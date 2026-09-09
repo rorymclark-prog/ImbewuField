@@ -1,6 +1,9 @@
 'use client';
 
-import { Camera, MessageCircleQuestion } from 'lucide-react';
+import { useRef, useState } from 'react';
+import ChatPanel from './ChatPanel';
+import { useSampleRole } from '@/lib/use-role-navigation';
+import { Camera, MessageCircleQuestion, X } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n';
 
@@ -23,12 +26,23 @@ interface LimaBarProps {
  *     programme, her mentor? And the placeholder was hardcoded English, so the single most
  *     prominent line on the home screen was untranslated for every non-English speaker.
  *
- * So: one caption that says who Lima is, and two labelled buttons. Tapping either lands in
- * exactly the same place the input did — nothing was taken away, it just stopped being the
- * default posture of the screen. Both labels go through t(), which the placeholder never did.
+ * Photo opens the native picker in the tap handler: routing to the map first loses
+ * the user gesture needed by iPhone Safari. The chosen photo stays in a local Lima dialog
+ * until the farmer explicitly sends it.
  */
 export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const sampleRole = useSampleRole();
+  const fileRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoOpen, setPhotoOpen] = useState(false);
+
+  function openPhotoChat(file: File | null) {
+    setPhoto(file);
+    setPhotoOpen(true);
+    dialogRef.current?.showModal();
+  }
 
   return (
     <div
@@ -72,8 +86,15 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
 
           {/* The camera keeps its own control rather than hiding inside the chat, but it now says
               what it does. An unlabelled icon is a guess, and she only gets one guess. */}
-          <Link
-            href={`${chatHref}&photo=1`}
+          <input ref={fileRef} type="file" accept="image/*" className="hidden"
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              event.target.value = '';
+              if (file) openPhotoChat(file);
+            }} />
+          <button
+            type="button"
+            onClick={() => sampleRole ? openPhotoChat(null) : fileRef.current?.click()}
             className="flex items-center justify-center gap-1.5 font-sans"
             style={{
               minHeight: 46, padding: '0 13px', borderRadius: 12, textDecoration: 'none',
@@ -83,9 +104,22 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
           >
             <Camera size={17} strokeWidth={2} />
             {t('limaPhotoButton')}
-          </Link>
+          </button>
         </div>
       </div>
+      <dialog ref={dialogRef} aria-labelledby="lima-photo-title"
+        className="m-auto rounded-2xl p-0 backdrop:bg-black/40"
+        style={{ width: 'min(94vw, 560px)', maxHeight: '85dvh', background: '#FFFEFA', color: '#20190F' }}
+        onClose={() => { setPhotoOpen(false); setPhoto(null); }}>
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 p-4" style={{ background: '#FFFEFA' }}>
+          <h2 id="lima-photo-title" className="font-semibold">{t('limaWhoIs')}</h2>
+          <button type="button" aria-label="Close" className="flex min-h-11 min-w-11 items-center justify-center"
+            onClick={() => dialogRef.current?.close()}><X size={22} /></button>
+        </div>
+        <div className="p-4 pt-0">
+          {photoOpen && <ChatPanel locationData={null} appLang={lang} initialFile={photo} />}
+        </div>
+      </dialog>
     </div>
   );
 }
