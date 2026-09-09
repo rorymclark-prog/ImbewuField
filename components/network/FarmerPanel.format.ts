@@ -66,7 +66,7 @@ export const NOT_RECORDED_NOTE = 'Readable — nothing has been logged';
 
 /** Fallback badge text when the caller does not pass its own demo notice. */
 export const SAMPLE_DATA_NOTICE =
-  'Sample portfolio — invented farmers and finances. No live farmer data is shown.';
+  'Tour portfolio';
 
 function notVisible(note = NOT_VISIBLE_NOTE): Readout {
   return { state: 'not_visible', text: NOT_VISIBLE_TEXT, note };

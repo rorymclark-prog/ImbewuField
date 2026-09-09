@@ -35,7 +35,7 @@ export default function MenuButton() {
         onClick={() => setOpen(true)}
         aria-label="Open navigation"
         aria-expanded={open}
-        title={sample ? 'Sample — open choices, tour and exit' : 'Menu'}
+        title={sample ? 'Tour — open choices and exit' : 'Menu'}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
@@ -52,7 +52,7 @@ export default function MenuButton() {
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>Sample</span>}
+        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>Tour</span>}
       </button>
       <ProductTourButton />
       <NavDrawer open={open} onClose={() => setOpen(false)} />

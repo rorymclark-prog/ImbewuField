@@ -18,7 +18,7 @@ export function freshSampleAssessment(): SiteSurvey {
     existingCrops: ['vegetables','fruit-trees'], existingGrowingAreaM2: 128, existingGrowingAreaSource: 'manual',
     livestock: ['none'], otherInfra: ['compost-bay'], farmingPractice: 'mostly-organic', challenges: ['water'],
     isCommercial: true, marketType: 'local-market', reportedProduction: [],
-    notes: 'FICTIONAL TRAINING EXAMPLE. These answers and areas demonstrate the form; they are not observations at the real Ubhejane Crèche.' };
+    notes: 'Tour assessment for exploring the editable design; no site survey was carried out.' };
 }
 
 export interface SampleFarmPack {
@@ -28,7 +28,7 @@ export interface SampleFarmPack {
   soil: { reference: string; sampledOn: string; ph: number; texture: string; note: string };
 }
 export function freshSampleFarmPack(): SampleFarmPack {
-  return { coordinator: 'Nomvula Dlamini (fictional)', visitDate: '2026-09-01',
+  return { coordinator: 'Nomvula Dlamini', visitDate: '2026-09-01',
     mentorNotes: 'Example visit completed: reviewed bed labels and the water supply. Follow up on the damaged gutter and record the next harvest together.',
     household: { code: 'DEMO-HH-001', adults: 2, children: 3, water: 'Shared municipal tap; supply interrupted some days.',
       food: 'Example respondent reports vegetables from the garden supplement purchased staple foods.',
@@ -39,9 +39,9 @@ export function freshSampleFarmPack(): SampleFarmPack {
 
 export function sampleFarmSections(pack: SampleFarmPack, assessment: SiteSurvey): ReportSection[] {
   return [
-    { title: 'Provenance and saved site', lines: [`${DEMO_SITE.name} workspace. Real map location, fictional layout and records.`,
+    { title: 'Provenance and saved site', lines: [`${DEMO_SITE.name} workspace. Tour edition with prepared records and a schematic design.`,
       `Map reference: ${DEMO_SITE.lat}, ${DEMO_SITE.lon}. Generated photos do not depict this location.`,
-      `Example coordinator: ${pack.coordinator}. Visit: ${pack.visitDate}.`,
+      `Coordinator: ${pack.coordinator}. Visit: ${pack.visitDate}.`,
       'This evidence pack accompanies the editable design, crop plan and records. It is not the full agronomic site report or a verified project return.'] },
     { title: "Site assessment — current answers", lines: [`Site type: ${assessment.siteType}; goals: ${assessment.goals.join(', ')}.`,
       `Water: ${assessment.waterSource.join(', ')}; delivery: ${assessment.waterDelivery.join(', ')}; storage: ${assessment.waterStorage.join(', ')}.`,
@@ -49,7 +49,7 @@ export function sampleFarmSections(pack: SampleFarmPack, assessment: SiteSurvey)
       `Soil condition: ${assessment.soilCondition}; amendments: ${assessment.soilAmendments.join(', ')}; fencing: ${assessment.hasFencing}.`,
       `Growing area: ${assessment.existingGrowingAreaM2 ?? 'not recorded'} m2; crops: ${assessment.existingCrops.join(', ')}.`,
       `Challenges: ${assessment.challenges.join(', ')}. ${assessment.notes}`] },
-    { title: 'Completed fictional household interview', lines: [`${pack.household.code}: ${pack.household.adults} adults, ${pack.household.children} children. No real household is represented.`,
+    { title: 'Household interview', lines: [`${pack.household.code}: ${pack.household.adults} adults, ${pack.household.children} children. No real household is represented.`,
       `Water access: ${pack.household.water}`, `Food access: ${pack.household.food}`, `Priority: ${pack.household.priority}`, `Follow-up: ${pack.household.followUp}`] },
     { title: 'Illustrative soil result — not a laboratory certificate', lines: [pack.soil.reference, `Example date: ${pack.soil.sampledOn}; pH: ${pack.soil.ph}; texture: ${pack.soil.texture}.`, pack.soil.note] },
     { title: 'Orchard harvests and sales', lines: SAMPLE_ORCHARD.map(row => `${row.crop}: ${row.pickedKg} kg picked, ${row.soldKg} kg sold, R${row.soldKg * row.price} received in the current demonstration month.`) },

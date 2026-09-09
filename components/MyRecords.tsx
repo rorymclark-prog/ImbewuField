@@ -948,7 +948,7 @@ function CreditPackCard({
       const blob = sampling
         ? await buildCreditPackPreviewPdf({ production, sales, expenses, invoices })
         : await buildCreditPackPdf({ farmer, production, sales, expenses, invoices });
-      await deliverCreditPackPdf(blob, creditPackPdfFilename(sampling ? 'Sample-summary' : farmer.farmName ?? farmer.name));
+      await deliverCreditPackPdf(blob, creditPackPdfFilename(sampling ? 'Tour-summary' : farmer.farmName ?? farmer.name));
     } catch (err) {
       setError(
         err instanceof CreditPackSampleModeError

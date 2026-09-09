@@ -33,7 +33,17 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 September 2026', sha: 'ee80c00', changes: [
+    'Mentor priorities show due actions, participant coverage and practical visit guidance.',
+    'Choose ACT SEF food security or general support as the field team’s programme focus.',
+    'Record garden skills, GPS locations and dated evidence when completing visit actions.',
+    'Search assigned gardens and keep visit filters, report figures and charts together.',
+  ] },
   { when: '8 September 2026', sha: '650c7bf', changes: [
+    'Add attendance IDs, signatures, certificates, photos and feedback to training records.',
+    'Save the training venue with GPS, view its map or open Google Maps directions.',
+    'Programme reports include key figures, charts and signed attendance tables.',
+    'Tour screens have fewer repeated notices and clearer text on cards and controls.',
     'Record past sales with the original paper invoice reference and payment date.',
     'Link an existing sale to an invoice without counting kilograms or income twice.',
     'Keep original expense slip photos on this device and reopen or download them.',
@@ -43,7 +53,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Tour and Tips stay at the top of the menu; Home invites you for your first 30 openings.',
     'Saving a sale creates its invoice, ready to view, share or print.',
     'Explore orchard harvests and sales alongside vegetables in the tour.',
-    'Garden invoices have a logo and complete fictional contact and banking details.',
+    'Garden invoices have a logo and complete contact and banking details.',
     'Dictate visit notes, review AI cleanup and attach photos to each mentor visit.',
     'Switch paid AI tools on or off in Settings.',
     'Money charts label the balance as cash surplus or cash shortfall.',

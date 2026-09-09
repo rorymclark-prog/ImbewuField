@@ -27,5 +27,5 @@ export default function SampleModeBanner() {
     return () => observer.disconnect();
   }, [pathname]);
   if (!active || pathname.startsWith('/pitch') || hasMenu) return null;
-  return <Link className="no-print" href="/samples" aria-label="Sample — choose a view" style={{position:'fixed',top:'calc(env(safe-area-inset-top, 0px) + 8px)',right:12,zIndex:40,minHeight:44,display:'inline-flex',alignItems:'center',padding:'0 12px',borderRadius:24,background:'var(--bg-1)',border:'1px solid var(--border)',color:'var(--color-harvest)',fontSize:12,fontWeight:700}}>Sample</Link>;
+  return <Link className="no-print" href="/samples" aria-label="Tour — choose a view" style={{position:'fixed',top:'calc(env(safe-area-inset-top, 0px) + 8px)',right:12,zIndex:40,minHeight:44,display:'inline-flex',alignItems:'center',padding:'0 12px',borderRadius:24,background:'var(--bg-1)',border:'1px solid var(--border)',color:'var(--color-harvest)',fontSize:12,fontWeight:700}}>Tour</Link>;
 }

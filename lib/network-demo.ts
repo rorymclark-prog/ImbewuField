@@ -54,7 +54,7 @@ import {
 } from './network';
 
 export const DEMO_NETWORK_NOTICE =
-  'Portfolio — invented farmers and finances on real KwaZulu-Natal locations. No live farmer data is shown.';
+  'Tour portfolio';
 
 /** Real course length (lib/course-modules.ts COURSE_MODULES). */
 const COURSE_MODULE_IDS = [

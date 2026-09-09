@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { FieldPath, getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, type MelPermission } from '@/lib/mel';
 import { canReadFieldVisit, fieldVisitDocumentId, projectFieldWorkspace, validFieldId, validFieldTeam, validFieldVisit, type FieldTeam, type FieldVisit, type FieldMember } from '@/lib/field-teams';
@@ -43,18 +43,23 @@ async function handle(req: NextRequest, write: boolean) {
       const allowed = new Set(people.filter(x => x.role === 'farmer' || x.role === 'student').map(x => x.id));
       const currentTeams = teams.map(t => ({ ...t, farmerIds: t.farmerIds.filter(id => allowed.has(id)) }));
       const visitsQuery = db.collection('field_team_visits').where('orgId', '==', orgId);
-      const visits = await (manage ? visitsQuery : visitsQuery.where('mentorId', '==', auth.uid)).limit(501).get();
-      if (visits.size > 500) fail('This report needs a shorter visit period. Contact your administrator.', 422);
-      return json(projectFieldWorkspace({ people, teams: currentTeams, visits: visits.docs.map(d => ({ ...(d.data() as FieldVisit), photos:[], id: d.id })), canManage: manage, selfId: auth.uid, sample: false }, auth.uid, manage));
+      const cursor=req.nextUrl.searchParams.get('cursor');
+      if(cursor && !validFieldId(cursor))fail('Choose a valid visit page.');
+      let query=(manage ? visitsQuery : visitsQuery.where('mentorId', '==', auth.uid)).orderBy(FieldPath.documentId());
+      if(cursor)query=query.startAfter(cursor);
+      const visits=await query.limit(201).get();
+      const page=visits.docs.slice(0,200);
+      return json(projectFieldWorkspace({ people, teams: currentTeams, visits: page.map(d => ({ ...(d.data() as FieldVisit), photos:[], id: d.id })), visitCursor:visits.size>200?page[page.length-1].id:'', canManage: manage, selfId: auth.uid, sample: false }, auth.uid, manage));
     }
     const raw = await req.text();
     if (raw.length > 650000) fail('Use up to three smaller visit photos.', 413);
     const b = JSON.parse(raw), now = new Date().toISOString();
+    let savedVisit:FieldVisit|undefined;
     if (b.action === 'team') {
       if (raw.length > 20000) fail('This team update is too large.', 413);
       if (!manage) fail('Only an organisation access manager can assign field teams.', 403);
       if (!validFieldTeam(b.team)) fail('Choose a mentor, location and unique farmer assignments.');
-      const team: FieldTeam = { mentorId: b.team.mentorId, location: b.team.location.trim(), farmerIds: b.team.farmerIds, guidance: b.team.guidance.trim(), updatedAt: now };
+      const team: FieldTeam = { programme:b.team.programme ?? 'general', mentorId: b.team.mentorId, location: b.team.location.trim(), farmerIds: b.team.farmerIds, guidance: b.team.guidance.trim(), updatedAt: now };
       await db.runTransaction(async tx => {
         const members = await tx.getAll(...[team.mentorId, ...team.farmerIds].map(id => db.collection('profiles').doc(id)));
         if (members.some(d => !d.exists || d.data()?.org_id !== orgId) || members[0].data()?.role !== 'mentor' || members.slice(1).some(d => !['farmer', 'student'].includes(d.data()?.role))) fail('Choose a mentor and farmers from this organisation.', 403);
@@ -70,17 +75,18 @@ async function handle(req: NextRequest, write: boolean) {
         if (!team.data()?.farmerIds?.includes(visit.farmerId) || farmer.data()?.org_id !== orgId || !['farmer', 'student'].includes(farmer.data()?.role)) fail('This farmer is not in your assigned team.', 403);
         if (old.exists && (old.data()?.orgId!==orgId || old.data()?.mentorId!==auth.uid)) fail('You can edit your own visits within this organisation.',403);
         if (old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This visit changed in another window. Reopen it before saving.',409);
-        const optionalFields=Object.fromEntries((['supportRequested','observations','agreedAction','responsiblePerson','followUpDate','location'] as const).map(key=>[key,(visit[key] ?? old.data()?.[key] ?? '').trim()]));
-        const next={orgId,mentorId:auth.uid,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),originalNotes:visit.originalNotes ?? old.data()?.originalNotes ?? '',...optionalFields,
-          photoCount:visit.photos?.length ?? old.data()?.photoCount ?? 0,updatedAt:now};
+        const optionalFields=Object.fromEntries((['supportRequested','observations','agreedAction','responsiblePerson','followUpDate','location','practicalSkill','skillResult','actionCompletedOn','actionOutcome'] as const).map(key=>[key,(visit[key] ?? old.data()?.[key] ?? (key==='skillResult'?'not-assessed':'')).trim()]));
+        const next={orgId,mentorId:visit.mentorId,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),originalNotes:visit.originalNotes ?? old.data()?.originalNotes ?? '',...optionalFields,
+          focus:visit.focus ?? old.data()?.focus ?? [],latitude:visit.latitude===undefined?old.data()?.latitude??null:visit.latitude,longitude:visit.longitude===undefined?old.data()?.longitude??null:visit.longitude,photoCount:visit.photos?.length ?? old.data()?.photoCount ?? 0,updatedAt:now};
         if(!validFieldVisit({...next,id:visit.id},now.slice(0,10)))fail('Check the saved action and follow-up date for this visit.');
         tx.set(ref,next);
+        savedVisit={...next,id:ref.id,photos:visit.photos??[]};
         // Like training evidence, image bytes live outside the list document and
         // are returned only after the organisation and assignment checks above.
         if (visit.photos!==undefined) tx.set(db.collection('field_team_visit_photos').doc(ref.id),{orgId,mentorId:auth.uid,photos:visit.photos.map(photo=>({image:photo.image,caption:photo.caption.trim()}))});
       });
     } else fail('Unknown field team action.');
-    return json({ saved: true });
+    return json({ saved: true, ...(savedVisit?{visit:savedVisit}:{}) });
   } catch (e) { const status = e instanceof SyntaxError ? 400 : (e as { status?: number }).status ?? 503; return json({ error: status === 503 ? 'Field team service unavailable. Changes have not been confirmed.' : (e as Error).message }, status); }
 }
 export const GET = (req: NextRequest) => handle(req, false);

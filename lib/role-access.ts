@@ -44,7 +44,7 @@ export function canAccessRolePage(role: UserRole | null, allowed: ReadonlySet<Us
 export const ROLE_GATED_ROUTES: Readonly<Record<string, ReadonlySet<UserRole>>> = Object.freeze({
   '/network': new Set<UserRole>(['ngo', 'funder', 'admin']),
   '/funder':  new Set<UserRole>(['funder', 'admin']),
-  '/mentor':  new Set<UserRole>(['mentor', 'ngo', 'funder', 'admin']),
+  '/mentor':  new Set<UserRole>(['mentor', 'ngo', 'admin']),
   '/ngo':     new Set<UserRole>(['ngo', 'admin']),
 });
 

@@ -1,4 +1,5 @@
 'use client';
+import { isSampleMode } from '@/lib/sample-mode';
 
 /**
  * FarmerPanel — the panel a funder opens when they click one farmer on the
@@ -445,7 +446,7 @@ export function FarmerPanel({
         {/* ── sample-data badge ──────────────────────────────────────────
             farmer.isDemo is set by lib/network-demo.ts. A funder must never be
             unsure whether they are looking at a real person. */}
-        {farmer.isDemo && (
+        {farmer.isDemo && !isSampleMode() && (
           <div
             className="flex items-start gap-2 px-3 py-2 rounded-xl"
             style={{ background: 'rgba(176,122,30,0.10)', border: '1px solid rgba(176,122,30,0.30)' }}
@@ -458,8 +459,8 @@ export function FarmerPanel({
         )}
 
         {farmer.isDemo && <div className="flex items-center gap-4" style={{ background: '#fff', padding: 8, borderRadius: 12 }}>
-          <img src="/demo/logo-organisation.png" alt="Imbewu KZN — fictional implementing partner" width={76} height={76} style={{ objectFit: 'contain' }} />
-          <img src="/demo/logo-funder.png" alt="Thembalethu Trust — fictional funding partner" width={76} height={76} style={{ objectFit: 'contain' }} />
+          <img src="/demo/logo-organisation.png" alt="Imbewu KZN — implementing partner" width={76} height={76} style={{ objectFit: 'contain' }} />
+          <img src="/demo/logo-funder.png" alt="Thembalethu Trust — funding partner" width={76} height={76} style={{ objectFit: 'contain' }} />
         </div>}
         {/* ── identity + site ────────────────────────────────────────────── */}
         <div className="flex items-center gap-3">
@@ -870,7 +871,7 @@ export function FarmerPanel({
             <strong style={{ color: BODY }}>Not visible</strong> means this account could not read
             that record — it never means zero.
             {farmer.consent === 'demo'
-              ? ' These are invented records, so no consent question arises.'
+              ? ' Tour records do not contain private farmer data.'
               : ' Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.'}
           </span>
         </div>

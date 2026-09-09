@@ -21,7 +21,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const [draft, setDraft] = useState({ title: '', project: "Community garden learning cohort", stage: 'baseline' as MelStage, due: '' });
   const [chosenPeople, setChosenPeople] = useState<string[]>([]);
   const [funderPreview, setFunderPreview] = useState(false);
-  useEffect(() => { setControls(readSampleProgramme()); }, []);
+  useEffect(() => { const saved=readSampleProgramme();setControls(saved);const id=new URLSearchParams(window.location.search).get('assessment');if(id&&sampleAssessments(saved).some(a=>a.assessment.id===id))setSelected(id); }, []);
   function update(next: SampleProgrammeControls) {
     if (!isSampleMode()) return;
     try { window.localStorage.setItem(KEY, JSON.stringify(next)); setControls(next); setNotice('Changes saved.'); }

@@ -16,7 +16,7 @@ export function sampleWrite<T>(key: string, value: T): void {
 export function freshSampleAreas(): ProductionSite[] {
   return SAMPLE_GARDENS.map(g => ({ code: g.id, name: g.name, observedOn: '2026-09-01',
     ...g.production, boundaryM2: g.areaM2 ?? null,
-    evidence: `Fictional ${g.kind} allocation for ${g.town}. Planted beds exclude buildings, paths, trees and unused land. AI reference photos do not establish measured area.`,
+    evidence: `${g.kind} allocation for ${g.town}. Planted beds exclude buildings, paths, trees and unused land. AI reference photos do not establish measured area.`,
     published: true, updatedAt: '2026-09-01', updatedBy: 'sample-organisation' }));
 }
 /** Upgrade the old one-garden seed without throwing away practice edits. */

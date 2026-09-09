@@ -33,3 +33,11 @@
 @media(max-width:750px){.hero{grid-template-columns:1fr;gap:14px}.hero img{height:230px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.page{padding:16px 14px 110px}.grid{grid-template-columns:1fr}.hero img{height:210px}.dialog{padding:18px}.header{gap:8px}}
 @media print{.badge,.dialog,.header,.controls{display:none!important}.page{height:auto;overflow:visible}}
+
+@media(max-width:600px) {
+  .hero { margin:16px 0; }
+  .hero h1 { font-size:32px; margin:8px 0 12px; }
+  .hero figure { display:none; }
+  .notice { padding:10px 12px; margin:12px 0 20px; }
+  .eyebrow { font-size:11px; letter-spacing:.05em; }
+}

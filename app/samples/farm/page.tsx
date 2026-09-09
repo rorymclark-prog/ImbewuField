@@ -36,7 +36,7 @@ export default function SampleFarmPage() {
     if(!isSampleMode())return;
     const pdf=await buildProgrammePdf("Ubhejane farm evidence pack",true,sampleFarmSections(pack,assessment),'full',SAMPLE_BRANDING,photos,'Illustrative garden and harvest images');
     if(!isSampleMode())return;
-    await deliverFile(pdf.output('blob'),'ImbewuField-SAMPLE-Farm-Evidence.pdf',"Fictional Ubhejane farm evidence");setMessage('Report ready. Use your device’s save or share controls.');
+    await deliverFile(pdf.output('blob'),'ImbewuField-Tour-Farm-Evidence.pdf',"Ubhejane farm evidence · Tour edition");setMessage('Report ready. Use your device’s save or share controls.');
   }catch(e){setMessage((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}><div className={styles.wrap}><header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><SettingsButton/><Link href="/tour">15-minute tour</Link></header>
     <h1>One farm, from plan to evidence</h1><p>Explore the design, visit records and evidence. Your edits stay available until you reload or reset this workspace.</p>

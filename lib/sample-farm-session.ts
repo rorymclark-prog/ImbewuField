@@ -9,6 +9,6 @@ export function prepareSampleFarm() {
   const existing = loadSurvey(SAMPLE_FARM_SITE_ID);
   if (existing) return existing;
   const saved = saveSurvey(freshSampleAssessment());
-  if (!saved) throw Error('The sample assessment could not be prepared. Please allow browser storage.');
+  if (!saved) throw Error('The tour assessment could not be prepared. Please allow browser storage.');
   return saved;
 }

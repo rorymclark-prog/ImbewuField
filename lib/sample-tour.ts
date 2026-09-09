@@ -65,11 +65,11 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'mentor', minutes: 2, title: 'Support a group of growers', href: '/mentor', role: 'mentor',
-    task: 'Review Field team for assignments, organisation guidance and visit records. Choose Trainees and open a learner to see their progress, then find Messages for follow-up.',
+    task: 'Start in Fieldwork to review due actions and assigned gardens. Record a visit, check a practical skill and agree the next action. Use Training for attendance and feedback, Learning for modules, and Messages for follow-up.',
   },
   {
     id: 'organisation', minutes: 2, title: 'Follow the whole programme', href: '/ngo', role: 'ngo',
-    task: 'Choose Assessments to review stages and response counts. Then look at Training & progress and Reports: these bring monitoring, evaluation and learning records together for the programme team.',
+    task: 'Open Training & progress, then Training register. Review the attendance signatures, certificates, venue map, photographs and short feedback survey. Open Reports to compare programme results.',
   },
   {
     id: 'funder', minutes: 2, title: 'See progress as a funder', href: '/funder', role: 'funder',
@@ -123,8 +123,8 @@ export const PRODUCT_TOUR_FEATURES: Record<string, readonly TourFeature[]> = {
     { title: 'See a useful summary', text: 'In Picked, open Records for a lender to view harvest, income and cost history and export the summary.' },
   ],
   mentor: [
-    { title: 'Meet your field team', text: 'Field team brings assigned growers and visit records together. Open a group to inspect the work.' },
-    { title: 'Follow learning and visits', text: 'Use Trainees for individual learning progress, Training for course records, and Messages for follow-up.' },
+    { title: 'Start with garden priorities', text: 'Fieldwork opens your due actions, participant coverage and food-security visit guide. Open People & gardens to start a visit with the participant already selected.' },
+    { title: 'Follow learning and visits', text: 'Use Learning for module progress and Training for attendance, certificates and feedback. In a field visit, record the skill observed and the next action, owner and date.' },
   ],
   organisation: [
     { title: 'See the programme together', text: 'Compare groups, gardens and recorded activity. Open Assessments to review the survey stages and responses.' },

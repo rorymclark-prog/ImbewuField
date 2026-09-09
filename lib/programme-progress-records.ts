@@ -11,7 +11,7 @@ export async function loadProgrammeProgressRecords(org: string, funder: boolean,
   if (sample) {
     const areas = productionAreaSummary(completeSampleAreas(sampleRead('areas', freshSampleAreas)), funder);
     const records = programmeRecordMetrics(DEMO_NETWORK.farmers, areas);
-    records.notes.unshift('Fictional examples: area comes from the 18-garden catalogue; production and finances come from the separate sample farmer portfolio. Their coverage differs.');
+    records.notes.unshift('Area comes from the 18-garden catalogue; production and finances come from the separate farmer portfolio. Their coverage differs.');
     return records;
   }
   async function get(url: string) {

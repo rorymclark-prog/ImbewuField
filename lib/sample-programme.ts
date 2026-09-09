@@ -47,7 +47,7 @@ export function sampleAssessments(controls: SampleProgrammeControls) {
 export function changeSampleAssessment(controls: SampleProgrammeControls, id: string, patch: Partial<MelAssessment>): SampleProgrammeControls {
   const data = sampleAssessments(controls);
   const found = data.find(x => x.assessment.id === id);
-  if (!found) throw Error('Sample assessment not found.');
+  if (!found) throw Error('Tour assessment not found.');
   if (patch.state === 'open' && found.assessment.state !== 'draft') throw Error('Only a draft can be opened.');
   if (patch.state === 'closed' && found.assessment.state !== 'open') throw Error('Only an open assessment can be closed.');
   if (patch.state === 'open' && !patch.participantIds?.length) throw Error('Choose participants first.');

@@ -1,0 +1,20 @@
+{
+  "mode": "Built-in image_gen",
+  "intendedUse": "Illustrative photo-style images used only inside the disposable ImbewuField product tour.",
+  "assets": [
+    {
+      "name": "training-activity",
+      "path": "public/demo/training-activity.jpg",
+      "prompt": "Use case: photorealistic-natural\nAsset type: landscape photograph-style illustration for an agricultural training product tour.\nPrimary request: A candid small rural KwaZulu-Natal garden training session. Exactly three adult Black South African people: one middle-aged woman participant wearing a rust-coloured cardigan and practical hat, one middle-aged man participant wearing a blue work shirt, and one male facilitator wearing a muted green polo shirt. They are collaboratively practising weighing fresh garden produce using a simple tabletop scale under an open shade shelter beside productive vegetable beds.\nScene/backdrop: Ordinary well-tended community garden venue in rural northern KwaZulu-Natal, low timber and shade-net shelter, practical wooden table, leafy vegetable beds visible behind them, warm natural afternoon light, believable tools and baskets.\nStyle/medium: Natural documentary photography, respectful and everyday, real skin texture, realistic anatomy, no glamour retouching.\nComposition/framing: Landscape 3:2 crop, medium-wide view showing all three people and the practical demonstration clearly, candid attentive expressions, garden venue context.\nConstraints: No children, no extra people, no readable personal information, no logos, no watermarks, no text overlays. This is an illustrative tour asset and must not depict an identifiable real event or claim accreditation.",
+      "reference": null
+    },
+    {
+      "name": "training-certificates",
+      "path": "public/demo/training-certificates.jpg",
+      "prompt": "Use case: photorealistic-natural\nAsset type: second landscape photograph-style illustration for the same agricultural training product tour.\nPrimary request: Create a group photograph after this training session using the attached image as a continuity reference for the same three adults, clothing, and garden location. The woman in the rust-coloured cardigan and practical hat and the man in the blue work shirt stand together holding one paper certificate each, with their male facilitator in the muted green polo beside them. They look warmly toward the camera.\nScene/backdrop: Same ordinary rural KwaZulu-Natal community garden, leafy vegetable beds and simple timber shade shelter in the background. Move the camera away from the table for a clean medium-wide group portrait.\nComposition/framing: Landscape 3:2, exactly three people from knees upward, all faces and two certificates visible, practical welcoming natural composition.\nLighting/mood: Natural afternoon light, documentary photographic texture, no glamour retouching.\nText (verbatim): Each paper has only a modest heading \"Certificate of attendance\", with an otherwise blank centre and a simple thin green border. Do not put names, signatures, ID numbers, dates, logos, seals, extra words, or accreditation claims on the certificates.\nConstraints: Preserve the same three adults and their clothing; no children, no extra people, no watermarks, no text overlays. This is an illustrative tour asset, not an identifiable real event.",
+      "reference": "training-activity"
+    }
+  ],
+  "inspection": "Both visually inspected at 1536x1024. Exactly three adults with consistent clothing/location. Second image shows two certificates each headed Certificate of attendance, blank elsewhere with no names, IDs, signatures, logos or accreditation marks.",
+  "delivery": "JPEG assets resized and compressed for field-device loading; the same bounded image data is used by the tour record and its PDF."
+}

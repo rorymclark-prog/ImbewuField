@@ -18,10 +18,10 @@ test('sample tour spans 15 minutes and leads to real farm pages with bounded pro
   assert.deepEqual(sampleRolesFor('funder'),['funder']);
   assert.equal(sampleRolesFor('ngo').length,5);
 });
-test('farm evidence uses the saved place, reset-safe fixtures and explicit fictional provenance',()=>{
+test('farm evidence uses the saved place, reset-safe fixtures and explicit tour and measurement provenance',()=>{
   const a=freshSampleAssessment(),p=freshSampleFarmPack();
   assert.equal(a.placeId,buildDemoSavedPlace().id);assert.equal(a.siteId,SAMPLE_FARM_SITE_ID);
-  assert.match(a.notes,/FICTIONAL/);assert.match(p.soil.reference,/NOT A LAB CERTIFICATE/);
+  assert.match(a.notes,/Tour assessment.*no site survey/);assert.match(p.soil.reference,/NOT A LAB CERTIFICATE/);
   p.household.adults=99;a.goals.length=0;
   assert.equal(freshSampleFarmPack().household.adults,2);assert.ok(freshSampleAssessment().goals.length>0);
   const sections=sampleFarmSections(p,a);assert.ok(sections.some(s=>s.lines.some(l=>l.includes('99 adults'))));
@@ -29,7 +29,8 @@ test('farm evidence uses the saved place, reset-safe fixtures and explicit ficti
 });
 test('feedback is bounded and never includes query strings, external URLs or automatic farm attachments',()=>{
   const good={id:'demo-request-001',kind:'bug',title:'Map labels',details:'The label is cut off on my phone.',path:'/farmer',sample:true};
-  assert.ok(validFeedback(good));assert.match(feedbackText(good as import('../lib/product-feedback').FeedbackInput),/Sample workspace: yes/);
+  // The compact Tour label replaces Sample wording; the workspace context remains.
+  assert.ok(validFeedback(good));assert.match(feedbackText(good as import('../lib/product-feedback').FeedbackInput),/Tour workspace: yes/);
   for(const patch of [{id:'../bad'},{kind:'admin'},{details:'short'},{title:'x'.repeat(161)},{details:'x'.repeat(4001)},{path:'https://example.com'},{path:'/farmer?token=secret'},{sample:'yes'}])assert.equal(validFeedback({...good,...patch}),false);
   const route=readFileSync('app/api/product-feedback/route.ts','utf8');
   assert.match(route,/guardPaidApiRequest/);assert.match(route,/profile\.data\(\)\?\.role!=='admin'/);
@@ -76,6 +77,50 @@ test('owner access editor remains scoped to the selected NGO and cannot demote i
 import { changeSampleAssessment, sampleAssessments } from '../lib/sample-programme';
 import { freshSampleAreas, upsertSampleArea, sampleRead, sampleWrite } from '../lib/sample-operations';
 import { canReadFieldVisit, completeSampleFieldWorkspace, fieldVisitDocumentId, fieldVisitReportLines, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, validFieldVisit } from '../lib/field-teams';
+import { summariseFieldWork } from '../lib/field-teams';
+
+test('a completed garden action needs dated evidence and stops appearing in the due worklist', () => {
+  const data=projectFieldWorkspace(freshFieldWorkspace(),'sample-mentor',false);
+  const visit={...data.visits[1],actionCompletedOn:'2026-09-08',actionOutcome:'Invoice and harvest weights checked together.'};
+  assert.equal(validFieldVisit(visit,'2026-09-08',true),true);
+  assert.equal(validFieldVisit({...visit,actionOutcome:''},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,actionCompletedOn:'2026-09-09'},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,actionCompletedOn:'2026-08-01'},'2026-09-08',true),false);
+  data.visits=data.visits.map(v=>v.id===visit.id?visit:v);
+  const summary=summariseFieldWork(data,'','','','2026-09-08');
+  assert.ok(summary.completed.some(v=>v.id===visit.id));
+  assert.ok(!summary.due.some(v=>v.id===visit.id));
+  assert.ok(!summary.open.some(v=>v.id===data.visits[0].id),'the bed-label action was explicitly checked complete on 5 September');
+});
+
+test('report coverage, follow-ups and support charts use the same dates and participant', () => {
+  const data=projectFieldWorkspace(freshFieldWorkspace(),'sample-mentor',false);
+  const summary=summariseFieldWork(data,'2026-09-01','2026-09-06','s1','2026-09-08');
+  assert.deepEqual(summary.assigned,['s1']);
+  assert.equal(summary.visited,1);
+  assert.equal(summary.visits.length,1);
+  assert.equal(summary.visits[0].date,'2026-09-05');
+  assert.equal(summary.open.length,1);
+  assert.equal(summary.due.length,0);
+  assert.equal(summary.focus.length,2,'a visit can cover two areas; these must not become pie slices');
+  assert.equal(summary.focus.reduce((n,r)=>n+r.value,0),2);
+  assert.equal(summariseFieldWork(data,'2026-08-01','2026-09-08','s1').visited,1,'repeat visits do not create another participant');
+  assert.equal(summariseFieldWork(data,'2026-10-01','2026-10-31').visits.length,0);
+});
+
+test('practical skill claims, programme focus and GPS are validated before saving', () => {
+  const data=freshFieldWorkspace(),visit=data.visits[1];
+  assert.equal(validFieldVisit({...visit,practicalSkill:'',skillResult:'demonstrated'},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,focus:['water','water']},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,focus:['payroll-approved']},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,latitude:-27.7,longitude:null},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,latitude:-27.7,longitude:31.9},'2026-09-08',true),true);
+  assert.equal(validFieldTeam({...data.teams[0],programme:'act-sef-food-security'}),true);
+  assert.equal(validFieldTeam({...data.teams[0],programme:'government-certified'}),false);
+  const lines=fieldVisitReportLines(visit,'Participant').join('\n');
+  assert.match(lines,/Practical skill: Weigh and record a harvest/);
+  assert.match(lines,/Demonstrated during this visit/);
+});
 
 test('opening a sample assessment needs participants and never invents completed responses', () => {
   const fresh = freshSampleProgramme();
@@ -235,9 +280,11 @@ test('demo reports identify their basis once without repetitive sample footers, 
   const full = await buildProgrammePdf('Field report', true, sections, 'full');
   assert.ok(full.getNumberOfPages() > 1);
   const output = pdfContentStreams(full.output('arraybuffer'));
-  assert.ok(output.includes('Fictional demonstration data'));
+  // Rory's 8 Sep instruction supersedes the old repeated fictional/sample phrasing.
+  assert.equal(output.split('Tour workspace').length-1,1);
+  assert.ok(!output.includes('Fictional demonstration data'));
   assert.ok(!output.includes('SAMPLE - NOT ACTUAL RESULTS'));
-  assert.equal(output.split('ImbewuField | ').length - 1, full.getNumberOfPages());
+  assert.equal(output.split('(ImbewuField)').length - 1, full.getNumberOfPages());
   assert.ok(output.includes('Visit record 90:'));
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
   const briefOutput = pdfContentStreams(brief.output('arraybuffer'));
@@ -333,8 +380,9 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
   const source=readFileSync(new URL('../components/SampleModeBanner.tsx',import.meta.url),'utf8');
   assert.doesNotMatch(source,/bottom:|bottom-\[|zIndex:\s*9999/);
   const menu=readFileSync(new URL('../components/NavDrawer.tsx',import.meta.url),'utf8');
-  assert.match(menu,/Sample controls/);
-  assert.match(menu,/Exit sample/);
+  // Rory's September wording decision uses Tour while retaining an explicit exit.
+  assert.match(menu,/Tour controls/);
+  assert.match(menu,/Exit tour/);
   assert.match(menu,/18 gardens &amp; completed reports/);
 });
 
