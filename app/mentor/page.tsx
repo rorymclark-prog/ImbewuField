@@ -26,6 +26,7 @@ import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { freshFieldWorkspace } from '@/lib/field-teams';
 import ProgrammeEvidence from '@/components/ProgrammeEvidence';
 import FieldTeams from '@/components/FieldTeams';
+import ProfileAvatar from '@/components/ProfileAvatar';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
 import ContactInbox from '@/components/ContactInbox';
@@ -130,13 +131,10 @@ function TraineeCard({
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <button onClick={() => setOpen((o) => !o)}
+      <button onClick={() => setOpen((o) => !o)} aria-expanded={open}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-        <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
-          style={{ width: 40, height: 40, fontSize: 15, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
-          {isSampleMode() ? <img data-photo-preview src={samplePortrait(trainee.id)} alt="Profile portrait illustration" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
-        </div>
+        <ProfileAvatar id={trainee.id} name={trainee.full_name || 'Unnamed'} photoUrl={trainee.photo_url} sample={isSampleMode()} size={44}/>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
