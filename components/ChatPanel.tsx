@@ -23,6 +23,8 @@ interface Props {
   initialQuery?: string | null;
   /** LimaBar's camera button (?photo=1) — opens the photo picker automatically once on mount. */
   initialPhoto?: boolean;
+  /** Photo selected directly from a user tap, before opening this panel. */
+  initialFile?: File | null;
   /** Called once the initialQuery/initialPhoto deep link has been acted on, so the caller can clear it. */
   onInitialConsumed?: () => void;
 }
@@ -66,7 +68,7 @@ export default function ChatPanel(props: Props) {
   return role ? <SampleLimaConversation key={role} role={role}/> : <LiveChatPanel {...props}/>;
 }
 
-function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, onInitialConsumed }: Props) {
+function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, initialFile, onInitialConsumed }: Props) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -208,6 +210,16 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (!initialFile) return;
+    let active = true;
+    fileToPayload(initialFile).then(
+      (image) => { if (active) setPendingImage(image); },
+      () => { if (active) setMessages([{ role: 'assistant', content: 'This photo could not be opened. Please try another photo or a JPEG image.' }]); },
+    );
+    return () => { active = false; };
+  }, [initialFile]);
+
   const isDisabled = loading || (!input.trim() && !pendingImage);
 
   return (
@@ -236,7 +248,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
         }}
       />
       {/* Intro / empty state */}
-      {messages.length === 0 && (
+      {messages.length === 0 && !initialFile && (
         <div className="space-y-3">
           <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="flex items-center gap-1.5 mb-1">
