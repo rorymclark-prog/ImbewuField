@@ -33,7 +33,7 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '9 September 2026', sha: '8af6a4b', changes: [
+  { when: '9 September 2026', sha: 'f538e21', changes: [
     'Plant Guilds now has illustrated slides, English narration and eight short videos.',
     'Learn how to choose support plants, prune for mulch and thin as fruit trees grow.',
     'Download Plant Guilds again to update any saved offline narration.',
