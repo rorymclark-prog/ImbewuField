@@ -33,6 +33,13 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 September 2026', sha: 'ed9a797b', changes: [
+    'Prepare your device in Offline & sync before closing the app without internet.',
+    'Save visits, attendance, signatures, photos and assessment answers without signal.',
+    'Keep unfinished fieldwork drafts and send saved entries when you reconnect.',
+    'See waiting entries, review conflicts and download a copy of unsent work.',
+    'Read downloaded programme records and use the map’s Offline canvas.',
+  ] },
   { when: '9 September 2026', sha: '332d934', changes: [
     'Mentor actions and visit records show profile photos and garden names.',
     'An illustrated garden visit guide and coverage bar make fieldwork easier to scan.',

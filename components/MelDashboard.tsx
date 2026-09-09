@@ -4,18 +4,18 @@ import MelCoverage from './MelCoverage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { isSampleMode } from '@/lib/sample-mode';
-import { paidApiHeaders } from '@/lib/api-client-auth';
+import { fieldApi } from '@/lib/field-api';
+import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
+import { useFieldSync } from '@/lib/use-field-sync';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import { MEL_STAGES, analyseAssessment, type MelAssessment, type MelMetric, type MelPermission, type MelResponse, type MelStage } from '@/lib/mel';
 import type { UserRole } from '@/lib/db/types';
 import styles from './MelDashboard.module.css';
+import FieldDataStatus from './FieldDataStatus';
 import SampleProgramme from './SampleProgramme';
 
 export async function melRequest(query = '', body?: unknown) {
-  const response = await fetch(`/api/assessments${query}`, { method: body ? 'POST' : 'GET', headers: { ...await paidApiHeaders(), ...(body ? { 'Content-Type': 'application/json' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error ?? 'Could not load assessments.');
-  return data;
+  return fieldApi(`/api/assessments${query}`,body);
 }
 const TIMING_ZU: Record<MelStage, string> = {
   baseline: 'Ngaphambi kokuthi kuqale usizo lwephrojekthi. Uma sekuqalile, bhala ukuthi izimpendulo zibheka emuva.',
@@ -56,11 +56,12 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     let cancelled = false;
     if (role !== 'admin' || !user || isSampleMode()) return;
     void (async () => {
-      try { const r = await fetch('/api/network/orgs', { headers: await paidApiHeaders() }); const d = await r.json(); if (!r.ok) throw new Error(d.error); if (!cancelled) { setOrgs(d.orgs); const linkedOrg=new URLSearchParams(window.location.search).get('org'); setOrg(d.orgs.find((o:{id:string})=>o.id===linkedOrg)?.id??d.orgs[0]?.id??''); } }
+      try { const d = await fieldApi('/api/network/orgs'); if (!cancelled) { setOrgs(d.orgs); const linkedOrg=new URLSearchParams(window.location.search).get('org'); setOrg(d.orgs.find((o:{id:string})=>o.id===linkedOrg)?.id??d.orgs[0]?.id??''); } }
       catch (e) { if (!cancelled) setError((e as Error).message); }
     })();
     return () => { cancelled = true; };
   }, [role, user]);
+  const [source,setSource]=useState<unknown>(null);
   const [list, setList] = useState<Listed[]>([]);
   const [permissions, setPermissions] = useState<MelPermission>({});
   const [error, setError] = useState('');
@@ -93,16 +94,17 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   const reload = useCallback(async () => {
     if (!user || isSampleMode() || (role === 'admin' && !org)) { setReady(true); return; }
     const version = ++requestVersion.current;
-    try { const data = await request(); if (version !== requestVersion.current) return; setList(data.assessments); setPermissions(data.permissions); setReady(true); }
+    try { const data = await request(); if (version !== requestVersion.current) return; setSource(data);setList(data.assessments); setPermissions(data.permissions); setReady(true); }
     catch (e) { if (version === requestVersion.current) { setError((e as Error).message); setReady(true); } }
   }, [user, role, org, request]);
   useEffect(() => { setList([]); setSelected(null); setAnalysis(null); setPermissions({}); setError(''); setPeople([]); setAccessView(false); setReady(false); void reload(); return () => { requestVersion.current++; }; }, [reload]);
   async function perform(body: unknown, message: string) {
     setBusy(true); setError(''); setNotice('');
-    try { await request('', body); await reload(); if (accessOnly) { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); } setNotice(message); setSelected(null); setAnalysis(null); }
+    try { const result=await request('', body); await reload(); if (accessOnly) { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); } setNotice(result.queued?DEVICE_SAVE_NOTICE:message); setSelected(null); setAnalysis(null); }
     catch (e) { setError((e as Error).message); }
     finally { setBusy(false); }
   }
+  useFieldSync(()=>void reload(),!busy&&!selected);
   async function open(a: Listed) {
     setBusy(true);
     setSelected(a); setAnalysis(null); setAssigned([]); setParticipants([]); setAnswers(a.response?.answers ?? {}); setConsent(false); setNotice(''); setError('');
@@ -141,7 +143,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   return <section className={styles.root}><div className={styles.wrap}>
     {!accessOnly && <div className={styles.hero}><span>IMBEWUFIELD · PROJECT LEARNING</span><h1>{accessOnly ? 'People & access' : zu ? 'Ukuhlola nokufunda' : 'Assessments & learning'}</h1><p>{t('Listen to farmers. Follow progress. Record what we change.', 'Lalela abalimi. Landela intuthuko. Bhala esikushintshayo.')}</p><div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button><a href="/ngo" style={{ color: 'white' }}>{t('Organisation dashboard', 'Ideshibhodi ye-NGO')}</a></div></div>}
     {role === 'admin' && !sample && <label>Organisation<select value={org} onChange={e => { setOrg(e.target.value); setSelected(null); setAnalysis(null); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
-    {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
+    <FieldDataStatus data={source} />{error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
     {!accessOnly && <MelCoverage/>}
     {accessOnly && <div className={styles.card} style={{ marginBottom: 16 }}><h2>People & access</h2><p>Set member roles, delegate assessments and control funder sharing for this organisation.</p><p>These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.</p></div>}
     {sample ? <SampleProgramme accessOnly={accessOnly} language={zu} /> : <>
@@ -181,7 +183,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
           <p className={styles.notice}>{zu ? 'Ukuphendula kungukuzithandela. Ungeqa noma yimuphi umbuzo. Izimpendulo zixhunywe ku-akhawunti yakho ukuze kuqhathaniswe intuthuko. Ithimba eligunyaziwe le-NGO lingazifunda; abaxhasi babona izifinyezo ezigunyaziwe kuphela. Ungafaki izinombolo zikamazisi noma amagama abanye abantu.' : 'Answering is voluntary. You may skip any question. Responses are linked to your account to compare progress. Authorised NGO analysts can read them; funders see approved summaries only. Do not include ID numbers or other people’s names.'}</p>
           {MEL_TEMPLATES[selected.stage].questions.map(q => <label key={q.id}>{zu ? q.zu : q.en}{q.kind === 'choice' ? <select disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })}><option value="">{zu ? 'Yeqa / khetha impendulo' : 'Skip / choose an answer'}</option>{q.options?.map(o => <option key={o.value} value={o.value}>{zu ? o.zu : o.en}</option>)}</select> : q.kind === 'number' ? <input disabled={selected.state !== 'open'} type="number" min="0" max={q.max} step="any" value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} /> : <textarea disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} maxLength={1200} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} />}</label>)}
           {selected.response && <button disabled={busy} onClick={() => void perform({ action: 'withdraw', id: selected.id }, zu ? 'Izimpendulo zisusiwe.' : 'Your response has been withdrawn.')}>{zu ? 'Susa izimpendulo zami' : 'Withdraw my response'}</button>}
-          {selected.state === 'open' && <><label className={styles.option}><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />{zu ? 'Ngifundile noma ngichazelwe lokhu futhi ngiyavuma ukuphendula.' : 'I have read or had this notice explained and agree to take part.'}</label><button className={styles.primary} disabled={busy || !consent} onClick={() => void perform({ action: 'respond', id: selected.id, answers, consent, language: zu ? 'zu' : 'en' }, zu ? 'Izimpendulo zigciniwe.' : 'Your response is saved.')}>{zu ? 'Gcina izimpendulo' : 'Save response'}</button></>}
+          {selected.state === 'open' && <><label className={styles.option}><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />{zu ? 'Ngifundile noma ngichazelwe lokhu futhi ngiyavuma ukuphendula.' : 'I have read or had this notice explained and agree to take part.'}</label><button className={styles.primary} disabled={busy || !consent} onClick={() => void perform({ action: 'respond', id: selected.id, expectedSubmittedAt:selected.response?.submittedAt??'', answers, consent, language: zu ? 'zu' : 'en' }, zu ? 'Izimpendulo zigciniwe.' : 'Your response is saved.')}>{zu ? 'Gcina izimpendulo' : 'Save response'}</button></>}
         </>}
       </div>}
       </>}

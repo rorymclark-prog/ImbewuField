@@ -62,14 +62,14 @@ function clientCallSites(guarded: Set<string>): CallSite[] {
       const rel = relative(ROOT, file).replace(/\\/g, '/');
       if (rel.startsWith('app/api/')) continue; // server handlers, not callers
       const src = stripComments(readFileSync(file, 'utf8'));
-      const re = /fetch\(\s*[`'"]\/api\/([a-z0-9-]+(?:\/[a-z0-9-]+)*)/g;
+      const re = /(fetch|fieldApi)\(\s*[`'"]\/api\/([a-z0-9-]+(?:\/[a-z0-9-]+)*)/g;
       for (let m = re.exec(src); m; m = re.exec(src)) {
-        const route = m[1];
+        const route = m[2];
         if (!guarded.has(route)) continue;
         // The token may be spread inline (`...await paidApiHeaders()`) or resolved just before the
         // fetch and threaded in (the .then() chain in LifeGuide), so look both directions.
         const window = src.slice(Math.max(0, m.index - 300), m.index + 400);
-        sites.push({ file: rel, route, wired: window.includes('paidApiHeaders') });
+        sites.push({ file: rel, route, wired: m[1]==='fieldApi' ? /import\s*\{[^}]*fieldApi[^}]*\}\s*from\s*['"][^'"]*field-api['"]/.test(src) : window.includes('paidApiHeaders') });
       }
     }
   }
@@ -121,4 +121,14 @@ test('a route guarded on the server but never called from the client is reported
     'suggest-zones-ai',
     'tree-id',
   ], 'the set of deployed-but-uncalled paid routes changed — add or remove one on purpose, not by accident');
+});
+
+// Field calls now defer authentication until replay; checking only direct fetch calls
+// would silently remove these protected routes from the audit. Verify the shared transport.
+test('the device queue authenticates its captured actor again when sending',()=>{
+  const source=stripComments(readFileSync(join(ROOT,'lib/field-api.ts'),'utf8'));
+  assert.match(source,/await paidApiHeaders\(actor\)/);
+  assert.match(source,/headers: \{ \.\.\.headers/);
+  assert.match(source,/assertCurrent\(\);\s*if \(controller.signal.aborted\)/);
+  assert.match(source,/currentUser\?\.uid !== actor.uid/);
 });

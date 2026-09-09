@@ -1,7 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { paidApiHeaders } from '@/lib/api-client-auth';
+import { fieldApi } from '@/lib/field-api';
+import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
+import { useFieldSync } from '@/lib/use-field-sync';
+import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { readSampleProgramme } from './SampleProgramme';
@@ -19,6 +22,7 @@ import TrainingFeedback from './TrainingFeedback';
 import { TRAINING_PHOTO_KINDS, trainingEvidenceSummary, type TrainingPhotoKind } from '@/lib/programme-evidence';
 import trainingStyles from './TrainingEvidence.module.css';
 import styles from './MelDashboard.module.css';
+import FieldDataStatus from './FieldDataStatus';
 
 type Tab = 'progress' | 'training' | 'targets' | 'branding';
 const today=()=>new Date().toISOString().slice(0,10);
@@ -38,8 +42,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   const [records,setRecords]=useState<ProgrammeRecords|null>(null);
   async function request(body?:unknown,query='') {
     if(isSampleMode()) throw Error("This action must remain in the tour.");
-    const res=await fetch(`/api/programme-evidence?org=${encodeURIComponent(org)}${query}`,{method:body?'POST':'GET',headers:{...(await paidApiHeaders()),'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});
-    const d=await res.json();if(!res.ok)throw Error(d.error);return d;
+    return fieldApi(`/api/programme-evidence?org=${encodeURIComponent(org)}${query}`,body);
   }
   async function reload() {
     const version=++requestVersion.current; setError('');
@@ -53,7 +56,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
       } else {const result=await request();if(version===requestVersion.current)setData(result);}
     } catch(e){if(version===requestVersion.current){setData(null);setError((e as Error).message);}}
   }
-  useEffect(()=>{let cancelled=false;if(isSampleMode()){setOrgs([{id:'sample-ngo',name:"Imbewu KZN"}]);setOrg('sample-ngo');return;}if(!user)return;if(profile?.role==='mentor'&&profile.org_id){setOrg(profile.org_id);return;}void (async()=>{try{const res=await fetch('/api/network/orgs',{headers:await paidApiHeaders()});const d=await res.json();if(!res.ok)throw Error(d.error);if(!cancelled){setOrgs(d.orgs);setOrg(d.orgs[0]?.id??'');}}catch(e){if(!cancelled)setError((e as Error).message);}})();return()=>{cancelled=true;};},[user,profile]);
+  useEffect(()=>{let cancelled=false;if(isSampleMode()){setOrgs([{id:'sample-ngo',name:"Imbewu KZN"}]);setOrg('sample-ngo');return;}if(!user)return;if(profile?.role==='mentor'&&profile.org_id){setOrg(profile.org_id);return;}void (async()=>{try{const d=await fieldApi('/api/network/orgs');if(!cancelled){setOrgs(d.orgs);setOrg(d.orgs[0]?.id??'');}}catch(e){if(!cancelled)setError((e as Error).message);}})();return()=>{cancelled=true;};},[user,profile]);
   useEffect(()=>{setData(null);setSession(null);setTarget(null);if(org)void reload();return()=>{requestVersion.current++;};},[org,funder,mentor]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     let cancelled=false;setRecords(null);
@@ -69,8 +72,8 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   async function save(action:'session'|'milestone'|'branding') {
     if(!data||busy)return;const version=requestVersion.current;setBusy(true);setError('');setNotice('');
     try{
-      const now=new Date().toISOString();
-      const s=session ? {...session,id:session.id||crypto.randomUUID(),ownerId:session.ownerId||(mentor?'sample-mentor':'sample-organisation'),presentCount:session.attendance.filter(a=>a.present).length,registeredCount:session.attendance.length,photoCount:session.photos.length} : null;
+      const now=new Date().toISOString();let queued=false;
+      const s=session ? {...session,id:session.id||crypto.randomUUID(),ownerId:session.ownerId||(data.sample?(mentor?'sample-mentor':'sample-organisation'):user?.uid??''),presentCount:session.attendance.filter(a=>a.present).length,registeredCount:session.attendance.length,photoCount:session.photos.length} : null;
       const m=target ? {...target,id:target.id||crypto.randomUUID()} : null;
       if(action==='milestone' && m && (observation.actual.trim() || observation.evidence.trim())) {
         if(!observation.actual.trim() || !observation.evidence.trim())throw Error('Complete the pending observation total and evidence reference, or clear both.');
@@ -84,11 +87,11 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         if(action==='milestone'&&!data.canManage)throw Error('Organisation management access is required.');
         if(action==='session' && s?.attendance.some(a=>!a.id.startsWith('guest-')&&!data.people.some(p=>p.id===a.id)))throw Error('Use members of your current assigned group.');
         sampleWrite('programme-evidence',action==='session'?{...all,sessions:[...all.sessions.filter(r=>r.id!==s!.id),{...s!,updatedAt:now}]}:action==='milestone'?{...all,milestones:[...all.milestones.filter(r=>r.id!==m!.id),{...m!,updatedAt:now}]}:{...all,branding:data.branding});
-      }else{if(data.sample)throw Error('This practice workspace has ended. Reopen the workspace.');await request(action==='session'?{action,session:s,reviewed,expectedUpdatedAt:session?.updatedAt}:action==='milestone'?{action,milestone:m,expectedUpdatedAt:target?.updatedAt}:{action,branding:data.branding});}
-      if(version!==requestVersion.current)return;setNotice('Saved. Reports now include the updated record.');setSession(null);setTarget(null);await reload();
+      }else{if(data.sample)throw Error('This practice workspace has ended. Reopen the workspace.');const result=await request(action==='session'?{action,session:s,reviewed,expectedUpdatedAt:session?.updatedAt}:action==='milestone'?{action,milestone:m,expectedUpdatedAt:target?.updatedAt}:{action,branding:data.branding});queued=result.queued===true;}
+      if(version!==requestVersion.current)return;setNotice(queued?DEVICE_SAVE_NOTICE:'Saved. Reports now include the updated record.');if(action==='session')void clearFieldDraft(`training:${org}`).catch(()=>{});setSession(null);setTarget(null);await reload();
     }catch(e){if(version===requestVersion.current)setError((e as Error).message);}finally{setBusy(false);}
   }
-  async function editSession(s:TrainingRecord){const version=requestVersion.current;setError('');setPhotosBusy(true);setReviewed(false);try{const photos=data?.sample?s.photos:(await request(undefined,`&mode=photos&id=${encodeURIComponent(s.id)}`)).photos;if(version===requestVersion.current)setSession({...s,photos,published:data?.canRecord&&!data.canManage?false:s.published});}catch(e){setError((e as Error).message);}finally{setPhotosBusy(false);}}
+  async function editSession(s:TrainingRecord){const version=requestVersion.current;setError('');setPhotosBusy(true);setReviewed(false);try{const photos=data?.sample?s.photos:s.photoCount===0?[]:(await request(undefined,`&mode=photos&id=${encodeURIComponent(s.id)}`)).photos;if(version===requestVersion.current)setSession({...s,photos,published:data?.canRecord&&!data.canManage?false:s.published});}catch(e){setError((e as Error).message);}finally{setPhotosBusy(false);}}
   async function addVenuePhotos(files: FileList | null) {
     if (!session || !data?.canRecord || photosBusy || !files?.length) return;
     const sessionId=session.id, version=requestVersion.current;
@@ -101,6 +104,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     } catch(e) { if(version===requestVersion.current)setError((e as Error).message); }
     finally { if(version===requestVersion.current)setPhotosBusy(false); }
   }
+  useFieldSync(()=>void reload(),!busy&&!session&&!target);
   const sessions=data?.sessions.filter(s=>!project||s.project===project)??[],targets=data?.milestones.filter(m=>!project||m.project===project)??[];
   const totals=trainingTotals(sessions,asOf,!funder), dated=sessions.filter(s=>s.date<=asOf);
   const currentScope=asOf===today()&&!project&&!mentor;
@@ -113,6 +117,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   const setM=(key:keyof ProgrammeMilestone,value:unknown)=>setTarget(m=>m?{...m,[key]:value}:m);
   const logoUpload=async(key:'organisation'|'garden'|'funder',file?:File)=>{if(!file||!data)return;setBusy(true);try{const image=await resizeLogoForStorage(file);setData(d=>d?{...d,branding:{...d.branding,[key]:{...d.branding[key],image}}}:d);}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
   return <section className={styles.root} style={initialTab==='branding'?{padding:0,background:'transparent'}:undefined}><div className={styles.wrap}>
+    <FieldDataStatus data={data} />
     {initialTab!=='branding'&&<div className={styles.hero}><h1>{funder?'Project progress & evidence':'Programme evidence & progress'}</h1><p>Growing, water, land, livelihoods, participation, learning and delivery. Follow the recorded results and the evidence behind them.</p></div>}
     {orgs.length>1&&<label>Organisation<select disabled={busy||photosBusy} value={org} onChange={e=>setOrg(e.target.value)}>{orgs.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error&&<p role="alert" className={styles.error}>{error}</p>}{notice&&<p role="status" className={styles.notice}>{notice}</p>}
@@ -124,7 +129,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         <div className={styles.card}><label>Progress as of<input type="date" value={asOf} max={today()} onChange={e=>{if(e.target.value)setAsOf(e.target.value);}} /></label><label>Timeline · recorded dates<input aria-label="Progress timeline" style={{accentColor:'#285c3e'}} type="range" min={0} max={Math.max(0,dates.length-1)} value={Math.max(0,dates.findLastIndex(d=>d<=asOf))} onChange={e=>setAsOf(dates[+e.target.value])} /></label><p>Shows observations dated on or before {asOf}, using the latest corrected records. This is not a reconstruction of what had been entered at that time.</p></div>
         <ProgrammeProgress records={records} targets={targets} asOf={asOf} category={category} onCategory={setCategory} onAdd={data.canManage?addIndicator:undefined} currentScope={currentScope} showCurrentRecords={!mentor}/>
         {showTraining&&<section className={styles.card}><h2>Training delivery</h2><div className={styles.grid}>{[['Sessions delivered',totals.sessions],['Attendances',totals.attendances],['Distinct participants',totals.uniqueParticipants??'Not included in funder projection']].map(([l,n])=><div key={l}><h3>{l}</h3><strong className={styles.stat}>{n}</strong></div>)}</div><p>Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.</p></section>}
-        <ReportComposer title="Project progress report" sample={data.sample} branding={data.branding} reportDate={asOf}
+        <ReportComposer deviceData={data} title="Project progress report" sample={data.sample} branding={data.branding} reportDate={asOf}
           metrics={[{label:'Indicators',value:String(selectedTargets.length),detail:project||'All visible projects'}, {label:'Targets met',value:String(selectedTargets.filter(m=>milestoneAt(m,asOf).status==='Target met').length),detail:`As of ${asOf}`}, ...(showTraining?[{label:'Sessions delivered',value:String(totals.sessions),detail:'Completed sessions'},{label:'Attendances',value:String(totals.attendances),detail:'Includes repeat attendance'}]:[])]}
           chart={{title:`Progress against agreed targets · ${asOf}`,suffix:'%',minimumScale:100,rows:selectedTargets.flatMap(m=>{const v=milestoneAt(m,asOf);return v.percent===null?[]:[{label:m.title,value:v.percent,display:`${Math.round(v.percent)}%`}];})}} sections={[
           {title:'Reporting scope',lines:[project||'All visible projects',category?PROGRESS_AREAS.find(a=>a.id===category)!.title:'All areas of work',`As of ${asOf}. Generated from the latest available records. ${funder?'Published evidence and consented portfolio records only.':'Includes internal records.'}`,currentScope?'Latest register totals have their own coverage and periods, as stated below.':'Current organisation totals are excluded from this dated or project-specific selection.']},
@@ -139,6 +144,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         ]}/>
       </>}
       {!data.brandingOnly&&tab==='training'&&<>
+        {data.canRecord&&<FieldDraft name={`training:${org}`} value={session} onRestore={value=>{setSession(value);setReviewed(false);}} />}
         {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:data.sample?(mentor?"Sibusiso Ndlovu":"Nosipho Khumalo"):profile?.full_name??''});setReviewed(false);}}>Record a training session</button>}
         {photosBusy&&<p>Loading session photos…</p>}
         {sessions.map(s=><article key={s.id} className={styles.card} style={{marginTop:16}}><h2>{s.title}</h2><p>{s.date} · {s.project} · {s.venue}</p><p>{s.presentCount} present / {s.registeredCount} registered · {s.photoCount} photographs · {s.published?'Shared with funders':'Internal'}</p><p>{s.report}</p><button disabled={busy||photosBusy} onClick={()=>void editSession(s)}>{data.canRecord?'Open register / edit':'Open session report'}</button></article>)}
@@ -159,7 +165,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
           </fieldset>
           <button type="button" disabled={busy||photosBusy} onClick={()=>setSession(null)}>Close record</button>
           <p>{data.canRecord?'This preview includes your current edits. Save the session to update project progress reports.':'Published summary; named attendance remains with the organisation.'}</p>
-          <ReportComposer title="Training session report" sample={data.sample} branding={data.branding} photos={session.photos} photosByDefault photoHeading="Training evidence" session={session} funder={funder} sections={[{title:'Session delivery',lines:[session.report]},{title:'Assessment & follow-up',lines:[session.assessmentId?`Linked assessment: ${data.assessments.find(a=>a.id===session.assessmentId)?.title??'Course assessment'}`:'Feedback is recorded with this session.',...(funder?[]:[session.nextSteps||'No follow-up recorded.'])]}]}/>
+          <ReportComposer deviceData={data} title="Training session report" sample={data.sample} branding={data.branding} photos={session.photos} photosByDefault photoHeading="Training evidence" session={session} funder={funder} sections={[{title:'Session delivery',lines:[session.report]},{title:'Assessment & follow-up',lines:[session.assessmentId?`Linked assessment: ${data.assessments.find(a=>a.id===session.assessmentId)?.title??'Course assessment'}`:'Feedback is recorded with this session.',...(funder?[]:[session.nextSteps||'No follow-up recorded.'])]}]}/>
         </form>}
       </>}
       {!data.brandingOnly&&tab==='targets'&&<>
@@ -173,7 +179,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
           <h3>Dated observations</h3>{target.observations.map(o=><p key={o.date}>{o.date} · {o.actual} {target.unit} · {o.evidence}</p>)}<div className={styles.grid}><label>Observation date<input type="date" max={today()} value={observation.date} onChange={e=>setObservation({...observation,date:e.target.value})}/></label><label>Total or reading on this date<input type="number" min="0" step="any" value={observation.actual} onChange={e=>setObservation({...observation,actual:e.target.value})}/></label></div><label>Evidence / record reference<textarea maxLength={1500} value={observation.evidence} onChange={e=>setObservation({...observation,evidence:e.target.value})}/></label><button type="button" onClick={()=>{if(!observation.actual.trim()||!observation.evidence.trim()){setError('Enter an observed total and evidence reference.');return;}setM('observations',[...target.observations.filter(o=>o.date!==observation.date),{...observation,actual:+observation.actual,recordedAt:new Date().toISOString()}]);setObservation({date:today(),actual:'',evidence:''});}}>Add / replace dated observation</button>
           <label className={styles.option}><input type="checkbox" checked={target.published} onChange={e=>setM('published',e.target.checked)}/>Share this indicator and its evidence notes with linked funders</label><button className={styles.primary}>Save indicator</button><button type="button" onClick={()=>setTarget(null)}>Cancel</button></fieldset></form>}
       </>}
-      {(tab==='branding'||data.brandingOnly)&&data.canBrand&&<div className={styles.card}><h2>Organisation, garden & funder identity</h2><p>These are the default partner identities for this organisation’s programme reports. Use a programme-wide community name when several gardens are included. Upload logos you are authorised to use.</p><div className={styles.grid}>{(['organisation','garden','funder'] as const).map(key=><div key={key}><h3>{key==='organisation'?'Implementing organisation':key==='garden'?'Community garden / project':'Funding partner'}</h3>{data.branding[key].image&&<img src={data.branding[key].image} alt={`${key} logo`} style={{width:120,height:90,objectFit:'contain'}}/>}<label>Display name<input maxLength={120} value={data.branding[key].label} onChange={e=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],label:e.target.value}}})}/></label><label>Upload logo<input disabled={busy} type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void logoUpload(key,e.target.files?.[0])}/></label><button onClick={()=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],image:''}}})}>Remove logo</button></div>)}</div><button className={styles.primary} disabled={busy} onClick={()=>void save('branding')}>Save names & logos</button><ReportComposer title="Branded report preview" sample={data.sample} branding={data.branding} sections={[{title:'Programme identity',lines:['The saved names and logos are used on training and progress reports.']}]} /></div>}
+      {(tab==='branding'||data.brandingOnly)&&data.canBrand&&<div className={styles.card}><h2>Organisation, garden & funder identity</h2><p>These are the default partner identities for this organisation’s programme reports. Use a programme-wide community name when several gardens are included. Upload logos you are authorised to use.</p><div className={styles.grid}>{(['organisation','garden','funder'] as const).map(key=><div key={key}><h3>{key==='organisation'?'Implementing organisation':key==='garden'?'Community garden / project':'Funding partner'}</h3>{data.branding[key].image&&<img src={data.branding[key].image} alt={`${key} logo`} style={{width:120,height:90,objectFit:'contain'}}/>}<label>Display name<input maxLength={120} value={data.branding[key].label} onChange={e=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],label:e.target.value}}})}/></label><label>Upload logo<input disabled={busy} type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void logoUpload(key,e.target.files?.[0])}/></label><button onClick={()=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],image:''}}})}>Remove logo</button></div>)}</div><button className={styles.primary} disabled={busy} onClick={()=>void save('branding')}>Save names & logos</button><ReportComposer deviceData={data} title="Branded report preview" sample={data.sample} branding={data.branding} sections={[{title:'Programme identity',lines:['The saved names and logos are used on training and progress reports.']}]} /></div>}
     </>}
   </div></section>;
 }

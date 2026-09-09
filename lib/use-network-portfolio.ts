@@ -23,7 +23,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { paidApiHeaders } from '@/lib/api-client-auth';
+import { fieldApi } from '@/lib/field-api';
+import { useFieldSync } from './use-field-sync';
 import { isSampleMode } from '@/lib/sample-mode';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { DEMO_COHORT_MONTHLY, DEMO_NETWORK } from '@/lib/network-demo';
@@ -35,6 +36,7 @@ import type { NetworkFarmerSummary, NetworkOrgOption } from '@/lib/network';
 const NO_SERIES = emptyCohortSeries('The month-by-month totals have not been loaded for this organisation.');
 
 export interface NetworkPortfolio {
+  deviceData?: unknown;
   /** Rows for the map/list. Demo rows in sample mode, authorised rows otherwise, [] on error. */
   rows: NetworkFarmerSummary[];
   /**
@@ -67,6 +69,7 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
   // A signed-in owner exploring sample roles must never read a live portfolio.
   const live = isBackendConfigured() && signedIn && sample === false;
 
+  const [deviceData,setDeviceData]=useState<unknown>(null);
   const [orgs, setOrgs] = useState<NetworkOrgOption[]>([]);
   const [orgId, setOrgId] = useState<string | null>(null);
   const [rows, setRows] = useState<NetworkFarmerSummary[]>([]);
@@ -76,6 +79,7 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
   const [error, setError] = useState<string | null>(null);
   const [nonce, setNonce] = useState(0);
   const reload = useCallback(() => setNonce((n) => n + 1), []);
+  useFieldSync(reload,live);
 
   // ── which orgs may this caller see ──
   useEffect(() => {
@@ -85,10 +89,8 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
     setError(null);
     (async () => {
       try {
-        const res = await fetch('/api/network/orgs', { headers: await paidApiHeaders() });
-        const body = await res.json().catch(() => ({}));
+        const body = await fieldApi('/api/network/orgs');
         if (cancelled) return;
-        if (!res.ok) { setError(body.error ?? 'Could not load your portfolio.'); setOrgs([]); return; }
         const list: NetworkOrgOption[] = body.orgs ?? [];
         setOrgs(list);
         // Pick the first org so a single-org NGO never has to choose. A funder or admin with
@@ -112,17 +114,9 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
     setError(null);
     (async () => {
       try {
-        const res = await fetch(`/api/network/farmers?org_id=${encodeURIComponent(orgId)}`, {
-          headers: await paidApiHeaders(),
-        });
-        const body = await res.json().catch(() => ({}));
-        if (cancelled) return;
-        if (!res.ok) {
-          // Empty, never demo: see the header. An unknown portfolio must not be dressed as one.
-          setError(body.error ?? 'Could not load farmers for this organisation.');
-          setRows([]); setWithheld(0); setMonthly(NO_SERIES);
-          return;
-        }
+        const body = await fieldApi(`/api/network/farmers?org_id=${encodeURIComponent(orgId)}`);
+        if(cancelled)return;
+        setDeviceData(body);
         setRows(body.farmers ?? []);
         setWithheld(body.withheldForConsent ?? 0);
         // An older deployment of the route has no `monthly`. That is a missing series, not an
@@ -144,5 +138,5 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
     };
   }
 
-  return { rows, monthly, orgs, orgId, setOrgId, isDemo: false, loading, error, withheldForConsent, reload };
+  return { deviceData, rows, monthly, orgs, orgId, setOrgId, isDemo: false, loading, error, withheldForConsent, reload };
 }

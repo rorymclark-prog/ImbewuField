@@ -5,6 +5,7 @@ import ReactMapGL, {
   Source, Layer, Marker, Popup, ScaleControl,
   type MapRef, type MapMouseEvent, type LayerProps,
 } from 'react-map-gl';
+import { OFFLINE_MAP_STYLE } from '@/lib/map-offline-style';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
@@ -345,6 +346,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
+  const [connected,setConnected]=useState(true),[canvasOnly,setCanvasOnly]=useState(false);
+  const offlineCanvas=!connected||canvasOnly;
+  useEffect(()=>{const update=()=>setConnected(navigator.onLine);update();window.addEventListener('online',update);window.addEventListener('offline',update);return()=>{window.removeEventListener('online',update);window.removeEventListener('offline',update);};},[]);
   // Default to Esri ("HD") wherever a licensed key is configured, and to Mapbox otherwise.
   //
   // This was opt-in, on the reasoning that Esri has DATA GAPS which render an opaque "Map data not
@@ -2106,12 +2110,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   return (
     <div className="relative w-full h-full">
+      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'#f7f2e9',color:'#203127',fontSize:14,pointerEvents:'none'}}>Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.</div>}
       <ReactMapGL
         ref={mapRef}
         mapboxAccessToken={TOKEN}
         initialViewState={{ longitude: 25, latitude: -29, zoom: 5.2 }}
-        mapStyle={`mapbox://styles/mapbox/${style}`}
-        terrain={terrain3d ? { source: 'mapbox-dem', exaggeration: 1.5 } : undefined}
+        mapStyle={offlineCanvas ? OFFLINE_MAP_STYLE : `mapbox://styles/mapbox/${style}`}
+        terrain={!offlineCanvas && terrain3d ? { source: 'mapbox-dem', exaggeration: 1.5 } : undefined}
         minZoom={MIN_ZOOM}
         maxZoom={MAX_ZOOM}
         dragRotate={false}
@@ -2154,10 +2159,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         style={{ width: '100%', height: '100%' }}
       >
         <ScaleControl position="bottom-right" maxWidth={120} unit="metric" />
-        <Source id="mapbox-dem" {...terrainSource} />
+        {!offlineCanvas && <Source id="mapbox-dem" {...terrainSource} />}
 
         {/* Hillshade relief — shades hills/valleys so slope shape & direction read at a glance */}
-        {hillshade && (
+        {!offlineCanvas && hillshade && (
           <Source id="hillshade-dem" type="raster-dem" url="mapbox://mapbox.mapbox-terrain-dem-v1" tileSize={512} maxzoom={14}>
             <Layer id="hillshade-layer" type="hillshade"
               paint={{ 'hillshade-exaggeration': 0.55, 'hillshade-shadow-color': '#08120a', 'hillshade-highlight-color': '#eef3df', 'hillshade-accent-color': '#1a2e16' }} />
@@ -2172,7 +2177,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             the main map, quietly, for months. It now uses the licensed ArcGIS Location Platform
             endpoint and only renders when a key is configured; without one the toggle is hidden
             entirely rather than silently drawing nothing. */}
-        {hdImagery && ARCGIS_API_KEY && (
+        {!offlineCanvas && hdImagery && ARCGIS_API_KEY && (
           <Source
             id="esri-imagery"
             type="raster"
@@ -2188,7 +2193,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {/* Below FINE_CONTOUR_MIN_ZOOM, or whenever the fine fetch hasn't produced data yet
             (still loading / errored / bbox too large), keep the fixed-10m Mapbox vector
             contours as the always-available fallback. */}
-        {contours && (zoom < FINE_CONTOUR_MIN_ZOOM || !fineContours) && (
+        {!offlineCanvas && contours && (zoom < FINE_CONTOUR_MIN_ZOOM || !fineContours) && (
           <Source id="contours" type="vector" url="mapbox://mapbox.mapbox-terrain-v2">
             {/* Casings mount FIRST — Mapbox paints in mount order, so these sit beneath. */}
             <Layer {...contourMinorCasing} />
@@ -3029,8 +3034,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           });
           return (
           <div className="flex gap-1.5 flex-wrap font-sans">
+            <button onClick={()=>setCanvasOnly(!canvasOnly)} className="transition-all" style={chip(offlineCanvas)}>Offline canvas</button>
             {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
-              <button key={s} onClick={() => setStyle(s)} className="transition-all" style={chip(style === s)}>
+              <button key={s} onClick={() => {setCanvasOnly(false);setStyle(s);}} className="transition-all" style={chip(style === s)}>
                 {style === s && <Check size={13} strokeWidth={2.4} />}{[t('layerToggleSatellite'), t('layerToggleTopo')][i]}
               </button>
             ))}

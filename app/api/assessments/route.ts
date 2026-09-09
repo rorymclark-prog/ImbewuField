@@ -1,3 +1,4 @@
+import { fieldOperationReceipt, readFieldReceipt, writeFieldReceipt } from '@/lib/field-operation-receipt';
 import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -144,15 +145,22 @@ async function handle(req: NextRequest, write: boolean) {
     if (b.action === 'respond') {
       if (!safeId(b.id)) fail('Choose an assessment.');
       const ref = db.collection('mel_assessments').doc(b.id);
+      const receipt=fieldOperationReceipt(db,uid,orgId,'response',b);
+      let acknowledgedAt=now;
       await db.runTransaction(async tx => {
+        const replay=await readFieldReceipt(tx,receipt);
+        if(replay){acknowledgedAt=replay.updatedAt;return;}
+        const previous=await tx.get(ref.collection('responses').doc(uid));
+        if(receipt && (previous.data()?.submittedAt??'')!==(b.expectedSubmittedAt??''))fail('Your response changed on another device. Review it before replacing it.',409);
         const snap = await tx.get(ref);
         const a = snap.data() as MelAssessment | undefined;
         if (!a || a.orgId !== orgId || a.state !== 'open' || !a.participantIds.includes(uid)) fail('This assessment is not open for your account.', 403);
         if (b.consent !== true || !['en', 'zu'].includes(b.language) || !validAnswers(MEL_TEMPLATES[a.stage], b.answers) || !Object.values(b.answers).some(v => typeof v === 'string' && v.trim())) fail('Agree to the assessment notice and answer at least one question.');
+        writeFieldReceipt(tx,receipt,now);
         // Deterministic ID + transaction: retries replace one response, never inflate completion.
         tx.set(ref.collection('responses').doc(uid), { assessmentId: b.id, participantId: uid, orgId, version: a.version, language: b.language, consent: true, answers: b.answers, submittedAt: now } satisfies MelResponse);
       });
-      return json({ saved: true });
+      return json({ saved: true, updatedAt: acknowledgedAt });
     }
     if (b.action === 'person' || b.action === 'sharing') {
       if (!['ngo', 'admin'].includes(role) || !can('people')) fail('Organisation access management is restricted.', 403);

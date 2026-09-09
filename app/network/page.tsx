@@ -44,6 +44,7 @@ import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { canAccessRolePage } from '@/lib/role-access';
+import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import type { UserRole } from '@/lib/db/types';
 import BackButton from '@/components/BackButton';
@@ -252,6 +253,7 @@ export default function NetworkPage() {
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean
           completely different things to whoever is reading it. */}
+      <FieldDataStatus data={portfolio.deviceData} />
       {portfolio.error && (
         <div
           className="flex-shrink-0 flex items-center gap-2 px-3 md:px-4 py-2"

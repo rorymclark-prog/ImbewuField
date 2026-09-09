@@ -31,7 +31,7 @@ const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
 // These are the routes a farmer opens on a phone with no signal.
 const PRECACHE_URLS = [
   '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/', '/home', '/farmer', '/student', '/prices',
+  '/', '/home', '/farmer', '/student', '/prices', '/offline',
 ];
 
 // COURSE DOWNLOADS — deliberately NOT versioned by CACHE_VERSION, and deliberately spared by the
@@ -64,24 +64,86 @@ const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
 const ART_CACHE = 'imbewu-art-v1';
 const ART_PATH = /^\\/(element-art|element-art-2|render-assets)\\//;
 
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open(SHELL_CACHE).then(function (cache) {
-      // ONE URL AT A TIME, NOT addAll. addAll is atomic: a single 404 or redirect rejects the whole
-      // precache, and the .catch below would swallow it — leaving the farmer with no shell at all
-      // and no signal that anything went wrong. Per-URL means a bad entry costs only that entry.
-      return Promise.all(PRECACHE_URLS.map(function (url) {
-        return cache.add(url).catch(function () {});
+// A first visit loads its scripts BEFORE the worker controls the page. Saving HTML alone
+// therefore cannot boot that page after closing the browser. Publish each cached document
+// only after all its same-origin build assets (including CSS fonts) are safely stored.
+const pendingAssets = new Map();
+function buildAssets(text, base) {
+  const matches = text.match(/(?:\\/|\\.\\.\\/)[^\\s"'<>\\\\()]+/g) || [];
+  return Array.from(new Set(matches.map(function (value) {
+    try { const url = new URL(value.replace(/&amp;/g, '&'), base);
+      return url.origin === self.location.origin && url.pathname.indexOf('/_next/static/') === 0 ? url.href : null;
+    } catch (_) { return null; }
+  }).filter(Boolean)));
+}
+function cacheAsset(cache, url) {
+  if (pendingAssets.has(url)) return pendingAssets.get(url);
+  const work = (async function () {
+    let response = await cache.match(url);
+    if (!response) {
+      response = await fetch(url);
+      if (!response.ok) throw new Error('Startup asset unavailable: ' + url);
+      await cache.put(url, response.clone());
+    }
+    if (new URL(url).pathname.endsWith('.css')) {
+      await Promise.all(buildAssets(await response.text(), url).map(function (child) {
+        return cacheAsset(cache, child);
       }));
-    }).catch(function () {})
-  );
-  // Activate this worker immediately instead of waiting for every other open
-  // tab to close — otherwise a deploy never "reaches" an already-open device.
-  self.skipWaiting();
+    }
+  })();
+  pendingAssets.set(url, work);
+  return work.finally(function () { pendingAssets.delete(url); });
+}
+async function cachePage(cache, url, suppliedResponse) {
+  const response = suppliedResponse || await fetch(url, { cache: 'reload' });
+  if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) {
+    throw new Error('Startup page unavailable: ' + url);
+  }
+  const assets = buildAssets(await response.clone().text(), new URL(url, self.location.origin));
+  if (!assets.some(function (asset) { return new URL(asset).pathname.endsWith('.js'); })) {
+    throw new Error('Startup page has no application scripts');
+  }
+  await Promise.all(assets.map(function (asset) { return cacheAsset(cache, asset); }));
+  await cache.put(url, response);
+}
+self.addEventListener('install', function (event) {
+  event.waitUntil((async function () {
+    const cache = await caches.open(SHELL_CACHE);
+    // The installed app launches /home. If preparing it fails, reject this update and
+    // leave the previous working worker and its caches in control.
+    await cachePage(cache, '/home');
+    await Promise.all(PRECACHE_URLS.map(function (url) {
+      if (url === '/home') return;
+      return (url.endsWith('.json') || url.endsWith('.png')
+        ? cache.add(url) : cachePage(cache, url)).catch(function () {});
+    }));
+    await self.skipWaiting();
+  })());
 });
 
+const FIELD_PAGES = ['/home','/offline','/farmer','/student','/records','/invoice','/journal','/facilitator/crops','/cropplan','/reports','/design','/calendar','/assessments','/mentor','/ngo','/funder','/network'];
 self.addEventListener('message', function (event) {
   if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+  if (!event.ports[0] || !event.data || !['PREPARE_FIELD_PAGES','FIELD_PAGE_STATUS'].includes(event.data.type)) return;
+  const port = event.ports[0];
+  event.waitUntil((async function () {
+    const cache = await caches.open(SHELL_CACHE);
+    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path); }) : FIELD_PAGES;
+    for (const path of requested) {
+      let error = '';
+      if (event.data.type === 'PREPARE_FIELD_PAGES') {
+        try { await cachePage(cache, path); } catch (_) { error = 'Could not finish downloading this page.'; }
+      }
+      const response = await cache.match(path);
+      let ready = false;
+      if (response) {
+        const assets = buildAssets(await response.text(), new URL(path, self.location.origin));
+        ready = assets.length > 0 && (await Promise.all(assets.map(function (url) { return cache.match(url); }))).every(Boolean);
+      }
+      port.postMessage({ path, ready, error });
+    }
+    port.postMessage({ done: true });
+  })().catch(function () { port.postMessage({ done: true, error: 'Device storage is unavailable.' }); }));
 });
 
 // The guild lesson changed from 20 recordings to 51. Keep other downloaded lessons,
@@ -103,13 +165,15 @@ async function migrateGuildNarration() {
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
+      const previousShell = keys.filter(function (key) { return key.indexOf('imbewufield-shell-') === 0 && key !== SHELL_CACHE; }).pop();
+      const previousRuntime = keys.filter(function (key) { return key.indexOf('imbewufield-runtime-') === 0 && key !== RUNTIME_CACHE; }).pop();
       return Promise.all(
         keys
           .filter(function (key) {
             // COURSE_CACHE and ART_CACHE survive every deploy on purpose — see the comments on
             // their declarations. A superseded art cache (imbewu-art-v1 after the constant moves
             // to v2) no longer matches and is swept here like any other stale cache.
-            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE && key !== ART_CACHE;
+            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE && key !== ART_CACHE && key !== previousShell && key !== previousRuntime;
           })
           .map(function (key) { return caches.delete(key); })
       );
@@ -160,7 +224,7 @@ self.addEventListener('fetch', function (event) {
           if (hit) return hit;
           return fetch(request).then(function (response) {
             if (response && response.status === 200) {
-              cache.put(request, response.clone());
+              event.waitUntil(cache.put(request, response.clone()).catch(function () {}));
             }
             return response;
           });
@@ -178,7 +242,9 @@ self.addEventListener('fetch', function (event) {
       fetch(request)
         .then(function (response) {
           const copy = response.clone();
-          caches.open(RUNTIME_CACHE).then(function (cache) { cache.put(request, copy); });
+          event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) {
+            return cachePage(cache, request.url, copy);
+          }).catch(function () {}));
           return response;
         })
         .catch(function () {
@@ -189,7 +255,9 @@ self.addEventListener('fetch', function (event) {
           // PROMISE, which is always truthy, so such a chain stops at the first match call whether
           // or not it resolved to anything. (Backticks are banned in here — this file is one big
           // template literal and a stray backtick silently ends it.)
-          return caches.match(request)
+          return caches.open(RUNTIME_CACHE).then(function (cache) { return cache.match(request); })
+            .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match(request); }); })
+            .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match('/home'); }); })
             .then(function (hit) { return hit || caches.match('/home'); })
             .then(function (hit) { return hit || caches.match('/'); });
         })
@@ -202,16 +270,22 @@ self.addEventListener('fetch', function (event) {
   // the NEXT request already has the new asset — this is what keeps offline
   // usage working without pinning the app to old chunks forever.
   event.respondWith(
-    caches.match(request).then(function (cached) {
+    caches.open(RUNTIME_CACHE).then(function (cache) { return cache.match(request); })
+      .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match(request); }); })
+      .then(function (hit) { return hit || caches.match(request); })
+      .then(function (cached) {
       const network = fetch(request)
         .then(function (response) {
           if (response && response.status === 200) {
             const copy = response.clone();
-            caches.open(RUNTIME_CACHE).then(function (cache) { cache.put(request, copy); });
+            event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) { return cache.put(request, copy); }).catch(function () {}));
           }
           return response;
         })
         .catch(function () { return cached; });
+      // A cached response can finish before the refresh. Keep that refresh and its
+      // cache write alive even if the user immediately closes the app.
+      event.waitUntil(network.then(function () {}).catch(function () {}));
       return cached || network;
     })
   );

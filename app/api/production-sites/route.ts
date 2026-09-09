@@ -1,3 +1,4 @@
+import { fieldOperationReceipt, readFieldReceipt, writeFieldReceipt } from '@/lib/field-operation-receipt';
 import { NextRequest } from 'next/server';
 import { resolveNetworkCaller } from '@/lib/network-caller';
 import { canSeeOrg } from '@/lib/network-access';
@@ -24,6 +25,7 @@ export async function GET(req: NextRequest) {
   return json({ summary: productionAreaSummary(rows, c.publishedOnly), ...(c.publishedOnly ? {} : { sites: rows, canManage: c.manage }) });
 }
 export async function POST(req: NextRequest) {
+  try {
   const c = await scope(req); if ('response' in c) return c.response;
   if (!c.manage || c.publishedOnly || !['ngo', 'admin'].includes(c.access.role)) return json({ error: 'NGO management access is required.' }, 403);
   const raw = await req.text(); if (raw.length > 8000) return json({ error: 'Entry is too large.' }, 413);
@@ -34,10 +36,17 @@ export async function POST(req: NextRequest) {
   const ref = c.db.collection('production_sites').doc(c.org).collection('sites').doc(site.code);
   // Append a history entry and replace this site's current observation atomically.
   // Repeated seasons update the same physical site instead of accumulating hectares.
+  let acknowledgedAt=site.updatedAt;
+  const receipt=fieldOperationReceipt(c.db,c.uid,c.org,'production-site',body);
   await c.db.runTransaction(async tx => {
+    const replay=await readFieldReceipt(tx,receipt);
+    if(replay){acknowledgedAt=replay.updatedAt;return;}
     const old = await tx.get(ref);
+    if(receipt && (old.data()?.updatedAt??'')!==(body.expectedUpdatedAt??''))throw Object.assign(Error('This garden observation changed. Review the current record before replacing it.'),{status:409});
+    writeFieldReceipt(tx,receipt,site.updatedAt);
     tx.set(ref.collection('history').doc(), { previous: old.exists ? old.data() : null, next: site });
     tx.set(ref, site);
   });
-  return json({ saved: true });
+  return json({ saved: true, updatedAt: acknowledgedAt });
+  } catch(error) { const status=(error as {status?:number}).status??503; return json({error:status===503?'Production area saving is unavailable. Your save is not confirmed.':(error as Error).message},status); }
 }
