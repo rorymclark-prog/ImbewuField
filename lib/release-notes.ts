@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 September 2026', sha: 'ab14d5f', changes: [
+    'The Home Photo button opens your camera or photo library without taking you to the map.',
+    'Review your photo in Lima before sending it, or close to return to Home.',
+  ] },
   { when: '9 September 2026', sha: '066bcd0', changes: [
     'Organisations, mentors, funders and admins can open every lesson.',
     'Farmers unlock lessons as they progress; student previews can browse the course.',
