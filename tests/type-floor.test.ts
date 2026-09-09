@@ -41,6 +41,7 @@ const FLOOR = 12;
 // old tab, a bookmark, the Journal's link), so if anyone ever puts markup back on it, the floor
 // should apply from the first line rather than from whenever someone remembers this file.
 const ROUTES = [
+  'app/offline/page.tsx',
   'app/tips/page.tsx',
   'app/home/page.tsx',
   'app/records/page.tsx',
@@ -68,6 +69,10 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'app/offline/page.tsx': 'device preparation and unsent fieldwork are read on phones',
+  'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
+  'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',
+  'components/FieldSyncBadge.tsx': 'offline and waiting counts must stay legible',
   'components/ProfileAvatar.tsx': 'names and profile fallbacks must remain readable on phones',
   'components/FieldVisitGuide.tsx': 'visual visit prompts are used outdoors on phones',
   'components/TourDiscovery.tsx': 'tour menu reminder is read on phones',

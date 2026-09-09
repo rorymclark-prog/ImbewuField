@@ -1,5 +1,6 @@
 'use client';
-import { paidApiHeaders } from './api-client-auth';
+import { fieldDataReportNote } from './field-request-model';
+import { fieldApi } from './field-api';
 import { isSampleMode } from './sample-mode';
 import { completeSampleAreas, freshSampleAreas, sampleRead } from './sample-operations';
 import { productionAreaSummary } from './production-sites';
@@ -15,10 +16,7 @@ export async function loadProgrammeProgressRecords(org: string, funder: boolean,
     return records;
   }
   async function get(url: string) {
-    const response = await fetch(url, { headers: await paidApiHeaders(), cache:'no-store' });
-    const body = await response.json();
-    if (!response.ok) throw Error(body.error ?? 'Shared records could not be loaded.');
-    return body;
+    return fieldApi(url);
   }
   // Existing endpoints apply consent, organisation access and publication rules.
   // Failure in one register does not replace it with sample values or zero totals.
@@ -31,6 +29,7 @@ export async function loadProgrammeProgressRecords(org: string, funder: boolean,
     areas.status==='fulfilled' ? areas.value.summary ?? null : null,
     portfolio.status==='fulfilled' ? portfolio.value.withheldForConsent ?? 0 : 0,
   );
+  for(const source of [portfolio,areas])if(source.status==='fulfilled'){const note=fieldDataReportNote(source.value);if(note)records.notes.push(note);}
   if (portfolio.status==='rejected') records.errors.push(`Production and finance records: ${portfolio.reason instanceof Error ? portfolio.reason.message : 'unavailable'}`);
   if (areas.status==='rejected') records.errors.push(`Production area records: ${areas.reason instanceof Error ? areas.reason.message : 'unavailable'}`);
   return records;

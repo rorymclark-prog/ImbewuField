@@ -26,6 +26,7 @@ import {
   getRedirectResult,
   type User,
 } from 'firebase/auth';
+import { bindFieldIdentity } from '@/lib/field-session';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
@@ -169,6 +170,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Keep account-bound children unmounted while their identity changes. In
       // particular, this prevents a still-mounted Map from pushing farmer A's
       // in-memory draw collection after Firebase has already switched to farmer B.
+      bindFieldIdentity(null);
       setLoading(true);
       setStorageReadyEpoch(null);
       setProfile(null);
@@ -201,8 +203,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!loading || storageReadyEpoch === null) return;
     if (storageReadyEpoch !== authEpochRef.current) return;
     bindMountedAccountLocalStorageUid(user?.uid ?? null);
+    bindFieldIdentity(user && profile ? { uid: user.uid, org: profile.org_id ?? '', role: profile.role } : null);
     setLoading(false);
-  }, [loading, storageReadyEpoch, user]);
+  }, [loading, storageReadyEpoch, user, profile]);
+
+  useLayoutEffect(() => {
+    if (!loading) bindFieldIdentity(user && profile ? { uid: user.uid, org: profile.org_id ?? '', role: profile.role } : null);
+  }, [user, profile, loading]);
 
   // ── signIn ──────────────────────────────────────────────────────────────
   const signIn = useCallback(async (email: string, password: string): Promise<string | null> => {

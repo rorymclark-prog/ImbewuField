@@ -21,6 +21,7 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import NavDrawer from './NavDrawer';
+import FieldSyncBadge from './FieldSyncBadge';
 import { ProductTourButton } from './ProductTourProvider';
 import { useSampleRole } from '@/lib/use-role-navigation';
 
@@ -54,6 +55,7 @@ export default function MenuButton() {
         <Menu size={18} strokeWidth={1.7} />
         {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>Tour</span>}
       </button>
+      <FieldSyncBadge />
       <ProductTourButton />
       <NavDrawer open={open} onClose={() => setOpen(false)} />
     </>

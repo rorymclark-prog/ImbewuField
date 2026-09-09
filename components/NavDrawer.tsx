@@ -106,6 +106,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('tabAccount'),
       items: [
         { href: '/account', Icon: User, label: t('navMyAccount') },
+        { href: '/offline', Icon: ClipboardList, label: 'Offline & sync' },
         { href: '/samples', Icon: Sprout, label: 'Practice views' },
         { href: '/samples/gardens', Icon: Sprout, label: "Browse gardens" },
         { href: '/feedback', Icon: MessageCircle, label: 'Report a bug / suggest a feature' },

@@ -7,6 +7,7 @@ import { LanguageProvider } from '@/lib/i18n';
 import BackControlProvider from '@/components/BackControl';
 import AppConfirmProvider from '@/components/AppConfirm';
 import ChatWidget from '@/components/ChatWidget';
+import FieldSyncRunner from '@/components/FieldSyncRunner';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
 import PhotoViewer from '@/components/PhotoViewer';
@@ -124,6 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <AppConfirmProvider>
                 <ProductTourProvider>
                 <AccountOnboardingGates />
+                <FieldSyncRunner />
                 <BackControlProvider>{children}</BackControlProvider>
                 <ChatWidget />
                 <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />

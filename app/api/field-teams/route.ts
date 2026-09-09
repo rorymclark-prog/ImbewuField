@@ -1,3 +1,4 @@
+import { fieldOperationReceipt, readFieldReceipt, writeFieldReceipt } from '@/lib/field-operation-receipt';
 import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { FieldPath, getFirestore } from 'firebase-admin/firestore';
@@ -70,10 +71,13 @@ async function handle(req: NextRequest, write: boolean) {
       const visit={...b,mentorId:auth.uid} as FieldVisit;
       if (role !== 'mentor' || !validFieldVisit(visit,now.slice(0,10))) fail('Check the assigned farmer, date, observations, follow-up and photo captions.');
       const ref=db.collection('field_team_visits').doc(fieldVisitDocumentId(auth.uid,visit.id));
+      const receipt=fieldOperationReceipt(db,auth.uid!,orgId,'visit',b);
       await db.runTransaction(async tx => {
+        const replay=await readFieldReceipt(tx,receipt);
         const [team, farmer, old] = await tx.getAll(teamCollection.doc(auth.uid!), db.collection('profiles').doc(visit.farmerId),ref);
         if (!team.data()?.farmerIds?.includes(visit.farmerId) || farmer.data()?.org_id !== orgId || !['farmer', 'student'].includes(farmer.data()?.role)) fail('This farmer is not in your assigned team.', 403);
         if (old.exists && (old.data()?.orgId!==orgId || old.data()?.mentorId!==auth.uid)) fail('You can edit your own visits within this organisation.',403);
+        if(replay){savedVisit={...visit,id:ref.id,updatedAt:replay.updatedAt};return;}
         if (old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This visit changed in another window. Reopen it before saving.',409);
         const optionalFields=Object.fromEntries((['supportRequested','observations','agreedAction','responsiblePerson','followUpDate','location','practicalSkill','skillResult','actionCompletedOn','actionOutcome'] as const).map(key=>[key,(visit[key] ?? old.data()?.[key] ?? (key==='skillResult'?'not-assessed':'')).trim()]));
         const next={orgId,mentorId:visit.mentorId,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),originalNotes:visit.originalNotes ?? old.data()?.originalNotes ?? '',...optionalFields,
@@ -81,6 +85,7 @@ async function handle(req: NextRequest, write: boolean) {
         if(!validFieldVisit({...next,id:visit.id},now.slice(0,10)))fail('Check the saved action and follow-up date for this visit.');
         tx.set(ref,next);
         savedVisit={...next,id:ref.id,photos:visit.photos??[]};
+        writeFieldReceipt(tx,receipt,now);
         // Like training evidence, image bytes live outside the list document and
         // are returned only after the organisation and assignment checks above.
         if (visit.photos!==undefined) tx.set(db.collection('field_team_visit_photos').doc(ref.id),{orgId,mentorId:auth.uid,photos:visit.photos.map(photo=>({image:photo.image,caption:photo.caption.trim()}))});

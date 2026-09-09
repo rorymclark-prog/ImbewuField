@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import { deliverFile } from '@/lib/file-delivery';
 import { useAuth } from '@/lib/auth';
-import { paidApiHeaders } from '@/lib/api-client-auth';
+import { fieldApi } from '@/lib/field-api';
+import { fieldDataReportNote } from '@/lib/field-request-model';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead } from '@/lib/sample-operations';
 import { freshEvidenceData, trainingFeedbackSummary, TRAINING_PHOTO_KINDS, type TrainingRecord, type ProgrammeBranding, type VenuePhoto } from '@/lib/programme-evidence';
@@ -17,7 +18,9 @@ import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 
 import { buildProgrammePdf, programmeReportMetrics, type ReportMetric, type ReportChart, type ReportSection } from '@/lib/programme-report-pdf';
 export type { ReportSection } from '@/lib/programme-report-pdf';
-export default function ReportComposer({ title, sample, sections, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false }: { title: string; sample: boolean; sections: ReportSection[]; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean }) {
+export default function ReportComposer({ title, sample, sections: suppliedSections, deviceData, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false }: { title: string; sample: boolean; sections: ReportSection[]; deviceData?: unknown; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean }) {
+  const note=fieldDataReportNote(deviceData);
+  const sections=note?[{title:'Data availability',lines:[note]},...suppliedSections]:suppliedSections;
   const { profile } = useAuth();
   const [loadedBranding, setLoadedBranding] = useState<ProgrammeBranding>();
   const branding = suppliedBranding ?? loadedBranding;
@@ -27,7 +30,7 @@ export default function ReportComposer({ title, sample, sections, branding: supp
     if (sample && isSampleMode()) { setLoadedBranding(sampleRead('programme-evidence', freshEvidenceData).branding); return; }
     const id = orgId ?? (profile?.role !== 'funder' ? profile?.org_id : null);
     if (!id || sample) return;
-    void (async () => { try { const res = await fetch(`/api/programme-evidence?org=${encodeURIComponent(id)}&mode=branding`, { headers: await paidApiHeaders() }); if (res.ok) { const d = await res.json(); if (!cancelled) setLoadedBranding(d.branding); } } catch { /* The report remains available without optional branding. */ } })();
+    void (async () => { try { const d = await fieldApi(`/api/programme-evidence?org=${encodeURIComponent(id)}&mode=branding`); if (!cancelled) setLoadedBranding(d.branding); } catch { /* The report remains available without optional branding. */ } })();
     return () => { cancelled = true; };
   }, [orgId, profile, sample, suppliedBranding]);
   const [includePhotos, setIncludePhotos] = useState(photosByDefault);

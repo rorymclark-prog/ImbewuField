@@ -45,6 +45,7 @@ import {
   AlertTriangle, ArrowUpRight, Download, Search, SlidersHorizontal, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import {
   attentionFlags,
@@ -256,7 +257,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       {/* ── main column ── */}
       <div className="flex-1 overflow-y-auto min-w-0" style={{ background: FIELD }}>
         {/* Banners, in order of what would stop you trusting the screen ------------------- */}
-        {portfolio.error && (
+        <FieldDataStatus data={portfolio.deviceData} />
+      {portfolio.error && (
           <div
             className="flex items-center gap-2 px-3 md:px-5 py-2.5"
             style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}

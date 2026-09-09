@@ -1,3 +1,4 @@
+import { fieldOperationReceipt, readFieldReceipt, writeFieldReceipt } from '@/lib/field-operation-receipt';
 import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
@@ -63,6 +64,8 @@ async function handle(req: NextRequest, write: boolean) {
     if (role==='funder') fail('Funders can read published reports.',403);
     const raw=await req.text(); if (new TextEncoder().encode(raw).length>1500000) fail('This record is too large. Use smaller photos or split a large register into sessions.',413);
     const b=JSON.parse(raw), now=new Date().toISOString(), today=now.slice(0,10);
+    let acknowledgedAt=now;
+    const receipt=fieldOperationReceipt(db,auth.uid!,org,'programme',b);
     if (b.action==='branding') {
       if (!brand) fail('Manage people access is required to change organisation branding.',403);
       if (!validProgrammeBranding(b.branding)) fail('Choose names and supported PNG/JPEG logos.');
@@ -77,6 +80,8 @@ async function handle(req: NextRequest, write: boolean) {
       const s=b.session as TrainingRecord; if (s.published && (!manage || b.reviewed!==true)) fail('An organisation manager must review the summary and images before sharing.',403);
       const ref=root.collection('sessions').doc(s.id);
       await db.runTransaction(async tx=> {
+        const replay=await readFieldReceipt(tx,receipt);
+        if(replay){acknowledgedAt=replay.updatedAt;return;}
         const old=await tx.get(ref);
         if (old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This record changed. Reload before saving.',409);
         if (role==='mentor' && old.exists && old.data()?.ownerId!==auth.uid) fail('You can edit your own training records.',403);
@@ -100,6 +105,7 @@ async function handle(req: NextRequest, write: boolean) {
           return {participantId:f.participantId,answers,language:f.language,consent:true as const,recordedAt:prior?.recordedAt??now};
         });
         const next:TrainingRecord={id:s.id,project:s.project.trim(),title:s.title.trim(),date:s.date,venue:s.venue.trim(),latitude:s.latitude,longitude:s.longitude,facilitator:s.facilitator.trim(),ownerId:previous?.ownerId??auth.uid!,attendance,presentCount:attendance.filter(a=>a.present).length,registeredCount:attendance.length,report:s.report.trim(),nextSteps:s.nextSteps.trim(),assessmentId:s.assessmentId,published:s.published,photos:[],photoCount:s.photos.length,updatedAt:now,feedback};
+        writeFieldReceipt(tx,receipt,now);
         tx.set(ref,{...trainingForStorage(next),sharedPhotoCount:sharedTrainingPhotos(s.photos).length});
         tx.set(root.collection('photos').doc(s.id),{photos:s.photos.map(p=>({image:p.image,caption:p.caption.trim(),...(p.kind?{kind:p.kind}:{}),...(p.shared!==undefined?{shared:p.shared}:{})}))});
         // Keep the edit trail without doubling every handwritten signature into a
@@ -111,12 +117,15 @@ async function handle(req: NextRequest, write: boolean) {
       if (!manage || !validProgrammeMilestone(b.milestone,today)) fail('Management access and a valid indicator, method and dated evidence are required.');
       const m=b.milestone as ProgrammeMilestone,ref=root.collection('milestones').doc(m.id);
       await db.runTransaction(async tx=> {
+        const replay=await readFieldReceipt(tx,receipt);
+        if(replay){acknowledgedAt=replay.updatedAt;return;}
         const old=await tx.get(ref); if(old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This milestone changed. Reload before saving.',409);
         const next:ProgrammeMilestone={id:m.id,project:m.project.trim(),title:m.title.trim(),...(m.category?{category:m.category}:{}),unit:m.unit.trim(),baseline:m.baseline,target:m.target,due:m.due,owner:m.owner.trim(),method:m.method.trim(),published:m.published,observations:m.observations.map(o=>{const prior=(old.data()?.observations as ProgrammeMilestone['observations'] | undefined)?.find(p=>p.date===o.date&&p.actual===o.actual&&p.evidence===o.evidence.trim());return {date:o.date,actual:o.actual,evidence:o.evidence.trim(),recordedAt:prior?.recordedAt ?? now};}),updatedAt:now};
+        writeFieldReceipt(tx,receipt,now);
         tx.set(ref,next);tx.create(root.collection('history').doc(),{kind:'milestone',id:m.id,previous:old.data() ?? null,next,actor:auth.uid,at:now});
       });
     } else fail('Unknown programme action.');
-    return json({saved:true});
+    return json({saved:true,updatedAt:acknowledgedAt});
   } catch(e) { const status=e instanceof SyntaxError ? 400 : (e as {status?:number}).status ?? 503; return json({error:status===503 ? 'Programme evidence is unavailable. Your save has not been confirmed.' : (e as Error).message},status); }
 }
 export const GET=(req:NextRequest)=>handle(req,false);

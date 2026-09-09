@@ -1,7 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { paidApiHeaders } from '@/lib/api-client-auth';
+import { fieldApi } from '@/lib/field-api';
+import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
+import { useFieldSync } from '@/lib/use-field-sync';
+import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
@@ -15,6 +18,8 @@ import ProfileAvatar from './ProfileAvatar';
 import FieldVisitGuide from './FieldVisitGuide';
 import ReportComposer from './ReportComposer';
 import styles from './MelDashboard.module.css';
+import FieldDataStatus from './FieldDataStatus';
+import { prepareFieldVisitDraft, fieldVisitDraftHasPhotos } from '@/lib/field-visit-draft';
 
 const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:new Date().toISOString().slice(0,10),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
 
@@ -41,14 +46,13 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     if (isSampleMode()) throw Error('Sample requests must stay in the demo.');
     const actor=user,version=requestVersion.current;
     if(!actor || expectedScope!==currentScope() || getFirebase()?.auth.currentUser?.uid!==actor.uid)throw Error('The workspace changed. Reopen field teams.');
-    const headers=await paidApiHeaders(actor);
+
     // Authentication can finish after an account or organisation switch. Never
     // send an old draft using whichever account happens to be current then.
     if(version!==requestVersion.current || expectedScope!==currentScope() || isSampleMode() || getFirebase()?.auth.currentUser?.uid!==actor.uid)throw Error('The workspace changed. Reopen field teams.');
-    const res = await fetch(`/api/field-teams?${org ? `org=${encodeURIComponent(org)}` : ''}${query}`, { method: body ? 'POST' : 'GET', headers: { ...headers, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}) });
-    const result = await res.json();
+    const result = await fieldApi(`/api/field-teams?${org ? `org=${encodeURIComponent(org)}` : ''}${query}`,body);
     if(version!==requestVersion.current || expectedScope!==currentScope())throw Error('The workspace changed. Reopen field teams.');
-    if (!res.ok) throw Error(result.error); return result;
+    return result;
   };
   async function reload(expectedScope=currentScope(),version=requestVersion.current) {
     setError('');
@@ -86,17 +90,18 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     setBusy(true); setError(''); setNotice('');
     try {
       const nextVisit={...visit,mentorId:data.selfId,photoCount:visit.photos?.length??0};
-      let confirmedVisit:FieldVisit|undefined;
+      let confirmedVisit:FieldVisit|undefined; let queued=false;
       if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,new Date().toISOString().slice(0,10),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
       if (isSampleMode()) {
         if(!data.sample)throw Error('The workspace changed. Reopen field teams.');
         const all = completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace));
         if (team) { if (!data.canManage || !validFieldTeam(draft)) throw Error('Choose a mentor, location and unique farmer assignments.'); const next = { ...draft, updatedAt: new Date().toISOString() }; sampleWrite('field-teams', { ...all, teams: [...all.teams.filter(t => t.mentorId !== next.mentorId), next] }); }
         else { if (!all.teams.some(t => t.mentorId===data.selfId && t.farmerIds.includes(nextVisit.farmerId))) throw Error('Choose an assigned farmer.'); confirmedVisit={...nextVisit,updatedAt:new Date().toISOString()};sampleWrite('field-teams', { ...all, visits: [...all.visits.filter(v => v.id !== nextVisit.id), confirmedVisit] }); }
-      } else { if (data.sample) throw Error('This sample has ended. Reopen the workspace.'); const result=await request(team ? { action: 'team', team: draft } : { action: 'visit', ...nextVisit,expectedUpdatedAt:visit.updatedAt },'',scope);if(!team)confirmedVisit=result.visit; }
+      } else { if (data.sample) throw Error('This sample has ended. Reopen the workspace.'); const result=await request(team ? { action: 'team', team: draft } : { action: 'visit', ...nextVisit,expectedUpdatedAt:visit.updatedAt },'',scope);queued=result.queued===true;if(!team)confirmedVisit=result.visit; }
       if(scope!==currentScope() || version!==requestVersion.current)return;
       if(!team&&!confirmedVisit)throw Error('The saved record was not returned. Reopen visit records to confirm the change.');
-      setNotice(team ? 'Team and guidance saved. The mentor will see this in their workspace.' : 'Visit recorded.');
+      setNotice(queued ? DEVICE_SAVE_NOTICE : team ? 'Team and guidance saved. The mentor will see this in their workspace.' : 'Visit recorded.');
+      if(!team)void clearFieldDraft(`visit:${org}`).catch(()=>{});
       if(!team){
         if(!confirmedVisit)throw Error('The saved record was not returned. Reopen visit records to confirm the change.');
         const saved=confirmedVisit;
@@ -115,6 +120,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     }catch(e){if(scope===currentScope()&&version===requestVersion.current)setError((e as Error).message);}
     finally{if(scope===currentScope()&&version===requestVersion.current)setBusy(false);}
   }
+  useFieldSync(()=>void reload(),!busy&&!visitOpen);
   const name = (id: string) => data?.people.find(p => p.id === id)?.name ?? 'Former team member';
   const portrait = (id: string, size = 52) => {
     const person = data?.people.find(p => p.id === id);
@@ -134,6 +140,14 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   const actionLabel=(record:FieldVisit)=>record.actionCompletedOn?'Completed':record.followUpDate?record.followUpDate<today?'Follow-up overdue':record.followUpDate===today?'Follow up today':'Follow-up scheduled':'Date needed';
   const filteredPeople=data?.people.filter(person=>assigned.includes(person.id)&&(!farmerFilter||person.id===farmerFilter)&&`${person.name} ${person.gardenName??''}`.toLowerCase().includes(peopleSearch.toLowerCase()))??[];
   return <section className={`${styles.root} ${workStyles.workspace}`}><div className={styles.wrap}>
+    <FieldDataStatus data={data} />
+    <FieldDraft name={`visit:${org}`} value={prepareFieldVisitDraft(visit,{open:visitOpen,photosReady,photosBusy,captureBusy,saving:busy,readOnly:readOnlyVisit})} onRestore={value=>{
+      // Abandon a previous photo load before restoring a different saved draft.
+      requestVersion.current++;setPhotosBusy(false);setCaptureBusy(false);setVisitReport(null);
+      const complete=fieldVisitDraftHasPhotos(value);
+      setVisit(value);setVisitOpen(true);setPhotosReady(complete);
+      setError(complete?'':'This draft is missing saved visit photos. Keep your notes, then reopen the original visit with a connection before submitting changes.');
+    }} />
     <div className={workStyles.hero}>
       <div><p className={workStyles.eyebrow}>{organisation?'Programme coordination':programmeLabel}</p><h1>{organisation?'Mentor teams & guidance':'My fieldwork'}</h1><p>{organisation?'Give each mentor a clear group, programme focus and current instructions.':'Support the garden. Build practical skills. Follow through on agreed actions.'}</p></div>
       {!organisation&&<div className={workStyles.heroActions}><button className={styles.primary} disabled={!canRecordVisits||busy||photosBusy||captureBusy} onClick={()=>newVisit()}>Record a field visit</button>{onStartTraining&&<button onClick={onStartTraining}>Training & attendance</button>}</div>}
@@ -195,7 +209,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
             {!readOnlyVisit&&<button className={styles.primary} disabled={busy||photosBusy||captureBusy||!photosReady}>{busy?'Saving…':'Save visit'}</button>}
           </fieldset>
         </form>
-        {visitReport&&<><p className={styles.muted}>This report uses the saved visit. Save any edits to update it.</p><ReportComposer title="Field visit report" sample={data.sample} orgId={org||undefined} photos={visitReport.photos??[]} photoHeading="Visit photographs" sections={[{title:'Visit details',lines:fieldVisitReportLines(visitReport,name(visitReport.farmerId),name(visitReport.mentorId))}]}/></>}
+        {visitReport&&<><p className={styles.muted}>This report uses the saved visit. Save any edits to update it.</p><ReportComposer deviceData={data} title="Field visit report" sample={data.sample} orgId={org||undefined} photos={visitReport.photos??[]} photoHeading="Visit photographs" sections={[{title:'Visit details',lines:fieldVisitReportLines(visitReport,name(visitReport.farmerId),name(visitReport.mentorId))}]}/></>}
       </section>}
       {panel==='visits'&&scopeValid&&<section className={styles.card} style={{margin:'16px 0'}} aria-label="Recorded field visits">
         <h2>Recorded visits</h2><p className={styles.muted}>{scopeLabel}</p>
@@ -209,7 +223,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
       {!data.teams.length && <p className={styles.card}>No field team assigned yet. Your organisation can assign one in Control centre → Mentor teams.</p>}
       {(panel==='people'||organisation)&&data.teams.map(t => <article key={t.mentorId} className={styles.card} style={{ marginBottom: 16 }}><h2>{t.location}</h2><p style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{portrait(t.mentorId,64)}<span>Mentor: {name(t.mentorId)} · updated {t.updatedAt.slice(0, 10)}</span></p><h3>Organisation guidance</h3><p style={{ whiteSpace: 'pre-wrap' }}>{t.guidance || 'No guidance posted yet.'}</p><p>{t.farmerIds.length} assigned participants · {FIELD_PROGRAMMES[t.programme??'general']}</p>{data.canManage && <button onClick={() => setDraft(t)}>Edit team & guidance</button>}</article>)}
       {data.canManage && <form className={styles.card} onSubmit={e => { e.preventDefault(); void save(true); }}><h2>Assign or update a team</h2><label>Mentor<select required value={draft.mentorId} onChange={e => setDraft(data.teams.find(t => t.mentorId === e.target.value) ?? { ...draft, mentorId: e.target.value, farmerIds: [], guidance: '', location: '' })}><option value="">Choose a mentor</option>{data.people.filter(p => p.role === 'mentor').map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label><label>Service location<input required maxLength={160} value={draft.location} onChange={e => setDraft({ ...draft, location: e.target.value })} /></label><label>Programme focus<select value={draft.programme??'general'} onChange={e=>setDraft({...draft,programme:e.target.value as FieldProgramme})}>{Object.entries(FIELD_PROGRAMMES).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><h3>Participant group</h3><div className={styles.scroll}>{data.people.filter(p => ['farmer', 'student'].includes(p.role)).map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={draft.farmerIds.includes(p.id)} onChange={e => setDraft({ ...draft, farmerIds: e.target.checked ? [...draft.farmerIds, p.id] : draft.farmerIds.filter(id => id !== p.id) })} />{p.name}</label>)}</div><label>Guidance for this mentor<textarea maxLength={4000} value={draft.guidance} onChange={e => setDraft({ ...draft, guidance: e.target.value })} /></label><button className={styles.primary} disabled={busy}>Save team & guidance</button></form>}
-      {panel==='report'&&summary&&scopeValid&&!data.visitCursor&&<><p className={styles.notice}>Internal mentor report · Includes private visit notes. Use the organisation’s published programme report when sharing with funders.</p><ReportComposer orgId={org||undefined} photos={summary.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${name(v.farmerId)} · ${p.caption}`})))} photoHeading="Visit photographs opened for this report" title={organisation ? 'Field implementation report' : 'Mentor field report'} sample={data.sample}
+      {panel==='report'&&summary&&scopeValid&&!data.visitCursor&&<><p className={styles.notice}>Internal mentor report · Includes private visit notes. Use the organisation’s published programme report when sharing with funders.</p><ReportComposer deviceData={data} orgId={org||undefined} photos={summary.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${name(v.farmerId)} · ${p.caption}`})))} photoHeading="Visit photographs opened for this report" title={organisation ? 'Field implementation report' : 'Mentor field report'} sample={data.sample}
       metrics={[{label:'Visits recorded',value:String(summary.visits.length)},{label:'Participants visited',value:`${summary.visited} / ${summary.assigned.length}`},{label:'Open actions',value:String(summary.open.length)},{label:'Completed actions',value:String(summary.completed.length)}]}
       chart={summary.focus.length?{title:'Support delivered · visits by area (a visit may cover several areas)',rows:summary.focus}:undefined} sections={[
         { title: 'Report scope', lines: [scopeLabel,`Programme focus: ${programmeLabel}. Prepared ${today}.`,`${summary.assigned.length} currently assigned participants; ${summary.visited} with a recorded visit in this period. This counts participants, not distinct garden sites.`,`Actions are shown at their latest recorded status, checked ${today}; they are not a historical status snapshot.`] },
