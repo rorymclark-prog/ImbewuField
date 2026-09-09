@@ -234,32 +234,419 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'plant-guilds': {
+    // Rebuilt 9 September 2026: 51 current slide scripts, recorded with Leah.
+    // IsiZulu remains in review; a generated recording is not language sign-off.
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
-    // Slide 2 is this deck's "Why This Matters", under a module-specific name.
     tracks: [
-      { slide: 1,  lesson: null,              title: 'Plant Selection and Guilds' },
-      { slide: 2,  lesson: null,              title: 'Why Plant Guilds Matter' },
-      { slide: 3,  lesson: null,              title: 'Learning Outcomes' },
-      { slide: 4,  lesson: 'plant-guilds-l1', title: 'How Legumes Feed the Soil' },
-      { slide: 5,  lesson: 'plant-guilds-l1', title: 'Watch: Roots That Feed the Soil' },
-      { slide: 6,  lesson: 'plant-guilds-l1', title: 'Nitrogen-Fixing Trees' },
-      { slide: 7,  lesson: 'plant-guilds-l1', title: 'Sunn Hemp and the Waiting Soil' },
-      { slide: 8,  lesson: 'plant-guilds-l1', title: 'Where to Place Nitrogen Fixers' },
-      { slide: 9,  lesson: 'plant-guilds-l2', title: 'Mulch Plants and Chop and Drop' },
-      { slide: 10, lesson: 'plant-guilds-l2', title: 'Watch: Chop and Drop' },
-      { slide: 11, lesson: 'plant-guilds-l2', title: 'Choose the Right Comfrey' },
-      { slide: 12, lesson: 'plant-guilds-l2', title: 'Work With Helpful Insects' },
-      { slide: 13, lesson: 'plant-guilds-l2', title: 'Wild Garlic for Pest Control' },
-      { slide: 14, lesson: 'plant-guilds-l3', title: 'What Makes a Plant Guild' },
-      { slide: 15, lesson: 'plant-guilds-l3', title: 'Watch: A Mango Guild' },
-      { slide: 16, lesson: 'plant-guilds-l3', title: 'Place and Cut the Sesbania' },
-      { slide: 17, lesson: 'plant-guilds-l3', title: 'Fill the Guild’s Other Jobs' },
-      { slide: 18, lesson: 'plant-guilds-l3', title: 'Let Every Plant Earn Its Place' },
-      { slide: 19, lesson: null,              title: 'Field Assignment' },
-      { slide: 20, lesson: null,              title: 'Field Action' },
-    ],
+      {
+            "slide": 1,
+            "lesson": null,
+            "title": "Plant Selection and Guilds",
+            "titleByLang": {
+                  "zu": "Ukukhetha Izitshalo Nama-Guilds"
+            }
+      },
+      {
+            "slide": 2,
+            "lesson": null,
+            "title": "Plant Selection and Guilds",
+            "titleByLang": {
+                  "zu": "Ukukhetha Izitshalo Nama-Guilds"
+            }
+      },
+      {
+            "slide": 3,
+            "lesson": null,
+            "title": "Start With the Site",
+            "titleByLang": {
+                  "zu": "Qala Ngokubheka Indawo"
+            }
+      },
+      {
+            "slide": 4,
+            "lesson": null,
+            "title": "Start With the Site",
+            "titleByLang": {
+                  "zu": "Qala Ngokubheka Indawo"
+            }
+      },
+      {
+            "slide": 5,
+            "lesson": null,
+            "title": "Give Every Plant a Job",
+            "titleByLang": {
+                  "zu": "Nikeza Isitshalo Ngasinye Umsebenzi"
+            }
+      },
+      {
+            "slide": 6,
+            "lesson": null,
+            "title": "Give Every Plant a Job",
+            "titleByLang": {
+                  "zu": "Nikeza Isitshalo Ngasinye Umsebenzi"
+            }
+      },
+      {
+            "slide": 7,
+            "lesson": "plant-guilds-l1",
+            "title": "Look for Root Nodules",
+            "titleByLang": {
+                  "zu": "Bheka Ama-Nodule Ezimpandeni"
+            }
+      },
+      {
+            "slide": 8,
+            "lesson": "plant-guilds-l1",
+            "title": "Look for Root Nodules",
+            "titleByLang": {
+                  "zu": "Bheka Ama-Nodule Ezimpandeni"
+            }
+      },
+      {
+            "slide": 9,
+            "lesson": "plant-guilds-l1",
+            "title": "Return Leaves to the Soil",
+            "titleByLang": {
+                  "zu": "Buyisela Amaqabunga Emhlabathini"
+            }
+      },
+      {
+            "slide": 10,
+            "lesson": "plant-guilds-l1",
+            "title": "Return Leaves to the Soil",
+            "titleByLang": {
+                  "zu": "Buyisela Amaqabunga Emhlabathini"
+            }
+      },
+      {
+            "slide": 11,
+            "lesson": "plant-guilds-l1",
+            "title": "Sesbania Has a Useful Role",
+            "titleByLang": {
+                  "zu": "I-Sesbania Inomsebenzi Owusizo"
+            }
+      },
+      {
+            "slide": 12,
+            "lesson": "plant-guilds-l1",
+            "title": "Sesbania Has a Useful Role",
+            "titleByLang": {
+                  "zu": "I-Sesbania Inomsebenzi Owusizo"
+            }
+      },
+      {
+            "slide": 13,
+            "lesson": "plant-guilds-l1",
+            "title": "Check the Full Plant Name",
+            "titleByLang": {
+                  "zu": "Hlola Igama Eligcwele Lesitshalo"
+            }
+      },
+      {
+            "slide": 14,
+            "lesson": "plant-guilds-l1",
+            "title": "Check the Full Plant Name",
+            "titleByLang": {
+                  "zu": "Hlola Igama Eligcwele Lesitshalo"
+            }
+      },
+      {
+            "slide": 15,
+            "lesson": "plant-guilds-l1",
+            "title": "Pigeon Pea Gives Food Too",
+            "titleByLang": {
+                  "zu": "I-Pigeon Pea Inika Nokudla"
+            }
+      },
+      {
+            "slide": 16,
+            "lesson": "plant-guilds-l1",
+            "title": "Pigeon Pea Gives Food Too",
+            "titleByLang": {
+                  "zu": "I-Pigeon Pea Inika Nokudla"
+            }
+      },
+      {
+            "slide": 17,
+            "lesson": "plant-guilds-l1",
+            "title": "Choose for Place and Size",
+            "titleByLang": {
+                  "zu": "Khetha Ngokwendawo Nobukhulu"
+            }
+      },
+      {
+            "slide": 18,
+            "lesson": "plant-guilds-l1",
+            "title": "Choose for Place and Size",
+            "titleByLang": {
+                  "zu": "Khetha Ngokwendawo Nobukhulu"
+            }
+      },
+      {
+            "slide": 19,
+            "lesson": "plant-guilds-l1",
+            "title": "Annual Cover Has a Place",
+            "titleByLang": {
+                  "zu": "Ukumboza Ngezitshalo Zonyaka"
+            }
+      },
+      {
+            "slide": 20,
+            "lesson": "plant-guilds-l1",
+            "title": "Annual Cover Has a Place",
+            "titleByLang": {
+                  "zu": "Ukumboza Ngezitshalo Zonyaka"
+            }
+      },
+      {
+            "slide": 21,
+            "lesson": "plant-guilds-l1",
+            "title": "Leave Room Around the Tree",
+            "titleByLang": {
+                  "zu": "Shiya Indawo Ezungeze Umuthi"
+            }
+      },
+      {
+            "slide": 22,
+            "lesson": "plant-guilds-l1",
+            "title": "Leave Room Around the Tree",
+            "titleByLang": {
+                  "zu": "Shiya Indawo Ezungeze Umuthi"
+            }
+      },
+      {
+            "slide": 23,
+            "lesson": "plant-guilds-l1",
+            "title": "Build a Layered Support Guild",
+            "titleByLang": {
+                  "zu": "Hlanganisa Izingqimba Ezisekelayo"
+            }
+      },
+      {
+            "slide": 24,
+            "lesson": "plant-guilds-l1",
+            "title": "Build a Layered Support Guild",
+            "titleByLang": {
+                  "zu": "Hlanganisa Izingqimba Ezisekelayo"
+            }
+      },
+      {
+            "slide": 25,
+            "lesson": "plant-guilds-l1",
+            "title": "How Many Support Plants?",
+            "titleByLang": {
+                  "zu": "Zingaki Izitshalo Ezisekelayo?"
+            }
+      },
+      {
+            "slide": 26,
+            "lesson": "plant-guilds-l1",
+            "title": "How Many Support Plants?",
+            "titleByLang": {
+                  "zu": "Zingaki Izitshalo Ezisekelayo?"
+            }
+      },
+      {
+            "slide": 27,
+            "lesson": "plant-guilds-l2",
+            "title": "Chop-and-Drop for Light and Mulch",
+            "titleByLang": {
+                  "zu": "Thena Ukuze Kukhanye"
+            }
+      },
+      {
+            "slide": 28,
+            "lesson": "plant-guilds-l2",
+            "title": "Chop-and-Drop for Light and Mulch",
+            "titleByLang": {
+                  "zu": "Thena Ukuze Kukhanye"
+            }
+      },
+      {
+            "slide": 29,
+            "lesson": "plant-guilds-l2",
+            "title": "Keep Mulch Off the Trunk",
+            "titleByLang": {
+                  "zu": "I-Mulch Mayingathinti Isiqu"
+            }
+      },
+      {
+            "slide": 30,
+            "lesson": "plant-guilds-l2",
+            "title": "Keep Mulch Off the Trunk",
+            "titleByLang": {
+                  "zu": "I-Mulch Mayingathinti Isiqu"
+            }
+      },
+      {
+            "slide": 31,
+            "lesson": "plant-guilds-l2",
+            "title": "Choose the Right Comfrey",
+            "titleByLang": {
+                  "zu": "Khetha I-Comfrey Efanele"
+            }
+      },
+      {
+            "slide": 32,
+            "lesson": "plant-guilds-l2",
+            "title": "Choose the Right Comfrey",
+            "titleByLang": {
+                  "zu": "Khetha I-Comfrey Efanele"
+            }
+      },
+      {
+            "slide": 33,
+            "lesson": "plant-guilds-l2",
+            "title": "Observe Helpful Insects",
+            "titleByLang": {
+                  "zu": "Bheka Izinambuzane Eziwusizo"
+            }
+      },
+      {
+            "slide": 34,
+            "lesson": "plant-guilds-l2",
+            "title": "Observe Helpful Insects",
+            "titleByLang": {
+                  "zu": "Bheka Izinambuzane Eziwusizo"
+            }
+      },
+      {
+            "slide": 35,
+            "lesson": "plant-guilds-l2",
+            "title": "Give Flowers Their Space",
+            "titleByLang": {
+                  "zu": "Nikeza Izimbali Indawo Yazo"
+            }
+      },
+      {
+            "slide": 36,
+            "lesson": "plant-guilds-l2",
+            "title": "Give Flowers Their Space",
+            "titleByLang": {
+                  "zu": "Nikeza Izimbali Indawo Yazo"
+            }
+      },
+      {
+            "slide": 37,
+            "lesson": "plant-guilds-l3",
+            "title": "Bring the Jobs Together",
+            "titleByLang": {
+                  "zu": "Hlanganisa Imisebenzi"
+            }
+      },
+      {
+            "slide": 38,
+            "lesson": "plant-guilds-l3",
+            "title": "Bring the Jobs Together",
+            "titleByLang": {
+                  "zu": "Hlanganisa Imisebenzi"
+            }
+      },
+      {
+            "slide": 39,
+            "lesson": "plant-guilds-l3",
+            "title": "Food Cover Also Competes",
+            "titleByLang": {
+                  "zu": "Ubhatata Nawo Uyancintisana"
+            }
+      },
+      {
+            "slide": 40,
+            "lesson": "plant-guilds-l3",
+            "title": "Food Cover Also Competes",
+            "titleByLang": {
+                  "zu": "Ubhatata Nawo Uyancintisana"
+            }
+      },
+      {
+            "slide": 41,
+            "lesson": "plant-guilds-l3",
+            "title": "First, Establish the Guild",
+            "titleByLang": {
+                  "zu": "Qala Ngokumilisa I-Guild"
+            }
+      },
+      {
+            "slide": 42,
+            "lesson": "plant-guilds-l3",
+            "title": "First, Establish the Guild",
+            "titleByLang": {
+                  "zu": "Qala Ngokumilisa I-Guild"
+            }
+      },
+      {
+            "slide": 43,
+            "lesson": "plant-guilds-l3",
+            "title": "Thin as the Fruit Tree Grows",
+            "titleByLang": {
+                  "zu": "Nciphisa Njengoba Umuthi Ukhula"
+            }
+      },
+      {
+            "slide": 44,
+            "lesson": "plant-guilds-l3",
+            "title": "Move Support Into the Light",
+            "titleByLang": {
+                  "zu": "Hambisa Ezisekelayo Ekukhanyeni"
+            }
+      },
+      {
+            "slide": 45,
+            "lesson": "plant-guilds-l3",
+            "title": "Move Support Into the Light",
+            "titleByLang": {
+                  "zu": "Hambisa Ezisekelayo Ekukhanyeni"
+            }
+      },
+      {
+            "slide": 46,
+            "lesson": "plant-guilds-l3",
+            "title": "Let Observation Decide",
+            "titleByLang": {
+                  "zu": "Nquma Ngokubonile"
+            }
+      },
+      {
+            "slide": 47,
+            "lesson": "plant-guilds-l3",
+            "title": "Let Observation Decide",
+            "titleByLang": {
+                  "zu": "Nquma Ngokubonile"
+            }
+      },
+      {
+            "slide": 48,
+            "lesson": null,
+            "title": "Plan One Real Guild",
+            "titleByLang": {
+                  "zu": "Hlela I-Guild Eyodwa Yangempela"
+            }
+      },
+      {
+            "slide": 49,
+            "lesson": null,
+            "title": "Plan One Real Guild",
+            "titleByLang": {
+                  "zu": "Hlela I-Guild Eyodwa Yangempela"
+            }
+      },
+      {
+            "slide": 50,
+            "lesson": null,
+            "title": "Plant, Observe, Adjust",
+            "titleByLang": {
+                  "zu": "Tshala, Qaphela, Lungisa"
+            }
+      },
+      {
+            "slide": 51,
+            "lesson": null,
+            "title": "Plant, Observe, Adjust",
+            "titleByLang": {
+                  "zu": "Tshala, Qaphela, Lungisa"
+            }
+      }
+],
   },
   'food-forest': {
     languages: ['en'],

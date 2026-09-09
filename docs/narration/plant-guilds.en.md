@@ -1,217 +1,303 @@
 **Slide 1 — Plant Selection and Guilds**
 
-Healthy farms do not depend on a single plant doing every job.
-
-Choose plants that feed the soil, protect crops, cover the ground, and give food.
-
-This is the work of plant selection and plant guilds.
-
-The aim is a strong system for South African conditions.
+Choose plants that work together—and change the planting as it grows.
 
 ---
 
-**Slide 2 — Why Plant Guilds Matter**
+**Slide 2 — Plant Selection and Guilds**
 
-When soil is tired, crops struggle to grow.
-
-Nitrogen is what most limits growth in degraded South African soils.
-
-Plants can take nitrogen from the air, return minerals through mulch, and call helpful insects into the garden.
-
-Together, they support the crops around them.
+A fruit tree needs light, water, soil nutrients and room. Support plants can supply food, leafy mulch, flowers and living cover.  Give each plant a useful job. Keep observing whether it helps the tree and the household. Which jobs does your planting need?
 
 ---
 
-**Slide 3 — Learning Outcomes**
+**Slide 3 — Start With the Site**
 
-By the end, you can explain how legumes fix atmospheric nitrogen through rhizobia in root nodules.
-
-You can choose mulch plants and use chop and drop to return material to the soil surface.
-
-You can plan flowering plants and wild garlic for biological pest management.
-
-You can build a mango guild with each plant given a clear job.
+Find out what is limiting growth before choosing a plant.
 
 ---
 
-**Slide 4 — How Legumes Feed the Soil**
+**Slide 4 — Start With the Site**
 
-Most plants need nitrogen for strong growth.
-
-Legumes partner with soil bacteria called rhizobia.
-
-The bacteria pull nitrogen from the air and fix it in nodules on the roots.
-
-When roots die back, or the plant is cut, that nitrogen becomes available to neighbouring plants.
+Check sunlight, drainage, soil condition and water availability. Nitrogen is only one possible limitation.  Compare the soil beneath mulch with exposed soil. Choose support plants that fit the actual conditions. What does this site need first?
 
 ---
 
-**Slide 5 — Watch: Roots That Feed the Soil**
+**Slide 5 — Give Every Plant a Job**
 
-Look at the roots below the soil. Small nodules show where rhizobia fix nitrogen, helping a living legume feed the soil around it.
-
----
-
-**Slide 6 — Nitrogen-Fixing Trees**
-
-Useful nitrogen-fixing trees include Senegalia, formerly Acacia, species and relatives like flat-crown, Albizia adianthifolia.
-
-Tagasaste suits the Western Cape and highland zones.
-
-It self-seeds readily, so plant it with care near untransformed land.
-
-Sesbania sesban suits warm, moist KZN coastal and Lowveld conditions. Do not confuse it with Sesbania punicea, the red-flowered invasive relative.
+A useful guild produces benefits you can observe.
 
 ---
 
-**Slide 7 — Sunn Hemp and the Waiting Soil**
+**Slide 6 — Give Every Plant a Job**
 
-Sunn hemp is a fast annual option.
-
-It can reach 2 metres in one season and adds roughly 100 to 165kg of nitrogen per hectare from its above-ground biomass alone.
-
-After slashing and working it into the soil, do not expect the next crop to use that nitrogen at once.
-
-Soil organisms need 2-6 weeks to break down the plant material and release nitrogen in a form roots can take up.
+Choose members for food, nitrogen fixation, mulch, flowers or ground cover. One plant may do several jobs.  By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove. Which job is still missing?
 
 ---
 
-**Slide 8 — Where to Place Nitrogen Fixers**
+**Slide 7 — Look for Root Nodules**
 
-Place nitrogen fixers uphill or upwind of fruit trees, so fertility moves downhill towards the fruit trees.
-
-In a food forest, plant nitrogen fixers at twice fruit-tree density early on.
-
-As the canopy closes, thin the nitrogen fixers.
-
-For a degraded field in a warm, moist KZN summer, Sesbania sesban is the practical fast annual choice.
+Legumes work with rhizobia in nodules on their roots.
 
 ---
 
-**Slide 9 — Mulch Plants and Chop and Drop**
+**Slide 8 — Look for Root Nodules**
 
-Some plants grow deep, wide-ranging roots.
-
-Those roots can draw up minerals that other crops cannot reach.
-
-When you cut the plant and leave it on the ground, chop and drop returns that material to the surface.
-
-This helps hold moisture, suppress weeds, and build steady organic matter, even when the exact fertility gain is debated.
+These bacteria convert nitrogen from the air into forms the legume can use.  Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find the nodules?
 
 ---
 
-**Slide 10 — Watch: Chop and Drop**
+**Slide 9 — Return Leaves to the Soil**
 
-Watch the cut leaves lying around living plants. They protect the soil surface, hold moisture, and slowly become organic matter as soil life breaks them down.
-
----
-
-**Slide 11 — Choose the Right Comfrey**
-
-Comfrey is a classic mulch plant because of its deep roots.
-
-Use Bocking 14 comfrey, Symphytum times uplandicum.
-
-This cultivar is sterile and will not spread by seed.
-
-Ordinary comfrey can set viable seed and spread beyond where you planted it, so the cultivar choice matters.
+Nitrogen in plant material becomes useful as that material breaks down.
 
 ---
 
-**Slide 12 — Work With Helpful Insects**
+**Slide 10 — Return Leaves to the Soil**
 
-Permaculture works with biology rather than sprays.
-
-Ladybirds eat aphids, while wasps parasitise caterpillars.
-
-Flowering plants such as African basil, borage, and marigold attract these pest-controlling insects.
-
-They help build a living pest-control system around your crops that can strengthen every year.
+Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.  This takes time. A living legume is not an instant fertiliser pipe into the fruit tree. Which residues can you return?
 
 ---
 
-**Slide 13 — Wild Garlic for Pest Control**
+**Slide 11 — Sesbania Has a Useful Role**
 
-Wild garlic, Tulbaghia violacea, is a strong guild plant for pest management.
-
-Its sulphur compounds repel aphids and whitefly.
-
-It is drought-tolerant, and Highveld frost-hardy once established.
-
-It is edible and multiplies easily to share. Interplant it with African basil so flowering plants attract aphid predators like ladybirds.
+Sesbania sesban can supply fast growth and leafy mulch.
 
 ---
 
-**Slide 14 — What Makes a Plant Guild**
+**Slide 12 — Sesbania Has a Useful Role**
 
-A plant guild is a group chosen to support one central tree, usually fruit or nut.
-
-Each member has a job: fixing nitrogen, drawing up minerals, attracting beneficial insects, repelling pests, covering ground, or producing food.
-
-The plants are selected as a community, not as separate crops.
-
-Once established, a well-built guild needs little from you.
+It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.  Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases. Where could you manage its growth?
 
 ---
 
-**Slide 15 — Watch: A Mango Guild**
+**Slide 13 — Check the Full Plant Name**
 
-Look at the central mango and the plants around it. Notice how the guild works as one team, with each plant supporting the tree in a different way.
-
----
-
-**Slide 16 — Place and Cut the Sesbania**
-
-For a mango guild in KZN's Lowveld or coast, place Sesbania sesban on the north-east and north-west sides.
-
-Cut it back yearly for nitrogen and mulch.
-
-Cutting stops it shading and competing with the mango.
-
-Plant Bocking 14 comfrey 60 to 80cm from the trunk in four spots, then chop and drop it regularly.
+Sesbania sesban and Sesbania punicea are different species.
 
 ---
 
-**Slide 17 — Fill the Guild’s Other Jobs**
+**Slide 14 — Check the Full Plant Name**
 
-Place wild garlic in a ring at the outer edge for pest control.
-
-Grow African basil between the comfrey, drawing in wasps that control fruit flies.
-
-Let sweet potato carpet the ground.
-
-Together, these plants give the mango guild pest control, beneficial insects, mulch, and food.
+Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?
 
 ---
 
-**Slide 18 — Let Every Plant Earn Its Place**
+**Slide 15 — Pigeon Pea Gives Food Too**
 
-Give every guild plant at least one clear function.
-
-It may produce food, fix nitrogen, draw up minerals, attract helpful insects, repel pests, or cover the ground.
-
-Sweet potato is better than bare mulch alone here because it suppresses weeds, holds moisture, and gives a harvest.
-
-The aim is a guild that supports the tree with little maintenance once established.
+Pigeon pea—Cajanus cajan—can provide peas, leafy material and nitrogen fixation.
 
 ---
 
-**Slide 19 — Field Assignment**
+**Slide 16 — Pigeon Pea Gives Food Too**
 
-Walk a growing area on your land and choose a central fruit tree.
-
-Write down the jobs your guild still needs: soil feeding, mulch, pest control, beneficial insects, ground cover, or food.
-
-Mark where existing plants already do a job.
-
-Then sketch a guild using only plants named in this lesson.
+Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?
 
 ---
 
-**Slide 20 — Field Action**
+**Slide 17 — Choose for Place and Size**
 
-Plant or plan one guild around a central tree.
+A useful support tree in one place may be too large or unsuitable in another.
 
-Choose Sesbania sesban for nitrogen where warm, moist KZN conditions suit it, Bocking 14 comfrey for chop and drop, wild garlic and African basil for pest management, and sweet potato for ground cover.
+---
 
-Give each plant a job, then watch how the community changes as it grows.
+**Slide 18 — Choose for Place and Size**
+
+Compare mature crown, roots, shade, rainfall and temperature. Check locally appropriate species and planting rules.  Put large support trees where they have space. For a small young guild, a manageable shrub may be easier to maintain. How large will this plant become?
+
+---
+
+**Slide 19 — Annual Cover Has a Place**
+
+Sunn hemp can cover a suitable warm-season gap before the next crop.
+
+---
+
+**Slide 20 — Annual Cover Has a Place**
+
+Grow it where its season and space fit the plan. Its contribution depends on growth, nodulation and the material returned.  After cutting, allow for decomposition. An annual cover crop plays a different role from a longer-lived support shrub. When will this space be needed again?
+
+---
+
+**Slide 21 — Leave Room Around the Tree**
+
+Keep the young fruit tree in light and retain access for care.
+
+---
+
+**Slide 22 — Leave Room Around the Tree**
+
+Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?
+
+---
+
+**Slide 23 — Build a Layered Support Guild**
+
+Combine seasonal cover, support shrubs and temporary small trees.
+
+---
+
+**Slide 24 — Build a Layered Support Guild**
+
+Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?
+
+---
+
+**Slide 25 — How Many Support Plants?**
+
+Plan abundant support where the site and your care can sustain it.
+
+---
+
+**Slide 26 — How Many Support Plants?**
+
+Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.  There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin. How much support can you maintain?
+
+---
+
+**Slide 27 — Chop-and-Drop for Light and Mulch**
+
+Watch the branch fall onto the cut leaves.
+
+---
+
+**Slide 28 — Chop-and-Drop for Light and Mulch**
+
+Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?
+
+---
+
+**Slide 29 — Keep Mulch Off the Trunk**
+
+Spread suitable cut material over the soil, with the trunk and root collar clear.
+
+---
+
+**Slide 30 — Keep Mulch Off the Trunk**
+
+Mulch protects the surface, helps conserve moisture and returns organic material.  Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition. Is the root collar still clear?
+
+---
+
+**Slide 31 — Choose the Right Comfrey**
+
+Bocking 14 comfrey can supply cut leaves for mulch.
+
+---
+
+**Slide 32 — Choose the Right Comfrey**
+
+Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.  Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree. Is this a good permanent place for the clump?
+
+---
+
+**Slide 33 — Observe Helpful Insects**
+
+Flowers can provide resources for useful insects.
+
+---
+
+**Slide 34 — Observe Helpful Insects**
+
+Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.  Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control. What is the insect actually doing?
+
+---
+
+**Slide 35 — Give Flowers Their Space**
+
+Wild garlic can be a flowering member where the site suits it.
+
+---
+
+**Slide 36 — Give Flowers Their Space**
+
+Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.  Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak. Where can flowers grow without crowding?
+
+---
+
+**Slide 37 — Bring the Jobs Together**
+
+Choose useful partners while protecting the mango's growing space.
+
+---
+
+**Slide 38 — Bring the Jobs Together**
+
+Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.  Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow. Does each member have space and a job?
+
+---
+
+**Slide 39 — Food Cover Also Competes**
+
+Sweet potato can cover ground and provide food in a suitable sunny space.
+
+---
+
+**Slide 40 — Food Cover Also Competes**
+
+Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?
+
+---
+
+**Slide 41 — First, Establish the Guild**
+
+Start while the young fruit tree and its support plants have enough light and water.
+
+---
+
+**Slide 42 — First, Establish the Guild**
+
+Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.  Start with the number of support plants you can care for. Observe survival and growth before adding more. Can you care for every plant through establishment?
+
+---
+
+**Slide 43 — Thin as the Fruit Tree Grows**
+
+When pruning is no longer enough, reduce selected support plants. Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.  Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition. Which support plants should now give way?
+
+---
+
+**Slide 44 — Move Support Into the Light**
+
+As shade increases, renew sun-loving support plants in open edges and younger plantings.
+
+---
+
+**Slide 45 — Move Support Into the Light**
+
+Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.  Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need. Where is the next useful sunny space?
+
+---
+
+**Slide 46 — Let Observation Decide**
+
+Keep a short record of how the guild performs.
+
+---
+
+**Slide 47 — Let Observation Decide**
+
+Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. What evidence would make you change the guild?
+
+---
+
+**Slide 48 — Plan One Real Guild**
+
+Choose one fruit tree and mark a layout you can manage.
+
+---
+
+**Slide 49 — Plan One Real Guild**
+
+Record the tree, site conditions and missing jobs. Name the support species fully, mark the starting number and leave access.  Write down what will trigger pruning or thinning. Agree the species list with the project team where required. Can someone else explain your plan back to you?
+
+---
+
+**Slide 50 — Plant, Observe, Adjust**
+
+Start one suitable guild and care for it through its first stage.
+
+---
+
+**Slide 51 — Plant, Observe, Adjust**
+
+Use the right species, a manageable number of plants and room to grow. Return useful biomass and protect the fruit tree.  Review the planting as crowns expand. Keep, cut, replace or remove each support plant when its role changes. What will you do first—and when will you review it?

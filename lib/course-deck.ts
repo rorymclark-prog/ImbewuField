@@ -102,7 +102,63 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
   }));
 }
 
+// Approved guild clips each occupy one teaching slot; whole-plant thinning is slide 43.
+const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
+  "15": {
+    "src": "Imbewu-Guilds-03-Pigeon-pea-food",
+    "poster": "Imbewu-Guilds-03-Pigeon-pea-food",
+    "bytes": 7277042,
+    "seconds": 8.0
+  },
+  "23": {
+    "src": "Imbewu-Guilds-09-Labelled",
+    "poster": "Imbewu-Guilds-09-Labelled",
+    "bytes": 4174276,
+    "seconds": 8.0
+  },
+  "27": {
+    "src": "Imbewu-Guilds-02-Pruning-trimmed",
+    "poster": "Imbewu-Guilds-02-Pruning-trimmed",
+    "bytes": 3373640,
+    "seconds": 5.0
+  },
+  "29": {
+    "src": "Imbewu-Guilds-01-Mulch-ring",
+    "poster": "Imbewu-Guilds-01-Mulch-ring",
+    "bytes": 3173759,
+    "seconds": 8.0
+  },
+  "33": {
+    "src": "Imbewu-Guilds-04-Helpful-insects",
+    "poster": "Imbewu-Guilds-04-Helpful-insects",
+    "bytes": 3933234,
+    "seconds": 5.5
+  },
+  "37": {
+    "src": "Imbewu-Guilds-05-Guild-overview",
+    "poster": "Imbewu-Guilds-05-Guild-overview",
+    "bytes": 9200096,
+    "seconds": 8.0
+  },
+  "41": {
+    "src": "Imbewu-Guilds-06-Succession-establish",
+    "poster": "Imbewu-Guilds-06-Succession-establish",
+    "bytes": 3900208,
+    "seconds": 8.0
+  },
+  "44": {
+    "src": "Imbewu-Guilds-08-Succession-carry-mulch",
+    "poster": "Imbewu-Guilds-08-Succession-carry-mulch",
+    "bytes": 8354154,
+    "seconds": 8.0
+  }
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'plant-guilds': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
+  },
   'seeds-sovereignty': {
     slideLanguages: ['en', 'zu'],
     // ALL 24 SLIDES NOW EXIST IN BOTH LANGUAGES. The history is kept because the failure was

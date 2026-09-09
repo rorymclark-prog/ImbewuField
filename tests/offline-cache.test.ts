@@ -327,3 +327,31 @@ test('plant art survives a deploy: unversioned cache, spared sweep, no revalidat
   assert.ok(artBlock.includes('caches.open(ART_CACHE)'), 'art requests must be answered from ART_CACHE');
   assert.ok(artBlock.includes('if (hit) return hit;'), 'a cached sprite returns with no background re-fetch');
 });
+
+
+test('the guild narration upgrade removes only obsolete guild speech, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateGuildNarration\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'guild migration must exist before the new worker claims clients');
+  assert.match(source, /then\(migrateGuildNarration\)\.then/);
+  const rows = new Map<string, Response>([
+    ['/course-audio/plant-guilds/en/slide-01.mp3', new Response('old guild')],
+    ['/course-audio/seeds-sovereignty/en/slide-01.mp3', new Response('keep seeds')],
+    ['/course-decks/plant-guilds/en/slide-01.jpg', new Response('keep image')],
+  ]);
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map((key) => new Request('https://example.com' + key)),
+    delete: async (request: Request) => rows.delete(new URL(request.url).pathname),
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async () => fakeCache };
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(rows.has('/course-audio/plant-guilds/en/slide-01.mp3'), false);
+  assert.equal(rows.has('/course-audio/seeds-sovereignty/en/slide-01.mp3'), true);
+  assert.equal(rows.has('/course-decks/plant-guilds/en/slide-01.jpg'), true);
+  rows.set('/course-audio/plant-guilds/en/slide-01.mp3', new Response('new guild'));
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(await rows.get('/course-audio/plant-guilds/en/slide-01.mp3')!.text(), 'new guild');
+});

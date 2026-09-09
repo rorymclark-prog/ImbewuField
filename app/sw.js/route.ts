@@ -84,6 +84,22 @@ self.addEventListener('message', function (event) {
   if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
+// The guild lesson changed from 20 recordings to 51. Keep other downloaded lessons,
+// but do not pair their old guild speech with the new slide order. This marker survives
+// ordinary deploys so the replacement is invalidated once, not on every app update.
+async function migrateGuildNarration() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/plant-guilds/.revision-20260909';
+  if (await cache.match(marker)) return;
+  const keys = await cache.keys();
+  for (const request of keys) {
+    if (new URL(request.url).pathname.indexOf('/course-audio/plant-guilds/en/') === 0) {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('51-slide guild narration'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -97,7 +113,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(function () {
+    }).then(migrateGuildNarration).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
