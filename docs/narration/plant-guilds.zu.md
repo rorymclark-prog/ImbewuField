@@ -301,9 +301,3 @@ Qala i-guild eyodwa efanele, uyinakekele esigabeni sayo sokuqala.
 **Ikhasi 51 — Tshala, Qaphela, Lungisa**
 
 Sebenzisa izinhlobo ezifanele, inani lezitshalo olilawulekayo nendawo yokukhula. Buyisela izinsalela zezitshalo eziwusizo, uvikele umuthi wezithelo.  Buyekeza okutshaliwe njengoba amagatsha esabalala. Gcina, sika, shintsha noma ususe isitshalo ngasinye esisekelayo lapho umsebenzi waso ushintsha. Uzokwenzani kuqala—futhi uzokubuyekeza nini?
-
-## TERMS NEEDING REVIEW
-
-This is a draft translation only. It must be read by a first-language isiZulu speaker who farms before this script goes anywhere near a learner.
-
-The 51 blocks match the current English lesson. Review the spoken register, plant names, nitrogen-fixing terminology, pruning versus whole-plant thinning, and the use of English borrowings such as i-mulch and i-guild. A draft Thando recording has been generated for review; this does not certify the translation or release it to learners.

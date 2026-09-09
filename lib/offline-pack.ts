@@ -13,7 +13,7 @@
 
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { COURSE_NARRATION } from '@/lib/course-audio';
-import { COURSE_DECKS, slideImageUrl } from '@/lib/course-deck';
+import { COURSE_DECKS, slideImageUrl, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export interface PackEntry {
@@ -101,9 +101,10 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
       const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
       if (url) push(at(url, 'slide'));
 
-      if (slide.animation) {
-        push(at(`/course-animations/${moduleId}/${slide.animation.src}.mp4`, 'animation'));
-        push(at(`/course-animations/${moduleId}/posters/${slide.animation.poster}.jpg`, 'poster'));
+      const animation = animationUrls(moduleId, slide.slide, lang);
+      if (animation) {
+        push(at(animation.video, 'animation'));
+        push(at(animation.poster, 'poster'));
       }
     }
   }

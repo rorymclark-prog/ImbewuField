@@ -234,9 +234,9 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'plant-guilds': {
-    // Rebuilt 9 September 2026: 51 current slide scripts, recorded with Leah.
-    // IsiZulu remains in review; a generated recording is not language sign-off.
-    languages: ['en'],
+    // 51 slides: Leah / Thando. Owner authorized both languages on 9 September.
+    // Fluent review remains pending in NARRATION_RELEASE_EXCEPTIONS, not certified.
+    languages: ['en', 'zu'],
     tracks: [
       {
             "slide": 1,

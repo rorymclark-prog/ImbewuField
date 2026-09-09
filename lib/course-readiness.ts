@@ -17,6 +17,7 @@
 
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { hasNarration, narrationFor } from '@/lib/course-audio';
+import { narrationReviewPending } from '@/lib/narration-blockers';
 import { hasDeck } from '@/lib/course-deck';
 
 export type ModuleReadiness = 'complete' | 'in-progress';
@@ -49,6 +50,7 @@ export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
     totalLessons > 0 &&
     illustratedLessons === totalLessons &&
     narrationLanguages.length >= 2 &&
+    !narrationLanguages.some((lang) => narrationReviewPending(moduleId, lang)) &&
     deck;
 
   return {
@@ -92,7 +94,7 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
   if (d.hasDeck && d.narrationLanguages.length > 0) {
     return {
       text: 'Narrated slides',
-      detail: `Illustrated slides and narration are ready in ${d.narrationLanguages.length} language. Other translations are still in review.`,
+      detail: `Illustrated slides and narration are ready in ${d.narrationLanguages.length} language${d.narrationLanguages.length === 1 ? '' : 's'}. Translation review is still outstanding.`,
     };
   }
   return {

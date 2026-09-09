@@ -450,7 +450,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
 
 // ── Main page ────────────────────────────────────────────────────────────────
 
-const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'ngo', 'funder', 'admin']);
+const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'mentor', 'ngo', 'funder', 'admin']);
 
 export default function StudentPage() {
   const { user, role, loading } = useAuth();
@@ -586,10 +586,11 @@ export default function StudentPage() {
   // display-only reordering that lifts assigned work to the top (see lib/course-gating.ts).
   const gatingCtx: GatingContext = useMemo(() => ({
     moduleIds: COURSE_MODULES.map((m) => m.id),
+    role: sampleRole ? (sampleRole === 'sample' ? 'student' : sampleRole) : role,
     doneIds,
     submittedIds: submittedModuleIds(submissions),
     assignments,
-  }), [doneIds, submissions, assignments]);
+  }), [doneIds, submissions, assignments, role, sampleRole]);
 
   const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
   const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
@@ -786,7 +787,7 @@ export default function StudentPage() {
             you do on purpose before you leave, not a preference you configure. */}
         <details className={styles.offline}>
           <summary className="font-sans"><BookOpen size={18} /> Study offline <span className={styles.offlineHint}>Save lessons to this phone before you leave signal</span></summary>
-          <OfflineDownload moduleIds={orderedModules.map((m) => m.id)} lang={lang} label="Save the whole course to this phone" />
+          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
         </details>
 
         <div className={styles.courseHeading}>
@@ -805,19 +806,9 @@ export default function StudentPage() {
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
 
-            // A FINISHED MODULE IS ALWAYS OPEN.
-            //
-            // Rory needs to show the app before the course is finished, and the one module that is
-            // genuinely complete — illustrated, narrated in both languages, with its slide deck —
-            // sat locked behind five he had not done. So the thing he most wants seen was the one
-            // thing nobody could reach.
-            //
-            // Sequential gating still governs everything else, and it costs nothing here: modules
-            // are finished in curriculum order, so in normal use a complete module is one the
-            // learner has already unlocked. This only ever opens a module that is ahead of them
-            // AND finished, which is exactly the sample case. The badge says which it is.
+            // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
-            const unlocked = isModuleUnlocked(mod.id, gatingCtx) || contentComplete;
+            const unlocked = isModuleUnlocked(mod.id, gatingCtx);
             const isCurrent = currentId === mod.id;
 
             // LOCKED: content is unreachable, not merely visually hidden — the lessons list

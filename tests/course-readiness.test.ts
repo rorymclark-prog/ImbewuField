@@ -65,9 +65,9 @@ test('an unknown module is in-progress rather than throwing', () => {
 });
 
 
-test('a released English guild deck is discoverable without claiming isiZulu is finished', () => {
+test('owner-authorized isiZulu is available without claiming its fluent review is finished', () => {
   assert.equal(moduleReadiness('plant-guilds'), 'in-progress');
-  assert.deepEqual(moduleReadinessDetail('plant-guilds').narrationLanguages, ['en']);
+  assert.deepEqual(moduleReadinessDetail('plant-guilds').narrationLanguages, ['en', 'zu']);
   assert.equal(readinessLabel('plant-guilds')?.text, 'Narrated slides');
-  assert.match(readinessLabel('plant-guilds')!.detail, /translations are still in review/);
+  assert.match(readinessLabel('plant-guilds')!.detail, /Translation review is still outstanding/);
 });

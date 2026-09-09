@@ -219,3 +219,13 @@ test('standard stays the default everywhere — a farmer never opts in by accide
   assert.ok(wholeCourseBytes('zu') < wholeCourseBytes('zu', 'high'));
   assert.equal(downloadableModules('zu').length, downloadableModules('zu', 'high').length);
 });
+
+test('the isiZulu guild offline pack contains all 51 local slides and tracks and the localized labels', () => {
+  const pack = offlinePack('plant-guilds', 'zu');
+  assert.deepEqual(pack.missing, []);
+  assert.equal(pack.entries.filter(e => e.kind === 'slide').length, 51);
+  assert.equal(pack.entries.filter(e => e.kind === 'audio').length, 51);
+  assert.ok(pack.entries.filter(e => e.kind === 'slide' || e.kind === 'audio').every(e => e.url.includes('/zu/')));
+  assert.ok(pack.entries.some(e => e.url.endsWith('Imbewu-Guilds-09-Labelled-zu.mp4')));
+  assert.ok(!pack.entries.some(e => e.url.endsWith('Imbewu-Guilds-09-Labelled.mp4')));
+});

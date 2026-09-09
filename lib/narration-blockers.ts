@@ -32,6 +32,21 @@ export const NARRATION_BLOCKER_MARKERS: readonly RegExp[] = [
   /NOT SHIPPABLE/i,
 ];
 
+/** Explicit owner release exception; pending is not a translation sign-off. */
+export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
+  reviewStatus: 'pending'; authorizedBy: string; authorizedOn: string; reviewRecord: string; scriptSha256: string;
+}>> = {
+  'plant-guilds.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-09',
+    reviewRecord: 'docs/narration-reviews/plant-guilds.zu.md',
+    scriptSha256: '63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa',
+  },
+};
+
+export function narrationReviewPending(moduleId: string, lang: string): boolean {
+  return NARRATION_RELEASE_EXCEPTIONS[`${moduleId}.${lang}`]?.reviewStatus === 'pending';
+}
+
 /** True when the script says, in its own words, that it still needs a human. */
 export function hasNarrationBlocker(text: string): boolean {
   return NARRATION_BLOCKER_MARKERS.some((re) => re.test(text));

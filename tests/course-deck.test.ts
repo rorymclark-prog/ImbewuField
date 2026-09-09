@@ -207,3 +207,18 @@ test('the branch-pruning clip is not presented as whole-plant thinning', () => {
   assert.equal(thinning.length, 1);
   assert.equal(thinning[0].animation, undefined, 'do not reuse the branch cut to claim a whole plant was removed');
 });
+
+test('isiZulu guild slides, audio and labelled video are delivered in the selected language', () => {
+  for (const slide of deckFor('plant-guilds')!.slides) {
+    assert.ok(onDisk(slideImageUrl('plant-guilds', 'zu', slide.slide)!));
+    assert.ok(onDisk(slideAudioUrl('plant-guilds', 'zu', slide.slide)!));
+    const animation = animationUrls('plant-guilds', slide.slide, 'zu');
+    if (animation) {
+      assert.ok(onDisk(animation.video));
+      assert.ok(onDisk(animation.poster));
+      assert.equal(statSync(new URL(animation.video.slice(1), PUBLIC)).size, animation.bytes);
+    }
+  }
+  assert.match(animationUrls('plant-guilds', 23, 'zu')!.video, /Labelled-zu/);
+  assert.doesNotMatch(animationUrls('plant-guilds', 23, 'en')!.video, /Labelled-zu/);
+});

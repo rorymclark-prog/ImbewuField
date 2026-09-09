@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readdirSync, readFileSync } from 'node:fs';
@@ -5,7 +6,7 @@ import { join } from 'node:path';
 
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { NARRATION_BLOCKER_MARKERS } from '@/lib/narration-blockers';
+import { NARRATION_BLOCKER_MARKERS, NARRATION_RELEASE_EXCEPTIONS } from '@/lib/narration-blockers';
 
 // A NARRATION SCRIPT IS READ ALOUD TO A FARMER AS INSTRUCTION. Whatever is in the file is what
 // they hear, so the file's contents are a safety surface, not just content.
@@ -252,5 +253,22 @@ test('no module is captioned with the placeholder in the manifest, in either lan
         );
       }
     }
+  }
+});
+
+// Owner explicitly requested release after the outstanding review was explained. This exception
+// is tied to the exact spoken script and preserves the review appendix; it is not human sign-off.
+test('an owner-authorized review-pending release preserves its exact script and review record', () => {
+  for (const [key, authorization] of Object.entries(NARRATION_RELEASE_EXCEPTIONS)) {
+    const script = PARSED.find(s => `${s.moduleId}.${s.lang}` === key);
+    assert.ok(script, key);
+    assert.equal(authorization.reviewStatus, 'pending');
+    assert.ok(authorization.authorizedBy && /^\d{4}-\d{2}-\d{2}$/.test(authorization.authorizedOn));
+    assert.equal(createHash('sha256').update(script.text).digest('hex'), authorization.scriptSha256,
+      'Changed narration needs a new review or explicit release instruction; do not silently inherit this exception');
+    const record = readFileSync(join(process.cwd(), authorization.reviewRecord), 'utf8');
+    assert.match(record, /TERMS NEEDING REVIEW/);
+    assert.match(record, /fluent review pending/);
+    assert.match(record, /does not certify translation or pronunciation/);
   }
 });
