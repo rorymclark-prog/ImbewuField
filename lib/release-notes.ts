@@ -33,11 +33,16 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '9 September 2026', sha: '4cb7869', changes: [
+  { when: '9 September 2026', sha: '332d934', changes: [
     'Mentor actions and visit records show profile photos and garden names.',
     'An illustrated garden visit guide and coverage bar make fieldwork easier to scan.',
     'Saved profile photos now appear in mentor fieldwork and learning cards.',
     'Choose indicators for donated food, nurseries, training and environmental work.',
+  ] },
+  { when: '9 September 2026', sha: 'fa36a38', changes: [
+    'Plant Guilds now has illustrated slides, English narration and eight short videos.',
+    'Learn how to choose support plants, prune for mulch and thin as fruit trees grow.',
+    'Download Plant Guilds again to update any saved offline narration.',
   ] },
   { when: '8 September 2026', sha: 'c72705a0', changes: [
     'Mentor priorities show due actions, participant coverage and practical visit guidance.',

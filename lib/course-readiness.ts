@@ -89,6 +89,12 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
       detail: `All ${d.totalLessons} lessons illustrated, narrated in ${d.narrationLanguages.length} languages, with slides and animations.`,
     };
   }
+  if (d.hasDeck && d.narrationLanguages.length > 0) {
+    return {
+      text: 'Narrated slides',
+      detail: `Illustrated slides and narration are ready in ${d.narrationLanguages.length} language. Other translations are still in review.`,
+    };
+  }
   return {
     text: 'Lessons only',
     detail: 'Reading and pictures are ready. Narration and slides are still being made.',
