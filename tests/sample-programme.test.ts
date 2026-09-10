@@ -387,6 +387,21 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
 });
 
 const { validVisitPhotos } = await import('../lib/field-teams');
+test('assessment dashboards share progress controls and keep the guide out of the first screen', () => {
+  const live = readFileSync('components/MelDashboard.tsx', 'utf8');
+  const sample = readFileSync('components/SampleProgramme.tsx', 'utf8');
+  const overview = readFileSync('components/MelOverview.tsx', 'utf8');
+  const guide = readFileSync('components/MelCoverage.tsx', 'utf8');
+  assert.match(live, /<MelOverview items=\{list\}/);
+  assert.match(sample, /published: controls\.published\.includes\(assessment\.id\)/);
+  assert.ok(live.indexOf('<MelOverview') < live.indexOf('<MelCoverage'));
+  assert.match(guide, /return <details/);
+  assert.doesNotMatch(guide, /<details[^>]*\bopen\b/);
+  assert.match(overview, /a\.state === 'closed' && !a\.published/);
+  assert.match(overview, /Assignments, not unique people/);
+  assert.match(overview, /onClick=\{\(\) => onOpen\(a\.id\)\}/);
+  assert.doesNotMatch(overview, /\/api\/|fieldApi|fetch\(/, 'presentation must not widen access to private data');
+});
 test('visit photos cannot overflow a record or point to untrusted external images', () => {
   const p={image:'data:image/jpeg;base64,/9j/AA==',caption:'Tap repaired'};
   assert.equal(validVisitPhotos([p,p,p]),true);

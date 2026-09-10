@@ -1,8 +1,10 @@
 .root { --mel-ink:#183427; --mel-muted:#506158; color:var(--mel-ink); background:#eff4ef; padding:24px; font-family:var(--font-sans),sans-serif; width:100%; min-width:0; min-height:0; overflow:auto; padding-bottom:180px; }
 .wrap { max-width:1440px; margin:auto; }
-.hero { background:#214d35; color:white; border-radius:20px; padding:28px; margin-bottom:20px; }
-.hero h1 { font-family:var(--font-display),serif; font-size:32px; margin:4px 0 12px; }
-.hero p { max-width:680px; }
+.hero { background:#214d35; color:white; border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
+.hero > span { display:none; }
+.hero h1 { font-family:var(--font-display),serif; font-size:28px; margin:0; }
+.hero p { max-width:680px; margin:0; }
+.hero .row { margin-left:auto; }
 .root h2 { font-size:21px; margin:0 0 12px; }
 .root h3 { font-size:17px; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
@@ -61,3 +63,56 @@
 
 /* Embedded control panels share one scroll surface and one bottom clearance. */
 .root .root { padding:20px 0 0; overflow:visible; background:transparent; }
+
+/* First show the work; explanations stay available without pushing progress off screen. */
+.overview { margin:12px 0 20px; }
+.overview h2 { margin:0; }
+.overviewStats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+.root .summaryCard { display:flex; align-items:center; gap:12px; text-align:left; padding:16px; border-radius:16px; border:1px solid #cddcd1; box-shadow:0 4px 14px #18342706; }
+.summaryCard > span:nth-child(2) { flex:1; }
+.summaryCard small { color:#506158; font-size:13px; }
+.summaryCard .stat { margin:4px 0; line-height:1; font-size:32px; }
+.statIcon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:12px; background:#e4eee8; color:#245739; }
+.overviewPanels { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.overviewPanels .card { padding:18px 20px; }
+.coverageValue { display:flex; align-items:baseline; gap:14px; margin:12px 0; flex-wrap:wrap; }
+.coverageValue > strong { font-size:36px; line-height:1; }
+.coverageValue > span { font-size:14px; }
+.coverageTrack { height:14px; overflow:hidden; border-radius:20px; background:#e4ebe6; }
+.coverageTrack > span { display:block; height:100%; background:#327450; border-radius:20px; }
+.root .attention { background:#fffaf0; border-color:#dfcda9; }
+.root .attention button { display:flex; width:100%; align-items:center; gap:12px; text-align:left; background:transparent; border:0; border-bottom:1px solid #e8dcc6; padding:10px 0; }
+.attention button > span { flex:1; }
+.attention small { display:block; color:#645a45; margin-top:3px; }
+.cyclePanel { background:white; border:1px solid #d7e3d9; border-radius:16px; padding:18px 20px; margin-bottom:20px; }
+.root .cycleLabel { font:600 13px var(--font-sans),sans-serif; text-transform:uppercase; letter-spacing:.06em; color:#506158; margin:18px 0 10px; }
+.cycleStages { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+.appStages { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.root .cycleStages button,.root .appStages button { display:grid; grid-template-columns:28px 1fr; align-items:center; gap:6px 8px; text-align:left; border-color:#d7e3d9; background:#f7faf7; padding:12px; min-width:0; }
+.cycleStages button > span,.appStages button > span { grid-column:2; font-size:13px; color:#506158; }
+.cycleStages .bar,.appStages .bar { grid-column:1 / -1; width:100%; margin:4px 0 0; }
+.root .cycleStages button[aria-pressed=true],.root .appStages button[aria-pressed=true] { background:#e4eee8; }
+.assessmentCards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:14px 0; }
+.root .assessmentCard { display:flex; align-items:flex-start; gap:12px; padding:18px; border-radius:16px; border-color:#d7e3d9; text-align:left; }
+.assessmentText { display:flex; flex-direction:column; align-items:flex-start; gap:8px; flex:1; min-width:0; }
+.assessmentText > strong { font-family:var(--font-display),serif; font-size:20px; font-weight:600; }
+.assessmentText > span:not(.tag),.assessmentText > small { color:#506158; font-size:14px; }
+.assessmentText .bar { width:100%; margin:0; }
+.root .guide { margin:20px 0; padding:12px 20px; }
+.root .guide > summary { color:#315a42; }
+@media(max-width:1100px) { .hero p { display:none; } .cycleStages { grid-template-columns:repeat(3,minmax(0,1fr)); } .summaryCard > svg { display:none; } }
+@media(max-width:650px) {
+  .hero { display:block; padding:0; }
+  .hero .row { margin-top:8px; gap:8px; }
+  .hero .row > a { margin-left:auto; font-size:13px; }
+  .overviewStats { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .root .summaryCard { padding:12px; gap:8px; }
+  .summaryCard .stat { font-size:28px; }
+  .summaryCard .statIcon { width:32px; height:32px; border-radius:9px; }
+  .overviewPanels,.assessmentCards { grid-template-columns:1fr; }
+  .cycleStages { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cyclePanel,.overviewPanels .card { padding:14px; }
+  .root .cycleStages button,.root .appStages button { padding:10px; grid-template-columns:1fr; }
+  .cycleStages button > span,.appStages button > span { grid-column:1; }
+  .root .assessmentCard { padding:14px; }
+}

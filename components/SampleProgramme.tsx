@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isSampleMode } from '@/lib/sample-mode';
 import { analyseAssessment, MEL_STAGES, type MelStage } from '@/lib/mel';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import { buildSampleAssessments, sampleAssessments, changeSampleAssessment, freshSampleProgramme, samplePublishedAssessments, type SampleProgrammeControls } from '@/lib/sample-programme';
 import { MelMetrics } from '@/components/MelDashboard';
+import MelOverview from './MelOverview';
 import styles from './MelDashboard.module.css';
 const KEY = 'imbewu-sample-programme';
 export function readSampleProgramme(): SampleProgrammeControls {
@@ -17,6 +18,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const [selected, setSelected] = useState('sample-baseline');
   const [localZu, setZu] = useState(false);
   const zu = language ?? localZu;
+  const detailRef = useRef<HTMLElement>(null);
   const [notice, setNotice] = useState('');
   const [draft, setDraft] = useState({ title: '', project: "Community garden learning cohort", stage: 'baseline' as MelStage, due: '' });
   const [chosenPeople, setChosenPeople] = useState<string[]>([]);
@@ -43,8 +45,8 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const published = samplePublishedAssessments(controls);
   if (funder) return <><h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} /></details>)}</>;
   return <>
-    <details><summary>About these counts</summary><p>Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown.</p></details>
-    <div className={styles.grid}>{[['Assigned', assigned], ['Completed', completed], ['Awaiting responses', assigned - completed], ['Shared summaries', controls.published.length]].map(([label, value]) => <div key={label} className={styles.card}>{label}<strong className={styles.stat}>{value}</strong></div>)}</div>
+    <MelOverview items={data.map(({ assessment, rows }) => ({ ...assessment, published: controls.published.includes(assessment.id), assigned: assessment.participantIds.length, completed: rows.length }))} selectedId={selected} zu={zu} onOpen={id => { setSelected(id); setChosenPeople([]); setFunderPreview(false); requestAnimationFrame(() => detailRef.current?.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })); }} />
+    <details className={styles.about}><summary>About these counts</summary><p>Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.</p></details>
     {language === undefined && <div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button></div>}
     <details className={styles.card}><summary>Create an assessment</summary>
       <label>Stage<select value={draft.stage} onChange={e => setDraft({ ...draft, stage: e.target.value as MelStage })}>{MEL_STAGES.map(s => <option key={s} value={s}>{MEL_TEMPLATES[s].en}</option>)}</select></label>
@@ -53,8 +55,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
       <label>Due date<input type="date" value={draft.due} onChange={e => setDraft({ ...draft, due: e.target.value })} /></label>
       <button disabled={!draft.title.trim() || !draft.project.trim() || !draft.due} onClick={() => { const id = `sample-custom-${Date.now()}`; const base = buildSampleAssessments()[0].assessment; update({ ...controls, assessments: [...data, { assessment: { ...base, ...draft, id, state: 'draft', published: false, participantIds: [] }, rows: [] }] }); setSelected(id); setChosenPeople([]); setDraft({ ...draft, title: '' }); }}>Save draft</button>
     </details>
-    <div className={styles.grid}>{data.map(({ assessment: a, rows }) => <button key={a.id} onClick={() => { setSelected(a.id); setChosenPeople([]); setFunderPreview(false); }} aria-pressed={a.id === selected}>{zu ? MEL_TEMPLATES[a.stage].zu : a.title}<p>{a.state} · {rows.length}/{a.participantIds.length} completed</p></button>)}</div>
-    <article className={styles.card}><h2>{zu ? MEL_TEMPLATES[chosen.assessment.stage].zu : chosen.assessment.title}</h2>
+    <article ref={detailRef} className={styles.card}><h2>{zu ? MEL_TEMPLATES[chosen.assessment.stage].zu : chosen.assessment.title}</h2>
       {chosen.assessment.state === 'draft' ? <div><p>Choose participants for this assessment.</p>{Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`).map((id, i) => <label key={id} className={styles.option}><input type="checkbox" checked={chosenPeople.includes(id)} onChange={e => setChosenPeople(e.target.checked ? [...chosenPeople, id] : chosenPeople.filter(x => x !== id))} />Participant {i + 1}</label>)}<button disabled={!chosenPeople.length} onClick={() => update(changeSampleAssessment(controls, selected, { state: 'open', participantIds: chosenPeople }))}>Open for {chosenPeople.length} participants</button></div> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows, funderPreview).metrics} zu={zu} />}
       {chosen.assessment.state !== 'draft' && <div className={styles.row}><button aria-pressed={!funderPreview} onClick={() => setFunderPreview(false)}>Private organisation analysis</button><button aria-pressed={funderPreview} onClick={() => setFunderPreview(true)}>Preview funder summary</button>{chosen.assessment.state === 'open' && <button onClick={() => update(changeSampleAssessment(controls, selected, { state: 'closed' }))}>Close assessment</button>}</div>}
       <details style={{ marginTop: 20 }}><summary>Learning action · what will we change?</summary>

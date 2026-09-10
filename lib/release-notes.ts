@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 September 2026', sha: '91dba96', changes: [
+    'Assessments now puts response progress, review work and learning actions first.',
+    'Tap a summary or assessment stage to filter the list, then open its results.',
+    'The full assessment guide is expandable, and the active bottom tab is clearer in dark mode.',
+  ] },
   { when: '9 September 2026', sha: 'ab14d5f', changes: [
     'The Home Photo button opens your camera or photo library without taking you to the map.',
     'Review your photo in Lima before sending it, or close to return to Home.',

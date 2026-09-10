@@ -125,7 +125,8 @@ export default function TabBar() {
               style={{
                 padding: '4px 14px',
                 borderRadius: 12,
-                background: active ? 'var(--brand-soft)' : 'transparent',
+                // A fixed light pill keeps the forest-green active label legible in dark mode.
+                background: active ? '#e4eee8' : 'transparent',
                 transition: 'background var(--dur-fast) var(--ease-out)',
               }}
             >
