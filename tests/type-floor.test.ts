@@ -106,6 +106,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/AreaReturnCards.tsx': 'farmers compare the recorded return from their growing space',
   'components/ProductionAreas.tsx': 'staff record and read checked production areas',
   'components/MelCoverage.tsx': 'shared assessment cycle and app improvement navigation',
+  'components/MelOverview.tsx': 'assessment progress and stage controls must stay readable on phones',
   'components/SampleLimaConversation.tsx': 'role-specific sample conversation with readable messages',
   'components/MelDashboard.tsx': 'farmer assessment forms and NGO analysis',
   'components/funder/FunderAssessments.tsx': 'approved assessment summaries',
