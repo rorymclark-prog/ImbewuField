@@ -1,5 +1,6 @@
 'use client';
 import MelCoverage from './MelCoverage';
+import MelOverview from './MelOverview';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
@@ -78,6 +79,8 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   const t = (en: string, zulu: string) => zu ? zulu : en;
   const requestVersion = useRef(0);
   const linkedOpened=useRef('');
+  const detailRef = useRef<HTMLDivElement>(null);
+  useEffect(() => { if (selected) detailRef.current?.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }, [selected]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
   const [people, setPeople] = useState<Person[]>([]);
@@ -144,14 +147,13 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     {!accessOnly && <div className={styles.hero}><span>IMBEWUFIELD · PROJECT LEARNING</span><h1>{accessOnly ? 'People & access' : zu ? 'Ukuhlola nokufunda' : 'Assessments & learning'}</h1><p>{t('Listen to farmers. Follow progress. Record what we change.', 'Lalela abalimi. Landela intuthuko. Bhala esikushintshayo.')}</p><div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button><a href="/ngo" style={{ color: 'white' }}>{t('Organisation dashboard', 'Ideshibhodi ye-NGO')}</a></div></div>}
     {role === 'admin' && !sample && <label>Organisation<select value={org} onChange={e => { setOrg(e.target.value); setSelected(null); setAnalysis(null); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     <FieldDataStatus data={source} />{error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
-    {!accessOnly && <MelCoverage/>}
     {accessOnly && <div className={styles.card} style={{ marginBottom: 16 }}><h2>People & access</h2><p>Set member roles, delegate assessments and control funder sharing for this organisation.</p><p>These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.</p></div>}
     {sample ? <SampleProgramme accessOnly={accessOnly} language={zu} /> : <>
 
       {!ready && <p>Loading assessments…</p>}
       {staff && !accessOnly && <>
-        <div className={styles.grid}>{[['Assigned', assignedCount], ['Completed', completed], ['Overdue', overdue], ['Published summaries', list.filter(a => a.published).length]].map(([label, n]) => <div className={styles.card} key={label}><span className={styles.muted}>{label}</span><strong className={styles.stat}>{n}</strong></div>)}</div>
-        <p className={styles.muted}>Counts are assessment assignments, not unique people. Assigned means available in the app; it does not mean a WhatsApp, email or SMS was sent.</p>
+        {ready && <MelOverview items={list} zu={zu} selectedId={selected?.id} busy={busy} onOpen={id => { const a = list.find(a => a.id === id); if (a) void open(a); }} />}
+        <details className={styles.about}><summary>About these counts · {overdue} overdue responses</summary><p>Counts are assessment assignments, not unique people. Assigned means available in the app; it does not mean a WhatsApp, email or SMS was sent. Awaiting review means closed but not shared; it is not a separate recorded approval status.</p></details>
       </>}
       {permissions.people && !accessOnly && <button onClick={async () => { try { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); setAccessView(!accessView); } catch (e) { setError((e as Error).message); } }}>People & funder access</button>}
       {accessView && <div className={styles.card} style={{ marginTop: 16 }}><h2>Organisation access</h2><p>Assign app roles within your organisation. Platform administrators, funder identities and organisation transfers are managed by the platform administrator. Role changes apply to the next server request; the member may need to refresh their screen.</p>
@@ -166,9 +168,9 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
       {accessOnly && ready && !permissions.people && <p className={styles.notice}>Your account cannot manage people here. Ask an organisation administrator to grant Manage people access.</p>}
       {!accessOnly && <>
       {permissions.manage && !selected && <details className={styles.card} style={{ marginTop: 16 }}><summary>Create an assessment</summary><label>Stage<select value={stage} onChange={e => setStage(e.target.value as MelStage)}>{MEL_STAGES.map(s => <option key={s} value={s}>{MEL_TEMPLATES[s].en}</option>)}</select></label><p>{zu ? TIMING_ZU[stage] : MEL_TEMPLATES[stage].timing}</p><label>Project / course cohort<input value={project} maxLength={160} onChange={e => setProject(e.target.value)} placeholder="Use the same name throughout this assessment cycle" /></label><label>Assessment title<input value={title} maxLength={160} onChange={e => setTitle(e.target.value)} /></label><label>Due date<input type="date" value={due} onChange={e => setDue(e.target.value)} /></label><details><summary>Review the questions · English and isiZulu</summary>{MEL_TEMPLATES[stage].questions.map(q => <p key={q.id}><strong>{q.en}</strong><br />{q.zu}</p>)}</details><button className={styles.primary} disabled={busy || !project.trim() || !title.trim() || !due} onClick={() => void perform({ action: 'create', project, title, stage, due }, 'Draft created. Choose its participants before opening it.')}>Save draft</button></details>}
-      {!selected && <div className={styles.grid}>{list.map(a => <article className={styles.card} key={a.id}><span className={styles.tag}>{a.state}{a.published ? ' · published' : ''}</span><h2 style={{ marginTop: 12 }}>{a.title}</h2><p>{a.project} · {zu ? MEL_TEMPLATES[a.stage]?.zu : MEL_TEMPLATES[a.stage]?.en}</p><p className={styles.muted}>Due {a.due}{staff ? ` · ${a.completed}/${a.assigned} completed` : a.response ? ' · completed' : ''}</p><button disabled={busy} onClick={() => void open(a)}>{staff ? t('Open assessment', 'Vula ukuhlola') : a.response ? t('View my response', 'Buka izimpendulo zami') : t('Answer assessment', 'Phendula ukuhlola')}</button></article>)}</div>}
+      {!selected && !staff && <div className={styles.grid}>{list.map(a => <article className={styles.card} key={a.id}><span className={styles.tag}>{a.state}{a.published ? ' · published' : ''}</span><h2 style={{ marginTop: 12 }}>{a.title}</h2><p>{a.project} · {zu ? MEL_TEMPLATES[a.stage]?.zu : MEL_TEMPLATES[a.stage]?.en}</p><p className={styles.muted}>Due {a.due}{a.response ? ' · completed' : ''}</p><button disabled={busy} onClick={() => void open(a)}>{a.response ? t('View my response', 'Buka izimpendulo zami') : t('Answer assessment', 'Phendula ukuhlola')}</button></article>)}</div>}
       {ready && !list.length && !sample && <p className={styles.card}>{t('No assessments yet.', 'Akukho ukuhlola okwamanje.')} {permissions.manage ? t('Create a draft using the questions above.', 'Dala uhlaka usebenzisa imibuzo engenhla.') : t('Your organisation will assign assessments here.', 'I-NGO yakho izokwabela ukuhlola lapha.')}</p>}
-      {selected && <div className={styles.card} style={{ marginTop: 20 }}><button disabled={busy} onClick={() => { setSelected(null); setAnalysis(null); }}>{t('← All assessments', '← Konke ukuhlola')}</button><h2 style={{ marginTop: 20 }}>{selected.title}</h2><p>{selected.project} · {selected.due}</p>
+      {selected && <div ref={detailRef} className={styles.card} style={{ marginTop: 20 }}><button disabled={busy} onClick={() => { setSelected(null); setAnalysis(null); }}>{t('← All assessments', '← Konke ukuhlola')}</button><h2 style={{ marginTop: 20 }}>{selected.title}</h2><p>{selected.project} · {selected.due}</p>
         {staff ? <>
           {selected.state === 'draft' && permissions.manage && <><h3>Choose participants</h3><p>Only selected farmers and students can answer. No external messages will be sent.</p><div className={styles.scroll}>{participants.map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={assigned.includes(p.id)} onChange={e => setAssigned(e.target.checked ? [...assigned, p.id] : assigned.filter(id => id !== p.id))} />{p.name}</label>)}</div><button disabled={busy || !assigned.length} className={styles.primary} onClick={() => void perform({ action: 'open', id: selected.id, participantIds: assigned }, 'Assessment opened for the selected participants.')}>Open for {assigned.length} participants</button></>}
           {selected.state === 'open' && permissions.manage && <button disabled={busy} onClick={() => void perform({ action: 'close', id: selected.id }, 'Assessment closed. Responses are now read-only.')}>Close assessment</button>}
@@ -188,5 +190,6 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
       </div>}
       </>}
     </>}
+    {!accessOnly && <MelCoverage/>}
   </div></section>;
 }
