@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { listenForOverlay } from '@/lib/overlay-signal';
+import { limaInMenu, OPEN_LIMA_EVENT } from '@/lib/lima-launcher';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
 
@@ -29,6 +30,11 @@ import ChatPanel from './ChatPanel';
 export default function ChatWidget() {
   const pathname = usePathname() || '';
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const show = () => setOpen(true);
+    window.addEventListener(OPEN_LIMA_EVENT, show);
+    return () => window.removeEventListener(OPEN_LIMA_EVENT, show);
+  }, []);
   // Hide the FAB while the map is in boundary-draw mode (the draw bar owns the
   // bottom-left corner). The farmer map broadcasts this via a window event.
   const [drawing, setDrawing] = useState(false);
@@ -116,38 +122,21 @@ export default function ChatWidget() {
   // reaches ~137px. 188px clears it with a thumb's width to spare. Only below lg, because the
   // pill is lg:hidden and the desktop corner really is free.
   //
-  // /facilitator/crops is the same 12 Aug complaint on a different page: everything that page
-  // shows — section headings, the Availability tab, the benchmark kg headline, every task line —
-  // is LEFT-aligned, so a bottom-left FAB sits on top of the content and the tab's hit area at
-  // 375px. That page docks nothing to the bottom-right (its only fixed elements are full-screen
-  // modal overlays, which cover the FAB anyway), so the right corner is genuinely free.
-  //
-  // /invoice's last screen is a two-up "Share PDF" / "Print" row that is the literal end of that
-  // page's scroll container — nothing follows it but the tab bar. At rest (scrolled to the
-  // bottom, which sending an invoice requires), the default 130px offset put the FAB over 84% of
-  // Share PDF's height and a third of its width — the WhatsApp-green button that actually
-  // delivers the invoice to a buyer. Measured on the live site at 375px (sample mode, an invoice
-  // with a buyer and item filled in so the row enables): button at viewport y:[644,689], default
-  // FAB at y:[626,682]. Raising to 176px clears it (new FAB band y:[580,636], 8px above the
-  // button's top) but lands on the optional "Note on the invoice" textarea instead — only a
-  // 43×35px corner of it, since that field ends at y:615, 11px of clearance the button doesn't
-  // have. A corner nick on an optional multi-line field beats hiding the send action, and the two
-  // can't both be fully clear: the 29px gap between them is smaller than the 56px FAB.
+  // Records, invoices, crop plans and garden profiles use the menu entry instead:
+  // these pages scroll content through every fixed corner. There is no safe offset.
   const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
     ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
-    : pathname.startsWith('/facilitator/crops')
-      ? 'bottom-[130px] right-4 lg:bottom-[100px] lg:right-4'
-      : pathname.startsWith('/invoice')
-        ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
-        : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+    : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
 
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 
   return (
     <>
       {/* Launcher FAB — draggable; defaults bottom-left, remembers where you park it */}
-      {!open && !drawing && !overlay && (
+      {!open && !drawing && !overlay && !limaInMenu(pathname) && (
         <button
+          // Keyboard and assistive-technology clicks have no pointer-up to open the panel.
+          onClick={(e) => { if (e.detail === 0) setOpen(true); }}
           onPointerDown={onFabPointerDown}
           onPointerMove={onFabPointerMove}
           onPointerUp={onFabPointerUp}

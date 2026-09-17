@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '18 September 2026', sha: 'cbd4841', changes: [
+    'Find Lima in the menu on Records, Invoice, Crop plan and Browse gardens.',
+    'The menu scrolls as one list on small screens. The Design Studio title stays readable.',
+    'Tap More space in Design Studio to fold away the steps and see more of your map.',
+  ] },
   { when: '10 September 2026', sha: '91dba96', changes: [
     'Assessments now puts response progress, review work and learning actions first.',
     'Tap a summary or assessment stage to filter the list, then open its results.',
