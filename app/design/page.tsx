@@ -3025,6 +3025,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             justifyContent: 'center',
             width: 44,
             height: 44,
+            flexShrink: 0,
             borderRadius: 12,
             background: 'rgba(31,77,43,0.08)',
             color: GREEN,
@@ -3032,7 +3033,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         >
           <ArrowLeft size={20} />
         </Link>
-        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, width: isPhone ? 112 : 180, flexShrink: 0 }}>
           <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
@@ -3087,6 +3088,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             title="Print / Export — export your exact maps as a PDF plan set or PNGs"
             style={{
               display: 'inline-flex',
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
               alignItems: 'center',
               gap: 6,
               minHeight: 32,
@@ -3332,7 +3335,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <button
             type="button"
             onClick={() => setTopStop((c) => (c === 'full' ? 'slim' : 'full'))}
-            style={{ display: 'none' }}
+            aria-expanded={!chromeCollapsed}
+            style={{ display: isPhone ? 'inline-flex' : 'none', alignItems: 'center', gap: 4, flexShrink: 0, minHeight: 44, padding: '0 4px', color: GREEN, fontSize: 12, fontWeight: 700 }}
           >
             {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
           </button>

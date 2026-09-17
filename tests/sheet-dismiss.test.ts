@@ -58,7 +58,9 @@ test('the floating launcher gets out of the way of any sheet', () => {
   // covers the whole screen, so the answer is to go away while one is up.
   const widget = source('../components/ChatWidget.tsx');
   assert.match(widget, /listenForOverlay\(setOverlay\)/, 'the FAB no longer listens for open sheets');
-  assert.match(widget, /\{!open && !drawing && !overlay && \(/, 'the FAB will float over sheets again');
+  // Test the overlay gate, not its being the final gate: content pages can now also
+  // hide the FAB in favour of a menu entry without weakening sheet protection.
+  assert.match(widget, /\{!open && !drawing && !overlay &&/, 'the FAB will float over sheets again');
 
   // And something has to actually raise the signal, or the listener is decoration.
   const farmer = source('../app/farmer/page.tsx');

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { limaInMenu } from '../lib/lima-launcher.ts';
 
 // "LOOK AT ALL THE BUTTONS THAT ARE COVERING EACH OTHER SORT THOSE OUT" — Rory, 12 August, with a
 // screenshot of the farmer map: Lima's launcher sitting on top of the "+ Add" pill.
@@ -59,22 +60,21 @@ test('the pages that hand the corner to something else still opt out entirely', 
   assert.doesNotMatch(skipBlock, /\/farmer/, 'Lima should move on the map, not disappear from it');
 });
 
-test('Lima\'s launcher stays off the crop plan\'s left-aligned content', () => {
-  // Same 12 August complaint, a different page. /facilitator/crops draws every
-  // section heading, the Availability tab, the benchmark kg headline and every
-  // task line flush LEFT, so the shared bottom-left default parked the FAB on
-  // top of them at 375px. That page docks nothing to the bottom-right — its
-  // only fixed elements are full-screen modal overlays — so the fix is a
-  // route-specific corner rather than another exclusion.
+test('content pages keep Lima available without covering cards or fields', () => {
+  // The old assertion required a right-hand crop-plan FAB. The September click-through
+  // audit showed that repositioning still covers scrolling content. The rule is clear
+  // content AND reachable help; all four pages now satisfy it through the menu.
+  for (const route of ['/records', '/invoice', '/facilitator/crops', '/samples/gardens']) {
+    assert.equal(limaInMenu(route), true, `${route} needs help outside its scrolling content`);
+  }
+  assert.equal(limaInMenu('/farmer'), false, 'the map retains its directly reachable launcher');
   const widget = source('../components/ChatWidget.tsx');
-  const cropsDefault = widget.match(/pathname\.startsWith\('\/facilitator\/crops'\)\s*\n?\s*\?\s*'bottom-\[\d+px\] (left|right)-4/);
-  assert.ok(cropsDefault, 'ChatWidget no longer gives /facilitator/crops its own default position');
-  assert.equal(cropsDefault[1], 'right', 'the crop plan\'s content is left-aligned — the FAB must not park on it');
-
-  // It must MOVE, not vanish: the plan page is exactly where a farmer wants to ask.
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
-  const skipBlock = widget.slice(skipAt, skipAt + 260);
-  assert.doesNotMatch(skipBlock, /facilitator/, 'Lima should move on the crop plan, not disappear from it');
+  const menu = source('../components/NavDrawer.tsx');
+  assert.match(widget, /!limaInMenu\(pathname\)/, 'menu pages must not also show the floating button');
+  assert.match(menu, /limaInMenu\(pathname\) &&/, 'hiding the FAB must leave a menu entry');
+  assert.match(menu, /onClose\(\); openLima\(\);/, 'the menu must close and open help');
+  assert.match(widget, /window\.addEventListener\(OPEN_LIMA_EVENT, show\)/);
+  assert.match(widget, /const show = \(\) => setOpen\(true\)/);
 });
 
 test('the FAB still gets out of the way while a boundary is being drawn', () => {

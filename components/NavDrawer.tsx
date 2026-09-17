@@ -15,6 +15,7 @@ import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
+import { limaInMenu, openLima } from '@/lib/lima-launcher';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
@@ -196,18 +197,29 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </button>
         </div>
 
-        <nav aria-label="Getting started" style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
+        <nav aria-label="Getting started" style={{ margin: '12px 16px', display: 'grid', gap: 8, flexShrink: 0 }}>
           <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'var(--color-harvest)',color:'#20190f',fontWeight:700 }}><Footprints size={20}/>Take a tour</Link>
           <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>Tips &amp; help</Link>
         </nav>
-        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Tour controls"><strong>Tour workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Changes stay in this tour workspace.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Take a tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit tour</button></div></section>}
-        <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
+        {sample && <section style={{flexShrink:0,margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Tour controls"><strong>Tour workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Changes stay in this tour workspace.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Take a tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit tour</button></div></section>}
+        <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, flexShrink: 0 }}>
+          {limaInMenu(pathname) && (
+            <button
+              type="button"
+              onClick={() => { onClose(); openLima(); }}
+              aria-label="Open Lima, your field guide"
+              style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 44, padding: '8px 12px', borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-primary)', border: '1px solid var(--border)' }}
+            >
+              <Sprout size={20} /> Lima
+            </button>
+          )}
           <SettingsButton showLabel />
           <LessonLink id={pageLesson} label="Page help" tone="menu" />
           <RoleSwitcher current={navigationRole ?? 'farmer'} inMenu onNavigate={onClose} />
         </section>
         {/* Nav sections */}
-        <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
+        {/* One scroll surface: nested scrolling squeezed the tour controls on short phones. */}
+        <div style={{ flexShrink: 0, paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({
             ...section,
             items: section.items.filter(({ href }) => (sample || canSeeNavLink(role, href)) && canSeeWorkspaceLink(navigationRole, href)),
