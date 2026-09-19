@@ -55,7 +55,7 @@ export interface TankSizingResult {
 }
 
 // Real (non-leap) month lengths, Jan..Dec — demand scales with days in the month.
-const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+export const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const JOJO_SIZES = [10000, 5000, 2500] as const;
 
 /** Group an integer's digits with a thin space every 3 (locale-free): 10000 → "10 000". */
