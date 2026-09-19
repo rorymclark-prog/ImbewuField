@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'b69d7bf', changes: [
+    'Open report diagrams and charts at full size, then zoom and scroll to read details.',
+    'Close the enlarged view to return to the same place in your report.',
+  ] },
   { when: '20 September 2026', sha: 'd28077d', changes: [
     'Choose a short or comprehensive site survey, with illustrated guidance along the way.',
     'Review your observations and harvest months before saving your survey.',
