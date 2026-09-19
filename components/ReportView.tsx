@@ -98,6 +98,7 @@ const LANGUAGE_OPTIONS = [
   { code: 'nr', label: 'isiNdebele' },
 ] as const;
 
+const REPORT_SIDEBAR_QUERY = '(min-width: 1100px)';
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const BIOME_COLORS: Record<string, string> = {
   SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
@@ -330,6 +331,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>(savedReport?.settings?.length ?? 'standard');
   const abortRef = useRef<AbortController | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
+  function jumpToChapter(id: string) {
+    setReading('full');
+    setPanelOpen(false);
+    // A chapter may be unmounted in a short edition or hidden behind phone settings.
+    requestAnimationFrame(() => {
+      const heading = reportRef.current?.querySelector<HTMLElement>(`#${id}`);
+      heading?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      heading?.focus({ preventScroll: true });
+    });
+  }
+
 
   // Saved reports (for the in-screen list) + save-button feedback
   const [savedList, setSavedList] = useState<SavedReport[]>([]);
@@ -461,7 +473,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // Desktop keeps the two-column layout untouched.
   const [isWide, setIsWide] = useState(true);
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
+    const mq = window.matchMedia(REPORT_SIDEBAR_QUERY);
     const apply = () => setIsWide(mq.matches);
     apply();
     mq.addEventListener('change', apply);
@@ -519,7 +531,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // closing over `isWide`, so this never acts on a stale value.
   const collapsePanelOnNarrow = useCallback(() => {
     if (typeof window === 'undefined') return;
-    if (!window.matchMedia('(min-width: 768px)').matches) setPanelOpen(false);
+    if (!window.matchMedia(REPORT_SIDEBAR_QUERY).matches) setPanelOpen(false);
   }, []);
 
   const openSaved = useCallback((r: SavedReport) => {
@@ -799,7 +811,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   }
 
   return (
-    <div className={`${styles.workspace} ${presentation === 'print' ? styles.printPreview : ''} fixed inset-0 z-50 flex flex-col`} data-report-print={presentation === 'print' ? 'ink' : 'colour'}>
+    <div className={`${styles.workspace} ${presentation === 'print' ? styles.printPreview : ''} fixed inset-0 flex flex-col`} data-report-print={presentation === 'print' ? 'ink' : 'colour'}>
 
       {/* ── Toolbar ──────────────────────────────────────────────────────────
           Wraps rather than scrolls. At 375px the old single non-wrapping row was
@@ -1021,7 +1033,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{tr('Advice depth', 'Ukujula kwezeluleko')}</div>
           <div className="flex flex-col gap-1.5 mb-4">
             {([
-              ['one-pager', 'Brief advice', 'Generate brief advice. Use 1-page summary above for a fixed-length PDF.'] as const,
+              ['one-pager', 'Brief advice', 'Generate brief advice. Choose At a glance for a 1-page summary PDF.'] as const,
               ['standard', 'Standard', 'Core sections for the farmer'] as const,
               ['comprehensive', 'Comprehensive', 'All sections, full detail'] as const,
             ]).map(([val, label, tip]) => (
@@ -1066,7 +1078,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           {length === 'one-pager' && (
             <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
-              {tr('Brief advice = Executive Summary only. Use the summary controls above to choose a fixed page count.', 'Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.')}
+              {tr('Brief advice = Executive Summary only. Choose At a glance or Field guide for a fixed-page summary PDF.', 'Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.')}
             </div>
           )}
           <div className="space-y-1" style={{ opacity: length === 'one-pager' ? 0.4 : 1, pointerEvents: length === 'one-pager' ? 'none' : 'auto' }}>
@@ -1114,12 +1126,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </fieldset>
           {/* Generated TOC — appears once the report has content */}
           {report && (() => {
-            const tocItems = report.split('\n')
-              .filter(l => l.startsWith('## ') && !l.includes('Executive Summary'))
-              .map(l => {
-                const title = l.replace('## ', '');
-                return { title, id: title.toLowerCase().replace(/[^a-z0-9]+/g, '-') };
-              });
+            const tocItems = chapters;
             if (!tocItems.length) return null;
             return (
               <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--report-border)' }}>
@@ -1130,16 +1137,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   {tocItems.map(({ title, id }) => (
                     <button
                       key={id}
-                      onClick={() => {
-                        // On a phone the report column is display:none while this
-                        // panel is open — scrolling a hidden element does nothing,
-                        // so show it first and scroll on the next frame.
-                        setPanelOpen(false);
-                        requestAnimationFrame(() => {
-                          const el = reportRef.current?.querySelector(`#${id}`);
-                          el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        });
-                      }}
+                      onClick={() => jumpToChapter(id)}
                       className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
@@ -1158,11 +1156,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div className={`${styles.column} report-column flex-1 overflow-y-auto relative`}
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
-          <ReportReadingGuide reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={id => {
-            const heading = reportRef.current?.querySelector<HTMLElement>(`#${id}`);
-            heading?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-            heading?.focus({ preventScroll: true });
-          }} />
+          <ReportReadingGuide reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={jumpToChapter} />
           {/* Progress while the report is being written. It used to stay pinned at full width
               afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
           {report && loading && (

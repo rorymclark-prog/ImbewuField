@@ -1,4 +1,5 @@
 .workspace {
+  z-index:65;
   --report-paper: #ffffff;
   --report-canvas: #edf2ee;
   --report-panel: #f3f7f3;

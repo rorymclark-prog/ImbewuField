@@ -1,4 +1,5 @@
-.survey { background:var(--bg); color:var(--text); height:100dvh; font-size:15px; }
+/* Fixed insets fit the zoomed viewport too; 100dvh put Save below the screen at 140% type. */
+.survey { background:var(--bg); color:var(--text); font-size:15px; container-type:inline-size; }
 .survey button,.survey input,.survey select,.survey textarea { font-family:var(--font-sans); }
 .survey button { min-height:44px; }
 .survey button:focus-visible,.survey input:focus-visible,.survey textarea:focus-visible,.survey select:focus-visible,.survey summary:focus-visible { outline:3px solid var(--brand); outline-offset:3px; }
@@ -134,3 +135,10 @@
 .mobileGuide summary { display:flex; gap:8px; align-items:center; min-height:44px; font-size:13px; cursor:pointer; }
 .mobileGuide p { font-size:13px; line-height:1.75; padding-bottom:14px; }
 @media(max-width:1170px) { .mobileGuide { display:block; } }
+@container (max-width:340px) {
+  .header { display:grid; grid-template-columns:minmax(0,1fr) 44px; }
+  .siteHeading { grid-column:1; grid-row:1; }
+  .close { grid-column:2; grid-row:1; }
+  .modeButton { grid-column:1 / -1; grid-row:2; justify-self:start; max-width:none; }
+  .siteHeading strong { font-size:17px; }
+}

@@ -102,6 +102,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/report/ReportCropPlan.tsx': 'saved crop plan read by farmers',
   'components/report/ReportVersionDetails.tsx': 'saved report settings and dates read by farmers',
   'components/report/ReportVisualOverview.tsx': 'site charts, values and captions read by farmers on phones',
+  'components/report/ReportReadingGuide.tsx': 'report depth choices and chapter links must remain readable on phones',
   'components/report/SidewaysScroller.tsx': 'the words that tell a farmer a wide report picture slides sideways on a phone',
   'components/ProgrammeReports.tsx': 'organisation and funder reporting',
   'components/DashboardTabs.tsx': 'touch and keyboard navigation across staff sections',

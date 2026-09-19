@@ -406,9 +406,16 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
     headingRef.current?.focus({ preventScroll: true });
-    const active = dialogRef.current?.querySelector<HTMLElement>('[aria-current="step"]');
-    if (active && window.matchMedia('(max-width:760px)').matches) active.parentElement?.scrollTo({ left: active.offsetLeft - 12 });
   }, [step, started]);
+  useEffect(() => {
+    const alignActiveSection = () => {
+      const active = dialogRef.current?.querySelector<HTMLElement>('[aria-current="step"]');
+      if (active && window.matchMedia('(max-width:760px)').matches) active.parentElement?.scrollTo({ left: active.offsetLeft - 12 });
+    };
+    alignActiveSection();
+    window.addEventListener('resize', alignActiveSection);
+    return () => window.removeEventListener('resize', alignActiveSection);
+  }, [step, started, mode]);
   useEffect(() => {
     const prior = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;

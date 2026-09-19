@@ -1,15 +1,15 @@
 # Site survey and visual report — 20 September 2026
 
-## Checkpoint requested by Rory
+## Release status
 
-Rory asked to preserve the work before usage expires. This branch is a reviewable
-checkpoint, not a claim that all device checks are complete. Build on the existing
-report illustrations and saved data. Do not replace or merge this work blindly.
+Rory first requested a checkpoint before usage expiry, then explicitly requested
+publication and continued work with saves every ten minutes. PR #444 contains the
+site survey and report improvements. The task uses Astra with Extra high reasoning.
 
 Branch: `codex/visual-site-survey`.
 Worktree: `/Users/roryclark/.codex/worktrees/visual-site-survey/ImbewuField`.
 Task: `01a0bbde-0dd6-74e1-992c-fc2848b7e6a8`.
-The task is on `gpt-6-astra`, reasoning `xhigh` (confirmed from its turn metadata).
+Checkpoint automation: `save-imbewu-survey-work` (every ten minutes while active).
 
 ## Implemented
 
@@ -42,59 +42,58 @@ The task is on `gpt-6-astra`, reasoning `xhigh` (confirmed from its turn metadat
 This changes the picture. `PLAN_VERSION` was deliberately left untouched.
 No saved geometry, species, lesson bodies, or paid-render paths were changed.
 
-## Verification already completed
+## Release verification
 
-Before the final report-reading additions, typecheck and the full Node 24 suite
-passed: 3,630 tests, 3,629 passed, zero failed, one existing TODO. Whitespace passed.
-Typecheck also passed after the report-reading additions.
+Final typecheck and full Node 24 suite passed: 3,630 tests, 3,629 passed, zero
+failed, one existing TODO. Whitespace passed. The new reading panel is registered
+under the strict 12px farmer text floor; no assertion or allowance was removed.
+CI must pass both the test and rules jobs before merging.
 
-Browser checks on the local questionnaire included:
+Rendered and inspected Chrome layouts at phone (390×844), iPad portrait
+(820×1180), iPad landscape (1180×820), and laptop (1440×960). These are browser
+viewport checks, not physical-device or Safari certification. The survey review
+was inspected in light and dark modes. At 140% scale the survey now fits the
+390×844 viewport and Save remains visible (bottom 827px). The narrow header wraps
+without overlap, and the active section scrolls into view after rotation.
 
-- Existing selections, manual cultivation area and roof areas survive saving.
-- Adult range is saved in its canonical form.
-- Explicit None is deselected when an actual crop or water source is chosen.
-- Escape opens the unsaved-change confirmation; cancelling retains answers.
-- A simulated local-storage write failure leaves the questionnaire open with an
-  error. Restoring storage allows a successful save.
-- Short to comprehensive navigation preserves the production/cultivation state.
-- Desktop soil and water layouts were rendered and inspected. Missing rainfall
-  displays an unknown result rather than an invented site estimate.
+Report settings fold away below 1100px, giving iPads a full-width document. The
+floating Lima launcher no longer obscures report figures. Both chapter menus use
+the same heading IDs, and navigating from a short edition opens the full report.
 
-No live paid AI call was made. No production deployment was requested or performed.
+Browser interactions verified:
 
-## Resume here
+- Survey selections, manual growing area and both roof areas survive save/reopen.
+- Canonical adult range; mutually exclusive None and actual crop/water choices.
+- Escape confirmation; cancel retains unsaved answers.
+- Simulated storage-write failure keeps the survey open; retry saves successfully.
+- 120 eggs/year, 80 used and 41 sold is flagged. With 40 sold it saves exactly,
+  including Jan/Dec harvest months and unknown (null) income.
+- Switching comprehensive to short retains the detailed production row. Reopening
+  shows 120 eggs in the review.
+- Full-report chapter navigation opens and focuses its matching section.
+- Actual Export PDF downloads: exactly 1-page and 5-page handouts; a 12-page full
+  sample report. Handout pages and the full cover, land-use/progress and climate
+  chart pages were rendered and visually inspected. The existing full PDF drawing
+  pipeline is retained. No paid AI call was made.
 
-1. Run the required final checks in order: `npx tsc --noEmit`, `npm test` under
-   Node 24, then `git diff --check`. The system Node is 26; the verified test command
-   is `npm exec --yes --package=node@24 -- npm test`. Dependencies were installed
-   in this worktree with `npm ci`; do not re-symlink stale main dependencies.
-2. Complete the production browser case: 120 eggs/year, 80 used and 41 sold must
-   warn; changing sold to 40 must clear it. Add Jan and Dec, switch to short,
-   review, save, reopen, and confirm blank income is still unknown.
-3. Inspect questionnaire entry, soil, water, review and production on phone
-   (390×844), iPad portrait (820×1180), landscape (1180×820) and laptop (1440×960).
-   Check overflow, sticky footer, keyboard focus, touch targets, dark mode and
-   enlarged type. Inspect the actual screenshots, not only DOM dimensions.
-4. Inspect all three report reading editions at those sizes. Check the chapter
-   jumps, source notices and horizontal figure scrolling. Confirm the 1/5-page
-   handouts and full visual PDF still export correctly. New report visual changes
-   have not yet been visually signed off.
-5. New questionnaire copy uses the established English fallback. Review isiZulu
-   presentation and obtain language review before claiming full localisation.
-6. Finish the PR, report branch/SHA and checks in issue #35. Read remote queue and
-   ledger before integration. Do not assume the old August self-merge window is
-   active in September. Do not bump PLAN_VERSION.
+Local QA page source and images are under `output/playwright/` and deliberately
+untracked. Temporary `app/qa-*` routes must never be committed. The saved harnesses
+are `output/playwright/harness/qa-survey` and `qa-report`; the latter uses disposable
+sample mode. The dev server is port 4244. Playwright sessions are `survey-final`
+and `report-qa`. Inspect a fresh snapshot before continuing. The survey action is
+labelled "Save & continue"; its cultivation field is "Area currently under cultivation".
 
-Local QA helpers and images are under `output/playwright/` and are deliberately
-untracked; no QA routes, logs, credentials or screenshots are in this commit.
-The temporary page source is preserved locally under
-`output/playwright/harness/qa-survey` and `qa-report`; copy back into `app/` only
-for QA, then remove before committing. The report harness uses disposable sample
-mode. Local dev server is port 4244. Playwright sessions are `survey-final` and
-`report-qa` using the installed Playwright skill wrapper. Reinspect a snapshot
-before continuing, since the final production automation had not completed when
-this checkpoint was requested. A test locator must use the actual label
-"Area currently under cultivation", not "Cultivation area".
+## Further improvement boundaries
+
+- New questionnaire copy uses the existing English fallback. Obtain language review
+  before claiming full localisation.
+- Persistent draft recovery is not implemented; explicit saves and unsaved-change
+  protection retain the existing storage model.
+- Continue checking real-device ergonomics and farmer feedback without inventing
+  measurements or nutritional scores.
+- Publication was authorised on 20 September. Use the existing Vercel deployment
+  workflow, verify `/api/build-info`, and record the deployed revision in issue #35.
+- Leave PLAN_VERSION untouched. Re-read the remote ledger before integration.
 
 ## Follow-up audit observations
 
