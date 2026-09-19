@@ -9,6 +9,7 @@ import ReportMapStocktake, { ReportMapPreview } from './report/ReportMapStocktak
 import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportMaps, type ReportMapSelection } from '@/lib/report-map-selection';
 import ReportVisualOverview from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
+import ReportReadingGuide from './report/ReportReadingGuide';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
 import { reportChapterGraphics, placedFigureIds, type ChapterGraphic } from '@/lib/report-chapter-visuals';
 import { siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
@@ -127,18 +128,18 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
 
     if (line.startsWith('## ')) {
       const heading = line.replace('## ', '');
-      const headingId = heading.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      const headingId = `report-chapter-${i}`;
       const isExecSummary = heading === 'Executive Summary';
       elements.push(
         isExecSummary ? (
-          <div key={i} className="report-h2 rounded-xl p-4 my-6"
+          <div key={i} id={headingId} tabIndex={-1} className="report-h2 rounded-xl p-4 my-6"
                style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
             <div className="font-display font-bold text-lg mb-1" style={{ color: 'var(--report-green)' }}>
               Executive Summary
             </div>
           </div>
         ) : (
-          <h2 key={i} id={headingId} className="report-h2 font-display font-bold text-xl mt-10 mb-3 pt-4 pb-2 flex items-center gap-3"
+          <h2 key={i} id={headingId} tabIndex={-1} className="report-h2 font-display font-bold text-xl mt-10 mb-3 pt-4 pb-2 flex items-center gap-3"
               style={{ color: 'var(--report-green)', borderBottom: '1px solid var(--report-border)' }}>
             <span style={{ display: 'inline-block', width: 3, height: 20, borderRadius: 2, background: 'var(--report-gold)', flexShrink: 0 }} />
             {heading}
@@ -307,6 +308,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
+  const chapters = report.split('\n').flatMap((line, i) => line.startsWith('## ') ? [{ id: `report-chapter-${i}`, title: stripInlineMarkdown(line.slice(3)) }] : []);
+  // Short editions keep the same saved facts. Their simpler charts do not need a new report.
+  const briefVisuals = { ...siteReportVisuals(facts, d, language), title: siteName, subtitle: '',
+    overviewTitle: tr('The essentials, in pictures', 'Okubalulekile, ngezithombe'),
+    overviewNote: tr('Your mapped space, planned storage and seasonal rainfall.', 'Indawo ebalazwe, ukugcinwa kwamanzi okuhleliwe nemvula yesizini.') };
+  const screenVisuals = reading === 'full' ? overviewVisuals : reading === 'one'
+    ? { ...briefVisuals, charts: briefVisuals.charts.filter(c => ['area', 'water', 'rainfall'].includes(c.id)) }
+    : { ...visuals, charts: visuals.charts.filter(c => ['site-plan', 'rainfall', 'water-budget', 'soil'].includes(c.id)) };
+
   useEffect(() => {
     if (activeSaved) { setFacts(activeSaved.facts ?? null); return; }
     const siteId = designSiteIdFromLocation(d);
@@ -910,7 +920,6 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </button>
         {!isWide && <button type="button" aria-expanded={viewOptionsOpen} onClick={() => setViewOptionsOpen(open => !open)}>{tr('View and print options', 'Izinketho zokubuka nokuphrinta')} <span aria-hidden="true">{viewOptionsOpen ? '▴' : '▾'}</span></button>}
         <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
-        <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label>Cover <select aria-label="Report cover image" value={coverChoice} onChange={e => setCoverChoice(e.target.value as ReportCoverChoice)}>
           <option value="auto">Automatic</option><option value="map">Site map</option><option value="photo">Site photo</option><option value="none">No picture</option>
         </select></label>}
@@ -1149,8 +1158,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div className={`${styles.column} report-column flex-1 overflow-y-auto relative`}
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
-          {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
-          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
+          <ReportReadingGuide reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={id => {
+            const heading = reportRef.current?.querySelector<HTMLElement>(`#${id}`);
+            heading?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+            heading?.focus({ preventScroll: true });
+          }} />
           {/* Progress while the report is being written. It used to stay pinned at full width
               afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
           {report && loading && (
@@ -1227,7 +1239,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={overviewVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
+            {presentation !== 'print' && <ReportVisualOverview visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
@@ -1345,7 +1357,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Generated report */}
             {(report || reading !== 'full') && (
               <div className={`${styles.body} report-body`}>
-                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><span className={styles.summaryLabel}>{i + 1} / {summaryPages.length}</span><h2>{page.title}</h2>{page.lines.map((line, n) => <p key={n}>{line}</p>)}</section>)}
+                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">
@@ -1369,6 +1381,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </p>
               </div>
             )}
+          </div>
+          <div className={styles.recordTools}>
+          {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
+          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           </div>
         </div>
       </div>

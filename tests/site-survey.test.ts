@@ -5,6 +5,8 @@ import {
   canonicalSurveySiteId,
   loadSurvey,
   reportedFoodGroups,
+  toggleSurveyChoice,
+  productionNeedsReview,
   saveSurvey,
   surveyToPrompt,
   type SiteSurvey,
@@ -258,4 +260,55 @@ test('SSR and broken JSON degrade to no survey', () => {
   Object.defineProperty(globalThis, 'window', { configurable: true, value: undefined });
   assert.equal(loadSurvey('site:any'), null);
   assert.doesNotThrow(() => saveSurvey(survey()));
+});
+
+
+test('a farmer cannot report no water or no crops alongside a selected resource', () => {
+  assert.deepEqual(toggleSurveyChoice(['municipal'], 'none'), ['none']);
+  assert.deepEqual(toggleSurveyChoice(['none'], 'rainwater'), ['rainwater']);
+  assert.deepEqual(toggleSurveyChoice(['municipal'], 'rainwater'), ['municipal', 'rainwater']);
+  assert.deepEqual(toggleSurveyChoice(['vegetables'], 'nothing', 'nothing'), ['nothing']);
+  assert.deepEqual(toggleSurveyChoice(['nothing'], 'vegetables', 'nothing'), ['vegetables']);
+  assert.deepEqual(toggleSurveyChoice(['rainwater'], 'rainwater'), []);
+});
+
+test('production review catches missing units and over-allocation without rejecting decimal rounding', () => {
+  const row = { category: 'eggs' as const, quantityPerYear: 100, unit: 'eggs', usedByHousehold: 60, sold: 40, incomeZar: null };
+  assert.equal(productionNeedsReview(row), false);
+  assert.equal(productionNeedsReview({ ...row, sold: 41 }), true);
+  assert.equal(productionNeedsReview({ ...row, unit: '' }), true);
+  assert.equal(productionNeedsReview({ ...row, incomeZar: -1 }), true);
+  assert.equal(productionNeedsReview({ ...row, category: 'other' }), true);
+  assert.equal(productionNeedsReview({ ...row, quantityPerYear: .3, usedByHousehold: .1, sold: .2 }), false);
+  assert.equal(productionNeedsReview({ ...row, quantityPerYear: null, usedByHousehold: null, sold: null, unit: '', harvestMonths: [1] }), false);
+});
+
+test('the site report receives the production the farmer entered, with units and missing figures intact', () => {
+  const input = survey({ reportedProduction: [{ category: 'eggs', quantityPerYear: 120, unit: 'eggs', usedByHousehold: 80, sold: 40, incomeZar: null, harvestMonths: [1, 12] }] });
+  const prompt = surveyToPrompt(input, 800);
+  assert.match(prompt, /eggs — source: reported by the farmer/);
+  assert.match(prompt, /Quantity per year: 120 eggs; used by household: 80 eggs; sold: 40 eggs/);
+  assert.match(prompt, /income \(not profit\): not recorded/);
+  assert.match(prompt, /Harvest months .*: 1, 12/);
+  assert.match(prompt, /Unreported months are unknown, not food gaps/);
+  assert.match(prompt, /not a dietary intake survey or a nutrition score/);
+});
+
+test('an unreported resource remains unknown in the report instead of becoming confirmed absence', () => {
+  const prompt = surveyToPrompt(survey({ existingCrops: [], livestock: [], soilAmendments: [], waterStorage: [] }), 800);
+  assert.match(prompt, /Crops growing now: not recorded/);
+  assert.match(prompt, /Livestock: not recorded/);
+  assert.match(prompt, /On-site water storage: not recorded/);
+  assert.match(prompt, /Soil amendments applied: not recorded/);
+  const explicitNone = surveyToPrompt(survey({ existingCrops: ['nothing'], livestock: ['none'] }), 800);
+  assert.match(explicitNone, /Crops growing now: nothing yet/);
+  assert.match(explicitNone, /Livestock: none reported/);
+});
+
+
+test('translated adult-count ranges keep the same household key used by water estimates', () => {
+  installBrowser();
+  const saved = saveSurvey(survey({ adults: '2–5' }));
+  assert.equal(saved?.adults, '2-5');
+  assert.equal(loadSurvey(saved!.siteId)?.adults, '2-5');
 });

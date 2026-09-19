@@ -1,0 +1,31 @@
+.guide { max-width:1180px; margin:0 auto 20px; color:var(--report-ink); font-family:var(--font-sans),sans-serif; }
+.heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px 20px; margin:4px 0 12px; }
+.heading>span { font-size:12px; font-weight:700; letter-spacing:.11em; color:var(--report-green); }
+.heading p,.exportNote { font-size:13px; line-height:1.6; color:var(--report-muted); }
+.editions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.editions button { text-align:left; padding:18px; border:1px solid var(--report-border); border-radius:14px; background:var(--report-paper); color:var(--report-ink); min-width:0; transition:background .15s; }
+.editions button:hover { background:var(--report-panel); }
+.editions button[aria-pressed=true] { background:var(--report-panel); border-color:var(--report-green); box-shadow:inset 0 3px 0 var(--report-green); }
+.cardTop { display:flex; gap:8px; align-items:center; color:var(--report-green); }
+.cardTop svg { flex-shrink:0; }
+.cardTop span { font-size:12px; line-height:1.4; flex:1; }
+.editions strong { display:block; font:500 25px/1.2 var(--font-display),Georgia,serif; margin:14px 0 7px; }
+.editions small { display:block; font-size:13px; line-height:1.6; color:var(--report-muted); }
+.exportNote { margin:12px 0 0; }
+.contents { margin-top:12px; border-bottom:1px solid var(--report-border); }
+.contents summary { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; min-height:44px; color:var(--report-green); }
+.contents summary>span { margin-left:auto; color:var(--report-muted); }
+.contents nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px 20px; padding:8px 0 16px; }
+.contents button { display:flex; align-items:baseline; text-align:left; gap:12px; font-size:14px; line-height:1.5; min-height:44px; padding:10px 8px; border-radius:8px; }
+.contents button:hover { background:var(--report-panel); }
+.contents button>span { color:var(--report-gold); font-size:12px; }
+@media(max-width:767px) {
+  .guide { padding:18px 16px 0; margin-bottom:18px; }
+  .heading p { display:none; }
+  .editions { gap:8px; }
+  .editions button { padding:12px 10px; }
+  .cardTop>span,.cardTop>svg:last-child:not(:first-child),.editions small { display:none; }
+  .editions strong { font-size:19px; margin:12px 0 0; }
+  .contents nav { grid-template-columns:1fr; }
+}
+@media print { .guide { display:none; } }

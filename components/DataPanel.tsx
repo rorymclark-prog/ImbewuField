@@ -28,7 +28,7 @@ import { COMPASS16_BEARING } from '@/lib/local-wind';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { studioBoundaryMetrics } from '@/lib/studio-traced-areas';
 import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
-import { gatherSiteInputs } from '@/lib/site-progress';
+import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage } from '@/lib/i18n';
@@ -1654,16 +1654,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Site survey card */}
             {(() => {
               const sv = survey;
-              const steps = [
-                !!(sv?.siteType && sv.goals?.length > 0),
-                !!(sv?.waterSource?.length),
-                sv?.roofMainM2 !== undefined && sv?.roofMainM2 !== null,
-                !!(sv?.landPrepMethod && sv.soilCondition),
-                !!(sv?.existingCrops?.length),
-                !!(sv?.farmingPractice && sv.challenges?.length),
-              ];
-              const done = steps.filter(Boolean).length;
-              const pct = Math.round(done / 6 * 100);
+              const done = surveyFilledCount(sv);
+              const pct = Math.round(done / SURVEY_TOTAL_FIELDS * 100);
               const GOAL_LABELS: Record<string, string> = {
                 food: t('surveyGoalFood'), income: t('surveyGoalIncome'),
                 soil: t('surveyGoalSoil'), education: t('surveyGoalEducation'),
@@ -1674,13 +1666,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
                       {t('surveySectionLabel')}
                     </span>
-                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === 6 ? '#3C6B3F' : '#B07A1E' }}>
-                      {t('surveyStepsOf6').replace('{n}', String(done))}
+                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === SURVEY_TOTAL_FIELDS ? '#3C6B3F' : '#B07A1E' }}>
+                      {t('surveyKeyChecks').replace('{n}', String(done)).replace('{total}', String(SURVEY_TOTAL_FIELDS))}
                     </span>
                   </div>
                   <div style={{ height: 6, background: '#DCD2BD', borderRadius: 3, overflow: 'hidden', marginBottom: 10 }}>
-                    <div style={{ width: `${pct}%`, height: '100%', background: done === 6 ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
+                    <div style={{ width: `${pct}%`, height: '100%', background: done === SURVEY_TOTAL_FIELDS ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
                   </div>
+                  <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: 12 }}>{t('surveyCardHint')}</p>
                   {(sv?.goals?.length ?? 0) > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
                       {(sv?.goals ?? []).map((g: string) => (
@@ -1694,7 +1687,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     onClick={() => setSurveySheetOpen(true)}
                     style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
                   >
-                    {done === 6 ? t('surveyUpdateButton') : t('surveyOpenButton')}
+                    {done === SURVEY_TOTAL_FIELDS ? t('surveyUpdateButton') : t('surveyOpenButton')}
                   </button>
                 </div>
               );
@@ -1863,6 +1856,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         <SiteSurveySheet
           placeId={activePlaceId}
           coords={coords}
+          annualRainfallMm={data?.rainfall.annual}
           onSaved={() => { setSurveySheetOpen(false); openPhotoOrReport(); }}
           onClose={() => setSurveySheetOpen(false)}
         />

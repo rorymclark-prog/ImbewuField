@@ -69,6 +69,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
+  'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
   'app/offline/page.tsx': 'device preparation and unsent fieldwork are read on phones',
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
   'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',
@@ -171,10 +173,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
     reason: 'the site analysis panel — dense climate and soil figures read at a laptop',
     budget: 33,
   },
-  'components/SiteSurveySheet.tsx': {
-    reason: 'the facilitator survey, filled in by a field officer',
-    budget: 11,
-  },
+
   'components/ReportView.tsx': {
     reason: 'screen report captions are now at least 12px; PDF type is handled separately',
     budget: 0,

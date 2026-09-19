@@ -49,6 +49,8 @@ function localeBlocks(): Array<{ locale: string; block: string }> {
 // Brand new — did not exist anywhere in the dictionary before this change. (`stepChallenges` is
 // reused as-is for the 7th step tab and is covered by the rewired list below, not here.)
 const NEW_ENGLISH_ONLY_KEYS = [
+  // Saving now returns to the caller; it does not itself generate a report.
+  'surveySaveContinue',
   'surveyStepHouseholdInfo',
   'surveyStepLandLocation',
   'surveyStepCurrentProduction',
@@ -274,7 +276,7 @@ const REWIRED_EXISTING_KEYS = [
   'notesPlaceholder',
   'buttonBack',
   'buttonNext',
-  'buttonSaveAndGenerateReport',
+  // The former Save & generate report promise is replaced by surveySaveContinue above.
 ] as const;
 
 test('the new SiteSurveySheet keys exist in English only, and no other locale was touched', () => {
