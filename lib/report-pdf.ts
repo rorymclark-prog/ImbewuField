@@ -290,6 +290,31 @@ export async function sheetPlate(
   }
 }
 
+/** How small a chapter picture may be set to stay on the page it belongs to. Below this the
+ * lettering inside a drawn figure stops being readable in print, so the picture waits instead. */
+export const CHAPTER_PICTURE_MIN_SCALE = 0.8;
+
+/** Which of a chapter's waiting pictures are set from here down, and how large.
+ *
+ * In order, as many as fit at the smallest honest size; those share ONE scale, no smaller than
+ * they need, so a page of pictures is filled rather than left with a hole under the first one
+ * (a tall water figure and the picture explaining it make one full page at 83 %, where at full
+ * size the second was pushed on and a third of the page stayed empty). `natural` is a picture's
+ * full height and `extra` its title, gaps and caption, which never scale. `mustPlace` is a fresh
+ * page: something is always set there, so the caller is guaranteed to make progress. */
+export function fitChapterPictures(
+  pictures: Array<{ natural: number; extra: number }>, room: number, mustPlace = false, minScale = CHAPTER_PICTURE_MIN_SCALE,
+): { count: number; scale: number } {
+  let count = 0, fixed = 0, natural = 0;
+  for (const picture of pictures) {
+    if (fixed + picture.extra + (natural + picture.natural) * minScale > room) break;
+    fixed += picture.extra; natural += picture.natural; count += 1;
+  }
+  if (count) return { count, scale: Math.min(1, (room - fixed) / natural) };
+  if (!mustPlace || !pictures.length) return { count: 0, scale: 1 };
+  return { count: 1, scale: Math.max(0.1, Math.min(1, (room - pictures[0].extra) / pictures[0].natural)) };
+}
+
 export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): Promise<Blob> {
   // A SAVED REPORT IS AN ARTEFACT, AND ARTEFACTS OUTLIVE THE CODE THAT MADE THEM. The API
   // assembles cover, contents and section numbers for every report it generates — but a report
@@ -335,7 +360,45 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     doc.setTextColor(textColor);
   };
 
-  const newPage = () => { footer(); doc.addPage(); y = M + 8; };
+  // ── Chapter pictures ───────────────────────────────────────────────────────
+  //
+  // A picture that does not fit used to be pushed to the next page with nothing to fill the hole
+  // it left: exported reports carried half-empty pages in the middle of a chapter. Now it is set
+  // a little smaller when that keeps it here, and otherwise it WAITS — the chapter's text carries
+  // on under the heading and the picture opens the next page, the way a printed book floats a
+  // figure. `waiting` is drained by every page break and at the end of each chapter.
+  type ChapterPicture = { image: string; title: string; caption: string[]; natural: number; ratio: number; format: 'JPEG' | 'PNG' };
+  const waiting: ChapterPicture[] = [];
+  const measurePicture = (graphic: import('./report-visual-pdf').ChapterImage): ChapterPicture => {
+    const info = doc.getImageProperties(graphic.image);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    return {
+      image: graphic.image, title: graphic.title, caption: doc.splitTextToSize(graphic.caption, CW) as string[],
+      natural: Math.min(graphic.maxHeight ?? 345, CW * info.height / info.width), ratio: info.width / info.height,
+      format: info.fileType === 'JPEG' ? 'JPEG' : 'PNG',
+    };
+  };
+  /** Title, gaps and caption: everything a picture needs on the page besides its own height. */
+  const pictureExtra = (picture: ChapterPicture) => picture.caption.length * 12 + 50;
+  const fitHere = (pictures: ChapterPicture[], reserved = 0) =>
+    fitChapterPictures(pictures.map(picture => ({ natural: picture.natural, extra: pictureExtra(picture) })), BOTTOM - y - reserved, y <= M + 8 && !reserved);
+  const drawPicture = (picture: ChapterPicture, height: number) => {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(12); setInk(INK.green);
+    doc.text(picture.title, M, y + 9); y += 22;
+    const width = height * picture.ratio;
+    doc.addImage(picture.image, picture.format, M + (CW - width) / 2, y, width, height, undefined, 'FAST'); y += height + 14;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); setInk(INK.muted);
+    for (const line of picture.caption) { doc.text(line, M, y); y += 12; }
+    y += 14;
+  };
+  /** Set the waiting pictures that fit from here down; the rest keep waiting. */
+  const drawWaiting = () => {
+    const fit = fitHere(waiting);
+    for (const picture of waiting.splice(0, fit.count)) drawPicture(picture, picture.natural * fit.scale);
+  };
+  const newPage = () => { footer(); doc.addPage(); y = M + 8; drawWaiting(); };
+  /** End of a chapter: its pictures are set before the next chapter's heading, never after it. */
+  const flushWaiting = () => { drawWaiting(); while (waiting.length) newPage(); };
   // Reports whether it broke the page, so the table below can repeat its header on the new one —
   // every other call site just ignores the return value, exactly as before this was added.
   const need = (h: number): boolean => { if (y + h <= BOTTOM) return false; newPage(); return true; };
@@ -392,7 +455,27 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   }
 
   // ── Body ───────────────────────────────────────────────────────────────────
-  for (const block of parseReportMarkdown(markdown)) {
+  const blocks = parseReportMarkdown(markdown);
+  /** Room the first thing under a chapter heading needs. A heading is only kept on a page when
+   * its own text will start there too — never left behind by a paragraph that jumps the page. */
+  const openingRoom = (from: number): number => {
+    let room = 0;
+    for (let k = from; k < Math.min(blocks.length, from + 2); k += 1) {
+      const next = blocks[k];
+      if (next.kind === 'h2' || next.kind === 'title') break;
+      if (next.kind === 'table') { room += 64; break; }
+      doc.setFont('helvetica', next.kind === 'h3' || next.kind === 'bold' ? 'bold' : 'normal');
+      doc.setFontSize(next.kind === 'h3' ? 11 : 10);
+      const width = next.kind === 'bullet' ? CW - 14 : next.kind === 'numbered' ? CW - 20 : CW;
+      const count = (doc.splitTextToSize(next.text, width) as string[]).length;
+      if (next.kind === 'h3') { room += count * 15 + 26; continue; } // a sub-heading keeps its first block too
+      room += count * 14 + 8;
+      break;
+    }
+    return room;
+  };
+  for (let index = 0; index < blocks.length; index += 1) {
+    const block = blocks[index];
     switch (block.kind) {
       case 'title': {
         doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setInk(INK.text);
@@ -402,38 +485,36 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         break;
       }
       case 'h2': {
-        // Match before pagination so the chapter title stays with its first illustration.
+        flushWaiting();
+        // The PDF may number an older report now. Match its chapter by the same title rule
+        // as the document assembler, so illustrations survive added/changed numbering.
         const chapter=Object.entries(meta.visualAssets?.chapters??{}).find(([heading])=>stripLeadingNumber(pdfSafe(stripInlineMarkdown(heading)))===stripLeadingNumber(block.text));
-        const firstGraphic=chapter?.[1][0];
-        let firstGraphicRoom=0;
-        if(firstGraphic){
-          const info=doc.getImageProperties(firstGraphic.image);
-          doc.setFont('helvetica','normal');doc.setFontSize(9);
-          firstGraphicRoom=Math.min(firstGraphic.maxHeight??345,CW*info.height/info.width)+doc.splitTextToSize(firstGraphic.caption,CW).length*12+43;
-        }
+        const pictures = (chapter?.[1] ?? []).map(measurePicture);
         doc.setFont('helvetica', 'bold'); doc.setFontSize(13); setInk(INK.green);
         const lines = doc.splitTextToSize(block.text, CW);
-        // A heading alone at the foot of a page is worse than a slightly short page.
-        need(lines.length * 17 + 34 + firstGraphicRoom);
+        const headingRoom = lines.length * 17 + 34;
+        // A heading alone at the foot of a page is worse than a slightly short page. It stays
+        // with its first illustration when that fits here; when it does not, it stays with the
+        // opening of its text instead (openingRoom) and the illustration opens the next page.
+        if (!pictures.length || fitHere(pictures.slice(0, 1), headingRoom).count) need(headingRoom);
+        else {
+          // The first illustration does not fit under the heading here. Breaking the page keeps
+          // them together, and a short gap before a new chapter reads as a chapter opening — but
+          // a third of a page left empty reads as a mistake, so there the text fills it instead.
+          const left = BOTTOM - y;
+          const opening = openingRoom(index + 1);
+          const fillWithText = left >= (BOTTOM - M - 8) * 0.3 && opening > 0 && left >= headingRoom + Math.max(opening, 60);
+          if (!fillWithText) newPage();
+        }
         y += 10;
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(13); setInk(INK.green);
         doc.text(lines, M, y); y += lines.length * 17;
         doc.setDrawColor(226, 216, 196); doc.line(M, y - 4, PW - M, y - 4);
         y += 8;
-        // The PDF may number an older report now. Match its chapter by the same title rule
-        // as the document assembler, so illustrations survive added/changed numbering.
-        for (const graphic of chapter?.[1] ?? []) {
-          const info=doc.getImageProperties(graphic.image);
-          const height=Math.min(graphic.maxHeight??345,CW*info.height/info.width);
-          doc.setFont('helvetica','normal');doc.setFontSize(9);
-          const caption=doc.splitTextToSize(graphic.caption,CW) as string[];
-          need(height+caption.length*12+43);
-          doc.setFont('helvetica','bold');doc.setFontSize(12);setInk(INK.green);
-          doc.text(graphic.title,M,y+9);y+=22;
-          const width=height*info.width/info.height;
-          doc.addImage(graphic.image,info.fileType==='JPEG'?'JPEG':'PNG',M+(CW-width)/2,y,width,height,undefined,'FAST');y+=height+14;
-          doc.setFont('helvetica','normal');doc.setFontSize(9);setInk(INK.muted);
-          textLines(caption,M,12);y+=14;
-        }
+        // In order, and only while each one fits: a later picture never jumps ahead of an
+        // earlier one that is still waiting for room. The text carries on under whatever was set.
+        waiting.push(...pictures);
+        drawWaiting();
         break;
       }
       case 'h3': {
@@ -513,6 +594,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
       }
     }
   }
+  flushWaiting();
 
   if (meta.cropPlan) {
     footer();
