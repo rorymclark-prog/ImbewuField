@@ -96,7 +96,8 @@ test('chapter graphics use named catalogue trees and typed chart values, never i
   assert.ok(visuals.charts.some(c => c.id === 'rainfall'));
   assert.ok(Object.values(chapters).flat().every(g => !g.chart));
   assert.ok(!chapters['Water Harvesting'].some(g=>g.chart?.id==='water'),'no tank capacity may be guessed from prose');
-  assert.ok(chapters['Soil Strategy'].some(g=>g.svg&&g.note.includes('does not describe measured')));
+  assert.ok(chapters['Soil Strategy'].some(g=>g.art&&g.note.includes('does not describe measured')));
+  assert.ok(Object.values(chapters).flat().filter(g=>g.art).every(g=>g.note.startsWith('Concept illustration')),'a reusable picture is never passed off as this site');
 });
 
 // The traced roof and the traced property boundary live in the MAP's shape store, which the

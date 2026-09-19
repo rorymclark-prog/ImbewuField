@@ -853,10 +853,10 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   // The first two blocks sit either side of the house's south wing (DEMO_HOUSE_METRES runs to
   // y = 16 between x = 24 and x = 30). They used to be drawn straight across it — invisible while
   // nothing drew the traced house and the design together, and the first thing anyone saw once the
-  // site report's plan did. Same ~21 m² each.
+  // site report's plan did. Still 21 m² each (6 × 3.5 and 4.2 × 5).
   const staplePlots: ZoneShape[] = [
-    [[17.6, 12.4], [23.4, 12.4], [23.4, 15.9], [17.6, 15.9]],
-    [[31, 10.8], [35.6, 10.8], [35.6, 15.4], [31, 15.4]],
+    [[17.4, 12.4], [23.4, 12.4], [23.4, 15.9], [17.4, 15.9]],
+    [[31, 10.6], [35.2, 10.6], [35.2, 15.6], [31, 15.6]],
     [[22, 16.5], [28, 16.5], [28, 20], [22, 20]],
     [[29, 16.5], [35, 16.5], [35, 20], [29, 20]],
   ].map((ringM, index) => ({

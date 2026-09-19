@@ -62,7 +62,7 @@ const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
 // filename do NOT need a bump — a miss falls through to the network and is cached on
 // first sight. Ordinary deploys leave the constant alone and the art survives.
 const ART_CACHE = 'imbewu-art-v1';
-const ART_PATH = /^\\/(element-art|element-art-2|render-assets)\\//;
+const ART_PATH = /^\\/(element-art|element-art-2|render-assets|report-art)\\//;
 
 // A first visit loads its scripts BEFORE the worker controls the page. Saving HTML alone
 // therefore cannot boot that page after closing the browser. Publish each cached document

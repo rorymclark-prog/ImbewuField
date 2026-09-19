@@ -315,6 +315,7 @@ test('plant art survives a deploy: unversioned cache, spared sweep, no revalidat
     '/element-art/veg_bed.png',
     '/element-art-2/lawn.png',
     '/render-assets/reference-blueprint/apple-tree-v1.png',
+    '/report-art/soil-layers.jpg',
   ]) {
     assert.ok(artRe.test(p), `${p} must be served from the art cache`);
   }
