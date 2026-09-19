@@ -2,13 +2,16 @@ import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
 import { buildBillOfQuantities } from './report-boq';
+import type { ReportFigure } from './report-figures';
 
 export type ReportPresentation = 'screen' | 'colour' | 'ink';
 export type ReportMetric = { label: string; value: string; note: string };
 export type ReportChart = {
   id: string; title: string; note: string; unit: string;
-  kind: 'bars' | 'months' | 'progress' | 'calendar';
+  kind: 'bars' | 'months' | 'progress' | 'calendar' | 'figure';
   rows: Array<{ label: string; value: number; detail?: string; months?: number[]; once?: number[] }>;
+  /** kind 'figure': a finished drawing from lib/report-figures. `rows` stays empty. */
+  figure?: ReportFigure;
 };
 export type ReportVisuals = { title: string; subtitle: string; basis: string; overviewTitle?: string; overviewNote?: string; metrics: ReportMetric[]; charts: ReportChart[] };
 export const REPORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -44,6 +47,25 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
   return { overviewTitle: t('The site at a glance', 'Indawo ngamafuphi'), overviewNote: t('Space, seasons and the resources behind the plan.', 'Indawo, izinkathi zonyaka nezinsiza zohlelo.'), title: facts?.farmName ?? t('Your land, your plan', 'Umhlaba wakho, uhlelo lwakho'), subtitle: `${Math.abs(location.lat).toFixed(4)}°${location.lat < 0 ? 'S' : 'N'} · ${Math.abs(location.lon).toFixed(4)}°${location.lon < 0 ? 'W' : 'E'}`, basis: t('Saved design quantities and site data. Planned work remains distinct from completed work.', 'Ubuningi bomklamo obugciniwe nedatha yendawo. Umsebenzi ohleliwe uhlukile kosewuqediwe.'), metrics, charts };
 }
 
+/** A figure says more than the plain chart it grew out of, so it takes that chart's place (and,
+ * for rain, its id: saved reports and the chapter rules already know it as 'rainfall'). */
+const FIGURE_REPLACES: Record<string, string> = { climate: 'rainfall', 'water-budget': 'water', 'land-use': 'area' };
+const FIGURE_KICKER: Record<string, [string, string]> = { 'site-plan': ['SITE PLAN', 'IPULANI YENDAWO'], 'land-use': ['m²', 'm²'], status: ['BUILT / PLANNED', 'OKWAKHIWE / OKUHLELIWE'], climate: ['JAN – DEC', 'JAN – DEC'], sectors: ['SUN · WIND · SLOPE', 'ILANGA · UMOYA · UMTHAMBEKA'], 'water-budget': ['LITRES', 'AMALITHA'], soil: ['SOIL', 'UMHLABATHI'], timeline: ['WEEKS', 'AMASONTO'] };
+/** The ground comes first in the overview; the rest follow the charts they sit beside. */
+const FIGURES_FIRST = ['site-plan', 'land-use', 'status'];
+
+/** Adds the drawn figures to a report's visuals. Separate from siteReportVisuals because the
+ * figures need the saved drawing, which only the browser holds; the typed charts need only facts. */
+export function withReportFigures(visuals: ReportVisuals, figures: ReportFigure[], language = 'en'): ReportVisuals {
+  if (!figures.length) return visuals;
+  const source = language === 'zu' ? 'Umthombo' : 'Source';
+  const asChart = (figure: ReportFigure): ReportChart => ({ id: FIGURE_REPLACES[figure.id] === 'rainfall' ? 'rainfall' : figure.id, title: figure.title, note: `${figure.note} ${source}: ${figure.source}`.trim(), unit: FIGURE_KICKER[figure.id]?.[language === 'zu' ? 1 : 0] ?? '', kind: 'figure', rows: [], figure });
+  const replaced = new Set(figures.map(figure => FIGURE_REPLACES[figure.id]).filter(Boolean));
+  const first = figures.filter(figure => FIGURES_FIRST.includes(figure.id)).map(asChart);
+  const rest = figures.filter(figure => !FIGURES_FIRST.includes(figure.id)).map(asChart);
+  return { ...visuals, charts: [...first, ...visuals.charts.filter(chart => !replaced.has(chart.id)), ...rest] };
+}
+
 export function sampleReportVisuals(g: SampleGarden): ReportVisuals {
   const total = g.production.vegetableM2 + g.production.stapleM2;
   const rows = [{ label: 'Vegetable beds', value: g.production.vegetableM2 }, { label: 'Staple plots', value: g.production.stapleM2 }];
@@ -62,6 +84,7 @@ export function sampleReportVisuals(g: SampleGarden): ReportVisuals {
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** One chart drawing for screen and PDF. Values and category labels accompany colour. */
 export function reportChartSvg(chart: ReportChart, ink = false): { svg: string; height: number; width: number } {
+  if (chart.kind === 'figure' && chart.figure) return { svg: chart.figure.svg, width: chart.figure.width, height: chart.figure.height };
   const width = chart.kind === 'calendar' ? 820 : 640;
   const height = chart.kind === 'calendar' ? 80 + chart.rows.length * 58 : chart.kind === 'bars' ? Math.max(150, 32 + chart.rows.length * 66) : 252;
   const colours = ink ? ['#242424', '#626262', '#8b8b8b', '#434343'] : REPORT_COLOURS;

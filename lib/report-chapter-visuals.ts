@@ -24,10 +24,34 @@ export function reportTreeIllustrations(text:string) {
   }
   return trees;
 }
-export function chapterGraphics(heading:string, body:string, visuals:ReportVisuals):ChapterGraphic[] {
-  const plain=stripLeadingNumber(heading);
-  const title=Object.entries(REPORT_ZU).find(([,value])=>value===plain)?.[0]??plain;
-  const result:ChapterGraphic[]=[];
+/** Where each drawn figure belongs, best chapter first. A figure is shown ONCE: under the first of
+ * these headings the report actually has, and otherwise in the overview. 'rainfall' is the climate
+ * figure. The site plan, land use and built/planned figures always stay in the overview. */
+const FIGURE_CHAPTERS:Array<[string,RegExp[]]>=[
+  ['rainfall',[/^site conditions/i,/climate/i]],
+  ['sectors',[/sun (&|and) solar/i,/wind (&|and) windbreaks/i,/sector/i]],
+  ['water-budget',[/water harvesting/i,/irrigation/i,/water plan|water strategy|water, soil and|amanzi, umhlabathi/i]],
+  ['soil',[/soil strategy|soil plan|soil management/i,/water, soil and|amanzi, umhlabathi/i]],
+  ['timeline',[/year 1 priorities/i,/next actions/i,/implementation|phasing|5-year vision/i]],
+];
+const englishTitle=(heading:string)=>{const plain=stripLeadingNumber(heading);return Object.entries(REPORT_ZU).find(([,value])=>value===plain)?.[0]??plain;};
+/** heading → the figure charts that belong under it, for the headings this report really has. */
+export function placeReportFigures(headings:string[],visuals:ReportVisuals):Record<string,ReportChart[]> {
+  const placed:Record<string,ReportChart[]>={};
+  for(const [id,rules] of FIGURE_CHAPTERS){
+    const chart=visuals.charts.find(c=>c.kind==='figure'&&c.id===id);
+    if(!chart)continue;
+    for(const rule of rules){
+      const heading=headings.find(h=>rule.test(englishTitle(h)));
+      if(heading){(placed[heading]??=[]).push(chart);break;}
+    }
+  }
+  return placed;
+}
+export function chapterGraphics(heading:string, body:string, visuals:ReportVisuals, figures:ReportChart[]=[]):ChapterGraphic[] {
+  const title=englishTitle(heading);
+  // This site's own data first; the general "how it works" picture after it.
+  const result:ChapterGraphic[]=figures.map(chart=>({id:`figure-${chart.id}`,title:chart.title,note:chart.note,chart}));
   const waterSection=/water harvesting|irrigation|water plan|water strategy|water, soil and|amanzi, umhlabathi/i.test(title);
   const soilSection=/soil strategy|soil plan|soil management|water, soil and|amanzi, umhlabathi/i.test(title);
   if(/vegetation|biome|guild|food forest/i.test(title))result.push({id:'layers',title:'A living landscape, layer by layer',note:'Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.',svg:layers});
@@ -37,10 +61,15 @@ export function chapterGraphics(heading:string, body:string, visuals:ReportVisua
     const trees=reportTreeIllustrations(body);
     if(trees.length)result.push({id:'trees',title:'Trees mentioned in this section',note:'Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.',trees});
   }
-  // The overview owns site charts; the crop-plan section owns its calendar.
-  // Repeating them under matching chapter headings added pages without new information.
+  // The overview owns the plain site charts; the crop-plan section owns its calendar. Repeating
+  // them under matching chapter headings added pages without new information. A drawn figure is
+  // different: it moves to its chapter (placeReportFigures) and leaves the overview.
   return result;
 }
 export function reportChapterGraphics(report:string,visuals:ReportVisuals) {
-  return Object.fromEntries(report.split(/^## /m).slice(1).map(section=>{const [heading,...body]=section.split('\n');return [heading,chapterGraphics(heading,body.join('\n'),visuals)];}));
+  const sections=report.split(/^## /m).slice(1).map(section=>{const [heading,...body]=section.split('\n');return {heading,body:body.join('\n')};});
+  const placed=placeReportFigures(sections.map(s=>s.heading),visuals);
+  return Object.fromEntries(sections.map(({heading,body})=>[heading,chapterGraphics(heading,body,visuals,placed[heading])]));
 }
+/** Ids of the figure charts that found a chapter, so the overview can leave them out. */
+export const placedFigureIds=(chapters:Record<string,ChapterGraphic[]>)=>new Set(Object.values(chapters).flat().filter(g=>g.chart?.kind==='figure').map(g=>g.chart!.id));

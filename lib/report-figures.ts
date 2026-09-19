@@ -1038,3 +1038,27 @@ export function statusFigure(canvas: DesignCanvasState | null | undefined, langu
     alt: `${t('Built and planned', 'Okwakhiwe nokuhleliwe')}: ${rows.map(row => `${names[row.key]} ${row.built}/${row.built + row.planned}`).join('; ')}.`,
   };
 }
+
+// ── All of them, in reading order ─────────────────────────────────────────────────────────────
+
+/** What the figures need beyond the typed facts and the location: the saved drawing itself. */
+export type ReportFigureInputs = { canvas?: DesignCanvasState | null; mapLayers?: MapRefLayers | null; phasePlan?: PhasePlan | null };
+
+/**
+ * Every figure this site has the data for, in the order a reader meets them: the ground first,
+ * then what arrives on it (rain, sun, wind), then what the plan does about it. A figure with no
+ * data behind it is absent, not empty — except soil, whose empty scales ARE the finding.
+ */
+export function siteReportFigures(facts: ReportSiteFacts | null | undefined, location: LocationData | null | undefined, language = 'en', inputs: ReportFigureInputs = {}): ReportFigure[] {
+  const build = (make: () => ReportFigure | null): ReportFigure | null => { try { return make(); } catch { return null; } };
+  return [
+    build(() => sitePlanFigure(inputs.canvas, language, inputs.mapLayers)),
+    build(() => landUseFigure(facts, language)),
+    build(() => statusFigure(inputs.canvas, language)),
+    build(() => climateFigure(location, language)),
+    build(() => sectorFigure(location, facts, language)),
+    build(() => waterBudgetFigure(facts, location, language)),
+    build(() => soilFigure(location, language)),
+    build(() => timelineFigure(inputs.phasePlan, language)),
+  ].filter((figure): figure is ReportFigure => figure !== null);
+}
