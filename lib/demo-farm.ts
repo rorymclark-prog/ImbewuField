@@ -849,9 +849,14 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   // and masterplan painters deliberately give each traced staple plot one crop silhouette, so the
   // sample farm exercises the same rotation-readable drawing a real four-block field needs. These
   // are illustrative geometry only: the fixture records no crop plan, spacing or yield claim.
+  //
+  // The first two blocks sit either side of the house's south wing (DEMO_HOUSE_METRES runs to
+  // y = 16 between x = 24 and x = 30). They used to be drawn straight across it — invisible while
+  // nothing drew the traced house and the design together, and the first thing anyone saw once the
+  // site report's plan did. Still 21 m² each (6 × 3.5 and 4.2 × 5).
   const staplePlots: ZoneShape[] = [
-    [[22, 12], [28, 12], [28, 15.5], [22, 15.5]],
-    [[29, 12], [35, 12], [35, 15.5], [29, 15.5]],
+    [[17.4, 12.4], [23.4, 12.4], [23.4, 15.9], [17.4, 15.9]],
+    [[31, 10.6], [35.2, 10.6], [35.2, 15.6], [31, 15.6]],
     [[22, 16.5], [28, 16.5], [28, 20], [22, 20]],
     [[29, 16.5], [35, 16.5], [35, 20], [29, 20]],
   ].map((ringM, index) => ({
@@ -863,9 +868,11 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   zones.push(...staplePlots);
 
   // ── Lines ──────────────────────────────────────────────────────────────
-  const pathM: Array<[number, number]> = [[20, 2], [20, 12], [12, 18]];      // gate → down → into beds
+  // The path leaves the foot of the driveway and the greywater line leaves the wing's corner, so
+  // neither runs through the house the map traces (see the staple plots above).
+  const pathM: Array<[number, number]> = [[16, 10], [16, 16.5], [4, 16.5]];    // driveway foot → down → along the aisle between the bed rows
   const swaleM: Array<[number, number]> = [[3, 20.5], [20, 20.8], [37, 20.5]]; // on-contour, just above the orchard
-  const greywaterM: Array<[number, number]> = [[24, 12], [20, 18], [17, 22.5]]; // house diverter → orchard basin
+  const greywaterM: Array<[number, number]> = [[24, 16.2], [21, 16.2], [17, 22.5]]; // house diverter → orchard basin
   const lines: LineShape[] = [
     { id: 'demo-dl-path', kind: 'path', points: pathM.map(([xM, yM]) => toNorm(xM, yM)) },
     { id: 'demo-dl-swale', kind: 'swale', points: swaleM.map(([xM, yM]) => toNorm(xM, yM)) },
@@ -879,6 +886,9 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
     zones,
     lines,
     step: 'review',
+    // What the crèche draws in a day for the garden and hand-washing, as the Water step records it.
+    // With it the sample report can show the month-by-month water budget, not only the roof's catch.
+    dailyWaterUseL: 200,
     updatedAt: new Date().toISOString(),
     rev: 1,
   };

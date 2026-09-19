@@ -125,6 +125,7 @@
 .readingControls button { padding: 9px 12px; border-radius: 8px; border: 1px solid var(--report-border); color: var(--report-ink); }
 .readingControls button[aria-pressed='true'] { background: var(--report-button); color: white; }
 .readingControls label { display: flex; align-items: center; gap: 8px; }
+.readingCompact > div, .readingCompact > label { display: none; }
 .languageNote { font-size: 13px; padding: 8px 20px; background: var(--report-panel); }
 .summaryPage { margin: 0 0 28px; padding: 24px; border: 1px solid var(--report-border); border-radius: 12px; background: var(--report-paper); }
 .summaryPage h2 { font-size: 24px; font-weight: 700; margin: 12px 0 20px; }

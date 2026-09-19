@@ -24,6 +24,7 @@
 import { deriveSolar, type SolarModel } from '@/lib/solar';
 import { resolveRegion, type NamedWindSector, type Provenance } from '@/lib/regional-wind';
 import { aspectLabel } from '@/lib/biome';
+import type { LocationData } from '@/lib/types';
 
 export type { Provenance } from '@/lib/regional-wind';
 export type { NamedWindSector, NamedWindId, RegionalFireSector } from '@/lib/regional-wind';
@@ -121,6 +122,38 @@ export interface SectorModel {
   flat: boolean; // slopeDeg < 1.5 (matches lib/contours tooFlat) → no contour lines
   dataNotes: string[]; // honest caveats, strongest first
   assumptionNotes: string[]; // regional-assumption disclosures, printed verbatim in the sheet's footer band
+}
+
+/** LocationData → SectorSite. The same shape app/design/page.tsx builds for the Sector sheet and
+ *  components/design/SectorSummary.tsx builds for its card; exported so the site report's sun and
+ *  wind figure is derived from exactly the inputs the Design Studio uses. */
+export function sectorSiteFromLocation(location: LocationData | null | undefined): SectorSite | null {
+  if (!location) return null;
+  return {
+    biome: location.biome?.name,
+    rainfallMm: location.rainfall?.annual,
+    monthlyRainfallMm: location.rainfall?.monthly,
+    rainfallPattern: location.rainfall?.pattern ?? location.biome?.rainfallPattern,
+    elevation: location.elevation
+      ? {
+          slopeDeg: location.elevation.slopeDeg,
+          slopePct: location.elevation.slopePct,
+          aspectDeg: location.elevation.aspectDeg,
+          aspectLabel: location.elevation.aspectLabel,
+          sampleBaselineM: location.elevation.sampleBaselineM,
+          directionConfidence: location.elevation.directionConfidence,
+        }
+      : undefined,
+    climate: location.climate
+      ? {
+          windFromSummer: location.climate.windFromSummer,
+          windFromWinter: location.climate.windFromWinter,
+          windSpeed: location.climate.windSpeed,
+          minTemp: location.climate.minTemp,
+          maxTemp: location.climate.maxTemp,
+        }
+      : undefined,
+  };
 }
 
 /** Driveway-access bearing — pure geometry, no site/climate data, so it lives outside

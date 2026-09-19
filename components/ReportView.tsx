@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
 import ReportCropPlan from './report/ReportCropPlan';
@@ -10,8 +10,10 @@ import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportM
 import ReportVisualOverview from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
-import { reportChapterGraphics, type ChapterGraphic } from '@/lib/report-chapter-visuals';
-import { siteReportVisuals } from '@/lib/report-visuals';
+import { reportChapterGraphics, placedFigureIds, type ChapterGraphic } from '@/lib/report-chapter-visuals';
+import { siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
+import { siteReportFigures, type ReportFigureInputs } from '@/lib/report-figures';
+import { collectReportFigureInputs } from '@/lib/report-figure-inputs';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
 import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason, reportSiteName, type ReportGenerationSettings, type ReportCoverChoice } from '@/lib/saved-reports';
@@ -291,10 +293,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
-  const visuals = { ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' };
-  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar') };
-  const pdfVisuals = facts?.crop?.snapshot ? overviewVisuals : visuals;
+  // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
+  // saved drawing as well as the facts. Each is shown ONCE: under its chapter when the report has
+  // one, otherwise in the overview — on screen and in the PDF alike.
+  const [figureInputs, setFigureInputs] = useState<ReportFigureInputs>({});
+  const figures = useMemo(() => siteReportFigures(facts, d, contentLanguage, figureInputs), [facts, d, contentLanguage, figureInputs]);
+  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' }, figures, contentLanguage);
   const chapterVisuals = reportChapterGraphics(report,visuals);
+  const placedFigures = placedFigureIds(chapterVisuals);
+  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar' && !placedFigures.has(c.id)) };
+  // With chapter pictures switched off for the PDF, a placed figure has no chapter to sit under, so it stays up front.
+  const pdfPlaced = includeImages ? placedFigures : new Set<string>();
+  const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
   useEffect(() => {
@@ -302,6 +312,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     const siteId = designSiteIdFromLocation(d);
     setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
   }, [activeSaved, d, reportPlace, evidenceRevision]);
+  useEffect(() => {
+    setFigureInputs(collectReportFigureInputs({ siteId: designSiteIdFromLocation(d), lat: d.lat, lon: d.lon, biome: resolveSiteEcology(d.biome, d.vegetation).placeName, rainfallMm: d.rainfall?.annual }));
+  }, [d, evidenceRevision]);
   const [bilingual, setBilingual] = useState(savedReport?.settings?.bilingual ?? false);
   const [tone, setTone] = useState<'simple' | 'professional'>(savedReport?.settings?.tone ?? 'simple');
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>(savedReport?.settings?.length ?? 'standard');
@@ -458,6 +471,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setPanelOpen(false);
   }, [facts, d, language, savedReport]);
 
+  const [viewOptionsOpen, setViewOptionsOpen] = useState(false);
   const showPanel = isWide || panelOpen;
   const showReportColumn = isWide || !panelOpen;
 
@@ -874,7 +888,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </div>
       </div>
 
-      <div className={`${styles.readingControls} no-print`}>
+      {/* Phone: the view, print and summary choices fold behind one button. Pinned open they took
+          more than half of a 844px screen and left the report itself under 400px to be read in. */}
+      <div className={`${styles.readingControls} ${!isWide && !viewOptionsOpen ? styles.readingCompact : ''} no-print`}>
           <button
             onClick={generate}
             disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
@@ -892,6 +908,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           >
             {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
+        {!isWide && <button type="button" aria-expanded={viewOptionsOpen} onClick={() => setViewOptionsOpen(open => !open)}>{tr('View and print options', 'Izinketho zokubuka nokuphrinta')} <span aria-hidden="true">{viewOptionsOpen ? '▴' : '▾'}</span></button>}
         <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label>Cover <select aria-label="Report cover image" value={coverChoice} onChange={e => setCoverChoice(e.target.value as ReportCoverChoice)}>
@@ -899,8 +916,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </select></label>}
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
-      <p className={`${styles.languageNote} no-print`}>Screen, print and summary controls change the view or export without a new AI call.</p>
-      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
+      {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>Screen, print and summary controls change the view or export without a new AI call.</p>}
+      {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
       {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
@@ -1134,7 +1151,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              style={{ display: showReportColumn ? 'block' : 'none' }}>
           {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
           <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
-          {report && (
+          {/* Progress while the report is being written. It used to stay pinned at full width
+              afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
+          {report && loading && (
             <div
               style={{
                 position: 'sticky', top: 0, left: 0, right: 0, height: 2,
