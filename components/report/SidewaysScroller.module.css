@@ -1,0 +1,7 @@
+.wrap { position: relative; min-width: 0; }
+.cue { display: flex; justify-content: flex-end; margin: 0; padding: 0 var(--cue-inset, 0px) 8px 0; }
+.cue > span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #e7f0e8; color: #1b3024; font-size: 13px; font-weight: 600; line-height: 1.2; }
+.arrow { display: inline-block; animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { .arrow { animation: none; } }
+@media print { .cue { display: none; } }

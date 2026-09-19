@@ -13,7 +13,8 @@ export type ReportChart = {
   /** kind 'figure': a finished drawing from lib/report-figures. `rows` stays empty. */
   figure?: ReportFigure;
 };
-export type ReportVisuals = { title: string; subtitle: string; basis: string; overviewTitle?: string; overviewNote?: string; metrics: ReportMetric[]; charts: ReportChart[] };
+/** slideHint: the words shown on a phone while a figure is wider than its card, in the report's language. */
+export type ReportVisuals = { title: string; subtitle: string; basis: string; overviewTitle?: string; overviewNote?: string; slideHint?: string; metrics: ReportMetric[]; charts: ReportChart[] };
 export const REPORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 export const REPORT_COLOURS = ['#245738', '#24738a', '#af6b24', '#766395', '#52656a'];
 const n = (value: number) => value.toLocaleString('en-ZA', { maximumFractionDigits: 1 }).replace(/\s/g, ' ');
@@ -63,7 +64,7 @@ export function withReportFigures(visuals: ReportVisuals, figures: ReportFigure[
   const replaced = new Set(figures.map(figure => FIGURE_REPLACES[figure.id]).filter(Boolean));
   const first = figures.filter(figure => FIGURES_FIRST.includes(figure.id)).map(asChart);
   const rest = figures.filter(figure => !FIGURES_FIRST.includes(figure.id)).map(asChart);
-  return { ...visuals, charts: [...first, ...visuals.charts.filter(chart => !replaced.has(chart.id)), ...rest] };
+  return { ...visuals, slideHint: language === 'zu' ? 'Shelelezisa eceleni ukuze ubone konke' : 'Slide to see more', charts: [...first, ...visuals.charts.filter(chart => !replaced.has(chart.id)), ...rest] };
 }
 
 export function sampleReportVisuals(g: SampleGarden): ReportVisuals {

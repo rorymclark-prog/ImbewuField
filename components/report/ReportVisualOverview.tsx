@@ -1,8 +1,9 @@
 'use client';
 import { reportChartSvg, REPORT_COLOURS, type ReportChart, type ReportVisuals } from '@/lib/report-visuals';
+import SidewaysScroller from './SidewaysScroller';
 import styles from './VisualReport.module.css';
 
-export function ReportChartCard({ chart, ink = false }: { chart: ReportChart; ink?: boolean }) {
+export function ReportChartCard({ chart, ink = false, slideHint }: { chart: ReportChart; ink?: boolean; slideHint?: string }) {
   const art = reportChartSvg(chart, ink);
   const maximum = Math.max(...chart.rows.map(row => row.value), 1);
   return <figure className={`${styles.chart} ${chart.id === 'cost' ? styles.wideChart : ''}`}>
@@ -11,10 +12,12 @@ export function ReportChartCard({ chart, ink = false }: { chart: ReportChart; in
       <div className={styles.barLabel}><span>{row.label}</span><strong>{row.value.toLocaleString('en-ZA', { maximumFractionDigits: 1 })} {chart.unit}</strong></div>
       <div className={styles.track}><span style={{ width: `${row.value / maximum * 100}%`, background: ink ? '#333' : REPORT_COLOURS[i % REPORT_COLOURS.length] }} /></div>
       {row.detail && <small>{row.detail}</small>}
-    </div>) : <p>No priced or measured values available.</p>}</div> : chart.kind === 'figure' && chart.figure ? <div className={styles.chartScroll} tabIndex={0} aria-label={chart.title}>
+    </div>) : <p>No priced or measured values available.</p>}</div> : chart.kind === 'figure' && chart.figure ? <SidewaysScroller className={styles.chartScroll} label={chart.title} hint={slideHint}>
       <img className={styles.figure} src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`} alt={chart.figure.alt} width={art.width} height={art.height} />
-    </div> : <div className={`${styles.chartScroll} ${chart.kind === 'calendar' ? styles.calendarScroll : ''}`} tabIndex={chart.kind === 'calendar' || chart.kind === 'months' ? 0 : undefined} aria-label={chart.title}>
-      <img className={chart.kind === 'months' ? styles.months : chart.kind === 'calendar' ? styles.calendar : styles.progress} src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`} alt={`${chart.title}. ${chart.rows.map(r => `${r.label}: ${chart.kind === 'calendar' ? (r.months ?? []).map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m]).join(', ') : `${r.value} ${chart.unit}`}`).join('; ')}`} width={art.width} height={art.height} />
+    </SidewaysScroller> : chart.kind === 'calendar' || chart.kind === 'months' ? <SidewaysScroller className={`${styles.chartScroll} ${chart.kind === 'calendar' ? styles.calendarScroll : ''}`} label={chart.title} hint={slideHint}>
+      <img className={chart.kind === 'months' ? styles.months : styles.calendar} src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`} alt={`${chart.title}. ${chart.rows.map(r => `${r.label}: ${chart.kind === 'calendar' ? (r.months ?? []).map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m]).join(', ') : `${r.value} ${chart.unit}`}`).join('; ')}`} width={art.width} height={art.height} />
+    </SidewaysScroller> : <div className={styles.chartScroll} aria-label={chart.title}>
+      <img className={styles.progress} src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`} alt={`${chart.title}. ${chart.rows.map(r => `${r.label}: ${r.value} ${chart.unit}`).join('; ')}`} width={art.width} height={art.height} />
     </div>}
     <p className={styles.caption}>{chart.note}</p>
   </figure>;
@@ -35,7 +38,7 @@ export default function ReportVisualOverview({ visuals, image, imageCaption, ima
     </header>
     <div className={styles.metrics}>{visuals.metrics.map(metric => <div key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong><small>{metric.note}</small></div>)}</div>
     <p className={styles.basis}>{visuals.basis}</p>
-    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div>{lead.map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}{grid.length > 0 && <div className={styles.charts}>{grid.map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</div>}{tail.map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</>}
+    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div>{lead.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}{grid.length > 0 && <div className={styles.charts}>{grid.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}</div>}{tail.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}</>}
     {children}
   </div>;
 }

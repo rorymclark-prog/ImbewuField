@@ -3,7 +3,7 @@ import { REPORT_ZU } from './report-localisation';
 import type { ReportChart, ReportVisuals } from './report-visuals';
 import { stripLeadingNumber } from './report-structure';
 
-export type ChapterGraphic = { id:string; title:string; note:string; svg?:string; chart?:ReportChart; trees?:{name:string;image:string}[]; art?:{src:string;alt:string;width:number;height:number} };
+export type ChapterGraphic = { id:string; title:string; note:string; slideHint?:string; svg?:string; chart?:ReportChart; trees?:{name:string;image:string}[]; art?:{src:string;alt:string;width:number;height:number} };
 
 /** The "how it works" pictures. Drawn once (docs/REPORT-ART-BRIEF.md), committed under
  * public/report-art and identical in every report — so each is captioned as a concept and never
@@ -81,7 +81,7 @@ export function placeReportFigures(headings:string[],visuals:ReportVisuals):Reco
 export function chapterGraphics(heading:string, body:string, visuals:ReportVisuals, figures:ReportChart[]=[]):ChapterGraphic[] {
   const title=englishTitle(heading);
   // This site's own data first; the general "how it works" picture after it.
-  const result:ChapterGraphic[]=figures.map(chart=>({id:`figure-${chart.id}`,title:chart.title,note:chart.note,chart}));
+  const result:ChapterGraphic[]=figures.map(chart=>({id:`figure-${chart.id}`,title:chart.title,note:chart.note,chart,...(visuals.slideHint?{slideHint:visuals.slideHint}:{})}));
   if(/vegetation|biome/i.test(title))result.push({id:'layers',title:'A living landscape, layer by layer',note:'Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.',svg:layers});
   // At most two concept pictures a chapter: they explain an idea, they are not the content.
   for(const art of REPORT_ART.filter(a=>REPORT_ART_READY.has(a.id)&&a.when.test(title)&&(!a.body||a.body.test(body))).slice(0,2)){

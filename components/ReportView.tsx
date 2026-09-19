@@ -471,6 +471,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setPanelOpen(false);
   }, [facts, d, language, savedReport]);
 
+  const [viewOptionsOpen, setViewOptionsOpen] = useState(false);
   const showPanel = isWide || panelOpen;
   const showReportColumn = isWide || !panelOpen;
 
@@ -887,7 +888,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </div>
       </div>
 
-      <div className={`${styles.readingControls} no-print`}>
+      {/* Phone: the view, print and summary choices fold behind one button. Pinned open they took
+          more than half of a 844px screen and left the report itself under 400px to be read in. */}
+      <div className={`${styles.readingControls} ${!isWide && !viewOptionsOpen ? styles.readingCompact : ''} no-print`}>
           <button
             onClick={generate}
             disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
@@ -905,6 +908,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           >
             {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
+        {!isWide && <button type="button" aria-expanded={viewOptionsOpen} onClick={() => setViewOptionsOpen(open => !open)}>{tr('View and print options', 'Izinketho zokubuka nokuphrinta')} <span aria-hidden="true">{viewOptionsOpen ? '▴' : '▾'}</span></button>}
         <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label>Cover <select aria-label="Report cover image" value={coverChoice} onChange={e => setCoverChoice(e.target.value as ReportCoverChoice)}>
@@ -912,8 +916,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </select></label>}
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
-      <p className={`${styles.languageNote} no-print`}>Screen, print and summary controls change the view or export without a new AI call.</p>
-      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
+      {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>Screen, print and summary controls change the view or export without a new AI call.</p>}
+      {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
       {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
