@@ -33,6 +33,16 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '19 September 2026', sha: 'cbd4841', changes: [
+    'Site reports for a saved design open with a drawn plan: boundary, house, beds and trees.',
+    'New report pictures show rain by month, your water budget, sun and wind, and soil.',
+    'A build timeline, land use and design progress show what to do first and what is left.',
+    'Chapters carry concept pictures, such as roof to tank, swales, compost and windbreaks.',
+    'The downloaded PDF has the same pictures, starting with the site plan on the cover.',
+    'On a phone the report fills the screen. Open View and print options when you need them.',
+    'Wide report pictures tell you when they slide sideways.',
+    'The sample farm plan no longer draws plots and paths through the house.',
+  ] },
   { when: '10 September 2026', sha: '91dba96', changes: [
     'Assessments now puts response progress, review work and learning actions first.',
     'Tap a summary or assessment stage to filter the list, then open its results.',
