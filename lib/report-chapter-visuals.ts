@@ -3,7 +3,7 @@ import { REPORT_ZU } from './report-localisation';
 import type { ReportChart, ReportVisuals } from './report-visuals';
 import { stripLeadingNumber } from './report-structure';
 
-export type ChapterGraphic = { id:string; title:string; note:string; svg?:string; chart?:ReportChart; trees?:{name:string;image:string}[]; art?:{src:string;alt:string} };
+export type ChapterGraphic = { id:string; title:string; note:string; svg?:string; chart?:ReportChart; trees?:{name:string;image:string}[]; art?:{src:string;alt:string;width:number;height:number} };
 
 /** The "how it works" pictures. Drawn once (docs/REPORT-ART-BRIEF.md), committed under
  * public/report-art and identical in every report — so each is captioned as a concept and never
@@ -32,6 +32,8 @@ const REPORT_ART:Array<{id:string;when:RegExp;body?:RegExp;title:string;alt:stri
  * being drawn can never leave a broken image in a report. */
 export const REPORT_ART_READY=new Set(['roof-to-tank','swale-section','drip-bed','soil-layers','trench-bed','compost-bays','crop-rotation','guild-layers','windbreak-section','sun-house','zones','chicken-tractor','firebreak','food-all-year','market-table','five-year-change']);
 export const reportArtSrc=(id:string)=>`/report-art/${id}.jpg`;
+/** Pixel size of each picture file, so the page keeps its place while a picture loads. Margins are trimmed, so the shapes differ. */
+export const REPORT_ART_SIZE:Record<string,[number,number]>={'chicken-tractor':[1424,786],'compost-bays':[1426,702],'crop-rotation':[1336,786],'drip-bed':[1426,784],'firebreak':[1426,658],'five-year-change':[1427,617],'food-all-year':[1428,585],'guild-layers':[1338,787],'market-table':[1340,788],'roof-to-tank':[1427,764],'soil-layers':[1425,739],'sun-house':[1426,643],'swale-section':[1425,730],'trench-bed':[1358,786],'windbreak-section':[1426,558],'zones':[1426,739]};
 const xml=(s:string)=>s.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]!));
 const svg=(body:string)=>`<svg xmlns="http://www.w3.org/2000/svg" width="820" height="370" viewBox="0 0 820 370"><rect width="820" height="370" rx="18" fill="#f2f6ef"/>${body}</svg>`;
 const label=(x:number,y:number,text:string,size=18)=>`<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="${size}" fill="#244b34">${xml(text)}</text>`;
@@ -80,7 +82,7 @@ export function chapterGraphics(heading:string, body:string, visuals:ReportVisua
   const result:ChapterGraphic[]=figures.map(chart=>({id:`figure-${chart.id}`,title:chart.title,note:chart.note,chart}));
   if(/vegetation|biome/i.test(title))result.push({id:'layers',title:'A living landscape, layer by layer',note:'Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.',svg:layers});
   // At most two concept pictures a chapter: they explain an idea, they are not the content.
-  for(const art of REPORT_ART.filter(a=>REPORT_ART_READY.has(a.id)&&a.when.test(title)&&(!a.body||a.body.test(body))).slice(0,2))result.push({id:`art-${art.id}`,title:art.title,note:art.note,art:{src:reportArtSrc(art.id),alt:art.alt}});
+  for(const art of REPORT_ART.filter(a=>REPORT_ART_READY.has(a.id)&&a.when.test(title)&&(!a.body||a.body.test(body))).slice(0,2))result.push({id:`art-${art.id}`,title:art.title,note:art.note,art:{src:reportArtSrc(art.id),alt:art.alt,width:REPORT_ART_SIZE[art.id]?.[0]??1600,height:REPORT_ART_SIZE[art.id]?.[1]??800}});
   if(/tree|fruit|vegetation|biome|guild|agroecosystem|full design inventory/i.test(title)) {
     const trees=reportTreeIllustrations(body);
     if(trees.length)result.push({id:'trees',title:'Trees mentioned in this section',note:'Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.',trees});
