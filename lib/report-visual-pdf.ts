@@ -4,7 +4,8 @@ import { reportChartSvg, type ReportVisuals } from './report-visuals';
 import type { ChapterGraphic } from './report-chapter-visuals';
 
 export type VisualImage = { image: string; caption: string };
-export type ChapterImage = { image:string; title:string; caption:string };
+/** maxHeight (pt): a figure drawn from the site's data may run taller on the page than a concept picture. */
+export type ChapterImage = { image:string; title:string; caption:string; maxHeight?:number };
 export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[]; chapters?:Record<string,ChapterImage[]> };
 
 async function svgImage(svg: string): Promise<string> {
@@ -52,7 +53,15 @@ export async function prepareVisualPdfAssets(visuals: ReportVisuals, photos: Vis
         const key=graphic.svg?graphic.id:`chart-${graphic.chart!.id}`;
         let image=cached.get(key);
         if(!image){image=graphic.chart?charts[graphic.chart.id]??await svgImage(reportChartSvg(graphic.chart).svg):await svgImage(graphic.svg!);cached.set(key,image);}
-        images.push({image,title:graphic.title,caption:graphic.note});
+        images.push({image,title:graphic.title,caption:graphic.note,...(graphic.chart?.kind==='figure'?{maxHeight:440}:{})});
+      }
+      if(graphic.art){
+        // A concept picture explains an idea; it carries no site data. Offline or missing, it is left out and the export carries on.
+        try{
+          let image=cached.get(graphic.art.src);
+          if(!image){const response=await fetch(graphic.art.src);if(response.ok){const blob=await response.blob();image=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=reject;reader.readAsDataURL(blob);});cached.set(graphic.art.src,image);}}
+          if(image)images.push({image,title:graphic.title,caption:graphic.note});
+        }catch{/* left out */}
       }
       if(graphic.trees)for(let start=0;start<graphic.trees.length;start+=6){
         const trees=graphic.trees.slice(start,start+6);const columns=trees.length===4?2:Math.min(3,trees.length);const cellWidth=772/columns;const height=Math.ceil(trees.length/columns)*260+30;
@@ -101,11 +110,27 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   y = 95 + write(visuals.title, 44, 95, 494, 30, '#ffffff', true);
   write(visuals.subtitle, 44, y + 18, 494, 11, '#d6e7d9');
   y = headingHeight + 20;
+  const glance = visuals.overviewTitle ?? 'The site at a glance';
+  // The cover picture: the farmer's own photograph or map when there is one. Without it, the site
+  // plan drawn from the saved design takes the cover instead of leaving most of the page blank.
+  const coverPlan = assets.photos[0] ? undefined : visuals.charts.find(chart => chart.kind === 'figure' && chart.id === 'site-plan' && assets.charts[chart.id]);
+  let onGlancePage = false;
   if (assets.photos[0]) { image(assets.photos[0], 44, y, 512, 310); y += 327; y += write(assets.photos[0].caption, 44, y, 512, 8, '#526258') + 18; }
+  else if (coverPlan) {
+    const drawing = reportChartSvg(coverPlan);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
+    const captionHeight = (doc.splitTextToSize(pdfSafe(coverPlan.note), u(512)) as string[]).length * 8 * 1.3;
+    const room = doc.internal.pageSize.getHeight() / scale - 62 - y - captionHeight - 12;
+    const fit = Math.min(512 / drawing.width, room / drawing.height);
+    const w = drawing.width * fit, h = drawing.height * fit;
+    doc.addImage(assets.charts[coverPlan.id], 'PNG', u(44 + (512 - w) / 2), u(y), u(w), u(h), undefined, 'FAST');
+    write(coverPlan.note, 44, y + h + 16, 512, 8, '#526258');
+    page(glance); onGlancePage = true;
+  }
   const columns = visuals.metrics.length > 2 ? 4 : 2;
   const cell = 526 / columns;
   const metricRows = Math.ceil(visuals.metrics.length / columns);
-  if (y + metricRows * 100 > 750) page(visuals.overviewTitle ?? 'The site at a glance');
+  if (y + metricRows * 100 > 750) { page(glance); onGlancePage = true; }
   visuals.metrics.forEach((metric, i) => {
     const x = 44 + (i % columns) * cell, top = y + Math.floor(i / columns) * 100;
     rect(x, top - 10, 3, 78, '#af6b24');
@@ -114,24 +139,29 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     write(metric.note, x + 10, top + 53, cell - 24, 8, '#526258');
   });
   y += metricRows * 100 + 4;
-  if (y + 55 > 765) page('Report basis');
-  write(visuals.basis, 44, y, 512, 9, '#526258');
+  if (y + 55 > 765) { page('Report basis'); onGlancePage = false; }
+  y += write(visuals.basis, 44, y, 512, 9, '#526258') + 22;
 
-  if (visuals.charts.length) page('The site at a glance');
+  // The cards carry straight on under the figures when that page is already "the site at a glance";
+  // after a photograph cover they open on a page of their own, as before.
+  let fresh = !onGlancePage;
   for (const chart of visuals.charts) {
+    if (chart === coverPlan) continue;
     const drawing = reportChartSvg(chart);
-    const chartHeight = drawing.height / drawing.width * 476;
     doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
     const titleHeight = doc.splitTextToSize(pdfSafe(chart.title), u(476)).length * 22;
     doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
     const noteHeight = doc.splitTextToSize(pdfSafe(chart.note), u(476)).length * 12;
+    // A tall drawing (a site plan with a long key) is fitted to one page rather than run off it.
+    const chartHeight = Math.min(drawing.height / drawing.width * 476, 765 - 125 - 40 - titleHeight - noteHeight);
+    const chartWidth = chartHeight * drawing.width / drawing.height;
     const height = 40 + titleHeight + chartHeight + noteHeight;
-    if (y + height > 765) page(chart.kind === 'calendar' ? 'Planting through the year' : 'The site at a glance');
+    if (fresh || y + height > 765) { page(chart.kind === 'calendar' ? 'Planting through the year' : 'The site at a glance'); fresh = false; }
     doc.setDrawColor('#d6e1d8'); doc.roundedRect(u(44), u(y), u(512), u(height), u(6), u(6));
     write(chart.title, 62, y + 29, 476, 17, '#245738', true);
     const png = assets.charts[chart.id];
     if (!png) throw Error(`Missing chart artwork: ${chart.title}`);
-    doc.addImage(png, 'PNG', u(62), u(y + 17 + titleHeight), u(476), u(chartHeight), undefined, 'FAST');
+    doc.addImage(png, 'PNG', u(62 + (476 - chartWidth) / 2), u(y + 17 + titleHeight), u(chartWidth), u(chartHeight), undefined, 'FAST');
     write(chart.note, 62, y + 29 + titleHeight + chartHeight, 476, 9, '#526258');
     y += height + 20;
   }

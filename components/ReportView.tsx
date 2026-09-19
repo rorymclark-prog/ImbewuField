@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
 import ReportCropPlan from './report/ReportCropPlan';
@@ -10,8 +10,10 @@ import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportM
 import ReportVisualOverview from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
-import { reportChapterGraphics, type ChapterGraphic } from '@/lib/report-chapter-visuals';
-import { siteReportVisuals } from '@/lib/report-visuals';
+import { reportChapterGraphics, placedFigureIds, type ChapterGraphic } from '@/lib/report-chapter-visuals';
+import { siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
+import { siteReportFigures, type ReportFigureInputs } from '@/lib/report-figures';
+import { collectReportFigureInputs } from '@/lib/report-figure-inputs';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
 import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason, reportSiteName, type ReportGenerationSettings, type ReportCoverChoice } from '@/lib/saved-reports';
@@ -291,10 +293,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
-  const visuals = { ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' };
-  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar') };
-  const pdfVisuals = facts?.crop?.snapshot ? overviewVisuals : visuals;
+  // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
+  // saved drawing as well as the facts. Each is shown ONCE: under its chapter when the report has
+  // one, otherwise in the overview — on screen and in the PDF alike.
+  const [figureInputs, setFigureInputs] = useState<ReportFigureInputs>({});
+  const figures = useMemo(() => siteReportFigures(facts, d, contentLanguage, figureInputs), [facts, d, contentLanguage, figureInputs]);
+  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' }, figures, contentLanguage);
   const chapterVisuals = reportChapterGraphics(report,visuals);
+  const placedFigures = placedFigureIds(chapterVisuals);
+  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar' && !placedFigures.has(c.id)) };
+  // With chapter pictures switched off for the PDF, a placed figure has no chapter to sit under, so it stays up front.
+  const pdfPlaced = includeImages ? placedFigures : new Set<string>();
+  const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
   useEffect(() => {
@@ -302,6 +312,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     const siteId = designSiteIdFromLocation(d);
     setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
   }, [activeSaved, d, reportPlace, evidenceRevision]);
+  useEffect(() => {
+    setFigureInputs(collectReportFigureInputs({ siteId: designSiteIdFromLocation(d), lat: d.lat, lon: d.lon, biome: resolveSiteEcology(d.biome, d.vegetation).placeName, rainfallMm: d.rainfall?.annual }));
+  }, [d, evidenceRevision]);
   const [bilingual, setBilingual] = useState(savedReport?.settings?.bilingual ?? false);
   const [tone, setTone] = useState<'simple' | 'professional'>(savedReport?.settings?.tone ?? 'simple');
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>(savedReport?.settings?.length ?? 'standard');

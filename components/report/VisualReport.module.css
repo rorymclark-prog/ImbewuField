@@ -34,6 +34,7 @@
 .chartScroll img { display: block; max-width: 100%; width: 100%; height: auto; }
 .chartScroll .months { min-width: 480px; }
 .chartScroll .calendar { min-width: 720px; }
+.chartScroll .figure { min-width: 560px; }
 .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 18px 0; margin-bottom: 16px; border-bottom: 1px solid var(--vr-line); }
 .controls button { min-height: 44px; padding: 10px 16px; border: 1px solid var(--vr-line); border-radius: 8px; font-size: 14px; color: var(--vr-green); background: white; }
 .controls button[aria-pressed='true'], .controls .primary { background: var(--vr-green); color: white; }
@@ -62,7 +63,7 @@
 .ink .chapter::before { color: #555; }
 @media (max-width: 1000px) { .charts { grid-template-columns: 1fr; gap: 0; } .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .report { padding: 16px; border-radius: 12px; } .heroCopy { padding: 24px; } .edition { flex-direction: column; gap: 8px; } .hero h1 { font-size: 34px; } .chart { padding: 16px; } .chapter { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; } .chapter::before { font-size: 22px; } .chapter h3 { font-size: 25px; } .metrics { gap: 22px 12px; } .metrics > div { padding-left: 12px; } .metrics strong { font-size: 28px; } }
-@media print { .visual, .report { print-color-adjust: exact; -webkit-print-color-adjust: exact; } .report { padding: 0; border: 0; } .controls, .option { display: none; } .hero { break-inside: avoid; } .heroCopy { padding: 24px; } .hero h1 { font-size: 34px; } .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } .metrics strong { font-size: 24px; } .charts { display: block; } .chart { margin-bottom: 20px; } .chartScroll { overflow: visible; } .chartScroll .months, .chartScroll .calendar { min-width: 0; } .chapter { display: block; } .chapter::before { display: none; } .chapter h3 { break-after: avoid; } .chapter p { orphans: 3; widows: 3; font-size: 11pt; } .heroFigure img { max-height: 290px; } }
+@media print { .visual, .report { print-color-adjust: exact; -webkit-print-color-adjust: exact; } .report { padding: 0; border: 0; } .controls, .option { display: none; } .hero { break-inside: avoid; } .heroCopy { padding: 24px; } .hero h1 { font-size: 34px; } .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } .metrics strong { font-size: 24px; } .charts { display: block; } .chart { margin-bottom: 20px; } .chartScroll { overflow: visible; } .chartScroll .months, .chartScroll .calendar, .chartScroll .figure { min-width: 0; } .chapter { display: block; } .chapter::before { display: none; } .chapter h3 { break-after: avoid; } .chapter p { orphans: 3; widows: 3; font-size: 11pt; } .heroFigure img { max-height: 290px; } }
 
 /* Ground evidence is stored as thumbnails; keep it at a readable native scale. */
 .heroPhoto img { width: auto; max-width: 100%; max-height: 300px; margin: 0 auto; }

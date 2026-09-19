@@ -409,7 +409,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         if(firstGraphic){
           const info=doc.getImageProperties(firstGraphic.image);
           doc.setFont('helvetica','normal');doc.setFontSize(9);
-          firstGraphicRoom=Math.min(345,CW*info.height/info.width)+doc.splitTextToSize(firstGraphic.caption,CW).length*12+43;
+          firstGraphicRoom=Math.min(firstGraphic.maxHeight??345,CW*info.height/info.width)+doc.splitTextToSize(firstGraphic.caption,CW).length*12+43;
         }
         doc.setFont('helvetica', 'bold'); doc.setFontSize(13); setInk(INK.green);
         const lines = doc.splitTextToSize(block.text, CW);
@@ -423,14 +423,14 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         // as the document assembler, so illustrations survive added/changed numbering.
         for (const graphic of chapter?.[1] ?? []) {
           const info=doc.getImageProperties(graphic.image);
-          const height=Math.min(345,CW*info.height/info.width);
+          const height=Math.min(graphic.maxHeight??345,CW*info.height/info.width);
           doc.setFont('helvetica','normal');doc.setFontSize(9);
           const caption=doc.splitTextToSize(graphic.caption,CW) as string[];
           need(height+caption.length*12+43);
           doc.setFont('helvetica','bold');doc.setFontSize(12);setInk(INK.green);
           doc.text(graphic.title,M,y+9);y+=22;
           const width=height*info.width/info.height;
-          doc.addImage(graphic.image,'PNG',M+(CW-width)/2,y,width,height,undefined,'FAST');y+=height+14;
+          doc.addImage(graphic.image,info.fileType==='JPEG'?'JPEG':'PNG',M+(CW-width)/2,y,width,height,undefined,'FAST');y+=height+14;
           doc.setFont('helvetica','normal');doc.setFontSize(9);setInk(INK.muted);
           textLines(caption,M,12);y+=14;
         }
