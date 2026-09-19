@@ -293,6 +293,17 @@ export async function sheetPlate(
 /** How small a chapter picture may be set to stay on the page it belongs to. Below this the
  * lettering inside a drawn figure stops being readable in print, so the picture waits instead. */
 export const CHAPTER_PICTURE_MIN_SCALE = 0.8;
+/** A picture that waits for the next page must not strand the last few items of a list beneath it.
+ * True when the page is breaking inside a list whose remaining tail is short: the tail is then set
+ * first and the picture follows it. A long tail keeps the picture at the head of the page. */
+export const LIST_TAIL_MAX = 3;
+export function shortListTail(kinds: readonly string[], index: number, max = LIST_TAIL_MAX): boolean {
+  const item = (kind?: string) => kind === 'bullet' || kind === 'numbered';
+  if (!item(kinds[index]) || !item(kinds[index - 1])) return false;
+  let tail = 0;
+  for (let k = index; k < kinds.length && item(kinds[k]); k += 1) tail += 1;
+  return tail <= max;
+}
 
 /** Which of a chapter's waiting pictures are set from here down, and how large.
  *
@@ -396,12 +407,20 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     const fit = fitHere(waiting);
     for (const picture of waiting.splice(0, fit.count)) drawPicture(picture, picture.natural * fit.scale);
   };
-  const newPage = () => { footer(); doc.addPage(); y = M + 8; drawWaiting(); };
+  // The body's block kinds and the block being set, so a page break knows when it falls inside a list.
+  let kinds: string[] = [];
+  let cursor = 0;
+  let heldForList = false;
+  const newPage = (insideBody = false) => {
+    footer(); doc.addPage(); y = M + 8;
+    if (insideBody && waiting.length && shortListTail(kinds, cursor)) heldForList = true;
+    else drawWaiting();
+  };
   /** End of a chapter: its pictures are set before the next chapter's heading, never after it. */
-  const flushWaiting = () => { drawWaiting(); while (waiting.length) newPage(); };
+  const flushWaiting = () => { heldForList = false; drawWaiting(); while (waiting.length) newPage(); };
   // Reports whether it broke the page, so the table below can repeat its header on the new one —
   // every other call site just ignores the return value, exactly as before this was added.
-  const need = (h: number): boolean => { if (y + h <= BOTTOM) return false; newPage(); return true; };
+  const need = (h: number): boolean => { if (y + h <= BOTTOM) return false; newPage(true); return true; };
 
   // Keep normal paragraphs together; carry an unusually long paragraph across
   // pages line by line without clipping its ending or shrinking its type.
@@ -474,8 +493,11 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     }
     return room;
   };
+  kinds = blocks.map(block => block.kind);
   for (let index = 0; index < blocks.length; index += 1) {
     const block = blocks[index];
+    cursor = index;
+    if (heldForList && block.kind !== 'bullet' && block.kind !== 'numbered') { heldForList = false; drawWaiting(); }
     switch (block.kind) {
       case 'title': {
         doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setInk(INK.text);
