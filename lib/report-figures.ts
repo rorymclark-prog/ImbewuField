@@ -118,6 +118,7 @@ const NICE_METRES = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000];
 
 type Box = { x: number; y: number; w: number; h: number };
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+const padded = (b: Box, by: number): Box => ({ x: b.x - by, y: b.y - by, w: b.w + by * 2, h: b.h + by * 2 });
 
 type PlanItem = { paint: PlanPaint; round: boolean; cx: number; cy: number; w: number; h: number; rot: number; planned: boolean; label: string; inside: string };
 type PlanArea = { id: string; feature: GroundFeatureKind; name: string; planned: boolean; points: Array<[number, number]> };
@@ -228,6 +229,12 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
   const within = (x: number, y: number, points: Array<[number, number]>) => { let hit = false; for (let i = 0, j = points.length - 1; i < points.length; j = i++) { const [xi, yi] = points[i], [xj, yj] = points[j]; if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit; } return hit; };
   const edgeDistance = (x: number, y: number, points: Array<[number, number]>) => { let best = Infinity; for (let i = 0, j = points.length - 1; i < points.length; j = i++) { const [ax, ay] = points[j], [bx, by] = points[i], dx = bx - ax, dy = by - ay, len = dx * dx + dy * dy, u = len ? Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / len)) : 0; best = Math.min(best, Math.hypot(x - ax - u * dx, y - ay - u * dy)); } return best; };
   /** Where a name reads best: the roomiest spot inside the ring that no building covers — the centroid of an L-shaped driveway is usually not on the driveway. */
+  /** True when any part of a label box lies on the ring (both in drawing pixels). */
+  const boxTouchesRing = (b: Box, ring: Array<[number, number]>) => {
+    if (ring.some(([x, y]) => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h)) return true;
+    for (let i = 0; i <= 8; i += 1) for (let j = 0; j <= 2; j += 1) if (within(b.x + (b.w * i) / 8, b.y + (b.h * j) / 2, ring)) return true;
+    return false;
+  };
   const labelPoint = (points: Array<[number, number]>, avoid: Array<Array<[number, number]>>): [number, number] => {
     const xs = points.map(q => q[0]), ys = points.map(q => q[1]), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
     let best: [number, number] | null = null, room = 0;
@@ -245,6 +252,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
   const featureName: Partial<Record<GroundFeatureKind, string>> = { house: t('House', 'Indlu'), patio: t('Patio', 'Isitubhi'), driveway: t('Driveway', 'Indlela yemoto'), lawn: t('Lawn', 'Utshani'), veg_garden: t('Veg garden', 'Ingadi yemifino'), orchard: t('Orchard', 'Insimu yezithelo'), cleared: t('Cleared ground', 'Indawo evulekile') };
   const order: GroundFeatureKind[] = ['lawn', 'cleared', 'veg_garden', 'orchard', 'driveway', 'patio', 'terrace_bank', 'staple_garden', 'house'];
   const buildings = areas.filter(area => area.feature === 'house').map(area => area.points);
+  const busyGround = areas.filter(area => area.feature === 'house' || area.feature === 'staple_garden').map(area => area.points.map(q => [X(q[0]), Y(q[1])] as [number, number]));
   let plotNumber = 0;
   const plotLabel = new Map<string, string>();
   for (const area of areas) if (area.feature === 'staple_garden') { plotNumber += 1; plotLabel.set(area.id, `P${plotNumber}`); }
@@ -342,7 +350,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
       { x: mid, y: own.y - gap, box: { x: mid - tw / 2, y: own.y - gap - size, w: tw, h: size * 1.3 } },
       { x: mid, y: own.y + own.h + gap + size * 0.8, box: { x: mid - tw / 2, y: own.y + own.h + gap - 2, w: tw, h: size * 1.3 } },
     ];
-    const spot = candidates.find(c => inside(c.box) && !taken.some(b => overlaps(b, c.box)) && !obstacles.some(b => b !== own && overlaps(b, c.box)));
+    const spot = candidates.find(c => inside(c.box) && !taken.some(b => overlaps(padded(b, 4), c.box)) && !obstacles.some(b => b !== own && overlaps(b, c.box)));
     if (!spot) continue;
     labels.push({ text, x: spot.x, y: spot.y, size, fill: INK, weight: 600, halo: true, box: spot.box });
     taken.push(spot.box);
@@ -356,7 +364,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
     const text = clip(route.name || routeName[route.kind], 20), size = 12, tw = textWidth(text, size);
     search: for (const fraction of [0.5, 0.38, 0.62, 0.26, 0.74, 0.14, 0.86]) for (const dy of [-7, 15, -19, 27]) {
       const at = along(fraction), box = { x: X(at[0]) - tw / 2, y: Y(at[1]) + dy - size, w: tw, h: size * 1.3 };
-      if (!inside(box) || taken.some(b => overlaps(b, box)) || obstacles.some(b => overlaps(b, box))) continue;
+      if (!inside(box) || taken.some(b => overlaps(padded(b, 3), box)) || obstacles.some(b => overlaps(b, box)) || busyGround.some(ring => boxTouchesRing(box, ring))) continue;
       labels.push({ text, x: X(at[0]), y: Y(at[1]) + dy, size, fill: ROUTE_STYLE[route.kind].ink, weight: 600, halo: true, box });
       taken.push(box);
       break search;
@@ -847,6 +855,27 @@ export function soilFigure(location: LocationData | null | undefined, language =
   const x0 = 40, x1 = W - 40;
   const marker = (x: number, y: number) => p.circle(x, y, 8, lab ? { fill: INK, stroke: '#ffffff', width: 2 } : { fill: '#ffffff', stroke: INK, width: 2.6 });
   const empty = (y: number) => { p.rect(x0, y - 7, x1 - x0, 14, { fill: '#ffffff', stroke: MUTED, width: 1.2, dash: '5 4', radius: 7 }); p.text((x0 + x1) / 2, y + 4.5, t('not measured', 'akulinganiswanga'), { size: 12, fill: MUTED, anchor: 'middle' }); };
+  if (!known) {
+    // Nothing measured: three empty scales would be a tall drawing of nothing. Say so once, and
+    // show what a soil test fills in.
+    p.text(14, 25, t('The soil here has not been measured yet', 'Umhlabathi walapha awukalinganiswa'), { size: 17, weight: 700, fill: INK });
+    p.text(14, 46, t('A soil test fills in these three readings.', 'Ukuhlolwa komhlabathi kugcwalisa lezi zilinganiso ezintathu.'), { size: 13, fill: MUTED });
+    const slots = [t('How sour or sweet (pH)', 'Ubumuncu noma ubumnandi (pH)'), t('Sand, silt and clay', 'Isihlabathi, udaka nobumba'), t('Organic carbon', 'Ikhabhoni yemvelo')];
+    const gap = 12, slotW = (W - 28 - gap * 2) / 3;
+    slots.forEach((name, i) => {
+      const x = 14 + i * (slotW + gap);
+      p.rect(x, 64, slotW, 58, { fill: '#ffffff', stroke: MUTED, width: 1.2, dash: '5 4', radius: 6 });
+      p.text(x + slotW / 2, 88, name, { size: 12.5, weight: 700, fill: INK, anchor: 'middle' });
+      p.text(x + slotW / 2, 108, t('not measured', 'akulinganiswanga'), { size: 12, fill: MUTED, anchor: 'middle' });
+    });
+    return {
+      id: 'soil', width: W, height: 134, svg: p.done(134),
+      title: t('Soil at a glance', 'Umhlabathi ngamafuphi'),
+      note: t('No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test on a sample from the top 30 cm.', 'Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi kusampula yamasentimitha angu-30 aphezulu.'),
+      source: t('No soil measurement recorded', 'Akukho ukulinganiswa komhlabathi okuqoshiwe'),
+      alt: t('Soil not measured.', 'Umhlabathi awulinganiswanga.'),
+    };
+  }
   let y = 24;
 
   // pH
@@ -928,7 +957,10 @@ export function timelineFigure(plan: PhasePlan | null | undefined, language = 'e
   const maxWeek = Math.max(...phases.map(ph => ph.weekEnd), 1);
   const step = maxWeek <= 12 ? 1 : maxWeek <= 24 ? 2 : maxWeek <= 48 ? 4 : 8;
   const xOf = (week: number) => left + (week / maxWeek) * (right - left);
-  const rowH = 46, top = 16, bottom = top + phases.length * rowH;
+  const rowH = 46, top = 66, bottom = top + phases.length * rowH;
+  const overlap = phases.some((ph, i) => i > 0 && ph.weekStart < phases[i - 1].weekEnd);
+  p.text(14, 25, `${figureNumber(phases.length)} ${t('stages of work. The last one starts around week', 'izigaba zomsebenzi. Esokugcina siqala cishe ngeviki')} ${figureNumber(last.weekStart)}`, { size: 17, weight: 700, fill: INK });
+  p.text(14, 46, overlap ? t('Stages overlap: the next one can start before the one before it is finished.', 'Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.') : t('Each stage starts when the one before it is finished.', 'Isigaba ngasinye siqala lapho esandulelayo sesiphelile.'), { size: 13, fill: MUTED });
   for (let w = 0; w <= maxWeek; w += step) p.line(xOf(w), top, xOf(w), bottom + 4, { stroke: HAIR, width: 1 });
   phases.forEach((phase, i) => {
     const y = top + i * rowH, open = phase === last;
@@ -943,6 +975,7 @@ export function timelineFigure(plan: PhasePlan | null | undefined, language = 'e
   for (let w = 0; w <= maxWeek; w += step) p.text(xOf(w), bottom + 20, String(w), { size: 11.5, fill: MUTED, anchor: 'middle' });
   p.text((left + right) / 2, bottom + 38, t('weeks from the day work starts', 'amaviki kusukela ngosuku umsebenzi oqala ngalo'), { size: 12, fill: MUTED, anchor: 'middle' });
   const y = keyRow(p, left, bottom + 62, [
+    { label: t('Planned work, not started', 'Umsebenzi ohleliwe, awukaqali'), draw: (x, yy) => p.rect(x + 1, yy - 6, 20, 12, { fill: '#e6efe6', stroke: GREEN, width: 1.6, dash: '5 3', radius: 3 }) },
     { label: t('Hold point: stop and check before the next phase', 'Iphuzu lokuma: yima uhlole ngaphambi kwesigaba esilandelayo'), draw: (x, yy) => p.path(pathOf([[x + 10, yy - 8], [x + 18, yy], [x + 10, yy + 8], [x + 2, yy]], true), { fill: INK }) },
     { label: t('Carries on', 'Kuyaqhubeka'), draw: (x, yy) => p.path(pathOf([[x + 4, yy - 7], [x + 16, yy], [x + 4, yy + 7]], true), { fill: GREEN }) },
   ]);
@@ -982,7 +1015,7 @@ export function landUseFigure(facts: ReportSiteFacts | null | undefined, languag
     p.rect(x0, y - 11, 18, 13, { ...part.look, radius: 2 });
     p.text(x0 + 28, y, part.name, { size: 13 });
     const share = (part.value / total) * 100;
-    p.text(x1, y, `${figureNumber(part.value)} m²   ${share < 1 ? '<1' : figureNumber(share)} %`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
+    p.text(x1, y, `${figureNumber(part.value)} m²  ·  ${share < 1 ? '<1' : figureNumber(share)} %`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
     y += 23;
   }
   return {

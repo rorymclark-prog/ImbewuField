@@ -870,7 +870,7 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
   // ── Lines ──────────────────────────────────────────────────────────────
   // The path leaves the foot of the driveway and the greywater line leaves the wing's corner, so
   // neither runs through the house the map traces (see the staple plots above).
-  const pathM: Array<[number, number]> = [[16, 10], [16, 13], [12, 18]];       // driveway foot → down → into beds
+  const pathM: Array<[number, number]> = [[16, 10], [16, 16.5], [4, 16.5]];    // driveway foot → down → along the aisle between the bed rows
   const swaleM: Array<[number, number]> = [[3, 20.5], [20, 20.8], [37, 20.5]]; // on-contour, just above the orchard
   const greywaterM: Array<[number, number]> = [[24, 16.2], [21, 16.2], [17, 22.5]]; // house diverter → orchard basin
   const lines: LineShape[] = [

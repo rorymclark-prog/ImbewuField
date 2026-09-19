@@ -13,7 +13,7 @@ const blank = { siteId: canvas.siteId, layers: [], updatedAt: '' } as never;
 const merged = mergeFarmShapesIntoDesignState(buildDemoBoundaryFC(), blank, canvas.siteId);
 const refs = mapRefLayersForCanvas(merged.layers, canvas, DEMO_SITE.lat, DEMO_SITE.lon);
 const location = { ...DEMO_LOCATION, lat: DEMO_SITE.lat, lon: DEMO_SITE.lon, soil: { ...DEMO_LOCATION.soil, soilSource: variant === 'lab' ? 'lab' : variant === 'bare' ? 'estimate' : 'soilgrids' } } as typeof DEMO_LOCATION;
-if (variant !== 'bare') { canvas.dailyWaterUseL = 250; canvas.localWind = { prevailingFrom: 'SW', strongestFrom: 'NW', recordedAt: new Date().toISOString() } as never; }
+if (variant !== 'bare') { canvas.localWind = { prevailingFrom: 'SW', strongestFrom: 'NW', recordedAt: new Date().toISOString() } as never; }
 const facts = collectReportSiteFacts({ siteId: canvas.siteId, lat: DEMO_SITE.lat, lon: DEMO_SITE.lon, canvas, farmName: DEMO_SITE.name } as never) ?? {};
 if (!facts.roof) facts.roof = { areaM2: 144, source: 'Traced on the map' } as never;
 if (!facts.boundary) facts.boundary = { areaM2: 1037, source: 'Traced on the map' } as never;
