@@ -8,6 +8,7 @@ import { readLocalFarmShapes } from './map-sync';
 import { resolveBaseLayers } from './base-layers';
 import { buildPhasePlan } from './phasing';
 import { EMPTY_MAP_REF_LAYERS, mapRefLayersForCanvas } from './report-map-layers';
+import { collectReportSiteFacts } from './report-site-facts-collect';
 import type { ReportFigureInputs } from './report-figures';
 
 export function collectReportFigureInputs(input: { siteId: string; lat: number; lon: number; biome?: string; rainfallMm?: number }): ReportFigureInputs {
@@ -23,7 +24,11 @@ export function collectReportFigureInputs(input: { siteId: string; lat: number; 
     try {
       phasePlan = buildPhasePlan(canvas, resolveBaseLayers(canvas, mapLayers), { biome: input.biome, rainfallMm: input.rainfallMm });
     } catch { /* no build order: the timeline figure is simply left out */ }
-    return { canvas, mapLayers, phasePlan };
+    let designToday = null;
+    try {
+      designToday = collectReportSiteFacts({ siteId: input.siteId, lat: input.lat, lon: input.lon, canvas, waterPoints: [] }).design ?? null;
+    } catch { /* nothing to compare a saved report with: the figures simply carry no "changed since" line */ }
+    return { canvas, mapLayers, phasePlan, designToday };
   } catch {
     return {};
   }

@@ -1151,7 +1151,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              style={{ display: showReportColumn ? 'block' : 'none' }}>
           {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
           <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
-          {report && (
+          {/* Progress while the report is being written. It used to stay pinned at full width
+              afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
+          {report && loading && (
             <div
               style={{
                 position: 'sticky', top: 0, left: 0, right: 0, height: 2,

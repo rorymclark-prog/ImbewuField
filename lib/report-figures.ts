@@ -28,7 +28,7 @@ import { BED_DEF_IDS, canvasMetreExtent } from './design-beds-bridge';
 import { ELEMENTS_BY_ID, type ElementCategory } from './design-elements';
 import { plantCodesForSheet } from './plant-codes';
 import type { LocationData } from './types';
-import type { ReportSiteFacts } from './report-site-facts';
+import { designChangedSince, type FactDesign, type ReportSiteFacts } from './report-site-facts';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT, roofHarvestLitres } from './roof-runoff';
 import { DAYS_IN_MONTH, computeTankSizing } from './tank-sizing';
 import { deriveSectorModel, labelToBearing, sectorSiteFromLocation } from './sector';
@@ -1075,7 +1075,13 @@ export function statusFigure(canvas: DesignCanvasState | null | undefined, langu
 // ── All of them, in reading order ─────────────────────────────────────────────────────────────
 
 /** What the figures need beyond the typed facts and the location: the saved drawing itself. */
-export type ReportFigureInputs = { canvas?: DesignCanvasState | null; mapLayers?: MapRefLayers | null; phasePlan?: PhasePlan | null };
+export type ReportFigureInputs = {
+  canvas?: DesignCanvasState | null;
+  mapLayers?: MapRefLayers | null;
+  phasePlan?: PhasePlan | null;
+  /** The design as it is saved today, in the same terms as the facts a saved report was written from. */
+  designToday?: FactDesign | null;
+};
 
 /**
  * Every figure this site has the data for, in the order a reader meets them: the ground first,
@@ -1084,14 +1090,22 @@ export type ReportFigureInputs = { canvas?: DesignCanvasState | null; mapLayers?
  */
 export function siteReportFigures(facts: ReportSiteFacts | null | undefined, location: LocationData | null | undefined, language = 'en', inputs: ReportFigureInputs = {}): ReportFigure[] {
   const build = (make: () => ReportFigure | null): ReportFigure | null => { try { return make(); } catch { return null; } };
+  // Three pictures are drawn from the design as it is saved today, not from the facts a saved
+  // report was written from. When the two have parted, each of the three says so first.
+  const t = translator(language);
+  const moved = designChangedSince(facts?.design, inputs.designToday);
+  const today = (make: () => ReportFigure | null) => () => {
+    const figure = make();
+    return figure && moved ? { ...figure, note: `${t('The design has changed since this report was written. This picture shows the design as it is today.', 'Umklamo ushintshile selokhu kwabhalwa lo mbiko. Lesi sithombe sikhombisa umklamo njengoba unjalo namuhla.')} ${figure.note}`.trim() } : figure;
+  };
   return [
-    build(() => sitePlanFigure(inputs.canvas, language, inputs.mapLayers)),
+    build(today(() => sitePlanFigure(inputs.canvas, language, inputs.mapLayers))),
     build(() => landUseFigure(facts, language)),
-    build(() => statusFigure(inputs.canvas, language)),
+    build(today(() => statusFigure(inputs.canvas, language))),
     build(() => climateFigure(location, language)),
     build(() => sectorFigure(location, facts, language)),
     build(() => waterBudgetFigure(facts, location, language)),
     build(() => soilFigure(location, language)),
-    build(() => timelineFigure(inputs.phasePlan, language)),
+    build(today(() => timelineFigure(inputs.phasePlan, language))),
   ].filter((figure): figure is ReportFigure => figure !== null);
 }

@@ -114,6 +114,29 @@ export interface FactDesign {
   savedAt?: string;
 }
 
+/**
+ * Has the drawn design changed since a saved report's words were written?
+ *
+ * A saved report keeps the facts it was written from, but its plan, progress and build-order
+ * pictures are drawn from the design as it is saved TODAY. If the farmer has added a bed since,
+ * the words say seven and the plan shows eight, and nothing on the page says why.
+ *
+ * Counted things only — beds, plots, placed items, traced lines — because that is what the words
+ * state. NOT the save time: opening the Design Studio re-saves the drawing without changing it.
+ * A part that either side never recorded (older saved reports carry no plots) is not compared,
+ * and with no design on one side there is nothing to compare, so the answer is no.
+ */
+export function designChangedSince(written: FactDesign | null | undefined, today: FactDesign | null | undefined): boolean {
+  if (!written || !today) return false;
+  const known = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
+  const differs = (a: unknown, b: unknown, tolerance = 0) => known(a) && known(b) && Math.abs(a - b) > tolerance;
+  if (differs(written.bedCount, today.bedCount) || differs(written.plotCount, today.plotCount)) return true;
+  if (differs(written.bedAreaM2, today.bedAreaM2, 0.5) || differs(written.plotAreaM2, today.plotAreaM2, 0.5)) return true;
+  const tally = (rows: ReadonlyArray<{ name?: string; label?: string; count: number }> | undefined) =>
+    (rows ?? []).map(row => `${row.name ?? row.label}\u00d7${row.count}`).sort().join('|');
+  return tally(written.elements) !== tally(today.elements) || tally(written.routes) !== tally(today.routes);
+}
+
 export interface FactWater {
   tanks: FactTank[];
   /** Sum of the capacities that are actually stated. Tanks of unknown size are NOT counted. */
