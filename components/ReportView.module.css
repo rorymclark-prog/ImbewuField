@@ -1,4 +1,5 @@
 .workspace {
+  z-index:65;
   --report-paper: #ffffff;
   --report-canvas: #edf2ee;
   --report-panel: #f3f7f3;
@@ -37,7 +38,7 @@
   border-right: 1px solid var(--report-border);
 }
 
-.sidebar button, .sidebar select { min-height: 36px; }
+.sidebar button, .sidebar select, .toolbar button, .readingControls button { min-height: 44px; }
 .sidebar button, .sidebar select, .toolbar button { font-family: var(--font-sans), sans-serif; }
 .workspace button:focus-visible, .workspace select:focus-visible {
   outline: 2px solid var(--report-green);
@@ -130,6 +131,17 @@
 .summaryPage { margin: 0 0 28px; padding: 24px; border: 1px solid var(--report-border); border-radius: 12px; background: var(--report-paper); }
 .summaryPage h2 { font-size: 24px; font-weight: 700; margin: 12px 0 20px; }
 .summaryPage p { padding-bottom: 8px; border-bottom: 1px solid var(--report-border); }
+.summaryPage header { display:flex; gap:18px; align-items:baseline; border-bottom:1px solid var(--report-border); padding-bottom:18px; margin-bottom:18px; }
+.summaryPage header>span { color:var(--report-gold); font:500 36px var(--font-display),Georgia,serif; }
+.summaryPage header small { font-size:12px; letter-spacing:.12em; color:var(--report-muted); }
+.summaryPage h2 { font-family:var(--font-display),Georgia,serif; font-weight:500; margin:8px 0 0; }
+.summaryPage ul { list-style:none; padding:0; }
+.summaryPage li { position:relative; padding:10px 0 10px 20px; border-bottom:1px solid var(--report-border); }
+.summaryPage li::before { content:''; position:absolute; width:5px; height:5px; border-radius:50%; background:var(--report-gold); top:22px; left:0; }
+.summaryPage li:last-child { border-bottom:0; }
+.recordTools { margin-top:24px; }
+.body :global(.report-h2) { scroll-margin-top:24px; }
+.body :global(.report-h2):focus { outline:2px solid var(--report-green); outline-offset:6px; }
 
 .printPreview, :global(html.dark) .printPreview { --report-paper: white; --report-canvas: #e9edeb; --report-panel: white; --report-ink: #171717; --report-muted: #444; --report-border: #ccc; --report-green: #222; --report-blue: #222; --report-gold: #222; }
 .printPreview .coverTitle { background: white; border-bottom: 2px solid #222; border-radius: 0; padding: 0 0 20px; }

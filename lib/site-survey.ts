@@ -18,6 +18,24 @@ export const PRODUCTION_CATEGORIES = [
 ] as const;
 export type ProductionCategory = typeof PRODUCTION_CATEGORIES[number];
 
+/** “None” must not travel into a report alongside the resource it denies. */
+export function toggleSurveyChoice(values: string[], value: string, none = 'none'): string[] {
+  if (values.includes(value)) return values.filter(item => item !== value);
+  return value === none ? [none] : [...values.filter(item => item !== none), value];
+}
+
+/** Review a farmer's own figures; never repair them by silently changing a quantity. */
+export function productionNeedsReview(row: ReportedProduction): boolean {
+  const quantities = [row.quantityPerYear, row.usedByHousehold, row.sold];
+  if (quantities.some(value => value !== null && (!Number.isFinite(value) || value < 0))) return true;
+  if (row.incomeZar !== null && (!Number.isFinite(row.incomeZar) || row.incomeZar < 0)) return true;
+  if (quantities.some(value => value !== null) && !row.unit.trim()) return true;
+  if (row.category === 'other' && !row.name?.trim()) return true;
+  if (row.quantityPerYear === null) return false;
+  const allocated = (row.usedByHousehold ?? 0) + (row.sold ?? 0);
+  return allocated - row.quantityPerYear > Number.EPSILON * Math.max(1, allocated, row.quantityPerYear) * 4;
+}
+
 export interface ReportedProduction {
   category: ProductionCategory;
   /** The farmer names the free row; catalog categories carry their own label. */
@@ -193,7 +211,8 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
       ? row.updatedAt
       : undefined,
     siteType: row.siteType === 'community' ? 'community' : 'homestead',
-    adults: stringValue(row.adults),
+    // The translated chip used an en dash; water demand readers expect these canonical IDs.
+    adults: stringValue(row.adults).replace(/[–—]/g, '-'),
     memberCount: stringValue(row.memberCount) || undefined,
     goals: stringArray(row.goals),
     waterSource: stringArray(row.waterSource),
@@ -265,7 +284,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push(`Sources available: ${s.waterSource.length ? s.waterSource.join(', ') : 'none specified'}`);
   const deliveryArr = Array.isArray(s.waterDelivery) ? s.waterDelivery : (s.waterDelivery ? [s.waterDelivery] : []);
   lines.push(`Delivery / irrigation: ${deliveryArr.map(v => deliveryLabels[v] ?? v).join(' + ') || 'not specified'}`);
-  lines.push(`On-site water storage: ${s.waterStorage.filter(v => v !== 'none').join(', ') || 'none'}`);
+  lines.push(`On-site water storage: ${s.waterStorage.length ? s.waterStorage.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
 
   lines.push('');
   lines.push('--- ROOF CATCHMENT ---');
@@ -288,18 +307,30 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('--- LAND & SOIL ---');
   lines.push(`Land preparation method: ${(prepLabels[s.landPrepMethod] ?? s.landPrepMethod) || 'not specified'}`);
   lines.push(`Soil condition (self-assessed): ${s.soilCondition || 'not assessed'}`);
-  lines.push(`Soil amendments applied: ${s.soilAmendments.filter(v => v !== 'none').join(', ') || 'none'}`);
+  lines.push(`Soil amendments applied: ${s.soilAmendments.length ? s.soilAmendments.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
   lines.push(`Fencing: ${s.hasFencing || 'not specified'}`);
 
   lines.push('');
   lines.push('--- EXISTING RESOURCES ---');
-  lines.push(`Crops growing now: ${s.existingCrops.filter(v => v !== 'nothing').join(', ') || 'nothing yet'}`);
+  lines.push(`Crops growing now: ${s.existingCrops.length ? s.existingCrops.filter(v => v !== 'nothing').join(', ') || 'nothing yet' : 'not recorded'}`);
   if (s.existingGrowingAreaM2 && s.existingGrowingAreaM2 > 0) {
     lines.push(`Existing growing area (traced or entered): ${s.existingGrowingAreaM2} m²`);
   }
-  lines.push(`Livestock: ${s.livestock.filter(v => v !== 'none').join(', ') || 'none'}`);
+  lines.push(`Livestock: ${s.livestock.length ? s.livestock.filter(v => v !== 'none').join(', ') || 'none reported' : 'not recorded'}`);
   lines.push(`Other infrastructure: ${s.otherInfra.length ? s.otherInfra.join(', ') : 'none mentioned'}`);
 
+  lines.push('');
+  lines.push('--- FARMER-REPORTED ANNUAL PRODUCTION ---');
+  const rows = s.reportedProduction ?? [];
+  if (!rows.length) lines.push('Production quantities, household use, sales, income and harvest timing: not recorded.');
+  for (const row of rows) {
+    const quantity = (value: number | null) => value === null ? 'not recorded' : `${value} ${row.unit || '(unit not recorded)'}`;
+    lines.push(`${row.name || row.category.replace(/_/g, ' ')} — source: reported by the farmer.`);
+    lines.push(`Quantity per year: ${quantity(row.quantityPerYear)}; used by household: ${quantity(row.usedByHousehold)}; sold: ${quantity(row.sold)}; annual sales income (not profit): ${row.incomeZar === null ? 'not recorded' : `ZAR ${row.incomeZar}`}.`);
+    lines.push(`Harvest months (1=January, 12=December): ${row.harvestMonths?.length ? row.harvestMonths.join(', ') : 'not recorded'}.`);
+    if (productionNeedsReview(row)) lines.push('These figures need farmer review; do not use them to claim a yield, surplus or financial return.');
+  }
+  lines.push('Unreported months are unknown, not food gaps. Production is not a dietary intake survey or a nutrition score. Never combine quantities with different units.');
   lines.push('');
   lines.push('--- APPROACH & CONSTRAINTS ---');
   lines.push(`Farming practice: ${s.farmingPractice || 'not specified'}`);

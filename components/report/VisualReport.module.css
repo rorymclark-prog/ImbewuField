@@ -1,6 +1,8 @@
 .visual, .report { --vr-green: #245738; --vr-ink: #1b3024; --vr-muted: #526258; --vr-line: #d6e1d8; color: var(--vr-ink); background: white; font-family: var(--font-sans), Arial, sans-serif; }
 .report { padding: 32px; border-radius: 20px; margin-top: 28px; border: 1px solid var(--vr-line); }
-.hero { overflow: hidden; border-radius: 12px; background: #173f2d; color: white; }
+.hero { position:relative; overflow: hidden; border-radius: 16px; background: #173f2d; color: white; }
+.heroCopy { position:relative; isolation:isolate; }
+.heroCopy::after { content:''; position:absolute; z-index:-1; pointer-events:none; width:230px; height:230px; border:1px solid #527b61; border-radius:50%; right:-42px; top:-116px; box-shadow:0 0 0 30px #214c361f,0 0 0 31px #527b6159,0 0 0 62px #214c361f,0 0 0 63px #527b6147,0 0 0 95px #214c361f,0 0 0 96px #527b612e; }
 .heroCopy { padding: clamp(18px, 2.5vw, 28px); }
 .edition { display: flex; justify-content: space-between; gap: 20px; font-size: 12px; letter-spacing: .13em; line-height: 1.5; color: #d6e7d9; }
 .hero h1 { font-family: var(--font-display), Georgia, serif; font-size: clamp(28px, 3vw, 42px); line-height: 1.08; max-width: 18ch; margin: 14px 0 10px; font-weight: 500; color: white; }
@@ -57,6 +59,7 @@
 .partners p { font-size: 14px; margin: 3px 0; }
 .ink .hero { background: white; color: #222; border-bottom: 2px solid #222; border-radius: 0; }
 .ink .heroCopy { padding: 12px 0 20px; }
+.ink .heroCopy::after { display:none; }
 .ink .hero h1, .ink .hero p, .ink .edition { color: #222; }
 .ink .metrics > div { border-color: #333; }
 .ink .chart, .ink .report { border-radius: 0; }

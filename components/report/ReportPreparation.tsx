@@ -60,6 +60,6 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
     </details>
     {changed&&<p role="status">Site evidence updated. Choose Generate new report to include it in the advice.</p>}
     {sheet&&place&&<EvidenceSheet key={`${place.id}:${sheet.group.key}`} siteId={evidenceSiteId(place.id)} group={sheet.group} item={sheet.item} onClose={()=>setSheet(null)} onChanged={refresh}/>}
-    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} onClose={()=>setSurvey(false)} onSaved={()=>{setSurvey(false);refresh();}}/>}
+    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} annualRainfallMm={location.rainfall.annual} onClose={()=>setSurvey(false)} onSaved={()=>{setSurvey(false);refresh();}}/>}
   </section>;
 }
