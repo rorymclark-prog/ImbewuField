@@ -33,6 +33,13 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'f75c875', changes: [
+    'Choose a short or comprehensive site survey, with illustrated guidance along the way.',
+    'Review your observations and harvest months before saving your survey.',
+    'Production records now inform your site report; blank quantities stay unknown.',
+    'Read reports at a glance, as a field guide, or with every chapter and visual.',
+    'Find full-report chapters quickly and see charts in the shorter screen views.',
+  ] },
   { when: '19 September 2026', sha: 'cbd4841', changes: [
     'Site reports for a saved design open with a drawn plan: boundary, house, beds and trees.',
     'New report pictures show rain by month, your water budget, sun and wind, and soil.',
