@@ -7,7 +7,7 @@ import ReportCropPlan from './report/ReportCropPlan';
 import { reportSectionsForGeneration } from '@/lib/report-planting-guide';
 import ReportMapStocktake, { ReportMapPreview } from './report/ReportMapStocktake';
 import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportMaps, type ReportMapSelection } from '@/lib/report-map-selection';
-import ReportVisualOverview from './report/ReportVisualOverview';
+import ReportVisualOverview, { type OpenReportImage } from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportReadingGuide from './report/ReportReadingGuide';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
@@ -118,7 +118,7 @@ interface Props {
   activePlaceId?: string;
 }
 
-function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {}) {
+function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {}, onOpenImage?: OpenReportImage, viewLabel?: string) {
   const lines = text.split('\n');
   const elements: React.ReactNode[] = [];
   let i = 0;
@@ -147,7 +147,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
           </h2>
         )
       );
-      if(graphics[heading]?.length)elements.push(<ReportChapterGraphics key={`visual-${i}`} graphics={graphics[heading]}/>);
+      if(graphics[heading]?.length)elements.push(<ReportChapterGraphics key={`visual-${i}`} graphics={graphics[heading]} onOpenImage={onOpenImage} viewLabel={viewLabel}/>);
     } else if (line.startsWith('### ')) {
       elements.push(
         <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: 'var(--report-gold)' }}>
@@ -394,6 +394,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
   const [openingPlate, setOpeningPlate] = useState(false);
   const [plateZoom, setPlateZoom] = useState(false);
+  const plateTrigger = useRef<HTMLElement | null>(null);
+  const openReportImage = useCallback<OpenReportImage>((label, image) => {
+    plateTrigger.current = document.activeElement as HTMLElement | null;
+    setOpenPlate({ label, image });
+  }, []);
+  const closeReportImage = useCallback(() => {
+    setOpenPlate(null);
+    requestAnimationFrame(() => { if (plateTrigger.current?.isConnected) plateTrigger.current.focus(); });
+  }, []);
+
   const plateRequest = useRef(0);
   useEffect(() => { ++plateRequest.current; setOpenPlate(null); setOpeningPlate(false); }, [sheetScope]);
   useEffect(() => { setPlateZoom(false); }, [openPlate]);
@@ -455,9 +465,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setCoverPlate(null);
     try {
       const image = existing ?? await loadSheetImage(plate.id).catch(() => null);
-      if (request === plateRequest.current && image) setOpenPlate({ label: plate.label, image });
+      if (request === plateRequest.current && image) openReportImage(plate.label, image);
     } finally { if (request === plateRequest.current) setOpeningPlate(false); }
-  }, [coverPlate, sheetScope]);
+  }, [coverPlate, sheetScope, openReportImage]);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -1233,7 +1243,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {presentation !== 'print' && <ReportVisualOverview visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
+            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
@@ -1293,7 +1303,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   {photoGallery.shown.map((p, i) => (
                     <button
                       key={`${p.key}-${i}`}
-                      onClick={() => setOpenPlate({ label: p.label, image: p.dataUrl })}
+                      onClick={event => {
+                        plateTrigger.current = event.currentTarget;
+                        setOpenPlate({ label: p.label, image: p.dataUrl });
+                      }}
                       className="u-tap-target text-left"
                       style={{
                         background: 'var(--report-paper)', border: '1px solid var(--report-border)', borderRadius: 10,
@@ -1351,7 +1364,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Generated report */}
             {(report || reading !== 'full') && (
               <div className={`${styles.body} report-body`}>
-                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
+                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}, openReportImage, tr('View full size', 'Buka ngosayizi ogcwele')) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">
@@ -1383,18 +1396,26 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </div>
       </div>
 
-      {/* One sheet at full resolution, held only while it is open. Closing drops the reference —
+      {/* One map, diagram or photograph at full resolution, held only while it is open. Closing drops the reference —
           the print master is the largest single string this screen ever holds. */}
       {openPlate && (
         <div role="dialog" aria-modal="true" aria-label={openPlate.label}
-          onKeyDown={e => { if (e.key === 'Escape') setOpenPlate(null); }}
+          onKeyDown={e => {
+            if (e.key === 'Escape') { e.preventDefault(); closeReportImage(); }
+            if (e.key === 'Tab') {
+              const controls = e.currentTarget.querySelectorAll<HTMLElement>('button, [tabindex="0"]');
+              const first = controls[0], last = controls[controls.length - 1];
+              if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+              else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+            }
+          }}
           style={{ position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(32,25,15,0.94)', display: 'flex', flexDirection: 'column', padding: 16, gap: 10 }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, color: '#fff' }}>
             <strong style={{ flex: 1 }}>{stripInlineMarkdown(openPlate.label)}</strong>
-            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" onClick={() => setPlateZoom(v => !v)}>{plateZoom ? tr('Fit page', 'Linganisa ikhasi') : tr('Zoom to read', 'Khulisa ukuze ufunde')}</button>
-            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" autoFocus onClick={() => setOpenPlate(null)}>{tr('Close', 'Vala')}</button>
+            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" aria-pressed={plateZoom} onClick={() => setPlateZoom(v => !v)}>{plateZoom ? tr('Fit page', 'Linganisa ikhasi') : tr('Zoom to read', 'Khulisa ukuze ufunde')}</button>
+            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" autoFocus onClick={closeReportImage}>{tr('Close', 'Vala')}</button>
           </div>
-          <div style={{ flex: 1, minHeight: 0, overflow: 'auto', textAlign: 'center' }}>
+          <div tabIndex={0} role="region" aria-label={openPlate.label} style={{ flex: 1, minHeight: 0, overflow: 'auto', textAlign: 'center' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={openPlate.image} alt={openPlate.label} style={plateZoom
               ? { width: 'max(1600px, 160%)', maxWidth: 'none', height: 'auto' }

@@ -1,13 +1,16 @@
 'use client';
 import { reportChartSvg, REPORT_COLOURS, type ReportChart, type ReportVisuals } from '@/lib/report-visuals';
+import { Maximize2 } from 'lucide-react';
 import SidewaysScroller from './SidewaysScroller';
 import styles from './VisualReport.module.css';
 
-export function ReportChartCard({ chart, ink = false, slideHint }: { chart: ReportChart; ink?: boolean; slideHint?: string }) {
+export type OpenReportImage = (label: string, image: string) => void;
+
+export function ReportChartCard({ chart, ink = false, slideHint, onOpenImage, viewLabel = 'View full size' }: { chart: ReportChart; ink?: boolean; slideHint?: string; onOpenImage?: OpenReportImage; viewLabel?: string }) {
   const art = reportChartSvg(chart, ink);
   const maximum = Math.max(...chart.rows.map(row => row.value), 1);
   return <figure className={`${styles.chart} ${chart.id === 'cost' ? styles.wideChart : ''}`}>
-    <figcaption><span className={styles.kicker}>{chart.unit || 'JAN – DEC'}</span><h3>{chart.title}</h3></figcaption>
+    <figcaption><div><span className={styles.kicker}>{chart.unit || 'JAN – DEC'}</span><h3>{chart.title}</h3></div>{onOpenImage && <button type="button" className={`${styles.enlarge} no-print`} onClick={() => onOpenImage(chart.title, `data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`)}><Maximize2 size={16} aria-hidden="true"/>{viewLabel}</button>}</figcaption>
     {chart.kind === 'bars' ? <div className={styles.bars}>{chart.rows.length ? chart.rows.map((row, i) => <div key={`${row.label}-${i}`}>
       <div className={styles.barLabel}><span>{row.label}</span><strong>{row.value.toLocaleString('en-ZA', { maximumFractionDigits: 1 })} {chart.unit}</strong></div>
       <div className={styles.track}><span style={{ width: `${row.value / maximum * 100}%`, background: ink ? '#333' : REPORT_COLOURS[i % REPORT_COLOURS.length] }} /></div>
@@ -23,7 +26,7 @@ export function ReportChartCard({ chart, ink = false, slideHint }: { chart: Repo
   </figure>;
 }
 
-export default function ReportVisualOverview({ visuals, image, imageCaption, imageKind = 'map', ink = false, compact = false, stamp, children }: { visuals: ReportVisuals; image?: string; imageCaption?: string; imageKind?: 'photo' | 'map'; ink?: boolean; compact?: boolean; stamp?: string; children?: React.ReactNode }) {
+export default function ReportVisualOverview({ visuals, image, imageCaption, imageKind = 'map', ink = false, compact = false, stamp, children, onOpenImage, viewLabel }: { onOpenImage?: OpenReportImage; viewLabel?: string; visuals: ReportVisuals; image?: string; imageCaption?: string; imageKind?: 'photo' | 'map'; ink?: boolean; compact?: boolean; stamp?: string; children?: React.ReactNode }) {
   // Full-width cards: month charts, calendars and drawn figures. The figures that open the list
   // (the site plan, what the land is used for, built / planned) lead the section; the rest follow the grid.
   const wide = (chart: ReportChart) => chart.kind === 'months' || chart.kind === 'calendar' || chart.kind === 'figure';
@@ -38,7 +41,7 @@ export default function ReportVisualOverview({ visuals, image, imageCaption, ima
     </header>
     <div className={styles.metrics}>{visuals.metrics.map(metric => <div key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong><small>{metric.note}</small></div>)}</div>
     <p className={styles.basis}>{visuals.basis}</p>
-    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div>{lead.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}{grid.length > 0 && <div className={styles.charts}>{grid.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}</div>}{tail.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} />)}</>}
+    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div>{lead.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} onOpenImage={onOpenImage} viewLabel={viewLabel} />)}{grid.length > 0 && <div className={styles.charts}>{grid.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} onOpenImage={onOpenImage} viewLabel={viewLabel} />)}</div>}{tail.map(chart => <ReportChartCard key={chart.id} chart={chart} slideHint={visuals.slideHint} ink={ink} onOpenImage={onOpenImage} viewLabel={viewLabel} />)}</>}
     {children}
   </div>;
 }

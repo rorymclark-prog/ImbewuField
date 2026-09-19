@@ -103,3 +103,14 @@ workflow. Current navigation opens the parcel questionnaire through
 and should be audited independently rather than confused with this site report.
 Persistent draft recovery is not implemented here; unsaved changes are guarded
 until the explicit save. Existing booleans retain their original storage schema.
+
+## Full-size figure follow-up
+
+The survey release is live at main/23fdb01 (PR #444); production and both CI jobs
+passed. Follow-up branch `codex/site-report-figure-viewer` extends the existing
+report image viewer to overview charts and chapter diagrams. Zoom, keyboard focus
+containment, Escape and return focus were exercised at 390×844 and 820×1180.
+The viewer uses the original SVG and never redraws or modifies site geometry.
+Local typecheck, all 3,630 tests (3,629 pass, one existing TODO), and whitespace
+checks pass. No test assertion was changed. Chapter-specific integration and
+remote CI remain to be checked before this follow-up is published.
