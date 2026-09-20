@@ -358,9 +358,9 @@
       "purpose": "plan-animal-needs"
     },
     "4": {
-      "path": "public/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg",
+      "path": "public/course-animations/small-livestock/posters/flow-hens-foraging.jpg",
       "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+      "reason": "Full-frame foraging scene; title and full narration remain available in the player."
     },
     "9": {
       "path": "public/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg",

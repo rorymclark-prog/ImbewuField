@@ -685,7 +685,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 1,  lesson: null,                 title: 'Small Livestock Integration' },
       { slide: 2,  lesson: null,                 title: 'Why This Matters' },
       { slide: 3,  lesson: null,                 title: 'Learning Outcomes' },
-      { slide: 4,  lesson: 'small-livestock-l1', title: 'Watch: A Chicken Tractor Moving Across a Bed' },
+      { slide: 4,  lesson: 'small-livestock-l1', title: 'Watch: Hens Foraging After Harvest' },
       { slide: 5,  lesson: 'small-livestock-l1', title: 'Chickens Turn Scratching Into Useful Work' },
       { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time' },
       { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },

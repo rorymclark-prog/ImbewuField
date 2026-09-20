@@ -1,0 +1,206 @@
+{
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "human_listening_review": false,
+  "clip": {
+    "slide": 4,
+    "source_sha256": "506628ee7893bc81267094ab178139823ffff9da5f1342665fd04e5c98dd1be0",
+    "audio_sha256": "4ab4360862340e04d2b37cd024725a62dfa579e0abb1d702c60e0a483fe57fb0",
+    "seconds": 15.96,
+    "last_word_end": 14.900583,
+    "text_match": true,
+    "full_decode": "pass",
+    "boundaries": [
+      {
+        "text": "Watch",
+        "offset": 1068330,
+        "duration": 2698750
+      },
+      {
+        "text": "the",
+        "offset": 4761250,
+        "duration": 710410
+      },
+      {
+        "text": "hens",
+        "offset": 5755830,
+        "duration": 2840830
+      },
+      {
+        "text": "peck",
+        "offset": 9590830,
+        "duration": 1846660
+      },
+      {
+        "text": "at",
+        "offset": 11579580,
+        "duration": 710410
+      },
+      {
+        "text": "the",
+        "offset": 12715830,
+        "duration": 710410
+      },
+      {
+        "text": "ground",
+        "offset": 14278330,
+        "duration": 2982910
+      },
+      {
+        "text": "among",
+        "offset": 17261250,
+        "duration": 2840830
+      },
+      {
+        "text": "dry",
+        "offset": 21096660,
+        "duration": 1988750
+      },
+      {
+        "text": "plant",
+        "offset": 24221660,
+        "duration": 2272910
+      },
+      {
+        "text": "remains",
+        "offset": 26636250,
+        "duration": 4545410
+      },
+      {
+        "text": "Chickens",
+        "offset": 42613750,
+        "duration": 3693330
+      },
+      {
+        "text": "may",
+        "offset": 46590830,
+        "duration": 1420410
+      },
+      {
+        "text": "eat",
+        "offset": 49005830,
+        "duration": 1704580
+      },
+      {
+        "text": "some",
+        "offset": 51136250,
+        "duration": 2130830
+      },
+      {
+        "text": "insects",
+        "offset": 53551250,
+        "duration": 4687500
+      },
+      {
+        "text": "and",
+        "offset": 58806660,
+        "duration": 994160
+      },
+      {
+        "text": "weed",
+        "offset": 59943330,
+        "duration": 2414580
+      },
+      {
+        "text": "seeds",
+        "offset": 62500000,
+        "duration": 3409160
+      },
+      {
+        "text": "They",
+        "offset": 77556660,
+        "duration": 1420410
+      },
+      {
+        "text": "still",
+        "offset": 79403330,
+        "duration": 2556660
+      },
+      {
+        "text": "need",
+        "offset": 82244160,
+        "duration": 1704580
+      },
+      {
+        "text": "balanced",
+        "offset": 84659160,
+        "duration": 3835410
+      },
+      {
+        "text": "feed",
+        "offset": 88636250,
+        "duration": 2982910
+      },
+      {
+        "text": "clean",
+        "offset": 95312500,
+        "duration": 2272910
+      },
+      {
+        "text": "water",
+        "offset": 97727080,
+        "duration": 3977080
+      },
+      {
+        "text": "and",
+        "offset": 102840830,
+        "duration": 1420410
+      },
+      {
+        "text": "shelter",
+        "offset": 104687500,
+        "duration": 4687500
+      },
+      {
+        "text": "Keep",
+        "offset": 119460410,
+        "duration": 1988750
+      },
+      {
+        "text": "them",
+        "offset": 122017080,
+        "duration": 1562500
+      },
+      {
+        "text": "away",
+        "offset": 123579580,
+        "duration": 2130830
+      },
+      {
+        "text": "from",
+        "offset": 126278330,
+        "duration": 1988750
+      },
+      {
+        "text": "seedlings",
+        "offset": 128551250,
+        "duration": 5255410
+      },
+      {
+        "text": "and",
+        "offset": 133806660,
+        "duration": 1278330
+      },
+      {
+        "text": "food",
+        "offset": 135369160,
+        "duration": 3125000
+      },
+      {
+        "text": "ready",
+        "offset": 138636250,
+        "duration": 3125000
+      },
+      {
+        "text": "to",
+        "offset": 142613750,
+        "duration": 568330
+      },
+      {
+        "text": "harvest",
+        "offset": 143750000,
+        "duration": 5255830
+      }
+    ]
+  }
+}
