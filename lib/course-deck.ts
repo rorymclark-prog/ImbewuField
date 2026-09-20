@@ -177,7 +177,18 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
   21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 150159, aspectRatio: 824 / 720, seconds: 17 },
 };
 
+// English concept diagrams follow the three authored Introduction Watch passages.
+const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
+  7: { src: 'watch-07-three-ethics', poster: 'watch-07-three-ethics', bytes: 211949, seconds: 23.416667 },
+  13: { src: 'watch-13-diversity', poster: 'watch-13-diversity', bytes: 586357, seconds: 26.625 },
+  19: { src: 'watch-19-windbreak', poster: 'watch-19-windbreak', bytes: 284869, seconds: 23.708008 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'intro-permaculture': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
+  },
   'water-harvesting': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),

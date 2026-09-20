@@ -3,9 +3,15 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 618 files, 195.1 MB total.
+// 646 files, 198.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
+  '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg': 94537,
+  '/course-animations/intro-permaculture/posters/watch-13-diversity.jpg': 86777,
+  '/course-animations/intro-permaculture/posters/watch-19-windbreak.jpg': 76681,
+  '/course-animations/intro-permaculture/watch-07-three-ethics.mp4': 211949,
+  '/course-animations/intro-permaculture/watch-13-diversity.mp4': 586357,
+  '/course-animations/intro-permaculture/watch-19-windbreak.mp4': 284869,
   '/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4': 3173759,
   '/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4': 3373640,
   '/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4': 7277042,
@@ -394,6 +400,28 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/water-harvesting/en/slide-22.mp3': 101952,
   '/course-audio/water-harvesting/en/slide-23.mp3': 58176,
   '/course-audio/water-harvesting/en/slide-24.mp3': 99648,
+  '/course-decks/intro-permaculture/en/slide-01.jpg': 132648,
+  '/course-decks/intro-permaculture/en/slide-02.jpg': 112895,
+  '/course-decks/intro-permaculture/en/slide-03.jpg': 111928,
+  '/course-decks/intro-permaculture/en/slide-04.jpg': 93211,
+  '/course-decks/intro-permaculture/en/slide-05.jpg': 105142,
+  '/course-decks/intro-permaculture/en/slide-06.jpg': 110563,
+  '/course-decks/intro-permaculture/en/slide-07.jpg': 145519,
+  '/course-decks/intro-permaculture/en/slide-08.jpg': 113038,
+  '/course-decks/intro-permaculture/en/slide-09.jpg': 92605,
+  '/course-decks/intro-permaculture/en/slide-10.jpg': 95532,
+  '/course-decks/intro-permaculture/en/slide-11.jpg': 112982,
+  '/course-decks/intro-permaculture/en/slide-12.jpg': 120762,
+  '/course-decks/intro-permaculture/en/slide-13.jpg': 144461,
+  '/course-decks/intro-permaculture/en/slide-14.jpg': 126745,
+  '/course-decks/intro-permaculture/en/slide-15.jpg': 115985,
+  '/course-decks/intro-permaculture/en/slide-16.jpg': 113898,
+  '/course-decks/intro-permaculture/en/slide-17.jpg': 88530,
+  '/course-decks/intro-permaculture/en/slide-18.jpg': 121971,
+  '/course-decks/intro-permaculture/en/slide-19.jpg': 140967,
+  '/course-decks/intro-permaculture/en/slide-20.jpg': 95610,
+  '/course-decks/intro-permaculture/en/slide-21.jpg': 104746,
+  '/course-decks/intro-permaculture/en/slide-22.jpg': 117901,
   '/course-decks/plant-guilds/en/slide-01.jpg': 432945,
   '/course-decks/plant-guilds/en/slide-02.jpg': 92697,
   '/course-decks/plant-guilds/en/slide-03.jpg': 339682,

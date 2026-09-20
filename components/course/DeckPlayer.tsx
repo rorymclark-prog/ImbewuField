@@ -305,7 +305,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             <span aria-hidden style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 54, height: 54, borderRadius: '50%', background: 'rgba(255,255,255,0.94)', color: INK, fontSize: 20, paddingLeft: 4 }}>▶</span>
             {/* The size is on the button, not buried in a setting. Someone paying by the megabyte
                 is entitled to decide before the download starts, not after. */}
-            <span style={{ fontSize: 12.5, fontWeight: 700 }}>Watch · {anim.seconds}s · {formatBytes(anim.bytes)}</span>
+            <span style={{ fontSize: 12.5, fontWeight: 700 }}>Watch · {Number(anim.seconds.toFixed(1))}s · {formatBytes(anim.bytes)}</span>
           </button>
         )}
       </div>

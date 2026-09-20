@@ -1,0 +1,62 @@
+{
+  "module": "intro-permaculture",
+  "clips": [
+    {
+      "slide": 7,
+      "file": "public/course-animations/intro-permaculture/watch-07-three-ethics.mp4",
+      "bytes": 211949,
+      "seconds": 23.416667,
+      "sha256": "2e7843bb754037e2a412b12487969a953302543ad9b241056b3ac03dcd979bf2",
+      "full_decode": "pass",
+      "diagram_samples": 47,
+      "distinct_diagram_frames": 44,
+      "static_control": "fails motion requirement",
+      "source_audio": "public/course-audio/intro-permaculture/en/slide-07.mp3",
+      "audio_sha256": "d7514530828901c4dcdb76d1c9ffbd6fbbd005d70759234f4dfc7edf950c521c",
+      "audio_seconds": 22.392,
+      "captions_match_full_authored_watch_text": true,
+      "poster_sha256": "c4f3a11d39c6a7ecbabdb2d1a4331a19ce3e8f95d7371f372247248b8d45d5ca",
+      "poster_bytes": 94537
+    },
+    {
+      "slide": 13,
+      "file": "public/course-animations/intro-permaculture/watch-13-diversity.mp4",
+      "bytes": 586357,
+      "seconds": 26.625,
+      "sha256": "bede9828928bd347b7f29ae06cc6ce8213baa1c0d9f1dc4a3491d90de0289031",
+      "full_decode": "pass",
+      "diagram_samples": 53,
+      "distinct_diagram_frames": 53,
+      "static_control": "fails motion requirement",
+      "source_audio": "public/course-audio/intro-permaculture/en/slide-13.mp3",
+      "audio_sha256": "95872a8502fe1118dedac813401bb75b08af71cd6816c71a2472e4dc1316e225",
+      "audio_seconds": 25.608,
+      "captions_match_full_authored_watch_text": true,
+      "poster_sha256": "0dce59933264e258eaa2d13535ee98cb1be13815c329d02066c0e99e1043d736",
+      "poster_bytes": 86777
+    },
+    {
+      "slide": 19,
+      "file": "public/course-animations/intro-permaculture/watch-19-windbreak.mp4",
+      "bytes": 284869,
+      "seconds": 23.708008,
+      "sha256": "d642d26866ca627e8949d75899e5d6b9e24c6b1fda5b4bdea7dfa8dd48a44aa9",
+      "full_decode": "pass",
+      "diagram_samples": 47,
+      "distinct_diagram_frames": 47,
+      "static_control": "fails motion requirement",
+      "source_audio": "public/course-audio/intro-permaculture/en/slide-19.mp3",
+      "audio_sha256": "0c71438efe3e049e216734106bc780c2d816ea3d3bfb64b7449ad77b0618ca73",
+      "audio_seconds": 22.704,
+      "captions_match_full_authored_watch_text": true,
+      "poster_sha256": "b1b97279f4c1db02cd7161ef6e2800a61c0637fc14da171278ac7b5ff885b94f",
+      "poster_bytes": 76681
+    }
+  ],
+  "review_reel": {
+    "bytes": 1534011,
+    "sha256": "e0df646569a09c7d84e148e01dc50d7494b4ab6aba5ff425edda3743a7fca343",
+    "full_decode": "pass"
+  },
+  "visual_review": "Teaching-phase contact sheets viewed; physical-device and language review not claimed."
+}
