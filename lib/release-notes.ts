@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'b5aec11', changes: [
+    'Small Livestock now has 20 English slides and three teaching animations.',
+    'Watch a chicken tractor, bee pollination and the manure-to-compost nutrient loop.',
+  ] },
   { when: '20 September 2026', sha: 'fc71778', changes: [
     'Food Forest now has 20 English slides and three teaching animations.',
     'Watch the seven layers, climate choices and the planting sequence.',
