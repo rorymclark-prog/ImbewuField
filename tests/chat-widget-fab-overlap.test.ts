@@ -10,12 +10,16 @@ import test from 'node:test';
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
-test('Studies keeps Lima available without a floating button covering the narration', () => {
+test('Studies and task guides keep Lima available without covering the reading', () => {
   const widget = source('../components/ChatWidget.tsx');
   const studies = source('../app/student/page.tsx');
   assert.match(widget, /if \(\s*\/\/[^\n]*\n\s*pathname === '\/student' \|\|[\s\S]*?\) return null;/);
   assert.match(studies, /import LimaBar from '@\/components\/LimaBar';/);
   assert.match(studies, /<LimaBar \/>/, 'help remains in the document flow instead of vanishing');
+  const guide = source('../components/studies/AppGuidePage.tsx');
+  assert.match(widget, /pathname\.startsWith\('\/student\/guides\/'\)/);
+  assert.match(guide, /<LimaBar \/>/, 'guide readers still need an in-flow route to help');
+  assert.match(guide, /useRegisterBackControl\(\)/, 'the My Studies link must suppress the duplicate floating Back');
 });
 
 test('/funder and /ngo are excluded — same class as /partners, not a farmer route', () => {

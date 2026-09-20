@@ -29,7 +29,7 @@ import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
-import { INVOICE_GUIDE } from '@/lib/course-app-guides';
+import { APP_GUIDES } from '@/lib/course-app-guides';
 import {
   assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
@@ -798,12 +798,12 @@ export default function StudentPage() {
           <div>
             <p className={styles.eyebrow}>Practical app guides</p>
             <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
-            <p>Keep a guide beside you while you work. Start with invoices, or explore the sample farm.</p>
+            <p>Follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
           </div>
-          <Link href={INVOICE_GUIDE.href} className={styles.guideCard}>
-            <img src={INVOICE_GUIDE.image} alt="" loading="lazy" />
-            <span><strong className="font-display">Make and manage an invoice</strong><span>{INVOICE_GUIDE.summary}</span><em>Read the guide · English →</em></span>
-          </Link>
+          {APP_GUIDES.map(guide => <Link key={guide.id} href={guide.href} className={styles.guideCard}>
+            <img src={guide.image} alt="" loading="lazy" />
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
+          </Link>)}
           <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
         </section>
 

@@ -97,8 +97,8 @@ export default function ChatWidget() {
   // fills the whole scrollable area) — and the /pitch projector deck (a chat FAB floating over a
   // presentation slide, and over the live app already embedded inside it, helps nobody).
   if (
-    // Studies has an inline LimaBar: at phone width the floating launcher covered narration.
-    pathname === '/student' ||
+    // Studies and its task guides use inline help so the floating launcher cannot cover reading.
+    pathname === '/student' || pathname.startsWith('/student/guides/') ||
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||

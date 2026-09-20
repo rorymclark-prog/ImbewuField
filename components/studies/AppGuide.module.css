@@ -57,3 +57,6 @@
   .hero, .step, .finish { border: 0; }
   .step, .limits { break-inside: avoid; }
 }
+.related { margin-top: 28px; padding: 4px; }
+.related a { display: block; min-height: 44px; padding: 9px 0; text-decoration: underline; text-underline-offset: 4px; }
+@media print { .related { display: none; } }
