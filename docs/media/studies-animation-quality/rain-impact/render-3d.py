@@ -7,7 +7,7 @@ import bpy, math, random, sys, argparse
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
-p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--frame',type=int,default=76);p.add_argument('--samples',type=int,default=64);p.add_argument('--animation',action='store_true');p.add_argument('--gpu',action='store_true');p.add_argument('--width',type=int,default=1600)
+p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--frame',type=int,default=76);p.add_argument('--samples',type=int,default=64);p.add_argument('--animation',action='store_true');p.add_argument('--gpu',action='store_true');p.add_argument('--width',type=int,default=1600);p.add_argument('--setup-only',action='store_true');p.add_argument('--focus',choices=['both','bare','mulch'],default='both')
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:]);a.out.mkdir(parents=True,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=a.samples;scene.cycles.use_denoising=True
@@ -41,6 +41,10 @@ for pos,power,size in [((-5,-6,7),800,5),((5,1,6),650,4),((0,3,4),300,3)]:
     bpy.ops.object.light_add(type='AREA',location=pos);light=bpy.context.object;light.data.energy=power;light.data.shape='DISK';light.data.size=size;light.rotation_euler=(-light.location).to_track_quat('-Z','Y').to_euler()
 
 origins=[right*((428-800)/100)+up*((450-482)/100),right*((1155-800)/100)+up*((450-350)/100)]
+if a.focus!='both':
+    target=origins[0 if a.focus=='bare' else 1]+up*.75
+    cam.location=camdir*18+target;cam.data.ortho_scale=7.8
+
 def ball(name,mat,r=1,ico=False):
     if ico:bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2,radius=r)
     else:bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=20,radius=r)
@@ -56,30 +60,40 @@ for side,origin in enumerate(origins):
     drop=ball(f'Drop {side}',water,.24)
     count=160
     # Closed thin annular liquid sheet, four rings from outer base to inner base.
-    crown=mesh(f'Water crown {side}',[(0,0,0)]*(count*4),[(ring*count+k,ring*count+(k+1)%count,((ring+1)%4)*count+(k+1)%count,((ring+1)%4)*count+k) for ring in range(4) for k in range(count)],water)
+    crown=mesh(f'Water crown {side}',[(0,0,0)]*(count*16),[(ring*count+k,ring*count+(k+1)%count,((ring+1)%16)*count+(k+1)%count,((ring+1)%16)*count+k) for ring in range(16) for k in range(count)],water)
     crown.location=origin
     spray=[ball(f'Water bead {side}-{k}',water,r) for k,(_,_,_,r) in enumerate(sprayparams)]
     grains=[ball(f'Soil grain {k}',soilmat,r,True) for k,(_,_,r) in enumerate(grainparams)] if side==0 else []
-    objects.append((drop,crown,spray,grains))
+    puddle=ball(f'Surface liquid {side}',water,1)
+    puddle.location=origin+Vector((0,0,.008))
+    objects.append((drop,crown,spray,grains,puddle))
 
 def show(ob,visible):ob.hide_render=not visible
 
 def update(scene):
     t=scene.frame_current/24;cycle=(t-1.4)%4.5;u=cycle-1.45
-    for side,(drop,crown,spray,grains) in enumerate(objects):
+    for side,(drop,crown,spray,grains,puddle) in enumerate(objects):
         origin=origins[side];fall=t>=1.4 and cycle<1.45
         show(drop,fall)
         if fall:
             f=cycle/1.45;drop.location=origin+Vector((0,0,.24+4.5*(1-f*f)));drop.scale=(1.04,1.04,.94)
         active=t>=1.4 and 0<=u<.88;show(crown,active)
         if active:
-            q=u/.88;radius=.10+.88*q;height=.52*math.sin(math.pi*q);thickness=.016*(1-.6*q)
+            q=u/.88;radius=.10+1.10*q;height=.29*math.sin(math.pi*q);thickness=.009*(1-.6*q)
             for k in range(160):
-                theta=k/160*2*math.pi;wave=(.50+.50*(.5+.5*math.sin(theta*9+.4))**3)
-                rad=radius*(1+.03*math.sin(theta*5+.9));top=height*wave+.022
-                coords=[(rad,.015),(rad,top),(rad-thickness,top),(max(.02,rad-thickness),.015)]
-                for ring,(r,z) in enumerate(coords):crown.data.vertices[ring*160+k].co=(r*math.cos(theta),r*math.sin(theta),z)
+                theta=k/160*2*math.pi
+                wave=.30+.70*max(0,math.sin(theta*7+.4)+.30*math.sin(theta*11+.7))**2/1.69
+                rad=radius*(1+.06*math.sin(theta*5+.9));top=height*wave+.025
+                for ring in range(16):
+                    v=ring/7 if ring<8 else (15-ring)/7
+                    r=rad*(.56+.52*v*v)-(thickness if ring>=8 else 0)
+                    z=.01+top*v
+                    crown.data.vertices[ring*160+k].co=(r*math.cos(theta),r*math.sin(theta),z)
             crown.data.update()
+        visible=t>=1.4 and 0<=u<2.2
+        show(puddle,visible)
+        if visible:
+            r=.07+.78*min(1,u/.65);puddle.scale=(r,r,.014*max(.05,1-u/2.2))
         for ob,(theta,speed,vert,r) in zip(spray,sprayparams):
             age=u-.12;z=.06+1.4*vert*age-1.1*age*age;visible=t>=1.4 and 0<age<1.8 and z>0
             show(ob,visible)
@@ -92,7 +106,9 @@ def update(scene):
 bpy.app.handlers.frame_change_pre.clear();bpy.app.handlers.frame_change_pre.append(update)
 scene.frame_set(a.frame);update(scene)
 bpy.ops.wm.save_as_mainfile(filepath=str(a.out/'rain-impact.blend'))
-if a.animation:
+if a.setup_only:
+    pass
+elif a.animation:
     scene.render.filepath=str(a.out/'frame-');bpy.ops.render.render(animation=True)
 else:
     scene.render.filepath=str(a.out/f'frame-{a.frame:04}.png');bpy.ops.render.render(write_still=True)

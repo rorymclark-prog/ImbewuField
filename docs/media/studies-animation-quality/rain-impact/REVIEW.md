@@ -35,3 +35,20 @@ Inspected frames 76 and 84 from `render.py`. The crown reads as a pale outlined 
 ## 3D material test underway
 
 Blender 5.2.2 LTS installed from the official Homebrew cask to make physically shaded/refractive water over the same background illustration. `render-3d.py` creates a closed liquid crown, separate clear water beads and textured brown grains, with matched camera projection. This is still procedural teaching geometry, not a calibrated fluid simulation. The first Metal render crashed during shader compilation; CPU proof rendering is being used. Generated `.blend` and frame outputs stay in the Downloads review pack until inspected. Neither installation nor a completed render counts as visual acceptance.
+
+## 3D proof findings
+
+The first procedural 3D crown was rejected after inspecting frame 76 and a closer frame 80: transparency/reflections improved, but the regular geometry resembled a glass ornament. `simulate-impact.py` now bakes a bounded 64-frame Mantaflow drop impact. The bake completed on CPU in about 16 seconds. That is computational timing, not field time.
+
+The initial cached liquid showed flat triangular normals and refraction of a distant image plane. `refine-liquid.py` applies smooth surface normals and projects the image onto a receiver at the actual collision surface. It preserves the camera view while avoiding a detached background refraction. Still frames 38 and 44 were inspected after correcting the receiver's height. The result is an improved liquid-material study, **not an accepted teaching clip**: the simulated surface is flat/non-absorbing, the pictured soil has relief, and this model does not yet show soil grains detaching or a matched covered-surface interaction. Do not represent the spread as a runoff or infiltration result. No narration or production registration has been added.
+
+A short cached-motion render is being reviewed next. To proceed to a publication candidate, either obtain and inspect the actual Flow export or build a coherent 3D surface/collision scene matching the visible materials. Do not publish a pretty but physically disconnected overlay.
+
+Reproduction:
+
+1. `blender -b -P docs/media/studies-animation-quality/rain-impact/simulate-impact.py -- --out <absolute-review-folder> --frame 44 --samples 48 --width 1600 --focus bare`
+2. `blender -b <absolute-review-folder>/liquid-proof.blend -P docs/media/studies-animation-quality/rain-impact/refine-liquid.py -- <absolute-review-folder>`
+
+`--gpu` is opt-in because Metal shader compilation crashed on this host; CPU renders completed successfully. The `.blend` and simulation cache are review outputs, not app assets. Blender 5.2.2 came from the official Homebrew cask; no paid animation credits were used in this iteration.
+
+Verification on the app baseline: typecheck clean; 3,639 tests, 3,638 passes, zero failures, one pre-existing TODO; `git diff --check` clean. These validate repository compatibility, not visual acceptance.
