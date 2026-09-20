@@ -33,7 +33,7 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '21 September 2026', sha: 'b23d410', changes: [
+  { when: '21 September 2026', sha: '71f65a3', changes: [
     'Studies now has step-by-step guides for recording harvests and costs, beside the invoice guide.',
     'Practise checking weights, receipts and saved entries before using your own records.',
     'My Records keeps cents visible, so a R12.50 cost no longer appears as R13.',
