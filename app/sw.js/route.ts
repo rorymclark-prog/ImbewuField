@@ -313,6 +313,23 @@ async function migrateStudiesMedia() {
   await cache.put(marker, new Response('Corrected Studies media; unaffected downloads preserved'));
 }
 
+// The chicken Watch scene now shows foraging, not a moving pen. Invalidate only its
+// old speech and slide; otherwise a saved lesson would describe an action no longer shown.
+async function migrateChickenForagingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.chicken-foraging-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/small-livestock/en/slide-04.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+    '/course-decks/small-livestock/en/slide-04.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Foraging scene and matching narration'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -328,7 +345,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

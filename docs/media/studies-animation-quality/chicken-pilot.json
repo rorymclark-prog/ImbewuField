@@ -1,0 +1,36 @@
+{
+  "status": "replacement prepared; local checks passed; publication pending",
+  "model": "Google Flow Veo 3.1 Quality",
+  "credits_used": 100,
+  "flow_url": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/b6ba6e67-ec08-439a-81ed-6ebaf1fca442",
+  "source_image_tool": "built-in image_gen",
+  "source_image_prompt": "chicken-source-prompt.txt",
+  "source_video_sha256": "a3fd8bb6b8a2e50c0d015385a70c1c71e31f57fb5ff6d25aba6c877e55332803",
+  "video": "public/course-animations/small-livestock/flow-hens-foraging.mp4",
+  "video_sha256": "66bfa1ab31974d4bc7e02e2505969afa9bf9faf97e2ea17510327be887ef04e7",
+  "bytes": 5064928,
+  "seconds": 8,
+  "audio_sha256": "4ab4360862340e04d2b37cd024725a62dfa579e0abb1d702c60e0a483fe57fb0",
+  "review_scope": [
+    "32 frames across eight seconds at 4 fps",
+    "32 foreground foot/body crops across first four seconds at 8 fps",
+    "full-resolution frame at five seconds",
+    "full video and audio decode",
+    "browser native player reached eight-second end with readyState 4 and no media error"
+  ],
+  "limits": [
+    "Generated illustration, not real-farm evidence.",
+    "Not an enclosure-moving or stocking-density demonstration.",
+    "Requested two alternating scratch strokes not reliably shown; accepted foraging/pecking only.",
+    "Rory has not yet assessed this pilot motion."
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "tests": {
+      "pass": 3636,
+      "fail": 0,
+      "pre_existing_todo": 1
+    },
+    "whitespace": "pass"
+  }
+}

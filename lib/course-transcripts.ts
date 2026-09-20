@@ -1448,8 +1448,9 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "You will understand pollination, hive placement, and the value of closing nutrient loops."
       ],
       "4": [
-        "A chicken tractor is a moveable pen with no floor. Watch it move across an empty garden bed.",
-        "Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting."
+        "Watch the hens peck at the ground among dry plant remains.",
+        "Chickens may eat some insects and weed seeds. They still need balanced feed, clean water and shelter.",
+        "Keep them away from seedlings and food ready to harvest."
       ],
       "5": [
         "Chickens can help an empty bed after harvest.",
