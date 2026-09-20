@@ -12,5 +12,22 @@
     "postharvest.md": 3,
     "farm-money.md": 5
   },
-  "capstone": "facilitator-and-capstone.md"
+  "capstone": "facilitator-and-capstone.md",
+  "additionalPathways": {
+    "farmFinance": {
+      "status": "specification; full lesson scripts and exercises pending",
+      "units": 8,
+      "lessonPlans": 24,
+      "path": "financial-course.md",
+      "introductoryModuleRetained": "farm-money.md"
+    },
+    "usingImbewuField": {
+      "status": "14 tutorial specifications; first invoice guide drafted; UI integration pending",
+      "tutorialSpecifications": 14,
+      "path": "app-companions/README.md",
+      "draftGuides": [
+        "app-companions/invoice.md"
+      ]
+    }
+  }
 }
