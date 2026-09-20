@@ -1348,9 +1348,15 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "The result is not one crop in one row, but many useful layers growing together."
       ],
       "5": [
-        "Read the planting downwards, from the tall canopy to the roots.",
-        "Climbers use the open vertical space between the layers.",
-        "One piece of ground, working at every level."
+        "Find seven planting layers.",
+        "Tall trees form the canopy.",
+        "Smaller trees grow below it.",
+        "Then look for woody shrubs.",
+        "Herbaceous plants have soft stems.",
+        "Ground cover spreads across the surface.",
+        "Root crops grow below the surface.",
+        "Climbers use suitable supports.",
+        "These are planning layers, not fixed height bands. Choose plants and spacing for your site."
       ],
       "6": [
         "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",

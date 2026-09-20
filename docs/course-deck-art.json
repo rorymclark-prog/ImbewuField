@@ -311,9 +311,9 @@
       "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
     },
     "5": {
-      "path": "public/course-animations/food-forest/posters/watch-05-seven-layers.jpg",
+      "path": "public/course-animations/food-forest/posters/tour-seven-layers.jpg",
       "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+      "reason": "Keep the complete cutaway, its roots and teaching label visible; never crop this instructional scene."
     },
     "15": {
       "path": "public/course-animations/food-forest/posters/watch-15-forest-sequence.jpg",

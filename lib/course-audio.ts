@@ -657,7 +657,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 2,  lesson: null,             title: 'Why This Matters' },
       { slide: 3,  lesson: null,             title: 'Learning Outcomes' },
       { slide: 4,  lesson: 'food-forest-l1', title: 'The Forest Uses Every Layer' },
-      { slide: 5,  lesson: 'food-forest-l1', title: 'Watch: The Seven Layers Working Together' },
+      { slide: 5,  lesson: 'food-forest-l1', title: 'Watch: Read the Seven Planting Layers' },
       { slide: 6,  lesson: 'food-forest-l1', title: 'The Seven Layers' },
       { slide: 7,  lesson: 'food-forest-l1', title: 'Read a Layered Planting Example' },
       { slide: 8,  lesson: 'food-forest-l1', title: 'Care Changes as Plants Grow' },

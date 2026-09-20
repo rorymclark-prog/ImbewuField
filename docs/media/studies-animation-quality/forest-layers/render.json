@@ -1,0 +1,24 @@
+{
+  "file": "public/course-animations/food-forest/tour-seven-layers.mp4",
+  "bytes": 7425984,
+  "sha256": "efe689c8f2ce76ab752d58d957eedb63413a8f05295560ae0f9f233a3b80ce74",
+  "seconds": 30.375,
+  "width": 1600,
+  "height": 1100,
+  "fps": 24,
+  "frames": 729,
+  "source_sha256": "5eb5c4463e43873bec023b210b5eb4a92f053a6bb3e1846e61560eb1426a5c4f",
+  "narration_seconds": 29.088,
+  "phase_starts": [
+    0,
+    2.769875,
+    5.3125,
+    8.025583,
+    10.553958,
+    13.480125,
+    16.690333,
+    19.744333,
+    22.357958
+  ],
+  "scope": "Guided illustrated cutaway. No simulated plant growth or measured planting dimensions."
+}

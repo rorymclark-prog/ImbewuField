@@ -6,8 +6,12 @@ Implemented: new detailed source image using built-in image_gen; one eight-secon
 
 The film is a foraging observation, not a demonstration of moving a tractor or instantly preparing soil. Slide 8 retains the rotation teaching. Generated video action was reviewed against the actual output, not assumed from the prompt.
 
-Validated: frame sampling across the whole film, detailed foot/body samples, browser video playback to completion, complete video/audio decoding, typecheck, 3,636 passing tests, no failing tests, one existing TODO, clean whitespace. Publication pending. Rory has not yet assessed the motion.
+Validated: frame sampling across the whole film, detailed foot/body samples, browser video playback to completion, complete video/audio decoding, typecheck, 3,636 passing tests, no failing tests, one existing TODO, clean whitespace. Published through PR #456; production build cbb178d was verified. Rory has not yet assessed the motion.
 
 The next artwork priorities and acceptance criteria are in NEXT-ANIMATIONS.md. These remain open work; this pilot does not make the whole course visually complete.
 
 Ten-minute working-file checkpoints: Downloads/ImbewuField-animation-quality-checkpoints.
+
+## Forest layer tour
+
+The next replacement is implemented on `codex/forest-layers-quality`: detailed cutaway artwork, timed highlights and new matching narration for Food Forest slide 5. Source, timing, art review and reproduction notes are in `forest-layers/README.md`. The broader animation replacement programme remains open.
