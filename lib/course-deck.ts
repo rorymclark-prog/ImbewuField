@@ -206,7 +206,18 @@ const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 196132, seconds: 14 },
 };
 
+// Each Small Livestock Watch scene follows its existing narration.
+const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'watch-04-chicken-tractor', poster: 'watch-04-chicken-tractor', bytes: 190619, seconds: 14 },
+  9: { src: 'watch-09-bee-pollination', poster: 'watch-09-bee-pollination', bytes: 116723, seconds: 14 },
+  14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'small-livestock': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
+  },
   'food-forest': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),

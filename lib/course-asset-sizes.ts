@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 745 files, 210.8 MB total.
+// 771 files, 213.9 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 120803,
@@ -75,6 +75,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/seeds-sovereignty/posters/seed-selecting-parents.jpg': 52099,
   '/course-animations/seeds-sovereignty/seed-dry-processing.mp4': 311237,
   '/course-animations/seeds-sovereignty/seed-selecting-parents.mp4': 248394,
+  '/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg': 101222,
+  '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg': 86421,
+  '/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg': 90954,
+  '/course-animations/small-livestock/watch-04-chicken-tractor.mp4': 190619,
+  '/course-animations/small-livestock/watch-09-bee-pollination.mp4': 116723,
+  '/course-animations/small-livestock/watch-14-nutrient-loop.mp4': 161586,
   '/course-animations/soil-health/posters/watch-05-living-soil.jpg': 122455,
   '/course-animations/soil-health/posters/watch-10-compost-heap.jpg': 94343,
   '/course-animations/soil-health/posters/watch-14-mulch-protection.jpg': 97925,
@@ -656,6 +662,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/zu/slide-22.jpg': 153749,
   '/course-decks/seeds-sovereignty/zu/slide-23.jpg': 66361,
   '/course-decks/seeds-sovereignty/zu/slide-24.jpg': 55527,
+  '/course-decks/small-livestock/en/slide-01.jpg': 148296,
+  '/course-decks/small-livestock/en/slide-02.jpg': 107894,
+  '/course-decks/small-livestock/en/slide-03.jpg': 113764,
+  '/course-decks/small-livestock/en/slide-04.jpg': 162371,
+  '/course-decks/small-livestock/en/slide-05.jpg': 121774,
+  '/course-decks/small-livestock/en/slide-06.jpg': 114268,
+  '/course-decks/small-livestock/en/slide-07.jpg': 121010,
+  '/course-decks/small-livestock/en/slide-08.jpg': 117195,
+  '/course-decks/small-livestock/en/slide-09.jpg': 150845,
+  '/course-decks/small-livestock/en/slide-10.jpg': 123576,
+  '/course-decks/small-livestock/en/slide-11.jpg': 114825,
+  '/course-decks/small-livestock/en/slide-12.jpg': 88047,
+  '/course-decks/small-livestock/en/slide-13.jpg': 136989,
+  '/course-decks/small-livestock/en/slide-14.jpg': 164846,
+  '/course-decks/small-livestock/en/slide-15.jpg': 104328,
+  '/course-decks/small-livestock/en/slide-16.jpg': 128045,
+  '/course-decks/small-livestock/en/slide-17.jpg': 121200,
+  '/course-decks/small-livestock/en/slide-18.jpg': 132335,
+  '/course-decks/small-livestock/en/slide-19.jpg': 135171,
+  '/course-decks/small-livestock/en/slide-20.jpg': 127561,
   '/course-decks/soil-health/en/slide-01.jpg': 195636,
   '/course-decks/soil-health/en/slide-02.jpg': 117437,
   '/course-decks/soil-health/en/slide-03.jpg': 105487,

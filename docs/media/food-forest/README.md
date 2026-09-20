@@ -16,7 +16,7 @@ Antigravity supplied the local Pillow/FFmpeg renderer. Codex reviewed its code a
 
 All three 1280×720 H.264/yuv420p, 24 fps, faststart clips fully decode and have no audio stream. `verification.json` records video/poster/source-audio hashes, bytes and durations, exact caption matching, and diagram motion checks that ignore small codec noise. The clips have 22, 18 and 21 materially moving sampled transitions. Independently encoded frozen-poster controls all have zero, so the check can reject static output.
 
-The phase contacts, corrected final posters and entire twenty-slide contact sheet were visually inspected. The local app played the seven-layer animation and original narration together at readyState 4 with advancing time. No physical-device or fluent-language review is claimed. Deployed disconnected playback is checked after the preview builds.
+The phase contacts, corrected final posters and entire twenty-slide contact sheet were visually inspected. The local app played the seven-layer animation and original narration together at readyState 4 with advancing time. No physical-device or fluent-language review is claimed. The deployed preview saved all 49 files (6.2 MB). With tab networking disabled, all three Watch video/audio pairs played at readyState 4 with advancing time. Networking was restored afterwards.
 
 ```sh
 python3 scripts/render-forest-concepts.py --output OUTPUT --audio-dir public/course-audio/food-forest/en --preview

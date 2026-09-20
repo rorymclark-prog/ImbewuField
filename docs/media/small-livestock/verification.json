@@ -1,0 +1,93 @@
+{
+  "module": "small-livestock",
+  "clips": [
+    {
+      "slide": 4,
+      "file": "public/course-animations/small-livestock/watch-04-chicken-tractor.mp4",
+      "bytes": 190619,
+      "seconds": 14.0,
+      "sha256": "51739d854d01926d1bab453c7e74f577ef923d190d1a14c7ab1b95fe6f7934aa",
+      "poster_bytes": 101222,
+      "poster_sha256": "231c90e8756f9535b56802b591f44c3baa37789d38d5d39d1963c9eb01a971eb",
+      "audio": "public/course-audio/small-livestock/en/slide-04.mp3",
+      "audio_sha256": "73e6d1ce2cdee7943ffd192c0484906a374d95b5eaf7e2a247cbae33aec03e74",
+      "audio_seconds": 9.144,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.05831350976310833,
+          "transitions_over_0_05_percent": 27
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00046089800773119237,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 9,
+      "file": "public/course-animations/small-livestock/watch-09-bee-pollination.mp4",
+      "bytes": 116723,
+      "seconds": 14.0,
+      "sha256": "d035b535946c66625f7e984dbbabaecc70f1653a3ec56e9df3084d9896a4e857",
+      "poster_bytes": 86421,
+      "poster_sha256": "a40b6bd3893cd2276cab4d30370f1b23db13a95b5b2a00df086f06f14c3bb40d",
+      "audio": "public/course-audio/small-livestock/en/slide-09.mp3",
+      "audio_sha256": "2a5ff2c63f056efc146a8a5689472626b898d002c694b0fb6e94e8f07e5cb5be",
+      "audio_seconds": 7.344,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.004046486272177619,
+          "transitions_over_0_05_percent": 21
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 6.194865695311726e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 14,
+      "file": "public/course-animations/small-livestock/watch-14-nutrient-loop.mp4",
+      "bytes": 161586,
+      "seconds": 14.0,
+      "sha256": "77e9ae7c02ab91eb10d9bced9e0d50136fbab168a8ddcf544aef14bd51e718bb",
+      "poster_bytes": 90954,
+      "poster_sha256": "3e88eb3074ca4f0677c8eb674caccb046bb71d4ad979377848a1dc9321383b19",
+      "audio": "public/course-audio/small-livestock/en/slide-14.mp3",
+      "audio_sha256": "9da9e55da42f331ce6948adc6ac42d99e0daedb00e43e49555976466436db09f",
+      "audio_seconds": 5.664,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.004452869461790069,
+          "transitions_over_0_05_percent": 27
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00023788284269997027,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    }
+  ],
+  "review_reel": {
+    "filename": "reel-livestock-three-slot-en-review.mp4",
+    "size_bytes": 685098,
+    "sha256": "7c1f1a8c5a5403dbbc90f5547cd771dbe8f904e23cd5d52d95bbfc231aec2114",
+    "seconds": 42.041016
+  },
+  "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
+}
