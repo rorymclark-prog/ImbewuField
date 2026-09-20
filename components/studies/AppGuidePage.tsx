@@ -6,10 +6,14 @@ import { ArrowLeft, ArrowUpRight, Check, FileText, Printer } from 'lucide-react'
 import MenuButton from '@/components/MenuButton';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
+import { useRegisterBackControl } from '@/components/BackControl';
 import { APP_GUIDES, type AppGuide } from '@/lib/course-app-guides';
 import styles from './AppGuide.module.css';
 
 export default function AppGuidePage({ guide }: { guide: AppGuide }) {
+  // My Studies is the in-flow way back; a second floating Back covered the phone text.
+  useRegisterBackControl();
   const [answer, setAnswer] = useState<number | null>(null);
   return <div className={styles.page} lang="en">
     <header className={styles.header}>
@@ -35,6 +39,8 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
         <h2 id="prepare-title">{guide.prepareTitle}</h2>
         {guide.prepare.map(text => <p key={text}>{text}</p>)}
       </section>
+
+      <div className="no-print"><LimaBar /></div>
 
       <nav className={styles.contents} aria-label={`${guide.cardTitle} steps`}>
         {guide.steps.map((step, index) => <a key={step.id} href={`#${step.id}`}><span>{index + 1}</span>{step.title}</a>)}
