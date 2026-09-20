@@ -29,6 +29,7 @@ import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
+import { INVOICE_GUIDE } from '@/lib/course-app-guides';
 import {
   assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
@@ -792,6 +793,19 @@ export default function StudentPage() {
           <summary className="font-sans"><BookOpen size={18} /> Study offline <span className={styles.offlineHint}>Save lessons to this phone before you leave signal</span></summary>
           <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
         </details>
+
+        <section className={styles.companions} aria-labelledby="app-guides-title">
+          <div>
+            <p className={styles.eyebrow}>Practical app guides</p>
+            <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
+            <p>Keep a guide beside you while you work. Start with invoices, or explore the sample farm.</p>
+          </div>
+          <Link href={INVOICE_GUIDE.href} className={styles.guideCard}>
+            <img src={INVOICE_GUIDE.image} alt="" loading="lazy" />
+            <span><strong className="font-display">Make and manage an invoice</strong><span>{INVOICE_GUIDE.summary}</span><em>Read the guide · English →</em></span>
+          </Link>
+          <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
+        </section>
 
         <div className={styles.courseHeading}>
           <h2 className="font-display">Your course</h2>
