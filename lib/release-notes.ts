@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: '802d223', changes: [
+    'Small Livestock now shows lifelike hens foraging after harvest.',
+    'The new chicken scene has matching narration and readable lesson text.',
+    'Save Small Livestock again to use its updated picture and audio offline.',
+  ] },
   { when: '20 September 2026', sha: 'b067813', changes: [
     'Studies now has richer lesson pictures and eight new scenes you can watch.',
     'Read the full slide narration below each lesson picture.',
