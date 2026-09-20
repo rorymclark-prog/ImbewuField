@@ -1,0 +1,21 @@
+{
+  "status": "Synthetic classroom arithmetic only; not prices, budgets or real farm records",
+  "currency": "ZAR",
+  "moneyUnit": "cents",
+  "openingCash": 100000,
+  "events": [
+    {"id":"C01","day":1,"kind":"owner-contribution","reference":"O01","cashIn":30000,"cashOut":0},
+    {"id":"C02","day":1,"kind":"packaging-payment","reference":"P01","cashIn":0,"cashOut":12000},
+    {"id":"C03","day":2,"kind":"sale","reference":"S01","sale":20000,"cashIn":20000,"cashOut":0},
+    {"id":"C04","day":3,"kind":"sale","reference":"S02","sale":15000,"cashIn":0,"cashOut":0},
+    {"id":"C05","day":4,"kind":"owner-withdrawal","reference":"W01","cashIn":0,"cashOut":8000},
+    {"id":"C06","day":5,"kind":"loan-received","reference":"L01","principalReceived":50000,"cashIn":50000,"cashOut":0},
+    {"id":"C07","day":6,"kind":"buyer-payment","reference":"R02","settles":"S02","cashIn":15000,"cashOut":0},
+    {"id":"C08","day":6,"kind":"equipment-purchase","reference":"E01","cashIn":0,"cashOut":40000},
+    {"id":"C09","day":7,"kind":"transport-payment","reference":"T01","cashIn":0,"cashOut":6000},
+    {"id":"C10","day":7,"kind":"loan-payment","reference":"L02","loan":"L01","principalPaid":10000,"interestPaid":1000,"cashIn":0,"cashOut":11000},
+    {"id":"C11","day":7,"kind":"sale","reference":"S03","sale":12000,"cashIn":0,"cashOut":0}
+  ],
+  "profit": null,
+  "missingForProfit": ["complete production costs", "opening and closing stock information", "equipment-use treatment for the period"]
+}
