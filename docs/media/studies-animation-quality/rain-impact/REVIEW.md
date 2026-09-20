@@ -64,3 +64,13 @@ The current model does **not** detach soil grains and treats the ground as non-a
 Reproduce each scene with `simulate-impact.py -- --out <folder> --frame 44 --samples 32 --width 1200 --focus bare --terrain` (replace `bare` with `mulch` for cover), then open `<folder>/liquid-proof.blend` and run `shade-terrain.py -- <folder>`. CPU rendering remains the supported local path.
 
 Repository verification: typecheck clean; 3,639 tests, 3,638 passes, zero failures, one existing TODO; whitespace check clean. The public slide and narration remain unchanged.
+
+## Matched motion review outcome — 21 September 2026
+
+`render-terrain-motion.py` rendered all cached frames 20–56 for both scenes, encoded at 24 fps, 1000×564 after one-pixel even-dimension padding. Each clip is 1.541667 seconds. Both played through to `ended` without media errors in `TERRAIN-REVIEW.html`; opening/late browser frames and previously rendered impact stills were inspected. This is not a claim that every frame was visually reviewed. Desktop and native 390×844 browser views were checked; document width and scroll width were both 390.
+
+**Not accepted for public teaching.** The coherent collision is a real improvement over the detached photo overlay, but water still reads as an enlarged glass-like object. The relative drop/leaf scale is an artistic exaggeration, not a physically calibrated rainfall scene. Repeated leaves remain conspicuous. The bare scene does not show detached grains, so a narrated claim that viewers can watch erosion would not be supported. The phone end frame particularly emphasises the glassy covered splash. No replacement narration, manifest registration or public video was added.
+
+Review outputs remain in the local rain-impact review folder under `terrain-dense/` and `terrain-mulch/`, with `TERRAIN-REVIEW.html` comparing them. The renderer and review-page source are retained here for reproducibility. A subsequent attempt should resolve these specific defects before another full render; changing only texture quality is insufficient.
+
+A primary high-speed reference was located: [Cheng, Zhao, Zhang and Tjugito, Raindrop impact on a sandy surface, APS Gallery of Fluid Motion (2014)](https://gfm.aps.org/meetings/dfd-2014/5407aca969702d0771ed0100). Its page describes real high-speed granular-impact footage and licenses it CC BY-NC 4.0. It is a motion reference, **not an asset cleared for this app**; no footage was copied or bundled. Sand experiments are not interchangeable with all farm soils.
