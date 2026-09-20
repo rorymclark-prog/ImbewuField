@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 771 files, 213.9 MB total.
+// 797 files, 217.1 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 120803,
@@ -18,6 +18,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/intro-permaculture/watch-07-three-ethics.mp4': 211949,
   '/course-animations/intro-permaculture/watch-13-diversity.mp4': 586357,
   '/course-animations/intro-permaculture/watch-19-windbreak.mp4': 284869,
+  '/course-animations/market-community/posters/watch-04-farm-record.jpg': 110150,
+  '/course-animations/market-community/posters/watch-09-surplus-routes.jpg': 101159,
+  '/course-animations/market-community/posters/watch-14-community-network.jpg': 112578,
+  '/course-animations/market-community/watch-04-farm-record.mp4': 112750,
+  '/course-animations/market-community/watch-09-surplus-routes.mp4': 118388,
+  '/course-animations/market-community/watch-14-community-network.mp4': 170639,
   '/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4': 3173759,
   '/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4': 3373640,
   '/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4': 7277042,
@@ -468,6 +474,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/en/slide-20.jpg': 95610,
   '/course-decks/intro-permaculture/en/slide-21.jpg': 104746,
   '/course-decks/intro-permaculture/en/slide-22.jpg': 117901,
+  '/course-decks/market-community/en/slide-01.jpg': 166262,
+  '/course-decks/market-community/en/slide-02.jpg': 124413,
+  '/course-decks/market-community/en/slide-03.jpg': 106255,
+  '/course-decks/market-community/en/slide-04.jpg': 167093,
+  '/course-decks/market-community/en/slide-05.jpg': 115657,
+  '/course-decks/market-community/en/slide-06.jpg': 110770,
+  '/course-decks/market-community/en/slide-07.jpg': 115336,
+  '/course-decks/market-community/en/slide-08.jpg': 105677,
+  '/course-decks/market-community/en/slide-09.jpg': 163293,
+  '/course-decks/market-community/en/slide-10.jpg': 114020,
+  '/course-decks/market-community/en/slide-11.jpg': 128313,
+  '/course-decks/market-community/en/slide-12.jpg': 117513,
+  '/course-decks/market-community/en/slide-13.jpg': 130456,
+  '/course-decks/market-community/en/slide-14.jpg': 163569,
+  '/course-decks/market-community/en/slide-15.jpg': 131515,
+  '/course-decks/market-community/en/slide-16.jpg': 104585,
+  '/course-decks/market-community/en/slide-17.jpg': 122713,
+  '/course-decks/market-community/en/slide-18.jpg': 129554,
+  '/course-decks/market-community/en/slide-19.jpg': 127625,
+  '/course-decks/market-community/en/slide-20.jpg': 127935,
   '/course-decks/plant-guilds/en/slide-01.jpg': 432945,
   '/course-decks/plant-guilds/en/slide-02.jpg': 92697,
   '/course-decks/plant-guilds/en/slide-03.jpg': 339682,

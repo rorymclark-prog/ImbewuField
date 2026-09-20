@@ -213,7 +213,18 @@ const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
   14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14 },
 };
 
+// Each Market Gardening Watch scene follows its existing narration.
+const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'watch-04-farm-record', poster: 'watch-04-farm-record', bytes: 112750, seconds: 14 },
+  9: { src: 'watch-09-surplus-routes', poster: 'watch-09-surplus-routes', bytes: 118388, seconds: 14 },
+  14: { src: 'watch-14-community-network', poster: 'watch-14-community-network', bytes: 170639, seconds: 14 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'market-community': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
+  },
   'small-livestock': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),

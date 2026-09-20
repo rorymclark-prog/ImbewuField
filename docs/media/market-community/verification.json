@@ -1,0 +1,93 @@
+{
+  "module": "market-community",
+  "clips": [
+    {
+      "slide": 4,
+      "file": "public/course-animations/market-community/watch-04-farm-record.mp4",
+      "bytes": 112750,
+      "seconds": 14.0,
+      "sha256": "51a8bdbf0d595eaf0dec1e674bf3f25a1126c2bdceebf7a3b4cacfdff53b1c82",
+      "poster_bytes": 110150,
+      "poster_sha256": "5faf135a551291e5e427653f5f3ec9c053d10ef74336c3a9dfa47c35e801ae11",
+      "audio": "public/course-audio/market-community/en/slide-04.mp3",
+      "audio_sha256": "17d5b099d6097b8610560fa439f61997b7a22c65ac25e8189a0add88a786c652",
+      "audio_seconds": 9.72,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.2724923183665378,
+          "transitions_over_0_05_percent": 18
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 7.43383883437407e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 9,
+      "file": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
+      "bytes": 118388,
+      "seconds": 14.0,
+      "sha256": "e4adf98f4eba2bf6399fc46ce67533a9e72d1fd8aad415a944848c6dc462eb64",
+      "poster_bytes": 101159,
+      "poster_sha256": "6c71cf68b356717d2663365063f55c6b5a2d5603472c3a6a26eec271f44fb6ba",
+      "audio": "public/course-audio/market-community/en/slide-09.mp3",
+      "audio_sha256": "eaeb55c65a0a92571924fb383694cf098085199c80798f43e0d069b633d4ad05",
+      "audio_seconds": 8.64,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.011589354742789177,
+          "transitions_over_0_05_percent": 22
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00014124293785310735,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 14,
+      "file": "public/course-animations/market-community/watch-14-community-network.mp4",
+      "bytes": 170639,
+      "seconds": 14.0,
+      "sha256": "1a9f6bcae8990b1873c2e85ee60a63873a9087af34e409536f9835289fcd8ac2",
+      "poster_bytes": 112578,
+      "poster_sha256": "6c7e09375abe9a3dda3a8b75b74948c805d503caf7b44a03f9a1bbd0dfae4edf",
+      "audio": "public/course-audio/market-community/en/slide-14.mp3",
+      "audio_sha256": "7a82ecded86c0918e383cddc70c5b7789a38368095a4b4db12e48c804fcf3507",
+      "audio_seconds": 11.976,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.04571067499256616,
+          "transitions_over_0_05_percent": 24
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00021310337991872335,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    }
+  ],
+  "review_reel": {
+    "filename": "reel-market-three-slot-en-review.mp4",
+    "size_bytes": 702338,
+    "sha256": "24f8df0550973b2c5dd4a77ac7aa029de5a36ec213e81dd9e3d62f15619508af",
+    "seconds": 42.041016
+  },
+  "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
+}
