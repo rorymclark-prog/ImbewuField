@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 817 files, 313.4 MB total.
+// 819 files, 319.4 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
@@ -103,9 +103,11 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/small-livestock/watch-14-nutrient-loop.mp4': 161586,
   '/course-animations/soil-health/flow-compost-materials.mp4': 4290981,
   '/course-animations/soil-health/posters/flow-compost-materials.jpg': 433066,
+  '/course-animations/soil-health/posters/tour-soil-observation.jpg': 701546,
   '/course-animations/soil-health/posters/watch-05-living-soil.jpg': 132808,
   '/course-animations/soil-health/posters/watch-10-compost-heap.jpg': 114574,
   '/course-animations/soil-health/posters/watch-14-mulch-protection.jpg': 116741,
+  '/course-animations/soil-health/tour-soil-observation.mp4': 4874969,
   '/course-animations/soil-health/watch-05-living-soil.mp4': 118495,
   '/course-animations/soil-health/watch-10-compost-heap.mp4': 119193,
   '/course-animations/soil-health/watch-14-mulch-protection.mp4': 369446,
@@ -387,12 +389,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/small-livestock/en/slide-18.mp3': 113184,
   '/course-audio/small-livestock/en/slide-19.mp3': 136656,
   '/course-audio/small-livestock/en/slide-20.mp3': 124704,
-  '/course-audio/soil-health/en/full.mp3': 2300492,
+  '/course-audio/soil-health/en/full.mp3': 2403020,
   '/course-audio/soil-health/en/slide-01.mp3': 101376,
   '/course-audio/soil-health/en/slide-02.mp3': 103824,
   '/course-audio/soil-health/en/slide-03.mp3': 87120,
   '/course-audio/soil-health/en/slide-04.mp3': 127440,
-  '/course-audio/soil-health/en/slide-05.mp3': 68832,
+  '/course-audio/soil-health/en/slide-05.mp3': 171360,
   '/course-audio/soil-health/en/slide-06.mp3': 151920,
   '/course-audio/soil-health/en/slide-07.mp3': 123408,
   '/course-audio/soil-health/en/slide-08.mp3': 132192,
@@ -732,7 +734,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/en/slide-02.jpg': 108169,
   '/course-decks/soil-health/en/slide-03.jpg': 114796,
   '/course-decks/soil-health/en/slide-04.jpg': 97128,
-  '/course-decks/soil-health/en/slide-05.jpg': 192658,
+  '/course-decks/soil-health/en/slide-05.jpg': 701546,
   '/course-decks/soil-health/en/slide-06.jpg': 486223,
   '/course-decks/soil-health/en/slide-07.jpg': 111507,
   '/course-decks/soil-health/en/slide-08.jpg': 931947,

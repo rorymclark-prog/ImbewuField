@@ -198,7 +198,7 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Soil Health Watch scene follows its existing narration.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
-  5: { src: 'watch-05-living-soil', poster: 'watch-05-living-soil', bytes: 118495, seconds: 14.0 },
+  5: { src: 'tour-soil-observation', poster: 'tour-soil-observation', bytes: 4874969, seconds: 29.833333, aspectRatio: 1600 / 1100 },
   10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14.0 },
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };

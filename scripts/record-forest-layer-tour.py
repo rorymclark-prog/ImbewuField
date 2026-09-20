@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Record only the authored forest tour and retain word timings for its highlights.
+"""Record an authored tour and retain word timings for its highlights.
 
 Run with: uv run --with edge-tts python scripts/record-forest-layer-tour.py
+Use --art-dir to select another storyboard; the forest tour remains the default.
 Changing the source requires re-rendering the tour before importing either asset.
 """
-import asyncio,json,html,hashlib,subprocess
+import argparse,asyncio,json,html,hashlib,subprocess
 from pathlib import Path
 import edge_tts
-root=Path(__file__).resolve().parents[1]/'docs/media/studies-animation-quality/forest-layers'
+parser=argparse.ArgumentParser()
+parser.add_argument('--art-dir',type=Path,default=Path(__file__).resolve().parents[1]/'docs/media/studies-animation-quality/forest-layers')
+root=parser.parse_args().art_dir
 config=json.loads((root/'storyboard.json').read_text())
 text='\n\n'.join(s['narration'] for s in config['scenes'])
 def norm(t): return ''.join(c for c in html.unescape(t).casefold() if c.isalnum())

@@ -1,0 +1,20 @@
+{
+  "file": "public/course-animations/soil-health/tour-soil-observation.mp4",
+  "bytes": 4874969,
+  "sha256": "d989230915ec4fb47db81626e081894226ed38dbcb67b7368eb4a2e703e809b3",
+  "seconds": 29.833333333333332,
+  "width": 1600,
+  "height": 1100,
+  "fps": 24,
+  "frames": 716,
+  "source_sha256": "57c3a6763692cdcf6dc95e87b1186055e617b33a0f37e8ff9d20dbd22a8dd90c",
+  "narration_seconds": 28.56,
+  "phase_starts": [
+    0,
+    3.451708,
+    10.397708,
+    13.366458,
+    18.451708
+  ],
+  "scope": "Guided illustrative observation, not a soil-health diagnosis or measured soil profile. No simulated growth or infiltration."
+}

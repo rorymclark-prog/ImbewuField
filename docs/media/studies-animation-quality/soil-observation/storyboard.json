@@ -1,0 +1,60 @@
+{
+  "source": "../soil-rain/source.png",
+  "title": "Watch: Read Your Soil",
+  "eyebrow": "LOOK CLOSELY AT YOUR SOIL",
+  "scope": "Guided illustrative observation, not a soil-health diagnosis or measured soil profile. No simulated growth or infiltration.",
+  "fps": 24,
+  "width": 1600,
+  "artHeight": 900,
+  "footerHeight": 200,
+  "scenes": [
+    {
+      "id": "overview",
+      "label": "Look at the soil",
+      "narration": "Look closely at these two soil examples.",
+      "focus": null
+    },
+    {
+      "id": "structure",
+      "label": "Soil structure",
+      "narration": "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+      "focus": [
+        0.25,
+        0.63,
+        0.12,
+        0.13
+      ],
+      "zoom": 1.9
+    },
+    {
+      "id": "roots",
+      "label": "Roots and spaces",
+      "narration": "Look at the roots and the spaces around them.",
+      "focus": [
+        0.13,
+        0.73,
+        0.105,
+        0.13
+      ],
+      "zoom": 2.0
+    },
+    {
+      "id": "cover",
+      "label": "Surface cover",
+      "narration": "Look at the surface cover. Loose mulch covers one example.",
+      "focus": [
+        0.77,
+        0.43,
+        0.185,
+        0.14
+      ],
+      "zoom": 1.65
+    },
+    {
+      "id": "overview",
+      "label": "Use several clues",
+      "narration": "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground.",
+      "focus": null
+    }
+  ]
+}

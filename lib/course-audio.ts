@@ -190,7 +190,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 2,  lesson: null,             title: 'Why This Matters' },
       { slide: 3,  lesson: null,             title: 'Learning Outcomes' },
       { slide: 4,  lesson: 'soil-health-l1', title: 'Soil Is Alive' },
-      { slide: 5,  lesson: 'soil-health-l1', title: 'Watch: Look at the Soil' },
+      { slide: 5,  lesson: 'soil-health-l1', title: 'Watch: Read Your Soil' },
       { slide: 6,  lesson: 'soil-health-l1', title: 'Explore Soil Texture with a Jar' },
       { slide: 7,  lesson: 'soil-health-l1', title: 'Read the Jar Carefully' },
       { slide: 8,  lesson: 'soil-health-l1', title: 'Investigate Before You Treat' },

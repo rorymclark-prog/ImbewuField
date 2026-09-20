@@ -347,6 +347,23 @@ async function migrateForestLayerMedia() {
   await cache.put(marker, new Response('Forest layer tour and matching narration'));
 }
 
+// The soil close-ups now follow three spoken observations. Remove only the old
+// scene's speech and still so saved lessons cannot mix the two versions.
+async function migrateSoilObservationMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.soil-observation-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/soil-health/en/slide-05.mp3',
+    '/course-audio/soil-health/en/full.mp3',
+    '/course-decks/soil-health/en/slide-05.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Soil observation tour and matching narration'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -362,7 +379,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
