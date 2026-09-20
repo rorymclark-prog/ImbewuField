@@ -200,6 +200,10 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
 };
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'vegetables-staples': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('vegetables-staples', {}),
+  },
   'soil-health': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),

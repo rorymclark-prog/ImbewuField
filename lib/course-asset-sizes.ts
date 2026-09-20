@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 701 files, 205.7 MB total.
+// 719 files, 207.4 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg': 94537,
@@ -650,6 +650,24 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/soil-health/en/slide-18.jpg': 110728,
   '/course-decks/soil-health/en/slide-19.jpg': 111684,
   '/course-decks/soil-health/en/slide-20.jpg': 108315,
+  '/course-decks/vegetables-staples/en/slide-01.jpg': 141369,
+  '/course-decks/vegetables-staples/en/slide-02.jpg': 80280,
+  '/course-decks/vegetables-staples/en/slide-03.jpg': 77630,
+  '/course-decks/vegetables-staples/en/slide-04.jpg': 95546,
+  '/course-decks/vegetables-staples/en/slide-05.jpg': 116198,
+  '/course-decks/vegetables-staples/en/slide-06.jpg': 94122,
+  '/course-decks/vegetables-staples/en/slide-07.jpg': 96486,
+  '/course-decks/vegetables-staples/en/slide-08.jpg': 103236,
+  '/course-decks/vegetables-staples/en/slide-09.jpg': 101003,
+  '/course-decks/vegetables-staples/en/slide-10.jpg': 96002,
+  '/course-decks/vegetables-staples/en/slide-11.jpg': 93223,
+  '/course-decks/vegetables-staples/en/slide-12.jpg': 93687,
+  '/course-decks/vegetables-staples/en/slide-13.jpg': 115089,
+  '/course-decks/vegetables-staples/en/slide-14.jpg': 99558,
+  '/course-decks/vegetables-staples/en/slide-15.jpg': 99438,
+  '/course-decks/vegetables-staples/en/slide-16.jpg': 89428,
+  '/course-decks/vegetables-staples/en/slide-17.jpg': 90170,
+  '/course-decks/vegetables-staples/en/slide-18.jpg': 96181,
   '/course-decks/water-harvesting/en/slide-01.jpg': 252277,
   '/course-decks/water-harvesting/en/slide-02.jpg': 103379,
   '/course-decks/water-harvesting/en/slide-03.jpg': 101794,
