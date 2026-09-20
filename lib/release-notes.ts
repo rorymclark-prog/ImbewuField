@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'e2bdb6b', changes: [
+    'Introduction now has 22 English slides and three optional teaching animations.',
+    'Watch borehole choices, planting diversity and windbreak placement.',
+  ] },
   { when: '20 September 2026', sha: '97e22ef', changes: [
     'Water Harvesting now has 24 English slides and six optional teaching animations.',
     'Mzomoyethu clips show swales soaking water and safely overflowing into the pond.',
