@@ -23,6 +23,9 @@
 .wideChart { grid-column: 1 / -1; }
 .chart { margin: 0 0 24px; padding: 22px; border: 1px solid var(--vr-line); border-radius: 12px; background: white; color: var(--vr-ink); min-width: 0; break-inside: avoid; }
 .chart h3 { font-family: var(--font-display), Georgia, serif; font-size: 25px; line-height: 1.2; font-weight: 500; margin: 7px 0 20px; }
+.chart>figcaption { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.enlarge { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 12px; border:1px solid var(--vr-line); border-radius:10px; color:var(--vr-green); font-size:13px; margin-bottom:16px; }
+.enlarge svg { flex-shrink:0; }
 .kicker { color: #806028; font-size: 12px; font-weight: 600; letter-spacing: .12em; }
 .caption { font-size: 13px; line-height: 1.65; color: var(--vr-muted); margin: 18px 0 0; }
 .bars { display: grid; gap: 20px; }
