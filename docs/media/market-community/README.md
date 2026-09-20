@@ -24,3 +24,5 @@ python3 scripts/render-market-concepts.py --output OUTPUT --audio-dir public/cou
 ```
 
 Requires Pillow, FFmpeg/FFprobe and Arial/DejaVu. Missing or invalid audio fails explicitly. The existing slide generator uses unchanged narration, Watch posters and the original title illustration padded to retain the full image. App slides are 1920×1080 JPEGs at quality 85.
+
+Local typecheck, full suite (3,632 pass, zero failures, one existing TODO), and diff check passed in order.
