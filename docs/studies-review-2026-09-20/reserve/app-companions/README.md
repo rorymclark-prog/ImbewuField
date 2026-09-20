@@ -48,3 +48,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
 Open work: full tutorial scripts and practice cards for C01–C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+
+## First app implementation
+
+The first readable/printable invoice companion is implemented at `/student/guides/invoices`, linked from a Using ImbewuField section on Studies. It reuses the reviewed harvest-record illustration, names the live controls, checks duplicate-sale reasoning interactively, and links to Invoice and the existing sample tour. It does not add assessed module progress or promise a recorded walkthrough. Local typecheck and the full suite passed; branch preview and production visual/link checks are recorded in the release ledger after verification. A local onboarding overlay prevented unobstructed visual review there, so the release must be inspected in its preview before merge.

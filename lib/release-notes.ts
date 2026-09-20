@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: '4c08747', changes: [
+    'Studies now includes a Using ImbewuField section with an invoice guide.',
+    'Follow the steps to check payment, find saved invoices and avoid recording a sale twice.',
+    'Print the guide or practise with the sample farm.',
+  ] },
   { when: '20 September 2026', sha: 'ecb917a', changes: [
     'Soil Health now guides you through close-ups of soil structure, roots and surface cover.',
     'The new illustrated soil tour has clear labels and matching narration.',
