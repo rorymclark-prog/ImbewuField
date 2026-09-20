@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'a391236', changes: [
+    'Reading the Landscape now has 21 English slides and four teaching animations.',
+    'Watch water flow, seasonal shadows, wind and cold air, and a site map being drawn.',
+  ] },
   { when: '20 September 2026', sha: 'e2bdb6b', changes: [
     'Introduction now has 22 English slides and three optional teaching animations.',
     'Watch borehole choices, planting diversity and windbreak placement.',
