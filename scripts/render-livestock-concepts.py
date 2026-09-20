@@ -98,7 +98,7 @@ def create_base_canvas(title: str, caption: str) -> tuple[Image.Image, ImageDraw
 # ---------------- Slide 4: Chicken Tractor ----------------
 def render_chicken_tractor(t: float) -> Image.Image:
     title = "Watch: Chicken Tractor Moving Across an Empty Bed"
-    caption = "Watch the chicken tractor move across an empty bed. Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting."
+    caption = "A chicken tractor is a moveable pen with no floor. Watch it move across an empty garden bed. Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting."
     img, draw = create_base_canvas(title, caption)
 
     # Tractor position stops and glides across the empty bed
@@ -402,7 +402,7 @@ SLIDES = [
     {
         "id": "watch-04-chicken-tractor",
         "title": "Watch: Chicken Tractor Moving Across an Empty Bed",
-        "caption": "Watch the chicken tractor move across an empty bed. Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting.",
+        "caption": "A chicken tractor is a moveable pen with no floor. Watch it move across an empty garden bed. Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting.",
         "render": render_chicken_tractor,
         "slide_num": 4,
     },

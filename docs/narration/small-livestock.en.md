@@ -12,11 +12,11 @@ Use the system you already have: food, manure, flowers, grazing, and careful mov
 
 Small livestock can do work beyond producing meat, eggs, or honey.
 
-Chickens can clear pests, snails, and weed seeds while adding fertility.
+Chickens eat some insects and weed seeds. Their manure can become compost.
 
-Ducks can protect established beds without heavy scratching.
+Ducks scratch less than chickens, but can still damage plants.
 
-Bees can lift food production across the whole site.
+Bees and other pollinators help many crops. Each animal still needs suitable food, water, shelter and care.
 
 ---
 
@@ -32,7 +32,7 @@ You will understand pollination, hive placement, and the value of closing nutrie
 
 **Slide 4 — Watch: A Chicken Tractor Moving Across a Bed**
 
-Watch the chicken tractor move across an empty bed.
+A chicken tractor is a moveable pen with no floor. Watch it move across an empty garden bed.
 
 Scratching clears old material and pests; manure stays behind as the pen prepares the soil for planting.
 
@@ -40,43 +40,49 @@ Scratching clears old material and pests; manure stays behind as the pen prepare
 
 **Slide 5 — Chickens Turn Scratching Into Useful Work**
 
-Chickens earn their keep when they are part of the system, not only fed bought feed in a fixed pen.
+Chickens can help an empty bed after harvest.
 
-After harvest, they eat pest larvae, snails, and weed seeds without spray.
+They scratch through plant remains and eat some insects and weed seeds.
 
-Their manure, mixed with bedding, becomes some of the richest compost material on the farm.
+Their manure and bedding can be composted and returned to the soil.
+
+Foraging does not replace a balanced diet, clean water, shelter or daily care.
 
 ---
 
 **Slide 6 — Use Chickens at the Right Time**
 
-Timing protects both the birds and the bed.
+Use chickens in an empty bed after harvest.
 
-Put chickens into a bed only after harvest, once it is empty and cleared, before the next planting.
+Keep them away from seedlings and crops being harvested for food.
 
-Their scratching helps prepare the ground, but it will pull young plants out.
+Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop.
 
-Never place chickens around seedlings.
+Move the birds before they damage the ground.
 
 ---
 
 **Slide 7 — Ducks Suit Established Understorey**
 
-Ducks are gentler than chickens and suit an established food forest understorey better.
+Ducks eat slugs and snails without the heavy scratching of chickens.
 
-They eat slugs and snails without the heavy scratching that disturbs roots and mulch.
+They may suit an established food forest understorey.
 
-Use ducks where pest control is needed, but the ground already has living plants and established roots.
+They can still eat or trample plants and make wet ground muddy. Watch the birds and move them when needed.
+
+Provide clean water and suitable feed; foraging alone may not be enough.
 
 ---
 
 **Slide 8 — Rotate the Tractor Across the Plot**
 
-A chicken tractor works best when it moves across the land in rotation.
+A chicken tractor is a moveable, floorless pen.
 
-Keep the pen on one bed for a week or two, then move it so the land can rest between passes.
+Move it before the ground becomes bare, muddy or heavily covered with manure.
 
-Four to six chickens rotated through a 500m² plot can maintain fertility all year with no bought fertiliser.
+The right time depends on the birds, soil and weather. Let the ground recover between visits.
+
+There is no single number of chickens that guarantees enough fertility for every plot.
 
 ---
 
@@ -88,13 +94,13 @@ Their movement carries pollen between flowers across the site.
 
 ---
 
-**Slide 10 — Bees Make Food Forests More Productive**
+**Slide 10 — Bees Help Pollinate Many Crops**
 
-Honeybees are essential pollinators for watermelon, squash, beans, litchi, avocado, macadamia, and citrus.
+Honeybees and other insects carry pollen between flowers.
 
-A food forest without healthy bees nearby can produce well below its potential.
+This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs.
 
-Avocado flowers open as male and female at different, synchronised times across trees. Bees move pollen between them at the right moment.
+A hive does not guarantee higher yields everywhere. Weather, water, plant health and other pollinators also matter.
 
 ---
 
@@ -102,31 +108,33 @@ Avocado flowers open as male and female at different, synchronised times across 
 
 South Africa has two native honeybee subspecies.
 
-The Cape bee lives in the southern and south-western Cape.
+The Cape bee lives in the southern and south-western Cape. The African honeybee occurs across the north and east.
 
-The African honeybee occurs across the north and east.
-
-Both are more defensive than European strains, but both are more resistant to varroa mite.
+Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas.
 
 ---
 
 **Slide 12 — Place the Hive With Care**
 
-A single hive is a realistic start for a smallholding.
+Learn from an experienced local beekeeper before getting a hive.
 
-Position it away from foot traffic and face it north-east, so morning sun warms the entrance early.
+Keep hives away from busy paths, homes and places where children play.
+
+Morning sun can help, but a safe location comes first.
+
+Plan how people and animals will move around the site.
 
 ---
 
-**Slide 13 — Strong Colonies Need Space and Flowers**
+**Slide 13 — Strong Colonies Need Care and Flowers**
 
-A healthy, well-foraging colony signals a biodiverse, chemically clean smallholding.
+Provide flowering plants through the seasons and avoid exposing bees to pesticides.
 
-Use a year-round flowering calendar to keep colonies strong.
+Active bees do not prove that the farm is free of chemicals or disease.
 
-Every beekeeper in South Africa, even with a single hive, must register with DALRRD under the Agricultural Pests Act.
+All beekeepers must register with the national Department of Agriculture.
 
-If a hive swarms repeatedly, it is likely overcrowded and needs a super or a split.
+If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.
 
 ---
 
@@ -138,45 +146,49 @@ Watch nutrients move from plants to animals, then through manure and compost bac
 
 **Slide 15 — Close the Nutrient Loop**
 
-On a conventional farm, bought feed comes in, meat and eggs leave, and manure becomes a waste problem.
+Animals can return some nutrients to the farm.
 
-On an integrated smallholding, chickens eat scraps, pest insects, and surplus produce.
+Chickens eat suitable farm produce and insects, and manure can become compost for crops.
 
-They return their waste as fertility. Costs drop, value rises, and the same logic can guide ducks, guinea fowl, and bees.
+Keep track of feed bought in and food sold or taken home. These nutrients still enter or leave the system.
+
+Scraps alone may not meet the animals’ needs.
 
 ---
 
-**Slide 16 — Guinea Fowl Hunt Ticks and Grasshoppers**
+**Slide 16 — Guinea Fowl Forage, but Health Checks Still Matter**
 
-Guinea fowl are indigenous to southern Africa and are strong controllers of ticks and grasshoppers.
+Guinea fowl forage for insects and may eat ticks.
 
-In KZN and Limpopo’s humid, tick-heavy conditions, a small free-ranging flock can cut tick burdens sharply.
+Do not rely on them to protect people or livestock from ticks or tick-borne disease.
 
-This makes guinea fowl useful system workers where chemical treatments are not wanted.
+Keep checking animals and follow a local animal-health plan.
+
+Foraging birds are one part of the farm, not a replacement for health care.
 
 ---
 
 **Slide 17 — Ask Three Questions for Every Animal**
 
-For each animal, ask what it eats that you already have.
+For each animal, ask what it can eat here.
 
-Ask what it produces that helps another part of the system.
+Ask what useful things it produces.
 
-Then ask what it needs that you can supply from within the system.
+Then ask what else it needs. Include water, suitable feed, shelter, fencing and daily care.
 
-These questions show whether the animal closes a loop or creates another bought input.
+Some needs may require bought inputs. Plan for them before bringing animals onto the land.
 
 ---
 
-**Slide 18 — Chickens Following Goats Break the Parasite Cycle**
+**Slide 18 — Grazing and Goat Worm Control**
 
-Chickens following goats in rotation can reduce the need for chemical dewormers.
+Chickens following goats are not a proven replacement for goat worm control.
 
-They eat parasitic worm larvae in fresh manure before the larvae mature.
+Grazing management can help, but goats still need health checks.
 
-This breaks the parasite life cycle before the larvae can reinfect the goats.
+Work with a veterinary or animal-health adviser on a parasite plan for your herd.
 
-The animals become partners in managing the grazing system.
+Do not stop treatment because chickens have visited the grazing camp.
 
 ---
 
@@ -196,8 +208,8 @@ Identify one loop that could work with the resources you already have.
 
 Choose one safe action from this module.
 
-Prepare an empty bed for chickens after harvest, check a possible hive position away from foot traffic, or identify where guinea fowl could hunt ticks.
+Plan how chickens could use an empty bed after harvest, ask a beekeeper about a safe hive position, or check your animals’ daily needs.
 
-Do not place chickens around seedlings.
+Record the food, water, shelter and care that the action requires.
 
-Write down what the animal eats, what it produces, and what the farm supplies in return.
+Start with the resources and help you can reliably provide.

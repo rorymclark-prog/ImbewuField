@@ -169,6 +169,7 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
 // English-labelled Water clips: two Mzomoyethu extracts and four concept diagrams.
 // isiZulu slides and narration remain in review; the player discloses its English fallback.
 const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
+  14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
   4: { src: 'watch-04-swale-infiltration', poster: 'watch-04-swale-infiltration', bytes: 881320, aspectRatio: 824 / 720, seconds: 16 },
   7: { src: 'watch-07-swale-overflow-pond', poster: 'watch-07-swale-overflow-pond', bytes: 2712641, aspectRatio: 824 / 720, seconds: 13 },
   9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 172653, aspectRatio: 824 / 720, seconds: 16 },
@@ -179,6 +180,7 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // English concept diagrams follow the three authored Introduction Watch passages.
 const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8 },
   7: { src: 'watch-07-three-ethics', poster: 'watch-07-three-ethics', bytes: 211949, seconds: 23.416667 },
   13: { src: 'watch-13-diversity', poster: 'watch-13-diversity', bytes: 586357, seconds: 26.625 },
   19: { src: 'watch-19-windbreak', poster: 'watch-19-windbreak', bytes: 284869, seconds: 23.708008 },
@@ -186,6 +188,7 @@ const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Reading the Landscape keeps its four authored Watch scenes in teaching order.
 const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
+  6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6 },
   5: { src: 'watch-05-water-movement', poster: 'watch-05-water-movement', bytes: 542138, seconds: 14 },
   9: { src: 'watch-09-sun-shadows', poster: 'watch-09-sun-shadows', bytes: 192487, seconds: 14 },
   13: { src: 'watch-13-wind-cold-air', poster: 'watch-13-wind-cold-air', bytes: 373296, seconds: 14 },
@@ -194,13 +197,20 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Each Soil Health Watch scene follows its existing narration.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
+  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
   5: { src: 'watch-05-living-soil', poster: 'watch-05-living-soil', bytes: 124275, seconds: 14 },
   10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14 },
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14 },
 };
 
+// Practical motion shows the root plug and planting action without adding data on arrival.
+const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
+  6: { src: 'flow-seed-or-seedling', poster: 'flow-seed-or-seedling', bytes: 5423616, seconds: 8 },
+};
+
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
+  16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
   5: { src: 'watch-05-seven-layers', poster: 'watch-05-seven-layers', bytes: 222959, seconds: 14 },
   10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 166270, seconds: 14 },
   15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 196132, seconds: 14 },
@@ -208,13 +218,15 @@ const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Each Small Livestock Watch scene follows its existing narration.
 const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
-  4: { src: 'watch-04-chicken-tractor', poster: 'watch-04-chicken-tractor', bytes: 190619, seconds: 14 },
-  9: { src: 'watch-09-bee-pollination', poster: 'watch-09-bee-pollination', bytes: 116723, seconds: 14 },
-  14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14 },
+  7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8 },
+  4: { src: 'watch-04-chicken-tractor', poster: 'watch-04-chicken-tractor', bytes: 207078, seconds: 14.583333 },
+  9: { src: 'watch-09-bee-pollination', poster: 'watch-09-bee-pollination', bytes: 116723, seconds: 14.0 },
+  14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14.0 },
 };
 
 // Each Market Gardening Watch scene follows its existing narration.
 const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
+  15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8 },
   4: { src: 'watch-04-farm-record', poster: 'watch-04-farm-record', bytes: 112750, seconds: 14 },
   9: { src: 'watch-09-surplus-routes', poster: 'watch-09-surplus-routes', bytes: 118388, seconds: 14 },
   14: { src: 'watch-14-community-network', poster: 'watch-14-community-network', bytes: 170639, seconds: 14 },
@@ -235,7 +247,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   },
   'vegetables-staples': {
     slideLanguages: ['en'],
-    slides: slidesFromNarration('vegetables-staples', {}),
+    slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
     slideLanguages: ['en'],

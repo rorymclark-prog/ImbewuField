@@ -11,9 +11,27 @@ import {
   hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
+
+test('sound-off learners get the complete current script, including its final instruction', () => {
+  // A beautiful picture cannot replace words a learner cannot hear. This fails on a missing
+  // paragraph, stale edit, shifted slide, or accidentally published draft-language transcript.
+  assert.deepEqual(COURSE_TRANSCRIPTS, collectTranscripts());
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    assert.deepEqual(Object.keys(COURSE_TRANSCRIPTS[moduleId]).sort(), [...narration.languages].sort());
+    for (const lang of narration.languages) {
+      for (const track of narration.tracks) {
+        const paragraphs = COURSE_TRANSCRIPTS[moduleId][lang][track.slide];
+        assert.ok(paragraphs.length > 0, `${moduleId}/${lang}/${track.slide} has no readable words`);
+        assert.ok(paragraphs.every(p => !/\[pause\]|^---\s*$/m.test(p)), 'stage directions are not learner text');
+      }
+    }
+  }
+});
 
 test('the deck is derived from the narration manifest, never typed out twice', () => {
   // Two hand-maintained lists of the same 24 rows is this codebase's most repeated defect, and here

@@ -138,7 +138,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants' },
       { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope' },
       { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map' },
-      { slide: 14, lesson: 'reading-landscape-l3', title: 'Frost Flows Downhill' },
+      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Flows Downhill' },
       { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth' },
       { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map' },
       { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have' },
@@ -679,8 +679,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'small-livestock': {
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // Targeted factual corrections re-recorded in September 2026; source review is
+    // docs/studies-review-2026-09-20/FACT-CHECK.md. Same en-ZA-LukeNeural voice.
     // The "Watch" clip leads each lesson here rather than following its opening slide (4, 9, 14),
     // which is why every lesson run starts on a Watch.
     tracks: [
@@ -693,15 +693,15 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
       { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
       { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: Bees Moving Between Hive and Crops' },
-      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Make Food Forests More Productive' },
+      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops' },
       { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees' },
       { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care' },
-      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Space and Flowers' },
+      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Care and Flowers' },
       { slide: 14, lesson: 'small-livestock-l3', title: 'Watch: Nutrients Moving in a Closed Livestock Loop' },
       { slide: 15, lesson: 'small-livestock-l3', title: 'Close the Nutrient Loop' },
-      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Hunt Ticks and Grasshoppers' },
+      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter' },
       { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
-      { slide: 18, lesson: 'small-livestock-l3', title: 'Chickens Following Goats Break the Parasite Cycle' },
+      { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control' },
       { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Your Farm Loop' },
       { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
     ],

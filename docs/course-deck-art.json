@@ -1,0 +1,433 @@
+{
+  "intro-permaculture": {
+    "4": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/earth-care.jpg",
+      "layout": "scene",
+      "purpose": "earth-care"
+    },
+    "5": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/people-care.jpg",
+      "layout": "scene",
+      "purpose": "people-care"
+    },
+    "6": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/fair-share.jpg",
+      "layout": "scene",
+      "purpose": "fair-share"
+    },
+    "9": {
+      "path": "public/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "10": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/observe-land.jpg",
+      "layout": "scene",
+      "purpose": "observe-land"
+    },
+    "15": {
+      "path": "public/course-images/intro-permaculture/intro-permaculture-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "16": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/near-the-kitchen.jpg",
+      "layout": "scene",
+      "purpose": "near-the-kitchen"
+    },
+    "20": {
+      "path": "docs/media/studies-illustrated-release/art/intro-permaculture/sketch-the-site.jpg",
+      "layout": "scene",
+      "purpose": "sketch-the-site"
+    },
+    "13": {
+      "path": "public/course-animations/intro-permaculture/posters/watch-13-diversity.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "7": {
+      "path": "public/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "19": {
+      "path": "public/course-animations/intro-permaculture/posters/watch-19-windbreak.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "reading-landscape": {
+    "6": {
+      "path": "docs/media/studies-illustrated-release/art/reading-landscape/a-frame.jpg",
+      "layout": "scene",
+      "purpose": "a-frame"
+    },
+    "8": {
+      "path": "public/course-images/reading-landscape/reading-landscape-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "10": {
+      "path": "docs/media/studies-illustrated-release/art/reading-landscape/winter-shadow.jpg",
+      "layout": "scene",
+      "purpose": "winter-shadow"
+    },
+    "12": {
+      "path": "public/course-images/reading-landscape/reading-landscape-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "16": {
+      "path": "public/course-images/reading-landscape/reading-landscape-l4.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "18": {
+      "path": "docs/media/studies-illustrated-release/art/reading-landscape/read-the-ground.jpg",
+      "layout": "scene",
+      "purpose": "read-the-ground"
+    },
+    "20": {
+      "path": "docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg",
+      "layout": "scene",
+      "purpose": "landscape-walk"
+    },
+    "5": {
+      "path": "public/course-animations/reading-landscape/posters/watch-05-water-movement.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "9": {
+      "path": "public/course-animations/reading-landscape/posters/watch-09-sun-shadows.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "17": {
+      "path": "public/course-animations/reading-landscape/posters/watch-17-site-map.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "13": {
+      "path": "public/course-animations/reading-landscape/posters/watch-13-wind-cold-air.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "water-harvesting": {
+    "5": {
+      "path": "docs/media/studies-illustrated-release/art/water-harvesting/downhill-berm.jpg",
+      "layout": "scene",
+      "purpose": "downhill-berm"
+    },
+    "10": {
+      "path": "public/course-images/water-harvesting/water-harvesting-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "14": {
+      "path": "docs/media/studies-illustrated-release/art/water-harvesting/roof-rain.jpg",
+      "layout": "scene",
+      "purpose": "roof-rain"
+    },
+    "15": {
+      "path": "public/course-images/water-harvesting/water-harvesting-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "18": {
+      "path": "docs/media/studies-illustrated-release/art/water-harvesting/protected-tank.jpg",
+      "layout": "scene",
+      "purpose": "protected-tank"
+    },
+    "19": {
+      "path": "public/course-images/water-harvesting/water-harvesting-l4.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "4": {
+      "path": "public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "9": {
+      "path": "public/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "16": {
+      "path": "public/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "12": {
+      "path": "public/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "21": {
+      "path": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "7": {
+      "path": "public/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "soil-health": {
+    "6": {
+      "path": "public/course-images/soil-health/soil-health-l1.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "8": {
+      "path": "docs/media/studies-illustrated-release/art/soil-health/soil-recovery.jpg",
+      "layout": "scene",
+      "purpose": "soil-recovery"
+    },
+    "9": {
+      "path": "public/course-images/soil-health/soil-health-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "11": {
+      "path": "docs/media/studies-illustrated-release/art/soil-health/compost-materials.jpg",
+      "layout": "scene",
+      "purpose": "compost-materials"
+    },
+    "15": {
+      "path": "docs/media/studies-illustrated-release/art/soil-health/mulch-ground.jpg",
+      "layout": "scene",
+      "purpose": "mulch-ground"
+    },
+    "17": {
+      "path": "docs/media/studies-illustrated-release/art/soil-health/worm-farm.jpg",
+      "layout": "scene",
+      "purpose": "worm-farm"
+    },
+    "18": {
+      "path": "public/course-images/soil-health/soil-health-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "14": {
+      "path": "public/course-animations/soil-health/posters/watch-14-mulch-protection.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "5": {
+      "path": "public/course-animations/soil-health/posters/watch-05-living-soil.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "10": {
+      "path": "public/course-animations/soil-health/posters/watch-10-compost-heap.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "vegetables-staples": {
+    "4": {
+      "path": "docs/media/studies-illustrated-release/art/vegetables-staples/path-and-bed.jpg",
+      "layout": "scene",
+      "purpose": "path-and-bed"
+    },
+    "6": {
+      "path": "docs/media/studies-illustrated-release/art/vegetables-staples/seed-or-seedling.jpg",
+      "layout": "scene",
+      "purpose": "seed-or-seedling"
+    },
+    "7": {
+      "path": "docs/media/studies-illustrated-release/art/vegetables-staples/mark-the-bed.jpg",
+      "layout": "scene",
+      "purpose": "mark-the-bed"
+    },
+    "8": {
+      "path": "public/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "10": {
+      "path": "docs/media/studies-illustrated-release/art/vegetables-staples/three-sisters.jpg",
+      "layout": "scene",
+      "purpose": "three-sisters"
+    },
+    "12": {
+      "path": "public/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "15": {
+      "path": "docs/media/studies-illustrated-release/art/vegetables-staples/inspect-pests.jpg",
+      "layout": "scene",
+      "purpose": "inspect-pests"
+    },
+    "16": {
+      "path": "public/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    }
+  },
+  "food-forest": {
+    "6": {
+      "path": "public/course-images/food-forest/food-forest-l1.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "8": {
+      "path": "docs/media/studies-illustrated-release/art/food-forest/establish-the-forest.jpg",
+      "layout": "scene",
+      "purpose": "establish-the-forest"
+    },
+    "9": {
+      "path": "public/course-images/food-forest/food-forest-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "13": {
+      "path": "docs/media/studies-illustrated-release/art/food-forest/living-ecosystem.jpg",
+      "layout": "scene",
+      "purpose": "living-ecosystem"
+    },
+    "14": {
+      "path": "public/course-images/food-forest/food-forest-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "16": {
+      "path": "docs/media/studies-illustrated-release/art/food-forest/sheet-mulching.jpg",
+      "layout": "scene",
+      "purpose": "sheet-mulching"
+    },
+    "18": {
+      "path": "docs/media/studies-illustrated-release/art/food-forest/plant-with-rain.jpg",
+      "layout": "scene",
+      "purpose": "plant-with-rain"
+    },
+    "10": {
+      "path": "public/course-animations/food-forest/posters/watch-10-climate-match.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "5": {
+      "path": "public/course-animations/food-forest/posters/watch-05-seven-layers.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "15": {
+      "path": "public/course-animations/food-forest/posters/watch-15-forest-sequence.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "small-livestock": {
+    "5": {
+      "path": "public/course-images/small-livestock/small-livestock-l1.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "6": {
+      "path": "docs/media/studies-illustrated-release/art/small-livestock/chickens-after-harvest.jpg",
+      "layout": "scene",
+      "purpose": "chickens-after-harvest"
+    },
+    "7": {
+      "path": "docs/media/studies-illustrated-release/art/small-livestock/ducks-understorey.jpg",
+      "layout": "scene",
+      "purpose": "ducks-understorey"
+    },
+    "10": {
+      "path": "public/course-images/small-livestock/small-livestock-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "12": {
+      "path": "docs/media/studies-illustrated-release/art/small-livestock/careful-hive-site.jpg",
+      "layout": "scene",
+      "purpose": "careful-hive-site"
+    },
+    "15": {
+      "path": "public/course-images/small-livestock/small-livestock-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "17": {
+      "path": "docs/media/studies-illustrated-release/art/small-livestock/plan-animal-needs.jpg",
+      "layout": "scene",
+      "purpose": "plan-animal-needs"
+    },
+    "4": {
+      "path": "public/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "9": {
+      "path": "public/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "14": {
+      "path": "public/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  },
+  "market-community": {
+    "5": {
+      "path": "public/course-images/market-community/market-community-l1.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "7": {
+      "path": "docs/media/studies-illustrated-release/art/market-community/true-cost.jpg",
+      "layout": "scene",
+      "purpose": "true-cost"
+    },
+    "10": {
+      "path": "docs/media/studies-illustrated-release/art/market-community/know-the-customer.jpg",
+      "layout": "scene",
+      "purpose": "know-the-customer"
+    },
+    "13": {
+      "path": "public/course-images/market-community/market-community-l2.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "15": {
+      "path": "docs/media/studies-illustrated-release/art/market-community/seed-sharing.jpg",
+      "layout": "scene",
+      "purpose": "seed-sharing"
+    },
+    "16": {
+      "path": "docs/media/studies-illustrated-release/art/market-community/shared-tools.jpg",
+      "layout": "scene",
+      "purpose": "shared-tools"
+    },
+    "18": {
+      "path": "docs/media/studies-illustrated-release/art/market-community/share-skills.jpg",
+      "layout": "scene",
+      "purpose": "share-skills"
+    },
+    "2": {
+      "path": "public/course-images/market-community/market-community-l3.jpg",
+      "layout": "diagram",
+      "purpose": "authored lesson illustration"
+    },
+    "4": {
+      "path": "public/course-animations/market-community/posters/watch-04-farm-record.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "14": {
+      "path": "public/course-animations/market-community/posters/watch-14-community-network.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    },
+    "9": {
+      "path": "public/course-animations/market-community/posters/watch-09-surplus-routes.jpg",
+      "layout": "scene",
+      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+    }
+  }
+}

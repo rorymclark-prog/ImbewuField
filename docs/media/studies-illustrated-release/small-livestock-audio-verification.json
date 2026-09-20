@@ -1,0 +1,173 @@
+{
+  "module": "small-livestock",
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "human_review": false,
+  "publication_status": "Imported; in-app and listening review pending",
+  "source_script_sha256": "59707c112ab57dc25e8858176741c4dbd3f8f98bf3ea1dfca655e7377779a081",
+  "clips": [
+    {
+      "slide": 1,
+      "source_sha256": "02651c69ec15dad297ab24754a134c1f95b387cea05806a42c1e6e94734c8295",
+      "audio_sha256": "0c6c1b45799e48391bac60b483e3ed596eb223a3c51648edc1a88bda71f7a8f5",
+      "seconds": 21.024,
+      "last_word_end": 19.971583,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 2,
+      "source_sha256": "3a3ac25c37cc3ff937f8a79e7070acb9ef18510dea6908035fcf57488679a5e4",
+      "audio_sha256": "ee6be420bc0f0200cdc8aabaed2126a3babc755ec2eadac8ba86bbeffd474a70",
+      "seconds": 24.144,
+      "last_word_end": 23.082416,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 3,
+      "source_sha256": "e5f0fa0358ed416573fbeb94f95b828b84264a21ca6aa7bc538af6185f778e7f",
+      "audio_sha256": "c5fc8bb6c7c5cd785339c3aec53e82416ce54c547fd103a707f048fbe49d0ecd",
+      "seconds": 18.792,
+      "last_word_end": 17.684666,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 4,
+      "source_sha256": "fcbb9a01a4fc8bff5a6cc48327b6e07dcc6a0325675120b62d3073d2223ebb36",
+      "audio_sha256": "b31fbfcc1130a74d4aa8b4bac4f2b86574c35c95a3aaf57028dcf9b4d31910e6",
+      "seconds": 13.56,
+      "last_word_end": 12.528416,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 5,
+      "source_sha256": "bef21ef1f1d26365f1aeb2f652d0f731ffc566283971bceb48bded566df35501",
+      "audio_sha256": "c69173b35d7b15aa998c8c93a7f06028c6b583b5df5ad398ef9c3e1aae78309c",
+      "seconds": 18.336,
+      "last_word_end": 17.315333,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 6,
+      "source_sha256": "f760045f6c4506d1c4a58b6e5562a9a7f886b28965649edaef5dea7cff4c3256",
+      "audio_sha256": "382f3edcba453a67bac27992161827edbfbae3b8d49d4c069516b466a9055822",
+      "seconds": 18.72,
+      "last_word_end": 17.642041,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 7,
+      "source_sha256": "8f603673bb6220e86edaa7d925cb7de704fa4b8a9b13871e0cf31fd599e76e16",
+      "audio_sha256": "e4f641d2447eb8c25eb3e3075a9dc47962674c6537eda7ea2798c98d5d540838",
+      "seconds": 20.184,
+      "last_word_end": 19.090916,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 8,
+      "source_sha256": "d41d2bdce3e3d8f32b8774fd1d0e5a758369a09830ed5412ddd59484580f9ac9",
+      "audio_sha256": "23611f01a2f7e1e5f9d49b01ef4fadc4286a0aa3b6fa5b587fc50afdff810c80",
+      "seconds": 20.976,
+      "last_word_end": 19.872166,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 9,
+      "source_sha256": "dae68d2a67b2d9e75cb9ec8a8559d5747ae4d57e149082aca0c118a05dbabf63",
+      "audio_sha256": "2f966e9fab2fe36433292ccad1aeb33b7c207f3436301326ed3d1c323021df6c",
+      "seconds": 8.352,
+      "last_word_end": 7.244332,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 10,
+      "source_sha256": "9512539d77ffdf3b709f6daf4dc7cfa4f8c7aebaac0e2c06bf1283c14be1e6ae",
+      "audio_sha256": "083e7f088d83f8f4c4756ab04198b148cf967d6f058262182401892e5bbd255d",
+      "seconds": 21.36,
+      "last_word_end": 20.340916,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 11,
+      "source_sha256": "82707dbc34c1dbfd6b4e571a96dd5754ff919487c1252997ecdd12b2d9ca2106",
+      "audio_sha256": "41de0a323689f272493525f4fd1271fb4310fb84eb310fb008aa6803c91dc6e1",
+      "seconds": 19.512,
+      "last_word_end": 18.380666,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 12,
+      "source_sha256": "a67135687c3fec930eceb2cd78236a6438d0bca8afc28bb09d57f7af88af146e",
+      "audio_sha256": "0dbe4510ae8ab6947a150b226454cc17aebada6732853d05e81ba8bed0666e34",
+      "seconds": 17.448,
+      "last_word_end": 16.349457,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 13,
+      "source_sha256": "4777783b61aa395bf235d88eb9b2333e4365811cf8e8e3ac5e72cfeeca8ccf64",
+      "audio_sha256": "eb1242f4bce796046bb083a3352d4569b026a07bc9c1a19202855d53fe1cf30c",
+      "seconds": 23.904,
+      "last_word_end": 22.7415,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 14,
+      "source_sha256": "3803592f39830b91e299b2d0a0bbfd4efb64da16c8e50e6054e38614468d95ed",
+      "audio_sha256": "4b04a201bc82ffd92d884fc81a021798d1ed5c152205cfe8e4cbcd6fa72c8097",
+      "seconds": 6.432,
+      "last_word_end": 5.362499,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 15,
+      "source_sha256": "0e67f719d1edf37520a9381b2b59c4d75242386facab16675195575d11e121e7",
+      "audio_sha256": "562e4a692f9c1ae2f732572d97e3895f4590758129c6629cd9c1de405217fa9a",
+      "seconds": 20.64,
+      "last_word_end": 19.460208,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 16,
+      "source_sha256": "bfcc9338b04df4a80099b0cf0d0f90f23708784d2ae2a3986f1fdd85a57b59cb",
+      "audio_sha256": "f5bd54e3edce0460a663e42f540514f9e71dd1d447c750a8b39f2a3f6c912559",
+      "seconds": 17.808,
+      "last_word_end": 16.761374,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 17,
+      "source_sha256": "30e500f0be9da1422b297d29dc01065e2f56634c05190c6697a389e3076719a2",
+      "audio_sha256": "c0a7e1852c29dad1934dbe3869aef4a77ab8ffe342d498d13230e8c2aa1a7ee5",
+      "seconds": 21.744,
+      "last_word_end": 20.667625,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 18,
+      "source_sha256": "006b42290753a7b3112a1d584ca3acc936379eb31ba16a711119fd82de8a3dbe",
+      "audio_sha256": "816c18b8343ef2f1caef827224e093eb36cbc6716c40eb840a29596753096716",
+      "seconds": 18.864,
+      "last_word_end": 17.812499,
+      "text_match": true,
+      "full_decode": "pass"
+    }
+  ],
+  "generation": "Existing Edge TTS pipeline, en-ZA-LukeNeural at -12%; AGY reviewed livestock script only"
+}

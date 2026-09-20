@@ -1,5 +1,14 @@
 # Small Livestock Integration media — 20 September 2026
 
+## Illustrated-release update
+
+The history below describes the earlier media branch. The current illustrated release supersedes its unchanged-audio and unchanged-content statements: source-backed livestock corrections now update lesson bodies, four quiz claims, English narration and all twenty English recordings. AGY reviewed the narration text; the existing Edge TTS pipeline generated the recordings. Automated word-boundary comparison and full decoding passed; this is not human listening approval.
+
+Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The updated verification JSON is authoritative for bytes, audio hashes, captions and motion checks. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
+
+## Earlier branch record
+
+
 Twenty English slides and the three authored Watch clips are paired with the module's existing twenty English recordings. This branch follows Food Forest (#451) and the earlier Studies stack; it also records Food Forest's successful deployed offline follow-up. No lesson, quiz, narration, species name, farming figure, geometry or PLAN_VERSION changed. isiZulu stays review-only.
 
 ## What the clips show

@@ -12,6 +12,7 @@ import {
 } from '@/lib/course-deck';
 import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 
 // The module as it was actually written: 24 slides in a teaching order, narrated, with animations
@@ -233,6 +234,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
+  const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}>
@@ -314,6 +316,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         <audio
           ref={audioRef}
           src={audio}
+          aria-label={`Narration for ${heading}`}
           controls
           onEnded={onNarrationEnded}
           // Under play-through the next clip is fetched the moment this slide appears, so the gap
@@ -373,6 +376,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           Next ›
         </button>
       </div>
+
+      {transcript && (
+        <details style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
+          <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
+            Read this slide · {langName(spokenLang!.lang)}
+          </summary>
+          <div lang={spokenLang!.lang} style={{ color: INK, fontSize: 16, lineHeight: 1.65, maxWidth: '70ch' }}>
+            {transcript.map((paragraph, i) => <p key={i} style={{ margin: '10px 0' }}>{paragraph}</p>)}
+          </div>
+        </details>
+      )}
     </div>
   );
 }

@@ -1,0 +1,122 @@
+[
+  {
+    "file": "ACT-SEF-MENTOR-READINESS-2026-09-08.md",
+    "sha256": "e65f5b63f7d1af52ce46f7ed98449d1e0201083a7b8a0337e028c8a84ffe1008"
+  },
+  {
+    "file": "AUDIT-FARMER-MONEY-2026-08-02.md",
+    "sha256": "2ffc2eb3bfc0e3589fc9718a4f38a29ddc41b0578901d3d23e10ef4e75bd1ea3"
+  },
+  {
+    "file": "AUDIT-NEEDS-RORY-2026-08-15.md",
+    "sha256": "66e22907b93bfae7d0ab5cb8c3fc829b7628b362961b070568bd57990f60edd7"
+  },
+  {
+    "file": "COURSE-ART-AUDIT-2026-08-10.md",
+    "sha256": "a9a8631def5a7bd66f48a097aa548edbdfd736893f6529f89025c3d7f62382a5"
+  },
+  {
+    "file": "COURSE-GAP-AUDIT-2026-08-10.md",
+    "sha256": "b47e067bf450385b5834c8ef18421c1a6778c1bacc7a258f11b0daa959b424d8"
+  },
+  {
+    "file": "CROP-PLAN-TRUTH-AUDIT-2026-08-06.md",
+    "sha256": "610fa09d7793bb83378ab2c4ba53eee7010aedb0e7cee3bd8ac0c1f8f4a9f86f"
+  },
+  {
+    "file": "DASHBOARD-VISUAL-REVIEW.md",
+    "sha256": "b231fa6bc414fd895f912ebfc39e81f9c12f18f49c68aa20d66a85437f3ca402"
+  },
+  {
+    "file": "EARTHWORKS-AUDIT-2026-08-01.md",
+    "sha256": "e196046d18d590f71f8c64839c4cd5a534977b17346c0edecd8048333c9a804b"
+  },
+  {
+    "file": "FLOW-AUDIT-2026-07-18.md",
+    "sha256": "e804d881b04d5a6e64e1456da2e30de6129620b058a65b815a52c5752d276258"
+  },
+  {
+    "file": "GLOSSY-PROMPT-AUDIT.md",
+    "sha256": "f79cde804cff7d1b7ef8ea66396f86e8acb4073e6436ca69803f95180c6b5ac4"
+  },
+  {
+    "file": "LAYER-AUDIT-2026-07-20.md",
+    "sha256": "93c4631456069cba08c2e815582e63a61f4a2a8b5c53af79c9ad836dc07988b3"
+  },
+  {
+    "file": "MEL-ASSESSMENT-AUDIT-2026-09-05.md",
+    "sha256": "5595347d09ac7b424f7cdfe7724228d7cd8d4a06d0af3196d7c6c12f61fbc0c9"
+  },
+  {
+    "file": "MEL-FEATURE-AUDIT.md",
+    "sha256": "a68b28c25a5a97f5cc6befb0a0c616ddefa1b16bef39422b955add3981165845"
+  },
+  {
+    "file": "PLANT-ART-FINAL-AUDIT.md",
+    "sha256": "0c90befb1c8a557bca39f2a7c526c8631ca63811f2232b410b200d262f85dc4d"
+  },
+  {
+    "file": "PLANT-ART-HSV-AUDIT.md",
+    "sha256": "339d034e72d1ad6cb9f9c788c35ad49f3cd4e14ded23fc4bb4ad17c47ae830c9"
+  },
+  {
+    "file": "POLISH-AUDIT-PROGRESS-2026-08-01.md",
+    "sha256": "b94313877b0309a1eb5ea8767dd12187694f7cb24783b3d975b105be6419a560"
+  },
+  {
+    "file": "PRODUCTION-METRICS-AUDIT-2026-09-05.md",
+    "sha256": "3d871a8069b587ad2e5ef006f504976b4041c36efd4c7842bea11c3bec73cbfe"
+  },
+  {
+    "file": "RECORDS-TOUR-REVIEW-2026-09-07.md",
+    "sha256": "ad435868b12bfa1f908fd64eb168441015ff67ae6ba555508c1d5a5ddfa5840f"
+  },
+  {
+    "file": "REFERENCE-BLUEPRINT-REMAINING-LAYERS-AUDIT.md",
+    "sha256": "a63952219035dcfd550ebd7f8b7f8962798280f0aa2bd5349e4c726c68e8f612"
+  },
+  {
+    "file": "RENDER-AUDIT-IMPLEMENTATION-2026-09-04.md",
+    "sha256": "602904c689c8fd06cce91972d6250dd24f3eb5957da28dbef073e5664c1200ee"
+  },
+  {
+    "file": "RULES-AUDIT-PROGRESS-2026-08-01.md",
+    "sha256": "be1c112a5c9f779011d11375861006bef94bbf7c5f32b01c341a36987d5e2df8"
+  },
+  {
+    "file": "SAMPLE-MODE-COURSE-GAP-2026-08-10.md",
+    "sha256": "520d0748a4c7ca7d9337ecf160b2d7cc1c456ebe1a635af11052463d5b83f896"
+  },
+  {
+    "file": "SITE-REPORT-AUDIT-2026-09-05.md",
+    "sha256": "99064503d5e9d2b4b197b2627974d7ff4eac88a1fb970020d84e2c75c5c25b31"
+  },
+  {
+    "file": "SITE-REPORT-REVIEW-2026-09-07.md",
+    "sha256": "5ed7b082c31c059280d26c7566ac6489abd3057a8ee07f28d8abff840463e36d"
+  },
+  {
+    "file": "SITE-SURVEY-AUDIT-2026-09-20.md",
+    "sha256": "eda1c4649022fcce07017885fd7f35c45579b0ecb57fe3704e89f42781c5d497"
+  },
+  {
+    "file": "TRAINING-QUALITY-AUDIT-2026-09-08.md",
+    "sha256": "e48e72b672cf0e6de087318c0df78d0ad59291acb1c69492234d3a90888f11b2"
+  },
+  {
+    "file": "VISION2-DESIGN-FOUNDATION-AUDIT.md",
+    "sha256": "919e447cf993aa8f13bb6734b04337aa72b7df54b0b6eefd64ba9d0216bee7b5"
+  },
+  {
+    "file": "VISUAL-QUALITY-AND-ACT-READINESS-2026-09-09.md",
+    "sha256": "50a7b85198a243044ae4c5e6373078a6411d6503017dac202e425e9d61e005ba"
+  },
+  {
+    "file": "VISUAL-SITE-REPORT-AUDIT.md",
+    "sha256": "30407b1274f1c6f9fe60081e760ca11240d6cb5ed1b3cf096f7f9a662fa6ac13"
+  },
+  {
+    "file": "report-pictures-isizulu-review.md",
+    "sha256": "c4426bb2d249eefd90b0519c96426bd094b26c14eb02769d74abeaef3ad97bef"
+  }
+]

@@ -1,0 +1,11 @@
+# Recovery checkpoint — 20 September 2026
+
+Worktree: studies-media-completion/ImbewuField. Branch: codex/studies-illustrated-release. This is a working checkpoint, not a publication or completion report.
+
+Implemented: 35 full-scene lesson photographs; six corrected diagrams; 165 re-rendered English slides; eight Google Flow clips (one rejected generation excluded); full per-slide text transcripts; livestock factual corrections with twenty replacement English tracks; cold-air correction with replacement landscape slide 14 and rebuilt full track. Flow project and hashes are in flow-clips.json. The 30-audit relevance register is in docs/studies-review-2026-09-20.
+
+Latest verification: TypeScript clean; npm test 3,634 total, 3,633 pass, zero failures, one existing shape-sync TODO; git diff --check clean. All generated story images inspected. Eight module contact sheets inspected across iterations; corrected vegetable outcomes and landscape 14 inspected individually. Latest livestock Watch 4 caption fits; its motion check passes and frozen-poster negative control fails as intended.
+
+Pending: real player/phone/offline verification of this release; remaining factual issues in FACT-CHECK.md; reserve curriculum authoring; draft isiZulu audio and review-pack refresh; release notes, final checks, push/CI/merge, production verification. No publication or complete-course accuracy claim yet. Prior PRs 446–454 contain the earlier Studies media stack.
+
+Local source/review pack: Downloads/imbewu-studies-2026-09-20. Its existing ZIP and REVIEW.html predate these corrections and must be rebuilt. The FHR 2024 PDF is a certificate bundle with personal identifiers, not a teaching manual: extract only its generic curriculum headings; never commit or upload learner identities. Ten-minute local recovery archives run in the pack's checkpoints directory.

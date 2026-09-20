@@ -1,0 +1,358 @@
+[
+  {
+    "module": "intro-permaculture",
+    "slide": 4,
+    "id": "earth-care",
+    "scene": "A South African woman farmer kneels on a PATH beside a small vegetable bed, gently spreading dry leaf mulch over exposed soil with her hands. Healthy young plants, crumbly soil, mulch kept clear of stems, corrugated-roof homestead and green KwaZulu-Natal hills in the distance. Teaching focus: care for living soil.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/earth-care.jpg",
+    "source_sha256": "f0c47077145be4a049508a4cd4852b348d909c04d94eb65c6d6e409631272435",
+    "asset_sha256": "193edf8407667772e29df4a2b89dc2c69c93841ee7c5b6fa7278b60363e0d1ac"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 5,
+    "id": "people-care",
+    "scene": "At a modest South African homestead outdoor table, a farming family shares a simple meal with fresh vegetables from their nearby garden. The mother places a bowl of leafy vegetables on the table; eggs and a small harvest basket nearby. Respectful everyday realism, healthy ordinary family, no poverty spectacle. Teaching focus: keep farm food for the household.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/people-care.jpg",
+    "source_sha256": "88895e82d205113249b09c698d86566efee4ba7db1f532eb2dedf61f6a34b3cf",
+    "asset_sha256": "f5b79e19ce54e10d2b1e87f6e4f010e5a3569271b3acc7031c36905293042157"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 6,
+    "id": "fair-share",
+    "scene": "Two neighbouring Black South African women farmers exchange a small basket of harvested maize and plain seed envelopes across a low garden gate. An open compost bay with plant scraps in the background, modest homesteads and gardens. Friendly unposed interaction; no writing on packets. Teaching focus: share surplus and return resources.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/fair-share.jpg",
+    "source_sha256": "d648c257861468dcca9f6f8e0854d6f942a1162fca4c593f9cdc9b02763c7460",
+    "asset_sha256": "8726c80e7ca63acf4614d0a0bd34e87f25f595fba7b193a95c3a5f050a4994b9"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 10,
+    "id": "observe-land",
+    "scene": "A South African woman and man farmer stand safely on a firm path after a gentle rain, observing small surface runoff routes across their sloping homestead garden. One points at shallow water following the slope while the other holds a notebook. Wet earth and overcast clearing light. No digging, no hazardous flood, no glowing arrows.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/observe-land.jpg",
+    "source_sha256": "6a37beb84da7697cc4121531cf6616d3643470b94b38b00ae7da11a33fd26cca",
+    "asset_sha256": "2bd7ce66fbfe059f4f8fd4bdb67f896c3a6ce4d560e59940c94d80624f4bcf22"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 16,
+    "id": "near-the-kitchen",
+    "scene": "A clear slightly elevated view from a modest South African kitchen doorway to herbs and small vegetable beds immediately beside the house, water container nearby, paths connecting them; further away are larger beds and fruit trees. One woman harvests leafy greens close to the door. Teaching focus: frequently used plants close to home. No rings, diagrams or labels.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/near-the-kitchen.jpg",
+    "source_sha256": "1ddbcacfdb4b158791b308b38a761494fb83929f64753da1d3cc8600039611c2",
+    "asset_sha256": "794a14fdb5f74bfd6b785866b9903524f231ab25ed442ceaf73eb794a2235518"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 20,
+    "id": "sketch-the-site",
+    "scene": "Two Black South African farmers sit at a rustic outdoor table discussing a simple hand-drawn site sketch, looking between paper and their actual smallholding beyond. Sketch shows house, paths, beds and trees in the same general arrangement visible behind. Pencil and blank notebook, no legible writing, compass numbers or invented measurements. Eye-level over-shoulder view.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/intro-permaculture/sketch-the-site.jpg",
+    "source_sha256": "55e0224ca6f4e3f70ca6a2f0dc3cf5ba84684beb4acf3d5b2d626f6e9321fb30",
+    "asset_sha256": "ae12304823c625f74d9b283c96a2073376daeb0e981c5cc5224691a2ab3e121d"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 6,
+    "id": "a-frame",
+    "scene": "A Black South African man and woman carefully use a simple wooden A-frame contour level on a gentle grassy slope. Two equal long wooden legs meet in an inverted V, one horizontal crossbar, a plumb string hangs from the apex to a small weight just below the crossbar. Both feet sit on the ground; the woman holds the top steadily and the man points to the centre of the crossbar. A few marker pegs trace a nearly horizontal line across the slope. No text or measurements.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/reading-landscape/a-frame.jpg",
+    "source_sha256": "1a9495fd5234cd2c45492498f2a0ed6ed93d4121be6ffdeb5cecbabb05f14123",
+    "asset_sha256": "31bc03a7da7bcc619d03b7133150d5ed07ddcb1ca43b03a4366d3297762d52bd"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 10,
+    "id": "winter-shadow",
+    "scene": "A South African smallholder observes the long coherent shadow of a corrugated-roof house extending across a proposed garden patch on a crisp winter morning. Low sunlight from upper left; every shadow falls to lower right. Farmer holds notebook on the sunny path and considers where beds would receive light. No snow or falling leaves blanket. Cool dry grass, warm sun.",
+    "status": "corrected and visually inspected; rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/reading-landscape/winter-shadow.jpg",
+    "source_sha256": "96b89dc147fe41c958c535ed5d6422c4a90bba99a4ef351e590ca3dd90de056a",
+    "asset_sha256": "a5cea86c284fd37132c0a0f226fe8d114e8a86459dfeb9d740ab48a0cc45f77e",
+    "previous_source_sha256": "6b5fb321bec0e491ce5d80027b35fbee118094edf911de03f220ef7b0e5f394a",
+    "correction_prompt": "Edit only the lighting and spatial arrangement of this teaching scene. It must accurately show low winter sunlight casting a long house shadow away from the sun. Put the homestead house at the LEFT edge of the scene. Put the low visible sun behind the house at upper LEFT. Its coherent long shadow falls to the RIGHT across the nearby garden. Farther to the right the open garden receives sun. All people, plants and fence shadows point to the RIGHT consistently. Maintain warm lifelike South African homestead style and excellent clear readable scene. No text, no arrows. Show firm dry ground, no unnecessary puddles."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 18,
+    "id": "read-the-ground",
+    "scene": "Close environmental portrait of a Black South African woman farmer squatting beside a small spade-cut soil opening at the edge of her garden, comparing a crumb of soil in her palm with roots and naturally occurring grass nearby. No exaggerated indicator species or labels. Good hand anatomy, dark topsoil visible, practical observation, green hills background.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/reading-landscape/read-the-ground.jpg",
+    "source_sha256": "81d1aed516e5f4007469961153826be916a3cce1edb3f34fabb5aa3ee197e27c",
+    "asset_sha256": "8c46b362fd981aaca7b85084e372dd11b75747076b6c708a770dcace0a9b8a8b"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 20,
+    "id": "landscape-walk",
+    "scene": "Two South African smallholder learners walk a safe hillside path with a clipboard, studying their homestead's land: upper slope, lower garden, tree shade and a small drainage hollow all legible in a wide environmental composition. One points across the landscape while the other notes observations. No waterworks construction, maps floating in air, text or arrows.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg",
+    "source_sha256": "4e3b1a1974b8c8b1f4b1dd4fdfcd94365529740104226cc48f27f5ead1f46db4",
+    "asset_sha256": "74b29f301553ff0b631b935c91679034cd0b1c0dbb39dbaf6fc90514cd80ad6e"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 5,
+    "id": "downhill-berm",
+    "scene": "A realistic educational landscape scene on a gentle South African garden slope viewed obliquely along a contour: a shallow level swale trench runs ACROSS the slope, excavated soil forms a continuous low berm immediately DOWNHILL of the trench, and newly planted shrubs/young trees stand on that downhill berm. A farmer mulches around one plant on the berm; some rainwater sits shallowly in the trench. Show the uphill/downhill relationship clearly, never a trench running straight down the hill. No numbers or dimensions.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/water-harvesting/downhill-berm.jpg",
+    "source_sha256": "9b43ea9aea1571e6bc8f66c3d8f5a65cd01c60735a45a6c3be62b4331be872ea",
+    "asset_sha256": "fc44837de618d01e19ba2b902c95f1dff9bda5f64e66c4f8e3fc6720674453ff"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 14,
+    "id": "roof-rain",
+    "scene": "A modest plastered South African homestead with a clean corrugated metal roof in gentle rain. A continuous gutter follows the eave and a properly connected downpipe leads toward a closed rainwater tank beside the building. Roof and gutter are the clear visual focus, foreground garden glistens, one adult farmer inspects from shelter. No cutaway plumbing invented; downpipe's final connection can be partly behind tank. No drinking water depiction, open tank, children climbing or European roof tiles.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/water-harvesting/roof-rain.jpg",
+    "source_sha256": "a30d1759bdac39184c1c506ce33a9233bff035d8789d10b4e8bd2100165edd9e",
+    "asset_sha256": "ac72a6e6335397402a70bf19081eb7cf7ff7d63fd8a5ac8b3d522b6fc60a627b"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 18,
+    "id": "protected-tank",
+    "scene": "A Black South African woman inspects a closed green rainwater storage tank at her homestead. Secure lid in place, screened inlet visible beneath a connected gutter feed, controlled overflow and a simple tap above ground. Tank rests level on a stable base, surroundings clear of rubbish, no open holes or exposed standing water, no drinking claim. Beautiful detailed everyday scene in morning light, no brands.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/water-harvesting/protected-tank.jpg",
+    "source_sha256": "39b38ca722d8dca7a471b337426b364a942fb717226bf70fafeee988a98c128c",
+    "asset_sha256": "146e99da8cb41f72e5d7dcbf35686a78a42e6f79035692091a7955ee14ea7e8b"
+  },
+  {
+    "module": "soil-health",
+    "slide": 8,
+    "id": "soil-recovery",
+    "scene": "A South African woman gardener lifts a small handful of dark crumbly soil from a mulched bed while standing on the path. Adjacent nearby unmulched compacted ground is paler and harder; the healthy covered bed has realistic plants and old leaf mulch. Show gradual care and a local comparison, not a miraculous before/after transformation. Hands and soil sharply observed, homestead softly behind.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/soil-health/soil-recovery.jpg",
+    "source_sha256": "518d377657958a14ad7293c336c78c2c69b9674867ffa7338520a3630d5b4535",
+    "asset_sha256": "fb047b042e6e87b2c9398245595dd94302a5135532184c4af8f6273ef3371179"
+  },
+  {
+    "module": "soil-health",
+    "slide": 11,
+    "id": "compost-materials",
+    "scene": "A farmer at an open garden compost bay adds fresh green plant trimmings while another basket of dry brown leaves and straw sits ready beside him. Mix of browns and greens visible in the heap, no cooked food, meat, bones, seed pods or plastic. Gloves and garden fork safely resting nearby. Warm natural light, realistic South African smallholding, a clear teaching contrast between fresh greens and dry browns.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/soil-health/compost-materials.jpg",
+    "source_sha256": "5737e6af9876f9199fa28920a06d0f4361829aee7f95481cf970825e2d4ce1c3",
+    "asset_sha256": "e49eb7ab1dfeb277ac5612713142a3827bb4a5a0b299c9d0f0f0c52d254f911e"
+  },
+  {
+    "module": "soil-health",
+    "slide": 15,
+    "id": "mulch-ground",
+    "scene": "Close ground-level educational garden scene showing a farmer's dark-skinned hands carefully spreading dry leaves over moist crumbly soil between established vegetable plants. Leave a small clear ring at every plant stem. One exposed dry patch and one well-covered patch visible, organic texture rich and tactile, no printed labels, no giant droplets, no plastic sheet.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/soil-health/mulch-ground.jpg",
+    "source_sha256": "923e71b8a0ffe9df3d3823be85e6c83257b80fa9a2acd952ceb9eb5283d0e950",
+    "asset_sha256": "154650570b97fde48d220351f70c5ec7614dabdcb33a8584ce77ccfbfcf4fb0e"
+  },
+  {
+    "module": "soil-health",
+    "slide": 17,
+    "id": "worm-farm",
+    "scene": "A Black South African woman gently lifts the lid of a shaded domestic worm-compost bin to inspect damp shredded paper and vegetable peelings, with a few recognizable small compost worms visible near the surface. Bin in cool shelter near garden, lid held above, no pouring liquid onto food, no meat or shiny invented machines, no claims shown as symbols. Teaching focus: sheltered cared-for worm bedding.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/soil-health/worm-farm.jpg",
+    "source_sha256": "806224e9f69fb92e45c5f5d5ede35409cb435369bbe5b8a770f5cb599366aa6a",
+    "asset_sha256": "1a6700631dd477cbb2114d404f574107e0109b8ef148a2bd07522593c610b6ff"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 4,
+    "id": "path-and-bed",
+    "scene": "A Black South African woman kneels with both feet and knees on a permanent garden PATH, reaching comfortably into the middle of a narrow vegetable bed from its edge. Another path is clearly visible on the far side. Crumbly protected growing soil, healthy leafy crops, modest corrugated-roof homestead and lush hills. No feet in bed, no raised timber box required, no numbers.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/vegetables-staples/path-and-bed.jpg",
+    "source_sha256": "77d88b3b3e234463472fe77ff94695460a0a4ac6415170b3bcdf4b400c8454a2",
+    "asset_sha256": "96f49f259231abe11260f90fa20408caf934f67b421560e8aa36ea3d4e6a8e62"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 6,
+    "id": "seed-or-seedling",
+    "scene": "Close teaching scene at a South African garden: on one side a farmer sows bean seeds directly into a prepared short soil row; on the other side another farmer carefully transplants a small tomato seedling with its intact root plug from a nursery tray. Natural single wide scene, separate adjacent work areas, anatomically correct hands and plants, no text or invented spacing markers.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/vegetables-staples/seed-or-seedling.jpg",
+    "source_sha256": "879524cf1751629370e4d1334d5453575534f79a957e3f88edac60896bf246c9",
+    "asset_sha256": "c3de9b9c28f0045f3b782a33800d90b420990b768fa10b7f40919c73fd051452"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 7,
+    "id": "mark-the-bed",
+    "scene": "Two Black South African farmers mark out one rectangular practice bed with four corner pegs and taut string on bare ground. Both stand or kneel OUTSIDE the rectangle; access paths visible along both long sides. One secures a corner peg and the other checks alignment. No tape markings, no numbers, no wooden raised-bed frame. Clear oblique view, modest homestead garden.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/vegetables-staples/mark-the-bed.jpg",
+    "source_sha256": "52772484dfa743f08fd092c5b462935e29fae56ebe9d92644eb34ef21fd985b5",
+    "asset_sha256": "b63d569072556da8d432011c7259b0474e4424b636f37244023e1bce383a971d"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 10,
+    "id": "three-sisters",
+    "scene": "A rich but botanically accurate South African garden illustration in the realistic style reference: strong established maize stalks with tassels and side ears carry climbing bean vines; pumpkin leaves and a few pumpkins spread over soil below. Maize is visibly strong and taller than beans; all plants rooted, each distinct and identifiable. A farmer at the edge observes and tends from the path. No extra crop species, no floating roots, no text.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/vegetables-staples/three-sisters.jpg",
+    "source_sha256": "b3c767b92fef9c6d8425ca0a3307577d5591f83cb644820e435c53874b8673da",
+    "asset_sha256": "cb09ae17574e0c4297f1a426caf17f0d982768f3950709970ce05eb766969615"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 15,
+    "id": "inspect-pests",
+    "scene": "A Black South African woman carefully turns over a leaf in her vegetable garden to inspect a few small chewing insect holes. Tight environmental portrait with realistic hand and leaf detail; a small caterpillar on the underside, other healthy leaves around it. No spray bottle, dead insect pile, magical beneficial insect or alarm imagery. Teaching focus: observe before treating.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/vegetables-staples/inspect-pests.jpg",
+    "source_sha256": "7ce2ba59c3f1438d2912c943697e1c7feb9b23d6944ae009117901eb47e64069",
+    "asset_sha256": "85f9fad6a9810e688c7594a4f3af3767871fba2a91eb108e76b598d0a0d2dada"
+  },
+  {
+    "module": "food-forest",
+    "slide": 8,
+    "id": "establish-the-forest",
+    "scene": "A realistic South African smallholder tending a YOUNG food forest: modest newly established trees with ample open sunlight, low shrubs, mulched circles and obvious access paths. Farmer hand-pulls competing grass at a young tree while keeping mulch away from trunk. Mature hillside vegetation in the distance, young garden clearly still needs work. No instant mature canopy, no labels.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/food-forest/establish-the-forest.jpg",
+    "source_sha256": "3cc7a5285c32bf97869c93c8ca4bcd4a02a91a05c1db68032b41b491bf9847b3",
+    "asset_sha256": "cacb835d6b507f5f6a4e69faacd417d6db130ef3fbad8175a171712daba98de8"
+  },
+  {
+    "module": "food-forest",
+    "slide": 13,
+    "id": "living-ecosystem",
+    "scene": "A rich close environmental scene inside a mixed South African food forest: a small indigenous-looking bird perches naturally on a branch, a bee visits a flower in foreground, layered foliage and mulched ground support a lush coherent garden. No labelled or exotic invented species, no oversized insects, no impossible fruit grafting. Soft sunlight, natural observation, ecosystem relationships rather than decorative collage.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/food-forest/living-ecosystem.jpg",
+    "source_sha256": "37a518b85db9d51741f9d68c046bdbd2a59aa4b028b06d66b13c7f6b7d2c4cc0",
+    "asset_sha256": "1cf8e5d5647538cb5c6c49f3c4f81651690f87a039d5b0fba4e4ce62bebf529f"
+  },
+  {
+    "module": "food-forest",
+    "slide": 16,
+    "id": "sheet-mulching",
+    "scene": "Two Black South African farmers establish a food forest patch: plain brown overlapping cardboard lies flat over cut grass, one farmer wets it with a watering can while the other spreads coarse wood chips across the already wetted section. No printed packaging, plastic tape or staples, cardboard partly visible and partly covered. Nursery seedlings in pots wait at the path edge. No numeric thickness cues.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/food-forest/sheet-mulching.jpg",
+    "source_sha256": "e633a86a8330df5bc7f1b13564c2c3c30caf3c8a0eb05568a129f4965d01cc5d",
+    "asset_sha256": "be490978248b4ff4921479ef52a810f7412cdbea25026cfc0462fa1b1ce12d9c"
+  },
+  {
+    "module": "food-forest",
+    "slide": 18,
+    "id": "plant-with-rain",
+    "scene": "A South African woman plants a young tree at the beginning of a rainy spell, after light rain, gently placing intact root ball into moist soil with its collar at ground level. Cloudy bright daylight, wet earth, plain nursery bag set aside and watering can nearby, other young trees in background. No dramatic storm, no dry dusty planting hole, no deeply buried trunk or immediate fruit.",
+    "status": "corrected and visually inspected; rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/food-forest/plant-with-rain.jpg",
+    "source_sha256": "a779264de61b292707cf3979655919bbe7bb06bd0f60782ad972f8a613b4ab3d",
+    "asset_sha256": "d3bc31fd69f6001678d436053815bcaec64e16b9915ce500c162ebdd5682baff",
+    "previous_source_sha256": "61fd4b589eb2c3ab8a78a319d3e1fed94813888e46bfd13e8e9acaa1be0c7104",
+    "correction_prompt": "Edit this illustration to correct unsafe planting conditions. Keep the woman, tree, rootball, composition and lifelike South African garden style. REPLACE all muddy puddles and standing surface water with moist but well-drained, crumbly brown soil. The planting hole must contain NO standing water and its sides should be firm. The rootball top is level with surrounding finished soil, with trunk flare above ground. Show workable soil after light rain, not planting into saturated mud. Keep the rootball intact and nursery bag removed. No new text."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 6,
+    "id": "chickens-after-harvest",
+    "scene": "A few healthy chickens scratch old plant residues in a fully harvested EMPTY vegetable bed inside a roomy movable timber-and-wire poultry pen. A roofed shade section and accessible clean water are visible. Green seedling beds are safely outside and separate from the pen. A Black South African farmer inspects from the path. No young crops inside the pen, no crowding, no machinery.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/small-livestock/chickens-after-harvest.jpg",
+    "source_sha256": "b80579d602d7e973a228a4b0b7e6cf04ce04e1ea952c938e6b52ced2df61504e",
+    "asset_sha256": "6aa2758f0011db276e6d486b2fe28e654672dcd074ef8c3ed0cfb3185eee06b6"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 7,
+    "id": "ducks-understorey",
+    "scene": "A few healthy ducks forage naturally beneath ESTABLISHED fruit trees in a South African food forest, well-rooted vegetation and mulch, a shallow clean water vessel on firm ground, ample shade and open space. One adult farmer watches from the path. No tiny seedlings, ornamental swimming pool, bare muddy overcrowded pen or chickens. Warm lifelike sunlight.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/small-livestock/ducks-understorey.jpg",
+    "source_sha256": "7bcc20fbeadd9bbd8616ab55a41007ebb25ca57c35bfd9e1af4efb8b9ab65c22",
+    "asset_sha256": "4338b9ebc4a48d68835fedd14c86c07330ecb6c2de67e336cc621532b5243dea"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 12,
+    "id": "careful-hive-site",
+    "scene": "A single well-kept wooden beehive on a secure stand sits at the quiet far edge of a South African smallholding, with flowers and a leafy hedge separating it from a distant footpath and house. Early morning sun warms the entrance; a beekeeper wearing full protective veil and gloves observes from the side at a respectful distance, hive remains CLOSED. No people walking through the flight path, no children near hive, no labels or honey harvesting.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/small-livestock/careful-hive-site.jpg",
+    "source_sha256": "c60d8fee08e995f2ef5fbeb6d5b65106433faf99c8b315db0b18e65b79a49dc4",
+    "asset_sha256": "fd68a704d4cf6195af899e34e019effe6acdf61c6727f9d7e737162b1ae1ff00"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 17,
+    "id": "plan-animal-needs",
+    "scene": "At a rustic farm table two Black South African farmers plan their existing small livestock system using a notebook with simple unlabelled drawings, while a small healthy chicken flock with shelter and water is visible beyond. On the table a bowl of feed, garden produce and dry bedding illustrate resources; closed compost bay in background, clean food kept separate from manure. Thoughtful practical discussion, no prices, charts or text.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/small-livestock/plan-animal-needs.jpg",
+    "source_sha256": "58a6c5596c5e63b39106454ca8112a16128cd0b943d197a9f06cfb4fc533b696",
+    "asset_sha256": "4622d1aec222a3ad0484d17cb722143ce36c7a9a0b63ca3735d948f193c2b5e9"
+  },
+  {
+    "module": "market-community",
+    "slide": 7,
+    "id": "true-cost",
+    "scene": "A Black South African woman farmer reviews the cost of a vegetable harvest at a rustic outdoor table: blank ruled notebook, ordinary calculator without readable screen digits, plain seed packets, harvest basket, transport crate and pencil. She thoughtfully compares the supplies with the crop. No money amounts, misleading graph, brand logos or fake writing. Rich natural sunlight and practical dignified scene.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/market-community/true-cost.jpg",
+    "source_sha256": "6eeb16d28b8f3db433d7669a63b306226210ec4d4e297f69a0e8ad782c012a97",
+    "asset_sha256": "4c60e1c976f442787ad35f9cda6a04cf79bf1ba71beaae1dce6db35257c2fadd"
+  },
+  {
+    "module": "market-community",
+    "slide": 10,
+    "id": "know-the-customer",
+    "scene": "A Black South African smallholder woman speaks with a neighbour buying fresh vegetables at a simple clean roadside farm stall. Modest baskets of tomatoes, beans and leafy greens, warm natural human interaction focused on listening; shade canopy, rural South African hills behind. No price boards, brands, piles of cash or supermarket aesthetic.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/market-community/know-the-customer.jpg",
+    "source_sha256": "99775b8a60bf2aeca8e09e3c30fab9b39f818b8a0ec3b046cb60ae3b57ddf021",
+    "asset_sha256": "7536cb4e19606284cb54895ad5e924e605d3d6c2e9addd4c3936d8e4cf2aab10"
+  },
+  {
+    "module": "market-community",
+    "slide": 15,
+    "id": "seed-sharing",
+    "scene": "A small group of South African neighbours sit around a rustic table sharing saved dry bean seeds and maize seed in plain paper envelopes and simple lidded jars. Hands count and inspect seeds carefully, warm personal expressions, clean dry table, garden behind. No fake labels or numbers, no loose seed scattered in damp soil, no hybrid claims shown. Close scene of practical cooperation.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/market-community/seed-sharing.jpg",
+    "source_sha256": "1f3ad7f310dde59e393897e9d3d1a7a8f6214c107545434eef174b8b91b3e378",
+    "asset_sha256": "61820d3f800a1cc330512ba5382be189a5b6b5f57e18ca081645350c916b835d"
+  },
+  {
+    "module": "market-community",
+    "slide": 16,
+    "id": "shared-tools",
+    "scene": "Two Black South African neighbours exchange a sturdy wheelbarrow and garden fork at a homestead garden gate, discussing shared use. Fork tines point safely down, tools cared for, one person hands over the wheelbarrow handles while the other receives it. Small gardens and corrugated roofs behind, natural documentary composition. No logos, money, industrial tractor or expensive machinery.",
+    "status": "corrected and visually inspected; rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/market-community/shared-tools.jpg",
+    "source_sha256": "4f02a6e6297aa30e4b0cad138960a6fe61c1a1ea7f3fa2c82bef7a3f7619ef82",
+    "asset_sha256": "1d99da0084bff527b1433922152bc2d2c62e634dff02d6af9aa09e4012f9ebcf",
+    "previous_source_sha256": "d909266b5a6321367dfec0be8e38f5a66d884d59546361a306b037f2218af8f1",
+    "correction_prompt": "Correct the wheelbarrow geometry in this warm lifelike South African sharing-tools scene. A standard wheelbarrow has exactly TWO handles at the rear: both held by the man on the left. Remove the extra handle reaching toward the woman on the right. Her free hand rests naturally on the rim of the wheelbarrow. She holds the garden fork upright with the other hand. Exactly one wheel, two support legs, coherent frame, realistic anatomically correct hands. Preserve all other scene details, beautiful light and people."
+  },
+  {
+    "module": "market-community",
+    "slide": 18,
+    "id": "share-skills",
+    "scene": "An experienced Black South African woman farmer demonstrates careful seedling transplanting to two adult neighbours at a garden bed, all working from the path and watching the root plug closely. A small tray of seedlings and simple hand tools nearby. Respectful collaborative learning, realistic hands, warm late afternoon hills and homestead backdrop. No classroom screen, text or signs.",
+    "status": "visually inspected; final rendered slide review pending",
+    "asset": "docs/media/studies-illustrated-release/art/market-community/share-skills.jpg",
+    "source_sha256": "99bafd97121271923b9c340473587763486c9b14073ecf91b5b588dc353eec44",
+    "asset_sha256": "6c49730d60cc5d638ebde5b29a2ff802c288e5905026a6811e346aeb04285d54"
+  }
+]
