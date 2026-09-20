@@ -33,6 +33,9 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: '7814c97', changes: [
+    'Vegetables and Staple Crops now has 18 English slides with its original narration.',
+  ] },
   { when: '20 September 2026', sha: '235c5da', changes: [
     'Soil Health now has 20 English slides and three teaching animations.',
     'Watch living soil, compost layers and how mulch protects soil from rain.',
