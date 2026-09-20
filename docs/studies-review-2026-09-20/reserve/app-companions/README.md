@@ -16,8 +16,8 @@ Teach with the existing `/tour` and sample workspace before the learner works on
 | C02 | Find and map your site | Find the correct place, check the boundary and distinguish measured information from a sketch | Reading the Landscape; F8 | `/farmer`, saved-place/design source; full recording still needed |
 | C03 | Build and review a design | Work through Base, Sectors, Water, Earthworks, Zones, Planting, Structures, Review and Glossy; move an item and use Undo | Water, soil, guilds, forest; F8 | `components/design/DesignWizard.tsx`, `StepGuide.tsx`, `lib/sample-tour.ts` |
 | C04 | Turn the map into a crop plan | Check actual growing areas, choose plantings, inspect the calendar and distinguish planned harvests from records | Vegetables, seasonal planning; F3–F4 | `/facilitator/crops`, `lib/finance-plan-source.ts`; finance uses the main saved site's mapped beds |
-| C05 | Record what you picked and where it went | Record harvest with correct date/unit; review sold, home, stored or other destinations without calling all harvest cash | Vegetables, postharvest; F2 | `/records`, Picked; `HarvestReconciliation` |
-| C06 | Record expenses and keep the receipt | Save and find a cost, retain evidence and distinguish tagged enterprise costs from unallocated costs | Farm money; F2–F4 | `/records`, Spent; `components/records/ReceiptPreview.tsx` |
+| C05 | Record what you picked and where it went | Record the crop and kilograms; understand entry-date limits and the picked-minus-sold remainder; keep detailed destinations separately | Vegetables, postharvest; F2 | `/records`, Picked; `HarvestReconciliation` |
+| C06 | Record expenses and keep the receipt | Save and find a cost, retain evidence and its original date, and distinguish tagged costs from unallocated costs | Farm money; F2–F4 | `/records`, Spent; `components/records/ReceiptPreview.tsx` |
 | C07 | Record a sale once | Check produce, kilograms, amount, buyer and date; find the related invoice or existing sale | Market; F2, F5 | `/records`, Sold; `lib/sale-invoice.ts` |
 | C08 | Create, check and save an invoice | Choose the correct invoice type, check seller/buyer, units, agreed price, dates and payment status; reopen Saved | F5, F7 | `/invoice`; live entry and paid/unpaid choices observed; [draft guide](invoice.md) |
 | C09 | Bring paper and past sales into the app | Preserve the old reference/date and link an existing recorded sale when applicable | F2, F5 | `/invoice`, Invoice type and Existing sale record; `lib/invoice-entry.ts` |
@@ -47,8 +47,18 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C01–C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C01–C04/C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
 The first readable/printable invoice companion is implemented at `/student/guides/invoices`, linked from a Using ImbewuField section on Studies. It reuses the reviewed harvest-record illustration, names the live controls, checks duplicate-sale reasoning interactively, and links to Invoice and the existing sample tour. It does not add assessed module progress or promise a recorded walkthrough. Local typecheck and the full suite passed; branch preview and production visual/link checks are recorded in the release ledger after verification. A local onboarding overlay prevented unobstructed visual review there, so the release must be inspected in its preview before merge.
+
+## Harvest and expense companions — 21 September 2026
+
+C05 and C06 now have five-step English guides at `/student/guides/harvest` and `/student/guides/expenses`, with a decision exercise, work checks, printing and related-guide links. These reuse the invoice companion layout; they are not narrated screen recordings or assessed farming modules.
+
+The released sample workflow was inspected on main `5eabb25`. A sample-only 1.5 kg harvest saved and appeared in Recent harvests; a sample cost of R12.50 saved and reopened in Edit with 12.5 intact. The ledger wrongly displayed R13, so this branch switches it to the existing exact invoice formatter. Preview verification must confirm the changed display and phone layout.
+
+Corrections to the original specifications: the harvest and cost forms have no date picker and stamp the entry date; late entries belong to the entry month. The harvest list has no Edit action. The chart's kept amount is a subtraction, not a measured destination ledger. Neither guide claims otherwise. Optional receipt-photo persistence is supported in code; this walkthrough used no uploaded personal receipt and does not claim that an original-photo upload was tested.
+
+The expense hero reuses the already-generated and inspected `docs/media/studies-illustrated-release/art/market-community/true-cost.jpg`, copied unchanged to `public/studies-guides/expense-record.jpg`. It is an illustration, not a farmer's evidence. The other guide reuses the existing harvest notebook illustration. Final preview/production results belong in the release ledger.

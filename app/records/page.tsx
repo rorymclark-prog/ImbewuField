@@ -17,6 +17,9 @@ import {
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
 import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
+// A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
+// The ledger must use the same exact-money formatter as the buyer's document.
+import { formatInvoiceZar as fmtZAR } from '@/lib/invoice-document';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -76,13 +79,6 @@ function isBookTab(value: string | null): value is BookTab {
 }
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
-
-/** Format as "R 1 200" with space thousands separator */
-function fmtZAR(amount: number): string {
-  const rounded = Math.round(amount);
-  const str = rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return `R ${str}`;
-}
 
 function fmtDate(raw: string | null | undefined): string {
   if (!raw) return '—';
