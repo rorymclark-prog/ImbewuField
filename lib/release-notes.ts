@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: '97e22ef', changes: [
+    'Water Harvesting now has 24 English slides and six optional teaching animations.',
+    'Mzomoyethu clips show swales soaking water and safely overflowing into the pond.',
+    'Animations fit their full frame and finish before the lesson turns the page.',
+    'English audio fallback is clearly labelled and included in offline downloads.',
+  ] },
   { when: '20 September 2026', sha: 'b69d7bf', changes: [
     'Open report diagrams and charts at full size, then zoom and scroll to read details.',
     'Close the enlarged view to return to the same place in your report.',
