@@ -2,6 +2,8 @@
 
 Status: reserve teaching draft. Not registered as a public module. English text, activities and assessment drafted; local bookkeeping review, isiZulu review and media remain outstanding. This is elementary farm record literacy, not tax or investment advice.
 
+This five-lesson introduction now leads into the deeper [Farm Finance course](financial-course.md) requested by Rory, with eight units and 24 lesson plans. Pair practical tasks with [Using ImbewuField](app-companions/README.md), including the [invoice guide](app-companions/invoice.md). The longer pathway is being authored separately; it is not counted as finished by this introduction.
+
 Built from Rory's enterprise/cashbook workshops, the ASAP handbook's record-keeping section, and the farmer-money and production-metrics audits. Use real local records with private details removed, or clearly labelled practice cards. No fabricated market price, income promise or statutory threshold is a lesson fact.
 
 ## Outcomes
