@@ -10,7 +10,7 @@ import {
   slideAudioUrl,
   slideImageFor,
 } from '@/lib/course-deck';
-import { trackTitle } from '@/lib/course-audio';
+import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 
@@ -68,6 +68,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [lang, setLang] = useState(appLang);
   useEffect(() => { setLang(appLang); }, [appLang]);
   const slideLang = resolveDeckLang(moduleId, lang);
+  const spokenLang = resolveNarrationLang(moduleId, lang);
   const languages = narration?.languages ?? [];
 
   const slides = useMemo(
@@ -86,11 +87,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // is a lesson.
   const [running, setRunning] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const narrationEnded = useRef(false);
 
   const current = slides[index];
   const total = slides.length;
   // Resolved up here, not after the early return below, because the play-through effects need it.
-  const audioForCurrent = current ? slideAudioUrl(moduleId, lang, current.slide) : null;
+  const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
 
   // STEP BY A DELTA, never to a computed absolute.
   //
@@ -123,6 +126,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // slide. If a browser refuses anyway, play-through switches itself off rather than leaving a
   // Stop button that stops nothing.
   useEffect(() => {
+    narrationEnded.current = false;
+    if (running && videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
     const el = audioRef.current;
     if (!el) return;
     el.pause();
@@ -167,7 +175,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [total]);
 
   const onNarrationEnded = useCallback(() => {
-    if (running) advance();
+    narrationEnded.current = true;
+    // Water's voice finishes before infiltration does. Wait for the chosen clip's real ended
+    // event, so buffering cannot make a wall-clock timer cut away from the teaching action.
+    if (running && (!videoRef.current || videoRef.current.ended)) advance();
+  }, [running, advance]);
+
+  const onAnimationEnded = useCallback(() => {
+    if (running && narrationEnded.current) advance();
   }, [running, advance]);
 
   // A SLIDE WITH NO NARRATION MUST NOT END THE LESSON.
@@ -182,9 +197,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const SILENT_SLIDE_MS = 7000;
   useEffect(() => {
     if (!running || audioForCurrent) return;
-    const t = setTimeout(advance, SILENT_SLIDE_MS);
+    const t = setTimeout(onNarrationEnded, SILENT_SLIDE_MS);
     return () => clearTimeout(t);
-  }, [running, audioForCurrent, advance]);
+  }, [running, audioForCurrent, onNarrationEnded]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -257,17 +272,19 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#1B1710', aspectRatio: '16 / 9' }}
+        style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#1B1710', aspectRatio: anim?.aspectRatio ?? '16 / 9' }}
       >
         {isPlaying && anim ? (
           <video
+            ref={videoRef}
             src={anim.video}
             poster={anim.poster}
             autoPlay
-            loop
+            loop={!running}
             muted
             playsInline
             controls
+            onEnded={onAnimationEnded}
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
           />
         ) : (
@@ -312,7 +329,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         // so saying "these slides are in English" across the whole module would be false for the
         // rest of the lesson and would make a finished lesson look unfinished.
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          This one slide is only in English. The spoken lesson is in your language.
+          This slide is in {langName(img.lang)}.
+        </p>
+      )}
+
+      {spokenLang && !spokenLang.exact && (
+        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          Narration is in {langName(spokenLang.lang)}. {langName(lang)} narration is not available for this module yet.
         </p>
       )}
 

@@ -1,0 +1,128 @@
+{
+  "method": "Full FFmpeg decode and 2 fps frame-hash diversity (hash values, not timestamped lines). A repeated still fails the same threshold. Visual QA separately samples each phase.",
+  "clips": [
+    {
+      "slide": 4,
+      "sha256": "a029794b0a815468bce4f53bb367d9266545552ee8752d37a23b85d9477eabd3",
+      "bytes": 881320,
+      "seconds": 16.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 32,
+      "distinct_frame_hashes": 32,
+      "path": "public/course-animations/water-harvesting/watch-04-swale-infiltration.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
+      "poster_sha256": "b1ebc8e122967c9278d95bd983b2eff6c3bc06f6ebc22509a40dc01e1092c5c6",
+      "source": {
+        "master": "Mzomoyethu - swale side profile v2.mp4",
+        "in_seconds": 0,
+        "out_seconds": 16
+      }
+    },
+    {
+      "slide": 7,
+      "sha256": "45a587d018f2e254c29e3f8c6ae1377450d63e0cf8d0b569eeee9da7a1bcaa7d",
+      "bytes": 2712641,
+      "seconds": 13.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 26,
+      "distinct_frame_hashes": 26,
+      "path": "public/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg",
+      "poster_sha256": "57b42457643526e9d80557ad701ca2ff6a81d6fcc548f383968f89b0bb0e6cd2",
+      "source": {
+        "master": "Mzomoyethu - guided site v3.mp4",
+        "in_seconds": 56,
+        "out_seconds": 69
+      }
+    },
+    {
+      "slide": 9,
+      "sha256": "f244324819af64bcfdc4d0a757f723111a6b21ae7da7582ea5c7dec7d75e1058",
+      "bytes": 172653,
+      "seconds": 16.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 32,
+      "distinct_frame_hashes": 19,
+      "path": "public/course-animations/water-harvesting/watch-09-vetiver-contour.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg",
+      "poster_sha256": "ce96aceccc884098860ae95f93e1907321281199160d4d69cdfd6e47cfe93bf9",
+      "source": {
+        "generator": "scripts/render-water-concepts.py",
+        "origin": "Antigravity QA Lab; reviewed and corrected locally"
+      }
+    },
+    {
+      "slide": 12,
+      "sha256": "3a3801888029d7f407dedbc4a257ea839e925a3a8c3d445f6123061d714d8ea9",
+      "bytes": 185495,
+      "seconds": 16.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 32,
+      "distinct_frame_hashes": 21,
+      "path": "public/course-animations/water-harvesting/watch-12-dam-spillway.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg",
+      "poster_sha256": "314ea64a51c6fcfd32f5005fe2462a10ab8f693c4db46b446c1c1fcfae7c6271",
+      "source": {
+        "generator": "scripts/render-water-concepts.py",
+        "origin": "Antigravity QA Lab; reviewed and corrected locally"
+      }
+    },
+    {
+      "slide": 16,
+      "sha256": "8ef1eb650ae5d2665c9a985e86745f5829b34f7e2fbdfe03993135617201842c",
+      "bytes": 88137,
+      "seconds": 17.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 34,
+      "distinct_frame_hashes": 33,
+      "path": "public/course-animations/water-harvesting/watch-16-first-flush-tank.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg",
+      "poster_sha256": "b325f5bc67922015c95f1d108209632dc2f108a4b50f7778ba4243e6301d8f24",
+      "source": {
+        "generator": "scripts/render-water-concepts.py",
+        "origin": "Antigravity QA Lab; reviewed and corrected locally"
+      }
+    },
+    {
+      "slide": 21,
+      "sha256": "09306e584ae38e3a2ef06a27a251bee5c63c7d28f3451d118038317318cf111a",
+      "bytes": 150159,
+      "seconds": 17.0,
+      "silent": true,
+      "codec": "h264/yuv420p",
+      "width": 824,
+      "height": 720,
+      "complete_decode": true,
+      "sampled_frames": 34,
+      "distinct_frame_hashes": 28,
+      "path": "public/course-animations/water-harvesting/watch-21-greywater-mulch.mp4",
+      "poster": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
+      "poster_sha256": "78a43c13030942c87148a1b3ccb878380500c24e5c755e216249d1149ecb18b6",
+      "source": {
+        "generator": "scripts/render-water-concepts.py",
+        "origin": "Antigravity QA Lab; reviewed and corrected locally"
+      }
+    }
+  ],
+  "review_scope": "Complete files decoded; motion hashes measured; each teaching phase visually inspected in sampled contact sheets. English labels only. No new isiZulu media published. Not an agronomic engineering design or fluent-language review."
+}

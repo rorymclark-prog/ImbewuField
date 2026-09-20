@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
 import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
-import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = join(process.cwd(), 'public');
@@ -96,6 +96,17 @@ test('one language, not both — packing both would double the download for nobo
   assert.ok(enAudio.length > 0 && zuAudio.length > 0);
   assert.ok(enAudio.every((e) => e.url.includes('/en/')), 'English pack must carry only English audio');
   assert.ok(zuAudio.every((e) => e.url.includes('/zu/')), 'isiZulu pack must carry only isiZulu audio');
+});
+
+test('a learner can hear the player’s fallback narration after downloading in another app language', () => {
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    for (const requested of ['en', 'zu', 'xh']) {
+      const spoken = resolveNarrationLang(moduleId, requested);
+      if (!spoken) continue;
+      const audio = offlinePack(moduleId, requested).entries.filter(e => e.kind === 'audio');
+      assert.deepEqual(audio.map(e => e.url), narration.tracks.map(t => trackUrl(moduleId, spoken.lang, t.slide)));
+    }
+  }
 });
 
 test('a pack carries whatever the player will actually show, including any fallback', () => {

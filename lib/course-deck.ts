@@ -14,7 +14,7 @@
 import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-audio';
 
 export interface DeckAnimation {
-  /** Wordless clip, audio stripped — narration plays over it. */
+  /** Silent clip — narration plays over it. Some clips contain labels in the deck language. */
   src: string;
   /**
    * A still from the clip, shown until the farmer asks for it.
@@ -29,6 +29,8 @@ export interface DeckAnimation {
   /** Bytes, shown on the play button so the choice is an informed one. */
   bytes: number;
   seconds: number;
+  /** Preserve a teaching diagram's full frame without shrinking it into a widescreen box. */
+  aspectRatio?: number;
   /** Exact text-labelled variants; wordless clips share their base asset. */
   byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
 }
@@ -164,7 +166,22 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
   }
 };
 
+// English-labelled Water clips: two Mzomoyethu extracts and four concept diagrams.
+// isiZulu slides and narration remain in review; the player discloses its English fallback.
+const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'watch-04-swale-infiltration', poster: 'watch-04-swale-infiltration', bytes: 881320, aspectRatio: 824 / 720, seconds: 16 },
+  7: { src: 'watch-07-swale-overflow-pond', poster: 'watch-07-swale-overflow-pond', bytes: 2712641, aspectRatio: 824 / 720, seconds: 13 },
+  9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 172653, aspectRatio: 824 / 720, seconds: 16 },
+  12: { src: 'watch-12-dam-spillway', poster: 'watch-12-dam-spillway', bytes: 185495, aspectRatio: 824 / 720, seconds: 16 },
+  16: { src: 'watch-16-first-flush-tank', poster: 'watch-16-first-flush-tank', bytes: 88137, aspectRatio: 824 / 720, seconds: 17 },
+  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 150159, aspectRatio: 824 / 720, seconds: 17 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'water-harvesting': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
+  },
   'plant-guilds': {
     slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
@@ -243,7 +260,7 @@ export function slideImageFor(
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
-export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number } | null {
+export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
   if (!base) return null;
   const a = base.byLang?.[lang] ?? base;
@@ -252,6 +269,7 @@ export function animationUrls(moduleId: string, slide: number, lang = 'en'): { v
     poster: `/course-animations/${moduleId}/posters/${a.poster}.jpg`,
     bytes: a.bytes,
     seconds: a.seconds,
+    ...(a.aspectRatio ? { aspectRatio: a.aspectRatio } : {}),
   };
 }
 
