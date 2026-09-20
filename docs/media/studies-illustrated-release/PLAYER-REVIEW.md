@@ -21,3 +21,10 @@ The deployed service worker controlled the page. Market download stored 51 files
 With CDP network emulation set offline, a full page reload successfully loaded Studies, the downloaded image and course controls. Market slide 1 narration played (15.696 s, readyState 4). Slide 15 then played its downloaded Flow video (8 s) and narration (23.664 s), both advancing without media errors. The visible Offline indicator and rendered scene were inspected. Networking was restored afterwards. This verifies a new page load in the existing browser session; it does not claim every phone/browser has been physically restarted offline.
 
 Final code checks including cache migration: TypeScript clean; 3,636 tests, 3,635 pass, zero failures, one existing TODO. GitHub push and PR test/rules jobs all succeeded for 3510d4c. Preview deploy succeeded. Production publication and post-deploy checks are the remaining release step.
+
+
+## Failure/recovery check
+
+A blocked narration request exposed silent failure in the old player. The revised player shows a readable alert with retry and transcript guidance. Blocking the intro slide-1 MP3 locally reproduced the alert; removing the block and pressing Play lesson started audio (readyState 4) and cleared it. Blocking the Earth Care Flow MP4 returned the poster and an animation retry message. Narration continued; seeking near its end in this developer test confirmed that the failed video no longer traps the deck on that slide. After restoring requests, video and narration both played, and Stop paused both. All request-blocking and offline emulation were restored afterwards.
+
+The final Seeds written-text check also aligned two inherited lesson bodies and quiz explanations with the already-corrected narration; see FACT-CHECK.md. These changes do not alter asset URLs or require a further media-cache migration.
