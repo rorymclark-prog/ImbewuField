@@ -33,10 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '20 September 2026', sha: '8b91cba', changes: [
+  { when: '20 September 2026', sha: '9b8008c', changes: [
     'Studies now has richer lesson pictures and eight new scenes you can watch.',
     'Read the full slide narration below each lesson picture.',
-    'Water, soil, growing, livestock and market guidance has clearer local checks.',
+    'Water, soil, seeds, growing and animal guidance has clearer local checks.',
     'On phones, Ask Lima sits above Studies so it no longer covers lesson text.',
     'Download updated study modules again to keep the corrected lessons offline.',
   ] },
