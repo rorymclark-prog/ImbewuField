@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 675 files, 202.5 MB total.
+// 701 files, 205.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg': 94537,
@@ -69,6 +69,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/seeds-sovereignty/posters/seed-selecting-parents.jpg': 52099,
   '/course-animations/seeds-sovereignty/seed-dry-processing.mp4': 311237,
   '/course-animations/seeds-sovereignty/seed-selecting-parents.mp4': 248394,
+  '/course-animations/soil-health/posters/watch-05-living-soil.jpg': 122455,
+  '/course-animations/soil-health/posters/watch-10-compost-heap.jpg': 94343,
+  '/course-animations/soil-health/posters/watch-14-mulch-protection.jpg': 97925,
+  '/course-animations/soil-health/watch-05-living-soil.mp4': 124275,
+  '/course-animations/soil-health/watch-10-compost-heap.mp4': 119193,
+  '/course-animations/soil-health/watch-14-mulch-protection.mp4': 369446,
   '/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg': 92145,
   '/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg': 170083,
   '/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg': 66478,
@@ -624,6 +630,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/seeds-sovereignty/zu/slide-22.jpg': 153749,
   '/course-decks/seeds-sovereignty/zu/slide-23.jpg': 66361,
   '/course-decks/seeds-sovereignty/zu/slide-24.jpg': 55527,
+  '/course-decks/soil-health/en/slide-01.jpg': 195636,
+  '/course-decks/soil-health/en/slide-02.jpg': 117437,
+  '/course-decks/soil-health/en/slide-03.jpg': 105487,
+  '/course-decks/soil-health/en/slide-04.jpg': 106241,
+  '/course-decks/soil-health/en/slide-05.jpg': 167495,
+  '/course-decks/soil-health/en/slide-06.jpg': 109958,
+  '/course-decks/soil-health/en/slide-07.jpg': 108913,
+  '/course-decks/soil-health/en/slide-08.jpg': 114341,
+  '/course-decks/soil-health/en/slide-09.jpg': 111143,
+  '/course-decks/soil-health/en/slide-10.jpg': 149377,
+  '/course-decks/soil-health/en/slide-11.jpg': 114612,
+  '/course-decks/soil-health/en/slide-12.jpg': 114687,
+  '/course-decks/soil-health/en/slide-13.jpg': 114377,
+  '/course-decks/soil-health/en/slide-14.jpg': 146409,
+  '/course-decks/soil-health/en/slide-15.jpg': 116252,
+  '/course-decks/soil-health/en/slide-16.jpg': 123447,
+  '/course-decks/soil-health/en/slide-17.jpg': 113859,
+  '/course-decks/soil-health/en/slide-18.jpg': 110728,
+  '/course-decks/soil-health/en/slide-19.jpg': 111684,
+  '/course-decks/soil-health/en/slide-20.jpg': 108315,
   '/course-decks/water-harvesting/en/slide-01.jpg': 252277,
   '/course-decks/water-harvesting/en/slide-02.jpg': 103379,
   '/course-decks/water-harvesting/en/slide-03.jpg': 101794,

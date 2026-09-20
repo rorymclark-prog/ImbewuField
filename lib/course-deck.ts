@@ -192,7 +192,18 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
   17: { src: 'watch-17-site-map', poster: 'watch-17-site-map', bytes: 116306, seconds: 14 },
 };
 
+// Each Soil Health Watch scene follows its existing narration.
+const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'watch-05-living-soil', poster: 'watch-05-living-soil', bytes: 124275, seconds: 14 },
+  10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14 },
+  14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'soil-health': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
+  },
   'reading-landscape': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
