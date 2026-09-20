@@ -792,8 +792,11 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Look at roots, soil structure and water movement as well as visible soil life."
       ],
       "5": [
-        "Look at colour, structure and channels in these two soil examples.",
-        "Use several clues together. A picture or a single worm count cannot diagnose soil health."
+        "Look closely at these two soil examples.",
+        "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+        "Look at the roots and the spaces around them.",
+        "Look at the surface cover. Loose mulch covers one example.",
+        "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
       ],
       "6": [
         "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",

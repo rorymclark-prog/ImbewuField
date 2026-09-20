@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'ecb917a', changes: [
+    'Soil Health now guides you through close-ups of soil structure, roots and surface cover.',
+    'The new illustrated soil tour has clear labels and matching narration.',
+    'Save Soil Health again to use its updated picture and audio offline.',
+  ] },
   { when: '20 September 2026', sha: 'c9194d7', changes: [
     'Food Forest now guides you through seven planting layers in a detailed illustrated garden.',
     'Each highlighted layer has a clear label and matching narration.',

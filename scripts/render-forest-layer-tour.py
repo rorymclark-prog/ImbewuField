@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Render a narrated, guided tour of the reviewed forest cutaway.
+"""Render a narrated, guided tour of reviewed teaching artwork.
 
 The earlier clip reduced plants to green ellipses. Keep the detailed artwork intact;
 camera movement and a restrained focus light direct attention without inventing growth.
-Word-boundary timings keep each label beside the plant the learner is hearing about.
+Word-boundary timings keep each label beside the feature the learner is hearing about.
+The default remains the forest tour; --art-dir selects another authored storyboard.
 """
 import argparse
 import hashlib
@@ -23,17 +24,18 @@ def ease(value):
     return value * value * (3 - 2 * value)
 
 
-def render(output):
-    cfg = json.loads((ART / 'storyboard.json').read_text())
-    timing = json.loads((ART / 'timing.json').read_text())
+def render(output, asset_dir=ART):
+    cfg = json.loads((asset_dir / 'storyboard.json').read_text())
+    timing = json.loads((asset_dir / 'timing.json').read_text())
     spoken = '\n\n'.join(s['narration'] for s in cfg['scenes'])
     assert hashlib.sha256(spoken.encode()).hexdigest() == timing['source_sha256']
-    assert hashlib.sha256((ART / 'narration.mp3').read_bytes()).hexdigest() == timing['audio_sha256']
+    assert hashlib.sha256((asset_dir / 'narration.mp3').read_bytes()).hexdigest() == timing['audio_sha256']
     assert timing['text_match'] and timing['full_decode'] == 'pass'
-    assert len(timing['starts']) == len(cfg['scenes']) == 9
+    assert len(timing['starts']) == len(cfg['scenes']) >= 3
+    steps = len(cfg['scenes']) - 2
     w, ah, fh, fps = cfg['width'], cfg['artHeight'], cfg['footerHeight'], cfg['fps']
     height = ah + fh
-    source = Image.open(ART / cfg['source']).convert('RGB').resize((w, ah), Image.Resampling.LANCZOS)
+    source = Image.open(asset_dir / cfg['source']).convert('RGB').resize((w, ah), Image.Resampling.LANCZOS)
     font = ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf', 76)
     small = ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf', 31)
     count_font = ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf', 45)
@@ -53,7 +55,7 @@ def render(output):
         if not scene['focus']:
             return (w/2, ah/2, 1)
         x, y, rx, ry = scene['focus']
-        zoom = 1.30 if scene['id'] == 'canopy' else 1.65
+        zoom = scene.get('zoom', 1.30 if scene['id'] == 'canopy' else 1.65)
         return (x*w, y*ah, zoom)
 
     def frame_at(t):
@@ -74,10 +76,10 @@ def render(output):
         active0 = 0 if not cfg['scenes'][previous]['focus'] else 1
         active1 = 0 if not scene['focus'] else 1
         active = active0+(active1-active0)*transition
-        # The background remains recognisable, preserving the relationship between layers.
+        # The background remains recognisable, preserving context around the close-up.
         shade = focus.point(lambda p: round((1-p/255)*76*active))
         art = Image.composite(Image.new('RGB', (w, ah), '#102d21'), art, shade)
-        # A restrained teaching outline makes the named plant unambiguous on a phone.
+        # A restrained teaching outline makes the named feature unambiguous on a phone.
         if scene['focus'] and transition > .5:
             x, y, rx, ry = scene['focus']
             ring = Image.new('RGBA', (w, ah))
@@ -91,16 +93,16 @@ def render(output):
         out.paste(art, (0, 0))
         draw = ImageDraw.Draw(out)
         draw.line((0, ah, w, ah), fill='#b9b677', width=3)
-        draw.text((42, ah+19), 'READ THE FOOD FOREST', font=small, fill='#cbd6b4')
+        draw.text((42, ah+19), cfg.get('eyebrow', 'READ THE FOOD FOREST'), font=small, fill='#cbd6b4')
         draw.text((40, ah+60), scene['label'], font=font, fill='#fffdf5')
-        if 0 < idx < 8:
-            draw.text((w-164, ah+78), f'{idx} / 7', font=count_font, fill='#e5d4a0')
+        if 0 < idx <= steps:
+            draw.text((w-164, ah+78), f'{idx} / {steps}', font=count_font, fill='#e5d4a0')
         else:
             draw.text((w-350, ah+88), 'CONCEPT CUTAWAY', font=small, fill='#cbd6b4')
-        for n in range(7):
-            x = 43+n*((w-86)/7)
-            end = x+(w-114)/7
-            fill = '#dcca8c' if idx == 8 or n+1 <= idx else '#476354'
+        for n in range(steps):
+            x = 43+n*((w-86)/steps)
+            end = x+(w-114)/steps
+            fill = '#dcca8c' if idx == steps+1 or n+1 <= idx else '#476354'
             draw.rounded_rectangle((x, height-27, end, height-18), radius=4, fill=fill)
         return out
 
@@ -118,23 +120,25 @@ def render(output):
     poster = output.parent / 'posters' / output.with_suffix('.jpg').name
     poster.parent.mkdir(parents=True, exist_ok=True)
     frame_at(0).save(poster, quality=93)
-    contact = Image.new('RGB', (1200, 3*275), '#143a2b')
+    contact = Image.new('RGB', (1200, math.ceil(len(starts)/3)*275), '#143a2b')
     for i, start in enumerate(starts):
         sample = min(seconds-1/fps, start+1.3)
-        frame_at(sample).resize((400,275), Image.Resampling.LANCZOS).save(ART / f'review-{i:02}.jpg', quality=92)
-        contact.paste(Image.open(ART / f'review-{i:02}.jpg'), ((i%3)*400,(i//3)*275))
-    contact.save(ART / 'review-contact.jpg', quality=93)
+        frame_at(sample).resize((400,275), Image.Resampling.LANCZOS).save(asset_dir / f'review-{i:02}.jpg', quality=92)
+        contact.paste(Image.open(asset_dir / f'review-{i:02}.jpg'), ((i%3)*400,(i//3)*275))
+    contact.save(asset_dir / 'review-contact.jpg', quality=93)
     meta = {'file':str(output.relative_to(ROOT)), 'bytes':output.stat().st_size,
             'sha256':hashlib.sha256(output.read_bytes()).hexdigest(), 'seconds':seconds,
             'width':w, 'height':height, 'fps':fps, 'frames':frames,
-            'source_sha256':hashlib.sha256((ART/cfg['source']).read_bytes()).hexdigest(),
+            'source_sha256':hashlib.sha256((asset_dir/cfg['source']).read_bytes()).hexdigest(),
             'narration_seconds':timing['seconds'], 'phase_starts':starts,
-            'scope':'Guided illustrated cutaway. No simulated plant growth or measured planting dimensions.'}
-    (ART / 'render.json').write_text(json.dumps(meta, indent=2)+'\n')
+            'scope':cfg.get('scope', 'Guided illustrated cutaway. No simulated plant growth or measured planting dimensions.')}
+    (asset_dir / 'render.json').write_text(json.dumps(meta, indent=2)+'\n')
     print(json.dumps(meta, indent=2))
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--out', type=Path, default=ROOT/'public/course-animations/food-forest/tour-seven-layers.mp4')
-    render(parser.parse_args().out)
+    parser.add_argument('--art-dir', type=Path, default=ART)
+    args = parser.parse_args()
+    render(args.out, args.art_dir)

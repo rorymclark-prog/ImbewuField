@@ -38,11 +38,17 @@ Look at roots, soil structure and water movement as well as visible soil life.
 
 ---
 
-**Slide 5 — Watch: Look at the Soil**
+**Slide 5 — Watch: Read Your Soil**
 
-Look at colour, structure and channels in these two soil examples.
+Look closely at these two soil examples.
 
-Use several clues together. A picture or a single worm count cannot diagnose soil health.
+First, look at soil structure. In the field, feel how a moist piece breaks apart.
+
+Look at the roots and the spaces around them.
+
+Look at the surface cover. Loose mulch covers one example.
+
+Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground.
 
 ---
 
