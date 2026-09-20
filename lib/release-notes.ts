@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'bf94eca', changes: [
+    'Studies now has richer lesson pictures and eight new scenes you can watch.',
+    'Read the full slide narration below each lesson picture.',
+    'Water, soil, growing, livestock and market guidance has clearer local checks.',
+    'On phones, Ask Lima sits above Studies so it no longer covers lesson text.',
+  ] },
   { when: '20 September 2026', sha: '1a1b532', changes: [
     'Market Gardening now has 20 English slides and three teaching animations.',
     'Watch harvest records, surplus routes and growers sharing resources.',
