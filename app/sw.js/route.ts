@@ -330,6 +330,23 @@ async function migrateChickenForagingMedia() {
   await cache.put(marker, new Response('Foraging scene and matching narration'));
 }
 
+// This tour names each layer as it is highlighted. Old speech would label the wrong
+// plant, so replace just this scene's saved speech and still, once.
+async function migrateForestLayerMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.forest-layers-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/food-forest/en/slide-05.mp3',
+    '/course-audio/food-forest/en/full.mp3',
+    '/course-decks/food-forest/en/slide-05.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Forest layer tour and matching narration'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -345,7 +362,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

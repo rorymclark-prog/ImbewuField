@@ -3,14 +3,16 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 815 files, 304.7 MB total.
+// 817 files, 313.4 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
   '/course-animations/food-forest/posters/flow-sheet-mulching.jpg': 474783,
+  '/course-animations/food-forest/posters/tour-seven-layers.jpg': 839420,
   '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 141628,
   '/course-animations/food-forest/posters/watch-10-climate-match.jpg': 152349,
   '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg': 143974,
+  '/course-animations/food-forest/tour-seven-layers.mp4': 7425984,
   '/course-animations/food-forest/watch-05-seven-layers.mp4': 222959,
   '/course-animations/food-forest/watch-10-climate-match.mp4': 168094,
   '/course-animations/food-forest/watch-15-forest-sequence.mp4': 202241,
@@ -123,12 +125,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/water-harvesting/watch-12-dam-spillway.mp4': 185495,
   '/course-animations/water-harvesting/watch-16-first-flush-tank.mp4': 85731,
   '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4': 146959,
-  '/course-audio/food-forest/en/full.mp3': 2428508,
+  '/course-audio/food-forest/en/full.mp3': 2531612,
   '/course-audio/food-forest/en/slide-01.mp3': 95184,
   '/course-audio/food-forest/en/slide-02.mp3': 99360,
   '/course-audio/food-forest/en/slide-03.mp3': 92304,
   '/course-audio/food-forest/en/slide-04.mp3': 110592,
-  '/course-audio/food-forest/en/slide-05.mp3': 71424,
+  '/course-audio/food-forest/en/slide-05.mp3': 174528,
   '/course-audio/food-forest/en/slide-06.mp3': 114336,
   '/course-audio/food-forest/en/slide-07.mp3': 147600,
   '/course-audio/food-forest/en/slide-08.mp3': 129024,
@@ -454,7 +456,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/en/slide-02.jpg': 106214,
   '/course-decks/food-forest/en/slide-03.jpg': 122690,
   '/course-decks/food-forest/en/slide-04.jpg': 140698,
-  '/course-decks/food-forest/en/slide-05.jpg': 219052,
+  '/course-decks/food-forest/en/slide-05.jpg': 839420,
   '/course-decks/food-forest/en/slide-06.jpg': 447141,
   '/course-decks/food-forest/en/slide-07.jpg': 142318,
   '/course-decks/food-forest/en/slide-08.jpg': 1077897,

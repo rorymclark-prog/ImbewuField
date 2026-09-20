@@ -42,13 +42,25 @@ The result is not one crop in one row, but many useful layers growing together.
 
 ---
 
-**Slide 5 — Watch: The Seven Layers Working Together**
+**Slide 5 — Watch: Read the Seven Planting Layers**
 
-Read the planting downwards, from the tall canopy to the roots.
+Find seven planting layers.
 
-Climbers use the open vertical space between the layers.
+Tall trees form the canopy.
 
-One piece of ground, working at every level.
+Smaller trees grow below it.
+
+Then look for woody shrubs.
+
+Herbaceous plants have soft stems.
+
+Ground cover spreads across the surface.
+
+Root crops grow below the surface.
+
+Climbers use suitable supports.
+
+These are planning layers, not fixed height bands. Choose plants and spacing for your site.
 
 ---
 

@@ -72,3 +72,37 @@ test('the chicken replacement updates saved speech once without discarding the r
   assert.equal(await rows.get(changed[0])!.text(), 'corrected narration');
   assert.doesNotMatch(body, /\bfetch\(/, 'a migration must not silently spend a learner’s airtime');
 });
+
+test('the forest tour replaces old timed speech once and preserves other downloaded scenes', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateForestLayerMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateForestLayerMedia\)/);
+  const changed = [
+    '/course-audio/food-forest/en/slide-05.mp3',
+    '/course-audio/food-forest/en/full.mp3',
+    '/course-decks/food-forest/en/slide-05.jpg',
+  ];
+  const keep = [
+    '/course-audio/food-forest/en/slide-06.mp3',
+    '/course-decks/food-forest/en/slide-06.jpg',
+    '/course-animations/food-forest/tour-seven-layers.mp4',
+    '/course-animations/small-livestock/flow-hens-foraging.mp4',
+    '/course-audio/plant-guilds/en/slide-05.mp3',
+  ];
+  const rows = new Map([...changed, ...keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(key => new Request('https://example.com' + key)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=1'), true, path);
+  rows.set(changed[0], new Response('timed layer narration'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0])!.text(), 'timed layer narration');
+  assert.doesNotMatch(body, /\bfetch\(/, 'updating a lesson must not silently spend a learner’s airtime');
+});
