@@ -10,13 +10,11 @@ The aim is a farm that feeds the household and works as a small, clear economy.
 
 **Slide 2 — Why This Matters**
 
-Most smallholders undersell what their farms produce because they do not write it down.
+A harvest can feed the household, be sold, be shared, or be lost.
 
-A tomato, an egg, or a bundle of morogo can go to the family, a customer, a neighbour, or compost.
+Recording these different uses helps you see what the farm produces and what reaches customers.
 
-When you record each one, you can see what your land and labour are really doing.
-
-That clear picture helps you protect household food and make better business choices.
+Use that information to protect household food and make better business decisions.
 
 ---
 
@@ -66,25 +64,21 @@ The record also shows which months leave the household buying food.
 
 **Slide 7 — Find the True Cost**
 
-Before you set a selling price, add the real costs.
+Before setting a price, record production, packing and selling costs, including labour and transport.
 
-Include seeds, water, compost, and an honest hourly rate for your own labour.
+Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.
 
-If tomatoes cost R18/kg to produce, selling them at R15/kg loses money on every kilogram.
-
-Raise the price to at least R18/kg, cut input costs, or move labour to better crops.
+Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.
 
 ---
 
-**Slide 8 — Plant for the Food Gap**
+**Slide 8 — Plan for the Food Gap**
 
-A record can show a food gap before the next season begins.
+Use your record to find when household food runs short.
 
-If vegetables are short in June and July, plan cold-tolerant winter crops in March-April.
+Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.
 
-This is not guessing. The dates come from your own farm record.
-
-Planting for the gap can help the household eat more of its own food.
+A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.
 
 ---
 
@@ -98,49 +92,41 @@ The arrows show each route.
 
 **Slide 10 — Know Your Customer**
 
-Know your customer before you sell.
+Ask what the customer needs: product, quantity, quality, delivery and payment date.
 
-A formal farmers’ market may pay a premium price, but it demands registration and a consistent weekly supply.
+Compare market fees, transport, packing and unsold produce as well as the selling price.
 
-An informal market or taxi-rank stall pays less, but asks nothing in return.
-
-A school or clinic may pay below retail and give a stable order.
+Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.
 
 ---
 
-**Slide 11 — Keep More Through Direct Selling**
+**Slide 11 — Count the Work of Direct Selling**
 
-Direct selling can keep the full price with you.
+Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.
 
-Door-to-door sales, a WhatsApp order group, and weekly deliveries remove the middleman.
+A box scheme supplies a regular selection to agreed customers.
 
-A box scheme works differently: customers subscribe to a regular vegetable box.
-
-Their commitment gives you predictable income and helps you plan production around real demand.
+Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.
 
 ---
 
-**Slide 12 — Plan Around Box Customers**
+**Slide 12 — Plan Around Real Orders**
 
-A box scheme can suit a garden of 200 to 500m².
+Start from what you can reliably supply and what customers want.
 
-Ten regular box customers can provide meaningful monthly income.
+Check the costs and household food needs before promising regular boxes.
 
-The important value is not only the price per kilogram.
-
-You know in advance what customers expect, so you grow for real demand instead of growing speculatively.
+Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.
 
 ---
 
 **Slide 13 — Match the Channel to Your Supply**
 
-If production changes from week to week, do not promise a fixed box.
+If production changes from week to week, avoid promising a fixed delivery you cannot supply.
 
-Sell what you have through an informal market or to neighbours with no fixed commitment.
+Offer the surplus you have and agree clear terms with customers.
 
-Choose a price that covers the true cost of production.
-
-Trust through farm visits and an honest reputation matters more than expensive organic certification for most smallholders.
+Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.
 
 ---
 
@@ -156,13 +142,11 @@ Separate growers become a stronger local food network, with each household contr
 
 **Slide 15 — Save Seed Together**
 
-A seed swap between five neighbours can turn five households’ seed diversity into twenty-five.
+Neighbours can share different varieties and the work of saving seed.
 
-If five smallholders each save three tomato varieties alone, or each saves two varieties for the group, collective saving gives better seed.
+Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.
 
-Specialising means more attention to isolation, selection, and storage.
-
-The whole group receives stronger seed without every farmer doing every task alone.
+Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.
 
 ---
 
@@ -176,27 +160,23 @@ Shared use spreads the value across the group and helps each farm do work it cou
 
 ---
 
-**Slide 17 — Sell Locally to Reduce Loss**
+**Slide 17 — Reduce Loss Between Harvest and Sale**
 
-About a third of fresh fruit and vegetables grown by smallholders is lost between harvest and sale.
+Handle produce gently and keep suitable shade, packaging and storage through delivery.
 
-Poor transport, packaging, and storage delays cause much of this loss.
+A nearby buyer may reduce the journey, but losses and selling costs still need measuring.
 
-Selling within walking distance removes most of it. If a formal market is 60km away, moving 50kg of beans sold at R8/kg can cost R150.
-
-A WhatsApp group or community market removes that transport cost and may reach R10/kg.
+Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.
 
 ---
 
-**Slide 18 — Share Skills as Well as Things**
+**Slide 18 — Share Skills and Check Results**
 
-A farmer who has mastered grafting or managed fungal disease in humid KZN summers can teach ten neighbours.
+Neighbours can demonstrate useful skills and compare what happened on their own farms.
 
-That lesson may change ten farms, not just one.
+Record the method, conditions and result so others can judge whether it may suit their land.
 
-Monthly skills swaps build knowledge more durably than a single expert consultation.
-
-Document what you learn, then pass it on so the knowledge stays in the community.
+Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.
 
 ---
 
@@ -214,10 +194,8 @@ At the end of one season, identify a crop that returns well and a month when the
 
 **Slide 20 — Field Action: Use the Record**
 
-Choose one real selling decision from your farm.
+Choose one real decision from your farm record.
 
-If a product costs more to produce than its selling price, raise the price, cut input costs, or shift labour to a better crop.
+Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.
 
-If a food gap appears in June and July, plan cold-tolerant winter crops in March-April.
-
-Then talk with neighbours about one local sale, seed swap, tool share, or skills swap.
+Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Record responsibilities and review what happens.

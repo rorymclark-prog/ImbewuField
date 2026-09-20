@@ -1,4 +1,7 @@
+REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 3, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
+
 **Ikhasi 1 — Ukuklama I-Food Forest (Slide 1 — Food Forest Design)**
+
 
 Yakha i-food forest ephilayo, ehlela ukudla kusukela ku-canopy ende kuye ezitshalweni zezimpande.
 

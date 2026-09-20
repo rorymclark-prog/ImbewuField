@@ -138,7 +138,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants' },
       { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope' },
       { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map' },
-      { slide: 14, lesson: 'reading-landscape-l3', title: 'Frost Flows Downhill' },
+      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Flows Downhill' },
       { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth' },
       { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map' },
       { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have' },
@@ -150,7 +150,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'water-harvesting': {
     languages: ['en'],
-    // 24 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
+    // 24 slides, corrected and re-recorded 2026-09-20 with en-ZA-LukeNeural. Verified by
     // import-course-audio: every clip matched its script block.
     // No "Why This Matters" slide here: slide 2 is Learning Outcomes covering all four lessons, and
     // slide 24 "Check Your Work" is the field-action self-check. Both sit at module level.
@@ -162,19 +162,19 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 5,  lesson: 'water-harvesting-l1', title: 'Plant on the Downhill Berm' },
       { slide: 6,  lesson: 'water-harvesting-l1', title: 'Storms Need a Safe Overflow' },
       { slide: 7,  lesson: 'water-harvesting-l1', title: 'Watch: The Overflow Point' },
-      { slide: 8,  lesson: 'water-harvesting-l1', title: 'Know When Swales Fit the Slope' },
-      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Vetiver Takes Over' },
+      { slide: 8,  lesson: 'water-harvesting-l1', title: 'Check the Site Before Digging' },
+      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Roots Help Hold Soil' },
       { slide: 10, lesson: 'water-harvesting-l2', title: 'Store Rain for the Dry Season' },
       { slide: 11, lesson: 'water-harvesting-l2', title: 'Design the Spillway Before the Wall' },
       { slide: 12, lesson: 'water-harvesting-l2', title: 'Watch: Dam and Spillway' },
-      { slide: 13, lesson: 'water-harvesting-l2', title: 'Turn a Dam into a Working Ecosystem' },
+      { slide: 13, lesson: 'water-harvesting-l2', title: 'Care for the Dam and Its Banks' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
       { slide: 16, lesson: 'water-harvesting-l3', title: 'Watch: First Flush to Tank' },
-      { slide: 17, lesson: 'water-harvesting-l3', title: 'Match Tank Size to the Dry Season' },
+      { slide: 17, lesson: 'water-harvesting-l3', title: 'Match Tank Size to Water Demand' },
       { slide: 18, lesson: 'water-harvesting-l3', title: 'Keep Stored Water Protected' },
-      { slide: 19, lesson: 'water-harvesting-l4', title: 'Greywater Is Washwater, Not Toilet Water' },
-      { slide: 20, lesson: 'water-harvesting-l4', title: 'Keep Greywater Safe for Soil' },
+      { slide: 19, lesson: 'water-harvesting-l4', title: 'Greywater Is Used Washwater' },
+      { slide: 20, lesson: 'water-harvesting-l4', title: 'Keep Greywater Away from People and Food' },
       { slide: 21, lesson: 'water-harvesting-l4', title: 'Watch: Greywater Under Mulch' },
       { slide: 22, lesson: 'water-harvesting-l4', title: 'Use Greywater Only Where It Is Safe' },
       { slide: 23, lesson: null,                  title: 'Field Assignment' },
@@ -183,26 +183,26 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'soil-health': {
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
+    // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     tracks: [
       { slide: 1,  lesson: null,             title: 'Soil Health & Composting' },
       { slide: 2,  lesson: null,             title: 'Why This Matters' },
       { slide: 3,  lesson: null,             title: 'Learning Outcomes' },
       { slide: 4,  lesson: 'soil-health-l1', title: 'Soil Is Alive' },
       { slide: 5,  lesson: 'soil-health-l1', title: 'Watch: Look at the Soil' },
-      { slide: 6,  lesson: 'soil-health-l1', title: 'Test Your Soil with a Jar' },
-      { slide: 7,  lesson: 'soil-health-l1', title: 'Read the Jar Layers' },
-      { slide: 8,  lesson: 'soil-health-l1', title: 'Degraded Soil Can Recover' },
+      { slide: 6,  lesson: 'soil-health-l1', title: 'Explore Soil Texture with a Jar' },
+      { slide: 7,  lesson: 'soil-health-l1', title: 'Read the Jar Carefully' },
+      { slide: 8,  lesson: 'soil-health-l1', title: 'Investigate Before You Treat' },
       { slide: 9,  lesson: 'soil-health-l2', title: 'Compost Feeds the Soil' },
       { slide: 10, lesson: 'soil-health-l2', title: 'Watch: Build the Compost Heap' },
       { slide: 11, lesson: 'soil-health-l2', title: 'Balance Browns and Greens' },
-      { slide: 12, lesson: 'soil-health-l2', title: 'Keep the Compost Safe' },
-      { slide: 13, lesson: 'soil-health-l2', title: 'Keep Wattle Pods Out' },
+      { slide: 12, lesson: 'soil-health-l2', title: 'Heat Alone Is Not a Safety Check' },
+      { slide: 13, lesson: 'soil-health-l2', title: 'Keep Seed Pods and Contaminants Out' },
       { slide: 14, lesson: 'soil-health-l3', title: 'Watch: Bare Soil and Mulch' },
       { slide: 15, lesson: 'soil-health-l3', title: 'Mulch Protects the Ground' },
       { slide: 16, lesson: 'soil-health-l3', title: 'Cover Crops Between Seasons' },
-      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Farms Make Root Feed' },
+      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Castings and Liquid Drainage' },
       { slide: 18, lesson: 'soil-health-l3', title: 'Protect Soil All Year' },
       { slide: 19, lesson: null,             title: 'Field Assignment' },
       { slide: 20, lesson: null,             title: 'Field Action' },
@@ -210,8 +210,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'vegetables-staples': {
     languages: ['en'],
-    // 18 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
+    // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     tracks: [
       { slide: 1,  lesson: null,                    title: 'Vegetables and Staple Crops' },
       { slide: 2,  lesson: null,                    title: 'Why This Matters' },
@@ -650,10 +650,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'food-forest': {
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
-    // Slide 8 reads back l1's closing lines about the canopy closing by year three to five, so it
-    // belongs to the layers lesson — l3's establishment sequence only opens at slide 14.
+    // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
+    // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     tracks: [
       { slide: 1,  lesson: null,             title: 'Food Forest Design' },
       { slide: 2,  lesson: null,             title: 'Why This Matters' },
@@ -661,26 +659,26 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 4,  lesson: 'food-forest-l1', title: 'The Forest Uses Every Layer' },
       { slide: 5,  lesson: 'food-forest-l1', title: 'Watch: The Seven Layers Working Together' },
       { slide: 6,  lesson: 'food-forest-l1', title: 'The Seven Layers' },
-      { slide: 7,  lesson: 'food-forest-l1', title: 'A Highveld Example' },
-      { slide: 8,  lesson: 'food-forest-l1', title: 'From Establishment to Self-Care' },
-      { slide: 9,  lesson: 'food-forest-l2', title: 'Choose for Your Region' },
+      { slide: 7,  lesson: 'food-forest-l1', title: 'Read a Layered Planting Example' },
+      { slide: 8,  lesson: 'food-forest-l1', title: 'Care Changes as Plants Grow' },
+      { slide: 9,  lesson: 'food-forest-l2', title: 'Choose for Your Site' },
       { slide: 10, lesson: 'food-forest-l2', title: 'Watch: Match the Species to the Climate' },
-      { slide: 11, lesson: 'food-forest-l2', title: 'Highveld Food Forest Choices' },
-      { slide: 12, lesson: 'food-forest-l2', title: 'KZN Coast, Lowveld, and Limpopo' },
-      { slide: 13, lesson: 'food-forest-l2', title: 'Indigenous Species Build the Ecosystem' },
-      { slide: 14, lesson: 'food-forest-l3', title: 'Plant in Sequence' },
-      { slide: 15, lesson: 'food-forest-l3', title: 'Watch: From Bare Ground to Food Forest' },
-      { slide: 16, lesson: 'food-forest-l3', title: 'Year One on a 500m² Plot' },
-      { slide: 17, lesson: 'food-forest-l3', title: 'Years Two to Four' },
-      { slide: 18, lesson: 'food-forest-l3', title: 'Plant With the Rain' },
+      { slide: 11, lesson: 'food-forest-l2', title: 'Check the Highveld Examples' },
+      { slide: 12, lesson: 'food-forest-l2', title: 'Check the Warm-Region Examples' },
+      { slide: 13, lesson: 'food-forest-l2', title: 'Include Locally Appropriate Indigenous Plants' },
+      { slide: 14, lesson: 'food-forest-l3', title: 'Plan the Sequence for the Site' },
+      { slide: 15, lesson: 'food-forest-l3', title: 'Watch: Establishment in Stages' },
+      { slide: 16, lesson: 'food-forest-l3', title: 'Prepare a Manageable First Area' },
+      { slide: 17, lesson: 'food-forest-l3', title: 'Adjust as the Trees Grow' },
+      { slide: 18, lesson: 'food-forest-l3', title: 'Plant with Reliable Moisture' },
       { slide: 19, lesson: null,             title: 'Field Assignment' },
       { slide: 20, lesson: null,             title: 'Field Action' },
     ],
   },
   'small-livestock': {
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // Targeted factual corrections re-recorded in September 2026; source review is
+    // docs/studies-review-2026-09-20/FACT-CHECK.md. Same en-ZA-LukeNeural voice.
     // The "Watch" clip leads each lesson here rather than following its opening slide (4, 9, 14),
     // which is why every lesson run starts on a Watch.
     tracks: [
@@ -693,24 +691,23 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
       { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
       { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: Bees Moving Between Hive and Crops' },
-      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Make Food Forests More Productive' },
+      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops' },
       { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees' },
       { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care' },
-      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Space and Flowers' },
+      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Care and Flowers' },
       { slide: 14, lesson: 'small-livestock-l3', title: 'Watch: Nutrients Moving in a Closed Livestock Loop' },
       { slide: 15, lesson: 'small-livestock-l3', title: 'Close the Nutrient Loop' },
-      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Hunt Ticks and Grasshoppers' },
+      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter' },
       { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
-      { slide: 18, lesson: 'small-livestock-l3', title: 'Chickens Following Goats Break the Parasite Cycle' },
+      { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control' },
       { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Your Farm Loop' },
       { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
     ],
   },
   'market-community': {
     languages: ['en'],
-    // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
-    // Same deck shape as small-livestock: each lesson opens on its "Watch" clip (4, 9, 14).
+    // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
+    // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     tracks: [
       { slide: 1,  lesson: null,                  title: 'Market Gardening & Community' },
       { slide: 2,  lesson: null,                  title: 'Why This Matters' },
@@ -719,17 +716,17 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 5,  lesson: 'market-community-l1', title: 'Record Every Harvest' },
       { slide: 6,  lesson: 'market-community-l1', title: 'Let One Season Answer Questions' },
       { slide: 7,  lesson: 'market-community-l1', title: 'Find the True Cost' },
-      { slide: 8,  lesson: 'market-community-l1', title: 'Plant for the Food Gap' },
+      { slide: 8,  lesson: 'market-community-l1', title: 'Plan for the Food Gap' },
       { slide: 9,  lesson: 'market-community-l2', title: 'Watch: Where Surplus Can Go' },
       { slide: 10, lesson: 'market-community-l2', title: 'Know Your Customer' },
-      { slide: 11, lesson: 'market-community-l2', title: 'Keep More Through Direct Selling' },
-      { slide: 12, lesson: 'market-community-l2', title: 'Plan Around Box Customers' },
+      { slide: 11, lesson: 'market-community-l2', title: 'Count the Work of Direct Selling' },
+      { slide: 12, lesson: 'market-community-l2', title: 'Plan Around Real Orders' },
       { slide: 13, lesson: 'market-community-l2', title: 'Match the Channel to Your Supply' },
       { slide: 14, lesson: 'market-community-l3', title: 'Watch: How Neighbours Strengthen a Harvest' },
       { slide: 15, lesson: 'market-community-l3', title: 'Save Seed Together' },
       { slide: 16, lesson: 'market-community-l3', title: 'Share Expensive Tools' },
-      { slide: 17, lesson: 'market-community-l3', title: 'Sell Locally to Reduce Loss' },
-      { slide: 18, lesson: 'market-community-l3', title: 'Share Skills as Well as Things' },
+      { slide: 17, lesson: 'market-community-l3', title: 'Reduce Loss Between Harvest and Sale' },
+      { slide: 18, lesson: 'market-community-l3', title: 'Share Skills and Check Results' },
       { slide: 19, lesson: null,                  title: 'Field Assignment: Make a Farm Record' },
       { slide: 20, lesson: null,                  title: 'Field Action: Use the Record' },
     ],

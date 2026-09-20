@@ -1,0 +1,95 @@
+{
+  "module": "soil-health",
+  "clips": [
+    {
+      "slide": 5,
+      "file": "public/course-animations/soil-health/watch-05-living-soil.mp4",
+      "bytes": 118495,
+      "seconds": 14.0,
+      "sha256": "cbac903bcc381c987535df9027d5ebf08a807b5ed9d271e5ef1c01fda5cc448a",
+      "poster_bytes": 132808,
+      "poster_sha256": "3ed332acb5e7299226c096780ca5ff17b543f95d86a24d8b1f61b45e4986288b",
+      "audio": "public/course-audio/soil-health/en/slide-05.mp3",
+      "audio_sha256": "e294e0353a0ed2be866df4b9dcd5e476304e400b858c8722b48fcb8caab73e6e",
+      "audio_seconds": 11.472,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": false,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0021235999603528596,
+          "transitions_over_0_05_percent": 27
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0001238973139062345,
+          "transitions_over_0_05_percent": 0
+        }
+      },
+      "caption_review": "Short visible caption summarises the corrected narration; full words remain in the transcript."
+    },
+    {
+      "slide": 10,
+      "file": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
+      "bytes": 119193,
+      "seconds": 14.0,
+      "sha256": "c7711e415cf68ffaab184068a675d33a0aea0b4ecb28d41f771a6b6f763c39fb",
+      "poster_bytes": 114574,
+      "poster_sha256": "e88fbf7f954cdae0aac5444067f7d299af76f81ee9e1a9051f470b52aec2991e",
+      "audio": "public/course-audio/soil-health/en/slide-10.mp3",
+      "audio_sha256": "517ed42fe64040c48fb9a80836537146180543eb5720cf1b268311ea3598cbf9",
+      "audio_seconds": 8.568,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.08346218653979581,
+          "transitions_over_0_05_percent": 27
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0001015957974031123,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 14,
+      "file": "public/course-animations/soil-health/watch-14-mulch-protection.mp4",
+      "bytes": 369446,
+      "seconds": 14.0,
+      "sha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219",
+      "poster_bytes": 116741,
+      "poster_sha256": "444527d1c7660e7254460ab9b99bf52b7c4c2d069e3695f61387d71642625f6a",
+      "audio": "public/course-audio/soil-health/en/slide-14.mp3",
+      "audio_sha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+      "audio_seconds": 8.448,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.007535434631777183,
+          "transitions_over_0_05_percent": 27
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 7.43383883437407e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    }
+  ],
+  "review_reel": {
+    "filename": "reel-soil-three-slot-en-review.mp4",
+    "size_bytes": 843869,
+    "sha256": "96c412be5a6039323688f1a5c79686edd85554983e7b212e8bc78a1354cf513a",
+    "seconds": 42.041016,
+    "status": "Historical reel predates corrected narration; use current individual files and transcripts."
+  },
+  "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
+}

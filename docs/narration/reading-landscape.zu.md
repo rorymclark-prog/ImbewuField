@@ -120,13 +120,13 @@ Landela umoya phezu kwamagquma nasezikhaleni. Landela umoya obandayo wehla uye e
 
 ---
 
-**Ikhasi 14 — I-Frost Yehla Ngomthambeka (Slide 14 — Frost Flows Downhill)**
+**Ikhasi 14 — Umoya Obandayo Wehla Ngomthambeka (Slide 14 — Cold Air Flows Downhill)**
 
-I-frost iziphatha njengamanzi. Ebusuku, umoya obandayo wehla emthambekeni bese uqoqana ezindaweni eziphansi.
+Ngobusuku obungenamafu futhi obungenamoya, umoya obandayo ungakwazi ukwehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze.
 
-Iphansi lesigodi liba ne-frost emasontweni ambalwa ngaphambi nangemva kwemithambeka engenhla. Isikhala ku-ridgeline singangenisa umoya obandayo amamitha angamakhulu amabili noma amathathu uye esigodini esivikelekile.
+I-frost yiqhwa elakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi kukhona i-frost.
 
-Hamba emhlabeni ekuntweleni kokusa ngosuku olubandayo luka-June. Inkungu namazolo afriziwe kukhombisa lapho i-frost ihlala khona.
+Hamba emhlabeni ngemva kobusuku obubandayo. Bheka i-frost ezitshalweni, uqhathanise izindawo eziphansi nemithambeka. Maka izindawo lapho i-frost ihlala isikhathi eside. Gwema ukubeka izitshalo ezizwela amakhaza kulezo zindawo.
 
 ---
 
@@ -235,3 +235,5 @@ Please also confirm:
 
 When the review is done, correct the script and delete this appendix. Deleting the appendix without
 doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
+
+Review update, 20 September 2026: slide 14 corrected for cold-air drainage. This translation remains unapproved; previous draft audio is stale until regenerated.

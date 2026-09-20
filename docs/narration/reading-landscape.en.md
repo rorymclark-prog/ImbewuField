@@ -118,13 +118,13 @@ Follow wind across the ridges and gaps. Trace cold air downhill into low ground,
 
 ---
 
-**Slide 14 — Frost Flows Downhill**
+**Slide 14 — Cold Air Flows Downhill**
 
-Frost behaves like water. At night, cold air flows downhill and pools in low ground.
+On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.
 
-A valley bottom frosts weeks before and after the slopes above it. A gap in a ridgeline can funnel cold air two or three hundred metres into a sheltered valley.
+Frost is ice that forms on a cold surface. Mist alone does not prove there is frost.
 
-Walk the land at dawn on a cold June morning. Mist and frozen dew show where frost lingers.
+Walk the land after a cold night. Look for frost on plants and compare low ground with slopes. Mark places where frost lasts longest. Keep sensitive plants away from those cold pockets.
 
 ---
 

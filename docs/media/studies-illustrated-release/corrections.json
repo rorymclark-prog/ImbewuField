@@ -1,0 +1,41 @@
+[
+  {
+    "id": "soil-jar",
+    "target": "public/course-images/soil-health/soil-health-l1.jpg",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-4aa99b10-cb20-4e85-afde-ce2705cb8f6f.png"
+  },
+  {
+    "id": "sun-aspect",
+    "target": "public/course-images/reading-landscape/reading-landscape-l2.jpg",
+    "prompt": "Rebuild the teaching image of sun and shadows. Show a gently sloping smallholding as a simple slightly elevated oblique cutaway, one modest corrugated-roof home and one tree. Northern sunlight comes clearly from upper LEFT at a low oblique angle. Both house and tree cast coherent long shadows to the RIGHT, away from the sun across the southward downhill ground. Warm lit left-facing surfaces and cool right-facing shadows; tree shadow recognizable. A small painted sun on upper left and a few thin parallel golden light rays from upper left toward lower right make the geometry unambiguous. Absolutely no upward arrow, compass arrows or lettering. Leave uncluttered cream space below scene for future accessible orientation labels, to be supplied deterministically outside the image. Physical light direction must be consistent.",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-86c1cc1a-1167-4b7a-8155-abb52fa80c7b.png",
+    "previousSource": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-8baef139-cb94-4737-acf3-1fd08ef109e4.png",
+    "review": "North and South labels added; northern sunlight and shadows point in consistent opposite directions.",
+    "sha256": "9cdca0f00b563c866d4e48330adb833c647facd95e36e82d2c8f1e16c257aa83"
+  },
+  {
+    "id": "frost-hollow",
+    "target": "public/course-images/reading-landscape/reading-landscape-l3.jpg",
+    "prompt": "Rebuild as a beautifully detailed hand-painted elevated farm map with a corrugated-roof home on the upper slope, a grassy slope descending into a shallow sheltered hollow at lower right. Show prevailing wind as a few warm gold arrows crossing the map left-to-right, slope direction as fine ochre arrows descending the land, and cold air as translucent pale-blue ribbons with clear arrowheads flowing downhill into a still blue shaded low hollow. Depict delicate white frost lying ON blades of grass only in the lowest hollow, with a small close-up patch integrated at its near edge, no snow in sky. The hollow contains cold AIR, not a pond; grass visible through blue shading. No snowflakes, no snowdrifts, no snow symbols. Distinct flow directions, clean grounded farm detail, subtle contour lines.",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-13fba63f-a29a-44f8-ac33-714137524567.png"
+  },
+  {
+    "id": "staple-crops",
+    "target": "public/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+    "prompt": "Replace the abstract crop diagram with a precise botanical educational painting: three distinct plants side-by-side rooted in earth. Left is recognizable maize with a tall jointed stalk, long leaves, a fine branching male tassel at the TOP, and realistic green husked ears with silks attached along the SIDE of the stalk. Middle is a realistic climbing bean vine curling around a wooden pole, with compound leaves and hanging bean pods. Right is sweet potato with spreading heart-shaped leaves above a small soil cutaway showing tuberous roots connected below ground. These crops are already in the lesson. Every plant is connected to roots, no floating geometry. Quiet cream ground, each specimen beautifully rendered and spacious; no text or numbers.",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-27ee35b5-c6a6-4570-be65-893003223abe.png"
+  },
+  {
+    "id": "harvest-record",
+    "target": "public/course-images/market-community/market-community-l1.jpg",
+    "prompt": "Replace the diagram with a beautiful close overhead field-guide painting on a rustic wooden farm table: an open ruled harvest ledger on LEFT, a farmer's hand with pencil recording a harvest, and a basket and small pile of freshly harvested familiar vegetables on RIGHT, including leafy greens, tomatoes and beans. Ledger must have seven blank ruled columns, simple small pictograms only in header: calendar, leaf, harvest basket, house, coins, sharing hands, compost leaf cycle. Empty cells no fake handwriting or fake numbers. The produce must be clearly visible beside the record. Warm quiet daylight, detailed natural hands and produce, inviting rural South African farming context.",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-13f09c7e-f3b9-4c55-87a0-718eba70a73b.png"
+  },
+  {
+    "id": "first-flush",
+    "source": "/Users/roryclark/.codex/generated_images/01a0bdaa-0165-7891-867d-15ee2995722c/exec-d20bd0cc-b49a-4bd8-bddc-9b3cad0ea2d0.png",
+    "target": "public/course-images/water-harvesting/water-harvesting-l3.jpg",
+    "review": "Ball shown against the upper seat, full first-flush chamber below, subsequent runoff above toward tank; cutaway schematic, not a construction drawing.",
+    "sha256": "9842fbccd193e5d3f8468dac1214bfa509cccca8e805ddadb8e4d3492d2009c5"
+  }
+]

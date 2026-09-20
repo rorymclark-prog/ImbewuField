@@ -12,25 +12,21 @@ Learn how to design and establish a food forest for your farm.
 
 **Slide 2 — Why This Matters**
 
-A food forest can give food from many levels of the same piece of land.
+A food forest grows useful plants at different heights.
 
-It can use light and moisture that a single crop would leave unused.
+Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.
 
-The first years need steady work.
-
-Later, shade, leaf-fall mulch, and mixed roots help the system care for itself.
+Plan the care you can provide and watch how the planting changes.
 
 ---
 
 **Slide 3 — Learning Outcomes**
 
-Name the seven layers of a food forest.
+Name the seven commonly described food-forest layers.
 
-Choose species that match your frost zone, rainfall, and humidity.
+Check plants against your site, local ecology and the approved project list.
 
-Plan a planting sequence for a 500m² plot.
-
-Know why pioneers come first, and when lower layers and climbers should follow.
+Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure.
 
 ---
 
@@ -58,49 +54,41 @@ One piece of ground, working at every level.
 
 **Slide 6 — The Seven Layers**
 
-Tall canopy grows at 10m+.
+Think of tall canopy, smaller trees, shrubs and herbaceous plants.
 
-Sub-canopy grows from 4–8m, while shrubs grow from 1–3m.
+Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.
 
-Herbaceous plants stay under 1m.
-
-Ground cover protects the soil, root crops grow below, and climbers use vertical space.
+The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.
 
 ---
 
-**Slide 7 — A Highveld Example**
+**Slide 7 — Read a Layered Planting Example**
 
-The canopy might hold a large Wild Fig or pecan.
+The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.
 
-The sub-canopy can carry lemon, naartjie, and black mulberry.
+It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.
 
-Cape gooseberry and Wild Medlar fit the shrub layer.
-
-Vegetables, wild garlic, sweet potato, and granadilla fill the lower layers and vertical spaces.
+Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.
 
 ---
 
-**Slide 8 — From Establishment to Self-Care**
+**Slide 8 — Care Changes as Plants Grow**
 
-The first two to three years need real establishment work.
+Young plants need establishment care: moisture checks, weed control and protection from damage.
 
-Weeds compete strongly with herbaceous plants and ground cover on open, sunlit soil.
+As plants grow, shade and leaf litter change conditions below them.
 
-By year three to five, the canopy closes.
-
-Shade and deep leaf-fall mulch reduce evaporation, while mixed roots hold more soil moisture.
+Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.
 
 ---
 
-**Slide 9 — Choose for Your Region**
+**Slide 9 — Choose for Your Site**
 
-Match each species to your region before planting.
+Check local rainfall, frost, heat, soil and water availability before choosing plants.
 
-Know your rainfall, minimum winter temperature, frost frequency, and summer humidity.
+Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.
 
-A mango that thrives on the KZN coast dies at the first Highveld frost.
-
-A quince needing winter chill won't fruit in a frost-free coastal belt.
+A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.
 
 ---
 
@@ -114,124 +102,100 @@ Match every plant to your site.
 
 ---
 
-**Slide 11 — Highveld Food Forest Choices**
+**Slide 11 — Check the Highveld Examples**
 
-Highveld canopy choices include pecan, walnut, and indigenous fig.
+The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.
 
-Apple, pear, plum, black mulberry, and loquat can form the sub-canopy.
+This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.
 
-Shrubs include rosemary, Wild Medlar, Cape gooseberry, and Barbados cherry.
-
-Do not plant from a list alone. Check the conditions on your own land first.
+Keep existing legal and project restrictions in force. Do not plant from a picture alone.
 
 ---
 
-**Slide 12 — KZN Coast, Lowveld, and Limpopo**
+**Slide 12 — Check the Warm-Region Examples**
 
-KZN coast and Lowveld can suit mango, avocado, and Natal Mahogany.
+The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.
 
-Banana, pawpaw, litchi, and Wild Fig belong in the sub-canopy.
+Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.
 
-Barbados cherry and Wild Dagga belong in the shrub layer.
-
-In Limpopo Lowveld, Marula, Mopane, and baobab may be appropriate.
-
-These trees are edible and culturally significant.
+Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.
 
 ---
 
-**Slide 13 — Indigenous Species Build the Ecosystem**
+**Slide 13 — Include Locally Appropriate Indigenous Plants**
 
-Aim for at least 30% indigenous species throughout the food forest.
+Locally appropriate indigenous plants can support habitat as part of the design.
 
-They support the birds and insects that make the system work.
+Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.
 
-These visitors provide pest control, pollination, and seed dispersal.
-
-That support makes the food forest more resilient than a collection of fruit trees alone.
+Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.
 
 ---
 
-**Slide 14 — Plant in Sequence**
+**Slide 14 — Plan the Sequence for the Site**
 
-A food forest is planted in sequence, not all at once.
+Start by checking the site, water supply and care available. Protect exposed soil early.
 
-First come nitrogen-fixing pioneers to improve soil and offer shade.
+Temporary support plants may provide shelter and useful cut material where appropriate.
 
-Then come the main canopy and sub-canopy fruit trees.
-
-Lower layers follow when the canopy gives some protection.
-
-Climbers and ground covers come last.
+Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.
 
 ---
 
-**Slide 15 — Watch: From Bare Ground to Food Forest**
+**Slide 15 — Watch: Establishment in Stages**
 
-Sheet-mulch first.
+This animation is one example of a planting sequence.
 
-Pioneers build soil while fruit trees establish.
+Protect soil early and add suitable plants as water and shelter allow.
 
-As shelter grows, plant the lower layers, ground covers, and climbers.
-
----
-
-**Slide 16 — Year One on a 500m² Plot**
-
-Sheet-mulch with cardboard and 20cm of wood chips.
-
-The cardboard smothers existing grass while it decomposes and feeds soil organisms.
-
-Plant nitrogen-fixing pioneers at 2m spacing.
-
-Start a nursery so more plants are ready for the next stage.
+Use observed growth and competition to decide the next step, rather than copying a fixed calendar.
 
 ---
 
-**Slide 17 — Years Two to Four**
+**Slide 16 — Prepare a Manageable First Area**
 
-In year two, plant the main fruit trees.
+Begin with an area you can water and maintain. Check existing vegetation before clearing.
 
-Interplant comfrey and wild garlic beneath them.
+Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.
 
-During years three to four, thin the pioneers because they would otherwise compete too strongly for light with the maturing fruit trees.
-
-Use the pioneer cuttings as mulch, so their soil-building work continues.
+Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.
 
 ---
 
-**Slide 18 — Plant With the Rain**
+**Slide 17 — Adjust as the Trees Grow**
 
-Plant at the start of the rainy season.
+Watch how shade, roots and available water affect neighbouring plants.
 
-Let the rain do the establishment watering.
+Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.
 
-Never plant into dry soil.
+Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.
 
-Transplant shock plus drought stress rarely allows a young plant to recover.
+---
 
-By year five, a 500m² Highveld food forest can produce real harvests with minimal outside inputs.
+**Slide 18 — Plant with Reliable Moisture**
+
+Choose a planting opportunity when soil moisture and expected weather support establishment.
+
+Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.
+
+Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.
 
 ---
 
 **Slide 19 — Field Assignment**
 
-Draw your own food forest in layers.
+Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.
 
-Mark the canopy, sub-canopy, shrub, herbaceous, ground cover, root crop, and climber spaces.
+Record local frost, rain, soil and available care.
 
-Write down your frost zone, rainfall, minimum winter temperature, frost frequency, and summer humidity.
-
-Choose only species from this lesson that match your conditions.
+For each plant from the approved list, record its intended role and the local advice still needed before planting.
 
 ---
 
 **Slide 20 — Field Action**
 
-Choose a plot and inspect the soil before planting.
+Inspect a manageable area and choose one next step.
 
-Plan the sheet mulch with cardboard and wood chips.
+Protect exposed soil, check plant suitability, or prepare nursery plants.
 
-Prepare your pioneer plants and nursery.
-
-When the rainy season starts, plant the first sequence and watch which layers need the most care.
+Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition.

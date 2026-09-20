@@ -1,4 +1,7 @@
+REVIEW UPDATE — 20 September 2026: English slides 5, 6, 8, 9, 10, 11, 16, 17 and 18 have factual corrections. Reconcile this draft before fluent review and recording; old review audio is stale and must not be published.
+
 # Imifino neZitshalo Eziyisisekelo (Vegetables and Staple Crops) — Narration Script (isiZulu)
+
 
 **Kuhloselwe:** Injini ye-Text-to-Speech noma Umhlanganisi (Facilitator)
 **Amakhasi (Deck):** ImbewuField_Module_02_Vegetables_and_Staples_Deck.pptx (Amakhasi alishumi nesishagalombili - 18 slides)

@@ -33,6 +33,47 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'b067813', changes: [
+    'Studies now has richer lesson pictures and eight new scenes you can watch.',
+    'Read the full slide narration below each lesson picture.',
+    'If audio or video fails, retry it or keep reading the lesson.',
+    'Water, soil, seeds, growing and animal guidance has clearer local checks.',
+    'On phones, Ask Lima sits above Studies so it no longer covers lesson text.',
+    'Download updated study modules again to keep the corrected lessons offline.',
+  ] },
+  { when: '20 September 2026', sha: '1a1b532', changes: [
+    'Market Gardening now has 20 English slides and three teaching animations.',
+    'Watch harvest records, surplus routes and growers sharing resources.',
+  ] },
+  { when: '20 September 2026', sha: 'b5aec11', changes: [
+    'Small Livestock now has 20 English slides and three teaching animations.',
+    'Watch a chicken tractor, bee pollination and the manure-to-compost nutrient loop.',
+  ] },
+  { when: '20 September 2026', sha: 'fc71778', changes: [
+    'Food Forest now has 20 English slides and three teaching animations.',
+    'Watch the seven layers, climate choices and the planting sequence.',
+  ] },
+  { when: '20 September 2026', sha: '7814c97', changes: [
+    'Vegetables and Staple Crops now has 18 English slides with its original narration.',
+  ] },
+  { when: '20 September 2026', sha: '235c5da', changes: [
+    'Soil Health now has 20 English slides and three teaching animations.',
+    'Watch living soil, compost layers and how mulch protects soil from rain.',
+  ] },
+  { when: '20 September 2026', sha: 'a391236', changes: [
+    'Reading the Landscape now has 21 English slides and four teaching animations.',
+    'Watch water flow, seasonal shadows, wind and cold air, and a site map being drawn.',
+  ] },
+  { when: '20 September 2026', sha: 'e2bdb6b', changes: [
+    'Introduction now has 22 English slides and three optional teaching animations.',
+    'Watch borehole choices, planting diversity and windbreak placement.',
+  ] },
+  { when: '20 September 2026', sha: '97e22ef', changes: [
+    'Water Harvesting now has 24 English slides and six optional teaching animations.',
+    'Mzomoyethu clips show swales soaking water and safely overflowing into the pond.',
+    'Animations fit their full frame and finish before the lesson turns the page.',
+    'English audio fallback is clearly labelled and included in offline downloads.',
+  ] },
   { when: '20 September 2026', sha: 'b69d7bf', changes: [
     'Open report diagrams and charts at full size, then zoom and scroll to read details.',
     'Close the enlarged view to return to the same place in your report.',

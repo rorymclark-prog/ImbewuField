@@ -12,7 +12,7 @@
 // without a browser; lib/offline-cache.ts does the actual fetching.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_NARRATION, resolveNarrationLang } from '@/lib/course-audio';
 import { COURSE_DECKS, slideImageUrl, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
@@ -110,9 +110,12 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
   }
 
   const narration = COURSE_NARRATION[moduleId];
-  if (narration?.languages.includes(lang)) {
+  // Save the same disclosed fallback the player uses, or English-only decks go silent offline
+  // for a learner whose app is set to isiZulu.
+  const spokenLang = resolveNarrationLang(moduleId, lang);
+  if (narration && spokenLang) {
     for (const track of narration.tracks) {
-      push(at(`/course-audio/${moduleId}/${lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
+      push(at(`/course-audio/${moduleId}/${spokenLang.lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
     }
   }
 

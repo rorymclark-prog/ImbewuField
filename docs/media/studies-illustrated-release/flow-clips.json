@@ -1,0 +1,194 @@
+{
+  "project": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442",
+  "date": "2026-09-20",
+  "clips": [
+    {
+      "id": "earth-care",
+      "module": "intro-permaculture",
+      "slide": 4,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Woman_mulching_garden_soil_20260920132955.mp4",
+        "sha256": "38ed5c8d4d9aaaf461cd6f0510df843b663fe436d8cfc3a9d59536e173b40218"
+      },
+      "asset": "public/course-animations/intro-permaculture/flow-earth-care.mp4",
+      "bytes": 5177501,
+      "seconds": 8,
+      "sha256": "d0f2441f869e8a63ab8743ba3f33e94f0fe001d4c1e868636d86c58a61f1040c",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Mulch placed around plants without burying their stems.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "a-frame",
+      "module": "reading-landscape",
+      "slide": 6,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Surveyors_reading_plumb_line_20260920140816.mp4",
+        "sha256": "5035e709383f2a74f3fbe8d3aba98036923bd597bc79f689fa522e5b64ab7154"
+      },
+      "asset": "public/course-animations/reading-landscape/flow-a-frame.mp4",
+      "bytes": 1808880,
+      "seconds": 6,
+      "sha256": "32721be26c47a79b23edac694be0ae90f2ea1deadab7ae01cbaa1a34e0f56584",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "First six seconds only: frame stays planted while learners look at the plumb line; later frame lifting omitted. This is not a complete contour-setting procedure.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "compost-materials",
+      "module": "soil-health",
+      "slide": 11,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Farmer_tipping_compost_basket_20260920140819.mp4",
+        "sha256": "28defedf3e09b7dad24506b1f435fcb9879ff8cc6f830e14830dbe9602faf0b1"
+      },
+      "asset": "public/course-animations/soil-health/flow-compost-materials.mp4",
+      "bytes": 4290981,
+      "seconds": 8,
+      "sha256": "330895a064fac69b2c2798c17096ee8ea8960b9559870b1d3a5347cb151ec743",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Basket tips recognisable green material onto brown material; no instant decomposition.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "seed-or-seedling",
+      "module": "vegetables-staples",
+      "slide": 6,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Farmer_planting_vegetable_seedling_20260920140821.mp4",
+        "sha256": "40a450c8918618a24dc875be331409b6da310571afc2c7e4e516cd6ec02c56f1"
+      },
+      "asset": "public/course-animations/vegetables-staples/flow-seed-or-seedling.mp4",
+      "bytes": 5423616,
+      "seconds": 8,
+      "sha256": "c0a552b017ef13527a1ea68501c9789abb730800e842147937fcc54be5f5e80a",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Root plug lowered into prepared hole and soil closed around it; seed sowing shown alongside.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "sheet-mulching",
+      "module": "food-forest",
+      "slide": 16,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Woman_wetting_cardboard_and_leaves_20260920140822.mp4",
+        "sha256": "cc04a37fa9b843703c2ec536eb27a6aa779d8b5e0e0c7663212ddf163f767a71"
+      },
+      "asset": "public/course-animations/food-forest/flow-sheet-mulching.mp4",
+      "bytes": 7483690,
+      "seconds": 8,
+      "sha256": "5bc8868d14b7e1c46978a297fa748cf5b340bf701b701130a767a5fcbbacbbfb",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Cardboard wetted; dry leaves placed above; no trunk burial or instant growth.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "ducks-understorey",
+      "module": "small-livestock",
+      "slide": 7,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Ducks_foraging_in_homestead_orchard_20260920140851.mp4",
+        "sha256": "bfe44df66694431af2e252d55eeafe249b1f886ac8e1e9d8c4f3a9fc8d781fd6"
+      },
+      "asset": "public/course-animations/small-livestock/flow-ducks-understorey.mp4",
+      "bytes": 7613902,
+      "seconds": 8,
+      "sha256": "6b577ae543814d69b1566b3ee22549556f12c95068ee25730f43f93a380217f4",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Four ducks forage with bills among established plants; one drinks. No chicken scratching or complete-control claim.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "seed-sharing",
+      "module": "market-community",
+      "slide": 15,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Community_members_sharing_dry_seeds_20260920140758.mp4",
+        "sha256": "31999bd027031ea9fb6009280bc44b3518d934c0a79b643e7bc172b183e8ac96"
+      },
+      "asset": "public/course-animations/market-community/flow-seed-sharing.mp4",
+      "bytes": 3024675,
+      "seconds": 8,
+      "sha256": "39556f4a976856fbfbf1b9e2f8e7f0becd577697d101973793746af4615cc0bc",
+      "review": {
+        "method": "16-frame contact sheet, two frames per second across original 8 seconds; full ffmpeg decode",
+        "finding": "Dry seed transferred to paper packet; seed and people remain recognisable.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "roof-rain",
+      "module": "water-harvesting",
+      "slide": 14,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "source": {
+        "source": "/Users/roryclark/Downloads/Woman_lowering_hand_in_drizzle_20260920142615.mp4",
+        "sha256": "76b55713ccef35a8bbbb0dedf670ed650bd24b6b214c889aa69d2441fd8a5a77"
+      },
+      "projectAsset": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/07f0ac4b-1edc-44a8-857e-1d6ba284dd3b",
+      "asset": "public/course-animations/water-harvesting/flow-roof-rain.mp4",
+      "bytes": 3828056,
+      "seconds": 8,
+      "sha256": "c3f36f720feec46a2f9587f4022c54c5eb83ea0fc20c01c0796f63028db87993",
+      "review": {
+        "method": "16-frame contact sheet across full 8 seconds",
+        "finding": "Second generation: closed tank and pipe remain stable; rain and hand movement only. No invented overflow. Context scene, not a cutaway plumbing demonstration.",
+        "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
+      },
+      "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    }
+  ],
+  "rejected": [
+    {
+      "id": "roof-rain-v1",
+      "reason": "Generated implausible overflow through tank wall after 2 seconds; excluded from public assets.",
+      "source": {
+        "source": "/Users/roryclark/Downloads/Woman_watching_roof_rainwater_ru\u2026_20260920140815.mp4",
+        "sha256": "76fe3fdb791c17fcb2aac07d916b14ddc2a278df816f6ab1b536814a0236f33a"
+      }
+    }
+  ],
+  "pending": []
+}

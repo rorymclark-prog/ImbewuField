@@ -1,4 +1,7 @@
+REVIEW UPDATE — 20 September 2026: the English water-safety and sizing claims have been corrected. This draft and its old audio are stale and must not be published. Reconcile slides 2, 6, 8–11, 13–22 with the English source before fluent review or recording.
+
 **Ikhasi 1 — Ukuvunwa Kwamanzi (Slide 1 — Water Harvesting)**
+
 
 Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye ne-greywater — bambezela, sakaza futhi shonisa wonke amaconsi.
 

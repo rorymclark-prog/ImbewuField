@@ -1,4 +1,7 @@
+REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
+
 **Ikhasi 1 — Impilo Yomhlabathi Ne-Compost (Slide 1 — Soil Health & Composting)**
+
 
 Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.
 

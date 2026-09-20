@@ -64,7 +64,7 @@ Start with the least disturbance that solves your problem.
 
 No-dig suits most garden soils. Leave the structure alone and build fertility on top.
 
-Double-digging is hard work, and it should answer a real problem — compacted ground or heavy clay. Not habit.
+Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.
 
 Raised beds suit wet ground, where water needs somewhere to drain away to.
 
@@ -72,7 +72,7 @@ Sunken beds suit dry ground, where you want to catch and hold what rain you get.
 
 [pause]
 
-Look at your own ground after heavy rain. Does water sit, or does it run off? That answer chooses your bed.
+Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.
 
 ---
 
@@ -84,7 +84,7 @@ Others do better with a protected start in a nursery, then transplanting. Tomato
 
 [pause]
 
-Whichever you choose, spacing matters more than the packet suggests. Seed packets are printed for cooler, wetter places than most of South Africa. Give your plants more room than the smallest spacing on the packet.
+Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.
 
 ---
 
@@ -118,7 +118,7 @@ Plant a short row every two to three weeks.
 
 Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.
 
-If heat or heavy rain ruins one sowing, the others still carry the season.
+Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.
 
 Which fast crop could you sow in small batches? Decide on one, and start it this week.
 
@@ -130,7 +130,7 @@ Here's what it looks like in practice.
 
 Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.
 
-By the time the fourth sowing is in the ground, the first is ready to harvest. The harvests begin to overlap.
+With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.
 
 [pause]
 
@@ -144,7 +144,7 @@ Watch what your own garden does, and adjust the interval. That observation is th
 
 Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.
 
-The three sisters is the clearest example.
+The Three Sisters is an example from Indigenous farming traditions in the Americas.
 
 Maize gives height and structure.
 
@@ -156,13 +156,13 @@ Pumpkin spreads across the ground, shading the soil and holding moisture.
 
 Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.
 
-Three crops, one piece of ground, and none of them fighting the others.
+The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.
 
 ---
 
 **Slide 11 — Plan Backwards From Your Hungry Gap**
 
-Every place has a hungry gap. The weeks when the last harvest has run low and the next one isn't ready.
+A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.
 
 Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.
 
@@ -252,11 +252,11 @@ Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.
 
 Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.
 
-Four. Only then, act — and start with the lightest thing that works. Physical removal and better plant health solve most small outbreaks.
+Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.
 
 [pause]
 
-If you use a neem product, follow the label. Don't improvise a stronger mixture. Even lower-risk products harm the wrong insects when they're misused.
+If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.
 
 Be honest with yourself about which step you usually skip.
 
@@ -272,7 +272,7 @@ Reach the middle from both sides. Keep every foot on the paths. Space your plant
 
 [pause]
 
-Give it a realistic minimum of ten days before you judge it.
+Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.
 
 Photograph it when it's planted. Then come back after ten days with what you observed.
 
@@ -298,4 +298,4 @@ Record the sowing date. The rain. What germinated. Pest pressure. What you harve
 
 Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.
 
-That record is worth more than any advice.
+Use your record with reliable local advice when making the next decision.

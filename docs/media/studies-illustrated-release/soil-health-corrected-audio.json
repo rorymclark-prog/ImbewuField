@@ -1,0 +1,190 @@
+{
+  "module": "soil-health",
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "human_review": false,
+  "publication_status": "CORRECTED ENGLISH \u2014 automated verification; listening review pending",
+  "source_script_sha256": "333d9251a64a8ac7e80abebcc27cfb4cf6fc9cdbcbba466c5867328d6cf0b838",
+  "clips": [
+    {
+      "slide": 1,
+      "source_sha256": "53e115d17ac4f4251666497f968bfef948837fce2ced1cb0b53704da932546c8",
+      "audio_sha256": "edfc7ab6ae61b4559070cf49e46e22a10d2ad4c0f036d7e5c3c2827fc3046f17",
+      "seconds": 16.896,
+      "last_word_end": 15.767041,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 2,
+      "source_sha256": "3c122534597b87c676303990b7aa85d2fddd4c51b18433ee820a309a07de2c61",
+      "audio_sha256": "f4767eff13ad7a752f1d0e59a5396c0275a5b2e7594d4654f7e1753979255054",
+      "seconds": 17.304,
+      "last_word_end": 16.178999,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 3,
+      "source_sha256": "09e0cf79d77a64ce3144ee796e41894e5e33fde3af02d12cba539c6344706316",
+      "audio_sha256": "42b44715fb8329a7747adc3352364095365bd27c1c696b472e4bb35698531b6e",
+      "seconds": 14.52,
+      "last_word_end": 13.409082,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 4,
+      "source_sha256": "7c040060dc3bfe373ede1af46cc7ee61b0c5bf4388d5d1ad52aa64625e2adb61",
+      "audio_sha256": "570b95d787f5a8fd810732cf08a22665da079e43c7576d8854ed2bd5bbbb49ed",
+      "seconds": 21.24,
+      "last_word_end": 20.142041,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 5,
+      "source_sha256": "2e1a19da518bb19e4173e46823c759555cc825560b55330159386ea7f483a587",
+      "audio_sha256": "e294e0353a0ed2be866df4b9dcd5e476304e400b858c8722b48fcb8caab73e6e",
+      "seconds": 11.472,
+      "last_word_end": 10.411958,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 6,
+      "source_sha256": "8b990ff0d08387697b842daf88c614cf0c7b37cc575711644dc1174303ca9e5e",
+      "audio_sha256": "8040869eade835873f6a67b8cd99d9a8b5851059da3603f6663a41303ec5ec4c",
+      "seconds": 25.32,
+      "last_word_end": 24.275582,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 7,
+      "source_sha256": "60313bb67ff0e3320bf54716fa2a5766455dfc07489c54ce1038b0464291c1c3",
+      "audio_sha256": "78d3d7a87d6225e71051f87522b4d8a6b1afb2d73607321b922e4b5827b5775c",
+      "seconds": 20.568,
+      "last_word_end": 19.545458,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 8,
+      "source_sha256": "009582b241b5bce23b02e838011f9fa827c1ed229909bcc03651c890a6f9f27e",
+      "audio_sha256": "a0f051ae561b0798d81bf4a4d54f48f5cdc86e44d1202195688cb1f9fbf55570",
+      "seconds": 22.032,
+      "last_word_end": 20.980124,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 9,
+      "source_sha256": "842cd110388577d1860bed1d3915f5c244b532687777afcd4e2dce87f176480c",
+      "audio_sha256": "e0ffe197fcf3648ff4e5e2a21b51940038dccf790fa198bece80f7ae33d13d15",
+      "seconds": 18.936,
+      "last_word_end": 17.883541,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 10,
+      "source_sha256": "316fa7b2e3274c9ea698a3f299065291c7a9ee2f0a2d2ba76a0a439d24eacd07",
+      "audio_sha256": "517ed42fe64040c48fb9a80836537146180543eb5720cf1b268311ea3598cbf9",
+      "seconds": 8.568,
+      "last_word_end": 7.514208,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 11,
+      "source_sha256": "408026b9d2e7419ab9841fbad576d1c32df2397016d1e05bf5336cd550b8ad3a",
+      "audio_sha256": "82f85ecbe6fee3e4a80d00a9a07852708fb99704fd0ef6906ce295607fea9029",
+      "seconds": 18.552,
+      "last_word_end": 17.471583,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 12,
+      "source_sha256": "7ebea39818e676161238b3980d7884d079ce73747fa9ef153056c1110f29f154",
+      "audio_sha256": "796b1f6a86dba6bccfe5f65a6a7b068e2f341c31a7ae2cf64f452e0b15852b62",
+      "seconds": 25.32,
+      "last_word_end": 24.261374,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 13,
+      "source_sha256": "6974e2e4947b7dd5470397c6959d1cf2c7e02a0847909d3676cf1bde2307506e",
+      "audio_sha256": "3c27cfed9613f50f25c0e32e2be4d657c84f3858e2f93ebf7a866a4924334afc",
+      "seconds": 23.64,
+      "last_word_end": 22.570999,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 14,
+      "source_sha256": "b67b14cfd45ade47dde91b4a71621b8955813d5dd5a2bdc516792a60928a51b3",
+      "audio_sha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+      "seconds": 8.448,
+      "last_word_end": 7.443207,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 15,
+      "source_sha256": "75e6338c444aac89710a2218051e81e02713c45ca209338cbf6b2a27f7d752f4",
+      "audio_sha256": "504e9df61166faafd23dbe5e2cd3b364d08be0ef2aba891f10f15450b1b721be",
+      "seconds": 19.344,
+      "last_word_end": 18.309666,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 16,
+      "source_sha256": "877a5123db646f5d4009015994145648a68eea81c0e313a7483e9e2ed8b35819",
+      "audio_sha256": "0dbe6d08c43db350084a7c2041adc46ce45835349961dfab7af4a2be23b55f70",
+      "seconds": 26.328,
+      "last_word_end": 25.198833,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 17,
+      "source_sha256": "0f95fcfcf16125ef11a5724f683f1181bf259d38d01844d82c574e4331d5acd0",
+      "audio_sha256": "73d059a0b69a68175f73a0b95de8b61434a7f51fdd633b9cf302df1dc203f79d",
+      "seconds": 24.576,
+      "last_word_end": 23.536916,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 18,
+      "source_sha256": "39c8cf9a81dc05f5353d003dda886c879badc27c2a9ebd0a5c90de463b5c43dd",
+      "audio_sha256": "c0e636ac0af71fe31295788f5918cbd68f2d5ab938d6ffdf3ccf1b786e3bc866",
+      "seconds": 18.864,
+      "last_word_end": 17.826708,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 19,
+      "source_sha256": "722c32f980c08f0d0950da5de02de44d615d4d73e670da48dbfd4f5e229e7f9b",
+      "audio_sha256": "b122b081aee363e5d4954c3fee18fa6d2fc0414df66276817fcb989504da1c8e",
+      "seconds": 21.648,
+      "last_word_end": 20.625,
+      "text_match": true,
+      "full_decode": "pass"
+    },
+    {
+      "slide": 20,
+      "source_sha256": "1858175ac19554cddff77f6dd7904d7ba0ede0ec5c99d386a238abefceaf7ab1",
+      "audio_sha256": "3a536eb6419199138d503bc5bc4d74b674936045715a17bf8b44e485f7ee49e1",
+      "seconds": 19.8,
+      "last_word_end": 18.749999,
+      "text_match": true,
+      "full_decode": "pass"
+    }
+  ]
+}

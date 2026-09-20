@@ -10,87 +10,79 @@ In this module, learn to read soil, make safe compost, protect bare ground, and 
 
 **Slide 2 — Why This Matters**
 
-Years of monoculture, overgrazing, or stubble-burning leave soil that depends on bought fertiliser to produce anything.
+Soil condition affects roots, water and the harvest.
 
-When soil life is lost, the ground becomes pale, compacted, and difficult to farm.
+Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.
 
-Compost, mulch, cover crops, and worm farms can rebuild living soil on smallholder farms across South Africa.
+Observe your soil, then choose ways to protect and improve it.
 
 ---
 
 **Slide 3 — Learning Outcomes**
 
-You will learn how to recognise healthy and degraded soil.
+Look for several clues about soil condition.
 
-You will use a jar test to see whether soil is mostly sand, silt, or clay.
+Use a jar to explore soil texture, while recognising its limits.
 
-You will make safer compost, correct a wet heap, protect bare ground, and use cover crops and worm-farm leachate wisely.
+Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage.
 
 ---
 
 **Slide 4 — Soil Is Alive**
 
-A teaspoon of good topsoil holds more organisms than there are people on Earth.
+Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.
 
-Bacteria and fungi process nutrients for plants.
+Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.
 
-Underground fungal threads move nutrients between plants. Worm channels are a visible sign of healthy topsoil.
-
-Monoculture, overgrazing, and stubble-burning can strip this life away.
+Look at roots, soil structure and water movement as well as visible soil life.
 
 ---
 
 **Slide 5 — Watch: Look at the Soil**
 
-Compare the dark, living topsoil with the pale, compacted soil.
+Look at colour, structure and channels in these two soil examples.
 
-Look for worm channels, and notice how smell changes from rain or mushrooms to sour or nothing.
-
----
-
-**Slide 6 — Test Your Soil with a Jar**
-
-Fill a jar one-third with soil, top it up with water, and add a drop of dish soap.
-
-Shake the jar, then leave it to settle for a day.
-
-Sand settles first, silt settles next, and clay stays suspended longest.
-
-The layers show your soil texture without special equipment.
+Use several clues together. A picture or a single worm count cannot diagnose soil health.
 
 ---
 
-**Slide 7 — Read the Jar Layers**
+**Slide 6 — Explore Soil Texture with a Jar**
 
-Thick sand at the bottom and cloudy, clay-tinted water on top means the soil is sandy.
+Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.
 
-Sandy soil drains fast and holds little water for roots.
+Sand settles first. Silt settles next, while clay can remain suspended much longer.
 
-Mulch heavily and add organic matter often.
-
-This slows water loss and helps the soil hold moisture around growing plants.
+This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.
 
 ---
 
-**Slide 8 — Degraded Soil Can Recover**
+**Slide 7 — Read the Jar Carefully**
 
-Pale, compacted soil with no worms and a sour smell is not simply a fixed soil type.
+A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.
 
-Continuous cropping, chemical use, or burning may have killed most of the soil life.
+Compare the settled layers and feel the soil in the field.
 
-That is encouraging, because living soil can be rebuilt with compost, mulch, and gentler management.
+Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.
+
+---
+
+**Slide 8 — Investigate Before You Treat**
+
+Compaction, poor drainage and loss of organic matter can limit roots and soil life.
+
+Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.
+
+Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.
 
 ---
 
 **Slide 9 — Compost Feeds the Soil**
 
-Compost is organic matter that has decomposed.
+Compost is organic matter broken down under managed conditions.
 
-It rebuilds soil structure and feeds the organisms that help plants grow.
+Finished compost can improve soil structure and contribute nutrients.
 
-A hot heap reaches usable compost in four to six weeks in warm, humid KZN.
-
-On the cooler Highveld, it may take eight to twelve weeks.
+Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.
 
 ---
 
@@ -104,37 +96,31 @@ Keep the layers moist, not wet, so air and decomposers can work.
 
 **Slide 11 — Balance Browns and Greens**
 
-Layer 20 to 30cm of browns for every 5 to 10cm of greens.
+Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.
 
-Too much green material makes the heap wet, slimy, and ammonia-smelling.
+If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.
 
-Too much brown material keeps the heap cold for months.
-
-The right balance gives the heap food, air, and enough heat to break down.
+Check moisture and air as the heap changes; one recipe does not suit every mix of materials.
 
 ---
 
-**Slide 12 — Keep the Compost Safe**
+**Slide 12 — Heat Alone Is Not a Safety Check**
 
-Aim for a core temperature of 55 to 65°C.
+A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.
 
-This speeds decomposition and kills most weed seeds and pathogens.
+Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.
 
-Do not add meat, dairy, cooked scraps, diseased plants, or soil with persistent herbicide residue.
-
-These materials can make the finished compost unsafe for the farm.
+Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.
 
 ---
 
-**Slide 13 — Keep Wattle Pods Out**
+**Slide 13 — Keep Seed Pods and Contaminants Out**
 
-Keep wattle seed pods out of the compost heap.
+Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.
 
-Their hard seed coat can survive ordinary composting heat and carry the plant into finished compost.
+Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.
 
-Wattle bark alone is safe to include, although it breaks down slowly.
-
-Turn the heap every five to seven days and keep it moist, not wet.
+Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.
 
 ---
 
@@ -148,37 +134,31 @@ Watch how the mulch protects topsoil when a South African summer storm brings in
 
 **Slide 15 — Mulch Protects the Ground**
 
-Spread a 5 to 10cm layer of straw, dry grass, or wood chips over bare soil.
+Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.
 
-Mulch cuts erosion sharply and keeps soil several degrees cooler in summer.
+Mulch can reduce evaporation, soften the impact of rain and suppress weeds.
 
-On hot Highveld days, it can reduce soil temperature by up to 10°C.
-
-It also suppresses weeds and feeds soil life as it breaks down.
+Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.
 
 ---
 
 **Slide 16 — Cover Crops Between Seasons**
 
-Cover crops protect soil when the main crop is not growing.
+Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.
 
-On the Highveld, oats or lupins sown after the maize harvest cover soil through frost months.
+The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.
 
-Slash them in before spring planting.
-
-In KZN, sunn hemp grows fast in summer, while cowpea fixes nitrogen and tolerates the Lowveld’s early-summer dry spell.
+Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.
 
 ---
 
-**Slide 17 — Worm Farms Make Root Feed**
+**Slide 17 — Worm Castings and Liquid Drainage**
 
-Worm farms turn kitchen scraps into rich castings in three to four weeks.
+Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.
 
-The liquid leachate is a strong fertiliser.
+Liquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.
 
-Dilute it 1:10 with water before using it as a root feed.
-
-Undiluted leachate is concentrated enough to burn plant roots instead of nourishing them.
+Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.
 
 ---
 
@@ -196,13 +176,11 @@ Cover crops, mulch, and organic matter keep soil in place and help it stay alive
 
 **Slide 19 — Field Assignment**
 
-Choose a working area on your farm and inspect the soil.
+Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.
 
-Dig a 30cm hole and record its colour, smell, structure, and worm channels.
+Compare another spot and note recent weather and management.
 
-Do the jar test with soil, water, and a drop of dish soap.
-
-Write down whether sand, silt, or clay seems dominant, and what that means for watering.
+Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help.
 
 ---
 

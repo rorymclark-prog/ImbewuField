@@ -15,6 +15,7 @@ import {
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
+import LimaBar from '@/components/LimaBar';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
@@ -750,6 +751,8 @@ export default function StudentPage() {
           </div>
           </div>
         </section>
+
+        <LimaBar />
 
         {/* What the mentor has actually asked for — only shown when there is something */}
         {assignSummary && assignSummary.total > 0 && (

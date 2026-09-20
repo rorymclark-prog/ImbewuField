@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, statSync, readFileSync } from 'node:fs';
+import { registerHooks } from 'node:module';
+import { createElement } from 'react';
+import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import ts from 'typescript';
 import test from 'node:test';
 
 import {
@@ -7,9 +11,27 @@ import {
   hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
+
+test('sound-off learners get the complete current script, including its final instruction', () => {
+  // A beautiful picture cannot replace words a learner cannot hear. This fails on a missing
+  // paragraph, stale edit, shifted slide, or accidentally published draft-language transcript.
+  assert.deepEqual(COURSE_TRANSCRIPTS, collectTranscripts());
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    assert.deepEqual(Object.keys(COURSE_TRANSCRIPTS[moduleId]).sort(), [...narration.languages].sort());
+    for (const lang of narration.languages) {
+      for (const track of narration.tracks) {
+        const paragraphs = COURSE_TRANSCRIPTS[moduleId][lang][track.slide];
+        assert.ok(paragraphs.length > 0, `${moduleId}/${lang}/${track.slide} has no readable words`);
+        assert.ok(paragraphs.every(p => !/\[pause\]|^---\s*$/m.test(p)), 'stage directions are not learner text');
+      }
+    }
+  }
+});
 
 test('the deck is derived from the narration manifest, never typed out twice', () => {
   // Two hand-maintained lists of the same 24 rows is this codebase's most repeated defect, and here
@@ -131,9 +153,10 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
 });
 
 test('unknown modules and slides produce no url rather than a broken one', () => {
-  assert.equal(hasDeck('water-harvesting'), false);
+  // Water now has a deck; absence is a lookup rule, not a permanent module status.
+  assert.equal(hasDeck('no-such-module'), false);
   assert.equal(deckFor('no-such-module'), null);
-  assert.equal(resolveDeckLang('water-harvesting', 'en'), null);
+  assert.equal(resolveDeckLang('no-such-module', 'en'), null);
   assert.equal(slideImageUrl('seeds-sovereignty', 'en', 99), null);
   assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 99), null);
   // Slide 13 used to be asserted null here — the gap the PowerPoint repair left. It has been
@@ -175,6 +198,26 @@ test('only modules that really have a deck advertise one', () => {
   for (const id of Object.keys(COURSE_DECKS)) {
     assert.ok(COURSE_DECKS[id].slides.length > 0, `${id} is registered with no slides`);
     assert.ok(COURSE_DECKS[id].slideLanguages.length > 0, `${id} has no rendered language`);
+  }
+});
+
+test('every registered deck can load its slides and clips at the advertised data cost', () => {
+  // New modules must receive the same missing-file and byte checks as Seeds and Guilds.
+  for (const [id, deck] of Object.entries(COURSE_DECKS)) {
+    for (const lang of deck.slideLanguages) {
+      for (const slide of deck.slides) {
+        const picture = slideImageFor(id, lang, slide.slide);
+        assert.ok(picture && onDisk(picture.url), `${id}/${lang}/${slide.slide}: missing slide`);
+        const audio = slideAudioUrl(id, lang, slide.slide);
+        if (audio) assert.ok(onDisk(audio), `missing narration: ${audio}`);
+        const clip = animationUrls(id, slide.slide, lang);
+        if (!clip) continue;
+        assert.ok(onDisk(clip.video), `missing clip: ${clip.video}`);
+        assert.ok(onDisk(clip.poster), `missing poster: ${clip.poster}`);
+        assert.equal(statSync(new URL(clip.video.slice(1), PUBLIC)).size, clip.bytes);
+        assert.ok(clip.seconds > 0);
+      }
+    }
   }
 });
 
@@ -221,4 +264,59 @@ test('isiZulu guild slides, audio and labelled video are delivered in the select
   }
   assert.match(animationUrls('plant-guilds', 23, 'zu')!.video, /Labelled-zu/);
   assert.doesNotMatch(animationUrls('plant-guilds', 23, 'en')!.video, /Labelled-zu/);
+});
+
+// Exercise the actual player with media-device stubs. The browser check separately verifies
+// decoding and motion; these event-order checks catch a short voice cutting off a longer clip.
+test('Water playback respects language gaps, download choice and the whole animation', async t => {
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { addEventListener() {}, removeEventListener() {} } });
+  t.after(() => {
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+  });
+  for (const videoFirst of [false, true]) {
+    const videoDevice = { ended: false, currentTime: 0, play: () => Promise.resolve() };
+    const audioDevice = { currentTime: 0, pause() {}, play: () => Promise.resolve() };
+    let view!: ReactTestRenderer;
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'water-harvesting', lang: 'zu' }), {
+      createNodeMock: element => element.type === 'video' ? videoDevice : element.type === 'audio' ? audioDevice : null,
+    }); });
+    try {
+      assert.match(view.root.findByType('audio').props.src, /water-harvesting\/en\/slide-01.mp3$/);
+      const messages = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
+      assert.match(messages, /Narration is in English/);
+      assert.match(messages, /isiZulu narration is not available/);
+      assert.doesNotMatch(messages, /spoken lesson is in your language/);
+      for (let i = 0; i < 3; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
+      assert.equal(view.root.findByType('h3').children.join(''), 'Watch: A Swale Sinks Water');
+      assert.equal(view.root.findAllByType('video').length, 0, 'opening a Watch slide must not download video');
+      const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
+      assert.ok(watch);
+      act(() => watch.props.onClick());
+      const clip = view.root.findByType('video');
+      assert.equal(clip.parent!.props.style.aspectRatio, 824 / 720);
+      assert.equal(clip.props.loop, false, 'a selected animation must be able to finish under play-through');
+      const title = view.root.findByType('h3').children.join('');
+      if (videoFirst) {
+        videoDevice.ended = true;
+        act(() => clip.props.onEnded());
+      } else {
+        act(() => view.root.findByType('audio').props.onEnded());
+      }
+      assert.equal(view.root.findByType('h3').children.join(''), title, 'wait for both teaching streams');
+      if (videoFirst) act(() => view.root.findByType('audio').props.onEnded());
+      else { videoDevice.ended = true; act(() => clip.props.onEnded()); }
+      assert.match(view.root.findByType('audio').props.src, /slide-05.mp3$/, 'advance exactly one slide once both finish');
+    } finally { act(() => view.unmount()); }
+  }
 });

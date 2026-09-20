@@ -43,6 +43,12 @@ if (!existsSync(scriptPath)) {
 }
 
 const raw = readFileSync(scriptPath, 'utf8');
+const artPlanPath = resolve('docs/course-deck-art.json');
+const artPlan = existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
+for (const art of Object.values(artPlan)) {
+  art.path = resolve(art.path);
+  if (!existsSync(art.path)) throw new Error(`Teaching illustration is missing: ${art.path}`);
+}
 
 // Two heading shapes exist in the wild, because the isiZulu scripts are bilingual and the English
 // ones are not:
@@ -92,6 +98,12 @@ slides.forEach((s, i) => {
 // sentence of each paragraph, cap at 3 bullets and ~90 characters each, so nothing has to be
 // squinted at on a projector at the back of a hall.
 function bullets(paras) {
+  // Spoken enumeration is a cue, not a sentence to discard. Vegetables' four outcomes
+  // began ‘One. Build…’; taking only ‘One.’ erased every actual learning outcome.
+  const numbered = paras.filter((p) => /^(?:One|Two|Three|Four|Five|Six|\d+)[.)]\s/i.test(p));
+  if (numbered.length > 1) {
+    return numbered.map((p) => p.replace(/^(?:One|Two|Three|Four|Five|Six|\d+)[.)]\s+/i, ''));
+  }
   const out = [];
   for (const p of paras) {
     const first = (p.split(/(?<=[.!?])\s/)[0] || p).trim();
@@ -150,7 +162,9 @@ const deckTagline = h1English || s1Sub || mod?.description || '';
 const WATCH = /^\s*(?:Watch|Bukela|Buka)\s*[:：]\s*/i;
 
 const payload = slides.map((s) => {
-  const watch = WATCH.test(s.title);
+  // Introduction uses “Bheka” in isiZulu. Its authored English gloss still marks Watch;
+  // use that structural cue instead of silently shrinking the diagram into a text slide.
+  const watch = WATCH.test(s.title) || WATCH.test(s.subtitle);
   const body = bullets(s.body);
   return {
     n: s.n,
@@ -179,6 +193,7 @@ writeFileSync(
     moduleId,
     lang,
     imagesDir,
+    artPlan,
     lessonArt,
     moduleNumber,
     footer: 'ImbewuField · Imbewu Yoshintso',
@@ -278,6 +293,9 @@ def art_for(s):
     pictures spread over twenty pages means the same picture appearing five times, which reads
     as a mistake rather than as pacing. A watch slide with no picture at all is the one real
     failure: its words were deliberately written thin because a picture was meant to carry it."""
+    planned = cfg.get('artPlan', {}).get(str(s['n']))
+    if planned:
+        return planned['path']
     p = find_illustration(s['n'])
     if p:
         return p
@@ -345,6 +363,23 @@ for s in cfg['slides']:
         for ln in wrap(d, s['subtitle'], F_TAG, tw):
             d.text((x, y), ln, font=F_TAG, fill=RUST); y += 52
         track(d, (x, H - 98), 'HOME-STUDY LESSON', F_EYE, GREEN)
+
+    elif str(s['n']) in cfg.get('artPlan', {}):
+        # Guilds alternates complete teaching pictures with quiet text cards. Keep each picture
+        # whole; the player supplies the heading and the exact readable narration underneath.
+        planned = cfg['artPlan'][str(s['n'])]
+        im = Image.open(illus).convert('RGB')
+        if planned['layout'] == 'scene':
+            im = fit(im, W, H)
+            img.paste(im, ((W-im.width)//2, (H-im.height)//2))
+        else:
+            eyebrow(d, x, 64, EYE)
+            y = 136
+            for ln in wrap(d, s['title'], F_TITLE, W - 2*x):
+                d.text((x,y),ln,font=F_TITLE,fill=GREEN); y += 72
+            top = y + 20
+            im = fit(im, W - 2*x, H - top - 105)
+            img.paste(im, ((W-im.width)//2, top + (H-top-105-im.height)//2))
 
     elif s.get('watch') and illus:
         eyebrow(d, x, 64, EYE + ' · Animation')
@@ -417,7 +452,7 @@ for s in cfg['slides']:
             except Exception:
                 pass
 
-    if s['n'] != 1:
+    if s['n'] != 1 and cfg.get('artPlan', {}).get(str(s['n']), {}).get('layout') != 'scene':
         d.text((x, H - 62), cfg.get('footer') or '', font=F_FOOT, fill=MUTED)
         d.text((W - 132, H - 62), '%d/%d' % (s['n'], total), font=F_FOOT, fill=MUTED, anchor='ra')
 

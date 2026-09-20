@@ -48,11 +48,17 @@ test('exactly the modules that are really finished say so', () => {
 test('the in-progress label says what IS there, not what is missing', () => {
   // Every one of these modules has real, reviewed lesson content a farmer can use today. "Coming
   // soon" would be false and would hide finished teaching behind an apology.
-  const inProgress = readinessLabel('water-harvesting');
-  assert.ok(inProgress);
-  assert.match(inProgress!.text, /Lessons only/);
-  assert.match(inProgress!.detail, /ready/i);
-  assert.doesNotMatch(inProgress!.detail, /coming soon|not available|unavailable/i);
+  // Water gained a narrated deck. Test the actual readiness inputs instead of permanently
+  // pinning that module to "Lessons only", which would reject each legitimate media import.
+  for (const mod of COURSE_MODULES) {
+    const state = moduleReadinessDetail(mod.id);
+    if (state.readiness === 'complete') continue;
+    const label = readinessLabel(mod.id)!;
+    assert.equal(label.text, state.hasDeck && state.narrationLanguages.length > 0
+      ? 'Narrated slides' : 'Lessons only');
+    assert.match(label.detail, /ready/i);
+    assert.doesNotMatch(label.detail, /coming soon|not available|unavailable/i);
+  }
 
   const complete = readinessLabel('seeds-sovereignty');
   assert.match(complete!.text, /Fully built/);

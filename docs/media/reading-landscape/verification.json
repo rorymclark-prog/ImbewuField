@@ -1,0 +1,132 @@
+{
+  "module": "reading-landscape",
+  "clips": [
+    {
+      "slide": 5,
+      "file": "public/course-animations/reading-landscape/watch-05-water-movement.mp4",
+      "bytes": 542138,
+      "seconds": 14.0,
+      "sha256": "bd462a922248f12089a2c969f95f8edb45f8e17690e38cb2afaa4e4e86d7644e",
+      "poster_bytes": 86635,
+      "poster_sha256": "d9214c47f5912f2bcfe40e3f2a41cae123b5794a89417b13e9d3802283fc795a",
+      "audio": "public/course-audio/reading-landscape/en/slide-05.mp3",
+      "audio_sha256": "526ab298c413d4075c4dd2394c67d4f2c92d98243d87582d74bab52fbd37f149",
+      "audio_seconds": 7.896,
+      "full_decode": "pass",
+      "diagram_samples": 28,
+      "distinct_diagram_frames": 28,
+      "static_control": "fails motion requirement",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0123946872831797,
+          "transitions_over_0_05_percent": 26
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 8.425017345623947e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 9,
+      "file": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
+      "bytes": 192487,
+      "seconds": 14.0,
+      "sha256": "02392d4efc7b444b8250902acc68cce76e5c2528a73a0b5736c7aad1a8c3db93",
+      "poster_bytes": 83069,
+      "poster_sha256": "6e30449b9b7e39c1a12787a55d16ac6592e8f0ce37e99a3a5c53665c642c9d65",
+      "audio": "public/course-audio/reading-landscape/en/slide-09.mp3",
+      "audio_sha256": "69a8af59c23f7d7c20c05c72237bc59a49f7f0c2ef43d2e90f5c36b8bac532e6",
+      "audio_seconds": 7.584,
+      "full_decode": "pass",
+      "diagram_samples": 28,
+      "distinct_diagram_frames": 28,
+      "static_control": "fails motion requirement",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.01689959361681039,
+          "transitions_over_0_05_percent": 26
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 6.442660323124195e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 13,
+      "file": "public/course-animations/reading-landscape/watch-13-wind-cold-air.mp4",
+      "bytes": 373296,
+      "seconds": 14.0,
+      "sha256": "ee34bf369f8413f489492975c15daea98815cd3f2d137923f941b70edfa11a69",
+      "poster_bytes": 87626,
+      "poster_sha256": "3fbb87e6f8723e26f53c2c1e173e6e26bd682b24d51d5c6a085256fc40994427",
+      "audio": "public/course-audio/reading-landscape/en/slide-13.mp3",
+      "audio_sha256": "b8078a76d6919bd7f5edd38ec48888bc4a66c77f8ef778665dd404f6add5bd0e",
+      "audio_seconds": 8.256,
+      "full_decode": "pass",
+      "diagram_samples": 28,
+      "distinct_diagram_frames": 28,
+      "static_control": "fails motion requirement",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.4905887600356824,
+          "transitions_over_0_05_percent": 26
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0001511547229656061,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 17,
+      "file": "public/course-animations/reading-landscape/watch-17-site-map.mp4",
+      "bytes": 116306,
+      "seconds": 14.0,
+      "sha256": "c6abe9edcb3f9d91152064060adb3dab45f0a3ba9456982bd38c0ef7565c9b99",
+      "poster_bytes": 96235,
+      "poster_sha256": "a83c090706d805831a391de7d5814b7f9258019f53aed752e09c20150003946f",
+      "audio": "public/course-audio/reading-landscape/en/slide-17.mp3",
+      "audio_sha256": "762049394cb66c910c37106ae89c55b1d87bcc41b3e7cdbcdb403ab15f93c6c0",
+      "audio_seconds": 9.672,
+      "full_decode": "pass",
+      "diagram_samples": 28,
+      "distinct_diagram_frames": 28,
+      "static_control": "fails motion requirement",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.012835761720685896,
+          "transitions_over_0_05_percent": 23
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 8.672811973436416e-05,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    }
+  ],
+  "review_reel": {
+    "filename": "reel-landscape-four-slot-en-review.mp4",
+    "size_bytes": 1525210,
+    "sha256": "9652b3591579f4db2100543c0011032369a3feb5a82fecebd87576da94b6128d",
+    "seconds": 56.041016
+  },
+  "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
+}

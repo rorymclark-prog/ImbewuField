@@ -1,0 +1,50 @@
+[
+  {
+    "module": "water-harvesting",
+    "slides": 24,
+    "script_sha256": "84898e3528e0ebac13744f1e47dd9269d64ff6bfd93c795bc2622e08028c8358",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/water-harvesting/contact.jpg"
+  },
+  {
+    "module": "intro-permaculture",
+    "slides": 22,
+    "script_sha256": "e3a24b5e232d7ff855872b5c4dca035e04bf0a6b002c76151302aad0d1a160df",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/intro-permaculture/contact.jpg"
+  },
+  {
+    "module": "reading-landscape",
+    "slides": 21,
+    "script_sha256": "c66edba39be748bbec9ce4f50f357b4af5965c6fd0d47d261bbfbb8a4758930c",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/reading-landscape/contact.jpg"
+  },
+  {
+    "module": "soil-health",
+    "slides": 20,
+    "script_sha256": "333d9251a64a8ac7e80abebcc27cfb4cf6fc9cdbcbba466c5867328d6cf0b838",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/soil-health/contact.jpg"
+  },
+  {
+    "module": "vegetables-staples",
+    "slides": 18,
+    "script_sha256": "726acf4de748ec997fe8e717f2906f0ef33977c2846f3299613e73baf3dd8376",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/vegetables-staples/contact.jpg"
+  },
+  {
+    "module": "food-forest",
+    "slides": 20,
+    "script_sha256": "e874a9664e4986065ce10fc8b8a7051366df207a798c79aba73f9a393be8937d",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/food-forest/contact.jpg"
+  },
+  {
+    "module": "small-livestock",
+    "slides": 20,
+    "script_sha256": "59707c112ab57dc25e8858176741c4dbd3f8f98bf3ea1dfca655e7377779a081",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/small-livestock/contact.jpg"
+  },
+  {
+    "module": "market-community",
+    "slides": 20,
+    "script_sha256": "f1a56d0ad6eeda2461662f76b679988ba0dd0f1e8b2c5ac41a4b6abf3950f77f",
+    "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/market-community/contact.jpg"
+  }
+]

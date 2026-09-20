@@ -1,0 +1,151 @@
+{
+  "module": "vegetables-staples",
+  "narration_source_sha256": "0c2e278a105e65fb057eb79dbbe5ff00b41065e42524e474adea5541e00cf0ae",
+  "slides": [
+    {
+      "slide": 1,
+      "file": "public/course-decks/vegetables-staples/en/slide-01.jpg",
+      "bytes": 141369,
+      "sha256": "1138f731fb558e8bfb46e09d912bd64a3f8b5b74000cb6eda7b503ae257b3cd6",
+      "audio_sha256": "aef103174f804067d8070d8803fb16504247016c41a745c026f731536a77b7bf",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 2,
+      "file": "public/course-decks/vegetables-staples/en/slide-02.jpg",
+      "bytes": 80280,
+      "sha256": "ce5144179c8833d9b06b30aac8d5e5f411486baf5d5bc3189702dff15bd3857c",
+      "audio_sha256": "f3e0ff72b220c327ecafe2088dfe98fd2c0a3a64577df5683df1e78f7cd9ccc2",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 3,
+      "file": "public/course-decks/vegetables-staples/en/slide-03.jpg",
+      "bytes": 77630,
+      "sha256": "97cd0ab77e9c3cac03e1a65ac7f1d026680d12ea57aeb0bf1371194f1d08e6d4",
+      "audio_sha256": "be55538c43f67b7f4c647b56f3e28004d37a4375fbf291ee1b946934c3056fe9",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 4,
+      "file": "public/course-decks/vegetables-staples/en/slide-04.jpg",
+      "bytes": 95546,
+      "sha256": "aab5b989e39ced96f480e277067f4dcf0f240a90734f87d1130df4f08d970551",
+      "audio_sha256": "0da8479680a1a0bfb0e5f363d091db5bc2e65f5948f2f15f85a9a8ea29ff4a7c",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 5,
+      "file": "public/course-decks/vegetables-staples/en/slide-05.jpg",
+      "bytes": 116198,
+      "sha256": "903ccfd540fd4404e46d87c503b98db2bbfeee542b405a488be40fc9e8040baf",
+      "audio_sha256": "5628030c6480b556c17b860d5de2a4818d3072524dfc69c94efd63ca80934248",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 6,
+      "file": "public/course-decks/vegetables-staples/en/slide-06.jpg",
+      "bytes": 94122,
+      "sha256": "657af5e0bfed77babfa929e90d173204459c1b41797e15d21c090580881ad7de",
+      "audio_sha256": "0daa0ccd44f06bc7db3b2f9b104e838c99255eacab2608a5053381faff59f80e",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 7,
+      "file": "public/course-decks/vegetables-staples/en/slide-07.jpg",
+      "bytes": 96486,
+      "sha256": "4ed9f0195fff9ecfdf924ce47fec3cfb55fb075284b39bf73e0865e19416e1bc",
+      "audio_sha256": "2722e3a16a22f973924441954b69da7e5477d57501a7d4f4d4510c8140320601",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 8,
+      "file": "public/course-decks/vegetables-staples/en/slide-08.jpg",
+      "bytes": 103236,
+      "sha256": "8858d69b59cfaaa94d1616e57e80d48d51426084bf92c5859c9ea164ae03dace",
+      "audio_sha256": "f3632b6a1239cab65dc86f6c20e8e339af8d7dc0713068798e5fd1231612ea15",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 9,
+      "file": "public/course-decks/vegetables-staples/en/slide-09.jpg",
+      "bytes": 101003,
+      "sha256": "88430835a8cfc13c784c2e04a1e57753eb298abcf6f991595ab24010f3af12f5",
+      "audio_sha256": "f35bf3a419abbb6525ed990a8412e5e2f53547ea4aa0b93de70eb40d938f9b47",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 10,
+      "file": "public/course-decks/vegetables-staples/en/slide-10.jpg",
+      "bytes": 96002,
+      "sha256": "4b32e0d98dee8019e63a4b2b3d634974183d1ac413c43a19131a88544f1abdd0",
+      "audio_sha256": "49bcb5990f5a22d2997f2b5857080222f1ac5fd66a7adba864a8157cd886c984",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 11,
+      "file": "public/course-decks/vegetables-staples/en/slide-11.jpg",
+      "bytes": 93223,
+      "sha256": "7fe2253972563a8b2acb7ba779c3853046c8c7a1af12c699553139a29700bccc",
+      "audio_sha256": "b8ba2297e4bcb79ecf2eeae9f1a9b9009a1698c635e5eccfaf84d0770b57b991",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 12,
+      "file": "public/course-decks/vegetables-staples/en/slide-12.jpg",
+      "bytes": 93687,
+      "sha256": "6ce76a7d10788d11067a5160ed48553f44a7db13d259aa3122758176355fe95b",
+      "audio_sha256": "238edaae1a232759c1db6d172d2b6b9ee247ef9c19024cd4dcfd3758773b9973",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 13,
+      "file": "public/course-decks/vegetables-staples/en/slide-13.jpg",
+      "bytes": 115089,
+      "sha256": "e67894bf390983bdcfe5a70dce8d004cb2cd1c9beb1567a599670ec8a8a90066",
+      "audio_sha256": "b64b1ef931ecd220879a0d84329c691c41beb355d4dbf959e7d6941be8610e27",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 14,
+      "file": "public/course-decks/vegetables-staples/en/slide-14.jpg",
+      "bytes": 99558,
+      "sha256": "cc2cee06139e651d5f8e8f00a1a61ad1ce462a2c70fec75070806e9f56c265e8",
+      "audio_sha256": "b3ab7b3fce8508d6516524c22e8a213100bb688f11f9fb959da7ccceaa1dba71",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 15,
+      "file": "public/course-decks/vegetables-staples/en/slide-15.jpg",
+      "bytes": 99438,
+      "sha256": "a40040239442c79801213619b30638e0498d545a84ef661d8719163251e08c68",
+      "audio_sha256": "6ac1004a767f554f282da5b3549fe6e9882809b14d59a15a67820c972c97ac30",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 16,
+      "file": "public/course-decks/vegetables-staples/en/slide-16.jpg",
+      "bytes": 89428,
+      "sha256": "0aeed44f6de965e6479406d26d207f540dcdb577e56e4351358a31aa3dc31dfc",
+      "audio_sha256": "d308c84ed0653b1069a4000ed48471f4fe9f3b3ad44f285db67b1c6c3af067fa",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 17,
+      "file": "public/course-decks/vegetables-staples/en/slide-17.jpg",
+      "bytes": 90170,
+      "sha256": "f13bf8f5354f9e941e5c88d819c6ef26823fad3bff6f9d0135440283cd096443",
+      "audio_sha256": "810f60dea7ce9d00795738b20c40ad03b55f7f48719a7f5246c776c0b3c8d25a",
+      "audio_full_decode": "pass"
+    },
+    {
+      "slide": 18,
+      "file": "public/course-decks/vegetables-staples/en/slide-18.jpg",
+      "bytes": 96181,
+      "sha256": "25393feb9400e64ca6fb031ec2766af4cd682023b7f25ae99136c2529e41d131",
+      "audio_sha256": "d14b3cab99dc649d5b660b98c2143e8d182a76f558afd0709d6f5ef0654e06af",
+      "audio_full_decode": "pass"
+    }
+  ],
+  "authored_watch_slots": 0
+}
