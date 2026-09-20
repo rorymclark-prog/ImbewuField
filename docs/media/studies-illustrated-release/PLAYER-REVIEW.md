@@ -11,3 +11,13 @@ Local branch reviewed at 390 × 844 in the real Studies interface, using the sam
 English corrected recordings: word-boundary text matches the authored script, the last word fits inside the clip, full FFmpeg decoding succeeds and importer pacing checks pass. These are mechanical checks, not fluent-language or specialist approval. isiZulu corrections remain unapproved drafts; outdated draft recordings are excluded from the refreshed review pack.
 
 Local checks at c5688fe: TypeScript clean; 3,635 tests, 3,634 pass, zero failures, one existing shape-sync TODO; whitespace check clean. The curated review pack has 165 English slides, 33 animations, source-linked review notes and 15 reserve modules/51 lessons. It excludes raw private source documents and recovery archives.
+
+## Deployed preview — 3510d4c
+
+Preview build-info confirmed the exact branch/SHA and current release notes. Public Home → Take a tour → stop 3 opened Studies without sign-in or changing real learner data. Practice quiz feedback showed the incorrect choice, correct choice and rationale; reopening the local practice lesson reset its attempt.
+
+The deployed service worker controlled the page. Market download stored 51 files. Applying the corrected-media update left 30 unchanged assets and displayed “Finish download · 2.8 MB left”; completing that resumed from 30/51 rather than downloading the whole module again. The migration marker was present.
+
+With CDP network emulation set offline, a full page reload successfully loaded Studies, the downloaded image and course controls. Market slide 1 narration played (15.696 s, readyState 4). Slide 15 then played its downloaded Flow video (8 s) and narration (23.664 s), both advancing without media errors. The visible Offline indicator and rendered scene were inspected. Networking was restored afterwards. This verifies a new page load in the existing browser session; it does not claim every phone/browser has been physically restarted offline.
+
+Final code checks including cache migration: TypeScript clean; 3,636 tests, 3,635 pass, zero failures, one existing TODO. GitHub push and PR test/rules jobs all succeeded for 3510d4c. Preview deploy succeeded. Production publication and post-deploy checks are the remaining release step.
