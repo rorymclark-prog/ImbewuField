@@ -199,7 +199,18 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14 },
 };
 
+// Each Food Forest Watch scene follows its existing narration.
+const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'watch-05-seven-layers', poster: 'watch-05-seven-layers', bytes: 222959, seconds: 14 },
+  10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 166270, seconds: 14 },
+  15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 196132, seconds: 14 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'food-forest': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
+  },
   'vegetables-staples': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('vegetables-staples', {}),

@@ -1,0 +1,93 @@
+{
+  "module": "food-forest",
+  "clips": [
+    {
+      "slide": 5,
+      "file": "public/course-animations/food-forest/watch-05-seven-layers.mp4",
+      "bytes": 222959,
+      "seconds": 14.0,
+      "sha256": "e22f7e07a81037572a007e5eaf012d992c12ded8f58e88a9f4556f5925e77bb5",
+      "poster_bytes": 120803,
+      "poster_sha256": "c84779549bf2eed19b3159f2a2d3fc159b338d7565d4f942b320560258fb281f",
+      "audio": "public/course-audio/food-forest/en/slide-05.mp3",
+      "audio_sha256": "ddabf19cd57000c75b8f6db8efad04b64692f0ce7841ba7dfb737d95736c3ff0",
+      "audio_seconds": 10.488,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.053813559322033896,
+          "transitions_over_0_05_percent": 22
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00021310337991872335,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 10,
+      "file": "public/course-animations/food-forest/watch-10-climate-match.mp4",
+      "bytes": 166270,
+      "seconds": 14.0,
+      "sha256": "61d453ffaab3aee985c87715c7786bd376a313c28e48a8b67b87b82f6eae79d9",
+      "poster_bytes": 128482,
+      "poster_sha256": "0cfff5896f4466c0674fa40b111b85feb4df64cf5e94ee0b7c4babbc853a0571",
+      "audio": "public/course-audio/food-forest/en/slide-10.mp3",
+      "audio_sha256": "abdf33f6166c249c4d773c92d030c5392f9971305384c2ca7d341967e0718c24",
+      "audio_seconds": 11.976,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.038078600455942115,
+          "transitions_over_0_05_percent": 18
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00020814748736247397,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    },
+    {
+      "slide": 15,
+      "file": "public/course-animations/food-forest/watch-15-forest-sequence.mp4",
+      "bytes": 196132,
+      "seconds": 14.0,
+      "sha256": "26035a0d28a651afe9f539fe8987a57bab0d98a6003a1ba2105c416e2c800115",
+      "poster_bytes": 113351,
+      "poster_sha256": "a3315dfb45be78fe16e8b24d0d87d3b0cd643cce11dc078397d419d3d13b6212",
+      "audio": "public/course-audio/food-forest/en/slide-15.mp3",
+      "audio_sha256": "7014ff3bed6800803e3af42818cacb21f2c2cab8f36fbf6af09d26dae58b1f0d",
+      "audio_seconds": 10.104,
+      "full_decode": "pass",
+      "captions_match_full_authored_watch_text": true,
+      "motion_pixel_check": {
+        "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
+        "actual": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.0654747745068887,
+          "transitions_over_0_05_percent": 21
+        },
+        "independently_encoded_static_poster_control": {
+          "transitions": 27,
+          "largest_changed_pixel_fraction": 0.00020071364852809992,
+          "transitions_over_0_05_percent": 0
+        }
+      }
+    }
+  ],
+  "review_reel": {
+    "filename": "reel-forest-three-slot-en-review.mp4",
+    "size_bytes": 886862,
+    "sha256": "70a26f0d9e2062c9dd147a049d1f4cb01c80f762cdb905df40036e82815ee088",
+    "seconds": 42.041016
+  },
+  "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
+}

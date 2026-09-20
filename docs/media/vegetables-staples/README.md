@@ -14,6 +14,6 @@ Supply the original lesson-one art as `ART/slide-01.jpg`, padded to 1076×1080. 
 
 The local app displayed the registered deck with its title image at 1920×1080 and played the original narration at readyState 4 with advancing time.
 
-No physical-device or fluent-language sign-off is claimed. Deployed disconnected playback is checked after the branch preview builds.
+No physical-device or fluent-language sign-off is claimed. The deployed preview saved all 40 files (5.3 MB). With tab networking disabled, slides 1, 9 and 18 displayed their 1920-pixel images and played the corresponding narration at readyState 4 with advancing time. Networking was restored afterwards.
 
 Local `npx tsc --noEmit`, the full suite (3,632 pass, zero failures, one existing TODO) and `git diff --check` passed in order.

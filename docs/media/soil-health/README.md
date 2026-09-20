@@ -16,7 +16,7 @@ Antigravity supplied the local Pillow/FFmpeg renderer. Codex reviewed the code a
 
 All three H.264/yuv420p, 24 fps, faststart clips fully decoded, with one silent video stream each. `verification.json` records bytes, durations, source/audio/poster hashes, full-caption matching and diagram-only motion measurements. Motion checks at 2 fps reject compression noise and require at least eight materially changing transitions. Independently encoded frozen-poster controls are required to have none.
 
-Phase contacts, the corrected rain sequence and the complete 20-slide contact sheet were visually inspected. The local app showed the Soil deck and played the living-soil video with its original narration at readyState 4 and advancing time. No physical-device or fluent-language review is claimed. Deployed disconnected playback is checked after the preview builds; Reading and Introduction passed the same saved-pack/player path.
+Phase contacts, the corrected rain sequence and the complete 20-slide contact sheet were visually inspected. The local app showed the Soil deck and played the living-soil video with its original narration at readyState 4 and advancing time. No physical-device or fluent-language review is claimed. The deployed preview saved 49 files (5.4 MB); with its tab connection disabled, all three Watch video/audio pairs played at readyState 4 with advancing time. The connection was restored afterwards. Reading and Introduction also passed disconnected playback.
 
 Local `npx tsc --noEmit`, `npm test` (3,632 pass, zero failures, one existing TODO) and `git diff --check` passed in order.
 

@@ -3,9 +3,15 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 719 files, 207.4 MB total.
+// 745 files, 210.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
+  '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 120803,
+  '/course-animations/food-forest/posters/watch-10-climate-match.jpg': 128482,
+  '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg': 113351,
+  '/course-animations/food-forest/watch-05-seven-layers.mp4': 222959,
+  '/course-animations/food-forest/watch-10-climate-match.mp4': 166270,
+  '/course-animations/food-forest/watch-15-forest-sequence.mp4': 196132,
   '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg': 94537,
   '/course-animations/intro-permaculture/posters/watch-13-diversity.jpg': 86777,
   '/course-animations/intro-permaculture/posters/watch-19-windbreak.jpg': 76681,
@@ -414,6 +420,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/water-harvesting/en/slide-22.mp3': 101952,
   '/course-audio/water-harvesting/en/slide-23.mp3': 58176,
   '/course-audio/water-harvesting/en/slide-24.mp3': 99648,
+  '/course-decks/food-forest/en/slide-01.jpg': 347541,
+  '/course-decks/food-forest/en/slide-02.jpg': 105416,
+  '/course-decks/food-forest/en/slide-03.jpg': 102914,
+  '/course-decks/food-forest/en/slide-04.jpg': 116506,
+  '/course-decks/food-forest/en/slide-05.jpg': 174407,
+  '/course-decks/food-forest/en/slide-06.jpg': 96767,
+  '/course-decks/food-forest/en/slide-07.jpg': 109795,
+  '/course-decks/food-forest/en/slide-08.jpg': 119751,
+  '/course-decks/food-forest/en/slide-09.jpg': 115009,
+  '/course-decks/food-forest/en/slide-10.jpg': 176809,
+  '/course-decks/food-forest/en/slide-11.jpg': 113182,
+  '/course-decks/food-forest/en/slide-12.jpg': 118704,
+  '/course-decks/food-forest/en/slide-13.jpg': 126102,
+  '/course-decks/food-forest/en/slide-14.jpg': 102914,
+  '/course-decks/food-forest/en/slide-15.jpg': 159270,
+  '/course-decks/food-forest/en/slide-16.jpg': 108574,
+  '/course-decks/food-forest/en/slide-17.jpg': 114390,
+  '/course-decks/food-forest/en/slide-18.jpg': 92678,
+  '/course-decks/food-forest/en/slide-19.jpg': 115263,
+  '/course-decks/food-forest/en/slide-20.jpg': 102323,
   '/course-decks/intro-permaculture/en/slide-01.jpg': 132648,
   '/course-decks/intro-permaculture/en/slide-02.jpg': 112895,
   '/course-decks/intro-permaculture/en/slide-03.jpg': 111928,
