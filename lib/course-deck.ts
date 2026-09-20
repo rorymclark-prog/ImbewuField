@@ -184,7 +184,19 @@ const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   19: { src: 'watch-19-windbreak', poster: 'watch-19-windbreak', bytes: 284869, seconds: 23.708008 },
 };
 
+// Reading the Landscape keeps its four authored Watch scenes in teaching order.
+const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'watch-05-water-movement', poster: 'watch-05-water-movement', bytes: 542138, seconds: 14 },
+  9: { src: 'watch-09-sun-shadows', poster: 'watch-09-sun-shadows', bytes: 192487, seconds: 14 },
+  13: { src: 'watch-13-wind-cold-air', poster: 'watch-13-wind-cold-air', bytes: 373296, seconds: 14 },
+  17: { src: 'watch-17-site-map', poster: 'watch-17-site-map', bytes: 116306, seconds: 14 },
+};
+
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
+  'reading-landscape': {
+    slideLanguages: ['en'],
+    slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
+  },
   'intro-permaculture': {
     slideLanguages: ['en'],
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),

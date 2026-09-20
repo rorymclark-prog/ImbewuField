@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 646 files, 198.8 MB total.
+// 675 files, 202.5 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg': 94537,
@@ -37,6 +37,14 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg': 326728,
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg': 238549,
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg': 240698,
+  '/course-animations/reading-landscape/posters/watch-05-water-movement.jpg': 86635,
+  '/course-animations/reading-landscape/posters/watch-09-sun-shadows.jpg': 83069,
+  '/course-animations/reading-landscape/posters/watch-13-wind-cold-air.jpg': 87626,
+  '/course-animations/reading-landscape/posters/watch-17-site-map.jpg': 96235,
+  '/course-animations/reading-landscape/watch-05-water-movement.mp4': 542138,
+  '/course-animations/reading-landscape/watch-09-sun-shadows.mp4': 192487,
+  '/course-animations/reading-landscape/watch-13-wind-cold-air.mp4': 373296,
+  '/course-animations/reading-landscape/watch-17-site-map.mp4': 116306,
   '/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_01.mp4': 640574,
   '/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_02.mp4': 1145431,
   '/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_03.mp4': 634341,
@@ -524,6 +532,27 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/plant-guilds/zu/slide-49.jpg': 125206,
   '/course-decks/plant-guilds/zu/slide-50.jpg': 362063,
   '/course-decks/plant-guilds/zu/slide-51.jpg': 109124,
+  '/course-decks/reading-landscape/en/slide-01.jpg': 136085,
+  '/course-decks/reading-landscape/en/slide-02.jpg': 99332,
+  '/course-decks/reading-landscape/en/slide-03.jpg': 118089,
+  '/course-decks/reading-landscape/en/slide-04.jpg': 86742,
+  '/course-decks/reading-landscape/en/slide-05.jpg': 140093,
+  '/course-decks/reading-landscape/en/slide-06.jpg': 100687,
+  '/course-decks/reading-landscape/en/slide-07.jpg': 99580,
+  '/course-decks/reading-landscape/en/slide-08.jpg': 100581,
+  '/course-decks/reading-landscape/en/slide-09.jpg': 142558,
+  '/course-decks/reading-landscape/en/slide-10.jpg': 103392,
+  '/course-decks/reading-landscape/en/slide-11.jpg': 104732,
+  '/course-decks/reading-landscape/en/slide-12.jpg': 100260,
+  '/course-decks/reading-landscape/en/slide-13.jpg': 143813,
+  '/course-decks/reading-landscape/en/slide-14.jpg': 83580,
+  '/course-decks/reading-landscape/en/slide-15.jpg': 123539,
+  '/course-decks/reading-landscape/en/slide-16.jpg': 94432,
+  '/course-decks/reading-landscape/en/slide-17.jpg': 159032,
+  '/course-decks/reading-landscape/en/slide-18.jpg': 91441,
+  '/course-decks/reading-landscape/en/slide-19.jpg': 89446,
+  '/course-decks/reading-landscape/en/slide-20.jpg': 96717,
+  '/course-decks/reading-landscape/en/slide-21.jpg': 97245,
   '/course-decks/seeds-sovereignty/en/slide-01.jpg': 152319,
   '/course-decks/seeds-sovereignty/en/slide-02.jpg': 84917,
   '/course-decks/seeds-sovereignty/en/slide-03.jpg': 52417,
