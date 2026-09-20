@@ -16,6 +16,9 @@ for group in ns['objects']:
     drop,crown,spray,grains,puddle=group
     for ob in [drop,crown,*spray,*grains,puddle]:bpy.data.objects.remove(ob,do_unlink=True)
 
+if a.terrain:
+    terrain=runpy.run_path(str(ROOT/'terrain-scene.py'));origin,visible_ground=terrain['build'](scene,a.focus=='mulch')
+
 bpy.ops.mesh.primitive_cube_add(size=1,location=origin+Vector((0,0,1.6)))
 domain=bpy.context.object;domain.name='Liquid domain';domain.dimensions=(4,4,4.2)
 bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
@@ -23,11 +26,13 @@ mod=domain.modifiers.new('Liquid domain','FLUID');mod.fluid_type='DOMAIN';ds=mod
 for name in ['use_collision_border_front','use_collision_border_back','use_collision_border_left','use_collision_border_right','use_collision_border_top']:
     if hasattr(ds,name):setattr(ds,name,False)
 domain.data.materials.append(ns['water'])
+for poly in domain.data.polygons:poly.use_smooth=True
 
-bpy.ops.mesh.primitive_cube_add(size=1,location=origin+Vector((0,0,-.25)))
-ground=bpy.context.object;ground.name='Collision surface';ground.dimensions=(8,8,.5)
-bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
-mod=ground.modifiers.new('Impact collision','FLUID');mod.fluid_type='EFFECTOR';ground.hide_render=True
+if not a.terrain:
+    bpy.ops.mesh.primitive_cube_add(size=1,location=origin+Vector((0,0,-.25)))
+    ground=bpy.context.object;ground.name='Collision surface';ground.dimensions=(8,8,.5)
+    bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+    mod=ground.modifiers.new('Impact collision','FLUID');mod.fluid_type='EFFECTOR';ground.hide_render=True
 # The floor is a non-absorbing simulation boundary, not a model of this soil's pores.
 bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=24,radius=.28,location=origin+Vector((0,0,2.8)))
 flow=bpy.context.object;flow.name='Initial liquid drop';mod=flow.modifiers.new('Initial liquid','FLUID');mod.fluid_type='FLOW';fs=mod.flow_settings;fs.flow_type='LIQUID';fs.flow_behavior='GEOMETRY';flow.hide_render=True

@@ -7,7 +7,7 @@ import bpy, math, random, sys, argparse
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent
-p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--frame',type=int,default=76);p.add_argument('--samples',type=int,default=64);p.add_argument('--animation',action='store_true');p.add_argument('--gpu',action='store_true');p.add_argument('--width',type=int,default=1600);p.add_argument('--setup-only',action='store_true');p.add_argument('--focus',choices=['both','bare','mulch'],default='both')
+p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--frame',type=int,default=76);p.add_argument('--samples',type=int,default=64);p.add_argument('--animation',action='store_true');p.add_argument('--gpu',action='store_true');p.add_argument('--width',type=int,default=1600);p.add_argument('--terrain',action='store_true');p.add_argument('--setup-only',action='store_true');p.add_argument('--focus',choices=['both','bare','mulch'],default='both')
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:]);a.out.mkdir(parents=True,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=a.samples;scene.cycles.use_denoising=True

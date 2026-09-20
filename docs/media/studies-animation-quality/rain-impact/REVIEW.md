@@ -52,3 +52,15 @@ Reproduction:
 `--gpu` is opt-in because Metal shader compilation crashed on this host; CPU renders completed successfully. The `.blend` and simulation cache are review outputs, not app assets. Blender 5.2.2 came from the official Homebrew cask; no paid animation credits were used in this iteration.
 
 Verification on the app baseline: typecheck clean; 3,639 tests, 3,638 passes, zero failures, one pre-existing TODO; `git diff --check` clean. These validate repository compatibility, not visual acceptance.
+
+## Coherent terrain checkpoint — 21 September 2026
+
+`terrain-scene.py` replaces the photo receiver with an actual closed soil surface and irregular aggregate geometry. Both the visible soil and curled leaf meshes participate in liquid collision. The same deterministic ground, camera and initial drop are used before adding cover. This removes the earlier mismatch between a flat collision plane and a photograph of uneven soil.
+
+New built-in image-generation textures are retained as `soil-albedo.png` and `leaf-albedo.png`, with their exact prompts. They are generated material references, not field photographs. Images are packed into review blend files; no paid Flow credits were used for this checkpoint. A sparse aggregate version was rejected because it resembled scattered boulders. The denser textured scene was inspected at bare-surface frames 38 and 44; covered-surface frames 32 and 44 show the drop contacting the leaf mesh. A matching smooth-normal/lighting pass and full motion review remain outstanding.
+
+The current model does **not** detach soil grains and treats the ground as non-absorbing. It can illustrate which surface a drop contacts first; it does not demonstrate erosion quantities, infiltration or the result of a whole storm. Do not label this a field experiment. The leaf texture repeats visibly and the liquid remains an enlarged CG study. This checkpoint is **not approved for publication**.
+
+Reproduce each scene with `simulate-impact.py -- --out <folder> --frame 44 --samples 32 --width 1200 --focus bare --terrain` (replace `bare` with `mulch` for cover), then open `<folder>/liquid-proof.blend` and run `shade-terrain.py -- <folder>`. CPU rendering remains the supported local path.
+
+Repository verification: typecheck clean; 3,639 tests, 3,638 passes, zero failures, one existing TODO; whitespace check clean. The public slide and narration remain unchanged.
