@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '20 September 2026', sha: 'c9194d7', changes: [
+    'Food Forest now guides you through seven planting layers in a detailed illustrated garden.',
+    'Each highlighted layer has a clear label and matching narration.',
+    'Save Food Forest again to use its updated picture and audio offline.',
+  ] },
   { when: '20 September 2026', sha: '802d223', changes: [
     'Small Livestock now shows lifelike hens foraging after harvest.',
     'The new chicken scene has matching narration and readable lesson text.',
