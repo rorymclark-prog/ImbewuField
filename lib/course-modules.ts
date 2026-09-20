@@ -709,7 +709,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Hybrids can't be planted in South Africa"
             ],
             "correct": 1,
-            "rationale": "Hybrids are a one-time genetic cross — their seed grows into something different from the parent, which defeats the purpose of saving it."
+            "rationale": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed."
           },
           {
             "q": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
@@ -775,12 +775,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
         infographicAlt: "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
         title: "Why Seed Saving Matters",
-        body: "Open-pollinated seed breeds true, season after season — plant it, save it, and the next generation matches the parent. Hybrid, or F1, seed is a one-time cross bred for uniform commercial traits; its saved seed grows into something unpredictable, often far less productive. That's not an accident — it's what keeps farmers buying new seed every season.\n\nSeed sovereignty means the freedom to grow, save, and share seed without depending on a seed company for every planting. It matters more as climate becomes less predictable: a wide pool of locally adapted varieties gives your household and community more chance of having something that survives a bad season.\n\nThis season, pick one crop and commit to saving seed from your best plant — not your biggest harvest, your healthiest plant.",
+        body: "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
         keyPoints: [
-          "Open-pollinated seed breeds true; hybrid (F1) seed does not",
+          "Stable open-pollinated varieties need suitable pollination management",
           "Seed sovereignty means freedom from depending on a seed company every season",
           "Genetic diversity across many saved varieties is real protection against climate unpredictability",
-          "Select seed from your healthiest plant, not simply your biggest harvest",
+          "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
         ],
         quiz: [
           {
@@ -810,27 +810,27 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "seeds-sovereignty-l2",
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l2.jpg",
-        infographicAlt: "Two ways to save seed. Dry method: pods dry on the plant, then seed is collected. Wet method: seed ferments in water until a film forms, then is rinsed and dried.",
+        infographicAlt: "Dry seed is collected from mature pods. The tomato wet-method example shows brief fermentation, rinsing and drying.",
         title: "How to Save Seed: Dry and Wet Methods",
-        body: "Dry-method crops — beans, peas, maize, sunflower — are left to dry fully on the plant before you collect and store the seed. Simple and low-risk.\n\nWet-method crops — tomatoes, cucumbers, squash — need their seed separated from pulp that contains natural germination inhibitors. Scoop the seed and pulp into a jar with a little water, let it ferment two to three days until a light mould film forms on top, then rinse and dry the seed thoroughly before storing.\n\nIsolation distance matters to keep varieties pure. Tomatoes self-pollinate and need very little isolation. Maize cross-pollinates by wind over long distances and needs real separation between varieties, or hand-pollination if you're growing more than one type in a small space. Try the tomato fermentation method this season — it's the easiest wet-method entry point.",
+        body: "Dry seed must mature before collection. Clean away chaff and damaged seed, then finish drying with shade and airflow.\n\nSeed in fleshy fruit needs a crop-specific method. Tomato seed can be briefly fermented to help remove its gel, then rinsed and dried thoroughly. Keep an active jar open or loosely covered. Fermentation is not required for every wet-seeded crop and does not guarantee disease-free seed.\n\nPollination matters too. Maize is wind-pollinated and can cross with other varieties. Tomatoes mostly self-pollinate, but crossing is possible. Check the crop and variety before planning isolation or saving seed.",
         keyPoints: [
           "Dry-method crops (beans, maize, sunflower) simply dry on the plant before collection",
 
-          "Wet-method crops (tomato, cucumber) need pulp fermented off before drying the seed",
+          "Tomato fermentation removes gel; other wet seeds need their own processing method",
           "Tomatoes need little isolation; maize needs real distance between varieties to stay pure",
-          "Fermenting tomato seed for 2-3 days removes natural germination inhibitors",
+          "Rinse processed tomato seed and dry it thoroughly before storage",
         ],
         quiz: [
           {
-            q: "Why ferment tomato seed in water for a few days before drying it, rather than drying it straight from the fruit?",
+            q: "What does brief fermentation help remove when processing tomato seed?",
             options: [
               "Fermentation improves the seed's flavour",
-              "It removes the pulp's natural germination inhibitors, which otherwise prevent good germination",
+              "It helps remove the gel around the seed before rinsing and drying",
               "It kills any pests inside the fruit",
               "It's purely traditional with no practical function",
             ],
             correct: 1,
-            rationale: "The gel around tomato seeds actively suppresses germination in nature — fermentation breaks that down so the seed germinates reliably next season.",
+            rationale: "Fermentation helps separate tomato seed from its gel. It is not a guarantee of germination or disease-free seed; dry, store and test the batch.",
           },
           {
             q: "Why does maize need much greater isolation distance than tomatoes to keep a variety pure?",

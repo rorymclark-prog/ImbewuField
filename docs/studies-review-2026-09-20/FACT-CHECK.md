@@ -71,3 +71,10 @@ Primary sources used for this pass (accessed 20 September 2026):
 - [South African agricultural-remedy registration](https://www.gov.za/services/fertilizers-farm-feeds-agricultural-remedies/agricultural-remedy) and [Department guidelines](https://www.nda.gov.za/index.php/publication/581-guidelines): use the local regulatory context; no homemade pesticide dose prescribed.
 
 Publication boundaries: isiZulu drafts affected by these changes are marked stale and held for reconciliation and fluent review. The inherited Seeds course and other unchanged technical claims have not received a complete new specialist review in this pass. The reserve modules below require the named local reviews before release.
+
+
+## Final written/narrated Seeds consistency check
+
+The existing English Seeds narration already qualified open-pollinated stability, F1 offspring variation and tomato-specific fermentation. The older written lesson did not. Aligned lessons 1–2, key points, tomato-processing quiz rationale and the related vegetable quiz rationale with that narration. Removed the unsupported claim that reduced performance was deliberately designed to force purchases, and the blanket instruction to ferment all fleshy-fruit seed. No new seed-processing duration, plant name or isolation distance was introduced.
+
+Checked against [University of Minnesota Extension, Saving vegetable seeds](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds), especially open-pollinated, hybrid, tomato and disease sections (20 September 2026). This targeted reconciliation does not certify every inherited Seeds recording or translation.
