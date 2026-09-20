@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+# Keep the recording, source and diagram together so reviewers can find the exact slide.
+from pathlib import Path
+import json,shutil,subprocess,html,re
+import argparse
+parser=argparse.ArgumentParser(description='Prepare unapproved Studies review material; never publishes learner assets.')
+parser.add_argument('--output',type=Path,required=True,help='Existing review pack with exported recordings')
+parser.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[1])
+args=parser.parse_args()
+repo=args.repo.resolve();pack=args.output.resolve();review=pack/'review';review.mkdir(exist_ok=True)
+mods={'water-harvesting':24,'intro-permaculture':22,'reading-landscape':21,'soil-health':20,'vegetables-staples':18,'food-forest':20,'small-livestock':20,'market-community':20};data=[]
+for module,count in mods.items():
+ en=review/'english'/module;en.mkdir(parents=True,exist_ok=True)
+ subprocess.run(['node','scripts/course-narration-export.mjs',module,'en',str(en)],cwd=repo,check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+ zu=pack/('water-harvesting-zu' if module=='water-harvesting' else module+'-zu-REVIEW')
+ slides=[]
+ for n in range(1,count+1):
+  shutil.copy2(repo/f'public/course-audio/{module}/en/slide-{n:02}.mp3',en/f'slide-{n:02}.mp3')
+  image=pack/f'isizulu-deck-REVIEW/{module}/slide-{n:02}.jpg';assert image.exists(),image
+  audio=zu/f'isizulu/Slide_{n:02}_isiZulu.mp3';assert audio.exists()
+  cliplist=list((repo/f'public/course-animations/{module}').glob(f'watch-{n:02}-*.mp4'));video=None
+  if cliplist:
+   dest=review/'animations'/module/cliplist[0].name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(cliplist[0],dest);video=str(dest.relative_to(pack))
+  slides.append({'n':n,'image':str(image.relative_to(pack)),'audioZu':str(audio.relative_to(pack)),'audioEn':str((en/f'slide-{n:02}.mp3').relative_to(pack)),'en':(en/f'slide-{n:02}.txt').read_text().strip(),'zu':(zu/f'slide-{n:02}.txt').read_text().strip(),'video':video})
+ data.append({'id':module,'name':module.replace('-',' ').title(),'slides':slides})
+page='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Imbewu Studies — language review</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f5f0e4;color:#203b29;font:17px/1.5 system-ui}header,main{max-width:1180px;margin:auto;padding:24px}header{padding-bottom:0}h1{font:36px Georgia;margin:12px 0}.notice{background:#793b2d;color:white;padding:12px 18px;border-radius:8px}.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;top:0;background:#f5f0e4;padding:12px 0;z-index:2}select,button{font:inherit;min-height:44px;border:1px solid #78917b;border-radius:7px;padding:8px 12px;background:white;color:#203b29}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}img,video{width:100%;height:auto;background:#eee}video{max-height:560px}audio{width:100%}.columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.card{background:#fffaf1;padding:18px;border:1px solid #dfd5c1;border-radius:8px}.copy{white-space:pre-wrap;color:#24251f}h2{margin-top:0;font-size:23px}details{margin:24px 0}a{color:#205735}small{display:block}textarea{width:100%;min-height:130px;font:inherit;padding:12px}footer{padding:20px 0}@media(max-width:700px){.columns{grid-template-columns:1fr}header,main{padding:14px}h1{font-size:28px}}
+</style><header><p>IMBEWUFIELD · REVIEW COPY</p><h1>Listen, read and check each slide</h1><p class="notice">Unapproved isiZulu drafts. These screens and recordings are for review only. English diagram labels still need localization. Mechanical checks are not fluent-language approval.</p></header><main><div class="toolbar"><label>Module <select id="module"></select></label><button id="previous">‹ Previous</button><label>Slide <select id="slide"></select></label><button id="next">Next ›</button></div><img id="slideImage" alt="Unapproved isiZulu review slide"><div class="columns"><section class="card"><h2>isiZulu review recording</h2><button id="playZu">Play isiZulu</button> <button id="stopZu">Stop isiZulu</button><p id="zuStatus">Ready to listen</p><audio id="zuAudio" preload="none"></audio><p id="zuText" class="copy"></p></section><section class="card"><h2>Original English reference</h2><button id="playEn">Play English</button> <button id="stopEn">Stop English</button><p id="enStatus">Ready to listen</p><audio id="enAudio" preload="none"></audio><p id="enText" class="copy"></p></section></div><details id="animationPanel"><summary>Compare the teaching animation (English labels)</summary><p><button id="playAnimation">Play animation</button> <button id="stopAnimation">Stop animation</button></p><video id="animation" controls preload="none"></video></details><section class="card"><h2>Reviewer notes</h2><p>Note the module and slide, the exact phrase, and the suggested correction. This page does not send or save notes to an account. Download notes before closing it.</p><textarea id="notes" aria-label="Reviewer notes" placeholder="Module / slide — wording or pronunciation — suggested correction"></textarea><button id="download">Download notes</button></section><footer><a href="START-HERE.md">Read the pack status and evidence</a> · <a href="case-study/mzomoyethu-case-study-en-review.mp4">Open the corrected Mzomoyethu English film</a><p>Use the separate audio players to compare the original narration with each draft. Nothing plays automatically. Changing slide stops playback.</p></footer></main><script>
+const modules=DATA;let mi=0,si=0;const $=id=>document.getElementById(id);modules.forEach((m,i)=>{$('module').add(new Option(m.name,i))});
+function renderModule(){mi=Number($('module').value);si=0;$('slide').replaceChildren();modules[mi].slides.forEach((s,i)=>$('slide').add(new Option(s.n,i)));render()}
+function render(){for(const id of ['zuAudio','enAudio','animation'])$(id).pause();const s=modules[mi].slides[si];$('slide').value=si;$('slideImage').src=s.image;$('slideImage').alt=modules[mi].name+' — unapproved isiZulu slide '+s.n;$('zuAudio').src=s.audioZu;$('enAudio').src=s.audioEn;$('zuText').textContent=s.zu;$('enText').textContent=s.en;$('animationPanel').open=false;$('animationPanel').hidden=!s.video;$('animation').removeAttribute('src');$('animation').load();$('previous').disabled=si===0;$('next').disabled=si===modules[mi].slides.length-1;}
+for(const lang of ['Zu','En']){const audio=$(lang.toLowerCase()+'Audio'),status=$(lang.toLowerCase()+'Status');$('play'+lang).onclick=async()=>{for(const id of ['zuAudio','enAudio'])$(id).pause();try{await audio.play()}catch(e){status.textContent='Could not play this file: '+e.message}};$('stop'+lang).onclick=()=>audio.pause();audio.addEventListener('timeupdate',()=>status.textContent=Math.floor(audio.currentTime)+' seconds / '+Math.floor(audio.duration||0)+' seconds');audio.addEventListener('ended',()=>status.textContent='Recording finished');}
+$('playAnimation').onclick=()=> $('animation').play();$('stopAnimation').onclick=()=> $('animation').pause();
+$('animationPanel').addEventListener('toggle',()=>{if($('animationPanel').open){$('animation').src=modules[mi].slides[si].video}else{$('animation').pause()}});$('module').addEventListener('change',renderModule);$('slide').addEventListener('change',()=>{si=Number($('slide').value);render()});$('previous').onclick=()=>{si--;render()};$('next').onclick=()=>{si++;render()};$('download').onclick=()=>{const blob=new Blob(['Imbewu Studies review notes — '+new Date().toISOString()+'\n\n'+$('notes').value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='imbewu-studies-review-notes.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};renderModule();
+</script></html>'''
+# JSON is data, never interpreted as markup or instructions.
+page=page.replace('DATA',json.dumps(data,ensure_ascii=False).replace('<','\\u003c'))
+# Preserve the JavaScript newline escapes embedded in the Python string literal.
+page=page.replace(".toISOString()+'\n\n'", ".toISOString()+'\\n\\n'")
+(pack/'REVIEW.html').write_text(page)
+print('Review page:',len(data),'modules',sum(len(m['slides']) for m in data),'slides')

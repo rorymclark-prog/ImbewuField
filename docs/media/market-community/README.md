@@ -16,7 +16,7 @@ Antigravity supplied a local Pillow/FFmpeg renderer. Codex inspected its code an
 
 The clips are 1280×720 H.264/yuv420p at 24 fps with faststart and no audio stream. Full decodes passed. Verification records file sizes, hashes, actual durations and caption/source-audio matching. Diagram-only motion checks give 18, 22 and 24 moving transitions; independently encoded frozen-poster controls all give zero.
 
-The review pack contains a 42-second narrated reel outside automatic downloads. The reviewed Intro helper retains full speech, without trimming or speeding, and pads tails. Deployed disconnected playback follows preview creation.
+The review pack contains a 42-second narrated reel outside automatic downloads. The reviewed Intro helper retains full speech, without trimming or speeding, and pads tails. The deployed preview saved all 49 files (5.3 MB). With the tab disconnected, all three video/narration pairs played at readyState 4 with advancing time. Network emulation was restored afterwards.
 
 ```sh
 python3 scripts/render-market-concepts.py --output OUTPUT --audio-dir public/course-audio/market-community/en --preview

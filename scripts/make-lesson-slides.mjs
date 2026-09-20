@@ -150,7 +150,9 @@ const deckTagline = h1English || s1Sub || mod?.description || '';
 const WATCH = /^\s*(?:Watch|Bukela|Buka)\s*[:：]\s*/i;
 
 const payload = slides.map((s) => {
-  const watch = WATCH.test(s.title);
+  // Introduction uses “Bheka” in isiZulu. Its authored English gloss still marks Watch;
+  // use that structural cue instead of silently shrinking the diagram into a text slide.
+  const watch = WATCH.test(s.title) || WATCH.test(s.subtitle);
   const body = bullets(s.body);
   return {
     n: s.n,

@@ -28,3 +28,7 @@ The local delivery pack is Downloads/imbewu-studies-2026-09-20/. Its water-produ
 The separate case-study folder contains a compact copy of the corrected 19 September “extended with music - English - v3” Mzomoyethu film, with subtitles and chapters retained. It is approximately 10m46s and 38.5 MB. It is not part of the learner’s automatic course download. Older complete-film commentary was not reused.
 
 This changes the Studies pictures and playback. It does not change saved farm geometry or plan-sheet rendering. PLAN_VERSION is unchanged. Production publication is not claimed by this branch.
+
+## Deployed offline follow-up
+
+On the combined Market preview, all 64 Water files saved (9.2 MB). With the tab disconnected, all six Watch video/narration pairs played at readyState 4 with advancing time, including both Mzomoyethu excerpts. Network emulation was restored afterwards. This is a browser check, not a physical learner-device test.

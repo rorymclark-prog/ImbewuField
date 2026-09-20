@@ -20,9 +20,9 @@ Water uses two recent Mzomoyethu excerpts and four concept animations. Antigravi
 
 ## Review branches
 
-Merge in stack order: Water #446, Introduction #447, Landscape #448, Soil #449, Vegetables #450, Forest #451, Livestock #452, then codex/market-community-media. All are review work; no production merge occurred in this continuation. Required local checks passed through Livestock, as did CI test/rules/preview. Market's validation is recorded in its PR.
+Merge in stack order: Water #446, Introduction #447, Landscape #448, Soil #449, Vegetables #450, Forest #451, Livestock #452, then Market #453. All are review work; no production merge occurred in this continuation. Required local checks and CI test/rules/preview passed through Market.
 
-Deployed disconnected checks passed for every Watch pair in Introduction, Landscape, Soil, Forest and Livestock. Vegetables saved all 40 files and played representative slides 1, 9 and 18 disconnected. Market's deployed check follows its preview. These are browser checks, not physical learner-device sign-off. Visual evidence consists of inspected teaching-phase contacts, corrected posters and slide contact sheets; it does not constitute fluent narration review.
+Deployed disconnected checks passed for every Watch pair in Water, Introduction, Landscape, Soil, Forest and Livestock. Water saved all 64 files (9.2 MB), including both Mzomoyethu excerpts. Vegetables saved all 40 files and played representative slides 1, 9 and 18 disconnected. Market saved all 49 files (5.3 MB) and all three Watch pairs played disconnected. These are browser checks, not physical learner-device sign-off. Visual evidence consists of inspected teaching-phase contacts, corrected posters and slide contact sheets; it does not constitute fluent narration review.
 
 ## isiZulu and the film
 
@@ -36,8 +36,23 @@ The local review package is Downloads/imbewu-studies-2026-09-20. It includes the
 
 - Fluent review of the eight new isiZulu sets and source scripts; Plant Guilds also retains its existing pending review despite its separately authorized release exception.
 - Correct any reviewer findings at the authored source, then re-record affected clips and verify again. Do not remove draft markers or extend the Guilds exception implicitly.
-- Localized decks and text-labelled animation variants must be checked before registering isiZulu availability.
+- All 165 draft isiZulu slides are prepared locally with a visible review banner. English diagram labels remain explicitly marked for localization. These decks and text-labelled variants need review before registering isiZulu availability.
 - Human end-to-end listening and actual learner-device checks remain outstanding.
 - Media completeness does not resolve the historical curriculum gap: the current calendar covers 25 of the promised 36 weeks. No missing teaching weeks or farming advice were invented. Historical art/curriculum audits still require explicit triage.
 
 No PLAN_VERSION, saved geometry, species names, lesson bodies, quizzes or farming figures changed. New public audio must still be committed with its manifest entry when approved.
+
+## Review handoff follow-up
+
+`REVIEW.html` in the local pack pairs all 165 draft recordings and marked slides with the unchanged full English and isiZulu text. It offers separate playback, optional English-labelled animations and a notes download. Notes are not sent or saved to an account. All eight draft deck contact sheets were inspected. Introduction's three translated Watch headings now use the English gloss as a structural cue and receive the large animation layout; the authored heading text is unchanged.
+
+After the existing narration exporter/recording workflow has populated the review pack:
+
+```sh
+python3 scripts/prepare-studies-review-decks.py --output REVIEW_PACK
+python3 scripts/build-studies-review-page.py --output REVIEW_PACK
+```
+
+The review builders write only to the supplied pack. They do not register or publish learner media. Output decks retain review banners and English diagram labels pending localization. The review page uses local relative assets, with no external service or account dependency. Browser checks confirmed module/slide switching, English and isiZulu playback, full slide images and optional animation playback. A native audio-control interaction crashed the in-app browser; ordinary Play/Stop buttons were added and verified at readyState 4 with advancing time. No fluent approval is implied.
+
+The final handoff checks passed in order: typecheck, full suite (3,632 pass, zero failures, one existing TODO), then diff check. All 520 local media references for 165 review slides resolve; copied English audio hashes match the originals. The portable archive contains 1,528 payload files plus its checksum list and passed ZIP CRC verification (235,176,819 bytes at this checkpoint).
