@@ -34,9 +34,9 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '21 September 2026', sha: '71f65a3', changes: [
-    'Studies now has step-by-step guides for recording harvests and costs, beside the invoice guide.',
-    'Practise checking weights, receipts and saved entries before using your own records.',
-    'My Records keeps cents visible, so a R12.50 cost no longer appears as R13.',
+    'Studies now has guides for harvests and costs, beside the invoice guide.',
+    'Practise checking weights, receipts and saved entries.',
+    'My Records now shows cents: R12.50 stays R12.50.',
   ] },
   { when: '20 September 2026', sha: '4c08747', changes: [
     'Studies now includes a Using ImbewuField section with an invoice guide.',
