@@ -1,0 +1,16 @@
+{
+  "status": "draft, not public",
+  "proposedModules": 15,
+  "draftLessons": 51,
+  "lessonsByFile": {
+    "land-water-and-community.md": 6,
+    "seasonal-planning.md": 3,
+    "facilitator-and-capstone.md": 3,
+    "planned-grazing.md": 5,
+    "plant-propagation.md": 5,
+    "homestead-animals.md": 21,
+    "postharvest.md": 3,
+    "farm-money.md": 5
+  },
+  "capstone": "facilitator-and-capstone.md"
+}

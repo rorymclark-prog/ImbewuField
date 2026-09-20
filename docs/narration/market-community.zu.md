@@ -1,4 +1,7 @@
+REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 7, 8, 10, 11, 12, 13, 15, 17, 18, 20. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
+
 **Ikhasi 1 — Ingadi Yezimakethe Nomphakathi (Slide 1 — Market Gardening & Community)**
+
 
 Ingadi yakho inikeza umndeni ukudla, imali, nolwazi oluwusizo.
 
@@ -256,5 +259,3 @@ Please also confirm:
 
 When the review is done, correct the script and delete this appendix. Deleting the appendix without
 doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
-
-REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 7, 8, 10, 11, 12, 13, 15, 17, 18, 20. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
