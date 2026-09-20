@@ -45,8 +45,8 @@
     },
     {
       "slide": 9,
-      "sha256": "f244324819af64bcfdc4d0a757f723111a6b21ae7da7582ea5c7dec7d75e1058",
-      "bytes": 172653,
+      "sha256": "619e16428b3ab9bdfd691fc974d3f0a1cc200e8ba31f8b26ac4d5e085a8153b9",
+      "bytes": 176130,
       "seconds": 16.0,
       "silent": true,
       "codec": "h264/yuv420p",
@@ -54,10 +54,10 @@
       "height": 720,
       "complete_decode": true,
       "sampled_frames": 32,
-      "distinct_frame_hashes": 19,
+      "distinct_frame_hashes": 21,
       "path": "public/course-animations/water-harvesting/watch-09-vetiver-contour.mp4",
       "poster": "public/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg",
-      "poster_sha256": "ce96aceccc884098860ae95f93e1907321281199160d4d69cdfd6e47cfe93bf9",
+      "poster_sha256": "be3129a113ee6a6d05f31778f2483b0956d06287def3e884eb2c217324e45d8a",
       "source": {
         "generator": "scripts/render-water-concepts.py",
         "origin": "Antigravity QA Lab; reviewed and corrected locally"
@@ -85,8 +85,8 @@
     },
     {
       "slide": 16,
-      "sha256": "8ef1eb650ae5d2665c9a985e86745f5829b34f7e2fbdfe03993135617201842c",
-      "bytes": 88137,
+      "sha256": "8e973e1a3203fe7801a77e50410cfdc8cfd2cbab03b1b3627d274d8169cc1ae8",
+      "bytes": 85731,
       "seconds": 17.0,
       "silent": true,
       "codec": "h264/yuv420p",
@@ -97,7 +97,7 @@
       "distinct_frame_hashes": 33,
       "path": "public/course-animations/water-harvesting/watch-16-first-flush-tank.mp4",
       "poster": "public/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg",
-      "poster_sha256": "b325f5bc67922015c95f1d108209632dc2f108a4b50f7778ba4243e6301d8f24",
+      "poster_sha256": "30090b342117b2a585da2280ff3bdac0e22eb35da425d9233af791d24dbbfcaa",
       "source": {
         "generator": "scripts/render-water-concepts.py",
         "origin": "Antigravity QA Lab; reviewed and corrected locally"
@@ -105,8 +105,8 @@
     },
     {
       "slide": 21,
-      "sha256": "09306e584ae38e3a2ef06a27a251bee5c63c7d28f3451d118038317318cf111a",
-      "bytes": 150159,
+      "sha256": "444f1f784adfc62c46d1d52766e4eab4ed44b48771ee5c8467a3a98983b613a8",
+      "bytes": 146959,
       "seconds": 17.0,
       "silent": true,
       "codec": "h264/yuv420p",
@@ -117,7 +117,7 @@
       "distinct_frame_hashes": 28,
       "path": "public/course-animations/water-harvesting/watch-21-greywater-mulch.mp4",
       "poster": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
-      "poster_sha256": "78a43c13030942c87148a1b3ccb878380500c24e5c755e216249d1149ecb18b6",
+      "poster_sha256": "2d8c51e39e88bd20f0a26da27dc13a006fa20b2aae23cc996963e1b0d6afcb68",
       "source": {
         "generator": "scripts/render-water-concepts.py",
         "origin": "Antigravity QA Lab; reviewed and corrected locally"

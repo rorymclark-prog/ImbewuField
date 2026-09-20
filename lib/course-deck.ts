@@ -172,10 +172,10 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
   14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
   4: { src: 'watch-04-swale-infiltration', poster: 'watch-04-swale-infiltration', bytes: 881320, aspectRatio: 824 / 720, seconds: 16 },
   7: { src: 'watch-07-swale-overflow-pond', poster: 'watch-07-swale-overflow-pond', bytes: 2712641, aspectRatio: 824 / 720, seconds: 13 },
-  9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 172653, aspectRatio: 824 / 720, seconds: 16 },
+  9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 176130, aspectRatio: 824 / 720, seconds: 16 },
   12: { src: 'watch-12-dam-spillway', poster: 'watch-12-dam-spillway', bytes: 185495, aspectRatio: 824 / 720, seconds: 16 },
-  16: { src: 'watch-16-first-flush-tank', poster: 'watch-16-first-flush-tank', bytes: 88137, aspectRatio: 824 / 720, seconds: 17 },
-  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 150159, aspectRatio: 824 / 720, seconds: 17 },
+  16: { src: 'watch-16-first-flush-tank', poster: 'watch-16-first-flush-tank', bytes: 85731, aspectRatio: 824 / 720, seconds: 17 },
+  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 146959, aspectRatio: 824 / 720, seconds: 17 },
 };
 
 // English concept diagrams follow the three authored Introduction Watch passages.
@@ -198,9 +198,9 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Soil Health Watch scene follows its existing narration.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
-  5: { src: 'watch-05-living-soil', poster: 'watch-05-living-soil', bytes: 124275, seconds: 14 },
-  10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14 },
-  14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14 },
+  5: { src: 'watch-05-living-soil', poster: 'watch-05-living-soil', bytes: 118495, seconds: 14.0 },
+  10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14.0 },
+  14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };
 
 // Practical motion shows the root plug and planting action without adding data on arrival.
@@ -211,9 +211,9 @@ const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
-  5: { src: 'watch-05-seven-layers', poster: 'watch-05-seven-layers', bytes: 222959, seconds: 14 },
-  10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 166270, seconds: 14 },
-  15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 196132, seconds: 14 },
+  5: { src: 'watch-05-seven-layers', poster: 'watch-05-seven-layers', bytes: 222959, seconds: 14.0 },
+  10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
+  15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 202241, seconds: 15.667 },
 };
 
 // Each Small Livestock Watch scene follows its existing narration.

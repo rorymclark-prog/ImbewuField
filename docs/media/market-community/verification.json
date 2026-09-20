@@ -10,8 +10,8 @@
       "poster_bytes": 110150,
       "poster_sha256": "5faf135a551291e5e427653f5f3ec9c053d10ef74336c3a9dfa47c35e801ae11",
       "audio": "public/course-audio/market-community/en/slide-04.mp3",
-      "audio_sha256": "17d5b099d6097b8610560fa439f61997b7a22c65ac25e8189a0add88a786c652",
-      "audio_seconds": 9.72,
+      "audio_sha256": "e5e6c47587a4d02279283b8996796c1d9861bcb71f43e512f3176b990be4bc7e",
+      "audio_seconds": 11.04,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -37,8 +37,8 @@
       "poster_bytes": 101159,
       "poster_sha256": "6c71cf68b356717d2663365063f55c6b5a2d5603472c3a6a26eec271f44fb6ba",
       "audio": "public/course-audio/market-community/en/slide-09.mp3",
-      "audio_sha256": "eaeb55c65a0a92571924fb383694cf098085199c80798f43e0d069b633d4ad05",
-      "audio_seconds": 8.64,
+      "audio_sha256": "25fca3c8d45cb45245d7b1eb16dfe02bedaa36953466c9da34cb54802b27b93a",
+      "audio_seconds": 9.816,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -64,8 +64,8 @@
       "poster_bytes": 112578,
       "poster_sha256": "6c7e09375abe9a3dda3a8b75b74948c805d503caf7b44a03f9a1bbd0dfae4edf",
       "audio": "public/course-audio/market-community/en/slide-14.mp3",
-      "audio_sha256": "7a82ecded86c0918e383cddc70c5b7789a38368095a4b4db12e48c804fcf3507",
-      "audio_seconds": 11.976,
+      "audio_sha256": "34cb2dfe153abd2c38a67d660fc7ee57d9bc56f57abcbb2fa36eac5d1508d6f8",
+      "audio_seconds": 13.608,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -87,7 +87,8 @@
     "filename": "reel-market-three-slot-en-review.mp4",
     "size_bytes": 702338,
     "sha256": "24f8df0550973b2c5dd4a77ac7aa029de5a36ec213e81dd9e3d62f15619508af",
-    "seconds": 42.041016
+    "seconds": 42.041016,
+    "status": "Historical reel predates corrected narration; use current individual files and transcripts."
   },
   "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
 }

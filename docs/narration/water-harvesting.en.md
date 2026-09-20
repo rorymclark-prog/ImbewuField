@@ -6,13 +6,13 @@ Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink eve
 
 **Slide 2 — Learning Outcomes**
 
-A swale is a level trench on contour — it sinks water, it doesn't direct it.
+Explain how a level contour swale holds water for infiltration.
 
-Design the spillway before the wall — an overtopped wall can breach catastrophically.
+Explain why dams need a designed spillway and a site assessment.
 
-A first-flush diverter removes the dirty first flush from every rain event.
+Explain what a first-flush diverter does and why tank water still needs a safety check.
 
-Direct greywater to mulch basins around fruit trees, never onto raw-eaten vegetables.
+Keep greywater away from people, food and drinking-water pipes.
 
 ---
 
@@ -48,9 +48,11 @@ Trees planted there draw on stored water long after the rain has stopped.
 
 **Slide 6 — Storms Need a Safe Overflow**
 
-On the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam.
+Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.
 
-An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent.
+The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.
+
+Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.
 
 ---
 
@@ -64,45 +66,39 @@ The overflow leads to the next swale or a dam.
 
 ---
 
-**Slide 8 — Know When Swales Fit the Slope**
+**Slide 8 — Check the Site Before Digging**
 
-Swales work well on 1 to 15% slopes.
+Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.
 
-Above 15 to 20%, use vetiver grass contour lines or terraces instead.
-
-Test a 60cm pit with water first.
-
-If it drains within the hour, plan for drier conditions.
+Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.
 
 ---
 
-**Slide 9 — Watch: Vetiver Takes Over**
+**Slide 9 — Watch: Roots Help Hold Soil**
 
-Above 15-20% slope, use vetiver grass lines or terraces instead.
+Roots help hold soil along a planted contour line.
 
-[pause]
-
-Swales work well on 1 to 15% slopes.
+Choose erosion controls with local advice; steep land needs a site assessment.
 
 ---
 
 **Slide 10 — Store Rain for the Dry Season**
 
-A well-sited dam stores a season's rain to carry you through the dry months.
+A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.
 
-In summer-rainfall South Africa, rain falls October to March, then largely stops.
+Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.
 
-A dam makes you far less dependent on boreholes or municipal supply through winter.
+Before changing a watercourse or building storage works, check the required authorisation with the water authority.
 
 ---
 
 **Slide 11 — Design the Spillway Before the Wall**
 
-Site your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall.
+A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.
 
-A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season.
+Do not assume that annual rainfall tells you the size of a flood or the storage you will have.
 
-Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself.
+An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.
 
 ---
 
@@ -116,109 +112,97 @@ Size the dam to the catchment area draining toward it.
 
 ---
 
-**Slide 13 — Turn a Dam into a Working Ecosystem**
+**Slide 13 — Care for the Dam and Its Banks**
 
-In Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year.
+Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.
 
-Shade trees on the western and northern banks cut this significantly.
+Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.
 
-Ducks aerate the water.
-
-Indigenous bulrushes stabilise the banks.
-
-Ducks and indigenous bulrushes turn a dam into a working ecosystem, not just storage.
+Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.
 
 ---
 
 **Slide 14 — Your Roof Is a Harvesting Surface**
 
-Your roof is a harvesting surface.
+Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.
 
-Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses.
+Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.
 
-A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs.
+An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.
 
 ---
 
 **Slide 15 — Divert the Dirty First Flush**
 
-Fit a first-flush diverter.
+Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.
 
-The first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank.
+The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.
 
-For drinking water, add a filter downstream.
-
-For irrigation, untreated tank water is fine.
+A diverter does not make the remaining water safe to drink.
 
 ---
 
 **Slide 16 — Watch: First Flush to Tank**
 
-A first-flush diverter removes the dirty first flush from every rain event.
+A first-flush diverter keeps early roof runoff out of the tank.
 
-[pause]
-
-The first 20 to 30 litres should be diverted before clean water reaches the tank.
+Size and maintain it for your roof; later runoff still needs a safety check.
 
 ---
 
-**Slide 17 — Match Tank Size to the Dry Season**
+**Slide 17 — Match Tank Size to Water Demand**
 
-Match tank size to your dry season, not just one dry spell.
+Tank size depends on water demand, rain, roof area and the length of dry periods.
 
-In KZN, 5,000 litres may bridge a two-to-three-week gap.
+List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.
 
-On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic.
+Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.
 
 ---
 
 **Slide 18 — Keep Stored Water Protected**
 
-Keep tanks sealed against light and mosquitoes.
+Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.
 
-Filter before drinking.
+Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.
 
-[pause]
-
-For drinking water, add a filter downstream.
-
-For irrigation, untreated tank water is fine.
+A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.
 
 ---
 
-**Slide 19 — Greywater Is Washwater, Not Toilet Water**
+**Slide 19 — Greywater Is Used Washwater**
 
-Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling.
+Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.
 
-Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted.
+Do not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.
 
 ---
 
-**Slide 20 — Keep Greywater Safe for Soil**
+**Slide 20 — Keep Greywater Away from People and Food**
 
-Use plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots.
+Where local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.
 
-Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots.
+Do not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.
+
+Use it promptly. Stored greywater needs specialist advice and appropriate treatment.
 
 ---
 
 **Slide 21 — Watch: Greywater Under Mulch**
 
-Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground.
+Where permitted, direct suitable greywater below mulch around non-food planting.
 
-[pause]
-
-It filters through organic matter before reaching roots.
+Mulch does not disinfect water. Keep it away from people and food.
 
 ---
 
 **Slide 22 — Use Greywater Only Where It Is Safe**
 
-Never use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high.
+Keep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.
 
-Fruit trees, established shrubs, and non-edible landscaping are the right use.
+Check municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.
 
-Check your municipality's rules before installing a permanent greywater system.
+If the water smells bad, pools or harms plants, stop using it and seek advice.
 
 ---
 

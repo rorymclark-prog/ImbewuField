@@ -7,11 +7,11 @@
       "bytes": 222959,
       "seconds": 14.0,
       "sha256": "e22f7e07a81037572a007e5eaf012d992c12ded8f58e88a9f4556f5925e77bb5",
-      "poster_bytes": 120803,
-      "poster_sha256": "c84779549bf2eed19b3159f2a2d3fc159b338d7565d4f942b320560258fb281f",
+      "poster_bytes": 141628,
+      "poster_sha256": "c289038c94337a02f4f939859df31f8508c71f894edd5591b05984f610b87bfc",
       "audio": "public/course-audio/food-forest/en/slide-05.mp3",
-      "audio_sha256": "ddabf19cd57000c75b8f6db8efad04b64692f0ce7841ba7dfb737d95736c3ff0",
-      "audio_seconds": 10.488,
+      "audio_sha256": "3c70147e0c2e80823b7939900cefde6ecabf4aa8de390d118d7eb8f9254c72ad",
+      "audio_seconds": 11.904,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -23,7 +23,7 @@
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 0.00021310337991872335,
+          "largest_changed_pixel_fraction": 0.0001486767766874814,
           "transitions_over_0_05_percent": 0
         }
       }
@@ -31,26 +31,26 @@
     {
       "slide": 10,
       "file": "public/course-animations/food-forest/watch-10-climate-match.mp4",
-      "bytes": 166270,
-      "seconds": 14.0,
-      "sha256": "61d453ffaab3aee985c87715c7786bd376a313c28e48a8b67b87b82f6eae79d9",
-      "poster_bytes": 128482,
-      "poster_sha256": "0cfff5896f4466c0674fa40b111b85feb4df64cf5e94ee0b7c4babbc853a0571",
+      "bytes": 168094,
+      "seconds": 14.625,
+      "sha256": "2986778129137023db6e99f1794b26d86981b85ce6b73a1c44f833a1d60e2c7e",
+      "poster_bytes": 152349,
+      "poster_sha256": "c0af7097e3d1565c098a1e6e2b52c446220441f236bb6720269674c4e6236c45",
       "audio": "public/course-audio/food-forest/en/slide-10.mp3",
-      "audio_sha256": "abdf33f6166c249c4d773c92d030c5392f9971305384c2ca7d341967e0718c24",
-      "audio_seconds": 11.976,
+      "audio_sha256": "36efc66221434e9698ea630c5722d06c11b5d132c6def34238145fa699b92c7b",
+      "audio_seconds": 13.608,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
         "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
         "actual": {
-          "transitions": 27,
-          "largest_changed_pixel_fraction": 0.038078600455942115,
+          "transitions": 28,
+          "largest_changed_pixel_fraction": 0.030079789870155613,
           "transitions_over_0_05_percent": 18
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 0.00020814748736247397,
+          "largest_changed_pixel_fraction": 0.00021805927247497275,
           "transitions_over_0_05_percent": 0
         }
       }
@@ -58,36 +58,38 @@
     {
       "slide": 15,
       "file": "public/course-animations/food-forest/watch-15-forest-sequence.mp4",
-      "bytes": 196132,
-      "seconds": 14.0,
-      "sha256": "26035a0d28a651afe9f539fe8987a57bab0d98a6003a1ba2105c416e2c800115",
-      "poster_bytes": 113351,
-      "poster_sha256": "a3315dfb45be78fe16e8b24d0d87d3b0cd643cce11dc078397d419d3d13b6212",
+      "bytes": 202241,
+      "seconds": 15.666667,
+      "sha256": "f330a1f1d89c3bf9f4b3a029c8e56979bd918fe615e3b705b91465ccbf64770e",
+      "poster_bytes": 143974,
+      "poster_sha256": "e0f4f3b70d906557f45a8ce25346b2596b2b70829adb24ff75ea577fae776460",
       "audio": "public/course-audio/food-forest/en/slide-15.mp3",
-      "audio_sha256": "7014ff3bed6800803e3af42818cacb21f2c2cab8f36fbf6af09d26dae58b1f0d",
-      "audio_seconds": 10.104,
+      "audio_sha256": "e0ac04c4e0d3107ea6c5bb10aaf5ace44368cccc70f5b5e750b175aa7ed111d6",
+      "audio_seconds": 14.64,
       "full_decode": "pass",
-      "captions_match_full_authored_watch_text": true,
+      "captions_match_full_authored_watch_text": false,
       "motion_pixel_check": {
         "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
         "actual": {
-          "transitions": 27,
-          "largest_changed_pixel_fraction": 0.0654747745068887,
-          "transitions_over_0_05_percent": 21
+          "transitions": 30,
+          "largest_changed_pixel_fraction": 0.06367082961641392,
+          "transitions_over_0_05_percent": 23
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 0.00020071364852809992,
+          "largest_changed_pixel_fraction": 0.0001313311527406086,
           "transitions_over_0_05_percent": 0
         }
-      }
+      },
+      "caption_review": "Short visible caption summarises the corrected narration; full words remain in the transcript."
     }
   ],
   "review_reel": {
     "filename": "reel-forest-three-slot-en-review.mp4",
     "size_bytes": 886862,
     "sha256": "70a26f0d9e2062c9dd147a049d1f4cb01c80f762cdb905df40036e82815ee088",
-    "seconds": 42.041016
+    "seconds": 42.041016,
+    "status": "Historical reel predates corrected narration; use current individual files and transcripts."
   },
   "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
 }

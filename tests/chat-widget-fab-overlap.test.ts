@@ -10,6 +10,14 @@ import test from 'node:test';
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
+test('Studies keeps Lima available without a floating button covering the narration', () => {
+  const widget = source('../components/ChatWidget.tsx');
+  const studies = source('../app/student/page.tsx');
+  assert.match(widget, /if \(\s*\/\/[^\n]*\n\s*pathname === '\/student' \|\|[\s\S]*?\) return null;/);
+  assert.match(studies, /import LimaBar from '@\/components\/LimaBar';/);
+  assert.match(studies, /<LimaBar \/>/, 'help remains in the document flow instead of vanishing');
+});
+
 test('/funder and /ngo are excluded — same class as /partners, not a farmer route', () => {
   const widget = source('../components/ChatWidget.tsx');
 

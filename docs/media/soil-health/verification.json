@@ -4,16 +4,16 @@
     {
       "slide": 5,
       "file": "public/course-animations/soil-health/watch-05-living-soil.mp4",
-      "bytes": 124275,
+      "bytes": 118495,
       "seconds": 14.0,
-      "sha256": "a91e5ff82cc31e7b1bae15d4fdace9f4fbf82cb49edd8a35eeb44e56eb250f35",
-      "poster_bytes": 122455,
-      "poster_sha256": "82b8810d01ad023d3e0e2043a1f923300dddfd9126041bdff2d2f1834455f2a2",
+      "sha256": "cbac903bcc381c987535df9027d5ebf08a807b5ed9d271e5ef1c01fda5cc448a",
+      "poster_bytes": 132808,
+      "poster_sha256": "3ed332acb5e7299226c096780ca5ff17b543f95d86a24d8b1f61b45e4986288b",
       "audio": "public/course-audio/soil-health/en/slide-05.mp3",
-      "audio_sha256": "826caeff77ef146de5fde315f45fccc07d7f066c53e0a55856608ea74b4e9f20",
-      "audio_seconds": 9.768,
+      "audio_sha256": "e294e0353a0ed2be866df4b9dcd5e476304e400b858c8722b48fcb8caab73e6e",
+      "audio_seconds": 11.472,
       "full_decode": "pass",
-      "captions_match_full_authored_watch_text": true,
+      "captions_match_full_authored_watch_text": false,
       "motion_pixel_check": {
         "method": "At 2fps, crop diagram only; changed pixel requires >12 grey levels, moving transition requires >0.05% changed pixels; at least eight moving transitions required.",
         "actual": {
@@ -23,10 +23,11 @@
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 0.0001288532064624839,
+          "largest_changed_pixel_fraction": 0.0001238973139062345,
           "transitions_over_0_05_percent": 0
         }
-      }
+      },
+      "caption_review": "Short visible caption summarises the corrected narration; full words remain in the transcript."
     },
     {
       "slide": 10,
@@ -34,11 +35,11 @@
       "bytes": 119193,
       "seconds": 14.0,
       "sha256": "c7711e415cf68ffaab184068a675d33a0aea0b4ecb28d41f771a6b6f763c39fb",
-      "poster_bytes": 94343,
-      "poster_sha256": "b4e66ed3da4eb812a9cf2012d99be8f350a2dcf39d420a7518c3fffe4fbfe56c",
+      "poster_bytes": 114574,
+      "poster_sha256": "e88fbf7f954cdae0aac5444067f7d299af76f81ee9e1a9051f470b52aec2991e",
       "audio": "public/course-audio/soil-health/en/slide-10.mp3",
-      "audio_sha256": "1ae2a36d110d7aecea870eb53a29397d92fb12c3e51c11197f0ecaec2a4e83be",
-      "audio_seconds": 7.536,
+      "audio_sha256": "517ed42fe64040c48fb9a80836537146180543eb5720cf1b268311ea3598cbf9",
+      "audio_seconds": 8.568,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -50,7 +51,7 @@
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 7.92942808999901e-05,
+          "largest_changed_pixel_fraction": 0.0001015957974031123,
           "transitions_over_0_05_percent": 0
         }
       }
@@ -61,11 +62,11 @@
       "bytes": 369446,
       "seconds": 14.0,
       "sha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219",
-      "poster_bytes": 97925,
-      "poster_sha256": "dd28ec93c63f0af21ac804e6689527a58152364b04cca3903e3bf0befc14cdf7",
+      "poster_bytes": 116741,
+      "poster_sha256": "444527d1c7660e7254460ab9b99bf52b7c4c2d069e3695f61387d71642625f6a",
       "audio": "public/course-audio/soil-health/en/slide-14.mp3",
-      "audio_sha256": "bdae297648181ea64d1b2a24010fa99c6183da1608bfd81ae3f6e655a68ae8fa",
-      "audio_seconds": 7.44,
+      "audio_sha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+      "audio_seconds": 8.448,
       "full_decode": "pass",
       "captions_match_full_authored_watch_text": true,
       "motion_pixel_check": {
@@ -77,7 +78,7 @@
         },
         "independently_encoded_static_poster_control": {
           "transitions": 27,
-          "largest_changed_pixel_fraction": 8.920606601248885e-05,
+          "largest_changed_pixel_fraction": 7.43383883437407e-05,
           "transitions_over_0_05_percent": 0
         }
       }
@@ -87,7 +88,8 @@
     "filename": "reel-soil-three-slot-en-review.mp4",
     "size_bytes": 843869,
     "sha256": "96c412be5a6039323688f1a5c79686edd85554983e7b212e8bc78a1354cf513a",
-    "seconds": 42.041016
+    "seconds": 42.041016,
+    "status": "Historical reel predates corrected narration; use current individual files and transcripts."
   },
   "review_scope": "Teaching-phase contacts viewed; no physical-device or fluent-language review claimed."
 }

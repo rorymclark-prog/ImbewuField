@@ -2,7 +2,7 @@
   {
     "module": "water-harvesting",
     "slides": 24,
-    "script_sha256": "edbb8518978753196853c89ad6d272f8d3064d066f831b6050f88d2add99d885",
+    "script_sha256": "84898e3528e0ebac13744f1e47dd9269d64ff6bfd93c795bc2622e08028c8358",
     "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/water-harvesting/contact.jpg"
   },
   {
@@ -20,19 +20,19 @@
   {
     "module": "soil-health",
     "slides": 20,
-    "script_sha256": "03788496f23548dee85f0e6a4efbea6d687d057ff0fb9d140c6f7e8a998c7fd3",
+    "script_sha256": "333d9251a64a8ac7e80abebcc27cfb4cf6fc9cdbcbba466c5867328d6cf0b838",
     "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/soil-health/contact.jpg"
   },
   {
     "module": "vegetables-staples",
     "slides": 18,
-    "script_sha256": "0c2e278a105e65fb057eb79dbbe5ff00b41065e42524e474adea5541e00cf0ae",
+    "script_sha256": "726acf4de748ec997fe8e717f2906f0ef33977c2846f3299613e73baf3dd8376",
     "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/vegetables-staples/contact.jpg"
   },
   {
     "module": "food-forest",
     "slides": 20,
-    "script_sha256": "42ab010db6dec3248f0e3ce68accf1113cedaa8fbe1b18ae15d86aef3ff1794b",
+    "script_sha256": "e874a9664e4986065ce10fc8b8a7051366df207a798c79aba73f9a393be8937d",
     "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/food-forest/contact.jpg"
   },
   {
@@ -44,7 +44,7 @@
   {
     "module": "market-community",
     "slides": 20,
-    "script_sha256": "8f0d5d0072a508a9e2bfc32b8eacb555933aad21b13c5dd66c68c09829a12040",
+    "script_sha256": "f1a56d0ad6eeda2461662f76b679988ba0dd0f1e8b2c5ac41a4b6abf3950f77f",
     "contactSheet": "/Users/roryclark/Downloads/imbewu-studies-2026-09-20/illustrated-release/rendered/market-community/contact.jpg"
   }
 ]

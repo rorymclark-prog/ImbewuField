@@ -35,8 +35,8 @@ MOIST_BLUE = (80, 150, 195)
 MULCH_COLOR = (185, 150, 88)
 
 CAPTION_05 = (
-    "Compare the dark, living topsoil with the pale, compacted soil.\n"
-    "Look for worm channels, and notice how smell changes from rain or mushrooms to sour or nothing."
+    "Look at colour, structure and channels in these two soil examples.\n"
+    "Use several clues together; one picture cannot diagnose soil health."
 )
 CAPTION_10 = (
     "Build the heap with dry browns and fresh greens.\n"
@@ -437,7 +437,7 @@ def main():
     parser = argparse.ArgumentParser(description="Generate ImbewuField Soil Health Watch animations.")
     parser.add_argument("--output", default=".", help="Root output directory.")
     parser.add_argument("--preview", action="store_true", help="Only render posters and contact sheets.")
-    parser.add_argument("--audio-dir", help="Directory holding unchanged slide-NN.mp3 narration")
+    parser.add_argument("--audio-dir", help="Directory holding current slide-NN.mp3 narration")
     args = parser.parse_args()
 
     root = Path(args.output).resolve()

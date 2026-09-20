@@ -658,10 +658,10 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
       ],
       "2": [
-        "A swale is a level trench on contour — it sinks water, it doesn't direct it.",
-        "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
-        "A first-flush diverter removes the dirty first flush from every rain event.",
-        "Direct greywater to mulch basins around fruit trees, never onto raw-eaten vegetables."
+        "Explain how a level contour swale holds water for infiltration.",
+        "Explain why dams need a designed spillway and a site assessment.",
+        "Explain what a first-flush diverter does and why tank water still needs a safety check.",
+        "Keep greywater away from people, food and drinking-water pipes."
       ],
       "3": [
         "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.",
@@ -678,86 +678,82 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Trees planted there draw on stored water long after the rain has stopped."
       ],
       "6": [
-        "On the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam.",
-        "An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent."
+        "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+        "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+        "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
       ],
       "7": [
         "Include a safe overflow point so storms don't breach the berm.",
         "The overflow leads to the next swale or a dam."
       ],
       "8": [
-        "Swales work well on 1 to 15% slopes.",
-        "Above 15 to 20%, use vetiver grass contour lines or terraces instead.",
-        "Test a 60cm pit with water first.",
-        "If it drains within the hour, plan for drier conditions."
+        "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+        "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site."
       ],
       "9": [
-        "Above 15-20% slope, use vetiver grass lines or terraces instead.",
-        "Swales work well on 1 to 15% slopes."
+        "Roots help hold soil along a planted contour line.",
+        "Choose erosion controls with local advice; steep land needs a site assessment."
       ],
       "10": [
-        "A well-sited dam stores a season's rain to carry you through the dry months.",
-        "In summer-rainfall South Africa, rain falls October to March, then largely stops.",
-        "A dam makes you far less dependent on boreholes or municipal supply through winter."
+        "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+        "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+        "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
       ],
       "11": [
-        "Site your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall.",
-        "A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season.",
-        "Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself."
+        "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+        "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+        "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction."
       ],
       "12": [
         "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
         "Size the dam to the catchment area draining toward it."
       ],
       "13": [
-        "In Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year.",
-        "Shade trees on the western and northern banks cut this significantly.",
-        "Ducks aerate the water.",
-        "Indigenous bulrushes stabilise the banks.",
-        "Ducks and indigenous bulrushes turn a dam into a working ecosystem, not just storage."
+        "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+        "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+        "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
       ],
       "14": [
-        "Your roof is a harvesting surface.",
-        "Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses.",
-        "A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs."
+        "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+        "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+        "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
       ],
       "15": [
-        "Fit a first-flush diverter.",
-        "The first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank.",
-        "For drinking water, add a filter downstream.",
-        "For irrigation, untreated tank water is fine."
+        "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+        "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+        "A diverter does not make the remaining water safe to drink."
       ],
       "16": [
-        "A first-flush diverter removes the dirty first flush from every rain event.",
-        "The first 20 to 30 litres should be diverted before clean water reaches the tank."
+        "A first-flush diverter keeps early roof runoff out of the tank.",
+        "Size and maintain it for your roof; later runoff still needs a safety check."
       ],
       "17": [
-        "Match tank size to your dry season, not just one dry spell.",
-        "In KZN, 5,000 litres may bridge a two-to-three-week gap.",
-        "On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic."
+        "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+        "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+        "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need."
       ],
       "18": [
-        "Keep tanks sealed against light and mosquitoes.",
-        "Filter before drinking.",
-        "For drinking water, add a filter downstream.",
-        "For irrigation, untreated tank water is fine."
+        "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+        "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+        "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
       ],
       "19": [
-        "Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling.",
-        "Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted."
+        "Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.",
+        "Do not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed."
       ],
       "20": [
-        "Use plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots.",
-        "Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots."
+        "Where local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.",
+        "Do not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.",
+        "Use it promptly. Stored greywater needs specialist advice and appropriate treatment."
       ],
       "21": [
-        "Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground.",
-        "It filters through organic matter before reaching roots."
+        "Where permitted, direct suitable greywater below mulch around non-food planting.",
+        "Mulch does not disinfect water. Keep it away from people and food."
       ],
       "22": [
-        "Never use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high.",
-        "Fruit trees, established shrubs, and non-edible landscaping are the right use.",
-        "Check your municipality's rules before installing a permanent greywater system."
+        "Keep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.",
+        "Check municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.",
+        "If the water smells bad, pools or harms plants, stop using it and seek advice."
       ],
       "23": [
         "Build an A-frame level from three poles and a weighted string.",
@@ -781,91 +777,81 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
       ],
       "2": [
-        "Years of monoculture, overgrazing, or stubble-burning leave soil that depends on bought fertiliser to produce anything.",
-        "When soil life is lost, the ground becomes pale, compacted, and difficult to farm.",
-        "Compost, mulch, cover crops, and worm farms can rebuild living soil on smallholder farms across South Africa."
+        "Soil condition affects roots, water and the harvest.",
+        "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+        "Observe your soil, then choose ways to protect and improve it."
       ],
       "3": [
-        "You will learn how to recognise healthy and degraded soil.",
-        "You will use a jar test to see whether soil is mostly sand, silt, or clay.",
-        "You will make safer compost, correct a wet heap, protect bare ground, and use cover crops and worm-farm leachate wisely."
+        "Look for several clues about soil condition.",
+        "Use a jar to explore soil texture, while recognising its limits.",
+        "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
       ],
       "4": [
-        "A teaspoon of good topsoil holds more organisms than there are people on Earth.",
-        "Bacteria and fungi process nutrients for plants.",
-        "Underground fungal threads move nutrients between plants. Worm channels are a visible sign of healthy topsoil.",
-        "Monoculture, overgrazing, and stubble-burning can strip this life away."
+        "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+        "Look at roots, soil structure and water movement as well as visible soil life."
       ],
       "5": [
-        "Compare the dark, living topsoil with the pale, compacted soil.",
-        "Look for worm channels, and notice how smell changes from rain or mushrooms to sour or nothing."
+        "Look at colour, structure and channels in these two soil examples.",
+        "Use several clues together. A picture or a single worm count cannot diagnose soil health."
       ],
       "6": [
-        "Fill a jar one-third with soil, top it up with water, and add a drop of dish soap.",
-        "Shake the jar, then leave it to settle for a day.",
-        "Sand settles first, silt settles next, and clay stays suspended longest.",
-        "The layers show your soil texture without special equipment."
+        "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+        "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+        "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
       ],
       "7": [
-        "Thick sand at the bottom and cloudy, clay-tinted water on top means the soil is sandy.",
-        "Sandy soil drains fast and holds little water for roots.",
-        "Mulch heavily and add organic matter often.",
-        "This slows water loss and helps the soil hold moisture around growing plants."
+        "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+        "Compare the settled layers and feel the soil in the field.",
+        "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
       ],
       "8": [
-        "Pale, compacted soil with no worms and a sour smell is not simply a fixed soil type.",
-        "Continuous cropping, chemical use, or burning may have killed most of the soil life.",
-        "That is encouraging, because living soil can be rebuilt with compost, mulch, and gentler management."
+        "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+        "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+        "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
       ],
       "9": [
-        "Compost is organic matter that has decomposed.",
-        "It rebuilds soil structure and feeds the organisms that help plants grow.",
-        "A hot heap reaches usable compost in four to six weeks in warm, humid KZN.",
-        "On the cooler Highveld, it may take eight to twelve weeks."
+        "Compost is organic matter broken down under managed conditions.",
+        "Finished compost can improve soil structure and contribute nutrients.",
+        "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
       ],
       "10": [
         "Build the heap with dry browns and fresh greens.",
         "Keep the layers moist, not wet, so air and decomposers can work."
       ],
       "11": [
-        "Layer 20 to 30cm of browns for every 5 to 10cm of greens.",
-        "Too much green material makes the heap wet, slimy, and ammonia-smelling.",
-        "Too much brown material keeps the heap cold for months.",
-        "The right balance gives the heap food, air, and enough heat to break down."
+        "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+        "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+        "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
       ],
       "12": [
-        "Aim for a core temperature of 55 to 65°C.",
-        "This speeds decomposition and kills most weed seeds and pathogens.",
-        "Do not add meat, dairy, cooked scraps, diseased plants, or soil with persistent herbicide residue.",
-        "These materials can make the finished compost unsafe for the farm."
+        "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+        "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+        "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
       ],
       "13": [
-        "Keep wattle seed pods out of the compost heap.",
-        "Their hard seed coat can survive ordinary composting heat and carry the plant into finished compost.",
-        "Wattle bark alone is safe to include, although it breaks down slowly.",
-        "Turn the heap every five to seven days and keep it moist, not wet."
+        "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+        "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+        "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
       ],
       "14": [
         "Compare bare soil with mulched soil.",
         "Watch how the mulch protects topsoil when a South African summer storm brings intense rain."
       ],
       "15": [
-        "Spread a 5 to 10cm layer of straw, dry grass, or wood chips over bare soil.",
-        "Mulch cuts erosion sharply and keeps soil several degrees cooler in summer.",
-        "On hot Highveld days, it can reduce soil temperature by up to 10°C.",
-        "It also suppresses weeds and feeds soil life as it breaks down."
+        "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+        "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+        "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
       ],
       "16": [
-        "Cover crops protect soil when the main crop is not growing.",
-        "On the Highveld, oats or lupins sown after the maize harvest cover soil through frost months.",
-        "Slash them in before spring planting.",
-        "In KZN, sunn hemp grows fast in summer, while cowpea fixes nitrogen and tolerates the Lowveld’s early-summer dry spell."
+        "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+        "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+        "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
       ],
       "17": [
-        "Worm farms turn kitchen scraps into rich castings in three to four weeks.",
-        "The liquid leachate is a strong fertiliser.",
-        "Dilute it 1:10 with water before using it as a root feed.",
-        "Undiluted leachate is concentrated enough to burn plant roots instead of nourishing them."
+        "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+        "Liquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.",
+        "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
       ],
       "18": [
         "A Highveld field left bare after the maize harvest faces two main risks.",
@@ -874,10 +860,9 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Cover crops, mulch, and organic matter keep soil in place and help it stay alive."
       ],
       "19": [
-        "Choose a working area on your farm and inspect the soil.",
-        "Dig a 30cm hole and record its colour, smell, structure, and worm channels.",
-        "Do the jar test with soil, water, and a drop of dish soap.",
-        "Write down whether sand, silt, or clay seems dominant, and what that means for watering."
+        "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+        "Compare another spot and note recent weather and management.",
+        "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
       ],
       "20": [
         "Start one soil-building action from this module.",
@@ -919,15 +904,15 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "There's no single bed shape that's right everywhere.",
         "Start with the least disturbance that solves your problem.",
         "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
-        "Double-digging is hard work, and it should answer a real problem — compacted ground or heavy clay. Not habit.",
+        "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
         "Raised beds suit wet ground, where water needs somewhere to drain away to.",
         "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
-        "Look at your own ground after heavy rain. Does water sit, or does it run off? That answer chooses your bed."
+        "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
       ],
       "6": [
         "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
         "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
-        "Whichever you choose, spacing matters more than the packet suggests. Seed packets are printed for cooler, wetter places than most of South Africa. Give your plants more room than the smallest spacing on the packet."
+        "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
       ],
       "7": [
         "Before you plant, mark the bed out.",
@@ -942,27 +927,27 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
         "Plant a short row every two to three weeks.",
         "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
-        "If heat or heavy rain ruins one sowing, the others still carry the season.",
+        "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
         "Which fast crop could you sow in small batches? Decide on one, and start it this week."
       ],
       "9": [
         "Here's what it looks like in practice.",
         "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
-        "By the time the fourth sowing is in the ground, the first is ready to harvest. The harvests begin to overlap.",
+        "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
         "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
         "Watch what your own garden does, and adjust the interval. That observation is the skill."
       ],
       "10": [
         "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
-        "The three sisters is the clearest example.",
+        "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
         "Maize gives height and structure.",
         "Beans climb the maize, and store as protein.",
         "Pumpkin spreads across the ground, shading the soil and holding moisture.",
         "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
-        "Three crops, one piece of ground, and none of them fighting the others."
+        "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
       ],
       "11": [
-        "Every place has a hungry gap. The weeks when the last harvest has run low and the next one isn't ready.",
+        "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
         "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
         "Don't copy somebody else's calendar. Name your own months first.",
         "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
@@ -1002,15 +987,15 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
         "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
         "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
-        "Four. Only then, act — and start with the lightest thing that works. Physical removal and better plant health solve most small outbreaks.",
-        "If you use a neem product, follow the label. Don't improvise a stronger mixture. Even lower-risk products harm the wrong insects when they're misused.",
+        "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
         "Be honest with yourself about which step you usually skip."
       ],
       "17": [
         "Now the lesson finishes in the soil.",
         "Build one bed that can keep feeding you. One point two metres by three metres.",
         "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
-        "Give it a realistic minimum of ten days before you judge it.",
+        "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
         "Photograph it when it's planted. Then come back after ten days with what you observed.",
         "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
       ],
@@ -1022,7 +1007,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Then observe. Adjust. And write it down.",
         "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
         "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
-        "That record is worth more than any advice."
+        "Use your record with reliable local advice when making the next decision."
       ]
     }
   },
@@ -1347,16 +1332,14 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Learn how to design and establish a food forest for your farm."
       ],
       "2": [
-        "A food forest can give food from many levels of the same piece of land.",
-        "It can use light and moisture that a single crop would leave unused.",
-        "The first years need steady work.",
-        "Later, shade, leaf-fall mulch, and mixed roots help the system care for itself."
+        "A food forest grows useful plants at different heights.",
+        "Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.",
+        "Plan the care you can provide and watch how the planting changes."
       ],
       "3": [
-        "Name the seven layers of a food forest.",
-        "Choose species that match your frost zone, rainfall, and humidity.",
-        "Plan a planting sequence for a 500m² plot.",
-        "Know why pioneers come first, and when lower layers and climbers should follow."
+        "Name the seven commonly described food-forest layers.",
+        "Check plants against your site, local ecology and the approved project list.",
+        "Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure."
       ],
       "4": [
         "An indigenous forest fills the space from the highest branches to the roots.",
@@ -1370,28 +1353,24 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "One piece of ground, working at every level."
       ],
       "6": [
-        "Tall canopy grows at 10m+.",
-        "Sub-canopy grows from 4–8m, while shrubs grow from 1–3m.",
-        "Herbaceous plants stay under 1m.",
-        "Ground cover protects the soil, root crops grow below, and climbers use vertical space."
+        "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+        "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+        "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands."
       ],
       "7": [
-        "The canopy might hold a large Wild Fig or pecan.",
-        "The sub-canopy can carry lemon, naartjie, and black mulberry.",
-        "Cape gooseberry and Wild Medlar fit the shrub layer.",
-        "Vegetables, wild garlic, sweet potato, and granadilla fill the lower layers and vertical spaces."
+        "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+        "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+        "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first."
       ],
       "8": [
-        "The first two to three years need real establishment work.",
-        "Weeds compete strongly with herbaceous plants and ground cover on open, sunlit soil.",
-        "By year three to five, the canopy closes.",
-        "Shade and deep leaf-fall mulch reduce evaporation, while mixed roots hold more soil moisture."
+        "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+        "As plants grow, shade and leaf litter change conditions below them.",
+        "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday."
       ],
       "9": [
-        "Match each species to your region before planting.",
-        "Know your rainfall, minimum winter temperature, frost frequency, and summer humidity.",
-        "A mango that thrives on the KZN coast dies at the first Highveld frost.",
-        "A quince needing winter chill won't fruit in a frost-free coastal belt."
+        "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+        "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+        "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance."
       ],
       "10": [
         "Climate decides which species belong.",
@@ -1399,66 +1378,54 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Match every plant to your site."
       ],
       "11": [
-        "Highveld canopy choices include pecan, walnut, and indigenous fig.",
-        "Apple, pear, plum, black mulberry, and loquat can form the sub-canopy.",
-        "Shrubs include rosemary, Wild Medlar, Cape gooseberry, and Barbados cherry.",
-        "Do not plant from a list alone. Check the conditions on your own land first."
+        "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+        "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+        "Keep existing legal and project restrictions in force. Do not plant from a picture alone."
       ],
       "12": [
-        "KZN coast and Lowveld can suit mango, avocado, and Natal Mahogany.",
-        "Banana, pawpaw, litchi, and Wild Fig belong in the sub-canopy.",
-        "Barbados cherry and Wild Dagga belong in the shrub layer.",
-        "In Limpopo Lowveld, Marula, Mopane, and baobab may be appropriate.",
-        "These trees are edible and culturally significant."
+        "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+        "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+        "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide."
       ],
       "13": [
-        "Aim for at least 30% indigenous species throughout the food forest.",
-        "They support the birds and insects that make the system work.",
-        "These visitors provide pest control, pollination, and seed dispersal.",
-        "That support makes the food forest more resilient than a collection of fruit trees alone."
+        "Locally appropriate indigenous plants can support habitat as part of the design.",
+        "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+        "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere."
       ],
       "14": [
-        "A food forest is planted in sequence, not all at once.",
-        "First come nitrogen-fixing pioneers to improve soil and offer shade.",
-        "Then come the main canopy and sub-canopy fruit trees.",
-        "Lower layers follow when the canopy gives some protection.",
-        "Climbers and ground covers come last."
+        "Start by checking the site, water supply and care available. Protect exposed soil early.",
+        "Temporary support plants may provide shelter and useful cut material where appropriate.",
+        "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees."
       ],
       "15": [
-        "Sheet-mulch first.",
-        "Pioneers build soil while fruit trees establish.",
-        "As shelter grows, plant the lower layers, ground covers, and climbers."
+        "This animation is one example of a planting sequence.",
+        "Protect soil early and add suitable plants as water and shelter allow.",
+        "Use observed growth and competition to decide the next step, rather than copying a fixed calendar."
       ],
       "16": [
-        "Sheet-mulch with cardboard and 20cm of wood chips.",
-        "The cardboard smothers existing grass while it decomposes and feeds soil organisms.",
-        "Plant nitrogen-fixing pioneers at 2m spacing.",
-        "Start a nursery so more plants are ready for the next stage."
+        "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+        "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+        "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity."
       ],
       "17": [
-        "In year two, plant the main fruit trees.",
-        "Interplant comfrey and wild garlic beneath them.",
-        "During years three to four, thin the pioneers because they would otherwise compete too strongly for light with the maturing fruit trees.",
-        "Use the pioneer cuttings as mulch, so their soil-building work continues."
+        "Watch how shade, roots and available water affect neighbouring plants.",
+        "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+        "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants."
       ],
       "18": [
-        "Plant at the start of the rainy season.",
-        "Let the rain do the establishment watering.",
-        "Never plant into dry soil.",
-        "Transplant shock plus drought stress rarely allows a young plant to recover.",
-        "By year five, a 500m² Highveld food forest can produce real harvests with minimal outside inputs."
+        "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+        "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+        "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result."
       ],
       "19": [
-        "Draw your own food forest in layers.",
-        "Mark the canopy, sub-canopy, shrub, herbaceous, ground cover, root crop, and climber spaces.",
-        "Write down your frost zone, rainfall, minimum winter temperature, frost frequency, and summer humidity.",
-        "Choose only species from this lesson that match your conditions."
+        "Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.",
+        "Record local frost, rain, soil and available care.",
+        "For each plant from the approved list, record its intended role and the local advice still needed before planting."
       ],
       "20": [
-        "Choose a plot and inspect the soil before planting.",
-        "Plan the sheet mulch with cardboard and wood chips.",
-        "Prepare your pioneer plants and nursery.",
-        "When the rainy season starts, plant the first sequence and watch which layers need the most care."
+        "Inspect a manageable area and choose one next step.",
+        "Protect exposed soil, check plant suitability, or prepare nursery plants.",
+        "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition."
       ]
     }
   },
@@ -1583,10 +1550,9 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "The aim is a farm that feeds the household and works as a small, clear economy."
       ],
       "2": [
-        "Most smallholders undersell what their farms produce because they do not write it down.",
-        "A tomato, an egg, or a bundle of morogo can go to the family, a customer, a neighbour, or compost.",
-        "When you record each one, you can see what your land and labour are really doing.",
-        "That clear picture helps you protect household food and make better business choices."
+        "A harvest can feed the household, be sold, be shared, or be lost.",
+        "Recording these different uses helps you see what the farm produces and what reaches customers.",
+        "Use that information to protect household food and make better business decisions."
       ],
       "3": [
         "By the end, you can record harvests and where they go.",
@@ -1611,44 +1577,38 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "The record also shows which months leave the household buying food."
       ],
       "7": [
-        "Before you set a selling price, add the real costs.",
-        "Include seeds, water, compost, and an honest hourly rate for your own labour.",
-        "If tomatoes cost R18/kg to produce, selling them at R15/kg loses money on every kilogram.",
-        "Raise the price to at least R18/kg, cut input costs, or move labour to better crops."
+        "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
       ],
       "8": [
-        "A record can show a food gap before the next season begins.",
-        "If vegetables are short in June and July, plan cold-tolerant winter crops in March-April.",
-        "This is not guessing. The dates come from your own farm record.",
-        "Planting for the gap can help the household eat more of its own food."
+        "Use your record to find when household food runs short.",
+        "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+        "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
       ],
       "9": [
         "Surplus can leave the farm through a roadside stall, a group delivery to a shop, or a box delivered to a household.",
         "The arrows show each route."
       ],
       "10": [
-        "Know your customer before you sell.",
-        "A formal farmers’ market may pay a premium price, but it demands registration and a consistent weekly supply.",
-        "An informal market or taxi-rank stall pays less, but asks nothing in return.",
-        "A school or clinic may pay below retail and give a stable order."
+        "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+        "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
       ],
       "11": [
-        "Direct selling can keep the full price with you.",
-        "Door-to-door sales, a WhatsApp order group, and weekly deliveries remove the middleman.",
-        "A box scheme works differently: customers subscribe to a regular vegetable box.",
-        "Their commitment gives you predictable income and helps you plan production around real demand."
+        "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "A box scheme supplies a regular selection to agreed customers.",
+        "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
       ],
       "12": [
-        "A box scheme can suit a garden of 200 to 500m².",
-        "Ten regular box customers can provide meaningful monthly income.",
-        "The important value is not only the price per kilogram.",
-        "You know in advance what customers expect, so you grow for real demand instead of growing speculatively."
+        "Start from what you can reliably supply and what customers want.",
+        "Check the costs and household food needs before promising regular boxes.",
+        "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
       ],
       "13": [
-        "If production changes from week to week, do not promise a fixed box.",
-        "Sell what you have through an informal market or to neighbours with no fixed commitment.",
-        "Choose a price that covers the true cost of production.",
-        "Trust through farm visits and an honest reputation matters more than expensive organic certification for most smallholders."
+        "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+        "Offer the surplus you have and agree clear terms with customers.",
+        "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
       ],
       "14": [
         "One farm can produce food.",
@@ -1656,10 +1616,9 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Separate growers become a stronger local food network, with each household contributing what it can."
       ],
       "15": [
-        "A seed swap between five neighbours can turn five households’ seed diversity into twenty-five.",
-        "If five smallholders each save three tomato varieties alone, or each saves two varieties for the group, collective saving gives better seed.",
-        "Specialising means more attention to isolation, selection, and storage.",
-        "The whole group receives stronger seed without every farmer doing every task alone."
+        "Neighbours can share different varieties and the work of saving seed.",
+        "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed."
       ],
       "16": [
         "Tool sharing puts expensive equipment within reach of the group.",
@@ -1667,16 +1626,14 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Shared use spreads the value across the group and helps each farm do work it could not do alone."
       ],
       "17": [
-        "About a third of fresh fruit and vegetables grown by smallholders is lost between harvest and sale.",
-        "Poor transport, packaging, and storage delays cause much of this loss.",
-        "Selling within walking distance removes most of it. If a formal market is 60km away, moving 50kg of beans sold at R8/kg can cost R150.",
-        "A WhatsApp group or community market removes that transport cost and may reach R10/kg."
+        "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+        "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
       ],
       "18": [
-        "A farmer who has mastered grafting or managed fungal disease in humid KZN summers can teach ten neighbours.",
-        "That lesson may change ten farms, not just one.",
-        "Monthly skills swaps build knowledge more durably than a single expert consultation.",
-        "Document what you learn, then pass it on so the knowledge stays in the community."
+        "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+        "Record the method, conditions and result so others can judge whether it may suit their land.",
+        "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
       ],
       "19": [
         "Use headings for harvest, where it went, costs, and labour.",
@@ -1685,10 +1642,9 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "At the end of one season, identify a crop that returns well and a month when the household buys food."
       ],
       "20": [
-        "Choose one real selling decision from your farm.",
-        "If a product costs more to produce than its selling price, raise the price, cut input costs, or shift labour to a better crop.",
-        "If a food gap appears in June and July, plan cold-tolerant winter crops in March-April.",
-        "Then talk with neighbours about one local sale, seed swap, tool share, or skills swap."
+        "Choose one real decision from your farm record.",
+        "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Record responsibilities and review what happens."
       ]
     }
   }

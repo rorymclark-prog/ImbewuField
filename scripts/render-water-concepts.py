@@ -142,7 +142,7 @@ def render_frame_slide09(t):
             d.line(pts, fill=(45, 145, 205, 190), width=4)
 
     # Badges
-    draw_badge(d, "Slope > 15–20%", (40, 100), 22, fill=(35, 75, 95))
+    draw_badge(d, "Assess this slope", (40, 100), 22, fill=(35, 75, 95))
     d.line([(40, 160), (140, surface_y(140) - 10)], fill=(75, 125, 145), width=2)
 
     draw_badge(d, "Vetiver grass lines on contour", (340, surface_y(280) - 140), 21, fill=(28, 85, 45))
@@ -153,11 +153,11 @@ def render_frame_slide09(t):
 
     # Exact Watch-slide sentences
     if t < 8.0:
-        title = "Above 15–20% slope, use vetiver grass lines or terraces instead."
-        sub = "Swales work well on 1 to 15% slopes."
+        title = "Choose erosion controls with local advice; steep land needs a site assessment."
+        sub = "Roots help hold soil along a planted contour line."
     else:
-        title = "Swales work well on 1 to 15% slopes."
-        sub = "Above 15–20% slope, use vetiver grass lines or terraces instead."
+        title = "Roots help hold soil along a planted contour line."
+        sub = "Choose erosion controls with local advice; steep land needs a site assessment."
 
     return wrap_frame(body, "IMBEWUFIELD • WATER HARVESTING", "Concept diagram — not to scale", title, sub)
 
@@ -383,16 +383,16 @@ def render_frame_slide16(t):
         d.line([(500, 540), (ff_x - 10, ff_top_y + 20)], fill=(180, 80, 40), width=2)
 
     if t >= 8.5:
-        draw_badge(d, "Clean water to tank", (720, 320), 21, fill=(25, 95, 135))
+        draw_badge(d, "Later runoff to tank", (720, 320), 21, fill=(25, 95, 135))
         d.line([(860, 370), (tank_inlet_x - 30, ff_top_y)], fill=(45, 150, 210), width=2)
 
     # Exact Watch-slide sentences
     if t < 8.5:
-        title = "A first-flush diverter removes the dirty first flush from every rain event."
-        sub = "The first 20 to 30 litres should be diverted before clean water reaches the tank."
+        title = "A first-flush diverter keeps early roof runoff out of the tank."
+        sub = "Size and maintain it for your roof; later runoff still needs a safety check."
     else:
-        title = "The first 20 to 30 litres should be diverted before clean water reaches the tank."
-        sub = "A first-flush diverter removes the dirty first flush from every rain event."
+        title = "Size and maintain it for your roof; later runoff still needs a safety check."
+        sub = "A first-flush diverter keeps early roof runoff out of the tank."
 
     return wrap_frame(body, "IMBEWUFIELD • WATER HARVESTING", "Concept diagram — not to scale", title, sub)
 
@@ -464,8 +464,6 @@ def render_frame_slide21(t):
     d.polygon([(tx - 18, ty), (tx + 18, ty), (tx + 12, ty - 260), (tx - 12, ty - 260)], fill=(95, 68, 42))
     for fx, fy, fr in [(tx, ty - 320, 110), (tx - 70, ty - 270, 85), (tx + 75, ty - 280, 90), (tx, ty - 230, 80)]:
         d.ellipse((fx - fr, fy - fr * 0.85, fx + fr, fy + fr * 0.85), fill=(65, 125, 55))
-    for ox, oy in [(-45, -310), (35, -290), (-20, -250), (60, -320), (-60, -230)]:
-        d.ellipse((tx + ox - 8, ty + oy - 8, tx + ox + 8, ty + oy + 8), fill=(235, 145, 35))
 
     d.line([(basin_x0, surface_y), (basin_x1, surface_y)], fill=(130, 95, 60), width=6)
 
@@ -481,16 +479,16 @@ def render_frame_slide21(t):
         d.line([(440, 680), (basin_x0 + 140, surface_y + 90)], fill=(65, 140, 115), width=2)
 
     if t >= 8.5:
-        draw_badge(d, "Filtered water reaches roots", (780, 880), 21, fill=(25, 80, 110))
+        draw_badge(d, "Water enters root zone", (780, 880), 21, fill=(25, 80, 110))
         d.line([(880, 880), (tx + 50, basin_bot_y + 70)], fill=(65, 140, 185), width=2)
 
     # Exact Watch-slide sentences
     if t < 8.5:
-        title = "Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground."
-        sub = "It filters through organic matter before reaching roots."
+        title = "Where permitted, direct suitable greywater below mulch around non-food planting."
+        sub = "Mulch does not disinfect water. Keep it away from people and food."
     else:
-        title = "It filters through organic matter before reaching roots."
-        sub = "Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground."
+        title = "Mulch does not disinfect water. Keep it away from people and food."
+        sub = "Where permitted, direct suitable greywater below mulch around non-food planting."
 
     return wrap_frame(body, "IMBEWUFIELD • WATER HARVESTING", "Concept diagram — not to scale", title, sub)
 
@@ -501,7 +499,7 @@ CONFIGS = [
     {
         "id": "watch-09-vetiver-contour",
         "slide": 9,
-        "title": "Watch: Vetiver Takes Over",
+        "title": "Watch: Roots Help Hold Soil",
         "duration_sec": 16.0,
         "render_func": render_frame_slide09,
         "poster_time": 10.0,
@@ -509,7 +507,7 @@ CONFIGS = [
         "jpg_target": CLIPS_DIR / "watch-09-vetiver-contour.jpg",
         "sheet_target": CLIPS_DIR / "contact-sheet-watch-09.jpg",
         "sheet_times": [2.0, 5.0, 8.0, 10.5, 13.0, 15.5],
-        "language_notes": "Visibly contains baked-in English labels ('Slope > 15–20%', 'Vetiver grass lines on contour', 'Roots anchor soil', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
+        "language_notes": "Visibly contains baked-in English labels ('Assess this slope', 'Vetiver grass lines on contour', 'Roots anchor soil', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
     },
     {
         "id": "watch-12-dam-spillway",
@@ -535,7 +533,7 @@ CONFIGS = [
         "jpg_target": CLIPS_DIR / "watch-16-first-flush-tank.jpg",
         "sheet_target": CLIPS_DIR / "contact-sheet-watch-16.jpg",
         "sheet_times": [2.0, 5.0, 8.5, 11.5, 14.0, 16.5],
-        "language_notes": "Visibly contains baked-in English labels ('Roof runoff', 'First-flush diverter chamber', 'Floating seal', 'Clean water to tank', 'STORAGE TANK', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
+        "language_notes": "Visibly contains baked-in English labels ('Roof runoff', 'First-flush diverter chamber', 'Floating seal', 'Later runoff to tank', 'STORAGE TANK', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
     },
     {
         "id": "watch-21-greywater-mulch",
@@ -548,7 +546,7 @@ CONFIGS = [
         "jpg_target": CLIPS_DIR / "watch-21-greywater-mulch.jpg",
         "sheet_target": CLIPS_DIR / "contact-sheet-watch-21.jpg",
         "sheet_times": [2.0, 5.5, 8.5, 11.5, 14.0, 16.5],
-        "language_notes": "Visibly contains baked-in English labels ('Washwater pipe (no toilet)', 'Mulch basin', 'Discharge below mulch surface', 'Filtered water reaches roots', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
+        "language_notes": "Visibly contains baked-in English labels ('Washwater pipe (no toilet)', 'Mulch basin', 'Discharge below mulch surface', 'Water enters root zone', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
     }
 ]
 

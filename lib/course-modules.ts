@@ -341,12 +341,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
-        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off. The excavated soil forms a berm on the downhill side. Trees planted there draw on stored water long after the rain has stopped.\n\nOn the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam. An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent.\n\nSwales work well on 1 to 15% slopes. Above 15 to 20%, use vetiver grass contour lines or terraces instead — test a 60cm pit with water first; if it drains within the hour, plan for drier conditions.",
+        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
         keyPoints: [
-          "A swale is a level trench on contour — it sinks water, it doesn't direct it",
-          "The berm (downhill mound of excavated soil) is where you plant trees",
-          "Include a safe overflow point so storms don't breach the berm",
-          "Above 15-20% slope, use vetiver grass lines or terraces instead",
+          "A contour swale holds water for infiltration",
+          "Keep good ground cover and plan a safe overflow",
+          "Assess soil, drainage, slope and storm flow before digging",
+          "A concept picture is not a construction design",
         ],
         quiz: [
           {
@@ -361,15 +361,15 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "A swale only works if every point sits at the same height. Even a slight angle sends water to the low end instead of spreading evenly.",
           },
           {
-            q: "A farmer on a steep 25% slope in the KZN Midlands wants to slow erosion. What's most appropriate?",
+            q: "A farmer wants to control erosion on steep land. What should she do before digging?",
             options: [
               "Standard swales dug as deep as possible",
-              "Vetiver grass planted in contour lines",
+              "Keep ground covered and get a site assessment for suitable erosion controls",
               "A large dam at the bottom to catch all runoff",
               "Compacting the soil surface with a roller",
             ],
             correct: 1,
-            rationale: "Above roughly 15-20%, swales become hard to maintain and risk slipping. Vetiver's dense root mat holds the slope instead.",
+            rationale: "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
           },
         ],
       },
@@ -378,12 +378,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l2.jpg",
         infographicAlt: "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
         title: "Farm Dams and Ponds: Storing Water for the Dry Season",
-        body: "A well-sited dam stores a season's rain to carry you through the dry months. In summer-rainfall South Africa, rain falls October to March, then largely stops — a dam makes you far less dependent on boreholes or municipal supply through winter.\n\nSite your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall. A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season. Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself.\n\nIn Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year. Shade trees on the western and northern banks cut this significantly. Ducks aerate the water; indigenous bulrushes stabilise the banks.",
+        body: "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
         keyPoints: [
-          "Size the dam to the catchment area draining toward it",
-          "Design the spillway before the wall — an overtopped wall can breach catastrophically",
-          "Shade trees on the western and northern banks cut evaporation significantly in hot regions",
-          "Ducks and indigenous bulrushes turn a dam into a working ecosystem, not just storage",
+          "A dam needs a site assessment and qualified design",
+          "Design a safe spillway before construction",
+          "Check required water authorisations before building",
+          "Maintain bank cover and keep trees off an earth dam wall",
         ],
         quiz: [
           {
@@ -398,15 +398,15 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
           },
           {
-            q: "In Limpopo, what combination best reduces evaporation from an open dam?",
+            q: "Which action helps protect an earth dam?",
             options: [
               "A deep, exposed dam with no bank vegetation",
-              "Shade trees on the western and northern banks, plus ducks for aeration",
+              "Maintain the designed bank cover and keep the spillway clear",
               "A full concrete lining and plastic cover",
               "A larger surface area to spread evaporation evenly",
             ],
             correct: 1,
-            rationale: "Shade cuts direct heat gain on the water surface — a practical, low-cost combination that measurably reduces loss in hot, high-evaporation regions.",
+            rationale: "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
           },
         ],
       },
@@ -414,25 +414,25 @@ export const COURSE_MODULES: CourseModule[] = [
         id: "water-harvesting-l3",
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l3.jpg",
         infographicAlt: "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        title: "Rainwater Tanks and Roof Catchment: Harvesting Clean Water",
-        body: "Your roof is a harvesting surface. Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses. A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs.\n\nFit a first-flush diverter: the first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank. For drinking water, add a filter downstream. For irrigation, untreated tank water is fine.\n\nMatch tank size to your dry season, not just one dry spell. In KZN, 5,000 litres may bridge a two-to-three-week gap. On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic.",
+        title: "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+        body: "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
         keyPoints: [
-          "Roof catchment yield: about 0.9 litres per square metre per mm of rain",
-          "A first-flush diverter removes the dirty first flush from every rain event",
-          "Match tank size to your dry season length, not a single dry spell",
-          "Keep tanks sealed against light and mosquitoes; filter before drinking",
+          "Roof area, rain, demand and losses determine useful storage",
+          "Size and maintain the first-flush diverter for the roof",
+          "Clear water can still contain germs or chemicals",
+          "Testing and treatment must match the intended use",
         ],
         quiz: [
           {
-            q: "An 80m² iron roof gets 600mm of rain a year. Using the 0.9 litres per m² per mm figure, how much can she expect to harvest?",
+            q: "What information is needed to choose a rainwater tank?",
             options: [
-              "About 24,000 litres",
-              "About 43,200 litres",
-              "About 80,000 litres",
-              "About 6,000 litres",
+              "Only the province where the farm is located",
+              "Roof area, rainfall pattern, water demand and collection losses",
+              "Only the amount of rain in one storm",
+              "Only the price of the biggest available tank",
             ],
             correct: 1,
-            rationale: "80 times 600 times 0.9 equals 43,200 litres. The 0.9 factor already accounts for normal splash and evaporation losses.",
+            rationale: "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
           },
           {
             q: "Why does a first-flush diverter matter even for irrigation-only tank water?",
@@ -443,7 +443,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "It stops the tank overfilling in storms",
             ],
             correct: 1,
-            rationale: "Even irrigation water touches edible crops directly. Keeping the contaminated first flush out protects food safety, not just drinking quality.",
+            rationale: "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
           },
         ],
       },
@@ -451,25 +451,25 @@ export const COURSE_MODULES: CourseModule[] = [
         id: "water-harvesting-l4",
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
         infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
-        title: "Greywater Recycling: A Free Daily Water Source",
-        body: "Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling. Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted.\n\nUse plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots. Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots.\n\nNever use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high. Fruit trees, established shrubs, and non-edible landscaping are the right use. Check your municipality's rules before installing a permanent greywater system.",
+        title: "Greywater: Reuse with Care",
+        body: "Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.\n\nDo not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.\n\nWhere local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.\n\nDo not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.\n\nUse it promptly. Stored greywater needs specialist advice and appropriate treatment.\n\nKeep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.\n\nCheck municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.\n\nIf the water smells bad, pools or harms plants, stop using it and seek advice.",
         keyPoints: [
-          "Greywater is washwater from bath, basin, and laundry — never toilet water",
-          "Use plain soap; avoid bleach, strong disinfectants, and nappy-wash water",
-          "Direct greywater to mulch basins around fruit trees, never onto raw-eaten vegetables",
-          "Check your municipality's greywater rules before installing a permanent system",
+          "Greywater can contain germs, salts and chemicals",
+          "Keep untreated greywater away from food and people",
+          "Mulch does not disinfect water",
+          "Check municipal rules and avoid spraying, pooling and runoff",
         ],
         quiz: [
           {
-            q: "Which use of greywater is safe?",
+            q: "Where may suitable greywater be directed if local rules allow it?",
             options: [
               "Watering lettuce that will be eaten raw",
-              "Irrigating an established fruit tree through a mulch basin",
+              "Below mulch around non-food planting, away from people and animals",
               "Watering seedlings in a nursery tray",
               "Filling a fishpond",
             ],
             correct: 1,
-            rationale: "Fruit trees with mulch filtration keep greywater away from food that's eaten unwashed or uncooked — that's the safe use case.",
+            rationale: "Keep greywater away from edible crops and contact with people or animals. Mulch is not disinfection; local rules and site conditions still apply.",
           },
           {
             q: "Why avoid bleach or strong disinfectant in water destined for greywater reuse?",
@@ -480,290 +480,288 @@ export const COURSE_MODULES: CourseModule[] = [
               "They attract more mosquitoes",
             ],
             correct: 1,
-            rationale: "The whole value of greywater comes from feeding soil life and plant roots — harsh chemicals undermine exactly what you're trying to use the water for.",
+            rationale: "Some cleaning chemicals and salts can harm soil organisms and plants. Water sources and products must be assessed before reuse.",
           },
         ],
       },
     ],
   },
   {
-    id: "soil-health",
-    title: "Soil Health & Composting",
-    description: "Build living soil with compost, mulch, cover crops and worm farms.",
-    durationMins: 20,
-    category: "soil",
-    lessons: [
+    "id": "soil-health",
+    "title": "Soil Health & Composting",
+    "description": "Build living soil with compost, mulch, cover crops and worm farms.",
+    "durationMins": 20,
+    "category": "soil",
+    "lessons": [
       {
-        id: "soil-health-l1",
-        infographicUrl: "/course-images/soil-health/soil-health-l1.jpg",
-        infographicAlt: "A spade cut through the ground showing dark crumbly topsoil above pale subsoil, with worm channels. Beside it, a jar of soil settled into three layers — sand, silt and clay.",
-        title: "Understanding Your Soil: The Foundation of Everything",
-        body: "Healthy soil is alive. A teaspoon of good topsoil holds more organisms than there are people on Earth — bacteria, fungi, and the underground fungal threads that move nutrients between plants. Years of monoculture, overgrazing, or stubble-burning strip that life out, leaving soil that depends on bought fertiliser to produce anything.\n\nDig a 30cm hole and look. Healthy topsoil is dark, smells like rain or mushrooms, and shows worm channels. Degraded soil is pale, compacted, and smells of nothing or sour.\n\nTry the jar test: fill a jar one-third with soil, top up with water and a drop of dish soap, shake, and let it settle for a day. Sand settles first, then silt, with clay staying suspended longest — showing you your soil's texture.",
-
-        keyPoints: [
-          "Healthy soil is a living ecosystem — bacteria, fungi, and worms process nutrients for plants",
-          "Healthy soil smells earthy; degraded soil smells sour or of nothing",
-          "The jar test separates sand, silt, and clay with no equipment",
-          "Compost and mulch improve every South African soil type",
+        "id": "soil-health-l1",
+        "infographicUrl": "/course-images/soil-health/soil-health-l1.jpg",
+        "infographicAlt": "A spade cut through the ground showing dark crumbly topsoil above pale subsoil, with worm channels. Beside it, a jar of soil settled into three layers — sand, silt and clay.",
+        "title": "Understanding Your Soil: The Foundation of Everything",
+        "body": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+        "keyPoints": [
+          "Use several clues to assess soil condition",
+          "Soil colour and worm counts alone do not diagnose the cause of a problem",
+          "A jar exercise gives a rough indication of texture, not a complete soil test",
+          "Check drainage, roots and management history before choosing a remedy"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "After the jar test, a farmer sees thick sand at the bottom and cloudy clay-tinted water on top. What does this mean for watering?",
-            options: [
-              "Sandy soil retains water well, so water less often",
-              "Sandy soil drains fast and holds little water — mulch heavily and add organic matter often",
-              "The soil is balanced and needs no changes",
-              "High clay content means it will crack and needs gypsum",
+            "q": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+            "options": [
+              "The soil definitely needs less water",
+              "Fine particles may still be suspended; more observation is needed",
+              "All the clay has already settled",
+              "The crop definitely needs gypsum"
             ],
-            correct: 1,
-            rationale: "The dominant sand fraction means water drains through quickly. Mulch and organic matter are what slow that down and hold moisture for roots.",
+            "correct": 1,
+            "rationale": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment."
           },
           {
-            q: "A farmer finds pale, compacted soil with no worms and a sour smell. What's the most likely cause?",
-            options: [
-              "Too much organic matter, causing low-oxygen conditions",
-              "Years of heavy mulching depleting minerals",
-              "Continuous cropping, chemical use, or burning has killed most soil life",
-              "The soil type is naturally poor and can't improve",
+            "q": "A farmer finds compacted soil and few worms. What is the useful next step?",
+            "options": [
+              "Assume every soil organism has died",
+              "Add a treatment without checking the site",
+              "Check drainage, roots, moisture and management history",
+              "Give up because the soil cannot improve"
             ],
-            correct: 2,
-            rationale: "This combination of signs points to biological degradation from years of harsh management — not a fixed trait of the soil, which is the encouraging part: it can be rebuilt.",
-          },
-        ],
+            "correct": 2,
+            "rationale": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause."
+          }
+        ]
       },
       {
-        id: "soil-health-l2",
-        infographicUrl: "/course-images/soil-health/soil-health-l2.jpg",
-        infographicAlt: "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
-        title: "Making and Using Compost",
-        body: "Compost is decomposed organic matter that rebuilds soil structure and feeds soil life. A hot heap reaches usable compost in four to six weeks in warm, humid KZN, or eight to twelve weeks on the cooler Highveld. Aim for a core temperature of 55 to 65C, this speeds decomposition and kills most weed seeds and pathogens.\n\nBalance carbon (dry grass, straw, cardboard, maize stalks) with nitrogen (fresh grass, kitchen scraps, manure): 20 to 30cm of browns to every 5 to 10cm of greens. Too much green turns the heap slimy and ammonia-smelling; too much brown keeps it cold for months.\n\nAvoid meat, dairy, cooked scraps, and diseased plants. Keep wattle seed pods out, the hard seed coat survives ordinary composting heat, so pods can spread the plant through finished compost. Bark alone, without pods, is safe, it just breaks down slowly. Turn every five to seven days and keep the heap moist, not wet.",
-        keyPoints: [
-          "Hot compost needs a heap temperature of 55-65°C to kill weed seeds and pathogens",
-          "Layer 20-30cm of browns to every 5-10cm of greens",
-          "Wattle seed pods survive ordinary composting heat and can spread through finished compost — keep pods out, though bark alone is fine",
-          "Never add meat, dairy, diseased plants, or soil with persistent herbicide residue",
+        "id": "soil-health-l2",
+        "infographicUrl": "/course-images/soil-health/soil-health-l2.jpg",
+        "infographicAlt": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+        "title": "Making and Using Compost",
+        "body": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+        "keyPoints": [
+          "Balance browns, greens, moisture and air",
+          "A hot centre does not prove the whole heap is sanitised",
+          "Keep seed pods and contaminated materials out",
+          "Judge readiness from the compost condition, not a fixed regional timetable"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
-            options: [
+            "q": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+            "options": [
               "Add more nitrogen-rich green material",
               "Add more dry carbon material like straw and turn the heap",
               "Stop turning it and let it cool",
-              "Add more water — the smell means it's too dry",
+              "Add more water — the smell means it's too dry"
             ],
-            correct: 1,
-            rationale: "Ammonia and sliminess are the signature of too much nitrogen-rich green material relative to carbon — more browns rebalance the mix and let air back in.",
+            "correct": 1,
+            "rationale": "Ammonia and sliminess are the signature of too much nitrogen-rich green material relative to carbon — more browns rebalance the mix and let air back in."
           },
           {
-            q: "Why should a farmer keep wattle seed pods out of the compost heap, even though wattle bark itself is fine to include?",
-            options: [
-              "Wattle bark makes the heap too hot",
-              "Seed pods are hard-coated and can survive ordinary composting heat, letting the plant spread through finished compost",
-              "Bark attracts termites that damage the heap structure",
-              "Pods release a gas that kills beneficial soil microbes",
+            "q": "Why keep wattle seed pods out of an ordinary compost heap?",
+            "options": [
+              "Bark makes every heap too hot",
+              "Some seeds may survive and spread when the compost is used",
+              "Pods always attract termites",
+              "Pods release a gas that kills every soil organism"
             ],
-            correct: 1,
-            rationale: "Wattle seed needs much higher heat than a normal compost heap reaches to lose viability — so pods can ride through the whole process and germinate wherever the compost is used.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost."
+          }
+        ]
       },
       {
-        id: "soil-health-l3",
-        infographicUrl: "/course-images/soil-health/soil-health-l3.jpg",
-        infographicAlt: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
-        title: "Mulching and Cover Crops: Protecting and Building Soil",
-        body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn kitchen scraps into rich castings in three to four weeks. The liquid leachate, diluted 1:10 with water, makes a strong root feed.",
-        keyPoints: [
-          "A 5-10cm mulch layer cuts soil temperature, suppresses weeds, and prevents erosion",
-          "Cover crops like sunn hemp or lupins protect soil between seasons and add organic matter",
-          "Legume cover crops fix nitrogen for free, cutting your fertiliser bill",
-          "Worm farm leachate, diluted 1:10, is a strong liquid root feed",
+        "id": "soil-health-l3",
+        "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
+        "infographicAlt": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+        "title": "Mulching and Cover Crops: Protecting and Building Soil",
+        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.",
+        "keyPoints": [
+          "Protect exposed soil with suitable cover",
+          "Keep mulch away from trunks and stems",
+          "Choose cover crops for local water, weather and the following crop",
+          "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
-            options: [
+            "q": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+            "options": [
               "Overheating in winter sun and waterlogging from rain",
               "Frost kills soil life and weeds take over early",
               "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
-              "Soil pH drops and nitrogen builds up",
+              "Soil pH drops and nitrogen builds up"
             ],
-            correct: 2,
-            rationale: "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly.",
+            "correct": 2,
+            "rationale": "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly."
           },
           {
-            q: "Worm farm leachate is a strong fertiliser but must be diluted before use. Why?",
-            options: [
-              "It's too cold for roots undiluted",
-              "Undiluted, it's concentrated enough to burn plant roots",
-              "It contains worm eggs that could hatch and damage roots",
-              "Only seedlings need dilution",
+            "q": "What should you remember about liquid draining from a worm bin?",
+            "options": [
+              "It is always safe on salad leaves",
+              "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+              "It is identical to finished worm castings",
+              "A fixed dilution makes every liquid safe"
             ],
-            correct: 1,
-            rationale: "Leachate is far more concentrated than any diluted feed — applied neat, it can scorch the very roots it's meant to nourish.",
-          },
-        ],
-      },
-    ],
+            "correct": 1,
+            "rationale": "Leachate is drainage from unfinished material. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
+          }
+        ]
+      }
+    ]
   },
   {
-    id: "vegetables-staples",
-    title: "Vegetables and Staple Crops",
-    description: "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
-    durationMins: 30,
-    category: "plants",
-    lessons: [
+    "id": "vegetables-staples",
+    "title": "Vegetables and Staple Crops",
+    "description": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+    "durationMins": 30,
+    "category": "plants",
+    "lessons": [
       {
-        id: "vegetables-staples-l1",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
-        infographicAlt: "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
-        title: "Preparing and Planting Your Beds",
-        body: "Good beds start before you plant a single seed. No-dig beds — layers of compost and mulch over the existing ground — suit most smallholder soils and save labour; double-digging, loosening two spade-depths down, suits compacted or heavy clay soil that needs deeper drainage.\n\nKeep beds 1 to 1.2m wide, so you can reach the centre from either side without ever standing on the growing area — compaction is the enemy of root growth. Raised beds help in high-rainfall areas with poor drainage; sunken beds hold moisture better in dry regions.\n\nTransplant seedlings for crops that need a head start — tomatoes, brassicas — and direct-seed fast growers like beans and carrots, which resent root disturbance. Crowded plants compete for light and water and underperform badly; space for your climate, not the seed packet's minimum. This weekend, mark out and prepare one 1.2m by 3m bed.",
-        keyPoints: [
+        "id": "vegetables-staples-l1",
+        "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "infographicAlt": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "title": "Preparing and Planting Your Beds",
+        "body": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+        "keyPoints": [
           "Keep beds 1-1.2m wide so you never need to step on the growing area",
-          "No-dig suits most soils; double-dig only compacted or heavy clay ground",
+          "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
           "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
-          "Crowded plants underperform — space generously for your local climate",
+          "Crowded plants underperform — space generously for your local climate"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            options: [
+            "q": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+            "options": [
               "Wider beds get too much sun",
               "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
               "Narrow beds drain better in all conditions",
-              "It's a fixed rule with no practical reason",
+              "It's a fixed rule with no practical reason"
             ],
-            correct: 1,
-            rationale: "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+            "correct": 1,
+            "rationale": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to."
           },
           {
-            q: "Which crop is best suited to direct-seeding rather than transplanting?",
-            options: [
+            "q": "Which crop is best suited to direct-seeding rather than transplanting?",
+            "options": [
               "Tomatoes, which need an early start",
               "Brassicas, which need protection while small",
               "Beans, which resent root disturbance",
-              "Peppers, which are slow to germinate",
+              "Peppers, which are slow to germinate"
             ],
-            correct: 2,
-            rationale: "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
-          },
-        ],
+            "correct": 2,
+            "rationale": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely."
+          }
+        ]
       },
       {
-        id: "vegetables-staples-l2",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
-        infographicAlt: "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
-        title: "Succession Planting and Intercropping",
-        body: "Succession planting stops the feast-or-famine cycle. Instead of sowing all your spinach or lettuce at once, sow a short row every two to three weeks — you harvest steadily instead of drowning in one glut then running short for a month.\n\nIntercropping puts complementary plants together. The Three Sisters — maize, beans, and pumpkin — is the classic southern African example: maize gives beans a climbing frame, beans fix nitrogen for the maize, and pumpkin's broad leaves shade out weeds beneath both.\n\nEvery region has a hungry gap — weeks between one harvest ending and the next beginning, when stored food runs low before fresh food arrives. Know when yours falls, and plan a succession sowing specifically to fill it.",
-        keyPoints: [
-
-          "Sow small successive batches every 2-3 weeks instead of one large planting",
-          "The Three Sisters — maize, beans, pumpkin — is southern Africa's classic intercrop",
-          "Each region has a hungry gap between harvests — plan a sowing specifically to fill it",
-          "Intercropped plants should support each other, not just share space",
+        "id": "vegetables-staples-l2",
+        "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "infographicAlt": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+        "title": "Succession Planting and Intercropping",
+        "body": "Succession planting is a calendar habit, not a special crop.\n\nChoose something your household actually eats often. Then sow a small amount of it, again and again.\n\nPlant a short row every two to three weeks.\n\nLess waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.\n\nSeparate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.\n\nWhich fast crop could you sow in small batches? Decide on one, and start it this week.\n\nHere's what it looks like in practice.\n\nSow one. Then two to three weeks later, sow two. Then sow three. Then sow four.\n\nWith suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.\n\nTwo to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.\n\nWatch what your own garden does, and adjust the interval. That observation is the skill.\n\nIntercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.\n\nThe Three Sisters is an example from Indigenous farming traditions in the Americas.\n\nMaize gives height and structure.\n\nBeans climb the maize, and store as protein.\n\nPumpkin spreads across the ground, shading the soil and holding moisture.\n\nTiming matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThe plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nA household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nDon't copy somebody else's calendar. Name your own months first.\n\nWrite them down. Then choose the crop and the sowing date that puts food into that gap.\n\nThat's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
+        "keyPoints": [
+          "Stagger sowings and adjust the interval for crop, weather and household use",
+          "The Three Sisters comes from Indigenous farming traditions in the Americas",
+          "Use household food records to identify and plan for a hungry gap",
+          "Intercropped plants can still compete; manage space, timing and water"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
-            options: [
+            "q": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+            "options": [
               "It uses less seed overall",
               "It gives a steady harvest instead of a glut followed by a gap",
               "Lettuce germinates better in small batches",
-              "It reduces pest pressure",
+              "It reduces pest pressure"
             ],
-            correct: 1,
-            rationale: "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+            "correct": 1,
+            "rationale": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use."
           },
           {
-            q: "In the Three Sisters planting, what job does the bean plant do for the system?",
-            options: [
-              "It shades out weeds",
-              "It fixes nitrogen that feeds the maize and pumpkin",
-              "It climbs the pumpkin vines",
-              "It repels pests from the maize",
+            "q": "When can nitrogen in bean crop residues become available to other plants?",
+            "options": [
+              "Immediately whenever a bean touches maize",
+              "As soil organisms decompose the residues",
+              "Only when pumpkin leaves shade them",
+              "It can never be released"
             ],
-            correct: 1,
-            rationale: "Beans are the nitrogen-fixing partner in this trio — maize provides the climbing structure and pumpkin covers the ground, but nitrogen comes from the beans.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding."
+          }
+        ]
       },
       {
-        id: "vegetables-staples-l3",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
-        infographicAlt: "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
-        title: "Staple Crops: Maize, Beans, and Root Vegetables",
-        body: "A staple crop is calorie-dense, stores well, and often carries cultural weight. Maize is southern Africa's central staple — choose open-pollinated varieties over hybrids if you want to save seed, since hybrid seed won't breed true to the parent plant next season.\n\nBeans, both Phaseolus and Vigna species, are the most important protein crop for most smallholders — productive, storable dry, and nitrogen-fixing in the ground while they grow.\n\nSweet potatoes are drought-tolerant, productive even on poor soil, and give you both a root harvest and edible leaves. Amadumbe, or taro, is an underused traditional staple well suited to KZN and coastal conditions, tolerating wetter ground than maize.\n\nGrowing at least two staples together, not relying on one alone, protects your household against any single crop failing in a bad season.",
-        keyPoints: [
+        "id": "vegetables-staples-l3",
+        "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        "infographicAlt": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+        "title": "Staple Crops: Maize, Beans, and Root Vegetables",
+        "body": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato tolerates dry periods, and its leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+        "keyPoints": [
           "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
           "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
           "Sweet potato is drought-tolerant and gives both a root harvest and edible leaves",
-          "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+          "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
-            options: [
+            "q": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+            "options": [
               "Open-pollinated varieties yield more",
               "Hybrid seed won't breed true — the next generation won't match the parent plant",
               "Open-pollinated maize is always more drought-tolerant",
-              "Hybrids can't be planted in South Africa",
+              "Hybrids can't be planted in South Africa"
             ],
-            correct: 1,
-            rationale: "Hybrids are a one-time genetic cross — their seed grows into something different from the parent, which defeats the purpose of saving it.",
+            "correct": 1,
+            "rationale": "Hybrids are a one-time genetic cross — their seed grows into something different from the parent, which defeats the purpose of saving it."
           },
           {
-            q: "Why is amadumbe (taro) a good staple choice for parts of KZN?",
-            options: [
+            "q": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+            "options": [
               "It thrives on very dry, sandy soil",
               "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
               "It requires no cultivation at all",
-              "It's the only staple that stores for multiple years",
+              "It's the only staple that stores for multiple years"
             ],
-            correct: 1,
-            rationale: "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."
+          }
+        ]
       },
       {
-        id: "vegetables-staples-l4",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l4.jpg",
-        infographicAlt: "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
-        title: "Pest and Disease Management Without Chemicals",
-        body: "Pests usually signal a system out of balance — a stressed plant, a monoculture, or natural predators disrupted by chemical use. Address the imbalance and the pest pressure often eases on its own.\n\nThe basic neem spray — neem oil, a small amount of soft soap as an emulsifier, and water — is a non-negotiable tool for any smallholder facing soft-bodied pests like aphids.\n\nBiological controls do the rest: ladybirds hunt aphids, braconid wasps parasitise caterpillars, spiders take whitefly. Companion planting supports them — basil near tomatoes, nasturtium drawing pests from brassicas, marigold alongside legumes.\n\nBefore reaching for any treatment, check whether it's really a pest problem at all. Yellow leaves are just as often a soil or watering issue as a bug problem — treating the wrong cause wastes time and money.",
-        keyPoints: [
-          "Pests often signal an imbalance — plant stress, monoculture, or disrupted natural predators",
-          "The neem, soft soap, and water spray is a core non-chemical tool for soft-bodied pests",
-          "Companion planting (basil/tomato, nasturtium/brassica, marigold/legume) supports natural pest control",
-          "Yellow leaves are as often a soil or water problem as a pest problem — check before treating",
+        "id": "vegetables-staples-l4",
+        "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+        "infographicAlt": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+        "title": "Observe and Manage Pests and Disease",
+        "body": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+        "keyPoints": [
+          "Identify the cause before treating damage",
+          "Check water, roots, nutrition and beneficial insects",
+          "Use suitable physical or crop-care measures and monitor results",
+          "If treatment is needed, use a registered product for the crop and pest and follow the label"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "What's the basic recipe for a neem spray against soft-bodied pests like aphids?",
-            options: [
-              "Neem oil and water only",
-              "Neem oil, a small amount of soft soap as an emulsifier, and water",
-              "Neem oil and vinegar",
-              "Neem leaves boiled in water",
+            "q": "If a pest problem needs a treatment product, what should guide its use?",
+            "options": [
+              "An improvised stronger mixture",
+              "A product registered for the crop and pest, used according to its label",
+              "Any product described as natural",
+              "A neighbour’s dose for a different crop"
             ],
-            correct: 1,
-            rationale: "Soap acts as an emulsifier, letting the oil mix into water and coat the pests properly — without it, the oil just separates out.",
+            "correct": 1,
+            "rationale": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable."
           },
           {
-            q: "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
-            options: [
+            "q": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+            "options": [
               "Whether it's actually a soil nutrient or watering issue",
               "Whether the moon phase is right for treatment",
               "Whether her neighbour has the same problem",
-              "Whether it's aphids specifically",
+              "Whether it's aphids specifically"
             ],
-            correct: 0,
-            rationale: "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
-          },
-        ],
-      },
-    ],
+            "correct": 0,
+            "rationale": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment."
+          }
+        ]
+      }
+    ]
   },
   {
     id: "seeds-sovereignty",
@@ -1007,124 +1005,124 @@ export const COURSE_MODULES: CourseModule[] = [
     ]
   },
   {
-    id: "food-forest",
-    title: "Food Forest Design",
-    description: "Layer a multi-storey food system from tall canopy right down to root crops.",
-    durationMins: 25,
-    category: "design",
-    lessons: [
+    "id": "food-forest",
+    "title": "Food Forest Design",
+    "description": "Layer a multi-storey food system from tall canopy right down to root crops.",
+    "durationMins": 25,
+    "category": "design",
+    "lessons": [
       {
-        id: "food-forest-l1",
-        infographicUrl: "/course-images/food-forest/food-forest-l1.jpg",
-        infographicAlt: "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
-        title: "The Seven Layers: How a Forest Feeds Itself",
-        body: "An indigenous forest fills every vertical layer with different plants, each using the light and moisture available at its level. A food forest copies this using productive species instead. The seven layers: tall canopy (10m+), sub-canopy (4-8m), shrub (1-3m), herbaceous (under 1m), ground cover, root crops, and climbers using vertical space.\n\nFor a Highveld example: canopy might be a large Wild Fig or pecan; sub-canopy carries lemon, naartjie, and black mulberry; shrub layer holds Cape gooseberry and indigenous Wild Medlar; herbaceous layer holds vegetables and wild garlic; ground cover is sweet potato; climbers include granadilla.\n\nOnce established, a food forest needs far less labour than a vegetable garden the same size — no annual ploughing, no repeated planting. The first two to three years need real establishment work. By year three to five, the canopy closes and the system starts largely caring for itself.",
-        keyPoints: [
-          "Seven layers: canopy, sub-canopy, shrub, herbaceous, ground cover, root crops, climbers",
-          "Each vertical layer uses different light and moisture, so layers don't compete with each other",
-          "The first 2-3 years need real establishment work; by year 3-5 the system largely runs itself",
-          "Pecan, black mulberry, Wild Plum, loquat, and quince are practical Highveld species",
+        "id": "food-forest-l1",
+        "infographicUrl": "/course-images/food-forest/food-forest-l1.jpg",
+        "infographicAlt": "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
+        "title": "The Seven Layers: How a Forest Feeds Itself",
+        "body": "An indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThink of tall canopy, smaller trees, shrubs and herbaceous plants.\n\nGround cover protects the surface, root crops grow below it, and climbers use suitable supports.\n\nThe heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.\n\nThe original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nIt places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.\n\nTreat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.\n\nYoung plants need establishment care: moisture checks, weed control and protection from damage.\n\nAs plants grow, shade and leaf litter change conditions below them.\n\nCheck competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
+        "keyPoints": [
+          "Seven planning layers can combine useful plants at different heights",
+          "Plants can compete for light, water and nutrients",
+          "Establishment and ongoing care depend on observed conditions",
+          "Confirm local suitability before copying any example planting"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A food forest has all seven layers planted. Which layer struggles most and needs the most attention in years 1-2?",
-            options: [
-              "Tall canopy trees, exposed to wind and frost",
-              "The climbing layer, which grows too fast",
-              "Herbaceous and ground cover layers, competing with weeds before canopy closes",
-              "The root layer, blocked by tree roots",
+            "q": "Weeds are competing strongly with young lower-layer plants. What should guide the next action?",
+            "options": [
+              "Wait until the fifth year",
+              "Add more plants regardless of water",
+              "Check the affected plants and manage competition",
+              "Assume all seven layers take care of themselves"
             ],
-            correct: 2,
-            rationale: "Before the canopy closes and shades out competition, the low layers are fighting weeds on open, sunlit ground — that's where the establishment labour goes.",
+            "correct": 2,
+            "rationale": "Observe actual competition and plant condition. A fixed establishment calendar cannot tell you which plants need care now."
           },
           {
-            q: "Why is an established food forest more water-efficient than an annual vegetable garden of the same size, over ten years?",
-            options: [
-              "Deeper roots reach groundwater unavailable to vegetables",
-              "Closed canopy and deep leaf-fall mulch cut evaporation, and the mixed root system holds more soil moisture",
-              "Perennials use less water per kilogram of food",
-              "Food forests need no irrigation at all",
+            "q": "How can leaf litter and shade help protect soil moisture?",
+            "options": [
+              "They guarantee access to groundwater",
+              "They can reduce water loss from the soil surface",
+              "They guarantee higher yield per litre in every system",
+              "They remove the need to check watering"
             ],
-            correct: 1,
-            rationale: "Shade and mulch both reduce moisture loss from the soil surface — a compounding effect that a bare annual bed doesn't get.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "Shade and suitable mulch can reduce surface evaporation. Plant water demand and establishment needs still require attention."
+          }
+        ]
       },
       {
-        id: "food-forest-l2",
-        infographicUrl: "/course-images/food-forest/food-forest-l2.jpg",
-        infographicAlt: "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
-        title: "Species Selection for South African Food Forests",
-        body: "Match species to your region before you plant — a mango that thrives on the KZN coast dies at the first Highveld frost, and a quince needing winter chill won't fruit in a frost-free coastal belt. Know your rainfall, minimum winter temperature, frost frequency, and summer humidity first.\n\nHighveld: canopy — pecan, walnut, indigenous fig; sub-canopy — apple, pear, plum, black mulberry, loquat, not in the Western Cape or forest biome; shrubs — rosemary, Wild Medlar, Cape gooseberry, Barbados cherry.\n\nKZN coast and Lowveld: canopy — mango, avocado, Natal Mahogany; sub-canopy — banana, pawpaw, litchi, Wild Fig; shrubs — Barbados cherry, Wild Dagga.\n\nLimpopo Lowveld: Marula, Mopane, baobab where appropriate — all edible and culturally significant.\n\nAim for at least 30% indigenous species throughout. They support the birds and insects that make a food forest function as an ecosystem, not just a fruit collection.",
-        keyPoints: [
-          "Match species to your frost zone, rainfall, and humidity before planting",
-          "Highveld suits pecan, apple, black mulberry, Cape gooseberry, and indigenous figs",
-          "KZN coast and Lowveld suits mango, avocado, banana, litchi, and Natal Mahogany",
-          "Aim for at least 30% indigenous species to support birds, insects, and ecosystem function",
+        "id": "food-forest-l2",
+        "infographicUrl": "/course-images/food-forest/food-forest-l2.jpg",
+        "infographicAlt": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+        "title": "Species Selection for South African Food Forests",
+        "body": "Check local rainfall, frost, heat, soil and water availability before choosing plants.\n\nMango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.\n\nA regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.\n\nThe original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.\n\nKeep existing legal and project restrictions in force. Do not plant from a picture alone.\n\nThe original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.\n\nUseful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.\n\nLocally appropriate indigenous plants can support habitat as part of the design.\n\nChoose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.\n\nProtect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
+        "keyPoints": [
+          "Match each plant and variety to the actual site",
+          "Check identity, safe use and current local restrictions",
+          "A regional example is not approval for every species on its list",
+          "Use locally appropriate indigenous plants and protect existing natural habitat"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A Highveld farmer plants a young mango in a sheltered north-facing spot. What's the likely outcome after the first Highveld winter?",
-            options: [
+            "q": "A grower wants to plant a young mango where hard frost occurs. What risk needs attention?",
+            "options": [
               "It thrives — the position offsets frost",
               "It fruits early from the temperature swings",
               "It's likely killed or badly damaged by frost, especially as a young tree",
-              "It survives with heavy mulch but needs annual replacement",
+              "It survives with heavy mulch but needs annual replacement"
             ],
-            correct: 2,
-            rationale: "No sheltered position on the Highveld reliably protects a young mango from a hard frost — it's simply the wrong species for that climate.",
+            "correct": 2,
+            "rationale": "Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk."
           },
           {
-            q: "Why does 30% indigenous species matter in a South African food forest?",
-            options: [
-              "Indigenous species produce more food per square metre",
-              "They attract the birds and insects providing pest control, pollination, and seed dispersal, making the system more resilient",
-              "Exotic species aren't legally permitted on smallholdings",
-              "Indigenous species need less irrigation",
+            "q": "Why include locally appropriate indigenous plants in a design?",
+            "options": [
+              "They always yield more food per square metre",
+              "They can support local habitat, pollinators and other wildlife",
+              "Every introduced species is illegal",
+              "They never need establishment care"
             ],
-            correct: 1,
-            rationale: "Local birds and insects evolved alongside indigenous plants — bringing enough of them into the system is what makes the ecosystem services actually function.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability."
+          }
+        ]
       },
       {
-        id: "food-forest-l3",
-        infographicUrl: "/course-images/food-forest/food-forest-l3.jpg",
-        infographicAlt: "The same patch of ground at four stages, left to right: cardboard and mulch going down on bare soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
-        title: "Establishing a Food Forest: Planting Sequence and Timeline",
-        body: "A food forest is planted in sequence, not all at once, mimicking how nature rebuilds bare ground. First come nitrogen-fixing pioneers to improve soil and offer some shade. Then the main canopy and sub-canopy fruit trees. Then the lower layers, once the canopy gives some protection. Climbers and ground covers come last.\n\nFor a 500m² plot: year one, sheet-mulch with cardboard and 20cm of wood chips, plant pioneers at 2m spacing, and start a nursery. Year two, plant your main fruit trees and interplant comfrey and wild garlic beneath. Years three to four, thin the pioneers, the cuttings become mulch, as fruit trees take over. By year five, expect real harvests with minimal outside inputs.\n\nPlant at the start of the rainy season so rain does your establishment watering. Never plant into dry soil — transplant shock plus drought stress rarely allows recovery.",
-        keyPoints: [
-          "Plant in sequence: pioneers first, then canopy trees, then lower layers, then climbers",
-          "Sheet mulch with cardboard and wood chips at the start — smothers grass, feeds soil",
-          "Plant at the start of the rainy season so rain does the establishment watering",
-          "A 500m² Highveld food forest can produce real harvests by year 5",
+        "id": "food-forest-l3",
+        "infographicUrl": "/course-images/food-forest/food-forest-l3.jpg",
+        "infographicAlt": "The same patch of ground at four stages, left to right: cardboard and mulch going down on bare soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+        "title": "Establishing a Food Forest: Observe and Adjust",
+        "body": "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nCheck young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
+        "keyPoints": [
+          "Protect exposed soil early",
+          "Plan the sequence around conditions and available care",
+          "Check root-zone moisture even during the rainy season",
+          "Manage competition as it develops; harvest dates are not guaranteed"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A farmer sheet-mulches a 500m² plot with cardboard and wood chips in September, before the rains. What's the cardboard's main job?",
-            options: [
+            "q": "A farmer sheet-mulches a 500m² plot with cardboard and wood chips in September, before the rains. What's the cardboard's main job?",
+            "options": [
               "Creating a moisture barrier that blocks water from the soil",
               "Smothering existing grass while it decomposes and feeds soil organisms over following months",
               "Providing a stable base so wood chips don't shift",
-              "Reflecting heat upward to warm the soil",
+              "Reflecting heat upward to warm the soil"
             ],
-            correct: 1,
-            rationale: "Cardboard cuts off light to existing grass, killing it, and then breaks down itself — feeding the soil rather than blocking it long-term.",
+            "correct": 1,
+            "rationale": "Cardboard cuts off light to existing grass, killing it, and then breaks down itself — feeding the soil rather than blocking it long-term."
           },
           {
-            q: "Why are pioneer nitrogen fixers planted first, then thinned in years 3-4?",
-            options: [
-              "They're the most expensive and need the longest growing period",
-              "They improve soil fertility and shelter the fruit trees, then get removed before competing too hard for light",
-              "They must be removed before setting seed or spreading",
-              "Their roots inhibit fruit tree growth after 3 years",
+            "q": "When should a grower consider pruning or thinning temporary support plants?",
+            "options": [
+              "Only on a fixed anniversary",
+              "When observed competition requires it, using methods suited to the species",
+              "As soon as any leaf falls",
+              "Never, because support plants cannot compete"
             ],
-            correct: 1,
-            rationale: "Pioneers do their soil-building job early, then start competing with the maturing fruit trees for light — thinning at that point captures the benefit without the downside.",
-          },
-        ],
-      },
-    ],
+            "correct": 1,
+            "rationale": "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year."
+          }
+        ]
+      }
+    ]
   },
   {
     id: "small-livestock",
@@ -1248,125 +1246,124 @@ export const COURSE_MODULES: CourseModule[] = [
     ],
   },
   {
-    id: "market-community",
-    title: "Market Gardening & Community",
-    description: "Record-keeping, selling surplus and building local food networks.",
-    durationMins: 20,
-    category: "business",
-    lessons: [
+    "id": "market-community",
+    "title": "Market Gardening & Community",
+    "description": "Record-keeping, selling surplus and building local food networks.",
+    "durationMins": 20,
+    "category": "business",
+    "lessons": [
       {
-        id: "market-community-l1",
-        infographicUrl: "/course-images/market-community/market-community-l1.jpg",
-        infographicAlt: "A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.",
-        title: "Record-Keeping: Knowing What Your Farm Is Actually Producing",
-        body: "Most smallholders undersell what their farm produces because they've never recorded it. Write down every kilogram of tomatoes, every dozen eggs, every bundle of morogo, and where it went — family, sold, gifted, composted — and your farm starts looking like an economy, not just a garden.\n\nOne season of records answers the questions that matter: which crops yield best per bed? Which cost more in seeds, water and compost than they return? Which months leave you buying food?\n\nFor pricing, records reveal your true cost of production. Selling below that cost because a neighbour charges less isn't competition, it's a loss draining your household. A simple cost sheet, including an honest hourly rate for your own labour, shows your real minimum price.",
-        keyPoints: [
-          "Record every harvest and where it went — family, sold, gifted, or composted",
-          "One season of records shows which crops give the best return per bed and per hour",
-          "Calculate your true cost of production before setting any selling price",
-          "Records reveal which months you're food-insecure, guiding next season's planting",
+        "id": "market-community-l1",
+        "infographicUrl": "/course-images/market-community/market-community-l1.jpg",
+        "infographicAlt": "A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.",
+        "title": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
+        "body": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+        "keyPoints": [
+          "Record harvest amounts and destinations separately from cash",
+          "Include production and selling costs when assessing a price",
+          "Label worked examples; use your actual costs for decisions",
+          "Plan for food gaps using local growing conditions and harvest timing"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A farmer sells tomatoes at R15/kg but her records show they cost R18/kg to produce. What should she do?",
-            options: [
+            "q": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+            "options": [
               "Keep selling at R15 — short-term loss builds relationships",
               "Stop growing tomatoes entirely",
-              "Raise the price to at least R18, cut input costs, or shift labour to better crops",
-              "Apply for a subsidy to cover the gap",
+              "The selling price, costs and whether another crop would give a better return",
+              "Apply for a subsidy to cover the gap"
             ],
-            correct: 2,
-            rationale: "Selling below cost is a loss whatever the volume — the record shows exactly where the gap is, and there are three real ways to close it.",
+            "correct": 2,
+            "rationale": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision."
           },
           {
-            q: "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            options: [
+            "q": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+            "options": [
               "Buy vegetables at market each June and July",
-              "Plant cold-tolerant winter crops in March-April so they're ready in June-July",
+              "Work backwards from the food gap using suitable local crops and their harvest timing",
               "Accept her farm can't produce in winter",
-              "The records show a soil fertility problem",
+              "The records show a soil fertility problem"
             ],
-            correct: 1,
-            rationale: "The record identifies exactly when the gap happens, which means she can plant specifically to fill it, months in advance.",
-          },
-        ],
+            "correct": 1,
+            "rationale": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time."
+          }
+        ]
       },
-
       {
-        id: "market-community-l2",
-        infographicUrl: "/course-images/market-community/market-community-l2.jpg",
-        infographicAlt: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
-        title: "Selling Surplus: Where to Sell and How to Price",
-        body: "Know your customer before you sell. A formal farmers' market may pay premium prices but demands registration and a consistent weekly supply. An informal market or taxi rank stall pays less but asks nothing of you in return. A school or clinic buying direct may pay below retail but offers a stable, predictable order.\n\nDirect selling — door to door, a WhatsApp order group, weekly deliveries — usually pays best, since you keep the full price with no middleman. A box scheme, where customers subscribe to a regular vegetable box, gives predictable income and lets you plan production around real demand. Ten regular box customers can provide meaningful monthly income from a 200 to 500m² garden.\n\nTrust, built through farm visits and an honest reputation, matters more than expensive organic certification for most smallholders.",
-        keyPoints: [
-          "Match your selling channel to your customer — formal market, informal, direct, or box scheme",
-          "Direct and box scheme sales remove the middleman and keep more of the price for you",
-          "Ten regular box customers can provide meaningful income from a 200-500m² garden",
-          "Community trust from farm visits often matters more than costly certification",
+        "id": "market-community-l2",
+        "infographicUrl": "/course-images/market-community/market-community-l2.jpg",
+        "infographicAlt": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+        "title": "Selling Surplus: Where to Sell and How to Price",
+        "body": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+        "keyPoints": [
+          "Agree product, quantity, quality, delivery and payment",
+          "Compare costs and losses as well as selling price",
+          "Promise regular boxes only when supply and customer terms support them",
+          "Check market rules and describe growing practices honestly"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
-            options: [
+            "q": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+            "options": [
               "A formal market stall needing consistent weekly supply",
               "A box scheme needing the same produce weekly",
               "An informal market or neighbour sales with no fixed commitment",
-              "A daily-delivery school contract",
+              "A daily-delivery school contract"
             ],
-            correct: 2,
-            rationale: "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+            "correct": 2,
+            "rationale": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has."
           },
           {
-            q: "Why can a box scheme be worth more than a market stall, even at similar prices per kilogram?",
-            options: [
+            "q": "How can agreed regular orders help a grower plan?",
+            "options": [
               "Box customers always pay more per kilogram",
               "Box schemes let you charge extra for packaging",
               "Committed subscription income lets you plan production around real demand instead of growing speculatively",
-              "Box schemes avoid tax obligations",
+              "Box schemes avoid tax obligations"
             ],
-            correct: 2,
-            rationale: "The value here isn't the price — it's knowing in advance what you need to grow, instead of guessing and hoping it sells.",
-          },
-        ],
+            "correct": 2,
+            "rationale": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them."
+          }
+        ]
       },
       {
-        id: "market-community-l3",
-        infographicUrl: "/course-images/market-community/market-community-l3.jpg",
-        infographicAlt: "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
-        title: "Building Community Food Networks: Strength in Numbers",
-        body: "No smallholder farm stands alone. A seed swap between five neighbours turns five households' seed diversity into twenty-five, because each grower can focus on saving a few varieties well rather than many poorly. Tool sharing puts expensive items — a water pump, a grain mill — within reach of everyone.\n\nLocal food networks, whether a formal cooperative or an informal WhatsApp group, create demand close to home. Roughly a third of fresh fruit and vegetables grown by smallholders is lost between harvest and sale, from poor transport, packaging, and storage delays. Selling within walking distance removes most of that loss entirely.\n\nSkill sharing matters as much as material sharing. A farmer who's mastered grafting, or managing fungal disease in humid KZN summers, can transform ten neighbours' farms by teaching it. Document what you learn and pass it on.",
-        keyPoints: [
-          "Seed swaps between neighbours multiply variety diversity with the same total effort",
-          "Tool sharing puts expensive equipment within reach of an entire group",
-          "About a third of smallholder fruit and vegetables is lost between harvest and sale — local selling avoids most of this",
-          "Monthly skills swaps build knowledge more durably than any single expert consultation",
+        "id": "market-community-l3",
+        "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
+        "infographicAlt": "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
+        "title": "Building Community Food Networks: Strength in Numbers",
+        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "keyPoints": [
+          "Record seed identity, source and quality when sharing",
+          "Agree care, booking and repair responsibilities for shared tools",
+          "Measure losses and net returns for each selling route",
+          "Combine shared experience with qualified help when needed"
         ],
-        quiz: [
+        "quiz": [
           {
-            q: "Five smallholders each save three tomato varieties alone, or agree that each saves two varieties for the whole group. Which produces better seed?",
-            options: [
-              "Each saving alone, for full control",
-              "Collective saving — each farmer specialises and gives fuller attention to isolation, selection, and storage",
-              "Both approaches give the same result",
-              "Collective saving only works with a shared seed bank",
+            "q": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+            "options": [
+              "Mix all varieties without labels",
+              "Agree isolation, selection, labelling, storage and germination checks",
+              "Assume sharing automatically improves every seed lot",
+              "Rely only on the size of the group"
             ],
-            correct: 1,
-            rationale: "Specialising in fewer varieties means more attention per variety — better isolation, better selection, better stored seed for everyone in the group.",
+            "correct": 1,
+            "rationale": "Sharing access is useful, but quality still depends on crop-specific seed-saving practices and reliable records."
           },
           {
-            q: "A smallholder's nearest formal market is 60km away, costing R150 in transport for 50kg of beans sold at R8/kg. What community network approach improves this?",
-            options: [
-              "Grow 100kg instead to justify the transport cost",
-              "Process the beans to add value and justify the trip",
-              "Sell locally via a WhatsApp group or community market, cutting the R150 transport cost and possibly getting R10/kg",
-              "Join a cooperative for bulk transport rates",
+            "q": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+            "options": [
+              "Always choose the highest headline price",
+              "Always choose the shortest journey",
+              "Compare money received after fees, transport, unsold produce and losses",
+              "Assume joining a group removes all costs"
             ],
-            correct: 2,
-            rationale: "Selling close to home removes the transport cost entirely and can even fetch a better price — the two biggest levers, solved together.",
-          },
-        ],
-      },
-    ],
+            "correct": 2,
+            "rationale": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options."
+          }
+        ]
+      }
+    ]
   },
 ];
 

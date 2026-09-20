@@ -263,3 +263,5 @@ Please also confirm:
 
 When the review is done, correct the script and delete this appendix. Deleting the appendix without
 doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
+
+REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.

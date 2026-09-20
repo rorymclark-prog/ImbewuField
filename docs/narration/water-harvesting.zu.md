@@ -243,3 +243,5 @@ Ngimake okungenani amaphuzu amathathu aphakeme ngokufanayo anqamula umthambeka w
 Umugqa engiwumakile unqamula umthambeka, awehli nawo.
 
 Isikhathi esincane esingokoqobo somsebenzi wangempela: izinsuku ezi-5.
+
+REVIEW UPDATE — 20 September 2026: the English water-safety and sizing claims have been corrected. This draft and its old audio are stale and must not be published. Reconcile slides 2, 6, 8–11, 13–22 with the English source before fluent review or recording.

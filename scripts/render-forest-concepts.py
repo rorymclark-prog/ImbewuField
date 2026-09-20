@@ -28,16 +28,16 @@ CAPTIONS = {
         "Match every plant to your site."
     ),
     15: (
-        "Sheet-mulch first.\n"
-        "Pioneers build soil while fruit trees establish.\n"
-        "As shelter grows, plant the lower layers, ground covers, and climbers."
+        "This is one example of establishment in stages.\n"
+        "Protect soil early; add suitable plants as water and shelter allow.\n"
+        "Observe growth and competition before the next step."
     ),
 }
 
 TITLES = {
     5: ("Watch: The Seven Layers Working Together", "Slide 5 · Food Forest Design"),
     10: ("Watch: Match the Species to the Climate", "Slide 10 · Climate Matching"),
-    15: ("Watch: From Bare Ground to Food Forest", "Slide 15 · Planting Sequence"),
+    15: ("Watch: Establishment in Stages", "Slide 15 · Planting Sequence"),
 }
 
 SLUGS = {
