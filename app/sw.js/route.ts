@@ -162,6 +162,157 @@ async function migrateGuildNarration() {
   await cache.put(marker, new Response('51-slide guild narration'));
 }
 
+// Corrected teaching reused existing URLs. Without this one-time migration, a farmer's
+// deliberate download would keep the old speech forever beside the new lesson text.
+// Remove only replaced files; never clear the whole course or silently spend data refetching.
+async function migrateStudiesMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.studies-corrections-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    "/course-audio/food-forest/en/full.mp3",
+    "/course-audio/food-forest/en/slide-01.mp3",
+    "/course-audio/food-forest/en/slide-02.mp3",
+    "/course-audio/food-forest/en/slide-03.mp3",
+    "/course-audio/food-forest/en/slide-04.mp3",
+    "/course-audio/food-forest/en/slide-05.mp3",
+    "/course-audio/food-forest/en/slide-06.mp3",
+    "/course-audio/food-forest/en/slide-07.mp3",
+    "/course-audio/food-forest/en/slide-08.mp3",
+    "/course-audio/food-forest/en/slide-09.mp3",
+    "/course-audio/food-forest/en/slide-10.mp3",
+    "/course-audio/food-forest/en/slide-11.mp3",
+    "/course-audio/food-forest/en/slide-12.mp3",
+    "/course-audio/food-forest/en/slide-13.mp3",
+    "/course-audio/food-forest/en/slide-14.mp3",
+    "/course-audio/food-forest/en/slide-15.mp3",
+    "/course-audio/food-forest/en/slide-16.mp3",
+    "/course-audio/food-forest/en/slide-17.mp3",
+    "/course-audio/food-forest/en/slide-18.mp3",
+    "/course-audio/food-forest/en/slide-19.mp3",
+    "/course-audio/food-forest/en/slide-20.mp3",
+    "/course-audio/market-community/en/full.mp3",
+    "/course-audio/market-community/en/slide-01.mp3",
+    "/course-audio/market-community/en/slide-02.mp3",
+    "/course-audio/market-community/en/slide-03.mp3",
+    "/course-audio/market-community/en/slide-04.mp3",
+    "/course-audio/market-community/en/slide-05.mp3",
+    "/course-audio/market-community/en/slide-06.mp3",
+    "/course-audio/market-community/en/slide-07.mp3",
+    "/course-audio/market-community/en/slide-08.mp3",
+    "/course-audio/market-community/en/slide-09.mp3",
+    "/course-audio/market-community/en/slide-10.mp3",
+    "/course-audio/market-community/en/slide-11.mp3",
+    "/course-audio/market-community/en/slide-12.mp3",
+    "/course-audio/market-community/en/slide-13.mp3",
+    "/course-audio/market-community/en/slide-14.mp3",
+    "/course-audio/market-community/en/slide-15.mp3",
+    "/course-audio/market-community/en/slide-16.mp3",
+    "/course-audio/market-community/en/slide-17.mp3",
+    "/course-audio/market-community/en/slide-18.mp3",
+    "/course-audio/market-community/en/slide-19.mp3",
+    "/course-audio/market-community/en/slide-20.mp3",
+    "/course-audio/reading-landscape/en/full.mp3",
+    "/course-audio/reading-landscape/en/slide-14.mp3",
+    "/course-audio/small-livestock/en/full.mp3",
+    "/course-audio/small-livestock/en/slide-01.mp3",
+    "/course-audio/small-livestock/en/slide-02.mp3",
+    "/course-audio/small-livestock/en/slide-03.mp3",
+    "/course-audio/small-livestock/en/slide-04.mp3",
+    "/course-audio/small-livestock/en/slide-05.mp3",
+    "/course-audio/small-livestock/en/slide-06.mp3",
+    "/course-audio/small-livestock/en/slide-07.mp3",
+    "/course-audio/small-livestock/en/slide-08.mp3",
+    "/course-audio/small-livestock/en/slide-09.mp3",
+    "/course-audio/small-livestock/en/slide-10.mp3",
+    "/course-audio/small-livestock/en/slide-11.mp3",
+    "/course-audio/small-livestock/en/slide-12.mp3",
+    "/course-audio/small-livestock/en/slide-13.mp3",
+    "/course-audio/small-livestock/en/slide-14.mp3",
+    "/course-audio/small-livestock/en/slide-15.mp3",
+    "/course-audio/small-livestock/en/slide-16.mp3",
+    "/course-audio/small-livestock/en/slide-17.mp3",
+    "/course-audio/small-livestock/en/slide-18.mp3",
+    "/course-audio/small-livestock/en/slide-19.mp3",
+    "/course-audio/small-livestock/en/slide-20.mp3",
+    "/course-audio/soil-health/en/full.mp3",
+    "/course-audio/soil-health/en/slide-01.mp3",
+    "/course-audio/soil-health/en/slide-02.mp3",
+    "/course-audio/soil-health/en/slide-03.mp3",
+    "/course-audio/soil-health/en/slide-04.mp3",
+    "/course-audio/soil-health/en/slide-05.mp3",
+    "/course-audio/soil-health/en/slide-06.mp3",
+    "/course-audio/soil-health/en/slide-07.mp3",
+    "/course-audio/soil-health/en/slide-08.mp3",
+    "/course-audio/soil-health/en/slide-09.mp3",
+    "/course-audio/soil-health/en/slide-10.mp3",
+    "/course-audio/soil-health/en/slide-11.mp3",
+    "/course-audio/soil-health/en/slide-12.mp3",
+    "/course-audio/soil-health/en/slide-13.mp3",
+    "/course-audio/soil-health/en/slide-14.mp3",
+    "/course-audio/soil-health/en/slide-15.mp3",
+    "/course-audio/soil-health/en/slide-16.mp3",
+    "/course-audio/soil-health/en/slide-17.mp3",
+    "/course-audio/soil-health/en/slide-18.mp3",
+    "/course-audio/soil-health/en/slide-19.mp3",
+    "/course-audio/soil-health/en/slide-20.mp3",
+    "/course-audio/vegetables-staples/en/full.mp3",
+    "/course-audio/vegetables-staples/en/slide-01.mp3",
+    "/course-audio/vegetables-staples/en/slide-02.mp3",
+    "/course-audio/vegetables-staples/en/slide-03.mp3",
+    "/course-audio/vegetables-staples/en/slide-04.mp3",
+    "/course-audio/vegetables-staples/en/slide-05.mp3",
+    "/course-audio/vegetables-staples/en/slide-06.mp3",
+    "/course-audio/vegetables-staples/en/slide-07.mp3",
+    "/course-audio/vegetables-staples/en/slide-08.mp3",
+    "/course-audio/vegetables-staples/en/slide-09.mp3",
+    "/course-audio/vegetables-staples/en/slide-10.mp3",
+    "/course-audio/vegetables-staples/en/slide-11.mp3",
+    "/course-audio/vegetables-staples/en/slide-12.mp3",
+    "/course-audio/vegetables-staples/en/slide-13.mp3",
+    "/course-audio/vegetables-staples/en/slide-14.mp3",
+    "/course-audio/vegetables-staples/en/slide-15.mp3",
+    "/course-audio/vegetables-staples/en/slide-16.mp3",
+    "/course-audio/vegetables-staples/en/slide-17.mp3",
+    "/course-audio/vegetables-staples/en/slide-18.mp3",
+    "/course-audio/water-harvesting/en/full.mp3",
+    "/course-audio/water-harvesting/en/slide-01.mp3",
+    "/course-audio/water-harvesting/en/slide-02.mp3",
+    "/course-audio/water-harvesting/en/slide-03.mp3",
+    "/course-audio/water-harvesting/en/slide-04.mp3",
+    "/course-audio/water-harvesting/en/slide-05.mp3",
+    "/course-audio/water-harvesting/en/slide-06.mp3",
+    "/course-audio/water-harvesting/en/slide-07.mp3",
+    "/course-audio/water-harvesting/en/slide-08.mp3",
+    "/course-audio/water-harvesting/en/slide-09.mp3",
+    "/course-audio/water-harvesting/en/slide-10.mp3",
+    "/course-audio/water-harvesting/en/slide-11.mp3",
+    "/course-audio/water-harvesting/en/slide-12.mp3",
+    "/course-audio/water-harvesting/en/slide-13.mp3",
+    "/course-audio/water-harvesting/en/slide-14.mp3",
+    "/course-audio/water-harvesting/en/slide-15.mp3",
+    "/course-audio/water-harvesting/en/slide-16.mp3",
+    "/course-audio/water-harvesting/en/slide-17.mp3",
+    "/course-audio/water-harvesting/en/slide-18.mp3",
+    "/course-audio/water-harvesting/en/slide-19.mp3",
+    "/course-audio/water-harvesting/en/slide-20.mp3",
+    "/course-audio/water-harvesting/en/slide-21.mp3",
+    "/course-audio/water-harvesting/en/slide-22.mp3",
+    "/course-audio/water-harvesting/en/slide-23.mp3",
+    "/course-audio/water-harvesting/en/slide-24.mp3",
+    "/course-images/market-community/market-community-l1.jpg",
+    "/course-images/reading-landscape/reading-landscape-l2.jpg",
+    "/course-images/reading-landscape/reading-landscape-l3.jpg",
+    "/course-images/soil-health/soil-health-l1.jpg",
+    "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+    "/course-images/water-harvesting/water-harvesting-l3.jpg"
+]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Studies media; unaffected downloads preserved'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -177,7 +328,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
@@ -197,7 +348,7 @@ self.addEventListener('fetch', function (event) {
   //
   // It has to come first because the generic handler below is stale-while-revalidate: it would
   // return the cached copy and then fire a background fetch to refresh it. That is right for a JS
-  // chunk and wrong here — these files never change, and the background request would spend a
+  // chunk and wrong here — replaced files are migrated explicitly above, and a background request would spend a
   // farmer's data re-downloading a 700 KB clip they already own, every time they open the slide.
   //
   // A course asset that was NOT downloaded falls through untouched, so streaming one stays the
