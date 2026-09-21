@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C03–C04/C12–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C03–C04/C13–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -83,3 +83,7 @@ C01 has a readable implementation at `/student/guides/getting-started`: sample v
 ## Past paperwork and payment companions — 21 September 2026
 
 C09 and C10 are implemented at `/student/guides/past-sales` and `/student/guides/payments`. These bring readable implementations to nine of14; C03, C04, C12, C13 and C14 remain. [Walkthrough and correction evidence](invoice-followups.md) distinguishes actual sample save/reopen/payment checks, source-only existing-sale linking, directly rendered PDF checks and unverified browser-download delivery. The walkthrough found paid copies incorrectly labelled Total due; the shared document model now supplies Invoice total to both renderers when paid. No animations changed. Narration, isiZulu and learner review remain open.
+
+## Export companion — 21 September 2026
+
+C12 is implemented at `/student/guides/exports`: six English steps, a period-choice exercise and independent source-tracing practice. The phone export now states its current-month scope; the wide sheet exposes its selected period to assistive technology. [Source and walkthrough evidence](exports.md) records the different CSV/PDF periods and source-document limits. Ten readable companions are implemented, with C03, C04, C13 and C14 remaining. Branch/production verification follows in the release ledger. Animations remain held; narration and translation review remain open.

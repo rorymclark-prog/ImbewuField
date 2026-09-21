@@ -1023,7 +1023,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           )}
           <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
             {(['month', 'season', 'year'] as Period[]).map((p) => (
-              <button key={p} onClick={() => setPeriod(p)}
+              <button key={p} onClick={() => setPeriod(p)} aria-pressed={period === p}
                 className="px-3 py-1.5 rounded-md font-sans font-semibold capitalize transition-all"
                 style={period === p ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 } : { color: 'var(--color-muted-strong)', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
                 {p}
@@ -1709,7 +1709,7 @@ export default function RecordsPage() {
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                     style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--color-muted)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
                   >
-                    <Download size={15} />Export CSV
+                    <Download size={15} />Export this month (CSV)
                   </button>
                   {/* Everything, in date order — the one list that still crosses the tabs, because
                       "what happened lately" is a question about the whole book, not one page. */}
