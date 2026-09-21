@@ -1,0 +1,64 @@
+{
+  "status": "Original synthetic classroom exercises; not actual market prices, yields, wage rates or farm records",
+  "currency": "ZAR",
+  "moneyUnit": "cents",
+  "scope": "Three separate exercises on the same fictional practice farm. Do not combine their balances or carry forward F1/F2 values.",
+  "allocation": {
+    "period": "Practice cycle A; all listed cash costs paid in this cycle",
+    "products": ["carrots", "second-crop"],
+    "direct": [
+      {"id":"A01","label":"Materials used","product":"carrots","cents":9600},
+      {"id":"A02","label":"Packaging used","product":"carrots","cents":2400},
+      {"id":"A03","label":"Materials used","product":"second-crop","cents":14400},
+      {"id":"A04","label":"Packaging used","product":"second-crop","cents":3600}
+    ],
+    "shared": [
+      {"id":"A05","label":"Equipment hire","cents":12000,"basis":"recorded equipment hours","units":{"carrots":2,"second-crop":4}},
+      {"id":"A06","label":"Shared market trip","cents":9000,"basis":"equal-size crate spaces used","units":{"carrots":2,"second-crop":1}}
+    ],
+    "familyHours": {"carrots":4,"second-crop":6},
+    "familyComparisonCentsPerHour": 2500,
+    "familyCashPaid": 0,
+    "carrotMarketableGrams": 40000,
+    "carrotExpectedSoldGrams": 32000,
+    "exclusions": ["land charge", "owned-equipment use", "general administration", "finance costs", "tax"],
+    "fullProfit": null
+  },
+  "breakEven": {
+    "id":"B01",
+    "period":"Separate practice cycle B",
+    "unit":"one 1 kg pack prepared and sold",
+    "fixedCents":10500,
+    "variableCentsPerUnit":750,
+    "priceCentsPerUnit":1200,
+    "capacityUnits":30,
+    "expectedSalesUnits":30,
+    "assumptions":["Every pack prepared is sold in this bounded model", "Constant price and included variable cost per pack", "Included fixed costs do not change within the stated capacity", "No closing stock, discount, refund, credit loss or tax calculation", "Result is an included-cost model surplus, not complete accounting profit"],
+    "cases":[
+      {"id":"B02","expectedSalesUnits":18},
+      {"id":"B03","capacityUnits":20,"expectedSalesUnits":20},
+      {"id":"B04","priceCentsPerUnit":750},
+      {"id":"B05","priceCentsPerUnit":700},
+      {"id":"B06","variableCentsPerUnit":null}
+    ]
+  },
+  "markup": {"id":"M01","includedCostCents":800,"sellingPriceCents":1000},
+  "buyers": {
+    "period":"Separate practice decision C; choose one offer for the same produce",
+    "quantityGrams":20000,
+    "quantityUnit":"g",
+    "commonIncurredCents":14000,
+    "familyComparisonCentsPerHour":2500,
+    "assumptions":["Both buyers accept the same 20 kg quality and weight", "No sales are counted until agreed and made", "Listed delivery and packaging costs are incremental and paid by the grower", "Family hours are additional selling work, valued separately from cash", "Quotes are invented practice inputs; payment reliability is not guaranteed"],
+    "offers":[
+      {"id":"C01","buyer":"Buyer A","priceCentsPerKg":1000,"deliveryCents":0,"packagingCents":0,"paymentDay":0,"additionalFamilyHours":"0.5"},
+      {"id":"C02","buyer":"Buyer B","priceCentsPerKg":1200,"deliveryCents":3500,"packagingCents":1000,"paymentDay":7,"additionalFamilyHours":"1.5"}
+    ]
+  },
+  "transfer": {
+    "allocation":{"poolCents":7500,"hours":{"one":1,"two":2}},
+    "breakEven":{"fixedCents":8000,"variableCentsPerUnit":600,"priceCentsPerUnit":1000,"capacityUnits":18,"expectedSalesUnits":18},
+    "markup":{"includedCostCents":600,"sellingPriceCents":750},
+    "buyers":{"quantityGrams":10000,"collectionCentsPerKg":1000,"deliveryCentsPerKg":1200,"extraDeliveryCents":null}
+  }
+}
