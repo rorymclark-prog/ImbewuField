@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildDemoFacilitatorState } from '../lib/demo-farm.ts';
 import { sampleScalePair, scaleArrangement, scaleAnswer, checkScaleAnswers, type ScalePair } from '../lib/design-scale.ts';
+import { DESIGN_WORKED, existingFeatureIds, workedArea, workedProblems } from '../lib/design-worked.ts';
 
 test('scale teaching uses the same dimensions as the sample garden without exporting site or household records', () => {
   const source = buildDemoFacilitatorState();
@@ -63,4 +64,21 @@ test('calculation checks reject blank and partial numbers while accepting decima
   const naiveSum = checkScaleAnswers(overlap, { bed:'6', space:'1', covered:'12' });
   assert.equal(naiveSum.find(item=>item.id==='covered')!.correct,false);
   assert.equal(naiveSum.find(item=>item.id==='covered')!.expected,9);
+});
+
+test('the worked design source pack stays a bounded fictional model with named revision evidence', () => {
+  assert.equal(DESIGN_WORKED.coordinateSystem.unit, 'metres');
+  assert.match(DESIGN_WORKED.notice, /Fictional classroom model/);
+  assert.ok(DESIGN_WORKED.sourceCards.some(card => card.id === DESIGN_WORKED.revision.source));
+  assert.ok(DESIGN_WORKED.sourceCards.some(card => card.kind === 'unknown'));
+});
+
+test('the worked alternatives retain existing evidence and one supplied growing-area basis', () => {
+  const existing = DESIGN_WORKED.existing.find(feature => feature.id === 'E-PLOT-A')!;
+  const alternative = DESIGN_WORKED.concepts.find(concept => concept.id === 'B')!.geometry[0]!;
+  assert.equal(workedArea(existing), 48);
+  assert.equal(workedArea(alternative), 48);
+  assert.deepEqual(existingFeatureIds(), ['E-PLOT-A', 'E-HOME', 'E-ROUTE', 'E-GATE', 'E-WATER']);
+  assert.equal(DESIGN_WORKED.proposal.status, 'deferred after W-CARE');
+  assert.deepEqual(workedProblems(), []);
 });

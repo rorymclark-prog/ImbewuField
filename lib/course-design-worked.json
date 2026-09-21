@@ -1,0 +1,40 @@
+{
+  "caseId": "DESIGN-WORKED-01",
+  "revision": "R2",
+  "title": "A provisional yard plan",
+  "notice": "Fictional classroom model. Coordinates, dimensions and statements are supplied for learning only. They are not a survey, a construction drawing, local advice or a plan for a real household.",
+  "coordinateSystem": { "unit": "metres", "axis": "x increases right; y increases down; the top edge is model north by classroom convention only" },
+  "sourceCards": [
+    { "id": "W-BRIEF", "kind": "supplied simulation input", "title": "Household brief", "text": "The household wants vegetables, an unobstructed home-to-gate route and manageable care. The person carrying water participates in the decision." },
+    { "id": "W-MAP", "kind": "supplied simulation input", "title": "Teaching frame", "text": "A 20 m by 12 m classroom frame includes an existing 8 m by 6 m growing area. It is model geometry, not a boundary or land-rights record." },
+    { "id": "W-OBS", "kind": "reported classroom statement", "title": "Water and shade observation", "text": "A water point is beside the home. Water reportedly crosses the eastern yard in heavy rain; its extent and levels are unmeasured. One visit noted eastern-yard shade; it is not a seasonal shade study." },
+    { "id": "W-CARE", "kind": "reported classroom statement", "title": "Later care statement", "text": "The person expected to manage a proposed compost area has not agreed to that extra work." },
+    { "id": "W-A", "kind": "proposal", "title": "Concept A", "text": "Keep the existing growing area and investigate whether its care can improve while the route remains clear." },
+    { "id": "W-B", "kind": "proposal", "title": "Concept B", "text": "Investigate a relocated growing area of the same model footprint, while retaining the original area until a decision is made." },
+    { "id": "W-CHECK", "kind": "derived calculation", "title": "Model area check", "text": "Both growing-area proposals occupy 48 m² in the supplied model: 8 × 6 and 6 × 8." },
+    { "id": "W-UNKNOWN", "kind": "unknown", "title": "What remains unknown", "text": "Water quantity, quality and reliability; soil suitability; tenure; drainage levels; usable access; materials, costs, permissions and long-term care agreement remain unknown." }
+  ],
+  "existing": [
+    { "id": "E-PLOT-A", "label": "Existing growing area", "type": "rect", "x": 3, "y": 3, "width": 8, "height": 6 },
+    { "id": "E-HOME", "label": "Home", "type": "rect", "x": 11, "y": 0, "width": 6, "height": 3 },
+    { "id": "E-ROUTE", "label": "Existing route", "type": "rect", "x": 12, "y": 3, "width": 1, "height": 9 },
+    { "id": "E-GATE", "label": "Gate reference", "type": "point", "x": 12.5, "y": 12 },
+    { "id": "E-WATER", "label": "Water-point reference", "type": "point", "x": 11, "y": 2 }
+  ],
+  "concepts": [
+    { "id": "A", "title": "Concept A — care the existing growing area", "source": "W-A", "geometry": [], "criteria": ["Keeps the known existing growing area", "Keeps the existing route visible", "Needs evidence about water, soil, drainage and care before change"], "mayProceed": "Observation and household discussion only", "conditions": ["Agree care roles", "Check access in use", "Check water and soil conditions", "Do not treat reported water movement as a drainage design"] },
+    { "id": "B", "title": "Concept B — investigate a different location", "source": "W-B", "geometry": [{ "id": "P-B-PLOT", "label": "Alternative B growing area", "type": "rect", "x": 13.5, "y": 3.5, "width": 6, "height": 8 }], "criteria": ["Uses the same 48 m² model footprint", "Leaves the original growing area as existing evidence", "Needs extra location and route checks before choice"], "mayProceed": "Comparison and location checks only", "conditions": ["Check whether the proposed outline obstructs real movement", "Check water, soil, shade and reported water path", "Do not count both growing areas as active production"] }
+  ],
+  "proposal": { "id": "P-COMPOST", "label": "Proposed compost area", "type": "rect", "x": 1, "y": 9, "width": 1.5, "height": 1.5, "source": "W-A", "status": "deferred after W-CARE" },
+  "decision": { "provisional": "Investigate Concept A first; defer physical changes while evidence and household agreement are incomplete.", "rejected": "Concept B is not rejected as impossible. It remains a conditional alternative, not a proven improvement.", "deferral": "Deferral is a valid decision while the prerequisites are unresolved." },
+  "dependencies": [
+    { "item": "Growing-area change", "before": "Household agreement, route observation, water and soil checks, relevant permissions", "cost": "Unknown; obtain comparable quotes only after a defined proposal", "care": "Agree who will do the ongoing work before assigning it" },
+    { "item": "Compost area", "before": "Agreement from the person expected to manage it and a practical care plan", "cost": "Unknown; do not enter zero", "care": "Deferred after W-CARE" }
+  ],
+  "revision": { "from": "R1", "to": "R2", "source": "W-CARE", "change": "Defer the proposed compost area. Keep the growing-area investigation and route evidence unchanged.", "reason": "No person has agreed to the added care work.", "nextOwner": "Household and facilitator to record an agreed care arrangement or leave the component deferred." },
+  "facilitator": [
+    { "question": "Which source supports the 48 m² comparison?", "answer": "W-MAP supplies both footprints and W-CHECK records the calculation. A picture alone is not the source." },
+    { "question": "Does the report about water crossing the eastern yard establish levels or an earthworks design?", "answer": "No. It is W-OBS, a reported statement with unmeasured extent and levels." },
+    { "question": "What must change after W-CARE?", "answer": "The compost proposal, its phase/cost status and its care record all change to deferred. The earlier version and reason remain visible." }
+  ]
+}
