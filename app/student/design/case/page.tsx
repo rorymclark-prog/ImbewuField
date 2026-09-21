@@ -18,7 +18,7 @@ export default function DesignCasePage() {
       <aside className={`${styles.notice} ${styles.projectNotice}`}><FinanceText text={introduction} /></aside>
       {sections.map((section, i) => { const end = section.indexOf('\n'); return <section className={styles.section} key={i} id={i === 0 ? 'sources' : undefined}><h2>{section.slice(0, end)}</h2><FinanceText text={section.slice(end + 1)} headingLevel={3} /></section>; })}
       <DesignCasePractice />
-      <section className={styles.section}><h2>Apply the same questions to your own folder</h2><p>Keep observed, reported, measured and proposed information distinct. Ask your learning partner to trace a decision from the brief to its source. The full measured classroom plan and later results exercise are still being prepared.</p><div className={styles.actions}><Link href="/student/design/d1-1">Begin with the household brief →</Link><Link href="/student/design">Return to all eighteen lessons</Link></div></section>
+      <section className={styles.section}><h2>Apply the same questions to your own folder</h2><p>Keep observed, reported, measured and proposed information distinct. Ask your learning partner to trace a decision from the brief to its source. This early case deliberately remains unmeasured; use the separate fictional worked demonstration to practise a supplied model and a later revision.</p><div className={styles.actions}><Link className={styles.primary} href="/student/design/worked">Open the worked demonstration →</Link><Link href="/student/design/d1-1">Begin with the household brief →</Link><Link href="/student/design">Return to all eighteen lessons</Link></div></section>
     </main>
   </div>;
 }

@@ -1,0 +1,12 @@
+.map { margin: 24px 0; }
+.map svg { display: block; width: 100%; max-width: 720px; margin: auto; background: #f8f2df; border: 1px solid #d8d0bb; border-radius: 12px; }
+.map text { font: 14px var(--font-sans), sans-serif; fill: #293b2e; pointer-events: none; }
+.frame { fill: #fffdf7; stroke: #715634; stroke-width: 3; }
+.existing { fill: #d7e4c9; stroke: #31593a; stroke-width: 3; }
+.route { fill: #d8d0bb; stroke: #756b57; stroke-width: 2; }
+.point { fill: #2d6a4f; stroke: #fffdf7; stroke-width: 3; }
+.proposed { fill: #f9ddb0; fill-opacity: .72; stroke: #b85f1c; stroke-width: 4; stroke-dasharray: 10 7; }
+.compost { fill: #cfae73; fill-opacity: .72; stroke: #7a4d20; stroke-width: 3; stroke-dasharray: 7 5; }
+.axis { font-size: 13px !important; fill: #596b4d !important; }
+.deferred { fill: #8b2e1e !important; font-weight: 700; }
+@media print { .map svg { max-width: 600px; } }
