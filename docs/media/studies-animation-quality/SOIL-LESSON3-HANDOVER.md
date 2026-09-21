@@ -74,4 +74,6 @@ English is authoritative and present:
 
 ## Current honest status
 
-The soil-rain Quality pilot spent 100 credits and is rejected/held, with 2,400 credits uncommitted in its record. No replacement video, poster, runtime registration, cache update, narration update, or release has been made by this handover. The next work is a read-only reconciliation of the published clip, Fast candidate and Quality candidate, followed by whole-lesson review. An authored macro inset is conditional on that comparison proving necessary; another automatic generation attempt is not authorised.
+The soil-rain Quality pilot spent 100 credits and is rejected/held, with 2,400 credits uncommitted in its record. No replacement video, poster, runtime registration, cache update, narration update, or release has been made by this handover. The read-only reconciliation and local whole-lesson comparison are now complete; see SOIL-COMPARISON-REVIEW.md for evidence and remaining visual gaps. An authored macro inset is conditional on that comparison proving necessary; another automatic generation attempt is not authorised.
+
+Local review artifact: `/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/lesson-review/index.html`. It contains direct local copies of the seven slide stills and English MP3s, plus the three unchanged slide-14 videos. Its `sources.json` records every copied file hash and the shared source-art hash. It is not a public app change or a release claim.

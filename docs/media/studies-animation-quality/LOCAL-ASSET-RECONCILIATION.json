@@ -1,0 +1,2157 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local filesystem reconciliation only; no visual acceptance, generation, or deletion instruction.",
+  "sourceFiles": [
+    "lib/course-deck.ts",
+    "lib/course-audio.ts"
+  ],
+  "generatedAt": "2026-09-22",
+  "summary": {
+    "coreSlots": 49,
+    "manifestVariants": 57,
+    "provenExistingMp4s": 57,
+    "missingMp4s": 0,
+    "metadataMismatches": 2,
+    "duplicateByteHashes": 7,
+    "unregisteredMp4ArchiveCandidates": 5
+  },
+  "coreSlots": [
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l1",
+      "slide": 4,
+      "title": "Watch: What the Farm Record Shows",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-04-farm-record",
+          "manifest": {
+            "bytes": 112750,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/market-community/watch-04-farm-record.mp4",
+            "status": "proven-existing",
+            "bytes": 112750,
+            "sha256": "51a8bdbf0d595eaf0dec1e674bf3f25a1126c2bdceebf7a3b4cacfdff53b1c82",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/market-community/posters/watch-04-farm-record.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l2",
+      "slide": 9,
+      "title": "Watch: Where Surplus Can Go",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-09-surplus-routes",
+          "manifest": {
+            "bytes": 118388,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
+            "status": "proven-existing",
+            "bytes": 118388,
+            "sha256": "e4adf98f4eba2bf6399fc46ce67533a9e72d1fd8aad415a944848c6dc462eb64",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/market-community/posters/watch-09-surplus-routes.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "slide": 14,
+      "title": "Watch: How Neighbours Strengthen a Harvest",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-14-community-network",
+          "manifest": {
+            "bytes": 170639,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/market-community/watch-14-community-network.mp4",
+            "status": "proven-existing",
+            "bytes": 170639,
+            "sha256": "1a9f6bcae8990b1873c2e85ee60a63873a9087af34e409536f9835289fcd8ac2",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/market-community/posters/watch-14-community-network.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "market-community",
+      "lessonId": "market-community-l3",
+      "slide": 15,
+      "title": "Save Seed Together",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-seed-sharing",
+          "manifest": {
+            "bytes": 3024675,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/market-community/flow-seed-sharing.mp4",
+            "status": "proven-existing",
+            "bytes": 3024675,
+            "sha256": "39556f4a976856fbfbf1b9e2f8e7f0becd577697d101973793746af4615cc0bc",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/market-community/posters/flow-seed-sharing.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "small-livestock",
+      "lessonId": "small-livestock-l1",
+      "slide": 4,
+      "title": "Watch: Hens Foraging After Harvest",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-hens-foraging",
+          "manifest": {
+            "bytes": 5064928,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/small-livestock/flow-hens-foraging.mp4",
+            "status": "proven-existing",
+            "bytes": 5064928,
+            "sha256": "66bfa1ab31974d4bc7e02e2505969afa9bf9faf97e2ea17510327be887ef04e7",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/small-livestock/posters/flow-hens-foraging.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "small-livestock",
+      "lessonId": "small-livestock-l1",
+      "slide": 7,
+      "title": "Ducks Suit Established Understorey",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-ducks-understorey",
+          "manifest": {
+            "bytes": 7613902,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/small-livestock/flow-ducks-understorey.mp4",
+            "status": "proven-existing",
+            "bytes": 7613902,
+            "sha256": "6b577ae543814d69b1566b3ee22549556f12c95068ee25730f43f93a380217f4",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/small-livestock/posters/flow-ducks-understorey.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "small-livestock",
+      "lessonId": "small-livestock-l2",
+      "slide": 9,
+      "title": "Watch: Bees Moving Between Hive and Crops",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-09-bee-pollination",
+          "manifest": {
+            "bytes": 116723,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/small-livestock/watch-09-bee-pollination.mp4",
+            "status": "proven-existing",
+            "bytes": 116723,
+            "sha256": "d035b535946c66625f7e984dbbabaecc70f1653a3ec56e9df3084d9896a4e857",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "small-livestock",
+      "lessonId": "small-livestock-l3",
+      "slide": 14,
+      "title": "Watch: Nutrients Moving in a Closed Livestock Loop",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-14-nutrient-loop",
+          "manifest": {
+            "bytes": 161586,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/small-livestock/watch-14-nutrient-loop.mp4",
+            "status": "proven-existing",
+            "bytes": 161586,
+            "sha256": "77e9ae7c02ab91eb10d9bced9e0d50136fbab168a8ddcf544aef14bd51e718bb",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "food-forest",
+      "lessonId": "food-forest-l1",
+      "slide": 5,
+      "title": "Watch: Read the Seven Planting Layers",
+      "variants": [
+        {
+          "language": "default",
+          "src": "tour-seven-layers",
+          "manifest": {
+            "bytes": 7425984,
+            "seconds": 30.375,
+            "aspectRatio": 1.4545454545454546,
+            "narrationTimed": true
+          },
+          "mp4": {
+            "path": "public/course-animations/food-forest/tour-seven-layers.mp4",
+            "status": "proven-existing",
+            "bytes": 7425984,
+            "sha256": "efe689c8f2ce76ab752d58d957eedb63413a8f05295560ae0f9f233a3b80ce74",
+            "durationSeconds": 30.375,
+            "width": 1600,
+            "height": 1100
+          },
+          "poster": {
+            "path": "public/course-animations/food-forest/posters/tour-seven-layers.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "food-forest",
+      "lessonId": "food-forest-l2",
+      "slide": 10,
+      "title": "Watch: Match the Species to the Climate",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-10-climate-match",
+          "manifest": {
+            "bytes": 168094,
+            "seconds": 14.625,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/food-forest/watch-10-climate-match.mp4",
+            "status": "proven-existing",
+            "bytes": 168094,
+            "sha256": "2986778129137023db6e99f1794b26d86981b85ce6b73a1c44f833a1d60e2c7e",
+            "durationSeconds": 14.625,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/food-forest/posters/watch-10-climate-match.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "food-forest",
+      "lessonId": "food-forest-l3",
+      "slide": 15,
+      "title": "Watch: Care for a Young Food Forest",
+      "variants": [
+        {
+          "language": "default",
+          "src": "tour-young-forest",
+          "manifest": {
+            "bytes": 6436310,
+            "seconds": 33.291667,
+            "aspectRatio": 1.4545454545454546,
+            "narrationTimed": true
+          },
+          "mp4": {
+            "path": "public/course-animations/food-forest/tour-young-forest.mp4",
+            "status": "proven-existing",
+            "bytes": 6436310,
+            "sha256": "8107bf45e53b071259792a823067a79f14352dfd1655e49f8e812ce2f7aa9fa2",
+            "durationSeconds": 33.291667,
+            "width": 1600,
+            "height": 1100
+          },
+          "poster": {
+            "path": "public/course-animations/food-forest/posters/tour-young-forest.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "food-forest",
+      "lessonId": "food-forest-l3",
+      "slide": 16,
+      "title": "Prepare a Manageable First Area",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-sheet-mulching",
+          "manifest": {
+            "bytes": 7483690,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/food-forest/flow-sheet-mulching.mp4",
+            "status": "proven-existing",
+            "bytes": 7483690,
+            "sha256": "5bc8868d14b7e1c46978a297fa748cf5b340bf701b701130a767a5fcbbacbbfb",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/food-forest/posters/flow-sheet-mulching.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "slide": 6,
+      "title": "Seed or Seedling?",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-seed-or-seedling",
+          "manifest": {
+            "bytes": 5423616,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/vegetables-staples/flow-seed-or-seedling.mp4",
+            "status": "proven-existing",
+            "bytes": 5423616,
+            "sha256": "c0a552b017ef13527a1ea68501c9789abb730800e842147937fcc54be5f5e80a",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/vegetables-staples/posters/flow-seed-or-seedling.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l1",
+      "slide": 5,
+      "title": "Watch: Read Your Soil",
+      "variants": [
+        {
+          "language": "default",
+          "src": "tour-soil-observation",
+          "manifest": {
+            "bytes": 4874969,
+            "seconds": 29.833333,
+            "aspectRatio": 1.4545454545454546,
+            "narrationTimed": true
+          },
+          "mp4": {
+            "path": "public/course-animations/soil-health/tour-soil-observation.mp4",
+            "status": "proven-existing",
+            "bytes": 4874969,
+            "sha256": "d989230915ec4fb47db81626e081894226ed38dbcb67b7368eb4a2e703e809b3",
+            "durationSeconds": 29.833333,
+            "width": 1600,
+            "height": 1100
+          },
+          "poster": {
+            "path": "public/course-animations/soil-health/posters/tour-soil-observation.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l2",
+      "slide": 10,
+      "title": "Watch: Build the Compost Heap",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-10-compost-heap",
+          "manifest": {
+            "bytes": 119193,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
+            "status": "proven-existing",
+            "bytes": 119193,
+            "sha256": "c7711e415cf68ffaab184068a675d33a0aea0b4ecb28d41f771a6b6f763c39fb",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/soil-health/posters/watch-10-compost-heap.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l2",
+      "slide": 11,
+      "title": "Balance Browns and Greens",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-compost-materials",
+          "manifest": {
+            "bytes": 4290981,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/soil-health/flow-compost-materials.mp4",
+            "status": "proven-existing",
+            "bytes": 4290981,
+            "sha256": "330895a064fac69b2c2798c17096ee8ea8960b9559870b1d3a5347cb151ec743",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/soil-health/posters/flow-compost-materials.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "soil-health",
+      "lessonId": "soil-health-l3",
+      "slide": 14,
+      "title": "Watch: Bare Soil and Mulch",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-14-mulch-protection",
+          "manifest": {
+            "bytes": 369446,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/soil-health/watch-14-mulch-protection.mp4",
+            "status": "proven-existing",
+            "bytes": 369446,
+            "sha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/soil-health/posters/watch-14-mulch-protection.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "lessonId": "reading-landscape-l1",
+      "slide": 5,
+      "title": "Watch: Water Slows, Sinks, and Leaves",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-05-water-movement",
+          "manifest": {
+            "bytes": 542138,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/reading-landscape/watch-05-water-movement.mp4",
+            "status": "proven-existing",
+            "bytes": 542138,
+            "sha256": "bd462a922248f12089a2c969f95f8edb45f8e17690e38cb2afaa4e4e86d7644e",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/reading-landscape/posters/watch-05-water-movement.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "lessonId": "reading-landscape-l1",
+      "slide": 6,
+      "title": "Trace Contours with an A-Frame",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-a-frame",
+          "manifest": {
+            "bytes": 1808880,
+            "seconds": 6,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/reading-landscape/flow-a-frame.mp4",
+            "status": "proven-existing",
+            "bytes": 1808880,
+            "sha256": "32721be26c47a79b23edac694be0ae90f2ea1deadab7ae01cbaa1a34e0f56584",
+            "durationSeconds": 6,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/reading-landscape/posters/flow-a-frame.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "lessonId": "reading-landscape-l2",
+      "slide": 9,
+      "title": "Watch: Follow the Sun Across the Site",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-09-sun-shadows",
+          "manifest": {
+            "bytes": 192487,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
+            "status": "proven-existing",
+            "bytes": 192487,
+            "sha256": "02392d4efc7b444b8250902acc68cce76e5c2528a73a0b5736c7aad1a8c3db93",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/reading-landscape/posters/watch-09-sun-shadows.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "lessonId": "reading-landscape-l3",
+      "slide": 13,
+      "title": "Watch: See Wind and Cold Air on the Map",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-13-wind-cold-air",
+          "manifest": {
+            "bytes": 373296,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/reading-landscape/watch-13-wind-cold-air.mp4",
+            "status": "proven-existing",
+            "bytes": 373296,
+            "sha256": "ee34bf369f8413f489492975c15daea98815cd3f2d137923f941b70edfa11a69",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/reading-landscape/posters/watch-13-wind-cold-air.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "lessonId": "reading-landscape-l4",
+      "slide": 17,
+      "title": "Watch: Draw the Land You Already Have",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-17-site-map",
+          "manifest": {
+            "bytes": 116306,
+            "seconds": 14,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/reading-landscape/watch-17-site-map.mp4",
+            "status": "proven-existing",
+            "bytes": 116306,
+            "sha256": "c6abe9edcb3f9d91152064060adb3dab45f0a3ba9456982bd38c0ef7565c9b99",
+            "durationSeconds": 14,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/reading-landscape/posters/watch-17-site-map.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "lessonId": "intro-permaculture-l1",
+      "slide": 4,
+      "title": "Earth Care",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-earth-care",
+          "manifest": {
+            "bytes": 5177501,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/intro-permaculture/flow-earth-care.mp4",
+            "status": "proven-existing",
+            "bytes": 5177501,
+            "sha256": "d0f2441f869e8a63ab8743ba3f33e94f0fe001d4c1e868636d86c58a61f1040c",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/intro-permaculture/posters/flow-earth-care.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "lessonId": "intro-permaculture-l1",
+      "slide": 7,
+      "title": "Watch: One Decision, Three Ethics",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-07-three-ethics",
+          "manifest": {
+            "bytes": 211949,
+            "seconds": 23.416667,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/intro-permaculture/watch-07-three-ethics.mp4",
+            "status": "proven-existing",
+            "bytes": 211949,
+            "sha256": "2e7843bb754037e2a412b12487969a953302543ad9b241056b3ac03dcd979bf2",
+            "durationSeconds": 23.416667,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "lessonId": "intro-permaculture-l2",
+      "slide": 13,
+      "title": "Watch: Diversity Against One Bad Day",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-13-diversity",
+          "manifest": {
+            "bytes": 586357,
+            "seconds": 26.625,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/intro-permaculture/watch-13-diversity.mp4",
+            "status": "proven-existing",
+            "bytes": 586357,
+            "sha256": "bede9828928bd347b7f29ae06cc6ce8213baa1c0d9f1dc4a3491d90de0289031",
+            "durationSeconds": 26.625,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/intro-permaculture/posters/watch-13-diversity.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "lessonId": "intro-permaculture-l3",
+      "slide": 19,
+      "title": "Watch: Shelter Between Wind and Crops",
+      "variants": [
+        {
+          "language": "default",
+          "src": "motion-windbreak",
+          "manifest": {
+            "bytes": 4248143,
+            "seconds": 30.666667,
+            "aspectRatio": 1.4545454545454546,
+            "narrationTimed": true
+          },
+          "mp4": {
+            "path": "public/course-animations/intro-permaculture/motion-windbreak.mp4",
+            "status": "proven-existing",
+            "bytes": 4248143,
+            "sha256": "a3074769a56f1d7229f9bfd6e5e8cd5ccbf37a7c30f95ff174fcecdb8d049e20",
+            "durationSeconds": 30.666667,
+            "width": 1600,
+            "height": 1100
+          },
+          "poster": {
+            "path": "public/course-animations/intro-permaculture/posters/motion-windbreak.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l1",
+      "slide": 4,
+      "title": "Watch: A Swale Sinks Water",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-04-swale-infiltration",
+          "manifest": {
+            "bytes": 881320,
+            "seconds": 16,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-04-swale-infiltration.mp4",
+            "status": "proven-existing",
+            "bytes": 881320,
+            "sha256": "a029794b0a815468bce4f53bb367d9266545552ee8752d37a23b85d9477eabd3",
+            "durationSeconds": 16,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l1",
+      "slide": 7,
+      "title": "Watch: The Overflow Point",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-07-swale-overflow-pond",
+          "manifest": {
+            "bytes": 2712641,
+            "seconds": 13,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4",
+            "status": "proven-existing",
+            "bytes": 2712641,
+            "sha256": "45a587d018f2e254c29e3f8c6ae1377450d63e0cf8d0b569eeee9da7a1bcaa7d",
+            "durationSeconds": 13,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l1",
+      "slide": 9,
+      "title": "Watch: Roots Help Hold Soil",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-09-vetiver-contour",
+          "manifest": {
+            "bytes": 176130,
+            "seconds": 16,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-09-vetiver-contour.mp4",
+            "status": "proven-existing",
+            "bytes": 176130,
+            "sha256": "619e16428b3ab9bdfd691fc974d3f0a1cc200e8ba31f8b26ac4d5e085a8153b9",
+            "durationSeconds": 16,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l2",
+      "slide": 12,
+      "title": "Watch: Dam and Spillway",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-12-dam-spillway",
+          "manifest": {
+            "bytes": 185495,
+            "seconds": 16,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-12-dam-spillway.mp4",
+            "status": "proven-existing",
+            "bytes": 185495,
+            "sha256": "3a3801888029d7f407dedbc4a257ea839e925a3a8c3d445f6123061d714d8ea9",
+            "durationSeconds": 16,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l3",
+      "slide": 14,
+      "title": "Your Roof Is a Harvesting Surface",
+      "variants": [
+        {
+          "language": "default",
+          "src": "flow-roof-rain",
+          "manifest": {
+            "bytes": 3828056,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/flow-roof-rain.mp4",
+            "status": "proven-existing",
+            "bytes": 3828056,
+            "sha256": "c3f36f720feec46a2f9587f4022c54c5eb83ea0fc20c01c0796f63028db87993",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/flow-roof-rain.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l3",
+      "slide": 16,
+      "title": "Watch: First Flush to Tank",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-16-first-flush-tank",
+          "manifest": {
+            "bytes": 85731,
+            "seconds": 17,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-16-first-flush-tank.mp4",
+            "status": "proven-existing",
+            "bytes": 85731,
+            "sha256": "8e973e1a3203fe7801a77e50410cfdc8cfd2cbab03b1b3627d274d8169cc1ae8",
+            "durationSeconds": 17,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "lessonId": "water-harvesting-l4",
+      "slide": 21,
+      "title": "Watch: Greywater Under Mulch",
+      "variants": [
+        {
+          "language": "default",
+          "src": "watch-21-greywater-mulch",
+          "manifest": {
+            "bytes": 146959,
+            "seconds": 17,
+            "aspectRatio": 1.1444444444444444,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/water-harvesting/watch-21-greywater-mulch.mp4",
+            "status": "proven-existing",
+            "bytes": 146959,
+            "sha256": "444f1f784adfc62c46d1d52766e4eab4ed44b48771ee5c8467a3a98983b613a8",
+            "durationSeconds": 17,
+            "width": 824,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l1",
+      "slide": 15,
+      "title": "Pigeon Pea Gives Food Too",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-03-Pigeon-pea-food",
+          "manifest": {
+            "bytes": 7277042,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4",
+            "status": "proven-existing",
+            "bytes": 7277042,
+            "sha256": "346ed02f44b20dea94833c4bfcc7d65e4aa3ca0bfd26b1f5f7b9289fcb0c6827",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-03-Pigeon-pea-food",
+          "manifest": {
+            "bytes": 7277042,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4",
+            "status": "proven-existing",
+            "bytes": 7277042,
+            "sha256": "346ed02f44b20dea94833c4bfcc7d65e4aa3ca0bfd26b1f5f7b9289fcb0c6827",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l1",
+      "slide": 23,
+      "title": "Build a Layered Support Guild",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-09-Labelled",
+          "manifest": {
+            "bytes": 4174276,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled.mp4",
+            "status": "proven-existing",
+            "bytes": 4174276,
+            "sha256": "d0d73614a71f1d53488372e0753a4855fdfa9359fd9313a3061a43a57b41bc8d",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-09-Labelled-zu",
+          "manifest": {
+            "bytes": 3639293,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled-zu.mp4",
+            "status": "proven-existing",
+            "bytes": 3639293,
+            "sha256": "dea135f85477566f8bccc7e16b2b2d7b6ec829cf2d1f3cc833625b627c878e64",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l2",
+      "slide": 27,
+      "title": "Chop-and-Drop for Light and Mulch",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-02-Pruning-trimmed",
+          "manifest": {
+            "bytes": 3373640,
+            "seconds": 5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4",
+            "status": "proven-existing",
+            "bytes": 3373640,
+            "sha256": "adbef5fb7fcc5419e105ba5ceb6009798ca1be3953b376073e63b146cfc144c2",
+            "durationSeconds": 5,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-02-Pruning-trimmed",
+          "manifest": {
+            "bytes": 3373640,
+            "seconds": 5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4",
+            "status": "proven-existing",
+            "bytes": 3373640,
+            "sha256": "adbef5fb7fcc5419e105ba5ceb6009798ca1be3953b376073e63b146cfc144c2",
+            "durationSeconds": 5,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l2",
+      "slide": 29,
+      "title": "Keep Mulch Off the Trunk",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-01-Mulch-ring",
+          "manifest": {
+            "bytes": 3173759,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4",
+            "status": "proven-existing",
+            "bytes": 3173759,
+            "sha256": "e66cf9dd0a7621594a7c91f0251b80e41c162565ac8ccbbef873f6315d273003",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-01-Mulch-ring",
+          "manifest": {
+            "bytes": 3173759,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4",
+            "status": "proven-existing",
+            "bytes": 3173759,
+            "sha256": "e66cf9dd0a7621594a7c91f0251b80e41c162565ac8ccbbef873f6315d273003",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l2",
+      "slide": 33,
+      "title": "Observe Helpful Insects",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-04-Helpful-insects",
+          "manifest": {
+            "bytes": 3933234,
+            "seconds": 5.5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4",
+            "status": "proven-existing",
+            "bytes": 3933234,
+            "sha256": "4cb9ceafb95c64956e59c859c09f5d5f18a8ee1772b8d3b01d433b4d26b1a576",
+            "durationSeconds": 5.5,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-04-Helpful-insects",
+          "manifest": {
+            "bytes": 3933234,
+            "seconds": 5.5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4",
+            "status": "proven-existing",
+            "bytes": 3933234,
+            "sha256": "4cb9ceafb95c64956e59c859c09f5d5f18a8ee1772b8d3b01d433b4d26b1a576",
+            "durationSeconds": 5.5,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l3",
+      "slide": 37,
+      "title": "Bring the Jobs Together",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-05-Guild-overview",
+          "manifest": {
+            "bytes": 9200096,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4",
+            "status": "proven-existing",
+            "bytes": 9200096,
+            "sha256": "478c605da1a25f72a208874627298d4ab7821f0149b70e1a5f068fa19f95ed2d",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-05-Guild-overview",
+          "manifest": {
+            "bytes": 9200096,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4",
+            "status": "proven-existing",
+            "bytes": 9200096,
+            "sha256": "478c605da1a25f72a208874627298d4ab7821f0149b70e1a5f068fa19f95ed2d",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l3",
+      "slide": 41,
+      "title": "First, Establish the Guild",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-06-Succession-establish",
+          "manifest": {
+            "bytes": 3900208,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4",
+            "status": "proven-existing",
+            "bytes": 3900208,
+            "sha256": "8ee9e0ac457b70136644a15f5a1d9db3ab4599a8a6faaeecbf50ec736eb783ae",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-06-Succession-establish",
+          "manifest": {
+            "bytes": 3900208,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4",
+            "status": "proven-existing",
+            "bytes": 3900208,
+            "sha256": "8ee9e0ac457b70136644a15f5a1d9db3ab4599a8a6faaeecbf50ec736eb783ae",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "plant-guilds",
+      "lessonId": "plant-guilds-l3",
+      "slide": 44,
+      "title": "Move Support Into the Light",
+      "variants": [
+        {
+          "language": "default",
+          "src": "Imbewu-Guilds-08-Succession-carry-mulch",
+          "manifest": {
+            "bytes": 8354154,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4",
+            "status": "proven-existing",
+            "bytes": 8354154,
+            "sha256": "a618b18467d2600ef30b83d8d55c7c89f4ce4ed5c6d08e913af326e6c299c931",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        },
+        {
+          "language": "zu",
+          "src": "Imbewu-Guilds-08-Succession-carry-mulch",
+          "manifest": {
+            "bytes": 8354154,
+            "seconds": 8,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4",
+            "status": "proven-existing",
+            "bytes": 8354154,
+            "sha256": "a618b18467d2600ef30b83d8d55c7c89f4ce4ed5c6d08e913af326e6c299c931",
+            "durationSeconds": 8,
+            "width": 1280,
+            "height": 720
+          },
+          "poster": {
+            "path": "public/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch-zu.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "slide": 5,
+      "title": "Watch: Open-Pollinated Seed and F1 Seed",
+      "variants": [
+        {
+          "language": "default",
+          "src": "imbewu_isiZulu_video_01",
+          "manifest": {
+            "bytes": 420204,
+            "seconds": 10,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_01.mp4",
+            "status": "proven-existing",
+            "bytes": 420204,
+            "sha256": "9924b305a38bebc2c1570b4ede0e386573bf6c73d12823e0ea9e2efc04c54cbc",
+            "durationSeconds": 10,
+            "width": 800,
+            "height": 450
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_01.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "slide": 7,
+      "title": "Watch: Household Seed Network",
+      "variants": [
+        {
+          "language": "default",
+          "src": "imbewu_isiZulu_video_02",
+          "manifest": {
+            "bytes": 738328,
+            "seconds": 10,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_02.mp4",
+            "status": "proven-existing",
+            "bytes": 738328,
+            "sha256": "38fa0356593e3295d5301ac8cf715af118f516d77ea4e653b5efa1fd697a85ea",
+            "durationSeconds": 10,
+            "width": 800,
+            "height": 450
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_02.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "slide": 8,
+      "title": "Select Several Parent Plants",
+      "variants": [
+        {
+          "language": "default",
+          "src": "seed-selecting-parents",
+          "manifest": {
+            "bytes": 248394,
+            "seconds": 5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/seed-selecting-parents.mp4",
+            "status": "proven-existing",
+            "bytes": 248394,
+            "sha256": "97a794c0f0e9cfda9246970c1dc954689e7a5730faec0b7c64472a4c89d9724c",
+            "durationSeconds": 5.208008,
+            "width": 960,
+            "height": 540
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/seed-selecting-parents.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": false
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "slide": 10,
+      "title": "Watch: Self-Pollination and Crossing",
+      "variants": [
+        {
+          "language": "default",
+          "src": "imbewu_isiZulu_video_03",
+          "manifest": {
+            "bytes": 399404,
+            "seconds": 10,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_03.mp4",
+            "status": "proven-existing",
+            "bytes": 399404,
+            "sha256": "65f88c92436b70d59cc7678dcb6e784bfbf233eb705522b62dbb25e62c8fb9dd",
+            "durationSeconds": 10,
+            "width": 800,
+            "height": 450
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_03.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l2",
+      "slide": 13,
+      "title": "Watch: Dry Processing",
+      "variants": [
+        {
+          "language": "default",
+          "src": "seed-dry-processing",
+          "manifest": {
+            "bytes": 311237,
+            "seconds": 5,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/seed-dry-processing.mp4",
+            "status": "proven-existing",
+            "bytes": 311237,
+            "sha256": "ac2b716e251d1bb228fa2f05ac407537778ad4e9d313581a6d3e3793a52e3bc6",
+            "durationSeconds": 4.791667,
+            "width": 960,
+            "height": 540
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/seed-dry-processing.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": false
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l2",
+      "slide": 15,
+      "title": "Watch: Wet Processing for Tomato Seed",
+      "variants": [
+        {
+          "language": "default",
+          "src": "imbewu_isiZulu_video_05",
+          "manifest": {
+            "bytes": 1377407,
+            "seconds": 20,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_05.mp4",
+            "status": "proven-existing",
+            "bytes": 1377407,
+            "sha256": "ee7b3acda9614bfddb013c4126962e68dee4d26bf73469841284e38f0d30f590",
+            "durationSeconds": 20,
+            "width": 800,
+            "height": 450
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_05.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l3",
+      "slide": 18,
+      "title": "Protect Seed from Heat, Light and Moisture",
+      "variants": [
+        {
+          "language": "default",
+          "src": "new_seed-storage-jar-vs-bag",
+          "manifest": {
+            "bytes": 474949,
+            "seconds": 10,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/new_seed-storage-jar-vs-bag.mp4",
+            "status": "proven-existing",
+            "bytes": 474949,
+            "sha256": "f4d766b754fecdff8dbb614d1a30c87b8b0dec656ff3e6e1662f3e5e6d7c77f3",
+            "durationSeconds": 10,
+            "width": 960,
+            "height": 540
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/new_seed-storage-jar-vs-bag.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    },
+    {
+      "module": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l3",
+      "slide": 21,
+      "title": "Watch: Ten-Seed Germination Test",
+      "variants": [
+        {
+          "language": "default",
+          "src": "imbewu_isiZulu_video_06",
+          "manifest": {
+            "bytes": 439958,
+            "seconds": 10,
+            "aspectRatio": null,
+            "narrationTimed": false
+          },
+          "mp4": {
+            "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_06.mp4",
+            "status": "proven-existing",
+            "bytes": 439958,
+            "sha256": "46a9b4bc0df988a5aa81aa088125ec12e452757323c8ec5ab015a5fcca8d0408",
+            "durationSeconds": 10,
+            "width": 800,
+            "height": 450
+          },
+          "poster": {
+            "path": "public/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_06.jpg",
+            "exists": true
+          },
+          "metadata": {
+            "bytesMatch": true,
+            "secondsMatch": true
+          }
+        }
+      ]
+    }
+  ],
+  "duplicateByteHashes": [
+    {
+      "sha256": "346ed02f44b20dea94833c4bfcc7d65e4aa3ca0bfd26b1f5f7b9289fcb0c6827",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 15,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 15,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "adbef5fb7fcc5419e105ba5ceb6009798ca1be3953b376073e63b146cfc144c2",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 27,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 27,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "e66cf9dd0a7621594a7c91f0251b80e41c162565ac8ccbbef873f6315d273003",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 29,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 29,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "4cb9ceafb95c64956e59c859c09f5d5f18a8ee1772b8d3b01d433b4d26b1a576",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 33,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 33,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "478c605da1a25f72a208874627298d4ab7821f0149b70e1a5f068fa19f95ed2d",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 37,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 37,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "8ee9e0ac457b70136644a15f5a1d9db3ab4599a8a6faaeecbf50ec736eb783ae",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 41,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 41,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4"
+        }
+      ]
+    },
+    {
+      "sha256": "a618b18467d2600ef30b83d8d55c7c89f4ce4ed5c6d08e913af326e6c299c931",
+      "files": [
+        {
+          "module": "plant-guilds",
+          "slide": 44,
+          "language": "default",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4"
+        },
+        {
+          "module": "plant-guilds",
+          "slide": 44,
+          "language": "zu",
+          "path": "public/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4"
+        }
+      ]
+    }
+  ],
+  "unregisteredMp4ArchiveCandidates": [
+    {
+      "module": "small-livestock",
+      "path": "public/course-animations/small-livestock/watch-04-chicken-tractor.mp4",
+      "archiveCandidate": true
+    },
+    {
+      "module": "food-forest",
+      "path": "public/course-animations/food-forest/watch-05-seven-layers.mp4",
+      "archiveCandidate": true
+    },
+    {
+      "module": "food-forest",
+      "path": "public/course-animations/food-forest/watch-15-forest-sequence.mp4",
+      "archiveCandidate": true
+    },
+    {
+      "module": "soil-health",
+      "path": "public/course-animations/soil-health/watch-05-living-soil.mp4",
+      "archiveCandidate": true
+    },
+    {
+      "module": "intro-permaculture",
+      "path": "public/course-animations/intro-permaculture/watch-19-windbreak.mp4",
+      "archiveCandidate": true
+    }
+  ],
+  "knownFlowEvidenceReported2026_09_22": [
+    "Honeybee walking on apple blossom",
+    "Rain falls on split-screen soil (old Fast)",
+    "Rainfall striking soil comparison (new Quality trial)",
+    "Three hens foraging in enclosure",
+    "Woman lowering hand in drizzle",
+    "Community members sharing dry seeds",
+    "Woman watching roof rainwater runoff",
+    "Surveyors reading plumb line",
+    "Farmer tipping compost basket",
+    "Farmer planting vegetable seedling",
+    "Woman wetting cardboard and leaves",
+    "Ducks foraging in homestead orchard",
+    "Woman mulching garden soil"
+  ],
+  "knownLocalReferenceEvidence": [
+    "bee-pollination-source.png",
+    "chickens-source.png"
+  ],
+  "knownFlowProjectLocations": [
+    "Studies",
+    "Mzomoyethu (visible water capture)",
+    "PlantGuilds"
+  ],
+  "scopedDownloadsEvidence": [
+    {
+      "path": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/soil-rain-fast-existing.mp4",
+      "status": "proven-existing-local-download",
+      "sha256": "8cbd0d87c8e9e01c0ceaaff7207d66a89d55c69fac8348b35e759ea78db3e44c",
+      "bytes": 5691410,
+      "durationSeconds": 8,
+      "width": 1280,
+      "height": 720,
+      "reportedOrigin": "Flow Studies project edit 0545fa58-eeb1-4785-b022-7973e8c5298e; decode pass reported"
+    },
+    {
+      "path": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/bee-existing-flow.mp4",
+      "status": "proven-existing-local-download",
+      "sha256": "a7cfe1afd00bd5ac9fa9098a3ad3ffe166bd7c84e190095d4c41437268d3c153",
+      "bytes": 2246658,
+      "durationSeconds": 8,
+      "width": 1280,
+      "height": 720,
+      "reportedOrigin": "Flow Studies project edit f63da015-b123-4441-bd60-8652555b26a3; direct review still required for the hive-to-crops narration"
+    },
+    {
+      "path": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/soil-rain-quality-pilot.mp4",
+      "status": "proven-existing-local-download",
+      "sha256": "eba8d50610bcc81dd6354b756258ccab29f98f843eafbad9c3a5a2da00a7b13a",
+      "bytes": 6051418,
+      "durationSeconds": 8,
+      "width": 1280,
+      "height": 720,
+      "reportedOrigin": "existing local Quality pilot; no visual-acceptance conclusion in this inventory"
+    }
+  ],
+  "note": "Reported Flow titles are evidence of existing candidates only. They are not source-hashed matches, visual approvals, or replacement requests until direct reconciliation.",
+  "repositoryRoot": "/Users/roryclark/.codex/worktrees/studies-finance-unit/ImbewuField"
+}

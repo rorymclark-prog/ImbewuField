@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soil Health lesson 3 — local review</title>
+  <style>
+    :root { --ink:#18352b; --leaf:#346b4d; --cream:#f7f1e5; --paper:#fffdf7; --warm:#bd7a44; --line:#d7cdb8; --soft:#e5eee4; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--cream); font:17px/1.55 system-ui,-apple-system,sans-serif; }
+    h1,h2,h3 { font-family:Newsreader, Georgia, serif; line-height:1.08; margin:0 0 .5rem; } h1 { font-size:clamp(1.7rem,3vw,2.4rem); } h2 { font-size:clamp(1.3rem,2.2vw,1.7rem); } h3 { font-size:1.3rem; }
+    button { font:inherit; cursor:pointer; border:1px solid var(--leaf); border-radius:.5rem; padding:.65rem .9rem; background:var(--paper); color:var(--ink); } button:hover, button:focus-visible { outline:3px solid #e5ae6d; outline-offset:2px; } button.primary { background:var(--leaf); color:white; }
+    header { background:var(--ink); color:#fffaf0; padding:1.25rem max(1rem,calc((100% - 1100px)/2)); } header p { max-width:66ch; margin:.45rem 0 0; } main { max-width:1100px; margin:auto; padding:1.1rem; }
+    .notice { background:#fff4df; border-left:6px solid var(--warm); padding:1rem; margin:1rem 0 1.5rem; } .controls { display:flex; flex-wrap:wrap; gap:.6rem; margin:1rem 0; align-items:center; } .state { color:#456050; font-weight:650; }
+    .comparison, .slide, .assessment { background:var(--paper); border:1px solid var(--line); border-radius:1rem; padding:clamp(1rem,3vw,1.7rem); margin:1.3rem 0; box-shadow:0 3px 16px #59451a0c; }
+    .tabs { display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0; } .tab[aria-selected="true"] { background:var(--leaf); color:white; } .tag { display:inline-block; border-radius:99px; background:#f0d3b4; color:#552c15; padding:.1rem .55rem; font-size:.78rem; font-weight:750; }
+    video, img { width:100%; display:block; border-radius:.6rem; background:#19251f; } video { aspect-ratio:16/9; } .caption { color:#355445; margin:.7rem 0 0; }
+    .slide[hidden] { display:none; } .slide img { margin:.8rem 0; } .transcript { white-space:pre-line; max-width:75ch; } .slide-nav { display:flex; justify-content:space-between; gap:.5rem; margin-top:1rem; }
+    .quiz { border-top:1px solid var(--line); padding-top:1rem; margin-top:1rem; } .options { display:grid; gap:.45rem; } .option { text-align:left; border-color:var(--line); } .feedback { min-height:1.5em; font-weight:650; margin:.7rem 0 0; } .correct { color:#17633b; } .incorrect { color:#9c3d2b; }
+    details { margin:1rem 0; border:1px solid var(--line); border-radius:.6rem; padding:.7rem 1rem; } summary { cursor:pointer; font-weight:700; } .reduced-note { font-size:.92rem; color:#52675a; }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+    @media (max-width:390px) { body { font-size:16px; } main { padding:.7rem; } .comparison,.slide,.assessment { padding:1rem; border-radius:.65rem; } .controls button,.tabs button { width:100%; } .slide-nav button { width:auto; } }
+  </style>
+</head>
+<body>
+  <header><h1>Mulching and Cover Crops</h1><p>Compare existing videos, then review the complete lesson.</p></header>
+  <main>
+    <div class="notice"><strong>Review only.</strong> Flow candidates are <strong>UNPUBLISHED</strong>.</div>
+    <section class="comparison" aria-labelledby="compare-title">
+      <h2 id="compare-title">Slide 14 — Bare soil and mulch</h2>
+      <p class="transcript">Compare bare soil with mulched soil.
+
+Watch how the mulch protects topsoil when a South African summer storm brings intense rain.</p>
+      <div class="tabs" role="tablist" aria-label="Slide 14 video choice">
+        <button class="tab" role="tab" aria-selected="true" tabindex="0" data-video="published-watch-14-mulch-protection.mp4">Published</button>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-video="soil-rain-fast-existing.mp4">Existing Fast <span class="tag">UNPUBLISHED</span></button>
+        <button class="tab" role="tab" aria-selected="false" tabindex="-1" data-video="soil-rain-quality-pilot.mp4">Latest Quality <span class="tag">UNPUBLISHED</span></button>
+      </div>
+      <video id="video" controls muted playsinline preload="metadata" aria-describedby="video-note"><source src="assets/video/published-watch-14-mulch-protection.mp4" type="video/mp4"></video>
+      <p id="video-note" class="caption">The video is muted; the authoritative English narration plays separately. When an eight-second candidate ends, its last frame remains visible while the 8.448-second narration finishes.</p>
+      <div class="controls"><button id="play-current" class="primary">Play current slide</button><button id="replay">Replay</button><button id="pause">Pause</button><span id="state" class="state" aria-live="polite">Slide 14 ready.</span></div>
+    </section>
+
+    <section aria-labelledby="lesson-title"><h2 id="lesson-title">Exact lesson text</h2>
+      <details><summary>Read the lesson body</summary><p class="transcript">Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.
+
+Mulch can reduce evaporation, soften the impact of rain and suppress weeds.
+
+Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.
+
+Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.
+
+The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.
+
+Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.
+
+Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.
+
+Liquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.
+
+Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.
+
+A Highveld field left bare after the maize harvest faces two main risks.
+
+Winter wind can carry away dry topsoil.
+
+The first heavy spring storm can strike bare ground and damage soil structure.
+
+Cover crops, mulch, and organic matter keep soil in place and help it stay alive.</p></details>
+      <div class="controls"><button id="play-lesson" class="primary">Play lesson and optional module wrap-up, slides 14–20</button><button id="stop-lesson">Stop lesson</button><button id="read-slides">Read slides without audio</button><span class="reduced-note">Lesson 3 is slides 14–18; slides 19–20 are an optional module wrap-up. One audio track plays at a time. Reduced-motion users can read each exact transcript and use the stills.</span></div>
+    </section>
+
+    <section id="slides" aria-label="Lesson slides 15 through 18 and optional module wrap-up practical slides 19 through 20"></section>
+
+    <section class="assessment" aria-labelledby="assessment-title"><h2 id="assessment-title">Check your understanding</h2>
+      <div class="quiz" data-correct="2"><h3>A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?</h3><div class="options">
+        <button class="option">Overheating in winter sun and waterlogging from rain</button><button class="option">Frost kills soil life and weeds take over early</button><button class="option">Wind erosion of dry topsoil and loss of soil structure from spring storm impact</button><button class="option">Soil pH drops and nitrogen builds up</button>
+      </div><p class="feedback" aria-live="polite"></p><p class="rationale" hidden><strong>Why:</strong> Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly.</p></div>
+      <div class="quiz" data-correct="1"><h3>What should you remember about liquid draining from a worm bin?</h3><div class="options">
+        <button class="option">It is always safe on salad leaves</button><button class="option">It can contain harmful organisms or substances; dilution is not a safety guarantee</button><button class="option">It is identical to finished worm castings</button><button class="option">A fixed dilution makes every liquid safe</button>
+      </div><p class="feedback" aria-live="polite"></p><p class="rationale" hidden><strong>Why:</strong> Leachate is drainage from unfinished material. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.</p></div>
+    </section>
+    <p class="reduced-note">Sources and SHA-256 inventory: <a href="sources.json">sources.json</a>. Local review — no learner progress is saved.</p>
+  </main>
+  <audio id="audio" preload="metadata"></audio>
+  <script>
+    const slides = [
+      {n:15, title:'Mulch Protects the Ground', text:'Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.'},
+      {n:16, title:'Cover Crops Between Seasons', text:'Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.'},
+      {n:17, title:'Worm Castings and Liquid Drainage', text:'Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.'},
+      {n:18, title:'Protect Soil All Year', text:'A Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.'},
+      {n:19, title:'Optional module wrap-up — Field Assignment', text:'Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.\n\nCompare another spot and note recent weather and management.\n\nTry the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help.'},
+      {n:20, title:'Optional module wrap-up — Field Action', text:'Start one soil-building action from this module.\n\nCover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.\n\nIf your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.\n\nBuild soil life step by step.'}
+    ];
+    const host=document.querySelector('#slides'), audio=document.querySelector('#audio'), video=document.querySelector('#video'), state=document.querySelector('#state');
+    let current=14, lessonMode=false;
+    host.innerHTML=slides.map((s,i)=>`<article class="slide" data-slide="${s.n}" ${i?'hidden':''}><h2>Slide ${s.n} — ${s.title}</h2><img src="assets/slides/slide-${s.n}.jpg" alt="Course slide ${s.n}: ${s.title}"><p class="transcript">${s.text}</p><div class="slide-nav"><button data-prev="${s.n}">Back</button><button data-play="${s.n}">Play slide narration</button><button data-next="${s.n}" ${i===slides.length-1?'disabled':''}>Next</button></div></article>`).join('');
+    function audioFor(n){ return `assets/audio/slide-${String(n).padStart(2,'0')}.mp3`; }
+    function show(n){ current=n; document.querySelectorAll('.slide').forEach(x=>x.hidden=Number(x.dataset.slide)!==n); const target=n===14?document.querySelector('.comparison'):document.querySelector(`[data-slide="${n}"]`); target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); state.textContent=`Slide ${n} selected.`; if(n!==14) video.pause(); }
+    function stop(){ lessonMode=false; audio.pause(); video.pause(); state.textContent=`Slide ${current} paused.`; }
+    function play(n=current, fromLesson=false){ show(n); audio.pause(); audio.currentTime=0; audio.src=audioFor(n); audio.play().then(()=>{state.textContent=`Playing slide ${n} narration.`}).catch(()=>{state.textContent='Audio could not start; use Play slide narration.'}); if(n===14){video.currentTime=0; video.play().catch(()=>{});} lessonMode=fromLesson; }
+    document.querySelector('#play-current').onclick=()=>play(current); document.querySelector('#replay').onclick=()=>play(current); document.querySelector('#pause').onclick=stop; document.querySelector('#stop-lesson').onclick=stop;
+    document.querySelector('#play-lesson').onclick=()=>play(14,true);
+    document.querySelector('#read-slides').onclick=()=>{stop(); show(15);};
+    host.addEventListener('click',e=>{const n=Number(e.target.dataset.play||e.target.dataset.next||e.target.dataset.prev); if(!n)return; if(e.target.dataset.play)play(n); else {stop(); show(n+(e.target.dataset.next?1:-1));}});
+    audio.addEventListener('ended',()=>{ if(lessonMode && current<20) play(current+1,true); else if(lessonMode){lessonMode=false; state.textContent='Lesson narration complete.';} });
+    const tabs=[...document.querySelectorAll('.tab')];
+    function selectTab(tab){ stop(); audio.currentTime=0; audio.removeAttribute('src'); audio.load(); show(14); video.currentTime=0; video.querySelector('source').src=`assets/video/${tab.dataset.video}`; video.load(); tabs.forEach(x=>{const selected=x===tab; x.setAttribute('aria-selected',selected); x.tabIndex=selected?0:-1;}); state.textContent=`${tab.textContent.trim()} selected; unpublished candidates remain review-only.`; }
+    tabs.forEach((tab,index)=>{tab.onclick=()=>selectTab(tab); tab.onkeydown=e=>{let next=null; if(e.key==='ArrowRight')next=(index+1)%tabs.length; if(e.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length; if(e.key==='Home')next=0; if(e.key==='End')next=tabs.length-1; if(next!==null){e.preventDefault(); selectTab(tabs[next]); tabs[next].focus();}};});
+    document.querySelectorAll('.quiz').forEach(q=>q.querySelectorAll('.option').forEach((b,i)=>b.onclick=()=>{const ok=i===Number(q.dataset.correct), f=q.querySelector('.feedback'); f.textContent=ok?'Correct.':'Not quite. Read the reason below, then try again.'; f.className=`feedback ${ok?'correct':'incorrect'}`; q.querySelector('.rationale').hidden=false;}));
+  </script>
+</body>
+</html>

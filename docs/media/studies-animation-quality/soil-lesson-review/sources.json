@@ -1,0 +1,31 @@
+{
+  "purpose": "Local, read-only whole-lesson review bundle. No production registration or learner record is created.",
+  "repository_base_commit": "4150ad4",
+  "source_base": {
+    "repository_path": "docs/media/studies-animation-quality/soil-rain/source.png",
+    "sha256": "57c3a6763692cdcf6dc95e87b1186055e617b33a0f37e8ff9d20dbd22a8dd90c"
+  },
+  "video": [
+    {"label": "Published", "repository_path": "public/course-animations/soil-health/watch-14-mulch-protection.mp4", "local_path": "assets/video/published-watch-14-mulch-protection.mp4", "sha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219", "status": "published public asset"},
+    {"label": "Existing Fast", "local_source": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/soil-rain-fast-existing.mp4", "local_path": "assets/video/soil-rain-fast-existing.mp4", "sha256": "8cbd0d87c8e9e01c0ceaaff7207d66a89d55c69fac8348b35e759ea78db3e44c", "status": "UNPUBLISHED candidate"},
+    {"label": "Latest Quality", "local_source": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/soil-rain-quality-pilot.mp4", "local_path": "assets/video/soil-rain-quality-pilot.mp4", "sha256": "eba8d50610bcc81dd6354b756258ccab29f98f843eafbad9c3a5a2da00a7b13a", "status": "UNPUBLISHED candidate"}
+  ],
+  "audio_sha256": {
+    "slide-14": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+    "slide-15": "504e9df61166faafd23dbe5e2cd3b364d08be0ef2aba891f10f15450b1b721be",
+    "slide-16": "0dbe6d08c43db350084a7c2041adc46ce45835349961dfab7af4a2be23b55f70",
+    "slide-17": "73d059a0b69a68175f73a0b95de8b61434a7f51fdd633b9cf302df1dc203f79d",
+    "slide-18": "c0e636ac0af71fe31295788f5918cbd68f2d5ab938d6ffdf3ccf1b786e3bc866",
+    "slide-19": "b122b081aee363e5d4954c3fee18fa6d2fc0414df66276817fcb989504da1c8e",
+    "slide-20": "3a536eb6419199138d503bc5bc4d74b674936045715a17bf8b44e485f7ee49e1"
+  },
+  "slide_stills": [
+    {"slide": 14, "repository_path": "public/course-decks/soil-health/en/slide-14.jpg", "local_path": "assets/slides/slide-14.jpg", "sha256": "01a41cf5d26ca30fdbe8fabbc6792f1c4292d5a67fce235c1ab0b6dd247db2a2"},
+    {"slide": 15, "repository_path": "public/course-decks/soil-health/en/slide-15.jpg", "local_path": "assets/slides/slide-15.jpg", "sha256": "c038999ef53c6192fcb739c428b82f0cbfd8691bf9803fcbce618af294c6695d"},
+    {"slide": 16, "repository_path": "public/course-decks/soil-health/en/slide-16.jpg", "local_path": "assets/slides/slide-16.jpg", "sha256": "3c9ae891677d497485f760cefce8212c485a6c13f24191c534e24d0fc3e8c668"},
+    {"slide": 17, "repository_path": "public/course-decks/soil-health/en/slide-17.jpg", "local_path": "assets/slides/slide-17.jpg", "sha256": "25d1f04a8005ebdf58cc576baa7ee2668ef0dbc5183c8d1fcdfee737ebe57775"},
+    {"slide": 18, "repository_path": "public/course-decks/soil-health/en/slide-18.jpg", "local_path": "assets/slides/slide-18.jpg", "sha256": "9e52df0d21763a948e1b0589388445698f5353069844a6c250bee239622e646d"},
+    {"slide": 19, "repository_path": "public/course-decks/soil-health/en/slide-19.jpg", "local_path": "assets/slides/slide-19.jpg", "sha256": "987a29a9417f03b74a642f9583517819067c62ec4fb024f0756abff9ff250a59"},
+    {"slide": 20, "repository_path": "public/course-decks/soil-health/en/slide-20.jpg", "local_path": "assets/slides/slide-20.jpg", "sha256": "a603ad0f04261e47fb5d7aaaf6f6446100ec050149c706d6b2af645eeeeba025"}
+  ]
+}
