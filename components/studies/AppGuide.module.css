@@ -60,3 +60,8 @@
 .related { margin-top: 28px; padding: 4px; }
 .related a { display: block; min-height: 44px; padding: 9px 0; text-decoration: underline; text-underline-offset: 4px; }
 @media print { .related { display: none; } }
+
+.narration { margin: 14px 0 20px; }
+.narration p { margin: 0 0 6px; font-size: 0.875rem; }
+.narration audio { display: block; width: 100%; max-width: 520px; }
+.narration button { min-height: 44px; padding: 8px 14px; border: 1px solid currentColor; border-radius: 8px; font: inherit; }

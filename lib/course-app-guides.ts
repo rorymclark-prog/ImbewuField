@@ -886,3 +886,31 @@ export const CROP_PLAN_GUIDE: AppGuide = {
 };
 
 export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, DESIGN_GUIDE, CROP_PLAN_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];
+
+export interface AppGuideNarrationSection {
+  id: string;
+  title: string;
+  text: string;
+  /** Feedback is only offered after this answer is chosen; it must not spoil the question. */
+  afterChoice?: number;
+}
+
+/** Derive recordings from the same text the learner sees. A separate script drifted from
+ * course slides before; guide text changes must invalidate the recording's source hash. */
+export function appGuideNarrationSections(guide: AppGuide): AppGuideNarrationSection[] {
+  return [
+    { id: 'prepare', title: 'Before you start', text: [guide.title, guide.summary, guide.prepareTitle, ...guide.prepare].join('\n\n') },
+    ...guide.steps.map((step, index) => ({
+      id: step.id, title: `Step ${index + 1}: ${step.title}`,
+      text: [`Step ${index + 1}. ${step.title}`, step.action, ...step.paragraphs, `Check your work. ${step.check}`].join('\n\n'),
+    })),
+    { id: 'practice', title: 'Try a decision', text: [guide.practice.title, guide.practice.question,
+      ...guide.practice.choices.map((choice, index) => `Option ${index + 1}. ${choice.label}`),
+      'Choose your answer on the page. This practice question does not change your records.',
+    ].join('\n\n') },
+    ...guide.practice.choices.map((choice, index) => ({
+      id: `feedback-${index + 1}`, title: `Feedback for option ${index + 1}`, text: choice.feedback, afterChoice: index,
+    })),
+    { id: 'next', title: 'Practise and continue', text: [guide.limits.title, ...guide.limits.paragraphs, guide.finish.title, guide.finish.text].join('\n\n') },
+  ].map(section => ({ ...section, text: section.text.replaceAll('→', ', then ') }));
+}
