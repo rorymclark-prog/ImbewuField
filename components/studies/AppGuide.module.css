@@ -65,3 +65,4 @@
 .narration p { margin: 0 0 6px; font-size: 0.875rem; }
 .narration audio { display: block; width: 100%; max-width: 520px; }
 .narration button { min-height: 44px; padding: 8px 14px; border: 1px solid currentColor; border-radius: 8px; font: inherit; }
+.offline { margin-top: 24px; padding: 24px; border: 1px solid #c4d0b6; border-radius: 16px; background: #e9efdf; }

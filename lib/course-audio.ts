@@ -2106,5 +2106,6 @@ export const APP_GUIDE_NARRATION: Record<string, AppGuideNarration> = {
 export function appGuideTrack(guideId: string, section: string): (AppGuideAudioTrack & { url: string }) | null {
   const narration = APP_GUIDE_NARRATION[guideId];
   const track = narration?.tracks.find(item => item.section === section);
-  return track ? { ...track, url: `/app-guide-audio/${guideId}/${section}.mp3` } : null;
+  // A newly recorded instruction must not replay the older download under the same filename.
+  return track ? { ...track, url: `/app-guide-audio/${guideId}/${section}.mp3?v=${track.audioSha256}` } : null;
 }

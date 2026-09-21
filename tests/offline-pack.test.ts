@@ -4,12 +4,30 @@ import { existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
-import { offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
+import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
+import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
 import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = join(process.cwd(), 'public');
+
+test('every guide download contains its picture and every current recording, including unchosen feedback', () => {
+  for (const guide of APP_GUIDES) {
+    const pack = appGuideOfflinePack(guide.id);
+    assert.deepEqual(pack.missing, [], guide.id);
+    assert.ok(pack.entries.some(e => e.url === guide.image && e.kind === 'image'));
+    const audio = pack.entries.filter(e => e.kind === 'audio');
+    assert.equal(audio.length, appGuideNarrationSections(guide).length);
+    for (const e of pack.entries) {
+      const url = new URL(e.url, 'https://field.test');
+      assert.equal(e.bytes, statSync(join(PUBLIC, url.pathname)).size);
+      if (e.kind === 'audio') assert.match(url.searchParams.get('v')!, /^[a-f0-9]{64}$/);
+    }
+    assert.equal(pack.bytes, pack.entries.reduce((sum, e) => sum + e.bytes, 0));
+  }
+  assert.ok(appGuideOfflinePack('unknown').missing.length);
+});
 
 // The download button states a size and then spends somebody's data. Every number below is
 // therefore checked against the filesystem rather than against another number in the codebase.

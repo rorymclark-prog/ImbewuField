@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { APP_GUIDES } from '../lib/course-app-guides.ts';
 
 // Execute the shipped worker, with no browser HTTP cache. Checking only its URL list
 // missed the real first-visit failure: HTML was present but the app's scripts were not.
@@ -43,7 +44,7 @@ function harness(failAsset = false) {
       for (const rows of buckets.values()) { const r = rows.get(key(request)); if (r) return r.clone(); }
     },
   };
-  const worker = vm.runInNewContext(literal, { BUILD_ID: 'new' });
+  const worker = vm.runInNewContext(literal, { BUILD_ID: 'new', APP_GUIDES });
   vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches,
     self: { location: { origin }, addEventListener: (name: string, cb: any) => { listeners[name] = cb; },
       skipWaiting: async () => { activated = true; }, clients: { claim: async () => {} } },
@@ -62,8 +63,46 @@ function harness(failAsset = false) {
     await Promise.all(background);
     return result;
   }
-  return { lifecycle, request, caches, buckets, offline: () => { online = false; }, activated: () => activated };
+  async function message(type: string, paths: string[]) {
+    const work: Promise<any>[] = [], replies: any[] = [];
+    listeners.message({ data: { type, paths }, ports: [{ postMessage: (value: any) => replies.push(value) }], waitUntil: (p: Promise<any>) => work.push(p) });
+    await Promise.all(work);
+    return replies;
+  }
+  return { lifecycle, request, message, caches, buckets, offline: () => { online = false; }, activated: () => activated };
 }
+
+test('a requested guide saves its page and dependencies and reopens with no network', async () => {
+  const h = harness();
+  await h.lifecycle('install');
+  const path = APP_GUIDES[0].href;
+  const result = await h.message('PREPARE_FIELD_PAGES', [path]);
+  assert.ok(result.some(p => p.path === path && p.ready && !p.error));
+  h.offline();
+  assert.match(await (await h.request(path, true))!.text(), /home.js/);
+  const shell = await h.caches.open('imbewufield-shell-new');
+  await shell.delete('/_next/static/media/font.woff2');
+  const incomplete = await h.message('FIELD_PAGE_STATUS', [path]);
+  assert.equal(incomplete.find(p => p.path === path).ready, false, 'evicting a CSS dependency must remove readiness');
+});
+
+test('unknown guide paths are not downloaded or reported ready', async () => {
+  const h = harness();
+  const result = await h.message('PREPARE_FIELD_PAGES', ['/student/guides/not-a-guide']);
+  assert.equal(result.filter(p => p.path).length, 0);
+});
+
+test('saved guide audio respects its revision and plays without background network work', async () => {
+  const h = harness();
+  const cache = await h.caches.open('imbewu-course-v1');
+  await cache.put('/app-guide-audio/mapping/prepare.mp3?v=old', new Response('old recording'));
+  await cache.put('/app-guide-audio/mapping/prepare.mp3?v=new', new Response('current recording'));
+  await cache.put('/studies-guides/sketch-the-site.jpg', new Response('shared illustration'));
+  h.offline();
+  assert.equal(await (await h.request('/app-guide-audio/mapping/prepare.mp3?v=new'))!.text(), 'current recording');
+  await assert.rejects(h.request('/app-guide-audio/mapping/prepare.mp3?v=unavailable'), /No signal/);
+  assert.equal(await (await h.request('/studies-guides/sketch-the-site.jpg'))!.text(), 'shared illustration');
+});
 
 test('first installation can reopen home and fetch its JS, CSS and fonts without network', async () => {
   const h = harness();

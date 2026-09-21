@@ -188,7 +188,8 @@ test('every app guide has complete narration matching its current instructions a
       const track = appGuideTrack(guide.id, section.id);
       assert.ok(track, `${guide.id}/${section.id}: missing player source`);
       assert.equal(track.sourceSha256, hash(section.text), `${guide.id}/${section.id}: narration is stale after a text change`);
-      const bytes = readFileSync(join(process.cwd(), 'public', track.url));
+      // The version query is a cache identity, not part of the public filename.
+      const bytes = readFileSync(join(process.cwd(), 'public', new URL(track.url, 'https://field.test').pathname));
       assert.equal(track.bytes, bytes.length, 'the learner must see the actual download size');
       assert.equal(track.audioSha256, hash(bytes), `${guide.id}/${section.id}: audio changed after its verification`);
       assert.ok(Number.isFinite(track.seconds) && track.seconds > 0);

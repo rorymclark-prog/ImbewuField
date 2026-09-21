@@ -14,6 +14,8 @@ import { appGuideTrack, formatClock } from '@/lib/course-audio';
 import MappingExplainer from './MappingExplainer';
 import SalePaymentExplainer from './SalePaymentExplainer';
 import ChartWindowExplainer from './ChartWindowExplainer';
+import GuideOfflineDownload from './GuideOfflineDownload';
+import OfflinePageLink from './OfflinePageLink';
 
 function GuideAudio({ guideId, section, title, onPlay }: {
   guideId: string; section: string; title: string; onPlay: (audio: HTMLAudioElement) => void;
@@ -50,7 +52,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
   return <div className={styles.page} lang="en">
     <header className={styles.header}>
       <MenuButton />
-      <Link href="/student" className={styles.back}><ArrowLeft size={17} /> My Studies</Link>
+      <OfflinePageLink href="/student" className={styles.back}><ArrowLeft size={17} /> My Studies</OfflinePageLink>
       <SettingsButton />
     </header>
     <main className={styles.main}>
@@ -66,6 +68,8 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
         </div>
         <figure><img src={guide.image} alt={guide.imageAlt} /><figcaption>{guide.caption}</figcaption></figure>
       </section>
+
+      <GuideOfflineDownload guide={guide} />
 
       <section className={styles.prepare} aria-labelledby="prepare-title">
         <h2 id="prepare-title">{guide.prepareTitle}</h2>
@@ -121,12 +125,12 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
         <div className={styles.actions}>
           <Link href={guide.finish.href} className={styles.primary}><FileText size={18} /> {guide.finish.label}</Link>
           <button type="button" onClick={() => window.print()}><Printer size={18} /> Print this guide</button>
-          <Link href="/student">Back to Studies</Link>
+          <OfflinePageLink href="/student">Back to Studies</OfflinePageLink>
         </div>
       </section>
       <nav className={styles.related} aria-label="More app guides">
         <h2>Keep learning the app</h2>
-        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <Link key={item.id} href={item.href}>{item.cardTitle} →</Link>)}
+        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <OfflinePageLink key={item.id} href={item.href}>{item.cardTitle} →</OfflinePageLink>)}
       </nav>
     </main>
     <div className="no-print"><TabBar /></div>

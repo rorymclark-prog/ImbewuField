@@ -12,7 +12,8 @@
 // without a browser; lib/offline-cache.ts does the actual fetching.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { COURSE_NARRATION, resolveNarrationLang } from '@/lib/course-audio';
+import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationLang } from '@/lib/course-audio';
+import { APP_GUIDES } from '@/lib/course-app-guides';
 import { COURSE_DECKS, slideImageUrl, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
@@ -146,6 +147,26 @@ export function downloadableModules(lang: string, quality: PackQuality = 'standa
       return { moduleId: m.id, bytes: pack.bytes, count: pack.entries.length };
     })
     .filter((p) => p.count > 0);
+}
+
+/** App help remains separate from assessed modules, but uses the same deliberate media cache. */
+export function appGuideOfflinePack(guideId: string): OfflinePack {
+  const guide = APP_GUIDES.find(g => g.id === guideId);
+  const missing: string[] = [];
+  const entries: PackEntry[] = [];
+  if (!guide) missing.push(`Unknown guide: ${guideId}`);
+  if (guide) {
+    const image = entry(guide.image, 'image', missing);
+    if (image) entries.push(image);
+    const narration = APP_GUIDE_NARRATION[guideId];
+    if (!narration) missing.push(`Missing narration: ${guideId}`);
+    for (const track of narration?.tracks ?? []) {
+      const audio = appGuideTrack(guideId, track.section)!;
+      entries.push({ url: audio.url, bytes: audio.bytes, kind: 'audio' });
+    }
+  }
+  return { moduleId: `guide:${guideId}`, lang: 'en', quality: 'standard', entries,
+    bytes: entries.reduce((sum, e) => sum + e.bytes, 0), missing };
 }
 
 /** The whole course in one language — what "download everything" actually costs. */

@@ -16,6 +16,10 @@ export const COURSE_CACHE = 'imbewu-course-v1';
 /** How many fetches at once. Four keeps a weak connection busy without collapsing it. */
 const CONCURRENCY = 4;
 
+// Guide recordings include an audio hash in the URL. Ignoring it would count yesterday's
+// instruction as today's download. Existing course assets retain their migration policy.
+const matchOptions = (url: string) => ({ ignoreSearch: !url.startsWith('/app-guide-audio/') });
+
 const safeBytes = (value: number): number =>
   Number.isFinite(value) && value > 0 ? value : 0;
 
@@ -79,7 +83,7 @@ export async function packStatus(pack: OfflinePack): Promise<DownloadProgress> {
     let done = 0;
     let bytes = 0;
     for (const e of pack.entries) {
-      if (await cache.match(e.url, { ignoreSearch: true })) {
+      if (await cache.match(e.url, matchOptions(e.url))) {
         done += 1;
         bytes += safeBytes(e.bytes);
       }
@@ -138,7 +142,7 @@ export async function downloadPack(
   for (const entry of pack.entries) {
     let present = false;
     try {
-      present = Boolean(await cache.match(entry.url, { ignoreSearch: true }));
+      present = Boolean(await cache.match(entry.url, matchOptions(entry.url)));
     } catch {
       // A failed lookup is not proof that the lesson is on the phone. Retry it.
     }
@@ -194,7 +198,7 @@ export async function removePack(pack: OfflinePack): Promise<number> {
   let removed = 0;
   for (const e of pack.entries) {
     try {
-      if (await cache.delete(e.url, { ignoreSearch: true })) removed += 1;
+      if (await cache.delete(e.url, matchOptions(e.url))) removed += 1;
     } catch {
       // Keep removing the rest; one corrupt cache entry must not strand a pack.
     }
