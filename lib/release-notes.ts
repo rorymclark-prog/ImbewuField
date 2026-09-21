@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '8b84d6f', changes: [
+    'Your farm plan sprout now sways gently as you finish steps',
+  ] },
+  { when: '21 September 2026', sha: 'a831e18', changes: [
+    'Your farm plan sprout grows as you finish steps',
+    'Upcoming tasks now respond when you mark them done',
+  ] },
   { when: '21 September 2026', sha: '91e28ca', changes: [
     'After refreshing, choose a short guide to the pages that changed.',
   ], tour: [
@@ -717,21 +724,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: 'e95c732',
     changes: [
       'Gemini maps now start from cleaner placement marks for a less sticker-like aerial plan',
-    ],
-  },
-  {
-    when: '22 September',
-    sha: '8b84d6f',
-    changes: [
-      'Your farm plan sprout now sways gently as you finish steps',
-    ],
-  },
-  {
-    when: '21 September',
-    sha: 'a831e18',
-    changes: [
-      'Your farm plan sprout grows as you finish steps',
-      'Upcoming tasks now respond when you mark them done',
     ],
   },
   {
