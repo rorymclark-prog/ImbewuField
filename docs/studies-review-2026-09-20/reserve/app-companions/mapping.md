@@ -21,3 +21,9 @@ The hero copies `docs/media/studies-illustrated-release/art/intro-permaculture/s
 The interactive schematic is authored SVG: place pin, parcel boundary and beds are independently highlighted with explanations. The boundary traces on user selection; other layers change emphasis. Motion is finite and user-triggered; reduced-motion preference removes transitions. No invented field measurements or simulated app controls. Text descriptions and native buttons expose the same concepts. Printed output shows all layers.
 
 Local route and content loaded; local first-use consent prevented an unobstructed visual review, so no consent was accepted. Preview must be visually checked before merge: desktop and phone, all three layers, wrong/right practice feedback, related links, and the Studies card. Narration, real-screen video and isiZulu remain future work. No Flow credits spent for this companion.
+
+## Preview review
+
+Preview `af2b6c5` was visually inspected at desktop and 390 × 844 phone size. The hero and all three schematic states fit; the boundary trace reached its final closed outline. Each layer changed its accessible description and explanatory text. Phone document width equalled viewport width (390 px), with no horizontal overflow. Wrong and correct answers produced distinct feedback. Emulated reduced motion reported a zero-second transition; emulation was reset afterwards.
+
+The related harvest link opened its correct guide with fresh unanswered practice choices. My Studies requires an account or the sample workflow; no sign-in was attempted. Entered the public tour's Learn and find guidance stop, verified the new mapping card in Studies and opened it. The phone card and guide header were visually inspected. That review found the section summary still listed only the earlier three tasks; the final change adds mapping to that sentence. Final CI and production checks are recorded in the PR and issue 35. No physical-print or narrated-video claim.
