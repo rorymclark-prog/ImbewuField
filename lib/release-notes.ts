@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '487ed71', changes: [
+    'Compare bed outlines with a gap, touching edges or overlap in a scale exercise.',
+    'Check the areas and download the diagram with its sample dimensions.',
+  ] },
   { when: '21 September 2026', sha: 'f9970ac', changes: [
     'Keep your design brief, evidence, choices and revisions together in a learning folder.',
     'Save the folder on this device or download your notes to discuss beside the plan.',
