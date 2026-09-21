@@ -332,4 +332,65 @@ export const SALES_GUIDE: AppGuide = {
   finish: { title: 'Find your sale before adding another', text: 'Open Sold in your current workspace. Reopen an existing record when there is one.', href: '/records?tab=sold', label: 'Open Sold' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE];
+export const CHARTS_GUIDE: AppGuide = {
+  id: 'charts', href: '/student/guides/charts', cardTitle: 'Read Charts and check the evidence',
+  title: 'Read the chart. Check the story.',
+  summary: 'Choose the right period, separate plans from records and trace a figure back to its source.',
+  image: '/studies-guides/expense-record.jpg',
+  imageAlt: 'Illustration of a grower reviewing a notebook and calculator in a homestead garden',
+  caption: 'Keep the record beside the decision · illustrated example',
+  prepareTitle: 'Start with the right workspace',
+  prepare: [
+    'Open My Records, then Charts. Check whether you are using demonstration records or your own farm. From the sign-in prompt, Preview with demonstration records opens the prepared example without changing a real farm.',
+    'For your own records, have a receipt, sale or harvest entry to compare. Read loading, offline and save messages before deciding that a missing figure means zero. Keep private customer and banking details out of group practice.',
+  ],
+  steps: [
+    { id: 'chart-window', title: 'Choose the window on this chart', action: 'Charts → Cash flow → 6m, 12m or 24m', paragraphs: [
+      'The buttons choose how many months the Cash flow graph shows. Read the dates on that graph. Tap a month to inspect its money in, money out and running total.',
+      'The Harvest graphs card has its own window buttons. On a wide screen, the Financial sheet also has separate Month, Season and Year buttons. Changing one control does not set every other view to that period.',
+      'On a phone, the summary at the top says this month. Read the period beside each lower card as well. Check the labels again after changing screen size or reopening the page.',
+    ], check: 'You can name the period for the exact figure you are reading.' },
+    { id: 'cash-meaning', title: 'Explain the running total', action: 'Cash flow → Money in, money out and the lower running-total band', paragraphs: [
+      'The running total starts at zero at the left edge of the selected window. It adds recorded money in and subtracts recorded spending across those months. It is not your bank balance, because it has no opening bank balance.',
+      'Cash surplus and Recorded cash margin describe the included records. Missing expenses, stock, equipment treatment, debt and other accounts can change the complete business result. Do not call one chart a full profit-and-loss statement.',
+      'A cut mark means a tall bar has been shortened to keep other months readable. Read the accompanying amount rather than estimating it from the height. The two bands use different scales: monthly movements and their running total answer different questions.',
+    ], check: 'You can explain why a negative running total does not by itself prove an overdrawn account.' },
+    { id: 'harvest-meaning', title: 'Read picked, sold and the remainder', action: 'Harvest graphs → Picked & sold → Read the month and orchard setting', paragraphs: [
+      'Check the selected window and whether Orchard in or Orchard out is shown. That setting changes which kilograms are counted; it does not remove all those activities from the money totals.',
+      'Kept is the picked-minus-sold remainder in the records. It does not identify how much was eaten, given away, stored, used elsewhere or lost. Keep those destinations separately when needed.',
+      'A dashed outline can mark a month with more sold than logged as picked. Read the explanation and check missing harvests or sales from earlier stock. Do not enter an invented harvest to make the bars agree.',
+    ], check: 'You know the units, included produce and what the remainder cannot tell you.' },
+    { id: 'plan-meaning', title: 'Compare the plan with the right actuals', action: 'Harvest graphs → Plan vs actual', paragraphs: [
+      'This view places logged picking this year beside a benchmark for one complete crop cycle on the planned ground. The benchmark is not automatically a target for the whole calendar year.',
+      'Check the crop, mapped growing area and stage of the cycle. A shorter actual bar can mean the cycle is unfinished or records are missing; it is not proof that produce was lost. A larger bar also needs a fair period and area comparison.',
+      'The plan comes from the main saved site’s mapped beds when available. A place pin or whole parcel is not the bed area. Orchard produce has no comparable bed-cycle benchmark here; read the separate explanation.',
+    ], check: 'You can state one reason the bars may differ before judging the growing result.' },
+    { id: 'area-meaning', title: 'Check what a return per area includes', action: 'What your growing space returns → Read period, mapped m² and assigned entries', paragraphs: [
+      'This card uses recorded sales minus assigned costs and today’s mapped area. Its square metres are not a historical measurement of harvested ground.',
+      'Read the shared-cost and unassigned-cost notes. Missing overheads or labour are not silently included. Crop performance may say Cost per m²: not attributed rather than supplying a full crop profit.',
+      'Compare the same period, units and growing area before drawing a conclusion. Keep uncertain or missing values visible and check the underlying map and records.',
+    ], check: 'You can name an included cost, an excluded or unknown cost, and the area used.' },
+    { id: 'trace-figure', title: 'Trace one figure back to evidence', action: 'My Records → Sold, Spent or Picked → Reopen the source record', paragraphs: [
+      'Choose one amount or harvest and find its record. On a wide screen, the Financial sheet also lists dated entries with invoice and receipt links. Reopen the matching document instead of adding another entry.',
+      'Harvest and cost logging forms stamp the entry date. Paid invoices use their recorded payment date. Check the actual source dates and keep late-entry evidence; do not assume every chart month is the date work happened.',
+      'A paid invoice has one payment date for its whole amount. The app cannot show a full instalment history from that field. Keep separate evidence for part payments and do not mark a deposit as full payment.',
+      'Write down one question the evidence can answer and one gap still to resolve. Follow the harvest, expense or invoice guide if an actual supported entry needs correction.',
+    ], check: 'You can link the figure to its source and explain a remaining uncertainty without inventing an entry.' },
+  ],
+  practice: {
+    title: 'The running total is below zero.',
+    question: 'The selected cash-flow window shows −R50.00. Does that prove the bank account is overdrawn?',
+    choices: [
+      { label: 'Yes, the chart is the bank balance', feedback: 'The running total begins at zero for the selected months. Without the opening balance and all account movements, it cannot establish the bank balance.', correct: false },
+      { label: 'No; check the opening balance and complete account evidence', feedback: 'Correct. The chart shows the net movement of its included records. Reconcile the account separately before concluding what cash is available.', correct: true },
+      { label: 'Add an extra sale to bring it above zero', feedback: 'Do not invent a sale to change a chart. Investigate the period, missing records and original evidence.', correct: false },
+    ],
+  },
+  limits: { title: 'A useful view still has a boundary', paragraphs: [
+    'Charts helps you investigate recorded cash, harvests and planning assumptions. It does not produce a complete balance sheet, stock valuation, bank reconciliation or tax return.',
+    'Keep checked supporting schedules for amounts the app does not track, and ask for appropriate bookkeeping help with complete accounts. A map, chart or export does not prove profitability or funding approval.',
+  ] },
+  finish: { title: 'Choose one figure and explain it', text: 'Open Charts in your current workspace. Read its period, inspect one month and trace a figure to a source. Use demonstration records for practice.', href: '/records?tab=charts', label: 'Open Charts' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, CHARTS_GUIDE];
