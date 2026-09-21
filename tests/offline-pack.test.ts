@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
@@ -9,8 +9,35 @@ import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
 import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
+import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
 
 const PUBLIC = join(process.cwd(), 'public');
+
+test('public teaching-preview packs name every static reading route and the finance materials it links', () => {
+  const finance = STUDIES_PATHWAY_PACKS.finance;
+  const design = STUDIES_PATHWAY_PACKS.design;
+  assert.ok(finance.pages.includes('/student'));
+  assert.ok(finance.pages.includes('/student/finance/project/guided'));
+  assert.ok(finance.pages.includes('/student/finance/project/independent'));
+  assert.ok(finance.pages.includes('/student/finance/project/retry'));
+  assert.ok(design.pages.includes('/student/design/case'));
+  assert.ok(design.pages.includes('/student/design/folder'));
+  assert.ok(design.pages.includes('/student/design/scale'));
+  assert.ok(design.pages.includes('/student/design/worked'));
+  assert.equal(finance.pages.filter(path => /^\/student\/finance\/f\d-\d$/.test(path)).length, 24);
+  assert.equal(design.pages.filter(path => /^\/student\/design\/d\d-\d$/.test(path)).length, 18);
+  assert.deepEqual(STUDIES_PATHWAY_PAGES, [...new Set([...finance.pages, ...design.pages])]);
+  assert.deepEqual([...FINANCE_PATHWAY_MEDIA_URLS].sort(), finance.pack.entries.map(item => item.url).sort());
+  const worker = readFileSync(join(process.cwd(), 'app/sw.js/route.ts'), 'utf8');
+  assert.match(worker, /STUDIES_PATHWAY_PAGES/);
+  assert.match(worker, /STUDIES_PATHWAY_PAGES\.includes\(path\)/);
+  assert.match(worker, /finance-course/);
+  for (const pathway of Object.values(STUDIES_PATHWAY_PACKS)) {
+    assert.equal(new Set(pathway.pack.entries.map(item => item.url)).size, pathway.pack.entries.length);
+    assert.equal(pathway.pack.bytes, pathway.pack.entries.reduce((sum, item) => sum + item.bytes, 0));
+    for (const item of pathway.pack.entries) assert.equal(item.bytes, statSync(join(PUBLIC, item.url)).size, `${pathway.id}: ${item.url}`);
+  }
+});
 
 test('every guide download contains its picture and every current recording, including unchosen feedback', () => {
   for (const guide of APP_GUIDES) {

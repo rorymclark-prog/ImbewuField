@@ -1,6 +1,6 @@
 # Separate Farm Finance teaching preview
 
-21 September 2026. Branch `codex/finance-course-integration`, based on production `18f91b1c`.
+21 September 2026. The original integration branch was based on production `18f91b1c`; its English reading preview is now on main (`5e7b19b` and later). This document retains the original integration evidence and records the current teaching boundary.
 
 ## What this change makes available
 
@@ -28,8 +28,8 @@ This is a review preview, not a finished self-paced finance qualification. The o
 
 - Review teaching language and real app boundaries, including partial payments and workbook alternatives. Keep unsupported app operations out of instructions.
 - Complete South African bookkeeping review, learner trials and fluent isiZulu review; record their actual evidence, not an AI substitute.
-- Build the connected project and independent assessment with their own reconciled synthetic dataset. The current eight unit packs have different scopes and opening balances and must not be concatenated into one ledger.
-- Add reviewed narration, meaningful assessed progress and recovery, and verified finance-course offline availability. The existing guide downloads do not imply the new finance lessons are available offline.
+- The connected project now provides guided, independent and retry cases with their own reconciled synthetic dataset. Practitioner review and formal assessed-course integration remain open; the current eight unit packs still must not be concatenated into one ledger.
+- Add reviewed narration and meaningful assessed progress/recovery. A text/image/workbook offline pathway download is being added separately and needs its own production offline check; guide downloads alone do not establish Finance availability.
 - Review static imagery and accessibility throughout the final experience. Animations remain held for Rory’s joint review.
 
-The previous production releases PR484 (167 English app-guide recordings) and PR485 (guide offline downloads) remain separate, completed releases. This finance preview has not yet been merged or published to production.
+The previous production releases PR484 (167 English app-guide recordings) and PR485 (guide offline downloads) remain separate, completed releases. The Finance preview is deployed on main as an English reading/practice preview; it is not yet a reviewed, assessed or translated course.

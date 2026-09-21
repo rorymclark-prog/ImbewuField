@@ -42,7 +42,7 @@ The eighteen learner texts and worked case are newly written from Rory's teachin
 | D5.1–D5.3 Sequence, costs and care | RVCC: assessment then plans/budget/procurement, maintenance capacity; outlines: implementation sequence and enterprise integration | Dependency order, plan-linked quantity/cost record and agreed care |
 | D6.1–D6.3 Explanation, monitoring and revision | Outlines: structured design review, presentations, feedback and follow-up; handbook: evolving design | Explained choice, goal-linked observations and a revision/handover record |
 
-The lesson forms, evidence classifications and checks are original teaching decisions. The inherited examples are not copied into universal prescriptions. D4's measured demonstration and the completed end-to-end worked plan remain missing; the eighteen drafts must not be mistaken for eighteen production-ready app lessons.
+The lesson forms, evidence classifications and checks are original teaching decisions. The inherited examples are not copied into universal prescriptions. Update, 21 September: the scale exercise and separate fictional worked demonstration are now reading-preview resources. Their supplied model geometry is not a measured real-site source pack. The eighteen drafts remain subject to practitioner, language and learner review and must not be mistaken for eighteen fully assessed course lessons.
 
 ## Source claims deliberately excluded from these drafts
 

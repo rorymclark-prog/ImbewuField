@@ -1,4 +1,4 @@
-import content from './course-design-content.json';
+import content from './course-design-content.json' with { type: 'json' };
 
 export const DESIGN_COURSE = content;
 export const DESIGN_LESSONS = content.units.flatMap(unit => unit.lessons.map(lesson => ({ unit, lesson })));

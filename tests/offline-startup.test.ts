@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { APP_GUIDES } from '../lib/course-app-guides.ts';
+import { STUDIES_PATHWAY_PAGES } from '../lib/studies-pathway-pack.ts';
 
 // Execute the shipped worker, with no browser HTTP cache. Checking only its URL list
 // missed the real first-visit failure: HTML was present but the app's scripts were not.
@@ -44,7 +45,7 @@ function harness(failAsset = false) {
       for (const rows of buckets.values()) { const r = rows.get(key(request)); if (r) return r.clone(); }
     },
   };
-  const worker = vm.runInNewContext(literal, { BUILD_ID: 'new', APP_GUIDES });
+  const worker = vm.runInNewContext(literal, { BUILD_ID: 'new', APP_GUIDES, STUDIES_PATHWAY_PAGES });
   vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches,
     self: { location: { origin }, addEventListener: (name: string, cb: any) => { listeners[name] = cb; },
       skipWaiting: async () => { activated = true; }, clients: { claim: async () => {} } },
@@ -90,6 +91,28 @@ test('unknown guide paths are not downloaded or reported ready', async () => {
   const h = harness();
   const result = await h.message('PREPARE_FIELD_PAGES', ['/student/guides/not-a-guide']);
   assert.equal(result.filter(p => p.path).length, 0);
+});
+
+test('requested Finance and Design reading pages reopen offline, and a missing startup file retracts readiness', async () => {
+  const h = harness();
+  await h.lifecycle('install');
+  const pages = ['/student/finance/f1-1', '/student/design/d4-1'];
+  const prepared = await h.message('PREPARE_FIELD_PAGES', pages);
+  for (const path of pages) assert.ok(prepared.some(p => p.path === path && p.ready && !p.error), `${path} should prepare`);
+  h.offline();
+  for (const path of pages) assert.match(await (await h.request(path, true))!.text(), /home.js/);
+  const shell = await h.caches.open('imbewufield-shell-new');
+  await shell.delete('/_next/static/media/font.woff2');
+  const incomplete = await h.message('FIELD_PAGE_STATUS', pages);
+  for (const path of pages) assert.equal(incomplete.find(p => p.path === path).ready, false, `${path} must not claim offline readiness without its CSS dependency`);
+});
+
+test('a deliberately downloaded Finance workbook is served from the course cache offline', async () => {
+  const h = harness();
+  const cache = await h.caches.open('imbewu-course-v1');
+  await cache.put('/finance-course/workbooks/f2.pdf', new Response('finance workbook'));
+  h.offline();
+  assert.equal(await (await h.request('/finance-course/workbooks/f2.pdf'))!.text(), 'finance workbook');
 });
 
 test('saved guide audio respects its revision and plays without background network work', async () => {
