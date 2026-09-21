@@ -1,0 +1,32 @@
+[
+  {
+    "id": "reported-water",
+    "source": "TALK-A",
+    "question": "A resident says water crossed the eastern yard during heavy rain. The learner visited on a dry day. How should the note be labelled?",
+    "choices": [
+      { "label": "A measured flood level", "correct": false, "feedback": "No flood level was measured. Keep the resident’s account and identify what still needs checking." },
+      { "label": "Reported experience", "correct": true, "feedback": "Yes. The resident’s experience is useful evidence, and its source stays visible. It is not a measured contour or flood depth." },
+      { "label": "A proposal to dig a drain", "correct": false, "feedback": "The account describes what a resident experienced. A drain would be a separate proposal needing site assessment and relevant checks." }
+    ]
+  },
+  {
+    "id": "scale-and-fit",
+    "source": "MAP-A",
+    "question": "The sketch says “not to scale”. A new rectangle fits beside the drawn path. What can the learner conclude?",
+    "choices": [
+      { "label": "The new bed will fit on the ground", "correct": false, "feedback": "Its appearance on an unscaled sketch cannot establish fit. Relevant measurements and the system’s requirements are still needed." },
+      { "label": "Exporting the sketch will verify its dimensions", "correct": false, "feedback": "An export preserves a view; it does not add missing measurements or verify a boundary." },
+      { "label": "It is an idea to check against measurements", "correct": true, "feedback": "Yes. Keep the idea on a proposal overlay and obtain the measurements needed before claiming it fits." }
+    ]
+  },
+  {
+    "id": "brief-before-features",
+    "source": "BRIEF-A and RESOURCES-A",
+    "question": "The household does not want animals in this first phase. Their care capacity is not yet recorded. What should the design do?",
+    "choices": [
+      { "label": "Keep animals outside this phase and follow the agreed brief", "correct": true, "feedback": "Yes. A design does not need every possible system. Follow the household’s priorities and confirm care for what is proposed." },
+      { "label": "Add chickens because every permaculture plan needs them", "correct": false, "feedback": "The household has not agreed to that system. A design is judged by how it meets the brief, not by including a standard list of animals." },
+      { "label": "Assign animal care to whoever usually carries water", "correct": false, "feedback": "Existing work is not consent to additional work. Care responsibilities need discussion and agreement." }
+    ]
+  }
+]

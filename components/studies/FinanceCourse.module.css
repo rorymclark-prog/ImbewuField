@@ -72,3 +72,5 @@
 }
 
 @media print { .projectNotice { display: block !important; } }
+
+.actions button[aria-pressed="true"] { background: #e9efdf; border: 2px solid #245436; font-weight: 700; }
