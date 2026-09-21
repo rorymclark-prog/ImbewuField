@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildDemoFacilitatorState } from '../lib/demo-farm.ts';
 import { sampleScalePair, scaleArrangement, scaleAnswer, checkScaleAnswers, type ScalePair } from '../lib/design-scale.ts';
-import { DESIGN_WORKED, existingFeatureIds, workedArea, workedProblems } from '../lib/design-worked.ts';
+import { DESIGN_WORKED, existingFeatureIds, rectLeavesTeachingFrame, rectsOverlap, workedArea, workedProblems } from '../lib/design-worked.ts';
 
 test('scale teaching uses the same dimensions as the sample garden without exporting site or household records', () => {
   const source = buildDemoFacilitatorState();
@@ -81,4 +81,12 @@ test('the worked alternatives retain existing evidence and one supplied growing-
   assert.deepEqual(existingFeatureIds(), ['E-PLOT-A', 'E-HOME', 'E-ROUTE', 'E-GATE', 'E-WATER']);
   assert.equal(DESIGN_WORKED.proposal.status, 'deferred after W-CARE');
   assert.deepEqual(workedProblems(), []);
+});
+
+test('worked-plan geometry checks catch a deliberately misplaced or obstructing proposal', () => {
+  const alternative = DESIGN_WORKED.concepts.find(concept => concept.id === 'B')!.geometry[0]!;
+  const route = DESIGN_WORKED.existing.find(feature => feature.id === 'E-ROUTE')! as typeof alternative;
+  assert.equal(rectLeavesTeachingFrame({ ...alternative, x: 19 }), true);
+  assert.equal(rectsOverlap({ ...alternative, x: 12.25 }, route), true);
+  assert.equal(rectsOverlap(alternative, route), false);
 });

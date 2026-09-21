@@ -20,6 +20,14 @@ export default async function DesignLessonPage({ params }: { params: Promise<{ l
   const section = (title: string) => lesson.sections.find(item => item.title === title)!.text;
   const [question, feedback] = section('Check').split('**Answer:**');
   const companion = lesson.sections.filter(item => item.title.startsWith('App companion'));
+  const workedStage = {
+    d1: ['read', 'Read the supplied brief and source map'],
+    d2: ['map', 'Read the reported influences and their limits'],
+    d3: ['compare', 'Compare the two provisional concepts'],
+    d4: ['develop', 'Inspect dimensions and the provisional choice'],
+    d5: ['work', 'Trace work, cost and care dependencies'],
+    d6: ['revision', 'Review the later evidence and revision'],
+  }[unit.id];
   return <div className={styles.page}>
     <header className={styles.header}><MenuButton /><BackButton fallback="/student/design" /><Link href="/student/design">Design a homestead</Link><span>{lesson.code} · {index + 1} / {DESIGN_LESSONS.length}</span></header>
     <main className={styles.main}>
@@ -28,6 +36,7 @@ export default async function DesignLessonPage({ params }: { params: Promise<{ l
       <section className={`${styles.section} ${styles.reading}`} id="read"><h2>The idea</h2><FinanceText text={section('Teaching text')} /></section>
       <section className={styles.section}><p className={styles.eyebrow}>The busy yard · invented classroom example</p><h2>Follow the decision</h2><FinanceText text={section('Worked example')} /><div className={styles.actions}><Link href="/student/design/case">See the full case and source notes →</Link></div></section>
       <section className={styles.section} id="practice"><h2>Make the next part of your folder</h2><FinanceText text={section('Learner task')} /><h3>What your partner or facilitator should look for</h3><FinanceText text={section('Evidence for feedback')} /><div className={styles.actions}><Link href={`/student/design/folder#folder-${unit.id}`}>Record this stage in your design folder →</Link></div></section>
+      {workedStage && <section className={styles.section}><p className={styles.eyebrow}>Guided fictional model</p><h2>See this stage in a complete decision chain</h2><p>The worked demonstration uses supplied classroom geometry and a named source pack. It is separate from the unmeasured busy-yard exercise.</p><div className={styles.actions}><Link href={`/student/design/worked#${workedStage[0]}`}>{workedStage[1]} →</Link></div></section>}
       {['d1-3', 'd4-1', 'd4-3'].includes(id) && <section className={styles.section}><p className={styles.eyebrow}>Visual practice · supplied model dimensions</p><h2>Read the scale and check the space</h2><p>Compare two bed outlines with a gap, touching edges and an overlap. Follow the supplied dimensions and check what the area total counts. This is a separate sample-model exercise, not a measurement of the busy-yard household.</p><div className={styles.actions}><Link className={styles.primary} href="/student/design/scale">Open the scale exercise →</Link></div></section>}
       <section className={styles.section} id="check"><h2>Pause and explain</h2><FinanceText text={question} /><p>Try your own explanation before opening the discussion answer.</p><details><summary>Compare your reasoning</summary><FinanceText text={feedback} /></details></section>
       <section className={styles.section}><h2>Use the app alongside this lesson</h2><p>Practise in the sample farm first. Keep the source map and its measurements when trying a proposal. A paper design folder is also valid.</p>{companion.map(item => <FinanceText key={item.title} text={item.text} />)}<div className={styles.actions}>{unit.guides.map(id => <Link key={id} href={`/student/guides/${id}`}>{DESIGN_GUIDE_NAMES[id]} →</Link>)}{unit.id === 'd5' && <Link href="/student/finance">Farm Finance course →</Link>}</div></section>
