@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '02b445e7', changes: [
+    'Studies now has a guide to recording a sale once and finding its invoice.',
+    'Follow one invoice through two payments in a step-by-step practice example.',
+    'Learn which payment details need a separate record, including instalment dates.',
+  ] },
   { when: '21 September 2026', sha: 'a8cd790', changes: [
     'The windbreak lesson now shows wind moving through shelter toward the crops.',
     'A detailed homestead picture has clear labels and matching narration.',
