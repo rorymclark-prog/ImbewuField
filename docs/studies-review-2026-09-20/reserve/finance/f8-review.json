@@ -1,0 +1,51 @@
+{
+  "unit": "F8",
+  "status": "reserve-English-review-draft",
+  "lessonDrafts": 3,
+  "sourceBaseline": "b31413680e4c11cd4dc815ceebcafb7199b5658d",
+  "arithmetic": {
+    "command": "python3 docs/studies-review-2026-09-20/reserve/finance/verify-f8.py",
+    "deliberateAnswerFaultsRejected": 15,
+    "checks": [
+      "Dated forecast cash and early gaps",
+      "Independent actual source-category sums and closing reconciliation",
+      "Quantity/price effects plus payment/cost/owner bridge",
+      "Unknown cost and missing reconciliation preserve unknown totals",
+      "Independent items exercise",
+      "Printed manuscript answer rows"
+    ]
+  },
+  "workbook": {
+    "path": "output/pdf/finance-f8-workbook.pdf",
+    "pages": 5,
+    "allPagesRenderedAndVisuallyInspected": true
+  },
+  "interactive": {
+    "path": "output/html/finance-f8-business-plan.html",
+    "planCases": 3,
+    "explanationSteps": 8,
+    "defaultPaused": true,
+    "defaultSeconds": 10,
+    "flowCreditsSpent": 0,
+    "review": [
+      "All three plans and their five displayed cash values checked against source calculations.",
+      "All eight reconciliation totals and changes inspected in rendered DOM.",
+      "Full eight-step playback at six seconds reaches the final R310 and stops.",
+      "Desktop and 390px phone layouts inspected, including negative bars, source table, explanation and missing case.",
+      "Phone document width matches the 390px viewport.",
+      "A live bar transition was observed between computed top 110.782px and target 104px with 0.7s duration.",
+      "Three decision feedback responses and keyboard Next checked.",
+      "The first missing-case review exposed the complete-case closing value in surrounding prose. Corrected to hide the complete equation, source amounts, reconciliation and complete-case decision; no numeric closing answer remains in the missing view.",
+      "Pause held step 2 across separate calls; Previous, Restart, pause on pace change and pause on missing-case selection passed.",
+      "No captured browser console errors during final review."
+    ]
+  },
+  "open": [
+    "Local bookkeeping review",
+    "Learner trial",
+    "Fluent isiZulu",
+    "Narration",
+    "Filmed app walkthroughs",
+    "Course integration"
+  ]
+}
