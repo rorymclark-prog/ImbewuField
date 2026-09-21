@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'af2b6c5', changes: [
+    'Studies now has a guide to finding, mapping and reopening your site.',
+    'Explore the difference between a place pin, a land boundary and growing beds.',
+    'Practise the save and boundary steps with the sample farm.',
+  ] },
   { when: '21 September 2026', sha: '71f65a3', changes: [
     'Studies now has guides for harvests and costs, beside the invoice guide.',
     'Practise checking weights, receipts and saved entries.',

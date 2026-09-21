@@ -1,0 +1,34 @@
+.explainer { margin: 8px 0 30px; padding: 26px; background: #fffdf7; border: 1px solid #d8d0bb; border-radius: 18px; }
+.intro { max-width: 760px; }
+.eyebrow { color: #53684b; font-size: 12px !important; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+.switches { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+.switches button { min-height: 46px; padding: 10px 18px; border: 1px solid #9eae93; border-radius: 999px; background: #fffdf7; color: #284b33; font-weight: 600; }
+.switches button[aria-pressed='true'] { background: #284f38; color: #fffdf7; border-color: #284f38; }
+.scene { max-width: 760px; margin: 0 auto; }
+.scene svg { display: block; width: 100%; height: auto; }
+.caption { font-size: 12px !important; color: #626a5f; text-align: center; }
+.explanation { margin-top: 18px; padding: 18px 22px; background: #eff2e6; border-radius: 12px; min-height: 128px; }
+.explanation h3 { margin: 0; font-size: 20px; color: #214d32; }
+.explanation p { margin-bottom: 0; }
+.boundary { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: .2; transition: stroke-dashoffset 650ms ease, opacity 300ms ease; }
+.boundary[data-active='true'] { stroke-dashoffset: 0; opacity: 1; }
+.corner { opacity: 0; transition: opacity 450ms ease; }
+.corner[data-active='true'] { opacity: 1; }
+.pin { opacity: .45; transition: opacity 400ms ease; }
+.pin[data-active='true'] { opacity: 1; }
+.beds { opacity: .65; transition: opacity 400ms ease; }
+.beds[data-active='true'] { opacity: 1; }
+@media (max-width: 600px) {
+  .explainer { padding: 20px 14px; }
+  .switches { display: grid; grid-template-columns: 1fr; }
+  .switches button { border-radius: 10px; }
+  .explanation { padding: 16px; min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .boundary, .corner, .pin, .beds { transition: none; } }
+@media print {
+  .explainer { break-inside: avoid; border: 0; padding: 12px 0; }
+  .switches, .explanation { display: none; }
+  .scene { max-width: 480px; }
+  .boundary { stroke-dashoffset: 0; opacity: 1; }
+  .corner, .pin, .beds { opacity: 1; }
+}

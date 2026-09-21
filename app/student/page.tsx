@@ -798,7 +798,7 @@ export default function StudentPage() {
           <div>
             <p className={styles.eyebrow}>Practical app guides</p>
             <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
-            <p>Follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
+            <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
           </div>
           {APP_GUIDES.map(guide => <Link key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guide.image} alt="" loading="lazy" />

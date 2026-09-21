@@ -6,7 +6,7 @@ The public course remains ten modules and 33 lessons. This reserve adds **15 pro
 
 Rory expanded the brief on 20 September: add a deeper [Farm Finance course](financial-course.md), with **eight units and 24 lessons planned**. F1 and F2 now contain **six full English teaching drafts** with checked exercises; 18 lesson plans still need expansion. These remain in reserve and are tracked separately from the 51 drafted lessons. The existing five-lesson Farm Money module remains the introductory route.
 
-The [Using ImbewuField companion pathway](app-companions/README.md) has **14 tutorial specifications**. Three readable English guides are published: [harvest](https://imbewufield.vercel.app/student/guides/harvest), [expenses](https://imbewufield.vercel.app/student/guides/expenses) and [invoices](https://imbewufield.vercel.app/student/guides/invoices). Eleven remain to develop; narration and screen recordings are still open for all three published guides.
+The [Using ImbewuField companion pathway](app-companions/README.md) has **14 tutorial specifications**. Readable English implementations cover [mapping](https://imbewufield.vercel.app/student/guides/mapping), [harvest](https://imbewufield.vercel.app/student/guides/harvest), [expenses](https://imbewufield.vercel.app/student/guides/expenses) and [invoices](https://imbewufield.vercel.app/student/guides/invoices). Ten remain to develop; narration and screen recordings are still open. The companion evidence files and release ledger record preview/production verification.
 
 | Proposed module | Draft lessons | Dependency | Draft |
 | --- | ---: | --- | --- |

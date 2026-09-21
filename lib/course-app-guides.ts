@@ -211,4 +211,64 @@ export const EXPENSE_GUIDE: AppGuide = {
   finish: { title: 'Now record a checked cost', text: 'Open Spent in your current workspace. Find an existing entry first, or add the payment once from its source record.', href: '/records?tab=spent', label: 'Open Spent' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [HARVEST_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE];
+export const MAPPING_GUIDE: AppGuide = {
+  id: 'mapping', href: '/student/guides/mapping', cardTitle: 'Find, map and reopen your site',
+  title: 'Start with the right piece of land.',
+  summary: 'Find a place, save its pin, trace a boundary and check the work before planning beds.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers comparing a paper sketch with the homestead in front of them',
+  caption: 'Compare the map with the ground · illustrated example, not a surveyed plan',
+  prepareTitle: 'Know which place you are mapping',
+  prepare: [
+    'Bring a name you recognise, a sketch and any checked measurements. Identify familiar roads, buildings and corners on the ground. A satellite picture alone may not show the current boundary clearly.',
+    'To practise, open the sample tour. Choose Start with a garden, then Open the garden on the map. The Tour button shows that you are practising. Use a clearly named practice outline; sample changes reset on a full reload.',
+  ],
+  steps: [
+    { id: 'find', title: 'Find and check the location', action: 'Map → Show map tools → Find your land', paragraphs: [
+      'If the tools are closed, choose Show map tools. For a saved site, open Places and choose its name. Let the map finish moving, then check the site name and landmarks.',
+      'For a new location, use Search town or address, then zoom in and tap the correct spot. A town search is a starting point, not the exact position of your garden.',
+      'Locate me uses the device location if you choose to allow it. It is useful only when you are at the intended site. You can use search and the map without granting location access.',
+    ], check: 'The name, buildings and roads match the place you mean to work on.' },
+    { id: 'save-place', title: 'Save the pin once', action: 'Save place → Name and label → Save place', paragraphs: [
+      'Choose Save place for the selected spot. Give it a recognisable name and choose a label such as Home or Field. Save the place.',
+      'If the app finds an existing place nearby, read its name. Update it when it is the same site. Save as new place only when you really mean a different place; do not create a second record just to try saving again.',
+      'Open Places and choose the saved name again. Check where the map goes. The pin saves a location; it does not trace the land around it.',
+    ], check: 'You can find the same named place again, and have not accidentally duplicated it.' },
+    { id: 'trace', title: 'Trace the land you can identify', action: 'Add to my map → Land boundary', paragraphs: [
+      'If the right outline already exists, inspect it under Parcels first. Use Edit shape for a correction instead of drawing the same parcel again.',
+      'For a new outline, choose Land boundary, or Add parcel under Parcels. Tap each corner in order around the edge. You can also move the map until the crosshair is on a corner, then choose Add corner.',
+      'Use Undo if the last corner is wrong. Keep following the edge without crossing your own line. Choose Finish to close the shape. Cancel stops the unfinished drawing without adding it.',
+    ], check: 'The outline follows the intended edge, and you can explain any uncertain corner.' },
+    { id: 'name-boundary', title: 'Name and review the parcel', action: 'Finish → Name your land → Save name → Parcels', paragraphs: [
+      'After Finish, give the parcel a clear name, choose what it represents and check the optional link to a saved place. Choose Save name. Finish has already created the outline; Skip in the naming form does not undo it.',
+      'Find the named entry under Parcels. Check its units and shape against your sketch and measurements. A displayed area comes from the drawn shape, so a misplaced corner can change the result.',
+      'For a correction, choose that parcel’s Edit shape. Move the intended corner and review it before choosing Done. Use Cancel if you do not want those edits. A plausible total does not prove every corner is right.',
+    ], check: 'The named parcel, its location and its drawn edge agree with your evidence.' },
+    { id: 'growing-area', title: 'Keep growing beds separate', action: 'Design Studio → Review the site and its growing areas', paragraphs: [
+      'A land boundary can include paths, a house and places where nothing is planted. It is not automatically the area of your vegetable beds.',
+      'In Design Studio, check the site and map the actual growing areas before using the crop plan. The financial charts use the main saved site’s mapped beds when available; do not assume that selecting another map pin changes every financial chart.',
+      'Check the area and units used in a forecast. Planned harvests are estimates, not proof of what was picked or sold. Use the harvest, expense and invoice guides for actual records.',
+    ], check: 'You can point separately to the place pin, the parcel edge and the growing beds.' },
+    { id: 'reopen', title: 'Reopen and explain your work', action: 'Places → Saved place → Parcels', paragraphs: [
+      'Return to Places and open the same site. Find the parcel by name. Explain one corner you checked and one uncertainty that still needs checking on the ground.',
+      'In the sample tour, do this in the same session. A full reload restores the sample starting data. This exercise does not test your own account’s backup or another device.',
+      'For your own work, check the saved result and any connection messages. Do not draw a duplicate because you are unsure whether the first save worked. Keep your source sketch and measurements.',
+    ], check: 'You can find the saved work and explain what is measured, estimated or still unknown.' },
+  ],
+  practice: {
+    title: 'The pin is in the right place.',
+    question: 'Does that mean the whole area around it is ready to use as vegetable-bed area in a forecast?',
+    choices: [
+      { label: 'Yes, use the whole parcel as growing area', feedback: 'A parcel may include a house, paths and unplanted land. Its area is not automatically the area of the beds.', correct: false },
+      { label: 'Check the boundary and map the actual beds', feedback: 'Yes. A pin locates the site, a boundary outlines land, and beds describe the growing area. Check which site and areas the forecast uses.', correct: true },
+      { label: 'Add another pin to increase the area', feedback: 'Another pin does not measure more growing space. Reopen the correct place and check its mapped beds.', correct: false },
+    ],
+  },
+  limits: { title: 'Keep the evidence beside the map', paragraphs: [
+    'This is a planning map. Traced lines, satellite imagery and device GPS do not by themselves establish a surveyed or legal boundary. Check uncertain edges and permissions before acting on them.',
+    'The sample uses prepared records. A completion badge shows recorded steps, not an independent check that a drawing or a financial forecast is accurate.',
+  ], reference: { href: 'https://ngi.dlrrd.gov.za/index.php/what-we-do/prof', label: 'NGI mapping and boundary-verification support' } },
+  finish: { title: 'Now find and check your site', text: 'Open Map in your current workspace. Start with Places if the site is already saved. Use the sample tour above for practice.', href: '/farmer', label: 'Open Map' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE];

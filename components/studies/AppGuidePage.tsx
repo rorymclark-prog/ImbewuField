@@ -10,6 +10,7 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import { APP_GUIDES, type AppGuide } from '@/lib/course-app-guides';
 import styles from './AppGuide.module.css';
+import MappingExplainer from './MappingExplainer';
 
 export default function AppGuidePage({ guide }: { guide: AppGuide }) {
   // My Studies is the in-flow way back; a second floating Back covered the phone text.
@@ -39,6 +40,8 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
         <h2 id="prepare-title">{guide.prepareTitle}</h2>
         {guide.prepare.map(text => <p key={text}>{text}</p>)}
       </section>
+
+      {guide.id === 'mapping' && <MappingExplainer />}
 
       <div className="no-print"><LimaBar /></div>
 
