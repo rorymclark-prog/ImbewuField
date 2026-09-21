@@ -22,7 +22,7 @@ export default function MappingExplainer() {
     </div>
     <div className={styles.scene}>
       <svg viewBox="0 0 720 410" role="img" aria-labelledby="map-example-svg-title map-example-svg-description">
-        <title id="map-example-svg-title">{LAYERS[layer].name} in a schematic homestead</title>
+        <title id="map-example-svg-title">{`${LAYERS[layer].name} in a schematic homestead`}</title>
         <desc id="map-example-svg-description">A place pin sits beside a house. A four-corner boundary surrounds the house, paths, trees and four vegetable beds. The beds fill only part of the parcel. This illustration is not to scale and has no measured area.</desc>
         <rect width="720" height="410" rx="20" fill="#eee9d9" />
         <g fill="none" stroke="#dbd6c5" strokeWidth="1.5">
