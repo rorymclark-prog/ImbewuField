@@ -454,4 +454,122 @@ export const START_GUIDE: AppGuide = {
   finish: { title: 'Try your first task with the sample farm', text: 'Start the tour, find an existing record and return to it. Keep these steps beside you until you can do it independently.', href: '/tour', label: 'Open the sample tour' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, CHARTS_GUIDE];
+export const PAPER_SALES_GUIDE: AppGuide = {
+  id: 'past-sales', href: '/student/guides/past-sales', cardTitle: 'Bring paper and past sales into the app',
+  title: 'Keep the old paper. Record the sale once.',
+  summary: 'Bring an earlier sale into the app with its original evidence, date and reference.',
+  image: '/course-images/market-community/market-community-l1.jpg',
+  imageAlt: 'Illustration of a grower keeping a written record beside a basket of produce',
+  caption: 'The source record comes first · illustrated example',
+  prepareTitle: 'Have the paper and payment evidence ready',
+  prepare: [
+    'Bring the original reference, issue date, buyer, goods, quantities, units and agreed prices. Check whether payment arrived and on which date. Do not guess missing details.',
+    'For practice, use the sample tour → Record the work and the sale → Try it now. Use a clearly marked fictional example. Sample changes reset on a full reload.',
+  ],
+  steps: [
+    { id: 'check-existing', title: 'Look for the sale before entering it', action: 'My Records → Sold → Invoice → Saved', paragraphs: [
+      'Check both Sold and Saved. Match the reference, buyer, date, goods and amount. A paper copy and an app entry can describe the same sale.',
+      'If an invoice already exists, reopen it from Saved or its View link. Do not create a new sale because the buyer wants another copy.',
+    ], check: 'You know whether the sale and an invoice are already recorded.' },
+    { id: 'choose-entry', title: 'Choose the right kind of entry', action: 'Sold → Past sale / paper invoice → What are you recording?', paragraphs: [
+      'Choose An invoice already written on paper to copy an existing paper invoice. Choose Produce already sold when you are documenting an earlier sale without that paper invoice.',
+      'Answer Is this sale already in My Records? Choose Yes — link the existing sale if it is recorded. Choose No — record it with this invoice only after checking that it is absent.',
+      'Choose the entry type and existing-sale answer before filling the rest. Changing these choices starts a fresh form, so check all the details again.',
+    ], check: 'The choice describes the source, not just the page you happened to open.' },
+    { id: 'link-sale', title: 'Link only the exact recorded sale', action: 'Yes — link the existing sale → Recorded sale', paragraphs: [
+      'Select the exact available sale in kilograms. Read its crop, weight, amount, buyer and date. Its recorded crop, kilograms, total and payment date stay together.',
+      'An empty list is not proof that the sale never happened. It may already have an invoice or may not be an eligible kilogram record. Check Saved and your original evidence. Never pick a similar sale as a substitute.',
+      'If the app says the invoice is on another device, reopen it there. A linked sale can synchronise without copying the full invoice document. Connect to the internet before linking a real existing sale.',
+    ], check: 'You have an exact match, or you have stopped to resolve why it is unavailable.' },
+    { id: 'source-details', title: 'Preserve the reference, date and units', action: 'Original paper invoice reference → Invoice issue date → Line items', paragraphs: [
+      'For a paper copy, enter the original paper number and date. The app gives its copy an app invoice number too. Keep both references; the buyer’s order reference is a separate field.',
+      'Check the date in the document preview before saving. Copy the goods, quantities, units and agreed prices. A suggested price is not the price on your paper.',
+      'Bunches, bags and kilograms are different units. Keep the unit on the source. Do not invent a weight to make an old record fit.',
+    ], check: 'The preview agrees with the paper, including the original date and exact cents.' },
+    { id: 'old-payment', title: 'Record what actually happened to payment', action: 'Has the buyer paid? → Payment received on', paragraphs: [
+      'Choose Yes — paid in full only when full payment is supported by checked evidence. Use its actual receipt date and method. An old invoice date does not prove the buyer paid that day.',
+      'Choose Not yet — payment outstanding when payment remains due. This app does not keep an instalment ledger. Keep deposits and the remaining balance separately; do not mark a deposit as full payment.',
+      'For a linked recorded sale, preserve its recorded paid status and payment date. If they disagree with your evidence, resolve the original record instead of making a duplicate.',
+    ], check: 'The invoice date and payment date each describe their own event.' },
+    { id: 'verify-copy', title: 'Save and reopen the same copy', action: 'Save invoice → Saved → Open the same invoice', paragraphs: [
+      'Save once and read the result. Find the same invoice again and compare the paper reference, issue date, buyer, units, total and payment status.',
+      'A saved invoice’s issue date is locked. Check it before saving; keep the original evidence and seek help with that record if it is wrong. Do not add another sale as a correction.',
+      'If the message says the crop sale book still needs updating, reconnect and save the same invoice again. Keep the paper even after the app copy is saved.',
+    ], check: 'You can connect one source sale to its app document without counting its income twice.' },
+  ],
+  practice: {
+    title: 'The old sale is already recorded.',
+    question: 'Your paper describes a sale already in My Records. What should you do first?',
+    choices: [
+      { label: 'Enter a second sale with today’s date', feedback: 'That can duplicate income and change the story of when it happened. Find the existing record first.', correct: false },
+      { label: 'Reopen its invoice, or link the exact eligible sale', feedback: 'Yes. Match the source first. If an invoice exists, reopen it; otherwise use the supported existing-sale link.', correct: true },
+      { label: 'Link another sale with a similar amount', feedback: 'A similar amount does not establish the same sale. Keep the evidence and resolve the missing match.', correct: false },
+    ],
+  },
+  limits: { title: 'Keep gaps visible', paragraphs: [
+    'An app copy does not replace missing source evidence. It does not convert units, establish tax compliance or repair an incorrect old record by itself.',
+    'Independent practice: find one existing sample invoice and identify its issue date and payment status. Explain which entry route you would use for a paper copy and when you must stop to check a possible duplicate.',
+  ] },
+  finish: { title: 'Start by checking Sold', text: 'Look for the existing sale before opening a past-sale or paper-copy form. Use the sample workspace until you can explain your choice.', href: '/records?tab=sold', label: 'Open Sold' },
+};
+
+export const PAYMENT_GUIDE: AppGuide = {
+  id: 'payments', href: '/student/guides/payments', cardTitle: 'Review payment and share the right invoice',
+  title: 'Check payment. Send the right copy.',
+  summary: 'Update the existing invoice from checked payment evidence and inspect the document before sharing.',
+  image: '/studies-guides/expense-record.jpg',
+  imageAlt: 'Illustration of a grower checking a notebook and calculator at a homestead table',
+  caption: 'Check the amount against its evidence · illustrated example',
+  prepareTitle: 'Bring the invoice reference and payment evidence',
+  prepare: [
+    'Have the buyer, invoice number and payment evidence ready. A buyer asking for a copy is not proof of payment.',
+    'Practise in the sample tour. Keep real banking and customer details private. A practice export ends with checking the copy; do not send it to a real customer.',
+  ],
+  steps: [
+    { id: 'right-invoice', title: 'Reopen the correct invoice', action: 'Invoice → Saved → Invoice number or Review payment', paragraphs: [
+      'Find the existing invoice by number, buyer, issue date and total. Choose its row or Review payment to open it.',
+      'Check that you are editing that invoice. Do not start New invoice to record payment for goods already invoiced.',
+    ], check: 'The document and buyer match the payment you are investigating.' },
+    { id: 'payment-evidence', title: 'Check the whole payment', action: 'Compare the payment record with the invoice', paragraphs: [
+      'Check that the money was actually received and belongs to this invoice. Compare the amount and reference with your checked payment record.',
+      'A promise, payment request or screenshot that you have not verified is not enough to say paid in full. Resolve differences before changing the status.',
+      'This screen supports paid in full or unpaid. For a deposit or instalment, keep the amounts, dates and balance in a separate supporting record. Do not mark the whole invoice paid.',
+    ], check: 'You can explain why the evidence supports full payment, or what remains unresolved.' },
+    { id: 'update-payment', title: 'Update the same document', action: 'Has the buyer paid? → Payment received on → Payment method → Save invoice', paragraphs: [
+      'Once full payment is checked, choose Yes — paid in full. Check Payment received on and choose the method when known. Keep the original issue date.',
+      'Save and read the result. Reopen the same invoice from Saved. Check the paid status, receipt date and method. The invoice number should stay the same.',
+      'A sale linked from an existing record keeps its recorded payment details together. If these need correction, resolve that original record rather than making a new invoice.',
+    ], check: 'One invoice now carries the checked payment, with no extra sale added.' },
+    { id: 'check-book', title: 'Check the money book once', action: 'My Records → Sold → View the related invoice', paragraphs: [
+      'Check the related invoice and amount in Sold. Paid invoice income is included in the money book. Do not enter another quick sale for the same payment.',
+      'Kilogram lines can provide crop-sale evidence. Bunches and bags keep their own units; the app does not guess their kilograms. Read the units beside the amount.',
+      'If the invoice is saved on this device but its crop sale book update is pending, reconnect and save that same invoice again. Keep the source evidence while resolving the message.',
+    ], check: 'The money and units still describe the original sale, counted once.' },
+    { id: 'inspect-copy', title: 'Inspect the output before sharing', action: 'Saved invoice → Share PDF or Print', paragraphs: [
+      'Review the on-screen document first: seller and buyer, both references where relevant, dates, goods, units, prices, total, payment status and banking details.',
+      'Share PDF and Print save the current form before producing output. Check your edits first. A paid document shows Invoice total and its Paid stamp; an unpaid document shows Total due.',
+      'Share PDF opens a device share sheet where supported, or downloads a PDF. Check the generated copy. If PDF creation reports an error, the invoice may already be saved; follow the message and try Print rather than creating a duplicate.',
+    ], check: 'You have inspected the correct document, not merely pressed an export button.' },
+    { id: 'share-copy', title: 'Choose the recipient yourself', action: 'Check the copy → Choose the intended recipient', paragraphs: [
+      'For a real invoice, check the recipient and attachment before sending through your chosen app. Downloading or printing does not mean the buyer received it.',
+      'If the buyer needs another copy, reopen and share the same invoice. Keep a checked copy with the source records.',
+      'The complete invoice stays on its original device. Seeing the sale on another device does not prove the full document is there too.',
+    ], check: 'You can identify which copy was sent, to whom, and which invoice it belongs to.' },
+  ],
+  practice: {
+    title: 'Only part of the invoice was paid.',
+    question: 'The buyer paid a deposit. Which action keeps the record honest?',
+    choices: [
+      { label: 'Mark the invoice paid in full', feedback: 'A deposit is not full payment. That would hide the amount still owed.', correct: false },
+      { label: 'Keep the part payment and balance in a supporting record', feedback: 'Correct. The app has no instalment ledger. Keep the evidence separately and do not mark full payment until it is supported.', correct: true },
+      { label: 'Create another sale for the deposit', feedback: 'A deposit towards the existing invoice is not a second sale. Keep it linked in your supporting payment record.', correct: false },
+    ],
+  },
+  limits: { title: 'A paid label is a record, not independent proof', paragraphs: [
+    'The app relies on the payment details you enter. It does not check your bank account or establish that a transfer cleared. Keep the evidence that supports your update.',
+    'Independent practice: reopen one paid and one unpaid sample invoice. Explain the date and status on each, then identify the document and recipient you would check before sharing. Do not send the examples.',
+  ] },
+  finish: { title: 'Find the invoice you want to review', text: 'Open Saved, match the reference and compare the payment evidence. Follow the same record through review and sharing.', href: '/invoice', label: 'Open Invoice' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE];

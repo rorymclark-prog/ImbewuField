@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C01/C03–C04/C09–C10/C12–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C03–C04/C12–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -79,3 +79,7 @@ C11 is implemented at `/student/guides/charts`: six English steps and a three-st
 ## Getting-started companion — 21 September 2026
 
 C01 has a readable implementation at `/student/guides/getting-started`: sample versus own workspace, page navigation, reopening a record, save-result checks, retaining evidence and Exit tour. Seven of 14 readable companions are implemented; seven remain (C03, C04, C09, C10, C12, C13, C14). Release verification is recorded in [getting-started.md](getting-started.md). Narration and filmed walkthroughs remain open. Animations are held for joint review with Rory under [the current work direction](../../WORK-DIRECTION.md).
+
+## Past paperwork and payment companions — 21 September 2026
+
+C09 and C10 are implemented at `/student/guides/past-sales` and `/student/guides/payments`. These bring readable implementations to nine of14; C03, C04, C12, C13 and C14 remain. [Walkthrough and correction evidence](invoice-followups.md) distinguishes actual sample save/reopen/payment checks, source-only existing-sale linking, directly rendered PDF checks and unverified browser-download delivery. The walkthrough found paid copies incorrectly labelled Total due; the shared document model now supplies Invoice total to both renderers when paid. No animations changed. Narration, isiZulu and learner review remain open.
