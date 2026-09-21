@@ -1,0 +1,52 @@
+{
+  "unit": "F6",
+  "status": "reserve-English-review-draft",
+  "lessonDrafts": 3,
+  "sourceBaseline": "c37691cbd91e5fe2479e73adcd0e6e678b7fd491",
+  "arithmetic": {
+    "equipmentOptions": 3,
+    "borrowingSchedules": 3,
+    "reserveProjections": 2,
+    "deliberateFaultsRejected": 15,
+    "command": "python3 docs/studies-review-2026-09-20/reserve/finance/verify-f6.py"
+  },
+  "workbook": {
+    "path": "output/pdf/finance-f6-workbook.pdf",
+    "pages": 4,
+    "renderedAndVisuallyInspected": true
+  },
+  "interactive": {
+    "path": "output/html/finance-f6-decisions.html",
+    "cases": 8,
+    "cards": 36,
+    "review": [
+      "All 36 card balances read from rendered browser UI; all eight final comparisons checked.",
+      "Desktop and 390-pixel phone layout visually inspected; phone document width equals viewport width.",
+      "Previous, next, restart, play and pause verified; full five-card playback stops at final card.",
+      "Pace changes pause playback; default restored to ten seconds.",
+      "Reserve bar transition observed between computed widths; negative values remain explicit in numbers and warning.",
+      "Expanded source-card table and final comparison visually inspected on phone.",
+      "Initial missing-semicolon syntax error corrected; builder now checks generated JavaScript with node --check. No subsequent error in captured console history."
+    ],
+    "defaultPaused": true,
+    "externalAssets": false,
+    "flowCreditsSpent": 0
+  },
+  "validation": {
+    "typecheck": "pass",
+    "tests": 3642,
+    "pass": 3641,
+    "fail": 0,
+    "existingTodo": 1,
+    "diffCheck": "pass",
+    "releaseNotesPending": "nothing user-facing unnoted"
+  },
+  "open": [
+    "local bookkeeping review",
+    "learner trial",
+    "fluent isiZulu",
+    "narration",
+    "reserve course integration"
+  ],
+  "appFeatureChanges": false
+}

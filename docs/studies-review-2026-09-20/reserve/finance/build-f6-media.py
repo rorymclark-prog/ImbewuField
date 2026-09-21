@@ -1,0 +1,34 @@
+"""Prepare exact display data from verified source cards; the browser does not recompute finance."""
+from pathlib import Path
+import json,base64,runpy,subprocess
+R=Path(__file__).resolve().parent;REPO=R.parents[3]
+v=runpy.run_path(str(R/'verify-f6.py'));v['main']();p=v['P'];m=v['money'];cases=[]
+for c in p['equipment']['cases']:
+    x=v['equipment'](p['equipment'],c);opening=p['equipment']['openingCents']
+    frames=[dict(ref='OPEN',date='Before Day 1',title='Start with the same available cash',body='Each option starts separately. No borrowing or other receipts have been supplied.',metrics=[['Cash projection',opening]],bars=[['Cash projection',opening]])]
+    for r in x['rows']:
+        frames.append(dict(ref=r['ref'],date=f"Day {r['day']}",title=r['label'],body=(f"Payment {m(r['out'])}." if r['out'] else f"Receipt {m(r['in'])}; the return of your deposit is not a produce sale.")+(' This is an unfunded projection: the stated cash cannot pay all these bills.' if r['balance']<0 else ''),metrics=[['Cash projection',r['balance']]],bars=[['Cash projection',r['balance']]]))
+    cases.append(dict(id=c['id'],label={'BUY':'Equipment · Buy the tool','HIRE':'Equipment · Hire the service','SHARE':'Equipment · Share ownership'}[c['id']],scale=opening,scaleLabel='Bars use the R500.00 opening cash as their scale. A negative projection is a shortage, not cash.',summary=[['Gross payments',x['out']],['Deposit returned',x['received']],['Net cash paid',x['net']],['Peak cash needed',x['peak']],['Closing projection',x['closing']]],note=c['access']+'. Retained asset/share values are unknown for Buy and Share; these cash totals do not establish complete costs or a lifetime winner.',question='What must be paid before use? What information is missing before you can choose?',frames=frames))
+for s in p['borrowing']['schedules']:
+    x=v['loan'](p['borrowing'],s);principal=p['borrowing']['principalCents'];repaid=0
+    frames=[dict(ref=s['id']+'/OPEN',date='1 January 2027',title='Separate principal from usable funds',body=f"Principal {m(principal)}. Actually credited {m(s['creditedCents'])}; fee paid separately {m(s['separateFeeCents'])}. Net initial funds {m(x['net'])}. A withheld fee is not subtracted twice.",metrics=[['Net initial funds',x['net']],['Remaining principal',principal]],bars=[['Scheduled principal repayments',0],['Principal left after payments',principal]])]
+    for i,r in enumerate(x['rows'],1):
+        repaid+=r['principal']
+        frames.append(dict(ref=s['id']+f'/{i}',date=r['date'],title='Read this scheduled instalment',body='Required insurance is missing. The full instalment is unknown, even though its principal component is specified.' if r['insurance']is None else 'The total already includes the listed interest, service fee and insurance. Do not add those charges again.',metrics=[['Full instalment',r['amount']],['Principal left if paid',r['remaining']]],bars=[['Scheduled principal repayments',repaid],['Principal left if paid',r['remaining']]],components=[['Principal',r['principal']],['Interest',r['interest']],['Service',r['service']],['Insurance',r['insurance']]]))
+    cases.append(dict(id=s['id'],label={'SEPARATE':'Borrowing · Separate fee','WITHHELD':'Borrowing · Fee withheld','UNKNOWN':'Borrowing · Missing insurance'}[s['id']],scale=principal,scaleLabel='Bars show scheduled principal payments and principal left if paid, out of R600.00. Charges are separate.',summary=[['Net initial funds',x['net']],['Scheduled repayments',x['total']],['Specified financing charges',x['cost']]],note='Invented charge amounts, not a loan offer, interest-rate calculation or affordability test. Each schedule is separate from the equipment cash exercise. Principal bars assume the scheduled principal is paid; they do not confirm payment or full settlement when charges are missing.',question='Where is the initial fee counted? Which charges are included, and which information is missing?',frames=frames))
+for shock in (False,True):
+    x=v['reserve'](p['reserves'],shock);pr=p['reserves'];opening=pr['openingOperatingCents']+pr['openingReservedCents']
+    def frame(ref,date,title,body,op,held,total):return dict(ref=ref,date=date,title=title,body=body,metrics=[['Daily work',op],['Set aside',held],['Total cash',total]],bars=[['Daily work',op],['Set aside',held]])
+    frames=[frame('OPEN','Before Day 5','Give existing money a job','Both envelopes are inside the same cash scope. Earmarking does not create another asset or add cash.',pr['openingOperatingCents'],pr['openingReservedCents'],opening)]
+    titles={'allocate':'Move money into the reserve','reserve-payment':'Pay the maintenance bill','operating-receipt':'Record an actual receipt','operating-payment':'Check the essential bill','repair':'Test an unexpected repair'}
+    for r in x['rows']:
+        body={'allocate':'Move R100.00 between the two envelopes. Total cash stays unchanged.','reserve-payment':'R120.00 leaves the reserve to pay someone else. Total cash falls once.','operating-receipt':'An evidenced R80.00 arrives. Its source is still needed to classify it; the receipt alone does not prove profit.','operating-payment':'The R550.00 essential bill is still due. Check whether the revised plan can pay it.','repair':'The R250.00 repair uses R180.00 reserved and R70.00 from daily work. It leaves less for the later essential bill.'}[r['kind']]
+        if r['total']<0:body+=' A R40.00 shortage is unfunded; this is not a completed payment or an approved overdraft.'
+        frames.append(frame(r['ref'],f"Day {r['day']}",titles[r['kind']],body,r['operating'],r['reserved'],r['total']))
+    cases.append(dict(id='RESERVE_'+x['id'],label='Reserves · '+('Repair before the bill'if shock else 'Base plan'),scale=opening,scaleLabel='Each bar uses R800.00 as its scale. Daily work + Set aside = Total cash. Negative daily-work values show an unfunded projection.',summary=[['Closing cash projection',x['closing']],['Below the reserve target',x['targetGap']],['Unfunded cash gap',x['cashGap']]],note='The R500.00 target is an invented goal, not a recommended reserve. No fee or legal restriction applies in this model. A non-cash estimate and unapproved application are excluded.',question='Did cash leave the defined scope, or only change purpose? What happens to the later bill after the repair?',frames=frames))
+hero=REPO/'docs/media/studies-illustrated-release/art/market-community/shared-tools.jpg'
+html=(R/'f6-decisions.template.html').read_text().replace('__DATA__',json.dumps(cases)).replace('__HERO__','data:image/jpeg;base64,'+base64.b64encode(hero.read_bytes()).decode())
+# The visual review caught a template syntax error: reject it before writing a new artifact.
+subprocess.run(['node','--check'],input=html.split('<script>')[1].split('</script>')[0],text=True,check=True)
+out=REPO/'output/html/finance-f6-decisions.html';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(html)
+print(out)
