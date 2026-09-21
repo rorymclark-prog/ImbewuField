@@ -6,6 +6,7 @@ import { ArrowRight, MapPin, Eye } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useSiteProgress, STEP_COPY, getGuidedState } from '@/lib/site-progress';
 import type { SavedPlace } from '@/lib/saved-places';
+import ProgressSprout from '@/components/home/ProgressSprout';
 
 export interface HomeHeroCardProps {
   /** null until the places effect has run — render the DEFAULT variant (today's
@@ -78,8 +79,15 @@ function HeroEntranceStyle() {
         to { opacity: 1; transform: scale(1); }
       }
       .imf-hero-settle { animation: imfHeroSettle 260ms var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.1)); }
+      .imf-progress-sprout { width: 72px; height: 72px; flex: none; overflow: visible; }
+      .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
+      @keyframes imfGrowIn {
+        from { opacity: 0; transform: scale(0.7); }
+        to { opacity: 1; transform: scale(1); }
+      }
       @media (prefers-reduced-motion: reduce) {
         .imf-hero-settle { animation: none; }
+        .imf-progress-sprout__growth { animation: none; }
       }
     `}</style>
   );
@@ -93,6 +101,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   // client render, matching each other exactly).
   const coords = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
+  const completedSteps = progress?.score.steps.filter((step) => step.done).length ?? 0;
 
   // ── DEFAULT — pre-hydration paint (places === null). This is today's exact
   // analyse-CTA markup: the whole card is one Link, so returning users never see
@@ -101,11 +110,15 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     return (
       <Link href="/farmer" className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
         <HeroEntranceStyle />
-        <Overline>{t('homeLimaSuggests')}</Overline>
-
-        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
-          {t('homeSurveyNew')}
-        </h2>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <Overline>{t('homeLimaSuggests')}</Overline>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+              {t('homeSurveyNew')}
+            </h2>
+          </div>
+          <ProgressSprout completedSteps={0} />
+        </div>
 
         <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
           {t('homeSurveyDesc')}
@@ -123,13 +136,17 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
         <HeroEntranceStyle />
-        <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>
-          {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>
+              {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
+            </div>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+              {t('welcomeHeroTitle')}
+            </h2>
+          </div>
+          <ProgressSprout completedSteps={0} />
         </div>
-
-        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
-          {t('welcomeHeroTitle')}
-        </h2>
 
         <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
           {t('welcomeHeroSub')}
@@ -177,11 +194,15 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
         <HeroEntranceStyle />
-        <Overline>{t('homeLimaSuggests')}</Overline>
-
-        <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
-          {t('continueSiteTitle').replace('{site}', mainSite.name)}
-        </h2>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <Overline>{t('homeLimaSuggests')}</Overline>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
+              {t('continueSiteTitle').replace('{site}', mainSite.name)}
+            </h2>
+          </div>
+          <ProgressSprout key={completedSteps} completedSteps={completedSteps} />
+        </div>
 
         {pct != null && (
           <div style={{ marginBottom: 16 }}>
@@ -231,11 +252,15 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   return (
     <Link href="/farmer" className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
       <HeroEntranceStyle />
-      <Overline>{t('homeLimaSuggests')}</Overline>
-
-      <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
-        {t('homeSurveyNew')}
-      </h2>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <Overline>{t('homeLimaSuggests')}</Overline>
+          <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+            {t('homeSurveyNew')}
+          </h2>
+        </div>
+        <ProgressSprout completedSteps={0} />
+      </div>
 
       <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
         {t('homeSurveyDesc')}
