@@ -1,0 +1,27 @@
+{
+  "unit": "F5",
+  "status": "reserve-English-review-draft",
+  "lessonDrafts": 3,
+  "sourceBaseline": "3dd2e69950220dcc6a4857462cf4c38369efa20b",
+  "arithmetic": {
+    "documentEvents": 18,
+    "independentCases": 5,
+    "deliberateFaultsRejected": 12,
+    "command": "python3 docs/studies-review-2026-09-20/reserve/finance/verify-f5.py"
+  },
+  "workbook": {
+    "path": "output/pdf/finance-f5-workbook.pdf",
+    "pages": 4,
+    "renderedAndVisuallyInspected": true
+  },
+  "appCompanion": "/student/guides/sales",
+  "releaseEvidence": "../app-companions/sales.md and GitHub issue #35",
+  "open": [
+    "local bookkeeping review",
+    "learner trial",
+    "fluent isiZulu",
+    "narration",
+    "filmed app walkthrough",
+    "reserve course integration"
+  ]
+}

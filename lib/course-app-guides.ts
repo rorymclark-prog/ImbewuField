@@ -271,4 +271,64 @@ export const MAPPING_GUIDE: AppGuide = {
   finish: { title: 'Now find and check your site', text: 'Open Map in your current workspace. Start with Places if the site is already saved. Use the sample tour above for practice.', href: '/farmer', label: 'Open Map' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE];
+export const SALES_GUIDE: AppGuide = {
+  id: 'sales', href: '/student/guides/sales', cardTitle: 'Record a sale once',
+  title: 'Keep the sale and its payment together.',
+  summary: 'Choose the right starting record, check the payment, then find the same sale again.',
+  image: '/studies-guides/record-sale.jpg',
+  imageAlt: 'Illustration of a grower and buyer discussing vegetables at a rural market stall',
+  caption: 'Agree the produce, price and payment terms · illustrated example',
+  prepareTitle: 'Start with what actually happened',
+  prepare: [
+    'Have the buyer, product, quantity, unit, agreed price and dates beside you. Check whether an invoice or sale already exists before adding anything.',
+    'For practice, open the sample tour and choose Record the work and the sale. Choose Try it now if the tour tips cover the screen. Sample changes are practice only and reset on a full reload.',
+  ],
+  steps: [
+    { id: 'find-sale', title: 'Look for the existing record', action: 'My Records → Sold → Recent sales or the money list', paragraphs: [
+      'If the sale already has an invoice, choose its View or View invoice link. A buyer asking for another copy does not mean another sale.',
+      'If a recorded sale has no invoice, use Create invoice on that sale when available. Keep its recorded crop, kilograms, amount and payment date. Do not start another sale to create its paperwork.',
+      'For a sale that is not recorded, choose New sale & invoice. For an older sale or paper document, choose Past sale / paper invoice and keep the original reference and date.',
+    ], check: 'You know whether you are opening an existing record or adding a genuinely unrecorded sale.' },
+    { id: 'choose-source', title: 'Choose the source before filling the details', action: 'What are you recording? → Is this sale already in My Records?', paragraphs: [
+      'Read the selected Invoice type. For Produce already sold or An invoice already written on paper, answer whether the sale is already recorded. Choose the exact existing sale when linking one.',
+      'Make these choices first. Changing the invoice type or existing-sale choice starts a fresh form, so check the details again before saving.',
+      'For a paper copy, enter the original paper reference. The invoice issue date is not automatically the day the buyer paid.',
+    ], check: 'The source choice and any linked sale match your evidence.' },
+    { id: 'check-sale', title: 'Check the agreed quantity and total', action: 'Bill to → Crop or product → Quantity → Unit → Price each', paragraphs: [
+      'Check the buyer and every line. Keep kilograms, bags, bunches and other units as they were agreed. The app does not know a bag’s weight unless you have measured and recorded it.',
+      'Use the agreed price. A suggested crop price is a guide, not the buyer’s agreement. Compare the line amounts and total with your source.',
+      'Choose a growing area only when the invoice belongs to it. Keep a mixed invoice unassigned rather than giving one bed income from another activity.',
+    ], check: 'The buyer, units, quantity, agreed price and total agree with the source record.' },
+    { id: 'check-payment', title: 'Record whether the full payment arrived', action: 'Has the buyer paid? → Payment received on → Payment method', paragraphs: [
+      'Choose Not yet — payment outstanding if the money is still due. Choose Yes — paid in full only after checking that the full payment arrived.',
+      'For full payment, check the actual receipt date and method. A payment promise or screenshot from the buyer needs checking against your own receipt evidence.',
+      'A deposit or instalment is not payment in full. This app does not keep a partial-payment balance schedule. Keep a separate checked record of amounts received and still owed; do not mark the invoice fully paid for a deposit.',
+    ], check: 'The status describes the evidence, and a part payment has not been represented as full payment.' },
+    { id: 'save-sale', title: 'Save and check the same invoice', action: 'Save invoice → Saved → Open the same number', paragraphs: [
+      'Choose Save invoice and read the message. Open Saved and find the same invoice number, buyer, amount and payment status.',
+      'If the document is saved on this device but the crop sale book still needs updating, reconnect and follow the message on that same invoice. Creating another document is not a safe retry.',
+      'Paid invoices contribute income to My Records; paid kilogram lines can create linked crop-sale records. Other units retain their quantities. An unpaid invoice is not cash received.',
+    ], check: 'The saved document is the one you intended, and any pending update is visible.' },
+    { id: 'follow-sale', title: 'Follow the record back to Sold', action: 'My Records → Sold → View invoice', paragraphs: [
+      'For a paid invoice, check the amount in Sold and reopen its invoice link. Do not manually add its income again because a linked crop record also exists.',
+      'When an unpaid invoice is later paid in full, open that existing invoice or its Review payment button, check the receipt date and save the update. Keep the same invoice number.',
+      'To send another copy, reopen the saved invoice and check Share PDF or Print. Downloading a copy does not send it to a customer. Review the destination yourself before sending.',
+    ], check: 'You can trace the sale, payment and document without creating a duplicate.' },
+  ],
+  practice: {
+    title: 'Only part of the payment has arrived.',
+    question: 'The invoice is for R120.00. The buyer pays R40.00. What should you do?',
+    choices: [
+      { label: 'Mark the invoice paid in full', feedback: 'R80.00 is still owed. Paid in full would misstate the payment; this screen does not track a partial balance.', correct: false },
+      { label: 'Keep a separate payment record and leave full payment unconfirmed', feedback: 'Yes. Link the R40.00 evidence to the invoice and keep R80.00 outstanding in a checked supporting record. Do not create a second produce sale.', correct: true },
+      { label: 'Create another R40.00 produce sale', feedback: 'The payment settles part of the existing sale. It does not describe another delivery of produce.', correct: false },
+    ],
+  },
+  limits: { title: 'Keep the original evidence', paragraphs: [
+    'The invoice document is saved on this device. A synchronised crop-sale row is not a backup of every document detail. Retain the source and a checked copy.',
+    'A saved invoice or payment status does not by itself prove receipt, full profit or tax compliance. For deposits, adjustments or disputed amounts, keep a checked supporting balance record and get bookkeeping help.',
+  ] },
+  finish: { title: 'Find your sale before adding another', text: 'Open Sold in your current workspace. Reopen an existing record when there is one.', href: '/records?tab=sold', label: 'Open Sold' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE];

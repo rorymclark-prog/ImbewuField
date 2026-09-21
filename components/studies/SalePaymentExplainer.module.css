@@ -1,0 +1,29 @@
+.example { margin: 1.5rem 0; padding: clamp(1rem, 3vw, 2rem); border: 1px solid #d8ddcd; border-radius: 1.4rem; background: #eef2e7; color: #263e2d; }
+.example h2 { margin: .3rem 0 .7rem; font: 2rem/1.15 var(--font-display, Georgia, serif); }
+.eyebrow { margin: 0; text-transform: uppercase; letter-spacing: .1em; font-size: .72rem; font-weight: 700; }
+.stages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin: 1.4rem 0; }
+.stages button { text-align: left; display: flex; gap: .6rem; align-items: center; border: 1px solid #b6c2ad; border-radius: .75rem; background: #fbfcf6; color: #304a36; padding: .8rem; font: inherit; font-size: .85rem; min-height: 54px; }
+.stages button span { flex: 0 0 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center; background: #e4eadb; }
+.stages button[aria-pressed="true"] { background: #315939; color: #fffdf5; border-color: #315939; }
+.stages button[aria-pressed="true"] span { background: #547250; }
+.paper { background: #fffdf6; border: 1px solid #d9d8c9; border-radius: 1rem; padding: clamp(1rem, 3vw, 1.6rem); box-shadow: 0 8px 24px #263e2d08; }
+.source { font-size: .8rem; color: #696a51; margin: 0 0 .5rem; }
+.paper h3 { margin: 0 0 1rem; font: 1.5rem/1.2 var(--font-display, Georgia, serif); }
+.amounts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
+.amounts span { display: block; font-size: .78rem; color: #626855; }
+.amounts strong { display: block; font: 1.65rem/1.5 var(--font-display, Georgia, serif); }
+.paymentBar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: #e7e7dd; margin: 1rem 0; }
+.paymentBar span:first-child { background: #315939; }
+.paymentBar span:last-child { background: #c09a55; }
+.paper p:last-child { margin-bottom: 0; min-height: 3.2em; }
+.limit { font-size: .9rem; border-left: 3px solid #a58245; padding-left: 1rem; margin: 1.2rem 0; }
+.controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.controls button { min-height: 44px; border: 1px solid #aab6a0; border-radius: .6rem; background: #fffdf6; color: #263e2d; padding: .5rem .9rem; font: inherit; }
+.controls button:first-child { background: #315939; color: white; }
+.controls span { margin-left: auto; font-size: .8rem; }
+.example button { cursor: pointer; }
+.example button:disabled { opacity: .45; cursor: default; }
+.example button:focus-visible { outline: 3px solid #a58245; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) { .paymentBar span { transition: width .4s ease; } }
+@media (max-width: 600px) { .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); } .amounts strong { font-size: 1.2rem; } .amounts span { font-size: .7rem; } .controls span { margin-left: 0; } }
+@media print { .controls, .stages { display: none; } .example { break-inside: avoid; } }
