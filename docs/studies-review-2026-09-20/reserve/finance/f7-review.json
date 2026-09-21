@@ -1,0 +1,47 @@
+{
+  "unit": "F7",
+  "status": "reserve-English-review-draft",
+  "lessonDrafts": 3,
+  "sourceBaseline": "a6ef09af4d561d83771d3a11dec7419a681fadd4",
+  "arithmetic": {
+    "inPeriodEvents": 14,
+    "cases": 2,
+    "deliberateFaultsRejected": 19,
+    "command": "python3 docs/studies-review-2026-09-20/reserve/finance/verify-f7.py",
+    "learnerSourceAmountsChecked": true
+  },
+  "workbook": {
+    "path": "output/pdf/finance-f7-workbook.pdf",
+    "pages": 5,
+    "renderedAndVisuallyInspected": true,
+    "correction": "Initial source sentences omitted the R200 receipt and R900 invoice amounts. Both are now explicit; card amount coverage is checked by the verifier; corrected page 1 re-rendered and inspected."
+  },
+  "interactive": {
+    "path": "output/html/finance-f7-results.html",
+    "cases": 2,
+    "cards": 30,
+    "review": [
+      "All 30 rendered cards checked for cash, result, equity and the position equation.",
+      "Desktop and 390px phone views visually inspected, including the unknown case and detailed balances.",
+      "390px viewport and document widths match.",
+      "Full 15-card playback at five seconds per card reaches the last card and stops.",
+      "Previous, next, stable pause, restart, case selection and pause on pace change verified.",
+      "Persistent cash-bar transition measured between computed widths; numeric amounts are exact immediately.",
+      "Missing stock, stock loss, full result and position remain Unknown rather than zero.",
+      "No captured browser console errors during review."
+    ],
+    "defaultPaused": true,
+    "defaultSeconds": 10,
+    "flowCreditsSpent": 0
+  },
+  "appCompanion": "/student/guides/charts",
+  "appCompanionEvidence": "../app-companions/charts.md; preview and production release evidence recorded in issue #35",
+  "open": [
+    "local bookkeeping review",
+    "learner trial",
+    "fluent isiZulu",
+    "narration",
+    "filmed app walkthrough",
+    "reserve course integration"
+  ]
+}

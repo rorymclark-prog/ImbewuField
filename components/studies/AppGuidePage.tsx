@@ -12,6 +12,7 @@ import { APP_GUIDES, type AppGuide } from '@/lib/course-app-guides';
 import styles from './AppGuide.module.css';
 import MappingExplainer from './MappingExplainer';
 import SalePaymentExplainer from './SalePaymentExplainer';
+import ChartWindowExplainer from './ChartWindowExplainer';
 
 export default function AppGuidePage({ guide }: { guide: AppGuide }) {
   // My Studies is the in-flow way back; a second floating Back covered the phone text.
@@ -44,6 +45,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
 
       {guide.id === 'mapping' && <MappingExplainer />}
       {guide.id === 'sales' && <SalePaymentExplainer />}
+      {guide.id === 'charts' && <ChartWindowExplainer />}
 
       <div className="no-print"><LimaBar /></div>
 

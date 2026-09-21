@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C01/C03–C04/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C01/C03–C04/C09–C10/C12–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -70,3 +70,8 @@ C02 is implemented at `/student/guides/mapping`: six English steps and a user-co
 ## Sales companion — 21 September 2026
 
 C07 is implemented at `/student/guides/sales`, published in PR471 and production checked, with release evidence in issue #35: six steps, a four-stage authored invoice/payment explanation and a part-payment decision exercise. It reuses the reviewed lifelike market illustration. It does not add part-payment bookkeeping to the app. Five of 14 companions now have readable implementations; nine remain. [Walkthrough and release evidence](sales.md) distinguish verified existing-invoice updates from unverified new-entry persistence. Narration and filmed walkthroughs remain open.
+
+
+## Charts companion — 21 September 2026
+
+C11 is implemented at `/student/guides/charts`: six English steps and a three-stage practice window explain periods, the running total, harvest remainders, plan benchmarks, area returns and source tracing. It reuses the reviewed homestead cost illustration. This brings readable implementations to six of 14; eight remain. [Source and walkthrough evidence](charts.md) records the released sample controls and distinguishes local checks from branch/production release checks in issue #35. Narration and filmed walkthroughs remain open.

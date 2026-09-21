@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'a6ef09af', changes: [
+    'Studies now has a guide to reading Charts and tracing a figure to its record.',
+    'A practice example shows why a running total is not your bank balance.',
+    'Check each chart’s period, growing area and missing costs before comparing results.',
+  ] },
   { when: '21 September 2026', sha: '02b445e7', changes: [
     'Studies now has a guide to recording a sale once and finding its invoice.',
     'Follow one invoice through two payments in a step-by-step practice example.',

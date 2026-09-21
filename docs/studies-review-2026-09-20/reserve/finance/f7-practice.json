@@ -1,0 +1,198 @@
+{
+  "unit": "F7",
+  "status": "original synthetic classroom inputs, not actual accounts or tax advice",
+  "period": {
+    "start": "2027-01-01",
+    "end": "2027-01-31"
+  },
+  "scope": "A small market stall buys finished goods for resale. This separate teaching case does not value growing crops, livestock, home-grown harvests or the whole farm. All amounts are invented. No VAT or income-tax calculation is included. Specified carrying values and period costs are supplied exercise assumptions, not accounting policies for a real business.",
+  "opening": {
+    "cash": 100000,
+    "receivable": 20000,
+    "stock": 30000,
+    "equipment": 60000,
+    "prepayment": 0,
+    "payable": 30000,
+    "debt": 0,
+    "equity": 180000
+  },
+  "events": [
+    {
+      "ref": "R01",
+      "date": "2027-01-05",
+      "documentDate": "2027-01-05",
+      "kind": "collection",
+      "amount": 20000,
+      "title": "Collect an older sale",
+      "evidence": "R200 receipt linked to the opening customer balance. The sale belongs to the earlier period."
+    },
+    {
+      "ref": "P01",
+      "date": "2027-01-08",
+      "documentDate": "2027-01-08",
+      "kind": "stock-purchase",
+      "amount": 40000,
+      "cashPaid": 25000,
+      "title": "Receive resale stock",
+      "evidence": "Supplier invoice and goods received: R400 carrying cost, R250 paid, R150 still owed. Stock is not yet sold."
+    },
+    {
+      "ref": "S01",
+      "date": "2027-01-10",
+      "documentDate": "2027-01-10",
+      "kind": "credit-sale",
+      "amount": 90000,
+      "cost": 35000,
+      "title": "Deliver a credit sale",
+      "evidence": "Delivery and accepted R900 credit invoice establish the sale in this case. Goods supplied have verified carrying cost R350. No payment yet."
+    },
+    {
+      "ref": "R02",
+      "date": "2027-01-15",
+      "documentDate": "2027-01-15",
+      "kind": "collection",
+      "amount": 60000,
+      "title": "Collect part of that sale",
+      "evidence": "Receipt linked to S01. R600 settles part of R900; it is not a second sale."
+    },
+    {
+      "ref": "P02",
+      "date": "2027-01-16",
+      "documentDate": "2027-01-16",
+      "kind": "supplier-payment",
+      "amount": 20000,
+      "title": "Pay an amount already owed",
+      "evidence": "Supplier statement and payment match R200 of the payable balance. No new expense is created by this settlement."
+    },
+    {
+      "ref": "E01",
+      "date": "2027-01-20",
+      "documentDate": "2027-01-20",
+      "kind": "equipment",
+      "amount": 30000,
+      "title": "Buy a lasting tool",
+      "evidence": "R300 paid. For this exercise, the item qualifies as equipment and is available for use. Its period charge is supplied separately by D01."
+    },
+    {
+      "ref": "L01",
+      "date": "2027-01-21",
+      "documentDate": "2027-01-21",
+      "kind": "borrow",
+      "amount": 50000,
+      "title": "Receive borrowed money",
+      "evidence": "R500 advance and matching obligation. No withheld fee in this case. Borrowing is not a sale."
+    },
+    {
+      "ref": "L02",
+      "date": "2027-01-24",
+      "documentDate": "2027-01-24",
+      "kind": "repayment",
+      "principal": 10000,
+      "interest": 1000,
+      "title": "Separate repayment from interest",
+      "evidence": "R110 paid: R100 principal and R10 interest for this period. No other charge in this simplified schedule."
+    },
+    {
+      "ref": "H01",
+      "date": "2027-01-26",
+      "documentDate": "2027-01-26",
+      "kind": "draw",
+      "amount": 15000,
+      "title": "Take money for the household",
+      "evidence": "Owner takes R150 for personal use. This is a withdrawal of equity, not wages or a business expense in this case."
+    },
+    {
+      "ref": "A01",
+      "date": "2027-01-28",
+      "documentDate": "2027-02-02",
+      "kind": "accrual",
+      "amount": 8000,
+      "title": "Include a January service",
+      "evidence": "Signed January transport completion record supports an agreed R80 charge. Invoice arrives 2 February. No payment by 31 January."
+    },
+    {
+      "ref": "F01",
+      "date": "2027-01-29",
+      "documentDate": "2027-01-29",
+      "kind": "prepay",
+      "amount": 12000,
+      "title": "Pay for a future service",
+      "evidence": "R120 paid for storage supplied wholly in February. The unused right is a prepayment at 31 January, under this exercise assumption."
+    },
+    {
+      "ref": "U01",
+      "date": "2027-01-31",
+      "documentDate": "2027-01-31",
+      "kind": "expense",
+      "amount": 6000,
+      "title": "Pay a January running cost",
+      "evidence": "R60 utility charge relates entirely to January and is paid on 31 January."
+    },
+    {
+      "ref": "C01",
+      "date": "2027-01-31",
+      "documentDate": "2027-01-31",
+      "kind": "stock-review",
+      "closing": 30000,
+      "title": "Check what remains in stock",
+      "evidence": "Approved physical count, valuation and reconciliation confirm R300 closing stock and a R50 loss. This is not a guess from an unexplained count difference."
+    },
+    {
+      "ref": "D01",
+      "date": "2027-01-31",
+      "documentDate": "2027-01-31",
+      "kind": "depreciation",
+      "amount": 6000,
+      "title": "Include the supplied equipment charge",
+      "evidence": "Reviewed exercise schedule supplies R60 depreciation for January across the equipment. No useful life, rate or tax allowance is inferred."
+    }
+  ],
+  "outsidePeriod": [
+    {
+      "ref": "X01",
+      "date": "2027-02-05",
+      "amount": 30000,
+      "kind": "collection",
+      "evidence": "Remaining S01 balance collected in February. Keep it outside January cash."
+    }
+  ],
+  "missingCase": {
+    "omitRef": "C01",
+    "reason": "Closing stock count and valuation are missing. Book stock before review remains R350, but adjusted stock, period profit and complete position are not yet verified."
+  },
+  "independent": {
+    "openingCash": 40000,
+    "openingStock": 12000,
+    "sale": 30000,
+    "saleCost": 12000,
+    "collection": 20000,
+    "prepayOpeningCash": 20000,
+    "prepayment": 9000
+  },
+  "reviewCards": [
+    {
+      "id": "Q1",
+      "claim": "The app printed a VAT number, so this must be a valid tax invoice.",
+      "answer": "Not established",
+      "reason": "A field or document title does not prove the relevant registration, supply treatment or required particulars. Use current SARS guidance and an appropriate reviewer."
+    },
+    {
+      "id": "Q2",
+      "claim": "I did not have to submit a return, so I can discard every source record.",
+      "answer": "Not established",
+      "reason": "Do not infer record duties from that one fact. Check the applicable requirements and any audit, dispute or other retention obligation before disposal."
+    },
+    {
+      "id": "Q3",
+      "claim": "This export is a complete set of accounts for a loan application.",
+      "answer": "Not established",
+      "reason": "Reconcile the export with stock, amounts owed, assets, debt and other source records. A summary does not prove completeness or approval."
+    },
+    {
+      "id": "Q4",
+      "claim": "A missing stock valuation should be entered as zero so the totals work.",
+      "answer": "Incorrect",
+      "reason": "Keep the missing value explicit and request evidence. Balanced arithmetic alone cannot prove correct classification or complete records."
+    }
+  ]
+}
