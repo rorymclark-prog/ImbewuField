@@ -34,3 +34,7 @@ Use Rory's approved warm, lifelike homestead imagery to introduce the people and
 ## Publication boundary
 
 Complete the remaining teaching and case material, then review it against the technical sources, the actual app and the reserve capstone rubric. Require a local facilitator/practitioner review and a learner trial, accessible text and print alternatives, fluent isiZulu review, and aligned narration before calling the pathway complete. No professional, accreditation or specialist construction authority is claimed. Changes to existing course assessment/progress need an explicit migration design; these drafts make none.
+
+## Learner design folder
+
+A development preview at `/student/design/folder` now connects all six stages to an evidence record with device saves, a text download and facilitator discussion prompts. It keeps reasoning beside the actual drawing; it is not an automated assessment or a replacement for the missing measured case. See FOLDER-PRACTICE.md.
