@@ -1,0 +1,249 @@
+{
+  "status": "Synthetic future classroom plan, not real records, local prices, seasonal advice or a funding promise.",
+  "horizon": [
+    "2027-01-01",
+    "2027-03-31"
+  ],
+  "opening": {
+    "cashTinCents": 12000,
+    "bankCents": 18000,
+    "restrictedCents": 0,
+    "openingReceivableCents": 12000,
+    "openingPayableCents": 8000
+  },
+  "budget": {
+    "activities": [
+      {
+        "id": "A",
+        "salesCents": 60000,
+        "directCents": 22000,
+        "hireHours": 2,
+        "tripSpaces": 2,
+        "familyHours": 4
+      },
+      {
+        "id": "B",
+        "salesCents": 50000,
+        "directCents": 18000,
+        "hireHours": 4,
+        "tripSpaces": 1,
+        "familyHours": 6
+      }
+    ],
+    "hireCents": 12000,
+    "tripCents": 9000,
+    "familyComparisonCentsPerHour": 2500,
+    "fullProfit": null
+  },
+  "events": [
+    {
+      "id": "P01",
+      "date": "2027-01-05",
+      "direction": "out",
+      "cents": 22000,
+      "label": "Activity A inputs",
+      "category": "current-input"
+    },
+    {
+      "id": "P02",
+      "date": "2027-01-10",
+      "direction": "out",
+      "cents": 18000,
+      "label": "Activity B inputs",
+      "category": "current-input"
+    },
+    {
+      "id": "P03",
+      "date": "2027-01-20",
+      "direction": "out",
+      "cents": 12000,
+      "label": "Shared equipment hire",
+      "category": "current-input"
+    },
+    {
+      "id": "R01",
+      "date": "2027-01-25",
+      "direction": "in",
+      "cents": 60000,
+      "label": "Activity A buyer pays",
+      "category": "current-sale"
+    },
+    {
+      "id": "P04",
+      "date": "2027-02-05",
+      "direction": "out",
+      "cents": 9000,
+      "label": "Shared market trip",
+      "category": "current-input"
+    },
+    {
+      "id": "R02",
+      "date": "2027-02-20",
+      "direction": "in",
+      "cents": 50000,
+      "label": "Activity B buyer pays",
+      "category": "current-sale"
+    },
+    {
+      "id": "P05",
+      "date": "2027-02-25",
+      "direction": "out",
+      "cents": 15000,
+      "label": "Owner takes money for household",
+      "category": "owner-draw"
+    },
+    {
+      "id": "P06",
+      "date": "2027-03-10",
+      "direction": "out",
+      "cents": 25000,
+      "label": "Equipment purchase",
+      "category": "capital"
+    },
+    {
+      "id": "R03",
+      "date": "2027-03-20",
+      "direction": "in",
+      "cents": 12000,
+      "label": "Buyer settles an opening amount owed",
+      "category": "opening-receivable"
+    },
+    {
+      "id": "P07",
+      "date": "2027-03-25",
+      "direction": "out",
+      "cents": 8000,
+      "label": "Pay an opening supplier bill",
+      "category": "opening-payable"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "X01",
+      "date": "2027-01-24",
+      "cents": 5000,
+      "kind": "internal-transfer",
+      "label": "Bank to cash tin; both included; no fee in this exercise"
+    },
+    {
+      "id": "X02",
+      "date": "2027-01-15",
+      "cents": 50000,
+      "kind": "unapproved-application",
+      "label": "Funding applied for; no approval or payment date"
+    },
+    {
+      "id": "X03",
+      "date": "2027-01-22",
+      "cents": 60000,
+      "kind": "invoice",
+      "linkedReceipt": "R01",
+      "label": "Activity A invoice issued; not a second receipt"
+    },
+    {
+      "id": "X04",
+      "date": "2027-02-15",
+      "cents": 50000,
+      "kind": "invoice",
+      "linkedReceipt": "R02",
+      "label": "Activity B invoice issued; not a second receipt"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "BASE",
+      "label": "Base assumptions",
+      "changes": {}
+    },
+    {
+      "id": "LATE",
+      "label": "A pays on 28 February",
+      "changes": {
+        "R01": {
+          "date": "2027-02-28"
+        }
+      }
+    },
+    {
+      "id": "LOW",
+      "label": "B sales and receipt fall to R350",
+      "changes": {
+        "R02": {
+          "cents": 35000
+        }
+      }
+    },
+    {
+      "id": "HIGH",
+      "label": "B inputs rise to R240",
+      "changes": {
+        "P02": {
+          "cents": 24000
+        }
+      }
+    },
+    {
+      "id": "COMBINED",
+      "label": "Late A payment and higher B inputs",
+      "changes": {
+        "R01": {
+          "date": "2027-02-28"
+        },
+        "P02": {
+          "cents": 24000
+        }
+      }
+    },
+    {
+      "id": "OUTSIDE",
+      "label": "B pays on 20 April",
+      "changes": {
+        "R02": {
+          "date": "2027-04-20"
+        }
+      }
+    },
+    {
+      "id": "DEFER",
+      "label": "Equipment purchase agreed for 10 April",
+      "changes": {
+        "P06": {
+          "date": "2027-04-10"
+        }
+      }
+    },
+    {
+      "id": "UNKNOWN",
+      "label": "B input quote not yet known",
+      "changes": {
+        "P02": {
+          "cents": null
+        }
+      }
+    }
+  ],
+  "transfer": {
+    "openingCents": 9000,
+    "events": [
+      {
+        "id": "T1",
+        "date": "2027-01-02",
+        "direction": "out",
+        "cents": 13000
+      },
+      {
+        "id": "T2",
+        "date": "2027-01-10",
+        "direction": "in",
+        "cents": 8000
+      },
+      {
+        "id": "T3",
+        "date": "2027-01-20",
+        "direction": "out",
+        "cents": 2000
+      }
+    ],
+    "feeUnknown": true
+  }
+}

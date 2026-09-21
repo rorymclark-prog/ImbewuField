@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-21",
+  "base": "6fb8284369e7aaa00129b95d3d0fb32f4977b0f2",
+  "status": "reserve English teaching materials",
+  "artifacts": {
+    "output/pdf/finance-f4-workbook.pdf": {
+      "sha256": "32852d1dd4cc58abbee2d267ad43bb99f048e62d011fb8a6b98e2303b0466745",
+      "bytes": 9227
+    },
+    "output/html/finance-f4-timeline.html": {
+      "sha256": "a325eec4e211d5892d6508b7a8ef70e7a355e75a6a8964c5144fea36e7b289ea",
+      "bytes": 918735
+    }
+  },
+  "pdf_review": "Four A4 pages rendered with Poppler and visually inspected. Date labels revised to day/month names and changed page reinspected. No clipping or collisions observed. No physical print or learner trial.",
+  "browser_review": {
+    "local_url": "http://127.0.0.1:4353/finance-cashflow/REVIEW.html",
+    "viewports": [
+      "390x844",
+      "1100x900"
+    ],
+    "phone_widths": {
+      "viewport": 390,
+      "document": 390
+    },
+    "observed": "All eight scenario totals match expected values. Unknown quote leaves subsequent balances unknown in event card and source table. Playback reaches final card and stops; pause holds its card; previous and restart return to opening. Mobile graph labels and stats improved after initial inspection. Console warnings/errors empty.",
+    "limits": "Authored step-by-step timeline, not filmed footage or a production app forecast. No narration yet."
+  },
+  "arithmetic": "13 deliberate faults rejected; built timeline data compared with calculated results; partial budget surplus not full profit.",
+  "remaining_review": [
+    "South African bookkeeping",
+    "learner trial",
+    "isiZulu",
+    "narration",
+    "public course integration"
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "tests": {
+      "total": 3642,
+      "pass": 3641,
+      "fail": 0,
+      "existing_todo": 1
+    },
+    "diff_check": "pass",
+    "finance_verifiers": "F1-F4 pass",
+    "embedded_data": "matches checked forecast",
+    "timeline_js_syntax": "pass"
+  }
+}
