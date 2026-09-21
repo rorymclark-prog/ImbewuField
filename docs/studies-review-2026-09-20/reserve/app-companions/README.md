@@ -1,6 +1,6 @@
 # Using ImbewuField: companion learning pathway
 
-Rory requested companion sections covering the app from mapping through financial records and invoices on 20 September 2026. These are 14 tutorial specifications, with the invoice guide drafted separately. They are not all filmed, tested end-to-end or published.
+Rory requested companion sections covering the app from mapping through financial records and invoices on 20 September 2026. All 14 readable English guides are now published, with 167 English recordings (PR484) and per-guide offline downloads (PR485). They are not filmed walkthroughs; human listening, translation and learner review remain open.
 
 ## One guide format
 

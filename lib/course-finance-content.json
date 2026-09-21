@@ -1,0 +1,1093 @@
+{
+  "status": "teaching-preview",
+  "units": [
+    {
+      "id": "f1",
+      "number": 1,
+      "title": "Understand the farm's money",
+      "summary": "Separate household and farm money, follow sales and payments, and keep evidence.",
+      "image": "/studies-guides/expense-record.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f1-foundations.md",
+      "sourceSha256": "060206b444eea794be08bb1427dd740689d6cafacfb04961ca4c1a8bbcc73e91",
+      "lessons": [
+        {
+          "id": "f1-1",
+          "code": "F1.1",
+          "title": "Household and farm money",
+          "outcome": "Explain why money can enter or leave the farm without being a produce sale or an ordinary production cost.",
+          "reading": "Follow what happened. A buyer paid for produce. The owner added some of their own money. The farm borrowed money. All three can put money in the tin, but they are different events. Write the reason beside each amount. When the owner takes money home, record that too. Do not hide it among packaging or transport. The farm and household both matter. Clear records help you see how they support each other.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Put down the opening-balance card: R1,000. Add C01, the owner's R300 contribution. Count R1,300. Put C01 under “Owner added money”, not “Produce sold”. Remove C02, R120 paid for packaging: R1,180 remains. Add C03, R200 cash sale: R1,380 remains. Point back to the reasons, not only the final total."
+            },
+            {
+              "title": "Guided sorting",
+              "text": "Give learners C05, C06, C08 and C10 below. Use the headings “Household withdrawal”, “Borrowing”, “Equipment purchase” and “Loan repayment and interest”. Ask which change cash. All four do. Ask whether any is another produce sale. None is. Do not calculate final accounting profit from these headings. Loan principal, interest and equipment need different treatment in full accounts; F6 and F7 develop that distinction."
+            },
+            {
+              "title": "Independent check",
+              "text": "A grower sells produce for R90 and then takes R30 home. Ask separately: “What was the sale?” and “How much of that cash remains at the farm?” Answers: R90 sale; R60 remains from that receipt. R60 is not the sale value and is not a calculation of profit. Then ask where the R30 should be visible: in the household-withdrawal record."
+            },
+            {
+              "title": "Feedback",
+              "text": "If the learner reports a R60 sale, place the buyer's R90 payment card beside the R30 withdrawal card. Keep both events visible and ask again. If the learner calls the contribution a sale, ask what produce the owner bought. In this card they bought none."
+            },
+            {
+              "title": "Field task",
+              "text": "Make headings for farm sales, farm purchases, owner contributions and household withdrawals in a notebook. Use a private record or new practice cards. No personal amounts need to be shared in class."
+            }
+          ]
+        },
+        {
+          "id": "f1-2",
+          "code": "F1.2",
+          "title": "Cash, sales, amounts owed and profit",
+          "outcome": "Follow a credit sale into a later payment without counting it twice, and explain why closing cash is not enough to establish profit.",
+          "reading": "A buyer can take produce today and pay later. Record the sale and what the buyer owes. When the payment arrives, match it to that sale. The payment clears the amount owed; it is not a second basket sold. Cash answers how much money is available. Profit needs the income and costs for the period. Some costs or stock information may still be missing. Say what you know and what you still need.",
+          "practice": [
+            {
+              "title": "Demonstration in three views",
+              "text": "Make three cards: “Sales”, “Cash tin” and “Buyer owes”. Start after C03, with sales R200, cash R1,380 and nothing owed. Read C04: delivered produce worth R150, buyer pays later. Sales become R350; buyer owes R150; cash stays R1,380. Do not move a cash token. Later, read C07: buyer pays that same R150. Move the owed token to “Settled” and add cash once. Sales remain R350. Keep the invoice reference S02 on both cards so the connection is visible."
+            },
+            {
+              "title": "Guided calculation",
+              "text": "Work through the event table in order. At the end, sales are R470, cash received from buyers is R350 and buyers still owe R120. Ask the learner to point to S03, which explains that difference. Do not call the R1,380 closing cash profit: it includes opening cash, the owner's contribution and borrowing, and this pack does not supply all production costs, stock or equipment-use information."
+            },
+            {
+              "title": "Independent check",
+              "text": "A buyer receives produce for R240. They pay R100 now and agree to pay R140 later. Ask for sale value, payment received and amount still owed. Answers: R240, R100 and R140. The current app has paid-in-full/unpaid invoice status, not a partial-payment ledger. Keep this exercise in the workbook; do not mark the full invoice paid or create another sale to force the app to show the balance."
+            },
+            {
+              "title": "Feedback",
+              "text": "If cash is given as R240, cover the unpaid R140 card and ask what money arrived. If sales are given as R340, place the payment beneath its existing sale instead of adding it as a new sale. Check with a new example, R180 sale and R60 received: R120 remains owed."
+            },
+            {
+              "title": "App companion",
+              "text": "Read [Make and manage an invoice](https://imbewufield.vercel.app/student/guides/invoices). In the existing sample tour, identify the unpaid/paid-in-full choice and the route for linking an existing sale. Do not enter this entire workbook as crop sales: borrowing and household transfers are different events. The published guide currently teaches text and practice, not a narrated screen recording."
+            },
+            {
+              "title": "Field task",
+              "text": "Using practice or redacted evidence, connect one sale to its payment. Preserve both dates when they differ. If the payment cannot be found, keep the status unresolved and name the evidence you need."
+            }
+          ]
+        },
+        {
+          "id": "f1-3",
+          "code": "F1.3",
+          "title": "Keep an evidence trail",
+          "outcome": "Reopen a record, locate its supporting reference, and correct a duplicate or wrong unit without inventing a missing value.",
+          "reading": "Give each record a date and a clear reason. Keep the receipt, invoice or another useful reference. After saving, open the entry again and compare it with the source. Check the amount and the unit. A kilogram and a bunch are different. If evidence is missing, write what is unknown. Do not use zero to mean ‘I do not know’. Keep a note of a correction so you can explain it later.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Place S02, “Delivered sale R150 on Day 3”, beside C07, “Payment R150 on Day 6 for S02”. Draw a line between their references. A duplicate card says “New produce sale R150 on Day 6” but shows the same payment reference. Ask what new delivery it proves. None. On the practice worksheet, cross out the duplicate, retain a short correction note and recalculate sales. Do not prescribe deleting real transactions without checking linked invoice behaviour."
+            },
+            {
+              "title": "Guided inspection",
+              "text": "Give these independent cards: (a) a receipt says 2.5 kg, entry says 2.5 bunches; (b) source says R12.50, entry says R125; (c) transport receipt missing, entry says zero. Learners identify the unit, decimal and missing-evidence errors. Correct (a) and (b) from their sources. For (c), leave the cost unknown until evidence is obtained; a plausible amount is not evidence. These are new error-finding exercises, not additional events in the cash table below."
+            },
+            {
+              "title": "Independent check",
+              "text": "Hand the learner one correct record and one altered copy. Ask them to find the changed date or unit, identify the source that resolves it, and explain their correction. Then ask them to reopen the saved practice entry. A save message is not enough for this exercise: compare the reopened amount and unit too. A pending sync message is not proof that another device has the entry."
+            },
+            {
+              "title": "Feedback and transfer",
+              "text": "If a learner can repeat the rule but misses the changed record, simplify to two fields and then reintroduce the date. Success requires finding an error in a fresh example, not reciting “check the receipt”."
+            },
+            {
+              "title": "Field task",
+              "text": "Build a small evidence folder or envelope, with references that match the notebook. Use sample records if private material cannot be redacted. Keep actual customer details out of classroom screenshots."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Facilitation and practice setting",
+          "text": "Use a notebook, calculator and the event cards below. Learners may point, sort or explain aloud. Read each card aloud before introducing a table. Do not ask anyone to reveal household income, borrowing, customer details or bank records to a group.\n\n**Every amount below is invented solely for arithmetic practice.** These are neither local prices nor recommended budgets. “Day 1” through “Day 7” are an imaginary week. There is one practice farm, one owner and one cash tin. No bank account, tax, opening debt, opening customer balance, refunds or other cash movements are in this example. The opening R1,000 is counted money already in the tin, not a new sale. The cash result is complete for this deliberately bounded example; its production costs and profit are not complete.\n\nShow each card's reference beside the written entry. All events and amounts are also available in [f1-practice.json](f1-practice.json). The JSON uses whole cents to keep arithmetic exact; learner-facing materials use rand and cents."
+        },
+        {
+          "title": "Shared event cards and answer key",
+          "text": "The packaging and transport figures below are payments in the cash exercise. They are not a complete cost-of-production statement. No harvest quantities or crop yields are implied.\n\n| Card | Day | Event and source reference | Cash in | Cash out | Cash after card |\n| --- | --- | --- | ---: | ---: | ---: |\n| Opening | Before 1 | Counted cash tin | — | — | R1,000.00 |\n| C01 | 1 | Owner adds own money; contribution note O01 | R300.00 | — | R1,300.00 |\n| C02 | 1 | Pays for packaging; receipt P01 | — | R120.00 | R1,180.00 |\n| C03 | 2 | Produce delivered and paid for; S01 | R200.00 | — | R1,380.00 |\n| C04 | 3 | Produce delivered on credit; S02 for R150.00 | — | — | R1,380.00 |\n| C05 | 4 | Owner takes money home; withdrawal note W01 | — | R80.00 | R1,300.00 |\n| C06 | 5 | Loan principal received; agreement L01 | R500.00 | — | R1,800.00 |\n| C07 | 6 | Buyer pays the whole S02 balance; payment R02 | R150.00 | — | R1,950.00 |\n| C08 | 6 | Equipment bought; receipt E01 | — | R400.00 | R1,550.00 |\n| C09 | 7 | Transport paid; receipt T01 | — | R60.00 | R1,490.00 |\n| C10 | 7 | L01 payment: R100 principal and R10 interest, per supplied practice statement L02 | — | R110.00 | R1,380.00 |\n| C11 | 7 | Produce delivered on credit; S03 for R120.00, still unpaid | — | — | R1,380.00 |\n\nTotals: cash in R1,150; cash out R770; change in cash R380; closing cash R1,380. Produce sales R470, with R350 buyer payments and R120 outstanding. Remaining loan principal R400, based on the supplied R500 borrowing less R100 principal repaid; the R10 interest does not also reduce principal. No interest rate or recommended lending term is implied. Accounting profit remains unknown.\n\n**End-of-unit demonstration:** Give the learner a shuffled copy of these cards. They should restore the order, separate the different reasons for cash movement, connect S02 to R02, identify S03 as unpaid, and explain why profit is unknown. Then use the new partial-payment example to test transfer. Re-teach any missed distinction and assess with different amounts. Do not use a guessed profit figure as the expected answer."
+        }
+      ],
+      "sources": [
+        {
+          "label": "FAO record keeping",
+          "url": "https://www.fao.org/4/w6864e/w6864e0f.htm"
+        },
+        {
+          "label": "Iowa State University, Your Farm Income Statement",
+          "url": "https://www.extension.iastate.edu/AGDm/wholefarm/html/c3-25.html"
+        }
+      ],
+      "workbook": null
+    },
+    {
+      "id": "f2",
+      "number": 2,
+      "title": "Keep and reconcile useful records",
+      "summary": "Follow produce and money, reconcile records and explain corrections.",
+      "image": "/studies-guides/record-sale.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f2-records.md",
+      "sourceSha256": "51df5a365076fda59387ac059e0f92ffe02f677e05bc6b5d1692f045913db303",
+      "lessons": [
+        {
+          "id": "f2-1",
+          "code": "F2.1",
+          "title": "Harvest, stock and destinations",
+          "outcome": "Trace one product from opening stock and harvest into its recorded destinations, then compare the calculated remainder with a separate count.",
+          "reading": "Start with what was already here. Add what you picked. Record what left and why. A sale, food for home and a gift are different uses. Keep the same unit. At the end, count or weigh what is still here. Compare that with the book. If they differ, look for the cause. A difference is a question to investigate, not proof that someone stole food.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Put down four counters for opening stock, then add H01's 16 kg. Twenty kilograms are now available. Move six counters to Sold for delivery D01 and two to Home for HOME01. Twelve remain. Read the source reference as you write each row. The sold quantity belongs to sale S01; the home quantity is not another sale or a cash receipt."
+            },
+            {
+              "title": "Guided task",
+              "text": "Work through Q04–Q08 in the stock table below. Keep each destination in its own column. The book ends with 9 kg. Now uncover the independently supplied count card: 9 kg. Ask which two separate pieces of information agree. Do not claim that agreement proves every record is right; two errors can cancel each other out. Keep the source checks as well as the total check."
+            },
+            {
+              "title": "Independent task",
+              "text": "Use the worksheet's new 10 kg example. Ask the learner to show 3 kg sold, 2 kg used at home and 4 kg counted at closing. The record explains only 9 kg. One kilogram is unexplained. There is no loss note or second count yet, so “1 kg spoiled” is not a supported answer. Ask what could be checked: a repeat weighing, a missed gift or delivery record, the opening quantity and the units. Do not imply that every difference has the same cause."
+            },
+            {
+              "title": "Feedback",
+              "text": "If the learner enters bunches as kilograms, hold up the written unit and ask what was actually measured. Weigh a comparable practice bundle or keep its count in a separate record. No conversion is supplied in this pack. If the learner records all remaining produce as home food, point to the crate that is still present. Remaining stock and food already used are different destinations."
+            },
+            {
+              "title": "App companion",
+              "text": "Read [Record and check a harvest](https://imbewufield.vercel.app/student/guides/harvest). The current form records kilograms and the date of entry, not a backdated picking date. The chart's “kept” is picked minus logged sold quantities; it cannot identify home use, gifts, storage or loss separately. In this workbook, 24 kg picked minus 15 kg delivered is 9 kg; that happens to equal closing stock because the 4 kg opening stock and 4 kg other outflows offset. It is a coincidence, not a general stock formula or an expected app chart result. The current invoice link adds kilogram sale evidence when an invoice is paid in full, so unpaid and partly paid deliveries do not map directly to this workbook. Use its destination records to explain the movement; do not mark an invoice paid just to force the chart to match."
+            },
+            {
+              "title": "Field task",
+              "text": "Choose one product and a short agreed period. Write the opening amount, unit and how it was measured. Keep source references for additions and destinations. Compare with a separate closing count and list anything unresolved. Do not invent a weight for an unweighed bundle."
+            }
+          ]
+        },
+        {
+          "id": "f2-2",
+          "code": "F2.2",
+          "title": "Sales, payments and expenses",
+          "outcome": "Keep delivery, sale and payment linked; track what a buyer still owes; separate an internal transfer from new farm income or spending.",
+          "reading": "Write the sale when the agreed produce is delivered in this exercise. Keep the payment beside that sale, with the date it arrived. If only some money arrives, show what is still owed. Moving your own money from the cash tin to the wallet does not create another sale. It changes where the money is kept. A fee is a separate payment if the evidence shows one. Keep the amount and cents from the source.”\n\nThis exercise's agreed delivery is the point used to record its sale. It is not a rule covering every contract, deposit, return or accounting policy. Those need their own terms and bookkeeping review.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Read S02: 5 kg delivered on Day 2 for R100.00. Nothing is paid that day. Put R100.00 in “Buyer B owes”. On Day 4, PAY02 shows R60.00 received into the wallet for S02. Move R60.00 out of the owed amount and into wallet receipts; R40.00 remains owed. Sale value stays R100.00 and delivered weight stays 5 kg. The payment has not produced another delivery."
+            },
+            {
+              "title": "Guided transfer",
+              "text": "Before MOVE01 the cash tin holds R607.50 and the wallet R100.00. Move R100.00 from cash to the wallet. Cash becomes R507.50 and the wallet R200.00. Combined money remains R707.50. Keep both sides connected by MOVE01. This transfer is complete, with no fee attached in the supplied evidence. FEE01 is a separate Day 3 wallet charge of R2.50, not a guessed transfer cost. If a real transfer is pending, record and investigate that state; do not pretend the receiving account already has it."
+            },
+            {
+              "title": "Guided reconciliation",
+              "text": "Complete all seven money rows. The farm receives R260.00 from buyers and pays R45.00 in documented costs. Combined money changes from R600.00 to R815.00. Sales total R300.00; R40.00 remains owed on S02. Neither R815.00 nor R215.00 is established accounting profit. The pack omits production costs and stock values needed for that conclusion."
+            },
+            {
+              "title": "Independent task",
+              "text": "A new R90.00 sale has a R30.00 payment. Ask separately for the sale value, money received and amount owed: R90.00, R30.00 and R60.00. Then give the learner a new internal R20.00 transfer between accounts. The transfer alone changes neither total money nor sales. An independently documented R1.00 fee would reduce money by R1.00; it would not make the transfer itself a produce purchase. These are separate practice cases, not extra rows in the main tables."
+            },
+            {
+              "title": "Feedback",
+              "text": "If the learner adds the transfer to income, move one physical token between the two account mats and ask how many tokens were created. If a part-payment settles the whole sale in their answer, place the R60.00 payment under the R100.00 sale and uncover the R40.00 gap. If cents disappear, compare PACK01's R12.50 with the written entry before recalculating."
+            },
+            {
+              "title": "App companions",
+              "text": "Use [Record a cost and keep its receipt](https://imbewufield.vercel.app/student/guides/expenses) and [Make and manage an invoice](https://imbewufield.vercel.app/student/guides/invoices). The app currently offers unpaid or paid-in-full invoice status; it does not model the partial-payment or cash-tin/wallet ledgers in this exercise. Keep those in the workbook. Do not mark S02 paid in full, create another sale for its payment, or enter an own-account transfer as a crop sale to make the app resemble the worksheet."
+            },
+            {
+              "title": "Field task",
+              "text": "Use one approved practice or redacted sale and its payment evidence. Record the separate dates and account, match the reference, calculate any balance and name missing evidence. Do not contact a real buyer as part of this classroom task."
+            }
+          ]
+        },
+        {
+          "id": "f2-3",
+          "code": "F2.3",
+          "title": "Reconcile the book and correct mistakes",
+          "outcome": "Compare independent evidence with records, locate the cause of a difference, and retain a clear correction trail without concealing an unresolved amount.",
+          "reading": "Reconcile means compare and explain. Count the cash. Read the wallet statement. Match deliveries, sales, payments and receipts by their references. Check the dates and units as well as the totals. When you find a mistake, keep the original reference and write what changed and why. If you cannot explain a difference yet, say so. Do not add a guessed entry just to make the totals agree.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "The practice book omits FEE01 and reports wallet money of R340.00. The supplied closing wallet statement shows R337.50. Compare the rows, find the R2.50 debit on that statement and add its missing source reference. The book now agrees with the statement. This correction is supported by FEE01, not by a made-up “balancing fee”. If the statement did not show the reason, the difference would remain unresolved."
+            },
+            {
+              "title": "Guided error hunt",
+              "text": "Present four altered copies, one at a time. Each begins from the clean main pack; do not stack their errors.\n\n| Altered practice copy | What the learner should find | Evidence-led correction |\n| --- | --- | --- |\n| H02 is absent; book says only 1 kg remains | Missing 8 kg harvest | Restore H02 from the supplied Day 3 weighing record; closing stock becomes 9 kg |\n| PAY02 appears twice; buyer payments total R320.00 | One R60.00 payment counted twice | Retain one payment for its one reference; payments return to R260.00 and S02 still has R40.00 owed |\n| MOVE01 is called a new sale | Own money mistaken for revenue | Restore linked transfer treatment; there is no new buyer or delivery supporting a sale |\n| PACK01 is written as R125.00 | Decimal error of R112.50 | Copy R12.50 from the source; do not alter the receipt to agree with the entry |\n\nWrite a correction note containing the record reference, old entry, corrected entry, source used, date of correction and person checking it. In the paper exercise use a single line through the error so it remains readable. Follow the actual app's supported correction controls for real records; do not prescribe deleting a linked sale or invoice as a routine fix."
+            },
+            {
+              "title": "Independent task",
+              "text": "The worksheet gives an 8 kg record changed to “8 bunches”, a Day 2 delivery with a Day 4 payment, and a closing count that is still unexplained. The learner must keep the original measurement unit, preserve both event dates and leave the unknown cause unresolved. Being able to repeat the rule does not pass the task; they must find and explain each discrepancy on a fresh copy."
+            },
+            {
+              "title": "Feedback and transfer",
+              "text": "If the learner changes a source document to fit the total, ask which record was the evidence and which was the copy. If they stop after totals agree, show two offsetting errors: an omitted R5.00 receipt and an omitted R5.00 payment. The net change is zero, but both records are still missing. Ask them to identify the missing events rather than congratulating a balanced total. These two example events are outside the main pack."
+            },
+            {
+              "title": "App practice",
+              "text": "The published guides provide save/reopen steps for harvests, costs and invoices. Practise through the existing sample tour in the same tab. The sample farm's edited data lives in memory: a full reload restores its starting data, although the tab can remain in sample mode. Reopening within the same session is the task here; sample persistence does not demonstrate real-account sync. On a real account, read pending/offline messages and check the saved result without entering the same event twice. The harvest list currently has no Edit control; keep the exact correction needed rather than inventing an adjustment harvest."
+            },
+            {
+              "title": "Field task",
+              "text": "Reconcile one small, agreed set of practice records. Mark each source as checked, record the differences, make only supported corrections and leave an unresolved list. Ask for bookkeeping help on treatment that you cannot establish. Do not show account numbers, payment access details or private customer information to the group."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Facilitation and practice boundaries",
+          "text": "Use the [learner worksheet](f2-worksheet.md) or [four-page printable workbook](../../../../output/pdf/finance-f2-workbook.pdf), a calculator, a notebook and counters representing kilograms and money. Read one event aloud at a time. Let learners point, sort cards, explain aloud or ask someone to write their answer. Introduce the second money account only after the learner can follow the cash tin. Keep real household finances, buyer details and payment credentials out of group exercises and screenshots.\n\nAll weights, prices, fees and amounts in this pack are invented for arithmetic practice. They are not local market evidence, recommended fees, budgets or yields. This is a separate four-day practice period for the fictional farm; do not carry forward or add F1's balances. The opening position is given: 4 kg of carrots already stored, R500.00 in a cash tin and R100.00 in a mobile-money wallet, with no buyer balance owed. No field area or production period is supplied, so no yield per area can be calculated.\n\nThe exercise tracks the same produce in comparable weighed condition. It excludes purchases, processing, refunds, unknown shrinkage, pending transfers, tax, loans and equipment. In real work, identify additional movements and changes in weighing conditions rather than forcing them into this example. No numerical loss allowance is recommended. Exact quantities are stored as whole grams and money as whole cents in [f2-practice.json](f2-practice.json); the teaching tables use kg and rand."
+        },
+        {
+          "title": "Stock cards and worked answers",
+          "text": "All rows describe carrots in kg. Opening stock is from before this exercise; it is not another current-period harvest. “Sold” means the quantity delivered, whether paid yet or not. The independent closing count is 9 kg.\n\n| Card | Day | Reference and event | In kg | Out kg | Stock after card kg |\n| --- | --- | --- | ---: | ---: | ---: |\n| Opening | Before 1 | Counted opening stock | — | — | 4 |\n| Q01 | 1 | H01 harvested | 16 | — | 20 |\n| Q02 | 1 | D01 delivered for S01 | — | 6 | 14 |\n| Q03 | 1 | HOME01 food used at home | — | 2 | 12 |\n| Q04 | 2 | D02 delivered for S02 | — | 5 | 7 |\n| Q05 | 2 | GIFT01 given away | — | 1 | 6 |\n| Q06 | 3 | H02 harvested | 8 | — | 14 |\n| Q07 | 3 | LOSS01 recorded spoilage | — | 1 | 13 |\n| Q08 | 3 | D03 delivered for S03 | — | 4 | 9 |\n\nCheck: 4 kg opening + 24 kg harvested = 15 kg delivered + 2 kg home use + 1 kg gift + 1 kg recorded loss + 9 kg closing stock. These are quantity records, not money values or a profit calculation."
+        },
+        {
+          "title": "Sales and buyer balances",
+          "text": "| Sale | Delivery day | Quantity kg | Agreed value | Payment reference and day | Received | Still owed |\n| --- | --- | ---: | ---: | --- | ---: | ---: |\n| S01 | 1 | 6 | R120.00 | PAY01, Day 1, cash | R120.00 | R0.00 |\n| S02 | 2 | 5 | R100.00 | PAY02, Day 4, wallet | R60.00 | R40.00 |\n| S03 | 3 | 4 | R80.00 | PAY03, Day 3, wallet | R80.00 | R0.00 |\n\nTotal agreed sales R300.00 = buyer payments R260.00 + closing amount owed R40.00. The opening buyer balance is zero and this exercise includes no credit notes, refunds or advance deposits. The identity needs those additional movements when they exist."
+        },
+        {
+          "title": "Money cards and worked answers",
+          "text": "The closing cash count is R477.50 and the closing wallet statement shows R337.50. These observations are supplied separately from the book's running answers. The transfer is already completed; no money is in transit at closing.\n\n| Card | Day | Source and event | Cash tin after card | Wallet after card | Combined after card |\n| --- | --- | --- | ---: | ---: | ---: |\n| Opening | Before 1 | Given starting amounts | R500.00 | R100.00 | R600.00 |\n| M01 | 1 | PAY01 received for S01 into cash | R620.00 | R100.00 | R720.00 |\n| M02 | 1 | PACK01 packaging paid from cash, R12.50 | R607.50 | R100.00 | R707.50 |\n| M03 | 2 | MOVE01, R100.00 cash transferred to wallet | R507.50 | R200.00 | R707.50 |\n| M04 | 3 | PAY03 received for S03 into wallet | R507.50 | R280.00 | R787.50 |\n| M05 | 3 | FEE01 wallet charge paid, R2.50 | R507.50 | R277.50 | R785.00 |\n| M06 | 4 | PAY02 part-payment for S02 into wallet | R507.50 | R337.50 | R845.00 |\n| M07 | 4 | TRAVEL01 transport paid from cash, R30.00 | R477.50 | R337.50 | R815.00 |\n\nCombined check: R600.00 opening + R260.00 buyer receipts − R45.00 documented costs = R815.00 closing. MOVE01 contributes zero to this combined change. Cash's R100.00 decrease and wallet's R100.00 increase still appear in their separate records. The R215.00 increase in combined money is not established accounting profit."
+        },
+        {
+          "title": "Assessment and worked feedback",
+          "text": "The learner passes the practical task by (a) tracing the 28 kg available into all destinations; (b) matching three sales to payments and retaining S02's R40.00 balance; (c) keeping the internal transfer out of sales and costs; (d) checking cents; and (e) explaining a supported correction and an unresolved difference. Offer a different example after feedback. A guessed zero for missing information or a total that only matches by cancelling errors is not successful reconciliation.\n\nWorksheet answers: stock task 10 − 3 − 2 − 4 = 1 kg unexplained; payment task R90.00 − R30.00 = R60.00 owed; own-account transfer creates no extra combined money; independently documented R1.00 fee reduces it by R1.00. For the altered H02 unit, retain 8 kg from the weighing record. Keep Day 2 as delivery and Day 4 as payment. No evidence supports relabelling the unexplained kilogram as theft, spoilage or a gift."
+        }
+      ],
+      "sources": [
+        {
+          "label": "FAO record keeping",
+          "url": "https://www.fao.org/4/w6864e/w6864e0f.htm"
+        },
+        {
+          "label": "Iowa State University — Your Farm Income Statement",
+          "url": "https://www.extension.iastate.edu/AGDm/wholefarm/html/c3-25.html"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f2.pdf"
+    },
+    {
+      "id": "f3",
+      "number": 3,
+      "title": "Know costs and set prices",
+      "summary": "Include costs, compare prices and test a bounded break-even calculation.",
+      "image": "/studies-guides/expense-record.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f3-costing.md",
+      "sourceSha256": "da130f5e72d3e72599cdeb0721feeae7c4d58562ada647c54b4c4bfb08d397c6",
+      "lessons": [
+        {
+          "id": "f3-1",
+          "code": "F3.1",
+          "title": "Direct costs, shared costs and family labour",
+          "outcome": null,
+          "reading": "Start with a product and a period. A direct cost belongs to that product. A shared cost serves more than one product. Use a record of how it was used to divide it, and explain your choice. Divide the cost; do not copy the whole bill into both crops. Keep the family's work hours visible too. No wage paid does not mean no work done. An amount used to value that time is different from cash paid out.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Place A01-A04 beneath their own crop headings. A05 is one hire bill for R120.00. The equipment record shows two hours for carrots and four for the second crop: carrots receive 2/6 of the bill, the second crop 4/6. Together the shares must still equal the one bill. A06 is a separate R90.00 market trip. Its agreed practice basis is occupied equal-size crate spaces, two for carrots and one for the other crop. Explain why this bill uses a different record.\n\nThere is no universal rule that hours or crate spaces always give the fairest allocation. Ask what caused the shared cost and whether the record describes it. The chosen basis must fit the decision and period. If the usage record is missing, show an unallocated amount and investigate. Do not quietly assign it all to the crop that looks most profitable."
+            },
+            {
+              "title": "Two questions, not two interchangeable labels",
+              "text": "“Which product uses it?” gives direct or shared. “What changes when this activity changes?” gives fixed or variable. Hiring a tool for an agreed day may be direct to one crop but unchanged if that day's output is a little smaller. Extra packaging may vary with packs sold. A shared bill can contain variable items. Always state the period and the change being considered."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Allocate both shared bills, add each crop's direct costs and check the combined amount. Then add the separately stated family-time comparison: four hours and six hours at the hypothetical R25.00 per hour. Keep the cash column intact. No payment has been invented, and no family time should be added twice if it is already paid and included elsewhere."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "A new R75.00 hire bill was used one hour by one activity and two hours by another. Divide it and check the sum. Then explain why “shared” does not automatically mean “fixed”. Classify an owner withdrawal and an equipment purchase separately; neither should be hidden inside materials used. Equipment use and its cash purchase may fall in different periods; ask for bookkeeping help on the appropriate treatment."
+            },
+            {
+              "title": "Feedback",
+              "text": "If both crops receive R120.00, place the single hire receipt between them and ask how the farm obtained two bills. If the learner divides every shared cost equally, ask which source supports the equal split. If family time becomes a cash payment, ask for the payment evidence. Retry with the new hire bill rather than repeating the original numbers."
+            },
+            {
+              "title": "App connection",
+              "text": "Use the published [expense guide](https://imbewufield.vercel.app/student/guides/expenses) to record an actual paid cost and find its receipt in the sample workflow. Use this workbook for the allocation exercise. Do not create a second expense merely to assign one existing bill to another crop, or enter an unpaid comparison value as money spent. The app's current records are not proof that every cost has been included."
+            },
+            {
+              "title": "Field task",
+              "text": "Choose one small practice enterprise. Name its product, unit and period. Collect three redacted cost references, identify a shared cost and record a possible allocation basis. List missing evidence. Do not require learners to disclose private household finances."
+            }
+          ]
+        },
+        {
+          "id": "f3-2",
+          "code": "F3.2",
+          "title": "Unit cost, contribution and break-even",
+          "outcome": null,
+          "reading": "A cost per unit needs two things: the costs you included and the quantity you divided by. Say both. Produce available for sale is not always produce sold. A selling price may cover some costs and still leave others unpaid. Contribution is what remains after the included variable costs. It must still cover fixed costs. A break-even answer is useful only when its assumptions fit and the required sales can be achieved.",
+          "practice": [
+            {
+              "title": "Demonstration A - choose the denominator",
+              "text": "The carrot exercise has R220.00 of assigned paid costs and 40 kg of marketable produce. That is R5.50 per marketable kg for those included costs. With the separate R100.00 family-time comparison, the total becomes R320.00, or R8.00 per marketable kg. These are two labelled views of one budget, not two bills to add.\n\nIf only 32 kg is expected to sell, recovering that same R320.00 entirely through those sales requires R10.00 per kg sold. This is a **sales-recovery planning target**, not the accounting cost of each item sold or a promise that a buyer will pay it. The other 8 kg is not automatically lost or household food; investigate its destination and value. Do not write off closing stock simply because it has not sold. Missing land, equipment, administration, finance and tax information means full profit is still unknown."
+            },
+            {
+              "title": "Demonstration B - a separate simplified model",
+              "text": "B01 supplies included fixed costs of R105.00 per practice cycle and variable costs of R7.50 per pack. Each pack is 1 kg and sells for R12.00. For this model only, every pack prepared is sold, price and variable cost stay constant, and fixed costs stay unchanged up to the stated capacity of 30 packs. It is not a forecast derived from the carrot harvest.\n\nContribution per pack is R12.00 minus R7.50 = R4.50. R105.00 divided by R4.50 is 23 and one-third packs. Whole packs require rounding **up** to 24. Verify on either side: at 23 packs the model is R1.50 short; at 24 it has R3.00 left after its included costs. Call that the model surplus, not full farm profit. This model does not account for prepared-but-unsold packs, waste, changing rates, bad debts or omitted costs. A real plan with those features needs them added explicitly."
+            },
+            {
+              "title": "Guided practice",
+              "text": "At 30 packs, calculate revenue and both kinds of included cost. Repeat for 18 packs prepared and sold. Then keep the original prices but reduce capacity to 20. The numerical break-even point does not change, but it is outside that capacity. Never recommend “sell more” without testing production capacity and evidence of demand. Expected sales are assumptions, not confirmed orders.\n\nIf price equals or is below variable cost while fixed costs remain positive, more units do not cover those fixed costs under this model. Report no feasible break-even quantity under these assumptions, not zero units. If a cost is missing, the result is unknown; an empty value is not a free input."
+            },
+            {
+              "title": "Markup and margin",
+              "text": "A separate card gives included cost R8.00 and selling price R10.00. The difference is R2.00. As a share of cost it is 25% markup; as a share of selling price it is 20% margin on those included costs. These are different denominators. Neither is a complete net-profit margin if costs are missing."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Use fixed costs R80.00, price R10.00, variable cost R6.00, and capacity 18 whole packs. Find the break-even quantity and explain the capacity problem. Then compare a R6.00 included cost with a R7.50 selling price: calculate markup and margin, naming the denominator each time."
+            },
+            {
+              "title": "Feedback",
+              "text": "For an answer of 23 packs, ask the learner to multiply 23 by R4.50 and compare with R105.00. For “25% margin”, ask “25% of which amount?” For a missing variable cost treated as zero, restore the blank source card and ask what evidence is missing. For “profit”, have the learner name an excluded cost and relabel the result."
+            },
+            {
+              "title": "App connection",
+              "text": "Keep these what-if calculations in the workbook. Do not enter forecast sales as actual sales in My Records. Use the existing expense and harvest guides to find the underlying real records. A chart based on saved rows does not supply a missing stock valuation, family-time value or depreciation policy."
+            },
+            {
+              "title": "Field task",
+              "text": "Prepare one labelled cost-per-unit estimate from agreed practice data. Write the period, costs included, exclusions, unit, expected quantity sold, and source date. Test a smaller sales quantity. Explain what evidence is needed before using the estimate to negotiate a real price."
+            }
+          ]
+        },
+        {
+          "id": "f3-3",
+          "code": "F3.3",
+          "title": "Compare buyers and agree a price",
+          "outcome": null,
+          "reading": "Compare the whole offer. Check the weight, quality, price, packaging, delivery and payment date. Use the same unit for both buyers. A higher price can leave less after delivery. Money promised for next week is not money available today. Write down what is agreed, and check what is still unknown before choosing.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Decision C offers the same 20 kg of accepted produce to either Buyer A or Buyer B. A offers R10.00/kg, collects it, requires no extra packaging and pays on Day 0. B offers R12.00/kg, but the grower pays R35.00 delivery and R10.00 additional packaging; B promises payment on Day 7. These are alternatives, not two simultaneous sales of the same produce.\n\nA leaves R200.00 after the specified offer-specific cash costs. B leaves R195.00. A's lower headline price leaves R5.00 more at that stage. Both options also relate to R140.00 of already-incurred common costs; subtracting those gives R60.00 and R55.00, respectively. Those are partial results, not full profit. Do not charge the common cost twice or add the two offers together.\n\nThe cards separately record additional unpaid selling work: half an hour for A, one and a half for B. At the same hypothetical comparison value, that adds R12.50 or R37.50 to the management view, leaving R47.50 or R17.50 after the specified common costs and additional family-time value. The farm has not paid those wages. Other omitted work or costs could still change the full result."
+            },
+            {
+              "title": "Guided decision",
+              "text": "State what the supplied evidence favours: A retains more after these specified costs, requires less additional time and pays earlier. Do not claim the buyer is reliable merely because the card promises payment. Ask about confirmed quantities, acceptance standards, rejections, collection arrangements and how the agreement will be recorded. A real buyer relationship may have advantages the cards do not describe; name those separately rather than inventing a monetary score."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "For a fresh 10 kg, a collecting buyer offers R10.00/kg and a delivery buyer R12.00/kg. The delivery charge is missing. Find the charge at which their cash results would be equal, and explain why no final ranking is justified yet. Another buyer quotes per crate without a crate weight: explain what measurement is needed before comparing it with a per-kg price."
+            },
+            {
+              "title": "Feedback",
+              "text": "If the learner chooses B just because 12 is greater than 10, lay the delivery and packaging cards beside that offer. If Day 7 money is treated as today's cash, move its payment card along a paper calendar. If the missing delivery charge becomes zero, keep the result blank and write the next question to ask."
+            },
+            {
+              "title": "App connection",
+              "text": "The [invoice guide](https://imbewufield.vercel.app/student/guides/invoices) covers checking the buyer, units, amounts and payment status after an agreement. An invoice is not evidence that payment arrived. Link an existing recorded sale rather than recording it again. These alternative quotes belong in the workbook; do not create two sample sales and present both as completed business. Partial payments still need a separate balance record; do not mark an invoice paid in full after a deposit."
+            },
+            {
+              "title": "Field task",
+              "text": "Obtain two redacted or facilitator-supplied offers for a clearly specified product. Record the quote date and all conditions. Compare the supported costs and payment timing. Give a reasoned choice or say precisely which missing fact prevents one."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Before teaching",
+          "text": "Bring paper, a calculator and the learner workbook. Read the cards aloud if needed. Learners may point, sort cards or explain their answer to a partner; fluent reading is not the assessment. Begin by asking what it costs to get one product from the garden into a buyer's hands. Keep quantities, time and money on separate lines.\n\nAll amounts, weights, work hours and quotes below are **invented classroom inputs**. They are not recommended prices, wages, productivity rates or yields. The R25.00 hourly value is a comparison assumption, not a legal wage or payment instruction. No area, real growing season or tax status is supplied. Do not infer these. A, B and C are separate exercises; do not add their totals or carry forward F1/F2 balances.\n\nOutcomes: assign a cost once; explain the basis for sharing it; keep unpaid work visible; use the right denominator; distinguish markup from margin; test a bounded break-even calculation; and compare buyer terms without equating the highest price with the best outcome."
+        },
+        {
+          "title": "A - Worked allocation and cost-per-unit answers",
+          "text": "The second crop is deliberately unnamed. Only carrots have a supplied marketable quantity, so the second crop's unit cost cannot be calculated.\n\n| Card | Source | Carrots | Second crop | Combined |\n| --- | --- | ---: | ---: | ---: |\n| A01 | Carrot materials used | R96.00 | R0.00 | R96.00 |\n| A02 | Carrot packaging used | R24.00 | R0.00 | R24.00 |\n| A03 | Second-crop materials used | R0.00 | R144.00 | R144.00 |\n| A04 | Second-crop packaging used | R0.00 | R36.00 | R36.00 |\n| A05 | R120.00 hire; recorded hours 2 and 4 | R40.00 | R80.00 | R120.00 |\n| A06 | R90.00 trip; equal-size crate spaces 2 and 1 | R60.00 | R30.00 | R90.00 |\n| CASH | Assigned paid costs | R220.00 | R290.00 | R510.00 |\n| TIME | Unpaid family time: 4 and 6 hours at comparison value | R100.00 | R150.00 | R250.00 |\n| VIEW | Included costs plus family-time comparison | R320.00 | R440.00 | R760.00 |\n\n| Answer | Amount | Meaning |\n| --- | ---: | --- |\n| A07 | R5.50 | R220.00 / 40 marketable kg; assigned paid costs only |\n| A08 | R8.00 | R320.00 / 40 marketable kg; includes family-time comparison |\n| A09 | R10.00 | R320.00 / 32 expected kg sold; recovery target for included costs |\n\nThe zero entries above mean the supplied direct card belongs wholly to the other crop. They do not mean all other costs are known to be zero. Full profit remains unknown."
+        },
+        {
+          "title": "B - Worked break-even and percentage answers",
+          "text": "Each case starts from B01 and applies only its stated change.\n\n| Case | Change | Contribution per pack | Whole-pack break-even | Within capacity? | Result at stated sales |\n| --- | --- | ---: | ---: | --- | ---: |\n| B01 | Base; capacity and sales 30 | R4.50 | 24 | Yes | R30.00 |\n| B02 | Only 18 prepared and sold | R4.50 | 24 | Yes; demand still matters | -R24.00 |\n| B03 | Capacity and sales 20 | R4.50 | 24 | No | -R15.00 |\n| B04 | Price R7.50 | R0.00 | None | No | -R105.00 |\n| B05 | Price R7.00 | -R0.50 | None | No | -R120.00 |\n| B06 | Variable cost missing | Unknown | Unknown | Unknown | Unknown |\n\nAt 23 packs B01 is **-R1.50**; at 24 it is **R3.00**. A break-even quantity below capacity is not proof of demand. B04/B05 have positive fixed costs and no positive unit contribution; B06 lacks required evidence.\n\n| Card | Included cost | Selling price | Difference | Markup on cost | Margin on selling price |\n| --- | ---: | ---: | ---: | ---: | ---: |\n| M01 | R8.00 | R10.00 | R2.00 | 25% | 20% |"
+        },
+        {
+          "title": "C - Worked buyer comparison",
+          "text": "| Offer | Agreed sales value | Extra delivery and packaging | After those cash costs | After common R140.00 | Additional time value | After that time value | Payment promised |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |\n| C01 | R200.00 | R0.00 | R200.00 | R60.00 | R12.50 | R47.50 | Day 0 |\n| C02 | R240.00 | R45.00 | R195.00 | R55.00 | R37.50 | R17.50 | Day 7 |\n\nThese are alternative offers and partial management results, not money already received or full net profit. The additional family hours relate only to this selling decision; they are not the hours from A."
+        },
+        {
+          "title": "Independent answers and assessment",
+          "text": "The new R75.00 hire allocation is **R25.00 and R50.00**. The new break-even case needs **20 packs**, beyond capacity 18; at 18 its model result is **-R8.00**. R6.00 cost and R7.50 price give **R1.50 difference, 25% markup and 20% margin**. The fresh buyer comparison gives collection value R100.00 versus delivery value R120.00 before the unknown charge: the cash results tie at **R20.00 delivery cost**. Below that charge the delivery offer retains more; above it collection retains more, considering only these stated cash items. With the charge missing, no final ranking follows.\n\nTo pass, the learner must allocate each bill once, check the total, name the basis, keep time value separate from cash, use and label a correct denominator, round whole-unit break-even upward, reject a capacity or evidence gap, and compare an offer beyond its price. One correct total with an incorrect explanation is insufficient. Supply a fresh case after feedback; record what the learner actually demonstrates. Completion is evidence of these practice skills, not certification of a business's profitability."
+        }
+      ],
+      "sources": [
+        {
+          "label": "UF/IFAS FE1103, Knowing Your Product Costs: A Primer for Farmers and Food Entrepreneurs",
+          "url": "https://ask.ifas.ufl.edu/publication/FE1103"
+        },
+        {
+          "label": "FAO, Agricultural and Food Marketing Management, Chapter 8: Pricing Decisions",
+          "url": "https://www.fao.org/4/W3240E/W3240E08.htm"
+        },
+        {
+          "label": "FAO, Farm Management for Asia, Chapter 4",
+          "url": "https://www.fao.org/4/W7365E/w7365e07.htm"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f3.pdf"
+    },
+    {
+      "id": "f4",
+      "number": 4,
+      "title": "Budget and manage cash through the season",
+      "summary": "Build a budget, put money on dates and investigate a cash gap.",
+      "image": "/studies-guides/sketch-the-site.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f4-cashflow.md",
+      "sourceSha256": "9fcd3514a5d29e39e4fa9ddb49e1c44e0019813c13ad29ff736dd66c303972f7",
+      "lessons": [
+        {
+          "id": "f4-1",
+          "code": "F4.1",
+          "title": "Build an enterprise and whole-farm budget",
+          "outcome": "Combine two activity budgets without counting shared bills twice, distinguish cash spending from unpaid resource use, and identify missing costs and capacity evidence.",
+          "reading": "A budget is a plan with reasons behind the numbers. Name the activity and the period. Show what you expect to sell and what you expect to use. Keep shared bills once in the farm total. Family work still matters when no wage is paid. Write down what you do not yet know. A positive answer on paper does not prove that the land, water, time or buyers are available.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "The source cards give expected sales of R600.00 for A and R500.00 for B. Direct inputs are R220.00 and R180.00. Share the R120.00 hire using recorded planned hours, two for A and four for B. Share the R90.00 trip using two and one equal-size crate spaces. A receives R40.00 hire and R60.00 trip; B receives R80.00 and R30.00. Combined shared allocations remain R210.00, not R420.00.\n\nThe budget's specified cash inputs total R610.00. Separately show four and six hours of unpaid family work at the exercise comparison value of R25.00/hour, giving R250.00. That rate is a hypothetical comparison, not a wage recommendation or assertion of outside earning opportunities. After these included costs the two activities show R240.00 in planned surplus. Land, owned-equipment use, administration, finance costs, tax and other missing costs prevent this from establishing full farm profit. Do not add the time comparison to the cash payments."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Build the A and B columns and reconcile their sum to the original shared bills. Explain why paying R250.00 for equipment in March is a cash movement but does not establish a R250.00 cost of equipment use for this activity period. The value of its use and accounting treatment need separate evidence and bookkeeping review. Household withdrawal is also a cash movement, not automatically a crop input."
+            },
+            {
+              "title": "Capacity discussion",
+              "text": "A whole-farm plan also needs the actual availability and timing of land, water, labour, tools and markets. Two activities cannot each be assigned all of the same scarce resource at the same time. This pack supplies cost-sharing hours, not proof that a particular tool or worker is available on the required dates. Keep those checks unresolved until evidence exists. Do not invent a yield from the sales value."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "A new shared R60.00 bill is divided by recorded use of one unit and two units. Allocate it, then check the total. A learner says a R500.00 funding application makes the two activities profitable: ask them to identify approval, cash receipt and whether funding is a sale. Do not assume it is a grant or loan when the terms are absent."
+            },
+            {
+              "title": "Feedback",
+              "text": "If the farm total includes both the shared bill and its allocations, physically remove the duplicate card. If unpaid family time becomes a cash payment, ask for payment evidence. If a missing cost becomes zero, replace the zero with an unresolved source request. Give a fresh allocation after feedback."
+            },
+            {
+              "title": "App connection and field task",
+              "text": "The [expense companion](https://imbewufield.vercel.app/student/guides/expenses) helps find actual recorded costs. It does not create this forecast. Keep the proposed budget in the workbook, label actual evidence and estimates, and give each estimate a source date. Bring one redacted quote and one capacity question for local review."
+            }
+          ]
+        },
+        {
+          "id": "f4-2",
+          "code": "F4.2",
+          "title": "Put receipts and payments on their dates",
+          "outcome": "Calculate a dated cash projection, carry closing balances forward, and detect a shortfall hidden by a positive month-end balance.",
+          "reading": "Start with money that is available at the beginning. Add a receipt when you expect the money to arrive. Subtract a payment when it must leave. Carry the balance to the next date. An invoice is not cash received. Check the dates between month ends too. A good total at the end cannot pay a bill that comes before the money arrives.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Start at R300.00. Pay the planned R220.00 on 5 January: R80.00 remains. The next planned R180.00 payment on 10 January produces a projected minus R100.00. Stop the cards here and ask how that payment could be made. No borrowing facility or extra money has been supplied. Continue the calculation as a clearly labelled unfunded projection, not as an instruction to pay unavailable cash. The R120.00 hire on 20 January takes it to minus R220.00; the R600.00 receipt on 25 January brings it to R380.00.\n\nThe first shortage is 10 January and the deepest base-case shortage is R220.00 after the 20 January payment. January nevertheless closes at positive R380.00. A monthly closing-only check misses the earlier gap. If a receipt and payment share a real date, check which clears first; this exercise avoids same-date ambiguity. Combined available funds also do not prove the right payment account has accessible funds at the required moment."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Continue through February and March. Opening balance plus receipts minus payments equals closing balance. February opens with January's R380.00, not the original R300.00. March's R120.00 collection concerns a customer balance from before the exercise; it is a cash receipt now, not another current-season sale. Paying the old R80.00 supplier bill also needs cash now even though it is not one of these current activity inputs.\n\nSet aside X01, the R50.00 transfer from bank to cash tin: both are already inside the combined cash scope, and the supplied transfer has no fee. It changes location, not the combined amount. Set aside X02, the unapproved R500.00 application. Keep the two issued invoices X03/X04 as links to expected buyer receipts; do not count each invoice and its eventual receipt as two inflows. Family-time comparison is not a payment either."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "In a separate example, open with R90.00; pay R130.00 on Day 2, receive R80.00 on Day 10 and pay R20.00 on Day 20. Find closing cash, lowest projected cash and the first date requiring a response. Then ask whether the closing answer is complete if an additional payment fee is known to apply but its amount is missing."
+            },
+            {
+              "title": "Feedback",
+              "text": "For a learner who subtracts the net inflow, use counters: opening R10.00, receipt R5.00 and payment R3.00 leaves R12.00. For a learner who sees only the positive ending, replay one card at a time and stop at the first negative projection. For an invoice counted as cash, place its promised receipt on the later date. Ask for a new dated example after correction."
+            },
+            {
+              "title": "App connection and field task",
+              "text": "The live records/chart series summarises recorded events and has its own payment and missing-data boundaries. It is not this dated forecast or an available-bank-balance guarantee. Keep invented examples and future expected receipts out of actual My Records. Use the [invoice companion](https://imbewufield.vercel.app/student/guides/invoices) to check an existing unpaid invoice and its source, without marking it paid to make the plan balance. Build a short redacted forecast with exact dates; reconcile its opening funds and list restrictions or timing uncertainty."
+            }
+          ]
+        },
+        {
+          "id": "f4-3",
+          "code": "F4.3",
+          "title": "Test changes and make a reasoned response",
+          "outcome": "Change timing, amounts and uncertainty separately, identify combined stress, and explain a response that is feasible before the first shortfall.",
+          "reading": "Ask what changes if the buyer pays late, less produce sells, or an input costs more. Change the matching card and recalculate from that point onward. A delay changes when cash arrives. A lower sale changes how much arrives. Test them together too. Write down the evidence needed for your response, and check the plan again before committing.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "In LATE, move only A's R600.00 receipt from 25 January to 28 February. Do not make a new receipt or change the sale value. The March closing remains R430.00, but the deepest gap grows from R220.00 to R310.00, after the 5 February trip payment. Equal end totals do not imply equal ability to pay on time.\n\nIn HIGH, increase B's input payment from R180.00 to R240.00, with no other change. In COMBINED, apply this increase and the late A receipt together. Do not add the individual scenario balances together: each scenario starts from the same opening position and recomputes the changed events. The combined deepest gap is R370.00 and the closing balance is R370.00."
+            },
+            {
+              "title": "Guided practice",
+              "text": "LOW reduces B's expected sales and receipt from R500.00 to R350.00; this is a lower-sales case, not a claim that a R500.00 debt has been settled in full. OUTSIDE moves B's same R500.00 receipt to 20 April, beyond the 31 March horizon. It remains an expected amount owed, not vanished money; exclude it from cash received inside the horizon. UNKNOWN removes B's input quote. Later exact balances and the deepest gap become unknown, not larger positive balances caused by treating a blank as free."
+            },
+            {
+              "title": "Compare responses",
+              "text": "DEFER moves the proposed R250.00 equipment purchase to 10 April, assuming the purchase date can actually be changed by agreement. It improves the March closing figure to R680.00 but leaves January's R220.00 gap. It therefore does not solve that earlier problem. A response must work before the shortage: possible options to investigate include changing the scale and associated costs/revenue, agreeing timing with the buyer or supplier, or identifying genuinely available funds. Do not simply delete essential inputs, assume a buyer pays early, cut basic household needs, or treat an unapproved application as available cash. Borrowing requires its full terms and a repayment plan; this unit recommends no lender or loan size."
+            },
+            {
+              "title": "Independent decision",
+              "text": "Give the learner LATE and DEFER without the answer table. Ask which date first fails, whether the proposed equipment deferral solves it, and what evidence would be needed for a different response. Then present a real unknown quote: accept “cannot calculate yet” with a precise source request. Do not reward a guessed zero for producing a tidy budget."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "A good response names the affected date and amount, what can actually change, what must be agreed, and the consequences for later costs, production and receipts. After corrective feedback, use fresh dates or values. For a redacted local practice plan, keep base and adverse cases side by side, label assumptions and set a review date. Compare actual evidence with the plan when it arrives; retain the original forecast rather than rewriting it to pretend it predicted the outcome."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Prepare the session",
+          "text": "Bring a calculator, paper, date cards and counters. Read one card aloud at a time. Learners may point, move cards, explain aloud or ask a partner to write. Use the timeline for demonstration, then hide its answers for independent practice. Do not require anyone to share private household accounts, customer names or bank details.\n\nAll dates, amounts, working hours and offers are **invented classroom inputs**. January-March 2027 is a practice horizon, not a recommended South African growing season. Activities A and B have no specified crop, area or yield. Do not infer one. This is a new exercise, not a continuation of F1-F3 balances. The opening cash tin has R120.00 and the bank R180.00, both assumed available, with no restrictions or fees in the supplied model. The separate opening amounts owed are R120.00 by a customer and R80.00 to a supplier. Neither is opening cash.\n\nA negative projected balance means the proposed sequence cannot be paid from the specified available funds. It is a warning to revise the plan or establish an appropriate, evidenced funding arrangement. It is not cash that exists, an approved overdraft or permission to miss a bill. Later balances describe an **unfunded projection**, not evidence that the intervening transactions could happen. Exact shortfall amounts are model results, not recommended loans or contingency reserves."
+        },
+        {
+          "title": "Checked facilitator answers",
+          "text": "### Included activity budget\n\n| Activity | Planned sales | Direct inputs | Hire share | Trip share | Cash inputs | Unpaid-time comparison | Surplus after included costs |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n| A | R600.00 | R220.00 | R40.00 | R60.00 | R320.00 | R100.00 | R180.00 |\n| B | R500.00 | R180.00 | R80.00 | R30.00 | R290.00 | R150.00 | R60.00 |\n| TOTAL | R1,100.00 | R400.00 | R120.00 | R90.00 | R610.00 | R250.00 | R240.00 |\n\n### Base monthly projection\n\n| Month | Opening | Receipts | Payments | Closing |\n| --- | ---: | ---: | ---: | ---: |\n| 2027-01 | R300.00 | R600.00 | R520.00 | R380.00 |\n| 2027-02 | R380.00 | R500.00 | R240.00 | R640.00 |\n| 2027-03 | R640.00 | R120.00 | R330.00 | R430.00 |\n\nReceipts total R1,220.00 and payments R1,090.00. Opening R300.00 plus the R130.00 net inflow gives R430.00 closing. Do not sum the three opening balances or the three closing balances as money available. Current activity receipts R1,100.00 less current input payments R610.00 gives R490.00 before other cash movements. Add the old-customer R120.00, subtract the R80.00 old bill, R150.00 withdrawal and R250.00 purchase: net cash movement is R130.00. Separately, subtracting the R250.00 unpaid-time comparison from R490.00 gives the R240.00 partial budget surplus. Neither equals established full profit.\n\n### Scenarios before any new funding or corrective agreement\n\n| Case | Closing 31 March | Lowest dated balance | Deepest projected gap | First negative date |\n| --- | ---: | ---: | ---: | --- |\n| BASE | R430.00 | -R220.00 | R220.00 | 2027-01-10 |\n| LATE | R430.00 | -R310.00 | R310.00 | 2027-01-10 |\n| LOW | R280.00 | -R220.00 | R220.00 | 2027-01-10 |\n| HIGH | R370.00 | -R280.00 | R280.00 | 2027-01-10 |\n| COMBINED | R370.00 | -R370.00 | R370.00 | 2027-01-10 |\n| OUTSIDE | -R70.00 | -R220.00 | R220.00 | 2027-01-10 |\n| DEFER | R680.00 | -R220.00 | R220.00 | 2027-01-10 |\n| UNKNOWN | Unknown | Unknown | Unknown | Unknown |\n\nIndependent allocation: R20.00 and R40.00, still R60.00 together.\n\nIndependent case: closing R20.00; lowest -R40.00; gap R40.00 before any additional unknown fee. First negative date is Day 2. An unknown additional fee prevents a complete exact forecast; it cannot be silently omitted as zero. The given no-fee calculation remains a labelled comparison."
+        }
+      ],
+      "sources": [
+        {
+          "label": "FAO, Basic Finance for Marketers, Chapter 4",
+          "url": "https://www.fao.org/4/w4343e/w4343e05.htm"
+        },
+        {
+          "label": "University of Wisconsin Extension, Understanding the Statement of Cash Flows",
+          "url": "https://farms.extension.wisc.edu/articles/understanding-the-statement-of-cash-flows/"
+        },
+        {
+          "label": "FAO community action planning guidelines, cash-flow exercise",
+          "url": "https://www.fao.org/4/ad741e/ad741e0p.htm"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f4.pdf"
+    },
+    {
+      "id": "f5",
+      "number": 5,
+      "title": "Sell, invoice and collect payment",
+      "summary": "Connect orders, deliveries, invoices and payments without duplicate sales.",
+      "image": "/studies-guides/record-sale.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f5-sales.md",
+      "sourceSha256": "2e11632e0ae6f425f3a1156bf481bd6cc94312702cdb9bd8f1c0f8243c1d4615",
+      "lessons": [
+        {
+          "id": "f5-1",
+          "code": "F5.1",
+          "title": "Follow the order, delivery, invoice and receipt",
+          "outcome": "Explain what each document proves, preserve the quantity and unit, and distinguish a sale from cash collected against it.",
+          "reading": "Keep the story of one sale together. First, agree what the buyer wants and how payment will work. Check what you deliver. Check the invoice against that delivery and the agreed price. When money arrives, match it to the same invoice. The payment does not create another basket of produce. Keep its date and reference so you can show what is still owed.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Lay out P01: Day 1 order O01 for R120.00; Day 2 completed delivery and invoice D01-I01 for R120.00; Day 3 receipt R01-A for R40.00. Invoice value is R120.00, money received is R40.00, and the recorded balance is R80.00. On Day 4 the buyer asks for another copy. I01-COPY is the same invoice, not another R120.00 sale. On Day 5 receipt R01-B adds R80.00. Total collected is now R120.00 and the balance is zero. Do not add the order, invoice, copy and receipts together as revenue.\n\nUse the app companion's four-stage payment example to reveal one stage at a time. Pause before each answer. The animation is an explanation using invented numbers, not a live account or a demonstration that the app supports part-payment allocation."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Invoice M01 has two lines: 2.5 kg at R12.00/kg and three bunches at R8.00/bunch. Calculate each line, then add money. The result is R54.00. Do not add the quantities as 5.5 kg. A bunch has no supplied mass. If a line lacks a price or unit, stop and resolve that source instead of choosing a convenient zero or conversion."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Give the learner four new blank document cards. Read aloud: an agreement is made, produce is delivered, an invoice is issued, and a buyer pays only some of it later. Ask the learner to place each card in the correct sequence and identify the evidence still needed. Then supply the independent R150.00 invoice and R50.00 receipt. Ask for the recorded amount still owed and what would prove settlement."
+            },
+            {
+              "title": "Feedback",
+              "text": "If invoice value becomes cash received, move the unpaid portion into the “customer owes” envelope. If a copy creates new income, place it behind the original invoice instead of beside a second basket. If mixed quantities become kilograms, return to the two labelled lines. Give a fresh example after feedback."
+            },
+            {
+              "title": "App connection and field task",
+              "text": "Use [Record a sale once](https://imbewufield.vercel.app/student/guides/sales). Before any real entry, find the matching existing sale or invoice. Collect a redacted set of order, delivery, invoice and receipt references and explain any gap. This lesson does not require sending a customer message or sharing private documents."
+            }
+          ]
+        },
+        {
+          "id": "f5-2",
+          "code": "F5.2",
+          "title": "Choose the right invoice route and verify the saved result",
+          "outcome": "Choose new, past or paper entry appropriately; preserve a source reference; reopen or link an existing sale; and check the saved result without creating duplicate income.",
+          "reading": "Look in your records before you add anything. If the invoice is already there, open it. If the sale is there but needs an invoice, use that sale. If you are bringing in an older or paper record, keep its original reference and dates. Read the save message. Open the saved document and check it. A second copy of a document must not become a second sale.",
+          "practice": [
+            {
+              "title": "Demonstration on the actual app",
+              "text": "Start in the sample tour, confirm it is sample data, and open My Records → Sold. Show New sale & invoice and Past sale / paper invoice. Show View invoice for an already linked sale and Create invoice when an eligible existing sale needs one. Reopening is different from starting a blank form.\n\nChoose Invoice type and, when asked, Existing sale record **before** entering buyer and line details. Changing either starts a fresh form in the current app. A new invoice begins a new document. Produce already sold and An invoice already written on paper ask whether the sale exists. Select the source sale when applicable; do not choose No merely to avoid matching it. An already invoiced sale should be reopened, not invoiced again. Preserve the original paper reference when the paper route asks for it.\n\nCheck buyer, product, quantity, unit, agreed price, growing area where relevant, dates and payment status. A suggested price is not evidence of the buyer's agreement. Keep bags and bunches as their actual units. The app can link paid kilogram lines into crop-sale evidence; it cannot infer the mass of other units. Existing-sale linking is limited by the supported source records. Do not split one past sale into invented new sales to make the form accept it.\n\nSave, read the actual message, and reopen the same invoice from Saved or its sale link. Check its number, total, date and status. A device save with crop-sale synchronisation pending is not a reason to create another invoice. Documents are currently saved on the device within the account scope; crop-sale sync does not prove the complete invoice document is available on another device."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Sort these situations: (a) an invoice already saved; (b) an eligible sale already recorded with no invoice; (c) a completed sale not yet recorded; (d) an old paper invoice whose sale may already exist. Explain the lookup step and route for each. For (d), missing evidence about an existing sale stays unresolved until checked. “Paper” does not mean “unpaid”.\n\nUse the prepared sample invoice to demonstrate unpaid → paid in full only when the exercise supplies full payment evidence. Keep the same invoice identity. A receipt date and invoice issue date answer different questions. The current app gives the whole paid invoice one receipt date in its records/chart series. For instalments on different dates, the separate supporting schedule must retain each actual receipt date; the app chart cannot represent that full cash history. If the app does not support the original record faithfully, retain it separately and identify the limitation instead of manufacturing a replacement history."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Present a saved R150.00 invoice and the R50.00 receipt from F5.1. Ask whether to create a second R50.00 sale, mark the original paid in full, or keep the part payment in a separate checked balance record. Only the last fits these facts. Then ask what to inspect before downloading a requested copy of the existing invoice."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "For duplicates, start at the existing reference and follow it to the document. For premature full payment, compare the invoice amount with all verified receipts. For altered dates, return to original evidence. In the sample workspace, reopen one prepared invoice and identify its amount, payment status and source. Print/PDF is a separate document check; downloading does not send it to a customer. Use the [invoice companion](https://imbewufield.vercel.app/student/guides/invoices) for the detailed steps."
+            }
+          ]
+        },
+        {
+          "id": "f5-3",
+          "code": "F5.3",
+          "title": "Reconcile deposits, part payments and unresolved balances",
+          "outcome": "Keep cash receipts, allocations, adjustments and questions distinct; explain a remaining balance; and know when the current app needs a separate supporting schedule.",
+          "reading": "Write down every payment once, with its evidence. A deposit may arrive before produce is delivered. Keep it linked to that customer and order. Later, applying that same deposit to an invoice does not bring in more money. Keep questions and agreed corrections visible. If money arrives and you do not know who sent it, investigate before matching it to a sale.",
+          "practice": [
+            {
+              "title": "Deposit demonstration P02",
+              "text": "Day 1 order O02 is R90.00. Day 2 advance DEP02 is R30.00; nothing has been delivered and no invoice issued in this exercise. Cash received is R30.00 and the customer's advance remains separately held in the record. This describes an outstanding obligation, not a promise that a separate physical bank account exists. It does not establish completed sales revenue.\n\nDay 5 completed delivery and invoice D02-I02 is R90.00. First identify the original R30.00 receipt, then record ALLOC02 applying it to this invoice. After that allocation, recorded amount owed is R60.00, advance held is zero and total cash received remains R30.00. The intermediate table row before allocation deliberately leaves the deposit separate until matched. Day 6 receipt R02 of R60.00 settles the balance. Total cash collected is R90.00, not R120.00. Real deposits, cancellations, refund terms and tax timing require the actual agreement and local bookkeeping guidance; this pack invents none."
+            },
+            {
+              "title": "Dispute demonstration P03",
+              "text": "Invoice D03-I03 is R200.00; R03-A confirms R120.00 received. Q03 records that the customer questions R40.00. Keep the issue and evidence visible. Merely entering that question does not turn the R80.00 recorded balance into zero or establish that the disputed amount is legally owed. Investigate the delivery, price and agreement. For this synthetic case only, ADJ03 is a separately documented, approved R20.00 reduction. Retain the original invoice and adjustment trail. The resulting recorded balance is R60.00. Receipt R03-B of R60.00 settles it. This is a bookkeeping exercise, not advice to demand a disputed amount or authority to create a tax credit note in the app."
+            },
+            {
+              "title": "Unmatched receipt P04",
+              "text": "BANK04 proves R25.00 arrived, but no buyer or invoice has been identified. Cash received is R25.00; it stays unmatched. Do not select a convenient unpaid invoice or call it produce sales without evidence. Check the reference and appropriate source safely. If unresolved, retain that status for review."
+            },
+            {
+              "title": "Overpayment P05",
+              "text": "Invoice D05-I05 is R50.00; R05 proves receipt of R60.00. Only R50.00 settles that invoice. Keep the extra R10.00 as an unresolved customer credit; it is not extra produce revenue or automatically a tip. Confirm an appropriate agreed treatment and its evidence. This exercise performs no refund, future-sale allocation or financial transfer."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Build a separate customer schedule with original invoice reference, dated receipt references, approved adjustments, allocations and the remaining recorded balance. Keep advance deposits, unknown receipts and customer credits visible. Do not combine unrelated customers' credits and debts into one misleading net figure. In these cases, original invoice less approved reductions minus allocated receipts gives the remaining balance, with any excess shown as customer credit. The model excludes fees, tax and other arrangements."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Invoice R150.00, received R50.00. The buyer questions R30.00; no change has been approved. State the recorded balance and label the unresolved question. Then an evidenced R10.00 reduction is approved: recalculate. In a separate case, invoice R35.00 and receipt R40.00: identify the credit. Explain why the app's paid-in-full control cannot represent the first part-payment history or the credit ledger."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "If allocation creates cash, reuse the same receipt card rather than introducing another coin. If a dispute automatically changes the invoice, ask for the approved adjustment source and keep the question separate. If overpayment increases sales, return to the delivered amount. Prepare a blank customer schedule and use an invented new case or redacted approved records. Identify the next evidence needed to resolve one item; do not expose customer details or contact anyone as an automatic course action."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Prepare the session",
+          "text": "Bring paper cards for orders, delivery, invoices and receipts; counters; a calculator; and two envelopes marked “customer owes” and “money received”. Let learners point, sort, explain aloud or ask a partner to write. Keep real customer names, account numbers and private receipts out of group discussion. The app tour uses sample records; these classroom amounts must not be entered in a learner's real farm.\n\nEvery amount and numbered day below is an **invented classroom input**. Each P case begins separately with no opening invoice, cash receipt, deposit or credit. The cases contain no tax, discounts, payment fees, refunds or costs unless an event explicitly states an adjustment. They therefore establish neither full profit nor a compliant tax invoice. A single invoice covers each completed delivery in these simplified cases. Real contract terms, tax treatment and disputed rights require appropriate review."
+        },
+        {
+          "title": "Checked facilitator answers",
+          "text": "Each case is separate. Values are cumulative **within that case**, not balances to add across document rows. “Owed” is the recorded balance under the stated exercise assumptions, not a legal determination. The deposit is held separately until its explicit allocation event; cash is never counted again on allocation.\n\n| Reference | Original invoice | Approved reductions | Cash received | Recorded amount owed | Advance held | Customer credit | Unmatched cash |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |\n| O01 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 |\n| D01-I01 | R120.00 | R0.00 | R0.00 | R120.00 | R0.00 | R0.00 | R0.00 |\n| R01-A | R120.00 | R0.00 | R40.00 | R80.00 | R0.00 | R0.00 | R0.00 |\n| I01-COPY | R120.00 | R0.00 | R40.00 | R80.00 | R0.00 | R0.00 | R0.00 |\n| R01-B | R120.00 | R0.00 | R120.00 | R0.00 | R0.00 | R0.00 | R0.00 |\n| O02 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 | R0.00 |\n| DEP02 | R0.00 | R0.00 | R30.00 | R0.00 | R30.00 | R0.00 | R0.00 |\n| D02-I02 | R90.00 | R0.00 | R30.00 | R90.00 | R30.00 | R0.00 | R0.00 |\n| ALLOC02 | R90.00 | R0.00 | R30.00 | R60.00 | R0.00 | R0.00 | R0.00 |\n| R02 | R90.00 | R0.00 | R90.00 | R0.00 | R0.00 | R0.00 | R0.00 |\n| D03-I03 | R200.00 | R0.00 | R0.00 | R200.00 | R0.00 | R0.00 | R0.00 |\n| R03-A | R200.00 | R0.00 | R120.00 | R80.00 | R0.00 | R0.00 | R0.00 |\n| Q03 | R200.00 | R0.00 | R120.00 | R80.00 | R0.00 | R0.00 | R0.00 |\n| ADJ03 | R200.00 | R20.00 | R120.00 | R60.00 | R0.00 | R0.00 | R0.00 |\n| R03-B | R200.00 | R20.00 | R180.00 | R0.00 | R0.00 | R0.00 | R0.00 |\n| BANK04 | R0.00 | R0.00 | R25.00 | R0.00 | R0.00 | R0.00 | R25.00 |\n| D05-I05 | R50.00 | R0.00 | R0.00 | R50.00 | R0.00 | R0.00 | R0.00 |\n| R05 | R50.00 | R0.00 | R60.00 | R0.00 | R0.00 | R10.00 | R0.00 |\n\nM01: 2.5 kg × R12.00 = R30.00; 3 bunches × R8.00 = R24.00; total R54.00.\n\nIndependent answers: R100.00 owed before an approved adjustment; R90.00 after it; R5.00 customer credit in the separate overpayment case.\n\nThe unresolved R30.00 question remains attached to the independent case until resolved; the exercise does not establish a legal collection amount. In route sorting: reopen (a); use the eligible source-sale invoice action (b); use the unrecorded past-sale route (c); look up whether the sale already exists, then preserve the paper reference and appropriate link (d). A copy preserves the original invoice identity. None of these actions proves profit or tax compliance."
+        }
+      ],
+      "sources": [
+        {
+          "label": "FAO: Training manual for village cooperative societies, section 6.2",
+          "url": "https://www.fao.org/4/t1675e/t1675e06.htm"
+        },
+        {
+          "label": "FAO: Record keeping",
+          "url": "https://www.fao.org/4/w6864e/w6864e0f.htm"
+        },
+        {
+          "label": "IFRS Foundation: IFRS 15 overview",
+          "url": "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-15-revenue-from-contracts-with-customers/"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f5.pdf"
+    },
+    {
+      "id": "f6",
+      "number": 6,
+      "title": "Equipment, borrowing and reserves",
+      "summary": "Compare equipment options, understand commitments and plan reserves.",
+      "image": "/studies-guides/expense-record.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f6-equipment.md",
+      "sourceSha256": "50fd4def4184b355c5f903e0b49f7bb0947745832c56daab4569a1d143b607e9",
+      "lessons": [
+        {
+          "id": "f6-1",
+          "code": "F6.1",
+          "title": "Compare buying, hiring and sharing",
+          "outcome": "Compare the same service need, identify cash tied up before use, retain missing information, and explain why a low purchase contribution does not prove a tool will be available.",
+          "reading": "Start with the work you need done and the dates. Ask what each offer includes. Buying, hiring and sharing move money at different times. A deposit may come back later, but you still need it before use. Keep the value of a tool you still own separate from cash in your hand. Check who can use a shared tool, when it is available and who pays for damage or repairs.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "The practice need is the same suitable tool service on Days 2, 10 and 20 within a 30-day horizon. Opening available cash is R500.00. Suitability, safe operation and access for BUY and HIRE are assumed confirmed solely to isolate the money exercise. SHARE has an unconfirmed Day 10 booking. No other receipts are supplied.\n\nBUY pays R900.00 on Day 1, R60.00 for operating inputs on Day 10 and R40.00 for maintenance on Day 20. Total payments are R1,000.00. The plan is already R400.00 short on Day 1 and ends R500.00 short. It cannot be funded from the stated R500.00. The buyer would retain an asset, but its remaining value and useful life are unknown. Do not call the whole purchase an established 30-day cost of using up the tool, or assume the retained asset is worth zero. A future sale of that asset is not cash until its price, costs and date are evidenced.\n\nHIRE pays R210.00 for all three uses, R60.00 transport and R150.00 refundable security on Day 1. These are three parts of one offer, not three separate R210.00 service fees. The exercise says operating and maintenance service costs are included, no other charges apply, and the R150.00 deposit is returned in full on Day 30. Cash needed first is R420.00, leaving R80.00. After the refund, net cash paid is R270.00 and closing cash is R230.00. A R270.00 net figure does not mean the farmer could start with only R270.00. The refund returns the farmer's money; it is not a produce sale.\n\nSHARE pays R300.00 towards ownership on Day 1, R30.00 operating contribution on Day 10 and R20.00 maintenance contribution on Day 20. The conditional cash plan uses R350.00 and closes at R150.00. The retained share value is unknown. The unconfirmed booking means this offer has not yet been shown to meet the same need. A favourable cash total cannot resolve that availability problem."
+            },
+            {
+              "title": "Guided comparison",
+              "text": "Lay out all source cards by date, keeping the refundable deposit distinct. Check the included operator, transport, fuel or other operating inputs, cleaning, repair, storage, return terms, insurance and downtime arrangements in an actual offer. In this synthetic comparison the stated package assumptions are complete for the shown cash movements; they do not establish complete economic costs. None of the three totals proves full profitability or a lifetime winner."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "A different hire costs R80.00, plus a R50.00 security deposit returned fully later. Find the amount needed before hire and net cash paid after refund. Then remove the refund agreement: which conclusion is no longer established? For a shared tool, name the missing agreement if two members need the same slot."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "If the deposit is ignored, place the payment before the first use and its refund after the last use. If an unknown asset value becomes zero, replace it with a precise evidence request. If sharing is called cheapest without availability, ask how the required Day 10 work happens. Obtain a dated redacted quote or a list of questions for a supplier/group. Record the job, dates, inclusions, ownership and access terms. Do not buy, borrow or sign anything as an automatic lesson activity."
+            },
+            {
+              "title": "App connection",
+              "text": "Use the [expense guide](https://imbewufield.vercel.app/student/guides/expenses) for supported actual cost entries and receipt evidence. Keep the comparison, deposit schedule and asset/share record separately. The app's cost tag is not a complete asset register, depreciation calculation or tool-booking system. Do not enter every proposed offer as an actual expense or create an invented produce sale for a deposit refund."
+            }
+          ]
+        },
+        {
+          "id": "f6-2",
+          "code": "F6.2",
+          "title": "Read the whole borrowing commitment",
+          "outcome": "Reconcile money received, fees, principal and repayment dates; recognise an incomplete quote; and connect a proposed repayment to a dated cash plan without claiming that arithmetic alone proves affordability.",
+          "reading": "The amount borrowed is not the amount you may have left to spend. Read the fees and when they are paid. Each instalment may contain repayment of the amount borrowed, interest and other charges. If a charge is already included, do not add it again. Keep the dates. A smaller-looking instalment is not enough information to choose a loan.",
+          "practice": [
+            {
+              "title": "Source-reading demonstration",
+              "text": "Use the current [NCR quotation form](https://www.ncr.org.za/index.php/act/list-of-forms/category/123-english?download=480:english) to locate fields, not to manufacture a contract. Identify the advance, deposit if applicable, instalment count/frequency, interest information, fees, required and optional insurance, security and repayment arrangements. Ask a qualified local adviser about applicability and unclear terms. Do not infer a legal limit or a right from this lesson. No form is signed."
+            },
+            {
+              "title": "Worked SEPARATE case",
+              "text": "In this original model, R600.00 principal is advanced on 1 January 2027 and credited in full. A R30.00 fee is paid separately that day, leaving R570.00 from the advance available for the intended purpose. The quoted schedule has three principal payments of R200.00. Interest components are R12.00, R8.00 and R4.00. Each instalment also includes R6.00 service and R4.00 required insurance. No optional insurance or other charges are assumed in this model. These are supplied charge amounts, not an interest calculation or a statement that such terms comply with law.\n\nThe payments due are R222.00 on 31 January, R218.00 on 28 February and R214.00 on 31 March. Their total is R654.00. With the separate R30.00 fee, total outflow is R684.00 against the R600.00 gross advance. Specified financing charges are R84.00: interest R24.00, service R18.00, insurance R12.00 and the initial fee R30.00. Repaying R600.00 principal is not an additional R600.00 interest expense or produce sale. Remaining principal is R400.00, R200.00 and zero after the three scheduled payments. That number excludes future charges; label it remaining principal, not a complete early-settlement quote."
+            },
+            {
+              "title": "WITHHELD case",
+              "text": "Now keep the same principal, fee and repayment schedule, but the provider withholds the R30.00 fee once before paying out R570.00. Do not subtract it again from the R570.00 actually credited. The scheduled R654.00 outflow less R570.00 received still gives R84.00 financing charges. The apparent bank receipt differs, but these two cases have the same net initial funds and specified total charges. A fee added to the loan principal would be a different arrangement and needs its own supplied schedule; it is not silently substituted here."
+            },
+            {
+              "title": "UNKNOWN case",
+              "text": "A different practice quote shows principal R600.00, a separate R30.00 fee, three R200.00 principal components and R10.00 interest per instalment, with no service fee. Required insurance applies but its amount is missing. Each full instalment, the full repayment total and total financing charges remain unknown. The displayed remaining principal assumes the specified principal payments are made; it does not confirm payment or full settlement when charges are unresolved. Do not set missing insurance to zero and advertise this as a cheaper loan. Obtain the required amount, its payment timing and a corrected complete schedule."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Separate the principal and charges in each dated row. Match the total to the document rather than adding an included service fee twice. Link each proposed due date to a cash forecast that includes other obligations. Check the actual purpose, disbursement timing, rate basis, variable-rate exposure where applicable, fees, insurance, collateral and consequences of default with suitable help. This practice pack has no complete business-income forecast, household commitments or lender assessment, so it cannot certify affordability or recommend borrowing."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "A separate payment consists of R100.00 principal, R10.00 interest and R2.00 service already included in the instalment. Calculate that instalment. A learner adds the service again: explain the error. Then give an offer with missing compulsory insurance and ask what prevents a complete comparison."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "If loan receipts become sales revenue, link the money to its repayment obligation. If a fee is charged twice, trace whether it was withheld, paid separately or already included. If the learner chooses the unknown offer by its apparent total, restore the missing field. Collect a blank or approved redacted quote and list questions. Keep original terms and dates. Do not apply for credit, choose a lender, enter private identity details or transfer money as a lesson exercise."
+            },
+            {
+              "title": "App connection",
+              "text": "The current My Records summaries and lender record export are not this repayment schedule, a credit assessment or an automatic affordability decision. Keep the complete schedule and supporting evidence separately. F4 supplies dated cash planning; F7 will address statement boundaries. Do not force a loan advance into a produce sale or imply the app distinguishes principal and finance charges automatically."
+            }
+          ]
+        },
+        {
+          "id": "f6-3",
+          "code": "F6.3",
+          "title": "Set money aside and test a shock",
+          "outcome": "Distinguish a reserve allocation from money received or spent, retain restricted/earmarked funds in the correct scope, and identify a later cash gap after an unexpected repair.",
+          "reading": "Setting money aside gives it a job. It does not create more money. If you move it between two accounts you own, the total is unchanged unless there is a fee. When you pay someone else for a repair, money leaves. Keep the amount still set aside separate from money for daily work. A reserve target is a plan, not an account balance.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Start this separate case with R800.00 total owned cash: R600.00 for daily work and R200.00 earmarked. Both are inside the same scope, available to the owner, with no transfer fees or legal restrictions supplied. Earmarking is a management allocation; real contractual restrictions must be checked separately. A target of R500.00 is an invented goal for the exercise, not a recommended reserve size.\n\nOn Day 5 allocate R100.00 from daily work to the reserve. Daily work becomes R500.00 and reserve R300.00; total remains R800.00. On Day 10 pay a R120.00 maintenance bill from the reserve: reserve R180.00 and total R680.00. On Day 15 an evidenced R80.00 operating receipt arrives: daily work R580.00, reserve R180.00, total R760.00. Its source belongs with the receipt; the amount alone does not establish profit. On Day 25 a specified R550.00 essential bill leaves daily work R30.00 and reserve R180.00, total R210.00. The reserve is R320.00 below the invented R500.00 target.\n\nKeep D01, a separate R50.00 non-cash equipment-use estimate, out of these cash movements. It neither pays for replacement nor moves money into the bank. Keep the unapproved R300.00 funding application G01 out too. A proposal is not money received. This lesson does not prescribe depreciation or its tax treatment."
+            },
+            {
+              "title": "SHOCK case",
+              "text": "Return to the original opening position and insert a R250.00 repair on Day 20. After Day 15 only R180.00 is reserved. Using that plus R70.00 from daily work is a proposed change of plan, not additional income. Total falls from R760.00 to R510.00, with reserve zero. The later R550.00 essential bill would then produce a R40.00 shortage. Stop and investigate a feasible response before that bill is due. Do not silently clip the negative answer to zero or treat an unapproved application as the missing R40.00."
+            },
+            {
+              "title": "Guided discussion",
+              "text": "If the earmarked amount were legally restricted or unavailable, permission/access would be a separate constraint; this exercise assumes none. A response may require revising timing by agreement, obtaining reliable repair alternatives or reassessing the work and its consequences. Do not automatically cancel essential maintenance, divert protected funds or borrow. Recalculate the resulting dates and amounts from actual evidence. A reserve target must be grounded in the farmer's circumstances, not a universal percentage."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Start a new case with R400.00 total and no reserve. Earmark R90.00. Then pay R20.00 from that reserve. State total cash after the allocation and after the external payment, including what remains reserved. Explain why a non-cash cost estimate cannot pay the next repair."
+            },
+            {
+              "title": "Feedback and field task",
+              "text": "If allocation reduces total money, physically move counters between the two envelopes without removing any. For an external payment, remove its counters once. If the later shortage disappears, replay the repair before the essential bill. Prepare a redacted list of maintenance needs, their evidence, likely payment dates, funds genuinely available and unresolved costs. Keep the target, actual balance and obligations distinct. No private bank balance must be shared with the class."
+            },
+            {
+              "title": "App connection",
+              "text": "Keep reserve allocation and replacement planning in the workbook unless a supported ledger represents them faithfully. Use the expense companion for actual recorded costs, with original receipt evidence. The app chart does not establish your unrestricted bank balance, asset value or depreciation provision."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Prepare the session",
+          "text": "Bring three cards marked Buy, Hire and Share, counters, a calculator and two envelopes marked Daily work and Set aside. Read one source card at a time. Learners may point, sort, explain aloud or ask a partner to write. Keep private financial details out of group work. Use approved redacted documents only when people agree to discuss them.\n\nEvery rand amount, day, date, fee and schedule here is **invented for arithmetic practice**. None is a local quote, normal price, legal maximum, interest-rate recommendation or offer of credit. The tool is deliberately unspecified. No crop, yield, machine capacity or instruction to perform a farming operation is supplied. Each exercise starts separately; do not carry cash or debt from another case. Full profit remains unknown.\n\nA negative cash projection is an unfunded shortage, not spendable money or an approved overdraft. Continuing the calculation shows a proposed plan's problem; it does not prove the intervening payments can be made. Real affordability needs the full household/farm commitments and income evidence, which this unit does not supply."
+        },
+        {
+          "title": "Checked facilitator answers",
+          "text": "These are separate practice cases. Never sum cumulative row balances. Equipment cases are cash projections within 30 days, not complete costs of ownership or profit. Negative values are unfunded. The missing remaining asset/share value stays unknown.\n\n### Equipment cash comparison\n\n| Case | Gross payments | Deposit returned | Net paid | Peak cash needed | Closing projection | Deepest cash gap |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n| BUY | R1,000.00 | R0.00 | R1,000.00 | R1,000.00 | -R500.00 | R500.00 |\n| HIRE | R420.00 | R150.00 | R270.00 | R420.00 | R230.00 | R0.00 |\n| SHARE | R350.00 | R0.00 | R350.00 | R350.00 | R150.00 | R0.00 |\n\n### Borrowing summary\n\n| Case | Net initial funds | Scheduled repayments | Specified financing charges |\n| --- | ---: | ---: | ---: |\n| SEPARATE | R570.00 | R654.00 | R84.00 |\n| WITHHELD | R570.00 | R654.00 | R84.00 |\n| UNKNOWN | R570.00 | Unknown | Unknown |\n\n### Quoted components and principal remaining\n\n| Case / payment | Due date | Principal | Interest | Service | Insurance | Instalment | Remaining principal |\n| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |\n| SEPARATE-1 | 2027-01-31 | R200.00 | R12.00 | R6.00 | R4.00 | R222.00 | R400.00 |\n| SEPARATE-2 | 2027-02-28 | R200.00 | R8.00 | R6.00 | R4.00 | R218.00 | R200.00 |\n| SEPARATE-3 | 2027-03-31 | R200.00 | R4.00 | R6.00 | R4.00 | R214.00 | R0.00 |\n| WITHHELD-1 | 2027-01-31 | R200.00 | R12.00 | R6.00 | R4.00 | R222.00 | R400.00 |\n| WITHHELD-2 | 2027-02-28 | R200.00 | R8.00 | R6.00 | R4.00 | R218.00 | R200.00 |\n| WITHHELD-3 | 2027-03-31 | R200.00 | R4.00 | R6.00 | R4.00 | R214.00 | R0.00 |\n| UNKNOWN-1 | 2027-01-31 | R200.00 | R10.00 | R0.00 | Unknown | Unknown | R400.00 |\n| UNKNOWN-2 | 2027-02-28 | R200.00 | R10.00 | R0.00 | Unknown | Unknown | R200.00 |\n| UNKNOWN-3 | 2027-03-31 | R200.00 | R10.00 | R0.00 | Unknown | Unknown | R0.00 |\n\n### Reserve projection\n\n| Case / source | Day | Daily work | Set aside | Total cash |\n| --- | ---: | ---: | ---: | ---: |\n| BASE/A01 | 5 | R500.00 | R300.00 | R800.00 |\n| BASE/M01 | 10 | R500.00 | R180.00 | R680.00 |\n| BASE/R01 | 15 | R580.00 | R180.00 | R760.00 |\n| BASE/E01 | 25 | R30.00 | R180.00 | R210.00 |\n| SHOCK/A01 | 5 | R500.00 | R300.00 | R800.00 |\n| SHOCK/M01 | 10 | R500.00 | R180.00 | R680.00 |\n| SHOCK/R01 | 15 | R580.00 | R180.00 | R760.00 |\n| SHOCK/X01 | 20 | R510.00 | R0.00 | R510.00 |\n| SHOCK/E01 | 25 | -R40.00 | R0.00 | -R40.00 |\n\nIndependent: R130.00 needed before hire; R80.00 net after refund; R112.00 instalment including its service fee; R400.00 total after allocation; R380.00 after the payment, including R70.00 still reserved.\n\nThe independent deposit refund depends on its stated full-return assumption. Remove that agreement and net cash paid is unresolved. In the borrowing examples, the supplied principal is repaid exactly; an actual outstanding account, early settlement or changing interest needs its own evidence. BASE closes with R180.00 reserved, R320.00 below target. SHOCK has zero reserved and a projected R40.00 cash shortage after the essential bill; no source of funding has been supplied."
+        }
+      ],
+      "sources": [
+        {
+          "label": "NCR quotation form",
+          "url": "https://www.ncr.org.za/index.php/act/list-of-forms/category/123-english?download=480:english"
+        },
+        {
+          "label": "FAO: Hire services",
+          "url": "https://www.fao.org/sustainable-agricultural-mechanization/hire-services-as-a-business/hire-services/en/"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f6.pdf"
+    },
+    {
+      "id": "f7",
+      "number": 7,
+      "title": "Read results and prepare reliable records",
+      "summary": "Separate cash, period result and financial position; prepare reliable records.",
+      "image": "/studies-guides/record-sale.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f7-results.md",
+      "sourceSha256": "b97dca3c37d30333b49865eccd7353090d6a009416b106d3d71f84255ada6705",
+      "lessons": [
+        {
+          "id": "f7-1",
+          "code": "F7.1",
+          "title": "Three views of one business",
+          "outcome": "Point to the record that answers each question: what cash moved during a period; what income and costs belong to that period; and what the business owns and owes at a date. Explain why one total cannot answer all three.",
+          "reading": "Start by saying which business and which dates you mean. Our stall starts with money, stock, equipment and amounts owed. A cash summary follows money received and paid. A profit-and-loss view follows the period's income and costs. A balance sheet shows the position on a date: assets, liabilities and what remains for the owner. The views are connected, but their totals need not match. Borrowed money increases cash and debt. It does not become a sale. A customer can owe us for goods already delivered. That sale can be recorded before the money reaches us.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Lay out three spaces: Cash, Period result, Position. Show R01. Move R200 from “customer owes” to “cash”; do not add a January sale. Show S01: add R900 to sales and the customer balance; move R350 of stock into goods cost. Cash stays R950 after P01. The running result is R550 before later costs and checks. Then R02 moves R600 from the customer balance into cash. Sales remain R900; R300 remains owed. This model assumes the delivery and accepted invoice establish that sale; an order or an unfulfilled promise alone would not be the same evidence.\n\nContinue with L01: cash and debt both rise R500, while the result stays unchanged. Use the interactive aid one card at a time. Invite the learner to predict which of the three views changes before advancing. Early cards show a running result from the evidence processed so far, not a completed month's profit."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Sort P02, E01, L02 and H01. For each, say what cash leaves and whether the supplied case records a period cost. P02 settles a supplier balance. E01 changes cash into equipment. L02 has two parts: principal reduces debt; the R10 interest is a period cost. H01 reduces cash and the owner's equity; it is not a business expense here. Do not generalise this personal withdrawal into a rule about salaries in every business form."
+            },
+            {
+              "title": "Worked January summaries, after all checks",
+              "text": "Cash receipts total R1300: R200 old balance + R600 current receipt + R500 borrowing. Payments total R1190. Opening R1000 + R1300 − R1190 = closing cash R1110, an increase of R110. February's R300 receipt is excluded. This is a cash summary; it is not a standards-compliant statement of cash flows with all classifications and disclosures.\n\nSales R900 less goods supplied R350, interest R10, transport R80, utilities R60, stock loss R50 and depreciation R60 gives **R290 result before tax in this model**. No tax amount is inferred. Closing assets are cash R1110 + customers owing R300 + stock R300 + equipment R840 + prepayment R120 = R2670. Liabilities are supplier/service balances R330 + loan R400 = R730. Equity is R1940. Check R2670 = R730 + R1940, and R1800 opening equity + R290 result − R150 personal withdrawal = R1940."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Begin another case: cash R400 and resale stock R120, no debts. Deliver the entire stock for a R300 credit sale, then receive R200 of that sale. Ask for cash, the customer balance, remaining stock, result and total assets. Answer: R600 cash, R100 owed, no stock remaining, R180 result and R700 assets. The opening equity R520 plus the R180 result also equals R700. The R200 receipt must not be counted as another sale."
+            },
+            {
+              "title": "Corrective feedback",
+              "text": "If a learner calls R110 January profit, ask which cash movements were borrowing, equipment or a household withdrawal and which period costs had no January payment. If they add a receipt to sales twice, physically join the invoice and receipt with the same reference, then repeat the fresh example."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Choose one redacted recorded sale and its evidence. Say which part is a sale, receipt or unpaid amount. Read the Sales and Invoice app companions before changing an entry. Charts presents recorded information; it does not create this complete position, stock valuation or loan ledger. Keep these practice figures outside actual My Records."
+            }
+          ]
+        },
+        {
+          "id": "f7-2",
+          "code": "F7.2",
+          "title": "Close the period without hiding gaps",
+          "outcome": "Separate event, document and payment dates. Explain why stock, equipment, unpaid costs and future services matter at the period boundary. Keep an unsupported value unknown.",
+          "reading": "A document can arrive after the work. Payment can happen before or after the service. Keep those dates together. At the end of our month, ask what was delivered, used, owed and still available. A bank line alone cannot answer every question. Check the stock and equipment records too. When evidence is missing, write what you still need. Do not enter zero just to finish a total.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Place A01 across the January–February boundary. Work was completed in January at the agreed R80 charge. The invoice is dated February and the amount is unpaid at January end. Under this model, January includes the R80 cost and liability, while January cash does not change. Retain both documents and dates. Now place F01: cash leaves in January, but the whole storage service is for February. January includes a R120 prepayment asset, not a January storage cost. A real contract may need different treatment; this case supplies the timing and rights explicitly.\n\nShow the stock bridge: opening R300 + purchases R400 − goods supplied R350 = R350 before the closing check. C01 supports a R50 loss and R300 remaining. This is a reviewed reconciliation, not an instruction to label every unexplained difference as theft or spoilage. Ask for evidence before choosing a cause or accounting treatment. Show the equipment bridge: opening R600 + purchase R300 − supplied period depreciation R60 = R840. The charge spreads cost in this model but is not a new payment and is not a tax allowance."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Run the missing-stock case. Withhold C01 entirely. The book shows R350 before review, but the physical count, valuation and adjustment are unknown. Cash R1110, customer balances R300, equipment R840, prepayment R120, payables R330 and loan R400 still have supplied support. **Adjusted stock, complete period result, total assets and equity are unknown.** Do not reuse R300 from the complete case after its evidence has been removed. Ask the learner to identify the precise document that would allow a reliable update."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "New case: start with cash R200 and no other balance. Pay R90 for a service supplied wholly next month, with the right unused at this month's end. Cash becomes R110; the prepayment is R90; the period result is R0; total assets remain R200. If the service period is missing from the document, the R90 payment is known but that classification is not established. Request the agreement and service dates rather than assuming all of it is a current expense."
+            },
+            {
+              "title": "Corrective feedback",
+              "text": "If the learner puts A01 into February only because of the invoice date, point to the January service evidence. If they call every purchase an expense, compare stock still held, equipment and a service already used. If they equate a balanced equation with accurate accounts, show that a wrong classification can still balance: evidence and period checks are needed too."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Assemble a small period-end folder: opening balances, sales and deliveries, receipts, supplier bills, payments, stock evidence, equipment schedule, debt schedule and unresolved questions. Keep original references and dates. An export from the app is one input to that folder. Do not invent stock, depreciation or loan entries in a crop-sale form to force a chart to match this exercise."
+            }
+          ]
+        },
+        {
+          "id": "f7-3",
+          "code": "F7.3",
+          "title": "Prepare records and ask the right tax questions",
+          "outcome": "Assemble an evidence pack and find the appropriate current official guidance. Distinguish a readable app invoice from a verified compliant tax invoice. State what remains unconfirmed without guessing a tax rate, deadline or registration outcome.",
+          "reading": "Keep the story behind a number. Who supplied what? When did it happen? Which document supports it? Which money movement belongs with it? Keep records organised and safe. Tax and record duties depend on the business and its circumstances. Use current SARS guidance and suitable help. A saved invoice, tax-reference field or app export cannot confirm all those duties for you.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Use an invented pack, not a learner's private identifiers. Put an opening balance list, source documents, account statements, stock check, equipment and debt schedules, and unresolved items behind a one-page index. Give each a reference and period. Reconcile the index against the summaries. Mark missing items visibly. Keep actuals separate from forecasts. Do not ask learners to send private financial documents to a public class or to an unverified adviser.\n\nOpen the current official SARS pages in the source notes. Show how to record the page title, URL, date checked and the exact question. For example: which business form and registrations apply; what records are required; which retention conditions apply; whether an invoice has the required particulars for the relevant supply; and whether electronic storage arrangements meet the applicable requirements. This is an evidence-finding exercise, not a conclusion that a particular learner must register or can discard records. Retain source documents while questions remain unresolved. Do not teach a universal destruction date from a short web table."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Discuss four cards:\n\n1. “The app printed a VAT number, so this is a valid tax invoice.” **Not established.** A field or title alone does not establish registration, supply treatment or all required particulars. Inspect the document with the applicable current guidance.\n2. “I did not need to submit a return, so no records are needed.” **Not established.** Do not infer all record duties from that fact. Ask about the applicable requirements and any continuing audit, dispute or other obligation.\n3. “My export is a complete set of accounts and guarantees a loan.” **Not established.** Check it against the other evidence. An export does not establish completeness, creditworthiness or approval.\n4. “A missing stock value should be zero.” **Incorrect.** Request the count, valuation and reconciliation. Do not disguise missing information as a measured result."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Give an invoice and cash export with no stock check, unpaid-customer list or equipment schedule. Ask the learner to prepare an index of supplied and missing evidence, name one specific question for a bookkeeper, and record a current SARS source to consult for one compliance question. Accept an oral explanation or a card sort. A satisfactory answer separates known documents from missing ones and does not claim the export proves profit, complete accounts or tax compliance. The answer must be based on the supplied pack, not private records."
+            },
+            {
+              "title": "Corrective feedback",
+              "text": "If the learner asks for “the tax number that makes everything correct,” return to the supply, business status, document and current rules. If they try to fill gaps with plausible figures, ask them to label the gap and identify who or what can resolve it. Repeat with a different missing document."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Reopen the appropriate saved invoice and inspect its details without sending it. Use the invoice companion and, when available, the export companion. Prepare a private evidence index and questions for appropriate local help. Keep a readable copy and recovery plan for needed records. Do not assume a device-local document has synchronised to another device, or that a course completion badge certifies the business's accounts."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Shared practice case",
+          "text": "A small market stall buys finished goods for resale. It is a separate exercise within the farm-business pathway, not a valuation of growing crops, animals, home-grown harvests or an entire homestead. All amounts and dates are invented. The period is 1–31 January 2027. Values below are supplied carrying amounts for the exercise; they are not market quotations. No VAT or income-tax calculation is included. Equipment classification, depreciation and stock-loss treatment are supplied assumptions, not policies to copy into real accounts.\n\nAt opening: cash R1000; customers owe R200; resale stock R300; equipment R600. The business owes suppliers R300 and has no loan. Total assets R2100 less liabilities R300 leaves opening equity R1800. Equity is the owner's residual interest, not a second cash account. There are no other opening balances in this bounded model.\n\n| Ref | Event date | Original source card |\n| --- | --- | --- |\n| R01 | 5 Jan | Collect R200 from the opening customer balance. This older sale is not January revenue. |\n| P01 | 8 Jan | Receive resale goods costing R400. Pay R250; R150 remains owed. |\n| S01 | 10 Jan | Deliver an accepted credit sale of R900. Goods supplied have carrying cost R350. No receipt yet. |\n| R02 | 15 Jan | Receive R600 toward S01. Link the receipt to that sale. |\n| P02 | 16 Jan | Pay R200 against amounts already owed to suppliers. |\n| E01 | 20 Jan | Pay R300 for a lasting tool. It qualifies as equipment in this exercise. |\n| L01 | 21 Jan | Receive a R500 loan with a matching obligation. No initial fee here. |\n| L02 | 24 Jan | Pay R110: R100 loan principal and R10 January interest. |\n| H01 | 26 Jan | Owner takes R150 for personal use. No wage or business service is supplied. |\n| A01 | 28 Jan | January transport service completed, agreed charge R80, unpaid. Invoice arrives 2 February; a signed January work record supports the amount and period. |\n| F01 | 29 Jan | Pay R120 for storage supplied wholly in February. None of that service is used by 31 January. |\n| U01 | 31 Jan | Pay R60 utility cost relating wholly to January. |\n| C01 | 31 Jan | Approved count, valuation and reconciliation confirm closing resale stock R300 and a R50 stock loss. |\n| D01 | 31 Jan | Supplied reviewed schedule gives R60 January depreciation across the equipment. It is not an extra cash payment. |\n| X01 | 5 Feb | Receive the remaining R300 of S01. This is outside January cash. |"
+        },
+        {
+          "title": "Checked facilitator table",
+          "text": "Running model balances after each source card; early rows precede later period-end checks. Values are rand. “Result” means the supplied model's running before-tax result, not bank cash or a completed real farm's profit. In the missing case, an unsupported complete result is deliberately not displayed.\n\n| Source | Cash | Result | Stock | Customers owe | Payables | Loan | Assets | Equity |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| OPEN | R1000.00 | R0.00 | R300.00 | R200.00 | R300.00 | R0.00 | R2100.00 | R1800.00 |\n| R01 | R1200.00 | R0.00 | R300.00 | R0.00 | R300.00 | R0.00 | R2100.00 | R1800.00 |\n| P01 | R950.00 | R0.00 | R700.00 | R0.00 | R450.00 | R0.00 | R2250.00 | R1800.00 |\n| S01 | R950.00 | R550.00 | R350.00 | R900.00 | R450.00 | R0.00 | R2800.00 | R2350.00 |\n| R02 | R1550.00 | R550.00 | R350.00 | R300.00 | R450.00 | R0.00 | R2800.00 | R2350.00 |\n| P02 | R1350.00 | R550.00 | R350.00 | R300.00 | R250.00 | R0.00 | R2600.00 | R2350.00 |\n| E01 | R1050.00 | R550.00 | R350.00 | R300.00 | R250.00 | R0.00 | R2600.00 | R2350.00 |\n| L01 | R1550.00 | R550.00 | R350.00 | R300.00 | R250.00 | R500.00 | R3100.00 | R2350.00 |\n| L02 | R1440.00 | R540.00 | R350.00 | R300.00 | R250.00 | R400.00 | R2990.00 | R2340.00 |\n| H01 | R1290.00 | R540.00 | R350.00 | R300.00 | R250.00 | R400.00 | R2840.00 | R2190.00 |\n| A01 | R1290.00 | R460.00 | R350.00 | R300.00 | R330.00 | R400.00 | R2840.00 | R2110.00 |\n| F01 | R1170.00 | R460.00 | R350.00 | R300.00 | R330.00 | R400.00 | R2840.00 | R2110.00 |\n| U01 | R1110.00 | R400.00 | R350.00 | R300.00 | R330.00 | R400.00 | R2780.00 | R2050.00 |\n| C01 | R1110.00 | R350.00 | R300.00 | R300.00 | R330.00 | R400.00 | R2730.00 | R2000.00 |\n| D01 | R1110.00 | R290.00 | R300.00 | R300.00 | R330.00 | R400.00 | R2670.00 | R1940.00 |\n| MISSING/C01 | R1110.00 | Unknown | Unknown | R300.00 | R330.00 | R400.00 | Unknown | Unknown |\n| MISSING/D01 | R1110.00 | Unknown | Unknown | R300.00 | R330.00 | R400.00 | Unknown | Unknown |\n\nFresh sale columns: cash, customer balance, remaining stock, result, assets.\n\n| Case | Cash | Owed | Stock | Result | Assets |\n| --- | --- | --- | --- | --- | --- |\n| FRESH-SALE | R600.00 | R100.00 | R0.00 | R180.00 | R700.00 |\n\nFresh prepayment columns: cash, prepayment, result, assets.\n\n| Case | Cash | Prepayment | Result | Assets |\n| --- | --- | --- | --- | --- |\n| FRESH-PREPAY | R110.00 | R90.00 | R0.00 | R200.00 |"
+        }
+      ],
+      "sources": [
+        {
+          "label": "IFRS Foundation: IAS 1 overview",
+          "url": "https://www.ifrs.org/issued-standards/list-of-standards/ias-1-presentation-of-financial-statements/"
+        },
+        {
+          "label": "FAO: Record keeping",
+          "url": "https://www.fao.org/4/w6864e/w6864e0f.htm"
+        },
+        {
+          "label": "SARS: Starting a business and tax",
+          "url": "https://www.sars.gov.za/businesses-and-employers/small-businesses-taxpayers/starting-a-business-and-tax/"
+        },
+        {
+          "label": "SARS: Record keeping",
+          "url": "https://www.sars.gov.za/client-segments/record-keeping/"
+        },
+        {
+          "label": "SARS: Tax invoices",
+          "url": "https://www.sars.gov.za/businesses-and-employers/government/tax-invoices/"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f7.pdf"
+    },
+    {
+      "id": "f8",
+      "number": 8,
+      "title": "Plan, compare and improve the business",
+      "summary": "Test market evidence, write a checkable plan and review a season.",
+      "image": "/studies-guides/sketch-the-site.jpg",
+      "sourceFile": "docs/studies-review-2026-09-20/reserve/finance/f8-business-plan.md",
+      "sourceSha256": "ee2e36f8500d545f8fd5a97d955bc1989ff531cf664220cb8ec4fa7330570e96",
+      "lessons": [
+        {
+          "id": "f8-1",
+          "code": "F8.1",
+          "title": "Choose an enterprise from evidence",
+          "outcome": "Compare two options using demand evidence, the same period, available resources and dated cash needs; explain a missing assumption before choosing a next action.",
+          "reading": "Start with a buyer and a task you can deliver. What does the buyer need? How much, in which unit, at what quality, and by when? Interest is not an order. A high sales total does not tell you what you will keep or whether you can pay the earlier bills. Put the alternatives beside each other. Keep the missing evidence visible.",
+          "practice": [
+            {
+              "title": "Observe and sort",
+              "text": "Lay out M-A and M-B. Ask the learner to point to a documented statement, a planning assumption and an unanswered question. M-A is an enquiry about up to 40 kg at R12 per kg, subject to quality and confirmation. The forecast assumes the full quantity sells and the money arrives on 30 January. M-B expresses interest in baskets at R30 each, but confirms no quantity. The forecast's 20 items is an assumption, not a completed market survey or agreed order. Neither document proves a secure market. Ask about grade, acceptance, quantities, delivery costs, payment terms, repeat demand and alternative buyers. Keep a date and source beside each answer."
+            },
+            {
+              "title": "Demonstration",
+              "text": "For January, Plan A forecasts sales of R480 and operating payments of R280. Plan B forecasts R600 and operating payments of R480. Their included cash surpluses are R200 and R120 respectively, assuming all forecast sales are paid within the period. These are not full profits: closing stock, equipment use, overheads and unpaid work are not completely supplied. Do not treat the omitted costs as zero. Do not compare R12 per kg with R30 per item as though the larger number identifies the better enterprise.\n\nEach alternative starts with R300. A's quoted payments leave R120 on 5 January, R80 on 10 January and R20 on 20 January. The assumed R480 payment on 30 January brings its closing projection to R500. B's payments leave R20, then an unfunded -R120, then -R180; its assumed receipt brings the closing projection to R420. A positive closing forecast does not make those earlier B payments fundable. The negative amounts are projected gaps, not an assertion that a physical cash tin held negative notes or that an overdraft was approved.\n\nThe supplied work plan allows eight owner hours. A requires six; B requires ten in addition to its paid helper. B has a two-hour owner-time gap. Those are exercise capacities, not recommended work rates. A's apparent fit does not establish that a real farm has sufficient land, water, skills, labour or permissions. Check each real constraint separately using suitable local evidence."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Sort each source into “supports this fact”, “assumption to test” or “missing”. Show the first projected shortage on the dated cash line. Ask the learner to justify a next step, not announce a universal winning enterprise. A defensible answer is to investigate A further while confirming buyer terms, the complete costs and deliverability. Another is to revise B's scope and obtain evidence for labour and cash arrangements before any commitment. “B wins because R600 is bigger” fails. “A is guaranteed profitable” also fails."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Hide the demonstration. Give the separate items case: planned ten items at R15 each, R60 payments and R80 opening cash. Ask for sales and closing cash, then ask whether these alone prove profit. Next remove the buyer's confirmed quantity from a fresh enquiry. The learner must name a market question rather than fill the blank with ten. Finally show kg beside items: ask which measures can be compared and which cannot be added directly."
+            },
+            {
+              "title": "Feedback",
+              "text": "If sales become profit, put the excluded-cost card beside the surplus. If January's final cash hides the earlier gap, replay B one bill at a time. If the learner calls an enquiry an order, point to its conditional wording. Use a new example after correction; do not give a pass for repeating the model's answer."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Prepare a small market enquiry sheet with product, unit, quality, quantity, collection/delivery, date and payment terms. Record who supplied information and permission to keep it; use redacted copies in class. Use the mapping guide to identify the correct site and distinguish beds from a whole parcel. A place pin does not prove productive area or land rights. Keep these enterprise forecasts in the workbook; My Records is for supported actual entries."
+            }
+          ]
+        },
+        {
+          "id": "f8-2",
+          "code": "F8.2",
+          "title": "Turn the idea into a checkable plan",
+          "outcome": "Present a connected plan whose claims lead back to evidence, show timing and constraints, and distinguish an unapproved funding request from available cash.",
+          "reading": "A useful plan lets another person follow your reasoning. Say what you intend to sell, why a buyer may want it, and what you need to deliver it. Show the work and payments in order. Keep estimates separate from records. If a number or permission is missing, name it and say how you will check it. A neat document cannot turn an application into money.",
+          "practice": [
+            {
+              "title": "Demonstration pack",
+              "text": "Build eight short sections: purpose and chosen activity; market evidence; site and resource access; work and delivery sequence; cost assumptions; dated cash forecast; risks and responses; review actions. Give every significant figure a reference, date, unit, scope and status. Mark a quotation as a quotation, an enquiry as an enquiry and an actual payment as a record. Keep an original plan version and a date for revisions. Explain the business in plain language before presenting the numbers.\n\nFor A, connect the three quote cards to the cash line and its assumed buyer payment. Keep B as a genuine alternative, with its hours and earlier cash gap visible. Do not combine the two R300 opening balances. A funding application F-ASK for R180 has no approval, terms or disbursement date. It does not fill B's gap. Even an approval may have conditions and timing to check; this lesson gives no approval or borrowing recommendation. F6 supplies questions for reading actual finance terms."
+            },
+            {
+              "title": "Test timing",
+              "text": "Move A's entire assumed R480 receipt to 5 February, retaining January's cost dates. January now has no buyer receipt and ends at R20. The projected sale remains R480; payment timing changed, not the quantity or price. The amount remains expected from the buyer at the window's end under this scenario. This is a January horizon, not a full next-season plan: later bills and obligations still need their own dated rows. A real forecast should cover the relevant operating cycle and commitments, rather than copying this short exercise horizon blindly.\n\nA response must be specific and checked. For example, ask the buyer to confirm terms, then record any actual agreement and recalculate; obtain a genuine alternative transport quote; reconsider the proposed quantity against capacity. Do not assume a deposit, delay a supplier's bill without agreement, cut necessary care or insert hoped-for funding as certain income. Explain the effects on quality, workload, household needs and others before adopting a change."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Give one learner the proposed plan and another the evidence cards. For each claim ask “which record supports it?” Put missing demand confirmation, full cost treatment and site/resource evidence into an action register with an owner and review date. The model's proposed 10 February 2027 review is a classroom date, not a universal planning interval. Ask what could make the plan wrong and what observation would trigger reconsideration. Keep a funding pack's requested information separate from what the class currently knows."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "A learner submits a polished map, a screenshot of R420 closing projected cash and the R180 application. Explain why these do not prove land rights, earlier liquidity, profitability or funding approval. Ask for the dated B payments and the missing work-hour arrangement. Then give A's delayed receipt case without the answer and ask the learner to build January cash. They must leave the February receipt outside January."
+            },
+            {
+              "title": "Feedback",
+              "text": "If a forecast is relabelled as actual, return to the source status. If an application pays the bill in the model, remove it and restore the gap. If a claim rests on the map's appearance, ask for the appropriate underlying agreement, measurement or record. A legitimate answer may be “not ready to commit; obtain this evidence”. It is not a failure to preserve uncertainty."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Build a redacted practice plan and a short evidence index. Use the live mapping, invoice and Charts guides for supported tasks. A record export or “Records for a lender” summary is supporting material, not a full application, a title document, complete financial statements or an eligibility decision. Check the current requirements with the relevant organisation when preparing a real pack. Keep private documents secure; this lesson sends nothing to a lender or buyer."
+            }
+          ]
+        },
+        {
+          "id": "f8-3",
+          "code": "F8.3",
+          "title": "Review the season without rewriting its history",
+          "outcome": "Reconcile an original forecast with actual records, separate quantity, price, collection and cost differences, preserve a missing value, and set a justified next action.",
+          "reading": "Keep the plan you started with. Put the actual records beside it for the same period and units. What sold? What money arrived? What was paid? Which amounts are still owed? Explain each difference with evidence before saying why it happened. Then make the next plan. Changing the old plan to match the result hides what you learned.",
+          "practice": [
+            {
+              "title": "Demonstration",
+              "text": "Actual A has 36 kg delivered at R11 per kg on 25 January, an invoice for R396. R300 arrives on 30 January, leaving R96 owed at 31 January. The remaining R96 arrives on 5 February; it is not January cash. Actual payments are purchase R180, packaging R50 and transport R80, totalling R310. An evidenced R20 owner contribution arrives on 15 January from outside this business cash scope. It is not a sale or loan. Starting with R300, the actual cash sequence is R120, R70, R90, R10 and R310. ACT-C1 reconciles the final R310 to the cash count and statement evidence. This complete model has no unfunded actual negative balance.\n\nThe closing forecast was R500; checked actual closing cash is R310, a R190 decrease against that forecast. Do not call this R190 a business loss. The sales-value difference is R84, and neither difference establishes full profit. Use the visual bridge in this stated order:\n\n- Quantity effect: (36 - 40) kg at the planned R12 per kg = -R48.\n- Price effect: 36 actual kg at (R11 - R12) per kg = -R36.\n- Unpaid January balance: -R96 of the invoiced amount is not yet received.\n- Purchase payment difference: R180 versus R180, no change.\n- Packaging payment difference: R50 versus R40 reduces cash by R10.\n- Transport payment difference: R80 versus R60 reduces cash by R20.\n- Owner contribution adds R20 cash, not sales.\n\nR500 - R48 - R36 - R96 - R10 - R20 + R20 = R310. The quantity and price effects sum to the R84 sales difference. This decomposition values the quantity change at planned price and the price change at actual quantity; different valid ordering allocates the interaction differently. It is arithmetic attribution, not proof of cause. The records do not say why fewer kilos sold or why the price changed. Do not invent crop failure, poor effort, buyer misconduct or weather as the explanation. Investigate using appropriate evidence."
+            },
+            {
+              "title": "Guided practice",
+              "text": "Trace every bridge step back to its source. Ask why the invoice and its two receipts are not three sales, and why the owner contribution does not increase product revenue. Keep January and February windows visible. If a learner changes the plan quantity to 36, restore the original 40 before comparing. Ask for a reasoned next action such as confirming quality/demand and payment terms, checking current quotes, and fitting work to available hours. The actual R11 and 36 kg inform an enquiry; they do not guarantee next month's price or sales."
+            },
+            {
+              "title": "Missing-evidence case",
+              "text": "Hide the amount on ACT-P2 and remove ACT-C1's closing reconciliation. Packaging was paid but its amount is unavailable. Full payments, closing cash, the cash difference and deepest gap now remain unknown. Sales of R396 and the January customer balance of R96 stay supported. Do not use the other case's R310 closing figure to reconstruct the missing amount. With a separate trustworthy closing reconciliation, a discrepancy could be investigated; this case deliberately does not supply one. Keep a request for the receipt and reconciliation open."
+            },
+            {
+              "title": "Independent attempt",
+              "text": "Return to the separate items case. Plan: ten items at R15, R60 payments, R80 opening. Actual: eight items at R14, R90 received, R70 payments and R20 contributed by the owner; no other movements or opening customer balance. Find actual sales, customer balance, closing cash and the difference from plan. Decompose the sales change with the same order as the demonstration. Then remove the actual cost evidence and ask which answers remain supported. Do not label a missing amount zero."
+            },
+            {
+              "title": "Feedback and assessment",
+              "text": "The learner must produce R112 sales, R22 still owed and R120 closing cash against the R170 plan, a -R50 cash difference. Sales quantity effect is -R30 and price effect -R8, totalling -R38. Closing bridge: R170 - R30 - R8 - R22 - R10 + R20 = R120. Correct explanations distinguish product sales, money received, owner funds and the period. If a concept is missed, give corrective feedback and a new small source set; do not change the old answer to count it as independent success."
+            },
+            {
+              "title": "Field task and app connection",
+              "text": "Write a short review with the original assumption, actual evidence, explained difference, unresolved question, next action, responsible person and review date. Use the Charts guide to check each display's time window and cost scope. The app's single paid-in-full date does not reproduce this partial-payment history; keep the settlement schedule separately and do not mark a deposit as full payment. Do not enter invented classroom figures into a real farm's records."
+            }
+          ]
+        }
+      ],
+      "shared": [
+        {
+          "title": "Practice setting",
+          "text": "Use `f8-practice.json`, the learner workbook and the visual comparison together. All money, dates, quantities and hours are invented classroom inputs. They are not local prices, yields, recommended workloads or farming forecasts. This case concerns a produce-selling activity and a basket-selling activity; it does not model production from land. Keep kilos and items separate. Both are alternatives using the same opening money, not two activities that can each spend it simultaneously. The actual case is an invented record set shown after the plan, not a prediction of what will happen.\n\nBuild on F3 cost boundaries, F4 cash timing, F5 payment evidence and F7 complete-account boundaries. Supply counters, source cards, a calculator and writing space. A learner may explain aloud or point while a facilitator records the reasoning. No real buyer details or bank documents are needed."
+        },
+        {
+          "title": "Checked answers",
+          "text": "All cash values are within the stated January scope. Plan gaps are unfunded projections. Complete profit stays unknown. The original cases compare currencies over one period, not quantities across unlike units.\n\n| Case | Sales | Buyer receipts | Payments | Closing cash | Lowest cash | Cash gap |\n| --- | ---: | ---: | ---: | ---: | ---: | ---: |\n| Plan A | R480.00 | R480.00 | R280.00 | R500.00 | R20.00 | R0.00 |\n| Plan B | R600.00 | R600.00 | R480.00 | R420.00 | -R180.00 | R180.00 |\n| Actual A | R396.00 | R300.00 | R310.00 | R310.00 | R10.00 | R0.00 |\n\nPlan B needs two more owner hours than supplied. Delayed Plan A has R480 projected sales, zero January buyer receipts and R20 January closing cash. Actual A has R96 owed at 31 January. Owner funds R20 are included only in actual cash. Missing-case closing cash and full profit stay unknown."
+        },
+        {
+          "title": "Connected capstone",
+          "text": "The learner presents an original/revised plan pair with: one market evidence sheet; a resource and access check; an activity budget with exclusions; dated cash rows; a delivery/invoice/payment trail; a cost evidence index; an actual-versus-plan review; and a next-action register. Use only systems relevant to that learner. A farming plan needs appropriate land, resource and technical evidence beyond this market exercise. The map and app records can support the pack but cannot replace those checks.\n\nAssess whether the learner can detect an unconfirmed buyer assumption, an unfunded early payment, double-counted income, unlike units, an unpaid invoice counted as cash, an owner contribution called sales, an out-of-period receipt, missing costs presented as zero and a forecast presented as actual. Record the evidence of performance, feedback and next practice. Do not claim accounting competence, business viability, accreditation or funding approval from this classroom pack."
+        }
+      ],
+      "sources": [
+        {
+          "label": "FAO Farm Business School manual, 2011",
+          "url": "https://www.fao.org/4/i2136e/i2136e00.htm"
+        },
+        {
+          "label": "Department of Agriculture, Forestry and Fisheries: Agricultural Business Plan Guidelines",
+          "url": "https://old.dalrrd.gov.za/doaDev/sideMenu/cooperativeandenterprisedevelopment/docs/Business%20Plan%20Guidelines_WEB.pdf"
+        }
+      ],
+      "workbook": "/finance-course/workbooks/f8.pdf"
+    }
+  ]
+}
