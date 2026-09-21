@@ -33,6 +33,9 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '4f3fd9c9', changes: [
+    'Back returns to your app guide after opening Records or another page.',
+  ] },
   { when: '21 September 2026', sha: 'a6ef09af', changes: [
     'Studies now has a guide to reading Charts and tracing a figure to its record.',
     'A practice example shows why a running total is not your bank balance.',
