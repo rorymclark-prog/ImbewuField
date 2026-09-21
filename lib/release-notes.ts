@@ -34,6 +34,13 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '22 September',
+    sha: '6d8991f',
+    changes: [
+      'Your farm plan sprout now sways gently as you finish steps',
+    ],
+  },
+  {
     when: '21 September',
     sha: '4d38b53',
     changes: [
