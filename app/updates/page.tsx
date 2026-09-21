@@ -11,6 +11,7 @@ import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import MenuButton from '@/components/MenuButton';
 import { RELEASE_NOTES } from '@/lib/release-notes';
+import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
 
 export default function UpdatesPage() {
   // The sha of the build the reader is LOOKING AT — fetched, not imported, so a stale
@@ -50,6 +51,11 @@ export default function UpdatesPage() {
             Every change that reached the app, newest first — the same notes the refresh
             banner shows, kept here so they don&rsquo;t disappear when the next update lands.
           </p>
+          <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_UPDATE_GUIDE_EVENT))}
+            className="mb-6 px-4 rounded-lg font-semibold"
+            style={{ minHeight: 44, background: '#1F4D2B', color: '#fff' }}>
+            Guide me to recent changes
+          </button>
 
           {RELEASE_NOTES.map((entry) => (
             <section key={`${entry.when}-${entry.sha ?? ''}`} className="mb-7">
