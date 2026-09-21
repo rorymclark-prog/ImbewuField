@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C03–C04/C13–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C03–C04/C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -87,3 +87,7 @@ C09 and C10 are implemented at `/student/guides/past-sales` and `/student/guides
 ## Export companion — 21 September 2026
 
 C12 is implemented at `/student/guides/exports`: six English steps, a period-choice exercise and independent source-tracing practice. The phone export now states its current-month scope; the wide sheet exposes its selected period to assistive technology. [Source and walkthrough evidence](exports.md) records the different CSV/PDF periods and source-document limits. Ten readable companions are implemented, with C03, C04, C13 and C14 remaining. Branch/production verification follows in the release ledger. Animations remain held; narration and translation review remain open.
+
+## Field-evidence companion — 21 September 2026
+
+C13 is implemented at `/student/guides/evidence`: six English steps cover site identity, observation versus plan, manual test-result entry, source checks, saved versions and PDF inspection. [Source and walkthrough evidence](evidence.md) records the actual three-page sample evidence download and app-control save/reopen of the prepared Site Analysis Report, with their limits. Eleven readable companions are implemented; C03, C04 and C14 remain. No animations changed; narration and translation/learner review remain open.

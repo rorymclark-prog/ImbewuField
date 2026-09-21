@@ -632,4 +632,65 @@ export const EXPORT_GUIDE: AppGuide = {
   finish: { title: 'Choose the period you want to check', text: 'Open Charts for the CSV, or switch to Picked for Records for a lender. Start with sample records if you are practising.', href: '/records?tab=charts', label: 'Open My Records' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE];
+export const EVIDENCE_GUIDE: AppGuide = {
+  id: 'evidence', href: '/student/guides/evidence', cardTitle: 'Keep field evidence and check a report',
+  title: 'Keep the report connected to the land.',
+  summary: 'Choose the right site, keep the source evidence and check what a saved report actually includes.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers checking a site sketch together beside a homestead garden',
+  caption: 'Check the site together before trusting the plan · illustrated example',
+  prepareTitle: 'Bring observations, dates and original records',
+  prepare: [
+    'Have the site name, visit notes, photographs and any original test reports ready. Know when and where each record was made. Use only pictures and information you have permission to include.',
+    'For practice, open the sample tour and choose Turn site evidence into a report. Its pictures, household interview and soil values are examples. Do not use them as evidence about your own land.',
+  ],
+  steps: [
+    { id: 'right-site', title: 'Start with the correct saved site', action: 'Saved sites & reports → Saved sites → Open site & generate report', paragraphs: [
+      'Match the name and map position to the place you intend to describe. Open that site’s report workspace, then open Improve this report.',
+      'If the site has not been saved, name it and use Save site before attaching evidence. A familiar name alone is not enough if the map position is wrong.',
+      'The checklist shows whether records are present. It does not establish that they are accurate, checked or complete.',
+    ], check: 'The report workspace belongs to the place you visited, and you know which evidence is still missing.' },
+    { id: 'observations', title: 'Keep observations separate from plans', action: 'Improve this report → Add site photos and Complete or review survey', paragraphs: [
+      'Use Add site photos to include clear views of the actual site. Keep the original files with their dates, locations and notes. The app stores smaller copies; it is not your only photo archive.',
+      'Review the site and household survey. Write what was observed or reported, and identify what you still need to check. Do not invent an answer to fill a gap.',
+      'Review Boundary & measurements, Site design and Planting plan too. A drawn tank, bed or crop can be planned work. Check on the ground before describing it as installed, planted or harvested.',
+    ], check: 'You can distinguish a real observation, a planned item and an illustration.' },
+    { id: 'test-sources', title: 'Enter the results from their source', action: 'Add soil test results or Add water test results → Results and sampling details → Save test results', paragraphs: [
+      'Keep the original laboratory report. The test folder accepts its PDF or a clear photograph, but uploading the file does not make the app read its results automatically.',
+      'Enter the sampling date, sample location or ID, laboratory, results, units and relevant method or comments in Results and sampling details. Copy these from the source, then compare them with it before choosing Save test results.',
+      'Reopen the same test folder and check the saved entry. A filename alone is not a measured result. Keep missing results unknown. Regional soil and climate layers are context, not a test of your own sample.',
+    ], check: 'Every entered result has a source, a unit and a sample you can identify.' },
+    { id: 'review-advice', title: 'Review the information before generating', action: 'Improve this report → Review settings and included maps → Generate report', paragraphs: [
+      'Check the source records, selected sections, language, wording and depth. Review the maps selected for the report. A map saved on another device may not be available here.',
+      'Generate report creates the advice from the available information. Read it against your actual site and records. Investigate conflicts or missing evidence before acting on the advice.',
+      'If you add evidence after a report was written, the earlier text stays as it was. Use Generate new report when you need updated advice. Changing the screen, print layout or summary view does not rewrite the full report.',
+    ], check: 'You know which information supports the advice, and which questions still need an answer.' },
+    { id: 'save-version', title: 'Save a version you can return to', action: 'Save → Check the result → Saved sites & reports → Saved reports', paragraphs: [
+      'Choose Save and read the result. If the app says Not saved or reports a storage problem, keep the report open and retain a copy while you resolve it.',
+      'Use the report’s Back control to return. In Saved sites & reports, open Saved reports or use Read latest saved report on the site card. Check the site, saved date and text without generating it again.',
+      'An older saved report is a snapshot. The current evidence checklist and photographs can be newer than its text. Read those labels and dates before assuming the advice used the latest evidence.',
+    ], check: 'You can reopen the intended version and tell what has changed since it was written.' },
+    { id: 'inspect-report', title: 'Inspect the copy before sharing', action: 'Export PDF → Open the file → Compare it with the source records', paragraphs: [
+      'Choose the view and image options you need. On a phone, open View and print options to find these choices. Then use Export PDF and open the saved file.',
+      'Inspect every page: site name, dates, measurements, units, included maps and pictures, source labels and gaps. Check that text and tables are readable. Keep original evidence separately; a report is not a complete backup.',
+      'Keep a dated copy. Before sending a real report, check the intended recipient and any household details, faces or precise locations it includes. Downloading a file does not mean anyone else received it.',
+    ], check: 'You have inspected the right version, understand its limits and know who should see it.' },
+  ],
+  practice: {
+    title: 'The test PDF has been uploaded.',
+    question: 'Does the attached file mean its results are ready for the report to use?',
+    choices: [
+      { label: 'Yes, every result is read automatically', feedback: 'This test folder stores the file but does not automatically read its contents. You still need to enter and check the relevant results.', correct: false },
+      { label: 'Enter and check the results, units and sample details', feedback: 'Correct. Use the original report as the source, save the entered results and reopen the folder to check them.', correct: true },
+      { label: 'Use the sample farm’s values for now', feedback: 'The sample values are invented for practice. They say nothing about your land. Leave your unknown results missing until you have evidence.', correct: false },
+    ],
+  },
+  limits: { title: 'Practise the evidence pack, then check the site report', paragraphs: [
+    'In the sample farm, change Mentor notes and follow-up to a clearly labelled practice note. Use Save edits, then Download evidence report. Open the file and find that note and the example-picture labels. Stop before sharing.',
+    'That practice evidence pack is separate from the full Site Analysis Report. Its prepared pictures are not photographs of the real garden, and its soil values are not laboratory findings. The practice workspace resets on reload; it is not a place to keep real records.',
+    'Independent practice: explain one recorded fact, one planned item and one gap. Then save and reopen a sample site report, check its date, and explain why adding a later photo does not prove its earlier advice was updated.',
+  ] },
+  finish: { title: 'Start with a site you can identify', text: 'Open your saved sites and review the evidence checklist. Use the sample tour first if you are practising.', href: '/reports', label: 'Open saved sites & reports' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE];
