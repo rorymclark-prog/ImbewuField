@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'b6ee6ad', changes: [
+    'Practise farm finance with connected source cards, checked calculations and a fresh retry.',
+    'Save or print your practice answers; a facilitator reviews your explanations.',
+  ] },
   { when: '21 September 2026', sha: '18f91b1c', changes: [
     'Explore Farm Finance: 24 English lesson drafts with worked practice.',
     'Use finance workbooks and a reading checklist; final assessment is still being prepared.',
