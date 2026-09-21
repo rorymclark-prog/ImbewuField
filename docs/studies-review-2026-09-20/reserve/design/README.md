@@ -38,3 +38,7 @@ Complete the remaining teaching and case material, then review it against the te
 ## Learner design folder
 
 A development preview at `/student/design/folder` now connects all six stages to an evidence record with device saves, a text download and facilitator discussion prompts. It keeps reasoning beside the actual drawing; it is not an automated assessment or a replacement for the missing measured case. See FOLDER-PRACTICE.md.
+
+## Visual scale practice
+
+The development preview at `/student/design/scale` now provides a source-grounded, explicitly simulated dimension/area exercise beside D1.3, D4.1 and D4.3. Learners compare a gap, touching edges and overlap, check their arithmetic and download the diagram. Its dimensions come directly from the existing app sample; it is not the full measured household example. See SCALE-PRACTICE.md.
