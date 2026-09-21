@@ -1,0 +1,22 @@
+.stageLinks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.stageLinks a { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 12px; border: 1px solid #c4d0b6; border-radius: 10px; line-height: 1.5; }
+.stageLinks span { display: grid; place-items: center; flex: 0 0 32px; height: 32px; background: #e9efdf; border-radius: 50%; font-weight: 700; }
+.stage { scroll-margin-top: 20px; }
+.example { margin: 20px 0 28px; padding: 12px 18px; border-left: 3px solid #a2b38e; background: #f0f3e9; }
+.review { border-top: 1px solid #d8d0bb; padding-top: 22px; }
+.saveBar { position: sticky; bottom: 0; margin-top: 24px; padding: 14px 22px; background: #fffdf7; border: 1px solid #b8c7ac; border-radius: 14px; box-shadow: 0 -4px 18px #293b2e12; }
+.saveBar > div { margin-top: 0; }
+.saveBar p { font-size: 14px; margin: 10px 0 0; }
+.printAnswer { display: none; }
+@media (max-width: 650px) {
+  .stageLinks { grid-template-columns: 1fr; }
+  .saveBar { position: static; padding: 18px; }
+  .saveBar button { width: 100%; justify-content: center; }
+}
+@media print {
+  .stageLinks, .example, .saveBar { display: none; }
+  .printAnswer { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+
+.saveNote { font-size: 14px !important; color: #516347; }
+@media print { .saveNote { display: none; } }
