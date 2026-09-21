@@ -1407,9 +1407,11 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees."
       ],
       "15": [
-        "This animation is one example of a planting sequence.",
-        "Protect soil early and add suitable plants as water and shelter allow.",
-        "Use observed growth and competition to decide the next step, rather than copying a fixed calendar."
+        "This picture shows a young food forest. Start with an area you can care for.",
+        "Protect exposed soil early. Here, loose mulch covers the soil.",
+        "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+        "Watch for competition. The farmer is removing grass near the young tree.",
+        "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step."
       ],
       "16": [
         "Begin with an area you can water and maintain. Check existing vegetation before clearing.",

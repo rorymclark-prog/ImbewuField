@@ -1,0 +1,62 @@
+{
+  "source": "source.png",
+  "title": "Watch: Care for a Young Food Forest",
+  "eyebrow": "ESTABLISH THE FOOD FOREST",
+  "overviewTag": "ILLUSTRATED EXAMPLE",
+  "transitionSeconds": 1.4,
+  "scope": "Guided illustrated observation of establishment care. No simulated plant growth, fixed planting sequence or measured spacing.",
+  "fps": 24,
+  "width": 1600,
+  "artHeight": 900,
+  "footerHeight": 200,
+  "scenes": [
+    {
+      "id": "overview",
+      "label": "Start small",
+      "narration": "This picture shows a young food forest. Start with an area you can care for.",
+      "focus": null
+    },
+    {
+      "id": "cover",
+      "label": "Protect the soil",
+      "narration": "Protect exposed soil early. Here, loose mulch covers the soil.",
+      "focus": [
+        0.5,
+        0.84,
+        0.19,
+        0.13
+      ],
+      "zoom": 1.4
+    },
+    {
+      "id": "trunk",
+      "label": "Keep the trunk clear",
+      "narration": "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+      "focus": [
+        0.5,
+        0.74,
+        0.085,
+        0.1
+      ],
+      "zoom": 1.65
+    },
+    {
+      "id": "competition",
+      "label": "Watch competition",
+      "narration": "Watch for competition. The farmer is removing grass near the young tree.",
+      "focus": [
+        0.355,
+        0.675,
+        0.105,
+        0.13
+      ],
+      "zoom": 1.5
+    },
+    {
+      "id": "overview",
+      "label": "Check, then add",
+      "narration": "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step.",
+      "focus": null
+    }
+  ]
+}

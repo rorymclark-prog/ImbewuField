@@ -1,0 +1,379 @@
+{
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "seconds": 32.04,
+  "starts": [
+    0.106833,
+    6.25,
+    12.244333,
+    18.096583,
+    23.636375
+  ],
+  "text_match": true,
+  "full_decode": "pass",
+  "human_listening_review": false,
+  "source_sha256": "99e057fcac62d736513e0fd811cc7271f015498c1ba9c31d6474b3d053c12b75",
+  "audio_sha256": "e9f947a495d135b850aab0491ac648d01c78eae8824353cbcbb7b4cbba9f39fa",
+  "words": [
+    {
+      "text": "This",
+      "offset": 1068330,
+      "duration": 2130830
+    },
+    {
+      "text": "picture",
+      "offset": 4051250,
+      "duration": 2840830
+    },
+    {
+      "text": "shows",
+      "offset": 7318330,
+      "duration": 2698750
+    },
+    {
+      "text": "a",
+      "offset": 10159160,
+      "duration": 568330
+    },
+    {
+      "text": "young",
+      "offset": 11153330,
+      "duration": 2414580
+    },
+    {
+      "text": "food",
+      "offset": 13994160,
+      "duration": 2414580
+    },
+    {
+      "text": "forest",
+      "offset": 16693330,
+      "duration": 4971660
+    },
+    {
+      "text": "Start",
+      "offset": 32244160,
+      "duration": 3977080
+    },
+    {
+      "text": "with",
+      "offset": 36505830,
+      "duration": 1420410
+    },
+    {
+      "text": "an",
+      "offset": 38068330,
+      "duration": 1136250
+    },
+    {
+      "text": "area",
+      "offset": 39914580,
+      "duration": 3267080
+    },
+    {
+      "text": "you",
+      "offset": 43465830,
+      "duration": 710410
+    },
+    {
+      "text": "can",
+      "offset": 44886250,
+      "duration": 1562500
+    },
+    {
+      "text": "care",
+      "offset": 47159160,
+      "duration": 1988750
+    },
+    {
+      "text": "for",
+      "offset": 49431660,
+      "duration": 2272910
+    },
+    {
+      "text": "Protect",
+      "offset": 62500000,
+      "duration": 4687500
+    },
+    {
+      "text": "exposed",
+      "offset": 67187500,
+      "duration": 4545410
+    },
+    {
+      "text": "soil",
+      "offset": 71732910,
+      "duration": 3693330
+    },
+    {
+      "text": "early",
+      "offset": 76136250,
+      "duration": 3267080
+    },
+    {
+      "text": "Here",
+      "offset": 90198750,
+      "duration": 3267080
+    },
+    {
+      "text": "loose",
+      "offset": 97301250,
+      "duration": 2272910
+    },
+    {
+      "text": "mulch",
+      "offset": 100142080,
+      "duration": 2698750
+    },
+    {
+      "text": "covers",
+      "offset": 103693330,
+      "duration": 3125000
+    },
+    {
+      "text": "the",
+      "offset": 107244160,
+      "duration": 852080
+    },
+    {
+      "text": "soil",
+      "offset": 108380830,
+      "duration": 3409160
+    },
+    {
+      "text": "Keep",
+      "offset": 122443330,
+      "duration": 2414580
+    },
+    {
+      "text": "mulch",
+      "offset": 125426250,
+      "duration": 2556660
+    },
+    {
+      "text": "away",
+      "offset": 127982910,
+      "duration": 1988750
+    },
+    {
+      "text": "from",
+      "offset": 130397910,
+      "duration": 1846250
+    },
+    {
+      "text": "the",
+      "offset": 132244160,
+      "duration": 852080
+    },
+    {
+      "text": "trunk",
+      "offset": 133948750,
+      "duration": 2982910
+    },
+    {
+      "text": "Notice",
+      "offset": 147585410,
+      "duration": 4119160
+    },
+    {
+      "text": "the",
+      "offset": 152272910,
+      "duration": 710410
+    },
+    {
+      "text": "clear",
+      "offset": 153693330,
+      "duration": 2130830
+    },
+    {
+      "text": "space",
+      "offset": 156250000,
+      "duration": 3551250
+    },
+    {
+      "text": "at",
+      "offset": 159943330,
+      "duration": 852080
+    },
+    {
+      "text": "the",
+      "offset": 161079580,
+      "duration": 852080
+    },
+    {
+      "text": "tree's",
+      "offset": 162784160,
+      "duration": 2556660
+    },
+    {
+      "text": "base",
+      "offset": 166335410,
+      "duration": 2556660
+    },
+    {
+      "text": "Watch",
+      "offset": 180965830,
+      "duration": 2130830
+    },
+    {
+      "text": "for",
+      "offset": 183522910,
+      "duration": 1136250
+    },
+    {
+      "text": "competition",
+      "offset": 185369160,
+      "duration": 6250000
+    },
+    {
+      "text": "The",
+      "offset": 201704580,
+      "duration": 852080
+    },
+    {
+      "text": "farmer",
+      "offset": 202982910,
+      "duration": 3267080
+    },
+    {
+      "text": "is",
+      "offset": 206676250,
+      "duration": 1136250
+    },
+    {
+      "text": "removing",
+      "offset": 208522910,
+      "duration": 3977080
+    },
+    {
+      "text": "grass",
+      "offset": 213352080,
+      "duration": 2982910
+    },
+    {
+      "text": "near",
+      "offset": 217045410,
+      "duration": 1562500
+    },
+    {
+      "text": "the",
+      "offset": 219176250,
+      "duration": 710410
+    },
+    {
+      "text": "young",
+      "offset": 220312500,
+      "duration": 2272910
+    },
+    {
+      "text": "tree",
+      "offset": 223437500,
+      "duration": 1988750
+    },
+    {
+      "text": "Before",
+      "offset": 236363750,
+      "duration": 3267080
+    },
+    {
+      "text": "adding",
+      "offset": 240625000,
+      "duration": 2414580
+    },
+    {
+      "text": "more",
+      "offset": 243323750,
+      "duration": 1988750
+    },
+    {
+      "text": "plants",
+      "offset": 246306660,
+      "duration": 3409160
+    },
+    {
+      "text": "check",
+      "offset": 251988750,
+      "duration": 1846660
+    },
+    {
+      "text": "moisture",
+      "offset": 254261250,
+      "duration": 4971660
+    },
+    {
+      "text": "shelter",
+      "offset": 261647910,
+      "duration": 4829580
+    },
+    {
+      "text": "and",
+      "offset": 267755830,
+      "duration": 852080
+    },
+    {
+      "text": "the",
+      "offset": 269034160,
+      "duration": 710410
+    },
+    {
+      "text": "care",
+      "offset": 270738750,
+      "duration": 1562500
+    },
+    {
+      "text": "you",
+      "offset": 272585410,
+      "duration": 568330
+    },
+    {
+      "text": "can",
+      "offset": 273863750,
+      "duration": 1278330
+    },
+    {
+      "text": "provide",
+      "offset": 275426250,
+      "duration": 4687500
+    },
+    {
+      "text": "Let",
+      "offset": 290482910,
+      "duration": 2556660
+    },
+    {
+      "text": "what",
+      "offset": 293465830,
+      "duration": 1562500
+    },
+    {
+      "text": "you",
+      "offset": 295312500,
+      "duration": 426250
+    },
+    {
+      "text": "observe",
+      "offset": 296448750,
+      "duration": 3977080
+    },
+    {
+      "text": "guide",
+      "offset": 301278330,
+      "duration": 2414580
+    },
+    {
+      "text": "your",
+      "offset": 303835410,
+      "duration": 852080
+    },
+    {
+      "text": "next",
+      "offset": 304971660,
+      "duration": 1988750
+    },
+    {
+      "text": "step",
+      "offset": 307102500,
+      "duration": 3409160
+    }
+  ]
+}

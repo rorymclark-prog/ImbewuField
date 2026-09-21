@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '1aad607', changes: [
+    'Food Forest now takes you closer to mulch, tree care and weeding in a young garden.',
+    'The illustrated tour has clear labels and matching narration.',
+    'Forest and soil close-ups stay with the voice when you pause or skip ahead.',
+    'Save Food Forest again to keep the updated picture and audio offline.',
+  ] },
   { when: '21 September 2026', sha: 'af2b6c5', changes: [
     'Studies now has a guide to finding, mapping and reopening your site.',
     'Explore the difference between a place pin, a land boundary and growing beds.',

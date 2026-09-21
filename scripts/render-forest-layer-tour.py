@@ -62,7 +62,7 @@ def render(output, asset_dir=ART):
         idx = max(i for i, start in enumerate(starts) if start <= t)
         scene = cfg['scenes'][idx]
         local = t - starts[idx]
-        transition = ease(local / .8)
+        transition = ease(local / cfg.get('transitionSeconds', .8))
         previous = max(0, idx-1)
         c0, c1 = camera(cfg['scenes'][previous]), camera(scene)
         cx, cy, zoom = [a+(b-a)*transition for a, b in zip(c0, c1)]
@@ -98,7 +98,8 @@ def render(output, asset_dir=ART):
         if 0 < idx <= steps:
             draw.text((w-164, ah+78), f'{idx} / {steps}', font=count_font, fill='#e5d4a0')
         else:
-            draw.text((w-350, ah+88), 'CONCEPT CUTAWAY', font=small, fill='#cbd6b4')
+            tag = cfg.get('overviewTag', 'CONCEPT CUTAWAY')
+            draw.text((w-42-draw.textlength(tag, font=small), ah+88), tag, font=small, fill='#cbd6b4')
         for n in range(steps):
             x = 43+n*((w-86)/steps)
             end = x+(w-114)/steps

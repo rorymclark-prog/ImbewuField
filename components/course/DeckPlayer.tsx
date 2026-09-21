@@ -9,6 +9,7 @@ import {
   resolveDeckLang,
   slideAudioUrl,
   slideImageFor,
+  timedAnimationSync,
 } from '@/lib/course-deck';
 import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
@@ -87,6 +88,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // moves through unless you stop the deck." A list of 24 play buttons is a filing cabinet; this
   // is a lesson.
   const [running, setRunning] = useState(false);
+  const [timedVoiceActive, setTimedVoiceActive] = useState(false);
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
   useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
@@ -98,6 +100,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const total = slides.length;
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
+  const timedTour = !!current && !!animationUrls(moduleId, current.slide, lang)?.narrationTimed;
+  const followNarration = useCallback(() => {
+    const audio = audioRef.current;
+    const video = videoRef.current;
+    if (!timedTour || !audio || !video || (!running && !timedVoiceActive && audio.paused)) return;
+    const sync = timedAnimationSync(audio, video);
+    if (!sync) return;
+    if (sync.seekTo !== null) video.currentTime = sync.seekTo;
+    if (!sync.playing) video.pause();
+    else if (video.paused) video.play().catch(() => {});
+  }, [running, timedTour, timedVoiceActive]);
 
   // STEP BY A DELTA, never to a computed absolute.
   //
@@ -131,6 +144,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Stop button that stops nothing.
   useEffect(() => {
     narrationEnded.current = false;
+    setTimedVoiceActive(false);
     let cancelled = false;
     if (!running) videoRef.current?.pause();
     if (running && videoRef.current) {
@@ -295,10 +309,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             src={anim.video}
             poster={anim.poster}
             autoPlay
-            loop={!running}
+            loop={!(running || (timedTour && timedVoiceActive))}
             muted
             playsInline
-            controls
+            controls={!(timedTour && (running || timedVoiceActive))}
+            onCanPlay={followNarration}
             onEnded={onAnimationEnded}
             onError={() => {
               setAnimationFailed(true);
@@ -318,7 +333,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
         {anim && (!isPlaying || animationFailed) && (
           <button
-            onClick={() => { setAnimationFailed(false); setPlaying((p) => new Set(p).add(current.slide)); }}
+            onClick={() => {
+              // Watch during speech starts this timed scene together from the beginning.
+              // Loading may still take time; onCanPlay catches the picture up to the voice.
+              if (timedTour && (running || timedVoiceActive) && audioRef.current) {
+                narrationEnded.current = false;
+                audioRef.current.currentTime = 0;
+                audioRef.current.play().catch(() => { setAudioFailed(true); setRunning(false); });
+              }
+              setAnimationFailed(false);
+              setPlaying((p) => new Set(p).add(current.slide));
+            }}
             style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, border: 'none', background: 'rgba(20,16,10,0.42)', color: '#fff', cursor: 'pointer' }}
           >
             <span aria-hidden style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 54, height: 54, borderRadius: '50%', background: 'rgba(255,255,255,0.94)', color: INK, fontSize: 20, paddingLeft: 4 }}>▶</span>
@@ -336,7 +361,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           aria-label={`Narration for ${heading}`}
           controls
           onEnded={onNarrationEnded}
-          onPlaying={() => setAudioFailed(false)}
+          onPlaying={() => { setAudioFailed(false); if (timedTour) setTimedVoiceActive(true); followNarration(); }}
+          onTimeUpdate={followNarration}
+          onSeeked={followNarration}
+          onPause={followNarration}
+          onWaiting={() => { if (timedTour && (running || timedVoiceActive)) videoRef.current?.pause(); }}
           onError={() => { setAudioFailed(true); setRunning(false); }}
           // Under play-through the next clip is fetched the moment this slide appears, so the gap
           // between slides is not a silence while the phone thinks. Off otherwise: idle preloading

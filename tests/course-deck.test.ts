@@ -320,3 +320,78 @@ test('Water playback respects language gaps, download choice and the whole anima
     } finally { act(() => view.unmount()); }
   }
 });
+
+test('a timed tour follows the voice after late loading, pause and seeking, then preserves its final hold', async t => {
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { addEventListener() {}, removeEventListener() {} } });
+  t.after(() => {
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+  });
+  const audio = { currentTime: 0, paused: true, ended: false, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); } };
+  const video = { currentTime: 0, duration: 33.291667, readyState: 0, paused: true, ended: false, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); } };
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'food-forest', lessonId: 'food-forest-l3', lang: 'en' }), {
+    createNodeMock: element => element.type === 'video' ? video : element.type === 'audio' ? audio : null,
+  }); });
+  try {
+    act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
+    assert.equal(view.root.findAllByType('video').length, 0, 'timed tours still require a download choice');
+    audio.currentTime = 18;
+    const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
+    act(() => watch.props.onClick());
+    assert.equal(audio.currentTime, 0, 'choosing Watch during speech restarts this scene together');
+    const clip = view.root.findByType('video');
+    assert.equal(clip.props.controls, false, 'one set of playback controls governs the timed pair');
+    audio.currentTime = 8;
+    act(() => clip.props.onCanPlay());
+    assert.equal(video.currentTime, 0, 'do not seek unloaded media');
+    video.readyState = 4;
+    act(() => clip.props.onCanPlay());
+    assert.equal(video.currentTime, 8, 'late-loaded pictures must catch up to the spoken feature');
+    assert.equal(video.paused, false);
+    audio.paused = true;
+    act(() => view.root.findByType('audio').props.onPause());
+    assert.equal(video.paused, true, 'paused speech must not leave highlights running');
+    audio.currentTime = 18;
+    act(() => view.root.findByType('audio').props.onSeeked());
+    assert.equal(video.currentTime, 18, 'seeking speech must seek the matching visual');
+    audio.paused = false;
+    act(() => view.root.findByType('audio').props.onPlaying());
+    assert.equal(video.paused, false);
+    video.currentTime = 15;
+    act(() => view.root.findByType('audio').props.onTimeUpdate());
+    assert.equal(video.currentTime, 18, 'a stalled picture must not remain behind the voice');
+    act(() => view.root.findByType('audio').props.onWaiting());
+    assert.equal(video.paused, true, 'buffering speech must not let the visual run ahead');
+    act(() => view.root.findAllByType('button').find(b => b.props['aria-label'] === 'Stop the lesson')!.props.onClick());
+    assert.equal(view.root.findByType('video').props.controls, true, 'silent watching keeps its own controls');
+    audio.currentTime = 12; audio.paused = false;
+    act(() => view.root.findByType('audio').props.onPlaying());
+    assert.equal(video.currentTime, 12, 'the native audio Play control must also synchronize the picture');
+    assert.equal(view.root.findByType('video').props.controls, false);
+    assert.equal(view.root.findByType('video').props.loop, false, 'a narrated tour must not loop behind the closing words');
+    audio.paused = true;
+    act(() => view.root.findByType('audio').props.onPause());
+    assert.equal(video.paused, true);
+    act(() => view.root.findAllByType('button').find(b => b.props['aria-label'] === 'Play the lesson')!.props.onClick());
+    audio.currentTime = 32.04; audio.paused = true; audio.ended = true; video.currentTime = 32;
+    act(() => view.root.findByType('audio').props.onPause());
+    assert.equal(video.currentTime, 32, 'the final hold must not jump back to a word boundary');
+    assert.equal(video.paused, false, 'the final hold must be able to finish');
+    act(() => view.root.findByType('audio').props.onEnded());
+    assert.match(view.root.findByType('h3').children.join(''), /Young Food Forest/);
+    video.ended = true;
+    act(() => clip.props.onEnded());
+    assert.equal(view.root.findByType('h3').children.join(''), 'Prepare a Manageable First Area');
+  } finally { act(() => view.unmount()); }
+});

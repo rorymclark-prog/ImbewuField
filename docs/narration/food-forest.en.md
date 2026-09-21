@@ -154,13 +154,17 @@ Main trees and lower layers can be introduced as conditions allow. Ground cover 
 
 ---
 
-**Slide 15 — Watch: Establishment in Stages**
+**Slide 15 — Watch: Care for a Young Food Forest**
 
-This animation is one example of a planting sequence.
+This picture shows a young food forest. Start with an area you can care for.
 
-Protect soil early and add suitable plants as water and shelter allow.
+Protect exposed soil early. Here, loose mulch covers the soil.
 
-Use observed growth and competition to decide the next step, rather than copying a fixed calendar.
+Keep mulch away from the trunk. Notice the clear space at the tree's base.
+
+Watch for competition. The farmer is removing grass near the young tree.
+
+Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step.
 
 ---
 

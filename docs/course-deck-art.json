@@ -316,9 +316,9 @@
       "reason": "Keep the complete cutaway, its roots and teaching label visible; never crop this instructional scene."
     },
     "15": {
-      "path": "public/course-animations/food-forest/posters/watch-15-forest-sequence.jpg",
+      "path": "public/course-animations/food-forest/posters/tour-young-forest.jpg",
       "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+      "reason": "Keep the complete young-forest teaching scene and readable label visible; no crop."
     }
   },
   "small-livestock": {

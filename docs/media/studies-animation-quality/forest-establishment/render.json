@@ -1,0 +1,20 @@
+{
+  "file": "public/course-animations/food-forest/tour-young-forest.mp4",
+  "bytes": 6436310,
+  "sha256": "8107bf45e53b071259792a823067a79f14352dfd1655e49f8e812ce2f7aa9fa2",
+  "seconds": 33.291666666666664,
+  "width": 1600,
+  "height": 1100,
+  "fps": 24,
+  "frames": 799,
+  "source_sha256": "9b31fa7b62473109242bff9127c48358cccdfc404d89686332b08726f4ef1c6f",
+  "narration_seconds": 32.04,
+  "phase_starts": [
+    0,
+    6.25,
+    12.244333,
+    18.096583,
+    23.636375
+  ],
+  "scope": "Guided illustrated observation of establishment care. No simulated plant growth, fixed planting sequence or measured spacing."
+}
