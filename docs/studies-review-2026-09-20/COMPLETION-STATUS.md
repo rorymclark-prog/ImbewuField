@@ -30,8 +30,8 @@ Branch: `codex/studies-completion-review`, based on `64edbc9`.
 - [x] Make the concept comparison fair; require evidence-based reasoning.
 - [x] Tie feature references to work, cost and care revision records.
 - [x] Add edge-distance practice, a fresh evidence variation and a handover record.
-- [ ] Inspect actual standalone exports and desktop/390px views.
-- [ ] Complete targeted Studies journey audit and act on its verified priority gaps.
+- [x] Inspect actual standalone exports and desktop/390px views.
+- [x] Complete targeted Studies journey audit and act on its verified priority gaps.
 - [ ] Run final checks once on the complete batch, publish, verify production.
 - [ ] Update this file with evidence, limitations and the next unfinished item.
 
@@ -44,6 +44,37 @@ Checkpoint `a22869d` saves the connected teaching revision. The actual browser S
 download opens independently with its colors and source labels. Visual inspection
 found and corrected water-label, scale-bar and alternative-dimension collisions;
 final production-build browser and offline checks are still pending.
+
+## Verified release candidate
+
+Code checkpoint `e073ade`:
+
+- Typecheck clean; 3,678 tests: 3,677 pass, zero failures, one pre-existing
+  shape-sync-loss TODO. Whitespace check and production build passed.
+- Finance and Design controls each confirmed all pages and startup dependencies
+  saved. Shared pictures were reused; neither control deletes shared files.
+- Browser offline mode: Design D1.1 → D1.2, Finance F2.1, the independent project
+  and its fresh-case navigation reopened successfully. Worked Design also opened
+  with the local server stopped and remained interactive.
+- Wrong gap 4 received corrective feedback; decimal-comma 0,5 matched the supplied
+  0.5 m edge gap. Choosing B showed conditional investigation feedback, not failure.
+- Effective 390 CSS-pixel viewport inspected: fitted diagram, explicit enlargement,
+  wrapped buttons and source disclosures. Tables and enlarged diagrams scroll inside
+  their own regions. Desktop source/A/B/R2 diagrams were inspected independently.
+- Actual browser SVG downloads were opened without app CSS; final A/B/R2 label
+  collisions were corrected. Actual downloaded text contains sources and connected
+  R1/R2 work, unknown costs, deferred purchasing/care, and observation plans.
+- Finance F2 PDF returned HTTP 200 from `imbewu-course-v1` / service-worker cache
+  storage with the server stopped. The in-app PDF viewer stayed blank, so its PDF
+  visual display is not claimed verified here. The unchanged workbook file itself
+  remains covered by the existing source/PDF checks.
+- A debugger-attached test tab canceled local downloads; a fresh normal tab saved
+  the SVG and text files successfully. Temporary network/viewport overrides restored.
+
+The next bounded editorial item is [CORE-FACT-CHECK-FOLLOWUP.md](CORE-FACT-CHECK-FOLLOWUP.md):
+correct the twelve-principle attribution and A-frame observation/construction claims
+across the lesson, quiz, transcript and audio together. Do not make a text-only fix
+that leaves narration contradicting it. The original animation hold remains in force.
 
 ## Remaining gates
 

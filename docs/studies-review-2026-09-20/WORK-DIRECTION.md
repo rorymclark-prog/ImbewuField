@@ -1,5 +1,9 @@
 # Rory's current direction — 21 September 2026
 
+The live continuation checklist is [COMPLETION-STATUS.md](COMPLETION-STATUS.md).
+The dated entries below preserve delivery history; use that checklist for the
+current branch, verified release and next unfinished work.
+
 ## Status update — current main `64edbc9` (21 September 2026)
 
 The English Farm Finance preview, its three-case practical project, and the English Design preview are now on main and reachable from My Studies. Design also includes the fictional worked demonstration, learning folder and source-grounded scale exercise. These are deployed reading/practice previews, not formal assessed-course publication: learner/practitioner review, fluent isiZulu review, narration and final assessment remain open. The real busy-yard field plan still needs its own checked measurement evidence. The original branch/PR notes below are retained as delivery history.
