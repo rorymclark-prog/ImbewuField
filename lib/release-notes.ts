@@ -720,6 +720,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
+    when: '21 September',
+    sha: '4d38b53',
+    changes: [
+      'Your farm plan sprout grows as you finish steps',
+      'Upcoming tasks now respond when you mark them done',
+    ],
+  },
+  {
     when: '18 August',
     sha: 'e4efffe',
     changes: [
