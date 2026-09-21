@@ -1,0 +1,40 @@
+{
+  "status": "Original synthetic classroom exercise; not actual prices, yields, fees or farm records",
+  "currency": "ZAR",
+  "moneyUnit": "cents",
+  "quantityUnit": "g",
+  "crop": "Carrots",
+  "period": "Separate four-day practice period; not an extension of the F1 cash table",
+  "openingStock": 4000,
+  "openingAccounts": {"cash": 50000, "wallet": 10000},
+  "openingBuyerBalances": 0,
+  "stockEvents": [
+    {"id":"Q01","day":1,"reference":"H01","kind":"harvest","unit":"g","quantity":16000},
+    {"id":"Q02","day":1,"reference":"D01","kind":"sale","unit":"g","quantity":6000,"saleRef":"S01"},
+    {"id":"Q03","day":1,"reference":"HOME01","kind":"home","unit":"g","quantity":2000},
+    {"id":"Q04","day":2,"reference":"D02","kind":"sale","unit":"g","quantity":5000,"saleRef":"S02"},
+    {"id":"Q05","day":2,"reference":"GIFT01","kind":"gift","unit":"g","quantity":1000},
+    {"id":"Q06","day":3,"reference":"H02","kind":"harvest","unit":"g","quantity":8000},
+    {"id":"Q07","day":3,"reference":"LOSS01","kind":"loss","unit":"g","quantity":1000},
+    {"id":"Q08","day":3,"reference":"D03","kind":"sale","unit":"g","quantity":4000,"saleRef":"S03"}
+  ],
+  "countedClosingStock": 9000,
+  "sales": [
+    {"id":"S01","day":1,"buyer":"Practice buyer A","unit":"g","quantity":6000,"amount":12000},
+    {"id":"S02","day":2,"buyer":"Practice buyer B","unit":"g","quantity":5000,"amount":10000},
+    {"id":"S03","day":3,"buyer":"Practice buyer C","unit":"g","quantity":4000,"amount":8000}
+  ],
+  "moneyEvents": [
+    {"id":"M01","day":1,"reference":"PAY01","kind":"customer-payment","to":"cash","amount":12000,"saleRef":"S01"},
+    {"id":"M02","day":1,"reference":"PACK01","kind":"expense","from":"cash","amount":1250},
+    {"id":"M03","day":2,"reference":"MOVE01","kind":"transfer","from":"cash","to":"wallet","amount":10000},
+    {"id":"M04","day":3,"reference":"PAY03","kind":"customer-payment","to":"wallet","amount":8000,"saleRef":"S03"},
+    {"id":"M05","day":3,"reference":"FEE01","kind":"expense","from":"wallet","amount":250},
+    {"id":"M06","day":4,"reference":"PAY02","kind":"customer-payment","to":"wallet","amount":6000,"saleRef":"S02"},
+    {"id":"M07","day":4,"reference":"TRAVEL01","kind":"expense","from":"cash","amount":3000}
+  ],
+  "observedClosingAccounts": {"cash": 47750, "wallet": 33750},
+  "profit": null,
+  "missingForProfit": ["complete production costs", "opening and closing stock values", "other relevant period adjustments"],
+  "exerciseExclusions": ["tax", "loans", "equipment", "unpaid supplier bills", "pending transfers", "refunds", "processing or unmeasured stock changes"]
+}

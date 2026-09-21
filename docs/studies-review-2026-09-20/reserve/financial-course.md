@@ -61,4 +61,6 @@ The existing `farm-money.md` holds the original audit/manual trail. Current sour
 
 Unit F1 now has [three English teaching drafts, a synthetic practice pack and a checked answer key](finance/f1-foundations.md). These remain reserve drafts pending bookkeeping, isiZulu, media and learner review.
 
-Next production work: expand the remaining 21 plans into full scripts and reviewed exercises; create the linked practice dataset and answer key; independently check arithmetic and accounting treatment; test each app tutorial on the released interface; record English/isiZulu and matching media; connect the three Studies sections. These steps remain open. The specification is not advertised as a finished course.
+Unit F2 now has [three English teaching drafts, a learner worksheet, linked stock/sales/payment data and checked worked answers](finance/f2-records.md). It develops quantity destinations, separate money accounts, partial payments and evidence-led corrections. These are reserve drafts with the same review gates, not a published accounting course.
+
+Six of the 24 lessons have full English drafts. Next production work: expand the remaining 18 plans into full scripts and reviewed exercises; extend the linked practice dataset and answer key; independently check arithmetic and accounting treatment; test each app tutorial on the released interface; record English/isiZulu and matching media; connect the three Studies sections. These steps remain open. The specification is not advertised as a finished course.
