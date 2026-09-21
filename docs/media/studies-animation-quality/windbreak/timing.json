@@ -1,0 +1,379 @@
+{
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "seconds": 29.376,
+  "starts": [
+    0.106833,
+    5.056833,
+    8.963083,
+    15.298291,
+    21.605125
+  ],
+  "text_match": true,
+  "full_decode": "pass",
+  "human_listening_review": false,
+  "source_sha256": "f0a865b78cc117333826610366406292b0c5a0f55c4726407497494e05e91d3b",
+  "audio_sha256": "455bdf3b8fbfb0a6437b7309894117680f13557144a77654e754f297b28ef24e",
+  "words": [
+    {
+      "text": "Look",
+      "offset": 1068330,
+      "duration": 2272910
+    },
+    {
+      "text": "at",
+      "offset": 3482910,
+      "duration": 1136250
+    },
+    {
+      "text": "this",
+      "offset": 4903330,
+      "duration": 1846660
+    },
+    {
+      "text": "example",
+      "offset": 6750000,
+      "duration": 5397910
+    },
+    {
+      "text": "The",
+      "offset": 23011250,
+      "duration": 852080
+    },
+    {
+      "text": "wind",
+      "offset": 24573750,
+      "duration": 1988750
+    },
+    {
+      "text": "comes",
+      "offset": 27272910,
+      "duration": 2414580
+    },
+    {
+      "text": "from",
+      "offset": 30113750,
+      "duration": 1704580
+    },
+    {
+      "text": "the",
+      "offset": 32102080,
+      "duration": 852080
+    },
+    {
+      "text": "north-west",
+      "offset": 33522910,
+      "duration": 6534160
+    },
+    {
+      "text": "The",
+      "offset": 50568330,
+      "duration": 994160
+    },
+    {
+      "text": "trees",
+      "offset": 52556660,
+      "duration": 2840830
+    },
+    {
+      "text": "and",
+      "offset": 55397910,
+      "duration": 1136250
+    },
+    {
+      "text": "shrubs",
+      "offset": 56818330,
+      "duration": 3550830
+    },
+    {
+      "text": "stand",
+      "offset": 60369160,
+      "duration": 2982910
+    },
+    {
+      "text": "between",
+      "offset": 63778330,
+      "duration": 3125000
+    },
+    {
+      "text": "that",
+      "offset": 67329580,
+      "duration": 1420410
+    },
+    {
+      "text": "wind",
+      "offset": 69176250,
+      "duration": 2556660
+    },
+    {
+      "text": "and",
+      "offset": 71875000,
+      "duration": 994160
+    },
+    {
+      "text": "the",
+      "offset": 73153330,
+      "duration": 852080
+    },
+    {
+      "text": "crops",
+      "offset": 74857910,
+      "duration": 3409160
+    },
+    {
+      "text": "Some",
+      "offset": 89630830,
+      "duration": 2982910
+    },
+    {
+      "text": "air",
+      "offset": 92755830,
+      "duration": 1278330
+    },
+    {
+      "text": "passes",
+      "offset": 95028330,
+      "duration": 3409160
+    },
+    {
+      "text": "through",
+      "offset": 99289580,
+      "duration": 1420410
+    },
+    {
+      "text": "the",
+      "offset": 101278330,
+      "duration": 710410
+    },
+    {
+      "text": "windbreak",
+      "offset": 102698750,
+      "duration": 5113750
+    },
+    {
+      "text": "Other",
+      "offset": 118892080,
+      "duration": 2414580
+    },
+    {
+      "text": "air",
+      "offset": 122301250,
+      "duration": 1420410
+    },
+    {
+      "text": "moves",
+      "offset": 124005830,
+      "duration": 3125000
+    },
+    {
+      "text": "over",
+      "offset": 127982910,
+      "duration": 2414580
+    },
+    {
+      "text": "it",
+      "offset": 130539580,
+      "duration": 1278330
+    },
+    {
+      "text": "or",
+      "offset": 132528330,
+      "duration": 568330
+    },
+    {
+      "text": "around",
+      "offset": 133238750,
+      "duration": 3692910
+    },
+    {
+      "text": "its",
+      "offset": 136931660,
+      "duration": 1562500
+    },
+    {
+      "text": "ends",
+      "offset": 139204580,
+      "duration": 2698750
+    },
+    {
+      "text": "The",
+      "offset": 152982910,
+      "duration": 994160
+    },
+    {
+      "text": "shelter",
+      "offset": 154261250,
+      "duration": 3409160
+    },
+    {
+      "text": "can",
+      "offset": 158238750,
+      "duration": 1278330
+    },
+    {
+      "text": "reduce",
+      "offset": 159943330,
+      "duration": 3693330
+    },
+    {
+      "text": "wind",
+      "offset": 164204580,
+      "duration": 1704580
+    },
+    {
+      "text": "speed",
+      "offset": 166193330,
+      "duration": 3125000
+    },
+    {
+      "text": "behind",
+      "offset": 169460410,
+      "duration": 3977080
+    },
+    {
+      "text": "it",
+      "offset": 173437500,
+      "duration": 1704580
+    },
+    {
+      "text": "The",
+      "offset": 186079580,
+      "duration": 1136250
+    },
+    {
+      "text": "design",
+      "offset": 187926250,
+      "duration": 3409160
+    },
+    {
+      "text": "and",
+      "offset": 191335410,
+      "duration": 1136250
+    },
+    {
+      "text": "care",
+      "offset": 193323750,
+      "duration": 1562500
+    },
+    {
+      "text": "of",
+      "offset": 195028330,
+      "duration": 710410
+    },
+    {
+      "text": "the",
+      "offset": 195880830,
+      "duration": 852080
+    },
+    {
+      "text": "windbreak",
+      "offset": 197585410,
+      "duration": 4119160
+    },
+    {
+      "text": "matter",
+      "offset": 202272910,
+      "duration": 3409160
+    },
+    {
+      "text": "On",
+      "offset": 216051250,
+      "duration": 1562500
+    },
+    {
+      "text": "your",
+      "offset": 217755830,
+      "duration": 852080
+    },
+    {
+      "text": "own",
+      "offset": 219176250,
+      "duration": 1704580
+    },
+    {
+      "text": "site",
+      "offset": 221306660,
+      "duration": 3551250
+    },
+    {
+      "text": "observe",
+      "offset": 227698750,
+      "duration": 3693330
+    },
+    {
+      "text": "the",
+      "offset": 231392080,
+      "duration": 1420410
+    },
+    {
+      "text": "damaging",
+      "offset": 233664580,
+      "duration": 3835410
+    },
+    {
+      "text": "winds",
+      "offset": 237926250,
+      "duration": 2130830
+    },
+    {
+      "text": "before",
+      "offset": 240909160,
+      "duration": 2698750
+    },
+    {
+      "text": "choosing",
+      "offset": 244318330,
+      "duration": 3267080
+    },
+    {
+      "text": "where",
+      "offset": 248011250,
+      "duration": 1420410
+    },
+    {
+      "text": "to",
+      "offset": 250284160,
+      "duration": 426250
+    },
+    {
+      "text": "plant",
+      "offset": 251562500,
+      "duration": 2982910
+    },
+    {
+      "text": "This",
+      "offset": 265625000,
+      "duration": 1846660
+    },
+    {
+      "text": "picture",
+      "offset": 268323750,
+      "duration": 2840830
+    },
+    {
+      "text": "is",
+      "offset": 271306660,
+      "duration": 710410
+    },
+    {
+      "text": "not",
+      "offset": 272585410,
+      "duration": 1988330
+    },
+    {
+      "text": "a",
+      "offset": 274573750,
+      "duration": 426250
+    },
+    {
+      "text": "planting",
+      "offset": 275994160,
+      "duration": 3551250
+    },
+    {
+      "text": "plan",
+      "offset": 280540000,
+      "duration": 2698750
+    }
+  ]
+}

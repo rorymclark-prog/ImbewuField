@@ -175,3 +175,39 @@ test('the young-forest tour refreshes its speech and still once without erasing 
   assert.equal(await rows.get(changed[0])!.text(), 'matching young-forest narration');
   assert.doesNotMatch(body, /\bfetch\(/, 'updating a lesson must not silently spend a learner’s airtime');
 });
+
+test('the windbreak refreshes its speech and still once without erasing other downloads', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateWindbreakMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWindbreakMedia\)/);
+  const changed = [
+    '/course-audio/intro-permaculture/en/slide-19.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+    '/course-decks/intro-permaculture/en/slide-19.jpg',
+  ];
+  const keep = [
+    '/course-audio/food-forest/en/slide-05.mp3',
+    '/course-decks/food-forest/en/slide-05.jpg',
+    '/course-audio/intro-permaculture/en/slide-18.mp3',
+    '/course-animations/intro-permaculture/motion-windbreak.mp4',
+    '/course-animations/soil-health/tour-soil-observation.mp4',
+    '/course-animations/small-livestock/flow-hens-foraging.mp4',
+    '/course-audio/plant-guilds/en/slide-05.mp3',
+  ];
+  const rows = new Map([...changed, ...keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(key => new Request('https://example.com' + key)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=1'), true, path);
+  rows.set(changed[0], new Response('matching windbreak narration'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0])!.text(), 'matching windbreak narration');
+  assert.doesNotMatch(body, /\bfetch\(/, 'updating a lesson must not silently spend a learner’s airtime');
+});

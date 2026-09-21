@@ -256,17 +256,17 @@ Which direction does the weather that damages you come from?
 
 ---
 
-**Slide 19 — Watch: A Windbreak Belongs On The Wind Side**
+**Slide 19 — Watch: Shelter Between Wind and Crops**
 
-A Highveld farm gets hot, dry north-westerly winds in August.
+Look at this example. The wind comes from the north-west.
 
-The windbreak goes on the north-west boundary, standing between the wind and the crops.
+The trees and shrubs stand between that wind and the crops.
 
-That is all a windbreak does — it stands between the energy and the thing the energy would damage. Put it anywhere else and it is just a row of trees.
+Some air passes through the windbreak. Other air moves over it or around its ends.
 
-[pause]
+The shelter can reduce wind speed behind it. The design and care of the windbreak matter.
 
-The same logic places a firebreak, and it places your tender crops out of a frost pocket.
+On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.
 
 ---
 

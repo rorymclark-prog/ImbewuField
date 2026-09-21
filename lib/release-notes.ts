@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'a8cd790', changes: [
+    'The windbreak lesson now shows wind moving through shelter toward the crops.',
+    'A detailed homestead picture has clear labels and matching narration.',
+    'Save Introduction to Permaculture again for the updated offline lesson.',
+  ] },
   { when: '21 September 2026', sha: '1aad607', changes: [
     'Food Forest now takes you closer to mulch, tree care and weeding in a young garden.',
     'The illustrated tour has clear labels and matching narration.',

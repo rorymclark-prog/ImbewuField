@@ -1,0 +1,21 @@
+{
+  "file": "public/course-animations/intro-permaculture/motion-windbreak.mp4",
+  "bytes": 4248143,
+  "sha256": "a3074769a56f1d7229f9bfd6e5e8cd5ccbf37a7c30f95ff174fcecdb8d049e20",
+  "seconds": 30.666666666666668,
+  "frames": 736,
+  "width": 1600,
+  "height": 1100,
+  "fps": 24,
+  "source_sha256": "1369a1e176c2305cf426d99f94a920460585bb1272f9b8baeb22bd8c8c499820",
+  "narration_seconds": 29.376,
+  "phase_starts": [
+    0,
+    5.056833,
+    8.963083,
+    15.298291,
+    21.605125
+  ],
+  "full_decode": "pass",
+  "scope": "Illustrated example with authored arrows showing some of the air passing through a windbreak. Qualitative direction and slowing only, not a measured airflow simulation or planting plan."
+}
