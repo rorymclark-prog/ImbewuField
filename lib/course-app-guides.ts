@@ -820,4 +820,69 @@ export const DESIGN_GUIDE: AppGuide = {
   finish: { title: 'Start with a site you recognise', text: 'Open Design Studio and choose the intended saved site. Use the sample tour first if you are practising.', href: '/design', label: 'Open Design Studio' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, DESIGN_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];
+export const CROP_PLAN_GUIDE: AppGuide = {
+  id: 'crop-planning', href: '/student/guides/crop-planning', cardTitle: 'Turn the map into a crop plan',
+  title: 'Plan the growing work, then record what happens.',
+  summary: 'Check mapped beds, choose plantings and read the calendar without confusing a plan with a harvest.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers checking a site sketch beside planted beds in a homestead garden',
+  caption: 'Check the growing space before planning the season · illustrated example',
+  prepareTitle: 'Have the site and growing areas ready',
+  prepare: [
+    'Bring your checked bed and plot measurements, what is already growing, seed-packet information and notes about available water. Keep unknown details as questions to resolve.',
+    'For practice, open the sample tour and choose Plan the growing season. Open its crop plan. The prepared crops and dates are examples, not instructions for your own farm.',
+  ],
+  steps: [
+    { id: 'check-areas', title: 'Follow the correct site into its plan', action: 'Design Studio → Crop plan → Open the bed and plot count', paragraphs: [
+      'Use Crop plan from the design you checked. Read where the beds come from. The site-specific link carries that design into the planner; another entry route may use the main saved site or ask you to choose a site.',
+      'Open the bed and plot count to see each area and width. Match these with the map and your measurements. The whole boundary area is not the same as usable growing space.',
+      'Use Back to design to correct mapped growing areas. Do not change a crop quantity merely to hide an incorrect bed size. Keep practice or unmapped areas separate from a measured farm plan.',
+    ], check: 'The plan uses the intended site and growing areas, with uncertain measurements still identified.' },
+    { id: 'choose-planting', title: 'Choose a new planting or edit the existing row', action: '+ crop on the intended bed, or crop bar → Edit', paragraphs: [
+      'For a new planting, choose + crop on its actual bed or plot and select the crop. If the planting already appears, open its bar and choose Edit instead of adding it again.',
+      'Enter the variety from your seed packet if you know it. Leave it blank if you do not. An entered variety name does not turn general crop guidance into a verified variety-specific schedule.',
+      'Choose This is already growing only when that describes the real crop. Planned sowing and a crop already in the ground are different records. Check any nursery or transplant information too.',
+    ], check: 'You are adding one intended planting or editing its existing row, with its actual status clear.' },
+    { id: 'timing-space', title: 'Check the month and share of the bed', action: 'Sow month → How much of the bed? → Read the warnings', paragraphs: [
+      'Choose the intended sowing month and the area share. A half or quarter means part of the available bed, not extra land. Check the other crops occupying that bed in the same months.',
+      'Read overlap and unverified-timing messages. A warning is a reason to review the plan, even when the screen still lets you save. Do not assume two crop bars mean both fit.',
+      'For a crop raised in trays, sowing and planting out happen at different times. Read the readiness window and planned transplant month. Check actual seedlings and the bed before planting out; update a delayed plan.',
+    ], check: 'The proposed timing and area are consistent with the bed, other crops and information you have checked.' },
+    { id: 'save-check', title: 'Save, reopen and practise Undo', action: 'Add to bed, Add as existing or Save changes → Reopen the crop bar', paragraphs: [
+      'Use the action matching your entry. Reopen that crop bar and check its bed share, sowing month and planned harvest window. Editing should change the existing planting, not add a second one.',
+      'The plan saves on this device as you work. Read any Not saving warning and keep a copy while resolving it. A closed editor does not prove a cloud backup exists.',
+      'In the sample plan, change one planned month, save and reopen it. Then choose Undo and reopen the row to confirm the original month returned. Keep your own planting evidence separately; the sample workspace resets on reload.',
+    ], check: 'You can find the intended row again and recover a practice edit without duplicating it.' },
+    { id: 'suggest-review', title: 'Use automatic suggestions only with checked assumptions', action: 'Auto-suggest a plan → Goals and conditions → Review the proposal', paragraphs: [
+      'Automatic planning is optional. Choose your purpose, crop preferences and whether you are planning from this month or comparing a whole-year pattern. Read the climate source and the options before continuing.',
+      'This automatic planner requires reliable irrigation for every suggested crop cycle. Select that only if it is true for your farm. A rainfall pattern or a tank drawn on the map does not prove that water is available throughout the plan. Otherwise continue with a locally checked manual plan.',
+      'Suggest a plan prepares a proposal. Review its crops, timing, area shares and unresolved notes before choosing Add plantings to my plan. It adds around existing plantings; it does not erase them. Do not use Clear all simply to try a suggestion.',
+    ], check: 'You can explain the assumptions behind a suggestion and have reviewed it before adding anything.' },
+    { id: 'read-calendar', title: 'Read the calendar and its limits', action: 'Year one and Year two → Tasks → Food, field & value', paragraphs: [
+      'Year one begins from the current month. Year two shows the repeated annual timing for planned rows; a one-off crop marked already growing is not automatically repeated. Read the explanation below the calendar.',
+      'Tasks describes planned work. Availability shows fresh-picking windows and storage only where conditions are provided. Neither proves you have harvested or stored food. Field utilization concerns planned occupation of the mapped space.',
+      'A kilogram benchmark or Plan-cycle value is a comparison based on the entered plan and its stated assumptions. It is not actual yield, monthly cash received or complete profit. Open What the planner can prove and read the sources and gaps.',
+    ], check: 'You can identify a planned task, a comparison figure and the real record still needed to check it.' },
+    { id: 'take-plan', title: 'Keep a checked copy and record the real work', action: 'Take this plan with you → Download the plan (PDF) or Add tasks to calendar', paragraphs: [
+      'Open the downloaded PDF and check the site, beds, months, tasks and notes. Quick print offers a shorter wall reference. Inspect the result before relying on it away from the app.',
+      'The calendar download is a file, not proof that tasks have been added to your calendar account. Its tasks use the first day of their month as a placeholder because the plan works in months. Check dates before importing; importing the same file again can create duplicates.',
+      'Record actual picked quantities, sales and costs in My Records as the work happens. Keep original dates and evidence. Use those records to review the plan, rather than treating a forecast as food picked or money received.',
+    ], check: 'You have checked the output and know which real records will show what actually happened.' },
+  ],
+  practice: {
+    title: 'The plan shows a future harvest.',
+    question: 'Should that planned quantity already be entered as picked in My Records?',
+    choices: [
+      { label: 'Yes, because the crop appears on the calendar', feedback: 'The calendar is a plan. It does not establish that food has been harvested.', correct: false },
+      { label: 'Record the actual measured harvest when it happens', feedback: 'Correct. Keep the plan as a comparison and enter the real harvest with its evidence. A benchmark is not a harvest record.', correct: true },
+      { label: 'Record it as a sale instead', feedback: 'A planned harvest is not a sale or proof of payment. Record those events from their own evidence.', correct: false },
+    ],
+  },
+  limits: { title: 'Use the plan as a working record', paragraphs: [
+    'Independent practice: follow the sample design into its crop plan, identify one bed’s area and open one planting. Explain its status, month and area share. Change one planned month, save and reopen it, then restore it with Undo.',
+    'Explain one limitation of the forecast and find one task in a downloaded copy. Do not turn the sample values into real farm records. For your own farm, confirm timing, water and growing conditions locally and keep the plan updated as conditions change.',
+  ] },
+  finish: { title: 'Start with your checked growing areas', text: 'Open the crop plan and check its site and bed source before editing. The Crop plan link in Design Studio follows a particular saved design.', href: '/facilitator/crops', label: 'Open the crop plan' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, DESIGN_GUIDE, CROP_PLAN_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];

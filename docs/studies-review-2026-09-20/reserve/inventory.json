@@ -25,7 +25,7 @@
       "publishedLessons": 0
     },
     "usingImbewuField": {
-      "status": "Thirteen readable English guides implemented; crop-planning guide remaining; narration, translation review and filmed walkthroughs pending",
+      "status": "All fourteen readable English guides implemented; narration, translation review and filmed walkthroughs pending",
       "tutorialSpecifications": 14,
       "path": "app-companions/README.md",
       "draftGuides": [
@@ -38,10 +38,11 @@
         "app-companions/exports.md",
         "app-companions/evidence.md",
         "app-companions/offline-learning.md",
-        "app-companions/design.md"
+        "app-companions/design.md",
+        "app-companions/crop-planning.md"
       ],
-      "publishedReadableGuides": 11,
-      "remainingReadableGuides": 1,
+      "publishedReadableGuides": 13,
+      "remainingReadableGuides": 0,
       "publishedGuideRoutes": [
         "/student/guides/mapping",
         "/student/guides/harvest",
@@ -53,9 +54,11 @@
         "/student/guides/past-sales",
         "/student/guides/payments",
         "/student/guides/exports",
-        "/student/guides/evidence"
+        "/student/guides/evidence",
+        "/student/guides/offline-learning",
+        "/student/guides/design"
       ],
-      "implementedReadableGuides": 13
+      "implementedReadableGuides": 14
     }
   }
 }
