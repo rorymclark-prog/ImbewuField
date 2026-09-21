@@ -31,6 +31,8 @@ export interface DeckAnimation {
   seconds: number;
   /** Preserve a teaching diagram's full frame without shrinking it into a widescreen box. */
   aspectRatio?: number;
+  /** Authored against this slide's narration word timings; follow its playhead. */
+  narrationTimed?: boolean;
   /** Exact text-labelled variants; wordless clips share their base asset. */
   byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
 }
@@ -198,7 +200,7 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Soil Health Watch scene follows its existing narration.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
-  5: { src: 'tour-soil-observation', poster: 'tour-soil-observation', bytes: 4874969, seconds: 29.833333, aspectRatio: 1600 / 1100 },
+  5: { src: 'tour-soil-observation', poster: 'tour-soil-observation', bytes: 4874969, seconds: 29.833333, aspectRatio: 1600 / 1100, narrationTimed: true },
   10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14.0 },
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };
@@ -211,9 +213,9 @@ const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
-  5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100 },
+  5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100, narrationTimed: true },
   10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
-  15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100 },
+  15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100, narrationTimed: true },
 };
 
 // Each Small Livestock Watch scene follows its existing narration.
@@ -343,7 +345,7 @@ export function slideImageFor(
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
-export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number } | null {
+export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
   if (!base) return null;
   const a = base.byLang?.[lang] ?? base;
@@ -353,7 +355,22 @@ export function animationUrls(moduleId: string, slide: number, lang = 'en'): { v
     bytes: a.bytes,
     seconds: a.seconds,
     ...(a.aspectRatio ? { aspectRatio: a.aspectRatio } : {}),
+    ...(a.narrationTimed ? { narrationTimed: true } : {}),
   };
+}
+
+/** Late video loading must not show an earlier feature than the learner hears.
+ * Only word-timed tours opt in; independent demonstration clips keep their own timing.
+ * After speech ends, let the final visual hold finish so play-through can advance.
+ */
+export function timedAnimationSync(
+  audio: { currentTime: number; paused: boolean; ended: boolean },
+  video: { currentTime: number; duration: number; readyState: number; ended: boolean },
+): { seekTo: number | null; playing: boolean } | null {
+  if (video.readyState < 2 || !Number.isFinite(video.duration) || video.duration <= 0) return null;
+  if (audio.ended) return { seekTo: null, playing: !video.ended };
+  const time = Math.max(0, Math.min(audio.currentTime, video.duration));
+  return { seekTo: Math.abs(video.currentTime - time) > .25 ? time : null, playing: !audio.paused && time < video.duration };
 }
 
 /** Narration for a slide, in the learner's language where it exists. */
