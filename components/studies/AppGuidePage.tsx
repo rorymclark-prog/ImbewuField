@@ -16,6 +16,7 @@ import SalePaymentExplainer from './SalePaymentExplainer';
 import ChartWindowExplainer from './ChartWindowExplainer';
 import GuideOfflineDownload from './GuideOfflineDownload';
 import OfflinePageLink from './OfflinePageLink';
+import GuideScreenSlides from './GuideScreenSlides';
 
 function GuideAudio({ guideId, section, title, onPlay }: {
   guideId: string; section: string; title: string; onPlay: (audio: HTMLAudioElement) => void;
@@ -76,6 +77,8 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
         <GuideAudio guideId={guide.id} section="prepare" title="Before you start" onPlay={playOne} />
         {guide.prepare.map(text => <p key={text}>{text}</p>)}
       </section>
+
+      <GuideScreenSlides guideId={guide.id} />
 
       {guide.id === 'mapping' && <MappingExplainer />}
       {guide.id === 'sales' && <SalePaymentExplainer />}

@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AppGuide } from '@/lib/course-app-guides';
-import { appGuideOfflinePack, formatPackSize } from '@/lib/offline-pack';
+import { formatPackSize } from '@/lib/offline-pack';
 import { CACHE_CHANGED_EVENT, downloadPack, offlineSupported, packStatus, removePack, requestPersistence, type DownloadProgress } from '@/lib/offline-cache';
 import { fieldPageDownloads } from '@/lib/field-page-downloads';
 import styles from './AppGuide.module.css';
+import { guidePackWithScreens } from './guide-screens';
 
 export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
-  const pack = useMemo(() => appGuideOfflinePack(guide.id), [guide.id]);
+  const pack = useMemo(() => guidePackWithScreens(guide.id), [guide.id]);
   const [media, setMedia] = useState<DownloadProgress | null>(null);
   const [savedBytes, setSavedBytes] = useState(0);
   const [pageReady, setPageReady] = useState(false);
@@ -58,7 +59,7 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
     const controller = new AbortController();
     operation.current = controller;
     ++sequence.current;
-    setError(''); setStage('media'); setMessage('Saving recordings and picture…');
+    setError(''); setStage('media'); setMessage('Saving recordings and pictures…');
     try {
       if (pack.missing.length) throw Error('This guide is missing a file. Please keep using the written steps while it is corrected.');
       setMayClear(!(await requestPersistence()));
@@ -95,8 +96,8 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
   const partial = Boolean(media?.done);
   return <section className={`${styles.offline} no-print`} aria-labelledby="guide-offline-title">
     <h2 id="guide-offline-title">Take this guide home</h2>
-    <p>Save the written steps, picture and English recordings while you have signal.</p>
-    <p className={styles.small}>Recordings and picture: {formatPackSize(pack.bytes)}. Files needed to open the guide are downloaded too.</p>
+    <p>Save the written steps, screen pictures and English recordings while you have signal.</p>
+    <p className={styles.small}>Recordings and pictures: {formatPackSize(pack.bytes)}. Files needed to open the guide are downloaded too.</p>
     {!supported ? <p>This browser cannot save the full guide for offline use. You can print the written steps.</p> : <>
       <div role="status" aria-live="polite">
         {complete && !busy ? <p><strong>Guide saved on this device.</strong> Before leaving signal, switch your connection off, reopen this guide and try a recording.</p> : <p>{message || (partial ? 'Part of this guide is saved. Finish the download before leaving signal.' : 'This guide is not yet saved for offline use.')}</p>}
@@ -107,10 +108,10 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
         {!busy && media && media.done > 1 && <button type="button" onClick={() => void removeRecordings()}>Remove this guide’s recordings</button>}
         {!busy && <button type="button" onClick={() => void refresh()}>Check saved guide</button>}
       </div>
-      {busy && <p>{formatPackSize(savedBytes)} of {formatPackSize(pack.bytes)} of recordings and picture saved.</p>}
+      {busy && <p>{formatPackSize(savedBytes)} of {formatPackSize(pack.bytes)} of recordings and pictures saved.</p>}
       {error && <p role="alert">{error}</p>}
       {complete && mayClear && <p>The phone may clear downloads when space is low. Check again before leaving signal.</p>}
     </>}
-    <p className={styles.small}>This saves the guide, not the sample farm or every app tool. Removing recordings keeps the written page and shared picture.</p>
+    <p className={styles.small}>This saves the guide and its pictures, not the sample farm or every app tool. Removing recordings keeps the written page and pictures.</p>
   </section>;
 }
