@@ -4,7 +4,9 @@ These are **teaching drafts held out of the public course registry**. They conta
 
 The public course remains ten modules and 33 lessons. This reserve adds **15 proposed modules and 51 drafted lessons**, plus a capstone task. Counts describe this content inventory, not learner certification or completion.
 
-Rory expanded the brief on 20 September: add a deeper [Farm Finance course](financial-course.md), with **eight units and 24 lesson plans**, and a [Using ImbewuField companion pathway](app-companions/README.md), with **14 tutorial specifications**. These are additional specifications, not completed lesson scripts, and are tracked separately from the 51 drafted lessons. The existing five-lesson Farm Money module remains the introductory route. The first [invoice companion](app-companions/invoice.md) is drafted against current app controls.
+Rory expanded the brief on 20 September: add a deeper [Farm Finance course](financial-course.md), with **eight units and 24 lessons planned**. F1 and F2 now contain **six full English teaching drafts** with checked exercises; 18 lesson plans still need expansion. These remain in reserve and are tracked separately from the 51 drafted lessons. The existing five-lesson Farm Money module remains the introductory route.
+
+The [Using ImbewuField companion pathway](app-companions/README.md) has **14 tutorial specifications**. Three readable English guides are published: [harvest](https://imbewufield.vercel.app/student/guides/harvest), [expenses](https://imbewufield.vercel.app/student/guides/expenses) and [invoices](https://imbewufield.vercel.app/student/guides/invoices). Eleven remain to develop; narration and screen recordings are still open for all three published guides.
 
 | Proposed module | Draft lessons | Dependency | Draft |
 | --- | ---: | --- | --- |

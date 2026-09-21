@@ -4,7 +4,7 @@ Production status: three full English teaching drafts, learner practice and chec
 
 ## Facilitation and practice boundaries
 
-Use the [learner worksheet](f2-worksheet.md), a calculator, a notebook and counters representing kilograms and money. Read one event aloud at a time. Let learners point, sort cards, explain aloud or ask someone to write their answer. Introduce the second money account only after the learner can follow the cash tin. Keep real household finances, buyer details and payment credentials out of group exercises and screenshots.
+Use the [learner worksheet](f2-worksheet.md) or [four-page printable workbook](../../../../output/pdf/finance-f2-workbook.pdf), a calculator, a notebook and counters representing kilograms and money. Read one event aloud at a time. Let learners point, sort cards, explain aloud or ask someone to write their answer. Introduce the second money account only after the learner can follow the cash tin. Keep real household finances, buyer details and payment credentials out of group exercises and screenshots.
 
 All weights, prices, fees and amounts in this pack are invented for arithmetic practice. They are not local market evidence, recommended fees, budgets or yields. This is a separate four-day practice period for the fictional farm; do not carry forward or add F1's balances. The opening position is given: 4 kg of carrots already stored, R500.00 in a cash tin and R100.00 in a mobile-money wallet, with no buyer balance owed. No field area or production period is supplied, so no yield per area can be calculated.
 
@@ -147,3 +147,7 @@ Checked 21 September 2026. Values, references, worksheets and scenarios are orig
 - [FAO record keeping](https://www.fao.org/4/w6864e/w6864e0f.htm): source documents, separate sales/payment dates and stock movements are useful for checking records. Its historical processing accounts and prices are not reproduced or prescribed here.
 - [Iowa State University — Your Farm Income Statement](https://www.extension.iastate.edu/AGDm/wholefarm/html/c3-25.html), April 2025: cash movement and profit answer different questions; inventory and amounts owed require attention. No US tax rule or depreciation rate is imported.
 - Current app baseline `1b02f96`: `lib/sample-mode.ts` establishes tab-scoped mode with in-memory practice data; `lib/invoice-entry.ts` and `lib/invoice-sales.ts` establish current paid status and linked-sale behaviour. `lib/course-app-guides.ts` and the production sample walkthrough support the harvest/cost/invoice control descriptions. Recheck when filming. No bank feed, partial-payment ledger, stock-destination ledger or complete cross-device document sync is promised.
+
+## Printable workbook verification
+
+The [four-page learner workbook](../../../../output/pdf/finance-f2-workbook.pdf) keeps the worked answers in this facilitator document. Rebuild with `python3 build-f2-workbook.py` from this directory using ReportLab. All four rendered pages were visually inspected on 21 September 2026: headings, tables, writing space and footer fit without clipping. PDF text extraction confirms four pages and the practice references and amounts. Physical printing and learner trials remain unverified. The workbook is an English review draft, not a released lesson.

@@ -2,6 +2,8 @@
 
 Reserve English learner draft. All quantities and amounts are invented for practice, not prices, yields or recommended fees. Work in a notebook, with counters or aloud. Use the event cards supplied by your facilitator; worked answers are in `f2-records.md`.
 
+[Download the four-page printable workbook](../../../../output/pdf/finance-f2-workbook.pdf). The facilitator keeps the worked answers separately.
+
 ## 1. Follow one product
 
 Begin with 4 kg in store. Add H01: 16 kg picked. Follow these events in order: D01 sells 6 kg; HOME01 uses 2 kg at home; D02 sells 5 kg; GIFT01 gives away 1 kg; H02 adds 8 kg picked; LOSS01 records 1 kg spoiled; D03 sells 4 kg.
