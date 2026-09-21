@@ -15,18 +15,34 @@
   "capstone": "facilitator-and-capstone.md",
   "additionalPathways": {
     "farmFinance": {
-      "status": "specification; full lesson scripts and exercises pending",
+      "status": "24 English teaching drafts; reserve review and media/course integration pending",
       "units": 8,
       "lessonPlans": 24,
       "path": "financial-course.md",
-      "introductoryModuleRetained": "farm-money.md"
+      "introductoryModuleRetained": "farm-money.md",
+      "fullEnglishDrafts": 24,
+      "unitsDrafted": 8,
+      "publishedLessons": 0
     },
     "usingImbewuField": {
-      "status": "14 tutorial specifications; first invoice guide drafted; UI integration pending",
+      "status": "Six readable English guides published; eight remaining; narration and filmed walkthroughs pending",
       "tutorialSpecifications": 14,
       "path": "app-companions/README.md",
       "draftGuides": [
-        "app-companions/invoice.md"
+        "app-companions/mapping.md",
+        "app-companions/invoice.md",
+        "app-companions/sales.md",
+        "app-companions/charts.md"
+      ],
+      "publishedReadableGuides": 6,
+      "remainingReadableGuides": 8,
+      "publishedGuideRoutes": [
+        "/student/guides/mapping",
+        "/student/guides/harvest",
+        "/student/guides/expenses",
+        "/student/guides/invoices",
+        "/student/guides/sales",
+        "/student/guides/charts"
       ]
     }
   }

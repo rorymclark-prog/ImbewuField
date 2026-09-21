@@ -1,0 +1,42 @@
+{
+  "status": "Original synthetic classroom case. No actual prices, yields, income promises, tax calculation or finance offer.",
+  "period": {"start": "2027-01-01", "end": "2027-01-31"},
+  "openingCash": 30000,
+  "ownerHoursAvailable": 8,
+  "scope": "One planned market activity. All practice cash accounts are included. No opening customer balance, transfers, fees, debt, tax or other cash movements in this model. Complete profit is unknown: stock valuation, equipment use, overheads and unpaid work are not fully supplied.",
+  "plans": [
+    {"id": "A", "title": "Produce sales", "unit": "kg", "quantity": 40, "price": 1200, "ownerHours": 6,
+     "marketEvidence": "M-A / 2 January: a practice buyer asks about up to 40 kg at R12 per kg for 25 January, subject to quality and confirmation. This is an enquiry, not an accepted order or money received. The forecast assumes all 40 kg sell and payment arrives on 30 January.",
+     "payments": [
+       {"ref": "A-P1", "date": "2027-01-05", "amount": 18000, "label": "Quoted produce purchase", "evidence": "A-P1: quoted purchase payment R180 on 5 January. No complete stock valuation is supplied."},
+       {"ref": "A-P2", "date": "2027-01-10", "amount": 4000, "label": "Quoted packaging", "evidence": "A-P2: quoted packaging payment R40 on 10 January."},
+       {"ref": "A-P3", "date": "2027-01-20", "amount": 6000, "label": "Quoted transport", "evidence": "A-P3: quoted transport payment R60 on 20 January."}],
+     "receiptDate": "2027-01-30"},
+    {"id": "B", "title": "Basket sales", "unit": "items", "quantity": 20, "price": 3000, "ownerHours": 10,
+     "marketEvidence": "M-B / 2 January: a practice buyer expresses interest in baskets at R30 each but confirms no quantity or order. The forecast assumes 20 items sell and payment arrives on 30 January. The work plan requires 10 owner hours in addition to the paid help below; only 8 owner hours are available.",
+     "payments": [
+       {"ref": "B-P1", "date": "2027-01-05", "amount": 28000, "label": "Quoted materials", "evidence": "B-P1: quoted material payment R280 on 5 January."},
+       {"ref": "B-P2", "date": "2027-01-10", "amount": 14000, "label": "Quoted paid help", "evidence": "B-P2: quoted paid help R140 on 10 January; it does not replace the specified owner hours."},
+       {"ref": "B-P3", "date": "2027-01-20", "amount": 6000, "label": "Quoted delivery", "evidence": "B-P3: quoted delivery payment R60 on 20 January."}],
+     "receiptDate": "2027-01-30"}
+  ],
+  "actual": {
+    "unit": "kg", "quantity": 36, "price": 1100,
+    "invoice": {"ref": "ACT-S1", "date": "2027-01-25", "evidence": "ACT-S1: dated delivery and invoice show 36 kg sold at R11 per kg, total R396. No opening customer balance, discount, return or credit adjustment applies."},
+    "payments": [
+      {"ref": "ACT-P1", "date": "2027-01-05", "amount": 18000, "label": "Purchase paid", "evidence": "ACT-P1: purchase payment R180 on 5 January."},
+      {"ref": "ACT-P2", "date": "2027-01-10", "amount": 5000, "label": "Packaging paid", "evidence": "ACT-P2: packaging payment R50 on 10 January."},
+      {"ref": "ACT-P3", "date": "2027-01-20", "amount": 8000, "label": "Transport paid", "evidence": "ACT-P3: transport payment R80 on 20 January."}],
+    "receipts": [
+      {"ref": "ACT-R1", "date": "2027-01-30", "amount": 30000, "label": "Part payment received", "evidence": "ACT-R1: R300 received on 30 January against ACT-S1; the invoice is not fully paid."},
+      {"ref": "ACT-R2", "date": "2027-02-05", "amount": 9600, "label": "Remaining payment received", "evidence": "ACT-R2: remaining R96 received on 5 February against ACT-S1; outside the January cash window."}],
+    "contributions": [
+      {"ref": "ACT-O1", "date": "2027-01-15", "amount": 2000, "label": "Owner funds added", "evidence": "ACT-O1: owner contributes R20 from outside the defined business cash scope on 15 January. This is neither a produce sale nor a loan."}],
+    "closingCashEvidence": {"ref": "ACT-C1", "date": "2027-01-31", "amount": 31000, "evidence": "ACT-C1: checked cash count plus statement evidence totals R310 on 31 January; all included accounts reconciled in the complete case."}
+  },
+  "missingCase": {"ref": "ACT-P2", "closingEvidenceMissing": true, "reason": "The packaging payment happened, but its amount and the closing cash reconciliation ACT-C1 are unavailable. Complete payments, closing cash, cash variance and the deepest cash gap remain unknown. Sales R396 and the January customer balance R96 remain supported. Do not recover the missing amount from the complete case."},
+  "delayedPlan": {"plan": "A", "receiptDate": "2027-02-05", "reason": "Same projected sale and costs, but the whole R480 arrives on 5 February. This is an adverse timing assumption, not an actual January receipt."},
+  "funding": {"ref": "F-ASK", "amount": 18000, "status": "application only", "approved": false, "paymentDate": null, "evidence": "A R180 funding application has no approval, conditions or disbursement date. It cannot be inserted as cash to fix Plan B."},
+  "independent": {"unit": "items", "openingCash": 8000, "plan": {"quantity": 10, "price": 1500, "payments": 6000}, "actual": {"quantity": 8, "price": 1400, "payments": 7000, "receipts": 9000, "ownerContribution": 2000}, "scope": "A separate complete one-period cash example: no other cash movements or opening customer balances, no adjustments. All actual sales invoiced in this period. No full profit claim."},
+  "nextAction": {"owner": "Learner", "reviewDate": "2027-02-10", "task": "Keep the original January plan. Confirm future demand, quality and payment terms; replace old quotes with dated evidence; check hours and cash at each payment date. Keep unsupported inputs unknown and review the revised forecast on the practice date."}
+}

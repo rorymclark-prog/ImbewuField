@@ -1,6 +1,6 @@
 # Farm Finance: from a first record to a business decision
 
-Status: expanded course specification requested by Rory on 20 September 2026. Eight units and 24 lesson plans below; not 24 completed teaching scripts or published lessons. Keep the five-lesson `farm-money.md` introduction as the accessible starting point. This deeper pathway follows it and connects to the app companions. Do not silently change the existing 25-module inventory to imply these lessons are already produced.
+Status: expanded course specification requested by Rory on 20 September 2026. Eight units and 24 full English teaching drafts now exist; they are not recorded, translated, fully reviewed or published lessons. Keep the five-lesson `farm-money.md` introduction as the accessible starting point. This deeper pathway follows it and connects to the app companions. Do not silently change the existing 25-module inventory to imply these lessons are already produced.
 
 ## Learning approach
 
@@ -73,4 +73,6 @@ Unit F6 now has [three English teaching drafts and checked equipment, borrowing 
 
 Unit F7 now has [three English teaching drafts and an original reconciled resale case](finance/f7-results.md), a five-page workbook and a two-case visual walkthrough. It distinguishes cash, period result and position, preserves missing stock evidence, and prepares questions for current SARS guidance. Nineteen deliberate faults are rejected; learner source cards also require their stated amounts. The linked Charts companion explains the actual interface. These remain reserve review materials.
 
-Twenty-one of the 24 lessons have full English drafts. Next production work: expand the remaining three plans into full scripts and reviewed exercises; extend the linked practice dataset and answer key; independently check arithmetic and accounting treatment; test each app tutorial on the released interface; record English/isiZulu and matching media; connect the three Studies sections. These steps remain open. The specification is not advertised as a finished course.
+Unit F8 now has [three English teaching drafts and source-linked business-planning cases](finance/f8-business-plan.md), a five-page workbook and an animated plan/actual comparison. It separates conditional market evidence, owner capacity, early cash gaps, unpaid invoices and owner funds. Fifteen deliberate answer faults are rejected. These remain reserve review materials.
+
+All 24 lessons now have full English drafts. Next production work: complete local bookkeeping and learner reviews; refine the linked practice datasets and answer keys; independently check arithmetic and accounting treatment; test each app tutorial on the released interface; record English/isiZulu and matching media; connect the three Studies sections. These steps remain open. The specification is not advertised as a finished course.
