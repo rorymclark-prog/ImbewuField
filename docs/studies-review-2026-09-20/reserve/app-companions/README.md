@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C01–C04/C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C01/C03–C04/C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -62,3 +62,7 @@ The released sample workflow was inspected on main `5eabb25`. A sample-only 1.5 
 Corrections to the original specifications: the harvest and cost forms have no date picker and stamp the entry date; late entries belong to the entry month. The harvest list has no Edit action. The chart's kept amount is a subtraction, not a measured destination ledger. Neither guide claims otherwise. Optional receipt-photo persistence is supported in code; this walkthrough used no uploaded personal receipt and does not claim that an original-photo upload was tested.
 
 The expense hero reuses the already-generated and inspected `docs/media/studies-illustrated-release/art/market-community/true-cost.jpg`, copied unchanged to `public/studies-guides/expense-record.jpg`. It is an illustration, not a farmer's evidence. The other guide reuses the existing harvest notebook illustration. Final preview/production results belong in the release ledger.
+
+## Mapping companion — 21 September 2026
+
+C02 is implemented at `/student/guides/mapping`: six English steps and a user-controlled animated schematic separate a place pin, a land boundary and growing beds. [Walkthrough evidence and release checks](mapping.md) record the sample save/reopen, duplicate-place prompt, parcel tracing, Undo and naming. Four of 14 companions now have readable implementations; ten remain to develop. Preview/production verification is required before calling the fourth guide published. Narration and filmed walkthroughs remain open.
