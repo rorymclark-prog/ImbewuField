@@ -22,7 +22,7 @@ Production sample-tour checks on 21 September:
 - A subsequent prepared sample invoice #0043, R50.00, was changed from Unpaid to Paid using the exercise's full-payment condition. The UI showed “Invoice saved.” and Saved remained at 69. Sold contained exactly one View invoice 43 link. That link reopened the same #0043, R50.00, 2.5 kg line and Paid status with the selected receipt date/method. This verifies updating and following an existing sample invoice, not new-entry persistence or real cloud sync.
 - All interactions used the existing sample tour and synthetic/prepared data. No real payment, customer message, tax submission, PDF send or private receipt upload occurred.
 
-C07 uses these observed labels and preserves source constraints: paid-in-full/unpaid only; separate part-payment schedule; paid kilogram evidence versus other units; device-local invoice documents; save/sync messages; copies are not new sales. It adds no partial-payment backend and makes no full-profit or tax-compliance claim.
+C07 uses these observed labels and preserves source constraints: paid-in-full/unpaid only; separate part-payment schedule; paid kilogram evidence versus other units; device-local invoice documents; save/sync messages; copies are not new sales. `lib/finance-series.ts` also confirms that the whole paid invoice is placed on its single `paidAt` date. The guide therefore preserves each instalment date in the separate supporting record rather than promising a complete instalment cash timeline in Charts. It adds no partial-payment backend and makes no full-profit or tax-compliance claim.
 
 ## Media
 

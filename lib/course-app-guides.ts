@@ -303,6 +303,7 @@ export const SALES_GUIDE: AppGuide = {
       'Choose Not yet — payment outstanding if the money is still due. Choose Yes — paid in full only after checking that the full payment arrived.',
       'For full payment, check the actual receipt date and method. A payment promise or screenshot from the buyer needs checking against your own receipt evidence.',
       'A deposit or instalment is not payment in full. This app does not keep a partial-payment balance schedule. Keep a separate checked record of amounts received and still owed; do not mark the invoice fully paid for a deposit.',
+      'Keep every instalment’s actual receipt date in that separate record. The app gives a paid invoice one payment date for its whole amount, so its charts cannot show the separate instalment dates.',
     ], check: 'The status describes the evidence, and a part payment has not been represented as full payment.' },
     { id: 'save-sale', title: 'Save and check the same invoice', action: 'Save invoice → Saved → Open the same number', paragraphs: [
       'Choose Save invoice and read the message. Open Saved and find the same invoice number, buyer, amount and payment status.',
