@@ -795,6 +795,30 @@ export default function StudentPage() {
           <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
         </details>
 
+        <section className={styles.companions} aria-labelledby="design-pathway-title">
+          <div>
+            <p className={styles.eyebrow}>Connect the whole plan · English teaching preview</p>
+            <h2 id="design-pathway-title" className="font-display">Design a working homestead</h2>
+            <p>Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. The complete measured example is still being prepared.</p>
+          </div>
+          <Link href="/student/design" className={styles.guideCard}>
+            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
+            <span><strong className="font-display">Bring the decisions together.</strong><span>Build a design folder with a facilitator or learning partner. This preview does not award course credit.</span><em>Explore the design teaching preview →</em></span>
+          </Link>
+        </section>
+
+        <section className={styles.companions} aria-labelledby="finance-course-title">
+          <div>
+            <p className={styles.eyebrow}>Separate course · English teaching preview</p>
+            <h2 id="finance-course-title" className="font-display">Farm Finance</h2>
+            <p>Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.</p>
+          </div>
+          <Link href="/student/finance" className={styles.guideCard}>
+            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
+            <span><strong className="font-display">Understand the money. Plan the next season.</strong><span>Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.</span><em>Explore the finance teaching preview →</em></span>
+          </Link>
+        </section>
+
         <section className={styles.companions} aria-labelledby="app-guides-title">
           <div>
             <p className={styles.eyebrow}>Practical app guides</p>

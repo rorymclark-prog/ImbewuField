@@ -25,7 +25,7 @@
       "publishedLessons": 0
     },
     "usingImbewuField": {
-      "status": "All fourteen readable English guides implemented; narration, translation review and filmed walkthroughs pending",
+      "status": "Fourteen English guides, 167 English narration clips and per-guide offline downloads published (PR484/485); human listening, translation review and filmed walkthroughs pending",
       "tutorialSpecifications": 14,
       "path": "app-companions/README.md",
       "draftGuides": [
@@ -60,6 +60,26 @@
         "/student/guides/crop-planning"
       ],
       "implementedReadableGuides": 14
+    },
+    "permacultureDesign": {
+      "status": "Eighteen English drafts integrated in a development teaching preview; measured example, media, narration/offline and practitioner/learner/isiZulu review remain open",
+      "stages": 6,
+      "plannedLessons": 18,
+      "fullEnglishDrafts": 18,
+      "publishedLessons": 0,
+      "path": "design/README.md",
+      "draftFiles": [
+        "design/d1-people-and-place.md",
+        "design/d2-patterns-and-constraints.md",
+        "design/d3-connections-and-options.md",
+        "design/d4-develop-and-check.md",
+        "design/d5-work-and-care.md",
+        "design/d6-review-and-revise.md"
+      ],
+      "workedCase": "design/CASEBOOK.md",
+      "sourceReview": "design/SOURCES.md",
+      "implementedReadableLessons": 18,
+      "previewRoute": "/student/design"
     }
   }
 }

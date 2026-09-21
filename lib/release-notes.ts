@@ -33,6 +33,30 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '98efb4e', changes: [
+    'Keep your finance practice answers safe when another tab has saved a newer copy.',
+    'Download your current practice answers as text if this device cannot save them.',
+  ] },
+  { when: '21 September 2026', sha: 'd6304a7', changes: [
+    'Compare bed outlines with a gap, touching edges or overlap in a scale exercise.',
+    'Check the areas and download the diagram with its sample dimensions.',
+  ] },
+  { when: '21 September 2026', sha: 'f9970ac', changes: [
+    'Keep your design brief, evidence, choices and revisions together in a learning folder.',
+    'Save the folder on this device or download your notes to discuss beside the plan.',
+  ] },
+  { when: '21 September 2026', sha: '7a31942', changes: [
+    'Explore 18 design lesson drafts, from your household brief to reviewing a whole plan.',
+    'Follow a practice household and check which design decisions the evidence supports.',
+  ] },
+  { when: '21 September 2026', sha: 'b6ee6ad', changes: [
+    'Practise farm finance with connected source cards, checked calculations and a fresh retry.',
+    'Save or print your practice answers; a facilitator reviews your explanations.',
+  ] },
+  { when: '21 September 2026', sha: '18f91b1c', changes: [
+    'Explore Farm Finance: 24 English lesson drafts with worked practice.',
+    'Use finance workbooks and a reading checklist; final assessment is still being prepared.',
+  ] },
   { when: '21 September 2026', sha: 'b7613809', changes: [
     'Save an app guide with its picture and English recordings before leaving signal.',
     'Check what is saved, finish an interrupted download, or remove a guide’s recordings.',
