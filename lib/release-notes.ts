@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '13725c81', changes: [
+    'Studies now guides you through downloading lessons and checking them without signal.',
+    'The download message now reminds you to check saved lessons before leaving signal.',
+  ] },
   { when: '21 September 2026', sha: 'e9c92821', changes: [
     'Studies now explains how to connect site evidence, test results and saved reports.',
     'Practise checking source labels, report dates and exported copies before sharing.',

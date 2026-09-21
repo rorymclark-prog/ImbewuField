@@ -25,7 +25,7 @@
       "publishedLessons": 0
     },
     "usingImbewuField": {
-      "status": "Eleven readable English guides implemented; three remaining; narration, translation review and filmed walkthroughs pending",
+      "status": "Twelve readable English guides implemented; two remaining; narration, translation review and filmed walkthroughs pending",
       "tutorialSpecifications": 14,
       "path": "app-companions/README.md",
       "draftGuides": [
@@ -36,10 +36,11 @@
         "app-companions/getting-started.md",
         "app-companions/invoice-followups.md",
         "app-companions/exports.md",
-        "app-companions/evidence.md"
+        "app-companions/evidence.md",
+        "app-companions/offline-learning.md"
       ],
       "publishedReadableGuides": 11,
-      "remainingReadableGuides": 3,
+      "remainingReadableGuides": 2,
       "publishedGuideRoutes": [
         "/student/guides/mapping",
         "/student/guides/harvest",
@@ -53,7 +54,7 @@
         "/student/guides/exports",
         "/student/guides/evidence"
       ],
-      "implementedReadableGuides": 11
+      "implementedReadableGuides": 12
     }
   }
 }

@@ -265,8 +265,8 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
       {phase === 'done' && notPersisted && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#8C7A62' }}>
-          Saved, but this phone may clear it if storage runs low. Installing the app to your home
-          screen makes it stick.
+          Saved, but this phone may clear it if storage runs low. Check your saved lessons again
+          before leaving signal.
         </p>
       )}
 

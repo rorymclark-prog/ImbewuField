@@ -693,4 +693,65 @@ export const EVIDENCE_GUIDE: AppGuide = {
   finish: { title: 'Start with a site you can identify', text: 'Open your saved sites and review the evidence checklist. Use the sample tour first if you are practising.', href: '/reports', label: 'Open saved sites & reports' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE];
+export const OFFLINE_GUIDE: AppGuide = {
+  id: 'offline-learning', href: '/student/guides/offline-learning', cardTitle: 'Study offline, practise and get guidance',
+  title: 'Take your lessons home.',
+  summary: 'Save available lessons, check them without a connection and keep learning at your own pace.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers studying a site sketch together beside a homestead garden',
+  caption: 'Learn together, then practise on your own site · illustrated example',
+  prepareTitle: 'Prepare on the device you will use',
+  prepare: [
+    'Start while connected, with enough data, battery and free storage. Use the same normal browser or installed app that you will take with you. Stay signed in for your own coursework.',
+    'Use the sample tour for practice. Its progress is disposable. Do not keep your real course evidence in the sample workspace. Ask your facilitator which module and practical task to work on.',
+  ],
+  steps: [
+    { id: 'choose-pack', title: 'Choose the lessons and language', action: 'My Studies → Open a module, or Study offline', paragraphs: [
+      'Open the module you need to find its download control. Study offline offers the available lessons together. It does not unlock modules you have not been given access to.',
+      'Check the language shown for the slides and narration. Some translated material is not available yet, so the app may offer English instead. Downloading does not create a missing translation.',
+      'Read the download size before starting. Standard uses less data where a higher-quality version is offered. Choose what suits your connection and storage.',
+    ], check: 'You know which module, language and download size you are choosing.' },
+    { id: 'finish-download', title: 'Wait for the download to finish', action: 'Download → Check for On this phone', paragraphs: [
+      'Keep the page open while files arrive. If you need to interrupt the download, use Stop. Files already saved can be used when you finish the download later.',
+      'Finish download means some files are still missing. Reconnect and use that button, then check again. A progress bar or a few working slides does not mean the whole module is ready.',
+      'Check the module’s own On this phone message. If you downloaded one module, the whole-course control may still show missing files for other modules. Read which pack each message describes.',
+    ], check: 'The module you need says On this phone, with no unfinished download for that pack.' },
+    { id: 'test-offline', title: 'Try it before leaving signal', action: 'Open the module online → Briefly disconnect → Reopen My Studies', paragraphs: [
+      'While still somewhere you can reconnect, open the module once. Then briefly turn off your connection and reopen My Studies in the same browser or app.',
+      'Check that a slide picture loads. Open Read this slide and read its text. Choose Play to check the narration. Use Stop when you want to read quietly; Back and Next start narration on the selected slide.',
+      'If the page, picture or voice fails, reconnect and check the download and device storage. Resolve the gap before travelling. Repeat this check when you change devices or find that saved files are missing.',
+    ], check: 'You have actually reopened the lesson and used its picture, text and voice without a connection.' },
+    { id: 'learn-practise', title: 'Read, listen and explain it yourself', action: 'Open a lesson → Read or listen → Try its questions', paragraphs: [
+      'The slide presentation and the lesson list are different ways into the topic. Open a named lesson below the slides to find its reading and questions.',
+      'Read the feedback after answering. If an idea is unclear, return to the explanation and describe it in your own words. Use the practical task to connect it with your own site.',
+      'Downloading a pack does not mark a module done or submit its practical work. Mark done is your progress marker; it is not proof that a facilitator has assessed your work.',
+    ], check: 'You can explain the idea and the practical work still needed, rather than only recognising the slide.' },
+    { id: 'keep-evidence', title: 'Keep your practical evidence', action: 'Submit this module → Read the task and self-checks', paragraphs: [
+      'Read the actual assignment before taking a photograph. Keep the original photo and any notes on your device. Use evidence of your own work, with permission for any people shown.',
+      'The submission form requires a photo and offers an optional voice note. Adding a file only prepares it; Submit sends it. Reconnect before submitting and check the result. An error is not confirmation that your facilitator received it.',
+      'Resubmit replaces the previous submission’s photo and voice note. Check which version you intend to send and keep your originals. If you need help, show your facilitator the task, your attempt and the question you still have.',
+    ], check: 'Your evidence belongs to the task, and you distinguish a prepared file from a confirmed submission.' },
+    { id: 'reconnect', title: 'Check what needs a connection', action: 'Reconnect → Read save messages → Offline & sync if needed', paragraphs: [
+      'Ask for help on Studies opens Lima. AI chat and AI reports need a connection. A saved lesson can still be read while you wait; keep a note of your question for a facilitator.',
+      'For fieldwork, Offline & sync has a separate Prepare fieldwork on this device action. Read its results and open saved designs, crop plans and reports online before relying on them away from signal. A lesson download is not a download of every app page or all your farm records.',
+      'Use the same device and normal browser. Clearing site data removes downloads and can remove unsent work. Low storage can also cause the browser to clear saved files. Keep original evidence and check readiness again before your next visit.',
+    ], check: 'You know what is ready here, what is still waiting to send and what requires a connection.' },
+  ],
+  practice: {
+    title: 'One slide opens, but files are still missing.',
+    question: 'The module says Finish download. Is the whole module ready to take offline?',
+    choices: [
+      { label: 'Yes, because the first picture loads', feedback: 'A working picture only proves that picture is available. Other slides or narration may still be missing.', correct: false },
+      { label: 'Finish the download and test it without a connection', feedback: 'Correct. Check On this phone for that module, then reopen and try its picture, text and narration while briefly disconnected.', correct: true },
+      { label: 'Mark the module done to finish the download', feedback: 'Mark done records your progress. It does not download missing files or submit your practical evidence.', correct: false },
+    ],
+  },
+  limits: { title: 'A saved lesson is one part of learning', paragraphs: [
+    'Independent practice: choose an available module, explain its size and language, download it and demonstrate its picture, text and voice without a connection. Reconnect afterwards. Name one action that still needs a connection.',
+    'These app guides are separate from assessed modules. Reading this guide does not submit coursework. For your real course, check progress and submission messages in your own account; ask a facilitator about assessment and feedback.',
+    'The fieldwork queue and money book have separate save systems. No entries in the fieldwork queue does not prove that every financial record has synchronised. Follow the result shown by the feature you used.',
+  ], reference: { href: '/offline', label: 'Open Offline & sync' } },
+  finish: { title: 'Choose a lesson to take with you', text: 'Open My Studies while connected. Start with one available module and test the saved lesson on this device.', href: '/student', label: 'Open My Studies' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];
