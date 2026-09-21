@@ -31,7 +31,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
           <h1 id="guide-title">{guide.title}</h1>
           <p>{guide.summary} Keep these steps beside you while you work.</p>
           <div className={styles.actions}>
-            <a href="#steps" className={styles.primary}>Read the steps <ArrowUpRight size={17} /></a>
+            <Link href="#steps" className={styles.primary}>Read the steps <ArrowUpRight size={17} /></Link>
             <Link href="/tour">Practise with the sample farm</Link>
           </div>
         </div>
@@ -50,7 +50,8 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
       <div className="no-print"><LimaBar /></div>
 
       <nav className={styles.contents} aria-label={`${guide.cardTitle} steps`}>
-        {guide.steps.map((step, index) => <a key={step.id} href={`#${step.id}`}><span>{index + 1}</span>{step.title}</a>)}
+        {/* Native hash links lost the router's history entry: Back from Records kept Records on screen. */}
+        {guide.steps.map((step, index) => <Link key={step.id} href={`#${step.id}`}><span>{index + 1}</span>{step.title}</Link>)}
       </nav>
 
       <div id="steps" className={styles.steps}>
