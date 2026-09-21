@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'f7530bf5', changes: [
+    'Listen to each app-guide step in English, with controls to pause and replay.',
+    'Practice feedback has its own recording after you choose an answer.',
+  ] },
   { when: '21 September 2026', sha: 'e65025df', changes: [
     'Studies now explains how to turn mapped beds into a checked crop plan.',
     'Long crop details scroll on small screens so you can reach Edit and Close.',

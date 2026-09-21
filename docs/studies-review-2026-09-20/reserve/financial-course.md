@@ -2,6 +2,8 @@
 
 Status: expanded course specification requested by Rory on 20 September 2026. Eight units and 24 full English teaching drafts now exist; they are not recorded, translated, fully reviewed or published lessons. Keep the five-lesson `farm-money.md` introduction as the accessible starting point. This deeper pathway follows it and connects to the app companions. Do not silently change the existing 25-module inventory to imply these lessons are already produced.
 
+Proposed classroom delivery: [ten teaching days, including supported practice and assessment](finance/DELIVERY-PLAN.md). This is a planning estimate to validate with learners, not a completed teaching trial.
+
 ## Learning approach
 
 Follow one clearly labelled practice farm through a season: mapped growing areas, planned work, purchases, harvest destinations, sales, invoices, payments and review. Use a second enterprise to test whether the learner can transfer the method. The facilitator supplies redacted local evidence or a reviewed synthetic practice dataset. Practice figures are exercise inputs, never local prices, yields or income promises. Use rand and cents consistently and retain the original product units.

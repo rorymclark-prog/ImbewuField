@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { APP_GUIDES, appGuideNarrationSections } from '../lib/course-app-guides.ts';
 import { join } from 'node:path';
 
 import {
-  COURSE_NARRATION, allTracks, formatClock, fullNarrationUrl, hasNarration,
+  APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, allTracks, formatClock, fullNarrationUrl, hasNarration,
   moduleLevelTracks, narrationFor, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -167,6 +169,51 @@ test('every clip on disk is claimed by the manifest', () => {
         if (!file.endsWith('.mp3')) continue;
         assert.ok(known.has(file), `${moduleId}/${lang}: orphan clip not in the manifest: ${file}`);
       }
+    }
+  }
+});
+
+
+const GUIDE_AUDIO = join(process.cwd(), 'public', 'app-guide-audio');
+const hash = (value: string | Uint8Array) => createHash('sha256').update(value).digest('hex');
+
+test('every app guide has complete narration matching its current instructions and audio bytes', () => {
+  assert.deepEqual(Object.keys(APP_GUIDE_NARRATION).sort(), APP_GUIDES.map(g => g.id).sort());
+  for (const guide of APP_GUIDES) {
+    const recording = APP_GUIDE_NARRATION[guide.id];
+    const sections = appGuideNarrationSections(guide);
+    assert.equal(recording.language, 'en', 'do not silently offer an English recording as isiZulu');
+    assert.deepEqual(recording.tracks.map(t => t.section), sections.map(s => s.id), `${guide.id}: missing, duplicated or reordered section`);
+    for (const section of sections) {
+      const track = appGuideTrack(guide.id, section.id);
+      assert.ok(track, `${guide.id}/${section.id}: missing player source`);
+      assert.equal(track.sourceSha256, hash(section.text), `${guide.id}/${section.id}: narration is stale after a text change`);
+      const bytes = readFileSync(join(process.cwd(), 'public', track.url));
+      assert.equal(track.bytes, bytes.length, 'the learner must see the actual download size');
+      assert.equal(track.audioSha256, hash(bytes), `${guide.id}/${section.id}: audio changed after its verification`);
+      assert.ok(Number.isFinite(track.seconds) && track.seconds > 0);
+    }
+  }
+});
+
+test('unclaimed guide recordings cannot silently ship or create dead player links', () => {
+  const promised = new Set(Object.entries(APP_GUIDE_NARRATION).flatMap(([guide, n]) => n.tracks.map(t => `${guide}/${t.section}.mp3`)));
+  const actual = new Set(readdirSync(GUIDE_AUDIO, { recursive: true }).filter(p => typeof p === 'string' && p.endsWith('.mp3')));
+  assert.deepEqual(actual, promised);
+  assert.equal(appGuideTrack('unknown-guide', 'prepare'), null);
+  assert.equal(appGuideTrack(APP_GUIDES[0].id, 'unknown-section'), null);
+});
+
+test('the question recording excludes feedback and each feedback clip belongs to its chosen answer', () => {
+  for (const guide of APP_GUIDES) {
+    const sections = appGuideNarrationSections(guide);
+    const question = sections.find(s => s.id === 'practice')!;
+    for (const [index, choice] of guide.practice.choices.entries()) {
+      assert.ok(question.text.includes(choice.label));
+      assert.ok(!question.text.includes(choice.feedback), `${guide.id}: the question gives away feedback before an answer`);
+      const feedback = sections.find(s => s.afterChoice === index);
+      assert.ok(feedback);
+      assert.equal(feedback.text, choice.feedback);
     }
   }
 });

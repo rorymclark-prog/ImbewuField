@@ -41,7 +41,7 @@
         "app-companions/design.md",
         "app-companions/crop-planning.md"
       ],
-      "publishedReadableGuides": 13,
+      "publishedReadableGuides": 14,
       "remainingReadableGuides": 0,
       "publishedGuideRoutes": [
         "/student/guides/mapping",
@@ -56,7 +56,8 @@
         "/student/guides/exports",
         "/student/guides/evidence",
         "/student/guides/offline-learning",
-        "/student/guides/design"
+        "/student/guides/design",
+        "/student/guides/crop-planning"
       ],
       "implementedReadableGuides": 14
     }
