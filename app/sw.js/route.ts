@@ -381,6 +381,23 @@ async function migrateForestEstablishmentMedia() {
   await cache.put(marker, new Response('Young forest tour and matching narration'));
 }
 
+// The windbreak now explains through-flow, with matching speech. Keep other
+// saved lessons and never fetch a replacement without the learner choosing it.
+async function migrateWindbreakMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.windbreak-motion-20260921';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/intro-permaculture/en/slide-19.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+    '/course-decks/intro-permaculture/en/slide-19.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Windbreak motion and matching narration'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -396,7 +413,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateWindbreakMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

@@ -1,0 +1,16 @@
+{
+  "source": "source.png",
+  "title": "Watch: Shelter Between Wind and Crops",
+  "width": 1600,
+  "artHeight": 900,
+  "footerHeight": 200,
+  "fps": 24,
+  "scope": "Illustrated example with authored arrows showing some of the air passing through a windbreak. Qualitative direction and slowing only, not a measured airflow simulation or planting plan.",
+  "scenes": [
+    {"id": "direction", "label": "Wind from the north-west", "narration": "Look at this example. The wind comes from the north-west."},
+    {"id": "shelter", "label": "Shelter before the crops", "narration": "The trees and shrubs stand between that wind and the crops."},
+    {"id": "through", "label": "Some air passes through", "narration": "Some air passes through the windbreak. Other air moves over it or around its ends."},
+    {"id": "slower", "label": "Slower air behind", "narration": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter."},
+    {"id": "observe", "label": "Observe your own site", "narration": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."}
+  ]
+}

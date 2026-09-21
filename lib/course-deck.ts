@@ -185,7 +185,7 @@ const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8 },
   7: { src: 'watch-07-three-ethics', poster: 'watch-07-three-ethics', bytes: 211949, seconds: 23.416667 },
   13: { src: 'watch-13-diversity', poster: 'watch-13-diversity', bytes: 586357, seconds: 26.625 },
-  19: { src: 'watch-19-windbreak', poster: 'watch-19-windbreak', bytes: 284869, seconds: 23.708008 },
+  19: { src: 'motion-windbreak', poster: 'motion-windbreak', bytes: 4248143, seconds: 30.666667, aspectRatio: 1600 / 1100, narrationTimed: true },
 };
 
 // Reading the Landscape keeps its four authored Watch scenes in teaching order.

@@ -525,10 +525,11 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Which direction does the weather that damages you come from?"
       ],
       "19": [
-        "A Highveld farm gets hot, dry north-westerly winds in August.",
-        "The windbreak goes on the north-west boundary, standing between the wind and the crops.",
-        "That is all a windbreak does — it stands between the energy and the thing the energy would damage. Put it anywhere else and it is just a row of trees.",
-        "The same logic places a firebreak, and it places your tender crops out of a frost pocket."
+        "Look at this example. The wind comes from the north-west.",
+        "The trees and shrubs stand between that wind and the crops.",
+        "Some air passes through the windbreak. Other air moves over it or around its ends.",
+        "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+        "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
       ],
       "20": [
         "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",

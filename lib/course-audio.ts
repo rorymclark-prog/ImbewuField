@@ -90,6 +90,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     languages: ['en'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
+    // Slide 19 re-recorded 2026-09-21 with the same Luke voice at -12%, verified against
+    // returned word boundaries for the authored windbreak motion; full.mp3 rebuilt with it.
     // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
     // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
     // re-record seeds EN for a single course voice.
@@ -112,7 +114,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
       { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
-      { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: A Windbreak Belongs On The Wind Side' },
+      { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops' },
       { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design' },
       { slide: 21, lesson: null,                    title: 'Field Assignment' },
       { slide: 22, lesson: null,                    title: 'Field Action' },

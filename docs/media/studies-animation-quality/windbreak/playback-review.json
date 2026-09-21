@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-21",
+  "review_url": "http://127.0.0.1:4353/windbreak/REVIEW.html",
+  "video": "public/course-animations/intro-permaculture/motion-windbreak.mp4",
+  "sha256": "a3074769a56f1d7229f9bfd6e5e8cd5ccbf37a7c30f95ff174fcecdb8d049e20",
+  "browser_playback": {
+    "completed_runs": 2,
+    "ended": true,
+    "readyState": 4,
+    "duration": 30.666667,
+    "error": null
+  },
+  "phone_viewport": {
+    "width": 390,
+    "height": 844,
+    "document_width": 390
+  },
+  "source_inspected": true,
+  "phase_views_inspected": 5,
+  "human_listening_review": false,
+  "physical_phone_review": false
+}
