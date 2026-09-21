@@ -1,0 +1,53 @@
+.page { min-height: 100dvh; background: #f5f1e7; color: #293b2e; }
+.header { padding: 16px max(20px, calc((100% - 1120px) / 2)); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #fffdf7; border-bottom: 1px solid #ded5c2; }
+.main { max-width: 1120px; margin: auto; padding: 28px 20px 100px; }
+.page h1, .page h2, .page h3, .page h4 { font-family: var(--font-display), Georgia, serif; color: #214d32; }
+.page h1 { font-size: clamp(32px, 4vw, 52px); line-height: 1.12; margin: 12px 0 18px; }
+.page h2 { font-size: 28px; line-height: 1.2; margin: 0 0 14px; }
+.page h3 { font-size: 23px; margin: 0 0 10px; }
+.page h4 { font-size: 20px; margin: 18px 0 10px; }
+.page p, .page li { font-size: 16px; line-height: 1.65; }
+.page a { text-decoration: underline; text-underline-offset: 4px; }
+.page a:focus-visible, .page button:focus-visible, .page summary:focus-visible, .tableScroll:focus-visible { outline: 3px solid #956a25; outline-offset: 4px; }
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px !important; font-weight: 700; color: #586c4e; }
+.hero { background: #fffdf7; border: 1px solid #d8d0bb; border-radius: 22px; overflow: hidden; }
+.heroText { padding: 32px; max-width: 880px; }
+.hero img { display: block; width: 100%; aspect-ratio: 16/7; object-fit: cover; }
+.notice { margin: 20px 0; padding: 16px 20px; border: 1px solid #d8cda9; border-radius: 12px; background: #fbf5df; }
+.notice p { margin: 0; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 28px; }
+.card, .section { padding: 28px; border: 1px solid #d8d0bb; border-radius: 16px; background: #fffdf7; }
+.section { margin-top: 20px; }
+.card ol { padding-left: 24px; }
+.card li { padding: 7px 0; }
+.card a { display: inline-block; min-height: 44px; }
+.reading { background: #e9efdf; border-color: #c4d0b6; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 18px; }
+.actions a, .actions button { min-height: 44px; display: inline-flex; align-items: center; padding: 10px 14px; border: 1px solid #aabca2; border-radius: 10px; background: #fffdf7; font: inherit; }
+.actions .primary { background: #245436; color: #fffdf7; text-decoration: none; font-weight: 600; }
+.checklist { padding-top: 12px; color: #516347; }
+.checklist p { font-size: 14px; }
+.section summary { min-height: 44px; padding: 8px 0; cursor: pointer; font-weight: 600; font-size: 18px; }
+.prose p { margin: 12px 0; white-space: pre-line; }
+.prose ul, .prose ol { padding-left: 24px; }
+.tableScroll { overflow-x: auto; max-width: 100%; margin: 18px 0; }
+.tableScroll table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 14px; line-height: 1.55; }
+.tableScroll caption { text-align: left; padding: 0 0 8px; color: #516347; font-size: 13px; }
+.tableScroll th, .tableScroll td { text-align: left; vertical-align: top; padding: 10px 12px; border: 1px solid #d8d0bb; }
+.tableScroll th { background: #e9efdf; }
+.practice { border-top: 1px solid #ded5c2; margin-top: 22px; padding-top: 22px; }
+.sourceLinks a { overflow-wrap: anywhere; }
+.dayList { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 650px) {
+  .main { padding: 16px 12px 80px; }
+  .heroText, .card, .section { padding: 22px 18px; }
+  .hero img { aspect-ratio: 16/10; }
+  .grid, .dayList { grid-template-columns: 1fr; }
+}
+@media print {
+  .header, .actions, .notice, .checklist { display: none; }
+  .main { padding: 0; max-width: none; }
+  .hero img { display: none; }
+  .hero, .card, .section { border: 0; padding: 10px 0; }
+  .tableScroll { overflow: visible; }
+}
