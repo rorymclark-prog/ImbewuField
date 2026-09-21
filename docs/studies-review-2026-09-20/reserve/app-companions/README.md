@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C01/C03–C04/C07/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C01/C03–C04/C09–C14; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -66,3 +66,7 @@ The expense hero reuses the already-generated and inspected `docs/media/studies-
 ## Mapping companion — 21 September 2026
 
 C02 is implemented at `/student/guides/mapping`: six English steps and a user-controlled animated schematic separate a place pin, a land boundary and growing beds. [Walkthrough evidence and release checks](mapping.md) record the sample save/reopen, duplicate-place prompt, parcel tracing, Undo and naming. Four of 14 companions now have readable implementations; ten remain to develop. Published through [PR466](https://github.com/rorymclark-prog/ImbewuField/pull/466); the preview walkthrough is recorded in mapping.md and the production release checks in issue35. Narration and filmed walkthroughs remain open.
+
+## Sales companion — 21 September 2026
+
+C07 is implemented at `/student/guides/sales`, preview verified, with final publication tracked in issue #35: six steps, a four-stage authored invoice/payment explanation and a part-payment decision exercise. It reuses the reviewed lifelike market illustration. It does not add part-payment bookkeeping to the app. Five of 14 companions now have readable implementations; nine remain. [Walkthrough and release evidence](sales.md) distinguish verified existing-invoice updates from unverified new-entry persistence. Narration and filmed walkthroughs remain open.
