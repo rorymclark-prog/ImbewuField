@@ -13,6 +13,8 @@ export interface ReleaseNote {
   /** Short human date — no clock time; the farmer only needs the ordering. */
   when: string;
   changes: string[];
+  /** Optional places to visit after refreshing. Use real app routes and name the exact screen. */
+  tour?: UpdateTourStop[];
   /**
    * The newest commit this entry covers.
    *
@@ -31,15 +33,36 @@ export interface ReleaseNote {
   sha?: string;
 }
 
+export interface UpdateTourStop {
+  title: string;
+  where: string;
+  detail: string;
+  href: string;
+}
+
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '64edbc9', changes: [
+    'After refreshing, choose a short guide to the pages that changed.',
+  ], tour: [
+    { title: 'What’s new', where: 'Menu → What’s new', href: '/updates',
+      detail: 'Find the full update history here whenever you want to revisit a change.' },
+  ] },
   { when: '21 September 2026', sha: '0f1c415', changes: [
     'Follow the full worked design decision from sources through care, cost and revision.',
     'Download the fictional model diagram and check its dimensions before using a real plan.',
+  ], tour: [
+    { title: 'Worked design demonstration', where: 'Studies → Design → Worked demonstration',
+      href: '/student/design/worked',
+      detail: 'Follow the source pack, compare two designs and see how later evidence changes the plan.' },
   ] },
   { when: '21 September 2026', sha: '51f019a', changes: [
     'Follow a fictional yard plan from source cards to a revised design decision.',
     'Compare two options, keep unknowns visible and discuss the evidence with a facilitator.',
+  ], tour: [
+    { title: 'Practice household', where: 'Studies → Design → Practice household',
+      href: '/student/design/case',
+      detail: 'See the fictional yard and the evidence behind its first design choices.' },
   ] },
   { when: '21 September 2026', sha: '98efb4e', changes: [
     'Keep your finance practice answers safe when another tab has saved a newer copy.',
@@ -1632,4 +1655,17 @@ export const MAX_SHOWN = 5;
 /** The lines to render, flattened and capped. Kept pure so it is testable without a DOM. */
 export function visibleNotes(notes: ReleaseNote[] = RELEASE_NOTES, max = MAX_SHOWN): string[] {
   return notes.flatMap((n) => n.changes).slice(0, max);
+}
+
+/** Match the guide to the same recent changes the update notice actually announces. */
+export function visibleUpdateTour(notes: ReleaseNote[] = RELEASE_NOTES, max = MAX_SHOWN): UpdateTourStop[] {
+  let shown = 0;
+  const stops: UpdateTourStop[] = [];
+  for (const note of notes) {
+    if (shown >= max) break;
+    const remaining = max - shown;
+    shown += note.changes.length;
+    if (remaining > 0 && note.tour) stops.push(...note.tour);
+  }
+  return stops;
 }

@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import { NextResponse } from 'next/server';
-import { visibleNotes } from '@/lib/release-notes';
+import { visibleNotes, visibleUpdateTour } from '@/lib/release-notes';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +42,7 @@ export async function GET() {
       // runs on the deployment being announced, so its import of lib/release-notes is the new
       // one; the client prefers these and only falls back to its own copy if they are missing.
       notes: visibleNotes(),
+      tour: visibleUpdateTour(),
       source: branch && sha ? (process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA ? 'env' : 'git') : 'fallback',
     },
     {

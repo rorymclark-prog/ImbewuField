@@ -9,6 +9,7 @@ import AppConfirmProvider from '@/components/AppConfirm';
 import ChatWidget from '@/components/ChatWidget';
 import FieldSyncRunner from '@/components/FieldSyncRunner';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
+import UpdateGuide from '@/components/UpdateGuide';
 import SampleModeBanner from '@/components/SampleModeBanner';
 import PhotoViewer from '@/components/PhotoViewer';
 import ProductTourProvider from '@/components/ProductTourProvider';
@@ -129,6 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <BackControlProvider>{children}</BackControlProvider>
                 <ChatWidget />
                 <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
+                <UpdateGuide loadedBuildSha={loadedBuildSha} />
                 <SampleModeBanner />
                 <PhotoViewer />
                 </ProductTourProvider>

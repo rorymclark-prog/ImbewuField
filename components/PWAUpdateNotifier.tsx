@@ -4,11 +4,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { isDifferentBuild } from '@/lib/pwa-update';
 import { visibleNotes } from '@/lib/release-notes';
+import { cleanUpdateTour, UPDATE_GUIDE_KEY } from '@/lib/update-tour';
+import type { UpdateTourStop } from '@/lib/release-notes';
 
 interface BuildInfo {
   sha?: string | null;
   /** The new build's own release notes — see the comment in app/api/build-info/route.ts. */
   notes?: unknown;
+  tour?: unknown;
 }
 
 interface PWAUpdateNotifierProps {
@@ -32,6 +35,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   // Null until the server tells us; the local copy is the offline/older-server fallback.
   const [nextBuildNotes, setNextBuildNotes] = useState<string[] | null>(null);
+  const [nextBuildTour, setNextBuildTour] = useState<UpdateTourStop[]>([]);
   // IT WAS SITTING ON TOP OF THE APP'S OWN CONTROLS. Fixed, bottom-centre, 432x254, z-index 9999
   // — exactly where the Design Studio puts its Snap/Tidy confirm panel. Rory reported "snap to
   // neighbour still doesn't work" three times; it worked perfectly, computed the right answer and
@@ -74,6 +78,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           ? data.notes.filter((n): n is string => typeof n === 'string' && n.trim().length > 0)
           : [];
         setNextBuildNotes(served.length > 0 ? served : null);
+        setNextBuildTour(cleanUpdateTour(data.tour));
         markUpdateAvailable(latestSha);
       }
     } catch {
@@ -162,6 +167,29 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     if (refreshing) return;
     setRefreshing(true);
     try {
+      let tour = nextBuildTour;
+      let sha = nextBuildSha;
+      // A worker can announce an update before the build-info poll finishes. Ask the new
+      // deployment once more so the post-refresh guide describes the build we are installing.
+      if (!tour.length) {
+        try {
+          const info = await Promise.race([
+            fetch(`/api/build-info?guide=${Date.now()}`, { cache: 'no-store' })
+              .then((r) => r.ok ? r.json() as Promise<BuildInfo> : null),
+            new Promise<null>((resolve) => window.setTimeout(() => resolve(null), UPDATE_RELOAD_TIMEOUT_MS)),
+          ]);
+          if (info && isDifferentBuild(loadedBuildShaRef.current, info.sha?.trim() || null)) {
+            tour = cleanUpdateTour(info.tour);
+            sha = info.sha?.trim() || null;
+          }
+        } catch { /* Refresh still works when the guide cannot be fetched. */ }
+      }
+      if (tour.length) {
+        try {
+          window.sessionStorage.setItem(UPDATE_GUIDE_KEY,
+            JSON.stringify({ sha, stops: tour, phase: 'offer', index: 0 }));
+        } catch { /* Private browsing may not allow session storage. */ }
+      }
       if ('serviceWorker' in navigator) {
         const registration = registrationRef.current ?? await navigator.serviceWorker.getRegistration('/');
         // Normally /sw.js calls skipWaiting itself. This message also handles an older waiting
@@ -177,7 +205,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     } finally {
       window.location.reload();
     }
-  }, [refreshing]);
+  }, [refreshing, nextBuildTour, nextBuildSha]);
 
   // Long enough to read the headline and the first note or two, short enough that it is out of the
   // way before anyone reaches for a control underneath it.
