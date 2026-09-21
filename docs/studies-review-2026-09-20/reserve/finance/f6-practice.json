@@ -1,0 +1,28 @@
+{
+  "status": "Original synthetic classroom inputs; no actual offer, rate recommendation or equipment advice",
+  "equipment": {
+    "openingCents": 50000, "horizonDays": 30,
+    "need": "The same suitable tool service on Days 2, 10 and 20; no crop, yield or machine specified",
+    "cases": [
+      {"id":"BUY","label":"Buy the tool","access":"Assumed confirmed for the exercise","remainingAssetValueCents":null,"events":[{"day":1,"ref":"B01","label":"Purchase, paid before use","out":90000,"in":0},{"day":10,"ref":"B02","label":"Operating inputs","out":6000,"in":0},{"day":20,"ref":"B03","label":"Maintenance","out":4000,"in":0}]},
+      {"id":"HIRE","label":"Hire the service","access":"Assumed confirmed for the exercise","remainingAssetValueCents":0,"events":[{"day":1,"ref":"H01","label":"Service charge for all three uses","out":21000,"in":0},{"day":1,"ref":"H02","label":"Transport charge","out":6000,"in":0},{"day":1,"ref":"H03","label":"Refundable security deposit","out":15000,"in":0},{"day":30,"ref":"H04","label":"Deposit returned in full under this case","out":0,"in":15000}]},
+      {"id":"SHARE","label":"Contribute to shared ownership","access":"Day 10 booking unconfirmed","remainingAssetValueCents":null,"events":[{"day":1,"ref":"S01","label":"Ownership contribution","out":30000,"in":0},{"day":10,"ref":"S02","label":"Operating contribution","out":3000,"in":0},{"day":20,"ref":"S03","label":"Maintenance contribution","out":2000,"in":0}]}
+    ]
+  },
+  "borrowing": {
+    "principalCents":60000, "feeCents":3000,
+    "schedules":[
+      {"id":"SEPARATE","label":"Fee paid separately","creditedCents":60000,"separateFeeCents":3000,"withheldFeeCents":0,"rows":[{"date":"2027-01-31","principal":20000,"interest":1200,"service":600,"insurance":400},{"date":"2027-02-28","principal":20000,"interest":800,"service":600,"insurance":400},{"date":"2027-03-31","principal":20000,"interest":400,"service":600,"insurance":400}]},
+      {"id":"WITHHELD","label":"Same fee withheld once","creditedCents":57000,"separateFeeCents":0,"withheldFeeCents":3000,"rows":[{"date":"2027-01-31","principal":20000,"interest":1200,"service":600,"insurance":400},{"date":"2027-02-28","principal":20000,"interest":800,"service":600,"insurance":400},{"date":"2027-03-31","principal":20000,"interest":400,"service":600,"insurance":400}]},
+      {"id":"UNKNOWN","label":"A quote with missing insurance","creditedCents":60000,"separateFeeCents":3000,"withheldFeeCents":0,"rows":[{"date":"2027-01-31","principal":20000,"interest":1000,"service":0,"insurance":null},{"date":"2027-02-28","principal":20000,"interest":1000,"service":0,"insurance":null},{"date":"2027-03-31","principal":20000,"interest":1000,"service":0,"insurance":null}]}
+    ]
+  },
+  "reserves": {
+    "openingOperatingCents":60000,"openingReservedCents":20000,"targetCents":50000,
+    "events":[{"day":5,"ref":"A01","kind":"allocate","cents":10000},{"day":10,"ref":"M01","kind":"reserve-payment","cents":12000},{"day":15,"ref":"R01","kind":"operating-receipt","cents":8000},{"day":25,"ref":"E01","kind":"operating-payment","cents":55000}],
+    "shock":{"day":20,"ref":"X01","kind":"repair","cents":25000},
+    "excluded":[{"ref":"D01","label":"Non-cash equipment-use estimate, not a bank transfer","cents":5000},{"ref":"G01","label":"Unapproved funding application, not money received","cents":30000}]
+  },
+  "independent":{"hireChargeCents":8000,"depositCents":5000,"refundedCents":5000,"principalCents":10000,"interestCents":1000,"includedServiceCents":200,"openingTotalCents":40000,"allocatedCents":9000,"reservePaymentCents":2000},
+  "fullProfit":null
+}
