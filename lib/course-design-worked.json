@@ -1,9 +1,10 @@
 {
   "caseId": "DESIGN-WORKED-01",
-  "revision": "R2",
+  "currentRevision": "R2",
   "title": "A provisional yard plan",
   "notice": "Fictional classroom model. Coordinates, dimensions and statements are supplied for learning only. They are not a survey, a construction drawing, local advice or a plan for a real household.",
   "coordinateSystem": { "unit": "metres", "axis": "x increases right; y increases down; the top edge is model north by classroom convention only" },
+  "frame": { "width": 20, "height": 12, "source": "W-MAP" },
   "sourceCards": [
     { "id": "W-BRIEF", "kind": "supplied simulation input", "title": "Household brief", "text": "The household wants vegetables, an unobstructed home-to-gate route and manageable care. The person carrying water participates in the decision." },
     { "id": "W-MAP", "kind": "supplied simulation input", "title": "Teaching frame", "text": "A 20 m by 12 m classroom frame includes an existing 8 m by 6 m growing area. It is model geometry, not a boundary or land-rights record." },
@@ -33,7 +34,7 @@
   ],
   "revision": { "from": "R1", "to": "R2", "source": "W-CARE", "change": "Defer the proposed compost area. Keep the growing-area investigation and route evidence unchanged.", "reason": "No person has agreed to the added care work.", "nextOwner": "Household and facilitator to record an agreed care arrangement or leave the component deferred." },
   "facilitator": [
-    { "question": "Which source supports the 48 m² comparison?", "answer": "W-MAP supplies both footprints and W-CHECK records the calculation. A picture alone is not the source." },
+    { "question": "Which source supports the 48 m² comparison?", "answer": "W-MAP supplies the existing footprint, W-B holds the alternative proposal geometry and W-CHECK records the calculation. A picture alone is not the source." },
     { "question": "Does the report about water crossing the eastern yard establish levels or an earthworks design?", "answer": "No. It is W-OBS, a reported statement with unmeasured extent and levels." },
     { "question": "What must change after W-CARE?", "answer": "The compost proposal, its phase/cost status and its care record all change to deferred. The earlier version and reason remain visible." }
   ]
