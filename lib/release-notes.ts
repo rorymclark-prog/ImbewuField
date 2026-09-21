@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'd983bfe7', changes: [
+    'Studies now has a getting-started guide for practice, navigation and save checks.',
+    'Learn how to leave the sample farm and find the same record again.',
+  ] },
   { when: '21 September 2026', sha: '4f3fd9c9', changes: [
     'Back returns to your app guide after opening Records or another page.',
   ] },

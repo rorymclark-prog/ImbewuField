@@ -75,3 +75,7 @@ C07 is implemented at `/student/guides/sales`, published in PR471 and production
 ## Charts companion — 21 September 2026
 
 C11 is implemented at `/student/guides/charts`: six English steps and a three-stage practice window explain periods, the running total, harvest remainders, plan benchmarks, area returns and source tracing. It reuses the reviewed homestead cost illustration. This brings readable implementations to six of 14; eight remain. [Source and walkthrough evidence](charts.md) records the released sample controls and distinguishes local checks from branch/production release checks in issue #35. Narration and filmed walkthroughs remain open.
+
+## Getting-started companion — 21 September 2026
+
+C01 has a readable implementation at `/student/guides/getting-started`: sample versus own workspace, page navigation, reopening a record, save-result checks, retaining evidence and Exit tour. Seven of 14 readable companions are implemented; seven remain (C03, C04, C09, C10, C12, C13, C14). Release verification is recorded in [getting-started.md](getting-started.md). Narration and filmed walkthroughs remain open. Animations are held for joint review with Rory under [the current work direction](../../WORK-DIRECTION.md).

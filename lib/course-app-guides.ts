@@ -393,4 +393,65 @@ export const CHARTS_GUIDE: AppGuide = {
   finish: { title: 'Choose one figure and explain it', text: 'Open Charts in your current workspace. Read its period, inspect one month and trace a figure to a source. Use demonstration records for practice.', href: '/records?tab=charts', label: 'Open Charts' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, CHARTS_GUIDE];
+export const START_GUIDE: AppGuide = {
+  id: 'getting-started', href: '/student/guides/getting-started', cardTitle: 'Start, find your way and keep work safe',
+  title: 'Find your way. Keep your work safe.',
+  summary: 'Practise with the sample farm, return to a record and check what has saved before you move on.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers using a sketch and notebook to discuss their homestead',
+  caption: 'Keep a source record beside your app · illustrated example',
+  prepareTitle: 'Start with practice details',
+  prepare: [
+    'Use the sample farm for your first try. Keep real customer details, payments and private photographs out of a group demonstration.',
+    'Have a notebook ready. Write down which page you used and how you will find the same item again.',
+  ],
+  steps: [
+    { id: 'sample', title: 'Enter the sample farm', action: 'Menu → Take a tour → Record the work and the sale → Try it now', paragraphs: [
+      'Open Take a tour. Choose Record the work and the sale, then Try it now. You will see prepared records in My Records.',
+      'Look for Tour beside the menu. Open the menu and read Tour workspace. You are practising with example data. The sample farm is not a place to keep your own records.',
+      'Sample changes reset on a full reload. Practise and check the result in the same tab; do not rely on a practice entry being there tomorrow.',
+    ], check: 'You can show the Tour workspace label before practising.' },
+    { id: 'navigate', title: 'Choose the page for the task', action: 'Home · Map · My Records · Menu → Study', paragraphs: [
+      'Use Map for places and plans. Use My Records for Picked, Sold, Spent and Charts. Choose Study in the menu for lessons and these app guides.',
+      'The Tour guide button brings the tips back. Closing a tip does not leave the sample farm. Read the page title when you move to another screen.',
+      'Some pages depend on your role. A page seen in a sample role does not mean your own account has access to it.',
+    ], check: 'You can name the page for a harvest, an invoice and a lesson.' },
+    { id: 'reopen', title: 'Find the same record again', action: 'My Records → Invoice → Saved → Choose an existing invoice', paragraphs: [
+      'In the sample farm, open Invoice and choose an existing document from Saved. Read its number, buyer, date, total and payment status. You do not need to change or send it.',
+      'Return to the list and reopen that same invoice. Compare the details with your note. A request for another copy is not a new sale.',
+      'For your own work, check the site name and account as well as the record. A similar name is not enough to identify the right item.',
+    ], check: 'You can reopen the same document and explain how you recognised it.' },
+    { id: 'save-check', title: 'Read the save result', action: 'Save once → Read the message → Reopen the same item', paragraphs: [
+      'When you later save real work, read the result before leaving. Check the saved row or document against your source. If there is an error, keep the source and note what failed.',
+      'Saved on this device means a local copy. Waiting to send means the server save still needs confirmation. Reconnect and follow the message; do not add the same record again as a retry.',
+      'Menu → Offline & sync shows the fieldwork queue. Offline or a waiting count beside the menu can open it too. The money book has its own sync system: an empty fieldwork queue does not prove every invoice or sale is backed up.',
+    ], check: 'You can distinguish a reopened local record from a confirmed server save.' },
+    { id: 'keep-copy', title: 'Keep the evidence you need', action: 'Reopen → Check → Keep a copy', paragraphs: [
+      'Complete invoice documents and original money-book receipt photos stay on their original device. A linked sale appearing elsewhere does not prove the full invoice or photo is there.',
+      'Keep your source records and checked document copies. Follow the invoice guide to preview a PDF before sharing. Downloading a copy does not send it to a buyer.',
+      'Before leaving signal, prepare the pages you need in Offline & sync. Save lesson media separately through Study offline. Read what is available and test reopening it; a connection icon alone does not prove it was downloaded.',
+      'Do not clear site data to fix a waiting save. It can remove downloads and unsent work. Keep the device protected and resolve the save message first.',
+    ], check: 'You know where your record and its original evidence are kept.' },
+    { id: 'own-work', title: 'Leave practice before real work', action: 'Menu → Exit tour → Check your own account and site', paragraphs: [
+      'Open the menu and choose Exit tour. This returns you to Home. Check that the Tour workspace label has gone, then check your own account and selected site before entering real details.',
+      'End tour in the tips stops the guided checklist; it does not leave the sample workspace. Use Exit tour in the menu when you want your own work.',
+      'If you need to sign in, use your own account. If the account or site is wrong, resolve it before saving. Keep practising in the sample farm until you can follow the task confidently.',
+    ], check: 'You can explain whether your next entry belongs to practice or to your own farm.' },
+  ],
+  practice: {
+    title: 'A save is still waiting.',
+    question: 'An item says Saved on this device — waiting to send. What should you do?',
+    choices: [
+      { label: 'Add the same item again', feedback: 'That risks a duplicate. Keep the source and follow the original item’s save message.', correct: false },
+      { label: 'Keep the item, reconnect and check its save result', feedback: 'Yes. Reopen the same item and resolve its message. An empty fieldwork queue alone does not confirm the separate money book.', correct: true },
+      { label: 'Clear site data and start again', feedback: 'Clearing site data can remove unsent work and downloads. Preserve the record and resolve the save problem first.', correct: false },
+    ],
+  },
+  limits: { title: 'Practise the task, then check the evidence', paragraphs: [
+    'Exploring a tour stop is your checklist choice. It is not a training certificate or proof that you can perform a farming skill.',
+    'For an independent try, enter the sample farm, find a different existing invoice, note its reference, leave the list and reopen it. Explain the workspace and payment status to a partner. Finish with Exit tour; do not send the document.',
+  ] },
+  finish: { title: 'Try your first task with the sample farm', text: 'Start the tour, find an existing record and return to it. Keep these steps beside you until you can do it independently.', href: '/tour', label: 'Open the sample tour' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, CHARTS_GUIDE];
