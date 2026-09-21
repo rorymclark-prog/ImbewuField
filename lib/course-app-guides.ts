@@ -754,4 +754,70 @@ export const OFFLINE_GUIDE: AppGuide = {
   finish: { title: 'Choose a lesson to take with you', text: 'Open My Studies while connected. Start with one available module and test the saved lesson on this device.', href: '/student', label: 'Open My Studies' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];
+export const DESIGN_GUIDE: AppGuide = {
+  id: 'design', href: '/student/guides/design', cardTitle: 'Build and review a design',
+  title: 'Make a plan you can check on the ground.',
+  summary: 'Work through Design Studio, check a small edit and inspect the saved plan before using it.',
+  image: '/studies-guides/sketch-the-site.jpg',
+  imageAlt: 'Illustration of two growers comparing a site sketch with their homestead garden',
+  caption: 'A useful design connects the drawing with the land · illustrated example',
+  prepareTitle: 'Bring your site observations and measurements',
+  prepare: [
+    'Have the correct saved site, your field sketch and checked measurements ready. Keep a note of what already exists, what is proposed and what still needs measuring.',
+    'For practice, open the sample tour and choose Plan the growing season, then Try it now. Use that disposable design to learn the controls before editing your own farm.',
+  ],
+  steps: [
+    { id: 'site-base', title: 'Check the site and its base', action: 'Open the site’s Design Studio → Base', paragraphs: [
+      'Check the site name and recognise the boundary and buildings. The sample tour starts on Planting; choose Base to review the starting information.',
+      'Compare the traced boundary, house and existing ground features with your field record. A satellite picture or a drawing is not a ground measurement. Keep uncertain dimensions marked for checking.',
+      'Open the step guide when you need the next task. Do this selects the relevant tool. A tick shows that something has been drawn; it does not establish that its size or position is right.',
+    ], check: 'You are working on the intended site and can identify existing features and missing information.' },
+    { id: 'read-sectors', title: 'Read the site before placing new work', action: 'Sector → Read the source notes → Compare with your observations', paragraphs: [
+      'Look at the displayed sun, wind, fire and water information. Read the source and missing-data notes. Some information is modelled or regional context, rather than a measurement on your land.',
+      'Compare the display with what you have observed and recorded. Note a disagreement or an unknown instead of changing your field record to match the screen.',
+      'Use Learn and the linked course explanations for the farming ideas. These app instructions teach the controls; they do not replace a site assessment.',
+    ], check: 'You can say which information was observed and which still needs checking on site.' },
+    { id: 'place-systems', title: 'Work through the design layers', action: 'Water → Earthworks → Zones → Planting → Structures', paragraphs: [
+      'Use each step for the part of the plan you are considering. Read the step guide, choose the appropriate tool and place or draw the proposed item. You do not need every item in the palette.',
+      'Check how the parts work together: water access, paths, beds, trees and structures. Keep existing features distinguishable in your notes from work you have only proposed.',
+      'A tank or bed icon comes with starting dimensions. Check the real design requirements before keeping those values. A drawn earthwork is not a surveyed or approved construction instruction.',
+    ], check: 'Each item has a reason and checked dimensions, or a clearly recorded question to resolve.' },
+    { id: 'edit-undo', title: 'Practise one edit and Undo', action: 'Planting → Select → Zoom in if needed → Move the item → Undo', paragraphs: [
+      'In the sample design, select a bed and read its width and height. Zoom in so the item and its handles are easy to distinguish. Drag the body to move it; edge or corner handles change its size.',
+      'Check the result immediately. If you meant to move the bed but its width changed, choose Undo, confirm the original dimensions and try again at a larger zoom.',
+      'Use Undo to restore the practice edit. Check both the position and the dimensions. Redo repeats an undone edit; it is not a second copy. Fit map to view helps you see the whole site again.',
+    ], check: 'You can move an item deliberately and restore it without accidentally changing its dimensions.' },
+    { id: 'review-save', title: 'Review the whole design and its save result', action: 'Review → Inspect the map → Read Saved or any warning', paragraphs: [
+      'Review brings the design layers into view together. Trace an ordinary route through the plan: reach the beds, fetch water and get to the structures. Check for overlaps and blocked access.',
+      'The app saves edits as you work. Read the header. If it says NOT saved or reports full storage, retain a copy and resolve the warning before leaving. Saved confirms the device save; it does not by itself prove the same version has reached another device.',
+      'Return to the same saved site and check the design again. Keep your field sketch and source measurements separately. Do not clear the browser’s data as a way to repair a save problem.',
+    ], check: 'You have reviewed the intended version and can identify any save problem that remains.' },
+    { id: 'preview-sheet', title: 'Make and inspect a plan sheet', action: 'Glossy → Plan sheet → Underlay and labels → Design Map', paragraphs: [
+      'Glossy opens Preview & Export. Choose the plan sheet you need, then its underlay, quality and label options. Choose Design Map to draw that sheet from the saved design.',
+      'Open the resulting map full screen. Check the site name, sheet title, boundary, positions, scale, legend and readable labels. Compare with the drawing and field record; an attractive picture is not evidence that a planned feature exists.',
+      'Check the saved-render date and version. A previously saved picture can show an earlier design. If you edit the design later, draw and inspect a new sheet before treating it as the current plan.',
+    ], check: 'The selected sheet is readable and represents the version you intend to discuss.' },
+    { id: 'export-plan', title: 'Download the selected sheets and open the file', action: 'Export & Share → Select the saved sheet → Choose format → Download', paragraphs: [
+      'Select the saved sheet or sheets you want. Choose PDF for one document, or an available image format. Check the selection and quality before choosing Download.',
+      'Open the actual downloaded file. Inspect every page, including its title, legend, scale and any labels you need. A saved design, a saved rendered map and a downloaded document are different copies.',
+      'Keep a dated copy with your site notes. Choose any real recipient yourself after reviewing private details. A download does not send the plan to them.',
+    ], check: 'You have opened the right file and can explain what it contains and which design it represents.' },
+  ],
+  practice: {
+    title: 'You meant to move a bed.',
+    question: 'After dragging, its width has changed. What should you do?',
+    choices: [
+      { label: 'Keep it because the drawing looks tidy', feedback: 'A tidy drawing does not justify a changed dimension. Check the edit against your intended plan.', correct: false },
+      { label: 'Undo, check the dimensions and move its body carefully', feedback: 'Correct. Restore the original dimensions first. Zoom in and distinguish the body from the resize handles before trying again.', correct: true },
+      { label: 'Change the field notes to match the screen', feedback: 'Keep the measured evidence unchanged. Correct the drawing to reflect the intended design; do not rewrite measurements to conceal an accidental edit.', correct: false },
+    ],
+  },
+  limits: { title: 'Check the design before acting on it', paragraphs: [
+    'Independent practice: in the sample farm, identify an existing feature and a proposed item. Move one bed, explain what changed, and restore it with Undo. Draw a Design Map, download one selected sheet and find its title and legend in the file.',
+    'For your own site, review unresolved measurements and decisions with the people who use the land and a suitable adviser. A design drawing does not establish land rights, permissions or the suitability of construction work.',
+    'When the growing areas are checked, use the site’s Crop plan link to continue planning. Proposed plantings and forecast harvests remain plans until the real work is recorded.',
+  ] },
+  finish: { title: 'Start with a site you recognise', text: 'Open Design Studio and choose the intended saved site. Use the sample tour first if you are practising.', href: '/design', label: 'Open Design Studio' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, DESIGN_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE, EVIDENCE_GUIDE, OFFLINE_GUIDE];

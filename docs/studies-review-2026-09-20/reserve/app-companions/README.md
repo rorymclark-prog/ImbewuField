@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C03–C04; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: full tutorial scripts and practice cards for C04; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -95,3 +95,7 @@ C13 is implemented at `/student/guides/evidence`: six English steps cover site i
 ## Offline-learning companion — 21 September 2026
 
 C14 is implemented at `/student/guides/offline-learning`: six English steps cover pack/language choice, complete versus partial downloads, a real offline check, lesson practice, submission evidence and reconnecting. [Source and walkthrough evidence](offline-learning.md) records the completed introduction download and offline page/image/transcript/audio verification. Twelve readable companions are implemented; C03 design and C04 crop planning remain. No animation work was performed. Narration, translations and learner review remain open.
+
+## Design Studio companion — 21 September 2026
+
+C03 is implemented at `/student/guides/design`: seven English steps cover site/base checks, modelled sector context, design layers, moving versus resizing, Undo, save messages, map review and selected-sheet export. [Source and walkthrough evidence](design.md) records the actual sample edit/Undo and one-page PDF download. Thirteen readable companions are implemented; C04 crop planning remains. No animation changes. Narration, translations and learner review remain open.
