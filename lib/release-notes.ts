@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '0f1c415', changes: [
+    'Follow the full worked design decision from sources through care, cost and revision.',
+    'Download the fictional model diagram and check its dimensions before using a real plan.',
+  ] },
   { when: '21 September 2026', sha: '51f019a', changes: [
     'Follow a fictional yard plan from source cards to a revised design decision.',
     'Compare two options, keep unknowns visible and discuss the evidence with a facilitator.',
