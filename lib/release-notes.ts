@@ -33,7 +33,7 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '21 September 2026', sha: 'bd6a4ba', changes: [
+  { when: '21 September 2026', sha: 'ec56c4e', changes: [
     'Save the Finance or Design reading pathway and check every page before leaving signal.',
     'Compare design options fairly and download clear diagrams with their work, cost and care record.',
   ] },
