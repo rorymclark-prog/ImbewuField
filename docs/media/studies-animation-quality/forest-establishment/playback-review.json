@@ -1,0 +1,18 @@
+{
+  "date": "2026-09-21",
+  "review_url": "http://127.0.0.1:4353/forest-establishment/REVIEW.html",
+  "video": "public/course-animations/food-forest/tour-young-forest.mp4",
+  "sha256": "8107bf45e53b071259792a823067a79f14352dfd1655e49f8e812ce2f7aa9fa2",
+  "browser_playback": {
+    "completed_runs": 2,
+    "ended": true,
+    "readyState": 4,
+    "duration": 33.291667,
+    "error": null
+  },
+  "source_inspected": true,
+  "phase_views_inspected": 5,
+  "first_transition_frames_inspected": 8,
+  "human_listening_review": false,
+  "physical_phone_review": false
+}

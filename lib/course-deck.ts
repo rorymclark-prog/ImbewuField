@@ -213,7 +213,7 @@ const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
   5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100 },
   10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
-  15: { src: 'watch-15-forest-sequence', poster: 'watch-15-forest-sequence', bytes: 202241, seconds: 15.667 },
+  15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100 },
 };
 
 // Each Small Livestock Watch scene follows its existing narration.

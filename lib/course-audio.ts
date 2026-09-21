@@ -667,7 +667,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 12, lesson: 'food-forest-l2', title: 'Check the Warm-Region Examples' },
       { slide: 13, lesson: 'food-forest-l2', title: 'Include Locally Appropriate Indigenous Plants' },
       { slide: 14, lesson: 'food-forest-l3', title: 'Plan the Sequence for the Site' },
-      { slide: 15, lesson: 'food-forest-l3', title: 'Watch: Establishment in Stages' },
+      { slide: 15, lesson: 'food-forest-l3', title: 'Watch: Care for a Young Food Forest' },
       { slide: 16, lesson: 'food-forest-l3', title: 'Prepare a Manageable First Area' },
       { slide: 17, lesson: 'food-forest-l3', title: 'Adjust as the Trees Grow' },
       { slide: 18, lesson: 'food-forest-l3', title: 'Plant with Reliable Moisture' },
