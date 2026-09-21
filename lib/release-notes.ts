@@ -36,7 +36,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '21 September 2026', sha: '1aad607', changes: [
     'Food Forest now takes you closer to mulch, tree care and weeding in a young garden.',
     'The illustrated tour has clear labels and matching narration.',
-    'Forest and soil close-ups now follow your narration when you pause or move through a scene.',
+    'Forest and soil close-ups stay with the voice when you pause or skip ahead.',
     'Save Food Forest again to keep the updated picture and audio offline.',
   ] },
   { when: '21 September 2026', sha: 'af2b6c5', changes: [
