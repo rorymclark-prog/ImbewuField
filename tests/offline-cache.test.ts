@@ -26,12 +26,15 @@ class MemoryCache {
 
   private key(value: RequestInfo | URL): string {
     const raw = typeof value === 'string' ? value : value instanceof URL ? value.href : value.url;
-    return raw.split('?')[0];
+    return raw;
   }
 
-  async match(value: RequestInfo | URL): Promise<Response | undefined> {
+  async match(value: RequestInfo | URL, options?: CacheQueryOptions): Promise<Response | undefined> {
     const key = this.key(value);
     if (this.matchErrorFor.has(key)) throw new Error('cache read failed');
+    // Cache Storage preserves search parameters unless the caller explicitly ignores them.
+    // The old fake removed them even on put, hiding stale-revision bugs from these tests.
+    if (options?.ignoreSearch) return [...this.rows].find(([k]) => k.split('?')[0] === key.split('?')[0])?.[1];
     return this.rows.get(key);
   }
 
@@ -42,10 +45,15 @@ class MemoryCache {
     this.rows.set(key, response);
   }
 
-  async delete(value: RequestInfo | URL): Promise<boolean> {
+  async delete(value: RequestInfo | URL, options?: CacheQueryOptions): Promise<boolean> {
     const key = this.key(value);
     if (this.deleteErrorFor.has(key)) throw new Error('cache delete failed');
     this.deletes.push(key);
+    if (options?.ignoreSearch) {
+      const matching = [...this.rows.keys()].filter(k => k.split('?')[0] === key.split('?')[0]);
+      for (const k of matching) this.rows.delete(k);
+      return matching.length > 0;
+    }
     return this.rows.delete(key);
   }
 }
@@ -79,6 +87,25 @@ function installBrowser(cache: MemoryCache, fetchImpl: FetchFn = globalThis.fetc
   Object.defineProperty(globalThis, 'fetch', { configurable: true, value: fetchImpl });
   return target;
 }
+
+test('a changed guide recording is downloaded instead of counting an older revision as ready', async () => {
+  const cache = new MemoryCache();
+  const old = '/app-guide-audio/mapping/prepare.mp3?v=old';
+  const current = '/app-guide-audio/mapping/prepare.mp3?v=current';
+  cache.rows.set(old, new Response('old'));
+  const calls: string[] = [];
+  installBrowser(cache, (async url => { calls.push(String(url)); return new Response('new'); }) as FetchFn);
+  const p = pack([{ url: current, bytes: 3, kind: 'audio' }]);
+  assert.equal((await packStatus(p)).done, 0);
+  await downloadPack(p);
+  assert.deepEqual(calls, [current]);
+  assert.equal(await isPackComplete(p), true);
+  await downloadPack(p);
+  assert.equal(calls.length, 1, 'the matching revision must resume without spending data again');
+  await removePack(p);
+  assert.equal(await isPackComplete(p), false);
+  assert.ok(cache.rows.has(old), 'removal is scoped to the requested version');
+});
 
 test('the paid-for course cache is stable across deploys and explicitly spared from the sweep', () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');

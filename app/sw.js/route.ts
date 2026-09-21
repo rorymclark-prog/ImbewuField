@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { APP_GUIDES } from '@/lib/course-app-guides';
 
 // Evaluate BUILD_ID once at build time (not per request) so the worker body is
 // stable within a deploy but changes between deploys.
@@ -122,13 +123,23 @@ self.addEventListener('install', function (event) {
 });
 
 const FIELD_PAGES = ['/home','/offline','/farmer','/student','/records','/invoice','/journal','/facilitator/crops','/cropplan','/reports','/design','/calendar','/assessments','/mentor','/ngo','/funder','/network'];
+const GUIDE_PAGES = ${JSON.stringify(APP_GUIDES.map(guide => guide.href))};
+async function assetReady(cache, url, seen) {
+  if (seen.has(url)) return true;
+  seen.add(url);
+  const response = await cache.match(url);
+  if (!response) return false;
+  if (!new URL(url).pathname.endsWith('.css')) return true;
+  const children = buildAssets(await response.text(), url);
+  return (await Promise.all(children.map(function (child) { return assetReady(cache, child, seen); }))).every(Boolean);
+}
 self.addEventListener('message', function (event) {
   if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
   if (!event.ports[0] || !event.data || !['PREPARE_FIELD_PAGES','FIELD_PAGE_STATUS'].includes(event.data.type)) return;
   const port = event.ports[0];
   event.waitUntil((async function () {
     const cache = await caches.open(SHELL_CACHE);
-    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path); }) : FIELD_PAGES;
+    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path) || GUIDE_PAGES.includes(path); }) : FIELD_PAGES;
     for (const path of requested) {
       let error = '';
       if (event.data.type === 'PREPARE_FIELD_PAGES') {
@@ -138,7 +149,7 @@ self.addEventListener('message', function (event) {
       let ready = false;
       if (response) {
         const assets = buildAssets(await response.text(), new URL(path, self.location.origin));
-        ready = assets.length > 0 && (await Promise.all(assets.map(function (url) { return cache.match(url); }))).every(Boolean);
+        ready = assets.length > 0 && (await Promise.all(assets.map(function (url) { return assetReady(cache, url, new Set()); }))).every(Boolean);
       }
       port.postMessage({ path, ready, error });
     }
@@ -429,6 +440,15 @@ self.addEventListener('fetch', function (event) {
   if (url.origin !== self.location.origin) return; // leave Firebase/Mapbox/etc alone
   if (url.pathname.indexOf('/api/') === 0) return; // never cache dynamic API responses
 
+  // A guide revision is part of its cache key. Stream only on a miss; never refresh a
+  // saved recording in the background and spend the learner's airtime twice.
+  if (url.pathname.indexOf('/app-guide-audio/') === 0) {
+    event.respondWith(caches.open(COURSE_CACHE).then(function (cache) {
+      return cache.match(request).then(function (hit) { return hit || fetch(request); });
+    }));
+    return;
+  }
+
   // A DOWNLOADED course asset is answered from the download, before anything else.
   //
   // It has to come first because the generic handler below is stale-while-revalidate: it would
@@ -438,7 +458,7 @@ self.addEventListener('fetch', function (event) {
   //
   // A course asset that was NOT downloaded falls through untouched, so streaming one stays the
   // learner's choice, made on the page with the size in front of them.
-  if (COURSE_PATH.test(url.pathname)) {
+  if (COURSE_PATH.test(url.pathname) || url.pathname.indexOf('/studies-guides/') === 0) {
     event.respondWith(
       caches.open(COURSE_CACHE).then(function (cache) {
         return cache.match(request, { ignoreSearch: true }).then(function (hit) {

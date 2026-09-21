@@ -18,7 +18,7 @@ const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
 
 // Only the course payload. Render assets and app icons are not part of what a learner downloads.
-const ROOTS = ['course-decks', 'course-audio', 'course-animations', 'course-images'];
+const ROOTS = ['course-decks', 'course-audio', 'course-animations', 'course-images', 'studies-guides'];
 
 export function collectSizes() {
   const sizes = {};

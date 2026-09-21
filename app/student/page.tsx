@@ -30,6 +30,7 @@ import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
+import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
   assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
@@ -800,10 +801,10 @@ export default function StudentPage() {
             <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
             <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
           </div>
-          {APP_GUIDES.map(guide => <Link key={guide.id} href={guide.href} className={styles.guideCard}>
+          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guide.image} alt="" loading="lazy" />
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
-          </Link>)}
+          </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
         </section>
 
