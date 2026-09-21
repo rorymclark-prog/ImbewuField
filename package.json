@@ -27,6 +27,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
     "@mapbox/mapbox-gl-draw": "^1.5.1",
+    "@rive-app/react-canvas-lite": "^4.34.3",
     "@turf/area": "^7.3.5",
     "@turf/boolean-point-in-polygon": "^7.3.5",
     "@turf/helpers": "^7.3.5",
