@@ -203,7 +203,7 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(11);
   setInk(INK);
-  pdf.text('Total due', M, y);
+  pdf.text(doc.totalHeading, M, y);
   pdf.setFontSize(17);
   setInk(GREEN);
   pdf.text(doc.totalLabel, PAGE.width - M, y, { align: 'right' });

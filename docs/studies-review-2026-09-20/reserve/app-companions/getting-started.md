@@ -21,3 +21,5 @@ The reused sketch-the-site illustration was inspected: two growers comparing a s
 Local typecheck passed. Full-suite, rendered guide, links, phone layout and production checks recorded below when complete. No authenticated multi-device sync or real unsent-write recovery performed; those are not claimed as tested. Independent learner and isiZulu review remain open.
 
 Local checks: typecheck, 3641 passed / 0 failed / 1 existing TODO, diff whitespace and release-note gate passed. Full guide DOM contains all six steps and three choices. First-run consent overlay obscures local visual inspection; no consent was accepted for the user. Preview visual/interaction verification remains required before merge.
+
+PR477 merged57d0419. Main Tests35573035002 and Deploy35573035071 succeeded; production main57d0419 and actual guide screenshot verified. Preview desktop/390px phone, all feedback, keyboard, tour link/Back and sample Studies card checked. Ledger: https://github.com/rorymclark-prog/ImbewuField/issues/35#issuecomment-5756961444

@@ -151,6 +151,7 @@ export interface InvoiceDocument {
   referenceLabel: string | null;
   paperReferenceLabel: string | null;
   rows: InvoiceDocumentRow[];
+  totalHeading: 'Invoice total' | 'Total due';
   totalLabel: string;
   /** "How to pay" block. Empty when the farmer has not entered banking details. */
   bankingLines: string[];
@@ -223,6 +224,8 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     referenceLabel: input.reference?.trim() ? input.reference.trim() : null,
     paperReferenceLabel: input.paperReference?.trim() ? input.paperReference.trim() : null,
     rows,
+    // A paid copy still showed ‘Total due’, asking the buyer for money already received.
+    totalHeading: input.status === 'paid' ? 'Invoice total' : 'Total due',
     totalLabel: formatInvoiceZar(total),
     bankingLines,
     notes: input.notes?.trim() ? input.notes.trim() : null,

@@ -140,7 +140,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         className="invoice-total-band flex items-center justify-between mt-3 px-3 py-2.5 rounded-lg"
         style={{ background: 'rgba(31,77,43,0.07)', borderTop: '2px solid #1F4D2B' }}
       >
-        <span className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>Total due</span>
+        <span className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{doc.totalHeading}</span>
         <span className="invoice-total font-display font-bold text-2xl tabular-nums" style={{ color: '#1F4D2B', letterSpacing: '-0.01em' }}>
           {doc.totalLabel}
         </span>

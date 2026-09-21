@@ -298,3 +298,13 @@ test('printing whitens the app chrome instead of tinting the whole sheet', () =>
   }
   assert.ok(/max-width: none/.test(printBlock), 'the print stylesheet never releases the reading column');
 });
+
+
+test('a paid copy keeps its invoice amount without asking the buyer to pay it again', () => {
+  const unpaid = buildInvoiceDocument(BASE);
+  const paid = buildInvoiceDocument({ ...BASE, status: 'paid', paidAt: '2026-07-02T09:00:00.000Z' });
+  assert.equal(unpaid.totalHeading, 'Total due');
+  assert.equal(paid.totalHeading, 'Invoice total');
+  assert.equal(paid.totalLabel, unpaid.totalLabel, 'payment changes the status, not the value of the goods');
+  assert.equal(paid.paidStamp, 'Paid · 2 Jul 2026');
+});
