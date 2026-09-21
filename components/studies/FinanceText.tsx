@@ -15,7 +15,8 @@ function inline(text: string): ReactNode[] {
 }
 
 /** Render the authored text as accessible elements; manuscript HTML is never executed. */
-export default function FinanceText({ text }: { text: string }) {
+export default function FinanceText({ text, headingLevel = 4 }: { text: string; headingLevel?: 3 | 4 }) {
+  const Heading = headingLevel === 3 ? 'h3' : 'h4';
   const blocks = text.trim().split(/\n\s*\n/);
   return <div className={styles.prose}>{blocks.map((block, i) => {
     const lines = block.split('\n');
@@ -29,7 +30,7 @@ export default function FinanceText({ text }: { text: string }) {
     }
     if (lines.every(line => /^[-*] /.test(line))) return <ul key={i}>{lines.map((line, n) => <li key={n}>{inline(line.slice(2))}</li>)}</ul>;
     if (lines.every(line => /^\d+\. /.test(line))) return <ol key={i}>{lines.map((line, n) => <li key={n}>{inline(line.replace(/^\d+\. /, ''))}</li>)}</ol>;
-    if (/^#{1,6} /.test(block)) return <h4 key={i}>{inline(block.replace(/^#{1,6} /, ''))}</h4>;
+    if (/^#{1,6} /.test(block)) return <Heading key={i}>{inline(block.replace(/^#{1,6} /, ''))}</Heading>;
     return <p key={i}>{inline(block)}</p>;
   })}</div>;
 }

@@ -62,7 +62,7 @@
       "implementedReadableGuides": 14
     },
     "permacultureDesign": {
-      "status": "Reserve only: eighteen English lesson drafts; measured worked case, media, app integration and practitioner/learner/isiZulu review pending",
+      "status": "Eighteen English drafts integrated in a development teaching preview; measured example, media, narration/offline and practitioner/learner/isiZulu review remain open",
       "stages": 6,
       "plannedLessons": 18,
       "fullEnglishDrafts": 18,
@@ -77,7 +77,9 @@
         "design/d6-review-and-revise.md"
       ],
       "workedCase": "design/CASEBOOK.md",
-      "sourceReview": "design/SOURCES.md"
+      "sourceReview": "design/SOURCES.md",
+      "implementedReadableLessons": 18,
+      "previewRoute": "/student/design"
     }
   }
 }

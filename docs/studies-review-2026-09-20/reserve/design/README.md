@@ -1,6 +1,6 @@
 # From observation to a working homestead plan
 
-Status: additional design pathway in reserve. Six stages and eighteen English lesson drafts authored. The worked case covers the early reasoning, but its measured source pack, completed plan set and final visual demonstrations are still missing. Nothing in this pathway is published in the app, assessed, translated or narrated yet. Do not add these figures to the public course count.
+Status: additional design pathway in reserve. Six stages and eighteen English lesson drafts authored. The worked case covers the early reasoning, but its measured source pack, completed plan set and final visual demonstrations are still missing. An English app reading preview is implemented on the development branch; it is not merged to production, assessed, translated or narrated yet. Do not add these figures to the public course count.
 
 This pathway answers the design-process gap in the August course audit. It connects the existing technical modules rather than replacing them. Each learner develops a design folder across the pathway: household brief, evidence map, analysis, compared alternatives, developed plan, implementation/care plan and a justified revision. Use paper, supported oral explanation or the app. Drawing quality alone does not demonstrate design competence.
 
