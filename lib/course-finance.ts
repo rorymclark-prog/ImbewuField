@@ -1,4 +1,4 @@
-import content from './course-finance-content.json';
+import content from './course-finance-content.json' with { type: 'json' };
 
 export interface FinanceSection { title: string; text: string }
 export interface FinanceLesson {

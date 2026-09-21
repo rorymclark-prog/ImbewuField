@@ -1,10 +1,10 @@
 "use client";
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { PORTFOLIO_STAGES, PORTFOLIO_LIMIT, PORTFOLIO_NOTICE, portfolioStorageKey, portfolioText, readPortfolio, type PortfolioAnswers } from '@/lib/design-portfolio';
+import OfflinePageLink from './OfflinePageLink';
 import styles from './FinanceCourse.module.css';
 import folder from './DesignPortfolio.module.css';
 
@@ -88,7 +88,7 @@ export default function DesignPortfolio() {
         <p className={folder.printAnswer}>{answers[field.id] || '[Not yet recorded]'}</p>
       </div>)}
       <aside className={folder.review}><h3>Review the reasoning together</h3><p>{stage.review}</p><p>Discuss what is supported, what needs more evidence and the next attempt. Record feedback and changes in stage 6.</p></aside>
-      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}>Save folder after this stage</button><Link href={`/student/design/${stage.lesson}`}>Revisit this stage’s lessons →</Link>{stage.id === 'd4' && <Link href="/student/guides/design">Design Studio guide →</Link>}{stage.id === 'd5' && <Link href="/student/finance">Farm Finance →</Link>}</div><p className={folder.saveNote}>{ready ? message : 'Opening your folder…'}</p>
+      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}>Save folder after this stage</button><OfflinePageLink href={`/student/design/${stage.lesson}`}>Revisit this stage’s lessons →</OfflinePageLink>{stage.id === 'd4' && <OfflinePageLink href="/student/guides/design">Design Studio guide →</OfflinePageLink>}{stage.id === 'd5' && <OfflinePageLink href="/student/finance">Farm Finance →</OfflinePageLink>}</div><p className={folder.saveNote}>{ready ? message : 'Opening your folder…'}</p>
     </section>)}
     <section className={styles.section}><h2>Bring the folder and the actual plan</h2><p>A reviewer needs the evidence notes, drawings and your explanation together. Check that each reference names the right revision. Explain an alternative you rejected, a decision still on hold and what could make you revise the plan.</p><p>This page does not grade your answers or approve a design. Your facilitator reviews what you can explain and demonstrate, then helps identify the next attempt.</p></section>
     <div className={folder.saveBar}>

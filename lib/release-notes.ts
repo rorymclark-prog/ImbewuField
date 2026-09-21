@@ -42,11 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '21 September 2026', sha: '64edbc9', changes: [
+  { when: '21 September 2026', sha: '91e28ca', changes: [
     'After refreshing, choose a short guide to the pages that changed.',
   ], tour: [
     { title: 'What’s new', where: 'Menu → What’s new', href: '/updates',
       detail: 'Find the full update history here whenever you want to revisit a change.' },
+  ] },
+  { when: '21 September 2026', sha: 'ec56c4e', changes: [
+    'Save the Finance or Design reading pathway and check every page before leaving signal.',
+    'Compare design options and download diagrams with their work, cost and care record.',
+  ], tour: [
+    { title: 'Offline learning pathways', where: 'Studies → Design or Farm Finance',
+      href: '/student',
+      detail: 'Open a pathway, save it, and check its pages before leaving signal.' },
   ] },
   { when: '21 September 2026', sha: '0f1c415', changes: [
     'Follow the full worked design decision from sources through care, cost and revision.',

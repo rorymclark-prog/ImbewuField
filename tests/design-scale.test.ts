@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildDemoFacilitatorState } from '../lib/demo-farm.ts';
 import { sampleScalePair, scaleArrangement, scaleAnswer, checkScaleAnswers, type ScalePair } from '../lib/design-scale.ts';
-import { DESIGN_WORKED, existingFeatureIds, rectLeavesTeachingFrame, rectsOverlap, workedArea, workedProblems } from '../lib/design-worked.ts';
+import { DESIGN_WORKED, existingFeatureIds, rectLeavesTeachingFrame, rectsOverlap, workedArea, workedProblems, workedEdgeGap, workedHandoverText } from '../lib/design-worked.ts';
 
 test('scale teaching uses the same dimensions as the sample garden without exporting site or household records', () => {
   const source = buildDemoFacilitatorState();
@@ -89,4 +89,32 @@ test('worked-plan geometry checks catch a deliberately misplaced or obstructing 
   assert.equal(rectLeavesTeachingFrame({ ...alternative, x: 19 }), true);
   assert.equal(rectsOverlap({ ...alternative, x: 12.25 }, route), true);
   assert.equal(rectsOverlap(alternative, route), false);
+});
+
+test('a wrong alternative is rejected by the complete worked-pack check, not only a helper', () => {
+  for (const patch of [{ x: 19 }, { x: 12.25 }, { width: 0 }, { x: NaN }]) {
+    const altered = structuredClone(DESIGN_WORKED);
+    Object.assign(altered.concepts.find(concept => concept.id === 'B')!.geometry[0], patch);
+    assert.ok(workedProblems(altered).length > 0, JSON.stringify(patch));
+  }
+  const edge = workedEdgeGap();
+  assert.equal(edge.gap, 0.5); // 13.5 − (12 + 1), not the 4 m centre separation.
+  assert.deepEqual(workedProblems(), []);
+});
+
+test('a care refusal must reach work, purchasing and cost records before handover', () => {
+  for (const patch of [{ phase: 'Build now' }, { quantity: 'Buy materials' }, { costStatus: '0' }, { careStatus: 'Assigned without agreement' }]) {
+    const altered = structuredClone(DESIGN_WORKED);
+    Object.assign(altered.dependencies.find(row => row.featureIds.includes('P-COMPOST'))!.R2, patch);
+    assert.ok(workedProblems(altered).length > 0, JSON.stringify(patch));
+  }
+  const text = workedHandoverText();
+  for (const row of DESIGN_WORKED.dependencies) {
+    for (const id of row.featureIds) assert.ok(text.includes(id));
+    for (const state of [row.R1, row.R2]) for (const value of Object.values(state)) assert.ok(text.includes(value), value);
+  }
+  for (const card of DESIGN_WORKED.sourceCards) assert.ok(text.includes(card.text));
+  assert.ok(text.includes(DESIGN_WORKED.notice));
+  assert.ok(text.includes(DESIGN_WORKED.revision.nextOwner));
+  assert.ok(!text.includes(DESIGN_WORKED.variation.text), 'a separate practice variation must not rewrite the guided record');
 });

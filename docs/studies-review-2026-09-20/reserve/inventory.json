@@ -1,5 +1,5 @@
 {
-  "status": "draft, not public",
+  "status": "The 15-module / 51-lesson reserve remains draft and outside the public course registry; separate English Finance and Design reading previews are tracked below.",
   "proposedModules": 15,
   "draftLessons": 51,
   "lessonsByFile": {
@@ -15,14 +15,15 @@
   "capstone": "facilitator-and-capstone.md",
   "additionalPathways": {
     "farmFinance": {
-      "status": "24 English teaching drafts; reserve review and media/course integration pending",
+      "status": "24 English reading/practice preview lessons are deployed on main; formal registry publication, practitioner/learner/isiZulu review, narration and assessment remain pending",
       "units": 8,
       "lessonPlans": 24,
       "path": "financial-course.md",
       "introductoryModuleRetained": "farm-money.md",
       "fullEnglishDrafts": 24,
       "unitsDrafted": 8,
-      "publishedLessons": 0
+      "publishedReadingPreviewLessons": 24,
+      "formalRegistryPublishedLessons": 0
     },
     "usingImbewuField": {
       "status": "Fourteen English guides, 167 English narration clips and per-guide offline downloads published (PR484/485); human listening, translation review and filmed walkthroughs pending",
@@ -62,11 +63,12 @@
       "implementedReadableGuides": 14
     },
     "permacultureDesign": {
-      "status": "Eighteen English drafts integrated in a development teaching preview; measured example, media, narration/offline and practitioner/learner/isiZulu review remain open",
+      "status": "18 English reading/practice preview lessons are deployed on main with a fictional worked demonstration, folder and scale exercise; real field-plan evidence, narration, translation, assessment and practitioner/learner review remain open",
       "stages": 6,
       "plannedLessons": 18,
       "fullEnglishDrafts": 18,
-      "publishedLessons": 0,
+      "publishedReadingPreviewLessons": 18,
+      "formalRegistryPublishedLessons": 0,
       "path": "design/README.md",
       "draftFiles": [
         "design/d1-people-and-place.md",
