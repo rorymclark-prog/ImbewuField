@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-21",
+  "status": "reserve English review draft",
+  "base_commit": "3c0304867b304457b6e723033c60b44cc6c9cf83",
+  "lessons": [
+    "F3.1 direct/shared costs and family labour",
+    "F3.2 unit costs, contribution and break-even",
+    "F3.3 buyer comparison and price"
+  ],
+  "workbook": {
+    "path": "output/pdf/finance-f3-workbook.pdf",
+    "pages": 5,
+    "sha256": "3b8e77b53c109a31819a06d997d8e31086cc4c7c14e942582c8e07357dd80a84",
+    "visual_review": "All five A4 pages rendered with Poppler and visually inspected. No observed clipping, table collisions or unreadable text. Physical print and learner trial not performed."
+  },
+  "checks": {
+    "typecheck": "pass",
+    "repo_tests": {
+      "total": 3642,
+      "pass": 3641,
+      "fail": 0,
+      "existing_todo": 1
+    },
+    "whitespace": "pass",
+    "f1_f2_f3_verifiers": "pass",
+    "f3_deliberate_faults_rejected": 15
+  },
+  "accuracy_review": "The verifier caught an incorrect draft allocation subtotal. Manuscript corrected to R510 paid cash and R760 including a separate R250 family-time comparison; checks were retained.",
+  "publication_limits": [
+    "qualified South African bookkeeping review",
+    "learner trial",
+    "isiZulu translation and review",
+    "narration and teaching animation",
+    "app-linked course delivery"
+  ],
+  "app_changes": false
+}

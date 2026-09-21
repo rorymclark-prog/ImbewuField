@@ -1,0 +1,2 @@
+# PDFs are binary documents even when their encoded streams contain no NUL bytes.
+*.pdf binary
