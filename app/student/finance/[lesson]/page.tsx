@@ -29,7 +29,7 @@ export default async function FinanceLessonPage({ params }: { params: Promise<{ 
         </div>
         <img src={unit.image} alt="Illustrated homestead setting for practical farm record keeping" />
       </section>
-      <aside className={styles.notice}><p><strong>English teaching preview.</strong> Work through these examples with a facilitator or learning partner. The amounts and dates are invented practice inputs, not advice for your own accounts.</p></aside>
+      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>English teaching preview.</strong> Work through these examples with a facilitator or learning partner. The amounts and dates are invented practice inputs, not advice for your own accounts.</p></aside>
       <section id="read" className={`${styles.section} ${styles.reading}`}><h2>The idea</h2><FinanceText text={lesson.reading} /></section>
       <section id="unit-material" className={styles.section}>
         <h2>Practice materials for Unit {unit.number}</h2>

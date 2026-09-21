@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
-import { checkProjectAnswers, deriveProject, PROJECT_NUMBER_QUESTIONS, PROJECT_REASONING, projectMoney, readProjectDraft, type FinanceProjectCase, type ProjectAnswers } from '@/lib/finance-project';
+import { canSaveProjectDraft, checkProjectAnswers, deriveProject, projectDraftText, PROJECT_NUMBER_QUESTIONS, PROJECT_REASONING, projectMoney, readProjectDraft, type FinanceProjectCase, type ProjectAnswers } from '@/lib/finance-project';
 import styles from './FinanceCourse.module.css';
 
 export default function FinanceProjectWorksheet({ exercise }: { exercise: FinanceProjectCase }) {
   const { user, loading } = useAuth();
   const [sample, setSample] = useState<boolean | null>(null);
-  const [draft, setDraft] = useState<{ key: string; answers: ProjectAnswers } | null>(null);
+  const [draft, setDraft] = useState<{ key: string; answers: ProjectAnswers; baseline: string | null } | null>(null);
   const [savedMessage, setSavedMessage] = useState('');
   const [loadError, setLoadError] = useState(false);
   const [feedbackKey, setFeedbackKey] = useState<string | null>(null);
@@ -22,20 +22,44 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
   useEffect(() => {
     if (loading || sample === null) return;
     setFeedbackKey(null); setLoadError(false);
-    try { setDraft({ key, answers: readProjectDraft(localStorage.getItem(key)) }); setSavedMessage('Practice answers stay on this device. Use Save before leaving this case.'); }
-    catch { setDraft({ key, answers: {} }); setLoadError(true); setSavedMessage('An existing practice draft could not be opened. Work on paper or print this page; the stored copy has not been replaced.'); }
+    try {
+      const raw = localStorage.getItem(key);
+      setDraft({ key, answers: readProjectDraft(raw), baseline: raw });
+      setSavedMessage('Practice answers stay on this device. Use Save before leaving this case.');
+    }
+    catch {
+      setDraft({ key, answers: {}, baseline: null }); setLoadError(true);
+      setSavedMessage('An existing practice draft could not be opened. Its stored copy has not been replaced. Download or print this working copy before leaving.');
+    }
   }, [key, loading, sample]);
   const ready = !loading && sample !== null && draft?.key === key;
   const answers = ready ? draft.answers : {};
   const change = (id: string, value: string) => {
     if (!ready) return;
-    setDraft({ key, answers: { ...answers, [id]: value } }); setFeedbackKey(null);
-    setSavedMessage(loadError ? 'Practice is open, but the existing stored copy could not be read. Print your work to keep it.' : 'You have changes to save.');
+    setDraft({ key, answers: { ...answers, [id]: value }, baseline: draft!.baseline }); setFeedbackKey(null);
+    setSavedMessage(loadError ? 'Practice is open, but the existing stored copy could not be read. Download or print your work to keep it.' : 'You have changes to save.');
   };
   const save = () => {
     if (!ready || loadError) return;
-    try { localStorage.setItem(key, JSON.stringify(answers)); setSavedMessage(sample ? 'Saved for this sample session only. Sample answers reset when the session ends.' : 'Saved on this device. This is not a submitted assessment.'); }
+    try {
+      if (!canSaveProjectDraft(draft!.baseline, localStorage.getItem(key))) {
+        setSavedMessage('A newer saved worksheet exists in another tab. This page has not overwritten it. Download or print your current answers, then reopen this case.');
+        return;
+      }
+      const raw = JSON.stringify(answers);
+      localStorage.setItem(key, raw);
+      setDraft({ key, answers, baseline: raw });
+      setSavedMessage(sample ? 'Saved for this sample session only. Sample answers reset when the session ends.' : 'Saved on this device. This is not a submitted assessment.');
+    }
     catch { setSavedMessage('The device could not save your answers. Keep this page open or print your work.'); }
+  };
+  const download = () => {
+    if (!ready) return;
+    const url = URL.createObjectURL(new Blob([projectDraftText(exercise, answers)], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a'); link.href = url; link.download = `imbewu-finance-practice-${exercise.id}.txt`;
+    document.body.appendChild(link); link.click(); link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setSavedMessage('Text copy requested. Check Downloads for your finance practice answers.');
   };
   const checks = checkProjectAnswers(exercise, answers);
   const showFeedback = feedbackKey === key;
@@ -56,6 +80,7 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
     </label>)}
     <div className={styles.actions}>
       <button type="button" disabled={!ready || loadError} onClick={save}>Save practice on this device</button>
+      <button type="button" disabled={!ready} onClick={download}>Download my answers as text</button>
       <button type="button" onClick={() => window.print()}>Print the case and my answers</button>
       <button type="button" className={styles.primary} disabled={!ready || checks.some(check => check.entered === null)} onClick={() => setFeedbackKey(key)}>Check my calculations</button>
     </div>

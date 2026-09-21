@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { checkProjectAnswers, deriveProject, projectProblems, projectNumber, readProjectDraft, PROJECT_NUMBER_QUESTIONS, type FinanceProjectCase } from '../lib/finance-project.ts';
+import { canSaveProjectDraft, checkProjectAnswers, deriveProject, projectDraftText, projectProblems, projectNumber, readProjectDraft, PROJECT_NUMBER_QUESTIONS, type FinanceProjectCase } from '../lib/finance-project.ts';
 
 const cases: FinanceProjectCase[] = JSON.parse(readFileSync(new URL('../lib/course-finance-project.json', import.meta.url), 'utf8')).cases;
 
@@ -63,9 +63,23 @@ test('answers keep cents and decimal-comma kilograms exact and reject partial nu
   for (const bad of ['', ' ', '40 apples', '1e2', '3.4.5', '3,4.5', 'NaN', 'Infinity', '1.001', '900719925474099999']) assert.equal(projectNumber(bad, 2), null, bad);
 });
 
-test('a stored project restores only bounded worksheet answers, never a claimed pass or someone else’s records', () => {
+test('a stored project restores bounded worksheet answers while preserving a damaged known answer for recovery', () => {
   assert.deepEqual(readProjectDraft(null), {});
   assert.deepEqual(readProjectDraft('{"actualSales":"312","trail":"G-INV to G-PAY","passed":true,"customer":{"bank":"private"}}'), { actualSales: '312', trail: 'G-INV to G-PAY' });
-  assert.deepEqual(readProjectDraft(JSON.stringify({ trail: 'x'.repeat(3001), owed: 112 })), {});
+  assert.throws(() => readProjectDraft(JSON.stringify({ trail: 'x'.repeat(3001), owed: 112 })), /trail/);
+  assert.throws(() => readProjectDraft(JSON.stringify({ owed: 112 })), /owed/);
   for (const raw of ['null', '[]', '{', '"text"']) assert.throws(() => readProjectDraft(raw));
+});
+
+test('a stale tab cannot replace a newer worksheet and a recovery text keeps the complete current attempt', () => {
+  const original = '{"actualSales":"312"}';
+  const newer = '{"actualSales":"312","trail":"G-INV to G-PAY"}';
+  assert.equal(canSaveProjectDraft(original, original), true);
+  assert.equal(canSaveProjectDraft(original, newer), false);
+  const text = projectDraftText(cases[0], { actualSales: '312', trail: 'G-INV to G-PAY' });
+  assert.match(text, /Synthetic classroom case/);
+  assert.match(text, /Case: Work together/);
+  assert.match(text, /Value of produce actually delivered and invoiced\n312/);
+  assert.match(text, /Show your evidence trail\nG-INV to G-PAY/);
+  assert.doesNotMatch(text, /imbewu:finance-project:v1|user:/);
 });

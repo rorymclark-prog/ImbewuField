@@ -68,7 +68,32 @@ export function readProjectDraft(raw: string | null): ProjectAnswers {
   const value: unknown = JSON.parse(raw);
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw Error('Invalid practice draft');
   const allowed: Set<string> = new Set([...PROJECT_NUMBER_QUESTIONS, ...PROJECT_REASONING].map(q => q.id));
-  return Object.fromEntries(Object.entries(value).filter(([key, text]) => allowed.has(key) && typeof text === 'string' && text.length <= 3000));
+  const answers: ProjectAnswers = {};
+  for (const [key, text] of Object.entries(value)) {
+    if (!allowed.has(key)) continue;
+    // A partly damaged known answer must not look safely restored: the next save
+    // would otherwise erase the learner's original text without a recovery choice.
+    if (typeof text !== 'string' || text.length > 3000) throw Error(`Invalid saved answer: ${key}`);
+    answers[key] = text;
+  }
+  return answers;
+}
+
+/** A stale worksheet view must never overwrite a newer save from another tab. */
+export function canSaveProjectDraft(baseline: string | null, current: string | null) {
+  return baseline === current;
+}
+
+/** A device-only recovery copy; it deliberately contains no account or household identity. */
+export function projectDraftText(c: FinanceProjectCase, answers: ProjectAnswers) {
+  const questions = [...PROJECT_NUMBER_QUESTIONS, ...PROJECT_REASONING];
+  return [
+    'IMBEWUFIELD FARM FINANCE PRACTICE',
+    'Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.',
+    `Case: ${c.title} (${c.id})`,
+    `Practice period: ${c.period.start} to ${c.period.end}`,
+    ...questions.map(question => `${question.label}\n${answers[question.id]?.trim() || '[Not yet entered]'}`),
+  ].join('\n\n') + '\n';
 }
 
 export function projectMoney(cents: number) { return `${cents < 0 ? '−' : ''}R${(Math.abs(cents) / 100).toFixed(2)}`; }

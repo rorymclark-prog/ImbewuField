@@ -21,7 +21,7 @@ export default function FarmFinancePage() {
         </div>
         <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" />
       </section>
-      <aside className={styles.notice}><p><strong>Teaching preview.</strong> English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></aside>
+      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></aside>
       <FinanceReadingChecklist lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
       <section className={styles.section}>
         <h2>Learn by doing</h2>
