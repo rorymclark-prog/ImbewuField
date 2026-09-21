@@ -47,7 +47,7 @@ Add a **Using ImbewuField** section beside the main course and the deeper **Farm
 
 Capture the released UI at a phone-friendly scale. Use warm homestead images for context and real screen recordings for app tasks; no AI-generated screenshots. Animate focus, cursor/tap and calculations deliberately. A learner must be able to pause, read, replay and perform the task independently. Verify narration against the on-screen action and preserve the current recording's app revision. Update a guide when a relevant route, label or save behaviour changes.
 
-Open work: full tutorial scripts and practice cards for C04; live end-to-end saves/exports in the sample workspace; all screen recordings; translated narration; companion-section UI and course links. No real customer messages were sent during this review.
+Open work: narrated and filmed walkthroughs; fluent translation and learner review; remaining real-account, device and export verification; deeper links from reserve lessons. The fourteen readable English companions have implementations, with exact publication status in the inventory and release ledger. No real customer messages were sent during this review.
 
 ## First app implementation
 
@@ -99,3 +99,7 @@ C14 is implemented at `/student/guides/offline-learning`: six English steps cove
 ## Design Studio companion — 21 September 2026
 
 C03 is implemented at `/student/guides/design`: seven English steps cover site/base checks, modelled sector context, design layers, moving versus resizing, Undo, save messages, map review and selected-sheet export. [Source and walkthrough evidence](design.md) records the actual sample edit/Undo and one-page PDF download. Thirteen readable companions are implemented; C04 crop planning remains. No animation changes. Narration, translations and learner review remain open.
+
+## Crop-planning companion — 21 September 2026
+
+C04 is implemented at `/student/guides/crop-planning`: seven English steps cover source beds, new versus existing crops, dates/area shares, edit/reopen/Undo, optional automatic proposals, calendar limits and actual records. [Source and walkthrough evidence](crop-planning.md) records the actual sample edit and the detail-panel scrolling defect found during the walkthrough. All fourteen readable companions are now implemented. Publication checks remain distinct from implementation; narration, translations and learner review remain open. No animation changes.

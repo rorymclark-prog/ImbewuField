@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: 'e65025df', changes: [
+    'Studies now explains how to turn mapped beds into a checked crop plan.',
+    'Long crop details scroll on small screens so you can reach Edit and Close.',
+  ] },
   { when: '21 September 2026', sha: 'e36e2d43', changes: [
     'Studies now guides you through Design Studio, Undo and checking a downloaded plan.',
     'Practise moving a sample bed while keeping its dimensions correct.',

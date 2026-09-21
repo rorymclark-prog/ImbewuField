@@ -3736,7 +3736,8 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl p-4"
-        style={{ position: 'relative', width: '100%', maxWidth: 300, background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        // Long transplant and storage notes pushed Edit below a phone's screen with no way to scroll.
+        style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
           <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
