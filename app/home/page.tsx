@@ -162,11 +162,13 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
         {visible.map((task, i) => (
           <div
             key={task.id}
-            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderBottom: i < visible.length - 1 ? '1px solid var(--color-border)' : 'none' }}
+            className="imf-task-row"
+            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderBottom: i < visible.length - 1 ? '1px solid var(--color-border)' : 'none', backgroundColor: task.completed ? 'rgba(31,77,43,0.04)' : 'transparent', transition: 'background-color 220ms ease' }}
           >
             <button
               onClick={() => onToggle(task.id)}
               aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              className={task.completed ? 'imf-task-check' : undefined}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
@@ -176,8 +178,8 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             </div>
             <div className="flex-1 min-w-0">
               <div
-                className="font-display"
-                style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1 }}
+                className="font-display imf-task-title"
+                style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1, transition: 'opacity 220ms ease' }}
               >
                 {task.title}
               </div>
@@ -193,6 +195,18 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           </div>
         ))}
       </div>
+      <style jsx global>{`
+        @keyframes imfTaskCheck {
+          0% { transform: scale(0.7); }
+          60% { transform: scale(1.18); }
+          100% { transform: scale(1); }
+        }
+        .imf-task-check { animation: imfTaskCheck 300ms cubic-bezier(0.16,1,0.3,1); }
+        @media (prefers-reduced-motion: reduce) {
+          .imf-task-check { animation: none; }
+          .imf-task-row, .imf-task-title { transition: none !important; }
+        }
+      `}</style>
     </section>
   );
 }

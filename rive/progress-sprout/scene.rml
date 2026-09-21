@@ -1,0 +1,482 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:7" width="80" height="80" name="Stage0" id="0:2" styleId="0:5" x="0">
+        <LayoutComponentStyle name="Artboard Style" id="0:5" />
+        <Node x="40" y="58" name="Sprout" id="0:20">
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-14" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:6">
+            <KeyedObject objectId="0:20">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:7">
+            <StateMachineLayer name="Layer" id="0:8">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:12" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:6" id="0:12" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+    <Artboard defaultStateMachineId="0:107" width="80" height="80" name="Stage1" id="0:102" styleId="0:105" x="100">
+        <LayoutComponentStyle name="Artboard Style" id="0:105" />
+        <Node x="40" y="58" name="Sprout" id="0:120">
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-19" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:106">
+            <KeyedObject objectId="0:120">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:107">
+            <StateMachineLayer name="Layer" id="0:108">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:112" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:106" id="0:112" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+    <Artboard defaultStateMachineId="0:207" width="80" height="80" name="Stage2" id="0:202" styleId="0:205" x="200">
+        <LayoutComponentStyle name="Artboard Style" id="0:205" />
+        <Node x="40" y="58" name="Sprout" id="0:220">
+            <Shape x="9" y="-23" rotation="-0.42" name="R leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-23" rotation="0.42" name="L leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-25" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:206">
+            <KeyedObject objectId="0:220">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:207">
+            <StateMachineLayer name="Layer" id="0:208">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:212" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:206" id="0:212" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+    <Artboard defaultStateMachineId="0:307" width="80" height="80" name="Stage3" id="0:302" styleId="0:305" x="300">
+        <LayoutComponentStyle name="Artboard Style" id="0:305" />
+        <Node x="40" y="58" name="Sprout" id="0:320">
+            <Shape x="9" y="-31" rotation="-0.42" name="R leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-31" rotation="0.42" name="L leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-23" rotation="-0.42" name="R leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-23" rotation="0.42" name="L leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-31" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:306">
+            <KeyedObject objectId="0:320">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:307">
+            <StateMachineLayer name="Layer" id="0:308">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:312" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:306" id="0:312" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+    <Artboard defaultStateMachineId="0:407" width="80" height="80" name="Stage4" id="0:402" styleId="0:405" x="400">
+        <LayoutComponentStyle name="Artboard Style" id="0:405" />
+        <Node x="40" y="58" name="Sprout" id="0:420">
+            <Shape x="9" y="-38" rotation="-0.42" name="R leaf 4">
+                <Ellipse width="15" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-38" rotation="0.42" name="L leaf 4">
+                <Ellipse width="15" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-31" rotation="-0.42" name="R leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-31" rotation="0.42" name="L leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-23" rotation="-0.42" name="R leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-23" rotation="0.42" name="L leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-37" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:406">
+            <KeyedObject objectId="0:420">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:407">
+            <StateMachineLayer name="Layer" id="0:408">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:412" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:406" id="0:412" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+    <Artboard defaultStateMachineId="0:507" width="80" height="80" name="Stage5" id="0:502" styleId="0:505" x="500">
+        <LayoutComponentStyle name="Artboard Style" id="0:505" />
+        <Node x="40" y="58" name="Sprout" id="0:520">
+            <Shape x="0" y="-42" name="Flower">
+                <Ellipse width="11" height="11" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFF7C97E" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-38" rotation="-0.42" name="R leaf 4">
+                <Ellipse width="15" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-38" rotation="0.42" name="L leaf 4">
+                <Ellipse width="15" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-31" rotation="-0.42" name="R leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-31" rotation="0.42" name="L leaf 3">
+                <Ellipse width="19" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="9" y="-23" rotation="-0.42" name="R leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-9" y="-23" rotation="0.42" name="L leaf 2">
+                <Ellipse width="18" height="8" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="-8" y="-12" rotation="0.46" name="Left leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFA9CE79" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape x="8" y="-13" rotation="-0.46" name="Right leaf">
+                <Ellipse width="16" height="7" name="Path" />
+                <Fill name="Fill">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Fill>
+            </Shape>
+            <Shape name="Stem">
+                <PointsPath name="Path">
+                    <StraightVertex x="0" y="0" />
+                    <StraightVertex x="0" y="-41" />
+                </PointsPath>
+                <Stroke thickness="3" cap="round" name="Stroke">
+                    <SolidColor colorValue="FFD4E4B2" name="Color" />
+                </Stroke>
+            </Shape>
+        </Node>
+        <Shape x="40" y="62" name="Soil">
+            <PointsPath name="Path">
+                <StraightVertex x="-23" y="0" />
+                <StraightVertex x="23" y="0" />
+            </PointsPath>
+            <Stroke thickness="2" cap="round" name="Stroke">
+                <SolidColor colorValue="FFA5BD87" name="Color" />
+            </Stroke>
+        </Shape>
+        <Shape x="60" y="18" name="Sun">
+            <Ellipse width="8" height="8" name="Path" />
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF7C97E" name="Color" />
+            </Fill>
+        </Shape>
+        <LinearAnimation loopValue="pingPong" duration="90" name="Sway" id="0:506">
+            <KeyedObject objectId="0:520">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="-0.035" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.42" y1="0" x2="0.58" y2="1" />
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.035" frame="90" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+        <StateMachine name="Motion" id="0:507">
+            <StateMachineLayer name="Layer" id="0:508">
+                <AnyState x="100" y="-100" />
+                <ExitState x="450" y="-100" />
+                <EntryState x="100" y="0">
+                    <StateTransition stateToId="0:512" />
+                </EntryState>
+                <AnimationState x="250" y="0" animationId="0:506" id="0:512" />
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>
