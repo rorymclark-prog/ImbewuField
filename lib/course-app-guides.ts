@@ -572,4 +572,64 @@ export const PAYMENT_GUIDE: AppGuide = {
   finish: { title: 'Find the invoice you want to review', text: 'Open Saved, match the reference and compare the payment evidence. Follow the same record through review and sharing.', href: '/invoice', label: 'Open Invoice' },
 };
 
-export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE];
+export const EXPORT_GUIDE: AppGuide = {
+  id: 'exports', href: '/student/guides/exports', cardTitle: 'Export records and prepare the evidence',
+  title: 'Take a checked copy of your records.',
+  summary: 'Choose the right period, inspect the file and keep the evidence behind its figures.',
+  image: '/studies-guides/expense-record.jpg',
+  imageAlt: 'Illustration of a grower checking a notebook and calculator at a homestead table',
+  caption: 'Keep the figures beside their evidence · illustrated example',
+  prepareTitle: 'Bring the records and their supporting papers',
+  prepare: [
+    'Have the period you need, your invoices, receipts and payment records ready. First check which farm and account you are using.',
+    'Practise with the sample tour. Its figures belong to an example farm. Keep practice files separate from your own records and do not send them to a lender or customer.',
+  ],
+  steps: [
+    { id: 'choose-copy', title: 'Choose what you need to take away', action: 'My Records → Charts or Picked', paragraphs: [
+      'Charts can export a CSV: a table that a spreadsheet app can open. It contains dated harvest, sale, paid-invoice and cost rows for its selected period.',
+      'Picked has Records for a lender: a PDF summary of the records entered. It is useful for discussing those records. It is not a credit score or loan approval.',
+      'Neither file is a complete backup of the app. Keep original invoices, receipt photos and other evidence separately.',
+    ], check: 'You know whether you need the row-by-row table, a summary, or both.' },
+    { id: 'check-period', title: 'Check the export period', action: 'Charts → Financial sheet → month, season or year', paragraphs: [
+      'On a wide screen, the Financial sheet has month, season and year buttons. Export uses that sheet’s choice: the current calendar month, current season or current calendar year.',
+      'The app groups seasons as September–November, December–February, March–May and June–August. This is a reporting window, not your own crop’s growing season.',
+      'On a phone or compact screen, Export this month (CSV) exports the current calendar month. The chart’s 6m, 12m and 24m buttons do not change that export. Use the wide Financial sheet when you need its other periods.',
+    ], check: 'You can name the months the file should include, before exporting.' },
+    { id: 'inspect-csv', title: 'Open and check the table', action: 'Export or Export this month (CSV) → Open the downloaded file', paragraphs: [
+      'Find and open the file on your device. Check the Date, Description, Qty, In, Source, Out and Check columns. If the file is missing, export again after checking the browser’s download controls. Pressing Export alone does not prove you have a usable copy.',
+      'Match a row to its saved invoice, harvest or receipt. Keep its units: a bunch is not a kilogram. A harvest row records produce, not money received. Paid invoices use the recorded payment date; unpaid invoices are not cash income here.',
+      'Read any Check warning before adding totals. A possible duplicate needs investigation against its source. If there are no rows, check the period and saved records before concluding that nothing happened.',
+    ], check: 'You can trace a row, explain its date and units, and identify any warning.' },
+    { id: 'inspect-summary', title: 'Read the summary’s own dates', action: 'Picked → Records for a lender → View summary → Export records for a lender', paragraphs: [
+      'View summary shows monthly income, costs and balance. The cash summary covers up to twelve months including the current month, starting no earlier than the first dated sale, paid invoice or cost in your records.',
+      'Export records for a lender creates a PDF. Depending on the device, it downloads or opens a share sheet. Save a copy and inspect every page, including the farm name, generation date and Covers dates.',
+      'The harvest and sales track record can cover different dates from the monthly cash summary. Read the dates in each section. A blank or zero in these records does not prove that nothing happened outside the app.',
+    ], check: 'You can explain which dates each section covers and whose records it shows.' },
+    { id: 'collect-evidence', title: 'Keep the evidence and gaps together', action: 'Match the export to the source records', paragraphs: [
+      'Keep invoices, receipts and checked payment records beside the exported files. A CSV does not include the original receipt pictures or complete invoice documents.',
+      'Write down missing costs, unpaid amounts and records entered late. The harvest and cost forms use the entry date, so keep the original event date in your supporting papers too.',
+      'Income minus the costs entered is not complete profit or your bank balance. The app cannot include costs you have not recorded, or check your bank for you. Explain what is missing instead of filling gaps with guesses.',
+    ], check: 'Someone helping you can follow the figures to evidence and see what is still unknown.' },
+    { id: 'keep-share', title: 'Keep the checked copy, then choose who sees it', action: 'Check the files → Keep a dated copy → Review the intended recipient', paragraphs: [
+      'The CSV dates show day and month, without a year. Name your saved copy with the farm and full period, including the year, so it stays clear later. Keep the original exported file unchanged; make a separate working copy if you need to add notes in a spreadsheet.',
+      'For real records, check what your bookkeeper or adviser needs and choose the recipient yourself. Review the attachments and private details before sending. Saving or downloading does not send the file to them.',
+      'For this practice, stop with your checked sample copy. Explain its limits; do not submit example records as your own.',
+    ], check: 'You have a usable copy with its period and sources, and control who receives it.' },
+  ],
+  practice: {
+    title: 'The chart shows twelve months.',
+    question: 'On a phone, you choose Export this month (CSV). Which period should you check in the file?',
+    choices: [
+      { label: 'The twelve months visible in the chart', feedback: 'The chart window and compact-screen export are separate. That button exports the current calendar month.', correct: false },
+      { label: 'The current calendar month', feedback: 'Correct. Check the rows and their dates. For the current season or year, use the wide Financial sheet’s period choice and Export.', correct: true },
+      { label: 'Every record the farm has ever entered', feedback: 'This is a period export, not a complete backup. Keep the source records and check the file’s actual coverage.', correct: false },
+    ],
+  },
+  limits: { title: 'A clear summary still needs its source records', paragraphs: [
+    'The exports summarise entered records. They do not verify payment, certify complete accounts or establish eligibility for finance. Keep the evidence and unresolved questions available for the person helping you.',
+    'Independent practice: in the sample tour, compare the CSV period with View summary. Open an exported copy, trace one figure to its source, and name one item the file does not contain. Stop before sharing.',
+  ] },
+  finish: { title: 'Choose the period you want to check', text: 'Open Charts for the CSV, or switch to Picked for Records for a lender. Start with sample records if you are practising.', href: '/records?tab=charts', label: 'Open My Records' },
+};
+
+export const APP_GUIDES: readonly AppGuide[] = [START_GUIDE, MAPPING_GUIDE, HARVEST_GUIDE, SALES_GUIDE, EXPENSE_GUIDE, INVOICE_APP_GUIDE, PAPER_SALES_GUIDE, PAYMENT_GUIDE, CHARTS_GUIDE, EXPORT_GUIDE];

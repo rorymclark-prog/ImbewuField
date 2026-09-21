@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 September 2026', sha: '0fb0f893', changes: [
+    'Studies now guides you through exporting records and checking the evidence behind them.',
+    'The phone CSV button now says it exports this month; chart periods are separate.',
+  ] },
   { when: '21 September 2026', sha: '57d0419b', changes: [
     'Studies now guides you through past paper sales and checking invoice payments.',
     'Paid invoice copies say Invoice total instead of asking for that amount again.',
