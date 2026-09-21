@@ -39,7 +39,8 @@ export default function FarmFinancePage() {
           <div><h3>Days 9–10</h3><p>A supported project, then practical assessment, feedback and another attempt where needed.</p></div>
         </div>
         <p>Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.</p>
-        <p>Self-paced learners can take the lessons at their own pace. The final connected project and assessment are still being prepared. Reading this preview does not award a qualification.</p>
+        <p>Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification.</p>
+        <div className={styles.actions}><Link className={styles.primary} href="/student/finance/project/guided">Open the practical project →</Link></div>
       </section>
     </main>
   </div>;

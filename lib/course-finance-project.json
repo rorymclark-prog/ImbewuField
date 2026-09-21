@@ -1,0 +1,615 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "guided",
+      "title": "Work together",
+      "reference": "G",
+      "period": {
+        "start": "2027-03-01",
+        "end": "2027-03-31"
+      },
+      "status": "Original invented classroom case; not actual farm records, prices, yields or advice",
+      "opening": {
+        "reference": "G-OPEN",
+        "date": "2027-03-01",
+        "cashCents": 25000,
+        "stockGrams": 0,
+        "buyerOwesCents": 0
+      },
+      "site": {
+        "reference": "G-MAP",
+        "widthM": 20,
+        "heightM": 12,
+        "plot": {
+          "xM": 3,
+          "yM": 3,
+          "widthM": 8,
+          "heightM": 6
+        },
+        "note": "Imaginary site in metres, with no real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation."
+      },
+      "plan": {
+        "version": "G-PLAN-1",
+        "written": "2027-03-01",
+        "marketReference": "G-ENQUIRY",
+        "marketStatus": "enquiry, not an order",
+        "quantityGrams": 30000,
+        "unit": "kg",
+        "pricePerKgCents": 1200,
+        "receiptDate": "2027-03-10",
+        "payments": [
+          {
+            "reference": "G-Q-PACK",
+            "date": "2027-03-03",
+            "label": "Packaging quote",
+            "amountCents": 8000
+          },
+          {
+            "reference": "G-Q-TRAVEL",
+            "date": "2027-03-06",
+            "label": "Transport quote",
+            "amountCents": 21000
+          }
+        ],
+        "ownerHours": 6,
+        "availableOwnerHours": 8,
+        "exclusions": [
+          "Earlier growing costs are outside the supplied budget.",
+          "Water-service charge, stock values, equipment use and other full-period costs are not supplied.",
+          "The listed quotes are only included cash costs, not a complete cost of production."
+        ]
+      },
+      "alternative": {
+        "reference": "G-ALT",
+        "label": "Basket resale alternative",
+        "unit": "item",
+        "quantity": 8,
+        "pricePerItemCents": 3500,
+        "marketStatus": "enquiry, not an order",
+        "receiptDate": "2027-03-10",
+        "ownerHours": 10,
+        "availableOwnerHours": 8,
+        "payments": [
+          {
+            "reference": "G-ALT-Q1",
+            "date": "2027-03-03",
+            "label": "Basket purchase quote",
+            "amountCents": 12000
+          },
+          {
+            "reference": "G-ALT-Q2",
+            "date": "2027-03-06",
+            "label": "Delivery quote",
+            "amountCents": 6000
+          }
+        ],
+        "note": "A separate alternative using the SAME opening cash, not an extra business that can also spend it. No completed sale or full profit is established."
+      },
+      "harvest": {
+        "reference": "G-HARVEST",
+        "date": "2027-03-08",
+        "plotReference": "G-MAP",
+        "quantityGrams": 38000
+      },
+      "destinations": [
+        {
+          "reference": "G-DELIVERY",
+          "date": "2027-03-10",
+          "kind": "delivered sale",
+          "quantityGrams": 26000
+        },
+        {
+          "reference": "G-HOME",
+          "date": "2027-03-11",
+          "kind": "taken for household food",
+          "quantityGrams": 5000
+        },
+        {
+          "reference": "G-LOSS",
+          "date": "2027-03-11",
+          "kind": "recorded loss",
+          "quantityGrams": 1000
+        }
+      ],
+      "stockCount": {
+        "reference": "G-COUNT",
+        "date": "2027-03-31",
+        "quantityGrams": 6000
+      },
+      "invoice": {
+        "reference": "G-INV",
+        "orderReference": "G-ORDER",
+        "orderDate": "2027-03-09",
+        "date": "2027-03-10",
+        "deliveryReference": "G-DELIVERY",
+        "buyer": "Classroom buyer G",
+        "quantityGrams": 26000,
+        "unit": "kg",
+        "pricePerKgCents": 1200,
+        "amountCents": 31200
+      },
+      "cashEvents": [
+        {
+          "reference": "G-PACK",
+          "date": "2027-03-03",
+          "kind": "packaging paid",
+          "amountCents": -8000
+        },
+        {
+          "reference": "G-FUNDS",
+          "date": "2027-03-05",
+          "kind": "owner contribution",
+          "amountCents": 10000
+        },
+        {
+          "reference": "G-TRAVEL",
+          "date": "2027-03-06",
+          "kind": "transport paid",
+          "amountCents": -23000
+        },
+        {
+          "reference": "G-PAY",
+          "date": "2027-03-10",
+          "kind": "buyer payment",
+          "invoiceReference": "G-INV",
+          "amountCents": 20000
+        },
+        {
+          "reference": "G-DRAW",
+          "date": "2027-03-12",
+          "kind": "household withdrawal",
+          "amountCents": -3000
+        }
+      ],
+      "cashCount": {
+        "reference": "G-CASH-COUNT",
+        "date": "2027-03-31",
+        "amountCents": 21000
+      },
+      "laterPayment": {
+        "reference": "G-LATER-PAY",
+        "date": "2027-04-02",
+        "invoiceReference": "G-INV",
+        "amountCents": 11200
+      },
+      "unknownCost": {
+        "reference": "G-WATER",
+        "date": "2027-03-20",
+        "description": "A water delivery for the growing activity is confirmed. Its charge and supporting bill are missing. Nothing has yet been paid for this delivery.",
+        "amountCents": null,
+        "paid": false
+      },
+      "boundaries": [
+        "This is a one-month records exercise, not a complete growing season or a forecast of yield.",
+        "Opening cash and every actual cash movement in the month are supplied; there are no other cash accounts or movements in this bounded case.",
+        "Opening harvested stock and customer balances are zero. There are no other harvests, sales, stock movements, invoice adjustments or refunds.",
+        "The invoice is for the same accepted delivery as the delivery card; the payment is not another sale.",
+        "No tax calculation, registration status or compliant tax invoice is being assessed.",
+        "Production costs, stock values and full accounts are incomplete. No full profit or balance sheet can be established."
+      ],
+      "expected": {
+        "plannedClosing": 32000,
+        "plannedMinimum": -4000,
+        "knownPlannedCosts": 29000,
+        "actualClosing": 21000,
+        "actualSales": 31200,
+        "received": 20000,
+        "owed": 11200,
+        "closingGrams": 6000,
+        "cashDifference": -11000,
+        "fullProfit": null,
+        "actualPaidCosts": 31000,
+        "nonSaleFunding": 10000,
+        "householdWithdrawal": 3000
+      }
+    },
+    {
+      "id": "independent",
+      "title": "Try it yourself",
+      "reference": "I",
+      "period": {
+        "start": "2027-05-01",
+        "end": "2027-05-31"
+      },
+      "status": "Original invented classroom case; not actual farm records, prices, yields or advice",
+      "opening": {
+        "reference": "I-OPEN",
+        "date": "2027-05-01",
+        "cashCents": 32000,
+        "stockGrams": 0,
+        "buyerOwesCents": 0
+      },
+      "site": {
+        "reference": "I-MAP",
+        "widthM": 20,
+        "heightM": 12,
+        "plot": {
+          "xM": 3,
+          "yM": 3,
+          "widthM": 8,
+          "heightM": 6
+        },
+        "note": "Imaginary site in metres, with no real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation."
+      },
+      "plan": {
+        "version": "I-PLAN-1",
+        "written": "2027-05-01",
+        "marketReference": "I-ENQUIRY",
+        "marketStatus": "enquiry, not an order",
+        "quantityGrams": 24000,
+        "unit": "kg",
+        "pricePerKgCents": 1500,
+        "receiptDate": "2027-05-10",
+        "payments": [
+          {
+            "reference": "I-Q-PACK",
+            "date": "2027-05-03",
+            "label": "Packaging quote",
+            "amountCents": 11000
+          },
+          {
+            "reference": "I-Q-TRAVEL",
+            "date": "2027-05-06",
+            "label": "Transport quote",
+            "amountCents": 26000
+          }
+        ],
+        "ownerHours": 6,
+        "availableOwnerHours": 8,
+        "exclusions": [
+          "Earlier growing costs are outside the supplied budget.",
+          "Water-service charge, stock values, equipment use and other full-period costs are not supplied.",
+          "The listed quotes are only included cash costs, not a complete cost of production."
+        ]
+      },
+      "alternative": {
+        "reference": "I-ALT",
+        "label": "Basket resale alternative",
+        "unit": "item",
+        "quantity": 10,
+        "pricePerItemCents": 3000,
+        "marketStatus": "enquiry, not an order",
+        "receiptDate": "2027-05-10",
+        "ownerHours": 10,
+        "availableOwnerHours": 8,
+        "payments": [
+          {
+            "reference": "I-ALT-Q1",
+            "date": "2027-05-03",
+            "label": "Basket purchase quote",
+            "amountCents": 17000
+          },
+          {
+            "reference": "I-ALT-Q2",
+            "date": "2027-05-06",
+            "label": "Delivery quote",
+            "amountCents": 7000
+          }
+        ],
+        "note": "A separate alternative using the SAME opening cash, not an extra business that can also spend it. No completed sale or full profit is established."
+      },
+      "harvest": {
+        "reference": "I-HARVEST",
+        "date": "2027-05-08",
+        "plotReference": "I-MAP",
+        "quantityGrams": 32000
+      },
+      "destinations": [
+        {
+          "reference": "I-DELIVERY",
+          "date": "2027-05-10",
+          "kind": "delivered sale",
+          "quantityGrams": 22000
+        },
+        {
+          "reference": "I-HOME",
+          "date": "2027-05-11",
+          "kind": "taken for household food",
+          "quantityGrams": 4000
+        },
+        {
+          "reference": "I-LOSS",
+          "date": "2027-05-11",
+          "kind": "recorded loss",
+          "quantityGrams": 2000
+        }
+      ],
+      "stockCount": {
+        "reference": "I-COUNT",
+        "date": "2027-05-31",
+        "quantityGrams": 4000
+      },
+      "invoice": {
+        "reference": "I-INV",
+        "orderReference": "I-ORDER",
+        "orderDate": "2027-05-09",
+        "date": "2027-05-10",
+        "deliveryReference": "I-DELIVERY",
+        "buyer": "Classroom buyer I",
+        "quantityGrams": 22000,
+        "unit": "kg",
+        "pricePerKgCents": 1500,
+        "amountCents": 33000
+      },
+      "cashEvents": [
+        {
+          "reference": "I-PACK",
+          "date": "2027-05-03",
+          "kind": "packaging paid",
+          "amountCents": -11000
+        },
+        {
+          "reference": "I-FUNDS",
+          "date": "2027-05-05",
+          "kind": "loan received",
+          "amountCents": 14000
+        },
+        {
+          "reference": "I-TRAVEL",
+          "date": "2027-05-06",
+          "kind": "transport paid",
+          "amountCents": -25000
+        },
+        {
+          "reference": "I-PAY",
+          "date": "2027-05-10",
+          "kind": "buyer payment",
+          "invoiceReference": "I-INV",
+          "amountCents": 25000
+        },
+        {
+          "reference": "I-DRAW",
+          "date": "2027-05-12",
+          "kind": "household withdrawal",
+          "amountCents": -4000
+        }
+      ],
+      "cashCount": {
+        "reference": "I-CASH-COUNT",
+        "date": "2027-05-31",
+        "amountCents": 31000
+      },
+      "laterPayment": {
+        "reference": "I-LATER-PAY",
+        "date": "2027-06-02",
+        "invoiceReference": "I-INV",
+        "amountCents": 8000
+      },
+      "unknownCost": {
+        "reference": "I-WATER",
+        "date": "2027-05-20",
+        "description": "A water delivery for the growing activity is confirmed. Its charge and supporting bill are missing. Nothing has yet been paid for this delivery.",
+        "amountCents": null,
+        "paid": false
+      },
+      "boundaries": [
+        "This is a one-month records exercise, not a complete growing season or a forecast of yield.",
+        "Opening cash and every actual cash movement in the month are supplied; there are no other cash accounts or movements in this bounded case.",
+        "Opening harvested stock and customer balances are zero. There are no other harvests, sales, stock movements, invoice adjustments or refunds.",
+        "The invoice is for the same accepted delivery as the delivery card; the payment is not another sale.",
+        "No tax calculation, registration status or compliant tax invoice is being assessed.",
+        "Production costs, stock values and full accounts are incomplete. No full profit or balance sheet can be established.",
+        "The loan card confirms cash received and the same principal still owed at month end. No loan repayment occurs here. Terms and interest are not supplied: do not recommend this loan or assume it is free."
+      ],
+      "expected": {
+        "plannedClosing": 31000,
+        "plannedMinimum": -5000,
+        "knownPlannedCosts": 37000,
+        "actualClosing": 31000,
+        "actualSales": 33000,
+        "received": 25000,
+        "owed": 8000,
+        "closingGrams": 4000,
+        "cashDifference": 0,
+        "fullProfit": null,
+        "actualPaidCosts": 36000,
+        "nonSaleFunding": 14000,
+        "householdWithdrawal": 4000
+      }
+    },
+    {
+      "id": "retry",
+      "title": "A fresh case",
+      "reference": "R",
+      "period": {
+        "start": "2027-07-01",
+        "end": "2027-07-31"
+      },
+      "status": "Original invented classroom case; not actual farm records, prices, yields or advice",
+      "opening": {
+        "reference": "R-OPEN",
+        "date": "2027-07-01",
+        "cashCents": 18000,
+        "stockGrams": 0,
+        "buyerOwesCents": 0
+      },
+      "site": {
+        "reference": "R-MAP",
+        "widthM": 20,
+        "heightM": 12,
+        "plot": {
+          "xM": 3,
+          "yM": 3,
+          "widthM": 8,
+          "heightM": 6
+        },
+        "note": "Imaginary site in metres, with no real location. Plot A is only a reference for these source cards. Dimensions do not establish harvest, rights, safety or a planting recommendation."
+      },
+      "plan": {
+        "version": "R-PLAN-1",
+        "written": "2027-07-01",
+        "marketReference": "R-ENQUIRY",
+        "marketStatus": "enquiry, not an order",
+        "quantityGrams": 20000,
+        "unit": "kg",
+        "pricePerKgCents": 1800,
+        "receiptDate": "2027-07-10",
+        "payments": [
+          {
+            "reference": "R-Q-PACK",
+            "date": "2027-07-03",
+            "label": "Packaging quote",
+            "amountCents": 6000
+          },
+          {
+            "reference": "R-Q-TRAVEL",
+            "date": "2027-07-06",
+            "label": "Transport quote",
+            "amountCents": 16000
+          }
+        ],
+        "ownerHours": 6,
+        "availableOwnerHours": 8,
+        "exclusions": [
+          "Earlier growing costs are outside the supplied budget.",
+          "Water-service charge, stock values, equipment use and other full-period costs are not supplied.",
+          "The listed quotes are only included cash costs, not a complete cost of production."
+        ]
+      },
+      "alternative": {
+        "reference": "R-ALT",
+        "label": "Basket resale alternative",
+        "unit": "item",
+        "quantity": 6,
+        "pricePerItemCents": 4000,
+        "marketStatus": "enquiry, not an order",
+        "receiptDate": "2027-07-10",
+        "ownerHours": 10,
+        "availableOwnerHours": 8,
+        "payments": [
+          {
+            "reference": "R-ALT-Q1",
+            "date": "2027-07-03",
+            "label": "Basket purchase quote",
+            "amountCents": 9000
+          },
+          {
+            "reference": "R-ALT-Q2",
+            "date": "2027-07-06",
+            "label": "Delivery quote",
+            "amountCents": 5000
+          }
+        ],
+        "note": "A separate alternative using the SAME opening cash, not an extra business that can also spend it. No completed sale or full profit is established."
+      },
+      "harvest": {
+        "reference": "R-HARVEST",
+        "date": "2027-07-08",
+        "plotReference": "R-MAP",
+        "quantityGrams": 29000
+      },
+      "destinations": [
+        {
+          "reference": "R-DELIVERY",
+          "date": "2027-07-10",
+          "kind": "delivered sale",
+          "quantityGrams": 18000
+        },
+        {
+          "reference": "R-HOME",
+          "date": "2027-07-11",
+          "kind": "taken for household food",
+          "quantityGrams": 5000
+        },
+        {
+          "reference": "R-LOSS",
+          "date": "2027-07-11",
+          "kind": "recorded loss",
+          "quantityGrams": 2000
+        }
+      ],
+      "stockCount": {
+        "reference": "R-COUNT",
+        "date": "2027-07-31",
+        "quantityGrams": 4000
+      },
+      "invoice": {
+        "reference": "R-INV",
+        "orderReference": "R-ORDER",
+        "orderDate": "2027-07-09",
+        "date": "2027-07-10",
+        "deliveryReference": "R-DELIVERY",
+        "buyer": "Classroom buyer R",
+        "quantityGrams": 18000,
+        "unit": "kg",
+        "pricePerKgCents": 1800,
+        "amountCents": 32400
+      },
+      "cashEvents": [
+        {
+          "reference": "R-PACK",
+          "date": "2027-07-03",
+          "kind": "packaging paid",
+          "amountCents": -6000
+        },
+        {
+          "reference": "R-FUNDS",
+          "date": "2027-07-05",
+          "kind": "owner contribution",
+          "amountCents": 9000
+        },
+        {
+          "reference": "R-TRAVEL",
+          "date": "2027-07-06",
+          "kind": "transport paid",
+          "amountCents": -15000
+        },
+        {
+          "reference": "R-PAY",
+          "date": "2027-07-10",
+          "kind": "buyer payment",
+          "invoiceReference": "R-INV",
+          "amountCents": 20000
+        },
+        {
+          "reference": "R-DRAW",
+          "date": "2027-07-12",
+          "kind": "household withdrawal",
+          "amountCents": -2000
+        }
+      ],
+      "cashCount": {
+        "reference": "R-CASH-COUNT",
+        "date": "2027-07-31",
+        "amountCents": 24000
+      },
+      "laterPayment": {
+        "reference": "R-LATER-PAY",
+        "date": "2027-08-02",
+        "invoiceReference": "R-INV",
+        "amountCents": 12400
+      },
+      "unknownCost": {
+        "reference": "R-WATER",
+        "date": "2027-07-20",
+        "description": "A water delivery for the growing activity is confirmed. Its charge and supporting bill are missing. Nothing has yet been paid for this delivery.",
+        "amountCents": null,
+        "paid": false
+      },
+      "boundaries": [
+        "This is a one-month records exercise, not a complete growing season or a forecast of yield.",
+        "Opening cash and every actual cash movement in the month are supplied; there are no other cash accounts or movements in this bounded case.",
+        "Opening harvested stock and customer balances are zero. There are no other harvests, sales, stock movements, invoice adjustments or refunds.",
+        "The invoice is for the same accepted delivery as the delivery card; the payment is not another sale.",
+        "No tax calculation, registration status or compliant tax invoice is being assessed.",
+        "Production costs, stock values and full accounts are incomplete. No full profit or balance sheet can be established."
+      ],
+      "expected": {
+        "plannedClosing": 32000,
+        "plannedMinimum": -4000,
+        "knownPlannedCosts": 22000,
+        "actualClosing": 24000,
+        "actualSales": 32400,
+        "received": 20000,
+        "owed": 12400,
+        "closingGrams": 4000,
+        "cashDifference": -8000,
+        "fullProfit": null,
+        "actualPaidCosts": 21000,
+        "nonSaleFunding": 9000,
+        "householdWithdrawal": 2000
+      }
+    }
+  ]
+}
