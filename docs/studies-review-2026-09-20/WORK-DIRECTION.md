@@ -1,5 +1,9 @@
 # Rory's current direction — 21 September 2026
 
+## Status update — current main `64edbc9` (21 September 2026)
+
+The English Farm Finance preview, its three-case practical project, and the English Design preview are now on main and reachable from My Studies. Design also includes the fictional worked demonstration, learning folder and source-grounded scale exercise. These are deployed reading/practice previews, not formal assessed-course publication: learner/practitioner review, fluent isiZulu review, narration and final assessment remain open. The real busy-yard field plan still needs its own checked measurement evidence. The original branch/PR notes below are retained as delivery history.
+
 Rory: “do everything accept [except] the animations i need to improve those with you or review where we at later”.
 
 Continue all non-animation work: remaining app companions, source/content checks, exercises, course integration, narration, accessibility, appropriate verification and publication. Preserve animation candidates and review evidence. Do not generate or publish further animation changes until Rory resumes their joint review. The overall goal remains active; only the animation work is on hold.

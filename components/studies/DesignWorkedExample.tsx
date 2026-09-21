@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Link from 'next/link';
 import { DESIGN_WORKED as pack, workedArea, workedEdgeGap, workedHandoverText } from '@/lib/design-worked';
 import { scaleAnswer } from '@/lib/design-scale';
 import DesignWorkedDiagram from './DesignWorkedDiagram';
+import OfflinePageLink from './OfflinePageLink';
 import styles from './FinanceCourse.module.css';
 
 type View = 'source' | 'A' | 'B' | 'revision';
@@ -56,7 +56,7 @@ export default function DesignWorkedExample() {
           <tbody>{geometry.map(feature => <tr key={feature.id}><th>{feature.id}<br />{feature.label}</th><td>{feature.x} / {feature.y}</td><td>{'width' in feature ? `${feature.width} × ${feature.height}` : 'Reference point only'}</td></tr>)}</tbody>
         </table></div>
       </details>
-      <Link href="/student/design/folder#folder-d1">Record your own brief and evidence sources →</Link>
+      <OfflinePageLink href="/student/design/folder#folder-d1">Record your own brief and evidence sources →</OfflinePageLink>
     </section>
 
     <section className={styles.section} id="map">
@@ -66,10 +66,10 @@ export default function DesignWorkedExample() {
       <div className={styles.actions} role="group" aria-label="Worked-example drawing view">{views.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => { setView(item.id); setDownloadMessage(''); }}>{item.label}</button>)}</div>
       <DesignWorkedDiagram view={view} svgRef={mapRef} />
       <div className={styles.actions}><button type="button" onClick={() => {
-        if (mapRef.current) download(new XMLSerializer().serializeToString(mapRef.current), 'image/svg+xml;charset=utf-8', `imbewu-worked-design-${view}-${pack.currentRevision.toLowerCase()}.svg`);
+        if (mapRef.current) download(new XMLSerializer().serializeToString(mapRef.current), 'image/svg+xml;charset=utf-8', `imbewu-worked-design-${view}-view-${view === 'revision' ? 'r2' : 'r1'}-pack-${pack.currentRevision.toLowerCase()}.svg`);
       }}>Download this model diagram (SVG)</button></div>
       <p>Use the dimensions written on the diagram. Printing may change its size; no physical print scale is claimed.</p><p role="status">{downloadMessage}</p>
-      <Link href="/student/design/folder#folder-d2">Record influences and the checks they need →</Link>
+      <OfflinePageLink href="/student/design/folder#folder-d2">Record influences and the checks they need →</OfflinePageLink>
     </section>
 
     <section className={styles.section} id="compare">
@@ -85,7 +85,7 @@ export default function DesignWorkedExample() {
           <tbody>{pack.comparison.map(row => <tr key={row.criterion}><th>{row.criterion}<br /><small>{row.source}</small></th><td>{row.A}</td><td>{row.B}</td><td>{row.limit}</td></tr>)}</tbody>
         </table></div>
       </div>}
-      <p>This is a discussion exercise, not an assessment result. A facilitator reviews the evidence and explanation.</p><Link href="/student/design/folder#folder-d3">Record alternatives and your reasoned choice →</Link>
+      <p>This is a discussion exercise, not an assessment result. A facilitator reviews the evidence and explanation.</p><OfflinePageLink href="/student/design/folder#folder-d3">Record alternatives and your reasoned choice →</OfflinePageLink>
     </section>
 
     <section className={styles.section} id="develop">
@@ -96,14 +96,14 @@ export default function DesignWorkedExample() {
       <div className={styles.actions}><button type="button" disabled={scaleAnswer(gapAnswer) === null} onClick={() => setGapChecked(true)}>Check the edge calculation</button><button type="button" onClick={() => setView('B')}>Show B on the diagram above</button><a href="#map">Go to the diagram ↑</a></div>
       {gapChecked && <p role="status"><strong>{scaleAnswer(gapAnswer) === edge.gap ? 'The calculation matches.' : 'Check the edges again.'}</strong> B’s left edge ({edge.alternativeLeft} m) minus the route’s right edge ({edge.routeRight} m) = {edge.gap} m. Centre-to-centre distance includes parts of both rectangles and would answer a different question.</p>}
       <p>The supplied route footprint and gap are fictional geometry, not access standards. They do not establish drainage, crop spacing, soil suitability or safe working clearance. The original growing area remains existing evidence when B is displayed; do not count both outlines as active production.</p>
-      <div className={styles.actions}><Link href="/student/design/scale">Practise gaps, touching edges and overlap →</Link><Link href="/student/design/folder#folder-d4">Record your measured-plan checks →</Link></div>
+      <div className={styles.actions}><OfflinePageLink href="/student/design/scale">Practise gaps, touching edges and overlap →</OfflinePageLink><OfflinePageLink href="/student/design/folder#folder-d4">Record your measured-plan checks →</OfflinePageLink></div>
     </section>
 
     <section className={styles.section} id="work">
       <p className={styles.eyebrow}>5 · Make work and care feasible</p><h2>Keep each feature connected to its next task</h2>
       <p>Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied.</p>
       {pack.dependencies.map(row => <article className={styles.practice} key={row.item}><h3>{row.item}</h3><p><strong>Drawing references:</strong> {row.featureIds.join(', ')}</p><p><strong>Before physical work:</strong> {row.before}.</p><p><strong>Cost:</strong> {row.cost}.</p><p><strong>R1 record:</strong> {row.R1.phase}. {row.R1.quantity}. {row.R1.careStatus}.</p><p><strong>Who discusses the next check:</strong> {row.owner}.</p></article>)}
-      <p>Use <Link href="/student/finance">Farm Finance</Link> to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.</p><Link href="/student/design/folder#folder-d5">Record work, costs and agreed care →</Link>
+      <p>Use <OfflinePageLink href="/student/finance">Farm Finance</OfflinePageLink> to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.</p><OfflinePageLink href="/student/design/folder#folder-d5">Record work, costs and agreed care →</OfflinePageLink>
     </section>
 
     <section className={styles.section} id="revision">
@@ -116,7 +116,7 @@ export default function DesignWorkedExample() {
       <div className={styles.actions}><button type="button" onClick={() => setView('revision')}>Show R2 on the diagram above</button><a href="#map">Go to the diagram ↑</a></div>
       <h3>Plan the next observations</h3><p>Agree the observer and timing with the household. These are proposed checks; no later field results are supplied.</p>
       {pack.observationPlan.map(row => <details key={row.goal}><summary>{row.goal}</summary><p>{row.task}</p><p><strong>When:</strong> {row.trigger}.</p><p><strong>What would prompt review:</strong> {row.review}</p></details>)}
-      <Link href="/student/design/folder#folder-d6">Record feedback, observation plans and revisions →</Link>
+      <OfflinePageLink href="/student/design/folder#folder-d6">Record feedback, observation plans and revisions →</OfflinePageLink>
     </section>
 
     <section className={styles.section} id="practice">
@@ -128,7 +128,7 @@ export default function DesignWorkedExample() {
     <section className={styles.section} id="handover">
       <p className={styles.eyebrow}>7 · Hand over the current record</p><h2>Keep the plan and its reasons together</h2>
       <p>Download each diagram you need, plus the source and decision record. It includes the current choice, alternative, conditions, work/cost/care records, next discussion owner and revision history. Keep your own learner notes in your separate design folder.</p>
-      <div className={styles.actions}><button type="button" onClick={() => download(workedHandoverText(), 'text/plain;charset=utf-8', 'imbewu-worked-design-r2-record.txt')}>Download the guided source and decision record</button><Link className={styles.primary} href="/student/design/folder#folder-d6">Open my learning folder →</Link><Link href="/student/design/d6-1">Return to the final design stage →</Link></div><p role="status">{downloadMessage}</p>
+      <div className={styles.actions}><button type="button" onClick={() => download(workedHandoverText(), 'text/plain;charset=utf-8', 'imbewu-worked-design-r2-record.txt')}>Download the guided source and decision record</button><OfflinePageLink className={styles.primary} href="/student/design/folder#folder-d6">Open my learning folder →</OfflinePageLink><OfflinePageLink href="/student/design/d6-1">Return to the final design stage →</OfflinePageLink></div><p role="status">{downloadMessage}</p>
     </section>
   </>;
 }

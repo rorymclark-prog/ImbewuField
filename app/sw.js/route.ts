@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { APP_GUIDES } from '@/lib/course-app-guides';
+import { STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
 
 // Evaluate BUILD_ID once at build time (not per request) so the worker body is
 // stable within a deploy but changes between deploys.
@@ -46,7 +47,7 @@ const PRECACHE_URLS = [
 //
 // Written only by lib/offline-cache.ts, on an explicit tap. This worker never adds to it.
 const COURSE_CACHE = 'imbewu-course-v1';
-const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
+const COURSE_PATH = /^(?:\\/course-(decks|audio|animations|images)|\\/finance-course)\\//;
 
 // PLANT & ELEMENT ART — the same idea as COURSE_CACHE, with one honest difference.
 //
@@ -124,6 +125,7 @@ self.addEventListener('install', function (event) {
 
 const FIELD_PAGES = ['/home','/offline','/farmer','/student','/records','/invoice','/journal','/facilitator/crops','/cropplan','/reports','/design','/calendar','/assessments','/mentor','/ngo','/funder','/network'];
 const GUIDE_PAGES = ${JSON.stringify(APP_GUIDES.map(guide => guide.href))};
+const STUDIES_PATHWAY_PAGES = ${JSON.stringify(STUDIES_PATHWAY_PAGES)};
 async function assetReady(cache, url, seen) {
   if (seen.has(url)) return true;
   seen.add(url);
@@ -139,7 +141,7 @@ self.addEventListener('message', function (event) {
   const port = event.ports[0];
   event.waitUntil((async function () {
     const cache = await caches.open(SHELL_CACHE);
-    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path) || GUIDE_PAGES.includes(path); }) : FIELD_PAGES;
+    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path) || GUIDE_PAGES.includes(path) || STUDIES_PATHWAY_PAGES.includes(path); }) : FIELD_PAGES;
     for (const path of requested) {
       let error = '';
       if (event.data.type === 'PREPARE_FIELD_PAGES') {

@@ -26,18 +26,24 @@ Do not stop merely because one small patch or release has finished.
 
 Branch: `codex/studies-completion-review`, based on `64edbc9`.
 
-- [ ] Repair standalone diagram styling, legends and readable phone enlargement.
-- [ ] Make the concept comparison fair; require evidence-based reasoning.
-- [ ] Tie feature references to work, cost and care revision records.
-- [ ] Add edge-distance practice, a fresh evidence variation and a handover record.
+- [x] Repair standalone diagram styling, legends and readable phone enlargement.
+- [x] Make the concept comparison fair; require evidence-based reasoning.
+- [x] Tie feature references to work, cost and care revision records.
+- [x] Add edge-distance practice, a fresh evidence variation and a handover record.
 - [ ] Inspect actual standalone exports and desktop/390px views.
 - [ ] Complete targeted Studies journey audit and act on its verified priority gaps.
 - [ ] Run final checks once on the complete batch, publish, verify production.
 - [ ] Update this file with evidence, limitations and the next unfinished item.
 
 The primary agent owns integration and release. Terra agent `worked_diagram` owns
-only the new diagram component/styles. Terra agent `studies_completion_audit` is
-read-only. No agent changes existing lesson bodies, quizzes, translations or audio.
+only the new diagram component/styles. Terra agent `studies_completion_audit`
+completed a focused audit and implemented Finance/Design offline packs and navigation.
+No agent changes existing lesson bodies, quizzes, translations or audio.
+
+Checkpoint `a22869d` saves the connected teaching revision. The actual browser SVG
+download opens independently with its colors and source labels. Visual inspection
+found and corrected water-label, scale-bar and alternative-dimension collisions;
+final production-build browser and offline checks are still pending.
 
 ## Remaining gates
 
