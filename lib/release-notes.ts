@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '21 September 2026', sha: 'ec56c4e', changes: [
     'Save the Finance or Design reading pathway and check every page before leaving signal.',
-    'Compare design options fairly and download clear diagrams with their work, cost and care record.',
+    'Compare design options and download diagrams with their work, cost and care record.',
   ] },
   { when: '21 September 2026', sha: '0f1c415', changes: [
     'Follow the full worked design decision from sources through care, cost and revision.',
