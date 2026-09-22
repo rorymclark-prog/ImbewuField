@@ -36,6 +36,21 @@ and FAO source are in
 teaching assets are unchanged pending Rory's broader correction decision;
 human and practitioner approval are not claimed. No Flow credit was spent.
 
+## Water Harvesting L3 English check (23 September)
+
+The existing eight-second Flow roof-and-tank shot on slide 14 played to its
+final frame at phone width, held while English narration continued, and
+advanced to slide 15. Slides 15–18 loaded their existing stills and MP3s;
+the slide 16 code-drawn first-flush candidate stayed outside the player.
+After an offline browser reload, the saved pack played the slide 14 MP4
+and MP3 at `readyState=4`. Full-size stills and Flow contact frames were
+inspected. The English source review found no material overcertain claim;
+its first-flush and water-safety limits are appropriately stated. See
+`docs/media/studies-animation-quality/water-l3-lesson-check.md` for exact
+evidence and limits. No new Flow credit, protected edit or isiZulu claim;
+human, learner and practitioner acceptance remains open. Farm Finance is
+excluded.
+
 > **Current weekly scope:** Rory chose the ten core permaculture modules in
 > English first and explicitly said **do not finish Farm Finance**. The older
 > Finance/Design backlog and narration notes below are history, not the next
