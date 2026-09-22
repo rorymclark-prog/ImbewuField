@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '714b1786', changes: [
+    'The larger garden photo now stays on Home, even after many visits.',
+  ], tour: [
+    { title: 'See the garden', where: 'Home → Take a tour', href: '/home',
+      detail: 'Scroll below the shortcuts to see the garden photo whenever you return.' },
+  ] },
   { when: '22 September 2026', sha: '8eba11cf', changes: [
     'The garden photo on Home is much larger, with more of the farm in view.',
     'The seed animation card has been removed from Home.',
