@@ -604,3 +604,14 @@ so any authorised correction must update those stills as well as body, quiz,
 transcript and audio. Exact evidence is in
 `docs/media/studies-animation-quality/reading-landscape-l1-lesson-check.md`.
 No protected learner content changed and no Flow credit was spent.
+
+Reading the Landscape lesson 2 (slides 8–11) has now completed the deployed
+390 px English player from first slide to reset. All four stills were inspected;
+slide 10 depicts a Black African adult, and slide 9 remains a static concept
+diagram with no registered movie. The saved 12.2 MB module pack reopened
+offline; slide 9/10 stills and their English MP3s loaded and advanced. Source
+review found overbroad sun-path and frost-pooling statements, an unsupported
+2 m shade-cloth outcome, and a guaranteed frost-wall effect in body, quiz,
+narration and slide 11 text. The exact hold and primary-source boundaries are
+in `docs/media/studies-animation-quality/reading-landscape-l2-lesson-check.md`.
+No protected content changed and no Flow credit was spent.
