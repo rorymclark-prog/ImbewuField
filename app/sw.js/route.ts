@@ -425,6 +425,22 @@ async function migrateBeeHiveAndBlossomMedia() {
   await cache.put(marker, new Response('Bee hive and blossom teaching clip'));
 }
 
+// The greywater diagram now names the permitted planting and excluded source water.
+// Remove only its old saved movie and poster once; a fresh download stays the learner's choice.
+async function migrateGreywaterTeachingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/water-harvesting/.greywater-labels-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4',
+    '/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Greywater source and planting labels'));
+}
+
 // The windbreak now explains through-flow, with matching speech. Keep other
 // saved lessons and never fetch a replacement without the learner choosing it.
 async function migrateWindbreakMedia() {
@@ -473,7 +489,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateBeeHiveAndBlossomMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

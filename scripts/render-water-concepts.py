@@ -468,8 +468,12 @@ def render_frame_slide21(t):
     d.line([(basin_x0, surface_y), (basin_x1, surface_y)], fill=(130, 95, 60), width=6)
 
     # Badges
-    draw_badge(d, "Washwater pipe (no toilet)", (40, 240), 21, fill=(45, 75, 90))
-    d.line([(240, 290), (220, 365)], fill=(75, 125, 145), width=2)
+    draw_badge(d, "Suitable washwater", (40, 145), 40, fill=(45, 75, 90))
+    draw_badge(d, "No kitchen or toilet water", (40, 205), 40, fill=(45, 75, 90))
+    d.line([(400, 266), (220, 365)], fill=(75, 125, 145), width=2)
+
+    draw_badge(d, "Non-food planting", (1010, 235), 40, fill=(45, 100, 55))
+    d.line([(1080, 300), (tx, ty - 180)], fill=(75, 140, 85), width=2)
 
     draw_badge(d, "Mulch basin", (440, 410), 21, fill=(80, 55, 35))
     d.line([(530, 460), (560, surface_y + 30)], fill=(120, 85, 55), width=2)
@@ -546,7 +550,7 @@ CONFIGS = [
         "jpg_target": CLIPS_DIR / "watch-21-greywater-mulch.jpg",
         "sheet_target": CLIPS_DIR / "contact-sheet-watch-21.jpg",
         "sheet_times": [2.0, 5.5, 8.5, 11.5, 14.0, 16.5],
-        "language_notes": "Visibly contains baked-in English labels ('Washwater pipe (no toilet)', 'Mulch basin', 'Discharge below mulch surface', 'Water enters root zone', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
+        "language_notes": "Visibly contains baked-in English labels ('Suitable washwater', 'No kitchen or toilet water', 'Non-food planting', 'Mulch basin', 'Discharge below mulch surface', 'Water enters root zone', 'Concept diagram — not to scale'). Pure conceptual diagram; not localized to isiZulu."
     }
 ]
 

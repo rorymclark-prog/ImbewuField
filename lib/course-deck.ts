@@ -177,7 +177,7 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
   9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 176130, aspectRatio: 824 / 720, seconds: 16 },
   12: { src: 'watch-12-dam-spillway', poster: 'watch-12-dam-spillway', bytes: 185495, aspectRatio: 824 / 720, seconds: 16 },
   16: { src: 'watch-16-first-flush-tank', poster: 'watch-16-first-flush-tank', bytes: 85731, aspectRatio: 824 / 720, seconds: 17 },
-  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 146959, aspectRatio: 824 / 720, seconds: 17 },
+  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 163923, aspectRatio: 824 / 720, seconds: 17 },
 };
 
 // English concept diagrams follow the three authored Introduction Watch passages.

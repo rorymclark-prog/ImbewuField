@@ -205,3 +205,36 @@ quiz were left unchanged. Exact provenance and source limits are in
 `docs/media/studies-animation-quality/bee-hive-and-blossom.md`.
 No new Flow credits were spent, and Rory's visual decision is still required
 before release.
+
+## Further media work — Water Harvesting and complete-action checks
+
+Full-motion/phone reviews retained the existing Market seed-sharing, Soil
+compost-materials, Intro earth-care, Small Livestock ducks, and Water roof-rain
+Flow clips for the narrow actions each actually depicts. Their limits are now
+recorded beside their slots in `docs/media/studies-animation-quality/COVERAGE.md`;
+none needs a duplicate Flow generation. The Seed lesson animation was untouched.
+
+Water lesson 3 slide 16's existing first-flush diagram retains a correct early
+runoff → chamber/seal → later runoff to tank concept. Water lesson 4 slide 21's
+greywater diagram now has a draft clearer source badge excluding kitchen/toilet
+washwater and a visible “Non-food planting” badge by the generic tree. Its
+17-second movie and poster were checked at full size/390px; the narrow source,
+hashes, cache migration and limits are in
+`docs/media/studies-animation-quality/greywater-media-correction.md`.
+No site design, water-quality result or municipal approval is implied.
+
+Further Water slide 4/7 review identified unsupported outcome/safety impressions
+in the swale infiltration and homestead overflow films. Slide 12's wall-above-
+spillway diagram has sound conceptual topology, but “size the dam to the
+catchment area” in its caption/narration is incomplete without the existing
+site/flow/qualified-design cautions. These require coordinated editorial/media
+review; do not silently change protected narration or pass the films as safe
+construction examples. The [SA DHS stormwater guide](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_L_Stormwater_v1.pdf)
+sets site, drainage, receiver, erosion and runoff assessment requirements.
+
+The Vegetables slide 6 transplanting movie still ends with its root plug above
+the bed. Its local source has the same fault. Four licensed Pexels candidates
+(9737854, 9737847, 5766084, 19018086) were inspected end-to-end and at 390px;
+none visibly completes an open-soil transplant with the plug seated and covered.
+They were rejected, not added to the course. See the existing hold in the
+coverage register. No new Flow credits were spent.

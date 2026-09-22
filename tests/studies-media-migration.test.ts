@@ -269,3 +269,30 @@ test('the bee hive and blossom clip retires only the old slide 9 movie and poste
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new old-path download');
 });
+
+test('a saved greywater diagram with older source labels is retired without clearing other water lessons', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateGreywaterTeachingMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateGreywaterTeachingMedia\)/);
+  const changed = [
+    '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4',
+    '/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg',
+  ];
+  const keep = '/course-animations/water-harvesting/watch-16-first-flush-tank.mp4';
+  const rows = new Map([...changed, keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  assert.equal(rows.has(keep + '?saved=1'), true);
+  assert.equal(rows.has('/course-animations/water-harvesting/.greywater-labels-20260922'), true);
+  rows.set(changed[0] + '?saved=1', new Response('new lesson download'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new lesson download');
+});

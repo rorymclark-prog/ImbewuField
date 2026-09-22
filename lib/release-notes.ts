@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '67ac4bf2', changes: [
+    'Water Harvesting lesson 4 now labels non-food planting and washwater sources.',
+  ], tour: [
+    { title: 'Check the greywater route', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen, then view slide 21.' },
+  ] },
   { when: '22 September 2026', sha: '80c81387', changes: [
     'Food Forest lesson 3 now shows mulch over cardboard in its overview picture.',
     'Watch a bee on a blossom in Small Livestock lesson 2.',
