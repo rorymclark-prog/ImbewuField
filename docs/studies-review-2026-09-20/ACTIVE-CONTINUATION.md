@@ -1,5 +1,21 @@
 # Active Studies continuation — 22 September 2026
 
+## Food Forest Design L3 current English check (23 September)
+
+Slides 14–18 showed their current stills and English MP3s in the deployed
+390px player. Slide 16's existing eight-second Flow close-up visibly moves
+wood chips onto cardboard, reaches its end and holds while narration
+continues. The saved 17.7 MB module pack reopened the clip and audio after an
+offline reload. The old 13-second authored composite remains withdrawn under
+Rory's SVG clearance rule; the earlier L3 check is marked historical. Slide
+15's “Watch” title has no current movie, and slide 17's bullets are small on a
+phone. Quiz 1's categorical claim that cardboard kills grass is unsupported
+by the qualified lesson and ARC guidance; a narrow answer/rationale correction
+is proposed in `docs/media/studies-animation-quality/food-forest-l3-current-lesson-check.md`
+but protected teaching remains unchanged pending Rory's broader decision.
+No new Flow credit, isiZulu claim or human/practitioner approval. Farm Finance
+remains excluded.
+
 ## Food Forest Design L2 English check (23 September)
 
 Slides 9–13 showed their current stills and matching English narration in the

@@ -1,5 +1,12 @@
 # Food Forest lesson 3 — Establishing a Food Forest: Observe and Adjust
 
+> **Historical media observation.** The 22 September account below predates
+> Rory's SVG/code-drawn motion hold. The 13-second authored composite was
+> withdrawn from the learner player. The current slide 16 uses an eight-second
+> Flow close-up and the saved pack is smaller. See
+> `food-forest-l3-current-lesson-check.md` for the current source and deployed
+> media review; the old playback and pack figures below are archival.
+
 **Checkpoint:** 22 September 2026, draft PR #504. The English lesson has five
 slides (module slides 14–18). The lesson body, quiz, transcript and narration
 were left intact. Slide 14 uses the previously corrected layer-order still;
