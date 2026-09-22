@@ -71,5 +71,16 @@ Soil saved all51files; both new stills and narration played with tab network dis
 Native-audio arrow seeking no longer advances slides; focused deck navigation works.
 Phone Play/Back/Next controls no longer squeeze/wrap their labels.
 Final typecheck,3,681passing tests(0fail,1existingTODO),whitespace and production build
-passed. Update-tour regression test also passed after release-note insertion.
+passed. CI caught an update-tour link failure after release-note insertion; the initial targeted-check shell exit masked that failure. Corrected the guide destinations without weakening its test.
 No Flowcredits spent; no animation accepted or re-generated. Publication/CI next.
+
+The latest main b8c7a6a4 app-guide screenshots and scrolling improvements are merged
+and preserved. Release notes now link to Studies and the concrete invoice guide.
+Compost lesson2 current media was independently reviewed and fits the unchanged
+teaching; no replacement is justified. Offline production-build reopening succeeded
+(the tour tips initially obscured the controls; closing them restored access).
+
+The corrected release-note destinations now pass both update-tour tests. After
+merging main, typecheck and the full suite pass: 3,683 tests, 3,682 passes,
+zero failures, one existing TODO; whitespace is clean. Final compost play-through
+was started offline but its end state was not observed, so do not mark it passed.
