@@ -411,6 +411,22 @@ async function migrateWindbreakMedia() {
   await cache.put(marker, new Response('Windbreak motion and matching narration'));
 }
 
+// These soil-cover stills were improved in place while their narration stayed correct. Clear
+// only the two saved pictures, then let the learner choose whether to download replacements.
+async function migrateSoilCoverStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/en/.soil-cover-stills-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/soil-health/en/slide-16.jpg',
+    '/course-decks/soil-health/en/slide-18.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Improved soil-cover stills'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -426,7 +442,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateWindbreakMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

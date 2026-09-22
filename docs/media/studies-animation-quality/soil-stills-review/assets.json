@@ -1,0 +1,40 @@
+{
+  "provider": "built-in image_gen",
+  "flowCreditsSpent": 0,
+  "assets": [
+    {
+      "slide": 16,
+      "path": "public/course-decks/soil-health/en/slide-16.jpg",
+      "bytes": 932837,
+      "sha256": "c8dceb3a3d080a0a14126c9e7f39e7dfe16fdaebab322769a5b5b29aafb9e08b",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/soil-health/en/slide-18.jpg",
+      "bytes": 795928,
+      "sha256": "c091a8b6a0d21609afe173ba82e1f3afba04b7d5c359d0f852b022e85f3b2827",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "status": "App visual and offline-media verification passed; final build and CI pending",
+  "review": {
+    "independentAgent": "accept for illustration; no concrete misleading claim or anatomy issue found",
+    "desktop": "actual lesson player inspected",
+    "phone": "390px viewport; both images fit; stacked controls remain readable",
+    "offline": "module saved all51files; new stills loaded at1920px and English narration readyState4 with tab network disabled",
+    "keyboard": "nativeaudioArrowRight preserved slide16; deckfocusedArrowRight advanced only lessondeck to17",
+    "tests": {
+      "total": 3682,
+      "pass": 3681,
+      "fail": 0,
+      "existingTodo": 1
+    }
+  }
+}

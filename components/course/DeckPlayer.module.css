@@ -1,0 +1,51 @@
+.controlStrip {
+  display: grid;
+  grid-template-columns: max-content max-content minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 8px;
+}
+
+.playControl,
+.backControl,
+.nextControl {
+  white-space: nowrap;
+}
+
+.progress {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .controlStrip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .playControl {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .backControl,
+  .nextControl {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .backControl {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .nextControl {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .progress {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    width: 100%;
+  }
+}

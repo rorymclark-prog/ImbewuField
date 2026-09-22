@@ -383,3 +383,48 @@ test('the guild narration upgrade removes only obsolete guild speech, once', asy
   await run(caches, COURSE_CACHE, Response);
   assert.equal(await rows.get('/course-audio/plant-guilds/en/slide-01.mp3')!.text(), 'new guild');
 });
+
+test('the soil-cover still upgrade removes only its replaced images, including cached query variants, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilCoverStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'soil-cover migration must run before the new worker claims clients');
+  assert.match(source, /then\(migrateSoilCoverStills\)\.then/);
+  const marker = '/course-decks/soil-health/en/.soil-cover-stills-20260922';
+  const rows = new Map<string, Response>([
+    ['/course-decks/soil-health/en/slide-16.jpg', new Response('old 16')],
+    ['/course-decks/soil-health/en/slide-16.jpg?revision=old', new Response('old 16 query')],
+    ['/course-decks/soil-health/en/slide-18.jpg', new Response('old 18')],
+    ['/course-decks/soil-health/en/slide-18.jpg?revision=old', new Response('old 18 query')],
+    ['/course-decks/soil-health/en/slide-17.jpg', new Response('keep neighbouring still')],
+    ['/course-decks/soil-health/zu/slide-16.jpg', new Response('keep isiZulu still')],
+    ['/course-audio/soil-health/en/slide-16.mp3', new Response('keep narration')],
+  ]);
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map((key) => new Request('https://example.com' + key)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async () => fakeCache };
+  await run(caches, COURSE_CACHE, Response);
+  for (const path of [
+    '/course-decks/soil-health/en/slide-16.jpg',
+    '/course-decks/soil-health/en/slide-16.jpg?revision=old',
+    '/course-decks/soil-health/en/slide-18.jpg',
+    '/course-decks/soil-health/en/slide-18.jpg?revision=old',
+  ]) assert.equal(rows.has(path), false, `${path} needs the improved still when the learner next chooses a download`);
+  assert.equal(rows.has('/course-decks/soil-health/en/slide-17.jpg'), true);
+  assert.equal(rows.has('/course-decks/soil-health/zu/slide-16.jpg'), true);
+  assert.equal(rows.has('/course-audio/soil-health/en/slide-16.mp3'), true);
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, 4);
+
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(deleteCalls, 4, 'the durable marker makes a later deploy leave a new chosen download alone');
+});

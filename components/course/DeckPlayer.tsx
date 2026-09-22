@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import styles from './DeckPlayer.module.css';
 import {
   animationUrls,
   deckFor,
@@ -229,15 +230,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     return () => clearTimeout(t);
   }, [running, audioForCurrent, onNarrationEnded]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') go(1);
-      if (e.key === 'ArrowLeft') go(-1);
-      if (e.key === 'Escape' && onClose) onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [index, go, onClose]);
+  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    // The player used to listen on window, which meant seeking an audio clip or using any other
+    // page control also turned the lesson page. Only the deck surface owns these shortcuts.
+    if (e.currentTarget !== e.target || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    else if (e.key === 'Escape' && onClose) onClose();
+  }, [go, onClose]);
 
   // Touch: a horizontal drag turns the page. Vertical is left alone so the page still scrolls.
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -264,7 +264,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}>
+    <div
+      tabIndex={0}
+      role="region"
+      aria-label="Lesson slides. Use Left and Right arrow keys to change slides."
+      onKeyDown={onDeckKeyDown}
+      style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}
+    >
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
@@ -401,11 +407,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </p>
       )}
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div className={styles.controlStrip}>
         {/* THE PRIMARY ACTION. Everything else on this control strip is for someone who wants to
             steer; this is for someone who wants to be taught. It stays available on every slide,
             so stopping to re-read one and then carrying on is one tap, not a restart. */}
         <button
+          className={styles.playControl}
           onClick={() => setRunning((on) => !on)}
           aria-label={running ? 'Stop the lesson' : 'Play the lesson'}
           style={{
@@ -418,16 +425,18 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {running ? 'Stop' : 'Play lesson'}
         </button>
         <button
+          className={styles.backControl}
           onClick={() => go(-1)}
           disabled={index === 0}
           style={{ padding: '9px 14px', borderRadius: 10, border: `1px solid ${LINE}`, background: PAPER, color: index === 0 ? '#B9AC94' : INK, fontWeight: 700, fontSize: 13, cursor: index === 0 ? 'default' : 'pointer' }}
         >
           ‹ Back
         </button>
-        <div style={{ flex: 1, height: 4, borderRadius: 2, background: LINE, overflow: 'hidden' }}>
+        <div className={styles.progress} style={{ height: 4, borderRadius: 2, background: LINE, overflow: 'hidden' }}>
           <div style={{ width: `${((index + 1) / total) * 100}%`, height: '100%', background: GREEN }} />
         </div>
         <button
+          className={styles.nextControl}
           onClick={() => go(1)}
           disabled={index === total - 1}
           style={{ padding: '9px 14px', borderRadius: 10, border: 'none', background: index === total - 1 ? '#D9D0BC' : GREEN, color: '#fff', fontWeight: 700, fontSize: 13, cursor: index === total - 1 ? 'default' : 'pointer' }}
