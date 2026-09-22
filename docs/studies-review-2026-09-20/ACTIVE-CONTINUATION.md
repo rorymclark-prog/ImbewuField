@@ -110,3 +110,28 @@ accepted local bytes/SHA256 exactly (slide16: 932,837 bytes; slide18: 795,928 by
 Independent Soil lesson1 review found no concrete media replacement need. Its
 five sampled phases and stills support the observation task without claiming a
 soil diagnosis. No full-motion or practitioner sign-off is implied.
+
+## 22 September continuation — offline and animation evidence
+
+After downloading the full Soil Health pack online, the Compost lesson 2 player
+ran all five slides with the browser offline and ended on “Keep Seed Pods and
+Contaminants Out” with its control reset to “Play the lesson”. The lesson-specific
+player showed no missing-media alert. A stale alert in the separate whole-module
+player came from the earlier attempt before the pack was cached; it is not a
+Compost end-state failure. This is device/browser playback evidence, not a
+practitioner or language review.
+
+The Small Livestock ducks clip (lesson 1 slide 7) and hive-to-flowers bee clip
+(lesson 2 slide 9) were inspected through their full motion and at phone scale;
+their movement supports the existing narration. The hens clip (lesson 1 slide 4)
+shows the requested pecking but has pose jumps around 3–4 seconds. Trimming or
+crossfading existing frames cannot produce a better coherent loop. The published
+clip remains in place while a real replacement source is sought.
+
+Soil lesson 3 slide 14 is still held. The recovered Fast movie can be cropped to
+remove vertical-face drips, but its rain is unequal across the two surfaces. A
+new dry image with deterministic equal rain did not make splash versus mulch
+interception legible at 390px without conspicuous synthetic marks. Neither
+experiment was registered or published. No Google Flow credits were spent.
+Reproducible local trial files are in the Downloads animation-quality review
+folder; they are failed candidates, not course assets.

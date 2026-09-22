@@ -4,6 +4,8 @@ import BackButton from '@/components/BackButton';
 import { FINANCE_LESSONS, FINANCE_APP_GUIDES, financeLesson } from '@/lib/course-finance';
 import FinanceText from '@/components/studies/FinanceText';
 import FinanceReadingChecklist from '@/components/studies/FinanceReadingChecklist';
+import FinanceF1Timeline from '@/components/studies/FinanceF1Timeline';
+import f1Practice from '@/docs/studies-review-2026-09-20/reserve/finance/f1-practice.json';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import styles from '@/components/studies/FinanceCourse.module.css';
 
@@ -31,6 +33,7 @@ export default async function FinanceLessonPage({ params }: { params: Promise<{ 
       </section>
       <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>English teaching preview.</strong> Work through these examples with a facilitator or learning partner. The amounts and dates are invented practice inputs, not advice for your own accounts.</p></aside>
       <section id="read" className={`${styles.section} ${styles.reading}`}><h2>The idea</h2><FinanceText text={lesson.reading} /></section>
+      {lesson.id === 'f1-2' && <FinanceF1Timeline practice={f1Practice} />}
       <section id="unit-material" className={styles.section}>
         <h2>Practice materials for Unit {unit.number}</h2>
         <p>Use this unit’s own opening balances and source cards. Do not carry a previous unit’s totals into this exercise.</p>
