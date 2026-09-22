@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: 'a51ca51c', changes: [
+    'In Small Livestock lesson 2, watch one bee move between two blossoms.',
+    'Study clips awaiting visual review now show their lesson still pictures.',
+  ], tour: [
+    { title: 'Watch the bee move between blossoms', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then play Bees Moving Between Hive and Crops.' },
+  ] },
   { when: '22 September 2026', sha: 'ff9577cc', changes: [
     'Plant Guilds lesson 3 uses its still picture while a new film is reviewed.',
     'Vegetables lessons 1 and 4 use their still pictures while new films are reviewed.',
