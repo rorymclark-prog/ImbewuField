@@ -182,3 +182,12 @@ mulch remains piled beside it; this is also visible at 390px. The eight-second
 loop therefore shows an in-progress setup, not the narrated cardboard-under-
 mulch result. The clip was left unchanged rather than passing an incomplete
 action as a finished demonstration.
+
+The Food Forest lesson 3 overview still had a separate layer-order defect:
+its first panel put cardboard over visible straw. A corrected four-panel
+illustration now shows mulch over cardboard on soil, with a new asset path,
+exact byte count, matching alt text and a narrow offline-cache migration.
+The corrected JPEG was checked at full size and 390px and independently
+reviewed. Its prompt, hashes and limits are in
+`docs/media/studies-animation-quality/food-forest-sheet-mulch-still.md`.
+The unchanged slide-16 movie remains incomplete; the still does not clear it.

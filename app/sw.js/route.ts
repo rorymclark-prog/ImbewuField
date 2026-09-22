@@ -394,6 +394,21 @@ async function migrateForestEstablishmentMedia() {
   await cache.put(marker, new Response('Young forest tour and matching narration'));
 }
 
+// The L3 still now shows the mulch layer in the teaching sequence. Remove only the
+// superseded saved still once; keep every other downloaded course asset intact.
+async function migrateForestMulchInfographic() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-images/food-forest/.mulch-layer-correction-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-images/food-forest/food-forest-l3.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected food forest mulch layer still'));
+}
+
 // The windbreak now explains through-flow, with matching speech. Keep other
 // saved lessons and never fetch a replacement without the learner choosing it.
 async function migrateWindbreakMedia() {
@@ -442,7 +457,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

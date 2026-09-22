@@ -211,3 +211,29 @@ test('the windbreak refreshes its speech and still once without erasing other do
   assert.equal(await rows.get(changed[0])!.text(), 'matching windbreak narration');
   assert.doesNotMatch(body, /\bfetch\(/, 'updating a lesson must not silently spend a learner’s airtime');
 });
+
+test('the food forest mulch still replaces only the superseded infographic once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateForestMulchInfographic\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateForestMulchInfographic\)/);
+  const changed = '/course-images/food-forest/food-forest-l3.jpg';
+  const replacement = '/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg';
+  const keep = '/course-images/food-forest/food-forest-l2.jpg';
+  const rows = new Map([changed, replacement, keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(changed + '?saved=1'), false);
+  assert.equal(rows.has(replacement + '?saved=1'), true);
+  assert.equal(rows.has(keep + '?saved=1'), true);
+  assert.equal(rows.has('/course-images/food-forest/.mulch-layer-correction-20260922'), true);
+  rows.set(changed + '?saved=1', new Response('new old-path download'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed + '?saved=1')!.text(), 'new old-path download');
+});

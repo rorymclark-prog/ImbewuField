@@ -800,7 +800,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/water-harvesting/en/slide-24.jpg': 112556,
   '/course-images/food-forest/food-forest-l1.jpg': 466047,
   '/course-images/food-forest/food-forest-l2.jpg': 245107,
-  '/course-images/food-forest/food-forest-l3.jpg': 243520,
+  '/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg': 302363,
   '/course-images/intro-permaculture/intro-permaculture-l1.jpg': 61072,
   '/course-images/intro-permaculture/intro-permaculture-l2.jpg': 85271,
   '/course-images/intro-permaculture/intro-permaculture-l3.jpg': 133192,
