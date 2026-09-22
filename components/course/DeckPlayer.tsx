@@ -262,6 +262,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
   const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
+  const fullSizeImageUrl = anim?.poster ?? img?.url;
 
   return (
     <div
@@ -360,9 +361,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         )}
       </div>
 
-      {anim && (
+      {fullSizeImageUrl && (
         <a
-          href={anim.poster}
+          href={fullSizeImageUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Open still image for ${heading} at full size`}

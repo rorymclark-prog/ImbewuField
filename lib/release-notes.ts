@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '9d216d80', changes: [
+    'Open any Study slide picture at full size to read its details on your phone.',
+  ], tour: [
+    { title: 'Enlarge greywater slides', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen, then use Open still image on slide 2 or 4.' },
+  ] },
   { when: '22 September 2026', sha: '67ac4bf2', changes: [
     'Water Harvesting lesson 4 now labels non-food planting and washwater sources.',
   ], tour: [

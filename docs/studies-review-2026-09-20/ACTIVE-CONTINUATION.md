@@ -238,3 +238,12 @@ the bed. Its local source has the same fault. Four licensed Pexels candidates
 none visibly completes an open-soil transplant with the plug seated and covered.
 They were rejected, not added to the course. See the existing hold in the
 coverage register. No new Flow credits were spent.
+
+Rory then requested a lesson-at-a-time deployment he can inspect. Water
+Harvesting lesson 4 is the current unit. Its four-slide phone-width player
+play-through reached the end, and the corrected movie played to its last frame
+without a media error. Slides 2/4 have very small text in their still images,
+so the existing full-size image link has been extended to still slides; slide
+4's 1920×1080 asset opened and zoomed in the browser. Evidence and open
+acceptance gates are in `docs/media/studies-animation-quality/water-l4-lesson-check.md`.
+Do not move on to another lesson until the unit's latest preview is checked.
