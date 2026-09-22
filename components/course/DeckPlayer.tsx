@@ -229,15 +229,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     return () => clearTimeout(t);
   }, [running, audioForCurrent, onNarrationEnded]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') go(1);
-      if (e.key === 'ArrowLeft') go(-1);
-      if (e.key === 'Escape' && onClose) onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [index, go, onClose]);
+  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    // The player used to listen on window, which meant seeking an audio clip or using any other
+    // page control also turned the lesson page. Only the deck surface owns these shortcuts.
+    if (e.currentTarget !== e.target || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    else if (e.key === 'Escape' && onClose) onClose();
+  }, [go, onClose]);
 
   // Touch: a horizontal drag turns the page. Vertical is left alone so the page still scrolls.
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -264,7 +263,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}>
+    <div
+      tabIndex={0}
+      role="region"
+      aria-label="Lesson slides. Use Left and Right arrow keys to change slides."
+      onKeyDown={onDeckKeyDown}
+      style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}
+    >
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
