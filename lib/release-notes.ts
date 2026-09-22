@@ -42,12 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '8eba11cf', changes: [
+    'The garden photo on Home is much larger, with more of the farm in view.',
+    'The seed animation card has been removed from Home.',
+  ], tour: [
+    { title: 'See the garden', where: 'Home → Take a tour', href: '/home',
+      detail: 'Scroll below the shortcuts to see the larger garden photo and open the tour.' },
+  ] },
   { when: '22 September 2026', sha: '154b49cb', changes: [
-    'A seed now grows into a plant on Home. Tap Watch again to replay it.',
     'The farm plan sprout now waves when you hover over or tap it.',
   ], tour: [
-    { title: 'Watch a seed grow', where: 'Home → below the shortcut cards', href: '/home',
-      detail: 'Scroll to From seed to plant, then tap Watch again to replay the growth.' },
     { title: 'Meet your farm plan sprout', where: 'Home → green card', href: '/home',
       detail: 'Hover over or tap the sprout to see it wave and read what it means.' },
   ] },
