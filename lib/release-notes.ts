@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: 'ff9577cc', changes: [
+    'Plant Guilds lesson 3 uses its still picture while a new film is reviewed.',
+    'Vegetables lessons 1 and 4 use their still pictures while new films are reviewed.',
+  ], tour: [
+    { title: 'Review the study stills', where: 'Studies → Plant Guilds or Vegetables', href: '/student',
+      detail: 'Open Watch and listen; check Plant Guilds lesson 3, Vegetables lesson 1 or Vegetables lesson 4.' },
+  ] },
   { when: '22 September 2026', sha: '714b1786', changes: [
     'The larger garden photo now stays on Home, even after many visits.',
   ], tour: [

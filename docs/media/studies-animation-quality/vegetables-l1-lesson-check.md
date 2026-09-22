@@ -13,29 +13,26 @@ uses its existing still while a Flow replacement remains unresolved. The
 remaining playback notes document the retired preview candidate.
 
 Slide 6's earlier Flow film ends with its nursery root plug exposed above the
-bed, so the learner's Watch asset is now the generic, seven-second choice
-diagram documented in `vegetables-seed-or-seedling-choice.md`. The diagram
-matches the narrated contrast between direct sowing and a nursery start. Its
-poster is the final held frame; manual Watch runs once and holds, rather than
-returning to the start while the longer narration continues. The original Flow
-movie is retained on disk as a historical source, not as the active lesson.
+bed, so it remains outside the learner player. The later generic, seven-second
+choice diagram documented in `vegetables-seed-or-seedling-choice.md` also stays
+outside the player pending Rory's visual decision. It matches the narrated
+contrast between direct sowing and a nursery start, and its poster is the final
+held frame. The original Flow movie is retained on disk as a historical source.
 
-At a 390px local learner viewport, “Watch and listen” traversed all four
-slides and ended on “Mark the Working Shape”, with “Play lesson” restored and
-Next disabled. Slide 6's movie loaded as 7.0 seconds, `readyState=4`, with no
-media error; its `loop=false` and `ended=true` state held the diagram. The
-poster and full-size link were visible. The core route labels are readable in
-the phone deck at the final review size, and the full-size link supports zoom.
-This is a browser visual check, not evidence that a learner understood it.
+Before the candidate was retired, a 390px local learner check traversed all
+four slides and ended on “Mark the Working Shape”, with “Play lesson” restored
+and Next disabled. The candidate loaded as 7.0 seconds, `readyState=4`, with no
+media error; its `loop=false` and `ended=true` state held the diagram. This is
+historical technical evidence about the held candidate, not the current slide
+6 experience or evidence that a learner understood it.
 
-The full Vegetables and Staple Crops pack reported “On this phone · 11.4 MB”.
-After a reload with the browser network disabled, the learner page reopened
-and the pack still reported saved. The saved slide 6 MP4 (72,626 bytes), poster
-(70,176 bytes) and English audio (177,552 bytes) returned from the course
-cache. The movie and audio reached `readyState=4` with no media error while
-offline. Unrelated dev update requests produced offline console errors; they
-did not block the saved lesson media. This is one local browser/cache check,
-not a physical-phone storage guarantee.
+In that retired preview, the full Vegetables and Staple Crops pack reported
+“On this phone · 11.4 MB”. After a reload with the browser network disabled,
+the saved candidate MP4 (72,626 bytes), poster (70,176 bytes) and English audio
+(177,552 bytes) returned from the course cache. The current service-worker
+migration removes the retired movie and poster from saved packs while retaining
+the lesson's still and audio. The older check is not a current pack-size or
+physical-phone storage guarantee.
 
 The relationship is supported by the [Agricultural Research Council's seedling
 transplant guidance](https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VOP%20Newsletter%20No%202%2C%20June%202018.pdf)
