@@ -487,3 +487,26 @@ direction is Black African people in the South African smallholder setting. This
 does not require adding people to person-free diagrams. Current human-containing
 assets need a visual audit; appearance alone cannot establish anyone's identity,
 so uncertain depictions should be flagged for Rory rather than declared approved.
+
+## 22 September — Reading the Landscape lesson 4 technical check and source hold
+
+The live preview at 390 × 844 played lesson 4 through all four slides. Slide 17
+is the existing still with its original English MP3; the live lesson container
+had no video element, its image loaded at 1920 pixels natural width, and audio
+was ready and advancing. Slide 18 was visually checked in the phone player. The
+20 September landscape README now marks its four-animation/offline verification
+as historical, so it cannot be mistaken for proof of the current player. Exact
+observations and limitations are in
+`docs/media/studies-animation-quality/reading-landscape-l4-lesson-check.md`.
+
+This lesson remains on a **source/editorial hold**. The protected core text and
+quiz equate an uncalibrated paced sketch with a map “to scale,” and treat thick
+khakibos or blackjack as evidence of disturbed or compacted soil. The slide
+itself correctly says “not to scale.” Primary extension/botanical/research
+sources support recording site observations and checking measured distances;
+they do not establish these two stronger inferences. The check file records
+source links and proposed farmer-facing corrections. Do not silently rewrite
+the lesson body, narration or quiz under the project's protected-content rule.
+Get editorial ownership and practitioner/language review before calling the
+lesson content cleared. The current player has not had a fresh offline or
+physical-device check. No additional Flow credits were used for this check.
