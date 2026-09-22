@@ -133,6 +133,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/home/HomeHeroCard.tsx': 'the card at the top of the first screen',
   'components/home/ProgressSprout.tsx': 'the farm-plan sprout on the first screen has no small type',
   'components/home/RiveProgressSprout.tsx': 'the animated farm-plan sprout has no type to read',
+  'components/home/GrowthMomentCanvas.tsx': 'the seed growth scene has no type to read',
+  'components/home/GrowthMomentCard.tsx': 'the seed growth invitation on Home must remain readable on phones',
   'components/AddSheet.tsx': 'the sheet she records into',
   'components/PhotoUpload.tsx': 'adding a photo',
   'components/ProfileSheet.tsx': 'her own account',
