@@ -347,3 +347,14 @@ both lesson videos and their English audio loaded from cache with
 `docs/media/studies-animation-quality/plant-guilds-l1-lesson-check.md`.
 This is technical English preview evidence; fluent isiZulu, practitioner,
 human listening and learner review remain open.
+
+Plant Selection & Guilds lesson 2 (slides 27–36) then reached the end of
+its ten-slide English player in the deployed 390px sample. Existing pruning,
+mulch-ring and helpful-insect clip motion was inspected; the support tree
+stays standing, the mulch remains off the trunk, and the insect scene does
+not show a claimed pest cure. The 60.6 MB / 118-file module pack reported
+saved; after an offline reload, all three lesson videos and their English
+audio loaded with `readyState=4` and no media error. Source and review limits:
+`docs/media/studies-animation-quality/plant-guilds-l2-lesson-check.md`.
+No replacement movie was needed. Human, fluent isiZulu, practitioner and
+learner review remain open.
