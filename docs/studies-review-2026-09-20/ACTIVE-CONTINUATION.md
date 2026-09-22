@@ -317,3 +317,13 @@ existing lesson without a new Watch movie. The source check flags the need to
 keep sweet-potato drought tolerance conditional on crop stage and local
 conditions. See `docs/media/studies-animation-quality/vegetables-l3-lesson-check.md`.
 Human listening, crop-practice, fluent isiZulu and learner reviews remain open.
+
+Vegetables lesson 4 (slides 15–16) has a new, zero-credit authored decision
+diagram for slide 16. The existing still showed response options but not the
+narrated observe/check/protect/act/monitor sequence. The ten-second film holds
+a conditional treatment safeguard on its last frame. Its first local 390px
+playback exposed native controls hiding safety text; the renderer was revised
+so all essential instructions sit above the control overlay. See
+`docs/media/studies-animation-quality/vegetables-pest-decision-path.md` and
+`vegetables-l4-lesson-check.md`. Final full-lesson, offline, CI and deployed
+preview checks remain before this new candidate is offered for review.

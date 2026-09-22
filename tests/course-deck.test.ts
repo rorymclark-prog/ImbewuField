@@ -131,6 +131,18 @@ test('vegetable lesson 1 shows the seed-versus-seedling choice without replaying
   assert.ok(onDisk(clip.poster));
 });
 
+test('vegetable pest lesson keeps its conditional treatment safeguard visible after the decision path', () => {
+  const slides = deckFor('vegetables-staples')!.slides.filter(s => s.lesson === 'vegetables-staples-l4');
+  assert.deepEqual(slides.map(s => s.slide), [15, 16]);
+  const clip = animationUrls('vegetables-staples', 16);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/vegetables-staples/pest-decision-path.mp4');
+  assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/pest-decision-path.jpg');
+  assert.equal(clip.playOnce, true);
+  assert.ok(onDisk(clip.video));
+  assert.ok(onDisk(clip.poster));
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of

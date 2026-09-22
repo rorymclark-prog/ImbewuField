@@ -211,6 +211,9 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
 // movie stopped with an exposed plug, which looked like a finished transplant on a phone.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
   6: { src: 'seed-or-seedling-choice', poster: 'seed-or-seedling-choice', bytes: 72626, seconds: 7, playOnce: true },
+  // The still shows possible actions but not the order of checking causes before treating.
+  // Hold the label safeguard at the end; a looping restart would interrupt that decision.
+  16: { src: 'pest-decision-path', poster: 'pest-decision-path', bytes: 322214, seconds: 10, playOnce: true },
 };
 
 // Each Food Forest Watch scene follows its existing narration.
