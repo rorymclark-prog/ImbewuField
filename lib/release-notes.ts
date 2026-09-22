@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '22 September 2026', sha: '9d6d43e5', changes: [
+  { when: '22 September 2026', sha: '51132398', changes: [
     'In Farm Finance lesson 2, see cash, sales and money owed change with each card.',
     'In Small Livestock lesson 1, watch real hens peck among plant remains.',
   ], tour: [
