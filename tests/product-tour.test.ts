@@ -187,7 +187,7 @@ test('tour cards preserve account restrictions and a failed start cannot later j
 });
 
 const { recordTourOpening, dismissTourMenuTip } = await import('../lib/tour-discovery');
-test('tour invitation counts app openings once and retires after opening 30', () => {
+test('tour menu tip counts app openings once and appears after opening 30', () => {
   const rows = new Map<string,string>();
   const storage = { getItem: (k:string) => rows.get(k) ?? null, setItem: (k:string,v:string) => { rows.set(k,v); } };
   rows.set('opening-30', JSON.stringify({ openings:29 }));
