@@ -2758,6 +2758,7 @@ function FoodAvailabilityChart({
                           onClick={() => setOpenMonth(openMonth === i ? null : i)}
                           aria-expanded={openMonth === i}
                           aria-label={`${MONTHS_SHORT[m - 1]}${i >= 12 ? ', next year' : ''} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
+                          className="crop-availability-month"
                           style={{ display: 'block', width: '100%', background: openMonth === i ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
                           {/* The bar's own number, on the bar. The icon rows
@@ -2795,11 +2796,13 @@ function FoodAvailabilityChart({
                 </div>
               </CropMonthViewport>
               {openMonth !== null && (
-                <MonthAvailabilityDetail
-                  month={monthOrder[openMonth]}
-                  items={availability[openMonth] ?? []}
-                  onClose={() => setOpenMonth(null)}
-                />
+                <div key={openMonth} className="crop-availability-detail">
+                  <MonthAvailabilityDetail
+                    month={monthOrder[openMonth]}
+                    items={availability[openMonth] ?? []}
+                    onClose={() => setOpenMonth(null)}
+                  />
+                </div>
               )}
             </>
           )}

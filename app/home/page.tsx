@@ -422,6 +422,24 @@ function HomeLandingInner() {
       </header>
 
       <style jsx global>{`
+        @keyframes imfQuickEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .home-quick-link { animation: imfQuickEnter 360ms cubic-bezier(0.16,1,0.3,1) both; transition: transform 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 180ms ease, border-color 180ms ease; }
+        .home-quick-link:nth-child(2) { animation-delay: 45ms; }
+        .home-quick-link:nth-child(3) { animation-delay: 90ms; }
+        .home-quick-link:nth-child(4) { animation-delay: 135ms; }
+        .home-quick-link:nth-child(5) { animation-delay: 180ms; }
+        .home-quick-link:nth-child(6) { animation-delay: 225ms; }
+        .home-quick-link > div:first-child { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+        @media (hover: hover) {
+          .home-quick-link:hover { transform: translateY(-4px); box-shadow: 0 9px 22px rgba(31,77,43,0.12); border-color: rgba(31,77,43,0.32) !important; }
+          .home-quick-link:hover > div:first-child { transform: scale(1.12) rotate(-3deg); }
+        }
+        .home-quick-link:active { transform: scale(0.97); }
+        @media (prefers-reduced-motion: reduce) {
+          .home-quick-link { animation: none; transition: none; }
+          .home-quick-link > div:first-child { transition: none; }
+          .home-quick-link:hover, .home-quick-link:active, .home-quick-link:hover > div:first-child { transform: none; }
+        }
         .home-priority-grid,
         .home-priority-primary,
         .home-priority-secondary {
@@ -471,7 +489,7 @@ function HomeLandingInner() {
             <Link
               key={q.href}
               href={q.href}
-              className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
+              className="home-quick-link flex flex-col items-center gap-2 p-3 rounded-2xl text-center"
               style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
