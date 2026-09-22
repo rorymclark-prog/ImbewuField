@@ -71,18 +71,20 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   // Never leave audio running after the panel closes or the page changes.
   useEffect(() => () => { audioRef.current?.pause(); }, []);
 
-  // A learner can start the slide deck while this compact playlist is playing.
-  // Keep one spoken lesson at a time even when both controls remain on screen.
+  // The deck's silent Watch clip is still a lesson scene. Stop this playlist when
+  // it starts, or its next narrated slide can speak over the picture.
   useEffect(() => {
     if (typeof document === 'undefined') return;
-    const pauseForOtherAudio = (event: Event) => {
+    const pauseForOtherMedia = (event: Event) => {
       const audio = audioRef.current;
-      if (audio && event.target instanceof HTMLAudioElement && event.target !== audio && !audio.paused) {
+      if (audio && event.target !== audio &&
+        (event.target instanceof HTMLAudioElement || event.target instanceof HTMLVideoElement) &&
+        !audio.paused) {
         audio.pause();
       }
     };
-    document.addEventListener('play', pauseForOtherAudio, true);
-    return () => document.removeEventListener('play', pauseForOtherAudio, true);
+    document.addEventListener('play', pauseForOtherMedia, true);
+    return () => document.removeEventListener('play', pauseForOtherMedia, true);
   }, []);
 
   const playSlide = useCallback((slide: number) => {

@@ -103,8 +103,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     if (typeof document === 'undefined') return;
     const pauseForOtherAudio = (event: Event) => {
       const audio = audioRef.current;
-      if (audio && event.target instanceof HTMLAudioElement && event.target !== audio && !audio.paused) {
-        audio.pause();
+      if (audio && event.target instanceof HTMLAudioElement && event.target !== audio &&
+        (!audio.paused || (videoRef.current && !videoRef.current.paused))) {
+        if (!audio.paused) audio.pause();
         videoRef.current?.pause();
         setRunning(false);
         setTimedVoiceActive(false);
