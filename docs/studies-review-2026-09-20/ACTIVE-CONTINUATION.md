@@ -125,8 +125,11 @@ The Small Livestock ducks clip (lesson 1 slide 7) and hive-to-flowers bee clip
 (lesson 2 slide 9) were inspected through their full motion and at phone scale;
 their movement supports the existing narration. The hens clip (lesson 1 slide 4)
 shows the requested pecking but has pose jumps around 3–4 seconds. Trimming or
-crossfading existing frames cannot produce a better coherent loop. The published
-clip remains in place while a real replacement source is sought.
+crossfading existing frames cannot produce a better coherent loop. A licensed
+real-footage candidate from Pexels has since been prepared under a new filename
+on the working branch. See `docs/media/studies-animation-quality/HENS-REAL-FOOTAGE-CANDIDATE.md`.
+It does not establish an enclosure or a harvest sequence, and it is not yet
+published or accepted by Rory.
 
 Soil lesson 3 slide 14 is still held. The recovered Fast movie can be cropped to
 remove vertical-face drips, but its rain is unequal across the two surfaces. A

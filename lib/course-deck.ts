@@ -221,7 +221,7 @@ const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
 // Each Small Livestock Watch scene follows its existing narration.
 const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
   7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8 },
-  4: { src: 'flow-hens-foraging', poster: 'flow-hens-foraging', bytes: 5064928, seconds: 8 },
+  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8 },
   9: { src: 'watch-09-bee-pollination', poster: 'watch-09-bee-pollination', bytes: 116723, seconds: 14.0 },
   14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14.0 },
 };

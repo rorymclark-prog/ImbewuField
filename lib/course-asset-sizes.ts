@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 826 files, 335.4 MB total.
+// 845 files, 344.6 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
@@ -97,8 +97,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/seeds-sovereignty/seed-selecting-parents.mp4': 248394,
   '/course-animations/small-livestock/flow-ducks-understorey.mp4': 7613902,
   '/course-animations/small-livestock/flow-hens-foraging.mp4': 5064928,
+  '/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4': 5058477,
   '/course-animations/small-livestock/posters/flow-ducks-understorey.jpg': 460807,
   '/course-animations/small-livestock/posters/flow-hens-foraging.jpg': 391735,
+  '/course-animations/small-livestock/posters/hens-pecking-pexels-5563939.jpg': 227468,
   '/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg': 111188,
   '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg': 86421,
   '/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg': 90954,
@@ -831,5 +833,22 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-images/water-harvesting/water-harvesting-l4.jpg': 104423,
   '/studies-guides/expense-record.jpg': 870477,
   '/studies-guides/record-sale.jpg': 894454,
+  '/studies-guides/screens/charts.png': 71436,
+  '/studies-guides/screens/crop-plan.png': 99389,
+  '/studies-guides/screens/design.png': 232813,
+  '/studies-guides/screens/financial-sheet.png': 103122,
+  '/studies-guides/screens/home.png': 161646,
+  '/studies-guides/screens/invoice.png': 134665,
+  '/studies-guides/screens/map-tools.png': 669335,
+  '/studies-guides/screens/paper-invoice.png': 134115,
+  '/studies-guides/screens/payment-review.png': 127496,
+  '/studies-guides/screens/picked.png': 66730,
+  '/studies-guides/screens/reports.png': 65731,
+  '/studies-guides/screens/sample-farm.png': 599574,
+  '/studies-guides/screens/sold.png': 80194,
+  '/studies-guides/screens/spent-form.png': 85789,
+  '/studies-guides/screens/spent.png': 74810,
+  '/studies-guides/screens/studies.png': 104660,
+  '/studies-guides/screens/study-offline.png': 102320,
   '/studies-guides/sketch-the-site.jpg': 791967,
 });
