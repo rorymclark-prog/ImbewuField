@@ -1,5 +1,11 @@
 # Water Harvesting lesson 4 — Greywater: Reuse with Care
 
+> **Historical checkpoint, superseded for current learner state.** The
+> corrected movie and poster described below were later withdrawn with the
+> other locally authored animations under Rory's visual-clearance rule.
+> Current slide 21 uses an older still, with no video or Watch control. See
+> [the 23 September current-state check](water-l4-current-lesson-check.md).
+
 **Checkpoint:** 22 September 2026, draft PR #504. Four English slides (19–22),
 unchanged lesson body/quiz/transcript/audio, with the corrected slide-21 movie
 and poster documented in `greywater-media-correction.md`.

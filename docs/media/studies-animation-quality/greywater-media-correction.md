@@ -1,5 +1,11 @@
 # Greywater diagram label correction — 22 September 2026
 
+> **Historical candidate, no longer in the learner player.** The corrected
+> MP4 and poster below were subsequently withdrawn with the locally authored
+> animations pending Rory's visual clearance. The current slide 21 is the
+> older still. See [the current Water L4 check](water-l4-current-lesson-check.md)
+> before relying on any status in this record.
+
 Water Harvesting lesson 4 slide 21 keeps its existing 17-second conceptual
 below-mulch route. The old pipe badge said only “no toilet,” leaving kitchen
 washwater ambiguous. The generic tree did not itself identify the lesson's

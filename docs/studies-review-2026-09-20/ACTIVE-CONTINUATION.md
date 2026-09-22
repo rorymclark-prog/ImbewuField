@@ -51,6 +51,22 @@ evidence and limits. No new Flow credit, protected edit or isiZulu claim;
 human, learner and practitioner acceptance remains open. Farm Finance is
 excluded.
 
+## Water Harvesting L4 current English check (23 September)
+
+Slides 19–22 loaded their existing stills and English MP3s at phone width;
+slide 21 reopened from the saved pack offline without video. The 22 September
+review notes described a corrected code-drawn greywater movie and poster,
+but those were subsequently withdrawn under Rory's visual-clearance rule.
+The deployed slide 21 is the older still, whose “no toilet” pipe label leaves
+kitchen wastewater ambiguous; its footer's non-food/suitability cautions are
+very small at phone width. The lesson itself has strong contact, runoff,
+local-rule and non-food cautions. Quiz 2's correct option is more categorical
+than its rationale. The source-backed coordinated correction scope is in
+`docs/media/studies-animation-quality/water-l4-current-lesson-check.md`;
+older records are marked historical. Protected teaching and visuals remain
+unchanged pending Rory's broader correction decision. No Flow credit was
+spent. Slides 23–24 are a separate module assignment/check, not L4.
+
 > **Current weekly scope:** Rory chose the ten core permaculture modules in
 > English first and explicitly said **do not finish Farm Finance**. The older
 > Finance/Design backlog and narration notes below are history, not the next
