@@ -1517,7 +1517,7 @@ export default function RecordsPage() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setTab(id)}
-                    className="flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl font-sans transition-all"
+                    className={`flex-1 flex flex-col items-center justify-center gap-0.5 rounded-xl font-sans ${styles.bookTab}`}
                     style={{
                       minHeight: 48,
                       padding: '6px 2px',

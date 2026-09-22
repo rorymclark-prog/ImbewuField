@@ -42,6 +42,27 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '2692ad6d', changes: [
+    'Tap the sprout on Home to see what it means and how your farm plan is growing.',
+    'The next step, tour and farm-gate price cards now respond when you use them.',
+  ], tour: [
+    { title: 'Your farm plan sprout', where: 'Home → sprout on the green card', href: '/home',
+      detail: 'Hover over or tap the sprout to see the five plan steps and your progress.' },
+    { title: 'Farm-gate prices', where: 'Home → Prices', href: '/prices',
+      detail: 'Choose a crop to see its price card appear.' },
+  ] },
+  { when: '22 September 2026', sha: '19506d4d', changes: [
+    'Home shortcuts now respond as you open them, and the farm plan sprout is easier to see.',
+    'Study lessons and crop plan months now open with a short, clear transition.',
+    'My Records tabs now respond as you switch pages.',
+  ], tour: [
+    { title: 'Home shortcuts', where: 'Home', href: '/home',
+      detail: 'Move over or tap a shortcut to see how it responds.' },
+    { title: 'Study lessons', where: 'Study → a module and lesson', href: '/student',
+      detail: 'Open a module, then a lesson, to see its content appear.' },
+    { title: 'Crop plan months', where: 'Crop Planner → month availability', href: '/facilitator/crops',
+      detail: 'Tap a month to see its crop details appear beneath the chart.' },
+  ] },
   { when: '22 September 2026', sha: '17747f7', changes: [
     'Soil lessons now show living cover crops and the different effects of wind and rain.',
     'Lesson buttons fit small screens, and audio arrow keys no longer turn the page.',

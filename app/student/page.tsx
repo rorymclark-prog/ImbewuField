@@ -178,7 +178,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
       </button>
 
       {open && (
-        <div className="px-4 pb-5 space-y-5" style={{ borderTop: `1px solid ${color}18` }}>
+        <div className={`px-4 pb-5 space-y-5 ${styles.lessonContent}`} style={{ borderTop: `1px solid ${color}18` }}>
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -1006,7 +1006,7 @@ export default function StudentPage() {
 
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
-                  <div className="px-4 pb-4 space-y-2" style={{ borderTop: '1px solid #E2D8C4' }}>
+                  <div className={`px-4 pb-4 space-y-2 ${styles.moduleContent}`} style={{ borderTop: '1px solid #E2D8C4' }}>
                     {/* TAKE IT HOME. Sits directly above the players, because it is the answer to
                         the question those players raise: a farmer who has just seen what the
                         slides and narration are worth is the one who wants them on the phone

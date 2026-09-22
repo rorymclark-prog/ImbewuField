@@ -1,16 +1,24 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 const RiveProgressSprout = dynamic(() => import('./RiveProgressSprout'), { ssr: false });
 
-/** Decorative growth follows the five existing farm-plan checks, never a second score. */
-export default function ProgressSprout({ completedSteps }: { completedSteps: number }) {
+/** Growth follows the existing farm-plan checks, never a second score. */
+export default function ProgressSprout({ completedSteps, totalSteps, progressPct, interactive = false }: {
+  completedSteps: number;
+  totalSteps?: number;
+  progressPct?: number;
+  interactive?: boolean;
+}) {
   const stage = Math.max(0, Math.min(5, Math.floor(completedSteps)));
   const stemTop = [44, 40, 34, 28, 23, 18][stage];
   const [motionAllowed, setMotionAllowed] = useState(false);
   const [riveReady, setRiveReady] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const tipId = useId();
   const handleRiveReady = useCallback(() => setRiveReady(true), []);
 
   useEffect(() => {
@@ -25,10 +33,18 @@ export default function ProgressSprout({ completedSteps }: { completedSteps: num
     return () => preference.removeEventListener('change', update);
   }, []);
 
-  return (
-    <span aria-hidden="true" data-stage={stage} style={{ position: 'relative', display: 'block', width: 72, height: 72, flex: 'none' }}>
+  useEffect(() => {
+    if (!pinned) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (!wrapperRef.current?.contains(event.target as Node)) setPinned(false);
+    };
+    document.addEventListener('pointerdown', closeOutside);
+    return () => document.removeEventListener('pointerdown', closeOutside);
+  }, [pinned]);
+
+  const artwork = (
+    <span className="imf-progress-sprout-art" aria-hidden="true">
       <svg
-        aria-hidden="true"
         className="imf-progress-sprout"
         data-stage={stage}
         viewBox="0 0 80 80"
@@ -50,6 +66,42 @@ export default function ProgressSprout({ completedSteps }: { completedSteps: num
         </g>
       </svg>
       {motionAllowed && <RiveProgressSprout stage={stage} onReady={handleRiveReady} />}
+    </span>
+  );
+
+  return (
+    <span ref={wrapperRef} data-stage={stage} data-open={pinned || undefined} className="imf-progress-sprout-wrap" style={{ position: 'relative', display: 'block', flex: 'none' }}>
+      {interactive ? (
+        <>
+          <button
+            type="button"
+            className="imf-progress-sprout-hit"
+            aria-label="About your farm plan sprout"
+            aria-describedby={tipId}
+            aria-expanded={pinned}
+            aria-controls={tipId}
+            onClick={() => setPinned((open) => !open)}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setPinned(false);
+                event.currentTarget.blur();
+              }
+            }}
+          >
+            {artwork}
+            <span className="imf-progress-sprout-help" aria-hidden="true">?</span>
+          </button>
+          <span id={tipId} className="imf-progress-sprout-tip" role="tooltip">
+            <strong>Your farm plan sprout</strong>
+            <span>It grows as you find your land, trace its boundary, survey it, design it and plan crops.</span>
+            {totalSteps != null && progressPct != null && (
+              <span className="imf-progress-sprout-tip-status">
+                {completedSteps} of {totalSteps} steps done · {progressPct}% complete
+              </span>
+            )}
+          </span>
+        </>
+      ) : <span aria-hidden="true" className="imf-progress-sprout-static">{artwork}</span>}
     </span>
   );
 }
