@@ -118,6 +118,19 @@ test('food forest sheet mulching plays once so its illustrated layer order can r
   assert.equal(clip.playOnce, true);
 });
 
+test('vegetable lesson 1 shows the seed-versus-seedling choice without replaying the unfinished transplant film', () => {
+  const slides = deckFor('vegetables-staples')!.slides.filter(s => s.lesson === 'vegetables-staples-l1');
+  assert.deepEqual(slides.map(s => s.slide), [4, 5, 6, 7]);
+  const clip = animationUrls('vegetables-staples', 6);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4');
+  assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg');
+  assert.equal(clip.seconds, 7);
+  assert.equal(clip.playOnce, true);
+  assert.ok(onDisk(clip.video));
+  assert.ok(onDisk(clip.poster));
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of

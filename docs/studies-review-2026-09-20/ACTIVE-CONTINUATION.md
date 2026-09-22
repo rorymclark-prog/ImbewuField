@@ -246,7 +246,9 @@ without a media error. Slides 2/4 have very small text in their still images,
 so the existing full-size image link has been extended to still slides; slide
 4's 1920×1080 asset opened and zoomed in the browser. Evidence and open
 acceptance gates are in `docs/media/studies-animation-quality/water-l4-lesson-check.md`.
-Do not move on to another lesson until the unit's latest preview is checked.
+Its preview was checked before work moved to the next lesson. Its diagram is a
+media candidate; the existing Water lesson 4 speech/text still needs a
+coordinated editorial decision about excluding kitchen wastewater.
 
 ## Food Forest lesson 3 candidate — 22 September
 
@@ -264,5 +266,33 @@ longer slide-16 narration continued. The 34.6 MB Food Forest pack reported
 saved after an offline reload. In that offline browser, the lesson reopened and
 slide-16 video and audio both loaded and played from saved media. Details and
 limits: `docs/media/studies-animation-quality/food-forest-l3-lesson-check.md`.
-This is a review candidate until its exact-head preview and both CI jobs pass.
-It does not imply Rory, fluent isiZulu, practitioner or learner acceptance.
+Commit `d55f0509` passed the exact-head test/rules jobs in run 35724133374 and
+the preview job in run 35724128527. The deployed sample reported that build
+identity, loaded the new slide-16 video, and served exact matching video and
+poster bytes. It remains a review candidate, not Rory, fluent isiZulu,
+practitioner or learner acceptance.
+
+## Lesson-at-a-time continuation — Small Livestock and Vegetables
+
+Small Livestock lesson 1 (slides 4–8) was checked in the deployed preview at
+390px and after its 23.2 MB module pack was saved and reloaded offline. Its
+five-slide English player reached the end both online and offline; the saved
+hens movie and English audio loaded offline. The hens footage remains a visual
+candidate, not proof of an enclosure or post-harvest sequence. A specific
+unpublished isiZulu draft mismatch remains: slide 4 describes a moving chicken
+tractor while the active English slide/movie show hens foraging. See
+`docs/media/studies-animation-quality/small-livestock-l1-lesson-check.md`.
+
+Vegetables lesson 1 is module slides 4–7; the first three module slides are an
+introduction. The old slide-6 Flow transplant movie was removed from the active
+Watch registration because it ends with the plug above the bed. A seven-second
+authored, zero-credit comparison now illustrates the narrated direct-sow versus
+nursery-start choice. The source film remains intact. The deterministic builder
+reproduced the MP4 and poster byte-for-byte. At 390px, the four-slide English
+lesson reached its end. The 11.4 MB module pack reported saved after an offline
+reload; slide-6 video/poster/audio were in the course cache and video/audio
+loaded without error offline. See `vegetables-l1-lesson-check.md` and
+`vegetables-seed-or-seedling-choice.md` under the media quality directory.
+The new lesson batch still needs exact-head CI and deployed-preview inspection
+before Rory can review it. Human, fluent isiZulu, practitioner and learner
+reviews remain open.

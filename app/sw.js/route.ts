@@ -425,6 +425,22 @@ async function migrateForestSheetMulchingMedia() {
   await cache.put(marker, new Response('Food forest sheet mulch layer-order composite'));
 }
 
+// Slide 6's older film stops before the seedling plug is seated. Retire that saved pair only;
+// the learner chooses whether to download the replacement diagram.
+async function migrateVegetableChoiceMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/vegetables-staples/.seed-or-seedling-choice-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/vegetables-staples/flow-seed-or-seedling.mp4',
+    '/course-animations/vegetables-staples/posters/flow-seed-or-seedling.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Seed or seedling choice diagram'));
+}
+
 // Slide 9 now pairs the hive-to-crops diagram with a recovered Flow flower-contact macro.
 // Remove only the superseded saved movie and poster once; never refetch the replacement.
 async function migrateBeeHiveAndBlossomMedia() {
@@ -505,7 +521,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

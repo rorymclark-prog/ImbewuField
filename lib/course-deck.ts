@@ -207,9 +207,10 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };
 
-// Practical motion shows the root plug and planting action without adding data on arrival.
+// The authored choice diagram follows the seed-versus-seedling narration. The earlier Flow
+// movie stopped with an exposed plug, which looked like a finished transplant on a phone.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-seed-or-seedling', poster: 'flow-seed-or-seedling', bytes: 5423616, seconds: 8 },
+  6: { src: 'seed-or-seedling-choice', poster: 'seed-or-seedling-choice', bytes: 72626, seconds: 7, playOnce: true },
 };
 
 // Each Food Forest Watch scene follows its existing narration.
