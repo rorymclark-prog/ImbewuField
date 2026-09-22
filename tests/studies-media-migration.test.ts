@@ -351,6 +351,7 @@ test('every held authored study clip and poster leaves saved packs while reviewe
     '/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4',
     '/course-animations/small-livestock/flow-ducks-understorey.mp4',
     '/course-animations/small-livestock/flow-bee-between-blossoms.mp4',
+    '/course-animations/soil-health/flow-build-compost-heap.mp4',
   ];
   const rows = new Map([...changed, ...keep].map(path => [path + '?saved=1', new Response('saved')]));
   const cache = {

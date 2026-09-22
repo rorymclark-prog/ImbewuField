@@ -135,7 +135,7 @@ test('locally drawn study animations stay behind stills until Rory clears their 
     ['water-harvesting', 9], ['water-harvesting', 12], ['water-harvesting', 16], ['water-harvesting', 21],
     ['intro-permaculture', 7], ['intro-permaculture', 13], ['intro-permaculture', 19],
     ['reading-landscape', 5], ['reading-landscape', 9], ['reading-landscape', 13], ['reading-landscape', 17],
-    ['soil-health', 5], ['soil-health', 10], ['soil-health', 14],
+    ['soil-health', 5], ['soil-health', 14],
     ['food-forest', 5], ['food-forest', 10], ['food-forest', 15],
     ['small-livestock', 14],
     ['market-community', 4], ['market-community', 9], ['market-community', 14],
@@ -161,6 +161,16 @@ test('the bee lesson uses one technically checked Flow move between two blossoms
   assert.ok(clip);
   assert.equal(clip.video, '/course-animations/small-livestock/flow-bee-between-blossoms.mp4');
   assert.equal(clip.poster, '/course-animations/small-livestock/posters/flow-bee-between-blossoms.jpg');
+  assert.equal(clip.seconds, 8);
+  assert.equal(clip.playOnce, true);
+});
+
+test('the compost lesson shows dry browns being placed over fresh greens and then holds', () => {
+  const clip = animationUrls('soil-health', 10);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/soil-health/flow-build-compost-heap.mp4');
+  assert.equal(clip.poster, '/course-animations/soil-health/posters/flow-build-compost-heap.jpg');
+  assert.equal(clip.bytes, 7619537);
   assert.equal(clip.seconds, 8);
   assert.equal(clip.playOnce, true);
 });

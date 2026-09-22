@@ -188,8 +188,11 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
   6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6 },
 };
 
-// Keep the reviewed Flow materials shot; the locally authored soil clips await visual clearance.
+// Keep the reviewed Flow compost actions; the remaining locally authored soil clips await review.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
+  // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
+  // Moisture, decomposition and finished compost remain in the narration and later slides.
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true },
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
 };
 

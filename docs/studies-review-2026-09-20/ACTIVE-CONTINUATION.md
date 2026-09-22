@@ -438,3 +438,27 @@ Flow credits. The first three results remain rejected and unpublished. Exact
 hashes and limits are in `bee-hive-and-blossom.md` and
 `flow-x1-attempts-2026-09-22.md`. Human, beekeeper, practitioner, learner and
 fluent isiZulu approval remain open.
+
+## 22 September — Soil Health lesson 2 Flow replacement
+
+After the bee batch deployed green, the next one-lesson batch started with Soil
+Health lesson 2. One Veo 3.1 Quality prompt used 16:9, 720p, eight seconds and
+x1, costing 100 credits and producing one candidate. The farmer visibly tips dry
+leaves and straw over a fresh green layer in an outdoor compost bay, then spreads
+the brown material by hand. Complete-motion, half-second, final-frame and phone-
+scale checks found no visible cut, time jump, malformed hands, duplicate tool or
+material discontinuity. An independent lower-cost review agreed.
+
+The unexpected AAC track was removed from the learner copy. The silent
+`flow-build-compost-heap` asset is registered on Soil Health slide 10, plays once
+and holds. It supports only the visible dry-browns-over-fresh-greens setup. It
+does not establish moisture, air flow, decomposition, readiness, finished
+compost, sanitation, ratios, timing, nutrient improvement or yield. Nearby beds
+mean the frame must not be reused as a crop-bed mulching shot. Full prompt,
+hashes and limits are in `docs/media/studies-animation-quality/soil-l2-flow-compost-build.md`.
+
+This is the fifth x1 prompt in the current pass, bringing the pass to 500 Flow
+credits: three rejected and unpublished, two integrated as technical preview
+candidates. Human, practitioner, farmer, learner and fluent isiZulu review remain
+open. Small Livestock lesson 3 remains still-only because its “closed loop” title
+and narration need factual reconciliation before a replacement can be released.

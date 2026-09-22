@@ -60,7 +60,7 @@ members sharing dry seeds**. The relevant existing project locations are
 soil trial and older Fast candidate require direct side-by-side pedagogical and
 physical-mechanism review; neither is a reason to place another order.
 
-## Core animation slots — 51 records, 30 currently registered
+## Core animation slots — 51 records, 28 currently registered
 
 | # | Module | Lesson ID | Slide | Title | Registered `src` | Planned treatment / hold |
 | ---: | --- | --- | ---: | --- | --- | --- |
@@ -79,7 +79,7 @@ physical-mechanism review; neither is a reason to place another order.
 | 13 | Vegetables and Staple Crops | vegetables-staples-l1 | 6 | Seed or Seedling? | — | Existing still only. The unfinished Flow transplant and the unapproved code-drawn comparison remain outside the player. See `vegetables-seed-or-seedling-choice.md`. |
 | 14 | Vegetables and Staple Crops | vegetables-staples-l4 | 16 | Treat the Cause Before the Insect | — | Existing still and protected narration only. The code-drawn decision sequence remains a held review record and is not a learner asset. See `vegetables-pest-decision-path.md`. |
 | 15 | Soil Health & Composting | soil-health-l1 | 5 | Watch: Read Your Soil | — | Existing still only. The locally authored soil-observation tour is held outside the player pending Rory’s visual clearance. |
-| 16 | Soil Health & Composting | soil-health-l2 | 10 | Watch: Build the Compost Heap | — | Existing still only. The locally drawn compost-heap animation is held outside the player pending Rory’s visual clearance. |
+| 16 | Soil Health & Composting | soil-health-l2 | 10 | Watch: Build the Compost Heap | `flow-build-compost-heap` | One x1 Flow shot passed full-motion and phone-scale technical review: a farmer places dry leaves and straw over a clearly visible bed of fresh green trimmings, then spreads the brown layer by hand. The film shows setup only; moisture, air, decomposition, readiness and finished compost are not established. Rory, practitioner, learner and isiZulu review remain open. |
 | 17 | Soil Health & Composting | soil-health-l2 | 11 | Balance Browns and Greens | `flow-compost-materials` | Retain after full eight-second and phone review: a coherent early greens addition. Moisture/air checks and finished compost are not shown; the accompanying diagram/narration covers later checks. |
 | 18 | Soil Health & Composting | soil-health-l3 | 14 | Watch: Bare Soil and Mulch | — | Existing still only. The locally drawn mulch-protection animation is held outside the player while existing Flow candidates are reviewed; no further generation before a verified gap. |
 | 19 | Reading the Landscape | reading-landscape-l1 | 5 | Watch: Water Slows, Sinks, and Leaves | — | Existing still only. The locally drawn water-movement animation is held outside the player pending Rory’s visual clearance. |

@@ -2,9 +2,9 @@
 
 Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
 **eight seconds**, and **x1**. Each prompt produced one video and cost 100 Flow
-credits. Four prompts used 400 credits in total. The first three were rejected
-and were not copied into `public/`. The fourth passed technical review and is
-registered as the Small Livestock lesson 2 bee clip.
+credits. Five prompts used 500 credits in total. The first three were rejected
+and were not copied into `public/`. The fourth and fifth passed technical review
+and are registered for the bee and compost-building lessons.
 
 ## Plant Guilds lesson 3 — whole-support thinning
 
@@ -60,3 +60,22 @@ The clip shows contact only. It does not prove pollen transfer, fertilisation,
 fruit set or yield. Human, beekeeper, learner and fluent isiZulu review remain
 open. Exact learner-file hashes and the withdrawn composite record are in
 `bee-hive-and-blossom.md`.
+
+
+## Soil Health lesson 2 — build the compost heap
+
+The fifth prompt requested one continuous x1 action: a farmer places dry brown
+leaves and straw over a clearly visible fresh green layer in an outdoor compost
+bay, then spreads the brown material by hand. Full-motion, half-second and phone-
+scale review found coherent hands, basket, materials and background. The source
+contained an unexpected AAC track, so the learner copy is silent.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Farmer_builds_outdoor_compost_heap_20260922205945.mp4` | `6e9dba03ebf74ba807dfda2d2db875c9d883822d01ba22235334fdd753ff9154` | 7,769,863 | Passed technical visual review; learner registration added |
+
+The clip shows setup only. It does not establish moisture, air flow, decomposition,
+readiness, finished compost, sanitation, a layer ratio, timing, nutrient effect or
+yield. Exact learner-file hashes and visual limits are in
+`soil-l2-flow-compost-build.md`. Human, practitioner, learner and fluent isiZulu
+review remain open.
