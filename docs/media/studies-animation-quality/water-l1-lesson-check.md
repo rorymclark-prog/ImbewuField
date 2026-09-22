@@ -11,8 +11,12 @@ slide 4, 7 and 9 stills were inspected. The 16-second slide 4 video and
 13-second slide 7 video were inspected through four-frame contact sheets and
 in the deployed 390 × 844 player with matching narration (`readyState=4`).
 The complete seven-slide phone player advanced to slide 9 and reset to
-“Play lesson.” The old 16.6 MB module pack saved before this hold; the
-**changed** pack has not yet been reopened offline in the deployed preview.
+“Play lesson.” The old 16.6 MB module pack was saved before this hold. In
+the new exact-head preview, the service worker retained the slide 4 and 7
+stills and MP3s while removing both old MP4/poster pairs. After an offline
+reload at 390 × 844, slide 4 and 7 each showed its 1920 px still, English
+audio at `readyState=4`, and no video element (`navigator.onLine=false`).
+The browser was restored online afterward.
 
 Slide 4 depicts runoff entering a contour trench, blue infiltration reaching
 tree roots and a labelled water table. The movement and caption imply a

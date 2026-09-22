@@ -13,9 +13,14 @@ Flow credits were spent. The new
 proposal record the unresolved lesson, quiz, narration and still claims.
 Rory's broader protected-content decision is pending, so none of those
 protected teaching assets changed. Local typecheck, the full suite (3,701
-pass, zero fail, one existing TODO) and whitespace check passed. Check the
-exact-head `test` and `rules` jobs and deployed phone/offline preview after
-push before calling this a verified media hold. Farm Finance remains excluded.
+pass, zero fail, one existing TODO) and whitespace check passed. Exact-head
+`test` and `rules` jobs both passed in run 35792285337; preview run
+35792285279 succeeded. Build-info and the phone browser reported `d1763a8`;
+slides 4/7 showed stills without Watch or video elements. The old saved pack
+reopened both stills and English MP3s offline at `readyState=4`; the two held
+movies/posters were absent from the course cache after migration. This is a
+verified media hold, not content, human-listening or practitioner clearance.
+Farm Finance remains excluded.
 
 > **Current weekly scope:** Rory chose the ten core permaculture modules in
 > English first and explicitly said **do not finish Farm Finance**. The older
