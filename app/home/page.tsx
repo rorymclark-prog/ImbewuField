@@ -443,11 +443,15 @@ function HomeLandingInner() {
         .home-next-step-arrow { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
         .home-tour-card { overflow: hidden; transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; }
         .home-tour-card img { transition: transform 350ms cubic-bezier(0.16,1,0.3,1); }
+        .home-tour-landscape { width: 100%; height: auto; aspect-ratio: 16 / 9; }
         @media (hover: hover) {
           .home-next-step:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.6) !important; box-shadow: 0 12px 24px -15px rgba(83,52,18,0.5) !important; }
           .home-next-step:hover .home-next-step-arrow { transform: translateX(5px); }
           .home-tour-card:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.8) !important; box-shadow: 0 12px 26px rgba(83,52,18,0.12); }
           .home-tour-card:hover img { transform: scale(1.035); }
+        }
+        @media (min-width: 900px) {
+          .home-tour-landscape { height: clamp(300px, 36vw, 400px); aspect-ratio: auto; }
         }
         .home-next-step:active, .home-tour-card:active { transform: scale(0.985); }
         @media (prefers-reduced-motion: reduce) {
@@ -544,6 +548,7 @@ function HomeLandingInner() {
           }}
         >
           <img
+            className="home-tour-landscape"
             src="/home-images/sample-farm-landscape.webp"
             alt=""
             aria-hidden="true"
@@ -551,10 +556,8 @@ function HomeLandingInner() {
             decoding="async"
             style={{
               display: 'block',
-              width: '100%',
-              height: 118,
               objectFit: 'cover',
-              objectPosition: 'center',
+              objectPosition: 'center 52%',
               borderRadius: 14,
               marginBottom: 13,
               border: '1px solid rgba(32,25,15,0.08)',
