@@ -81,9 +81,10 @@ function HeroEntranceStyle() {
       .imf-hero-settle { animation: imfHeroSettle 260ms var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.1)); }
       @keyframes imfProgressReveal { from { transform: scaleX(0); } to { transform: scaleX(1); } }
       .imf-progress-fill { transform-origin: left center; animation: imfProgressReveal 700ms 120ms cubic-bezier(0.16,1,0.3,1) both; transition: width 450ms cubic-bezier(0.16,1,0.3,1); }
-      .imf-progress-sprout-wrap { width: 88px; height: 88px; }
+      .imf-progress-sprout-wrap { width: 96px; height: 96px; }
+      .imf-progress-sprout-wrap > svg, .imf-progress-sprout-wrap > span { transform: scale(1.2); transform-origin: center; }
       .imf-progress-sprout { width: 100%; height: 100%; flex: none; overflow: visible; }
-      @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 112px; height: 112px; } }
+      @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 128px; height: 128px; } }
       .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
       @keyframes imfGrowIn {
         from { opacity: 0; transform: scale(0.7); }
