@@ -1,4 +1,4 @@
-.page { min-height: 100dvh; background: #f5f1e7; color: #293b2e; }
+.page { height: 100dvh; overflow-y: auto; background: #f5f1e7; color: #293b2e; }
 .header { padding: 16px max(20px, calc((100% - 1120px) / 2)); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #fffdf7; border-bottom: 1px solid #ded5c2; }
 .main { max-width: 1120px; margin: auto; padding: 28px 20px 100px; }
 .page h1, .page h2, .page h3, .page h4 { font-family: var(--font-display), Georgia, serif; color: #214d32; }
@@ -45,6 +45,7 @@
   .grid, .dayList { grid-template-columns: 1fr; }
 }
 @media print {
+  .page { height: auto; overflow: visible; }
   .header, .actions, .notice, .checklist { display: none; }
   .main { padding: 0; max-width: none; }
   .hero img { display: none; }
