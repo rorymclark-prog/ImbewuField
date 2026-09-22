@@ -9,6 +9,12 @@
 > slide 5 remains a still. See the
 > [current lesson check](../studies-animation-quality/soil-l1-current-lesson-check.md).
 
+> **23 September L2 update:** Both existing Flow clips on slides 10–11 were
+> retained after full-motion, deployed 390px and offline-pack playback checks.
+> They show compost setup only. One overcertain English quiz rationale is held
+> for an authorised protected correction; see the
+> [current L2 check](../studies-animation-quality/soil-l2-current-lesson-check.md).
+
 The historical production pass registered twenty English slides and three locally
 authored Watch clips with the existing twenty English recordings. The current
 learner registration is described above. This branch follows Reading the Landscape

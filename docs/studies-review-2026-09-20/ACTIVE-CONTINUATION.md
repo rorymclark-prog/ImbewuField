@@ -1,5 +1,18 @@
 # Active Studies continuation — 22 September 2026
 
+## Soil Health L2 English media and source check (23 September)
+
+The existing Flow clips on slides 10–11 were reviewed in full motion and in
+the deployed 390px learner player, including playback after an offline browser
+reload from the saved 23.0 MB Soil pack. They show compost setup and one greens
+addition, not readiness or sanitation. Both remain registered; no new Flow
+credit was spent. The [current L2 check](../media/studies-animation-quality/soil-l2-current-lesson-check.md)
+records primary-source limits and a narrow quiz-rationale wording proposal:
+the answer is sound, but “signature” treats symptoms as proof of one cause.
+Protected text and narration are unchanged pending Rory's broader decision.
+Human, practitioner, learner and fluent isiZulu approval is not claimed; Farm
+Finance remains excluded.
+
 ## Soil Health L1 English and Flow check (23 September)
 
 Slides 4–8 and their actual stills were inspected in the deployed 390px
