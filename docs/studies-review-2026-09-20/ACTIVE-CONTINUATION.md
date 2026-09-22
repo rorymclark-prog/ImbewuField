@@ -193,3 +193,15 @@ The corrected JPEG was checked at full size and 390px and independently
 reviewed. Its prompt, hashes and limits are in
 `docs/media/studies-animation-quality/food-forest-sheet-mulch-still.md`.
 The unchanged slide-16 movie remains incomplete; the still does not clear it.
+
+The recovered eight-second Flow bee macro was paired with the existing
+fourteen-second hive-to-flowers concept diagram for Small Livestock lesson 2
+slide 9. A shorter 13.75-second muted clip now shows the route first and one
+lifelike blossom visit second; the final encode is 1,330,202 bytes rather than
+the 2.73 MB prototype. Full motion, poster and 390px views were inspected.
+The macro shows contact with one blossom, not pollen deposited on a second
+flower; it cannot prove fruit set or yield. The existing transcript/audio and
+quiz were left unchanged. Exact provenance and source limits are in
+`docs/media/studies-animation-quality/bee-hive-and-blossom.md`.
+No new Flow credits were spent, and Rory's visual decision is still required
+before release.

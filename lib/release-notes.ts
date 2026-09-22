@@ -42,11 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '22 September 2026', sha: 'a411c529', changes: [
+  { when: '22 September 2026', sha: '80c81387', changes: [
     'Food Forest lesson 3 now shows mulch over cardboard in its overview picture.',
+    'Watch a bee on a blossom in Small Livestock lesson 2.',
   ], tour: [
     { title: 'See the mulch layers', where: 'Studies → Food Forest → lesson 3', href: '/student',
       detail: 'Open the lesson overview and look at the first planting stage.' },
+    { title: 'Watch the bee visit', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then view slide 9.' },
   ] },
   { when: '22 September 2026', sha: '98ac62c1', changes: [
     'Open a lesson animation still at full size, then tap to zoom in.',

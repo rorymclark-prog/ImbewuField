@@ -107,6 +107,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/small-livestock/watch-04-chicken-tractor.mp4': 207078,
   '/course-animations/small-livestock/watch-09-bee-pollination.mp4': 116723,
   '/course-animations/small-livestock/watch-14-nutrient-loop.mp4': 161586,
+  '/course-animations/small-livestock/bee-hive-and-blossom.mp4': 1330202,
+  '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg': 91884,
   '/course-animations/soil-health/flow-compost-materials.mp4': 4290981,
   '/course-animations/soil-health/posters/flow-compost-materials.jpg': 433066,
   '/course-animations/soil-health/posters/tour-soil-observation.jpg': 701546,

@@ -237,3 +237,35 @@ test('the food forest mulch still replaces only the superseded infographic once'
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(await rows.get(changed + '?saved=1')!.text(), 'new old-path download');
 });
+
+test('the bee hive and blossom clip retires only the old slide 9 movie and poster once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateBeeHiveAndBlossomMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateBeeHiveAndBlossomMedia\)/);
+  const changed = [
+    '/course-animations/small-livestock/watch-09-bee-pollination.mp4',
+    '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg',
+  ];
+  const replacement = [
+    '/course-animations/small-livestock/bee-hive-and-blossom.mp4',
+    '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg',
+  ];
+  const keep = '/course-animations/small-livestock/watch-14-nutrient-loop.mp4';
+  const rows = new Map([...changed, ...replacement, keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  for (const path of replacement) assert.equal(rows.has(path + '?saved=1'), true, path);
+  assert.equal(rows.has(keep + '?saved=1'), true);
+  assert.equal(rows.has('/course-animations/small-livestock/.bee-hive-and-blossom-20260922'), true);
+  rows.set(changed[0] + '?saved=1', new Response('new old-path download'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new old-path download');
+});

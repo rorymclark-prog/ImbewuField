@@ -409,6 +409,22 @@ async function migrateForestMulchInfographic() {
   await cache.put(marker, new Response('Corrected food forest mulch layer still'));
 }
 
+// Slide 9 now pairs the hive-to-crops diagram with a recovered Flow flower-contact macro.
+// Remove only the superseded saved movie and poster once; never refetch the replacement.
+async function migrateBeeHiveAndBlossomMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/small-livestock/.bee-hive-and-blossom-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/small-livestock/watch-09-bee-pollination.mp4',
+    '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Bee hive and blossom teaching clip'));
+}
+
 // The windbreak now explains through-flow, with matching speech. Keep other
 // saved lessons and never fetch a replacement without the learner choosing it.
 async function migrateWindbreakMedia() {
@@ -457,7 +473,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateBeeHiveAndBlossomMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
