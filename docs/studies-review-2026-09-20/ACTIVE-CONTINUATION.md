@@ -560,3 +560,8 @@ teaching clearance. Rory's authorization for narrow corrections beyond L4 is
 pending; do not mark Introduction L1 content complete yet. The source and
 technical evidence are in
 `docs/media/studies-animation-quality/intro-l1-lesson-check.md`.
+The exact English correction proposal, source basis and coordinated media/cache
+work are in `docs/media/studies-animation-quality/intro-l1-water-use-correction-proposal.md`.
+It was independently checked for the distinction between permissible use and
+physical supply. Do not apply it to protected learner content until Rory answers
+the pending scope question.
