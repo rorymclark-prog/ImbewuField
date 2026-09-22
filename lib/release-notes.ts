@@ -67,24 +67,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Watch mulch cover cardboard', where: 'Studies → Food Forest → lesson 3', href: '/student',
       detail: 'Open Watch and listen, then view Prepare a Manageable First Area on slide 3 of 5.' },
   ] },
-  { when: '22 September 2026', sha: '95b54854', changes: [
-    'In Plant Guilds lesson 3, watch a support plant be thinned and useful cuttings carried.',
-  ], tour: [
-    { title: 'Watch the guild change', where: 'Studies → Plant Selection & Guilds → lesson 3', href: '/student',
-      detail: 'Open Watch and listen; view slides 43 and 45.' },
-  ] },
-  { when: '22 September 2026', sha: '77c12ea9', changes: [
-    'In Vegetables lesson 4, follow the pest-check steps before choosing an action.',
-  ], tour: [
-    { title: 'Check the pest steps', where: 'Studies → Vegetables and Staple Crops → lesson 4', href: '/student',
-      detail: 'Open Watch and listen, then watch Treat the Cause Before the Insect on slide 2 of 2.' },
-  ] },
-  { when: '22 September 2026', sha: 'aff0cc2c', changes: [
-    'In Vegetables lesson 1, compare sowing in the bed with starting a seedling in a nursery.',
-  ], tour: [
-    { title: 'Compare seed and seedling', where: 'Studies → Vegetables and Staple Crops → lesson 1', href: '/student',
-      detail: 'Open Watch and listen, then watch Seed or Seedling? on slide 3 of 4.' },
-  ] },
   { when: '22 September 2026', sha: '26472a11', changes: [
     'In Food Forest lesson 3, see mulch above cardboard in the overview picture.',
     'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',

@@ -1,0 +1,43 @@
+# Flow x1 animation attempts — 22 September 2026
+
+Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
+**eight seconds**, and **x1**. Each prompt produced one video and cost 100 Flow
+credits. Three prompts used 300 credits in total. None passed release review,
+none was copied into `public/`, and no further prompt was placed.
+
+## Plant Guilds lesson 3 — whole-support thinning
+
+The first prompt used the guild overview as its opening frame. The result reads
+as hoeing or weeding bare soil: no selected standing support is visibly cut and
+no stump remains.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Person_thinning_plant_in_garden_20260922193222.mp4` | `dda67a87019edc29fbbd48e2b2e076e82d1ef7532eb10965206187233791f3d2` | 4,925,235 | Rejected |
+
+The revised prompt used Flow's existing `07-Succession-thin.png` reference,
+where the selected basal stems are already between the loppers. The man and
+fruit tree remain coherent, but the shrub turns abruptly into a large pile.
+The pile hides the stump and encroaches on the access path, especially at phone
+width.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Man_pruning_shrub_20260922194001.mp4` | `5ddc3ec27295f30d3a8ce3d8f6882f8b77e666379a4cdaba16d7a326d76ee063` | 5,278,477 | Rejected |
+
+## Introduction lesson 3 — nearby Zone 1 harvest
+
+The prompt used the existing slide-16 still as its opening frame. The doorway,
+nearby bed and farther field remain stable and readable. The farmer begins
+already crouched in the bed, however, and the blurred greens never complete an
+unambiguous harvest-to-basket action. It works as atmosphere, but it does not
+teach the placement decision clearly enough.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Farmer_harvesting_greens_into_ba…_20260922195245.mp4` | `14f51929117fea2ae2eef51eaf06aee2f8e89e5c601e5d245b6a76c0d234368b` | 8,009,283 | Rejected |
+
+The files were decoded at 1280×720 and 24 fps. Full-duration and phone-scale
+contact views were inspected. Lower-cost agents independently checked the
+motion against the exact narration and farming safeguards. These are technical
+reviews, not human, farmer, practitioner, learner or isiZulu approval.

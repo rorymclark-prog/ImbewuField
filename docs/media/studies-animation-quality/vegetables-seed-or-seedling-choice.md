@@ -1,5 +1,10 @@
 # Vegetables lesson 1, slide 6 — seed or seedling choice
 
+**Held review record:** Rory has not accepted this code-drawn animation. Its
+MP4 and poster are no longer public assets or registered in the learner player.
+The builder and hashes remain here only to make the earlier preview recoverable.
+Slide 6 currently uses its existing still.
+
 The existing eight-second Flow derivative shows a person handling a nursery
 seedling, but its final root plug is still above the bed. It cannot teach a
 finished transplant. The slide's English narration asks the learner to choose

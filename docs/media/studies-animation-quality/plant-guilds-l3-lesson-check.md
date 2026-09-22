@@ -16,6 +16,11 @@ The clip had been registered on slide 44, whose narration says to renew sun-lovi
 
 ## Slide 43 authored animation
 
+**Current player status:** Rory has not accepted the code-drawn animation, so
+its MP4 and poster have been removed from the public assets and registration.
+Two later x1 Flow attempts also failed visual review. Slide 43 currently uses
+its existing still; the section below records the retired preview candidate.
+
 `thin-selected-support.mp4` is a deterministic, silent 1280×720 animation with matching poster and a builder in this directory. It uses language-neutral stage numerals and pictograms. The sequence shows:
 
 1. one competing support selected;

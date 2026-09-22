@@ -1,5 +1,10 @@
 # Vegetables lesson 4, slide 16 — pest decision path
 
+**Held review record:** Rory has not accepted this code-drawn animation. Its
+MP4 and poster are no longer public assets or registered in the learner player.
+The builder and hashes remain here only to make the earlier preview recoverable.
+Slide 16 currently uses its existing still and protected narration.
+
 The existing slide-16 still shows a damaged leaf, a helpful insect, a barrier
 and hand removal. In the 390px learner player those options remain visible, but
 the still cannot show the **order** of the protected English narration. The

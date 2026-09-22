@@ -10,6 +10,12 @@ sequence and a conditional treatment safeguard. See
 `vegetables-pest-decision-path.md` for the builder, hashes, source limits and
 exact final-frame copy.
 
+**Current player status:** the authored Watch diagram and poster were removed
+from the public assets and registration because Rory has not accepted their
+visual quality. Slide 16 retains its existing still and full protected
+narration. The technical checks below are a historical record of the retired
+preview candidate.
+
 The pre-change two-slide English player ran to its end in the deployed 390px
 sample. The new slide-16 movie was inspected at full size, in a 390px contact
 view and in the local 390px player. It loaded with `readyState=4`, played ten

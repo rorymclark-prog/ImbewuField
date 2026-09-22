@@ -4,10 +4,10 @@
 
 Rory explicitly directed work to Google Flow and requires his clearance before
 any SVG/code-drawn animation is accepted or released. The locally drawn Plant
-Guilds L3 thinning clip remains a draft in PR504; do not merge it on a technical
-check alone. The Food Forest L3 authored layer-order composite was removed from
-the student-player registration and public assets while its source stays in a
-held review record.
+Guilds L3 thinning clip and the two locally drawn Vegetable clips have now been
+removed from the student-player registration and public assets. Their builders
+and review notes remain only as held records. The Food Forest L3 authored
+layer-order composite was removed on the same basis.
 
 Three new Veo 3.1 Quality x1 eight-second Flow orders cost 100 credits each.
 The new Soil L3 rain comparison is rejected because it erupts into exaggerated
@@ -24,16 +24,25 @@ TODO) and whitespace check passed. Push a coherent preview, read the exact-head
 `test` and `rules` jobs, and request Rory's visual decision. Do not claim
 farmer, fluent isiZulu or practitioner approval.
 
+A later x1-only Flow pass used three more 100-credit prompts. Two Plant Guilds
+thinning results were rejected: the first reads as hoeing without a visible
+whole-support cut; the second collapses a shrub but hides the stump and places
+the generated pile into the access route. An Introduction lesson 3 Zone 1
+harvest result was also rejected because it begins with the farmer already in
+the bed and never shows a clear harvest-to-basket action. None entered the app,
+and further generation stopped. Exact files, hashes and review evidence are in
+`docs/media/studies-animation-quality/flow-x1-attempts-2026-09-22.md`.
+
 ## Latest checkpoint — Plant Guilds lesson 3
 
 Plant Guilds lessons 1 and 2 already have complete lesson checks on this branch;
 their exact-head test and rules jobs passed. For lesson 3 (slides 37–47), the
-deployed English 390px player ran from first to last slide before the new media
-change. A controlled, zero-Flow-credit eight-second diagram now fills slide
-43's whole-support thinning gap, and the existing carry clip moves from slide
-44 to 45 to match its narration. The new clip and final held frame were
-inspected in the local 390px Student player; no new species or figures were
-added. The source, builder, hashes and review limits are in
+deployed English 390px player ran from first to last slide. The existing carry
+clip moves from slide 44 to 45 to match its narration. A controlled,
+zero-Flow-credit diagram for slide 43 was technically checked, but Rory's visual
+quality rule now keeps it out of the player. Two replacement Flow attempts also
+failed review. Slide 43 therefore retains its still. The source, held builder,
+hashes and review limits are in
 `docs/media/studies-animation-quality/plant-guilds-thinning.md` and
 `plant-guilds-l3-lesson-check.md`. Local typecheck, 3,694 passing tests with
 zero failures and one existing TODO, and whitespace check are clean. The
@@ -332,13 +341,10 @@ tractor while the active English slide/movie show hens foraging. See
 
 Vegetables lesson 1 is module slides 4–7; the first three module slides are an
 introduction. The old slide-6 Flow transplant movie was removed from the active
-Watch registration because it ends with the plug above the bed. A seven-second
-authored, zero-credit comparison now illustrates the narrated direct-sow versus
-nursery-start choice. The source film remains intact. The deterministic builder
-reproduced the MP4 and poster byte-for-byte. At 390px, the four-slide English
-lesson reached its end. The 11.4 MB module pack reported saved after an offline
-reload; slide-6 video/poster/audio were in the course cache and video/audio
-loaded without error offline. See `vegetables-l1-lesson-check.md` and
+Watch registration because it ends with the plug above the bed. Its later
+zero-credit comparison was technically checked but is now also outside the
+player under Rory's visual quality rule, so slide 6 retains its still. See
+`vegetables-l1-lesson-check.md` and
 `vegetables-seed-or-seedling-choice.md` under the media quality directory.
 The exact-head `0f505fea` passed both `test` and `rules` in runs 35729261222
 and 35729257729, and preview run 35729257853 succeeded. The stable Student
@@ -365,12 +371,9 @@ keep sweet-potato drought tolerance conditional on crop stage and local
 conditions. See `docs/media/studies-animation-quality/vegetables-l3-lesson-check.md`.
 Human listening, crop-practice, fluent isiZulu and learner reviews remain open.
 
-Vegetables lesson 4 (slides 15–16) has a new, zero-credit authored decision
-diagram for slide 16. The existing still showed response options but not the
-narrated observe/check/protect/act/monitor sequence. The ten-second film holds
-a conditional treatment safeguard on its last frame. Its first local 390px
-playback exposed native controls hiding safety text; the renderer was revised
-so all essential instructions sit above the control overlay. See
+Vegetables lesson 4 (slides 15–16) retains its existing still and protected
+narration. A zero-credit authored decision diagram was technically checked but
+is now outside the player under Rory's visual quality rule. See
 `docs/media/studies-animation-quality/vegetables-pest-decision-path.md` and
 `vegetables-l4-lesson-check.md`. The local two-slide player reached its end;
 after stale development shell caches were removed from the test browser, the

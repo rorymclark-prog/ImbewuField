@@ -428,7 +428,7 @@ async function migrateForestSheetMulchingMedia() {
 }
 
 // Slide 6's older film stops before the seedling plug is seated. Retire that saved pair only;
-// the learner chooses whether to download the replacement diagram.
+// the reviewed lesson still remains available without downloading a replacement film.
 async function migrateVegetableChoiceMedia() {
   const cache = await caches.open(COURSE_CACHE);
   const marker = '/course-animations/vegetables-staples/.seed-or-seedling-choice-20260922';
@@ -440,7 +440,27 @@ async function migrateVegetableChoiceMedia() {
   for (const request of await cache.keys()) {
     if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
   }
-  await cache.put(marker, new Response('Seed or seedling choice diagram'));
+  await cache.put(marker, new Response('Seed or seedling lesson still'));
+}
+
+// Rory requires explicit visual clearance before code-drawn lesson animations are shown. Remove
+// only the three preview candidates from saved packs; their lesson stills and all other media stay.
+async function migrateUnapprovedStudyAnimations() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/.unapproved-code-drawn-retired-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/plant-guilds/thin-selected-support.mp4',
+    '/course-animations/plant-guilds/posters/thin-selected-support.jpg',
+    '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4',
+    '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg',
+    '/course-animations/vegetables-staples/pest-decision-path.mp4',
+    '/course-animations/vegetables-staples/posters/pest-decision-path.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Unapproved lesson animations retired'));
 }
 
 // Slide 9 now pairs the hive-to-crops diagram with a recovered Flow flower-contact macro.
@@ -523,7 +543,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

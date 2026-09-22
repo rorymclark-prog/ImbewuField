@@ -6,6 +6,12 @@ English lesson body, two quiz questions, rationale, transcript and narration
 were left intact. The existing stills for bed access, soil/rainfall choice and
 marking a practice bed were retained after a phone-size teaching-fit review.
 
+**Current player status:** Rory requires visual clearance before code-drawn
+animations are used. The seven-second comparison and poster described below
+have been removed from the public assets and Watch registration. Slide 6 now
+uses its existing still while a Flow replacement remains unresolved. The
+remaining playback notes document the retired preview candidate.
+
 Slide 6's earlier Flow film ends with its nursery root plug exposed above the
 bed, so the learner's Watch asset is now the generic, seven-second choice
 diagram documented in `vegetables-seed-or-seedling-choice.md`. The diagram

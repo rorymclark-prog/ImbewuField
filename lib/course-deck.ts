@@ -161,12 +161,6 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
     "bytes": 3900208,
     "seconds": 8.0
   },
-  // Slide 43 removes a selected whole support above ground; the older pruning film leaves it standing.
-  "43": {
-    src: 'thin-selected-support', poster: 'thin-selected-support', bytes: 48_896, seconds: 8,
-    playOnce: true,
-    byLang: { zu: { src: 'thin-selected-support', poster: 'thin-selected-support', bytes: 48_896, seconds: 8, playOnce: true } },
-  },
   "45": {
     byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
@@ -213,14 +207,9 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };
 
-// The authored choice diagram follows the seed-versus-seedling narration. The earlier Flow
-// movie stopped with an exposed plug, which looked like a finished transplant on a phone.
-const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'seed-or-seedling-choice', poster: 'seed-or-seedling-choice', bytes: 72626, seconds: 7, playOnce: true },
-  // The still shows possible actions but not the order of checking causes before treating.
-  // Hold the label safeguard at the end; a looping restart would interrupt that decision.
-  16: { src: 'pest-decision-path', poster: 'pest-decision-path', bytes: 322214, seconds: 10, playOnce: true },
-};
+// The two replacement diagrams remain outside the learner player until Rory has reviewed their
+// visual quality. Their existing stills continue to carry these lessons in the meantime.
+const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {};
 
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {

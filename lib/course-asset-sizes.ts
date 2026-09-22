@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 856 files, 353.1 MB total.
+// 850 files, 352.5 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -63,8 +63,6 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg': 326728,
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg': 238549,
   '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg': 240698,
-  '/course-animations/plant-guilds/posters/thin-selected-support.jpg': 86805,
-  '/course-animations/plant-guilds/thin-selected-support.mp4': 48896,
   '/course-animations/reading-landscape/flow-a-frame.mp4': 1808880,
   '/course-animations/reading-landscape/posters/flow-a-frame.jpg': 391242,
   '/course-animations/reading-landscape/posters/watch-05-water-movement.jpg': 86635,
@@ -124,11 +122,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/soil-health/watch-10-compost-heap.mp4': 119193,
   '/course-animations/soil-health/watch-14-mulch-protection.mp4': 369446,
   '/course-animations/vegetables-staples/flow-seed-or-seedling.mp4': 5423616,
-  '/course-animations/vegetables-staples/pest-decision-path.mp4': 322214,
   '/course-animations/vegetables-staples/posters/flow-seed-or-seedling.jpg': 393560,
-  '/course-animations/vegetables-staples/posters/pest-decision-path.jpg': 72672,
-  '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg': 70176,
-  '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4': 72626,
   '/course-animations/water-harvesting/flow-roof-rain.mp4': 3828056,
   '/course-animations/water-harvesting/posters/flow-roof-rain.jpg': 342615,
   '/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg': 92145,

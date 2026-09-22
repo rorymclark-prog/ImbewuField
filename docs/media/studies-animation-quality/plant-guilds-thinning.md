@@ -1,5 +1,11 @@
 # Plant Guilds lesson 3 — selected-support thinning
 
+**Held review record:** Rory has not accepted this code-drawn animation. Its
+MP4 and poster are no longer public assets or registered in the learner player.
+The builder and exact hashes remain here only to make the earlier preview
+recoverable. Two later x1 Flow attempts also failed the stump and access-path
+checks; see `flow-x1-attempts-2026-09-22.md`.
+
 Slide 43's English narration and quiz distinguish thinning a selected competing
 support from trimming a branch. The existing slide-27 pruning film leaves its
 support standing, so it could not safely illustrate slide 43. This eight-second

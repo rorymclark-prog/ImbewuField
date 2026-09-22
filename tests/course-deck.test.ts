@@ -118,29 +118,16 @@ test('food forest sheet mulching plays the reviewed Flow hand action once and ho
   assert.equal(clip.playOnce, true);
 });
 
-test('vegetable lesson 1 shows the seed-versus-seedling choice without replaying the unfinished transplant film', () => {
+test('vegetable lesson 1 keeps its still while the unfinished film and unapproved diagram stay out of the player', () => {
   const slides = deckFor('vegetables-staples')!.slides.filter(s => s.lesson === 'vegetables-staples-l1');
   assert.deepEqual(slides.map(s => s.slide), [4, 5, 6, 7]);
-  const clip = animationUrls('vegetables-staples', 6);
-  assert.ok(clip);
-  assert.equal(clip.video, '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4');
-  assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg');
-  assert.equal(clip.seconds, 7);
-  assert.equal(clip.playOnce, true);
-  assert.ok(onDisk(clip.video));
-  assert.ok(onDisk(clip.poster));
+  assert.equal(animationUrls('vegetables-staples', 6), null);
 });
 
-test('vegetable pest lesson keeps its conditional treatment safeguard visible after the decision path', () => {
+test('vegetable pest lesson keeps its still while the unapproved decision animation stays out of the player', () => {
   const slides = deckFor('vegetables-staples')!.slides.filter(s => s.lesson === 'vegetables-staples-l4');
   assert.deepEqual(slides.map(s => s.slide), [15, 16]);
-  const clip = animationUrls('vegetables-staples', 16);
-  assert.ok(clip);
-  assert.equal(clip.video, '/course-animations/vegetables-staples/pest-decision-path.mp4');
-  assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/pest-decision-path.jpg');
-  assert.equal(clip.playOnce, true);
-  assert.ok(onDisk(clip.video));
-  assert.ok(onDisk(clip.poster));
+  assert.equal(animationUrls('vegetables-staples', 16), null);
 });
 
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
@@ -278,15 +265,13 @@ test('the guild deck has a real image and matching narration entry for every sli
   }
 });
 
-test('a dedicated whole-support thinning clip keeps the branch-pruning action on its own slide', () => {
+test('whole-support thinning does not reuse branch pruning or an unapproved replacement', () => {
   const deck = deckFor('plant-guilds')!;
   const pruning = deck.slides.find(s => s.title === 'Chop-and-Drop for Light and Mulch' && s.animation);
   assert.ok(pruning?.animation?.src.includes('Pruning-trimmed'));
   const thinning = deck.slides.filter(s => s.title === 'Thin as the Fruit Tree Grows');
   assert.equal(thinning.length, 1);
-  assert.equal(thinning[0].animation?.src, 'thin-selected-support', 'show removal of the selected support, not another branch cut');
-  assert.equal(thinning[0].animation?.playOnce, true, 'hold the open-space result through the rest of the narration');
-  assert.notEqual(thinning[0].animation?.src, pruning?.animation?.src);
+  assert.equal(thinning[0].animation, undefined, 'keep the still until a whole-support Flow result passes review');
 });
 
 test('carried prunings play with the slide that describes carrying them, after the open-edge decision', () => {

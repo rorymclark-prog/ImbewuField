@@ -306,6 +306,38 @@ test('vegetable lesson 1 retires only the unfinished planting movie while preser
   assert.doesNotMatch(body, /\bfetch\(/, 'migration must not use a learner’s airtime');
 });
 
+test('unapproved code-drawn lesson animations leave saved packs without disturbing reviewed media', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateUnapprovedStudyAnimations\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateUnapprovedStudyAnimations\)/);
+  const changed = [
+    '/course-animations/plant-guilds/thin-selected-support.mp4',
+    '/course-animations/plant-guilds/posters/thin-selected-support.jpg',
+    '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4',
+    '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg',
+    '/course-animations/vegetables-staples/pest-decision-path.mp4',
+    '/course-animations/vegetables-staples/posters/pest-decision-path.jpg',
+  ];
+  const keep = '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4';
+  const rows = new Map([...changed, keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  assert.equal(rows.has(keep + '?saved=1'), true);
+  assert.equal(rows.has('/course-animations/.unapproved-code-drawn-retired-20260922'), true);
+  rows.set(changed[0] + '?saved=1', new Response('new unapproved preview asset'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new unapproved preview asset');
+  assert.doesNotMatch(body, /\bfetch\(/, 'retirement must not spend a learner’s airtime');
+});
+
 test('the bee hive and blossom clip retires only the old slide 9 movie and poster once', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateBeeHiveAndBlossomMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
