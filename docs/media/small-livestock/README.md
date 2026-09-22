@@ -1,5 +1,13 @@
 # Small Livestock Integration media — 20 September 2026
 
+> **Current-state note, 23 September:** The earlier illustrated-release record
+> below describes authored videos that Rory later held for visual quality.
+> Its slide-14 nutrient-loop MP4/poster are no longer in the public course
+> payload or learner player. The current static diagram also overstates a
+> closed nutrient cycle. See
+> `../studies-animation-quality/small-livestock-l3-lesson-check.md` before
+> reusing any of the older render or verification results.
+
 ## Illustrated-release update
 
 The history below describes the earlier media branch. The current illustrated release supersedes its unchanged-audio and unchanged-content statements: source-backed livestock corrections now update lesson bodies, four quiz claims, English narration and all twenty English recordings. AGY reviewed the narration text; the existing Edge TTS pipeline generated the recordings. Automated word-boundary comparison and full decoding passed; this is not human listening approval.

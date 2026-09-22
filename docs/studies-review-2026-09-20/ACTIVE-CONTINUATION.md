@@ -1,5 +1,22 @@
 # Active Studies continuation — 22 September 2026
 
+## Small Livestock L3 English check (23 September)
+
+Slides 14–18 showed their current stills and English MP3s in the deployed
+390px player. Slide 14's still and audio reopened from the saved 23.7 MB pack
+after an offline browser reload; its code-drawn film remains outside the
+learner player and public payload under Rory's clearance rule. Full-size
+slides 14–15 depict a sealed nutrient circle, while the corrected lesson body
+rightly says bought feed enters and products leave. The source-backed
+coordinated correction packet is
+`docs/media/studies-animation-quality/small-livestock-l3-lesson-check.md`.
+An unregistered static review candidate now illustrates a partial return and
+external feed/product flows, but its smaller labels remain too small at
+390px full-slide fit; it is held for revision in `docs/media/studies-animation-quality/review-candidates/`.
+Protected teaching, stills and audio are unchanged pending Rory's broader
+decision; no new Flow credit or human/veterinary approval is claimed. Farm
+Finance remains excluded.
+
 ## Small Livestock L2 English check (23 September)
 
 Slides 9–13 showed their current media and English MP3s in the deployed
