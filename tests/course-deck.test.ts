@@ -15,6 +15,8 @@ import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
+const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
+const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
 test('sound-off learners get the complete current script, including its final instruction', () => {
@@ -274,6 +276,9 @@ test('Water playback respects language gaps, download choice and the whole anima
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
       fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
     }).outputText };
+    // Node's focused component harness has no CSS-module loader. Styles do not affect these
+    // media event-order assertions, so provide only the imported module's class-name shape here.
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
     return nextLoad(url, context);
   } });
   const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
@@ -327,6 +332,7 @@ test('deck arrows change slides only while the deck itself has plain-key focus',
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
       fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
     }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
     return nextLoad(url, context);
   } });
   const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
@@ -364,6 +370,7 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
       fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
     }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
     return nextLoad(url, context);
   } });
   const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');

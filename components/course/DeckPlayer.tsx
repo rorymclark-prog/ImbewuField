@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import styles from './DeckPlayer.module.css';
 import {
   animationUrls,
   deckFor,
@@ -406,11 +407,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </p>
       )}
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div className={styles.controlStrip}>
         {/* THE PRIMARY ACTION. Everything else on this control strip is for someone who wants to
             steer; this is for someone who wants to be taught. It stays available on every slide,
             so stopping to re-read one and then carrying on is one tap, not a restart. */}
         <button
+          className={styles.playControl}
           onClick={() => setRunning((on) => !on)}
           aria-label={running ? 'Stop the lesson' : 'Play the lesson'}
           style={{
@@ -423,16 +425,18 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {running ? 'Stop' : 'Play lesson'}
         </button>
         <button
+          className={styles.backControl}
           onClick={() => go(-1)}
           disabled={index === 0}
           style={{ padding: '9px 14px', borderRadius: 10, border: `1px solid ${LINE}`, background: PAPER, color: index === 0 ? '#B9AC94' : INK, fontWeight: 700, fontSize: 13, cursor: index === 0 ? 'default' : 'pointer' }}
         >
           ‹ Back
         </button>
-        <div style={{ flex: 1, height: 4, borderRadius: 2, background: LINE, overflow: 'hidden' }}>
+        <div className={styles.progress} style={{ height: 4, borderRadius: 2, background: LINE, overflow: 'hidden' }}>
           <div style={{ width: `${((index + 1) / total) * 100}%`, height: '100%', background: GREEN }} />
         </div>
         <button
+          className={styles.nextControl}
           onClick={() => go(1)}
           disabled={index === total - 1}
           style={{ padding: '9px 14px', borderRadius: 10, border: 'none', background: index === total - 1 ? '#D9D0BC' : GREEN, color: '#fff', fontWeight: 700, fontSize: 13, cursor: index === total - 1 ? 'default' : 'pointer' }}
