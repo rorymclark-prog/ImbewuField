@@ -1,5 +1,12 @@
 # Active Studies continuation — 22 September 2026
 
+> **Current weekly scope:** Rory chose the ten core permaculture modules in
+> English first and explicitly said **do not finish Farm Finance**. The older
+> Finance/Design backlog and narration notes below are history, not the next
+> instruction for this week. Continue one core lesson at a time, preserve the
+> protected-content decisions and Flow/SVG quality boundaries, and defer
+> isiZulu completion to a fluent review cycle.
+
 ## Flow animation pivot and Rory's SVG approval rule
 
 Rory explicitly directed work to Google Flow and requires his clearance before
