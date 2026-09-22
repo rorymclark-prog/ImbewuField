@@ -50,6 +50,12 @@ checked on 22 September; see `FINANCE-F1-NARRATION-REVIEW.md` and its local list
 pack. It remains outside the app pending listening, bookkeeping and learner review.
 The remaining Finance/Design scripts and voice choice are not thereby accepted.
 
+Design D1.1–D1.3 now have short English candidate scripts grounded in the existing
+manuscript and busy-yard case. One D1.1 voice sample is technically checked in a
+local review pack; see `reserve/design/D1-NARRATION-CANDIDATE.md`. None is accepted
+or integrated. The next step is human listening and practitioner/learner review,
+while other unblocked Studies work may continue.
+
 ## Boundaries
 
 No credits spent since the duplicate Quality soil trial. Conservative remaining
