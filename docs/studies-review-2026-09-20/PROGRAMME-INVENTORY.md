@@ -69,10 +69,14 @@ stills or registered videos and shows which candidates remain held.
 ### Current Flow and video work
 
 The current batch uses one eight-second x1 Flow video per prompt to control cost.
-The documented current tally is **6 prompts / 600 Flow credits: 4 rejected and 2
+The documented current tally is **7 prompts / 700 Flow credits: 5 rejected and 2
 accepted as technical candidates**. The sixth, a site-map drawing shot, was
 rejected because its boundary remained open and its marks were ambiguous at phone
-width; Reading the Landscape L4 slide 17 still uses its existing still.
+width; Reading the Landscape L4 slide 17 still uses its existing still. The
+seventh, a Soil Health L1 clod close-up, was held because it does not show the
+narrated two-example comparison and its hands/representation need review;
+slide 5 still uses its split still. Its [current check](../media/studies-animation-quality/soil-l1-current-lesson-check.md)
+records the single x1 request and exact file.
 
 - **Accepted bee Flow:** Small Livestock L2 slide 9,
   `flow-bee-between-blossoms`. It shows one coherent bee moving between adjacent

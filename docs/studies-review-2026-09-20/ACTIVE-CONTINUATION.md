@@ -1,5 +1,19 @@
 # Active Studies continuation — 22 September 2026
 
+## Soil Health L1 English and Flow check (23 September)
+
+Slides 4–8 and their actual stills were inspected in the deployed 390px
+player. Slide 5 and English narration reopened after an offline browser reload
+from the saved 23.0 MB module pack. One verified hand-action gap justified one
+Veo 3.1 Quality 8-second x1 Flow request (100 credits). The continuous clod
+action is visible, but the single dark sample does not carry the narrated
+two-example/multi-clue comparison; an independent full-motion review also
+flagged ambiguous finger contours and unclear Black African portrayal.
+The silent review copy is held under `docs/media/studies-animation-quality/review-candidates/`;
+no learner video was registered. The [current L1 check](../media/studies-animation-quality/soil-l1-current-lesson-check.md)
+records the source and technical limits. No further Flow request was made,
+and Farm Finance remains excluded.
+
 ## Small Livestock L3 English check (23 September)
 
 Slides 14–18 showed their current stills and English MP3s in the deployed

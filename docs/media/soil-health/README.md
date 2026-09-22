@@ -2,6 +2,13 @@
 
 > **Current status — 22 September 2026:** the three locally drawn clips described below were withdrawn from the learner player under Rory’s visual-quality rule. Slide 10 now uses the separately reviewed Flow candidate `flow-build-compost-heap`; slides 5 and 14 use their existing stills. Slide 11 retains `flow-compost-materials`. The production record below is historical, not approval.
 
+> **23 September L1 update:** One x1 Flow clod-inspection shot was generated
+> and held after review because it shows one sample rather than the narrated
+> two-example comparison, and its hands/representation need visual review.
+> It is recoverable only in `../studies-animation-quality/review-candidates/`;
+> slide 5 remains a still. See the
+> [current lesson check](../studies-animation-quality/soil-l1-current-lesson-check.md).
+
 The historical production pass registered twenty English slides and three locally
 authored Watch clips with the existing twenty English recordings. The current
 learner registration is described above. This branch follows Reading the Landscape
