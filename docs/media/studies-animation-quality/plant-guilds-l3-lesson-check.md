@@ -30,4 +30,21 @@ The lesson body, narration and quiz retain the required safeguards: keep trunk a
 
 ## Limits still open
 
-The local phone browser review does not replace a deployed preview or physical-device acceptance. The full new lesson play-through and offline pack refresh still require verification after the preview deploy. A fluent isiZulu reviewer has not accepted the narration or the language-neutral visual pairing. Farmer, facilitator and practitioner review of thinning, mulch placement, access and regrowth teaching remains open.
+The preview at `https://imbewufield-studies-animation-direction.vercel.app/samples`
+reports build `f7280d7`; its MP4 and poster bytes match the documented hashes.
+At 390px in the deployed Student lesson, slide 43's video loaded with
+`readyState=4`, no media error, `loop=false` and `ended=true`, retaining its
+last frame. Slide 44 had no carry video; slide 45 offered the existing carry
+clip. The 120-file Plant Guilds pack reported **On this phone · 60.7 MB** after
+the two new assets were downloaded. With browser network disabled, the Student
+page reopened, and slide 43's saved MP4 and English audio loaded to
+`readyState=4` without a media error; Cache Storage returned 200 for the MP4.
+Slide 45's moved carry MP4 and English audio also loaded to `readyState=4`
+offline. Network was restored afterward. The complete English 37–47 player
+had reached its end on the prior deployed build; the changed slides and media
+were rechecked on this build. This remains a browser-profile check rather than
+physical-device acceptance.
+
+A fluent isiZulu reviewer has not accepted the narration or the language-neutral
+visual pairing. Farmer, facilitator and practitioner review of thinning, mulch
+placement, access and regrowth teaching remains open.

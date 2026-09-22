@@ -12,10 +12,14 @@ inspected in the local 390px Student player; no new species or figures were
 added. The source, builder, hashes and review limits are in
 `docs/media/studies-animation-quality/plant-guilds-thinning.md` and
 `plant-guilds-l3-lesson-check.md`. Local typecheck, 3,694 passing tests with
-zero failures and one existing TODO, and whitespace check are clean. Next:
-publish one coherent preview batch, inspect BOTH exact-head CI jobs and preview,
-then review the deployed lesson and offline pack. Human, fluent isiZulu,
-farmer/facilitator and practitioner acceptance remain open.
+zero failures and one existing TODO, and whitespace check are clean. The
+preview batch is published at `f7280d70`:
+test and rules jobs succeeded in run 35754313661 and preview in 35754313629;
+build-info and both asset hashes match. The deployed 390px clip played and held,
+and the 120-file pack reopened offline with slide 43/45 videos and English audio
+at `readyState=4`. Human, fluent isiZulu, farmer/facilitator and practitioner
+acceptance remain open. Food Forest lesson 1 audit found no new animation gap;
+its existing seven-layer tour is under root UI review before moving to lesson 2.
 
 Rory explicitly renewed sustained work after the previous response stopped overnight.
 Continue authorised work across coherent lessons and units. Do not stop at another
