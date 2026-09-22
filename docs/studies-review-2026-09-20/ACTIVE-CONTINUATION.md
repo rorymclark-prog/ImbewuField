@@ -1,5 +1,20 @@
 # Active Studies continuation — 22 September 2026
 
+## Food Forest Design L2 English check (23 September)
+
+Slides 9–13 showed their current stills and matching English narration in the
+deployed 390px player. Slide 10's locally drawn climate animation remains held
+outside the player pending Rory's visual clearance; the “Watch” title is a
+historical mismatch on the still. Its small secondary text, and the regional
+examples on slides 11–12, are hard to read at phone fit size. The saved module
+pack reopened slide 10 offline and its MP3 advanced while the browser showed
+Offline. The source review found the site, legal and natural-grassland
+safeguards intact; “Climate decides which species belong” is a low-severity
+overstatement proposed for a future coordinated protected edit. See
+`docs/media/studies-animation-quality/food-forest-l2-lesson-check.md` for
+evidence. No protected teaching changed, no Flow credit was spent, and no
+human/practitioner approval is claimed. Farm Finance remains excluded.
+
 ## Latest checkpoint — Water Harvesting L1 media hold (23 September)
 
 The English Water L1 swale and overflow clips on slides 4 and 7 have been
