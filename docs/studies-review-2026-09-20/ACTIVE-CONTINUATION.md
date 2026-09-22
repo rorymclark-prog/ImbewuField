@@ -293,6 +293,27 @@ lesson reached its end. The 11.4 MB module pack reported saved after an offline
 reload; slide-6 video/poster/audio were in the course cache and video/audio
 loaded without error offline. See `vegetables-l1-lesson-check.md` and
 `vegetables-seed-or-seedling-choice.md` under the media quality directory.
-The new lesson batch still needs exact-head CI and deployed-preview inspection
-before Rory can review it. Human, fluent isiZulu, practitioner and learner
-reviews remain open.
+The exact-head `0f505fea` passed both `test` and `rules` in runs 35729261222
+and 35729257729, and preview run 35729257853 succeeded. The stable Student
+sample reported that build identity; deployed video/poster hashes matched the
+checked-in files. At 390px in the deployed sample, slide 6's Watch movie
+loaded, played seven seconds and held its last frame without a media error.
+Issue #35 records the review route. Human, fluent isiZulu, practitioner and
+learner reviews remain open.
+
+Vegetables lesson 2 (module slides 8–11) then played to its end in the deployed
+390px English Student sample. All four existing stills were inspected; their
+relationship to succession and intercropping is adequate without a new movie.
+The unpublished isiZulu draft has material stronger claims on slides 8–11,
+including a harvest-timing guarantee and a no-competition implication. They
+require fluent correction against the protected English script before any
+localized release. See `docs/media/studies-animation-quality/vegetables-l2-lesson-check.md`.
+The currently deployed English preview already contains lesson 2; the technical
+review did not change learner-facing code or media.
+
+Vegetables lesson 3 (slides 12–14) also completed an English player run at
+390px in that deployed preview. Its three stills and infographic support the
+existing lesson without a new Watch movie. The source check flags the need to
+keep sweet-potato drought tolerance conditional on crop stage and local
+conditions. See `docs/media/studies-animation-quality/vegetables-l3-lesson-check.md`.
+Human listening, crop-practice, fluent isiZulu and learner reviews remain open.
