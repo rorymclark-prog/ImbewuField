@@ -3,16 +3,18 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 845 files, 344.6 MB total.
+// 850 files, 354.2 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
   '/course-animations/food-forest/posters/flow-sheet-mulching.jpg': 474783,
+  '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg': 64763,
   '/course-animations/food-forest/posters/tour-seven-layers.jpg': 839420,
   '/course-animations/food-forest/posters/tour-young-forest.jpg': 818287,
   '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 141628,
   '/course-animations/food-forest/posters/watch-10-climate-match.jpg': 152349,
   '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg': 143974,
+  '/course-animations/food-forest/sheet-mulching-layer-order.mp4': 8265843,
   '/course-animations/food-forest/tour-seven-layers.mp4': 7425984,
   '/course-animations/food-forest/tour-young-forest.mp4': 6436310,
   '/course-animations/food-forest/watch-05-seven-layers.mp4': 222959,
@@ -95,9 +97,11 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/seeds-sovereignty/posters/seed-selecting-parents.jpg': 52099,
   '/course-animations/seeds-sovereignty/seed-dry-processing.mp4': 311237,
   '/course-animations/seeds-sovereignty/seed-selecting-parents.mp4': 248394,
+  '/course-animations/small-livestock/bee-hive-and-blossom.mp4': 1330202,
   '/course-animations/small-livestock/flow-ducks-understorey.mp4': 7613902,
   '/course-animations/small-livestock/flow-hens-foraging.mp4': 5064928,
   '/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4': 5058477,
+  '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg': 91884,
   '/course-animations/small-livestock/posters/flow-ducks-understorey.jpg': 460807,
   '/course-animations/small-livestock/posters/flow-hens-foraging.jpg': 391735,
   '/course-animations/small-livestock/posters/hens-pecking-pexels-5563939.jpg': 227468,
@@ -107,8 +111,6 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-animations/small-livestock/watch-04-chicken-tractor.mp4': 207078,
   '/course-animations/small-livestock/watch-09-bee-pollination.mp4': 116723,
   '/course-animations/small-livestock/watch-14-nutrient-loop.mp4': 161586,
-  '/course-animations/small-livestock/bee-hive-and-blossom.mp4': 1330202,
-  '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg': 91884,
   '/course-animations/soil-health/flow-compost-materials.mp4': 4290981,
   '/course-animations/soil-health/posters/flow-compost-materials.jpg': 433066,
   '/course-animations/soil-health/posters/tour-soil-observation.jpg': 701546,
@@ -803,6 +805,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-images/food-forest/food-forest-l1.jpg': 466047,
   '/course-images/food-forest/food-forest-l2.jpg': 245107,
   '/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg': 302363,
+  '/course-images/food-forest/food-forest-l3.jpg': 243520,
   '/course-images/intro-permaculture/intro-permaculture-l1.jpg': 61072,
   '/course-images/intro-permaculture/intro-permaculture-l2.jpg': 85271,
   '/course-images/intro-permaculture/intro-permaculture-l3.jpg': 133192,

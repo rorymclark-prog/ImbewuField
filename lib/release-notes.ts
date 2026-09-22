@@ -42,6 +42,21 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '34de2ca4', changes: [
+    'In Food Forest lesson 3, see mulch cover cardboard after the filmed setup.',
+    'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',
+    'In Small Livestock, watch hens forage and a bee visit a blossom.',
+    'In Farm Finance lesson 2, follow sales, cash and money owed across the source cards.',
+  ], tour: [
+    { title: 'See the mulch layer', where: 'Studies → Food Forest → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view slide 16.' },
+    { title: 'Read greywater slides', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen; enlarge a still or watch the labelled greywater route.' },
+    { title: 'Watch the livestock clips', where: 'Studies → Small Livestock → lessons 1 and 2', href: '/student',
+      detail: 'Open Watch and listen to see the hens and bee scenes.' },
+    { title: 'Follow the finance cards', where: 'Studies → Farm Finance → lesson 2', href: '/student/finance',
+      detail: 'Use Next card to see how a sale, cash and a later payment differ.' },
+  ] },
   { when: '22 September 2026', sha: '5c606c8a', changes: [
     'The Take a tour garden photo on Home now stays fully visible.',
   ], tour: [

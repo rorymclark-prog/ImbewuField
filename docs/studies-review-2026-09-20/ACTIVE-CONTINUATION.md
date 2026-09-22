@@ -247,3 +247,22 @@ so the existing full-size image link has been extended to still slides; slide
 4's 1920×1080 asset opened and zoomed in the browser. Evidence and open
 acceptance gates are in `docs/media/studies-animation-quality/water-l4-lesson-check.md`.
 Do not move on to another lesson until the unit's latest preview is checked.
+
+## Food Forest lesson 3 candidate — 22 September
+
+After the Water lesson 4 preview and exact-head CI were checked, work moved to
+Food Forest lesson 3 (module slides 14–18). The earlier note above correctly
+describes the original slide-16 Flow source: it stops with broad exposed
+cardboard. A zero-credit composition now retains that eight-second setup and
+adds five seconds of clearly labelled illustration showing loose mulch above
+cardboard on soil. The original source remains intact. A deterministic local
+rerender matched the candidate MP4 and poster SHA-256 hashes exactly.
+
+At 390px in the local app, the five-slide English lesson reached its end; the
+new 13-second video finished once and held the final layer diagram while the
+longer slide-16 narration continued. The 34.6 MB Food Forest pack reported
+saved after an offline reload. In that offline browser, the lesson reopened and
+slide-16 video and audio both loaded and played from saved media. Details and
+limits: `docs/media/studies-animation-quality/food-forest-l3-lesson-check.md`.
+This is a review candidate until its exact-head preview and both CI jobs pass.
+It does not imply Rory, fluent isiZulu, practitioner or learner acceptance.

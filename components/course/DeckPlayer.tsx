@@ -316,7 +316,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             src={anim.video}
             poster={anim.poster}
             autoPlay
-            loop={!(running || (timedTour && timedVoiceActive))}
+            loop={!(anim.playOnce || running || (timedTour && timedVoiceActive))}
             muted
             playsInline
             controls={!(timedTour && (running || timedVoiceActive))}

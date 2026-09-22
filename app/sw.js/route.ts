@@ -409,6 +409,22 @@ async function migrateForestMulchInfographic() {
   await cache.put(marker, new Response('Corrected food forest mulch layer still'));
 }
 
+// The older slide-16 movie stops with cardboard exposed. Retire only its saved movie and poster;
+// the replacement stays opt-in, because downloading teaching media is the learner's decision.
+async function migrateForestSheetMulchingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/food-forest/.sheet-mulching-layer-order-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/food-forest/flow-sheet-mulching.mp4',
+    '/course-animations/food-forest/posters/flow-sheet-mulching.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Food forest sheet mulch layer-order composite'));
+}
+
 // Slide 9 now pairs the hive-to-crops diagram with a recovered Flow flower-contact macro.
 // Remove only the superseded saved movie and poster once; never refetch the replacement.
 async function migrateBeeHiveAndBlossomMedia() {
@@ -489,7 +505,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

@@ -33,6 +33,8 @@ export interface DeckAnimation {
   aspectRatio?: number;
   /** Authored against this slide's narration word timings; follow its playhead. */
   narrationTimed?: boolean;
+  /** Let a self-contained teaching sequence hold its final state after a manual Watch. */
+  playOnce?: boolean;
   /** Exact text-labelled variants; wordless clips share their base asset. */
   byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
 }
@@ -212,7 +214,9 @@ const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
-  16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
+  // The source clip stops at exposed cardboard. This composition keeps that setup, then holds
+  // the illustrated layer order so a manual Watch does not loop back to unfinished work.
+  16: { src: 'sheet-mulching-layer-order', poster: 'sheet-mulching-layer-order', bytes: 8265843, seconds: 13, playOnce: true },
   5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100, narrationTimed: true },
   10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
   15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100, narrationTimed: true },
@@ -345,7 +349,7 @@ export function slideImageFor(
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
-export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean } | null {
+export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean; playOnce?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
   if (!base) return null;
   const a = base.byLang?.[lang] ?? base;
@@ -356,6 +360,7 @@ export function animationUrls(moduleId: string, slide: number, lang = 'en'): { v
     seconds: a.seconds,
     ...(a.aspectRatio ? { aspectRatio: a.aspectRatio } : {}),
     ...(a.narrationTimed ? { narrationTimed: true } : {}),
+    ...(a.playOnce ? { playOnce: true } : {}),
   };
 }
 

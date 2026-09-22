@@ -109,6 +109,15 @@ test('a slide with no animation offers none — the still is the lesson', () => 
   assert.ok(animationUrls('seeds-sovereignty', 5));
 });
 
+test('food forest sheet mulching plays once so its illustrated layer order can remain visible', () => {
+  const clip = animationUrls('food-forest', 16);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/food-forest/sheet-mulching-layer-order.mp4');
+  assert.equal(clip.poster, '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg');
+  assert.equal(clip.seconds, 13);
+  assert.equal(clip.playOnce, true);
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of
