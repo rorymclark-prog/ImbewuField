@@ -22,6 +22,20 @@ movies/posters were absent from the course cache after migration. This is a
 verified media hold, not content, human-listening or practitioner clearance.
 Farm Finance remains excluded.
 
+## Water Harvesting L2 English check (23 September)
+
+Slides 10–13 loaded their existing stills and English MP3s in the deployed
+390px player; slide 12 reopened from the saved Water pack after an offline
+reload. Its archived code-drawn dam/spillway clip is absent from the player
+and remains held for Rory's visual clearance. The slide 12 still and
+narration say to size a dam to the catchment area, while the lesson body
+correctly calls for qualified investigation of the site, foundations,
+downstream risk and spillway. The exact narrow matched correction proposal
+and FAO source are in
+`docs/media/studies-animation-quality/water-l2-lesson-check.md`. Protected
+teaching assets are unchanged pending Rory's broader correction decision;
+human and practitioner approval are not claimed. No Flow credit was spent.
+
 > **Current weekly scope:** Rory chose the ten core permaculture modules in
 > English first and explicitly said **do not finish Farm Finance**. The older
 > Finance/Design backlog and narration notes below are history, not the next
