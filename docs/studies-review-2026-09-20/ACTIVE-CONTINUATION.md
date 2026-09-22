@@ -159,3 +159,12 @@ so a verified new action or coordinated lesson/media decision is needed.
 F2.1–F2.3 now have a concise English narration review copy drawn from the
 existing embedded drafts. No voice asset or app narration was added. Local
 bookkeeping, learner, human listening and fluent isiZulu review remain open.
+
+Market Gardening lesson 1 slide 4's record labels proved unreadable in the
+390px lesson player. The registered poster is a complete 1280×720 record
+diagram, so the deck now offers an on-demand full-size still link on animation
+slides. In the actual 390px local sample player, the link opened that asset in
+a separate browser tab; tapping the image expanded it to its natural width for
+panning, and opening it paused the playing movie. The lesson text and media
+bytes were not changed. This improves inspection of dense diagrams; it is not
+learner approval of the animation or its teaching.
