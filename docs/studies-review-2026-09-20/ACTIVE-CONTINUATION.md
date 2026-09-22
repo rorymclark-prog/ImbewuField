@@ -615,3 +615,13 @@ review found overbroad sun-path and frost-pooling statements, an unsupported
 narration and slide 11 text. The exact hold and primary-source boundaries are
 in `docs/media/studies-animation-quality/reading-landscape-l2-lesson-check.md`.
 No protected content changed and no Flow credit was spent.
+
+Reading the Landscape lesson 3 (slides 12–15) has completed the deployed
+390 px English player and saved-pack offline checks for slide 13/14 stills and
+MP3s. The withdrawn code-drawn slide 13 movie remains absent. Source review
+holds regional wind directions, a universal valley-frost timing claim, the
+frost-sensitive nursery siting quiz and overcertain late-blight advice. See
+`docs/media/studies-animation-quality/reading-landscape-l3-lesson-check.md`.
+An exact proposed correction is in
+`docs/media/studies-animation-quality/reading-landscape-l3-source-correction-proposal.md`.
+Protected content remains unchanged, and no Flow credit was spent.
