@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '22 September 2026', sha: '34de2ca4', changes: [
+  { when: '22 September 2026', sha: '26472a11', changes: [
     'In Food Forest lesson 3, see mulch cover cardboard after the filmed setup.',
     'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',
     'In Small Livestock, watch hens forage and a bee visit a blossom.',
