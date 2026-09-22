@@ -267,7 +267,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   return (
     <Link
       href={href}
-      className="flex items-center gap-4"
+      className="home-next-step flex items-center gap-4"
       style={{
         minHeight: 92,
         padding: '16px 18px',
@@ -290,7 +290,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
         </div>
       </div>
       <span
-        className="flex items-center justify-center flex-shrink-0"
+        className="home-next-step-arrow flex items-center justify-center flex-shrink-0"
         style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: '#F7F2E9', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
       >
         <ChevronRight size={20} strokeWidth={2} />
@@ -435,10 +435,24 @@ function HomeLandingInner() {
           .home-quick-link:hover > div:first-child { transform: scale(1.12) rotate(-3deg); }
         }
         .home-quick-link:active { transform: scale(0.97); }
+        .home-quick-link:focus-visible, .home-next-step:focus-visible, .home-tour-card:focus-visible { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
+        .home-next-step { transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; }
+        .home-next-step-arrow { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+        .home-tour-card { overflow: hidden; transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; }
+        .home-tour-card img { transition: transform 350ms cubic-bezier(0.16,1,0.3,1); }
+        @media (hover: hover) {
+          .home-next-step:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.6) !important; box-shadow: 0 12px 24px -15px rgba(83,52,18,0.5) !important; }
+          .home-next-step:hover .home-next-step-arrow { transform: translateX(5px); }
+          .home-tour-card:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.8) !important; box-shadow: 0 12px 26px rgba(83,52,18,0.12); }
+          .home-tour-card:hover img { transform: scale(1.035); }
+        }
+        .home-next-step:active, .home-tour-card:active { transform: scale(0.985); }
         @media (prefers-reduced-motion: reduce) {
           .home-quick-link { animation: none; transition: none; }
           .home-quick-link > div:first-child { transition: none; }
           .home-quick-link:hover, .home-quick-link:active, .home-quick-link:hover > div:first-child { transform: none; }
+          .home-next-step, .home-next-step-arrow, .home-tour-card, .home-tour-card img { transition: none; }
+          .home-next-step:hover, .home-next-step:active, .home-next-step:hover .home-next-step-arrow, .home-tour-card:hover, .home-tour-card:active, .home-tour-card:hover img { transform: none; }
         }
         .home-priority-grid,
         .home-priority-primary,
@@ -512,6 +526,7 @@ function HomeLandingInner() {
             it never reads or writes any real farmer's saved data. ── */}
         {showTourInvitation && <button
           type="button"
+          className="home-tour-card"
           onClick={() => router.push('/tour')}
           style={{
             display: 'grid',

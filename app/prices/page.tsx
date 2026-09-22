@@ -52,6 +52,23 @@ export default function PricesPage() {
       </header>
 
       <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+        <style jsx global>{`
+          .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
+          .imf-price-crop img, .imf-price-crop > span:first-child { transition: transform 220ms cubic-bezier(.16,1,.3,1); }
+          .imf-price-crop:focus-visible { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
+          @media (hover: hover) {
+            .imf-price-crop:hover { transform: translateY(-4px); box-shadow: 0 9px 20px rgba(31,77,43,.12); border-color: #1F4D2B !important; }
+            .imf-price-crop:hover img, .imf-price-crop:hover > span:first-child { transform: scale(1.18) rotate(-5deg); }
+          }
+          .imf-price-crop:active { transform: scale(.96); }
+          @keyframes imfPriceDetailEnter { from { opacity: 0; transform: translateY(10px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+          .imf-price-detail-enter { animation: imfPriceDetailEnter 280ms cubic-bezier(.16,1,.3,1) both; }
+          @media (prefers-reduced-motion: reduce) {
+            .imf-price-crop, .imf-price-crop img, .imf-price-crop > span:first-child { transition: none; }
+            .imf-price-crop:hover, .imf-price-crop:active, .imf-price-crop:hover img, .imf-price-crop:hover > span:first-child { transform: none; }
+            .imf-price-detail-enter { animation: none; }
+          }
+        `}</style>
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
@@ -64,7 +81,7 @@ export default function PricesPage() {
                   type="button"
                   onClick={() => setSelectedKey(crop.key)}
                   aria-pressed={selectedKey === crop.key}
-                  className="flex flex-col items-center justify-center gap-2 rounded-2xl text-center"
+                  className="imf-price-crop flex flex-col items-center justify-center gap-2 rounded-2xl text-center"
                   style={{
                     minHeight: 92,
                     padding: '14px 8px',
@@ -89,7 +106,7 @@ export default function PricesPage() {
             </div>
           </div>
           {selected && (
-            <div className={workspace.priceDetail}>
+            <div key={selected.key} className={`${workspace.priceDetail} imf-price-detail-enter`}>
               <CropPriceDetail crop={selected} onChangeCrop={() => setSelectedKey(null)} />
             </div>
           )}
