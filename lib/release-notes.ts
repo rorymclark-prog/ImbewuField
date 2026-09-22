@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '95b54854', changes: [
+    'In Plant Guilds lesson 3, watch a support plant be thinned and useful cuttings carried.',
+  ], tour: [
+    { title: 'Watch the guild change', where: 'Studies → Plant Selection & Guilds → lesson 3', href: '/student',
+      detail: 'Open Watch and listen; view slides 43 and 45.' },
+  ] },
   { when: '22 September 2026', sha: '77c12ea9', changes: [
     'In Vegetables lesson 4, follow the pest-check steps before choosing an action.',
   ], tour: [

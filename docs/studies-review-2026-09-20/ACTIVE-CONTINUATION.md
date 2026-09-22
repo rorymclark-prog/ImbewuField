@@ -1,5 +1,22 @@
 # Active Studies continuation — 22 September 2026
 
+## Latest checkpoint — Plant Guilds lesson 3
+
+Plant Guilds lessons 1 and 2 already have complete lesson checks on this branch;
+their exact-head test and rules jobs passed. For lesson 3 (slides 37–47), the
+deployed English 390px player ran from first to last slide before the new media
+change. A controlled, zero-Flow-credit eight-second diagram now fills slide
+43's whole-support thinning gap, and the existing carry clip moves from slide
+44 to 45 to match its narration. The new clip and final held frame were
+inspected in the local 390px Student player; no new species or figures were
+added. The source, builder, hashes and review limits are in
+`docs/media/studies-animation-quality/plant-guilds-thinning.md` and
+`plant-guilds-l3-lesson-check.md`. Local typecheck, 3,694 passing tests with
+zero failures and one existing TODO, and whitespace check are clean. Next:
+publish one coherent preview batch, inspect BOTH exact-head CI jobs and preview,
+then review the deployed lesson and offline pack. Human, fluent isiZulu,
+farmer/facilitator and practitioner acceptance remain open.
+
 Rory explicitly renewed sustained work after the previous response stopped overnight.
 Continue authorised work across coherent lessons and units. Do not stop at another
 planning/report-only checkpoint. Save intended changes about every ten minutes;

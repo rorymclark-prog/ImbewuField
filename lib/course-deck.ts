@@ -161,7 +161,13 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
     "bytes": 3900208,
     "seconds": 8.0
   },
-  "44": {
+  // Slide 43 removes a selected whole support above ground; the older pruning film leaves it standing.
+  "43": {
+    src: 'thin-selected-support', poster: 'thin-selected-support', bytes: 48_896, seconds: 8,
+    playOnce: true,
+    byLang: { zu: { src: 'thin-selected-support', poster: 'thin-selected-support', bytes: 48_896, seconds: 8, playOnce: true } },
+  },
+  "45": {
     byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
     "poster": "Imbewu-Guilds-08-Succession-carry-mulch",

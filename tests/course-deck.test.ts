@@ -278,13 +278,20 @@ test('the guild deck has a real image and matching narration entry for every sli
   }
 });
 
-test('the branch-pruning clip is not presented as whole-plant thinning', () => {
+test('a dedicated whole-support thinning clip keeps the branch-pruning action on its own slide', () => {
   const deck = deckFor('plant-guilds')!;
   const pruning = deck.slides.find(s => s.title === 'Chop-and-Drop for Light and Mulch' && s.animation);
   assert.ok(pruning?.animation?.src.includes('Pruning-trimmed'));
   const thinning = deck.slides.filter(s => s.title === 'Thin as the Fruit Tree Grows');
   assert.equal(thinning.length, 1);
-  assert.equal(thinning[0].animation, undefined, 'do not reuse the branch cut to claim a whole plant was removed');
+  assert.equal(thinning[0].animation?.src, 'thin-selected-support', 'show removal of the selected support, not another branch cut');
+  assert.equal(thinning[0].animation?.playOnce, true, 'hold the open-space result through the rest of the narration');
+  assert.notEqual(thinning[0].animation?.src, pruning?.animation?.src);
+});
+
+test('carried prunings play with the slide that describes carrying them, after the open-edge decision', () => {
+  assert.equal(animationUrls('plant-guilds', 44), null);
+  assert.match(animationUrls('plant-guilds', 45)!.video, /Succession-carry-mulch/);
 });
 
 test('isiZulu guild slides, audio and labelled video are delivered in the selected language', () => {

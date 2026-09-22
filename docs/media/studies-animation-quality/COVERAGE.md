@@ -4,7 +4,7 @@ Prepared from `lib/course-deck.ts`, `lib/course-audio.ts`, the reserve curriculu
 index and lesson files, `lib/course-finance-content.json`,
 `lib/course-design-content.json`, and `reserve/app-companions/README.md`.
 
-This register has **157 coverage records**: 50 registered core animation slots +
+This register has **158 coverage records**: 51 registered core animation slots +
 51 reserve draft lessons + 24 Finance lessons + 18 Design lessons + 14 app
 companions. A record is a review and production-planning unit. It is **not** a
 video, a completed lesson, an accepted shot, or an order to make media. In
@@ -57,7 +57,7 @@ members sharing dry seeds**. The relevant existing project locations are
 soil trial and older Fast candidate require direct side-by-side pedagogical and
 physical-mechanism review; neither is a reason to place another order.
 
-## Core registered slots — 50 records
+## Core registered slots — 51 records
 
 | # | Module | Lesson ID | Slide | Title | Registered `src` | Planned treatment / hold |
 | ---: | --- | --- | ---: | --- | --- | --- |
@@ -102,15 +102,16 @@ physical-mechanism review; neither is a reason to place another order.
 | 39 | Plant Guilds | plant-guilds-l2 | 33 | Observe Helpful Insects | `Imbewu-Guilds-04-Helpful-insects` | Retain and review; no pest-control guarantee. |
 | 40 | Plant Guilds | plant-guilds-l3 | 37 | Bring the Jobs Together | `Imbewu-Guilds-05-Guild-overview` | Retain and review; authored relationship overlay where needed. |
 | 41 | Plant Guilds | plant-guilds-l3 | 41 | First, Establish the Guild | `Imbewu-Guilds-06-Succession-establish` | Retain and review; no instant growth or universal succession. |
-| 42 | Plant Guilds | plant-guilds-l3 | 44 | Move Support Into the Light | `Imbewu-Guilds-08-Succession-carry-mulch` | Retain and review; conditional Flow only for one stable carry action. |
-| 43 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 5 | Watch: Open-Pollinated Seed and F1 Seed | `imbewu_isiZulu_video_01` | Retain and review; authored comparison labels stay outside video. |
-| 44 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 7 | Watch: Household Seed Network | `imbewu_isiZulu_video_02` | Retain and review; no claim beyond observed exchange. |
-| 45 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 8 | Select Several Parent Plants | `seed-selecting-parents` | Retain and review exact cut; selection precedes processing. |
-| 46 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 10 | Watch: Self-Pollination and Crossing | `imbewu_isiZulu_video_03` | Authored precise diagram: visible mechanism, no invented genetics claim. |
-| 47 | Seeds and Seed Sovereignty | seeds-sovereignty-l2 | 13 | Watch: Dry Processing | `seed-dry-processing` | Retain and review exact dry-method cut. |
-| 48 | Seeds and Seed Sovereignty | seeds-sovereignty-l2 | 15 | Watch: Wet Processing for Tomato Seed | `imbewu_isiZulu_video_05` | Retain and review; retain wet-method sequence. |
-| 49 | Seeds and Seed Sovereignty | seeds-sovereignty-l3 | 18 | Protect Seed from Heat, Light and Moisture | `new_seed-storage-jar-vs-bag` | Retain and review; authored comparison, no new storage figure. |
-| 50 | Seeds and Seed Sovereignty | seeds-sovereignty-l3 | 21 | Watch: Ten-Seed Germination Test | `imbewu_isiZulu_video_06` | Retain and review; preserve the exact ten-seed teaching action. |
+| 42 | Plant Guilds | plant-guilds-l3 | 43 | Thin as the Fruit Tree Grows | `thin-selected-support` | Eight-second authored, language-free diagram: one selected whole support is cut to a stump, with roots remaining and later light/moisture/regrowth checks. No instant result or universal cut prescription. See `plant-guilds-thinning.md`. |
+| 43 | Plant Guilds | plant-guilds-l3 | 45 | Move Support Into the Light | `Imbewu-Guilds-08-Succession-carry-mulch` | Existing carry clip moved from slide 44: slide 45 narration actually describes carrying useful prunings back to established trees. |
+| 44 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 5 | Watch: Open-Pollinated Seed and F1 Seed | `imbewu_isiZulu_video_01` | Retain and review; authored comparison labels stay outside video. |
+| 45 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 7 | Watch: Household Seed Network | `imbewu_isiZulu_video_02` | Retain and review; no claim beyond observed exchange. |
+| 46 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 8 | Select Several Parent Plants | `seed-selecting-parents` | Retain and review exact cut; selection precedes processing. |
+| 47 | Seeds and Seed Sovereignty | seeds-sovereignty-l1 | 10 | Watch: Self-Pollination and Crossing | `imbewu_isiZulu_video_03` | Authored precise diagram: visible mechanism, no invented genetics claim. |
+| 48 | Seeds and Seed Sovereignty | seeds-sovereignty-l2 | 13 | Watch: Dry Processing | `seed-dry-processing` | Retain and review exact dry-method cut. |
+| 49 | Seeds and Seed Sovereignty | seeds-sovereignty-l2 | 15 | Watch: Wet Processing for Tomato Seed | `imbewu_isiZulu_video_05` | Retain and review; retain wet-method sequence. |
+| 50 | Seeds and Seed Sovereignty | seeds-sovereignty-l3 | 18 | Protect Seed from Heat, Light and Moisture | `new_seed-storage-jar-vs-bag` | Retain and review; authored comparison, no new storage figure. |
+| 51 | Seeds and Seed Sovereignty | seeds-sovereignty-l3 | 21 | Watch: Ten-Seed Germination Test | `imbewu_isiZulu_video_06` | Retain and review; preserve the exact ten-seed teaching action. |
 
 ## Reserve curriculum — 51 records
 
