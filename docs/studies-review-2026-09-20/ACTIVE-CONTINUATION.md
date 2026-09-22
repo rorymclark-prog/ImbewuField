@@ -168,3 +168,17 @@ a separate browser tab; tapping the image expanded it to its natural width for
 panning, and opening it paused the playing movie. The lesson text and media
 bytes were not changed. This improves inspection of dense diagrams; it is not
 learner approval of the animation or its teaching.
+
+Reading the Landscape slide 6's A-frame film has now been checked through its
+full six seconds at source and phone width. Its held tool and plumb line are
+coherent, but it shows neither reversal calibration nor successive contour
+marks. The existing text, quiz and audio claims about speed, survey and
+earthworks remain a coordinated correction, not a visual fix. The fact-check
+follow-up records this media limit and the primary-source boundary.
+
+Food Forest lesson 3 slide 16's sheet-mulching film has a different open media
+gap. The final full-size frame still shows broad exposed cardboard while the
+mulch remains piled beside it; this is also visible at 390px. The eight-second
+loop therefore shows an in-progress setup, not the narrated cardboard-under-
+mulch result. The clip was left unchanged rather than passing an incomplete
+action as a finished demonstration.
