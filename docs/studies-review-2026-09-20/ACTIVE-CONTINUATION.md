@@ -585,3 +585,15 @@ site-observed condition is needed. Exact primary-source boundaries and media
 evidence are in `docs/media/studies-animation-quality/intro-l3-lesson-check.md`.
 The pending English core correction decision also covers this lesson. Farm
 Finance stays outside this week's completion scope.
+
+Reading the Landscape lesson 1 (slides 4–7) also passed a deployed 390 px
+English play-through. The existing six-second A-frame Flow clip and slide 6
+MP3 played in the live player. A first offline reload lacked its poster because
+this browser had not saved the module; after its 12.2 MB pack was explicitly
+saved, a new offline reload loaded the poster, narration and MP4 to completion.
+The existing A-frame source packet remains in force. Full-size inspection also
+found absolute water-retention/placement claims printed into slides 4 and 7,
+so any authorised correction must update those stills as well as body, quiz,
+transcript and audio. Exact evidence is in
+`docs/media/studies-animation-quality/reading-landscape-l1-lesson-check.md`.
+No protected learner content changed and no Flow credit was spent.
