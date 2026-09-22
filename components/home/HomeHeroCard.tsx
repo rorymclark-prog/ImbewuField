@@ -82,7 +82,28 @@ function HeroEntranceStyle() {
       @keyframes imfProgressReveal { from { transform: scaleX(0); } to { transform: scaleX(1); } }
       .imf-progress-fill { transform-origin: left center; animation: imfProgressReveal 700ms 120ms cubic-bezier(0.16,1,0.3,1) both; transition: width 450ms cubic-bezier(0.16,1,0.3,1); }
       .imf-progress-sprout-wrap { width: 96px; height: 96px; }
-      .imf-progress-sprout-wrap > svg, .imf-progress-sprout-wrap > span { transform: scale(1.2); transform-origin: center; }
+      .imf-progress-sprout-hit, .imf-progress-sprout-static, .imf-progress-sprout-art { position: relative; display: block; width: 100%; height: 100%; }
+      .imf-progress-sprout-hit { padding: 0; border: 0; border-radius: 50%; background: none; cursor: help; }
+      .imf-progress-sprout-hit:focus-visible { outline: 2px solid #F7C97E; outline-offset: 3px; }
+      .imf-progress-sprout-art > svg, .imf-progress-sprout-art > span { transform: scale(1.2); transform-origin: center; transition: transform 230ms cubic-bezier(0.16,1,0.3,1); }
+      .imf-progress-sprout-static .imf-progress-sprout-art > svg, .imf-progress-sprout-static .imf-progress-sprout-art > span { transition: none; }
+      @media (hover: hover) {
+        .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
+      }
+      .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
+      .imf-progress-sprout-help { position: absolute; right: 4px; bottom: 3px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #F7F2E9; color: #1F4D2B; font: 700 13px var(--font-sans, sans-serif); box-shadow: 0 2px 8px rgba(10,25,13,.3); }
+      @keyframes imfSproutHelpCue { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+      .imf-progress-sprout-help { animation: imfSproutHelpCue 480ms 900ms ease-out 1; }
+      .imf-progress-sprout-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; gap: 4px; width: min(260px, calc(100vw - 44px)); padding: 12px 14px; border: 1px solid #D8CFBC; border-radius: 12px; background: #F7F2E9; color: #1F4D2B; box-shadow: 0 12px 28px rgba(10,25,13,.25); font: 13px/1.4 var(--font-sans, sans-serif); opacity: 0; visibility: hidden; transform: translateY(-5px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; pointer-events: none; }
+      .imf-progress-sprout-tip strong { font-weight: 700; }
+      .imf-progress-sprout-tip-status { margin-top: 3px; font-weight: 700; }
+      .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip, .imf-progress-sprout-hit:focus-visible + .imf-progress-sprout-tip { opacity: 1; visibility: visible; transform: translateY(0); }
+      @media (hover: hover) { .imf-progress-sprout-wrap:hover .imf-progress-sprout-tip { opacity: 1; visibility: visible; transform: translateY(0); } }
+      @media (max-width: 899px) {
+        .imf-progress-sprout-wrap[data-open] { height: 235px; }
+        .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-hit { height: 96px; }
+        .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip { top: 104px; }
+      }
       .imf-progress-sprout { width: 100%; height: 100%; flex: none; overflow: visible; }
       @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 128px; height: 128px; } }
       .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
@@ -94,6 +115,9 @@ function HeroEntranceStyle() {
         .imf-hero-settle { animation: none; }
         .imf-progress-fill { animation: none; transition: none; }
         .imf-progress-sprout__growth { animation: none; }
+        .imf-progress-sprout-help { animation: none; }
+        .imf-progress-sprout-art > svg, .imf-progress-sprout-art > span, .imf-progress-sprout-tip { transition: none; }
+        .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.2); }
       }
     `}</style>
   );
@@ -151,7 +175,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
               {t('welcomeHeroTitle')}
             </h2>
           </div>
-          <ProgressSprout completedSteps={0} />
+          <ProgressSprout completedSteps={0} interactive />
         </div>
 
         <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
@@ -203,7 +227,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
               {t('continueSiteTitle').replace('{site}', mainSite.name)}
             </h2>
           </div>
-          <ProgressSprout key={completedSteps} completedSteps={completedSteps} />
+          <ProgressSprout key={completedSteps} completedSteps={completedSteps} totalSteps={progress?.score.steps.length} progressPct={pct} interactive />
         </div>
 
         {pct != null && (
