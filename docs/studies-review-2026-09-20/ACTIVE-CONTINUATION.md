@@ -329,4 +329,9 @@ so all essential instructions sit above the control overlay. See
 after stale development shell caches were removed from the test browser, the
 11.8 MB module pack reached 44/44 saved files. With network disabled the new
 video/poster/audio loaded from cache and the video ended once. Exact-head CI
-and deployed-preview checks remain before this candidate is offered for review.
+and deployed-preview checks then passed at `6fed2ef0`: both `test` and `rules`
+jobs succeeded in runs 35735268511 and 35735261791, and preview run
+35735261839 succeeded. The stable Student sample reported that build identity;
+video/poster hashes matched the checked-in bytes, and the deployed 390px Watch
+clip ended once without a media error. Issue #35 records the review route.
+Human, practitioner, fluent isiZulu and learner acceptance remain open.

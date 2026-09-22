@@ -28,8 +28,12 @@ disabled, the lesson reopened on slide 16; the video and audio both loaded to
 The first attempted incremental save failed because this long-running local
 browser profile hit Cache Storage quota; removing stale development shell
 caches allowed the two new files to save. This is not evidence about a physical
-learner phone's available storage. Exact-head CI and deployed preview inspection
-must still be recorded before offering the updated preview to Rory.
+learner phone's available storage. Exact-head `6fed2ef0` passed `test` and
+`rules` in runs 35735268511 and 35735261791; preview run 35735261839 passed.
+The stable Student sample reported that build SHA, the deployed MP4/poster
+matched the checked-in SHA-256 hashes, and its 390px Watch clip played ten
+seconds, held the safeguard frame and reported no media error. This is a
+technical English playback check, not a physical phone or human acceptance.
 
 The English lesson requires observation and checking water, roots, spacing,
 nutrition and drainage before assuming pest cause. It protects beneficial
