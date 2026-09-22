@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '77c12ea9', changes: [
+    'In Vegetables lesson 4, follow the pest-check steps before choosing an action.',
+  ], tour: [
+    { title: 'Check the pest steps', where: 'Studies → Vegetables and Staple Crops → lesson 4', href: '/student',
+      detail: 'Open Watch and listen, then watch Treat the Cause Before the Insect on slide 2 of 2.' },
+  ] },
   { when: '22 September 2026', sha: 'aff0cc2c', changes: [
     'In Vegetables lesson 1, compare sowing in the bed with starting a seedling in a nursery.',
   ], tour: [
