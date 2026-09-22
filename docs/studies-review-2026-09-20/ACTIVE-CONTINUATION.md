@@ -510,3 +510,23 @@ the lesson body, narration or quiz under the project's protected-content rule.
 Get editorial ownership and practitioner/language review before calling the
 lesson content cleared. The current player has not had a fresh offline or
 physical-device check. No additional Flow credits were used for this check.
+
+## 22 September — Rory's weekly scope and L4 correction
+
+Rory chose an English-first finish for the ten core permaculture modules this
+week. Do not include Farm Finance in this completion pass. Defer isiZulu and
+reserve-course completion; the existing isiZulu drafts require correction against
+the English source and fluent review before publication. Use existing stills for
+held animations while Flow credit is limited. Continue one complete lesson at a
+time and show a deployed preview. Stop work for the week after the English core
+pass and pause the continuation heartbeat then.
+
+Rory explicitly authorized correcting the protected Reading the Landscape L4
+lesson, quiz and narration after the source packet was prepared. The English
+body, key point, quiz answer/rationale, script and generated transcript now
+describe a first sketch as not to scale until its distances are checked, and
+vegetation as an observation that does not prove compaction. Slides 16 and 18
+have new source-matched en-ZA audio, and the combined English narration was
+rebuilt. The old versions are removed from saved course packs without an
+automatic replacement download. Exact checks and remaining preview/offline
+review are in `docs/media/studies-animation-quality/reading-landscape-l4-lesson-check.md`.

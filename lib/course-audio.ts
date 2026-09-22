@@ -122,8 +122,10 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'reading-landscape': {
     languages: ['en'],
-    // 21 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // The original 21 clips were recorded 2026-08-03. Slides 16 and 18 were
+    // re-recorded 2026-09-22 with en-ZA-LukeNeural after the map-scale and soil
+    // inference correction; their word boundaries matched the new script and the
+    // rebuilt full narration decoded. Human listening review remains open.
     // This deck labels its own boundaries — slides 4, 8, 12 and 16 open "Lesson 1" to "Lesson 4" —
     // so the mapping below is read off the slides rather than inferred.
     tracks: [

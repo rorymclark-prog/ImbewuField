@@ -394,6 +394,24 @@ async function migrateForestEstablishmentMedia() {
   await cache.put(marker, new Response('Young forest tour and matching narration'));
 }
 
+// The site-map lesson no longer calls an unmeasured sketch "to scale" or treats
+// weeds as proof of compaction. Retire the old speech only; keep every other saved
+// slide so a learner can choose when to fetch the corrected recordings.
+async function migrateLandscapeSiteMapNarration() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.landscape-site-map-source-correction-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/reading-landscape/en/slide-16.mp3',
+    '/course-audio/reading-landscape/en/slide-18.mp3',
+    '/course-audio/reading-landscape/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected site-map and soil-observation narration'));
+}
+
 // The L3 still now shows the mulch layer in the teaching sequence. Remove only the
 // superseded saved still once; keep every other downloaded course asset intact.
 async function migrateForestMulchInfographic() {
@@ -614,7 +632,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

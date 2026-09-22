@@ -115,6 +115,42 @@ test('the paid-for course cache is stable across deploys and explicitly spared f
   assert.doesNotMatch(source, /COURSE_CACHE\s*=\s*['"][^'"]*['"]\s*\+\s*(?:CACHE_VERSION|BUILD_ID)/);
 });
 
+test('corrected landscape speech retires only stale saved recordings and never refetches them', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const functionSource = source.match(/async function migrateLandscapeSiteMapNarration\(\) \{[\s\S]*?\n\}/)?.[0];
+  assert.ok(functionSource, 'the deployed worker must run the site-map narration migration');
+  assert.match(source, /\.then\(migrateLandscapeSiteMapNarration\)/);
+
+  const old = [
+    '/course-audio/reading-landscape/en/slide-16.mp3',
+    '/course-audio/reading-landscape/en/slide-18.mp3',
+    '/course-audio/reading-landscape/en/full.mp3',
+  ];
+  const kept = [
+    '/course-audio/reading-landscape/en/slide-17.mp3',
+    '/course-decks/reading-landscape/en/slide-17.jpg',
+    '/course-audio/soil-health/en/slide-16.mp3',
+  ];
+  const rows = new Map([...old, ...kept].map(path => [`https://example.test${path}`, new Response(path)]));
+  const deleted: string[] = [];
+  const cache = {
+    match: async (path: string) => rows.get(`https://example.test${path}`),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => { deleted.push(new URL(request.url).pathname); return rows.delete(request.url); },
+    put: async (path: string, response: Response) => { rows.set(`https://example.test${path}`, response); },
+  };
+  const migrate = new Function('caches', 'COURSE_CACHE', 'Response', `${functionSource}; return migrateLandscapeSiteMapNarration;`)(
+    { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return cache; } }, COURSE_CACHE, Response,
+  ) as () => Promise<void>;
+
+  await migrate();
+  assert.deepEqual(deleted.sort(), old.sort());
+  for (const path of old) assert.equal(rows.has(`https://example.test${path}`), false);
+  for (const path of kept) assert.equal(rows.has(`https://example.test${path}`), true);
+  await migrate();
+  assert.equal(deleted.length, old.length, 'an old client must not repeatedly lose its other downloads');
+});
+
 test('the app shell a farmer opens with no signal is actually precached', () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const list = source.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)?.[1] ?? '';

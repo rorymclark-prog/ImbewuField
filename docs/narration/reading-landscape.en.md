@@ -140,9 +140,9 @@ Air movement and dry leaves make it harder for fungal disease to keep the damp c
 
 **Slide 16 — Lesson 4: Start Your Site Map**
 
-A site map needs paper, a tape measure, a compass, and a morning to walk your land.
+A site map needs paper, a tape measure, a compass, and time to walk your land.
 
-Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, and fences.
+Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.
 
 Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.
 
@@ -158,9 +158,9 @@ Use the picture as a guide: boundary, buildings, roads, water, slopes, and direc
 
 Look for places where frost sits longest and where the ground smells damp during dry months.
 
-Notice existing vegetation. Thick khakibos or blackjack growing in one corner often signals disturbed or compacted soil.
+Notice existing vegetation. Mark where khakibos or blackjack grows thick.
 
-These are pioneer weeds. They colonise ground that has been disturbed or compacted. Mark the area on your map so your future design responds to the soil condition.
+These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.
 
 ---
 

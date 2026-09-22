@@ -294,24 +294,24 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l4.jpg",
         infographicAlt: "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
         title: "Making a Simple Site Map: Your Design Starts on Paper",
-        body: "A site map needs paper, a tape measure, a compass, and a morning to walk your land. Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick — both are pioneer weeds that mean disturbed or compacted soil.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+        body: "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
         keyPoints: [
           "A site map needs only paper, a tape measure, a compass, and observation",
           "Mark water flow, wind direction, frost pockets, and existing vegetation",
-          "Thick khakibos or blackjack growth signals disturbed or compacted soil",
+          "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
           "Overlay zones and sectors on your base map to complete the design skeleton",
         ],
         quiz: [
           {
-            q: "You notice thick blackjack growing in one corner every year. What does this most likely tell you?",
+            q: "You notice thick blackjack growing in one corner every year. What should you do next?",
             options: [
               "The soil there is exceptionally fertile",
               "That area has a higher water table",
-              "The soil has been disturbed or compacted and pioneers are colonising it",
+              "Mark the patch and check the soil; the plant alone cannot show compaction",
               "Blackjack only grows in shade, so there's a hidden seep",
             ],
             correct: 2,
-            rationale: "Blackjack and khakibos are classic pioneer species — they move into ground that's been disturbed or compacted, and their presence is a useful diagnostic.",
+            rationale: "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
           },
           {
             q: "Why mark summer and winter wind separately on your site map?",

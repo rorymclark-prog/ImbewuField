@@ -624,8 +624,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Air movement and dry leaves make it harder for fungal disease to keep the damp conditions it needs."
       ],
       "16": [
-        "A site map needs paper, a tape measure, a compass, and a morning to walk your land.",
-        "Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, and fences.",
+        "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+        "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
         "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
       ],
       "17": [
@@ -633,8 +633,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "18": [
         "Look for places where frost sits longest and where the ground smells damp during dry months.",
-        "Notice existing vegetation. Thick khakibos or blackjack growing in one corner often signals disturbed or compacted soil.",
-        "These are pioneer weeds. They colonise ground that has been disturbed or compacted. Mark the area on your map so your future design responds to the soil condition."
+        "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+        "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
       ],
       "19": [
         "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",

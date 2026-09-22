@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 798 files, 328.6 MB total.
+// 798 files, 328.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -254,7 +254,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/plant-guilds/zu/slide-49.mp3': 277293,
   '/course-audio/plant-guilds/zu/slide-50.mp3': 63981,
   '/course-audio/plant-guilds/zu/slide-51.mp3': 263469,
-  '/course-audio/reading-landscape/en/full.mp3': 2329724,
+  '/course-audio/reading-landscape/en/full.mp3': 2370620,
   '/course-audio/reading-landscape/en/slide-01.mp3': 118512,
   '/course-audio/reading-landscape/en/slide-02.mp3': 126144,
   '/course-audio/reading-landscape/en/slide-03.mp3': 124848,
@@ -270,9 +270,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/reading-landscape/en/slide-13.mp3': 49536,
   '/course-audio/reading-landscape/en/slide-14.mp3': 178848,
   '/course-audio/reading-landscape/en/slide-15.mp3': 116064,
-  '/course-audio/reading-landscape/en/slide-16.mp3': 119376,
+  '/course-audio/reading-landscape/en/slide-16.mp3': 159120,
   '/course-audio/reading-landscape/en/slide-17.mp3': 58032,
-  '/course-audio/reading-landscape/en/slide-18.mp3': 134496,
+  '/course-audio/reading-landscape/en/slide-18.mp3': 135648,
   '/course-audio/reading-landscape/en/slide-19.mp3': 113184,
   '/course-audio/reading-landscape/en/slide-20.mp3': 141264,
   '/course-audio/reading-landscape/en/slide-21.mp3': 125568,
