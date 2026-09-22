@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '5c606c8a', changes: [
+    'The Take a tour garden photo on Home now stays fully visible.',
+  ], tour: [
+    { title: 'Garden tour photo', where: 'Home → Take a tour', href: '/home',
+      detail: 'Scroll below the shortcut cards to see the full garden photo and tour invitation.' },
+  ] },
   { when: '22 September 2026', sha: 'e8cf8ece', changes: [
     'The bottom navigation now responds as you move between pages.',
     'Journal entries, Contact choices and My Records pages now open with clear motion.',
