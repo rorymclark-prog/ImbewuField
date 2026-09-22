@@ -422,6 +422,9 @@ function HomeLandingInner() {
       </header>
 
       <style jsx global>{`
+        /* Home scrolls vertically; flex shrinking used to squash the tour's 209px card to
+           35px on shorter windows, leaving only a thin strip of its garden photo visible. */
+        .home-scroll-content > * { flex-shrink: 0; }
         @keyframes imfQuickEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .home-quick-link { animation: imfQuickEnter 360ms cubic-bezier(0.16,1,0.3,1) both; transition: transform 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 180ms ease, border-color 180ms ease; }
         .home-quick-link:nth-child(2) { animation-delay: 45ms; }
@@ -476,7 +479,7 @@ function HomeLandingInner() {
       `}</style>
 
       {/* ── Main content ── */}
-      <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
+      <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
 
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
