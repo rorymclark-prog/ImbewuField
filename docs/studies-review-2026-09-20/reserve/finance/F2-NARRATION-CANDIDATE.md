@@ -6,7 +6,7 @@
 
 This is a concise oral rendering of the existing F2.1–F2.3 reading text. It keeps the lesson’s synthetic practice boundary and does not add figures, bookkeeping advice, app actions or recommendations.
 
-Before creating this file, the reserve Finance folder was searched for an F2 narration or script. There is no separate F2 narration/script file. The three existing narration drafts are embedded in [f2-records.md](f2-records.md) and mirrored in the current rendered source, [lib/course-finance-content.json](../../../../../lib/course-finance-content.json).
+There was no separate F2 narration file. The three existing narration drafts are embedded in [f2-records.md](f2-records.md) and mirrored in the current rendered source, [lib/course-finance-content.json](../../../../lib/course-finance-content.json). This review copy changes punctuation and sentence breaks only; it does not approve or replace those drafts.
 
 Grounding sources:
 

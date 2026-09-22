@@ -138,3 +138,24 @@ interception legible at 390px without conspicuous synthetic marks. Neither
 experiment was registered or published. No Google Flow credits were spent.
 Reproducible local trial files are in the Downloads animation-quality review
 folder; they are failed candidates, not course assets.
+
+## Further 22 September continuation — review dependencies
+
+PR504 is a draft candidate for the real hens footage and source-grounded F1.2
+practice timeline. Its current preview and exact-head test, rules and preview
+jobs passed. The hens clip has been inspected in the actual desktop and 390px
+player. Rory's joint visual decision is still required before publication.
+The proposed 100-credit Soil slide 14 Flow attempt also awaits Rory's explicit
+choice; no credit was spent.
+
+An independent full-motion review of Vegetables lesson 1 slide 6 exposed a
+specific error in the 20 September visual review: at the end of the film the
+seedling's root plug stands above the bed. The earlier claim that soil closes
+around it is incorrect. Full-size 5.5-second and 7.5-second frames and a 390px
+frame confirmed the issue. The published clip must not be described as a
+completed transplanting demonstration. Its local source has the same ending,
+so a verified new action or coordinated lesson/media decision is needed.
+
+F2.1–F2.3 now have a concise English narration review copy drawn from the
+existing embedded drafts. No voice asset or app narration was added. Local
+bookkeeping, learner, human listening and fluent isiZulu review remain open.

@@ -73,7 +73,7 @@ physical-mechanism review; neither is a reason to place another order.
 | 10 | Food Forest Design | food-forest-l2 | 10 | Watch: Match the Species to the Climate | `watch-10-climate-match` | Authored precise diagram; preserve existing species and locality limits. |
 | 11 | Food Forest Design | food-forest-l3 | 15 | Watch: Care for a Young Food Forest | `tour-young-forest` | Retain and review tour; no instant establishment claim. |
 | 12 | Food Forest Design | food-forest-l3 | 16 | Prepare a Manageable First Area | `flow-sheet-mulching` | Retain and review; conditional Flow only for one physically stable mulching action. |
-| 13 | Vegetables and Staple Crops | vegetables-staples-l1 | 6 | Seed or Seedling? | `flow-seed-or-seedling` | Retain and review; conditional Flow only for careful root-plug handling. |
+| 13 | Vegetables and Staple Crops | vegetables-staples-l1 | 6 | Seed or Seedling? | `flow-seed-or-seedling` | Hold as a transplanting demonstration: final frame leaves the root plug exposed above the bed. Earlier soil-closed review claim is corrected in `flow-clips.json`; source has the same ending. |
 | 14 | Soil Health & Composting | soil-health-l1 | 5 | Watch: Read Your Soil | `tour-soil-observation` | Retain and review published observation tour. |
 | 15 | Soil Health & Composting | soil-health-l2 | 10 | Watch: Build the Compost Heap | `watch-10-compost-heap` | Authored precise diagram: inputs, moisture/air observation and later checking. |
 | 16 | Soil Health & Composting | soil-health-l2 | 11 | Balance Browns and Greens | `flow-compost-materials` | Retain and review film; do not imply eight seconds makes safe compost. |
