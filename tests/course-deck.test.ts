@@ -15,6 +15,8 @@ import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
+const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
+const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
 test('sound-off learners get the complete current script, including its final instruction', () => {
@@ -274,6 +276,9 @@ test('Water playback respects language gaps, download choice and the whole anima
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
       fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
     }).outputText };
+    // Node's focused component harness has no CSS-module loader. Styles do not affect these
+    // media event-order assertions, so provide only the imported module's class-name shape here.
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
     return nextLoad(url, context);
   } });
   const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
@@ -321,12 +326,51 @@ test('Water playback respects language gaps, download choice and the whole anima
   }
 });
 
+test('deck arrows change slides only while the deck itself has plain-key focus', async () => {
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'water-harvesting', lang: 'en' })); });
+  try {
+    const deckSurface = () => view.root.findAllByType('div').find(div => div.props['aria-label']?.startsWith('Lesson slides.'))!;
+    const press = (key: 'ArrowLeft' | 'ArrowRight', target: unknown, modifiers = {}) => {
+      const surface = deckSurface();
+      let prevented = false;
+      act(() => surface.props.onKeyDown({ key, target, currentTarget: surface, preventDefault: () => { prevented = true; }, ...modifiers }));
+      return prevented;
+    };
+
+    const surface = deckSurface();
+    assert.equal(press('ArrowRight', surface), true);
+    assert.equal(view.root.findByType('h3').children.join(''), 'Learning Outcomes');
+    assert.equal(press('ArrowLeft', deckSurface()), true, 'plain arrows on the deck still provide slide navigation');
+    assert.equal(view.root.findByType('h3').children.join(''), 'Water Harvesting');
+
+    const audio = view.root.findByType('audio');
+    assert.equal(press('ArrowRight', audio), false, 'native audio controls keep their seek keys');
+    assert.equal(view.root.findByType('h3').children.join(''), 'Water Harvesting');
+    const playButton = view.root.findAllByType('button').find(button => button.props['aria-label'] === 'Play the lesson')!;
+    assert.equal(press('ArrowRight', playButton), false, 'buttons and other page widgets do not turn the page');
+    assert.equal(press('ArrowRight', deckSurface(), { ctrlKey: true }), false, 'modified browser and assistive-technology shortcuts stay untouched');
+    assert.equal(view.root.findByType('h3').children.join(''), 'Water Harvesting');
+  } finally { act(() => view.unmount()); }
+});
+
 test('a timed tour follows the voice after late loading, pause and seeking, then preserves its final hold', async t => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
       fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
     }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
     return nextLoad(url, context);
   } });
   const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');

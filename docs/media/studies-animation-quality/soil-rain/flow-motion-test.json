@@ -6,12 +6,19 @@
   "credits_shown": 20,
   "observed_balance_before": 90,
   "source_sha256": "57c3a6763692cdcf6dc95e87b1186055e617b33a0f37e8ff9d20dbd22a8dd90c",
-  "status": "candidate visible in Flow; not accepted or registered; export unresolved",
+  "status": "export recovered; candidate not accepted or registered",
   "project": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442",
   "edit_url": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/0545fa58-eeb1-4785-b022-7973e8c5298e",
   "review": {
     "observed": "Full-screen playback: much clearer surface splashes than authored prototype; root and soil geometry generally stable.",
     "concern": "The exposed cutaway face also becomes wet. Do not imply measured subsurface wetting or infiltration from this generated shot. Consider a surface-focused crop after complete frame review.",
     "export": "720p scene/history downloads and included 1080p export did not produce a local file; refreshed preview plays 8 seconds. Page asset export cannot bundle the media resource because it is classified as other. No further generation attempted."
+  },
+  "export_recovery": {
+    "date": "2026-09-22",
+    "path": "/Users/roryclark/Downloads/ImbewuField-Animation-Quality-2026-09-22/soil-rain-fast-existing.mp4",
+    "sha256": "8cbd0d87c8e9e01c0ceaaff7207d66a89d55c69fac8348b35e759ea78db3e44c",
+    "method": "Flow editor Download media, 720p Original",
+    "credits_spent": 0
   }
 }

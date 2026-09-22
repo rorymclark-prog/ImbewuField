@@ -1,0 +1,106 @@
+{
+  "checkedDate": "2026-09-22",
+  "origin": "https://imbewufield.vercel.app",
+  "scope": "Soil lesson3 currently published MP4, five stills and five English narration clips; byte identity only, no visual or human language approval",
+  "assets": [
+    {
+      "path": "course-animations/soil-health/watch-14-mulch-protection.mp4",
+      "http": 200,
+      "localBytes": 369446,
+      "productionBytes": 369446,
+      "localSha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219",
+      "productionSha256": "3e4e1df9cc98ad7010f60553c108f4c651e347792f5570d338640a5116820219",
+      "matches": true
+    },
+    {
+      "path": "course-decks/soil-health/en/slide-14.jpg",
+      "http": 200,
+      "localBytes": 177683,
+      "productionBytes": 177683,
+      "localSha256": "01a41cf5d26ca30fdbe8fabbc6792f1c4292d5a67fce235c1ab0b6dd247db2a2",
+      "productionSha256": "01a41cf5d26ca30fdbe8fabbc6792f1c4292d5a67fce235c1ab0b6dd247db2a2",
+      "matches": true
+    },
+    {
+      "path": "course-decks/soil-health/en/slide-15.jpg",
+      "http": 200,
+      "localBytes": 879762,
+      "productionBytes": 879762,
+      "localSha256": "c038999ef53c6192fcb739c428b82f0cbfd8691bf9803fcbce618af294c6695d",
+      "productionSha256": "c038999ef53c6192fcb739c428b82f0cbfd8691bf9803fcbce618af294c6695d",
+      "matches": true
+    },
+    {
+      "path": "course-decks/soil-health/en/slide-16.jpg",
+      "http": 200,
+      "localBytes": 117649,
+      "productionBytes": 117649,
+      "localSha256": "3c9ae891677d497485f760cefce8212c485a6c13f24191c534e24d0fc3e8c668",
+      "productionSha256": "3c9ae891677d497485f760cefce8212c485a6c13f24191c534e24d0fc3e8c668",
+      "matches": true
+    },
+    {
+      "path": "course-decks/soil-health/en/slide-17.jpg",
+      "http": 200,
+      "localBytes": 784137,
+      "productionBytes": 784137,
+      "localSha256": "25d1f04a8005ebdf58cc576baa7ee2668ef0dbc5183c8d1fcdfee737ebe57775",
+      "productionSha256": "25d1f04a8005ebdf58cc576baa7ee2668ef0dbc5183c8d1fcdfee737ebe57775",
+      "matches": true
+    },
+    {
+      "path": "course-decks/soil-health/en/slide-18.jpg",
+      "http": 200,
+      "localBytes": 192147,
+      "productionBytes": 192147,
+      "localSha256": "9e52df0d21763a948e1b0589388445698f5353069844a6c250bee239622e646d",
+      "productionSha256": "9e52df0d21763a948e1b0589388445698f5353069844a6c250bee239622e646d",
+      "matches": true
+    },
+    {
+      "path": "course-audio/soil-health/en/slide-14.mp3",
+      "http": 200,
+      "localBytes": 50688,
+      "productionBytes": 50688,
+      "localSha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+      "productionSha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
+      "matches": true
+    },
+    {
+      "path": "course-audio/soil-health/en/slide-15.mp3",
+      "http": 200,
+      "localBytes": 116064,
+      "productionBytes": 116064,
+      "localSha256": "504e9df61166faafd23dbe5e2cd3b364d08be0ef2aba891f10f15450b1b721be",
+      "productionSha256": "504e9df61166faafd23dbe5e2cd3b364d08be0ef2aba891f10f15450b1b721be",
+      "matches": true
+    },
+    {
+      "path": "course-audio/soil-health/en/slide-16.mp3",
+      "http": 200,
+      "localBytes": 157968,
+      "productionBytes": 157968,
+      "localSha256": "0dbe6d08c43db350084a7c2041adc46ce45835349961dfab7af4a2be23b55f70",
+      "productionSha256": "0dbe6d08c43db350084a7c2041adc46ce45835349961dfab7af4a2be23b55f70",
+      "matches": true
+    },
+    {
+      "path": "course-audio/soil-health/en/slide-17.mp3",
+      "http": 200,
+      "localBytes": 147456,
+      "productionBytes": 147456,
+      "localSha256": "73d059a0b69a68175f73a0b95de8b61434a7f51fdd633b9cf302df1dc203f79d",
+      "productionSha256": "73d059a0b69a68175f73a0b95de8b61434a7f51fdd633b9cf302df1dc203f79d",
+      "matches": true
+    },
+    {
+      "path": "course-audio/soil-health/en/slide-18.mp3",
+      "http": 200,
+      "localBytes": 113184,
+      "productionBytes": 113184,
+      "localSha256": "c0e636ac0af71fe31295788f5918cbd68f2d5ab938d6ffdf3ccf1b786e3bc866",
+      "productionSha256": "c0e636ac0af71fe31295788f5918cbd68f2d5ab938d6ffdf3ccf1b786e3bc866",
+      "matches": true
+    }
+  ]
+}

@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '17747f7', changes: [
+    'Soil lessons now show living cover crops and the different effects of wind and rain.',
+    'Lesson buttons fit small screens, and audio arrow keys no longer turn the page.',
+    'App guides include sample screens to follow while you practise.',
+  ], tour: [
+    { title: 'Protecting your soil', where: 'Studies → Soil Health → Mulching and Cover Crops',
+      href: '/student',
+      detail: 'Open Watch and listen to see the new cover-crop and seasonal-risk pictures.' },
+    { title: 'Practise making an invoice', where: 'Studies → Using ImbewuField → Make and manage an invoice',
+      href: '/student/guides/invoices',
+      detail: 'Follow the sample screens and check the saved invoice before sharing it.' },
+  ] },
   { when: '22 September 2026', sha: '8b84d6f', changes: [
     'Your farm plan sprout now sways gently as you finish steps',
   ] },
