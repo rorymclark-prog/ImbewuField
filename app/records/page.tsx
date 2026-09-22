@@ -1536,6 +1536,7 @@ export default function RecordsPage() {
               })}
             </div>
 
+            <div data-book-tab={tab} className={`${styles.bookPage} space-y-4`}>
             {/* PICKED and SOLD both take their forms from the same mounted MyRecords, in the same
                 JSX slot, so switching between them changes one prop instead of remounting and
                 re-reading Firestore. The harvest form inside it is untouched by this merge —
@@ -1728,6 +1729,7 @@ export default function RecordsPage() {
                 </div>
               </>
             )}
+            </div>
           </>
         )}
       </main>

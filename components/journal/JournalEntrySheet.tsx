@@ -14,6 +14,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import { getElementArt2 } from '@/lib/element-art-2';
+import motion from './JournalMotion.module.css';
 
 export interface BedOption {
   id: string;
@@ -93,13 +94,13 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center"
+      className={`fixed inset-0 z-50 flex items-end justify-center ${motion.overlay}`}
       style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(3px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <form
         onSubmit={submit}
-        className="w-full max-w-md font-sans overflow-y-auto"
+        className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
         style={{
           background: '#FBF8F1', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh',
