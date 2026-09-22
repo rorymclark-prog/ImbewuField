@@ -79,7 +79,12 @@ function HeroEntranceStyle() {
         to { opacity: 1; transform: scale(1); }
       }
       .imf-hero-settle { animation: imfHeroSettle 260ms var(--ease-spring, cubic-bezier(0.175, 0.885, 0.32, 1.1)); }
-      .imf-progress-sprout { width: 72px; height: 72px; flex: none; overflow: visible; }
+      @keyframes imfProgressReveal { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      .imf-progress-fill { transform-origin: left center; animation: imfProgressReveal 700ms 120ms cubic-bezier(0.16,1,0.3,1) both; transition: width 450ms cubic-bezier(0.16,1,0.3,1); }
+      .imf-progress-sprout-wrap { width: 96px; height: 96px; }
+      .imf-progress-sprout-wrap > svg, .imf-progress-sprout-wrap > span { transform: scale(1.2); transform-origin: center; }
+      .imf-progress-sprout { width: 100%; height: 100%; flex: none; overflow: visible; }
+      @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 128px; height: 128px; } }
       .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
       @keyframes imfGrowIn {
         from { opacity: 0; transform: scale(0.7); }
@@ -87,6 +92,7 @@ function HeroEntranceStyle() {
       }
       @media (prefers-reduced-motion: reduce) {
         .imf-hero-settle { animation: none; }
+        .imf-progress-fill { animation: none; transition: none; }
         .imf-progress-sprout__growth { animation: none; }
       }
     `}</style>
@@ -203,7 +209,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
         {pct != null && (
           <div style={{ marginBottom: 16 }}>
             <div style={{ height: 4, borderRadius: 2, background: 'rgba(234,243,226,0.25)', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${pct}%`, background: '#F7C97E', borderRadius: 2 }} />
+              <div className="imf-progress-fill" style={{ height: '100%', width: `${pct}%`, background: '#F7C97E', borderRadius: 2 }} />
             </div>
             <div className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.78)', marginTop: 6 }}>
               {t('continueSitePct').replace('{pct}', String(pct))}

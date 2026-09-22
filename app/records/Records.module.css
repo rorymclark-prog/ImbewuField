@@ -7,4 +7,10 @@
 .page :global(header) :global(button[data-header-secondary]) { color:var(--color-muted-strong) !important; }
 .documentLink { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--color-border); border-radius: 9px; color: var(--color-muted-strong); font: 12px var(--font-sans), sans-serif; text-decoration: none; }
 .documents { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 5px; }
+.bookTab { transition: background 180ms ease, color 180ms ease, transform 150ms ease, box-shadow 180ms ease; }
+.bookTab[aria-selected='true'] { box-shadow: 0 3px 9px rgba(31,77,43,.22); }
+.bookTab:active { transform: scale(.95); }
+.bookTab svg { transition: transform 180ms ease; }
+.bookTab[aria-selected='true'] svg { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .bookTab, .bookTab svg { transition: none; } .bookTab:active, .bookTab[aria-selected='true'] svg { transform: none; } }
 @media (max-width: 650px) { .documents { gap: 4px; } }

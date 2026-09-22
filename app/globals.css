@@ -702,6 +702,14 @@ body.is-sample-mode .pwa-update-notifier {
 }
 .u-sheet-grabber { width: 36px; height: 4px; border-radius: 9999px; background: var(--border-strong); margin: 8px auto; }
 
+/* The crop detail follows the month the farmer just tapped; its entrance is brief enough
+   to keep the chart's numbers and bar heights visually steady. */
+@keyframes cropDetailReveal { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.crop-availability-month { transition: background 180ms ease, transform 180ms ease; }
+.crop-availability-month:active { transform: scale(0.96); }
+.crop-availability-detail { animation: cropDetailReveal 230ms var(--ease-out); }
+@media (hover: hover) { .crop-availability-month:hover { background: #F5F0E8 !important; } }
+
 /* Design Studio edge grips. The default focus ring drew a full-width blue box around a 20px
    strip every time it was clicked, which is most of what "there is still a big gap now where the
    minimise tool is" was describing. :focus-visible keeps the ring for keyboard users, where it is
@@ -712,6 +720,9 @@ body.is-sample-mode .pwa-update-notifier {
 
 @media (prefers-reduced-motion: reduce) {
   .u-anim-sheet, .u-anim-sheet.u-anim-dialog { animation: u-fadeIn var(--dur-base) linear !important; }
+  .crop-availability-month { transition: none; }
+  .crop-availability-month:active { transform: none; }
+  .crop-availability-detail { animation: none; }
 }
 
 /* Recognisable list art without rescaling map geometry or diagram symbols. */

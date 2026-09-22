@@ -26,7 +26,7 @@ export default function ProgressSprout({ completedSteps }: { completedSteps: num
   }, []);
 
   return (
-    <span aria-hidden="true" data-stage={stage} style={{ position: 'relative', display: 'block', width: 72, height: 72, flex: 'none' }}>
+    <span aria-hidden="true" data-stage={stage} className="imf-progress-sprout-wrap" style={{ position: 'relative', display: 'block', flex: 'none' }}>
       <svg
         aria-hidden="true"
         className="imf-progress-sprout"
