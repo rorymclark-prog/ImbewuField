@@ -23,5 +23,18 @@
       ]
     }
   ],
-  "status": "implemented; app review and release checks in progress"
+  "status": "App visual and offline-media verification passed; final build and CI pending",
+  "review": {
+    "independentAgent": "accept for illustration; no concrete misleading claim or anatomy issue found",
+    "desktop": "actual lesson player inspected",
+    "phone": "390px viewport; both images fit; stacked controls remain readable",
+    "offline": "module saved all51files; new stills loaded at1920px and English narration readyState4 with tab network disabled",
+    "keyboard": "nativeaudioArrowRight preserved slide16; deckfocusedArrowRight advanced only lessondeck to17",
+    "tests": {
+      "total": 3682,
+      "pass": 3681,
+      "fail": 0,
+      "existingTodo": 1
+    }
+  }
 }

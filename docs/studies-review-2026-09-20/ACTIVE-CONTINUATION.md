@@ -62,3 +62,14 @@ coordinated editorial/media corrections; do not silently rewrite protected conte
 - Dependencies refreshed into this worktree (previous shared symlink was removed,
   its target preserved) to match main’s new Rive dependency.
 - Local app at4373; browser review, full suite and release still in progress.
+
+## Verified release batch
+
+Implementation checkpoints:6a757544 and dec51ea2. Two stills visually inspected in
+actual app at desktop/390px; independent review accepted qualitative teaching fit.
+Soil saved all51files; both new stills and narration played with tab network disabled.
+Native-audio arrow seeking no longer advances slides; focused deck navigation works.
+Phone Play/Back/Next controls no longer squeeze/wrap their labels.
+Final typecheck,3,681passing tests(0fail,1existingTODO),whitespace and production build
+passed. Update-tour regression test also passed after release-note insertion.
+No Flowcredits spent; no animation accepted or re-generated. Publication/CI next.

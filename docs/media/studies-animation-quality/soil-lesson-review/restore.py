@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib
 import json
-import shutil
+import subprocess
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
@@ -14,10 +14,16 @@ for item in manifest['video'] + manifest['slide_stills']:
 for slide, digest in manifest['audio_sha256'].items():
     assets.append((ROOT / f'public/course-audio/soil-health/en/{slide}.mp3', HERE / f'assets/audio/{slide}.mp3', digest))
 # Validate the whole set before copying so a stale/missing candidate cannot become a partial review.
-for source, _, digest in assets:
-    if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != digest:
+verified = []
+for source, target, digest in assets:
+    data = source.read_bytes() if source.is_file() else b''
+    if hashlib.sha256(data).hexdigest() != digest and source.is_relative_to(ROOT):
+        # Preserve this comparison's published baseline when a later lesson replaces a still.
+        data = subprocess.check_output(['git', 'show', f"{manifest['repository_base_commit']}:{source.relative_to(ROOT)}"], cwd=ROOT)
+    if hashlib.sha256(data).hexdigest() != digest:
         raise SystemExit(f'Missing or changed source: {source}')
-for source, target, _ in assets:
+    verified.append((target, data))
+for target, data in verified:
     target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(source, target)
+    target.write_bytes(data)
 print(f'Restored {len(assets)} verified assets. Serve this directory with python3 -m http.server 4372 --bind 127.0.0.1')

@@ -37,3 +37,20 @@ A targeted service-worker migration retires only the two outdated English stills
 retaining other downloads and requiring the normal explicit download for replacements.
 
 Validation and publication status will be appended after the complete checks.
+
+## App verification
+
+Both actual images were viewed in the lesson player on desktop and at390CSSpx.
+The narrow navigation strip now uses full-width Play, a Back/Next row and a
+separate progress bar; labels no longer wrap. Independent agent review accepted
+both images for illustration, without claiming practitioner approval.
+
+The Soil module saved all51files. With the tab connection disabled, slides16/18
+loaded at1920px and their original narration reached readyState4 and played.
+Native-audio ArrowRight stayed on slide16; the same key focused on the deck
+advanced only that deck to17. Network and viewport overrides are restored after QA.
+
+Final implementation suite: 3,682tests, 3,681pass, zero failures, one existingTODO.
+Typecheck and whitespace passed. The CSS-module import required a scoped style
+stub in component tests; media and interaction assertions remain unchanged.
+Production build, CI and publication are recorded in the continuation file.
