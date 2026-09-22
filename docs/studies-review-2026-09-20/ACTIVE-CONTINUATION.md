@@ -1,5 +1,19 @@
 # Active Studies continuation — 22 September 2026
 
+## Small Livestock L2 English check (23 September)
+
+Slides 9–13 showed their current media and English MP3s in the deployed
+390px player. The existing eight-second Flow bee shot played from the saved
+23.7 MB pack after an offline reload. Its picture shows one bee visiting two
+blossoms; the slide 9 title/narration instead say bees leave a hive and state
+pollen transfer as certain. The “Open still image” link currently opens the
+close-up poster, not the old wider hive-to-crops still. Slide 11's bee ranges
+omit the hybrid zone. Source-backed matched title/narration/body proposals are
+in `docs/media/studies-animation-quality/small-livestock-l2-lesson-check.md`;
+protected teaching remains unchanged pending Rory's broader decision. No new
+Flow credit, isiZulu claim or human/beekeeper approval. Farm Finance is
+excluded.
+
 ## Food Forest Design L3 current English check (23 September)
 
 Slides 14–18 showed their current stills and English MP3s in the deployed

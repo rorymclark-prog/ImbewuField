@@ -1,5 +1,12 @@
 # Bee between blossoms Flow candidate — 22 September 2026
 
+> **23 September current-state correction:** Slide 9's learner player uses the
+> Flow close-up poster for its “Open still image” link. The original wider
+> hive-to-crops still is not displayed alongside the video. Its existing
+> hive-departure title/narration are therefore not visually matched to this
+> shot. See `small-livestock-l2-lesson-check.md` for the source-backed
+> correction proposal; the protected teaching remains unchanged.
+
 ## Current learner media
 
 Small Livestock lesson 2 slide 9 now uses the silent eight-second Flow clip
