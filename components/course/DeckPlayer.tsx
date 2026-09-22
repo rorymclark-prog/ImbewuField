@@ -97,6 +97,23 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
 
+  // The separate audio-only playlist can be opened beside this deck. If the
+  // learner starts another spoken clip, stop this tour instead of talking over it.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const pauseForOtherAudio = (event: Event) => {
+      const audio = audioRef.current;
+      if (audio && event.target instanceof HTMLAudioElement && event.target !== audio && !audio.paused) {
+        audio.pause();
+        videoRef.current?.pause();
+        setRunning(false);
+        setTimedVoiceActive(false);
+      }
+    };
+    document.addEventListener('play', pauseForOtherAudio, true);
+    return () => document.removeEventListener('play', pauseForOtherAudio, true);
+  }, []);
+
   const current = slides[index];
   const total = slides.length;
   // Resolved up here, not after the early return below, because the play-through effects need it.
