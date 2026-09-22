@@ -17,6 +17,7 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
   const [motionAllowed, setMotionAllowed] = useState(false);
   const [riveReady, setRiveReady] = useState(false);
   const [pinned, setPinned] = useState(false);
+  const [waveToken, setWaveToken] = useState(0);
   const wrapperRef = useRef<HTMLSpanElement>(null);
   const tipId = useId();
   const handleRiveReady = useCallback(() => setRiveReady(true), []);
@@ -65,7 +66,7 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
           {stage >= 5 && <circle cx="40" cy="17" r="5" fill="#F7C97E" />}
         </g>
       </svg>
-      {motionAllowed && <RiveProgressSprout stage={stage} onReady={handleRiveReady} />}
+      {motionAllowed && <RiveProgressSprout stage={stage} waveToken={waveToken} onReady={handleRiveReady} />}
     </span>
   );
 
@@ -80,7 +81,12 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
             aria-describedby={tipId}
             aria-expanded={pinned}
             aria-controls={tipId}
-            onClick={() => setPinned((open) => !open)}
+            onPointerEnter={() => setWaveToken((token) => token + 1)}
+            onFocus={() => setWaveToken((token) => token + 1)}
+            onClick={() => {
+              setPinned((open) => !open);
+              setWaveToken((token) => token + 1);
+            }}
             onKeyDown={(event) => {
               if (event.key === 'Escape') {
                 setPinned(false);

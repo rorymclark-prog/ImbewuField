@@ -31,6 +31,7 @@ import TabBar from '@/components/TabBar';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
+import GrowthMomentCard from '@/components/home/GrowthMomentCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -523,6 +524,8 @@ function HomeLandingInner() {
             </Link>
           ))}
         </div>
+
+        <GrowthMomentCard />
 
         {/* ── Take a tour farm — NGO/onboarding "show me how it works" entry point.
             Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —

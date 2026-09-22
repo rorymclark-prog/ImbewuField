@@ -1,0 +1,5 @@
+name: growth-moment
+main: Growth
+logs:
+  file: build/rive.log
+  problems: build/problems.log

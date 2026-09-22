@@ -49,14 +49,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:10">
+            <KeyedObject objectId="0:20">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:7">
+            <StateMachineTrigger name="Wave" id="0:9" />
             <StateMachineLayer name="Layer" id="0:8">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:12" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:6" id="0:12" />
+                <AnimationState x="250" y="0" animationId="0:6" id="0:12">
+                    <StateTransition stateToId="0:13" duration="80">
+                        <TransitionTriggerCondition inputId="0:9" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:10" id="0:13" reset="true">
+                    <StateTransition stateToId="0:12" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
@@ -110,14 +129,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:110">
+            <KeyedObject objectId="0:120">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:107">
+            <StateMachineTrigger name="Wave" id="0:109" />
             <StateMachineLayer name="Layer" id="0:108">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:112" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:106" id="0:112" />
+                <AnimationState x="250" y="0" animationId="0:106" id="0:112">
+                    <StateTransition stateToId="0:113" duration="80">
+                        <TransitionTriggerCondition inputId="0:109" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:110" id="0:113" reset="true">
+                    <StateTransition stateToId="0:112" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
@@ -183,14 +221,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:210">
+            <KeyedObject objectId="0:220">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:207">
+            <StateMachineTrigger name="Wave" id="0:209" />
             <StateMachineLayer name="Layer" id="0:208">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:212" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:206" id="0:212" />
+                <AnimationState x="250" y="0" animationId="0:206" id="0:212">
+                    <StateTransition stateToId="0:213" duration="80">
+                        <TransitionTriggerCondition inputId="0:209" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:210" id="0:213" reset="true">
+                    <StateTransition stateToId="0:212" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
@@ -268,14 +325,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:310">
+            <KeyedObject objectId="0:320">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:307">
+            <StateMachineTrigger name="Wave" id="0:309" />
             <StateMachineLayer name="Layer" id="0:308">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:312" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:306" id="0:312" />
+                <AnimationState x="250" y="0" animationId="0:306" id="0:312">
+                    <StateTransition stateToId="0:313" duration="80">
+                        <TransitionTriggerCondition inputId="0:309" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:310" id="0:313" reset="true">
+                    <StateTransition stateToId="0:312" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
@@ -365,14 +441,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:410">
+            <KeyedObject objectId="0:420">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:407">
+            <StateMachineTrigger name="Wave" id="0:409" />
             <StateMachineLayer name="Layer" id="0:408">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:412" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:406" id="0:412" />
+                <AnimationState x="250" y="0" animationId="0:406" id="0:412">
+                    <StateTransition stateToId="0:413" duration="80">
+                        <TransitionTriggerCondition inputId="0:409" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:410" id="0:413" reset="true">
+                    <StateTransition stateToId="0:412" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
@@ -468,14 +563,33 @@
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
+        <LinearAnimation duration="36" name="Wave" id="0:510">
+            <KeyedObject objectId="0:520">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble frame="0" value="0" interpolationType="linear" />
+                    <KeyFrameDouble frame="8" value="-0.2" interpolationType="linear" />
+                    <KeyFrameDouble frame="16" value="0.22" interpolationType="linear" />
+                    <KeyFrameDouble frame="25" value="-0.12" interpolationType="linear" />
+                    <KeyFrameDouble frame="36" value="0" interpolationType="linear" />
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
         <StateMachine name="Motion" id="0:507">
+            <StateMachineTrigger name="Wave" id="0:509" />
             <StateMachineLayer name="Layer" id="0:508">
                 <AnyState x="100" y="-100" />
                 <ExitState x="450" y="-100" />
                 <EntryState x="100" y="0">
                     <StateTransition stateToId="0:512" />
                 </EntryState>
-                <AnimationState x="250" y="0" animationId="0:506" id="0:512" />
+                <AnimationState x="250" y="0" animationId="0:506" id="0:512">
+                    <StateTransition stateToId="0:513" duration="80">
+                        <TransitionTriggerCondition inputId="0:509" />
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState x="420" y="0" animationId="0:510" id="0:513" reset="true">
+                    <StateTransition stateToId="0:512" duration="80" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100" />
+                </AnimationState>
             </StateMachineLayer>
         </StateMachine>
     </Artboard>
