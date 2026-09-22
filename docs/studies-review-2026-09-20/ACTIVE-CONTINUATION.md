@@ -44,6 +44,12 @@ Local review server: port 4372 (restart if absent).
    Do not redo deployed app guides, finished previews or media inventories. Human
    acceptance and protected-content decisions must remain explicit dependencies.
 
+Finance F1 already has three narration drafts, and the app reading matches them.
+An exact-text English candidate pack for F1.1–F1.3 was recorded and technically
+checked on 22 September; see `FINANCE-F1-NARRATION-REVIEW.md` and its local listening
+pack. It remains outside the app pending listening, bookkeeping and learner review.
+The remaining Finance/Design scripts and voice choice are not thereby accepted.
+
 ## Boundaries
 
 No credits spent since the duplicate Quality soil trial. Conservative remaining
