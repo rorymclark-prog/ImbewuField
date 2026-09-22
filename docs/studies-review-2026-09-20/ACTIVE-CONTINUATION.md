@@ -530,3 +530,15 @@ have new source-matched en-ZA audio, and the combined English narration was
 rebuilt. The old versions are removed from saved course packs without an
 automatic replacement download. Exact checks and remaining preview/offline
 review are in `docs/media/studies-animation-quality/reading-landscape-l4-lesson-check.md`.
+
+The exact-head audio/content commit `00caaed0` passed both CI jobs and deployed.
+A phone-width preview check then found that the separate audio playlist and slide
+deck could speak simultaneously. Commit `919bc1a5` coordinates native audio play
+events, pausing the other narration and its timed video. Its local typecheck,
+full suite (3,700 pass, zero fail, one existing TODO) and whitespace check passed;
+the test and rules CI jobs and stable preview deploy passed. In the live 390 ×
+844 preview, each playback direction left only one audio element playing. The
+corrected English slide 16/18 clips and slide 17 still loaded from a saved pack
+after an offline reload. This completes the English **technical** L4 player pass.
+Physical-device, human listening, practitioner, learner and isiZulu approval are
+still open. No new Flow credit was spent.
