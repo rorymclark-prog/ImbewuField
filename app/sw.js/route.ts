@@ -409,20 +409,22 @@ async function migrateForestMulchInfographic() {
   await cache.put(marker, new Response('Corrected food forest mulch layer still'));
 }
 
-// The older slide-16 movie stops with cardboard exposed. Retire only its saved movie and poster;
-// the replacement stays opt-in, because downloading teaching media is the learner's decision.
+// The older wide movie ends with bare cardboard, and the authored composite is awaiting Rory's
+// approval. Retire only those saved pairs; the learner chooses whether to download the Flow close-up.
 async function migrateForestSheetMulchingMedia() {
   const cache = await caches.open(COURSE_CACHE);
-  const marker = '/course-animations/food-forest/.sheet-mulching-layer-order-20260922';
+  const marker = '/course-animations/food-forest/.flow-sheet-mulching-closeup-20260922';
   if (await cache.match(marker)) return;
   const obsolete = new Set([
     '/course-animations/food-forest/flow-sheet-mulching.mp4',
     '/course-animations/food-forest/posters/flow-sheet-mulching.jpg',
+    '/course-animations/food-forest/sheet-mulching-layer-order.mp4',
+    '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg',
   ]);
   for (const request of await cache.keys()) {
     if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
   }
-  await cache.put(marker, new Response('Food forest sheet mulch layer-order composite'));
+  await cache.put(marker, new Response('Food forest Flow sheet mulch close-up'));
 }
 
 // Slide 6's older film stops before the seedling plug is seated. Retire that saved pair only;

@@ -1,7 +1,14 @@
 # Food Forest slide 16 sheet-mulching composite — 22 September 2026
 
+**Held for Rory's approval.** Rory requires explicit review of SVG or code-drawn
+animation quality. This authored composite is no longer registered in the
+student player, and its generated MP4 and poster were removed from `public/`.
+The source script and this record remain solely to make the draft reviewable.
+The current Flow close-up candidate is recorded in
+[`food-forest-flow-mulch-closeup.md`](food-forest-flow-mulch-closeup.md).
+
 The existing eight-second Flow movie ends with broad cardboard exposed and mulch
-still beside it. It is retained as the setup segment, then followed by a
+still beside it. The held draft retained it as the setup segment, then followed it by a
 five-second authored illustration. The illustration shows loose chips settling
 above one continuous pale cardboard layer on distinct brown soil. Its only
 labels are `Mulch`, `Cardboard`, `Soil`, and `Illustrated layer order`.

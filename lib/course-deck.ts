@@ -224,9 +224,9 @@ const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // Each Food Forest Watch scene follows its existing narration.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
-  // The source clip stops at exposed cardboard. This composition keeps that setup, then holds
-  // the illustrated layer order so a manual Watch does not loop back to unfinished work.
-  16: { src: 'sheet-mulching-layer-order', poster: 'sheet-mulching-layer-order', bytes: 8265843, seconds: 13, playOnce: true },
+  // The close-up visibly moves mulch onto cardboard and holds the final layer order. The earlier
+  // wide Flow film stopped before this action, and the authored composite awaits Rory's review.
+  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true },
   5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100, narrationTimed: true },
   10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
   15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100, narrationTimed: true },

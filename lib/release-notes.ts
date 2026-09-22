@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '633fcf3f', changes: [
+    'In Food Forest lesson 3, watch hands spread mulch over cardboard.',
+  ], tour: [
+    { title: 'Watch mulch cover cardboard', where: 'Studies → Food Forest → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view Prepare a Manageable First Area on slide 3 of 5.' },
+  ] },
   { when: '22 September 2026', sha: '95b54854', changes: [
     'In Plant Guilds lesson 3, watch a support plant be thinned and useful cuttings carried.',
   ], tour: [
@@ -61,7 +67,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Open Watch and listen, then watch Seed or Seedling? on slide 3 of 4.' },
   ] },
   { when: '22 September 2026', sha: '26472a11', changes: [
-    'In Food Forest lesson 3, see mulch cover cardboard after the filmed setup.',
+    'In Food Forest lesson 3, see mulch above cardboard in the overview picture.',
     'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',
     'In Small Livestock, watch hens forage and a bee visit a blossom.',
     'In Farm Finance lesson 2, follow sales, cash and money owed across the source cards.',

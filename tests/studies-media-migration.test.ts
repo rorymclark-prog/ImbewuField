@@ -238,7 +238,7 @@ test('the food forest mulch still replaces only the superseded infographic once'
   assert.equal(await rows.get(changed + '?saved=1')!.text(), 'new old-path download');
 });
 
-test('the food forest layer-order composite retires only the incomplete slide 16 movie and poster once', async () => {
+test('the food forest Flow close-up retires the incomplete movie and unapproved composite without disturbing other downloads', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateForestSheetMulchingMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
@@ -246,10 +246,12 @@ test('the food forest layer-order composite retires only the incomplete slide 16
   const changed = [
     '/course-animations/food-forest/flow-sheet-mulching.mp4',
     '/course-animations/food-forest/posters/flow-sheet-mulching.jpg',
-  ];
-  const replacement = [
     '/course-animations/food-forest/sheet-mulching-layer-order.mp4',
     '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg',
+  ];
+  const replacement = [
+    '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4',
+    '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg',
   ];
   const keep = '/course-animations/food-forest/tour-young-forest.mp4';
   const rows = new Map([...changed, ...replacement, keep].map(path => [path + '?saved=1', new Response('saved')]));
@@ -264,7 +266,7 @@ test('the food forest layer-order composite retires only the incomplete slide 16
   for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
   for (const path of replacement) assert.equal(rows.has(path + '?saved=1'), true, path);
   assert.equal(rows.has(keep + '?saved=1'), true);
-  assert.equal(rows.has('/course-animations/food-forest/.sheet-mulching-layer-order-20260922'), true);
+  assert.equal(rows.has('/course-animations/food-forest/.flow-sheet-mulching-closeup-20260922'), true);
   rows.set(changed[0] + '?saved=1', new Response('new old-path download'));
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new old-path download');

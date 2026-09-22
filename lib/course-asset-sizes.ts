@@ -3,18 +3,18 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 856 files, 354.9 MB total.
+// 856 files, 353.1 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
+  '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
   '/course-animations/food-forest/flow-sheet-mulching.mp4': 7483690,
+  '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg': 241289,
   '/course-animations/food-forest/posters/flow-sheet-mulching.jpg': 474783,
-  '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg': 64763,
   '/course-animations/food-forest/posters/tour-seven-layers.jpg': 839420,
   '/course-animations/food-forest/posters/tour-young-forest.jpg': 818287,
   '/course-animations/food-forest/posters/watch-05-seven-layers.jpg': 141628,
   '/course-animations/food-forest/posters/watch-10-climate-match.jpg': 152349,
   '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg': 143974,
-  '/course-animations/food-forest/sheet-mulching-layer-order.mp4': 8265843,
   '/course-animations/food-forest/tour-seven-layers.mp4': 7425984,
   '/course-animations/food-forest/tour-young-forest.mp4': 6436310,
   '/course-animations/food-forest/watch-05-seven-layers.mp4': 222959,

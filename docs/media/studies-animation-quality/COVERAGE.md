@@ -19,7 +19,10 @@ fallback before it can be accepted.
   review and the completed lesson bundle.
 - **Authored precise diagram** means controlled illustration, geometry, masks,
   arrows, labels, calculations or interface annotation; it is the default for
-  relationships, quantities, dates, flows and decisions.
+  relationships, quantities, dates, flows and decisions. Rory requires his
+  explicit visual clearance before any SVG or code-drawn **animation** is
+  accepted or released; a diagram treatment in this register is only a draft
+  option until that clearance.
 - **Conditional Flow treatment** means one candidate only after the listed
   preconditions; it is never an automatic shot order. Use an inspected reference,
   one continuous eight-second action, locked camera by default, x1, no text,
@@ -72,7 +75,7 @@ physical-mechanism review; neither is a reason to place another order.
 | 9 | Food Forest Design | food-forest-l1 | 5 | Watch: Read the Seven Planting Layers | `tour-seven-layers` | Retain and review tour; authored layer overlay must remain readable. |
 | 10 | Food Forest Design | food-forest-l2 | 10 | Watch: Match the Species to the Climate | `watch-10-climate-match` | Authored precise diagram; preserve existing species and locality limits. |
 | 11 | Food Forest Design | food-forest-l3 | 15 | Watch: Care for a Young Food Forest | `tour-young-forest` | Retain and review tour; no instant establishment claim. |
-| 12 | Food Forest Design | food-forest-l3 | 16 | Prepare a Manageable First Area | `sheet-mulching-layer-order` | Reviewed composite: retain the eight-second filmed setup, then show a five-second labelled illustration of loose mulch settling above continuous cardboard on soil. The illustration is a layer-order aid, not filmed completion or an establishment claim; provenance and limits are in `food-forest-sheet-mulching-composite.md`. |
+| 12 | Food Forest Design | food-forest-l3 | 16 | Prepare a Manageable First Area | `flow-sheet-mulching-closeup` | New Flow close-up candidate: gloved hands physically spread wood chips above cardboard; an exposed cardboard section keeps the layer order visible at phone size. The older wide Flow film ends before that action, while the authored composite awaits Rory's explicit SVG/code-drawn approval. This is a preview candidate, not farmer or isiZulu acceptance; see `food-forest-flow-mulch-closeup.md`. |
 | 13 | Vegetables and Staple Crops | vegetables-staples-l1 | 6 | Seed or Seedling? | `seed-or-seedling-choice` | Seven-second authored comparison illustrates the narrated direct-sow versus nursery-start choice; it ends with seed covered and root plug seated. No depth, spacing, crop or outcome claim. The older Flow transplant movie remains on disk for provenance but is no longer the learner's Watch asset because its plug stays exposed. See `vegetables-seed-or-seedling-choice.md`. |
 | 14 | Vegetables and Staple Crops | vegetables-staples-l4 | 16 | Treat the Cause Before the Insect | `pest-decision-path` | Ten-second authored decision sequence shows observe, check stress, protect helpful insects, choose an appropriate light action and monitor; conditional treatment frame requires crop-and-pest registration, label, protection and harvest waiting instructions. No diagnosis, product or result claimed. See `vegetables-pest-decision-path.md`. |
 | 15 | Soil Health & Composting | soil-health-l1 | 5 | Watch: Read Your Soil | `tour-soil-observation` | Retain and review published observation tour. |

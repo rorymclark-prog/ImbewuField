@@ -111,7 +111,31 @@
         "finding": "Cardboard wetted; dry leaves placed above; no trunk burial or instant growth.",
         "inAppPlayback": "Verified 2026-09-20 in local Studies player at 390x844: Watch button starts video; readyState 4, currentTime advances, no media error. Market clip also checked with narration and automatic next slide."
       },
+      "followupReview": "2026-09-22: The final frame still shows broad cardboard exposed with mulch beside it, so this is only an in-progress setup and was retired from slide 16.",
       "encoding": "1280x720 H264 CRF22 slow yuv420p faststart, audio removed"
+    },
+    {
+      "id": "sheet-mulching-closeup",
+      "module": "food-forest",
+      "slide": 16,
+      "provider": "Google Flow",
+      "model": "Veo 3.1 Quality",
+      "generationCredits": 100,
+      "flowEditor": "https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/773387c3-bd8b-4e5b-b501-464ded91cbf5",
+      "source": {
+        "source": "/Users/roryclark/Downloads/Hands_spreading_mulch_on_cardboard_20260922185935.mp4",
+        "sha256": "01ba5108d6630d6770256da4ee6687d9b03343e5ec24ae04b2b376a6b2cae128"
+      },
+      "asset": "public/course-animations/food-forest/flow-sheet-mulching-closeup.mp4",
+      "bytes": 6248424,
+      "seconds": 8,
+      "sha256": "01ba5108d6630d6770256da4ee6687d9b03343e5ec24ae04b2b376a6b2cae128",
+      "review": {
+        "method": "Complete editor playback; 16-frame phone-width contact sheet; original file decoded at 1280x720, 24 fps",
+        "finding": "One pair of gloved hands physically spreads wood chips over cardboard. An exposed section remains visible at the end, showing the layer order. No completed-bed or weed-control outcome is depicted.",
+        "inAppPlayback": "2026-09-22: Local 390px Student player rendered the video at 269px, reached currentTime=8, readyState=4 and ended=true with loop=false; the final frame held. Slide-16 narration continued to the next slide. After saving the Food Forest pack, the new MP4, poster and narration were cached and reopened with the browser network disabled. Rory's visual approval remains open."
+      },
+      "encoding": "Original 1280x720 H264 with generated AAC; Student player mutes video under lesson narration"
     },
     {
       "id": "ducks-understorey",

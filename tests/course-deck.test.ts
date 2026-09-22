@@ -109,12 +109,12 @@ test('a slide with no animation offers none — the still is the lesson', () => 
   assert.ok(animationUrls('seeds-sovereignty', 5));
 });
 
-test('food forest sheet mulching plays once so its illustrated layer order can remain visible', () => {
+test('food forest sheet mulching plays the reviewed Flow hand action once and holds its final layer order', () => {
   const clip = animationUrls('food-forest', 16);
   assert.ok(clip);
-  assert.equal(clip.video, '/course-animations/food-forest/sheet-mulching-layer-order.mp4');
-  assert.equal(clip.poster, '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg');
-  assert.equal(clip.seconds, 13);
+  assert.equal(clip.video, '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4');
+  assert.equal(clip.poster, '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg');
+  assert.equal(clip.seconds, 8);
   assert.equal(clip.playOnce, true);
 });
 

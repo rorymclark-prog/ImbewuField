@@ -1,5 +1,29 @@
 # Active Studies continuation — 22 September 2026
 
+## Flow animation pivot and Rory's SVG approval rule
+
+Rory explicitly directed work to Google Flow and requires his clearance before
+any SVG/code-drawn animation is accepted or released. The locally drawn Plant
+Guilds L3 thinning clip remains a draft in PR504; do not merge it on a technical
+check alone. The Food Forest L3 authored layer-order composite was removed from
+the student-player registration and public assets while its source stays in a
+held review record.
+
+Three new Veo 3.1 Quality x1 eight-second Flow orders cost 100 credits each.
+The new Soil L3 rain comparison is rejected because it erupts into exaggerated
+mud splashes and changes the vertical cutaway. A wide Food Forest sheet-mulching
+rerender still ends with broad cardboard exposed. The new close-up Flow action
+visibly spreads wood chips over cardboard and is the Food Forest L3 slide-16
+preview candidate. Its editor link, prompt boundary, hashes and review limits
+are in `docs/media/studies-animation-quality/food-forest-flow-mulch-closeup.md`.
+The complete clip played and held in the actual 390px local learner player;
+slide-16 narration continued to the next slide. The full Food Forest pack saved
+the new MP4/poster and audio, and they reopened with the browser network
+disabled. Local typecheck, the full suite (3,694 pass, zero fail, one existing
+TODO) and whitespace check passed. Push a coherent preview, read the exact-head
+`test` and `rules` jobs, and request Rory's visual decision. Do not claim
+farmer, fluent isiZulu or practitioner approval.
+
 ## Latest checkpoint — Plant Guilds lesson 3
 
 Plant Guilds lessons 1 and 2 already have complete lesson checks on this branch;
@@ -79,8 +103,10 @@ while other unblocked Studies work may continue.
 
 ## Boundaries
 
-No credits spent since the duplicate Quality soil trial. Conservative remaining
-batch budget: 2,400 credits. “Not accepted” or “export unresolved” is not “missing”.
+Before the Flow pivot above, no credits had been spent since the duplicate
+Quality soil trial and the conservative remaining batch budget was 2,400
+credits. The three new orders consumed 300 credits of that planning envelope.
+“Not accepted” or “export unresolved” is not “missing”.
 All49 core video slots /57 language variants have files and posters. Fast soil
 and bee originals are recovered. See SOIL-COMPARISON-REVIEW.md for exact findings.
 Fluent isiZulu and practitioner/human listening review remain outstanding; no
