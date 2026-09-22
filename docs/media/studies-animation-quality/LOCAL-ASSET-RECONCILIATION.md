@@ -1,5 +1,11 @@
 # Local core-animation asset reconciliation
 
+> **Superseded snapshot.** This inventory predates Rory's 22 September visual
+> quality decision and the withdrawal of 22 locally authored learner
+> registrations. It remains evidence of what was found at that point; it is not
+> the current player or filesystem state. See
+> `held-authored-media-2026-09-22.md` and `COVERAGE.md` for current status.
+
 This is a filesystem inventory only. It does not approve a visual, request a
 replacement, alter a registry entry, generate media or authorise deletion.
 

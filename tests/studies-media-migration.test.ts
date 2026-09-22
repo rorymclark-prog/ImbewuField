@@ -338,6 +338,35 @@ test('unapproved code-drawn lesson animations leave saved packs without disturbi
   assert.doesNotMatch(body, /\bfetch\(/, 'retirement must not spend a learner’s airtime');
 });
 
+test('every held authored study clip and poster leaves saved packs while reviewed footage stays', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateHeldAuthoredStudyAnimations\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateHeldAuthoredStudyAnimations\)/);
+  const changed = [...body.matchAll(/'(\/course-animations\/[^']+\.(?:mp4|jpg))'/g)]
+    .map(match => match[1]);
+  assert.equal(changed.length, 56, 'all 28 held movies and posters must be retired');
+  const keep = [
+    '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4',
+    '/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4',
+    '/course-animations/small-livestock/flow-ducks-understorey.mp4',
+    '/course-animations/small-livestock/flow-bee-between-blossoms.mp4',
+  ];
+  const rows = new Map([...changed, ...keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=1'), true, path);
+  assert.equal(rows.has('/course-animations/.held-authored-media-retired-20260922'), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'retirement must not spend a learner’s airtime');
+});
+
 test('the bee hive and blossom clip retires only the old slide 9 movie and poster once', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateBeeHiveAndBlossomMedia\(\) \{([\s\S]*?)\n\}/)?.[1];

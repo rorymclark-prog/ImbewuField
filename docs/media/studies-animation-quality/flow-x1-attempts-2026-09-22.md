@@ -2,8 +2,9 @@
 
 Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
 **eight seconds**, and **x1**. Each prompt produced one video and cost 100 Flow
-credits. Three prompts used 300 credits in total. None passed release review,
-none was copied into `public/`, and no further prompt was placed.
+credits. Four prompts used 400 credits in total. The first three were rejected
+and were not copied into `public/`. The fourth passed technical review and is
+registered as the Small Livestock lesson 2 bee clip.
 
 ## Plant Guilds lesson 3 — whole-support thinning
 
@@ -41,3 +42,21 @@ The files were decoded at 1280×720 and 24 fps. Full-duration and phone-scale
 contact views were inspected. Lower-cost agents independently checked the
 motion against the exact narration and farming safeguards. These are technical
 reviews, not human, farmer, practitioner, learner or isiZulu approval.
+
+## Small Livestock lesson 2 — one bee between two blossoms
+
+The fourth prompt requested one coherent bee, two adjacent blossoms held in
+view, one uninterrupted move, x1 output and no pollen-transfer or yield claim.
+The bee stays continuous, contacts the centre of the first blossom, moves to
+the second and contacts its centre. The source contained an unexpected AAC
+track, so the learner copy is silent. The existing still retains the wider
+hive-to-crops context.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Honeybee_moving_between_blossoms_20260922203050.mp4` | `09bfa32523016b768d959a92113af7ab50b9799920a0fad71d8ef107a3eb988c` | 2,277,351 | Passed technical visual review; learner registration added |
+
+The clip shows contact only. It does not prove pollen transfer, fertilisation,
+fruit set or yield. Human, beekeeper, learner and fluent isiZulu review remain
+open. Exact learner-file hashes and the withdrawn composite record are in
+`bee-hive-and-blossom.md`.

@@ -463,8 +463,79 @@ async function migrateUnapprovedStudyAnimations() {
   await cache.put(marker, new Response('Unapproved lesson animations retired'));
 }
 
-// Slide 9 now pairs the hive-to-crops diagram with a recovered Flow flower-contact macro.
-// Remove only the superseded saved movie and poster once; never refetch the replacement.
+// Rory has not cleared the locally rendered diagrams and tours. Remove every public copy from a
+// saved pack so a learner sees the lesson still while one-at-a-time Flow replacements are reviewed.
+// This is a new marker because earlier clients may already have run the narrower retirement above.
+async function migrateHeldAuthoredStudyAnimations() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/.held-authored-media-retired-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-09-vetiver-contour.mp4',
+    '/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg',
+    '/course-animations/water-harvesting/watch-12-dam-spillway.mp4',
+    '/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg',
+    '/course-animations/water-harvesting/watch-16-first-flush-tank.mp4',
+    '/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg',
+    '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4',
+    '/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg',
+    '/course-animations/intro-permaculture/watch-07-three-ethics.mp4',
+    '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg',
+    '/course-animations/intro-permaculture/watch-13-diversity.mp4',
+    '/course-animations/intro-permaculture/posters/watch-13-diversity.jpg',
+    '/course-animations/intro-permaculture/motion-windbreak.mp4',
+    '/course-animations/intro-permaculture/posters/motion-windbreak.jpg',
+    '/course-animations/intro-permaculture/watch-19-windbreak.mp4',
+    '/course-animations/intro-permaculture/posters/watch-19-windbreak.jpg',
+    '/course-animations/reading-landscape/watch-05-water-movement.mp4',
+    '/course-animations/reading-landscape/posters/watch-05-water-movement.jpg',
+    '/course-animations/reading-landscape/watch-09-sun-shadows.mp4',
+    '/course-animations/reading-landscape/posters/watch-09-sun-shadows.jpg',
+    '/course-animations/reading-landscape/watch-13-wind-cold-air.mp4',
+    '/course-animations/reading-landscape/posters/watch-13-wind-cold-air.jpg',
+    '/course-animations/reading-landscape/watch-17-site-map.mp4',
+    '/course-animations/reading-landscape/posters/watch-17-site-map.jpg',
+    '/course-animations/soil-health/tour-soil-observation.mp4',
+    '/course-animations/soil-health/posters/tour-soil-observation.jpg',
+    '/course-animations/soil-health/watch-05-living-soil.mp4',
+    '/course-animations/soil-health/posters/watch-05-living-soil.jpg',
+    '/course-animations/soil-health/watch-10-compost-heap.mp4',
+    '/course-animations/soil-health/posters/watch-10-compost-heap.jpg',
+    '/course-animations/soil-health/watch-14-mulch-protection.mp4',
+    '/course-animations/soil-health/posters/watch-14-mulch-protection.jpg',
+    '/course-animations/food-forest/tour-seven-layers.mp4',
+    '/course-animations/food-forest/posters/tour-seven-layers.jpg',
+    '/course-animations/food-forest/watch-05-seven-layers.mp4',
+    '/course-animations/food-forest/posters/watch-05-seven-layers.jpg',
+    '/course-animations/food-forest/watch-10-climate-match.mp4',
+    '/course-animations/food-forest/posters/watch-10-climate-match.jpg',
+    '/course-animations/food-forest/tour-young-forest.mp4',
+    '/course-animations/food-forest/posters/tour-young-forest.jpg',
+    '/course-animations/food-forest/watch-15-forest-sequence.mp4',
+    '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg',
+    '/course-animations/small-livestock/bee-hive-and-blossom.mp4',
+    '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg',
+    '/course-animations/small-livestock/watch-04-chicken-tractor.mp4',
+    '/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg',
+    '/course-animations/small-livestock/watch-09-bee-pollination.mp4',
+    '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg',
+    '/course-animations/small-livestock/watch-14-nutrient-loop.mp4',
+    '/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg',
+    '/course-animations/market-community/watch-04-farm-record.mp4',
+    '/course-animations/market-community/posters/watch-04-farm-record.jpg',
+    '/course-animations/market-community/watch-09-surplus-routes.mp4',
+    '/course-animations/market-community/posters/watch-09-surplus-routes.jpg',
+    '/course-animations/market-community/watch-14-community-network.mp4',
+    '/course-animations/market-community/posters/watch-14-community-network.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Held authored study media retired'));
+}
+
+// Historical migration from the original drawn bee route to the now-withdrawn composite. Keep its
+// marker for clients crossing that release; the broader migration above retires both generations.
 async function migrateBeeHiveAndBlossomMedia() {
   const cache = await caches.open(COURSE_CACHE);
   const marker = '/course-animations/small-livestock/.bee-hive-and-blossom-20260922';
@@ -543,7 +614,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

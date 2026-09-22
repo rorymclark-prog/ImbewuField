@@ -1,5 +1,7 @@
 {
   "schemaVersion": 1,
+  "status": "Superseded historical snapshot taken before the 2026-09-22 withdrawal of locally authored learner animations.",
+  "supersededBy": "docs/media/studies-animation-quality/held-authored-media-2026-09-22.md",
   "scope": "Local filesystem reconciliation only; no visual acceptance, generation, or deletion instruction.",
   "sourceFiles": [
     "lib/course-deck.ts",

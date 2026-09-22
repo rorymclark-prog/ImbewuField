@@ -130,6 +130,41 @@ test('vegetable pest lesson keeps its still while the unapproved decision animat
   assert.equal(animationUrls('vegetables-staples', 16), null);
 });
 
+test('locally drawn study animations stay behind stills until Rory clears their visual quality', () => {
+  const held: Array<[string, number]> = [
+    ['water-harvesting', 9], ['water-harvesting', 12], ['water-harvesting', 16], ['water-harvesting', 21],
+    ['intro-permaculture', 7], ['intro-permaculture', 13], ['intro-permaculture', 19],
+    ['reading-landscape', 5], ['reading-landscape', 9], ['reading-landscape', 13], ['reading-landscape', 17],
+    ['soil-health', 5], ['soil-health', 10], ['soil-health', 14],
+    ['food-forest', 5], ['food-forest', 10], ['food-forest', 15],
+    ['small-livestock', 14],
+    ['market-community', 4], ['market-community', 9], ['market-community', 14],
+  ];
+  for (const [moduleId, slide] of held) {
+    assert.equal(animationUrls(moduleId, slide), null, `${moduleId} slide ${slide} must use its still`);
+    assert.ok(slideImageFor(moduleId, 'en', slide), `${moduleId} slide ${slide} must keep its still`);
+  }
+
+  const retained: Array<[string, number]> = [
+    ['water-harvesting', 4], ['water-harvesting', 7], ['water-harvesting', 14],
+    ['intro-permaculture', 4], ['reading-landscape', 6], ['soil-health', 11],
+    ['food-forest', 16], ['small-livestock', 4], ['small-livestock', 7], ['small-livestock', 9],
+    ['market-community', 15],
+  ];
+  for (const [moduleId, slide] of retained) {
+    assert.ok(animationUrls(moduleId, slide), `${moduleId} slide ${slide} must retain non-drawn footage`);
+  }
+});
+
+test('the bee lesson uses one technically checked Flow move between two blossoms and then holds', () => {
+  const clip = animationUrls('small-livestock', 9);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/small-livestock/flow-bee-between-blossoms.mp4');
+  assert.equal(clip.poster, '/course-animations/small-livestock/posters/flow-bee-between-blossoms.jpg');
+  assert.equal(clip.seconds, 8);
+  assert.equal(clip.playOnce, true);
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of
@@ -391,6 +426,16 @@ test('deck arrows change slides only while the deck itself has plain-key focus',
 });
 
 test('a timed tour follows the voice after late loading, pause and seeking, then preserves its final hold', async t => {
+  // The current learner set deliberately has no locally drawn timed tours. Keep this interaction
+  // covered with an in-memory fixture so withdrawing a visual does not also withdraw the player
+  // guarantee that the next reviewed timed tour will depend on.
+  const tourSlide = COURSE_DECKS['food-forest'].slides.find(slide => slide.slide === 15)!;
+  const previousAnimation = tourSlide.animation;
+  tourSlide.animation = {
+    src: 'timed-tour-test-fixture', poster: 'timed-tour-test-fixture', bytes: 1,
+    seconds: 33.291667, narrationTimed: true,
+  };
+  t.after(() => { tourSlide.animation = previousAnimation; });
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {

@@ -408,3 +408,33 @@ audio loaded with `readyState=4` and no media error. Source and review limits:
 `docs/media/studies-animation-quality/plant-guilds-l2-lesson-check.md`.
 No replacement movie was needed. Human, fluent isiZulu, practitioner and
 learner review remain open.
+
+## 22 September continuation — locally authored animation withdrawal and bee Flow replacement
+
+Rory rejected the quality of the SVG/code-drawn style animations and requires
+explicit visual clearance before any such animation is learner-facing. A
+renderer/provenance audit found 21 registered locally authored clips plus the
+mixed code-drawn/Flow `bee-hive-and-blossom` composite. All 22 registrations
+were withdrawn. Existing lesson stills, narration, transcripts, bodies,
+quizzes and rationales remain unchanged. Six additional unregistered legacy
+code-drawn movies were removed from the public course payload. The new service
+worker migration removes all 28 retired movies and 28 posters from saved packs
+without fetching replacements. Exact scope and current holds are in
+`docs/media/studies-animation-quality/held-authored-media-2026-09-22.md`.
+
+One Veo 3.1 Quality prompt was then placed for Small Livestock lesson 2 using
+16:9, 720p, eight seconds and x1. It cost 100 Flow credits and produced one
+candidate. Full-motion and phone-scale inspection found one continuous bee
+moving from the first blossom to an adjacent second blossom, with both flowers
+remaining visible and no obvious duplicate, morph, cut or background break. An
+independent lower-cost review reached the same technical decision. The
+unexpected AAC track was removed from the learner copy. The registered silent
+asset is `flow-bee-between-blossoms`; it plays once and holds its final frame.
+It shows flower contact only and does not prove pollen transfer, fertilisation,
+fruit set or yield. The existing still retains the wider hive-to-crops context.
+
+This was the fourth x1 prompt in the current pass, bringing this pass to 400
+Flow credits. The first three results remain rejected and unpublished. Exact
+hashes and limits are in `bee-hive-and-blossom.md` and
+`flow-x1-attempts-2026-09-22.md`. Human, beekeeper, practitioner, learner and
+fluent isiZulu approval remain open.
