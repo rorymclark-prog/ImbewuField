@@ -31,6 +31,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import motion from './JournalMotion.module.css';
 
 type Filter = 'all' | JournalCategory;
 
@@ -192,6 +193,7 @@ export default function FieldJournal() {
       }}>
         <button
           type="button"
+          className={motion.newEntry}
           onClick={() => setSheet({ open: true, entry: null })}
           style={{
             width: '100%', minHeight: 50, borderRadius: 14, border: 'none', cursor: 'pointer',
@@ -365,6 +367,7 @@ export default function FieldJournal() {
 
             <button
               type="button"
+              className={motion.newEntry}
               onClick={() => setSheet({ open: true, entry: null })}
               style={{
                 width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
@@ -380,8 +383,8 @@ export default function FieldJournal() {
         </div>
       )}
 
-      {months.map((group) => (
-        <section key={group.key} style={{ marginBottom: 18 }}>
+      {months.map((group, index) => (
+        <section key={`${filter}-${group.key}`} className={motion.monthGroup} style={{ marginBottom: 18, animationDelay: `${Math.min(index, 4) * 45}ms` }}>
           <div className={workspace.journalMonth} style={{
             // Tucks under the sticky New-entry bar above (50px button + its padding).
             zIndex: 1,
@@ -401,6 +404,7 @@ export default function FieldJournal() {
               return (
                 <article
                   key={entry.id}
+                  className={motion.entry}
                   style={{
                     position: 'relative', marginBottom: 10, borderRadius: 14,
                     background: '#FFFEFA', border: '1px solid #E2D8C4',
@@ -464,6 +468,7 @@ export default function FieldJournal() {
 
                     <button
                       type="button"
+                      className={motion.editEntry}
                       onClick={() => setSheet({ open: true, entry })}
                       aria-label={`Edit entry: ${entry.title || formatJournalDate(entry.date)}`}
                       style={{
@@ -539,6 +544,7 @@ function Chip({
   return (
     <button
       type="button"
+      className={motion.filterChip}
       onClick={onClick}
       aria-pressed={on}
       style={{

@@ -17,6 +17,7 @@ import type { Profile } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
+import motion from './ContactMotion.module.css';
 
 interface ContactReply {
   id: string;
@@ -175,10 +176,10 @@ export default function ContactPage() {
         {sent ? (
           /* Success state */
           <div
-            className="rounded-2xl p-8 text-center"
+            className={`rounded-2xl p-8 text-center ${motion.sentCard}`}
             style={{ background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.2)', marginTop: 32 }}
           >
-            <CheckCircle size={40} style={{ color: '#1F4D2B', margin: '0 auto 16px' }} strokeWidth={1.5} />
+            <CheckCircle className={motion.sentIcon} size={40} style={{ color: '#1F4D2B', margin: '0 auto 16px' }} strokeWidth={1.5} />
             <div className="font-display font-bold" style={{ fontSize: 20, color: '#1F4D2B', marginBottom: 8 }}>
               Message sent
             </div>
@@ -260,7 +261,7 @@ export default function ContactPage() {
                           : <ChevronDown size={13} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />}
                       </button>
                       {expandedReply === r.id && (
-                        <div className="px-4 pb-4 pt-1" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
+                        <div className={`px-4 pb-4 pt-1 ${motion.replyBody}`} style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
                           <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: '#20190F' }}>
                             {r.reply_body}
                           </p>
@@ -355,14 +356,15 @@ export default function ContactPage() {
                       key={value}
                       type="button"
                       onClick={() => setRecipient(value)}
-                      className="flex items-center gap-3 rounded-xl p-3 text-left transition-all"
+                      aria-pressed={recipient === value}
+                      className={`flex items-center gap-3 rounded-xl p-3 text-left ${motion.recipient}`}
                       style={{
                         background: recipient === value ? 'rgba(31,77,43,0.08)' : '#FFFEFA',
                         border: `1px solid ${recipient === value ? 'rgba(31,77,43,0.35)' : '#E2D8C4'}`,
                         cursor: 'pointer',
                       }}
                     >
-                      <div style={{
+                      <div className={motion.recipientIcon} style={{
                         width: 34, height: 34, borderRadius: 9, flexShrink: 0,
                         background: recipient === value ? 'rgba(31,77,43,0.12)' : 'rgba(32,25,15,0.05)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -400,7 +402,7 @@ export default function ContactPage() {
                   placeholder="e.g. Farm visit request"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  className="w-full rounded-xl px-3 py-2.5 font-sans"
+                  className={`w-full rounded-xl px-3 py-2.5 font-sans ${motion.field}`}
                   style={{
                     fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4',
                     color: '#20190F', outline: 'none',
@@ -419,7 +421,7 @@ export default function ContactPage() {
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
                   required
-                  className="w-full rounded-xl px-3 py-2.5 font-sans"
+                  className={`w-full rounded-xl px-3 py-2.5 font-sans ${motion.field}`}
                   style={{
                     fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4',
                     color: '#20190F', outline: 'none', resize: 'vertical', lineHeight: 1.5,
@@ -440,7 +442,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={sending || !body.trim()}
-                className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
+                className={`flex items-center justify-center gap-2 font-display font-semibold rounded-xl ${motion.send}`}
                 style={{
                   background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)',
                   color: body.trim() ? '#F7F2E9' : '#94876F',

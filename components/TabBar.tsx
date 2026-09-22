@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Home, Map, DollarSign, User, Users, BarChart3 } from 'lucide-react';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
+import styles from './TabBar.module.css';
 
 // The third tab is the farmer's money, and there is one of it now. It used to point at
 // /finances while a second door, "My Records", held her kilograms — the split the Gogo Test
@@ -117,20 +118,20 @@ export default function TabBar() {
           <Link
             key={href}
             href={href}
-            className="flex-1 flex flex-col items-center py-2"
+            className={`flex-1 flex flex-col items-center py-2 ${styles.link}`}
             style={{ textDecoration: 'none' }}
           >
             <div
-              className="flex flex-col items-center gap-1"
+              className={`flex flex-col items-center gap-1 ${styles.pill} ${active ? styles.active : ''}`}
               style={{
                 padding: '4px 14px',
                 borderRadius: 12,
                 // A fixed light pill keeps the forest-green active label legible in dark mode.
                 background: active ? '#e4eee8' : 'transparent',
-                transition: 'background var(--dur-fast) var(--ease-out)',
               }}
             >
               <Icon
+                className={styles.icon}
                 size={22}
                 strokeWidth={active ? 2.2 : 1.7}
                 style={{
@@ -140,7 +141,6 @@ export default function TabBar() {
                   // would put two visibly different "brand greens" in the app at once. Matches
                   // the --brand-soft tint already used for the pill background above.
                   color: active ? '#1F4D2B' : 'var(--text-muted)',
-                  transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
               />
               <span
