@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '9d6d43e5', changes: [
+    'In Farm Finance lesson 2, see cash, sales and money owed change with each card.',
+    'In Small Livestock lesson 1, watch real hens peck among plant remains.',
+  ], tour: [
+    { title: 'Follow the finance cards', where: 'Studies → Farm Finance → lesson 2', href: '/student/finance',
+      detail: 'Open lesson 2. Use Next card to see why a later buyer payment is not another sale.' },
+    { title: 'Watch hens forage', where: 'Studies → Small Livestock → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, then watch the first slide.' },
+  ] },
   { when: '22 September 2026', sha: '2692ad6d', changes: [
     'Tap the sprout on Home to see what it means and how your farm plan is growing.',
     'The next step, tour and farm-gate price cards now respond when you use them.',
@@ -1715,5 +1724,6 @@ export function visibleUpdateTour(notes: ReleaseNote[] = RELEASE_NOTES, max = MA
     shown += note.changes.length;
     if (remaining > 0 && note.tour) stops.push(...note.tour);
   }
-  return stops;
+  // The saved update guide holds five stops; keep the newest relevant stops first.
+  return stops.slice(0, 5);
 }
