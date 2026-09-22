@@ -360,6 +360,25 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         )}
       </div>
 
+      {anim && (
+        <a
+          href={anim.poster}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open still image for ${heading} at full size`}
+          className={styles.zoomLink}
+          onClick={() => {
+            // A separate image tab needs the lesson to wait while the farmer inspects its detail.
+            audioRef.current?.pause();
+            videoRef.current?.pause();
+            setRunning(false);
+            setTimedVoiceActive(false);
+          }}
+        >
+          Open still image · tap to zoom ↗
+        </a>
+      )}
+
       {audio && (
         <audio
           ref={audioRef}
