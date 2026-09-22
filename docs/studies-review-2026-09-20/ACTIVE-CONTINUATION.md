@@ -565,3 +565,11 @@ work are in `docs/media/studies-animation-quality/intro-l1-water-use-correction-
 It was independently checked for the distinction between permissible use and
 physical supply. Do not apply it to protected learner content until Rory answers
 the pending scope question.
+
+Introduction lesson 2 (slides 9–14) then passed a deployed phone-width and
+saved-pack offline media play-through without a new Flow spend. It is still
+content held for attribution, swale-site safety and an overconfident hail
+comparison whose still also overstates protection. The exact technical evidence
+and source boundaries are in
+`docs/media/studies-animation-quality/intro-l2-lesson-check.md`. No protected
+L2 copy or learner media was changed while Rory's scope answer remains pending.
