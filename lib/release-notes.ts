@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: 'aff0cc2c', changes: [
+    'In Vegetables lesson 1, compare sowing in the bed with starting a seedling in a nursery.',
+  ], tour: [
+    { title: 'Compare seed and seedling', where: 'Studies → Vegetables and Staple Crops → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, then watch Seed or Seedling? on slide 3 of 4.' },
+  ] },
   { when: '22 September 2026', sha: '26472a11', changes: [
     'In Food Forest lesson 3, see mulch cover cardboard after the filmed setup.',
     'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',
