@@ -335,3 +335,15 @@ jobs succeeded in runs 35735268511 and 35735261791, and preview run
 video/poster hashes matched the checked-in bytes, and the deployed 390px Watch
 clip ended once without a media error. Issue #35 records the review route.
 Human, practitioner, fluent isiZulu and learner acceptance remain open.
+
+Plant Selection & Guilds lesson 1 (slides 7–26) was then checked in the
+deployed 390px English Student sample. The 20-slide narrated player reached
+its end. Existing pigeon-pea and labelled-guild clips played without media
+error; the latter's labels are small at phone width, and its **Open still
+image · tap to zoom** link opened the full 1280×720 poster. The 60.6 MB /
+118-file module pack reported **On this phone**; after an offline reload,
+both lesson videos and their English audio loaded from cache with
+`readyState=4`. No replacement animation was needed. See
+`docs/media/studies-animation-quality/plant-guilds-l1-lesson-check.md`.
+This is technical English preview evidence; fluent isiZulu, practitioner,
+human listening and learner review remain open.
