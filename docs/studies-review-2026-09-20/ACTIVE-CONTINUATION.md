@@ -29,18 +29,20 @@ Local review server: port 4372 (restart if absent).
 
 ## Immediate work
 
-1. Terra agent `soil_stills_reuse` owns only `soil-stills-review/` under the media
-   docs and matching Downloads folder. Find existing assets for slide16 cover
-   crops and slide18 wind/storm teaching. Build concrete candidates without new
-   generation or new facts. Parent owns review and integration.
-2. Parent reviews candidate source/teaching fit, actual output and delivery paths.
-   Register accepted still improvements only with accurate sizes and targeted cache
-   replacement. Keep the soil movies held for joint style review.
-3. Continue Soil lessons1–2 using already published observation/compost media;
-   check actual teaching and narration before commissioning anything else.
-4. Continue genuine unfinished Finance/Design/app guide implementation work.
-   Older COMPLETION-STATUS documents are snapshots: verify against current main
-   before acting. Do not duplicate released work.
+1. PR500 is published at ad44fd74. Production deployment, build identity and
+   exact live slide16/18 bytes are verified. Do not repeat this release.
+2. Soil lesson3's two still replacements, mobile controls and cache handling are
+   implemented and verified. Do not regenerate these or repeat their review.
+   Soil slide14 movie candidates remain held for joint review.
+3. Soil lessons1–2 passed a teaching/media-fit review with no replacement brief.
+   Lesson1 reviewed actual stills and sampled tour contact views; this is not full
+   temporal or practitioner approval. Lesson2's attempted uninterrupted offline
+   play-through had no observed end state, so that one check remains unverified.
+4. Continue a concrete unfinished task from the remaining Finance/Design narration
+   gates or coordinated core fact-check corrections, subject to existing content
+   protections. First establish whether its scripts/voice samples already exist.
+   Do not redo deployed app guides, finished previews or media inventories. Human
+   acceptance and protected-content decisions must remain explicit dependencies.
 
 ## Boundaries
 
@@ -61,7 +63,7 @@ coordinated editorial/media corrections; do not silently rewrite protected conte
 - Two-still-only cache migration and idempotence/preservation test implemented.
 - Dependencies refreshed into this worktree (previous shared symlink was removed,
   its target preserved) to match main’s new Rive dependency.
-- Local app at4373; browser review, full suite and release still in progress.
+- Local production-build app at4373; browser review and the full suite completed.
 
 ## Verified release batch
 
@@ -84,3 +86,15 @@ The corrected release-note destinations now pass both update-tour tests. After
 merging main, typecheck and the full suite pass: 3,683 tests, 3,682 passes,
 zero failures, one existing TODO; whitespace is clean. Final compost play-through
 was started offline but its end state was not observed, so do not mark it passed.
+
+## Release checkpoint — PR500
+
+PR https://github.com/rorymclark-prog/ImbewuField/pull/500 merged at
+ad44fd74b98359aaad4ca3ec6943af7eac0fa1b9. Exact-head ad10af26 CI test and rules
+jobs both passed in runs 35690201090 and 35690198377; preview 35690198389 passed.
+Production deployment 35690531200 succeeded, as did main test run 35690531245.
+Live build-info reports ad44fd7. Both new JPEGs returned HTTP 200 and matched
+accepted local bytes/SHA256 exactly (slide16: 932,837 bytes; slide18: 795,928 bytes).
+Independent Soil lesson1 review found no concrete media replacement need. Its
+five sampled phases and stills support the observation task without claiming a
+soil diagnosis. No full-motion or practitioner sign-off is implied.
