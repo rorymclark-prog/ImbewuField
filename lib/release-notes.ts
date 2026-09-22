@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: 'e8cf8ece', changes: [
+    'The bottom navigation now responds as you move between pages.',
+    'Journal entries, Contact choices and My Records pages now open with clear motion.',
+  ], tour: [
+    { title: 'Write in your journal', where: 'Home → Journal → New entry', href: '/journal',
+      detail: 'Open a new entry, then choose a category to see your entries appear.' },
+    { title: 'Choose who to contact', where: 'Home → Contact', href: '/contact',
+      detail: 'Choose a recipient to see which contact is selected.' },
+    { title: 'Switch records pages', where: 'My Records', href: '/records',
+      detail: 'Move between Picked, Sold, Spent and Charts to see each page arrive.' },
+  ] },
   { when: '22 September 2026', sha: '2692ad6d', changes: [
     'Tap the sprout on Home to see what it means and how your farm plan is growing.',
     'The next step, tour and farm-gate price cards now respond when you use them.',
@@ -1699,6 +1710,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
 
 /** Never let the banner become a wall of text over the map. */
 export const MAX_SHOWN = 5;
+// The saved update guide keeps five stops; showing more here makes its preview disagree
+// with the guide a farmer can actually open after refreshing.
+export const MAX_TOUR_STOPS = 5;
 
 /** The lines to render, flattened and capped. Kept pure so it is testable without a DOM. */
 export function visibleNotes(notes: ReleaseNote[] = RELEASE_NOTES, max = MAX_SHOWN): string[] {
@@ -1715,5 +1729,5 @@ export function visibleUpdateTour(notes: ReleaseNote[] = RELEASE_NOTES, max = MA
     shown += note.changes.length;
     if (remaining > 0 && note.tour) stops.push(...note.tour);
   }
-  return stops;
+  return stops.slice(0, MAX_TOUR_STOPS);
 }

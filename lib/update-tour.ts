@@ -1,4 +1,4 @@
-import type { UpdateTourStop } from './release-notes';
+import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes';
 
 export const UPDATE_GUIDE_KEY = 'imbewu-update-guide-v1';
 export const OPEN_UPDATE_GUIDE_EVENT = 'imbewu-open-update-guide';
@@ -13,7 +13,7 @@ export interface UpdateGuideState {
 /** A route from the new build is only useful if it stays inside this app. */
 export function cleanUpdateTour(value: unknown): UpdateTourStop[] {
   if (!Array.isArray(value)) return [];
-  return value.slice(0, 5).filter((stop): stop is UpdateTourStop =>
+  return value.slice(0, MAX_TOUR_STOPS).filter((stop): stop is UpdateTourStop =>
     !!stop && typeof stop === 'object'
     && typeof stop.title === 'string' && stop.title.trim().length > 0
     && typeof stop.where === 'string' && stop.where.trim().length > 0
