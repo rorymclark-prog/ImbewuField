@@ -573,3 +573,15 @@ comparison whose still also overstates protection. The exact technical evidence
 and source boundaries are in
 `docs/media/studies-animation-quality/intro-l2-lesson-check.md`. No protected
 L2 copy or learner media was changed while Rory's scope answer remains pending.
+
+Introduction lesson 3 (slides 15–20) has now passed the deployed 390 px English
+player from first to last slide. Slide 19 remains a still with narration: both
+loaded from the saved module pack after an offline reload, and no video was
+registered or Flow credit spent. The Black African adults in slides 16 and 20,
+all six stills and the actual phone player were visually inspected. It is on a
+content hold because slide 18 and the lesson body state unsupported regional
+wind/rain directions, and the quiz presents a regional wind assertion where a
+site-observed condition is needed. Exact primary-source boundaries and media
+evidence are in `docs/media/studies-animation-quality/intro-l3-lesson-check.md`.
+The pending English core correction decision also covers this lesson. Farm
+Finance stays outside this week's completion scope.
