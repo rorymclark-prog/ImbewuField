@@ -27,9 +27,13 @@ The compact audio list could advance to the next spoken slide while the learner
 opened the silent Earth Care video. The result was a slide 4 picture alongside
 slide 5 speech. The player now pauses the compact list when a deck video starts,
 and pauses a running deck video when another audio clip starts, including when
-the deck's own audio is already paused. Confirm both directions on the deployed
-preview after this correction is pushed; local typecheck and suite alone cannot
-verify browser media events.
+the deck's own audio is already paused. Deployed preview `b23993a` at 390 px
+confirmed both directions: during the slide 4 video the slide 5 MP3 was paused;
+starting the compact list again paused the video while its MP3 advanced. The
+video was decoded and ready in both checks. Exact-head CI run 35782379704
+passed both `test` and `rules`, and preview run 35782379670 succeeded. Local
+typecheck, 3,700 passing tests with zero failures and one existing TODO, and
+whitespace check passed.
 
 ## Source hold before content clearance
 

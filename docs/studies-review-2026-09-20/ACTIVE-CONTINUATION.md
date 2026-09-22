@@ -542,3 +542,21 @@ corrected English slide 16/18 clips and slide 17 still loaded from a saved pack
 after an offline reload. This completes the English **technical** L4 player pass.
 Physical-device, human listening, practitioner, learner and isiZulu approval are
 still open. No new Flow credit was spent.
+
+## 22 September — Introduction lesson 1 technical pass
+
+Rory reconfirmed that Farm Finance must not be finished in this weekly pass.
+Introduction lesson 1 is the current English core lesson. Its slide 4 Flow Earth
+Care clip was reviewed for all eight seconds and in the deployed 390 px player;
+slides 5–8 use stills, with the code-drawn slide 7 animation held. All five
+English narrations and stills are present. The saved 16.7 MB module pack reopened
+offline, including the Flow video and slide 7 still. The deployed player exposed
+an audio/video overlap, now corrected at `b23993a8`. Exact-head CI run
+35782379704 passed `test` and `rules`; preview run 35782379670 succeeded, and
+the deployed build-info matched `b23993a`. Both directions of audio/video
+pausing were observed in the refreshed phone-width preview. Source review found
+that the borehole example and quiz need a permitted-use and supply check before
+teaching clearance. Rory's authorization for narrow corrections beyond L4 is
+pending; do not mark Introduction L1 content complete yet. The source and
+technical evidence are in
+`docs/media/studies-animation-quality/intro-l1-lesson-check.md`.
