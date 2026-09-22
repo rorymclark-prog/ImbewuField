@@ -462,3 +462,28 @@ credits: three rejected and unpublished, two integrated as technical preview
 candidates. Human, practitioner, farmer, learner and fluent isiZulu review remain
 open. Small Livestock lesson 3 remains still-only because its “closed loop” title
 and narration need factual reconciliation before a replacement can be released.
+
+## 22 September — next Flow screen and programme additions
+
+Reading the Landscape lesson 4 slide 17 was audited for a single generic
+mapmaking shot. One Veo 3.1 Quality, 16:9, 720p, eight-second x1 prompt cost
+100 credits. Complete-motion, contact-sheet and phone-width checks rejected the
+result: the final property boundary remains open and the track/slope marks are
+ambiguous. An independent lower-cost reviewer agreed. The movie remains only in
+Downloads and was not registered or deployed. The existing still and protected
+narration remain in the learner player. The pass is now six x1 prompts / 600
+credits: four rejected, two integrated as technical candidates. The exact movie
+hash and review reasons are in `flow-x1-attempts-2026-09-22.md`.
+
+The user added Plant Propagation and a Small Nursery as an explicit named reserve
+course, then Teach the Teachers and Mentorship at the end of the programme. The
+five draft Plant Propagation lessons were already included in the 15-module /
+51-lesson reserve count. The final two courses have no lesson or media count yet.
+The programme inventory records their place without treating them as built.
+
+Rory also confirmed that Reading the Landscape slide 17 should use its existing
+still. For every new Studies image or animation that depicts people, the visual
+direction is Black African people in the South African smallholder setting. This
+does not require adding people to person-free diagrams. Current human-containing
+assets need a visual audit; appearance alone cannot establish anyone's identity,
+so uncertain depictions should be flagged for Rory rather than declared approved.

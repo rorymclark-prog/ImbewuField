@@ -8,6 +8,13 @@ current app, what is a reading preview, what is drafted, and what is still held 
 visual or human review. A registered media path means that the app can point to the
 asset; it does not mean that the shot has been accepted as good teaching.
 
+**Visual direction:** where people appear in Studies images or animations, depict
+Black African people in the South African smallholder context. Reading the
+Landscape L4 slide 17 stays a still; its rejected Flow map clip is not in the
+player. The [core representation audit](../media/studies-animation-quality/representation-audit-2026-09-22.md)
+found no definite contrary portrayal in current core images or registered videos;
+Rory's visual approval remains open.
+
 ## At a glance
 
 | Area | Verified current count | State |
@@ -22,6 +29,9 @@ asset; it does not mean that the shot has been accepted as good teaching.
 | Permaculture Design | 6 stages / 18 lessons | English reading/practice preview; formal course publication remains open |
 | Using ImbewuField | 14 guides | Readable guides and 167 English clips published; filmed walkthroughs remain open |
 | Reserve curriculum | 15 modules / 51 lessons | Draft and outside the public core registry |
+| Plant propagation and a small nursery | 1 module / 5 draft lessons | A named reserve course to develop; included in the 15 / 51 reserve count |
+| Teach the Teachers | Lesson count to be designed | Planned as a course after the current core, reserve and app-guide work |
+| Mentorship | Lesson count to be designed | Planned as the final course; pathway, people and delivery format need definition |
 
 The core counts come from `lib/course-modules.ts`, `lib/course-deck.ts`,
 `lib/course-audio.ts`, `lib/course-image-briefs.ts` and the media coverage register.
@@ -51,14 +61,18 @@ The detailed 51-row animation register, including slide numbers, exact source na
 treatment and claim limits, is
 [COVERAGE.md](../media/studies-animation-quality/COVERAGE.md). The 33 lesson image
 briefs and species-specific holds are in `lib/course-image-briefs.ts`.
+The [core media matrix](PROGRAMME-MEDIA-MATRIX.md) links each of those 51 slide
+stills or registered videos and shows which candidates remain held.
 
 ## Animation and image status
 
 ### Current Flow and video work
 
 The current batch uses one eight-second x1 Flow video per prompt to control cost.
-The documented current tally is **5 prompts / 500 Flow credits: 3 rejected and 2
-accepted as technical candidates**.
+The documented current tally is **6 prompts / 600 Flow credits: 4 rejected and 2
+accepted as technical candidates**. The sixth, a site-map drawing shot, was
+rejected because its boundary remained open and its marks were ambiguous at phone
+width; Reading the Landscape L4 slide 17 still uses its existing still.
 
 - **Accepted bee Flow:** Small Livestock L2 slide 9,
   `flow-bee-between-blossoms`. It shows one coherent bee moving between adjacent
@@ -72,6 +86,10 @@ accepted as technical candidates**.
   authored/SVG/code-drawn candidates, while others are simply held stills or need a
   factual/source decision before any new prompt. No held SVG animation is being
   presented as accepted.
+- **Water L3 first flush:** keep slide 16 still-only. Its isiZulu narration draft
+  is explicitly marked stale and still states a fixed 20–30 L diversion and old
+  tank-water advice. Source reconciliation and fluent review are needed before a
+  media release; the current English lesson uses a roof-specific safety limit.
 - **Seeds:** existing Seed media is left alone under Rory's instruction.
 
 The working media review is tracked in
@@ -256,9 +274,11 @@ assessment and practitioner/learner review remain open. See
 
 ### Reserve modules: 15 modules / 51 draft lessons
 
-These are planned teaching modules outside the public core registry. The counts
-below are draft counts from `reserve/inventory.json`; they are not promises that
-each lesson needs a Flow video.
+These are planned teaching modules outside the public core registry. **Plant
+propagation and a small nursery is a named course in this roadmap**, with five
+draft lessons. It is part of the 15 / 51 reserve total, not an extra module. The
+counts below are draft counts from `reserve/inventory.json`; they are not promises
+that each lesson needs a Flow video.
 
 | Reserve area | Modules / draft lessons |
 | --- | ---: |
@@ -284,6 +304,15 @@ paperwork, payments, charts, exports, field evidence and offline learning. Filme
 walkthroughs, fluent translation, human listening review and learner review remain
 open. See [app-companions/README.md](reserve/app-companions/README.md).
 
+### Final planned courses: Teach the Teachers and Mentorship
+
+Rory has added two courses at the end of the roadmap: **Teach the Teachers**,
+followed by **Mentorship**. Both are planning entries, with no lessons, images,
+animations, narration or assessments authored or counted yet. Their scope,
+delivery model, human roles, review process and media needs need a separate brief.
+The existing reserve facilitator guide and capstone are draft material that may
+inform Teach the Teachers; they are not counted as that completed course.
+
 ## What happens next
 
 The intended order is one complete lesson bundle at a time:
@@ -296,13 +325,17 @@ The intended order is one complete lesson bundle at a time:
    the preview route.
 4. Keep a factual or visual hold when the clip cannot prove the lesson claim. Rory's
    explicit clearance is still required for any held SVG/code-drawn animation.
-5. After core animation holds, return to reserve Finance, Design and app media in
-   their own reviewable bundles. Seeds is not part of the replacement queue.
+5. After core animation holds, develop Plant Propagation and a Small Nursery with
+   the other reserve, Finance, Design and app media in reviewable bundles. Seeds
+   is not part of the replacement queue.
+6. Develop Teach the Teachers and Mentorship as the last two courses. Their scope,
+   lesson count, teaching staff, mentor capacity and delivery format still need a
+   separate brief and review before they can be counted as built lessons.
 
 ## Rough future cost
 
-The active Codex goal meter reported **11,504,164 tokens used across the whole
-authorised programme run at 22 September 2026, 21:15 CEST**. That is a factual
+The active Codex goal meter reported **12,554,405 tokens used across the whole
+authorised programme run at 22 September 2026, 21:42 CEST**. That is a factual
 whole-run usage figure. It cannot be allocated reliably to a particular lesson,
 image, audio file or animation, because the run includes supervision, audits,
 browser checks, CI output, documentation and delegated work.
@@ -322,6 +355,7 @@ much broader than the cost of writing one prompt.
 | Reserve 51 lessons | No approved Flow order | Broad, not yet budgeted | Many should use reviewed diagrams, stills, real footage or app captures; do not multiply 51 by 100 credits |
 | Finance 24 + Design 18 preview lessons | Usually no Flow by default | Broad, not yet budgeted | Teaching, evidence, accessibility, narration and review work; only approved mechanism shots would need Flow |
 | Fourteen app guides | No new Flow assumed | Broad, not yet budgeted | Readable guides exist; filmed walkthroughs and review remain |
+| Teach the Teachers and Mentorship | No approved Flow order | Not yet budgeted | Planned final courses; lesson count and delivery format still need a brief |
 
 The practical credit range for finishing the **currently held core animation slots**
 is therefore **2,300–6,900 Flow credits**, depending on prompt success and how
@@ -334,7 +368,7 @@ number until a concrete shot list is approved.
 
 These figures are deliberately broad because lower-model delegation, inspection
 depth, CI output and human review can change actual token use. They are useful for
-sequencing work, not for claiming a precise invoice or allocating the 11,504,164
+sequencing work, not for claiming a precise invoice or allocating the 12,554,405
 tokens already used.
 
 ## Review gates still open

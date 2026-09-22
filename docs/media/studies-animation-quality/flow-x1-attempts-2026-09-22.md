@@ -2,9 +2,9 @@
 
 Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
 **eight seconds**, and **x1**. Each prompt produced one video and cost 100 Flow
-credits. Five prompts used 500 credits in total. The first three were rejected
-and were not copied into `public/`. The fourth and fifth passed technical review
-and are registered for the bee and compost-building lessons.
+credits. Six prompts used 600 credits in total. The first three and sixth were
+rejected and were not copied into `public/`. The fourth and fifth passed technical
+review and are registered for the bee and compost-building lessons.
 
 ## Plant Guilds lesson 3 — whole-support thinning
 
@@ -79,3 +79,24 @@ readiness, finished compost, sanitation, a layer ratio, timing, nutrient effect 
 yield. Exact learner-file hashes and visual limits are in
 `soil-l2-flow-compost-build.md`. Human, practitioner, learner and fluent isiZulu
 review remain open.
+
+## Reading the Landscape lesson 4 — draw existing features
+
+The sixth prompt requested one continuous overhead shot of a hand adding an
+existing building, track, water oval and slope arrows to a generic pencil site
+sketch. Flow was visibly set to Veo 3.1 Quality, 16:9, 720p, eight seconds and
+x1 before generation. The source was silent H.264, 1280×720, 24 fps and eight
+seconds. One 100-credit output was downloaded and inspected at one-second and
+half-second intervals, at full resolution and 390-pixel phone width. An
+independent lower-cost review checked the same actual movie.
+
+| Download | SHA-256 | Bytes | Decision |
+| --- | --- | ---: | --- |
+| `/Users/roryclark/Downloads/Farmer_drawing_site_map_20260922213257.mp4` | `dbc2cfa252518fa07fb8d757db1e2fe09fb39ae70d927b878892251d632d70bd` | 5,146,710 | Rejected; no learner registration |
+
+At the final frame the rough boundary stays open: the lower-left line does not
+join the long right edge. The road and slope marks are ambiguous at phone width,
+the hand dominates much of the action, and there is no clear north arrow. No
+invented text or measurements appeared and the main marks stayed broadly fixed,
+but the film does not teach the complete map step. Slide 17 keeps its existing
+concept still and narration. No locally drawn replacement has Rory's clearance.
