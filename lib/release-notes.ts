@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '22 September 2026', sha: 'b436b234', changes: [
+  { when: '22 September 2026', sha: 'a411c529', changes: [
     'Food Forest lesson 3 now shows mulch over cardboard in its overview picture.',
   ], tour: [
     { title: 'See the mulch layers', where: 'Studies → Food Forest → lesson 3', href: '/student',

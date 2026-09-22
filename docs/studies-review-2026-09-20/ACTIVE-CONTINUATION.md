@@ -183,8 +183,10 @@ loop therefore shows an in-progress setup, not the narrated cardboard-under-
 mulch result. The clip was left unchanged rather than passing an incomplete
 action as a finished demonstration.
 
-The Food Forest lesson 3 overview still had a separate layer-order defect:
-its first panel put cardboard over visible straw. A corrected four-panel
+The Food Forest lesson 3 overview still had a separate clarity gap: its first
+panel placed cardboard over visible straw without showing a top mulch layer.
+Straw can be a valid base layer; the image did not make the lesson's
+cardboard-under-mulch relationship visible. A corrected four-panel
 illustration now shows mulch over cardboard on soil, with a new asset path,
 exact byte count, matching alt text and a narrow offline-cache migration.
 The corrected JPEG was checked at full size and 390px and independently

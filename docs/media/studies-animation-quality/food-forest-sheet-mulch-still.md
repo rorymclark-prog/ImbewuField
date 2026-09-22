@@ -1,9 +1,15 @@
 # Food Forest layer-order still — 22 September 2026
 
 The Food Forest lesson 3 overview image's first panel showed a hand placing
-cardboard over a visible straw layer. The lesson says that, where appropriate,
-plain cardboard goes under suitable mulch. The linked eight-second slide-16
-film also ends before its cardboard is covered. These are distinct visual gaps;
+cardboard over a visible straw layer, without clearly showing a top mulch
+layer. Straw below cardboard can itself be part of a layered method; the
+problem here is that the image does not make the lesson's *cardboard under
+mulch* relationship clear. [University of California Agriculture and Natural
+Resources' sheet-mulching guidance](https://ucanr.edu/site/uc-master-gardener-program-contra-costa-county/article/how-sheet-mulch)
+describes covering cardboard with a final mulch layer, and its
+[weed-management guidance](https://weedcut.ipm.ucanr.edu/management-practices/mulching/)
+also allows an optional organic base layer. The linked eight-second slide-16
+film ends before its cardboard is covered. These are distinct visual gaps;
 correcting the overview still does not complete the film.
 
 The existing four-panel image was supplied to built-in image generation for one
