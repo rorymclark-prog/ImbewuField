@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '528e077a', changes: [
+    'In Soil Health lesson 2, watch dry leaves and straw cover fresh green material.',
+  ], tour: [
+    { title: 'Watch the compost heap take shape', where: 'Studies → Soil Health → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then play Build the Compost Heap.' },
+  ] },
   { when: '22 September 2026', sha: 'a51ca51c', changes: [
     'In Small Livestock lesson 2, watch one bee move between two blossoms.',
     'Study clips awaiting visual review now show their lesson still pictures.',
