@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 September 2026', sha: '2e6f21d3', changes: [
+    'Home shortcuts now respond as you open them, and the farm plan sprout is easier to see.',
+    'Study lessons and crop plan months now open with a short, clear transition.',
+    'My Records tabs now respond as you switch pages.',
+  ], tour: [
+    { title: 'Home shortcuts', where: 'Home', href: '/home',
+      detail: 'Move over or tap a shortcut to see how it responds.' },
+    { title: 'Study lessons', where: 'Study → a module and lesson', href: '/student',
+      detail: 'Open a module, then a lesson, to see its content appear.' },
+    { title: 'Crop plan months', where: 'Crop Planner → month availability', href: '/facilitator/crops',
+      detail: 'Tap a month to see its crop details appear beneath the chart.' },
+  ] },
   { when: '22 September 2026', sha: '8b84d6f', changes: [
     'Your farm plan sprout now sways gently as you finish steps',
   ] },
