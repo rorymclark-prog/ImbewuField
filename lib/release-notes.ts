@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '22 September 2026', sha: '9cc02c35', changes: [
+  { when: '22 September 2026', sha: '19506d4d', changes: [
     'Home shortcuts now respond as you open them, and the farm plan sprout is easier to see.',
     'Study lessons and crop plan months now open with a short, clear transition.',
     'My Records tabs now respond as you switch pages.',
