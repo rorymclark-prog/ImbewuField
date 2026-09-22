@@ -325,5 +325,8 @@ a conditional treatment safeguard on its last frame. Its first local 390px
 playback exposed native controls hiding safety text; the renderer was revised
 so all essential instructions sit above the control overlay. See
 `docs/media/studies-animation-quality/vegetables-pest-decision-path.md` and
-`vegetables-l4-lesson-check.md`. Final full-lesson, offline, CI and deployed
-preview checks remain before this new candidate is offered for review.
+`vegetables-l4-lesson-check.md`. The local two-slide player reached its end;
+after stale development shell caches were removed from the test browser, the
+11.8 MB module pack reached 44/44 saved files. With network disabled the new
+video/poster/audio loaded from cache and the video ended once. Exact-head CI
+and deployed-preview checks remain before this candidate is offered for review.

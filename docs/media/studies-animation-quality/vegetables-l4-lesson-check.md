@@ -20,8 +20,16 @@ placed above the controls in the held frame. The transcript remains the
 readable full explanation. The complete post-change local lesson then ran
 from slide 15 to slide 16 and ended with Play restored, Next disabled and the
 video still on its held final frame. The final audio reached `readyState=4`
-without a media error. Offline reopen, exact-head CI and deployed preview
-inspection must still be recorded before offering the updated preview to Rory.
+without a media error. The 11.8 MB module pack then reported **44 of 44 files,
+On this phone**. Its saved slide-16 MP4, poster and audio were checked in Cache
+Storage at 322,214, 72,672 and 374,112 bytes. With the browser network
+disabled, the lesson reopened on slide 16; the video and audio both loaded to
+`readyState=4`, the video ended once and the player reset at the final slide.
+The first attempted incremental save failed because this long-running local
+browser profile hit Cache Storage quota; removing stale development shell
+caches allowed the two new files to save. This is not evidence about a physical
+learner phone's available storage. Exact-head CI and deployed preview inspection
+must still be recorded before offering the updated preview to Rory.
 
 The English lesson requires observation and checking water, roots, spacing,
 nutrition and drainage before assuming pest cause. It protects beneficial
