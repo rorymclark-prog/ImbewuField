@@ -552,6 +552,24 @@ async function migrateHeldAuthoredStudyAnimations() {
   await cache.put(marker, new Response('Held authored study media retired'));
 }
 
+// The two water swale clips are held pending safety and visual review. Remove only their
+// saved movies and posters, including URL variants, so unrelated course media remains offline.
+async function migrateHeldWaterSwaleMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/water-harvesting/.swale-clips-held-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-04-swale-infiltration.mp4',
+    '/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg',
+    '/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4',
+    '/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water swale clips held for review'));
+}
+
 // Historical migration from the original drawn bee route to the now-withdrawn composite. Keep its
 // marker for clients crossing that release; the broader migration above retires both generations.
 async function migrateBeeHiveAndBlossomMedia() {
@@ -632,7 +650,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

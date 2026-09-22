@@ -1,5 +1,22 @@
 # Active Studies continuation — 22 September 2026
 
+## Latest checkpoint — Water Harvesting L1 media hold (23 September)
+
+The English Water L1 swale and overflow clips on slides 4 and 7 have been
+inspected at full frame and in the deployed 390px player. Their pictures
+imply root/groundwater and safe overflow outcomes without site evidence, and
+their baked captions are very small on a phone. This batch holds both clips
+outside the learner player, uses the existing stills, and retires only their
+saved MP4/poster cache entries. The clips remain direct review assets; no
+Flow credits were spent. The new
+`docs/media/studies-animation-quality/water-l1-lesson-check.md` and source
+proposal record the unresolved lesson, quiz, narration and still claims.
+Rory's broader protected-content decision is pending, so none of those
+protected teaching assets changed. Local typecheck, the full suite (3,701
+pass, zero fail, one existing TODO) and whitespace check passed. Check the
+exact-head `test` and `rules` jobs and deployed phone/offline preview after
+push before calling this a verified media hold. Farm Finance remains excluded.
+
 > **Current weekly scope:** Rory chose the ten core permaculture modules in
 > English first and explicitly said **do not finish Farm Finance**. The older
 > Finance/Design backlog and narration notes below are history, not the next

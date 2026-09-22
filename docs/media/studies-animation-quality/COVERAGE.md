@@ -60,7 +60,7 @@ members sharing dry seeds**. The relevant existing project locations are
 soil trial and older Fast candidate require direct side-by-side pedagogical and
 physical-mechanism review; neither is a reason to place another order.
 
-## Core animation slots — 51 records, 28 currently registered
+## Core animation slots — 51 records, 26 currently registered
 
 | # | Module | Lesson ID | Slide | Title | Registered `src` | Planned treatment / hold |
 | ---: | --- | --- | ---: | --- | --- | --- |
@@ -91,8 +91,8 @@ physical-mechanism review; neither is a reason to place another order.
 | 25 | Introduction to Permaculture | intro-permaculture-l1 | 7 | Watch: One Decision, Three Ethics | — | Existing still only. The locally drawn three-ethics animation is held outside the player pending Rory’s visual clearance. |
 | 26 | Introduction to Permaculture | intro-permaculture-l2 | 13 | Watch: Diversity Against One Bad Day | — | Existing still only. The locally drawn diversity animation is held outside the player pending Rory’s visual clearance. |
 | 27 | Introduction to Permaculture | intro-permaculture-l3 | 19 | Watch: Shelter Between Wind and Crops | — | Existing still only. The locally authored windbreak animation is held outside the player pending Rory’s visual clearance. |
-| 28 | Water Harvesting | water-harvesting-l1 | 4 | Watch: A Swale Sinks Water | `watch-04-swale-infiltration` | Hold as a site outcome: full-frame review shows water spreading below every swale toward roots and a labelled water table. The route is conceptual; enduring root moisture/recharge cannot be inferred for a farm without site evidence. Coordinate the existing narration claim before release. |
-| 29 | Water Harvesting | water-harvesting-l1 | 7 | Watch: The Overflow Point | `watch-07-swale-overflow-pond` | Hold as a safe overflow example: the house/paths/pond scene and “gentle and contained” caption cannot establish a safe route, outlet or receiver. Site-specific design and a coordinated caption/narration decision remain open. |
+| 28 | Water Harvesting | water-harvesting-l1 | 4 | Watch: A Swale Sinks Water | — | Existing direct review asset and static slide still retained; clip held outside the learner player pending visual and farming-safety review. Full-frame review shows water spreading below every swale toward roots and a labelled water table. The route is conceptual; enduring root moisture/recharge cannot be inferred for a farm without site evidence. Coordinate the existing narration claim before release. |
+| 29 | Water Harvesting | water-harvesting-l1 | 7 | Watch: The Overflow Point | — | Existing direct review asset and static slide still retained; clip held outside the learner player pending visual and farming-safety review. The house/paths/pond scene and “gentle and contained” caption cannot establish a safe route, outlet or receiver. Site-specific design and a coordinated caption/narration decision remain open. |
 | 30 | Water Harvesting | water-harvesting-l1 | 9 | Watch: Roots Help Hold Soil | — | Existing still only. The locally drawn contour-roots animation is held outside the player pending Rory’s visual clearance. |
 | 31 | Water Harvesting | water-harvesting-l2 | 12 | Watch: Dam and Spillway | — | Existing still only. The locally drawn dam/spillway animation is held outside the player; the site-investigation and qualified-design warning remain open. |
 | 32 | Water Harvesting | water-harvesting-l3 | 14 | Your Roof Is a Harvesting Surface | `flow-roof-rain` | Retain after full eight-second and phone review: coherent roof, gutter, downpipe and tank in light rain. No visible tank filling, first flush or water-safety result; those need separate teaching. |

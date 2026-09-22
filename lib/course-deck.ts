@@ -173,9 +173,9 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
 // Keep only the source footage and Flow result. Rory has not cleared the locally drawn concept
 // animations, so their lesson stills carry those teaching steps until reviewed replacements exist.
 const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
+  // The swale and overflow extracts on slides 4/7 imply site outcomes that their lesson cannot
+  // establish. Keep their stills until the teaching and visual review are resolved together.
   14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
-  4: { src: 'watch-04-swale-infiltration', poster: 'watch-04-swale-infiltration', bytes: 881320, aspectRatio: 824 / 720, seconds: 16 },
-  7: { src: 'watch-07-swale-overflow-pond', poster: 'watch-07-swale-overflow-pond', bytes: 2712641, aspectRatio: 824 / 720, seconds: 13 },
 };
 
 // The three locally drawn Introduction clips await Rory's visual clearance.

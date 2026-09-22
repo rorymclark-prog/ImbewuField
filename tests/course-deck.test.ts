@@ -130,9 +130,10 @@ test('vegetable pest lesson keeps its still while the unapproved decision animat
   assert.equal(animationUrls('vegetables-staples', 16), null);
 });
 
-test('locally drawn study animations stay behind stills until Rory clears their visual quality', () => {
+test('study clips held for visual or farming-safety review stay behind stills', () => {
   const held: Array<[string, number]> = [
-    ['water-harvesting', 9], ['water-harvesting', 12], ['water-harvesting', 16], ['water-harvesting', 21],
+    // The L1 swale and overflow clips imply site outcomes their pictures cannot verify.
+    ['water-harvesting', 4], ['water-harvesting', 7], ['water-harvesting', 9], ['water-harvesting', 12], ['water-harvesting', 16], ['water-harvesting', 21],
     ['intro-permaculture', 7], ['intro-permaculture', 13], ['intro-permaculture', 19],
     ['reading-landscape', 5], ['reading-landscape', 9], ['reading-landscape', 13], ['reading-landscape', 17],
     ['soil-health', 5], ['soil-health', 14],
@@ -146,13 +147,13 @@ test('locally drawn study animations stay behind stills until Rory clears their 
   }
 
   const retained: Array<[string, number]> = [
-    ['water-harvesting', 4], ['water-harvesting', 7], ['water-harvesting', 14],
+    ['water-harvesting', 14],
     ['intro-permaculture', 4], ['reading-landscape', 6], ['soil-health', 11],
     ['food-forest', 16], ['small-livestock', 4], ['small-livestock', 7], ['small-livestock', 9],
     ['market-community', 15],
   ];
   for (const [moduleId, slide] of retained) {
-    assert.ok(animationUrls(moduleId, slide), `${moduleId} slide ${slide} must retain non-drawn footage`);
+    assert.ok(animationUrls(moduleId, slide), `${moduleId} slide ${slide} must retain its registered footage`);
   }
 });
 
@@ -341,7 +342,7 @@ test('isiZulu guild slides, audio and labelled video are delivered in the select
 
 // Exercise the actual player with media-device stubs. The browser check separately verifies
 // decoding and motion; these event-order checks catch a short voice cutting off a longer clip.
-test('Water playback respects language gaps, download choice and the whole animation', async t => {
+test('Water playback respects language gaps, download choice and the whole cleared animation', async t => {
   const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
   const hooks = registerHooks({ load(url, context, nextLoad) {
     if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
@@ -373,14 +374,15 @@ test('Water playback respects language gaps, download choice and the whole anima
       assert.match(messages, /Narration is in English/);
       assert.match(messages, /isiZulu narration is not available/);
       assert.doesNotMatch(messages, /spoken lesson is in your language/);
-      for (let i = 0; i < 3; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
-      assert.equal(view.root.findByType('h3').children.join(''), 'Watch: A Swale Sinks Water');
+      for (let i = 0; i < 13; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
+      assert.equal(view.root.findByType('h3').children.join(''), 'Your Roof Is a Harvesting Surface');
       assert.equal(view.root.findAllByType('video').length, 0, 'opening a Watch slide must not download video');
       const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
       assert.ok(watch);
       act(() => watch.props.onClick());
       const clip = view.root.findByType('video');
-      assert.equal(clip.parent!.props.style.aspectRatio, 824 / 720);
+      assert.match(clip.props.src, /flow-roof-rain\.mp4$/);
+      assert.equal(clip.parent!.props.style.aspectRatio, '16 / 9');
       assert.equal(clip.props.loop, false, 'a selected animation must be able to finish under play-through');
       const title = view.root.findByType('h3').children.join('');
       if (videoFirst) {
@@ -392,7 +394,7 @@ test('Water playback respects language gaps, download choice and the whole anima
       assert.equal(view.root.findByType('h3').children.join(''), title, 'wait for both teaching streams');
       if (videoFirst) act(() => view.root.findByType('audio').props.onEnded());
       else { videoDevice.ended = true; act(() => clip.props.onEnded()); }
-      assert.match(view.root.findByType('audio').props.src, /slide-05.mp3$/, 'advance exactly one slide once both finish');
+      assert.match(view.root.findByType('audio').props.src, /slide-15.mp3$/, 'advance exactly one slide once both finish');
     } finally { act(() => view.unmount()); }
   }
 });

@@ -22,7 +22,7 @@ Rory's visual approval remains open.
 | Core Studies modules | 10 | In the course registry and player |
 | Core Studies lessons | 33 | English lesson bodies, quizzes and rationales exist |
 | Core lesson infographics | 33 current lesson images | One additional corrected Food Forest image is retained on disk |
-| Core animation slots | 51 review records | 28 registered in the current deck; 23 still-only/held outside the player |
+| Core animation slots | 51 review records | 26 registered in the current deck; 25 still-only/held outside the player |
 | Core narration tracks | 240 manifest tracks | Mostly English; Seeds and Plant Guilds also have isiZulu tracks |
 | Seeds | 3 lessons, 8 animation slots | Existing completed baseline; no Seeds rework in this animation batch |
 | Farm Finance | 8 units / 24 lessons | English reading/practice preview; formal course publication remains open |
@@ -48,7 +48,7 @@ not create a second lesson authority.
 | --- | --- | --- |
 | Introduction to Permaculture | L1 The Three Ethics: Earth Care, People Care, Fair Share; L2 Twelve Principles: Designing with Nature; L3 Zones and Sectors: Organising Your Farm by Energy | 3 images, 1 registered animation, 22 narration tracks; three local animation slots remain held |
 | Reading the Landscape | L1 Understanding Water Flow: Where Rain Goes on Your Land; L2 Sun Angles, Shade, and Aspect: Getting the Most from Sunlight; L3 Wind, Frost, and Topography: Reading the Invisible Forces; L4 Making a Simple Site Map: Your Design Starts on Paper | 4 images, 1 registered animation, 21 narration tracks; four animation slots remain still-only/held |
-| Water Harvesting | L1 Swales and Berms: Slowing Water on the Slope; L2 Farm Dams and Ponds: Storing Water for the Dry Season; L3 Rainwater Tanks and Roof Catchment: Collecting and Protecting Water; L4 Greywater: Reuse with Care | 4 images, 3 registered animations, 24 narration tracks; four local animation slots remain held or require coordinated review |
+| Water Harvesting | L1 Swales and Berms: Slowing Water on the Slope; L2 Farm Dams and Ponds: Storing Water for the Dry Season; L3 Rainwater Tanks and Roof Catchment: Collecting and Protecting Water; L4 Greywater: Reuse with Care | 4 images, 1 registered animation, 24 narration tracks; six local animation slots remain held or require coordinated review, including two existing direct review assets retained with static still fallbacks in L1 |
 | Soil Health & Composting | L1 Understanding Your Soil: The Foundation of Everything; L2 Making and Using Compost; L3 Mulching and Cover Crops: Protecting and Building Soil | 3 images, 2 registered animations, 20 narration tracks; the new L2 compost Flow candidate is current, while two local slots remain held |
 | Vegetables and Staple Crops | L1 Preparing and Planting Your Beds; L2 Succession Planting and Intercropping; L3 Staple Crops: Maize, Beans, and Root Vegetables; L4 Observe and Manage Pests and Disease | 4 images, no registered animation, 18 narration tracks; two animation slots remain held |
 | Seeds and Seed Sovereignty | L1 Why Seed Saving Matters; L2 How to Save Seed: Dry and Wet Methods; L3 Drying, Storing, and Sharing Seed | 3 images, 8 registered animation slots, 24 manifest tracks across English and isiZulu; treated as the completed baseline for this work |
@@ -81,7 +81,7 @@ width; Reading the Landscape L4 slide 17 still uses its existing still.
   `flow-build-compost-heap`. It shows dry leaves and straw placed over visible
   fresh green trimmings, then spread by hand. It does not show moisture, air,
   decomposition, readiness, finished compost or a timing claim.
-- **Still-only/held work:** the 23 still-only core slots remain outside the player
+- **Still-only/held work:** the 25 still-only core slots remain outside the player
   until their visual and teaching decisions are complete. Several are local
   authored/SVG/code-drawn candidates, while others are simply held stills or need a
   factual/source decision before any new prompt. No held SVG animation is being
@@ -155,7 +155,7 @@ public/course-images/water-harvesting/water-harvesting-l4.jpg
 
 ### Exact registered animation paths
 
-The current `COURSE_DECKS` resolves the following 28 registered video files and
+The current `COURSE_DECKS` resolves the following 26 registered video files and
 their matching poster files. The `src` names in the deck are the authority; this
 appendix expands them to inspectable paths. Seeds has additional `hi/` variants
 for its bilingual player, which are not counted as extra core slots here.
@@ -171,8 +171,6 @@ for its bilingual player, which are not counted as extra core slots here.
 | Soil Health & Composting | `public/course-animations/soil-health/flow-compost-materials.mp4` | `public/course-animations/soil-health/posters/flow-compost-materials.jpg` |
 | Reading the Landscape | `public/course-animations/reading-landscape/flow-a-frame.mp4` | `public/course-animations/reading-landscape/posters/flow-a-frame.jpg` |
 | Introduction to Permaculture | `public/course-animations/intro-permaculture/flow-earth-care.mp4` | `public/course-animations/intro-permaculture/posters/flow-earth-care.jpg` |
-| Water Harvesting | `public/course-animations/water-harvesting/watch-04-swale-infiltration.mp4` | `public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg` |
-| Water Harvesting | `public/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4` | `public/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg` |
 | Water Harvesting | `public/course-animations/water-harvesting/flow-roof-rain.mp4` | `public/course-animations/water-harvesting/posters/flow-roof-rain.jpg` |
 | Plant Selection & Guilds | `public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4` | `public/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food.jpg` |
 | Plant Selection & Guilds | `public/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled.mp4` | `public/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg` |
@@ -350,17 +348,17 @@ much broader than the cost of writing one prompt.
 | Work package | Flow estimate | Codex token planning range | Basis |
 | --- | ---: | ---: | --- |
 | Next three safest core animation candidates | 300–900 credits | 0.6m–1.8m tokens | One to three x1 prompts per candidate; each still requires a complete supervised lesson bundle |
-| All 23 still-only/held core slots, one prompt each | 2,300 credits | 4.6m–13.8m tokens | Upper scenario if every held slot receives one new Flow prompt and full supervision |
-| All 23 held slots, two or three prompts each | 4,600–6,900 credits | 4.6m–13.8m tokens | Token range is per lesson bundle; extra prompts mainly change Flow spend, not the lesson review scope |
+| All 25 still-only/held core slots, one prompt each | 2,500 credits | 5.0m–15.0m tokens | Upper scenario if every held slot receives one new Flow prompt and full supervision |
+| All 25 held slots, two or three prompts each | 5,000–7,500 credits | 5.0m–15.0m tokens | Token range is per lesson bundle; extra prompts mainly change Flow spend, not the lesson review scope |
 | Reserve 51 lessons | No approved Flow order | Broad, not yet budgeted | Many should use reviewed diagrams, stills, real footage or app captures; do not multiply 51 by 100 credits |
 | Finance 24 + Design 18 preview lessons | Usually no Flow by default | Broad, not yet budgeted | Teaching, evidence, accessibility, narration and review work; only approved mechanism shots would need Flow |
 | Fourteen app guides | No new Flow assumed | Broad, not yet budgeted | Readable guides exist; filmed walkthroughs and review remain |
 | Teach the Teachers and Mentorship | No approved Flow order | Not yet budgeted | Planned final courses; lesson count and delivery format still need a brief |
 
 The practical credit range for finishing the **currently held core animation slots**
-is therefore **2,300–6,900 Flow credits**, depending on prompt success and how
+is therefore **2,500–7,500 Flow credits**, depending on prompt success and how
 many assets Rory elects to retain. The corresponding planning range is
-**4.6m–13.8m Codex tokens** if all 23 are treated as full supervised animation
+**5.0m–15.0m Codex tokens** if all 25 are treated as full supervised animation
 lessons. Reusing a good existing asset or keeping the still fallback reduces both
 figures. A one-video-per-prompt rule keeps the Flow estimate visible and prevents a
 silent multi-clip spend. Reserve and app work should not be charged against this
