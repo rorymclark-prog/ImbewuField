@@ -85,7 +85,7 @@ Print each assignment as an **A6 card** (two sets). Session IDs follow the Cours
 - **Take home:** "Set up a drum with a sack."
 
 ### MT-08 · Harden off seedlings
-- **From:** F-D4-S1 · **Poster:** F-P14 · **Clip:** T-ANI-26
+- **From:** F-D4-S1 · **Poster:** F-P14 · **Clip:** T-ANI-25
 - **Outcome (5):** Learners **explain** why seedlings need a week of "toughening".
 - **Outcome (10):** …and **plan** a 7-day hardening schedule on a drawn calendar.
 - **Materials:** 2 seedlings (one soft, one hardened) or pictures; 7 day cards.
@@ -145,7 +145,7 @@ Print each assignment as an **A6 card** (two sets). Session IDs follow the Cours
 - **Take home:** "Mark out one trench bed."
 
 ### MT-15 · Sow a seedling tray
-- **From:** F-D4-S1 · **Poster:** F-P14 · **Clip:** T-ANI-26
+- **From:** F-D4-S1 · **Poster:** F-P14 · **Clip:** T-ANI-25
 - **Outcome:** Learners **mix** seedling soil and **sow** a row of cells at the right depth.
 - **Materials (per group):** 1 tray (or egg boxes), sand, compost, soil, seeds, labels, water.
 - **Keep for 15:** mix + sow 6 cells. **Add for 20:** labels and a watering plan.
