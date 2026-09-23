@@ -1,6 +1,32 @@
 # Vegetables and Staple Crops lesson 1 — Preparing and Planting Your Beds
 
-## Current deployed English check — 23 September 2026
+## Current deployed English Flow check — 23 September 2026
+
+The new [silent Flow transplant](vegetables-seed-or-seedling-choice.md) is
+registered only on module slide 6, lesson slide 3 of 4. The earlier
+direct-sowing-versus-nursery still remains its poster until Watch. One x1
+Veo 3.1 Quality prompt used the displayed 100 credits; no second candidate
+was generated. The shot shows a Black African adult lower one nursery plug
+into a bed and firm soil around it; it does not replace the narration's
+crop-specific choice or claim a planting outcome. No code-drawn animation was
+released.
+
+Build `781a2a7` appeared in `/api/build-info` and the 390px Student player.
+The slide offered **Watch · 8s · 6.4 MB**; the MP4 loaded to `readyState=4`,
+ran to eight seconds with `loop=false`, and held its planted end frame. The
+existing English MP3 continued after the film; the local MP4 has no audio
+track. The poster, film and slide 6 MP3 were saved in the **18.1 MB / 42-file**
+Vegetables pack with byte counts 390,414, 6,707,780 and 177,552. After an
+offline browser reload, the lesson reopened; the film reached its end frame
+while the English narration was still at 22/29 seconds. The actual phone-size
+end frame was inspected. Network access was restored afterwards. CI `test`
+and `rules` and the preview deployment passed for this exact asset commit.
+
+This is technical and source review. Rory's visual acceptance, a real learner,
+local practitioner, physical-phone and fluent isiZulu review remain open. The
+separate Farm Finance course was untouched.
+
+## Previous deployed still-only check — 23 September 2026
 
 At 390 × 844 in the stable Student preview, the current four-slide player
 opened on module slide 4 and advanced to slide 7 (4/4). English MP3s for slides

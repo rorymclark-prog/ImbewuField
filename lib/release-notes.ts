@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '781a2a7c', changes: [
+    'In Vegetables lesson 1, watch a seedling go into the bed and stay planted.',
+    'In Market Gardening lesson 1, read the four harvest destinations at phone size.',
+  ], tour: [
+    { title: 'Watch the transplant', where: 'Studies → Vegetables → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, go to Seed or Seedling?, then play the eight-second clip.' },
+  ] },
   { when: '22 September 2026', sha: '528e077a', changes: [
     'In Soil Health lesson 2, watch dry leaves and straw cover fresh green material.',
   ], tour: [

@@ -1,5 +1,20 @@
 # Active Studies continuation — 22 September 2026
 
+## Vegetables L1 Flow transplant release (23 September)
+
+One Veo 3.1 Quality x1 request used 100 displayed Flow credits for slide 6.
+The new silent eight-second clip shows a Black African adult seat one nursery
+root plug and firm soil; the prior Flow clip did not complete that action.
+The existing two-method still is retained as the Watch poster, and the English
+narration continues to distinguish direct sowing from transplanting. The
+deployed 390px lesson played the MP4 to its end and kept its final planted
+frame. The 18.1 MB / 42-file Vegetables pack saved and reopened the MP4,
+poster and English MP3 after an offline reload; the video finished while the
+voice continued. [Current L1 check](../media/studies-animation-quality/vegetables-l1-lesson-check.md).
+Exact-head `test`, `rules` and preview jobs passed for asset commit `781a2a7`.
+No code-drawn film, protected text, isiZulu or Farm Finance work was released.
+Rory, learner, practitioner and fluent-language review remain open.
+
 ## Market Gardening L1 static slide 4 improvement (23 September)
 
 The prior 390px check found that slide 4's five-column record table was too
