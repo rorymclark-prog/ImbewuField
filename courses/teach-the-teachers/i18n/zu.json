@@ -440,6 +440,222 @@
         "Ningaphenduli — wubuyiseleni eqenjini",
         "Imizuzu 12"
       ]
+    },
+    "T-D2-08": {
+      "title": "Isifundo esiyisibonelo ngaphansi kwesihlahla",
+      "screen": [
+        "Funda umhlaba namanzi",
+        "Ababhali: balani izinhlobo zemibuzo"
+      ]
+    },
+    "T-D2-09": {
+      "title": "Ilanga likuphi?",
+      "screen": [
+        "Iwindi libheke enyakatho",
+        "Makani umthunzi wasebusika ngezinduku",
+        "Isithunzi sikhomba ngaphi?"
+      ]
+    },
+    "T-D2-10": {
+      "title": "Amanzi aya kuphi?",
+      "screen": [
+        "Thelani 500 ml ebhodleleni ngalinye",
+        "Bambani nilinganise amanzi agelezayo",
+        "Tholani izimpawu ezintathu zamanzi"
+      ]
+    },
+    "T-D2-11": {
+      "title": "Ukufundisa ngaphansi kwesihlahla",
+      "screen": [
+        "Ilanga ngemuva kwabafundi",
+        "Iphosta ezingeni lamehlo",
+        "Yima, bese ukhuluma"
+      ]
+    },
+    "T-D2-12": {
+      "title": "Indlela 1: amaphosta kuphela",
+      "screen": [
+        "Isifundo esisodwa, izindlela ezintathu",
+        "Namuhla: iphosta"
+      ]
+    },
+    "T-D2-13": {
+      "title": "Fundisa ngephosta",
+      "screen": [
+        "Mboza bese uyambula",
+        "Khomba bese ubuza",
+        "Abafundi beza ephosteni"
+      ]
+    },
+    "T-D2-14": {
+      "title": "Wonke umuntu uyafunda",
+      "screen": [
+        "Isikhathi solimi: bayaphinda bayixoxe",
+        "Umsebenzi womuntu wonke",
+        "Imisebenzi yokuhlala phansi, amalebula ezithombe"
+      ]
+    },
+    "T-D2-15": {
+      "title": "Ukufundisa okuncane: Round 2",
+      "screen": [
+        "Imizuzu 10, uwedwa, amaphosta kuphela",
+        "Umbukeli ubala ukukhuluma nemibuzo",
+        "Imizuzu 6 yempendulo"
+      ]
+    },
+    "T-D2-16": {
+      "title": "Ibhodi lokukhuluma",
+      "screen": [
+        "Bhala i-% yakho yokukhuluma",
+        "Yini ekusizile ukuthi ukhulume kancane?"
+      ]
+    },
+    "T-D2-17": {
+      "title": "Ubuciko besifundo: i-POPIA",
+      "screen": [
+        "Imvume ngaphambi kwekhamera",
+        "Ichashaza eliluhlaza = azikho izithombe",
+        "Yabelana ngalokho okuvunyelwene ngakho kuphela"
+      ]
+    },
+    "T-D3-01": {
+      "title": "Usuku 3",
+      "screen": [
+        "Izandla emsebenzini, njalo",
+        "Usuku 3 kwezi-5"
+      ]
+    },
+    "T-D3-02": {
+      "title": "Indaba ka-2022",
+      "screen": [
+        "Umuntu oyedwa uyamba",
+        "Abangu-25 bayabuka",
+        "I-kit yamaqembu amane isemotweni"
+      ]
+    },
+    "T-D3-03": {
+      "title": "Izandla emsebenzini, hhayi i-demo",
+      "screen": [
+        "I-kit eqenjini ngalinye · I-demo imizuzu 3",
+        "Amaqembu abantu 5 · Iziteshi zihlukene",
+        "Izandla zakho ngemuva"
+      ]
+    },
+    "T-D3-04": {
+      "title": "Sindisani umsebenzi wezandla",
+      "screen": [
+        "Ikhadi elilodwa eqenjini ngalinye",
+        "Hlelani ukusindisa, imizuzu 12",
+        "Imizuzu 2 yokwethula"
+      ]
+    },
+    "T-D3-05": {
+      "title": "I-kit eyodwa? Jikelezani",
+      "screen": [
+        "I-A-frame eyodwa, abafundi abangu-25",
+        "Iziteshi ezinhlanu, imizuzu 8 ngasinye",
+        "Akekho obuka ngaphezu kwemizuzu 10"
+      ]
+    },
+    "T-D3-06": {
+      "title": "Thola ingozi",
+      "screen": [
+        "Tholani izingozi ezi-8 ngemizuzu 4",
+        "Amathuluzi akhombe phansi",
+        "Ikhithi yosizo lokuqala ivuliwe"
+      ]
+    },
+    "T-D3-07": {
+      "title": "Umsebenzi wezandla oyisibonelo: inhlabathi ephilayo",
+      "screen": [
+        "Manje ningabalimi",
+        "Ababhali: ikhadi lokuhlola umsebenzi wezandla"
+      ]
+    },
+    "T-D3-08": {
+      "title": "Izivivinyo ezine zenhlabathi",
+      "screen": [
+        "Cindezela · Imbiza · Imisundu · Ukungena kwamanzi",
+        "Wonke umuntu wenza ngasinye",
+        "Imizuzu 27"
+      ]
+    },
+    "T-D3-09": {
+      "title": "Hlolani eceleni ngeceleni",
+      "screen": [
+        "Amabhodwe amabili, ushintsho olulodwa",
+        "Hlwanyelani, nibhale, ninisele ngokufanayo",
+        "Qagelani, bese nibheka ngoSuku 5"
+      ]
+    },
+    "T-D3-10": {
+      "title": "Phumani: sihlaziye",
+      "screen": [
+        "Ubani othole ama-tick angaphansi kuka-4?",
+        "Yini egcine zonke izandla zimatasa?"
+      ]
+    },
+    "T-D3-11": {
+      "title": "Indlela 2: ama-slide",
+      "screen": [
+        "Ungakufunda usemuva?"
+      ]
+    },
+    "T-D3-12": {
+      "title": "Lapho ama-slide esiza khona",
+      "screen": [
+        "Izinto ezihambayo noma ezikhulayo",
+        "Izinambuzane ezingekho ngalesi sikhathi",
+        "Iqembu elikhulu egumbini elimnyama"
+      ]
+    },
+    "T-D3-13": {
+      "title": "Hlela ukuze kubonakale",
+      "screen": [
+        "Hlola usemuva, emini",
+        "I-TV ingcono kune-projector; cindezela B",
+        "Ithebhulethi eqenjini ngalinye labantu 5"
+      ]
+    },
+    "T-D3-14": {
+      "title": "Iziteshi ezintathu",
+      "screen": [
+        "A: isikrini esikhulu, ama-slide 2",
+        "B: ividiyo kuthebhulethi, yifundiseni",
+        "C: incwajana yezithombe yephepha"
+      ]
+    },
+    "T-D3-15": {
+      "title": "Dlulisela, ungathathi izintambo",
+      "screen": [
+        "Hlelani ozohola isinyathelo ngasinye",
+        "Dlulisela ngezwi elizwakalayo",
+        "Thinta indlebe yakho ukuze unikele"
+      ]
+    },
+    "T-D3-16": {
+      "title": "Ukufundisa okuncane: Round 3",
+      "screen": [
+        "Imizuzu 15, ngababili, ingxenye yekilasi",
+        "Umsebenzi wezandla ngamaqembu amabili aba-4",
+        "Imizuzu 7 yempendulo"
+      ]
+    },
+    "T-D3-17": {
+      "title": "Impendulo yababili",
+      "screen": [
+        "Abangane banikana izinkanyezi",
+        "Umbukeli 1: ukukhuluma nemibuzo",
+        "Umbukeli 2: izandla nokudlulisela"
+      ]
+    },
+    "T-D3-18": {
+      "title": "Ubuciko besifundo: i-kit",
+      "screen": [
+        "Bala ngeqembu, kanye nesisodwa esengeziwe",
+        "I-kit ingena, i-kit iphuma, nsuku zonke",
+        "Izitifiketi: ababhalisile + 10%"
+      ]
     }
   },
   "glossary": {}
