@@ -296,13 +296,13 @@ Closed ______ · Open ______ · Deeper ______ · Waited 5 s? ☐ often ☐ somet
 **7 · Mode** — did the poster / slides / app help learning? ______________________
 
 **8 · Two stars and a wish**
-⭐ ______________________________________________
-⭐ ______________________________________________
-🌱 Next time maybe ______________________________
+Star 1: ______________________________________________
+Star 2: ______________________________________________
+Wish: Next time maybe ______________________________
 
 ### Round 1 short sheet (5-minute teach)
 ☐ Learners **did** something with their hands · ☐ Teacher **asked** a question and waited ·
-☐ It ended with a **take home** · ⭐ ___ ⭐ ___ 🌱 ___
+☐ It ended with a **take home** · Star ___ · Star ___ · Wish ___
 
 ---
 

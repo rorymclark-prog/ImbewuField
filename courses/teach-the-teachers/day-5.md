@@ -87,8 +87,8 @@ of different colours.
   the same market; price so you cover costs — and sell before it wilts. Don't promise income:
   speak of **saving money on food** and **selling surplus**.
 - **Records:** money in / money out; harvest weights; what sold, where, for how much. The
-  ImbewuField **Finances** screen (Money in / Money out, "scan a till slip") and **Records**
-  hold the same; the paper book is always enough.
+  ImbewuField **Records** book (/records) holds the same in one place, with tabs
+  **Picked · Sold · Spent**; the paper book is always enough.
 - **Stokvels & savings groups:** members save a fixed amount regularly; payouts in turn or at
   year end; rules agreed and written. Course 4 (*Farmer Money*) goes deep.
 - **Borrowing:** only from NCR-registered lenders; never give your SASSA card or PIN to anyone.
@@ -142,7 +142,7 @@ two groups of 4 for the practical. Two are observers (the next pair).
    practises bounce-back and "I'll find out".
 3. **Feedback (10 min):**
    - Pair: each partner stars the other; then one wish for themselves (2 min).
-   - Observer 1: ⭐⭐🌱 + talk %, questions by rung, *Look · Try · Talk · Take home* (3 min).
+   - Observer 1: two stars and a wish + talk %, questions by rung, *Look · Try · Talk · Take home* (3 min).
    - Observer 2: practical check, handovers, the poster (6-metre check) (2 min).
    - Trainer: **two stars and a wish** (2 min). Pair: "Thank you — in my first course I will…" (1 min).
 4. **Trainer readiness note (private, not shared in the room):** for each trainee, circle one:
@@ -173,7 +173,7 @@ two groups of 4 for the practical. Two are observers (the next pair).
 ## T-D5-S3 · 14:05–14:55 · Did they learn it? Checking learning & the paperwork (50 min)
 
 **By the end, trainees can:** **run** the Course 1 picture quiz without reading, **record** skills
-on the ✔ ◐ ✘ checklist during a practical, **run** the learner evaluation, and **name** every
+on the tick / half / cross checklist during a practical, **run** the learner evaluation, and **name** every
 form in the flip folder and when it's used.
 
 **Poster:** T-P15 · **Slides:** T-D5-08 → T-D5-11
@@ -193,7 +193,7 @@ form in the flip folder and when it's used.
    say the question, point to corners A, B, C; trainees **walk** to their answer. Count heads.
    **ASK:** "Did anyone need to read?" *(No.)* **SAY:** "Class totals only, Day 1 and Day 5."
 2. **Talk (14:13):** Reveal **T-P15**. Point ①–③:
-   ① **Watch them do it** — the skills checklist (✔ did it alone · ◐ with help · ✘ not yet).
+   ① **Watch them do it** — the skills checklist (tick = did it alone · half = with help · cross = not yet).
    ② **Picture quiz** — start and end of the course; class totals.
    ③ **Ask them** — evaluation with fingers 1–5 and sticker lists.
    **SAY:** "The best proof is ①: a farmer doing the skill. And it's a record of what they can

@@ -333,7 +333,7 @@ handovers.
    four. You set up your kit **during the previous pair's feedback**." Name the observers for
    each pair (the next pair observes). Show the feedback order:
    - Pair speaks first — each partner stars the **other** partner (1 min).
-   - Observer 1: ⭐⭐🌱 with talk % and questions (2 min).
+   - Observer 1: two stars and a wish, with talk % and questions (2 min).
    - Observer 2: practical-check result — did anyone watch more than 5 minutes? handovers? (2 min).
    - Trainer: one star only (1 min). Pair: "Thank you — next time we will…" (1 min).
 2. **DO:** Trainer sits at the side, silent, completes their own observer sheet. **Never

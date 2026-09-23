@@ -390,7 +390,7 @@ time cards ("2 min", "1 min", "STOP"); posters, objects, *Teach it* cards.
    micro-teaching-bank.md): outcome seen? · talk tally (one mark a minute) · questions by rung
    · did every learner do something? · *Look · Try · Talk · Take home* ticks · two stars and a wish.
 2. **SAY:** "Talk % = marks ÷ 10 × 100. Three marks = 30%. That's the target."
-3. **Feedback (6 min):** teacher (1) · observer ⭐⭐🌱 with the numbers (3) · one more star (1) ·
+3. **Feedback (6 min):** teacher (1) · observer: two stars and a wish, with the numbers (3) · one more star (1) ·
    "Thank you, next time I will…" (1).
 4. **DO (14:08):** Groups start. Trainers each sit in on **two full teaches** in different
    groups and complete their own observer sheet (to compare with the trainee observer's).

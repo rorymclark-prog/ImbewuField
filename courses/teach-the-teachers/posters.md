@@ -518,7 +518,8 @@ Question: *What can they do now?*
 **Teach it — back-of-poster card (A5):**
 ```
 T-P15  Did they learn it?                        (≈ 10 min)
-1. POINT ①: Skills checklist — ✔ alone · ◐ with help · ✘ not yet.
+1. POINT ①: Skills checklist — tick = alone · half = with help ·
+   cross = not yet.
    Tick while they work, not from memory.
 2. POINT ②: Picture quiz, Day 1 and Day 5 — walk to corners;
    count class totals, not names.

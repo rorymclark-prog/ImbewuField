@@ -454,7 +454,7 @@ its own wall.
    "1 min left" at 4:00 and "STOP" at 5:00 — and the teacher stops mid-sentence.
 3. **Feedback in 5 minutes (point to T-P10):**
    - Teacher first (1 min): "What went well? What would I change?"
-   - Observer: ⭐ ⭐ 🌱 — two specific stars, one wish (2 min).
+   - Observer: two stars and a wish — two specific stars, one wish (2 min).
    - One more star from anyone (1 min).
    - Teacher says only: "Thank you. Next time I will…" (1 min). **No defending, no arguing.**
 4. **Round 1 observer sheet (three ticks only):** Did learners **do** something with their
@@ -515,7 +515,7 @@ correctly on paper (and see it in **Mentor → Training**).
 ### Say / ask / do
 
 1. **DO (15:50):** One word each about today. Right to pass.
-2. **DO (15:55):** Green notes = ⭐ what helped you learn today; orange = 🌱 one wish. Stick
+2. **DO (15:55):** Green notes = a star: what helped you learn today; orange = one wish. Stick
    on the "Day 1" sheet. **SAY:** "We'll read them tonight and tell you tomorrow what we'll change."
 3. **Course craft (16:00):**
    **ASK:** "Why does the register come first, every day?" *(Proof people came; funders pay
