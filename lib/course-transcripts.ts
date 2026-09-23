@@ -709,6 +709,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "14": [
         "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+        "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
         "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
         "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
       ],

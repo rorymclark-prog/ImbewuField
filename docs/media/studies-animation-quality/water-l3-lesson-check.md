@@ -1,5 +1,43 @@
 # Water Harvesting L3 English lesson check — 23 September 2026
 
+## New English roof-material check and first-flush label
+
+The current English lesson and slide 14 narration now ask learners to check
+whether their roof material is suitable for rainwater collection before
+connecting a tank. The [South African Department of Human Settlements
+Red Book, water section](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_J_Water_v1-1.pdf)
+(pp. 44–45) says roof type affects yield and notes that thatch roofs are
+generally unsuitable. The [KwaZulu-Natal Department of Human Settlements
+rainwater policy](https://www.kzndhs.gov.za/documents/Provincial%20Policies/Rainwater_22.pdf)
+(pp. 8 and 10) calls for an existing roof-material assessment and recommends
+inert, non-toxic catchment materials within its stated programme scope. The
+lesson gives no universal material list, plumbing specification or drinking-
+water guarantee. The existing tank-sizing and first-flush quiz remains
+unchanged. Slide 16 is now titled “First Flush to Tank: A Concept” to match
+its static diagram. Its drawn labels and safety caption are unchanged; the
+held code-drawn movie remains out of the player. No Flow credit or SVG motion
+was used.
+
+The matched English transcript and narration script include the new slide 14
+sentence. Its MP3 SHA-256 is
+`a7589c2d95e6636176e83592e2aac43fe9886803580e2bb97973663db9d8f4aa`;
+the refreshed full-track SHA-256 is
+`dff7adcb1455075d62ef0f47805781ce96011f72a13949eb87849206c91545f0`.
+The [audio verification](water-l3-english-audio-verification.json) records
+the exact normalized 78-word WordBoundary match, full decode, and 462.120-
+second concatenation equal to the sum of the 24 slide clips. The saved-pack
+migration retires only the changed English slide 14 and full MP3s, without
+automatic fetching or deleting neighboring slides and isiZulu assets. The
+[isiZulu L3 packet](../../narration-reviews/water-harvesting-l3.zu.review.md)
+is review-only and unpublished; it lists broader stale volume, water-safety
+and tank-size statements needing fluent and local review.
+
+Local checks, exact-head CI and deployed phone/offline verification of this
+change are pending. Human listening, physical-phone, learner, farmer,
+plumbing/practitioner and fluent isiZulu approval are not claimed.
+
+## Earlier English source and player check — before this correction
+
 **Status:** English source and deployed media technical check passed; human,
 practitioner and learner review remain open. No protected teaching changed
 and no new Flow credit was spent.

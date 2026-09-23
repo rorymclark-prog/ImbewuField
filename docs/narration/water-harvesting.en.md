@@ -120,6 +120,8 @@ Animals can damage banks and add manure to the water. Their presence does not ma
 
 Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.
 
+Check whether the roof material is suitable for rainwater collection before connecting a tank.
+
 Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.
 
 An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.
@@ -136,7 +138,7 @@ A diverter does not make the remaining water safe to drink.
 
 ---
 
-**Slide 16 — Watch: First Flush to Tank**
+**Slide 16 — First Flush to Tank: A Concept**
 
 A first-flush diverter keeps early roof runoff out of the tank.
 

@@ -174,7 +174,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 13, lesson: 'water-harvesting-l2', title: 'Care for the Dam and Its Banks' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
-      { slide: 16, lesson: 'water-harvesting-l3', title: 'Watch: First Flush to Tank' },
+      { slide: 16, lesson: 'water-harvesting-l3', title: 'First Flush to Tank: A Concept' },
       { slide: 17, lesson: 'water-harvesting-l3', title: 'Match Tank Size to Water Demand' },
       { slide: 18, lesson: 'water-harvesting-l3', title: 'Keep Stored Water Protected' },
       { slide: 19, lesson: 'water-harvesting-l4', title: 'Greywater Is Used Washwater' },

@@ -1121,6 +1121,46 @@ test('a saved water L2 pack drops catchment-only dam sizing media without cleari
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
 
+test('a saved water L3 pack refreshes roof-suitability speech without deleting stills or isiZulu', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateWaterL3RoofSuitabilityTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWaterL3RoofSuitabilityTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-audio/water-harvesting/en/slide-14.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/water-harvesting/en/slide-14.jpg',
+    '/course-audio/water-harvesting/en/slide-15.mp3',
+    '/course-audio/water-harvesting/zu/slide-14.mp3',
+    '/course-audio/soil-health/en/slide-14.mp3',
+  ];
+  const rows = new Map<string, Response>([
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old speech')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  const marker = origin + '/course-audio/water-harvesting/en/.l3-roof-suitability-20260923';
+  assert.equal(rows.has(marker), true);
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected speech'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected speech');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

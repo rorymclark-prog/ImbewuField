@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '5f41be93', changes: [
+    'Water lesson 3 now asks you to check your roof material before collecting rain.',
+    'The first-flush diagram is labelled as a concept still, with no drinking-water promise.',
+  ], tour: [
+    { title: 'Check roof collection', where: 'Studies → Water Harvesting → lesson 3', href: '/student',
+      detail: 'Read lesson 3, listen to slide 14, and view the first-flush concept on slide 16.' },
+  ] },
   { when: '23 September 2026', sha: '89bbca73', changes: [
     'Water lesson 2 now explains that catchment runoff alone cannot size a dam.',
     'Its dam picture and narration call for qualified site and spillway design.',
