@@ -1,5 +1,20 @@
 # Active Studies continuation — 22 September 2026
 
+## Soil Health L3 English and Flow check (23 September)
+
+Slides 14–18 were checked against their current full-size stills; slide 16
+already depicts cover crops and slide 18 already shows a photorealistic paired
+field, so older handover descriptions of missing/cartoon stills are stale.
+The deployed 390px player reopened slide 14's still and English MP3 from the
+saved 23.0 MB Soil pack with network disabled. One further, distinct Veo 3.1
+Quality x1 ground-level rain prompt used 100 displayed Flow credits. Its
+continuous eight-second shot was inspected in motion and at phone width. It
+visibly pools water but does not clearly show the bare-versus-covered raindrop
+impact, so the silent review copy is [held under `docs/`](../media/studies-animation-quality/soil-l3-current-lesson-check.md)
+and no learner video was registered. No second prompt, SVG clearance, protected
+teaching edit or isiZulu/human/practitioner approval is claimed. Farm Finance
+remains excluded.
+
 ## Soil Health L2 English media and source check (23 September)
 
 The existing Flow clips on slides 10–11 were reviewed in full motion and in

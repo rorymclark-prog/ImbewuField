@@ -15,6 +15,13 @@
 > for an authorised protected correction; see the
 > [current L2 check](../studies-animation-quality/soil-l2-current-lesson-check.md).
 
+> **23 September L3 update:** A distinct one-output x1 Flow ground-level rain
+> shot was generated and held after full-motion and phone-width review:
+> pooling obscures the raindrop-impact contrast. Slide 14 remains a still;
+> slides 16 and 18 already have current photorealistic stills. The current
+> English/offline and source check is
+> [here](../studies-animation-quality/soil-l3-current-lesson-check.md).
+
 The historical production pass registered twenty English slides and three locally
 authored Watch clips with the existing twenty English recordings. The current
 learner registration is described above. This branch follows Reading the Landscape
