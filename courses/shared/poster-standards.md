@@ -103,7 +103,7 @@ One poster carries both languages (cheaper to print, and every learner can read 
 
 ## Translation
 
-Every poster ships as an editable layout (Figma/Canva/SVG or PowerPoint master) with all words
+Every poster ships as an editable layout (Figma, Affinity/Illustrator SVG or a PowerPoint master) with all words
 in text boxes. Order of translation for ACT·SEF sites: **isiZulu, then Sesotho, siSwati,
 Xitsonga, Sepedi, isiXhosa** as programmes need. A translation must be read back by a first-
 language speaker who farms before it is printed.

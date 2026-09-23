@@ -6742,7 +6742,15 @@
       "teach_it": "```\nT-P01  Our learning agreement                     (≈ 15 min)\n1. ASK: What would help you learn this week? One idea per sticky note.\n2. DO: Groups agree 3; Reporters stick them on the lines.\n3. DO: Cluster and read back. Add missing must-haves (phones, time,\n   right to pass, no correcting language, feedback = thank you,\n   Question Tree).\n4. DO: Everyone signs or marks. A thumbprint counts.\n5. ASK (every morning): Are we keeping it? What needs to change?\nKEY: An agreement made by the group is kept by the group.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P01.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P01.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P01.jpg",
+      "zu": {
+        "headline": "Isivumelwano sethu sokufunda",
+        "labels": [
+          "Sisenzile",
+          "Siyasigcina"
+        ],
+        "question": "Yini ekusizayo ukuthi ufunde?"
+      }
     },
     {
       "id": "T-P02",
@@ -6762,7 +6770,17 @@
       "teach_it": "```\nT-P02  How adults learn                          (≈ 12 min)\n1. DO first: any short hands-on task (fold a seed envelope).\n2. POINT ①: What did you do?\n3. POINT ②: What did you notice? What went wrong?\n4. POINT ③: What is the rule? Why does it work?\n5. POINT ④: When will you use it at home?\n6. SAY: Adults want the why, bring experience, learn from real\n   problems, need respect. Go all the way round.\nKEY: Most bad lessons stop at \"make sense\". Finish with \"use it\".\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P02.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P02.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P02.jpg",
+      "zu": {
+        "headline": "Abantu abadala bafunda kanjani",
+        "labels": [
+          "Yenza",
+          "Buka emuva",
+          "Qonda",
+          "Kusebenzise"
+        ],
+        "question": "Izifundo zakho zima kuphi?"
+      }
     },
     {
       "id": "T-P03",
@@ -6784,7 +6802,17 @@
       "teach_it": "```\nT-P03  Look · Try · Talk · Take home             (≈ 10 min)\n1. ASK: Think of a lesson you just had. What came first?\n2. POINT ①: Look — a question, object, story or poster reveal.\n3. POINT ②: Try — every learner's hands, in groups of 5.\n4. POINT ③: Talk — What did you do? Why does it work?\n   What will you do at home?\n5. POINT ④: Take home — each group says one action.\n6. ASK: Who talks most in each step? (Learners, except a\n   short set-up.)\nKEY: Try comes before the long explanation.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P03.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P03.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P03.jpg",
+      "zu": {
+        "headline": "Buka · Zama · Khuluma · Hamba nakho",
+        "labels": [
+          "Baheheni",
+          "Izandla emsebenzini",
+          "Imibuzo emithathu",
+          "Isenzo esisodwa"
+        ],
+        "question": "Ubani okhuluma kakhulu esinyathelweni ngasinye?"
+      }
     },
     {
       "id": "T-P04",
@@ -6805,7 +6833,16 @@
       "teach_it": "```\nT-P04  The teacher-talk meter                    (≈ 8 min)\n1. ASK: How much of that lesson was the teacher talking? Guess.\n2. DO: Read the tally — one mark per minute of talk to the room.\n3. SAY: Talk % = marks ÷ minutes × 100. 60-min session = 18 min max.\n4. ASK: Where did the talk happen? Where could it be shorter?\n5. SAY: Biggest cut: give the task first, explain after the Try.\nKEY: Talk is counted, not guessed. ≤ 30%.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P04.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P04.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P04.jpg",
+      "zu": {
+        "headline": "Uthisha akhulume: 30% noma ngaphansi",
+        "labels": [
+          "Uthisha: 3 kwangu-10",
+          "Abafundi: 7 kwangu-10",
+          "Umaka owodwa ngomzuzu"
+        ],
+        "question": "Ubani obale namuhla?"
+      }
     },
     {
       "id": "T-P05",
@@ -6824,7 +6861,16 @@
       "teach_it": "```\nT-P05  Start with a doing word                   (≈ 12 min)\n1. SHOW two outcomes: \"understand compost\" vs \"build a heap\n   1 m wide in green and brown layers\".\n2. ASK: At lunch, how would you know each one happened?\n3. POINT ①②③: doing word · what · how well.\n4. SAY the verbs: make, show, find, measure, explain, name,\n   choose, draw, plan, record.\n5. SAY foggy words to avoid: understand, know, learn about,\n   be aware of, appreciate.\n6. DO: Fix three foggy outcomes in groups.\nKEY: If you can't see it or hear it, it isn't an outcome.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P05.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P05.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P05.jpg",
+      "zu": {
+        "headline": "Qala ngesenzo",
+        "labels": [
+          "Isenzo",
+          "Kuyini",
+          "Kahle kangakanani"
+        ],
+        "question": "Ungakubona ngaphambi kwasemini?"
+      }
     },
     {
       "id": "T-P06",
@@ -6844,7 +6890,18 @@
       "teach_it": "```\nT-P06  Five people, five jobs                    (≈ 5 min)\n1. POINT ①–⑤: Leader keeps everyone doing, not watching ·\n   Timekeeper calls \"5 minutes left\" · Materials collects and counts\n   the kit · Recorder draws or writes · Reporter speaks for the group.\n2. DO: Each group chooses today's roles in 1 minute.\n3. SAY: Roles rotate every morning — everyone does every job.\n4. SAY: Recorder can draw. Seated roles are real roles.\nKEY: A job for everyone means nobody only watches.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P06.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P06.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P06.jpg",
+      "zu": {
+        "headline": "Abantu abahlanu, imisebenzi emihlanu",
+        "labels": [
+          "Umholi",
+          "Ogcina isikhathi",
+          "Ophethe izinto",
+          "Umbhali",
+          "Umbiki"
+        ],
+        "question": "Ithuba likabani kusasa?"
+      }
     },
     {
       "id": "T-P07",
@@ -6865,7 +6922,19 @@
       "teach_it": "```\nT-P07  Hands on, not a demo                      (≈ 10 min)\n1. STORY (1 min): In 2022, practicals became one person digging while\n   25 watched — even with kit for four groups in the car.\n2. ASK: Why does it happen? Which reasons can we fix?\n3. POINT ①–⑥: count kit per group · show 3 min max · groups of 5\n   with roles · stations 3 m apart · hands behind your back ·\n   one kit = carousel, nobody watches more than 10 min.\n4. SAFETY: tools points down; nobody behind a swing; gloves or soap;\n   hats and water; first aid kit open; lightning = stop.\n5. DO: Plan a carousel for one A-frame and 25 learners.\nKEY: If you take the spade, the practical is over.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P07.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P07.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P07.jpg",
+      "zu": {
+        "headline": "Izandla emsebenzini, hhayi i-demo",
+        "labels": [
+          "I-kit eqenjini ngalinye",
+          "I-demo: imizuzu 3",
+          "Amaqembu abantu 5",
+          "Iziteshi zihlukene",
+          "Izandla ngemuva",
+          "I-kit eyodwa? Jikelezani"
+        ],
+        "question": "Ubani obebuka nje?"
+      }
     },
     {
       "id": "T-P08",
@@ -6885,7 +6954,18 @@
       "teach_it": "```\nT-P08  Climb the question ladder                 (≈ 12 min)\n1. ASK three: \"Is soil alive?\" · \"What lives in soil?\" ·\n   \"How could you find out if YOUR soil is alive?\"\n2. ASK: Which got the best thinking?\n3. POINT ①: Closed — one right answer; for checking.\n   ②: Open — many answers: what, how, tell me.\n   ③: Deeper — why? how do you know? what if? what will you do?\n4. POINT ④: Count five fingers silently before you speak again.\n5. POINT ⑤: \"What do others think?\" — never answer your own question.\n6. SAY: Not \"Any questions?\" — \"What questions do you have?\"\nKEY: Climb the ladder, then wait.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P08.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P08.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P08.jpg",
+      "zu": {
+        "headline": "Khwela isitebhisi semibuzo",
+        "labels": [
+          "Umbuzo ovaliwe",
+          "Umbuzo ovulekile",
+          "Umbuzo ojulile",
+          "Linda imizuzwana 5",
+          "Wubuyisele eqenjini"
+        ],
+        "question": "Abanye bacabangani?"
+      }
     },
     {
       "id": "T-P09",
@@ -6905,7 +6985,19 @@
       "teach_it": "```\nT-P09  A poster that teaches                     (≈ 15 min + studio)\n1. SHOW a bad poster at 6 m: \"What does it teach?\"\n2. ASK groups: What's wrong? Each problem becomes a rule.\n3. POINT ①–⑥ and match their rules.\n4. ADD: sun in the north · people like our farmers · local\n   materials · works in black and white · no words inside the\n   picture (so it can be translated).\n5. DO: Pencil first. Headline, picture, 3 labels, 1 question.\n6. DO: The 6-metre check with a partner.\nKEY: One idea, few words, a big picture and a question.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P09.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P09.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P09.jpg",
+      "zu": {
+        "headline": "Iphosta efundisayo",
+        "labels": [
+          "Umqondo owodwa",
+          "Amagama 25, akwedlule",
+          "Isihloko esifushane",
+          "Isithombe esikhulu, ngaphandle kwamagama",
+          "Amalebula anezinombolo",
+          "Umbuzo owodwa"
+        ],
+        "question": "Iyafundeka kude ngo-6 m?"
+      }
     },
     {
       "id": "T-P10",
@@ -6925,7 +7017,18 @@
       "teach_it": "```\nT-P10  Two stars and a wish                      (≈ 5 min to teach; used daily)\n1. POINT ①: The teacher speaks first: what went well, what I'd change.\n2. POINT ②③: Two stars — specific: \"You let them dig before you\n   explained.\" Not \"nice\".\n3. POINT ④: One wish, as a suggestion: \"Next time maybe…\"\n4. POINT ⑤: The teacher only says \"Thank you. Next time I will…\"\n   No defending.\n5. RULE: Never correct anyone's language, spelling or accent.\nKEY: Feedback is a gift. Say thank you.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P10.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P10.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P10.jpg",
+      "zu": {
+        "headline": "Izinkanyezi ezimbili nesifiso",
+        "labels": [
+          "Uthisha ukhuluma kuqala",
+          "Inkanyezi: ecacile",
+          "Inkanyezi: ecacile",
+          "Isifiso: \"ngokuzayo mhlawumbe\"",
+          "Yithi ngiyabonga"
+        ],
+        "question": "Yini ozoyizama ngokuzayo?"
+      }
     },
     {
       "id": "T-P11",
@@ -6944,7 +7047,19 @@
       "teach_it": "```\nT-P11  Wake the room                             (5 min each)\n1. WHEN: yawning, phones, after lunch — always after lunch.\n2. CHOOSE one that teaches (see facilitation-toolkit §6).\n3. CHECK: nobody forced to touch or run; elders may sit and call.\n4. RUN it for 3–4 minutes. Stop while it's still fun.\n5. ASK: What did it teach?\nKEY: From Day 2, trainees lead the energisers.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P11.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P11.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P11.jpg",
+      "zu": {
+        "headline": "Vusa igumbi",
+        "labels": [
+          "Ilanga Nomthunzi",
+          "Inqwaba ye-Compost",
+          "Uxhumano Lwempilo",
+          "Isiphepho Semvula",
+          "Dlulisa Ukushaya Izandla",
+          "Ukushintshana Ngembewu"
+        ],
+        "question": "Ubani ozohola olandelayo?"
+      }
     },
     {
       "id": "T-P12",
@@ -6963,7 +7078,18 @@
       "teach_it": "```\nT-P12  Teach with what you have                  (≈ 12 min)\n1. DO: Teach outside first; then ask \"what made it work?\"\n2. POINT ①–⑤: sun behind learners · poster at eye level ·\n   horseshoe so all see the object · your back to the wind ·\n   stop, then talk — never talk while walking.\n3. ASK: What could go wrong outside? (noise, rain, moving shade,\n   dogs) What's your plan?\n4. GROUPS: List 8 free things that teach (box = sun & shade,\n   bottles = runoff, jar = soil, beans = money, string = spacing).\nKEY: The best teaching aid is usually already in the yard.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P12.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P12.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P12.jpg",
+      "zu": {
+        "headline": "Fundisa ngalokho onakho",
+        "labels": [
+          "Ilanga ngemuva kwabafundi",
+          "Iphosta ezingeni lamehlo",
+          "Isiyingi: bonke bayabona",
+          "Umhlane wakho emoyeni",
+          "Yima, bese ukhuluma"
+        ],
+        "question": "Yini engafundisa?"
+      }
     },
     {
       "id": "T-P13",
@@ -6984,7 +7110,17 @@
       "teach_it": "```\nT-P13  One lesson, three ways                    (≈ 8 min per mode)\n1. POINT ①: Poster — default. Cover and reveal; point and ask;\n   learners come to the poster; stand to the side.\n2. POINT ②: Slides — test from the back in daylight; TV beats a\n   projector; press B to blank; tablet per group of 5 for clips.\n3. POINT ③: App — My Studies (lessons offline) · Mentor → Training\n   (register, signatures, photos, feedback) · Lima Vision (ask the\n   group \"do we agree?\").\n4. POINT ④: Every mode has a paper twin: flip-book, printed stills,\n   paper register.\n5. ASK: What can a device show that a poster can't? (Movement.)\nKEY: Slides and app are a bonus. Switch in 30 seconds.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P13.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P13.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P13.jpg",
+      "zu": {
+        "headline": "Isifundo esisodwa, izindlela ezintathu",
+        "labels": [
+          "Iphosta",
+          "Ama-slide",
+          "I-app",
+          "Iphepha elisekelayo"
+        ],
+        "question": "Kuthiwani uma ugesi ucima?"
+      }
     },
     {
       "id": "T-P14",
@@ -7006,7 +7142,18 @@
       "teach_it": "```\nT-P14  Hand over, don't take over                (≈ 6 min)\n1. POINT ①: Write who leads Look, Try, Talk, Take home.\n2. POINT ②: Hand over out loud: \"Now Thandi will show you the jar.\"\n3. POINT ③: The one not leading counts talk, hands out kit, watches\n   groups. No side-talk.\n4. POINT ④: Agreed signal = \"may I add?\" The leader says yes or no.\n5. POINT ⑤: Debrief together every evening: star each other first.\nKEY: Two teachers, one lesson — never two lessons at once.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P14.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P14.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P14.jpg",
+      "zu": {
+        "headline": "Dlulisela, ungathathi izintambo",
+        "labels": [
+          "Hlelani ozohola",
+          "Dlulisela ngezwi",
+          "Umngane usebenza ngokuthula",
+          "Thinta indlebe: ngingengeza?",
+          "Nikanani izinkanyezi"
+        ],
+        "question": "Ubani ohola olandelayo?"
+      }
     },
     {
       "id": "T-P15",
@@ -7024,7 +7171,16 @@
       "teach_it": "```\nT-P15  Did they learn it?                        (≈ 10 min)\n1. POINT ①: Skills checklist — tick = alone · half = with help ·\n   cross = not yet.\n   Tick while they work, not from memory.\n2. POINT ②: Picture quiz, Day 1 and Day 5 — walk to corners;\n   count class totals, not names.\n3. POINT ③: Evaluation — fingers 1–5; stickers on \"understand best\"\n   and \"want more\". The gap = the mentor visit plan.\n4. SAY: It records what they can DO. It's not a qualification.\nKEY: The best proof is a farmer doing the skill.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P15.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P15.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P15.jpg",
+      "zu": {
+        "headline": "Ingabe bakufundile?",
+        "labels": [
+          "Babuke bekwenza",
+          "Imibuzo ngezithombe",
+          "Babuze"
+        ],
+        "question": "Yini abangayenza manje?"
+      }
     },
     {
       "id": "T-P16",
@@ -7045,7 +7201,18 @@
       "teach_it": "```\nT-P16  Ready by Day 0                            (≈ 15 min)\n1. POINT ①: One crate per group + 1 spare set. Materials counts in/out.\n2. POINT ②: Posters up before the session, left to right, seated\n   eye level; they stay up all course.\n3. POINT ③: Flip folder: register, POPIA, session sheets, checklist,\n   quiz, evaluation, daily report, certificates (registered + 10%).\n4. POINT ④: First aid kit open; clinic route written down.\n5. POINT ⑤: Devices charged; lessons saved offline; tested in\n   flight mode.\n6. ASK: What's missing? Fix it today.\nKEY: Day 0 is never the same day as Day 1.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P16.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P16.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P16.jpg",
+      "zu": {
+        "headline": "Silungile ngoSuku 0",
+        "labels": [
+          "Ama-crate eqenjini ngalinye",
+          "Amaphosta alengisiwe",
+          "I-flip folder",
+          "Ikhithi yosizo lokuqala ivuliwe",
+          "Amadivayisi ashajiwe"
+        ],
+        "question": "Yini engekho?"
+      }
     },
     {
       "id": "T-P17",
@@ -7064,7 +7231,18 @@
       "teach_it": "```\nT-P17  Everyone learns                           (≈ 15 min)\n1. POINT ①: Assume some don't read. Draw, point, do. Recorders draw.\n2. POINT ②: After you explain, groups retell it in their own\n   language for 2 minutes.\n3. POINT ③: Every person has a role; rotate daily.\n4. POINT ④: Every practical has a seated job.\n5. POINT ⑤: \"How did your grandmother do this?\" Honour it,\n   then add what's new.\n6. NEVER ask someone to read aloud unless they volunteer.\nKEY: Small changes, planned ahead, and a role for everyone.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P17.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P17.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P17.jpg",
+      "zu": {
+        "headline": "Wonke umuntu uyafunda",
+        "labels": [
+          "Izithombe, hhayi amagama kuphela",
+          "Isikhathi solimi",
+          "Umsebenzi womuntu wonke",
+          "Imisebenzi yokuhlala phansi",
+          "Buzani abadala"
+        ],
+        "question": "Ubani ongabambi iqhaza?"
+      }
     },
     {
       "id": "T-P18",
@@ -7082,7 +7260,19 @@
       "teach_it": "```\nT-P18  Keep the teacher strong                   (≈ 10 min)\n1. POINT ①: Max three courses back to back, then a week at home.\n2. POINT ②: Day 0 is a working day. Never skip it.\n3. POINT ③: Use the signal, not shouting. Water all day.\n4. POINT ④: Heavy work before 11:00; sit while groups work.\n5. POINT ⑤: 10 minutes with your co-facilitator every evening.\n6. POINT ⑥: Not a counsellor, bank or taxi. Listen, refer, follow up.\n7. ASK: What drains you? What will you do about it?\nKEY: A tired teacher talks more and listens less.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P18.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P18.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P18.jpg",
+      "zu": {
+        "headline": "Gcina uthisha eqinile",
+        "labels": [
+          "Izifundo ezintathu, bese uphumula",
+          "Usuku 0 njalo",
+          "Londoloza izwi lakho",
+          "Isigqoko, amanzi, umthunzi",
+          "Umngane wakusihlwa",
+          "Lalela, bese udlulisela"
+        ],
+        "question": "Yini ekuqeda amandla?"
+      }
     },
     {
       "id": "T-P19",
@@ -7102,7 +7292,23 @@
       "teach_it": "```\nT-P19  Ten elements of agroecology               (≈ 20 min with card sort)\n1. DO first: groups sort 20 practice photos under the 10 elements.\n2. SAY: FAO agreed these 10 in 2018 to describe agroecology.\n3. POINT ①–⑩ (FAO names): Diversity · Co-creation & sharing of\n   knowledge · Synergies · Efficiency · Recycling · Resilience ·\n   Human & social values · Culture & food traditions ·\n   Responsible governance · Circular & solidarity economy.\n4. ASK: Which 3 is our village strongest in? Which is weakest?\n5. SAY: Farming AND the food system — knowledge, culture,\n   fair markets, who decides.\nKEY: Agroecology is the practice and the food system together.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P19.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P19.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P19.jpg",
+      "zu": {
+        "headline": "Izinto eziyishumi ze-agroecology",
+        "labels": [
+          "Ukwehlukahlukana",
+          "Ukwabelana ngolwazi",
+          "Ukusizana kwezinto",
+          "Ukonga",
+          "Ukusebenzisa kabusha",
+          "Ukuqina",
+          "Ubuntu",
+          "Amasiko okudla",
+          "Ukubusa ngobulungiswa",
+          "Umnotho wokubambisana"
+        ],
+        "question": "Yikuphi esiqine kakhulu kukho?"
+      }
     },
     {
       "id": "T-P20",
@@ -7120,7 +7326,25 @@
       "teach_it": "```\nT-P20  12 design principles                      (≈ 10 min, trainers' reference)\n1. SAY: Permaculture = 3 ethics + a design toolbox. These are\n   David Holmgren's widely taught 12.\n2. POINT each: 1 Observe & interact · 2 Catch & store energy ·\n   3 Obtain a yield · 4 Self-regulate & accept feedback ·\n   5 Use & value renewables · 6 Produce no waste · 7 Design from\n   patterns to details · 8 Integrate rather than segregate ·\n   9 Small & slow solutions · 10 Use & value diversity ·\n   11 Use edges & value the margins · 12 Creatively respond to change.\n3. ASK: Which one did the \"good garden\" (F-P03) use?\n4. SAY: Course 1 teaches six simpler garden principles (F-P04).\nKEY: Ethics say why; principles say how to design.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P20.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P20.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P20.jpg",
+      "zu": {
+        "headline": "Imigomo yokuhlela eyi-12",
+        "labels": [
+          "Buka",
+          "Bamba amandla",
+          "Thola isivuno",
+          "Yamukela impendulo",
+          "Sebenzisa okuvuselelekayo",
+          "Ungamoshi lutho",
+          "Qala ngesimo esikhulu",
+          "Hlanganisa",
+          "Okuncane, kancane",
+          "Azisa ukwehlukahlukana",
+          "Sebenzisa imiphetho",
+          "Yamukela ushintsho"
+        ],
+        "question": ""
+      }
     },
     {
       "id": "T-P21",
@@ -7139,7 +7363,17 @@
       "teach_it": "```\nT-P21  Test it side by side                      (≈ 10 min + a season)\n1. ASK: How could we find out if compost really helps — ourselves?\n2. POINT ①: Two plots (or pots). Change ONE thing only.\n3. POINT ②: Same day every week, the group looks together.\n4. POINT ③: Measure (a marked stick) and draw what you see.\n5. POINT ④: The group decides what worked and what to try next.\n6. SAY: This is how farmer field schools learn — by comparing.\nKEY: Farmers believe what they see in their own trial.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P21.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P21.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P21.jpg",
+      "zu": {
+        "headline": "Hlola eceleni ngeceleni",
+        "labels": [
+          "Iziqephu ezimbili, ushintsho olulodwa",
+          "Bheka njalo ngeviki",
+          "Linganisa futhi udwebe",
+          "Iqembu liyanquma"
+        ],
+        "question": "Yini ozoyihlola?"
+      }
     },
     {
       "id": "T-P22",
@@ -7157,7 +7391,18 @@
       "teach_it": "```\nT-P22  Calm in a difficult moment                (≈ 25 min with role plays)\n1. POINT ①: Slow down. Lower your voice.\n2. POINT ②: \"I can see you feel strongly about this.\"\n3. POINT ③: \"Tell me more.\" Ask; don't argue.\n4. POINT ④: A choice, a role, the Question Tree, a talk at tea.\n5. POINT ⑤: Never shame anyone in front of the group.\n6. SAFETY: If anyone is at risk, stop and get help. Know the help\n   lines (GBV Command Centre 0800 428 428 · check locally).\n7. DO: Role plays in threes — facilitator, learner, observer.\nKEY: You're not a counsellor. Keep people safe, and refer.\n```",
       "status": "NEW",
       "target": "public/course-media/teach-the-teachers/posters/T-P22.pdf",
-      "phone_target": "public/course-media/teach-the-teachers/posters/T-P22.jpg"
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P22.jpg",
+      "zu": {
+        "headline": "Ukuzola esikhathini esinzima",
+        "labels": [
+          "Phefumula",
+          "Kusho ngomusa",
+          "Lalela, ubuze",
+          "Nikeza indlela eya phambili",
+          "Landelela ngasese"
+        ],
+        "question": "Ingabe wonke umuntu uphephile?"
+      }
     },
     {
       "id": "T-P01-ART",

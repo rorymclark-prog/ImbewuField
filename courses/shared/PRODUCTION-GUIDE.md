@@ -19,40 +19,33 @@ None of them is the botanical-watercolour-on-cream look of the in-app student co
 file holds the palette, fonts, recurring characters, an **image anchor** (ChatGPT/Gemini) and an
 **animation anchor** (Flow/Veo), plus the deck theme the build script uses.
 
-## 2. Three ways to make the media (pick per batch)
+## 2. Who makes what
 
-### Route A — automatic, straight into the repo (recommended)
-`scripts/courses/generate-media.py` calls Google's Gemini API: the Gemini image model for
-images and **Veo — the model behind Google Flow — for animations**. Files land at their
-`target` paths with the right names.
+| Media | Made by | How |
+|---|---|---|
+| **Images** (slide images, cards, poster art, photos) | **Rory, in ChatGPT** | Paste from `courses/build/<course>/prompts-images.md` |
+| **Animations** | **Claude, with Veo** (the model behind Google Flow) | `scripts/courses/generate-media.py` |
+| **Posters and decks** | the build script + a print layout tool | §4 |
 
-1. Add `GEMINI_API_KEY` to the Claude Code cloud environment (environment settings → Edit →
-   environment variables). The key the app already uses in Vercel works. Never paste it in chat.
-2. Start small, check the look, then scale:
-   ```bash
-   python3 scripts/courses/generate-media.py --course farmer-5day --kind poster-art --limit 3
-   python3 scripts/courses/build.py        # decks now show the new art
-   ```
-3. Costs money per call (Veo far more than images) — budget per course before running all.
-   Model ids can be overridden with `IMAGE_MODEL` / `VEO_MODEL`.
+### Images — ChatGPT (your separate billing)
+`courses/build/<course>/prompts-images.md` has one block per image, with the course's look
+baked in and the exact file name to save it under.
+- One ChatGPT chat **per course**. First make a **character sheet** (the recurring characters in
+  that course's `style.md`, side by side) and attach it to later prompts so faces stay the same.
+- Save each image at the path printed above its prompt (e.g.
+  `public/course-media/farmer-5day/F-P06-ART.jpg`), commit, and run
+  `python3 scripts/courses/build.py` — the decks swap the placeholders for your images.
 
-### Route B — by hand in Google Flow + ChatGPT (separate billing)
-The build writes two paste-ready packs per course:
-- `courses/build/<course>/prompts-images.md` → ChatGPT (image mode) or Gemini.
-- `courses/build/<course>/prompts-animations.md` → Google Flow (Text to Video).
-
-Tips that keep a course consistent:
-- One ChatGPT chat per course. First generate a **character sheet** (all recurring characters
-  from `style.md`, side by side) and a **style swatch**; attach both to every later prompt.
-- In Flow, save the character sheet as an **Ingredient**; use **Frames to Video** from the last
-  frame to continue a clip; Flow shots are ~8 s — items marked with 2–3 shots are extended in
-  **Scenebuilder**. Export MP4, mute audio, keep a still frame (`.jpg`, same name).
-- Save each file at the path printed above its prompt, commit, run the build.
-
-### Route C — Canva (works from Claude today)
-Claude can generate images in your Canva account through the Canva connector (a linocut test
-for F-P06 is already in your Canva). Files stay in Canva — download them and save at the
-target paths. Canva is also the natural place to lay out the bilingual posters (§4).
+### Animations — Veo (Claude runs it)
+```bash
+python3 scripts/courses/generate-media.py --course farmer-5day --limit 2   # animations only by default
+python3 scripts/courses/build.py
+```
+Needs `GEMINI_API_KEY` in the cloud environment (environment settings → Edit → environment
+variables; the key the app uses in Vercel works). Veo makes ~8-second shots; longer items are
+made as 8 s shots (extend later if needed). Clips are made silent, 1280×720, with a still `.jpg`.
+Veo is billed per second of video — run one course at a time and check the look first.
+`prompts-animations.md` has the same prompts if you ever want to run a clip by hand in Flow.
 
 ## 3. Rules for every image and clip
 

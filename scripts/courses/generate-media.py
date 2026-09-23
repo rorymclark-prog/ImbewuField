@@ -14,7 +14,9 @@ the right names — no downloading, renaming and uploading 400 files by hand.
 
 Needs:  GEMINI_API_KEY in the environment (a key from Google AI Studio; the one the app already
         uses in Vercel works). Optional: IMAGE_MODEL, VEO_MODEL to override the model ids.
-        ffmpeg (optional) to strip Veo's audio track and cut a still frame.
+        ffmpeg (or `pip install imageio-ffmpeg`) to strip Veo's audio track and cut a still frame.
+        Images are normally made by hand in ChatGPT from courses/build/<course>/prompts-images.md;
+        this script defaults to animations (--kind animation).
 
 Usage:
   python3 scripts/courses/generate-media.py --course farmer-5day --kind image --limit 5
@@ -115,15 +117,27 @@ def gen_video(requests, key: str, item: dict, out: Path) -> None:
     raise TimeoutError(f"Veo operation {op} did not finish")
 
 
+def ffmpeg_exe() -> str | None:
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    try:  # pip install imageio-ffmpeg ships a static binary
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return None
+
+
 def finish_video(raw: Path, out: Path) -> None:
     """Silent, web-friendly MP4 + a still frame. Without ffmpeg, keep the file as delivered."""
-    if not shutil.which("ffmpeg"):
+    ff = ffmpeg_exe()
+    if not ff:
         raw.rename(out)
         print("   (ffmpeg missing: audio not stripped, no still frame — run finish later)")
         return
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(raw), "-an", "-vf", "scale=1280:-2",
+    subprocess.run([ff, "-y", "-loglevel", "error", "-i", str(raw), "-an", "-vf", "scale=1280:-2",
                     "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-movflags", "+faststart", str(out)], check=True)
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1.5", "-i", str(out), "-frames:v", "1",
+    subprocess.run([ff, "-y", "-loglevel", "error", "-ss", "1.5", "-i", str(out), "-frames:v", "1",
                     "-q:v", "4", str(out.with_suffix(".jpg"))], check=True)
     raw.unlink()
 
@@ -132,7 +146,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--course")
     ap.add_argument("--ids", help="comma-separated media ids")
-    ap.add_argument("--kind", choices=["image", "poster-art", "photo", "animation"])
+    ap.add_argument("--kind", choices=["image", "poster-art", "photo", "animation"], default="animation",
+                    help="default: animation (images are made by hand in ChatGPT from prompts-images.md)")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
