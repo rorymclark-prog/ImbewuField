@@ -4,12 +4,34 @@
 lesson title and body, slides 14–15, lesson diagram, narration, transcript and
 English audio now show feed entering, only some nutrients returning through
 manure compost, and food/products leaving. The quiz and animal-health safeguards
-remain unchanged. The corrected media and saved-pack migration await deployed
-preview verification; the sections below record the *previous* released state
+remain unchanged. The corrected media and selective saved-pack migration passed
+deployed preview checks; the historical sections below record the *previous* released state
 and its source hold. No Flow credit was spent. The old code-drawn animation
 remains withdrawn. Farm Finance is excluded.
 
-## Deployed media and saved-pack check
+## Corrected release verification
+
+Commit `b336a9ec` passed local typecheck, 3,713 tests with no failures and one
+existing TODO, plus whitespace validation. Exact-head CI `35830511586` passed
+both `test` and `rules`; preview `35830511468` passed and `/api/build-info`
+reported `b336a9e`. The actual JPEGs and 269px fits were inspected before
+release. At deployed 390px size, the sample player showed slides 14 and 15
+without clipping; their short supporting lines remain small, with matching
+English narration, transcript and full-size image links available. Slide 15
+audio advanced to 0:03 / 0:30 online.
+
+The replacement assets selectively retired six older cached URLs: slides 14
+and 15, the lesson diagram, the two slide MP3s and the combined English MP3.
+The user-selected refresh completed all 49 files and reported **On this phone ·
+24.2 MB**. After a network-disabled browser reload, the 390px sample player
+reopened both corrected stills and their English MP3s; the files played to
+0:05 / 0:15 and 0:04 / 0:30. The network and temporary viewport were restored.
+Two earlier in-app browser tabs crashed when directly clicking their native
+audio controls; the later lesson-control playback and offline reload worked.
+This is a technical browser check, not physical-phone, learner, farmer,
+veterinary, practitioner or fluent isiZulu acceptance.
+
+## Previous deployed media and saved-pack check
 
 Lesson 3 occupies slides 14–18. All five current stills and English MP3s
 appeared in the deployed 390 × 844 learner player. Slide 14 has a static

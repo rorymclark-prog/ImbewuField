@@ -821,6 +821,48 @@ test('a saved Small Livestock L3 pack drops the closed-circle pictures and old s
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend the learner’s airtime');
 });
 
+test('a saved Introduction L2 pack retires old teaching media while keeping other lessons and isiZulu', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateIntroL2PrinciplesTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateIntroL2PrinciplesTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const changed = [
+    ...[11, 12, 13, 14].map(n => `/course-decks/intro-permaculture/en/slide-${String(n).padStart(2, '0')}.jpg`),
+    ...[9, 10, 11, 12, 13, 14].map(n => `/course-audio/intro-permaculture/en/slide-${String(n).padStart(2, '0')}.mp3`),
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/intro-permaculture/en/slide-10.jpg',
+    '/course-decks/intro-permaculture/en/slide-15.jpg',
+    '/course-audio/intro-permaculture/en/slide-08.mp3',
+    '/course-decks/intro-permaculture/zu/slide-13.jpg',
+    '/course-audio/intro-permaculture/zu/slide-13.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ];
+  const rows = new Map<string, Response>([
+    ...changed.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/intro-permaculture/en/.l2-principles-20260923'), true);
+  const replacement = new URL(changed[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected media'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected media');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

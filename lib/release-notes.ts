@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'b336a9ec', changes: [
+    'Introduction lesson 2 now checks the site before any water earthworks.',
+    'Four pictures and the narration no longer promise crops will survive hail.',
+  ], tour: [
+    { title: 'Review the principles', where: 'Studies → Introduction → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slides 9 to 14, then answer the two lesson questions.' },
+  ] },
   { when: '23 September 2026', sha: 'ff2668f1', changes: [
     'Small Livestock lesson 3 now shows feed entering and farm products leaving.',
     'Its stills and narration explain that only some nutrients return through compost.',

@@ -1,7 +1,23 @@
 # Introduction L2 English lesson check — 22 September 2026
 
-**Status:** technical media pass; English teaching not content cleared. No
-protected lesson, quiz, narration or learner asset was changed in this check.
+**Status (23 September):** English release candidate prepared for verification.
+The source-backed lesson, quiz, narration, transcript, four corrected static
+stills and six matching English slide MP3s now agree. The combined narration
+was rebuilt and decoded; the [audio verification record](intro-l2-english-audio-verification.json)
+contains exact WordBoundary matches. The corrected slide 13 is a still, with
+the older code-drawn motion still held. The revised stills were inspected at
+full and 269 px fit sizes. At the small fit, supporting text needs the zoom
+link or spoken narration. Selective offline cache migration retires only this
+lesson’s changed English media from saved packs. No Flow credit was spent.
+Local checks, exact-head CI, deployed phone view and offline recheck are still
+required before this is described as released. Human and fluent isiZulu review
+are still open; [isiZulu packet](../../narration-reviews/intro-l2.zu.review.md)
+is review-only.
+
+## Original 22 September check and holds
+
+The following is the pre-correction evidence and source hold that drove this
+release candidate.
 
 ## Learner-player evidence
 
@@ -64,9 +80,6 @@ learners, not proof that the teaching is understandable to a low-literacy user.
    than buying the same thing later. This unqualified cost comparison has no
    cited basis in the lesson; remove it or make it an observation question.
 
-Rory's answer to the pending request for narrow English core corrections is
-required before editing protected lesson/quiz/narration text. Once authorised,
-coordinate source text, slide 13 still, transcript, the affected English MP3s,
-combined narration, exact size manifest and saved-pack cache migration. Keep
-the older code-drawn slide 13 movie withdrawn. Human, practitioner and fluent
+The corrected release candidate addresses these five holds together. Keep the
+older code-drawn slide 13 movie withdrawn. Human, practitioner and fluent
 isiZulu acceptance remain open.

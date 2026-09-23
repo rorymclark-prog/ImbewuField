@@ -464,38 +464,35 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Build these three into how you think before you build anything on the ground."
       ],
       "9": [
-        "Bill Mollison and David Holmgren distilled permaculture into twelve design principles.",
-        "You do not need all twelve to start. Three of them do most of the work on a South African smallholding.",
-        "Observe and interact. Catch and store energy. Use edges and value the marginal.",
+        "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+        "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
         "We will take those three one at a time."
       ],
       "10": [
         "Watch your land through a full season before you commit to major earthworks.",
         "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
-        "That pattern is what a swale has to match. Dig before you know it and you have moved a great deal of soil into the wrong place.",
+        "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
         "Where does water leave your land? Do you actually know, or are you guessing?"
       ],
       "11": [
         "Harvest rain, sun and biomass before they leave your property.",
         "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
-        "Catching them is almost always cheaper than buying the same thing later.",
+        "Compare the cost and work with the benefit on your own farm.",
         "Name one thing that arrives on your land free and leaves again without being used."
       ],
       "12": [
-        "The edge is where two things meet — a fence line, a stream bank, the strip beside a path.",
-        "Edges are often the most productive ground you have, and they are usually the ground nobody has planned.",
-        "Look at what already grows well along yours. That is the land telling you something.",
+        "The edge is where two things meet — a fence line or the strip beside a path.",
+        "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
         "Which edge on your plot is doing nothing at the moment?"
       ],
       "13": [
-        "A monoculture maize field can be wiped out by one hailstorm. A mixed planting rarely is.",
-        "That is the principle \"use and value diversity\", and it is insurance you plant rather than buy.",
+        "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
         "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
         "What would one bad day cost you right now?"
       ],
       "14": [
         "Put each element where it works for its neighbours.",
-        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. The chickens clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
         "The same three things, fenced apart, do only their own job.",
         "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
       ],

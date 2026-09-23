@@ -1,5 +1,51 @@
 # Active Studies continuation — 22 September 2026
 
+## Introduction L2 English release candidate and parallel isiZulu review (23 September)
+
+The source-backed L2 correction now attributes Holmgren’s twelve principles
+precisely, treats observation as a first step before any swale decision, removes
+unqualified cost and stream-bank claims, avoids promising that mixed crops
+survive hail, and adds a fresh-manure food-safety boundary to the chicken
+example. Slides 11–14 have corrected static stills; slides 9–14 and the full
+English narration were regenerated from the matching script and transcript.
+The audio record reports exact word-boundary text matches and full decode;
+human listening remains open. Selective saved-pack migration retires only the
+changed English lesson media. Full-size and 269px still candidates were
+inspected. No new Flow credit or SVG/code-drawn motion was used, and the old
+diversity movie stays withdrawn. A lower-cost parallel agent prepared the
+L2 isiZulu comparison as **review only**; no learner-facing ZU edit or
+approval is claimed. Local typecheck, 3,714 passing tests / 0 failures /
+1 existing TODO, and whitespace check passed. Exact-head CI, preview and
+offline recheck remain to be completed before release is claimed.
+
+The [L2 check](../media/studies-animation-quality/intro-l2-lesson-check.md)
+and [isiZulu review packet](../narration-reviews/intro-l2.zu.review.md)
+record the source and approval limits. Farm Finance remains excluded.
+
+## Small Livestock L3 English release and isiZulu review preparation (23 September)
+
+Rory authorised the named nutrient-flow correction. Commit `b336a9ec` updated
+the L3 lesson, narration, transcript, titles, three static pictures, two slide
+MP3s and full MP3 together. The new stills show bought feed entering, only
+some nutrients returning through manure compost, and food/products leaving;
+the old code-drawn animation remains withdrawn. The quiz and animal-health
+safeguards are unchanged. No Flow credit was spent. The [L3 source and media
+check](../media/studies-animation-quality/small-livestock-l3-lesson-check.md)
+records the limits. Local typecheck, 3,713 passing tests / 0 failures / 1
+existing TODO, and whitespace check passed. Exact-head CI `35830511586`
+passed `test` and `rules`; preview `35830511468` passed, and build info
+reported `b336a9e`. The deployed sample Student showed the corrected L3
+lesson and slides 14–15; slide 15 English audio advanced to 0:03 / 0:30.
+The refreshed 49-file, 24.2 MB Small Livestock pack reported **On this phone**.
+After a network-disabled browser reload, the deployed 390px sample player
+reopened both corrected stills with the **Offline** badge visible; their MP3s
+advanced to 0:05 / 0:15 and 0:04 / 0:30. The connection and temporary viewport
+were restored. Two earlier in-app browser tabs crashed when directly clicking
+their native audio control; the later custom lesson control and offline check
+worked. The stills were also inspected at full and phone-fit sizes. This is
+one browser's technical check, not physical-phone or human review. A
+review-only isiZulu L3 comparison packet is prepared but unpublished.
+
 ## Introduction L1 English release and parallel isiZulu preparation (23 September)
 
 Rory asked for all ten core modules in English, one lesson at a time, while a
@@ -8,7 +54,8 @@ of this pass; Seeds remains the completed baseline. Four **unreviewed** isiZulu
 alignment packets are now prepared for Introduction L1, Reading Landscape L4,
 Soil Health L2 and Vegetables L2 in `docs/narration-reviews/`. They are not
 learner scripts or approvals. Fluent isiZulu and local farming review is
-required before any ZU audio or publication.
+required before any ZU audio or publication. Small Livestock L3 now has a
+fifth review-only packet; L1–L2 preparation is in progress.
 
 The authorized Introduction L1 borehole correction is deployed as `762617ac`.
 Its quiz, English narration, transcript, two static stills, two slide MP3s,

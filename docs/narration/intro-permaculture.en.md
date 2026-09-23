@@ -116,11 +116,9 @@ Build these three into how you think before you build anything on the ground.
 
 **Slide 9 — Twelve Principles**
 
-Bill Mollison and David Holmgren distilled permaculture into twelve design principles.
+David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.
 
-You do not need all twelve to start. Three of them do most of the work on a South African smallholding.
-
-Observe and interact. Catch and store energy. Use edges and value the marginal.
+You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.
 
 [pause]
 
@@ -134,7 +132,7 @@ Watch your land through a full season before you commit to major earthworks.
 
 One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.
 
-That pattern is what a swale has to match. Dig before you know it and you have moved a great deal of soil into the wrong place.
+This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.
 
 [pause]
 
@@ -148,7 +146,7 @@ Harvest rain, sun and biomass before they leave your property.
 
 Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.
 
-Catching them is almost always cheaper than buying the same thing later.
+Compare the cost and work with the benefit on your own farm.
 
 [pause]
 
@@ -158,11 +156,9 @@ Name one thing that arrives on your land free and leaves again without being use
 
 **Slide 12 — Use Edges and Value the Marginal**
 
-The edge is where two things meet — a fence line, a stream bank, the strip beside a path.
+The edge is where two things meet — a fence line or the strip beside a path.
 
-Edges are often the most productive ground you have, and they are usually the ground nobody has planned.
-
-Look at what already grows well along yours. That is the land telling you something.
+These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.
 
 [pause]
 
@@ -170,11 +166,9 @@ Which edge on your plot is doing nothing at the moment?
 
 ---
 
-**Slide 13 — Watch: Diversity Against One Bad Day**
+**Slide 13 — Use and Value Diversity**
 
-A monoculture maize field can be wiped out by one hailstorm. A mixed planting rarely is.
-
-That is the principle "use and value diversity", and it is insurance you plant rather than buy.
+Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.
 
 Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.
 
@@ -188,7 +182,7 @@ What would one bad day cost you right now?
 
 Put each element where it works for its neighbours.
 
-A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. The chickens clean up pests and add fertility instead of sitting idle in a fixed pen.
+A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.
 
 The same three things, fenced apart, do only their own job.
 

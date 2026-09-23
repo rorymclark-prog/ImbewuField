@@ -817,6 +817,24 @@ async function migrateSmallLivestockL3NutrientFlow() {
   await cache.put(marker, new Response('Corrected livestock nutrient flow'));
 }
 
+// These four stills and six recordings now explain the principles without
+// promising hail protection or treating observation as permission to dig.
+// A saved pack must not pair its old media with the corrected lesson and quiz.
+async function migrateIntroL2PrinciplesTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/en/.l2-principles-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...[11, 12, 13, 14].map(n => '/course-decks/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.jpg'),
+    ...[9, 10, 11, 12, 13, 14].map(n => '/course-audio/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Introduction principles lesson'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -832,7 +850,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateIntroL2PrinciplesTeaching).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
