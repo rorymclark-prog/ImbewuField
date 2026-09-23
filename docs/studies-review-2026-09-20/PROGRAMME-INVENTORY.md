@@ -21,6 +21,7 @@ Rory's visual approval remains open.
 | --- | ---: | --- |
 | Core Studies modules | 10 | In the course registry and player |
 | Core Studies lessons | 33 | English lesson bodies, quizzes and rationales exist |
+| Core isiZulu preparation | 27 review-only packets | Covers every core lesson outside the 3 Seeds and 3 Plant Guilds lessons; fluent review and release remain open |
 | Core lesson infographics | 33 current lesson images | One additional corrected Food Forest image is retained on disk |
 | Core animation slots | 51 review records | 27 registered in the current deck; 24 still-only/held outside the player |
 | Core narration tracks | 240 manifest tracks | Mostly English; Seeds and Plant Guilds also have isiZulu tracks |

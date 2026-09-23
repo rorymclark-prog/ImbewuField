@@ -7,19 +7,24 @@ knowledge has checked the meaning and safety instructions. Record the reviewer,
 date, corrections and acceptance per lesson. No such approval is claimed here.
 
 The ten core modules contain 33 lessons. All have draft isiZulu narration in
-the repository, but most are not published in the audio manifest. Seeds and
-Plant Guilds already have isiZulu audio; this queue does not reopen the Seeds
-baseline or call existing audio fluent-approved. Farm Finance is excluded.
+the repository, but most are not published in the audio manifest. Review-only
+comparison packets now cover all **27 lessons outside Seeds and Plant Guilds**.
+This is packet coverage, not 27 finished translations. Seeds (3 lessons) is
+the existing baseline and is not reopened. Plant Guilds (3 lessons) already
+has published isiZulu audio under Rory's earlier instruction, but its
+[separate language review](plant-guilds.zu.md) remains open. Neither existing
+audio set is described here as fluent-approved. Farm Finance is excluded.
 
-| English lesson | Prepared comparison | Main safeguard for fluent review |
+| Module | Review-only packets | Main unresolved checks |
 | --- | --- | --- |
-| Introduction L1 | [Borehole decision](intro-l1.zu.review.md) | Permitted use and adequate source supply before sharing; monitoring alone does not authorize use. |
-| Introduction L2 | [Principles and farm safety](intro-l2.zu.review.md) | Attribute Holmgren’s twelve precisely; swale assessment and safe overflow, no hail-survival promise, and fresh-manure food safety. |
-| Reading Landscape L4 | [Site map and soil clues](reading-landscape-l4.zu.review.md) | A paced sketch is not automatically to scale; khakibos/blackjack presence does not prove compaction. Slide 17 stays a still. |
-| Soil Health L2 | [Compost](soil-health-l2.zu.review.md) | No fixed recipe or sanitation guarantee; wet-heap actions and wattle-pod caution remain qualified. |
-| Vegetables L2 | [Succession and companion planting](vegetables-l2.zu.review.md) | Harvest timing and hungry gaps remain conditional; plants may compete. |
-| Small Livestock L3 | [Nutrient flow and manure](small-livestock-l3.zu.review.md) | Only some nutrients return; bought feed enters and products leave; fresh manure needs fully managed composting before use around food crops. |
-| Small Livestock L1–L2 | [Animals and bees](small-livestock-l1-l2.zu.review.md) | First reconcile English clip captions and bee rule claims; keep manure timing, animal care, hive siting and conditional pollination safeguards in fluent review. |
+| Introduction L1–L3 | [L1](intro-l1.zu.review.md), [L2](intro-l2.zu.review.md), [L3](intro-l3.zu.review.md) | Water-use permission and supply; qualified swale and overflow advice; zone/sector terms. |
+| Reading the Landscape L1–L4 | [L1](reading-landscape-l1.zu.review.md), [L2](reading-landscape-l2.zu.review.md), [L3](reading-landscape-l3.zu.review.md), [L4](reading-landscape-l4.zu.review.md) | Conditional water, aspect, wind and frost claims; a paced sketch is not automatically to scale; weeds do not prove compaction. L4 slide 17 stays a still. |
+| Water Harvesting L1–L4 | [L1](water-harvesting-l1.zu.review.md), [L2](water-harvesting-l2.zu.review.md), [L3](water-harvesting-l3.zu.review.md), [L4](water-harvesting-l4.zu.review.md) | Qualified earthwork and roof-water limits; stale first-flush numbers; L4 greywater source/use needs local sanitation and municipal reconciliation before translation or recording. |
+| Soil Health & Composting L1–L3 | [L1](soil-health-l1.zu.review.md), [L2](soil-health-l2.zu.review.md), [L3](soil-health-l3.zu.review.md) | No single-clue soil diagnosis, fixed compost recipe or sanitation guarantee; L3 mulch and leachate wording awaits an authorized English correction. |
+| Vegetables and Staple Crops L1–L4 | [L1](vegetables-staples-l1.zu.review.md), [L2](vegetables-l2.zu.review.md), [L3](vegetables-staples-l3.zu.review.md), [L4](vegetables-staples-l4.zu.review.md) | Match the planting action and crop identity; preserve conditional timing, drought and pest advice; check product registration, label and harvest safeguards. |
+| Food Forest Design L1–L3 | [L1](food-forest-l1.zu.review.md), [L2](food-forest-l2.zu.review.md), [L3](food-forest-l3.zu.review.md) | Do not prescribe fixed area, layer height or species suitability; preserve site and legal checks; grass suppression and water entry stay conditional. |
+| Small Livestock Integration L1–L3 | [L1–L2 overview](small-livestock-l1-l2.zu.review.md), [L2 current detail](small-livestock-l2.zu.review.md), [L3](small-livestock-l3.zu.review.md) | Animal care, manure food safety and bee siting; one bee clip does not prove pollen transfer; bought feed enters and animal products remove nutrients. |
+| Market Gardening & Community L1–L3 | [L1](market-community-l1.zu.review.md), [L2](market-community-l2.zu.review.md), [L3](market-community-l3.zu.review.md) | Keep illustrative prices separate from current prices, record food/sale destinations separately, check local trading rules and seed-variety rights. |
 
 ## Fastest safe handoff
 

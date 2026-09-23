@@ -1,5 +1,20 @@
 # Active Studies continuation — 23 September 2026
 
+## Core isiZulu review preparation (23 September)
+
+The [review queue](../narration-reviews/CORE-ISIZULU-REVIEW-QUEUE.md)
+now links comparison packets for all 27 English-first core lessons outside
+Seeds and Plant Guilds. Lower-cost agents prepared non-overlapping Soil,
+Vegetables, Food Forest and Market packets; the integrator checked the source
+claims and prepared the Water L4 greywater packet. These files are review-only:
+no isiZulu learner script, audio, manifest or player content was released.
+Seeds stays on its existing baseline; previously published Plant Guilds audio
+still needs fluent review. The remaining gate is a fluent isiZulu farmer or
+agricultural educator for meaning and safety, with qualified local sanitation
+and municipal reconciliation for Water L4. Soil L3's documented English
+correction also needs Rory's authorization before the packet becomes final.
+Farm Finance remains excluded.
+
 ## Small Livestock L3 module framing cleanup (23 September)
 
 The earlier English L3 nutrient-flow correction is now carried through the
