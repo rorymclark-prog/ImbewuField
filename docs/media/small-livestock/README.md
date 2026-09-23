@@ -1,10 +1,15 @@
 # Small Livestock Integration media — 20 September 2026
 
-> **Current-state note, 23 September:** The earlier illustrated-release record
-> below describes authored videos that Rory later held for visual quality.
-> Its slide-14 nutrient-loop MP4/poster are no longer in the public course
-> payload or learner player. The current static diagram also overstates a
-> closed nutrient cycle. See
+> **Current-state note, 23 September:** The illustrated-release record below
+> describes authored videos that Rory later held for visual quality. The
+> adjacent `verification.json` is a historical snapshot of that release, not a
+> live asset manifest: its slide-9 `watch-09-bee-pollination.mp4` and slide-14
+> `watch-14-nutrient-loop.mp4` entries and hashes record the old authored
+> renders. Neither movie nor its poster is present in the current public
+> payload or learner player. Current source registration is in
+> `lib/course-deck.ts`: slide 9 uses the separate
+> `flow-bee-between-blossoms.mp4`; slide 14 has no registered video. The
+> current static slide-14 diagram still overstates a closed nutrient cycle. See
 > `../studies-animation-quality/small-livestock-l3-lesson-check.md` before
 > reusing any of the older render or verification results.
 
@@ -12,7 +17,7 @@
 
 The history below describes the earlier media branch. The current illustrated release supersedes its unchanged-audio and unchanged-content statements: source-backed livestock corrections now update lesson bodies, four quiz claims, English narration and all twenty English recordings. AGY reviewed the narration text; the existing Edge TTS pipeline generated the recordings. Automated word-boundary comparison and full decoding passed; this is not human listening approval.
 
-Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The updated verification JSON is authoritative for bytes, audio hashes, captions and motion checks. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
+Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The verification JSON records bytes, audio hashes, captions and motion checks for that historical illustrated release only. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
 
 ## Earlier branch record
 

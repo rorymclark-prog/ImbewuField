@@ -430,7 +430,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/food-forest/en/slide-14.jpg': 260146,
   '/course-decks/food-forest/en/slide-15.jpg': 818287,
   '/course-decks/food-forest/en/slide-16.jpg': 1048768,
-  '/course-decks/food-forest/en/slide-17.jpg': 134466,
+  '/course-decks/food-forest/en/slide-17.jpg': 330920,
   '/course-decks/food-forest/en/slide-18.jpg': 833538,
   '/course-decks/food-forest/en/slide-19.jpg': 115313,
   '/course-decks/food-forest/en/slide-20.jpg': 103327,

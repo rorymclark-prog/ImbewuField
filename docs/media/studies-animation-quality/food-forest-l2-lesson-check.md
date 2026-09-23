@@ -1,10 +1,9 @@
 # Food Forest Design L2 English lesson check — 23 September 2026
 
-**Status:** English source and deployed still/audio technical check passed. A
-static slide 10 candidate now addresses the phone-legibility issue. Human,
-learner and practitioner review remain open. No protected teaching asset
-changed, no animation was released, and no Flow credit was spent. Farm Finance
-is excluded.
+**Status:** The revised static slide 10 passed deployed phone and offline
+browser checks. Human, learner and practitioner review remain open. No
+protected teaching asset changed, no animation was released, and no Flow
+credit was spent. Farm Finance is excluded.
 
 ## Actual media and phone playback
 
@@ -14,9 +13,10 @@ slides and played slide 10's narration. Slide 9 is an illustrative South Africa
 map; slide 10 compares a cold Highveld setting with a warm KZN coast/Lowveld
 setting; slides 11–12 list regional examples; slide 13 is a garden scene without
 a person. The map and slide 10 diagram are conceptual, not planting directions
-or a site survey. Slide 10's secondary labels and the example text on slides
-11–12 were hard to read at the phone's fitted-image size. The narrated audio,
-expandable lesson text and full-size still link are available.
+or a site survey. The previous slide 10's secondary labels and the example
+text on slides 11–12 were hard to read at the phone's fitted-image size. The
+new slide 10 improves its labels; slides 11–12 still depend on narration,
+expandable lesson text and the full-size still link for detail.
 
 The saved 17.7 MB Food Forest module pack reopened after an offline browser
 reload. The header displayed **Offline** and **On this phone**, slide 10's still
@@ -30,19 +30,32 @@ with tree icons that grow and shrink between climate panels. It remains outside
 SVG/code-drawn motion with him first. The existing Flow sheet-mulching clip on
 slide 16 concerns lesson 3 and cannot stand in for this climate comparison.
 
-The static candidate in
+The released static still in
 [`render-food-forest-l2-climate-still.py`](render-food-forest-l2-climate-still.py)
 uses two large generic climate panels, the existing site-match prompt, and the
 existing Frost / Rainfall / Humidity factors. It names no species and does not
 say that a region universally suits a planting. The image heading drops
 “Watch” because the lesson has no video or Watch control; the audio track title
-still contains “Watch,” so that title mismatch remains open. The 1920 × 1080
-candidate was inspected full-size and at the player's 269 × 151 fit. Both
+still contains “Watch,” so that title mismatch remains open. The final 1920 ×
+1080 still was inspected full-size and at the player's 269 × 151 fit. Both
 region labels, guidance panels and three individual site-factor cards remain
 distinct at this size. A second narrow cache marker ensures a phone that saved
 the first preview candidate receives this larger-label replacement. This is a
-local still inspection, not a deployed-player or learner check. Candidate SHA-256:
+local still inspection. Released SHA-256:
 `2f17872e8dc56465c0ecb7e35af2a2e92fb384f6ecd463c2a274ee8112d074e8`.
+
+Exact-head `test` and `rules` passed for `06e299ca`; preview run
+`35812484711` passed and `/api/build-info` reported `06e299c`. In the live
+390 px player the final still displayed at 269 CSS px with
+`naturalWidth=1920`; both region panels, site-match prompt and Frost,
+Rainfall and Humidity cards were visually checked. The English MP3 advanced
+with `readyState=4`, with no player video. A second one-time cache marker
+cleared the earlier preview candidate but preserved other saved assets.
+The saved Food Forest pack showed 44/45 files with **218 KB left**, then
+**On this phone · 17.2 MB** after saving the replacement. After a browser
+network-off reload, the final still and MP3 reopened at 269 CSS px and
+`readyState=4`; network was restored and playback stopped. This checks one
+browser cache path, not a physical handset or learner comprehension.
 
 ## Source and farming safeguards
 

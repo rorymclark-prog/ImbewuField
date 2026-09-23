@@ -32,6 +32,17 @@ the English audio advanced; the final video frame held while narration
 continued. The browser was restored online. This is a browser check, not a
 physical-phone or human listening assessment.
 
+## Slide 17 static still candidate — 23 September
+
+The existing three statements were reflowed into larger cards in a deterministic
+1920 × 1080 static still. Their wording, including the local-suitability and
+competition cautions, is unchanged. The render was inspected full-size and at
+269 × 151 px; it has no clipped text and gives the long pruning statement more
+space than the previous bullet layout. This is a local image inspection, not a
+deployed-player, physical-phone or learner readability result. Existing
+narration and expandable text remain available. SHA-256:
+`4f8f3d9ffe505a05e251249ad98f5d95a7450267b4f9b8a1799656b196c50a0b`.
+
 The previous [`food-forest-l3-lesson-check.md`](food-forest-l3-lesson-check.md)
 describes a 13-second authored composite and a 34.6 MB pack from an earlier
 player state. Its top warning now marks that account as historical. The

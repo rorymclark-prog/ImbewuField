@@ -38,16 +38,22 @@ The lesson body and narration give important safeguards: local rules,
 non-food planting, no people/animal contact, no spray or pooling, prompt
 use, no drinking-water connection, and stopping if the site shows harm.
 Yet “used water from washing” in the opening and “no toilet” on the still
-leave **kitchen wastewater** ambiguous. The [South African National Norms
-and Standards for Domestic Water and Sanitation Services](https://www.gov.za/sites/default/files/gcis_document/201709/41100gon982.pdf)
-define the reusable greywater sources narrowly and exclude kitchen sink and
-dishwasher wastewater; they also make cleaning-product content material to
-reuse. The [South African sanitation design
-guide](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_K_Sanitation_v1-1.pdf)
-also excludes kitchen and nappy-washing wastewater as a potential reuse
-resource. These are source-selection cautions, not a claim that every
-municipality permits the proposed irrigation route. The existing lesson
-rightly tells learners to check municipal rules.
+leave **kitchen wastewater** ambiguous. The [2017 national norms and
+standards](https://www.gov.za/sites/default/files/gcis_document/201709/41100gon982.pdf)
+are internally inconsistent on this point: the glossary (p. 9) excludes
+kitchen sinks and dishwashers from its definition of greywater, while §4.5(7)
+(p. 17) says water from those sources can be introduced to biologically active
+topsoil. Section 4.5(5) says composition varies by source and household;
+§6.2.3 warns about ponding and raw-eaten crops, and the document retains
+building, plumbing, health and local-rule constraints. Neither passage alone
+establishes a safe or permitted route for this learner. The [South African
+Neighbourhood Planning and Design Guide, Water section J.4.2.4 and glossary](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_J_Water_v1-1.pdf)
+separately exclude kitchen sinks and dishwashers as a *potential reuse
+resource* in that guide, and call for care with source and health risks. This
+supports a conservative teaching hold on kitchen sources while a qualified
+local sanitation/municipal reviewer reconciles the sources. It does not prove
+a universal statutory ban. The existing lesson rightly tells learners to
+check municipal rules.
 
 Quiz 2's correct option says bleach/strong disinfectant “can kill the soil
 organisms and harm plant roots,” while its rationale more carefully says
@@ -57,7 +63,7 @@ the correct index.
 
 Rory has authorised a narrow correction to Reading the Landscape L4; the
 broader English core protected-content decision is pending. If authorised,
-clarify suitable source examples and the kitchen-wastewater exclusion in the
+clarify suitable source examples and the conservative kitchen-source hold in the
 opening/body, matching narration/transcript, slide 19/21 still captions
 and audio; qualify quiz 2's correct option. Keep the non-food, local-rule,
 no-contact and no-pooling cautions. Regenerate affected MP3s and combined

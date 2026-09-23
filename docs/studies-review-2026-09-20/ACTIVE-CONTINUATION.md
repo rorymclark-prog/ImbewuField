@@ -1,5 +1,33 @@
 # Active Studies continuation — 22 September 2026
 
+## Water L4 source reconciliation (23 September)
+
+A parallel English audit found that the earlier greywater review overstated
+what one national document settles. The 2017 Gazette's glossary excludes
+kitchen sinks and dishwashers from its greywater definition, while §4.5(7)
+says those streams can be put into biologically active topsoil. The DHS
+Redbook separately excludes them as a potential reuse resource in that
+guide. The [current L4 check](../media/studies-animation-quality/water-l4-current-lesson-check.md)
+now records both passages, site and health conditions, and the need for local
+sanitation/municipal review. The learner body, quiz, narration and still were
+not changed or declared safe for a route; Finance remains excluded.
+
+## Food Forest Design L2 climate still release (23 September)
+
+The slide-10 static climate comparison now has two large regional panels, a
+site-dependent prompt and separate Frost, Rainfall and Humidity cards. The
+first deployed candidate remained too small in the 390px player, so a second
+deterministic render enlarged the labels; its one-time cache marker also
+replaces a saved intermediate copy. Exact-head `test` and `rules` passed for
+`06e299ca`; preview run 35812484711 passed and `/api/build-info` reported
+`06e299c`. The final 1920px still rendered at 269 CSS px and the English
+MP3 advanced with no player video. The 218 KB replacement brought the
+Food Forest pack to **On this phone · 17.2 MB**; both still and MP3 reopened
+after an offline browser reload. The [L2 check](../media/studies-animation-quality/food-forest-l2-lesson-check.md)
+records the source and human-review limits. No species, figure, protected
+teaching, Flow credit, SVG/code-drawn animation or Farm Finance work changed.
+Rory, learner, practitioner and fluent-language review remain open.
+
 ## Rory's Vegetables L1 version-one feedback (23 September)
 
 Rory says the transplant in the current Flow clip looks like a small tree. He

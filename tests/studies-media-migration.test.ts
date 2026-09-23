@@ -68,6 +68,43 @@ test('a saved Food Forest layer key replaces only its old still and preserves na
   assert.equal(await rows.get(replacement.url)!.text(), 'new key');
 });
 
+test('a saved Food Forest L3 still is replaced only when the learner downloads the clearer layout', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateFoodForestL3AdjustStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateFoodForestL3AdjustStill\)\.then/);
+
+  const oldStill = '/course-decks/food-forest/en/slide-17.jpg';
+  const otherStill = '/course-decks/food-forest/en/slide-16.jpg';
+  const audio = '/course-audio/food-forest/en/slide-17.mp3';
+  const rows = new Map([
+    [`${oldStill}?saved=1`, new Response('small text')],
+    [`${oldStill}?v=old`, new Response('small text variant')],
+    [`${otherStill}?saved=1`, new Response('saved still')],
+    [`${audio}?saved=1`, new Response('saved narration')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request(`https://example.com${path}`)),
+    delete: async (request: Request) => {
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(`${oldStill}?saved=1`), false);
+  assert.equal(rows.has(`${oldStill}?v=old`), false);
+  assert.equal(rows.has(`${otherStill}?saved=1`), true);
+  assert.equal(rows.has(`${audio}?saved=1`), true);
+  assert.equal(rows.has('/course-decks/food-forest/en/.adjust-trees-still-20260923'), true);
+  rows.set(`${oldStill}?saved=1`, new Response('replacement downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(`${oldStill}?saved=1`)!.text(), 'replacement downloaded later');
+  assert.doesNotMatch(body, /\bfetch\(/, 'migration must not spend a learner’s airtime');
+});
+
 test('a saved Food Forest climate comparison clears only slide 10 and leaves its lesson pack intact', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateFoodForestClimateMatchStill\(\) \{([\s\S]*?)\n\}/)?.[1];
