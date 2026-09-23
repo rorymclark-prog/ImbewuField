@@ -677,6 +677,20 @@ async function migrateFoodForestLayerKeyStill() {
   await cache.put(marker, new Response('Phone-readable seven-layer key'));
 }
 
+// Slide 10 now presents the existing climate comparison in large panels. Clear
+// only that saved picture; learners choose when to download its replacement.
+async function migrateFoodForestClimateMatchStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/food-forest/en/.climate-match-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/food-forest/en/slide-10.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable climate comparison'));
+}
+
 // Slide 14's four sharing labels are now readable at phone fit. Invalidate only
 // that saved picture; the learner chooses when to download its replacement.
 async function migrateMarketCommunityNetworkStill() {
@@ -706,7 +720,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();
