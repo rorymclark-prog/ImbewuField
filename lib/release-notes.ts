@@ -42,9 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '23 September 2026', sha: '1d184155', changes: [
+  { when: '23 September 2026', sha: '39ebc4e9', changes: [
     'Raised Bed opens the bed block sizes and count above the Elements list.',
     'Ubhejane tree choices now reflect its warm climate; saved site analyses refresh.',
+    'Frost-sensitive planting choices stay out of the palette when a site may freeze.',
+    'Listed invasive plants stay out of new planting choices and site report recommendations.',
+  ], tour: [
+    { title: 'Place a bed block', where: 'Design Studio → Planting', href: '/design',
+      detail: 'Tap Raised Bed, set the count and sizes, then place and rotate the block on the map.' },
+    { title: 'Review planting advice', where: 'Site reports', href: '/reports',
+      detail: 'Open a site report and review the suggested plants for your location.' },
   ] },
   { when: '23 September 2026', sha: '1d184155', changes: [
     'Read lesson slides in large text on your phone. Switch to the picture and zoom in.',
