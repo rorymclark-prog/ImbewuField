@@ -498,26 +498,26 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "15": [
         "Zones run from 0 to 5, and they are about your feet, not your fences.",
-        "Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs and salad greens.",
+        "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
         "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
         "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
       ],
       "16": [
-        "Herbs need daily picking to stay productive.",
-        "Plant them in Zone 3, out in the main field, and the walk is long enough that the daily visit stops happening. The herbs bolt, or they are simply neglected.",
-        "Nothing is wrong with the plant or the soil. The plant was put where your feet do not go.",
-        "What is currently planted further from your door than it deserves?"
+        "Herbs you pick often are easier to tend near the house.",
+        "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "Think about the paths you walk each day.",
+        "What do you visit often that could be closer?"
       ],
       "17": [
         "This is the point of the whole exercise.",
-        "Zones do not organise space. They organise effort — the walking, the carrying and the checking that fills a real day.",
-        "The more often something needs you, the closer it lives. That one rule cuts real hours over a season.",
+        "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+        "The more often something needs you, the closer it lives. That can save walking and work over a season.",
         "Stand at your kitchen door. What can you reach without thinking about it?"
       ],
       "18": [
         "Zones come from inside your land. Sectors come from outside it.",
         "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
-        "A Lowveld farm facing north-west gets hot dry berg winds in August. A KwaZulu-Natal farm has a summer rain sector from the north-east.",
+        "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
         "Which direction does the weather that damages you come from?"
       ],
       "19": [

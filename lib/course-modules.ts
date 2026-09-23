@@ -137,7 +137,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
         infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
-        body: "Zones and sectors are permaculture's main tool for cutting wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. A Lowveld farm facing north-west gets hot dry berg winds in August — that tells you where to plant a windbreak. A KZN farm has a summer rain sector from the north-east.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        body: "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [
           "Zone 1, nearest the house, holds daily-harvest crops like herbs",
           "Zones organise labour by how often you need to visit",
@@ -149,15 +149,15 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
             options: [
               "Herbs grow too large",
-              "You harvest rarely because the walk is long, so herbs bolt or get neglected",
+              "The extra walk may mean you pick or check them less often",
               "Herbs cross-pollinate with main crops",
               "Zone 3 gets too much sun for herbs",
             ],
             correct: 1,
-            rationale: "Herbs need daily picking to stay productive. Placed far from the house, that daily visit stops happening — and the plants suffer for it.",
+            rationale: "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
           },
           {
-            q: "A Highveld farm gets hot, dry north-westerly winds in August. Where should a windbreak go?",
+            q: "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
             options: [
               "South-east boundary",
               "North-west boundary, between the wind and the crops",

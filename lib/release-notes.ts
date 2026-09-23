@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'bc2499f1', changes: [
+    'Introduction lesson 3 now asks you to check local wind before marking sectors.',
+    'Its zone and windbreak pictures label the examples more clearly.',
+  ], tour: [
+    { title: 'Check zones and sectors', where: 'Studies → Introduction → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, view slides 15 to 20, then answer the windbreak question.' },
+  ] },
   { when: '23 September 2026', sha: 'fdd773e9', changes: [
     'My Studies now keeps each course and guide list folded until you open it.',
   ], tour: [

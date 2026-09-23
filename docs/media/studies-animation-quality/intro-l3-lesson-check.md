@@ -1,7 +1,31 @@
 # Introduction L3 English lesson check — 22 September 2026
 
-**Status:** technical media pass; English teaching is on a source hold. This
-check does not change protected lesson, quiz, narration or learner media.
+**Status (23 September):** English correction prepared for release checks.
+The earlier source hold below records why the old lesson could not be treated
+as content cleared. The revised lesson now asks for local observation of wind
+and rainwater movement, with nearby station wind records as a check. It removes
+fixed Lowveld and KZN directions, makes the windbreak quiz conditional on an
+observed north-west wind, and explains zones as a spatial arrangement guided
+by work. Slide 16's title and spoken example were softened. The lesson body,
+quiz, narration and transcript agree; isiZulu remains review-only.
+
+Static English slides 17 and 18 replace the baked-in claims; slide 19 uses the
+existing illustrated farm under large “Look at this example” and “Observe your
+own site” labels. I inspected all three 1920 × 1080 candidates and their
+269 × 151 phone fits. The slide 18 draft initially clipped its top sentence;
+that was corrected before registration. Slide 16's existing photograph still
+shows a Black African adult in a plausible smallholding setting. No Flow credit
+or SVG/code-drawn animation was used. Four English MP3s (slides 15–18) and the
+full 22-slide MP3 were regenerated; the [audio record](intro-l3-english-audio-verification.json)
+reports exact WordBoundary matches, full decode and a 535.656-second total
+equal to the sum of its tracks. The service worker retires only these changed
+English stills and speech from saved packs; replacement remains a learner
+choice. Local typecheck, 3,715 passing tests / 0 failures / 1 existing TODO,
+and whitespace check passed. Exact-head CI, deployed phone view and offline pack
+recheck are pending. Human listening, learner, practitioner and fluent isiZulu
+review are not claimed.
+
+## Original source and media hold
 
 ## Learner-player evidence
 
@@ -84,9 +108,10 @@ related source holds still require their separate editorial decision.
 
 An English correction should coordinate `lib/course-modules.ts`, the slide 18
 and related narration, transcript, affected still captions/MP3s, combined
-English narration, size manifest and offline cache migration. The narrow
-correction request beyond Reading the Landscape L4 is still awaiting Rory's
-answer under the project's protected-content rule. Keep the current still for
-slide 19 unless Rory clears another visual. Human, practitioner, learner and
-fluent isiZulu acceptance remain open. Farm Finance is outside this weekly
-core-module pass.
+English narration, size manifest and offline cache migration. At the time of
+this original audit, the narrow correction request beyond Reading the
+Landscape L4 was awaiting Rory's answer under the project's protected-content
+rule. The coordinated correction above followed Rory's later request to
+complete the core modules in English. Human, practitioner, learner and fluent
+isiZulu acceptance remain open. Farm Finance is outside this weekly core-module
+pass.

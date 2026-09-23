@@ -1,5 +1,24 @@
 # Active Studies continuation — 22 September 2026
 
+## Introduction L3 English release candidate (23 September)
+
+The next complete English lesson is Introduction L3 (zones and sectors).
+Lower-cost agents corrected the narrowly identified source claims in lesson,
+quiz, narration and transcript, regenerated four English MP3s plus the full
+module recording, and drew static slide 17/18 candidates. The primary agent
+checked the ARC wind-data source, CSIR north-coast climate text, original and
+replacement stills, and published a clearer slide 19 still from the existing
+illustration. The old fixed Lowveld/KZN direction assertions are removed;
+the windbreak quiz now uses a wind observed at the example farm. The 17/18/19
+stills were inspected at full and 269px size. No Flow credit or SVG animation
+was used. Exact WordBoundary match and full audio decode are recorded in the
+[L3 check](../media/studies-animation-quality/intro-l3-lesson-check.md).
+The targeted saved-pack migration removes only changed English L3 stills and
+MP3s. Local typecheck, 3,715 passing tests / 0 failures / 1 existing TODO,
+and whitespace check passed. Exact-head CI, preview, phone-width player and
+offline saved-pack recheck remain before release.
+Human, farmer, practitioner and fluent isiZulu approval are not inferred.
+
 ## Introduction L2 English release and parallel isiZulu review (23 September)
 
 The source-backed L2 correction now attributes Holmgren’s twelve principles

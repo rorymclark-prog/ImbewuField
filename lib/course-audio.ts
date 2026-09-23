@@ -111,7 +111,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 13, lesson: 'intro-permaculture-l2', title: 'Use and Value Diversity' },
       { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
       { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
-      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Daily Crops Close' },
       { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops' },
