@@ -16,6 +16,7 @@ import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { COURSE_CACHE } from '@/lib/offline-cache';
+import { useLanguage } from '@/lib/i18n-context';
 
 // The module as it was actually written: slides in a teaching order, narrated, with animations
 // where a still cannot carry the idea. Built for one farmer alone with a phone and metered data.
@@ -55,9 +56,12 @@ const LANG_NAME: Record<string, string> = {
   en: 'English', zu: 'isiZulu', af: 'Afrikaans', xh: 'isiXhosa', st: 'Sesotho',
   nso: 'Sepedi', tn: 'Setswana', ts: 'Xitsonga', ve: 'Tshivenda', ss: 'siSwati', nr: 'isiNdebele',
 };
-const langName = (code: string) => LANG_NAME[code] ?? code;
+const langName = (code: string, uiLang: string) => uiLang === 'zu' && code === 'en'
+  ? 'isiNgisi'
+  : LANG_NAME[code] ?? code;
 
 export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose }: DeckPlayerProps) {
+  const { lang: uiLang, t } = useLanguage();
   const deck = deckFor(moduleId);
   const narration = COURSE_NARRATION[moduleId];
 
@@ -286,7 +290,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     <div
       tabIndex={0}
       role="region"
-      aria-label="Lesson slides. Use Left and Right arrow keys to change slides."
+      aria-label={t('courseDeckRegion')}
       onKeyDown={onDeckKeyDown}
       style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}
     >
@@ -296,7 +300,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </span>
         <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.25, color: INK, flex: 1, textWrap: 'balance' }}>{heading}</h3>
         {languages.length > 1 && (
-          <div role="group" aria-label="Narration language" style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+          <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
             {languages.map((code) => {
               const on = code === lang;
               return (
@@ -312,14 +316,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                     color: on ? GREEN : MUTED,
                   }}
                 >
-                  {langName(code)}
+                  {langName(code, uiLang)}
                 </button>
               );
             })}
           </div>
         )}
         {onClose && (
-          <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
+          <button onClick={onClose} aria-label={t('courseDeckClose')} style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
 
@@ -374,7 +378,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             <span aria-hidden style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 54, height: 54, borderRadius: '50%', background: 'rgba(255,255,255,0.94)', color: INK, fontSize: 20, paddingLeft: 4 }}>▶</span>
             {/* The size is on the button, not buried in a setting. Someone paying by the megabyte
                 is entitled to decide before the download starts, not after. */}
-            <span style={{ fontSize: 12.5, fontWeight: 700 }}>Watch · {Number(anim.seconds.toFixed(1))}s · {formatBytes(anim.bytes)}</span>
+            <span style={{ fontSize: 12.5, fontWeight: 700 }}>{t('courseDeckWatch').replace('{seconds}', String(Number(anim.seconds.toFixed(1)))).replace('{size}', formatBytes(anim.bytes))}</span>
           </button>
         )}
       </div>
@@ -384,7 +388,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           href={fullSizeImageUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Open still image for ${heading} at full size`}
+          aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
           className={styles.zoomLink}
           onClick={() => {
             // A separate image tab needs the lesson to wait while the farmer inspects its detail.
@@ -394,7 +398,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             setTimedVoiceActive(false);
           }}
         >
-          Open still image · tap to zoom ↗
+          {t('courseDeckOpenImage')}
         </a>
       )}
 
@@ -402,7 +406,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         <audio
           ref={audioRef}
           src={audio}
-          aria-label={`Narration for ${heading}`}
+          aria-label={t('courseDeckNarrationAria').replace('{title}', heading)}
           controls
           onEnded={onNarrationEnded}
           onPlaying={() => { setAudioFailed(false); if (timedTour) setTimedVoiceActive(true); followNarration(); }}
@@ -421,12 +425,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {audioFailed && (
         <p role="alert" style={{ margin: 0, color: '#8B2020', fontSize: 14, lineHeight: 1.5 }}>
-          Narration could not play. Check your connection and press Play lesson again, or read this slide below.
+          {t('courseDeckNarrationFailed')}
         </p>
       )}
       {animationFailed && (
         <p role="status" style={{ margin: 0, color: MUTED, fontSize: 14, lineHeight: 1.5 }}>
-          The animation could not load. You can keep listening, read the slide, or tap Watch to try again.
+          {t('courseDeckAnimationFailed')}
         </p>
       )}
 
@@ -435,13 +439,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         // so saying "these slides are in English" across the whole module would be false for the
         // rest of the lesson and would make a finished lesson look unfinished.
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          This slide is in {langName(img.lang)}.
+          {t('courseDeckSlideLanguage').replace('{language}', langName(img.lang, uiLang))}
         </p>
       )}
 
       {spokenLang && !spokenLang.exact && (
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          Narration is in {langName(spokenLang.lang)}. {langName(lang)} narration is not available for this module yet.
+          {t('courseDeckNarrationFallback')
+            .replace('{spokenLanguage}', langName(spokenLang.lang, uiLang))
+            .replace('{appLanguage}', langName(lang, uiLang))}
         </p>
       )}
 
@@ -452,7 +458,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         <button
           className={styles.playControl}
           onClick={() => setRunning((on) => !on)}
-          aria-label={running ? 'Stop the lesson' : 'Play the lesson'}
+          aria-label={t(running ? 'courseDeckStopAria' : 'courseDeckPlayAria')}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, padding: '9px 15px', borderRadius: 10,
             border: 'none', background: running ? '#8A4B2A' : GREEN, color: '#fff',
@@ -460,7 +466,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           }}
         >
           <span aria-hidden style={{ fontSize: 12 }}>{running ? '■' : '▶'}</span>
-          {running ? 'Stop' : 'Play lesson'}
+          {t(running ? 'courseDeckStop' : 'courseDeckPlay')}
         </button>
         <button
           className={styles.backControl}
@@ -468,7 +474,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           disabled={index === 0}
           style={{ padding: '9px 14px', borderRadius: 10, border: `1px solid ${LINE}`, background: PAPER, color: index === 0 ? '#B9AC94' : INK, fontWeight: 700, fontSize: 13, cursor: index === 0 ? 'default' : 'pointer' }}
         >
-          ‹ Back
+          {t('courseDeckBack')}
         </button>
         <div className={styles.progress} style={{ height: 4, borderRadius: 2, background: LINE, overflow: 'hidden' }}>
           <div style={{ width: `${((index + 1) / total) * 100}%`, height: '100%', background: GREEN }} />
@@ -479,14 +485,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           disabled={index === total - 1}
           style={{ padding: '9px 14px', borderRadius: 10, border: 'none', background: index === total - 1 ? '#D9D0BC' : GREEN, color: '#fff', fontWeight: 700, fontSize: 13, cursor: index === total - 1 ? 'default' : 'pointer' }}
         >
-          Next ›
+          {t('courseDeckNext')}
         </button>
       </div>
 
       {transcript && (
         <details style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
-            Read this slide · {langName(spokenLang!.lang)}
+            {t('courseDeckReadSlide').replace('{language}', langName(spokenLang!.lang, uiLang))}
           </summary>
           <div lang={spokenLang!.lang} style={{ color: INK, fontSize: 16, lineHeight: 1.65, maxWidth: '70ch' }}>
             {transcript.map((paragraph, i) => <p key={i} style={{ margin: '10px 0' }}>{paragraph}</p>)}

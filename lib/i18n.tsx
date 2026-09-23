@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
 import {
   activeAccountLocalStorageKey,
@@ -8,6 +8,10 @@ import {
 } from '@/lib/account-local-storage';
 
 import { DESIGN_STUDIO_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { Ctx } from '@/lib/i18n-context';
+import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
+
+export { useLanguage } from '@/lib/i18n-context';
 
 const ONBOARD_KEY = 'permamap_onboarded';
 
@@ -33,6 +37,7 @@ export const APP_LANGS = [
 // lib/locales/<code>.ts and are fetched as small async chunks on demand via loadLocale().
 const T_en: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
+  ...LEARNER_UI_ENGLISH,
   tagline: 'Permaculture Intelligence',
   // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
   designStudioLabel: 'Design Studio',
@@ -868,7 +873,7 @@ const T_en: Dict = {
   studentOpenDesignStudio: 'Open Design Studio',
   studentCompletionMessage: 'You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.',
   studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',
-  studentEnglishContentNotice: 'Lesson titles, lesson text and quiz questions are shown in English for now. Review of the isiZulu wording and audio is still in progress.',
+  studentEnglishContentNotice: 'Module names and descriptions, lesson titles and text, and quiz questions are shown in English for now. Review of the isiZulu wording and audio is still in progress.',
   studentDesignEnglishPreview: 'Design course · English teaching preview',
   studentDesignPreviewTitle: 'Design a working homestead',
   studentDesignPreviewIntro: 'Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.',
@@ -1481,18 +1486,6 @@ export function translate(lang: string, key: string): string {
   return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;
 }
 
-interface LangCtx {
-  lang: string;
-  setLang: (code: string) => void;
-  t: (key: string) => string;
-  onboarded: boolean;
-  completeOnboarding: (code: string) => void;
-}
-
-const Ctx = createContext<LangCtx>({
-  lang: 'en', setLang: () => {}, t: (k) => k, onboarded: true, completeOnboarding: () => {},
-});
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState('en');
   const [onboarded, setOnboarded] = useState(true); // assume true until we check, avoids modal flash on SSR
@@ -1550,5 +1543,3 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return <Ctx.Provider value={{ lang, setLang, t, onboarded, completeOnboarding }}>{children}</Ctx.Provider>;
 }
-
-export const useLanguage = () => useContext(Ctx);

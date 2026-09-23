@@ -88,6 +88,23 @@ test('the session flag is never swallowed by the localStorage shim', () => {
   assert.equal(session.getItem('imbewu_sample_mode'), null);
 });
 
+test('sample pages keep the chosen interface language across reloads without changing the real account', () => {
+  reset();
+  realLocal.setItem('permamap_lang', 'zu');
+  assert.equal(sample.enterSampleMode(), true);
+  assert.equal(realLocal.getItem('permamap_lang'), 'zu');
+  assert.equal(session.getItem('imbewu_sample_lang'), 'zu', 'the sample tab can restore its language after a hard navigation');
+
+  realLocal.setItem('permamap_lang', 'en');
+  assert.equal(realLocal.getItem('permamap_lang'), 'en');
+  assert.equal(session.getItem('imbewu_sample_lang'), 'en');
+  assert.equal(realLocal.rows.get('permamap_lang'), 'zu', 'sample language changes must not write the real account preference');
+
+  sample.exitSampleMode();
+  assert.equal(session.getItem('imbewu_sample_lang'), null);
+  assert.equal(realLocal.getItem('permamap_lang'), 'zu');
+});
+
 test('entering again starts from clean seeded storage and clean typed data', () => {
   reset();
   const seeds = buildDemoStorageSeeds();

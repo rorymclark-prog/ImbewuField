@@ -5,6 +5,28 @@ isiZulu already loads a shared interface dictionary, but missing keys fall
 back to English. A language switch by itself does not mean a course, form,
 audio track, report or offline copy is localized.
 
+## Additional interface preview pass — 23 September
+
+Lower-cost parallel agents prepared isiZulu control and status text for the
+lesson player, narration fallback, offline pack, Records desktop and phone
+views, CSV/receipt labels, home, account, community, sample chooser and sample
+garden/farm screens, crop planner, calendar, surveys and staff dashboards. A
+separate pass covers the tour controls. These remain preview drafts, pending
+fluent review. The lesson player states the actual language
+of each slide and narration fallback; the Student page states that module
+names/descriptions, lesson text and quizzes remain English. Sourced farming
+tips, detailed programme evidence, high-risk finance explanations, sample
+evidence and authored course/guide material retain their English meaning and are marked where a
+translated shell could otherwise be mistaken for translated teaching.
+The sample workspace now retains its chosen interface language across hard
+navigation and reloads without changing the real account preference.
+
+This pass does not change role permissions, saved measurements, prices,
+calculations or learner course publication status. Route-level work continues;
+the interface dictionary and translated controls do not establish whole-app
+coverage. The exact preview commit, CI result and visual checks should be
+recorded in the continuation log after deployment.
+
 ## Core learning
 
 - The ten core modules contain 33 English lesson bodies and quizzes. Seeds

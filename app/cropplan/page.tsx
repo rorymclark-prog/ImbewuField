@@ -3,6 +3,7 @@
 import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useLanguage } from '@/lib/i18n';
 import Link from 'next/link';
 import {
   Layers, Sprout, Scissors, Leaf, ClipboardList,
@@ -98,8 +99,8 @@ const MONTH_FOCUS: Record<number, string> = {
 
 // ─── Task list ───────────────────────────────────────────────────────────────
 
-function TaskList({ tasks, onToggle, emptyMessage }: {
-  tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string;
+function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
+  tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string; doneLabel: string; notDoneLabel: string;
 }) {
   if (tasks.length === 0) {
     return (
@@ -116,7 +117,7 @@ function TaskList({ tasks, onToggle, emptyMessage }: {
           <div key={task.id} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <button
               onClick={() => onToggle(task.id)}
-              aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              aria-label={task.completed ? notDoneLabel : doneLabel}
               className="flex-shrink-0"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#1F4D2B' }}
             >
@@ -144,6 +145,14 @@ function TaskList({ tasks, onToggle, emptyMessage }: {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function CropPlanPage() {
+  const { lang } = useLanguage();
+  const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
+  const monthNames = lang === 'zu'
+    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'long' }))
+    : MONTHS;
+  const monthShortNames = lang === 'zu'
+    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'short' }))
+    : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
   const [cursorMonth, setCursorMonth] = useState(1);
   const [todayMonth, setTodayMonth] = useState(1);
@@ -182,13 +191,14 @@ export default function CropPlanPage() {
   // distinct from "no plan yet" so neither notice can claim the wrong thing.
   const planYieldsNothing = mounted && savedPlantings > 0 && totalTasks === 0;
   const season = saSeason(cursorMonth);
-  const monthName = MONTHS[cursorMonth - 1];
+  const seasonLabel = ui(season.name, ({ Spring: 'Intwasahlobo', Summer: 'Ihlobo', Autumn: 'Ikwindla', Winter: 'Ubusika' } as Record<string, string>)[season.name]);
+  const monthName = monthNames[cursorMonth - 1];
   const away = monthsUntil(cursorMonth, todayMonth);
 
   function stepMonth(dir: number) { setCursorMonth((m) => wrapMonth(m + dir)); }
 
   const TABS: { v: View; label: string }[] = [
-    { v: 'month', label: 'Month' }, { v: 'season', label: 'Season' },
+    { v: 'month', label: ui('Month', 'Inyanga') }, { v: 'season', label: ui('Season', 'Isikhathi sonyaka') },
   ];
 
   return (
@@ -199,9 +209,9 @@ export default function CropPlanPage() {
         <BackButton fallback="/plan" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Task Planner</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{ui('Task Planner', 'Ukuhlela imisebenzi')}</span>
         <div className="flex-1" />
-        <LessonLink id="crops:planner" label="Learn" />
+        <LessonLink id="crops:planner" label={ui('Learn', 'Funda')} />
         <SettingsButton />
       </header>
 
@@ -218,14 +228,14 @@ export default function CropPlanPage() {
         >
           <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
             <Sparkles size={14} />
-            No crop plan yet — jobs will show here once you plan your crops.
+            {ui('No crop plan yet — jobs will show here once you plan your crops.', 'Alukho uhlelo lwezitshalo okwamanje — imisebenzi izovela lapha uma usuhlele izitshalo zakho.')}
           </span>
           <Link
             href="/facilitator/crops"
             className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
             style={{ fontSize: 12, background: '#fff', color: '#C07A1E', textDecoration: 'none' }}
           >
-            Plan my crops
+            {ui('Plan my crops', 'Hlela izitshalo zami')}
           </Link>
         </div>
       )}
@@ -237,22 +247,22 @@ export default function CropPlanPage() {
           <Link href="/facilitator/crops"
             className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
             style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
-            🌱 New: plan crops bed-by-bed on your design map →
+            🌱 {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
           </Link>
 
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>Task planner</div>
+              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {mounted && view === 'month' && monthName}
-                {mounted && view === 'season' && season.name}
+                {mounted && view === 'season' && seasonLabel}
               </h1>
             </div>
             {view === 'month' && (
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => stepMonth(-1)} aria-label="Previous month" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => stepMonth(1)} aria-label="Next month" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>
@@ -281,16 +291,13 @@ export default function CropPlanPage() {
               <AlertCircle size={18} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
               <div>
                 <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
-                  Your crop plan is not producing any jobs
+                  {ui('Your crop plan is not producing any jobs', 'Uhlelo lwakho lwezitshalo alukhiqizi imisebenzi')}
                 </div>
                 <p className="font-sans" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>
-                  It has {savedPlantings} {savedPlantings === 1 ? 'planting' : 'plantings'} saved, but nothing in it
-                  lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop
-                  has no verified timings in the app, or when it is an existing crop whose picking months have already
-                  passed. Open the crop plan to check it.
+                  {ui(`It has ${savedPlantings} ${savedPlantings === 1 ? 'planting' : 'plantings'} saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.`, `Lunokutshala ${savedPlantings} okulondoloziwe, kodwa akukho okuvela emsebenzini wanoma iyiphi inyanga. Lokhu kwenzeka uma ukutshala kusembhedeni osusuliwe, uma isitshalo singenazo izikhathi eziqinisekisiwe kuhlelo lokusebenza, noma uma kuyisitshalo esivele sikhona futhi izinyanga zaso zokuvuna sezidlulile. Vula uhlelo lwezitshalo uluhlole.`)}
                 </p>
                 <Link href="/facilitator/crops" className="inline-flex items-center gap-1 mt-2 font-sans font-semibold" style={{ fontSize: 13, color: '#1F4D2B' }}>
-                  Open crop plan<ChevronRight size={14} />
+                  {ui('Open crop plan', 'Vula uhlelo lwezitshalo')}<ChevronRight size={14} />
                 </Link>
               </div>
             </div>
@@ -304,14 +311,14 @@ export default function CropPlanPage() {
                   task information at all and implied a day precision the crop plan
                   does not have. */}
               <div className="grid grid-cols-6 lg:grid-cols-12 gap-1 mb-4">
-                {MONTHS_SHORT.map((label, i) => {
+                {monthShortNames.map((label, i) => {
                   const m = i + 1;
                   const on = m === cursorMonth;
                   const isNow = mounted && m === todayMonth;
                   const n = countFor(m);
                   return (
                     <button key={label} onClick={() => setCursorMonth(m)}
-                      aria-label={`${MONTHS[i]} — ${n} ${n === 1 ? 'job' : 'jobs'}`}
+                      aria-label={`${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
                       aria-current={on ? 'true' : undefined}
                       className="rounded-lg py-1.5 flex flex-col items-center justify-center"
                       style={{
@@ -328,7 +335,7 @@ export default function CropPlanPage() {
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
-                  {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} in {monthName}
+                  {monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
                     carries its own "Due in N months" line, and a picking that lands in
@@ -336,14 +343,16 @@ export default function CropPlanPage() {
                     here would read as a claim about the jobs. */}
                 {mounted && (
                   <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: away === 0 ? 'rgba(31,77,43,0.1)' : 'rgba(226,216,196,0.6)', color: away === 0 ? '#1F4D2B' : '#5C5040' }}>
-                    {away === 0 ? 'Current month' : away === 1 ? '1 month ahead' : `${away} months ahead`}
+                    {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
                   </span>
                 )}
               </div>
               <TaskList
                 tasks={monthTasks}
                 onToggle={toggleTask}
-                emptyMessage={`Nothing due from your crop plan in ${monthName}.`}
+                emptyMessage={ui(`Nothing due from your crop plan in ${monthName}.`, `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.`)}
+                doneLabel={ui('Mark done', 'Maka njengokwenziwe')}
+                notDoneLabel={ui('Mark not done', 'Susa uphawu lokwenziwe')}
               />
             </div>
           )}
@@ -357,12 +366,13 @@ export default function CropPlanPage() {
                 </div>
                 <div>
                   <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'rgba(234,243,226,0.55)', letterSpacing: '0.1em' }}>
-                    {mounted && season.months.includes(todayMonth) ? 'This season' : 'Season'}
+                    {mounted && season.months.includes(todayMonth) ? ui('This season', 'Lesi sikhathi sonyaka') : ui('Season', 'Isikhathi sonyaka')}
                   </div>
-                  <div className="font-display font-bold" style={{ fontSize: 'clamp(20px, 2.2vw, 26px)', color: '#F7F2E9', lineHeight: 1.1 }}>{season.name} in South Africa</div>
+                  <div className="font-display font-bold" style={{ fontSize: 'clamp(20px, 2.2vw, 26px)', color: '#F7F2E9', lineHeight: 1.1 }}>{seasonLabel} {ui('in South Africa', 'eNingizimu Afrika')}</div>
                 </div>
               </div>
               <div className={workspace.cards}>
+              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (
@@ -370,10 +380,10 @@ export default function CropPlanPage() {
                     className="w-full text-left rounded-2xl px-4 py-3.5"
                     style={{ background: '#FFFEFA', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{MONTHS[m - 1]}</span>
-                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
+                      <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{monthNames[m - 1]}</span>
+                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>{ui('Now', 'Manje')}</span>}
                       <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(226,216,196,0.6)', color: '#5C5040' }}>
-                        {n} {n === 1 ? 'job' : 'jobs'} from your plan
+                        {n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}
                       </span>
                     </div>
                     {/* Generic seasonal guidance, not derived from this farmer's beds —
@@ -388,7 +398,7 @@ export default function CropPlanPage() {
 
           {/* Footer link */}
           <Link href="/plan" className="flex items-center justify-center gap-1.5 mt-6 py-3 rounded-xl font-display font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
-            Manage crops &amp; beds<ChevronRight size={15} />
+            {ui('Manage crops & beds', 'Phatha izitshalo nemibhede')}<ChevronRight size={15} />
           </Link>
         </div>
       </div>

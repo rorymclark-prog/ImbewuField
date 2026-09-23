@@ -40,6 +40,9 @@ import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDe
 import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from './consent';
 
 const FLAG_KEY = 'imbewu_sample_mode';
+// Language is a harmless interface preference, not farm data. Keep it inside the sample tab
+// across hard reloads while the storage shim hides the real account's localStorage.
+const SAMPLE_LANG_KEY = 'imbewu_sample_lang';
 export const SAMPLE_MODE_EVENT = 'imbewu-sample-mode-changed';
 
 interface SampleSandbox {
@@ -129,6 +132,8 @@ export const SAMPLE_MODE_RENDER_REFUSAL =
 
 export function enterSampleMode(): boolean {
   if (typeof window === 'undefined') return false;
+  let selectedLanguage: string | null = null;
+  try { selectedLanguage = window.localStorage.getItem('permamap_lang'); } catch { /* use the default */ }
   sandbox = freshSandbox(); // always a clean slate — never a previous demo session's edits
   resetShimStore(); // reseed the localStorage shim too
   try {
@@ -142,6 +147,10 @@ export function enterSampleMode(): boolean {
     try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* best-effort cleanup */ }
     return false;
   }
+  try {
+    if (selectedLanguage) window.sessionStorage.setItem(SAMPLE_LANG_KEY, selectedLanguage);
+    else window.sessionStorage.removeItem(SAMPLE_LANG_KEY);
+  } catch { /* The tour still works in the default language when storage is unavailable. */ }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
   return true;
 }
@@ -155,6 +164,7 @@ export function exitSampleMode(): void {
   sandbox = null;
   resetShimStore();
   try { window.sessionStorage.removeItem(FLAG_KEY); } catch { /* ignore */ }
+  try { window.sessionStorage.removeItem(SAMPLE_LANG_KEY); } catch { /* ignore */ }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
 }
 
@@ -191,6 +201,10 @@ function shimStoreEnsured(): Map<string, string> {
     // Lazy import cycle-breaker not needed: demo-farm is pure data/builders and
     // never reads storage, so seeding from inside a patched method cannot recurse.
     shimStore = new Map(Object.entries(buildDemoStorageSeeds()));
+    try {
+      const selectedLanguage = window.sessionStorage.getItem(SAMPLE_LANG_KEY);
+      if (selectedLanguage) shimStore.set('permamap_lang', selectedLanguage);
+    } catch { /* fall back to English */ }
   }
   return shimStore;
 }
@@ -222,11 +236,23 @@ function installStorageShim(): void {
     return orig.getItem.call(this, key);
   };
   proto.setItem = function (key: string, value: string): void {
-    if (shimmed(this)) { shimStoreEnsured().set(String(key), String(value)); return; }
+    if (shimmed(this)) {
+      shimStoreEnsured().set(String(key), String(value));
+      if (String(key) === 'permamap_lang') {
+        try { window.sessionStorage.setItem(SAMPLE_LANG_KEY, String(value)); } catch { /* current tab still changes */ }
+      }
+      return;
+    }
     orig.setItem.call(this, key, value);
   };
   proto.removeItem = function (key: string): void {
-    if (shimmed(this)) { shimStoreEnsured().delete(String(key)); return; }
+    if (shimmed(this)) {
+      shimStoreEnsured().delete(String(key));
+      if (String(key) === 'permamap_lang') {
+        try { window.sessionStorage.removeItem(SAMPLE_LANG_KEY); } catch { /* no persistent sample choice */ }
+      }
+      return;
+    }
     orig.removeItem.call(this, key);
   };
   proto.clear = function (): void {

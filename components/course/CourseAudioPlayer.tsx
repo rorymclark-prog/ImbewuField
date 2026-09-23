@@ -21,6 +21,7 @@ import {
   formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
+import { useLanguage } from '@/lib/i18n-context';
 
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -33,7 +34,9 @@ const LANG_NAME: Record<string, string> = {
   en: 'English', zu: 'isiZulu', af: 'Afrikaans', xh: 'isiXhosa', st: 'Sesotho',
   nso: 'Sepedi', tn: 'Setswana', ts: 'Xitsonga', ve: 'Tshivenda', ss: 'siSwati', nr: 'isiNdebele',
 };
-const langName = (code: string) => LANG_NAME[code] ?? code;
+const langName = (code: string, uiLang: string) => uiLang === 'zu' && code === 'en'
+  ? 'isiNgisi'
+  : LANG_NAME[code] ?? code;
 
 interface CourseAudioPlayerProps {
   moduleId: string;
@@ -47,6 +50,7 @@ interface CourseAudioPlayerProps {
 }
 
 export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: CourseAudioPlayerProps) {
+  const { t } = useLanguage();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const narration = narrationFor(moduleId);
   const resolved = resolveNarrationLang(moduleId, appLang);
@@ -145,11 +149,11 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
       <div className="flex items-center gap-2 px-3.5 py-2.5" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
         <Volume2 size={14} style={{ color: GREEN, flexShrink: 0 }} />
         <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
-          {label ?? 'Listen'}
+          {label ?? t('courseAudioListen')}
         </span>
         <div className="flex-1" />
         {narration.languages.length > 1 && (
-          <div className="flex items-center gap-1" role="group" aria-label="Narration language">
+          <div className="flex items-center gap-1" role="group" aria-label={t('courseNarrationLanguage')}>
             {narration.languages.map((code) => {
               const on = code === lang;
               return (
@@ -167,7 +171,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                     minHeight: 28,
                   }}
                 >
-                  {langName(code)}
+                  {langName(code, appLang)}
                 </button>
               );
             })}
@@ -177,7 +181,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
       {mismatch && (
         <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
-          This module has not been recorded in {langName(appLang)} yet — playing {langName(lang)}.
+          {t('courseAudioLanguageMissing')
+            .replace('{appLanguage}', langName(appLang, appLang))
+            .replace('{playingLanguage}', langName(lang, appLang))}
         </p>
       )}
 
@@ -192,7 +198,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
               <button
                 type="button"
                 onClick={() => toggle(track.slide)}
-                aria-label={`${isPlaying ? 'Pause' : 'Play'} ${title}`}
+                aria-label={t(isPlaying ? 'courseAudioPauseTrack' : 'courseAudioPlayTrack').replace('{title}', title)}
                 className="w-full flex items-center gap-2.5 px-1.5 py-2 rounded-lg text-left"
                 style={{
                   background: isCurrent ? 'rgba(31,77,43,0.06)' : 'transparent',
@@ -231,7 +237,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                     <span className="flex items-center gap-1 mt-1">
                       <AlertCircle size={11} style={{ color: '#B03A2E' }} />
                       <span className="font-sans text-xs" style={{ color: '#B03A2E' }}>
-                        Could not play this clip — check your connection and try again.
+                        {t('courseAudioPlayFailed')}
                       </span>
                     </span>
                   )}

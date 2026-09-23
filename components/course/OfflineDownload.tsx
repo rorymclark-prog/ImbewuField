@@ -8,6 +8,7 @@ import {
   downloadPack, packStatus, removePack, offlineSupported, requestPersistence, storageEstimate,
   CACHE_CHANGED_EVENT,
 } from '@/lib/offline-cache';
+import { useLanguage } from '@/lib/i18n-context';
 
 /**
  * Take a module — or the whole course — home.
@@ -35,6 +36,7 @@ interface Props {
 }
 
 export default function OfflineDownload({ moduleIds, lang, label, compact = false }: Props) {
+  const { t } = useLanguage();
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -133,7 +135,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   if (!offlineSupported()) {
     return compact ? null : (
       <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-        This browser cannot store lessons for offline use. Chrome on Android can.
+        {t('offlineDownloadUnsupported')}
       </p>
     );
   }
@@ -158,8 +160,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             {/* Says WHY, in the learner's own terms. A download button with no reason attached
                 reads as an app asking for data; this one is a plan for the month. */}
             <p className="font-sans text-xs mt-0.5 leading-relaxed" style={{ color: '#5C5040' }}>
-              Get the slides, the narration and the clips onto this phone while you have signal.
-              They then work with no airtime at all.
+              {t('offlineGetWhileSignal')}
             </p>
           </div>
         </div>
@@ -170,12 +171,12 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           <>
             <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold"
               style={{ background: 'rgba(31,77,43,0.1)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.25)' }}>
-              <Check size={13} />On this phone · {formatPackSize(totalBytes)}
+              <Check size={13} />{t('offlineOnThisPhone').replace('{size}', formatPackSize(totalBytes))}
             </span>
             <button onClick={remove}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans"
               style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
-              <Trash2 size={12} />Remove
+              <Trash2 size={12} />{t('offlineRemovePack')}
             </button>
           </>
         ) : busy ? (
@@ -188,7 +189,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"
               style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
-              Stop
+              {t('offlineStopDownload')}
             </button>
           </>
         ) : (
@@ -199,8 +200,8 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             {/* A resumed download quotes what is LEFT, not the whole thing — the already-cached
                 files are not fetched again and quoting them would overstate the cost. */}
             {phase === 'partial' && doneFiles > 0
-              ? `Finish download · ${formatPackSize(Math.max(0, totalBytes - bytes))} left`
-              : `Download · ${formatPackSize(totalBytes)}`}
+              ? t('offlineFinishDownload').replace('{size}', formatPackSize(Math.max(0, totalBytes - bytes)))
+              : t('offlineDownloadPack').replace('{size}', formatPackSize(totalBytes))}
           </button>
         )}
       </div>
@@ -213,10 +214,10 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           read that it is not the one for them. Hidden entirely when the module has no
           higher-quality files, rather than offering a choice that changes nothing. */}
       {hasHigher && !busy && phase !== 'done' && (
-        <div role="group" aria-label="Download quality" className="flex flex-wrap items-center gap-1.5">
+        <div role="group" aria-label={t('offlineDownloadQuality')} className="flex flex-wrap items-center gap-1.5">
           {([
-            { key: 'standard' as PackQuality, name: 'Standard', note: 'for phones on data', size: standardBytes },
-            { key: 'high' as PackQuality, name: 'Higher quality', note: 'facilitators & funders · wifi', size: highBytes },
+            { key: 'standard' as PackQuality, name: t('offlineQualityStandard'), note: t('offlineQualityStandardNote'), size: standardBytes },
+            { key: 'high' as PackQuality, name: t('offlineQualityHigher'), note: t('offlineQualityHigherNote'), size: highBytes },
           ]).map((opt) => {
             const on = quality === opt.key;
             return (
@@ -248,7 +249,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: '#1F4D2B' }} />
           </div>
           <p className="font-mono text-xs mt-1" style={{ color: '#8C7A62' }}>
-            {doneFiles} of {totalFiles} files
+            {t('offlineFilesProgress').replace('{done}', String(doneFiles)).replace('{total}', String(totalFiles))}
           </p>
         </div>
       )}
@@ -258,21 +259,19 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
         // no signal left to fix it and no way to tell a broken app from a broken download.
         <p className="flex items-start gap-1.5 font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
           <AlertTriangle size={13} style={{ marginTop: 1, flexShrink: 0 }} />
-          {failed.length} {failed.length === 1 ? 'file' : 'files'} did not download. Tap Finish download
-          again while you still have signal — the rest is already saved.
+          {t('offlineFilesFailed').replace('{count}', String(failed.length))}
         </p>
       )}
 
       {phase === 'done' && notPersisted && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#8C7A62' }}>
-          Saved, but this phone may clear it if storage runs low. Check your saved lessons again
-          before leaving signal.
+          {t('offlineSavedMayClear')}
         </p>
       )}
 
       {tightOnSpace && phase !== 'done' && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
-          This phone is low on space — the download may not fit.
+          {t('offlineLowStorage')}
         </p>
       )}
     </div>

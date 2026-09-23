@@ -241,7 +241,7 @@ interface ProdFormState {
 }
 
 function LogProductionForm({ onSaved }: { onSaved: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
@@ -336,6 +336,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
           <CropSelect
             ariaLabel={t('myRecordsCropLabel')}
+            language={lang === 'zu' ? 'zu' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
@@ -422,7 +423,7 @@ interface SaleFormState {
 
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     cropKey: null,
@@ -494,6 +495,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
             <CropSelect
               ariaLabel={t('myRecordsCropLabel')}
+              language={lang === 'zu' ? 'zu' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />

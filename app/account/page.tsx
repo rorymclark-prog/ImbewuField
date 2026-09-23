@@ -40,7 +40,8 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
 
 export default function AccountPage() {
   const { user, profile, signOutUser, changePassword, refreshProfile, loading } = useAuth();
-  const { setLang } = useLanguage();
+  const { lang, setLang } = useLanguage();
+  const copy = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -136,8 +137,8 @@ export default function AccountPage() {
 
   async function handleChangePw() {
     setPwError(null);
-    if (pwForm.next !== pwForm.confirm) { setPwError('New passwords do not match.'); return; }
-    if (pwForm.next.length < 6) { setPwError('Password must be at least 6 characters.'); return; }
+    if (pwForm.next !== pwForm.confirm) { setPwError(copy('New passwords do not match.', 'Amaphasiwedi amasha awafani.')); return; }
+    if (pwForm.next.length < 6) { setPwError(copy('Password must be at least 6 characters.', 'Iphasiwedi kumele ibe nezinhlamvu okungenani eziyisi-6.')); return; }
     setPwSaving(true);
     const err = await changePassword(pwForm.current, pwForm.next);
     setPwSaving(false);
@@ -156,8 +157,8 @@ export default function AccountPage() {
   }
 
   const displayName = profile?.full_name ?? user.displayName;
-  const roleLabel = profile?.role ? ROLE_LABELS[profile.role] : null;
   const langLabel = profile?.language ? (APP_LANGS.find((l) => l.code === profile.language)?.label ?? profile.language) : null;
+  const roleLabel = profile?.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[profile.role] : ROLE_LABELS[profile.role]) : null;
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
@@ -165,20 +166,20 @@ export default function AccountPage() {
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Account</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{copy('Account', 'I-akhawunti')}</span>
         <div className="flex-1" />
-        <LessonLink id="account:overview" label="Learn" />
-        <button onClick={() => setSettingsOpen(true)} aria-label="Settings"
+        <LessonLink id="account:overview" label={copy('Learn', 'Funda')} />
+        <button onClick={() => setSettingsOpen(true)} aria-label={copy('Settings', 'Izilungiselelo')}
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}>
           <Settings size={13} strokeWidth={1.7} />
-          <span className="hidden sm:inline">Settings</span>
+          <span className="hidden sm:inline">{copy('Settings', 'Izilungiselelo')}</span>
         </button>
       </header>
 
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} ${workspace.formWidth} ${workspace.twoColumns} px-4 py-6 sm:px-6`}>
-          <section className="min-w-0 space-y-5" aria-label="Profile details">
+          <section className="min-w-0 space-y-5" aria-label={copy('Profile details', 'Imininingwane yephrofayela')}>
 
           {/* Avatar + name */}
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -193,8 +194,8 @@ export default function AccountPage() {
                   {((displayName || user.email || '?').trim()[0] ?? '?').toUpperCase()}
                 </div>
               )}
-              <button onClick={() => photoInputRef.current?.click()} disabled={photoUploading}
-                aria-label="Change photo"
+              <button onClick={() => photoInputRef.current?.click()} disabled={photoUploading} aria-busy={photoUploading}
+                aria-label={copy('Change photo', 'Shintsha isithombe')}
                 className="absolute bottom-0 right-0 flex items-center justify-center rounded-full"
                 style={{ width: 22, height: 22, background: '#C07A1E', border: '2px solid #FBF6EC', cursor: photoUploading ? 'wait' : 'pointer' }}>
                 <Camera size={11} style={{ color: '#fff' }} />
@@ -213,10 +214,10 @@ export default function AccountPage() {
               )}
             </div>
             {!editing && (
-              <button onClick={() => setEditing(true)} title="Edit profile"
+              <button onClick={() => setEditing(true)} title={copy('Edit profile', 'Hlela iphrofayela')}
                 className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-display"
                 style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: '#1F4D2B', cursor: 'pointer' }}>
-                <Pencil size={12} />Edit
+                <Pencil size={12} />{copy('Edit', 'Hlela')}
               </button>
             )}
           </div>
@@ -224,18 +225,18 @@ export default function AccountPage() {
           {/* Edit form */}
           {editing ? (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>Edit profile</div>
+              <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>{copy('Edit profile', 'Hlela iphrofayela')}</div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Full name</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Full name', 'Amagama aphelele')}</div>
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Your full name"
+                  placeholder={copy('Your full name', 'Amagama akho aphelele')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               </label>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Phone</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Phone', 'Ucingo')}</div>
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
@@ -248,13 +249,13 @@ export default function AccountPage() {
                   then leads with the personal name, which is what a farmer trading under
                   their own name wants. Nothing is ever substituted for an unset value. */}
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Business name <span style={{ opacity: 0.7 }}>(heads your invoices)</span></div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
-                  placeholder="e.g. Ubhejane Creche"
+                  placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
                 <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
-                  Leave this empty to invoice under your own name instead.
+                  {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
                 </div>
               </label>
 
@@ -262,7 +263,7 @@ export default function AccountPage() {
                   waiting for Save — the picture is already visible by then, so a logo that
                   vanished on Cancel would read as a failed upload. */}
               <div className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Business logo <span style={{ opacity: 0.7 }}>(shown on invoices)</span></div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
                     style={{ width: 56, height: 56, background: '#fff', border: '1px solid #D8CBB2' }}>
@@ -276,18 +277,18 @@ export default function AccountPage() {
                       <button type="button" onClick={() => logoInputRef.current?.click()} disabled={logoUploading}
                         className="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
                         style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#1F4D2B', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
-                        {logoUploading ? 'Adding…' : profile?.farm_logo ? 'Replace' : 'Add a logo'}
+                        {logoUploading ? copy('Adding…', 'Iyengezwa…') : profile?.farm_logo ? copy('Replace', 'Faka olunye') : copy('Add a logo', 'Faka uphawu')}
                       </button>
                       {profile?.farm_logo && !logoUploading && (
                         <button type="button" onClick={handleRemoveLogo}
                           className="px-3 py-1.5 rounded-lg text-xs font-sans"
                           style={{ background: 'transparent', border: '1px solid #D8CBB2', color: '#8C7A62', cursor: 'pointer' }}>
-                          Remove
+                          {copy('Remove', 'Susa')}
                         </button>
                       )}
                     </div>
                     <div className="text-xs font-sans" style={{ color: logoError ? '#A8443A' : '#8C7A62' }}>
-                      {logoError ?? 'A photo of your sign works. It is made smaller automatically.'}
+                      {logoError ?? copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
                     </div>
                   </div>
                 </div>
@@ -295,7 +296,7 @@ export default function AccountPage() {
               </div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Language</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}>
@@ -304,35 +305,38 @@ export default function AccountPage() {
               </label>
 
               <div className="flex gap-2 pt-1">
-                <button onClick={saveProfile} disabled={saving}
+                <button onClick={saveProfile} disabled={saving} aria-busy={saving}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
                   style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
-                  <Check size={14} />{saving ? 'Saving...' : 'Save'}
+                  <Check size={14} />{saving ? copy('Saving...', 'Kuyalondolozwa...') : copy('Save', 'Londoloza')}
                 </button>
                 <button onClick={() => setEditing(false)} disabled={saving}
                   className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
                   style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                  <X size={14} />Cancel
+                  <X size={14} />{copy('Cancel', 'Khansela')}
                 </button>
               </div>
             </div>
           ) : (
             <div className="rounded-2xl px-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <Row icon={Mail} label="Email" value={user.email} />
-              <Row icon={Phone} label="Phone" value={profile?.phone ?? null} />
-              <Row icon={Globe} label="Language" value={langLabel} />
-              <Row icon={User} label="Role" value={roleLabel} />
+              <Row icon={Mail} label={copy('Email', 'I-imeyili')} value={user.email} />
+              <Row icon={Phone} label={copy('Phone', 'Ucingo')} value={profile?.phone ?? null} />
+              <Row icon={Globe} label={copy('Language', 'Ulimi')} value={langLabel} />
+              <Row icon={User} label={copy('Role', 'Isikhundla')} value={roleLabel} />
             </div>
           )}
 
           </section>
-          <section className="min-w-0 space-y-5" aria-label="Account settings">
+          <section className="min-w-0 space-y-5" aria-label={copy('Account settings', 'Izilungiselelo ze-akhawunti')}>
           <AccountAccess />
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
           {profile?.role === 'farmer' && profile?.org_id && (
-            <ConsentPanel orgName={orgName} />
+            <>
+              {lang === 'zu' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: '#5C5040' }} role="note">Imininingwane yokwabelana ngedatha nemvume engezansi ibhalwe ngesiNgisi. Uma ungayiqondi, cela usizo ngaphambi kokuvuma.</p>}
+              <ConsentPanel orgName={orgName} />
+            </>
           )}
 
           {/* Change password */}
@@ -340,16 +344,16 @@ export default function AccountPage() {
             <button onClick={() => setChangingPw(true)}
               className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
-              <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#8C7A62' }} />Change password</span>
+              <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#8C7A62' }} />{copy('Change password', 'Shintsha iphasiwedi')}</span>
               <ChevronRight size={16} style={{ color: '#8C7A62' }} />
             </button>
           ) : (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>Change password</div>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
 
               {pwSuccess ? (
                 <div className="flex items-center gap-2 py-2 text-sm font-display" style={{ color: '#1F4D2B' }}>
-                  <Check size={14} />Password updated successfully.
+                  <Check size={14} />{copy('Password updated successfully.', 'Iphasiwedi ibuyekeziwe.')}
                 </div>
               ) : (
                 <>
@@ -357,13 +361,15 @@ export default function AccountPage() {
                     <div key={field} className="relative">
                       <input
                         type={showPw ? 'text' : 'password'}
-                        placeholder={field === 'current' ? 'Current password' : field === 'next' ? 'New password' : 'Confirm new password'}
+                        aria-label={field === 'current' ? copy('Current password', 'Iphasiwedi yamanje') : field === 'next' ? copy('New password', 'Iphasiwedi entsha') : copy('Confirm new password', 'Qinisekisa iphasiwedi entsha')}
+                        placeholder={field === 'current' ? copy('Current password', 'Iphasiwedi yamanje') : field === 'next' ? copy('New password', 'Iphasiwedi entsha') : copy('Confirm new password', 'Qinisekisa iphasiwedi entsha')}
                         value={pwForm[field]}
                         onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
                         className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 pr-10"
                         style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
                       {field === 'current' && (
                         <button type="button" onClick={() => setShowPw((s) => !s)}
+                          aria-label={showPw ? copy('Hide passwords', 'Fihla amaphasiwedi') : copy('Show passwords', 'Bonisa amaphasiwedi')}
                           className="absolute right-3 top-1/2 -translate-y-1/2"
                           style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                           {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
@@ -371,17 +377,17 @@ export default function AccountPage() {
                       )}
                     </div>
                   ))}
-                  {pwError && <p className="text-xs font-sans" style={{ color: '#D4922A' }}>{pwError}</p>}
+                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: '#D4922A' }}>{pwError}</p>}
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
                       style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
-                      <Lock size={13} />{pwSaving ? 'Updating...' : 'Update password'}
+                      <Lock size={13} />{pwSaving ? copy('Updating...', 'Kuyabuyekezwa...') : copy('Update password', 'Buyekeza iphasiwedi')}
                     </button>
                     <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}
                       className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
                       style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                      <X size={14} />Cancel
+                      <X size={14} />{copy('Cancel', 'Khansela')}
                     </button>
                   </div>
                 </>
@@ -393,7 +399,7 @@ export default function AccountPage() {
           <button onClick={() => setSettingsOpen(true)}
             className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
             style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
-            <span>Appearance &amp; language</span>
+            <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
             <ChevronRight size={16} style={{ color: '#8C7A62' }} />
           </button>
 
@@ -402,11 +408,11 @@ export default function AccountPage() {
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
             style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#8C7A62' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
             <LogOut size={15} />
-            {signingOut ? 'Signing out...' : 'Sign out'}
+            {signingOut ? copy('Signing out...', 'Kuyaphuma...') : copy('Sign out', 'Phuma')}
           </button>
 
           <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            ImbewuField · growing with you
+            {copy('ImbewuField · growing with you', 'ImbewuField · ikhula nawe')}
           </p>
           </section>
         </div>

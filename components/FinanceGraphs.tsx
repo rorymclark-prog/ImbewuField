@@ -44,6 +44,7 @@ import {
   produceKindOf,
 } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
+import { useLanguage } from '@/lib/i18n';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
 
@@ -75,6 +76,7 @@ export default function FinanceGraphs({
   /** See CashflowChart: the desktop copy is drawn larger, not magnified. */
   wide?: boolean;
 }) {
+  const { lang } = useLanguage();
   const [view, setView] = useState<View>('measured');
   const [windowMonths, setWindowMonths] = useState(12);
   const [picked, setPicked] = useState<string | null>(null);
@@ -113,15 +115,16 @@ export default function FinanceGraphs({
   const header = (
     <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
       <p className="text-xl font-display font-semibold flex items-center gap-2" style={{ color: INK }}>
-        <BarChart3 size={13} /> Harvest graphs
+        <BarChart3 size={13} /> {lang === 'zu' ? 'Amashadi esivuno' : 'Harvest graphs'}
       </p>
       <div className="flex flex-wrap items-center gap-1.5 mt-2">
-        <Segment active={view === 'measured'} onClick={() => setView('measured')}>Picked &amp; sold</Segment>
-        <Segment active={view === 'plan'} onClick={() => setView('plan')}>Plan vs actual</Segment>
+        <Segment active={view === 'measured'} onClick={() => setView('measured')}>{lang === 'zu' ? 'Okuvunyiwe nokudayisiwe' : 'Picked & sold'}</Segment>
+        <Segment active={view === 'plan'} onClick={() => setView('plan')}>{lang === 'zu' ? 'Uhlelo nokuqobo' : 'Plan vs actual'}</Segment>
         {view === 'measured' && (
           <OrchardToggle
             on={includePerennials}
             onChange={(next) => { setIncludePerennials(next); saveIncludePerennials(next); }}
+            lang={lang}
           />
         )}
         {view === 'measured' && (
@@ -154,8 +157,8 @@ export default function FinanceGraphs({
     <section className="rounded-2xl overflow-hidden" style={CARD}>
       {header}
       {view === 'measured'
-        ? <MeasuredView series={series} pickedKey={picked} onPick={setPicked} wide={wide} />
-        : <PlanView plan={plan} source={source} wide={wide} orchard={orchardRecorded} />}
+        ? <MeasuredView series={series} pickedKey={picked} onPick={setPicked} wide={wide} lang={lang} />
+        : <PlanView plan={plan} source={source} wide={wide} orchard={orchardRecorded} lang={lang} />}
     </section>
   );
 }
@@ -172,7 +175,7 @@ export default function FinanceGraphs({
  * card — a control whose effect you cannot see from where you flick it is the bug class already
  * recorded twice in this codebase.
  */
-function OrchardToggle({ on, onChange }: { on: boolean; onChange: (next: boolean) => void }) {
+function OrchardToggle({ on, onChange, lang }: { on: boolean; onChange: (next: boolean) => void; lang: string }) {
   return (
     <button
       type="button"
@@ -192,7 +195,7 @@ function OrchardToggle({ on, onChange }: { on: boolean; onChange: (next: boolean
       }}
     >
       <Trees size={12} strokeWidth={on ? 2.2 : 1.6} />
-      {on ? 'Orchard in' : 'Orchard out'}
+      {lang === 'zu' ? (on ? 'Ingadi yezithelo ifakiwe' : 'Ingadi yezithelo ayifakiwe') : (on ? 'Orchard in' : 'Orchard out')}
     </button>
   );
 }
@@ -228,27 +231,29 @@ function MeasuredView({
   pickedKey,
   onPick,
   wide,
+  lang,
 }: {
   series: ReturnType<typeof buildFinanceSeries>;
   pickedKey: string | null;
   onPick: (key: string) => void;
   wide: boolean;
+  lang: string;
 }) {
   const { W, PAD, PLOT_H, barCap } = wide ? DESK : PHONE;
   if (!series.hasRecords) {
     return (
       <div className="px-4 py-5">
         <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>
-          {series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet'}
+          {lang === 'zu' ? (series.earlierRecords ? 'Akukho okuvunyiwe noma okudayisiwe kulezi zinyanga' : 'Asikho isivuno esirekhodiwe okwamanje') : (series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet')}
         </p>
         <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-          {series.earlierRecords
+          {lang === 'zu' ? 'Incazelo enemininingwane ngesiNgisi okwamanje: Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.' : series.earlierRecords
             ? `Your records start in ${series.firstRecordLabel}. Try a longer window above.`
             : 'Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.'}
         </p>
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
-          Log a harvest
+          {lang === 'zu' ? 'Rekhoda isivuno' : 'Log a harvest'}
         </Link>
       </div>
     );
@@ -285,18 +290,18 @@ function MeasuredView({
   return (
     <>
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label={`Picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
-        <Figure label="Sold" value={kgLabel(series.totalSoldKg)} tone={SOLD} />
+        <Figure label={lang === 'zu' ? `Okuvunyiwe, izinyanga ezingu-${series.windowMonths}` : `Picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
+        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD} />
         {/* Null is not zero: when the window sold more than it logged picking, the
             difference is a missing record, not food that stayed on the farm. */}
         {series.totalKeptKg === null
-          ? <Figure label="Kept on the farm" value="—" tone={FAINT} />
-          : <Figure label="Kept on the farm" value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
+          ? <Figure label={lang === 'zu' ? 'Okusele epulazini' : 'Kept on the farm'} value="—" tone={FAINT} />
+          : <Figure label={lang === 'zu' ? 'Okusele epulazini' : 'Kept on the farm'} value={kgLabel(series.totalKeptKg)} tone={KEPT} />}
       </div>
 
       <div className="px-2">
         <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block' }} role="img"
-          aria-label={`Kilograms picked each month for ${n} months, split into sold and kept on the farm.`}>
+          aria-label={lang === 'zu' ? `Amakhilogremu avunyiwe ngenyanga ezinyangeni ezingu-${n}, ahlukaniswe ngokudayisiwe nokusele epulazini.` : `Kilograms picked each month for ${n} months, split into sold and kept on the farm.`}>
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + PLOT_H} y2={PAD.top + PLOT_H} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
           <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">{Math.round(maxKg)}</text>
@@ -357,18 +362,19 @@ function MeasuredView({
         <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{selected.longLabel}</span>
         {selected.hasRecords ? (
           <>
-            <Chip dot={SOLD} label="sold" value={kgLabel(selected.soldKg)} />
+        <Chip dot={SOLD} label={lang === 'zu' ? 'kudayisiwe' : 'sold'} value={kgLabel(selected.soldKg)} />
             {selected.keptKg === null
-              ? <span className="font-sans" style={{ fontSize: 12, color: SHORT }}>sold more than was logged picked</span>
-              : <Chip dot={KEPT} label="kept" value={kgLabel(selected.keptKg)} />}
-            <Chip dot="transparent" label="picked in total" value={kgLabel(selected.producedKg)} />
+              ? <span className="font-sans" style={{ fontSize: 12, color: SHORT }}>{lang === 'zu' ? 'Kudayiswe okungaphezu kokurekhodiwe njengokuvuniwe' : 'sold more than was logged picked'}</span>
+              : <Chip dot={KEPT} label={lang === 'zu' ? 'okusele' : 'kept'} value={kgLabel(selected.keptKg)} />}
+            <Chip dot="transparent" label={lang === 'zu' ? 'okuvunyiwe konke' : 'picked in total'} value={kgLabel(selected.producedKg)} />
           </>
         ) : (
-          <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>nothing recorded this month</span>
+          <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{lang === 'zu' ? 'akukho okurekhodiwe kule nyanga' : 'nothing recorded this month'}</span>
         )}
       </div>
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+        {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: FAINT }}>Incazelo enemininingwane ngesiNgisi okwamanje.</p>}
         {(series.excludedProducedKg > 0 || series.excludedSoldKg > 0) && (
           /* Picked and sold said separately, because the card's own figures are separate and their
              sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
@@ -408,13 +414,14 @@ function MeasuredView({
 
 /* ── View 2: plan vs actual ────────────────────────────────────────────────── */
 
-function PlanView({ plan, source, wide, orchard }: {
+function PlanView({ plan, source, wide, orchard, lang }: {
   plan: ReturnType<typeof buildPlanVsActual>; source: FinancePlanSource; wide: boolean;
+  lang: string;
   /** Orchard produce this farm has actually recorded, so its absence below can be explained. */
   orchard: string[];
 }) {
   if (!source.loaded) {
-    return <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>Reading your crop plan…</div>;
+    return <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>{lang === 'zu' ? 'Kufundwa uhlelo lwezitshalo…' : 'Reading your crop plan…'}</div>;
   }
 
   if (plan.rows.length === 0) {
@@ -425,12 +432,12 @@ function PlanView({ plan, source, wide, orchard }: {
         : 'Your crop plan is empty, so there is nothing to compare your harvest against.';
     return (
       <div className="px-4 py-5">
-        <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>Nothing to compare yet</p>
-        <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{reason}</p>
+        <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>{lang === 'zu' ? 'Akukho okuqhathaniswayo okwamanje' : 'Nothing to compare yet'}</p>
+        <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: ${reason}` : reason}</p>
         <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'}
           className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
-          {source.origin === 'none' ? 'Open the Design Studio' : 'Open the crop plan'}
+          {lang === 'zu' ? (source.origin === 'none' ? 'Vula i-Design Studio' : 'Vula uhlelo lwezitshalo') : (source.origin === 'none' ? 'Open the Design Studio' : 'Open the crop plan')}
         </Link>
       </div>
     );
@@ -461,8 +468,9 @@ function PlanView({ plan, source, wide, orchard }: {
       </div>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} label="plan benchmark" value="" />
-        <Chip dot={SOLD} label="logged picked" value="" />
+        <Chip dot={BENCH} label={lang === 'zu' ? 'isilinganiso sohlelo' : 'plan benchmark'} value="" />
+        <Chip dot={SOLD} label={lang === 'zu' ? 'okuvunyiwe okurekhodiwe' : 'logged picked'} value="" />
+        {lang === 'zu' && <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>Incazelo enemininingwane ngesiNgisi okwamanje.</span>}
         {plan.lossConfirmed
           ? <Chip dot="#C07A1E" label={`after your ${Math.round(plan.lossPercent)}% loss allowance`} value="" />
           : (

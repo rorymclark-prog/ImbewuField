@@ -860,7 +860,7 @@ export default function StudentPage() {
             <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
           </summary>
           <div>
-            <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
+            <p>{t('studentGuidesDescription')}</p>
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
