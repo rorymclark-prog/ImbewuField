@@ -1,6 +1,6 @@
 # Reading the Landscape L1 English lesson check — 23 September 2026
 
-## Coordinated English correction candidate
+## Coordinated English correction and deployed check
 
 The English lesson, key points, quiz, narration and transcript now treat water
 exits as observations; some excess water needs a safe route away. They remove
@@ -32,9 +32,20 @@ records exact normalized WordBoundary source matches, full decode and
 selective saved-pack migration retires only these five MP3s, the full MP3,
 and the two changed stills; no replacement is auto-downloaded. The
 [isiZulu alignment packet](../../narration-reviews/reading-landscape-l1.zu.review.md)
-is review-only. Exact-head CI, deployed phone-width player, and offline saved
-pack remain to be checked before release. Human listening, learner, farmer,
-practitioner and fluent isiZulu review are not claimed.
+is review-only. Local typecheck, 3,716 passing tests / 0 failures / 1
+existing TODO, and whitespace check passed. Exact-head CI
+`35838576225` passed `test` and `rules`; preview `35838568960`
+passed and `/api/build-info` reported `fd6b3d0`. At 390 × 844, the
+deployed sample Student showed the corrected lesson, quiz, slide 4 and
+slide 7; both stills loaded at 1920px, and their MP3s reached
+`readyState=4` and advanced beyond four seconds. The Reading the
+Landscape pack saved 48 files and reported **On this phone · 12.4 MB**.
+With the browser network disabled and the page reloaded, the Offline
+badge appeared; slides 4 and 7 reopened at 1920px and their English
+MP3s advanced beyond four seconds with no media error. Network and
+temporary viewport were restored. This is one browser’s technical check,
+not physical-phone or human listening. Learner, farmer, practitioner and
+fluent isiZulu review are not claimed.
 
 ## Earlier 22 September baseline
 

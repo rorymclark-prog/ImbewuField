@@ -1,6 +1,6 @@
 # Active Studies continuation — 22 September 2026
 
-## Reading the Landscape L1 English candidate (23 September)
+## Reading the Landscape L1 English release (23 September)
 
 The next coordinated English lesson correction covers water exits, A-frame
 limits and water-works siting. Lower-cost agents prepared the narrow lesson,
@@ -13,8 +13,19 @@ full track were regenerated and machine-verified against their exported
 script. Selective offline migration retires only changed English assets.
 No Flow credit or SVG/code-drawn motion was used. The [L1 check](../media/studies-animation-quality/reading-landscape-l1-lesson-check.md)
 records sources, hashes and exact review limits. Local checks, CI, deployed
-player and offline pack verification remain before release. Farm Finance is
-excluded; isiZulu has no fluent review or learner publication.
+player and offline pack verification passed: local typecheck, 3,716 passing
+tests / 0 failures / 1 existing TODO, and whitespace check were clean.
+Exact-head CI `35838576225` passed `test` and `rules`; preview
+`35838568960` passed and build info reported `fd6b3d0`. At 390px,
+the deployed sample Student showed the corrected lesson, quiz and stills;
+slides 4 and 7 loaded at 1920px and their MP3s advanced. The 48-file,
+12.4 MB Reading the Landscape pack reported On this phone. After a
+network-disabled reload, the Offline badge was visible and both stills
+and MP3s reopened, advancing beyond four seconds. Network and viewport
+were restored. This is one browser's technical check, not physical-phone
+or human approval. Farm Finance is excluded; isiZulu has no fluent review
+or learner publication. The next English L2 source audit and isiZulu L2
+review packet are prepared; no L2 learner content has changed.
 
 ## Introduction L3 English release candidate (23 September)
 
