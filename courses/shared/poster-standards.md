@@ -1,4 +1,4 @@
-# Poster standards (all three courses)
+# Poster standards (all courses)
 
 Posters are the main teaching tool. A facilitator with a set of posters, a phone and the
 practical kit can run every course with no power at all.

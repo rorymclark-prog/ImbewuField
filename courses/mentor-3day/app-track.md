@@ -91,7 +91,7 @@ WhatsApp or show it next time.
 | 2 | E3 | **Garden Survey** → beds + 6-week plan → **Crop Plan** | Bed plan + 6-week plan page | A written plan: what goes where, when |
 | 3 | E4 | **Field Journal** — a weekly note and photo | Garden diary — a weekly line and drawing | A habit of noting what happens |
 | 4 | E5 | **Log a harvest** (My Records → **Picked**, kg) | Harvest page (date, crop, kg, where it went) | Every harvest weighed and written |
-| 5 | E6 | **Finances: Money in / Money out** (My Records → **Sold** / **Spent**) | Money book (in / out columns) | Every rand in and out written |
+| 5 | E6 | **Money in / Money out** (Records → **Sold** / **Spent**) | Money book (in / out columns) | Every rand in and out written |
 | 5 | E7 | **Scan a till slip** (Receipt photo; *Read this photo with Lima*; check it) | Slip envelope + money-out line | Every cost has its proof |
 | 5 | E8 | **Invoice builder**: build, save, share an invoice | Duplicate invoice book | A buyer gets a clear written invoice; a copy stays |
 | 6 | E9 | **Reports**: read (and share) a report | Month-end summary page | The farmer can say what the season gave and cost |
@@ -159,7 +159,7 @@ app's own guide in Studies and tell the programme office.
   use the scale for the record.
 - **Check:** the saved kilograms match the scale; the farmer can find the entry again.
 
-### E6 · Finances: Money in / Money out (month 5, 15 min)
+### E6 · Money in / Money out (Records → Sold / Spent) (month 5, 15 min)
 - **I do (3 min):** show the one book with three tabs: **Picked · Sold · Spent**. Sold is money
   in; Spent is money out. Record one sale (sample: 5 bunches spinach, R10 each = R50).
 - **We do (5 min):** farmer records a real cost under **Spent → Log a cost** (What for, Amount (R)

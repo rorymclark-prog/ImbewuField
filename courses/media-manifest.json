@@ -3,6 +3,850 @@
   "rules": "courses/shared/poster-standards.md (Art rules) and courses/shared/CODEX-HANDOFF.md",
   "items": [
     {
+      "id": "A-ANI-01",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "The guessing machine",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-01.mp4",
+      "used_in": [
+        "A-D1-04",
+        "A-D1-S1"
+      ],
+      "length": "16 s loop, silent",
+      "brief": "Picture-only sentence game. 0–4 s: many small picture tiles (cups of tea, coffee mugs,\nwater glasses, bowls of amahewu — tea cups most numerous) stream from the left into a simple\nphone-shaped machine. 4–8 s: a half-sentence picture appears (a sunrise + a person + a cup\noutline with a question mark). 8–11 s: the machine \"thinks\" (bubble pulses) and outputs the\nmost common tile — a teacup — with a confident bounce. 11–14 s: beside it, a learner figure holds\na different drink (amahewu); a small question mark appears between them. 14–16 s: fade back to\nthe start. No text."
+    },
+    {
+      "id": "A-ANI-02",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "Good photo, bad photo",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-02.mp4",
+      "used_in": [
+        "A-D1-16",
+        "A-D1-S3"
+      ],
+      "length": "14 s loop, silent",
+      "brief": "Phone camera view of a leaf with holes. 0–3 s: dark, blurry, far away, sun flaring in\nthe lens. 3–6 s: the photographer turns so the sun (north, top of sky) is behind her — flare\ngone. 6–9 s: phone moves close; leaf fills the frame. 9–11 s: a finger taps the leaf — it snaps\nsharp. 11–13 s: a flat hand slides in beside the leaf for size; a tick appears. 13–14 s: hold."
+    },
+    {
+      "id": "A-ANI-03",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "A voice can be copied",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-03.mp4",
+      "used_in": [
+        "A-D2-13",
+        "A-D2-S2"
+      ],
+      "length": "18 s loop, silent",
+      "brief": "0–4 s: a young man records a short voice note; a sound-wave shape leaves his phone.\n4–8 s: the wave flies into a shadowy box that stamps out an identical wave. 8–12 s: the copied\nwave arrives on his mother's phone from an unknown number with a coin and airtime icon beside it.\n12–16 s: she lowers the phone, taps a saved contact with her son's face — the real son answers,\nsurprised; both shake heads. 16–18 s: a small padlock and a heart (code word) appear. No text."
+    },
+    {
+      "id": "A-ANI-04",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "Climb the Check Ladder",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-04.mp4",
+      "used_in": [
+        "A-D2-03"
+      ],
+      "length": "15 s loop, silent",
+      "brief": "A farmer with a phone climbs the five-rung ladder from A-P07-ART. As she reaches each\nrung (every 2.5 s), its small picture lights up: own garden with sun in the north → circular\narrow → seed packet and label → two people talking → one small row planted. At the top she\nsmiles and plants the row. Loop."
+    },
+    {
+      "id": "A-ANI-05",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "The sun is in the north (for \"does it make sense here?\")",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
+      "target": null,
+      "used_in": [
+        "A-D2-03"
+      ],
+      "length": "use the full clip, silent",
+      "brief": "Optional, for rung ① of the Check Ladder: \"AI often answers with northern seasons.\nHere the sun is in the north, and winter is June–July.\" Play once, no narration over it."
+    },
+    {
+      "id": "A-ANI-06",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "Look at the soil",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
+      "target": null,
+      "used_in": [
+        "A-D2-20"
+      ],
+      "length": "use the first 15 s, silent",
+      "brief": "Optional clip for \"AI can't see your soil\" — people observe soil with their own eyes\nand hands. Show on a tablet to groups while they discuss what only people can do."
+    },
+    {
+      "id": "A-ANI-07",
+      "course": "ai-literacy",
+      "kind": "animation",
+      "title": "What the farm record shows",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
+      "target": null,
+      "used_in": [
+        "A-D2-19"
+      ],
+      "length": "use the full clip, silent",
+      "brief": "Optional, before reading an AI-written report: \"A report is only as true as your\nrecords. If the record says 12 bunches, the report can't say 50.\""
+    },
+    {
+      "id": "A-IMG-01",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Learning together under a tree",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-01.jpg",
+      "used_in": [
+        "A-D1-01",
+        "A-D1-21",
+        "A-D2-01"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. A group of five learners on plastic chairs under a big shade tree near\na small community garden: a gogo, an older man in a hat, two young women, a young man. One\nphone is shared between the gogo and a young woman; the young woman points at the screen, the\ngogo laughs. The others lean in. A poster on a fence behind (plain shapes, no text). Midday\nlight, sun high in the north; soft shade. Leave the left third calm (Paper-coloured sky and wall)\nfor the slide title."
+    },
+    {
+      "id": "A-IMG-02",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Where AI hides — picture set",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-02.jpg",
+      "used_in": [
+        "A-D1-07",
+        "K-02"
+      ],
+      "length": "still",
+      "brief": "Eight square icons (each 800 × 800 px, plus one sheet with all eight): 1. keyboard\nwith three blank suggestion bubbles above; 2. keyboard with a microphone key highlighted; 3. a\nchat screen with a plain ring icon; 4. phone camera frame over a leaf; 5. two overlapping speech\nbubbles with different scribble-scripts; 6. a video feed with a thumb scrolling; 7. incoming-call\nscreen with a warning triangle; 8. a phone with a garden-app screen and a help strip along the\nbottom showing a seedling. Flat, bold, readable at A6. No real logos."
+    },
+    {
+      "id": "A-IMG-03",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Weigh it to check it",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-03.jpg",
+      "used_in": [
+        "A-D1-17",
+        "A-D1-19"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. At a table outside, a young man photographs a bag of carrots and\npotatoes with a 2 ℓ plastic water bottle beside it for size. Next to him, an older woman places\nthe same bag on a simple kitchen scale; the dial pointer is visible (no numbers readable). The\ntwo look at each other, comparing. Station feel: other groups in the background at a bed and\na tree."
+    },
+    {
+      "id": "A-IMG-04",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Look at the soil — AI can't",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/soil-health/soil-health-l1.jpg",
+      "target": null,
+      "used_in": [
+        "A-D2-20"
+      ],
+      "length": "still",
+      "brief": "Use the whole image (soil profile beside a jar test). Facilitator says: \"AI can look\nat a photo. It can't do this — squeeze, smell, shake a jar, count worms.\""
+    },
+    {
+      "id": "A-IMG-05",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "The AI desk (facilitator plays the machine)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-05.jpg",
+      "used_in": [
+        "A-D1-03",
+        "A-D1-13",
+        "A-D2-02",
+        "A-D2-05"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. A facilitator (woman, 30s) sits on a chair at the side of a hall\nwearing a large card on a string round her neck — the card shows a simple drawn phone with a\nquestion mark (a drawing, not words). She holds a small stack of cards and reads one in a\ndeadpan, confident way. A group Reporter (young man) stands in front of her with a notebook; two\nlearners behind him grin. Playful, warm."
+    },
+    {
+      "id": "A-IMG-06",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Share or not — three piles",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-06.jpg",
+      "used_in": [
+        "A-D2-09"
+      ],
+      "length": "still",
+      "brief": "Top-down view of a reed mat with three sheets: one with a green circle, one with an\norange triangle, one with a red square. Hands of different ages place small cards (blank faces\nwith small icons: an ID shape, a leaf, a padlock, a pin) onto the piles. No text."
+    },
+    {
+      "id": "A-IMG-07",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Lock your chats",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-07.jpg",
+      "used_in": [
+        "A-D2-10"
+      ],
+      "length": "still",
+      "brief": "Close-up of two hands (an elder's and a youth's) around an entry-level phone. On the\nscreen: a large padlock over six empty PIN dots, and a toggle switched on. Background soft-focus\ngarden. No real app interface or logo."
+    },
+    {
+      "id": "A-IMG-08",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "The family code word",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-08.jpg",
+      "used_in": [
+        "A-D2-14"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. Split scene: left, a mother in her kitchen listening to a voice note,\neyebrow raised, finger to chin (thinking); right, the same mother and her adult son face to face\non the stoep, both smiling, the son whispering something in her ear (agreeing the code word in\nperson). A thin dotted line joins the two halves."
+    },
+    {
+      "id": "A-IMG-09",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Red pen on the draft",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-09.jpg",
+      "used_in": [
+        "A-D2-17",
+        "A-D2-18"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9, top-down. A table with: a printed page of lines (no words) with two\nlines crossed out in red and new squiggles written above; a phone showing a chat bubble; a till\nslip beside it with a finger tracing a line on the slip; an exercise-book money record open; a\nred pen. Hands of a young woman."
+    },
+    {
+      "id": "A-IMG-10",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Read the report together",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-10.jpg",
+      "used_in": [
+        "A-D2-19"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. A mentor (man, 40s, programme bib or plain jacket) and a farmer\n(woman, 50s) sit on a bench with a printed report (lines and a simple bar-chart shape, no words).\nThe farmer points at one bar and shakes her head gently; the mentor holds a pen ready to correct.\nGarden beds and a harvest crate behind."
+    },
+    {
+      "id": "A-IMG-11",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Fair and green AI",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-11.jpg",
+      "used_in": [
+        "A-D2-21"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. Foreground: a small homestead garden with a woman holding a phone,\ntwo speech bubbles above her — one full (English-shaped scribbles), one half-empty (her own\nlanguage). Far background, on the horizon: a large windowless grey building with cooling fans,\npower lines running to it and a water tower beside it (the data centre). A thin dotted line runs\nfrom the phone to the far building. Calm, not scary."
+    },
+    {
+      "id": "A-IMG-12",
+      "course": "ai-literacy",
+      "kind": "image",
+      "title": "Certificate day",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-IMG-12.jpg",
+      "used_in": [
+        "A-D2-23"
+      ],
+      "length": "still",
+      "brief": "Landscape 16:9. A facilitator shakes hands with a proud gogo holding a certificate\n(blank paper with a simple border and a seal shape, no text); a youth beside her claps; other\nlearners in a semicircle holding their own. Posters on the wall behind (shapes only)."
+    },
+    {
+      "id": "A-PHO-01",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Screen: the Lima help strip",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-01.jpg",
+      "used_in": [
+        "A-D1-14"
+      ],
+      "length": "still",
+      "brief": "Screenshot captured on Day 0 from a **sample/demo account** (no real farmer data):\nImbewuField Home with the Lima help strip at the bottom, then Lima answering a Question-Hand\nquestion about spinach holes. Crop to the phone frame. Recapture before each course if the\nscreen has changed. Blur anything personal."
+    },
+    {
+      "id": "A-PHO-02",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Plant problem photographs (6)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-02.jpg",
+      "used_in": [
+        "K-04",
+        "A-D1-S3"
+      ],
+      "length": "stills",
+      "brief": "Six real photographs, taken in South African gardens with the grower's consent, no\npeople's faces: holes in spinach leaves; yellowing lower leaves on maize; seedlings collapsed at\nthe soil line (damping off) in a tray; aphids clustered under a cabbage leaf; termite-eaten mulch\naround a bed; frost-burnt leaf tips. Clear, close, good light, a hand or matchbox for size.\nPrinted A5 for the no-phone path."
+    },
+    {
+      "id": "A-PHO-03",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Screen: Lima Vision result",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-03.jpg",
+      "used_in": [
+        "A-D1-18"
+      ],
+      "length": "still",
+      "brief": "Two screenshots from a demo account: \"What's growing\" result (crop, rough kg, weeks\nto harvest, confidence pill) and \"Weigh my harvest\" result (estimated kg, confidence pill).\nUse a real test photo of a bed and of produce beside a 2 ℓ bottle."
+    },
+    {
+      "id": "A-PHO-04",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Screen: Tree ID result",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-04.jpg",
+      "used_in": [
+        "A-D1-18"
+      ],
+      "length": "still",
+      "brief": "Screenshot of a Tree ID result for a common tree (demo account), showing the\nconfidence number and the note. Choose an example where the confidence is **not** 100% — it\nteaches that confidence varies."
+    },
+    {
+      "id": "A-PHO-05",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Screen: till slip read in Records → Spent",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-05.jpg",
+      "used_in": [
+        "A-D2-18"
+      ],
+      "length": "still",
+      "brief": "Side-by-side: a photo of a real till slip (an invented or blurred shop name, no card\nnumbers) and the Records → Spent entry after \"scan a till slip\" showing total, item and shop. If\npossible use an example where the reader made a small mistake (e.g. read the change as the\ntotal) — mark it with a red circle added on the slide, not in the screenshot."
+    },
+    {
+      "id": "A-PHO-06",
+      "course": "ai-literacy",
+      "kind": "photo",
+      "title": "Screen: an AI-written report",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-PHO-06.jpg",
+      "used_in": [
+        "A-D2-19"
+      ],
+      "length": "still",
+      "brief": "Screenshot of a Reports page generated for a demo garden. Crop to one paragraph and\none chart. No real names or locations."
+    },
+    {
+      "id": "A-P01",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Our class and phone agreement",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S0",
+        "A-D1-S1"
+      ],
+      "art": "A-P01-ART",
+      "headline": "Learn together, phones too",
+      "labels": "1. Phones silent, not away\n2. Share the turn\n3. Ask before photos\n4. Private stays private",
+      "layout": "Headline top band; art 45%; labels as numbered callouts; a 20% blank panel with\nruled lines for the class's own rules (marker on paper, or a sheet taped on the banner).",
+      "teach_it": "```\nA-P01  Our class and phone agreement            (≈ 8 min)\n1. GROUPS: agree one rule that helps us learn together. 2 min.\n2. Reporters say it; Recorder writes/draws it in the blank panel.\n3. POINT ①: phones silent, not away — we use them in class.\n4. POINT ②: one phone, many people — everyone gets a turn.\n5. POINT ③: ask before you photograph a person (POPIA consent).\n6. POINT ④: no ID, PIN or bank details typed today.\n7. ASK: Can we all live with these? Thumbs up.\nKEY: We share phones, we share turns, we protect each other.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P01.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P01.jpg"
+    },
+    {
+      "id": "A-P02",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "AI is a guessing machine",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S1",
+        "A-D2-S1"
+      ],
+      "art": "A-P02-ART",
+      "headline": "AI is a fast guesser",
+      "labels": "1. Learned from lots\n2. Guesses what's next\n3. Sure, but wrong\n4. Knows what you show",
+      "layout": "Headline top; art 60% flowing left to right; labels under the art in the callout band.",
+      "teach_it": "```\nA-P02  AI is a guessing machine                  (≈ 20 min with the role-play)\n1. PLAY: \"Finish my sentence\" — 3 starts, room shouts, tally the answers.\n2. Put on the AI sign. Answer with the most common word, every time.\n3. Ask the machine about a coughing goat — answer fast, sure, and unsafe.\n4. Ask it when to plant maize — answer \"April\" (northern seasons).\n5. Take the sign off: \"Now I'm me again.\"\n6. POINT ①→④ and say each label.\n7. ASK: What doesn't it know about your farm?\nKEY: AI is a very fast guesser. Very good is not always right.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P02.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P02.jpg"
+    },
+    {
+      "id": "A-P03",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Where you already meet AI",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S1"
+      ],
+      "art": "A-P03-ART",
+      "headline": "AI is already here",
+      "labels": "1. Keyboard guesses words\n2. Voice typing\n3. Chat helper\n4. Camera search\n5. Translate\n6. Garden app helper",
+      "layout": "Headline top; phone centre with islands around; labels in a 2 × 3 grid at the foot.",
+      "teach_it": "```\nA-P03  Where you already meet AI                 (≈ 12 min)\n1. SAY: You've probably used AI this week. Let's find it.\n2. GROUPS with a phone: find 3 places AI is on your phone.\n3. EVERYONE: type \"Good m…\" and watch the keyboard guess ①.\n4. GROUPS: sort the picture cards — used / not used.\n5. Reporters name one each; tick the island on the poster.\n6. ASK: Which one surprised you?\nKEY: You already use AI — keyboard, mic, camera, chat.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P03.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P03.jpg"
+    },
+    {
+      "id": "A-P04",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Save your data",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S2"
+      ],
+      "art": "A-P04-ART",
+      "headline": "Make your data last",
+      "labels": "1. Auto-download off\n2. Standard photos\n3. Data saver on\n4. Updates on Wi-Fi\n5. Voice, not video",
+      "layout": "Headline top; the pot centre; five callouts in a ring; labels in the band below.",
+      "teach_it": "```\nA-P04  Save your data                            (≈ 20 min)\n1. ASK: What did you spend on data last week? Tell your neighbour.\n2. Connect the group phone to the course Wi-Fi.\n3. ① WhatsApp › Settings › Storage and data › Media auto-download › mobile data: none.\n4. ② Photo upload quality › Standard.\n5. ③ Phone Settings › search \"data saver\" › on.\n6. ④ Play Store › auto-update on Wi-Fi only.\n7. ⑤ Habit: voice notes use less data than video.\nKEY: Learners tap it themselves. Menus differ — use Settings search.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P04.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P04.jpg"
+    },
+    {
+      "id": "A-P05",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "The Question Hand",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S2",
+        "A-D1-S4",
+        "A-D2-S0",
+        "A-D2-S3"
+      ],
+      "art": "A-P05-ART",
+      "headline": "Ask with your whole hand",
+      "labels": "1. Who I am\n2. What I have\n3. What I want\n4. How to answer\n5. Ask again",
+      "layout": "Headline top; the hand fills 60%; labels as callouts beside each finger (large, 64 pt).",
+      "teach_it": "```\nA-P05  The Question Hand                         (≈ 15 min + practice)\n1. AI sign on. A learner asks one word: \"Spinach?\" Read B-00 — long, useless.\n2. Sign off. Hold up your hand: \"A good question has five fingers.\"\n3. POINT ①–⑤ with an example: farmer near Bergville · spinach bed with holes ·\n   stop it · 3 short steps in isiZulu · ask again.\n4. AI sign on. Ask the full question. Read B-01 — short, useful.\n5. ASK: Which answer helps more? Why?\n6. PAIRS: say the five fingers in your own language.\nKEY: Tell it who you are and what you have. The first answer is a draft.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P05.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P05.jpg"
+    },
+    {
+      "id": "A-P06",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Ask with your voice and a photo",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S3"
+      ],
+      "art": "A-P06-ART",
+      "headline": "Say it. Show it.",
+      "labels": "1. Light behind you\n2. Close up\n3. Hold still\n4. One thing\n5. Show the size\n6. Speak, then read",
+      "layout": "Headline top; art split 25% voice / 35% photo; callouts beside; labels band.",
+      "teach_it": "```\nA-P06  Ask with your voice and a photo           (≈ 7 min + stations)\n1. ENERGISER: Broken Telephone — a farm sentence whispered round the circle.\n2. SHOW: keyboard mic ⑥. Speak a question. Read what it wrote.\n3. PAIRS: English, then first language. Fix mistakes.\n4. SHOW two photos: dark and blurry vs clear. ASK: which can AI understand?\n5. POINT ①–⑤. Add: both sides of a sick leaf, and the whole plant.\n6. Ask before a person is in your photo.\nKEY: Clear photo, better answer. A photo answer is still a guess — check it.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P06.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P06.jpg"
+    },
+    {
+      "id": "A-P07",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "The Check Ladder",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S1",
+        "A-D2-S3",
+        "A-D2-S4"
+      ],
+      "art": "A-P07-ART",
+      "headline": "Check before you trust",
+      "labels": "1. Makes sense here?\n2. Ask again\n3. Second source\n4. Ask a person\n5. Try it small",
+      "layout": "Headline top; ladder rising left to right across 60%; labels next to each rung.",
+      "teach_it": "```\nA-P07  The Check Ladder                          (≈ 8 min + Find the mistakes)\n1. AI sign on: \"Plant cabbage 5 cm apart.\" ASK: Would you do it? How did you know?\n2. ASK: In the village, how do you check a rumour?\n3. POINT ①→⑤ bottom to top; a learner says each rung in their language.\n4. SAY: How high you climb depends on how bad a mistake would be (A-P08).\n5. GROUPS: Find the mistakes — 4 B-cards; circle, colour, who to ask.\n6. Reporters share one mistake each.\nKEY: Makes sense? · ask again · second source · ask a person · try small.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P07.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P07.jpg"
+    },
+    {
+      "id": "A-P08",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Green · Orange · Red questions",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D1-S4",
+        "A-D2-S1"
+      ],
+      "art": "A-P08-ART",
+      "headline": "How bad if it's wrong?",
+      "labels": "1. Green: try small\n2. Orange: check again\n3. Red: danger\n4. Red? Ask a person",
+      "layout": "Headline top; three panels 60%; labels to the right of each panel.",
+      "teach_it": "```\nA-P08  Green · Orange · Red                       (≈ 10 min)\n1. POINT ① green: ideas, recipes, names, writing help — try it small.\n2. POINT ② orange: planting dates, spacing, pests, prices — second source.\n3. POINT ③ red: sprays and poisons, medicine, animal health, loans, grants,\n   SASSA, contracts, land — ④ always a person. Never AI alone.\n4. GROUPS: sort T-01…T-12 onto the three sheets. 6 min.\n5. ASK groups: \"What's the worst that could happen?\"\nKEY: The label is the law. Red questions go to a person.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P08.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P08.jpg"
+    },
+    {
+      "id": "A-P09",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Keep it private",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S2"
+      ],
+      "art": "A-P09-ART",
+      "headline": "Your phone is your wallet",
+      "labels": "1. ID number\n2. Bank card, PIN\n3. Codes (OTPs)\n4. Grant details\n5. Children's faces\n6. Where you are",
+      "layout": "Headline top; wallet 55%; \"Never share\" as a small Ochre tag above the six labels.\n(The tag is 2 more words — total stays ≤ 25.)",
+      "teach_it": "```\nA-P09  Keep it private                            (≈ 20 min with the sort)\n1. ASK: What's in your wallet you'd never give a stranger?\n2. SAY: Your phone is a wallet now.\n3. GROUPS: sort the H-cards — fine / trusted face to face / never. 10 min.\n4. POINT ①–⑥: never share with strangers or AI.\n5. SAY (POPIA): the law protects your information; you can ask what an\n   organisation holds and complain to the Information Regulator.\n6. SAY: AI apps may keep what you type. Ask about spinach, not your bank.\nKEY: Codes and PINs: never, to anyone.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P09.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P09.jpg"
+    },
+    {
+      "id": "A-P10",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Stop · Check · Ask",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S2"
+      ],
+      "art": "A-P10-ART",
+      "headline": "Stop · Check · Ask",
+      "labels": "1. Don't click, pay, send\n2. Call back, known number\n3. Ask someone you trust",
+      "layout": "Headline top; three panels 50%; warning-icon strip 15%; labels under the panels.",
+      "teach_it": "```\nA-P10  Stop · Check · Ask                          (≈ 5 min + scam cards)\n1. PLAY the fake voice note (Day 0 recording). ASK: What would you do?\n2. POINT ①: STOP — scammers rush you.\n3. POINT ②: CHECK — call back on the number you already have.\n4. POINT ③: ASK — family, mentor, bank at the branch, SASSA office, police.\n5. POINT the warning strip: hurry · secret · money/airtime/code · too good ·\n   a link · pay a fee for a job, grant or loan.\n6. GROUPS: sort S-01…S-10 — scam / real / not sure. 15 min.\nKEY: Hurry + money or code = scam until proven real.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P10.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P10.jpg"
+    },
+    {
+      "id": "A-P11",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "Fake voices, fake videos",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S2"
+      ],
+      "art": "A-P11-ART",
+      "headline": "Voices and videos can lie",
+      "labels": "1. Voices can be copied\n2. Too good? Too scary?\n3. Call back yourself\n4. Family code word",
+      "layout": "Headline top; art in three panels 60%; labels in the band.",
+      "teach_it": "```\nA-P11  Fake voices, fake videos                   (≈ 15 min)\n1. SAY: AI can copy a voice from a short voice note, and make a video of a\n   famous person saying things they never said.\n2. ASK: How can you tell? Collect answers.\n3. POINT ①–④.\n4. SAY: Check the message, not the picture. Money, secrets or codes = stop.\n5. PAIRS: role-play a family member \"in trouble\"; the other asks the code question.\n6. SAY: agree the code word face to face. Never write it down or post it.\nKEY: Call back on the number you know. Use a family code word.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P11.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P11.jpg"
+    },
+    {
+      "id": "A-P12",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "AI drafts, you own it",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S3"
+      ],
+      "art": "A-P12-ART",
+      "headline": "AI drafts. You own it.",
+      "labels": "1. Facts true?\n2. Sounds like me?\n3. Nothing private?\n4. Would I sign it?",
+      "layout": "Headline top; art 60%; four checks as a checklist band with tick boxes.",
+      "teach_it": "```\nA-P12  AI drafts, you own it                      (≈ 8 min + practical)\n1. ENERGISER: Human or Machine? — read D-00, stand/sit.\n2. POINT ①–④: the four checks before you send.\n3. SAY: CVs, funding requests, reports carry YOUR name. Never send what isn't true.\n4. GROUPS: draft with AI (or use a D-sheet), then red-pen it.\n5. [APP] till slip: check total, item, shop against the paper. The slip wins.\n6. Two groups read their fixed version aloud.\nKEY: AI drafts, you own it — every fact, every word.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P12.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P12.jpg"
+    },
+    {
+      "id": "A-P13",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "What AI can't do",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S3",
+        "A-D2-S4"
+      ],
+      "art": "A-P13-ART",
+      "headline": "Only people can do this",
+      "labels": "1. Feel your soil\n2. Measure the rain\n3. Elders' knowledge\n4. Your mentor\n5. Our languages — double-check",
+      "layout": "Headline top; scene 60% with the small dark phone near the centre; labels in the band.",
+      "teach_it": "```\nA-P13  What AI can't do                          (≈ 15 min)\n1. SAY: Hands up if AI can do it, down if it can't.\n2. ASK: see your soil? replace a soil test or scale? know your rain?\n   know today's market price? know your gogo's knowledge? replace your mentor?\n   sign for you?  — give the one-line answer each time.\n3. POINT ①–④.\n4. GROUPS: agree one thing only people can do; Recorder adds it beside the poster.\n5. POINT ⑤: AI is weaker in isiZulu and Sesotho — double-check (Day 2 S4).\nKEY: AI can't see your soil or feel the rain. People, land and elders first.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P13.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P13.jpg"
+    },
+    {
+      "id": "A-P14",
+      "course": "ai-literacy",
+      "kind": "poster",
+      "title": "My AI plan",
+      "size": "A1 portrait",
+      "used_in": [
+        "A-D2-S4",
+        "A-D2-SC"
+      ],
+      "art": "A-P14-ART",
+      "headline": "Use it to think. Ask to decide.",
+      "labels": "1. Use AI for\n2. Always ask a person\n3. My data rule\n4. My safety step\n5. I will teach",
+      "layout": "Headline top (two short lines); art 55%; labels match the K-06 plan sheet line by\nline, so learners can copy the shape.",
+      "teach_it": "```\nA-P14  My AI plan                                 (≈ 15 min)\n1. Hand out K-06. Point to ①–⑤ — the plan has the same five parts.\n2. Learners fill it alone — words or drawings. 8 min.\n3. REMIND: never write your family code word.\n4. PAIRS: tell your plan; partner asks \"What will you do first?\"\n5. Invite 2–3 volunteers to say one line to the room.\nKEY: Use AI to think; ask a person to decide.\n```",
+      "status": "NEW",
+      "target": "public/course-media/ai-literacy/posters/A-P14.pdf",
+      "phone_target": "public/course-media/ai-literacy/posters/A-P14.jpg"
+    },
+    {
+      "id": "A-P01-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P01 · Our class and phone agreement",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P01-ART.jpg",
+      "used_in": [
+        "A-P01",
+        "A-D1-S0",
+        "A-D1-S1"
+      ],
+      "length": "still",
+      "brief": "A circle of eight seated learners of mixed ages and genders under a\ntree — a gogo with a headscarf, a young man in a cap, a young woman, an older man with a\nwalking stick. Two pairs lean over one shared phone together, smiling. A third phone lies\nface-down on a knee (silent). One young woman holds up a hand to a person with a phone camera,\npalm out, polite (\"ask first\"). A small padlock floats above one phone. Four numbered callout\ncircles: ① on the face-down phone, ② on a shared screen, ③ on the raised hand, ④ on the padlock.\nLower third of the poster left empty (paper colour) for the group's own rules written on the day."
+    },
+    {
+      "id": "A-P02-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P02 · AI is a guessing machine",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P02-ART.jpg",
+      "used_in": [
+        "A-P02",
+        "A-D1-S1",
+        "A-D2-S1"
+      ],
+      "length": "still",
+      "brief": "Centre: a friendly, simple machine made of a phone shape with a big\nthought bubble. Left side feeding into it: a tall stream of many small paper pages, books and\nphotographs flying in (the training). Right side coming out: three speech bubbles; the top one\nhas a big tick shape, the middle one a tick, the bottom one a cross — but all three bubbles look\nequally bold and confident. Below the machine, a small homestead garden (beds, a goat, a water\ntank) sits behind a closed gate — the machine can't see into it. A farmer (middle-aged woman,\ngumboots) stands at the gate holding a phone, about to \"show\" the garden. Callouts: ① on the\nstream of pages, ② on the machine's thought bubble, ③ on the confident bubble with the cross,\n④ on the closed gate."
+    },
+    {
+      "id": "A-P03-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P03 · Where you already meet AI",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P03-ART.jpg",
+      "used_in": [
+        "A-P03",
+        "A-D1-S1"
+      ],
+      "length": "still",
+      "brief": "One large phone in the centre, drawn slightly tilted, held in a\nyouth's hand. Around it, six icon \"islands\" joined to the phone by dotted lines: a keyboard with\nthree suggestion bubbles above it; a microphone; a chat bubble with a small round ring icon; a\ncamera frame over a leaf; two overlapping speech bubbles (translation); a small seedling in a\ncircle (the garden app's helper). An elder sits beside the youth, looking on, pointing at the\nkeyboard island. Callouts ①–⑥ on the six islands."
+    },
+    {
+      "id": "A-P04-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P04 · Save your data",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P04-ART.jpg",
+      "used_in": [
+        "A-P04",
+        "A-D1-S2"
+      ],
+      "length": "still",
+      "brief": "A phone drawn as a clay water pot (a data \"pot\") with a small tap at\nthe bottom; a few drops fall from it. Around it: ① a photo/video icon with a pause symbol\n(auto-download off), ② a small photo next to a big photo, the small one ticked (standard\nquality), ③ a gauge/dial turned to low (data saver), ④ a Wi-Fi fan-shape over a download arrow\n(updates on Wi-Fi only), ⑤ a voice-note waveform next to a video icon, the waveform smaller.\nA young woman holds the phone-pot carefully with two hands. Water blue only for the drops."
+    },
+    {
+      "id": "A-P05-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P05 · The Question Hand",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P05-ART.jpg",
+      "used_in": [
+        "A-P05",
+        "A-D1-S2",
+        "A-D1-S4",
+        "A-D2-S0",
+        "A-D2-S3"
+      ],
+      "length": "still",
+      "brief": "One big open right hand, palm facing the viewer, brown skin, a farm-\nworker's hand (a little soil on the fingertips). Beside each finger a small picture: thumb — a\nsimple farmer figure pointing at herself (who I am); pointer — a bed with plants and a water\ndrum (what I have); middle — a target with a seedling in the centre (what I want); ring — three\nshort stacked bars like steps, and a speech bubble (how to answer); little finger — a circular\narrow (ask again). Callouts ①–⑤ on the fingers from thumb to little finger."
+    },
+    {
+      "id": "A-P06-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P06 · Ask with your voice and a photo",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P06-ART.jpg",
+      "used_in": [
+        "A-P06",
+        "A-D1-S3"
+      ],
+      "length": "still",
+      "brief": "Top half: an older man speaking into a phone held near his mouth, a\nsound-wave shape flowing into the phone; a small keyboard with a microphone key glows. Bottom\nhalf: a young woman crouched by a bed, photographing a single leaf with holes. Sun behind her\nin the **north** (upper part of the sky, compass rose in the corner showing N up), her shadow\nfalling away from the sun, not on the leaf. Beside the leaf, her other hand spread flat for size.\nFive callouts on the bottom half: ① the sun behind her, ② the phone close to the leaf, ③ both\nher hands steady, ④ one single leaf, ⑤ the hand for size. One callout ⑥ on the talking man."
+    },
+    {
+      "id": "A-P07-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P07 · The Check Ladder",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P07-ART.jpg",
+      "used_in": [
+        "A-P07",
+        "A-D2-S1",
+        "A-D2-S3",
+        "A-D2-S4"
+      ],
+      "length": "still",
+      "brief": "A wooden ladder leaning against a water tank, five rungs. A farmer\n(woman, 40s, headscarf, gumboots) climbs it holding a phone. Beside each rung, a small picture:\nbottom rung — the farmer's own garden with the sun in the north (does it make sense here?);\nsecond — a circular arrow around a speech bubble (ask again); third — a seed packet and a\nproduct bottle with a label, side by side (second source); fourth — two people talking, one an\nextension officer with a clipboard (ask a person); top rung — a single small row of plants\ninside a big empty bed (try it small). Callouts ①–⑤ bottom to top."
+    },
+    {
+      "id": "A-P08-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P08 · Green · Orange · Red questions",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P08-ART.jpg",
+      "used_in": [
+        "A-P08",
+        "A-D1-S4",
+        "A-D2-S1"
+      ],
+      "length": "still",
+      "brief": "Three stacked panels like a traffic light, each also marked with a\nshape so it works in black and white: **green circle** panel — a pot of food cooking and a\nseed packet (low harm); **orange triangle** panel — a bed of wilting seedlings and a coin\n(could cost a crop or money); **red square** panel — a spray bottle, a medicine bottle, a goat\nlying down, and a document with a signature line (poison, medicine, animals, money and papers).\nBeside the red panel, two people talking face to face — a farmer and a person in an extension\nofficer's jacket. Callouts ① ② ③ on the three panels, ④ on the two people."
+    },
+    {
+      "id": "A-P09-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P09 · Keep it private",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P09-ART.jpg",
+      "used_in": [
+        "A-P09",
+        "A-D2-S2"
+      ],
+      "length": "still",
+      "brief": "A phone drawn as an open wallet/purse. Inside it, six items each\nwith a closed padlock: ① an ID book/card (green SA-style ID shape, no text, no crest), ② a bank\ncard with a keypad beside it, ③ a phone screen showing six blank boxes (a code), ④ a plain grant\ncard (no logo), ⑤ a framed photo of two children (faces drawn as simple shapes, turned away), ⑥ a\nmap pin on a small house. Outside the wallet, a shadowy stranger's hand reaches in and a small\npadlock blocks it. A gogo holds the wallet closed, confident. Callouts ①–⑥ on the items."
+    },
+    {
+      "id": "A-P10-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P10 · Stop · Check · Ask",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P10-ART.jpg",
+      "used_in": [
+        "A-P10",
+        "A-D2-S2"
+      ],
+      "length": "still",
+      "brief": "Three big panels side by side, like three steps on a path. ① STOP:\na hand held up flat in front of a phone showing a message bubble with an exclamation mark and a\nclock (hurry). ② CHECK: the same person (young man, cap) phoning on a different, older contact\n— a phone book page with a familiar face drawn on it. ③ ASK: the young man talking with an older\nwoman (his aunt or mentor) at a gate. Along the bottom, a row of small warning icons: a running\nclock, a finger on lips (secret), coins and an airtime voucher, a gift box, a chain-link (click),\na price tag on a job/grant card (pay a fee)."
+    },
+    {
+      "id": "A-P11-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P11 · Fake voices, fake videos",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P11-ART.jpg",
+      "used_in": [
+        "A-P11",
+        "A-D2-S2"
+      ],
+      "length": "still",
+      "brief": "Left: a phone playing a voice note (sound wave), and behind the phone\na shadowy copying-machine shape producing a second identical sound wave. Centre: a video frame\nof a smiling man in a suit (generic, not a real person) with a pile of banknotes; the edge of his\nface slightly pixel-broken to hint \"fake\". Right: a family at home — a mother on the phone with\nher son; both touch their heart with a secret smile (the code word). Callouts: ① on the copied\nvoice, ② on the too-good video, ③ on a small phone with a \"call back\" arrow, ④ on the family."
+    },
+    {
+      "id": "A-P12-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P12 · AI drafts, you own it",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P12-ART.jpg",
+      "used_in": [
+        "A-P12",
+        "A-D2-S3"
+      ],
+      "length": "still",
+      "brief": "A young woman at a table under a shade-net, a phone propped up\nshowing a page of text-lines (lines, not words), a printed page in front of her that she is\ncorrecting with a red pen — crossing out one line, writing above it. Beside her, her own\nharvest book and a crate of spinach bunches with a price tag (blank). Four callouts: ① the red\npen on a number, ② her speaking the lines aloud (small speech bubble), ③ a padlock beside a\ncrossed-out line (private information removed), ④ her hand signing at the bottom of the page."
+    },
+    {
+      "id": "A-P13-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P13 · What AI can't do",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P13-ART.jpg",
+      "used_in": [
+        "A-P13",
+        "A-D2-S3",
+        "A-D2-S4"
+      ],
+      "length": "still",
+      "brief": "A warm farm scene with a phone lying small on a fence post, screen\ndark. Around the scene: ① a farmer squeezing a handful of soil and smelling it; ② a rain gauge\n(a cut 2 ℓ bottle) on a post, with a farmer reading it; ③ a gogo teaching a child to sort seed\nfrom a gourd; ④ a mentor and a farmer walking a bed together, talking; ⑤ two people with\ndifferent speech-bubble shapes (two languages) where one bubble is only half-filled (AI weaker\nin our languages). Sun in the north."
+    },
+    {
+      "id": "A-P14-ART",
+      "course": "ai-literacy",
+      "kind": "poster-art",
+      "title": "Artwork for A-P14 · My AI plan",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-P14-ART.jpg",
+      "used_in": [
+        "A-P14",
+        "A-D2-S4",
+        "A-D2-SC"
+      ],
+      "length": "still",
+      "brief": "A young man and a gogo sit together on a bench outside a home, both\nholding plan sheets (blank lines). Between them, a phone and a small open notebook. Behind them,\na flourishing garden bed, a water tank, a hen. Five small picture callouts floating above: ① a\nseedling in a speech bubble (use AI for ideas); ② two people talking (always ask a person);\n③ a data pot (my data rule); ④ a padlock (my safety step); ⑤ one person teaching another (who\nI will teach)."
+    },
+    {
       "id": "F-ANI-01",
       "course": "farmer-5day",
       "kind": "animation",
@@ -2276,6 +3120,1525 @@
       ],
       "length": "still",
       "brief": "A path drawn from bottom-left to top-right through three stepping\nstones. Stone 1: a person mulching and starting a small compost pile beside a tap. Stone 2: the\nsame person digging one bed north of the house and planting seedlings with a spacing stick.\nStone 3: the same person harvesting leafy greens into a basket, a jar of seed on the windowsill\nand a notebook in their pocket. A second smaller person (the buddy) waves from the side with a\nphone. Leave three blank rounded boxes beside the stones for writing."
+    },
+    {
+      "id": "R-P01",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Our money agreement",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S1",
+        "R-D2-S0",
+        "R-D3-S0"
+      ],
+      "art": "R-P01-ART",
+      "headline": "Our money agreement",
+      "labels": "1. Made-up families only\n2. You may pass\n3. It stays here\n4. No selling here\n5. Every question counts\nQuestion: *What else do we agree?*",
+      "layout": "Headline top band; art 60% with five callouts round the circle; labels in two rows;\nblank space at the bottom (5 cm) for learners' signatures or marks — or a sheet beside it.",
+      "teach_it": "```\nR-P01  Our money agreement                     (≈ 12 min)\n1. ASK: When you hear \"money\", what do you feel? One word each.\n2. POINT ①: We use made-up families. Nobody shares their own money.\n3. POINT ②: You may say \"pass\". Nobody asks why.\n4. POINT ③: What is said here stays here.\n5. POINT ④: Nobody sells anything in this room — not us, not visitors.\n6. POINT ⑤: Every question is a good question.\n7. ASK: What else must we agree? Add 3. Everyone signs or marks.\nKEY: Money is private. Here we learn with made-up families.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P01.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P01.jpg"
+    },
+    {
+      "id": "R-P02",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "The money map",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S2"
+      ],
+      "art": "R-P02-ART",
+      "headline": "Where does money go?",
+      "labels": "1. Money comes in\n2. Our household\n3. Money goes out\n4. Small leaks add up\nQuestion: *Which is your biggest leak?*",
+      "layout": "Landscape-style art on a portrait sheet: in-arrows left, out-arrows right; labels\nunder each side; ④ callout at the drips.",
+      "teach_it": "```\nR-P02  The money map                    (≈ 10 min + 30 min practical)\n1. DO: Pour water into a bottle with holes. ASK: Where does it go?\n2. POINT ①: Money comes in — grant, wages, piece jobs, garden sales.\n3. POINT ②: The household in the middle.\n4. POINT ③: Money goes out — food is the biggest arrow.\n5. POINT ④: Small leaks add up — airtime, sweets, cold drinks.\n6. GROUPS: Build your family's map with beans. 1 bean = R50.\n7. ASK: Which pile is biggest? What is left at the end?\nKEY: See it before you fix it.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P02.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P02.jpg"
+    },
+    {
+      "id": "R-P03",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Needs first, wants later",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S2",
+        "R-D1-S3"
+      ],
+      "art": "R-P03-ART",
+      "headline": "Needs first, wants later",
+      "labels": "1. Need: must have\n2. Want: can wait\n3. It depends\nQuestion: *When is airtime a need?*",
+      "layout": "Scale centred; labels under each basket; ③ in the middle.",
+      "teach_it": "```\nR-P03  Needs first, wants later                (≈ 5 min + 15 min sort)\n1. ASK: What can a family NOT live without?\n2. POINT ①: Needs — food, water, school, clinic, soap.\n3. POINT ②: Wants — nice, but can wait.\n4. POINT ③: It depends — airtime to call the clinic is a need; for games, a want.\n5. GROUPS: Sort 24 cards into Need / Want / It depends.\n6. DO: Give each group a shock card. What will they cut? Wants first.\nKEY: When money is short, cut wants before needs. Each family decides.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P03.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P03.jpg"
+    },
+    {
+      "id": "R-P04",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Plan the month before it starts",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S3",
+        "R-D3-S4"
+      ],
+      "art": "R-P04-ART",
+      "headline": "Plan the month first",
+      "labels": "1. Count money in\n2. Needs first\n3. Save some\n4. Farm money aside\n5. Then wants\n6. Keep for surprises\nQuestion: *What did you forget last month?*",
+      "layout": "Art centred; the six labels line up with the six rows (left of the sheet); question\nat the bottom.",
+      "teach_it": "```\nR-P04  Plan the month first                     (≈ 7 min + 20 min practical)\n1. ASK: Before a long journey, what do you do? (plan, save the fare)\n2. SAY: A budget is a plan for the month, made BEFORE it starts.\n3. POINT ①→⑥ in order: in · needs · save · farm · wants · surprises.\n4. GROUPS: Collect your family's month in play money. Put notes on each row, in order.\n5. RULE: keep at least R100 for surprises.\n6. ASK: What did you cut to keep R100?\nKEY: Plan before the month starts. Needs, save, farm — then wants.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P04.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P04.jpg"
+    },
+    {
+      "id": "R-P05",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Three tins",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S3",
+        "R-D2-S1",
+        "R-D3-S4"
+      ],
+      "art": "R-P05-ART",
+      "headline": "Three tins",
+      "labels": "1. Home\n2. Save\n3. Farm\n4. Garden money in first\nQuestion: *Who decides the split?*",
+      "layout": "Tins across the middle; labels directly under each tin; ④ callout at the hand.",
+      "teach_it": "```\nR-P05  Three tins                        (≈ 5 min + 10 min practical)\n1. TELL: Lerato's R120 went in her purse. By Friday it was gone. No money for seed.\n2. ASK: What went wrong? (garden money mixed with home money)\n3. POINT ③ ④: Every garden rand goes into FARM first — and into the book.\n4. POINT ① ②: Once a week the family decides: some stays FARM, some to SAVE, some HOME.\n5. GROUPS: Label three tins. Split R300 of play money. Explain why.\n6. ASK: Who should decide? The people who work for it should have a say.\nKEY: The farm pays the home — on purpose, not by accident.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P05.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P05.jpg"
+    },
+    {
+      "id": "R-P06",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Ways to save",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S4"
+      ],
+      "art": "R-P06-ART",
+      "headline": "Ways to save",
+      "labels": "1. Savings group\n2. Bank account\n3. Money on phone\n4. Tin at home\nQuestion: *Which two will you use?*",
+      "layout": "2 × 2 grid; label under each panel.",
+      "teach_it": "```\nR-P06  Ways to save                      (≈ 5 min + 15 min scoring)\n1. ASK: Where did your grandmother keep money? Honour the answers.\n2. POINT ①: Savings group / stokvel: save together, small loans, share-out. Three locks, three keys.\n3. POINT ②: Bank or Postbank account: safe; fees; grants can be paid in.\n4. POINT ③: Money on the phone: quick; fees; lost phone = risk.\n5. POINT ④: Tin at home: quick and free; easy to spend or steal.\n6. GROUPS: For each way, a bean for each YES: safe? quick? free? helps me keep saving?\n7. SAY: Bank money is protected by law up to R100 000. A stokvel is not — keep records.\nKEY: Save somewhere safe AND somewhere quick — often two places.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P06.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P06.jpg"
+    },
+    {
+      "id": "R-P07",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Keep your money safe",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D1-S4"
+      ],
+      "art": "R-P07-ART",
+      "headline": "Keep your money safe",
+      "labels": "1. PIN: tell nobody\n2. Cover the keypad\n3. Never share OTP\n4. Too good? Scam!\n5. Nobody keeps your card\nQuestion: *Who asked for your PIN?*",
+      "layout": "Shield centre (can hold the SASSA toll-free number in the translated version —\nnumber only, not counted as words); five scenes round it with callouts.",
+      "teach_it": "```\nR-P07  Keep your money safe               (≈ 5 min + 15 min game)\n1. POINT ①: Your PIN is yours only — not SASSA, not the bank, not family.\n2. POINT ②: Cover the keypad. No \"help\" from strangers at the ATM.\n3. POINT ③: The bank SMS number (OTP) is never for a caller.\n4. POINT ④: Big prize, big return? It's a hook.\n5. POINT ⑤: No shop, lender or relative may keep your card.\n6. GAME: Scam or safe? Read 10 cards; groups show red or green.\n7. SAY: Money taken? Phone the number on the back of your card NOW. Grant problems: SASSA 0800 60 10 11.\nKEY: Nobody real will ever ask for your PIN or OTP.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P07.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P07.jpg"
+    },
+    {
+      "id": "R-P08",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "The money book",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D2-S1",
+        "R-D2-S4",
+        "R-D3-S2"
+      ],
+      "art": "R-P08-ART",
+      "headline": "Write every rand",
+      "labels": "1. Date\n2. What happened\n3. Money in\n4. Money out\n5. Balance\n6. Owed to me\nQuestion: *Does the tin match the book?*",
+      "layout": "Book fills the art area; labels as callouts above each column; ⑥ on the right page.",
+      "teach_it": "```\nR-P08  Write every rand                   (≈ 7 min + 20 min practical)\n1. ASK: Lerato's tin has R315. Did she make money? (We can't tell.)\n2. POINT ①–⑤: date · what · in · out · balance. One line for every rand, the same day.\n3. POINT ⑥: Sold but not paid? Owed to me page — not money in yet.\n4. GROUPS: Lerato's week — 10 cards. Move play money, write each line.\n5. ASK: Count the tin. Does it match? If not, find the line.\n6. ASK: Sold R590. Cash R390. Where is R200? (owed)\nKEY: A sale is not cash until you are paid. The tin must match the book.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P08.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P08.jpg"
+    },
+    {
+      "id": "R-P09",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Where did the harvest go?",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D2-S2"
+      ],
+      "art": "R-P09-ART",
+      "headline": "Where did the harvest go?",
+      "labels": "1. Eaten\n2. Shared\n3. Sold\n4. Lost\n5. Eaten = money saved\nQuestion: *What did you eat this week?*",
+      "layout": "Basket centre, four destinations in the corners, ⑤ small near ①.",
+      "teach_it": "```\nR-P09  Where did the harvest go?          (≈ 5 min + 25 min practical)\n1. DO: Put a full basket in the middle. ASK: Where does it go?\n2. POINT ①–④: eaten · shared · sold · lost. All four must add up to what you picked.\n3. GROUPS: Harvest 5 bunches, weigh one, fill the harvest record for your family.\n4. ASK: The family ate 8 bunches. At R12 a bunch, what did they save? (R96)\n5. POINT ⑤: Food eaten is money not spent. Write its value.\nKEY: Record every harvest. Food eaten is money saved.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P09.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P09.jpg"
+    },
+    {
+      "id": "R-P10",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Count every cost",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D2-S2",
+        "R-D2-S3"
+      ],
+      "art": "R-P10-ART",
+      "headline": "Count every cost",
+      "labels": "1. Seed\n2. Compost and manure\n3. Water\n4. Transport\n5. Bands, bags, tools\n6. Your time\nQuestion: *Which cost do people forget?*",
+      "layout": "Bed centre, six items in a ring; a small legend strip: solid line = cash, dashed\nline = free but not free (the legend is a drawn line sample, no words).",
+      "teach_it": "```\nR-P10  Count every cost                   (≈ 5 min + 20 min sort)\n1. ASK: What did it cost to grow this bed? List everything.\n2. POINT ①–⑤: seed · compost · water · transport · bands and tools.\n3. POINT ⑥ and the dashed lines: your time, your manure, rainwater — free but not free.\n4. GROUPS: 12 cost cards → cash costs / free but not free. Add the cash costs with play money.\n5. CHECK: Lerato's bed = R510 cash + 44 hours of her time.\n6. ASK: Why only R30 for a R90 watering can? (lasts 3 seasons)\nKEY: Count every cost — including your own time.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P10.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P10.jpg"
+    },
+    {
+      "id": "R-P11",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "One bunch: cost, price, profit",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D2-S3",
+        "R-D3-S1"
+      ],
+      "art": "R-P11-ART",
+      "headline": "One bunch: cost, price, profit",
+      "labels": "1. All costs\n2. ÷ all bunches\n3. Cost of one bunch\n4. Floor\n5. Market\n6. Buyer\nQuestion: *Is your price above the floor?*",
+      "layout": "Two bands: the division (top) and the three price checks (bottom).",
+      "teach_it": "```\nR-P11  One bunch: cost, price, profit     (≈ 10 min + 15 min practical)\n1. DO: R40 and 10 bunch tokens. Share the money onto the bunches. (R4 each)\n2. POINT ①②③: all costs ÷ all bunches = cost of one bunch. Lerato: R510 ÷ 150 = R3.40.\n3. POINT ④: Floor — never sell below R3.40.\n4. POINT ⑤: Market — what others charge (check locally).\n5. POINT ⑥: Buyer — what this buyer values: fresh, delivered, on time.\n6. SUMS: Sales R1 080 − costs R510 = R570 profit. Plus food eaten R480.\n7. ASK: Her time — 44 h × R30 = R1 320. Does selling pay her time? Be honest.\nKEY: Know your cost of one bunch. Price between the floor and what the buyer values.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P11.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P11.jpg"
+    },
+    {
+      "id": "R-P12",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Break-even with beans",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D2-S3"
+      ],
+      "art": "R-P12-ART",
+      "headline": "Fill the cup first",
+      "labels": "1. Season costs cup\n2. Each bunch: one bean\n3. Full cup: break-even\n4. Then profit\nQuestion: *How many bunches fill your cup?*",
+      "layout": "Left-to-right flow: bunches → cup → basket.",
+      "teach_it": "```\nR-P12  Fill the cup first (break-even)    (≈ 5 min + 15 min practical)\n1. TELL: Sizanani sells to the creche at R12. Each bunch uses R2 of seed, compost, band.\n2. ASK: What does each bunch leave? (R10 = 1 bean)\n3. POINT ①: Season costs that don't change: fence R200, cans R100, transport R300 = R600 = 60 beans.\n4. POINT ②: Each bunch sold drops one bean in the cup.\n5. POINT ③: 60 bunches — the cup is full. Break-even.\n6. POINT ④: Bunch 61 onwards — profit.\n7. TRY: Price falls to R10. Each bunch leaves R8. How many now? (75)\nKEY: Fill the cup first. After break-even, each bunch is profit.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P12.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P12.jpg"
+    },
+    {
+      "id": "R-P13",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Money through the season",
+      "size": "A0 landscape",
+      "used_in": [
+        "R-D2-S4",
+        "R-D3-S3",
+        "R-D3-S4"
+      ],
+      "art": "R-P13-ART",
+      "headline": "Money through the season",
+      "labels": "1. Money out first\n2. Money in later\n3. Family big months\n4. Pinch month\n5. Save ahead\nQuestion: *Which month is hardest for you?*",
+      "layout": "Headline top left; 12 panels across; labels as callouts; the question bottom right.\nMonth names are **stuck on** by the facilitator in the local language (not part of the word count).",
+      "teach_it": "```\nR-P13  Money through the season           (≈ 5 min + 25 min practical)\n1. DO: Stick up local month names, September on the left.\n2. POINT ①: Money goes out first — seed, compost, before any harvest.\n3. POINT ②: Money comes in later, when you harvest.\n4. POINT ③: Family big months — December, January school.\n5. POINT ④: The pinch month — the tin is lowest. ASK: Which month is hardest here?\n6. GROUPS: Dlamini farm tin, Sep–Feb, with play money. Colour red when below zero.\n7. POINT ⑤: Save ahead in good months for the pinch month.\nKEY: Money goes out before it comes in. Save ahead for the pinch month.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P13.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P13.jpg"
+    },
+    {
+      "id": "R-P14",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Who buys? What do they want?",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D3-S1"
+      ],
+      "art": "R-P14-ART",
+      "headline": "Who buys? What do they want?",
+      "labels": "1. Neighbour\n2. Spaza shop\n3. Hawker\n4. Creche kitchen\n5. Market stall\n6. Sell together\nQuestion: *Which buyer pays on time?*",
+      "layout": "Hub-and-spoke; labels at the end of each path.",
+      "teach_it": "```\nR-P14  Who buys?                          (≈ 5 min + 15 min practical)\n1. DO: Price board — what prices did you see for a bunch? Why different?\n2. POINT ①–⑤: neighbour · spaza · hawker · creche · market.\n3. GROUPS: Rank the 6 buyer cards for your family. Why? (amount, price, when paid, quality, distance)\n4. DO: Good bunch, bad bunch. Which would you buy?\n5. POINT ⑥: Sell together — bigger orders, shared taxi. Needs clear records.\nKEY: Who you sell to changes your price. Quality is price.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P14.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P14.jpg"
+    },
+    {
+      "id": "R-P15",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "From order to receipt",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D3-S2"
+      ],
+      "art": "R-P15-ART",
+      "headline": "From order to receipt",
+      "labels": "1. Order\n2. Deliver and count\n3. Invoice: you owe\n4. Paid\n5. Receipt: you paid\nQuestion: *Which paper proves payment?*",
+      "layout": "Panels 1–3 in the top row, 4–5 below; big arrow numbers ①–⑤.",
+      "teach_it": "```\nR-P15  From order to receipt              (≈ 8 min + 60 min market day)\n1. TELL: The creche says \"it was only 20 bunches\". What can Lerato show?\n2. POINT ①: Order — what, how many, price, when.\n3. POINT ②: Deliver — the buyer counts and signs.\n4. POINT ③: Invoice — what they owe, by when. Your copy stays in the book.\n5. POINT ④⑤: Paid — then a receipt. The buyer keeps the top copy.\n6. DEMO 3 minutes, then MARKET DAY: groups buy and sell with role cards.\n7. ASK: Who still owes you? Write it on the Owed page. Practise a polite reminder.\nKEY: Each paper proves one step. Money owed is not money in the tin.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P15.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P15.jpg"
+    },
+    {
+      "id": "R-P16",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "Borrow wisely",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D3-S3"
+      ],
+      "art": "R-P16-ART",
+      "headline": "Borrow wisely",
+      "labels": "1. What for?\n2. Total cost?\n3. Can I pay?\n4. Registered lender?\n5. What if?\n6. Nobody keeps your card\nQuestion: *Is it cheaper to save first?*",
+      "layout": "Crossroads centre; labels as a numbered list on the right (they are the five\nquestions + the rule), callouts link to the art.",
+      "teach_it": "```\nR-P16  Borrow wisely                      (≈ 10 min + 20 min practical)\n1. TELL: Bongani wants a R3 000 pump now. Where can he get it?\n2. POINT ①–⑤: What for? Total cost? Can I pay? Registered? What if?\n3. GROUPS: 4 offer cards. Count with play money: gets · pays back · cost.\n   (A R1 500 · B R840 · C R450 · D R0). Can the garden pay each month?\n4. POINT ⑥: Keeps your ID or card, asks your PIN? Against the law. Walk away.\n5. SAY: Check a lender: NCR 0860 627 627. Too much debt: a registered debt counsellor.\n6. RULES: Never borrow with interest for food or parties. Borrow less, for less time.\n7. The reserve tin: R20 a week → R500 in 25 weeks.\nKEY: Compare the total cost, not the monthly payment.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P16.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P16.jpg"
+    },
+    {
+      "id": "R-P17",
+      "course": "farmer-money",
+      "kind": "poster",
+      "title": "My money plan",
+      "size": "A1 portrait",
+      "used_in": [
+        "R-D3-S4"
+      ],
+      "art": "R-P17-ART",
+      "headline": "My money plan",
+      "labels": "1. My goal\n2. My three tins\n3. My book, my day\n4. Pinch month, reserve\n5. One step next month\nQuestion: *What is your one step?*",
+      "layout": "People at the bottom; five pictures in an arc above; labels with each picture.",
+      "teach_it": "```\nR-P17  My money plan                      (≈ 3 min + 25 min planning & sharing)\n1. POINT ①–⑤: goal · three tins · book day · pinch month & reserve · one step.\n2. SAY: Your plan is yours. Pictures and ticks are fine. No real amounts needed.\n3. DO: 15 minutes — everyone makes their own plan.\n4. GROUPS: 2 minutes each: my goal and my one step. The group gives one star.\nKEY: One step next month is better than ten steps never.\n```",
+      "status": "NEW",
+      "target": "public/course-media/farmer-money/posters/R-P17.pdf",
+      "phone_target": "public/course-media/farmer-money/posters/R-P17.jpg"
+    },
+    {
+      "id": "R-P01-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P01 · Our money agreement",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P01-ART.jpg",
+      "used_in": [
+        "R-P01",
+        "R-D1-S1",
+        "R-D2-S0",
+        "R-D3-S0"
+      ],
+      "length": "still",
+      "brief": "A circle of eight adults of mixed ages (two gogos, a young man with a\ncap, a young woman with braids, a middle-aged man, others) seated on chairs and a bench around\na woven mat. In the centre of the mat a closed tin with its lid on. Callouts: ① one person\nholding up a card showing a simple drawn family (three stick figures) ② a young woman raising a\nflat open palm, calmly (passing) ③ an older woman with one finger to her lips, smiling\n④ a hand gently pushing away a bag of goods (no selling) ⑤ a young man with his hand up, the\nothers turned to listen. Warm, safe, daylight under a tree or in a hall."
+    },
+    {
+      "id": "R-P02-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P02 · The money map",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P02-ART.jpg",
+      "used_in": [
+        "R-P02",
+        "R-D1-S2"
+      ],
+      "length": "still",
+      "brief": "A simple house (tin roof, one door) in the centre, drawn like a\ncontainer with a small coin pile inside. **Left side:** three thick arrows flowing **into** the\nhouse from ① a grant card held in an older woman's hand, a hand with a wage packet, and a bunch\nof spinach being handed over for coins. **Right side:** arrows flowing **out** to ③ a food\nbasket with maize meal, a minibus taxi, school shoes, a light bulb, a phone, a church, a small\ncash box (stokvel). The food arrow is the thickest. ④ At the bottom of the house several small\ndrips of coins leak out (sweets, airtime, a cold drink shown very small). Beans are scattered\nbeside each arrow like counters."
+    },
+    {
+      "id": "R-P03-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P03 · Needs first, wants later",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P03-ART.jpg",
+      "used_in": [
+        "R-P03",
+        "R-D1-S2",
+        "R-D1-S3"
+      ],
+      "length": "still",
+      "brief": "A traditional balance scale made of a stick and two woven baskets.\n① The lower, heavier basket holds a bag of maize meal, a 20 ℓ water drum, a pair of school\nshoes, a clinic card, a candle, soap. ② The higher basket holds a takeaway box, a fancy cap, a\nbag of sweets, a phone showing a game (simple shapes). ③ Between them, hanging from the middle,\na plain phone with a small question mark shape above it (airtime — it depends). A woman and a\nteenage boy stand either side, thinking."
+    },
+    {
+      "id": "R-P04-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P04 · Plan the month before it starts",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P04-ART.jpg",
+      "used_in": [
+        "R-P04",
+        "R-D1-S3",
+        "R-D3-S4"
+      ],
+      "length": "still",
+      "brief": "A kitchen table seen from slightly above. A woman (40s, headscarf)\nplaces generic banknotes onto a large sheet divided into six rows, each row marked only by an\nicon: ① a hand receiving coins ② a food basket ③ a lidded tin with a lock ④ a seedling in a\ntin ⑤ a cap and sweets ⑥ an umbrella (surprises). The notes on rows ②–④ are in bigger piles\nthan on ⑤. A teenage girl sits beside her, helping count. A wall calendar hangs behind (grid\nonly, no numbers)."
+    },
+    {
+      "id": "R-P05-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P05 · Three tins",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P05-ART.jpg",
+      "used_in": [
+        "R-P05",
+        "R-D1-S3",
+        "R-D2-S1",
+        "R-D3-S4"
+      ],
+      "length": "still",
+      "brief": "Three large, identical tins with lids on a shelf. Each has a simple\npainted icon: ① a house ② a padlock ③ a seedling. ④ From the left, a hand holds coins just\nreceived for a bunch of spinach (the bunch is in the other hand of a buyer at the edge) and\ndrops them into the **seedling tin first**; from the seedling tin, two curved arrows lead to the\nhouse tin and the padlock tin. A family (grandmother, mother, young man) stands below, looking\nat the tins together."
+    },
+    {
+      "id": "R-P06-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P06 · Ways to save",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P06-ART.jpg",
+      "used_in": [
+        "R-P06",
+        "R-D1-S4"
+      ],
+      "length": "still",
+      "brief": "Four equal panels in a 2 × 2 grid. ① A savings group: eight people\n(mostly women, one man, one youth) on chairs in a circle; on a small table a metal cash box with\n**three padlocks**; three people each hold a key; one writes in a book. ② A small plain bank\nbuilding (no signage) with a woman at a counter handing over a card. ③ A hand holding a plain\nphone; a coin shape moving from the phone to another phone. ④ A tin on a high shelf behind jars\nin a kitchen."
+    },
+    {
+      "id": "R-P07-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P07 · Keep your money safe",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P07-ART.jpg",
+      "used_in": [
+        "R-P07",
+        "R-D1-S4"
+      ],
+      "length": "still",
+      "brief": "Five small scenes around a central shield shape. ① An older woman\nholding her bank card close, lips closed, a small shadowy figure behind her trying to peer.\n② A hand cupped over an ATM keypad. ③ A phone ringing, with a warning triangle, and a hand\nrefusing (palm out). ④ A big shiny gift box with a fish hook hanging from it. ⑤ A shop counter\nwhere a card is being taken back firmly by its owner. The shadowy figures are silhouettes, not\nany recognisable group."
+    },
+    {
+      "id": "R-P08-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P08 · The money book",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P08-ART.jpg",
+      "used_in": [
+        "R-P08",
+        "R-D2-S1",
+        "R-D2-S4",
+        "R-D3-S2"
+      ],
+      "length": "still",
+      "brief": "A large open exercise book, seen from above, on a wooden table. The\nleft page has a grid of five columns; the column heads are **icons only**: ① a small calendar\n② a leaf and a taxi (what happened) ③ a coin with an arrow going in ④ a coin with an arrow going\nout ⑤ a tin. Rows have scribble marks, not numbers. ⑥ The right page is a separate list with a\nhand holding out an open palm (owed to me). Beside the book: a tin with its lid off showing a few\nnotes, a pencil, a bunch of spinach."
+    },
+    {
+      "id": "R-P09-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P09 · Where did the harvest go?",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P09-ART.jpg",
+      "used_in": [
+        "R-P09",
+        "R-D2-S2"
+      ],
+      "length": "still",
+      "brief": "A big woven basket of leafy greens in the centre. Four arrows lead to:\n① a family (gogo, mother, two children) eating from a pot of greens and pap at a table ② a woman\nhanding a bunch over a fence to a neighbour ③ a buyer at the garden gate handing coins for a\nbunch ④ wilted leaves on the ground, a goat's head reaching through a broken fence, a snail on a\nleaf. ⑤ Beside the family, a small ghost-image of a shop shelf with a coin that stays in the\ngogo's purse (the saving)."
+    },
+    {
+      "id": "R-P10-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P10 · Count every cost",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P10-ART.jpg",
+      "used_in": [
+        "R-P10",
+        "R-D2-S2",
+        "R-D2-S3"
+      ],
+      "length": "still",
+      "brief": "A healthy leafy bed in the centre (generic greens). Six items around\nit, each linked by a dotted line: ① a blank seed packet with a seed shape ② a bag of compost\nand a wheelbarrow of kraal manure ③ a JoJo-style tank with a tap and a watering can\n④ a minibus taxi ⑤ rubber bands, a spade, a watering can ⑥ a clock beside a woman bent over the\nbed working. Items ② (manure) and ⑥ (time) are drawn with a dashed outline — \"free but not\nfree\"."
+    },
+    {
+      "id": "R-P11-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P11 · One bunch: cost, price, profit",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P11-ART.jpg",
+      "used_in": [
+        "R-P11",
+        "R-D2-S3",
+        "R-D3-S1"
+      ],
+      "length": "still",
+      "brief": "Top half: ① a pile of generic notes and coins on the left ② a row of\nmany spinach bunches on the right ③ a curved arrow that shares the money onto one single bunch,\nwhich now sits on a tiny coin stack. Bottom half: three steps like a staircase: ④ the bottom step\n— a bunch resting on a small coin stack (the floor) ⑤ the middle step — a market stall with\nbunches ⑥ the top step — a creche cook smiling, holding a bunch, a delivery crate at her feet."
+    },
+    {
+      "id": "R-P12-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P12 · Break-even with beans",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P12-ART.jpg",
+      "used_in": [
+        "R-P12",
+        "R-D2-S3"
+      ],
+      "length": "still",
+      "brief": "A big clay cup or tin in the centre, labelled only by a small icon of\na fence, a watering can and a taxi on its side (the season's costs). ① The cup is almost full of\nbeans. ② A line of spinach bunches walks towards the cup (drawn as a row); from each bunch\ndrops **one bean** into the cup. ③ The cup is exactly full, with a small star at the rim.\n④ Beyond the cup, the next bunches drop their beans into a small basket beside a smiling young\nwoman (profit)."
+    },
+    {
+      "id": "R-P13-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P13 · Money through the season",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P13-ART.jpg",
+      "used_in": [
+        "R-P13",
+        "R-D2-S4",
+        "R-D3-S3",
+        "R-D3-S4"
+      ],
+      "length": "still",
+      "brief": "A long landscape strip of 12 equal panels, left to right starting in\n**September** (spring). Top row: the same garden through the year — bare beds and seed sowing\n(Sep), seedlings (Oct), growing (Nov), full harvest (Dec–Mar), autumn planting (Mar–Apr), winter\ngreens with frost cloth (Jun–Jul), dry late winter (Aug). Sun position consistent with the\nsouthern hemisphere (sun to the north, lower in winter). Bottom row: 12 identical glass jars /\ntins whose coin level rises and falls: ① low in Sep with coins flowing out to a seed packet and\ncompost bag ② rising Nov–Dec with coins coming in from bunches ③ December panel shows a small\ngift and a pot of festive food; January panel shows school shoes and a uniform (big family months)\n④ January tin very low, circled with a thick ochre ring ⑤ a small arrow from the fuller months\ninto a padlock tin (save ahead). Leave a blank strip under the panels (4 cm) where the\nfacilitator sticks local month names."
+    },
+    {
+      "id": "R-P14-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P14 · Who buys? What do they want?",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P14-ART.jpg",
+      "used_in": [
+        "R-P14",
+        "R-D3-S1"
+      ],
+      "length": "still",
+      "brief": "A garden gate in the centre with a woman holding a crate of even,\nclean bunches. Six paths lead out to: ① a neighbour at the gate with a small bag ② a spaza shop\n(small building with a serving hatch, crates of vegetables, no signage) ③ a hawker at a taxi\nrank with a wheelbarrow stall ④ a creche kitchen door with a cook and a delivery crate ⑤ a\nmarket stall under a green awning ⑥ five growers carrying crates together to one bakkie."
+    },
+    {
+      "id": "R-P15-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P15 · From order to receipt",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P15-ART.jpg",
+      "used_in": [
+        "R-P15",
+        "R-D3-S2"
+      ],
+      "length": "still",
+      "brief": "A five-panel comic strip, reading left to right and top to bottom:\n① a creche cook on a phone, a young woman grower on another phone (the order) ② the grower\ndelivering a crate; the cook counting bunches and signing a paper ③ the grower handing over a\npaper with a torn-off copy staying in her book (invoice) ④ a few weeks later (a calendar with a\npage turned), the cook handing over notes ⑤ the grower tearing out a receipt and handing it to\nthe cook; both smiling. Papers show lines only — no writing."
+    },
+    {
+      "id": "R-P16-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P16 · Borrow wisely",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P16-ART.jpg",
+      "used_in": [
+        "R-P16",
+        "R-D3-S3"
+      ],
+      "length": "still",
+      "brief": "A young man (mid-20s, cap, overalls) stands at a crossroads, a thought\nbubble above him showing a small water pump. Four paths lead to: ① a street corner where only a\npair of hands is shown, holding a thick stack of bank cards and ID books (the danger — no face,\nno ethnicity) ② a plain office desk with forms, a stamp, and a person explaining a paper\n③ a savings-group circle around the three-lock cash box ④ a row of tins filling up month by\nmonth, and two neighbours sharing one pump. Callouts ⑤ and ⑥ sit on the young man: a question\nmark shape over the tins (what if?), and his hand holding his own card tightly."
+    },
+    {
+      "id": "R-P17-ART",
+      "course": "farmer-money",
+      "kind": "poster-art",
+      "title": "Artwork for R-P17 · My money plan",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-P17-ART.jpg",
+      "used_in": [
+        "R-P17",
+        "R-D3-S4"
+      ],
+      "length": "still",
+      "brief": "A woman in her 30s and a young man sit at a table outdoors, each\ndrawing on a large sheet. Around them, floating like a mind-map, five small pictures: ① a goal\n(a school uniform, a water tank, a small shelter for a stall) ② three tins ③ an open money book\nwith a pencil and a sun/moon symbol (when I write) ④ a calendar with one month circled and a\nsmall padlock tin (reserve) ⑤ a footprint stepping onto a path towards a buyer at a gate."
+    },
+    {
+      "id": "M-ANI-01",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Two ways to listen",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-01.mp4",
+      "used_in": [
+        "M-D1-07"
+      ],
+      "length": "16 s loop, silent",
+      "brief": "0–7 s: the farmer talks with open hands; the mentor stands, looks at her phone, glances\nat her watch; the farmer's gestures slow and stop, shoulders drop. 7–8 s: soft wipe. 8–15 s:\nsame farmer; the mentor puts the phone in her bag, squats to his level, nods; the farmer\nstraightens, gestures more, points to a bed. 15–16 s: hold, loop."
+    },
+    {
+      "id": "M-ANI-02",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "I do · We do · You do",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-02.mp4",
+      "used_in": [
+        "M-D1-11",
+        "M-D1-12"
+      ],
+      "length": "24 s loop, silent",
+      "brief": "Spacing string along a bed. 0–7 s: the mentor plants two seedlings at the knots while the\nfarmer watches. 7–15 s: the farmer plants with the mentor's hand guiding hers. 15–22 s: the\nfarmer plants three alone; the mentor steps back, hands in pockets. 22–24 s: they sit and talk\n(no speech bubbles); loop.\n\n---\n\n**Animations (REUSE)**"
+    },
+    {
+      "id": "M-ANI-03",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "A-frame: find the level",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/reading-landscape/flow-a-frame.mp4",
+      "target": null,
+      "used_in": [
+        "M-D1-12"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Use as the skill being coached in the Day 1 S3 hook and round 1 (A-frame station)."
+    },
+    {
+      "id": "M-ANI-04",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Farmers linked in a network",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-14-community-network.mp4",
+      "target": null,
+      "used_in": [
+        "M-D2-10",
+        "M-D3-06"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Farmers learning from farmers — plays behind the cluster-visit slide."
+    },
+    {
+      "id": "M-ANI-05",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Keeping a farm record",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
+      "target": null,
+      "used_in": [
+        "M-D3-12",
+        "M-ON-11"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Records and money coaching introduction (both tracks)."
+    },
+    {
+      "id": "M-ANI-06",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Where surplus goes",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
+      "target": null,
+      "used_in": [
+        "M-D2-05"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Stage 5 (selling surplus) on the stage-by-stage slide; optional."
+    },
+    {
+      "id": "M-ANI-07",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Looking at soil",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
+      "target": null,
+      "used_in": [
+        "M-D2-04"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "\"Walk & look\" — the pointing finger: looking closely at the garden together."
+    },
+    {
+      "id": "M-ANI-08",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Choosing seed parents",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/seeds-sovereignty/seed-selecting-parents.mp4",
+      "target": null,
+      "used_in": [
+        "M-D2-05"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Month 4 check: seed plants chosen from the best, not the leftovers."
+    },
+    {
+      "id": "M-ANI-09",
+      "course": "mentor-3day",
+      "kind": "animation",
+      "title": "Sharing seed",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/flow-seed-sharing.mp4",
+      "target": null,
+      "used_in": [
+        "M-D2-11"
+      ],
+      "length": "loop as supplied, silent",
+      "brief": "Tea and seed swap at the cluster visit.\n\n---\n\n**Photographs (NEW — taken on real courses, with consent)**"
+    },
+    {
+      "id": "M-IMG-01",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Mentor and farmer at the gate",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-01.jpg",
+      "used_in": [
+        "M-D1-01",
+        "M-D2-01",
+        "M-D3-01",
+        "M-D3-18",
+        "M-ON-01"
+      ],
+      "length": "still",
+      "brief": "Cover image for all decks. Early morning; the mentor greets the farmer at a wire-and-\ndropper garden gate, both smiling, a vegetable garden behind with mulched beds and a JoJo-style\ntank beside a corrugated-iron roof. Sun low in the north-east, long shadows falling south-west.\n16:9, 1920 × 1080, space on the left third for the slide title."
+    },
+    {
+      "id": "M-IMG-02",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "The inspector and the mentor",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-02.jpg",
+      "used_in": [
+        "M-D1-03"
+      ],
+      "length": "still",
+      "brief": "Split 16:9. Left: a person in a cap with a clipboard standing over a seated farmer,\npointing at a dry bed; farmer looks down. Right: the mentor kneeling beside the same bed with\nthe farmer, both looking at the soil, farmer talking. Same garden in both halves."
+    },
+    {
+      "id": "M-IMG-03",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "A listening triad",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-03.jpg",
+      "used_in": [
+        "M-D1-08"
+      ],
+      "length": "still",
+      "brief": "Three adults sitting on plastic chairs under a tree: one talking with open hands, one\nleaning in listening, one a little apart with a clipboard (blank sheet) watching. Mixed ages\nand genders. 16:9."
+    },
+    {
+      "id": "M-IMG-04",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "A trio arrives at a farm",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-04.jpg",
+      "used_in": [
+        "M-D2-08",
+        "M-D2-09"
+      ],
+      "length": "still",
+      "brief": "Three mentors-in-training (a young woman, an older man, a young man) waiting politely\nat a farmer's gate; one waves; the farmer walks towards them from the garden; a dog sits calmly\nby the gate. 16:9."
+    },
+    {
+      "id": "M-IMG-05",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "The observer stands back",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-05.jpg",
+      "used_in": [
+        "M-D2-08",
+        "M-D2-13"
+      ],
+      "length": "still",
+      "brief": "In a garden: the mentor and the gogo kneel planting seedlings together (the gogo's\nhands on the plant); a recorder writes in a notebook nearby; an observer stands 3 m back with a\nclipboard, watching the gogo's face. 16:9."
+    },
+    {
+      "id": "M-IMG-06",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Before and after pairs (set of 4)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-06.jpg",
+      "used_in": [
+        "M-D1-15"
+      ],
+      "length": "still",
+      "brief": "Four square pairs (8 tiles, 1080 × 1080 each), same viewpoint each pair: (a) bare\ncracked bed → mulched bed; (b) empty seedling tray → tray of sturdy green seedlings; (c) an\nexercise book with one ruled line filled → many lines filled (lines only, no readable writing);\n(d) a 20 ℓ drum with no lid → the same drum with a lid and a tap. Also print as A5 cards for the\nDay 1 S4 game."
+    },
+    {
+      "id": "M-IMG-07",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Farmer field day",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-07.jpg",
+      "used_in": [
+        "M-D3-08"
+      ],
+      "length": "still",
+      "brief": "A lively half-day event in a community garden: 30–40 people; a farmer presenting at a\nbed with a spacing string; a table of produce with a hanging scale; elders on chairs in shade; a\nfew children with adults; a buyer (spaza owner in an apron) talking with a farmer. 16:9."
+    },
+    {
+      "id": "M-IMG-08",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Weighing a harvest",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-08.jpg",
+      "used_in": [
+        "M-D3-13",
+        "M-D3-14"
+      ],
+      "length": "still",
+      "brief": "Close view: the gogo hangs a bunch of spinach on a hand-held hanging scale; the youth\nbeside her holds a phone (blank screen) and she holds an exercise book open (blank ruled lines).\n16:9."
+    },
+    {
+      "id": "M-IMG-09",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Invoice handed to a buyer",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-09.jpg",
+      "used_in": [
+        "M-D3-15"
+      ],
+      "length": "still",
+      "brief": "At a spaza counter (shelves of generic tins and bags, no brands), a farmer hands a\nbundle of bunches and a paper invoice (blank lines) to the shop owner; a carbon invoice book lies\nopen on the counter. 16:9."
+    },
+    {
+      "id": "M-IMG-10",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "A mentor on the WhatsApp classroom",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-IMG-10.jpg",
+      "used_in": [
+        "M-ON-01",
+        "M-ON-02"
+      ],
+      "length": "still",
+      "brief": "The mentor sits on a low wall at the edge of a garden in the late afternoon, holding a\nphone to her mouth to record a voice note, a printed A5 card and notebook on her lap. Blank\nscreen. 16:9.\n\n---\n\n**Still images (REUSE)**"
+    },
+    {
+      "id": "M-IMG-11",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "A simple record sheet",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l1.jpg",
+      "target": null,
+      "used_in": [
+        "M-D3-14"
+      ],
+      "length": "still",
+      "brief": "Ruled record sheet with produce beside it — use as the paper-track records picture."
+    },
+    {
+      "id": "M-IMG-12",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Selling routes",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l2.jpg",
+      "target": null,
+      "used_in": [
+        "M-D2-05"
+      ],
+      "length": "still",
+      "brief": "Three selling routes from one farm — use for stage 5 (selling surplus)."
+    },
+    {
+      "id": "M-IMG-13",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Farms linked to a shared point",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l3.jpg",
+      "target": null,
+      "used_in": [
+        "M-D3-06"
+      ],
+      "length": "still",
+      "brief": "Five farms linked to a shared centre — use to show a cluster."
+    },
+    {
+      "id": "M-IMG-14",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Pests: responses without chemicals",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+      "target": null,
+      "used_in": [
+        "M-D2-05"
+      ],
+      "length": "still",
+      "brief": "Stage 3 (growth) — what the mentor checks: the healthy-garden ladder."
+    },
+    {
+      "id": "M-IMG-15",
+      "course": "mentor-3day",
+      "kind": "image",
+      "title": "Seed stored and tested",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+      "target": null,
+      "used_in": [
+        "M-D2-05"
+      ],
+      "length": "still",
+      "brief": "Stage 6 (review) — seed jars and a germination test.\n\n---\n\n**Animations (NEW)**"
+    },
+    {
+      "id": "M-PHO-01",
+      "course": "mentor-3day",
+      "kind": "photo",
+      "title": "A real observed farm visit",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-PHO-01.jpg",
+      "used_in": [
+        "M-D2-09"
+      ],
+      "length": "still",
+      "brief": "On a Day 2 farm visit (host and trainees consent in writing): a wide shot of a trio at\nwork in a host garden — the farmer's hands on the task, the observer standing back. No children.\nLandscape, natural light, faces optional (backs and hands are fine). Replaces M-IMG-05 when available."
+    },
+    {
+      "id": "M-PHO-02",
+      "course": "mentor-3day",
+      "kind": "photo",
+      "title": "A real cluster visit circle",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-PHO-02.jpg",
+      "used_in": [
+        "M-D2-11",
+        "M-D3-07"
+      ],
+      "length": "still",
+      "brief": "The share circle at a cluster visit, taken from outside the circle, all participants\nconsenting (green-sticker holders out of frame). Landscape. Replaces M-P11-ART on the slide when available."
+    },
+    {
+      "id": "M-P01",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Walk beside",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S1",
+        "M-D2-S4"
+      ],
+      "art": "M-P01-ART",
+      "headline": "Walk beside, not in front",
+      "labels": "1. In front: I lead\n2. Behind: I push\n3. Beside: we walk",
+      "layout": "Headline top band; three scenes in the art area with ①②③; label strip below.",
+      "teach_it": "1. ASK: Who was the best helper you ever had? What did they do?\n2. POINT ①: the helper in front — when is that right? (new skill, danger)\n3. POINT ②: behind — how does a farmer feel when pushed?\n4. POINT ③: beside — the farmer chooses the path; the mentor walks with them.\n5. GROUPS: sort your helper stories under ① ② ③.\nKEY: Walk beside. The farmer chooses the path.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P01.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P01.jpg"
+    },
+    {
+      "id": "M-P02",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The mentor's promise",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S1",
+        "M-D3-S4"
+      ],
+      "art": "M-P02-ART",
+      "headline": "The mentor's promise",
+      "labels": "1. I listen first\n2. Only real promises\n3. Your story stays private\n4. No gifts that bind\n5. I keep you safe",
+      "layout": "Hand centred; five callouts on the fingers; labels in a list below.",
+      "teach_it": "1. ASK: What happens when a mentor promises a tank and none comes?\n2. POINT ①–⑤ one by one; ask for one example of each.\n3. GROUPS: one \"What would you do?\" card each (day-1.md S1).\n4. SAY: Tea is hospitality. A chicken is a gift that binds.\n5. SAY: Harm to a child or adult — tell your supervisor the same day.\nKEY: Promise only what you can do.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P02.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P02.jpg"
+    },
+    {
+      "id": "M-P03",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Listen with ears, eyes and heart",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S2"
+      ],
+      "art": "M-P03-ART",
+      "headline": "Listen with ears, eyes, heart",
+      "labels": "1. Ears: let them finish\n2. Eyes: same level\n3. Heart: notice feelings\n4. Say it back",
+      "layout": "Scene centre; four callouts; labels below.",
+      "teach_it": "1. PAIRS: 1 minute of bad listening. How did it feel?\n2. POINT ①: count to 3 before you speak.\n3. POINT ②: sit or squat at their level; phone away.\n4. POINT ③: \"You sound tired of this.\"\n5. POINT ④: \"So the water runs out in week two…\"\n6. TRIADS: speaker · listener · observer, 3 rounds.\nKEY: Say it back, then ask. No advice yet.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P03.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P03.jpg"
+    },
+    {
+      "id": "M-P04",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The question ladder",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S2",
+        "M-D3-S2"
+      ],
+      "art": "M-P04-ART",
+      "headline": "Climb the question ladder",
+      "labels": "1. Closed: yes or no\n2. Open: how, what\n3. Deeper: what happens\n4. Their plan: what else?",
+      "layout": "Ladder runs bottom-left to top-right; callouts on rungs; labels beside each rung.",
+      "teach_it": "1. ASK: \"Did you water?\" — what answer do you get? (yes)\n2. POINT ②: \"How do you water the beds?\"\n3. POINT ③: \"What happens to the water after you pour it?\"\n4. POINT ④: \"What could you try? What else?\"\n5. GROUPS: climb 10 closed-question cards.\n6. SAY: Start with \"What are you proud of?\"\nKEY: The best answer is the one the farmer finds.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P04.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P04.jpg"
+    },
+    {
+      "id": "M-P05",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "I do · We do · You do",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S3",
+        "M-D3-S3"
+      ],
+      "art": "M-P05-ART",
+      "headline": "I do · We do · You do",
+      "labels": "1. I do: show once\n2. We do: together\n3. You do: watch quietly\n4. Talk: what worked?",
+      "layout": "Four panels in a Z order; callouts ①–④; labels below each panel.",
+      "teach_it": "1. DO: explain the A-frame by talking only. Ask a volunteer to build it. Why was it hard?\n2. POINT ①: show once, slowly, say each step.\n3. POINT ②: the farmer's hands, your help.\n4. POINT ③: hands in pockets. Say nothing.\n5. POINT ④: What went well? What was hard?\n6. Result: demonstrated alone = Demonstrated. Anything else = Needs further support.\nKEY: One skill per visit. The farmer's hands.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P05.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P05.jpg"
+    },
+    {
+      "id": "M-P06",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The action agreement",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S4",
+        "M-D2-S4",
+        "M-D3-S2"
+      ],
+      "art": "M-P06-ART",
+      "headline": "One action, one owner, one date",
+      "labels": "1. What?\n2. Who?\n3. By when?\n4. How will we know?",
+      "layout": "Handshake centre; the four vignettes in the corners with ①–④.",
+      "teach_it": "1. ASK: \"I'll try to mulch\" vs \"I will mulch the 2 front beds by Friday\" — which happens?\n2. POINT ①: one small action, the farmer's words.\n3. POINT ②: a named person.\n4. POINT ③: before the next contact.\n5. POINT ④: what we will see.\n6. GROUPS: fix \"Farmer must improve the soil\".\nKEY: What · Who · By when · How we'll know.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P06.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P06.jpg"
+    },
+    {
+      "id": "M-P07",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The Visit Hand",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D2-S1",
+        "M-D2-S2",
+        "M-D2-S4",
+        "M-D3-S2"
+      ],
+      "art": "M-P07-ART",
+      "headline": "Five fingers, five steps",
+      "labels": "1. Look back\n2. Walk and look\n3. Listen and ask\n4. Try it together\n5. Agree and record",
+      "layout": "Hand fills art area; labels curve beside each finger with ①–⑤.",
+      "teach_it": "1. ASK: hold up your hand — what are the 5 steps of a visit?\n2. POINT ①: \"Last time you planned… show me.\" (5–10 min)\n3. POINT ②: \"What are you proud of?\" Farmer leads. (15 min)\n4. POINT ③: \"What would help most right now?\" (10 min)\n5. POINT ④: one skill, I do · We do · You do. (15 min)\n6. POINT ⑤: what · who · by when · how we'll know. Write it at the farm. (10 min)\nKEY: Never cut the ring or little finger.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P07.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P07.jpg"
+    },
+    {
+      "id": "M-P08",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "What to look at, stage by stage",
+      "size": "A0 landscape",
+      "used_in": [
+        "M-D2-S1",
+        "M-D3-S2"
+      ],
+      "art": "M-P08-ART",
+      "headline": "What to look at, stage by stage",
+      "labels": "1. Baseline\n2. Planting and spacing\n3. Growth and pests\n4. Harvest and weigh\n5. Selling surplus\n6. Review and seed",
+      "layout": "Six equal panels in a row; callouts ①–⑥; labels below.",
+      "teach_it": "1. ASK: Where are most of your gardens today? Point.\n2. POINT ②: the spacing string — check one row on every establishment visit.\n3. POINT ④: weigh, don't count bunches.\n4. SAY: Pick 3–5 checks for the stage and the farmer's priority (playbook §5).\n5. SAY: ★ = a Course 1 skill — look for it.\nKEY: Look at what matters for this stage.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P08.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P08.jpg"
+    },
+    {
+      "id": "M-P09",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Traffic light: who needs me most?",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D3-S1"
+      ],
+      "art": "M-P09-ART",
+      "headline": "Who needs me most?",
+      "labels": "1. Red: every 2 weeks\n2. Amber: every month\n3. Green: cluster plus phone",
+      "layout": "Traffic light left third; scenes and labels right; ①②③.",
+      "teach_it": "1. ASK: 40 farmers, 20 working days — can you see all every week?\n2. POINT ①: not started, crisis, missed 2 contacts, asked for help.\n3. POINT ②: growing, needs further support.\n4. POINT ③: skills demonstrated, could host.\n5. SAY: Re-sort every month. The colour is private.\n6. GROUPS: sort the 40 case cards.\nKEY: Nobody goes a month without a contact.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P09.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P09.jpg"
+    },
+    {
+      "id": "M-P10",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "A mentor's week",
+      "size": "A0 landscape",
+      "used_in": [
+        "M-D3-S1"
+      ],
+      "art": "M-P10-ART",
+      "headline": "A mentor's week",
+      "labels": "1. One cluster a day\n2. Cluster visit weekly\n3. Farthest first\n4. Friday: phone, records",
+      "layout": "Map top 55%; weekday strip below; callouts ①–④.",
+      "teach_it": "1. DO the sum: Red × 2 + Amber = visits needed.\n2. POINT ①: each weekday belongs to one cluster — less travel.\n3. POINT ②: the cluster visit rotates A → B → C → D.\n4. POINT ③: start far, work back towards home.\n5. POINT ④: phones, records, planning, buddy.\n6. GROUPS: draw your week on the A3 grid.\nKEY: Plan by cluster and route, and leave spare time.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P10.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P10.jpg"
+    },
+    {
+      "id": "M-P11",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The cluster visit",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D2-S3",
+        "M-D3-S2"
+      ],
+      "art": "M-P11-ART",
+      "headline": "Learn in a neighbour's garden",
+      "labels": "1. Welcome and register\n2. Host's tour\n3. Try it together\n4. Share circle\n5. Everyone agrees one action",
+      "layout": "Scene with ①–⑤ in visit order; labels below.",
+      "teach_it": "1. ASK: How many farmers can you reach in 2½ hours this way? (8–12)\n2. POINT ①: register, consent, last month's actions.\n3. POINT ②: the host shows what works; ask the host open questions.\n4. POINT ③: 2–3 stations, groups of 3–4.\n5. POINT ④: farmers answer each other first.\n6. POINT ⑤: one action each, aloud; next host.\nKEY: The host teaches; the mentor asks. Rotate the host.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P11.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P11.jpg"
+    },
+    {
+      "id": "M-P12",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Phone check-in",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D3-S2"
+      ],
+      "art": "M-P12-ART",
+      "headline": "Ten minutes on the phone",
+      "labels": "1. Greet\n2. Look back\n3. Show me\n4. What's next?\n5. Date",
+      "layout": "Two halves; five numbered steps down the centre line.",
+      "teach_it": "1. PAIRS: sit back to back — like a phone.\n2. POINT ①: \"How are you and the family?\"\n3. POINT ②: \"Last time you planned… how did it go?\"\n4. POINT ③: \"Can you send a photo — or describe it?\"\n5. POINT ④–⑤: \"What will you do this week? I'll call on…\"\n6. SAY: Write it — phone log or Record visit.\nKEY: Green farmers stay connected with 10 minutes a month.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P12.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P12.jpg"
+    },
+    {
+      "id": "M-P13",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "The season journey",
+      "size": "A0 landscape",
+      "used_in": [
+        "M-D3-S2",
+        "M-D3-S4"
+      ],
+      "art": "M-P13-ART",
+      "headline": "Six months with our farmers",
+      "labels": "1. Baseline\n2. Establish\n3. Grow\n4. Harvest\n5. Sell\n6. Review",
+      "layout": "Path across the full width; ①–⑥ at stops; a legend row for the contact symbols\n(symbols only, words typeset: visit · cluster · phone · field day).",
+      "teach_it": "1. ASK: What happens in a garden over six months?\n2. POINT ①–⑥: one sentence per stop (playbook §7).\n3. POINT the symbols: which contact fits which farmer?\n4. SAY: Field days at first harvest and at the review.\n5. GROUPS: put your cluster visits on the path.\nKEY: Every month, every farmer, one contact at least.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P13.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P13.jpg"
+    },
+    {
+      "id": "M-P14",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Two tracks, same records",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D2-S1",
+        "M-D3-S3"
+      ],
+      "art": "M-P14-ART",
+      "headline": "Phone or paper: same records",
+      "labels": "1. Weigh and record\n2. Money in, out\n3. Keep the slip\n4. Invoice the buyer\n5. Read the season",
+      "layout": "Two lanes top to bottom; callouts ①–⑤ on the shared objects.",
+      "teach_it": "1. ASK: She sold spinach for a month. Did she make money? How would she know?\n2. POINT the lanes: app or paper — same outcome.\n3. POINT ①: weigh first, then write kilograms.\n4. POINT ②–③: every rand in and out; every cost has a slip.\n5. POINT ④: an invoice is not a payment.\n6. POINT ⑤: the month-end summary or the report.\nKEY: Paper is never second best.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P14.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P14.jpg"
+    },
+    {
+      "id": "M-P15",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "When it gets hard",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D3-S4"
+      ],
+      "art": "M-P15-ART",
+      "headline": "When it gets hard",
+      "labels": "1. Stay calm\n2. Listen\n3. What can they do?\n4. Who else can help?",
+      "layout": "Footprints ①–④ across the art; labels below.",
+      "teach_it": "1. ASK: What hard things happen to our farmers? (drought, theft, conflict, drop-out, waiting for inputs)\n2. POINT ①: breathe, sit down.\n3. POINT ②: say back, no blame.\n4. POINT ③: their options, their choice — start small.\n5. POINT ④: neighbours, the group, programme, clinic, SAPS, helplines.\n6. SAY: Danger now: SAPS 10111 · Childline 116 · GBV 0800 428 428.\nKEY: You are a mentor, not a rescuer. Refer and record.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P15.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P15.jpg"
+    },
+    {
+      "id": "M-P16",
+      "course": "mentor-3day",
+      "kind": "poster",
+      "title": "Show me what changed",
+      "size": "A1 portrait",
+      "used_in": [
+        "M-D1-S4",
+        "M-D2-S3",
+        "M-D3-S2"
+      ],
+      "art": "M-P16-ART",
+      "headline": "Show me what changed",
+      "labels": "1. Before\n2. After\n3. The date\n4. What we saw",
+      "layout": "Before/after top two-thirds; notebook scene below; ①–④.",
+      "teach_it": "1. ASK: How would a funder know this garden changed?\n2. POINT ①②: same spot, same angle — mark the spot at the first visit.\n3. POINT ③④: close an action with a date and evidence.\n4. SAY: Not done is information: \"What got in the way?\"\n5. GROUPS: which photo pair proves the action?\nKEY: An action is closed only with a date and evidence.",
+      "status": "NEW",
+      "target": "public/course-media/mentor-3day/posters/M-P16.pdf",
+      "phone_target": "public/course-media/mentor-3day/posters/M-P16.jpg"
+    },
+    {
+      "id": "M-P01-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P01 · Walk beside",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P01-ART.jpg",
+      "used_in": [
+        "M-P01",
+        "M-D1-S1",
+        "M-D2-S4"
+      ],
+      "length": "still",
+      "brief": "Three small scenes stacked on a dirt path between vegetable beds.\nTop: a person with a clipboard striding ahead, farmer trailing behind, head down (in front).\nMiddle: the same person behind the farmer, pointing and pushing (behind). Bottom, largest and\nin full colour: mentor and farmer walking side by side, the farmer pointing at a healthy bed,\nthe mentor listening, both smiling. Top two scenes muted (Hairline/grey), bottom in full palette.\nSun in the north; shadows fall south."
+    },
+    {
+      "id": "M-P02-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P02 · The mentor's promise",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P02-ART.jpg",
+      "used_in": [
+        "M-P02",
+        "M-D1-S1",
+        "M-D3-S4"
+      ],
+      "length": "still",
+      "brief": "An open hand (palm facing viewer) drawn large, each finger with a small\nround picture above it: an ear; a hand pushing away a box of goods; closed lips with a finger\n(privacy); a hand politely refusing a live chicken while accepting a cup of tea; a shield over a\nchild and a woman. Warm Paper background, Ochre circles."
+    },
+    {
+      "id": "M-P03-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P03 · Listen with ears, eyes and heart",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P03-ART.jpg",
+      "used_in": [
+        "M-P03",
+        "M-D1-S2"
+      ],
+      "length": "still",
+      "brief": "The mentor squatting at the same level as the gogo farmer who sits on\nan upturned 20 ℓ drum beside a bed. The mentor's phone is in her bag (visible, put away). The\ngogo is talking with open hands; the mentor nods. Three soft Ochre circles highlight the\nmentor's ear, her eyes (looking at the bed the gogo points to), and her hand on her chest."
+    },
+    {
+      "id": "M-P04-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P04 · The question ladder",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P04-ART.jpg",
+      "used_in": [
+        "M-P04",
+        "M-D1-S2",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "A wooden ladder leaning against a fruit tree. On the bottom rung the\nfarmer stands with arms folded; on each higher rung the farmer climbs higher, looking more\nengaged; at the top the farmer is reaching for a ripe fruit with a smile. The mentor steadies the\nladder at the bottom. Four rungs highlighted with Ochre numbers."
+    },
+    {
+      "id": "M-P05-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P05 · I do · We do · You do",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P05-ART.jpg",
+      "used_in": [
+        "M-P05",
+        "M-D1-S3",
+        "M-D3-S3"
+      ],
+      "length": "still",
+      "brief": "Three panels left to right on one strip of garden, the same pair each\ntime, laying a knotted spacing string along a bed and planting seedlings. Panel 1: mentor plants,\nfarmer watches. Panel 2: both kneeling, the farmer's hands on the seedling, the mentor's hand\nguiding. Panel 3: the farmer planting alone; the mentor standing back with hands in pockets,\nwatching. A small fourth panel: both sitting, talking (speech-shape without words)."
+    },
+    {
+      "id": "M-P06-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P06 · The action agreement",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P06-ART.jpg",
+      "used_in": [
+        "M-P06",
+        "M-D1-S4",
+        "M-D2-S4",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "The mentor and farmer shaking hands over a garden bed at the end of a\nvisit. Around them, four corner vignettes: a bundle of dry grass mulch on a bed (what); the\nfarmer's grandson carrying grass (who); a wall calendar with one square circled (by when — no\nnumbers); the same bed later, covered in mulch, with the mentor looking and the farmer pointing\n(how we'll know)."
+    },
+    {
+      "id": "M-P07-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P07 · The Visit Hand",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P07-ART.jpg",
+      "used_in": [
+        "M-P07",
+        "M-D2-S1",
+        "M-D2-S2",
+        "M-D2-S4",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "A large open hand (brown skin tone, palm towards viewer, fingers\nspread). In each fingertip a small round scene: thumb — mentor and farmer looking at a mulched bed\ntogether (look back); pointing finger — the pair walking between beds, farmer pointing; middle\nfinger (tallest) — the pair sitting in shade talking; ring finger — both kneeling, farmer's hands\nplanting; little finger — handshake with a notebook. Palm: a simple garden seen from above."
+    },
+    {
+      "id": "M-P08-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P08 · What to look at, stage by stage",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P08-ART.jpg",
+      "used_in": [
+        "M-P08",
+        "M-D2-S1",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "One garden drawn six times in a row, left to right, as it changes over\na season: (1) boundary pegged, beds marked, drum at the roof; (2) beds planted with a spacing\nstring laid along one row, seedlings in a tray, mulch; (3) plants growing, a person checking\nunder leaves, a bucket of liquid manure; (4) harvest basket on a hanging scale, a family plate;\n(5) a bunch of spinach being handed to a buyer at a spaza counter, a notebook; (6) seed drying on\na sack, jars, the mentor photographing the garden from the same spot as panel 1. Sun in the\nnorth in every panel."
+    },
+    {
+      "id": "M-P09-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P09 · Traffic light: who needs me most?",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P09-ART.jpg",
+      "used_in": [
+        "M-P09",
+        "M-D3-S1"
+      ],
+      "length": "still",
+      "brief": "A tall traffic light made from three stacked round shapes, each with a\nsmall scene beside it. Top (Red, with a triangle pattern for B&W): a bare, dry garden and a\nworried farmer — the mentor walking towards them. Middle (Amber/Ochre, with dots): a half-planted\ngarden, farmer working. Bottom (Green/Leaf, with stripes): a lush garden and a farmer showing\nneighbours around. A small calendar icon next to each (two marks, one mark, one mark + a phone)."
+    },
+    {
+      "id": "M-P10-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P10 · A mentor's week",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P10-ART.jpg",
+      "used_in": [
+        "M-P10",
+        "M-D3-S1"
+      ],
+      "length": "still",
+      "brief": "A simple map of four villages (A, B, C, D drawn as four clusters of\nhouses with gardens — letters typeset on the layout, not in the art) around a small town with a\ntaxi rank. Five columns below the map, one per weekday, each showing a small figure of the\nmentor: Monday under a tree with a group of 10 farmers (cluster visit) then walking to 2\nhouses; Tuesday to Thursday walking a curved route to 3 houses in one cluster; Friday at a table\nwith a phone and a notebook. Dotted route lines on the map from the farthest house back to the\ntaxi rank."
+    },
+    {
+      "id": "M-P11-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P11 · The cluster visit",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P11-ART.jpg",
+      "used_in": [
+        "M-P11",
+        "M-D2-S3",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "A host farmer's garden with 10 farmers of mixed ages and genders. In\none corner the host gogo leads a tour, pointing at a mulched bed; in the middle, three small\ngroups of 3–4 kneeling at different stations (spacing string, seedling tray, a bucket); at the\nfront, everyone sitting in a circle in the shade of a tree; the mentor sits in the circle, not\nstanding. A cable-tied poster shape on the fence (blank)."
+    },
+    {
+      "id": "M-P12-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P12 · Phone check-in",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P12-ART.jpg",
+      "used_in": [
+        "M-P12",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "Split scene. Left: the mentor at a table with a basic phone to her ear\nand a notebook. Right: the farmer in his garden, phone to ear, looking at a mulched bed; a second\nsmall inset shows him taking a photo of the bed with a smartphone. A thin line (like a sound\nwave) connects the two phones."
+    },
+    {
+      "id": "M-P13-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P13 · The season journey",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P13-ART.jpg",
+      "used_in": [
+        "M-P13",
+        "M-D3-S2",
+        "M-D3-S4"
+      ],
+      "length": "still",
+      "brief": "A winding path across the poster through six \"stops\", each a small\ngarden scene matching M-P08's stages, from bare ground (left) to harvest and seed jars (right).\nAlong the path, small symbols show contact types: a single pair walking (individual visit), a\ncircle of people under a tree (cluster visit), a phone (check-in), and at stops 4 and 6 a big\ngathering with a table of produce (field day). Sky changes from spring to high summer."
+    },
+    {
+      "id": "M-P14-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P14 · Two tracks, same records",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P14-ART.jpg",
+      "used_in": [
+        "M-P14",
+        "M-D2-S1",
+        "M-D3-S3"
+      ],
+      "length": "still",
+      "brief": "A path that splits around a tree into two lanes and joins again. Left\nlane: the youth holds a smartphone (screen blank), showing it to the gogo farmer. Right lane: the\ngogo writes in an exercise book with a pencil; an envelope of slips and a carbon invoice book\nbeside her. Both lanes pass the same four objects: a hanging scale with a bunch of spinach, a\ntill slip, a bunch handed to a buyer, a small bar chart shape. They meet at a garden gate where\nthe mentor waits."
+    },
+    {
+      "id": "M-P15-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P15 · When it gets hard",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P15-ART.jpg",
+      "used_in": [
+        "M-P15",
+        "M-D3-S4"
+      ],
+      "length": "still",
+      "brief": "A dry garden with wilting plants and an empty drum. The farmer sits on\nthe ground, head in hands. Four steps shown as footprints leading to him: the mentor breathing\ncalmly; the mentor sitting beside him listening; the farmer standing, pointing at one small bed\nhe can save; a small group of neighbours arriving with a wheelbarrow of grass mulch. No clinic or\npolice imagery needed."
+    },
+    {
+      "id": "M-P16-ART",
+      "course": "mentor-3day",
+      "kind": "poster-art",
+      "title": "Artwork for M-P16 · Show me what changed",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-P16-ART.jpg",
+      "used_in": [
+        "M-P16",
+        "M-D1-S4",
+        "M-D2-S3",
+        "M-D3-S2"
+      ],
+      "length": "still",
+      "brief": "Two matching views of the same bed from the same spot, side by side:\nleft \"before\" — bare, cracked soil; right \"after\" — mulched, planted at even spacing, healthy.\nBelow, the mentor and the farmer look at a notebook together; the farmer points at a line. A\nsmall wall-calendar square with a tick. Same fence post in both views so the viewer sees it is\nthe same place."
     }
   ]
 }

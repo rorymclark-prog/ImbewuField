@@ -144,7 +144,7 @@ sheet (flipchart).
 
    **SAY:** "If you don't write it down, you can't know if the garden is paying. Even the food
    you eat is money you didn't spend in the shop."
-   *[APP] twin (only if learners have the app):* in **Records/Field Journal** log the same
+   *[APP] twin (only if learners have the app):* in **Records → Picked** log the same
    harvest; pairs help each other. Same 25 minutes.
 5. **DO (12:05) — garden handover:** "Who will look after our beds, compost and tree after
    today?" Make a roster on the flipchart: names, days, the watering, the compost turning,
@@ -208,7 +208,7 @@ page), 5 "market day" scenario cards (below).
    - The spaza sells a bunch for R15 — **check your local prices**. Sell at a fair price
      between your cost and the shop price, e.g. R10.
    **SAY:** "Your own time is worth something too. The Farmer Money course goes deeper."
-   *[APP] twin:* in **Finances** add one *Money in* and one *Money out*; show **scan a till
+   *[APP] twin:* in **Records** add one **Sold** and one **Spent** entry; in the Spent entry show **scan a till
    slip** on a real receipt. Same 20 minutes.
 
 ### Key messages

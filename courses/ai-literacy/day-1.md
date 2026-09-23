@@ -172,7 +172,7 @@ phones · 6 group envelopes.
     - Videos chosen for you on Facebook, TikTok, YouTube — AI picks what you see next.
     - "Suspected spam" warnings on calls and messages.
     - **ImbewuField** (app ON): **Lima** — the help strip at the bottom of the app — plus
-      **Lima Vision**, **Tree ID**, the till slip reader in **Finances**, and **Reports**.
+      **Lima Vision**, **Tree ID**, the till slip reader in **Records → Spent**, and **Reports**.
 16. **DO:** Reporters each name one place their group found. Tick it on A-P03's flipchart.
     **ASK:** *"Which one surprised you?"*
 

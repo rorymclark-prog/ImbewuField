@@ -409,14 +409,14 @@ Use a real test photo of a bed and of produce beside a 2 ℓ bottle.
 confidence number and the note. Choose an example where the confidence is **not** 100% — it
 teaches that confidence varies.
 
-## A-PHO-05 · Screen: till slip read in Finances
+## A-PHO-05 · Screen: till slip read in Records → Spent
 - Type: photo
 - Status: NEW
 - Used in: A-D2-18
 - Length: still
 
 **Brief:** Side-by-side: a photo of a real till slip (an invented or blurred shop name, no card
-numbers) and the Finances screen after "scan a till slip" showing total, item and shop. If
+numbers) and the Records → Spent entry after "scan a till slip" showing total, item and shop. If
 possible use an example where the reader made a small mistake (e.g. read the change as the
 total) — mark it with a red circle added on the slide, not in the screenshot.
 

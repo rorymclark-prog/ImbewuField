@@ -249,9 +249,9 @@ slip — personal details removed); a sample harvest (a bunch of spinach + a kit
 |---|---|---|
 | 13:15 | Energiser | 1 min |
 | 13:20 | Hook: "She sold spinach for a month. Did she make money? How would she know?" | 3 min |
-| 13:25 | Tour M-P14 app column: the month-by-month sequence (profile & consent → Map → Garden Survey/Crop Plan → Field Journal → harvest → Finances → till slip → Invoice builder → Reports) | 6 min |
+| 13:25 | Tour M-P14 app column: the month-by-month sequence (profile & consent → Map → Garden Survey/Crop Plan → Field Journal → harvest → Records Sold / Spent → till slip → Invoice builder → Reports) | 6 min |
 | 13:35 | Round 1 (15 min): **Log a harvest** — weigh the spinach; record kilograms | 3 min |
-| 13:50 | Round 2 (15 min): **Finances: Money in / Money out + scan a till slip** | 3 min |
+| 13:50 | Round 2 (15 min): **Records → Sold / Spent + scan a till slip** | 3 min |
 | 14:05 | Round 3 (15 min): **Invoice builder** — build and share an invoice for 5 bunches to a spaza | 2 min |
 | 14:20 | Debrief + key messages | 2 min |
 

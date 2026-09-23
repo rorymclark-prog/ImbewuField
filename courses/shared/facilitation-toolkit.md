@@ -1,4 +1,4 @@
-# Facilitation toolkit (all three courses)
+# Facilitation toolkit (all courses)
 
 The day files refer to these by name ("run *Groups of 5*", "use *Three-question debrief*").
 Read this once before any course; keep it on your phone.
@@ -54,6 +54,9 @@ Name each group after a plant: *Bean, Pumpkin, Maize, Banana, Marula, Spinach*.
 | **Recorder** | Draws or writes what the group found (drawing is fine) | Daily |
 | **Reporter** | Speaks for the group in the debrief | Daily |
 
+In the AI Literacy course the Materials person is also the **Phone Keeper** (charges, hands out
+and collects the group's shared phone).
+
 Put the roles on a small card per group. Rotate every morning so everyone does every role.
 
 **Never demo-only.** If you have only one set of materials: demonstrate in 3 minutes, then
@@ -106,9 +109,9 @@ the poster.
 
 Used in micro-teaching (Course 3), mentor role-plays (Course 2) and on farm visits:
 
-- ⭐ one thing that worked, specific ("You let the group dig before you explained.")
-- ⭐ a second thing that worked
-- 🌱 one wish, as a suggestion ("Next time, maybe ask them first where the water goes.")
+- **Star 1:** one thing that worked, specific ("You let the group dig before you explained.")
+- **Star 2:** a second thing that worked
+- **Wish:** one wish, as a suggestion ("Next time, maybe ask them first where the water goes.")
 
 The person who was taught speaks first about their own session. Never correct someone's
 language, spelling or accent.

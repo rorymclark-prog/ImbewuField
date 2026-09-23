@@ -111,7 +111,7 @@ did it make a mistake you can use in class.
 | ImbewuField **Lima** (app ON only) | | | |
 | **Lima Vision** — What's growing / Weigh my harvest | | | |
 | **Tree ID** (a tree at the venue) | | | |
-| **Finances** — scan a till slip (use a real slip) | | | |
+| **Records → Spent** — scan a till slip (use a real slip) | | | |
 | **Reports** — generate one for a sample garden | | | |
 
 Keep 2–3 of the **real mistakes** you found. Real mistakes from today's tools teach better

@@ -219,7 +219,7 @@ the farmer's priority. The Course 1 skills (forms.md §4) are marked ★.
 ### Month 5 · Selling surplus
 - What is surplus after the family eats? Who buys? (neighbours, spaza, school/crèche, church)
 - Price: costs known (money out), local price checked ★
-- Money book or app Finances used; slips kept ★
+- Money book or app Records (Sold / Spent) used; slips kept ★
 - Invoices for any buyer who pays later (duplicate book or Invoice builder)
 - Credit sales written down with a date to pay
 
@@ -327,7 +327,7 @@ local last-frost date has passed.
 | **2 · Oct** | **Establishment** | Planting and spacing check; seedlings; mulch; water storage | Spacing & planting; seedling trays | Garden Survey → Crop Plan / paper bed plan |
 | **3 · Nov** | **Growth** | Pests early; liquid manure; water through heat; succession sowing | Pest walk; natural spray; liquid manure | Field Journal / garden diary |
 | **4 · Dec** | **Harvest** | Weighing, recording, family plate; mark seed plants. **Field day** (first harvest) — before the holidays | Weigh & record; family plate | Log harvest (Records → Picked; Lima Vision optional) / harvest page |
-| **5 · Jan** | **Selling surplus** | Prices, costs, buyers, invoices, money book | Price a bunch; invoice; money book | Finances Money in / Money out + scan a till slip; Invoice builder / money book, slip envelope, duplicate invoice book |
+| **5 · Jan** | **Selling surplus** | Prices, costs, buyers, invoices, money book | Price a bunch; invoice; money book | Records → Sold / Spent + scan a till slip; Invoice builder / money book, slip envelope, duplicate invoice book |
 | **6 · Feb** | **Review & next season** | Seed saving; before/after photos; records summary; plan next season; exit or continue | Seed jars; before/after; next plan. **Field day** (season review) | Read a report (Reports) / month-end summaries |
 
 - **December holidays:** many households travel; plan the field day early December; phone

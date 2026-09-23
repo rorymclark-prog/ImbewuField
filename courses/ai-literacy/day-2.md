@@ -395,7 +395,7 @@ prices of 3 things they sell — they know these; write them on the flipchart fi
    found. Printed drafts: check against the answer key.
 
 #### [APP] Till slip, Reports and Lima (40 min)
-1. **Scan a till slip (15 min):** Phone Keeper opens **Finances** → *Money out* → **scan a till
+1. **Scan a till slip (15 min):** Phone Keeper opens **Records** → the **Spent** tab → **scan a till
    slip**, and photographs the group's slip (flat, good light, the whole slip). The app reads
    **three things**: the **total**, a **short description** and the **shop name** (and shows how
    sure it is). **Check all three against the paper slip, line by line with a finger.** Is the

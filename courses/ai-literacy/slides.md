@@ -440,7 +440,7 @@ names only in CVs. Fix, rewrite, two groups read aloud.
 Type: activity
 Track: app
 Screen:
-- Finances → Money out → scan a slip
+- Records → Spent → scan a slip
 - Check total, item, shop
 - The slip wins
 Media: A-PHO-05, A-IMG-09

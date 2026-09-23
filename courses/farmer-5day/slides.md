@@ -799,7 +799,7 @@ Screen:
 - Write it on the harvest page
 Media: F-ANI-28
 Notes:
-[APP] twin: log the harvest in Records / Field Journal. Then the garden handover roster.
+[APP] twin: log the harvest in Records → Picked. Then the garden handover roster.
 
 ## F-D5-11 · Two pockets
 Screen:
@@ -826,7 +826,7 @@ Screen:
 Media: F-ANI-29
 Poster: F-P20
 Notes:
-Everyone writes their card's lines. [APP] twin: Finances → Money in / Money out, scan a till slip.
+Everyone writes their card's lines. [APP] twin: Records → Sold and Spent; scan a till slip in a Spent entry.
 
 ## F-D5-14 · Cost per bunch
 Screen:

@@ -406,7 +406,7 @@ Print as a phone-screen drawing with the message typed in the bubble (typeset, n
 artwork). Names and numbers are invented. **Never use real bank or company names** on these cards.
 
 **S-01** · WhatsApp from an unknown number
-"Hi Ma 😊 this is my new number, my phone broke. Please send R300 on eWallet, I'll pay you back
+"Hi Ma, this is my new number, my phone broke. Please send R300 on eWallet, I'll pay you back
 tomorrow. Don't call, the line is bad."
 
 **S-02** · SMS
@@ -414,7 +414,7 @@ tomorrow. Don't call, the line is bad."
 sassa-pay-update.co within 24 hours or lose your grant."
 
 **S-03** · WhatsApp from a friend's name
-"Hey, I sent you a 6-digit code by mistake 🙏 please send it back to me quickly."
+"Hey, I sent you a 6-digit code by mistake, please send it back to me quickly."
 
 **S-04** · Facebook job ad
 "FARM SUPERVISOR WANTED. R12 000 per month. No experience needed. Pay R350 for uniform and
@@ -467,7 +467,7 @@ back of your card."
 1. "Sanibonani bomakhelwane! Spinach is ready, R10 a bunch, come by after 4. — Nomsa" *(person)*
 2. "Dear valued neighbours, I am delighted to announce the availability of fresh, organically
    grown spinach, harvested with care to nourish your family." *(machine)*
-3. "Eggs finished today sorry, more on Sat 🙏" *(person)*
+3. "Eggs finished today sorry, more on Sat, sorry!" *(person)*
 4. "Discover the goodness of farm-fresh eggs! Packed with protein and flavour, our eggs are the
    perfect start to your day. Order now!" *(machine)*
 
@@ -475,7 +475,7 @@ Point: machine text is often smooth, fancy and general. But not always — somet
 like that and machines write short. Don't rely on guessing; rely on checking.
 
 ### D-01 · "The AI wrote this" — WhatsApp selling message
-> 🌿 Fresh from Sipho's Farm! 🌿 Premium organic spinach only R35 per bunch, and a dozen free-range
+> FRESH from Sipho's Farm!!! Premium organic spinach only R35 per bunch, and a dozen free-range
 > eggs for R15! FREE delivery anywhere in Durban. Certified organic. Order now — limited stock!
 > Payment to ID 9001015800087. — Sipho
 

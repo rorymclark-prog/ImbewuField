@@ -40,7 +40,7 @@ By the end of Day 3 every mentor can:
    6-month season for ~40 farmers in 4 clusters, and **choose** the right contact for each
    farmer: individual visit, cluster visit, field day or phone check-in.
 7. **Plan and run** a 2–3 hour cluster visit at a host garden for 8–12 farmers.
-8. **Coach** a farmer's garden and money records — **on the app track** (Finances, till slip,
+8. **Coach** a farmer's garden and money records — **on the app track** (Records → Sold / Spent, till slip,
    Invoice builder, Reports) **or the paper track** (record book, money book, duplicate
    invoice book) — with a 10–15 minute on-visit script.
 9. **Handle** hard situations (drought, theft, conflict, drop-out, dependency) and **know**

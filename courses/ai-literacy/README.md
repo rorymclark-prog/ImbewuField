@@ -112,7 +112,7 @@ The course is **tool-neutral**. It teaches habits that work with any AI tool.
 
 - **App track ON** (programme uses ImbewuField): sessions marked `[APP]` use **Lima** (the
   in-app assistant), **Lima Vision** ("What's growing" and "Weigh my harvest"), **Tree ID**,
-  **scan a till slip** in **Finances**, and AI-written **Reports**. Slides for these carry
+  **scan a till slip** in **Records → Spent**, and AI-written **Reports**. Slides for these carry
   `Track: app`.
 - **App track OFF:** use the `[PAPER]` twin — same time, same outcome — with tools learners
   already have (WhatsApp, Meta AI where it shows up, Google Lens, voice typing on the keyboard)
