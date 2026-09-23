@@ -1,5 +1,26 @@
 # Active Studies continuation — 23 September 2026
 
+## Small Livestock L3 module framing cleanup (23 September)
+
+The earlier English L3 nutrient-flow correction is now carried through the
+module outcome (slide 3) and field assignment (slide 19). The two static JPEGs,
+matching transcripts, regenerated slide MP3s and combined English MP3 were
+released at `db554051`; [the lesson check](../media/studies-animation-quality/small-livestock-l3-lesson-check.md)
+records the FAO source, media evidence and limits. No new Flow or SVG motion
+was used. The stale image brief was aligned and the review-only isiZulu packet
+now flags pages 3 and 19 alongside pages 14–15. Nothing in isiZulu was
+published or described as fluent-reviewed.
+
+Local typecheck, 3,726 passing tests/zero failures/one existing TODO and
+whitespace passed. Exact-head CI `35863371089` passed `test` and `rules`;
+preview `35863371093` passed and build info reported `db55405`. The deployed
+390px sample Student showed slides 3 and 19 and played each revised MP3. Its
+Small Livestock pack refreshed the selectively retired files to 49/49 and
+**On this phone · 24.3 MB**. After a network-disabled reload, both new stills
+and both MP3s loaded and played. This is browser technical evidence only;
+human listening, learner, farmer, practitioner and physical-phone review
+remain open.
+
 ## Vegetables and Staple Crops L3 English release (23 September)
 
 Commits `e6d619fd` and `7c0c30db` qualify the sweet-potato drought claim in

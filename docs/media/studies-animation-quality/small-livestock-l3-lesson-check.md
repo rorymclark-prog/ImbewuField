@@ -9,6 +9,43 @@ deployed preview checks; the historical sections below record the *previous* rel
 and its source hold. No Flow credit was spent. The old code-drawn animation
 remains withdrawn. Farm Finance is excluded.
 
+## Module framing cleanup after the L3 release
+
+The earlier L3 release fixed the main nutrient-flow lesson, but the module's
+slide 3 still promised “closing nutrient loops” and slide 19 asked for a farm
+“loop.” [FAO manure-management guidance](https://www.fao.org/4/X6113E/x6113e06.htm)
+explains that feed brings nutrients in, products carry nutrients out and manure
+can lose nutrients. The module outcome now says livestock move nutrients around
+a farm. The field assignment asks learners to draw one useful link and show
+what comes in and what leaves. The stale L3 image brief is aligned. No new
+species, quantities, compost timing or animal-health instruction was added.
+
+The two corrected English JPEGs, their two MP3s and the combined English MP3
+were released in `db554051`. Slide-3 and slide-19 narration matched the
+exported script at 50/50 and 64/64 normalized WordBoundary words. All 20
+individual clips and the 399.696-second combined track decoded; the other 18
+clips kept their hashes. The [audio verification record](small-livestock-module-framing-audio-verification.json)
+and [deterministic still renderer](review-candidates/render-small-livestock-l1-slides03-19.py)
+are retained. Both actual 1920×1080 JPEGs and 269×151 phone-fit reductions
+were inspected: text and footer are not clipped, although the long slide-19
+copy is small at phone fit. The learner can open the full-size still and read
+the expandable English transcript.
+
+Local typecheck, 3,726 passing tests with zero failures and one existing TODO,
+and whitespace validation passed. Exact-head CI `35863371089` passed both
+`test` and `rules`; preview `35863371093` passed and `/api/build-info`
+reported `db55405`. In the deployed 390px sample Student, slides 3 and 19
+showed the revised stills and titles; the MP3s loaded and advanced beyond 5
+seconds. The selective migration left 45/49 previously saved files, then the
+user-selected 587 KB refresh completed to **On this phone · 24.3 MB**. After
+a network-disabled reload with the Offline badge, both new JPEGs loaded at
+1920×1080 and both new MP3s advanced beyond 4 seconds without media errors.
+The browser network and temporary viewport were restored. This is technical
+browser verification, not physical-phone, human listening, learner, farmer,
+veterinary or practitioner approval. The module-wide isiZulu draft still has
+closed-loop language on pages 3 and 19 and remains unpublished pending fluent
+and local review. No Flow credits were spent and no SVG motion was registered.
+
 ## Corrected release verification
 
 Commit `b336a9ec` passed local typecheck, 3,713 tests with no failures and one
