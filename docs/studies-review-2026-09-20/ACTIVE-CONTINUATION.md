@@ -1,5 +1,22 @@
 # Active Studies continuation — 22 September 2026
 
+## Food Forest Design L1 static seven-layer key release (23 September)
+
+The former slide-5 cutaway had no printed layer names. A deterministic static
+recomposition now keeps that artwork beside the seven names already spoken in
+the English narration, with a site-dependent planning note. The full-size JPEG
+and 390px fit were inspected. Exact-head `test` and `rules` passed for
+`d154265e`; preview run 35808342444 passed and `/api/build-info` reported
+`d154265`. In the deployed 390px lesson, all seven names were readable in the
+269 CSS px image; the English MP3 played and no video was registered. The
+one-time cache migration removed only the old saved slide-5 JPEG. After the
+271 KB replacement was saved, the **17.2 MB** pack showed On this phone; an
+offline browser reload reopened the new still and MP3. The
+[L1 check](../media/studies-animation-quality/food-forest-l1-lesson-check.md)
+records exact observations and limitations. No Flow credit, SVG/code-drawn
+animation, protected teaching edit, species change or Farm Finance work was
+used. Rory, learner, practitioner and fluent-language review remain open.
+
 ## Vegetables L1 Flow transplant release (23 September)
 
 One Veo 3.1 Quality x1 request used 100 displayed Flow credits for slide 6.

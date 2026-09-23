@@ -47,6 +47,21 @@ migration clears only a saved English slide-5 JPEG; narration, neighboring
 slides and other module downloads remain cached, and the learner chooses when
 to fetch the replacement.
 
+The exact-head `test` and `rules` jobs passed for `d154265e` (run
+35808342446); preview run 35808342444 passed. The stable preview's
+`/api/build-info` reported `d154265`. At a 390 × 844 browser viewport, the
+lesson player showed the new key at **269 CSS px** image width; all seven names
+were readable in the actual player. Slide 5 loaded at 1600 px natural width,
+showed zero video elements and played its English MP3. The service-worker
+migration left the existing Food Forest pack at 44 of 45 files, with **271 KB
+left** for this still. After `Finish download`, it reported **On this phone ·
+17.2 MB**. A reload with browser networking disabled showed the Offline badge,
+reopened the new slide-5 still (`naturalWidth=1600`) and played its MP3
+(`readyState=4`, advancing past 10 s), again with zero video elements. Network
+access was restored and playback stopped. This verifies one browser cache path,
+not a physical phone, learner understanding or human visual acceptance. No
+Flow credit was used; Farm Finance was not changed.
+
 ## Historical media observation — 22 September 2026
 
 > **Historical media observation.** The 22 September note below describes a
