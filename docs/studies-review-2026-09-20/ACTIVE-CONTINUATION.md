@@ -1,5 +1,27 @@
 # Active Studies continuation — 23 September 2026
 
+## Small Livestock L2 English release (23 September)
+
+Commit `da28234f` aligned the existing bee Flow clip's title and English
+speech with what it shows: one bee moving between blossoms, without claiming
+that film proves pollen transfer or yield. SANBI-backed regional wording for
+South Africa's native honeybees now matches the body, slide 11 static card,
+transcript and regenerated MP3. The registered x1 Flow asset was reused;
+no new Flow credit or SVG/code-drawn motion was used. The [L2 check](../media/studies-animation-quality/small-livestock-l2-lesson-check.md)
+records the source, media hashes and review limits. The [isiZulu L2 packet](../narration-reviews/small-livestock-l2.zu.review.md)
+is review-only and unpublished.
+
+Local typecheck, 3,722 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35854581929` passed both `test` and
+`rules`; preview `35854581943` passed. In the deployed 390 px sample
+Student, the corrected lesson and transcript appeared, the existing video
+played with new slide 9 audio, and the new slide 11 card and audio loaded.
+The 24.2 MB Small Livestock pack reported On this phone. After a
+network-disabled reload, the Offline badge appeared; slide 9 video/audio
+and slide 11 still/audio reopened and advanced. Connection and viewport
+were restored. No human listening, physical-phone, learner, beekeeper or
+fluent isiZulu approval is claimed. Farm Finance stays excluded.
+
 ## Water Harvesting L3 English release (23 September)
 
 Commit `0146fe0d` adds the South African source-backed roof-material

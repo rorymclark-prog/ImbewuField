@@ -39,9 +39,23 @@ the full track; it does not fetch automatically or delete other lessons.
 The [isiZulu L2 packet](../../narration-reviews/small-livestock-l2.zu.review.md)
 is review-only and unpublished.
 
-Local checks, exact-head CI and deployed phone/offline verification of this
-correction are pending. Human listening, physical-phone, learner, farmer,
-local beekeeper and fluent isiZulu approval are not claimed.
+Local typecheck, 3,722 passing tests / 0 failures / 1 existing TODO, and
+whitespace check passed. Exact-head CI `35854581929` passed `test` and
+`rules`; preview `35854581943` passed. In the deployed 390 px sample Student,
+the corrected body, unchanged quiz, slide 9 title and slide 11 transcript
+appeared. The existing 1280 × 720 Flow clip visibly moved between blossoms;
+its new MP3 and video both reached `readyState=4` and advanced beyond four
+seconds. The slide 11 still loaded at 1920 × 1080; its new MP3 advanced beyond
+six seconds. The card is readable with narration and expandable text at phone
+fit, though its small print benefits from the full-size link.
+
+After a selective refresh, the 24.2 MB Small Livestock pack reported **On this
+phone**. With network disabled and the **Offline** badge visible, the saved
+slide 9 video and MP3 reopened and advanced beyond four seconds. Slide 11's
+corrected still and MP3 also reopened; its MP3 advanced beyond five seconds.
+Network and viewport were restored. This is a browser technical check, not
+human listening, physical-phone, learner, farmer, local beekeeper or fluent
+isiZulu approval.
 
 ## Earlier player and source check — before this correction
 
