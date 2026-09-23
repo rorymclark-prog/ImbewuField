@@ -68,6 +68,42 @@ test('a saved Food Forest layer key replaces only its old still and preserves na
   assert.equal(await rows.get(replacement.url)!.text(), 'new key');
 });
 
+test('a saved Market community network gets the phone-readable still without clearing seed-sharing media', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateMarketCommunityNetworkStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateMarketCommunityNetworkStill\)\.then/);
+
+  const origin = 'https://field.test';
+  const oldStill = new Request(origin + '/course-decks/market-community/en/slide-14.jpg?cached=1');
+  const narration = new Request(origin + '/course-audio/market-community/en/slide-14.mp3');
+  const seedFilm = new Request(origin + '/course-animations/market-community/flow-seed-sharing.mp4');
+  const nextSlide = new Request(origin + '/course-decks/market-community/en/slide-15.jpg');
+  const rows = new Map<string, Response>([
+    [oldStill.url, new Response('small network labels')],
+    [narration.url, new Response('saved speech')],
+    [seedFilm.url, new Response('saved seed handover')],
+    [nextSlide.url, new Response('saved next still')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(oldStill.url), false);
+  for (const request of [narration, seedFilm, nextSlide]) assert.equal(rows.has(request.url), true);
+  assert.equal(rows.has(origin + '/course-decks/market-community/en/.community-network-still-20260923'), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'migration must not silently redownload the still');
+
+  const replacement = new Request(origin + '/course-decks/market-community/en/slide-14.jpg');
+  rows.set(replacement.url, new Response('new network still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement.url)!.text(), 'new network still');
+});
+
 test('a saved Market route diagram replaces only slide 9 and preserves the rest of the lesson', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateMarketL2RouteStill\(\) \{([\s\S]*?)\n\}/)?.[1];

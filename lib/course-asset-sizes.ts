@@ -469,7 +469,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/en/slide-11.jpg': 136160,
   '/course-decks/market-community/en/slide-12.jpg': 117841,
   '/course-decks/market-community/en/slide-13.jpg': 167361,
-  '/course-decks/market-community/en/slide-14.jpg': 207132,
+  '/course-decks/market-community/en/slide-14.jpg': 208457,
   '/course-decks/market-community/en/slide-15.jpg': 738631,
   '/course-decks/market-community/en/slide-16.jpg': 861957,
   '/course-decks/market-community/en/slide-17.jpg': 142492,

@@ -8,6 +8,22 @@ was made. This is technical/source review, not Rory, farmer, learner,
 practitioner, legal or fluent isiZulu approval. Farm Finance is outside this
 pass.
 
+## Slide 14 static still candidate
+
+The original network illustration's small labels and dense narration panel
+became difficult to read at the learner's 269 px image width. A deterministic
+static recomposition keeps the existing title and makes the four spoken
+sharing categories — seed, tools, skills and transport — large, with a
+“Concept diagram — not to scale” note. It does not depict a combined harvest,
+sale or income result. I inspected the 1920 × 1080 output and a proportional
+269 × 151 px fit; the four labels remain distinct and no text or cards overlap.
+The English slide-14 narration and protected lesson text are unchanged. This
+is a still replacement only; slide 14 has no registered animation. The generic seed
+sharing rights qualification remains unresolved as recorded below and is not
+resolved by this diagram. It still needs product-level deployed/player review
+before release. Rory's visual-clearance gate remains in force for the separate
+locally drawn animation, which is not registered in the learner player.
+
 ## Current lesson and actual media
 
 Module slides 14–18 discuss a local network, seed, shared tools, produce loss
