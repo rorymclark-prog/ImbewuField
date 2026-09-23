@@ -3122,6 +3122,523 @@
       "brief": "A path drawn from bottom-left to top-right through three stepping\nstones. Stone 1: a person mulching and starting a small compost pile beside a tap. Stone 2: the\nsame person digging one bed north of the house and planting seedlings with a spacing stick.\nStone 3: the same person harvesting leafy greens into a basket, a jar of seed on the windowsill\nand a notebook in their pocket. A second smaller person (the buddy) waves from the side with a\nphone. Leave three blank rounded boxes beside the stones for writing."
     },
     {
+      "id": "R-ANI-01",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "The leaking bucket",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-01.mp4",
+      "used_in": [
+        "R-D1-06",
+        "R-D1-07"
+      ],
+      "length": "15 s loop, silent",
+      "brief": "A clear bucket with a tin-roof-house shape printed on its side (no text). Generic coins\npour in from a tap at the top (0–4 s). Five holes of different sizes in the bottom; coins trickle\nout of each into small labelled-by-picture dishes: food basket (biggest stream), taxi, light bulb,\nphone, sweets (smallest) (4–10 s). A hand places a patch over the sweets hole and the phone hole;\nthe coin level in the bucket stops falling and starts to rise slightly (10–14 s). Fade to start\n(14–15 s). Poster frame: the bucket with all five leaks."
+    },
+    {
+      "id": "R-ANI-02",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "Three tins",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-02.mp4",
+      "used_in": [
+        "R-D1-15"
+      ],
+      "length": "15 s loop, silent",
+      "brief": "A hand hands over a bunch of greens; a buyer's hand gives coins (0–3 s). The coins drop\ninto a tin marked with a seedling icon (FARM) (3–6 s). A family of three appears around a table;\na hand lifts some coins from the FARM tin into a tin with a house icon (HOME) and a tin with a\npadlock icon (SAVE); some coins stay in FARM (6–12 s). The three tins sit side by side, all with\nsome coins (12–15 s). Poster frame: the three tins."
+    },
+    {
+      "id": "R-ANI-03",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "From order to receipt",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-03.mp4",
+      "used_in": [
+        "R-D3-07"
+      ],
+      "length": "25 s, silent, loopable",
+      "brief": "Five beats, 5 s each, same two characters (a young woman grower, a creche cook).\n1 Phone order: two phones, a speech bubble with a bunch icon and a crate icon. 2 Delivery: the\ngrower hands a crate; the cook counts bunches one by one (a tally appears as dots) and signs a\npaper. 3 Invoice: the grower tears the top copy from a book and hands it over; the copy stays in\nher book (it glows faintly). 4 Paid: a calendar page flips; the cook hands over generic notes.\n5 Receipt: the grower writes and tears out a receipt; the cook tucks it into a folder; both nod.\nPoster frame: beat 3."
+    },
+    {
+      "id": "R-ANI-04",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "How a debt grows — and the reserve that stops it",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-04.mp4",
+      "used_in": [
+        "R-D3-14"
+      ],
+      "length": "20 s, silent",
+      "brief": "Left half: a young man receives a small stack of generic notes from a pair of hands\n(no face) (0–3 s). A calendar flips month by month; each flip, a new, larger stack appears on the\n\"pay back\" side, and his card is shown being held by the other hands (3–10 s). Right half, same\nyoung man: he drops a single coin into a padlock tin each week (calendar flips); the tin fills\nslowly (10–17 s). Final beat: a pump breaks; he pays for the repair from the tin and keeps his\ncard in his own pocket (17–20 s). Poster frame: split screen at 10 s."
+    },
+    {
+      "id": "R-ANI-05",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "The season tin",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-05.mp4",
+      "used_in": [
+        "R-D2-22"
+      ],
+      "length": "24 s loop, silent",
+      "brief": "One tin in the foreground, a garden in the background that changes through 12 months\n(2 s per month), starting in spring (September): sowing → seedlings → growth → full harvest →\nautumn planting → winter greens with frost cloth → dry late winter. The sun moves lower in the\n**northern** sky in winter. The coin level in the tin: falls in September (coins flow to a seed\npacket and compost bag), rises from November, dips in December (a gift) and January (school\nshoes), rises through autumn, flat in winter. In December a few coins jump into a small padlock\ntin; in January they come back to cover the school shoes. Poster frame: January, tin low."
+    },
+    {
+      "id": "R-ANI-06",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "Where the harvest goes",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-06.mp4",
+      "used_in": [
+        "R-D2-09"
+      ],
+      "length": "12 s loop, silent",
+      "brief": "A full basket of greens (0–2 s). Bunches lift out and travel along four paths: to a\nfamily pot on a fire (4 bunches), over a fence to a neighbour (1), to a buyer at a gate who hands\nback coins (4), and one wilts and falls to a goat (1) (2–10 s). Beside the family pot, a coin\nstays in a purse (money saved) (10–12 s). Poster frame: the four paths."
+    },
+    {
+      "id": "R-ANI-07",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "The farm record",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
+      "target": null,
+      "used_in": [
+        "R-D2-03"
+      ],
+      "length": "use full clip, silent",
+      "brief": "Existing clip about keeping a farm record. Use as the backdrop while explaining the\nmoney book columns."
+    },
+    {
+      "id": "R-ANI-08",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "Surplus routes",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
+      "target": null,
+      "used_in": [
+        "R-D3-02"
+      ],
+      "length": "use full clip, silent",
+      "brief": "Existing clip of surplus going to different buyers. Show before the buyer-card ranking."
+    },
+    {
+      "id": "R-ANI-09",
+      "course": "farmer-money",
+      "kind": "animation",
+      "title": "The community network",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-14-community-network.mp4",
+      "target": null,
+      "used_in": [
+        "R-D3-05"
+      ],
+      "length": "use full clip, silent",
+      "brief": "Existing clip of growers connected in a network. Use for \"selling together\"."
+    },
+    {
+      "id": "R-IMG-01",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "The three families",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-01.jpg",
+      "used_in": [
+        "R-D1-01",
+        "R-D1-02",
+        "R-D1-04",
+        "R-D1-16",
+        "R-D3-20"
+      ],
+      "length": "still",
+      "brief": "Three side-by-side scenes, equal width, one per family, same style, a thin Hairline\ndivider between them. **Left — the Dlamini household (rural KZN):** a rondavel and a small\nblock house on a green hillside; a 2 500 ℓ plastic water tank beside the house; trench beds with\nleafy greens, cabbages and a row of maize. A grandmother (70s, headscarf, cardigan) seated on a\nchair; her daughter (40s) standing with a hoe; a young man (early 20s) with a phone in his\npocket; two children (8 and 12) carrying a watering can. **Middle — the Mokoena household\n(peri-urban Free State):** a small RDP-style house with a fence of droppers and wire, flat dry\ngrassland beyond; three raised beds with greens and onions, a small plot of green maize. A woman\n(mid-30s, braids) tying a bunch of greens; a boy (11) and a girl (6) at her side. **Right —\nSizanani Youth Garden (Mpumalanga):** a church building with a corrugated-iron roof; beside it a\nplot with seedling trays on a bench under shade-cloth and greens in rows; three young people\n(two men, one woman, 21–27) carrying buckets of water. Sun high in the north (shadows fall to the\nsouth). No text."
+    },
+    {
+      "id": "R-IMG-02",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Needs and wants picture cards (24)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-02.jpg",
+      "used_in": [
+        "R-D1-10"
+      ],
+      "length": "still (card sheet)",
+      "brief": "One A4 sheet of 24 equal cards (4 × 6 grid, 5 mm gutters, cut lines), each a single\nsimple object on Paper, thick outline, no text: 1 bag of maize meal · 2 loaf of bread · 3\nparaffin/gas bottle · 4 prepaid electricity token (a plain slip beside a light bulb) · 5 bar of\nsoap · 6 school shoes · 7 school uniform jersey · 8 minibus taxi · 9 clinic card and pills ·\n10 plain phone with a talking bubble (airtime) · 11 phone with a game controller shape (data\nfor games) · 12 takeaway chicken box · 13 fizzy cold drink · 14 sweets · 15 a fancy cap ·\n16 a small cash box (stokvel) · 17 a church · 18 a coffin-shaped outline with flowers (burial\nsociety) — drawn gently · 19 a seed packet · 20 a bag of compost · 21 a birthday cake ·\n22 a hair salon chair · 23 a bottle of beer (plain bottle, no label) · 24 a small TV. Print in\ncolour; must still read in black and white."
+    },
+    {
+      "id": "R-IMG-03",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Play money artwork",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-03.jpg",
+      "used_in": [
+        "R-D1-14",
+        "R-D2-04 (and printed for the kit — resources.md §3)"
+      ],
+      "length": "still (print artwork)",
+      "brief": "Artwork for printed **play money** notes and coins. Notes 120 × 60 mm (clearly smaller\nthan real notes, which must not be copied), coins 30 mm circles. Each note: Paper background,\na big plain oval on the left with a simple **crop** drawing (R10 = a bean pod, R20 = a spinach\nleaf, R50 = a cabbage, R100 = a maize cob), a thick colour band down the right side (R10 Leaf,\nR20 Ochre, R50 Ink with a dotted pattern, R100 Forest — Water blue is kept for water only), and an empty\nbox top right where the **value is typeset** large (\"R10\") with the words \"PLAY MONEY — NOT\nLEGAL TENDER\" typeset along the bottom by the layout (not in the art). Coins: R1, R2, R5 as plain\ncircles with a seed pattern, colour Ochre / Mid-green / Ink outline. Deliver as layered\nSVG/PDF so values are typeset text. **Must not resemble any real SA banknote.**"
+    },
+    {
+      "id": "R-IMG-04",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "A scam message on a phone",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-04.jpg",
+      "used_in": [
+        "R-D1-19",
+        "R-D1-20"
+      ],
+      "length": "still",
+      "brief": "Close-up of an older woman's hand holding a plain smartphone. The screen shows an\nempty message bubble (blank — the words are typeset on the slide) and a bright warning triangle\nabove it. Her other hand is raised, palm out, refusing. Background: a kitchen with a tin on a\nshelf. A small shadowy silhouette appears inside the phone screen corner (the unknown sender) —\nneutral, no features. No text."
+    },
+    {
+      "id": "R-IMG-05",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Market day",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-05.jpg",
+      "used_in": [
+        "R-D3-01",
+        "R-D3-06",
+        "R-D3-08"
+      ],
+      "length": "still",
+      "brief": "A busy but friendly informal market scene at a taxi rank on a sunny morning (sun in\nthe north). In the foreground a young woman grower hands a crate of even, clean bunches of greens\nto a creche cook in an apron, who counts them; the grower holds a small duplicate book and pen.\nMiddle ground: a hawker's wheelbarrow stall with greens and tomatoes; a spaza shop with a serving\nhatch and crates (no signage). Background: minibus taxis (no branding), people of all ages.\nGeneric notes changing hands at the hawker stall. No text."
+    },
+    {
+      "id": "R-IMG-06",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "A savings group meeting",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-06.jpg",
+      "used_in": [
+        "R-D1-17"
+      ],
+      "length": "still",
+      "brief": "Ten people (mostly women, two men, one youth) sit on plastic chairs in a circle under\na tree. On a small table in the middle: a metal cash box with **three padlocks**, a ledger book,\na bowl for the social fund. Three different members each hold one key on a string. One woman\ncounts generic notes aloud while another watches; a third writes in the ledger. Warm, orderly,\ntrusted. No text."
+    },
+    {
+      "id": "R-IMG-07",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Bunches weighed and counted",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-07.jpg",
+      "used_in": [
+        "R-D2-10"
+      ],
+      "length": "still",
+      "brief": "At the edge of a garden bed, a group of five (mixed ages) around a crate: one cuts outer\nleaves of leafy greens (leaving the heart), one ties even bunches with rubber bands, one hangs a\nbunch on a simple kitchen hanging scale, one sits on a bucket writing in a harvest record (lines\nonly), one carries a basket. Morning light from the north. No text."
+    },
+    {
+      "id": "R-IMG-08",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Good bunch, bad bunch",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-08.jpg",
+      "used_in": [
+        "R-D3-04"
+      ],
+      "length": "still",
+      "brief": "Two bunches of leafy greens side by side on a plank. **Left (good):** fresh, upright,\nclean, deep green, even leaf size, neatly tied with a band, in the shade of a crate. **Right\n(bad):** wilted, soil on the stems, yellow and holed leaves, mixed sizes, loosely tied, lying in\nthe sun. A small tick-shaped leaf above the left and a drooping leaf above the right (no\nletters or symbols that need translating). No text."
+    },
+    {
+      "id": "R-IMG-09",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Cost cards (12)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-09.jpg",
+      "used_in": [
+        "R-D2-13"
+      ],
+      "length": "still (card sheet)",
+      "brief": "A4 sheet, 12 cards (3 × 4), each one object, no text (amounts are printed on the card\nbacks — printables P17): 1 seed packet (blank) · 2 compost bag · 3 wheelbarrow of kraal manure\n(dashed outline — \"free but not free\") · 4 tap with a watering can (municipal water) · 5 JoJo-style\ntank with rain (dashed outline) · 6 rubber bands · 7 minibus taxi · 8 garlic and chilli\nwith a spray bottle · 9 watering can · 10 a fence section of droppers and wire · 11 a phone with\na talking bubble (airtime to buyers) · 12 a clock beside a woman working (dashed outline — own\ntime)."
+    },
+    {
+      "id": "R-IMG-10",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Buyer cards (6)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-10.jpg",
+      "used_in": [
+        "R-D3-03"
+      ],
+      "length": "still (card sheet)",
+      "brief": "A4 sheet, 6 cards (2 × 3), each one buyer, no text (facts on the backs — printables P16):\n1 a neighbour at a garden gate with a shopping bag · 2 a spaza shop hatch with a shopkeeper and\ncrates (no signage) · 3 a hawker with a wheelbarrow stall at a taxi rank · 4 a creche cook at a\nkitchen door with a delivery crate · 5 a market stall under an awning with a trader and scale ·\n6 five growers loading crates onto one bakkie (selling together)."
+    },
+    {
+      "id": "R-IMG-11",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Record book with picture headings",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l1.jpg",
+      "target": null,
+      "used_in": [
+        "R-D2-02"
+      ],
+      "length": "still",
+      "brief": "Existing lesson image: an elder's hands writing in a record book whose columns have\npicture headings, with a basket of greens and tomatoes. Use full frame — it shows that a money\nbook can work with pictures, not words."
+    },
+    {
+      "id": "R-IMG-12",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Surplus routes",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l2.jpg",
+      "target": null,
+      "used_in": [
+        "optional in R-D3-02 (alternative to R-ANI-08)"
+      ],
+      "length": "still",
+      "brief": "Existing image: a grower's bed with arrows to a market stall, a crate hand-over and a\nhome. Use when there is no screen for the animation."
+    },
+    {
+      "id": "R-IMG-13",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Beds pooling into one crate",
+      "status": "REUSE",
+      "reuse_path": "public/course-images/market-community/market-community-l3.jpg",
+      "target": null,
+      "used_in": [
+        "R-D3-05"
+      ],
+      "length": "still",
+      "brief": "Existing image: five beds with arrows into one large crate of produce. Use for\n\"selling together\"."
+    },
+    {
+      "id": "R-IMG-14",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "A grower selling at a roadside stall",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/record-sale.jpg",
+      "target": null,
+      "used_in": [
+        "R-D2-01"
+      ],
+      "length": "still",
+      "brief": "Existing Studies guide image: a woman grower handing a bunch of greens to a buyer at a\nroadside stall. Use full frame as the Day 2 opener."
+    },
+    {
+      "id": "R-IMG-15",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "A grower checking her costs",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/expense-record.jpg",
+      "target": null,
+      "used_in": [
+        "R-D2-14"
+      ],
+      "length": "still",
+      "brief": "Existing Studies guide image: a grower at a table with a notebook, calculator and seed\npackets, thinking. Use for \"the season's cost\"."
+    },
+    {
+      "id": "R-IMG-20",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "Picture quiz cards (8 × 3)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-IMG-20.jpg",
+      "used_in": [
+        "R-D1-05",
+        "R-D3-19"
+      ],
+      "length": "still (card set, A4 landscape per question)",
+      "brief": "Eight A4 landscape cards, one per quiz question (README table). Each card: a small\nquestion picture on the top third, and three answer panels below marked by a **big letter A, B,\nC typeset by the layout** (the art itself has no letters). 1 · top: coins from a spinach sale;\nA: coins into a purse with other things; B: coins into a tin beside an open book; C: many hands\nreaching. 2 · top: a question-shape above a shopping basket; A: phone with game; B: bag of maize\nmeal; C: fancy cap. 3 · top: a phone ringing; A: an older woman speaking into it, relaxed; B:\nthe same, covering half her mouth; C: her hand putting the phone down, firm. 4 · top: a spaza\nowner receiving 20 bunches; A: bunches at the spaza + an empty hand with a calendar page; B: an\nempty hand; C: bunches on a rubbish heap. 5 · top: seed packet + compost bag + a pile of coins;\nA/B/C: three coin piles of clearly different sizes (small, medium, large — the numbers are\ntypeset). 6 · top: a hand receiving notes; A/B/C: three paths with coin piles of different\nheights and calendars with different numbers of pages. 7 · top: a hand passing a card to another\nhand (lender, hands only); A: a shrug; B: a red stop hand; C: a heart. 8 · top: a row of tins\n(season); A: a gift; B: school shoes and uniform; C: a frost-covered bed."
+    },
+    {
+      "id": "R-IMG-30",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: My Records — Sold tab",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/sold.png",
+      "target": null,
+      "used_in": [
+        "R-D2-07"
+      ],
+      "length": "still",
+      "brief": "Screenshot of *My Records* with the tabs Picked · Sold · Spent · Charts, and *New sale &\ninvoice*, *Past sale / paper invoice*, *Quick sale entry*. Crop to the top two thirds."
+    },
+    {
+      "id": "R-IMG-31",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Money you paid out (with receipt photo)",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/spent-form.png",
+      "target": null,
+      "used_in": [
+        "R-D2-16"
+      ],
+      "length": "still",
+      "brief": "Screenshot of the Spent form: *Receipt photo — Take photo / Choose photo*, *Read a\nreceipt with Lima*, *Crop this cost was for*, *What for*, *Amount (R)*. Highlight the Lima button\nwith an Ochre ring on the slide (not in the image)."
+    },
+    {
+      "id": "R-IMG-32",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Spent tab list",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/spent.png",
+      "target": null,
+      "used_in": [
+        "R-D2-07",
+        "R-D2-16"
+      ],
+      "length": "still",
+      "brief": "Screenshot of the Spent list with costs and *View slip* buttons."
+    },
+    {
+      "id": "R-IMG-33",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Financial sheet",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/financial-sheet.png",
+      "target": null,
+      "used_in": [
+        "R-D2-24"
+      ],
+      "length": "still",
+      "brief": "Screenshot of the Financial sheet: Month / Season / Year, Export, Income, Expenses,\nRecorded cash margin, Yield logged, and the list of entries."
+    },
+    {
+      "id": "R-IMG-34",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Invoice builder",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/invoice.png",
+      "target": null,
+      "used_in": [
+        "R-D3-10"
+      ],
+      "length": "still",
+      "brief": "Screenshot of *Record the sale once*: What are you recording? · Invoice issue date ·\nHas the buyer paid? with the invoice preview on the right."
+    },
+    {
+      "id": "R-IMG-35",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Invoice — payment outstanding",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/payment-review.png",
+      "target": null,
+      "used_in": [
+        "R-D3-11"
+      ],
+      "length": "still",
+      "brief": "Screenshot of an invoice with *Not yet — payment outstanding* selected and *Share PDF*."
+    },
+    {
+      "id": "R-IMG-36",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: an invoice already written on paper",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/paper-invoice.png",
+      "target": null,
+      "used_in": [
+        "R-D3-11"
+      ],
+      "length": "still",
+      "brief": "Screenshot of the paper-invoice route. Show it second, small: \"if you already wrote\nit in your duplicate book, record it like this — once\"."
+    },
+    {
+      "id": "R-IMG-37",
+      "course": "farmer-money",
+      "kind": "image",
+      "title": "App: Picked tab (harvest)",
+      "status": "REUSE",
+      "reuse_path": "public/studies-guides/screens/picked.png",
+      "target": null,
+      "used_in": [
+        "R-D2-10"
+      ],
+      "length": "still",
+      "brief": "Screenshot of the Picked tab. Optional, for app groups who want to log the harvest."
+    },
+    {
+      "id": "R-PHO-01",
+      "course": "farmer-money",
+      "kind": "photo",
+      "title": "A real money book page and tin",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-PHO-01.jpg",
+      "used_in": [
+        "R-D2-08",
+        "R-D2-25",
+        "R-D3-12"
+      ],
+      "length": "still",
+      "brief": "Real photograph, taken by the programme on Day 0: the course money book (P1) open on a\nwooden table, filled in by hand with **Lerato's week** (made-up data — never a learner's real\nbook), a pencil, and a tin with its lid off showing play money. Daylight, from above, no faces.\n1920 × 1080."
+    },
+    {
+      "id": "R-PHO-02",
+      "course": "farmer-money",
+      "kind": "photo",
+      "title": "A till slip glued into the book",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-PHO-02.jpg",
+      "used_in": [
+        "R-D2-15"
+      ],
+      "length": "still",
+      "brief": "Real photograph: a till slip from an agri/hardware shop (seed and compost) glued onto\nthe slip page (P2), the total circled in pen and the money-book line number written beside it.\nBlur or crop any shop name, card digits or personal details. 1920 × 1080."
+    },
+    {
+      "id": "R-PHO-03",
+      "course": "farmer-money",
+      "kind": "photo",
+      "title": "A savings group's cash box",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-PHO-03.jpg",
+      "used_in": [
+        "optional in R-D1-17 (alternative to R-IMG-06)"
+      ],
+      "length": "still",
+      "brief": "Real photograph, **only with the written consent of the group** (POPIA): a savings\ngroup's metal cash box with three padlocks and a ledger, hands only, no faces, no amounts\nvisible. If consent is not given, use R-IMG-06 only.\n\n---\n\n**Poster art (text-free, one per poster)**\n\nEach brief is the **Art brief** of the poster in [posters.md](posters.md). Deliver at the size of\nthe art area: A1 portrait art area 4 000 × 3 400 px (60% of the sheet), A0 landscape art area\n7 000 × 3 000 px. PNG, no text, numbered callout positions marked on a separate layer."
+    },
+    {
       "id": "R-P01",
       "course": "farmer-money",
       "kind": "poster",
@@ -4639,6 +5156,810 @@
       ],
       "length": "still",
       "brief": "Two matching views of the same bed from the same spot, side by side:\nleft \"before\" — bare, cracked soil; right \"after\" — mulched, planted at even spacing, healthy.\nBelow, the mentor and the farmer look at a notebook together; the farmer points at a line. A\nsmall wall-calendar square with a tick. Same fence post in both views so the viewer sees it is\nthe same place."
+    },
+    {
+      "id": "T-P01",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Our learning agreement",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S0",
+        "T-D2-S0",
+        "T-D5-SC"
+      ],
+      "art": "T-P01-ART",
+      "headline": "Our learning agreement",
+      "labels": "1. We made it\n2. We keep it\nQuestion: *What helps you learn?*",
+      "layout": "Headline band; art in the top 45%; labels ① ② as two small ochre tags at the left of\nthe ruled area; ruled writing area 50%; question strip at the bottom.",
+      "teach_it": "```\nT-P01  Our learning agreement                     (≈ 15 min)\n1. ASK: What would help you learn this week? One idea per sticky note.\n2. DO: Groups agree 3; Reporters stick them on the lines.\n3. DO: Cluster and read back. Add missing must-haves (phones, time,\n   right to pass, no correcting language, feedback = thank you,\n   Question Tree).\n4. DO: Everyone signs or marks. A thumbprint counts.\n5. ASK (every morning): Are we keeping it? What needs to change?\nKEY: An agreement made by the group is kept by the group.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P01.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P01.jpg"
+    },
+    {
+      "id": "T-P02",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "How adults learn — the learning cycle",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S1",
+        "T-D1-S2",
+        "T-D5-S4"
+      ],
+      "art": "T-P02-ART",
+      "headline": "How adults learn",
+      "labels": "1. Do\n2. Look back\n3. Make sense\n4. Use it\nQuestion: *Where do your lessons stop?*",
+      "layout": "Headline top; loop fills 60%; ①–④ ochre circles on each arrow; labels band below.",
+      "teach_it": "```\nT-P02  How adults learn                          (≈ 12 min)\n1. DO first: any short hands-on task (fold a seed envelope).\n2. POINT ①: What did you do?\n3. POINT ②: What did you notice? What went wrong?\n4. POINT ③: What is the rule? Why does it work?\n5. POINT ④: When will you use it at home?\n6. SAY: Adults want the why, bring experience, learn from real\n   problems, need respect. Go all the way round.\nKEY: Most bad lessons stop at \"make sense\". Finish with \"use it\".\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P02.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P02.jpg"
+    },
+    {
+      "id": "T-P03",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Every lesson: Look · Try · Talk · Take home",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S1",
+        "T-D1-S2",
+        "T-D1-S4",
+        "T-D5-S2",
+        "all micro-teaching"
+      ],
+      "art": "T-P03-ART",
+      "headline": "Look · Try · Talk · Take home",
+      "labels": "1. Hook them\n2. Hands on\n3. Three questions\n4. One action\nQuestion: *Who talks most in each step?*",
+      "layout": "Headline top; four bands 15% each; ①–④ ochre circles at the left edge of each band;\nlabels at the right edge of each band; question strip at the bottom.",
+      "teach_it": "```\nT-P03  Look · Try · Talk · Take home             (≈ 10 min)\n1. ASK: Think of a lesson you just had. What came first?\n2. POINT ①: Look — a question, object, story or poster reveal.\n3. POINT ②: Try — every learner's hands, in groups of 5.\n4. POINT ③: Talk — What did you do? Why does it work?\n   What will you do at home?\n5. POINT ④: Take home — each group says one action.\n6. ASK: Who talks most in each step? (Learners, except a\n   short set-up.)\nKEY: Try comes before the long explanation.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P03.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P03.jpg"
+    },
+    {
+      "id": "T-P04",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "The teacher-talk meter",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S2",
+        "T-D2-S4",
+        "T-D3-S0",
+        "all micro-teaching"
+      ],
+      "art": "T-P04-ART",
+      "headline": "Teacher talk: 30% or less",
+      "labels": "1. Teacher: 3 in 10\n2. Learners: 7 in 10\n3. One mark a minute\nQuestion: *Who counted today?*",
+      "layout": "Headline top; gauge 35%; people 25%; ① on the Ochre wedges, ② on the Leaf wedges,\n③ on the clipboard; labels band; question strip.",
+      "teach_it": "```\nT-P04  The teacher-talk meter                    (≈ 8 min)\n1. ASK: How much of that lesson was the teacher talking? Guess.\n2. DO: Read the tally — one mark per minute of talk to the room.\n3. SAY: Talk % = marks ÷ minutes × 100. 60-min session = 18 min max.\n4. ASK: Where did the talk happen? Where could it be shorter?\n5. SAY: Biggest cut: give the task first, explain after the Try.\nKEY: Talk is counted, not guessed. ≤ 30%.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P04.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P04.jpg"
+    },
+    {
+      "id": "T-P05",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Outcomes start with a doing word",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D2-S1",
+        "all micro-teach planning"
+      ],
+      "art": "T-P05-ART",
+      "headline": "Start with a doing word",
+      "labels": "1. A doing word\n2. What\n3. How well\nQuestion: *Could you see it by lunch?*",
+      "layout": "Headline top; art 60%; labels band; question strip. A blank flipchart hangs beside\nit for the verbs list in local languages.",
+      "teach_it": "```\nT-P05  Start with a doing word                   (≈ 12 min)\n1. SHOW two outcomes: \"understand compost\" vs \"build a heap\n   1 m wide in green and brown layers\".\n2. ASK: At lunch, how would you know each one happened?\n3. POINT ①②③: doing word · what · how well.\n4. SAY the verbs: make, show, find, measure, explain, name,\n   choose, draw, plan, record.\n5. SAY foggy words to avoid: understand, know, learn about,\n   be aware of, appreciate.\n6. DO: Fix three foggy outcomes in groups.\nKEY: If you can't see it or hear it, it isn't an outcome.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P05.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P05.jpg"
+    },
+    {
+      "id": "T-P06",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Groups of 5 — five jobs",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S0",
+        "T-D3-S1",
+        "every practical"
+      ],
+      "art": "T-P06-ART",
+      "headline": "Five people, five jobs",
+      "labels": "1. Leader\n2. Timekeeper\n3. Materials\n4. Recorder\n5. Reporter\nQuestion: *Whose turn tomorrow?*",
+      "layout": "Headline top; art 60% with ①–⑤ on each person; labels band in two rows; question.",
+      "teach_it": "```\nT-P06  Five people, five jobs                    (≈ 5 min)\n1. POINT ①–⑤: Leader keeps everyone doing, not watching ·\n   Timekeeper calls \"5 minutes left\" · Materials collects and counts\n   the kit · Recorder draws or writes · Reporter speaks for the group.\n2. DO: Each group chooses today's roles in 1 minute.\n3. SAY: Roles rotate every morning — everyone does every job.\n4. SAY: Recorder can draw. Seated roles are real roles.\nKEY: A job for everyone means nobody only watches.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P06.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P06.jpg"
+    },
+    {
+      "id": "T-P07",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "A practical, not a demo",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D3-S1",
+        "T-D3-S2",
+        "T-D3-S4",
+        "T-D5-S2"
+      ],
+      "art": "T-P07-ART",
+      "headline": "Hands on, not a demo",
+      "labels": "1. Kit per group\n2. Demo: 3 minutes\n3. Groups of 5\n4. Stations apart\n5. Hands behind back\n6. One kit? Carousel\nQuestion: *Who watched?*",
+      "layout": "Headline top; art 60% (①② near the crates and facilitator, ③④ on the stations,\n⑤ on her hands, ⑥ on an arrow looping between stations); labels in two rows; question.",
+      "teach_it": "```\nT-P07  Hands on, not a demo                      (≈ 10 min)\n1. STORY (1 min): In 2022, practicals became one person digging while\n   25 watched — even with kit for four groups in the car.\n2. ASK: Why does it happen? Which reasons can we fix?\n3. POINT ①–⑥: count kit per group · show 3 min max · groups of 5\n   with roles · stations 3 m apart · hands behind your back ·\n   one kit = carousel, nobody watches more than 10 min.\n4. SAFETY: tools points down; nobody behind a swing; gloves or soap;\n   hats and water; first aid kit open; lightning = stop.\n5. DO: Plan a carousel for one A-frame and 25 learners.\nKEY: If you take the spade, the practical is over.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P07.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P07.jpg"
+    },
+    {
+      "id": "T-P08",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "The question ladder",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D2-S1",
+        "T-D2-S2",
+        "all micro-teaching"
+      ],
+      "art": "T-P08-ART",
+      "headline": "Climb the question ladder",
+      "labels": "1. Closed\n2. Open\n3. Deeper\n4. Wait 5 seconds\n5. Bounce it back\nQuestion: *What do others think?*",
+      "layout": "Headline top; ladder art 60%, ①–③ at each rung, ④ on the hand, ⑤ on the ball;\nlabels band; question.",
+      "teach_it": "```\nT-P08  Climb the question ladder                 (≈ 12 min)\n1. ASK three: \"Is soil alive?\" · \"What lives in soil?\" ·\n   \"How could you find out if YOUR soil is alive?\"\n2. ASK: Which got the best thinking?\n3. POINT ①: Closed — one right answer; for checking.\n   ②: Open — many answers: what, how, tell me.\n   ③: Deeper — why? how do you know? what if? what will you do?\n4. POINT ④: Count five fingers silently before you speak again.\n5. POINT ⑤: \"What do others think?\" — never answer your own question.\n6. SAY: Not \"Any questions?\" — \"What questions do you have?\"\nKEY: Climb the ladder, then wait.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P08.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P08.jpg"
+    },
+    {
+      "id": "T-P09",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "A poster that teaches",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S3",
+        "T-D2-S3",
+        "T-D5-S2"
+      ],
+      "art": "T-P09-ART",
+      "headline": "A poster that teaches",
+      "labels": "1. One idea\n2. 25 words, max\n3. Short headline\n4. Big picture, no words\n5. Numbered labels\n6. One question\nQuestion: *Readable from 6 m?*",
+      "layout": "Headline top; art 55% with ①–⑥ pointing at the parts of the drawn poster; labels in\ntwo rows; question.",
+      "teach_it": "```\nT-P09  A poster that teaches                     (≈ 15 min + studio)\n1. SHOW a bad poster at 6 m: \"What does it teach?\"\n2. ASK groups: What's wrong? Each problem becomes a rule.\n3. POINT ①–⑥ and match their rules.\n4. ADD: sun in the north · people like our farmers · local\n   materials · works in black and white · no words inside the\n   picture (so it can be translated).\n5. DO: Pencil first. Headline, picture, 3 labels, 1 question.\n6. DO: The 6-metre check with a partner.\nKEY: One idea, few words, a big picture and a question.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P09.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P09.jpg"
+    },
+    {
+      "id": "T-P10",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Two stars and a wish",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S4",
+        "every micro-teaching round",
+        "T-D5-SC"
+      ],
+      "art": "T-P10-ART",
+      "headline": "Two stars and a wish",
+      "labels": "1. Teacher speaks first\n2. Star: specific\n3. Star: specific\n4. Wish: \"next time maybe\"\n5. Say thank you\nQuestion: *What will you try next?*",
+      "layout": "Headline top; art 60% (① on the teacher, ②③ on the stars, ④ on the seedling, ⑤ on the\nhand on heart); labels band; question.",
+      "teach_it": "```\nT-P10  Two stars and a wish                      (≈ 5 min to teach; used daily)\n1. POINT ①: The teacher speaks first: what went well, what I'd change.\n2. POINT ②③: Two stars — specific: \"You let them dig before you\n   explained.\" Not \"nice\".\n3. POINT ④: One wish, as a suggestion: \"Next time maybe…\"\n4. POINT ⑤: The teacher only says \"Thank you. Next time I will…\"\n   No defending.\n5. RULE: Never correct anyone's language, spelling or accent.\nKEY: Feedback is a gift. Say thank you.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P10.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P10.jpg"
+    },
+    {
+      "id": "T-P11",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Wake the room — energiser menu",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D1-S3",
+        "every opening circle and after lunch"
+      ],
+      "art": "T-P11-ART",
+      "headline": "Wake the room",
+      "labels": "1. Sun and Shade\n2. Compost Heap\n3. Web of Life\n4. Rain Storm\n5. Pass the Clap\n6. Seed Swap\nQuestion: *Who leads the next one?*",
+      "layout": "Headline top; 3 × 2 grid 60% with ①–⑥; labels in two rows; question.",
+      "teach_it": "```\nT-P11  Wake the room                             (5 min each)\n1. WHEN: yawning, phones, after lunch — always after lunch.\n2. CHOOSE one that teaches (see facilitation-toolkit §6).\n3. CHECK: nobody forced to touch or run; elders may sit and call.\n4. RUN it for 3–4 minutes. Stop while it's still fun.\n5. ASK: What did it teach?\nKEY: From Day 2, trainees lead the energisers.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P11.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P11.jpg"
+    },
+    {
+      "id": "T-P12",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Teach with what you have (tree talk)",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D2-S2",
+        "T-D2-S3"
+      ],
+      "art": "T-P12-ART",
+      "headline": "Teach with what you have",
+      "labels": "1. Sun behind learners\n2. Poster at eye level\n3. Circle: all see\n4. Your back to wind\n5. Stop, then talk\nQuestion: *What could teach?*",
+      "layout": "Headline top; art 60% with ①–⑤ placed on the sun, the poster, the horseshoe, the wind\nlines and the stake; labels in two rows; question.",
+      "teach_it": "```\nT-P12  Teach with what you have                  (≈ 12 min)\n1. DO: Teach outside first; then ask \"what made it work?\"\n2. POINT ①–⑤: sun behind learners · poster at eye level ·\n   horseshoe so all see the object · your back to the wind ·\n   stop, then talk — never talk while walking.\n3. ASK: What could go wrong outside? (noise, rain, moving shade,\n   dogs) What's your plan?\n4. GROUPS: List 8 free things that teach (box = sun & shade,\n   bottles = runoff, jar = soil, beans = money, string = spacing).\nKEY: The best teaching aid is usually already in the yard.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P12.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P12.jpg"
+    },
+    {
+      "id": "T-P13",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "One lesson, three ways",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D2-S3",
+        "T-D3-S3",
+        "T-D4-S3",
+        "T-D4-S4"
+      ],
+      "art": "T-P13-ART",
+      "headline": "One lesson, three ways",
+      "labels": "1. Poster\n2. Slides\n3. App\n4. Paper backup\nQuestion: *What if the power fails?*",
+      "layout": "Headline top; columns 60% (①②③ at the top of each, ④ on the paper row); labels band;\nquestion.",
+      "teach_it": "```\nT-P13  One lesson, three ways                    (≈ 8 min per mode)\n1. POINT ①: Poster — default. Cover and reveal; point and ask;\n   learners come to the poster; stand to the side.\n2. POINT ②: Slides — test from the back in daylight; TV beats a\n   projector; press B to blank; tablet per group of 5 for clips.\n3. POINT ③: App — My Studies (lessons offline) · Mentor → Training\n   (register, signatures, photos, feedback) · Lima Vision (ask the\n   group \"do we agree?\").\n4. POINT ④: Every mode has a paper twin: flip-book, printed stills,\n   paper register.\n5. ASK: What can a device show that a poster can't? (Movement.)\nKEY: Slides and app are a bonus. Switch in 30 seconds.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P13.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P13.jpg"
+    },
+    {
+      "id": "T-P14",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Hand over, don't take over",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D3-S3",
+        "T-D3-S4",
+        "T-D4-S4",
+        "T-D5-S2",
+        "T-D5-S4"
+      ],
+      "art": "T-P14-ART",
+      "headline": "Hand over, don't take over",
+      "labels": "1. Plan who leads\n2. Say the handover\n3. Partner works, quietly\n4. Touch ear: offer\n5. Star each other\nQuestion: *Who leads next?*",
+      "layout": "Headline top; art 60% (① on a lesson-plan sheet in a hand, ② on the tray, ③ on the\nclipboard, ④ on the inset, ⑤ on the smiles); labels; question.",
+      "teach_it": "```\nT-P14  Hand over, don't take over                (≈ 6 min)\n1. POINT ①: Write who leads Look, Try, Talk, Take home.\n2. POINT ②: Hand over out loud: \"Now Thandi will show you the jar.\"\n3. POINT ③: The one not leading counts talk, hands out kit, watches\n   groups. No side-talk.\n4. POINT ④: Agreed signal = \"may I add?\" The leader says yes or no.\n5. POINT ⑤: Debrief together every evening: star each other first.\nKEY: Two teachers, one lesson — never two lessons at once.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P14.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P14.jpg"
+    },
+    {
+      "id": "T-P15",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Did they learn it?",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D5-S3"
+      ],
+      "art": "T-P15-ART",
+      "headline": "Did they learn it?",
+      "labels": "1. Watch them do it\n2. Picture quiz\n3. Ask them\nQuestion: *What can they do now?*",
+      "layout": "Headline top; three bands 20% each with ①–③; labels band; question.",
+      "teach_it": "```\nT-P15  Did they learn it?                        (≈ 10 min)\n1. POINT ①: Skills checklist — tick = alone · half = with help ·\n   cross = not yet.\n   Tick while they work, not from memory.\n2. POINT ②: Picture quiz, Day 1 and Day 5 — walk to corners;\n   count class totals, not names.\n3. POINT ③: Evaluation — fingers 1–5; stickers on \"understand best\"\n   and \"want more\". The gap = the mentor visit plan.\n4. SAY: It records what they can DO. It's not a qualification.\nKEY: The best proof is a farmer doing the skill.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P15.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P15.jpg"
+    },
+    {
+      "id": "T-P16",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Ready by Day 0 — the course kit",
+      "size": "A1 portrait",
+      "used_in": [
+        "Day 0",
+        "T-D3-SC",
+        "T-D4-SC",
+        "T-D5-S4"
+      ],
+      "art": "T-P16-ART",
+      "headline": "Ready by Day 0",
+      "labels": "1. Crates per group\n2. Posters up\n3. Flip folder\n4. First aid open\n5. Devices charged\nQuestion: *What's missing?*",
+      "layout": "Headline top; flat-lay 60% with ①–⑤; labels band; question.",
+      "teach_it": "```\nT-P16  Ready by Day 0                            (≈ 15 min)\n1. POINT ①: One crate per group + 1 spare set. Materials counts in/out.\n2. POINT ②: Posters up before the session, left to right, seated\n   eye level; they stay up all course.\n3. POINT ③: Flip folder: register, POPIA, session sheets, checklist,\n   quiz, evaluation, daily report, certificates (registered + 10%).\n4. POINT ④: First aid kit open; clinic route written down.\n5. POINT ⑤: Devices charged; lessons saved offline; tested in\n   flight mode.\n6. ASK: What's missing? Fix it today.\nKEY: Day 0 is never the same day as Day 1.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P16.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P16.jpg"
+    },
+    {
+      "id": "T-P17",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Everyone learns",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D2-S3",
+        "T-D4-S1"
+      ],
+      "art": "T-P17-ART",
+      "headline": "Everyone learns",
+      "labels": "1. Pictures, not only words\n2. Language time\n3. A role for everyone\n4. Seated jobs\n5. Ask the elders\nQuestion: *Who isn't taking part?*",
+      "layout": "Headline top; art 60% with ①–⑤; labels in two rows; question.",
+      "teach_it": "```\nT-P17  Everyone learns                           (≈ 15 min)\n1. POINT ①: Assume some don't read. Draw, point, do. Recorders draw.\n2. POINT ②: After you explain, groups retell it in their own\n   language for 2 minutes.\n3. POINT ③: Every person has a role; rotate daily.\n4. POINT ④: Every practical has a seated job.\n5. POINT ⑤: \"How did your grandmother do this?\" Honour it,\n   then add what's new.\n6. NEVER ask someone to read aloud unless they volunteer.\nKEY: Small changes, planned ahead, and a role for everyone.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P17.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P17.jpg"
+    },
+    {
+      "id": "T-P18",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Keep the teacher strong",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D5-S4"
+      ],
+      "art": "T-P18-ART",
+      "headline": "Keep the teacher strong",
+      "labels": "1. Three, then rest\n2. Day 0 always\n3. Save your voice\n4. Hat, water, shade\n5. Evening buddy\n6. Listen, then refer\nQuestion: *What drains you?*",
+      "layout": "Headline top; ring of scenes 60% with ①–⑥; labels in two rows; question.",
+      "teach_it": "```\nT-P18  Keep the teacher strong                   (≈ 10 min)\n1. POINT ①: Max three courses back to back, then a week at home.\n2. POINT ②: Day 0 is a working day. Never skip it.\n3. POINT ③: Use the signal, not shouting. Water all day.\n4. POINT ④: Heavy work before 11:00; sit while groups work.\n5. POINT ⑤: 10 minutes with your co-facilitator every evening.\n6. POINT ⑥: Not a counsellor, bank or taxi. Listen, refer, follow up.\n7. ASK: What drains you? What will you do about it?\nKEY: A tired teacher talks more and listens less.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P18.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P18.jpg"
+    },
+    {
+      "id": "T-P19",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "The 10 elements of agroecology",
+      "size": "A0 landscape",
+      "used_in": [
+        "T-D1-S2",
+        "T-D1-S3",
+        "T-D4-S2"
+      ],
+      "art": "T-P19-ART",
+      "headline": "Ten elements of agroecology",
+      "labels": "1. Diversity\n2. Sharing knowledge\n3. Synergies\n4. Efficiency\n5. Recycling\n6. Resilience\n7. Human values\n8. Food culture\n9. Fair governance\n10. Solidarity economy\nQuestion: *Which is our strongest?*",
+      "layout": "A0 landscape. Headline band; art 65% with ①–⑩; labels in two rows of five; question.",
+      "teach_it": "```\nT-P19  Ten elements of agroecology               (≈ 20 min with card sort)\n1. DO first: groups sort 20 practice photos under the 10 elements.\n2. SAY: FAO agreed these 10 in 2018 to describe agroecology.\n3. POINT ①–⑩ (FAO names): Diversity · Co-creation & sharing of\n   knowledge · Synergies · Efficiency · Recycling · Resilience ·\n   Human & social values · Culture & food traditions ·\n   Responsible governance · Circular & solidarity economy.\n4. ASK: Which 3 is our village strongest in? Which is weakest?\n5. SAY: Farming AND the food system — knowledge, culture,\n   fair markets, who decides.\nKEY: Agroecology is the practice and the food system together.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P19.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P19.jpg"
+    },
+    {
+      "id": "T-P20",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Twelve design principles",
+      "size": "A0 landscape",
+      "used_in": [
+        "T-D1-S2"
+      ],
+      "art": "T-P20-ART",
+      "headline": "12 design principles",
+      "labels": "1. Observe\n2. Catch energy\n3. Get yields\n4. Take feedback\n5. Use renewables\n6. No waste\n7. Pattern first\n8. Integrate\n9. Small, slow\n10. Value diversity\n11. Use edges\n12. Embrace change",
+      "layout": "A0 landscape. Headline band; clock-face art 70% with ①–⑫; labels as a ring or two\nrows of six. (No question line — at 25 words; the question is on the card.)",
+      "teach_it": "```\nT-P20  12 design principles                      (≈ 10 min, trainers' reference)\n1. SAY: Permaculture = 3 ethics + a design toolbox. These are\n   David Holmgren's widely taught 12.\n2. POINT each: 1 Observe & interact · 2 Catch & store energy ·\n   3 Obtain a yield · 4 Self-regulate & accept feedback ·\n   5 Use & value renewables · 6 Produce no waste · 7 Design from\n   patterns to details · 8 Integrate rather than segregate ·\n   9 Small & slow solutions · 10 Use & value diversity ·\n   11 Use edges & value the margins · 12 Creatively respond to change.\n3. ASK: Which one did the \"good garden\" (F-P03) use?\n4. SAY: Course 1 teaches six simpler garden principles (F-P04).\nKEY: Ethics say why; principles say how to design.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P20.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P20.jpg"
+    },
+    {
+      "id": "T-P21",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Test it side by side",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D3-S2",
+        "T-D5-S0"
+      ],
+      "art": "T-P21-ART",
+      "headline": "Test it side by side",
+      "labels": "1. Two plots, one change\n2. Look every week\n3. Measure and draw\n4. The group decides\nQuestion: *What will you test?*",
+      "layout": "Headline top; art 60% with ①–④; labels band; question.",
+      "teach_it": "```\nT-P21  Test it side by side                      (≈ 10 min + a season)\n1. ASK: How could we find out if compost really helps — ourselves?\n2. POINT ①: Two plots (or pots). Change ONE thing only.\n3. POINT ②: Same day every week, the group looks together.\n4. POINT ③: Measure (a marked stick) and draw what you see.\n5. POINT ④: The group decides what worked and what to try next.\n6. SAY: This is how farmer field schools learn — by comparing.\nKEY: Farmers believe what they see in their own trial.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P21.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P21.jpg"
+    },
+    {
+      "id": "T-P22",
+      "course": "teach-the-teachers",
+      "kind": "poster",
+      "title": "Calm in a difficult moment",
+      "size": "A1 portrait",
+      "used_in": [
+        "T-D4-S1"
+      ],
+      "art": "T-P22-ART",
+      "headline": "Calm in a difficult moment",
+      "labels": "1. Breathe\n2. Name it kindly\n3. Listen, ask\n4. Offer a way on\n5. Follow up privately\nQuestion: *Is everyone safe?*",
+      "layout": "Headline top; art 60% with ①–④ in the main scene and ⑤ on the inset; labels; question.",
+      "teach_it": "```\nT-P22  Calm in a difficult moment                (≈ 25 min with role plays)\n1. POINT ①: Slow down. Lower your voice.\n2. POINT ②: \"I can see you feel strongly about this.\"\n3. POINT ③: \"Tell me more.\" Ask; don't argue.\n4. POINT ④: A choice, a role, the Question Tree, a talk at tea.\n5. POINT ⑤: Never shame anyone in front of the group.\n6. SAFETY: If anyone is at risk, stop and get help. Know the help\n   lines (GBV Command Centre 0800 428 428 · check locally).\n7. DO: Role plays in threes — facilitator, learner, observer.\nKEY: You're not a counsellor. Keep people safe, and refer.\n```",
+      "status": "NEW",
+      "target": "public/course-media/teach-the-teachers/posters/T-P22.pdf",
+      "phone_target": "public/course-media/teach-the-teachers/posters/T-P22.jpg"
+    },
+    {
+      "id": "T-P01-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P01 · Our learning agreement",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P01-ART.jpg",
+      "used_in": [
+        "T-P01",
+        "T-D1-S0",
+        "T-D2-S0",
+        "T-D5-SC"
+      ],
+      "length": "still",
+      "brief": "Top 45% only. Eight adults of mixed ages sit in a circle on low chairs\nand a bench under a wide shade tree; a gogo in a headscarf, a young man in a cap, a woman with\na notebook, an older man with a walking stick, two young women, an extension officer in a\nwork shirt. In the centre, all their hands rest together on a large blank sheet of paper on the\nground. Warm afternoon light from the upper left (north). Lower 55% of the poster is left as\nplain Paper with faint Hairline ruled lines for writing the group's rules and signatures."
+    },
+    {
+      "id": "T-P02-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P02 · How adults learn — the learning cycle",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P02-ART.jpg",
+      "used_in": [
+        "T-P02",
+        "T-D1-S1",
+        "T-D1-S2",
+        "T-D5-S4"
+      ],
+      "length": "still",
+      "brief": "A large circular loop with four thick Mid-green arrows running\nclockwise, and a scene in each quarter. Top: a young woman folds a paper seed envelope (doing).\nRight: she and a friend look closely at her torn envelope, the friend pointing (looking back).\nBottom: a group of four crouches around a simple drawing scratched in the soil with a stick,\none nodding (making sense). Left: at home, the same woman pours bean seed into a finished\nenvelope at a kitchen table (using it). Centre of the loop: empty Paper."
+    },
+    {
+      "id": "T-P03-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P03 · Every lesson: Look · Try · Talk · Take home",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P03-ART.jpg",
+      "used_in": [
+        "T-P03",
+        "T-D1-S1",
+        "T-D1-S2",
+        "T-D1-S4",
+        "T-D5-S2",
+        "all micro-teaching"
+      ],
+      "length": "still",
+      "brief": "Four horizontal bands stacked top to bottom, one scene each, same\npeople throughout. ① A facilitator holds up a real cabbage leaf with holes; seated learners\nlean forward, two pointing. ② A group of five kneels at a bed, every pair of hands in the soil,\nthe facilitator standing back, hands behind her back. ③ The group sits in a circle beside a\nposter on a fence, one learner speaking, others listening. ④ A learner walks along a village\npath toward a house carrying a seedling tray. Each band has a thin Hairline divider."
+    },
+    {
+      "id": "T-P04-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P04 · The teacher-talk meter",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P04-ART.jpg",
+      "used_in": [
+        "T-P04",
+        "T-D1-S2",
+        "T-D2-S4",
+        "T-D3-S0",
+        "all micro-teaching"
+      ],
+      "length": "still",
+      "brief": "Top half: a big half-circle gauge, like a fuel gauge, split into ten\nequal wedges — three Ochre wedges on the left, seven Leaf-green wedges on the right (the Leaf\nwedges also carry small dot pattern so it works in black and white). A thick Ink needle points\ninto the third Ochre wedge. Bottom half: a facilitator stands to one side with an open hand\ngesturing toward a busy group of five who are talking and working; beside the facilitator a\nco-facilitator makes tally marks on a clipboard (marks drawn as simple strokes)."
+    },
+    {
+      "id": "T-P05-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P05 · Outcomes start with a doing word",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P05-ART.jpg",
+      "used_in": [
+        "T-P05",
+        "T-D2-S1",
+        "all micro-teach planning"
+      ],
+      "length": "still",
+      "brief": "A young farmer stands proudly beside a finished, neatly layered\ncompost heap about waist high, pointing to its layers. A facilitator beside her holds a\nclipboard and draws a tick shape. In the background, a clock shape on a wall shows the hands\nnear twelve (midday). Three big ochre callout circles sit on: the farmer's pointing hand (①),\nthe heap (②), and the heap's visible layers (③)."
+    },
+    {
+      "id": "T-P06-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P06 · Groups of 5 — five jobs",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P06-ART.jpg",
+      "used_in": [
+        "T-P06",
+        "T-D1-S0",
+        "T-D3-S1",
+        "every practical"
+      ],
+      "length": "still",
+      "brief": "A group of five around a half-built compost heap, each clearly doing\na different job: a young woman pointing and directing (Leader); a young man holding up a phone\nshowing a timer shape (Timekeeper); an older man carrying a crate of tools (Materials); a gogo\nseated on an upturned bucket drawing on a clipboard (Recorder); a middle-aged woman standing\nwith her hand raised, facing out to an unseen room (Reporter). Mixed ages and genders."
+    },
+    {
+      "id": "T-P07-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P07 · A practical, not a demo",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P07-ART.jpg",
+      "used_in": [
+        "T-P07",
+        "T-D3-S1",
+        "T-D3-S2",
+        "T-D3-S4",
+        "T-D5-S2"
+      ],
+      "length": "still",
+      "brief": "Two panels. Small top-left panel (one third width), drawn in faded\ngreys: one facilitator digging while a crowd of about twenty stands watching, arms folded; a\nthick Ochre diagonal bar crosses the panel (a \"no\" sign made of a shape, not a letter). Large\nmain panel: four groups of five at four stations spaced apart on open ground, every person\nworking — digging, carrying, mixing, measuring; each station has its own small pile of tools\nand a crate. The facilitator walks between stations with her hands clasped behind her back."
+    },
+    {
+      "id": "T-P08-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P08 · The question ladder",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P08-ART.jpg",
+      "used_in": [
+        "T-P08",
+        "T-D2-S1",
+        "T-D2-S2",
+        "all micro-teaching"
+      ],
+      "length": "still",
+      "brief": "A tall wooden ladder with three rungs leans against a tree. On the\nbottom rung, a small figure beside one short speech-bubble shape (empty). On the middle rung,\ntwo figures with several branching bubble shapes. On the top rung, a figure looks out over a\nwhole garden, hand on chin, with a bubble shaped like a sprouting seed. At the ladder's foot:\nan open hand with five fingers spread (wait), and a group of three passing a ball between them\n(bounce back)."
+    },
+    {
+      "id": "T-P09-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P09 · A poster that teaches",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P09-ART.jpg",
+      "used_in": [
+        "T-P09",
+        "T-D1-S3",
+        "T-D2-S3",
+        "T-D5-S2"
+      ],
+      "length": "still",
+      "brief": "A fence with a teaching poster hung on it by cable ties. The poster\nis drawn as a simple layout: a dark top band, a big clear drawing of a bean plant with three\nnumbered ochre circles, a band of short grey bars where labels go (bars, not letters), and a\nthin bar at the bottom. On the ground, a line of six footprints leads away from the fence to a\nyoung man and a gogo standing about six metres away, both reading the poster easily, the gogo\npointing at it."
+    },
+    {
+      "id": "T-P10-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P10 · Two stars and a wish",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P10-ART.jpg",
+      "used_in": [
+        "T-P10",
+        "T-D1-S4",
+        "every micro-teaching round",
+        "T-D5-SC"
+      ],
+      "length": "still",
+      "brief": "A small group of four seated in a circle after a lesson. A young\nwoman (the teacher) speaks first, hand open. Opposite her, an older man with a clipboard\n(the observer) speaks kindly; above him float two big Ochre star shapes and one Leaf-green\nsprouting seedling shape. The teacher, now with hand on heart, listens and nods. A third\nperson smiles and holds up one finger (another star)."
+    },
+    {
+      "id": "T-P11-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P11 · Wake the room — energiser menu",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P11-ART.jpg",
+      "used_in": [
+        "T-P11",
+        "T-D1-S3",
+        "every opening circle and after lunch"
+      ],
+      "length": "still",
+      "brief": "A 3 × 2 grid of small scenes, each with a Hairline frame:\n(1) people standing in the \"shade\" of a partner, a sun shape in the upper part marked by a\ncompass arrow pointing up (north); (2) people jumping, sitting and waving in a circle; (3) a\nball of string criss-crossing a circle of people; (4) people rubbing hands, clicking and\nstamping; (5) a circle passing a clap, hands mid-clap; (6) two people swapping small paper\nseed packets. In one scene an elder sits on a chair calling the game."
+    },
+    {
+      "id": "T-P12-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P12 · Teach with what you have (tree talk)",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P12-ART.jpg",
+      "used_in": [
+        "T-P12",
+        "T-D2-S2",
+        "T-D2-S3"
+      ],
+      "length": "still",
+      "brief": "A teaching circle under a large shade tree. A poster is tied to the\ntrunk at the eye level of seated people. Learners sit in a horseshoe facing the trunk, the sun\nshape behind them in the upper part of the scene (north, marked by a small compass arrow\npointing up), so their faces are in shade. The facilitator stands to one side of the poster,\nwind lines blowing from behind her toward the group. On the ground in the middle of the\nhorseshoe: a cardboard house model, two cut-open 2 ℓ bottles with soil, a clear jar with\nlayered soil, two tins with beans, a torch and a coil of knotted string. At the edge, a small\ngroup stands still at a marker stake (a stop)."
+    },
+    {
+      "id": "T-P13-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P13 · One lesson, three ways",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P13-ART.jpg",
+      "used_in": [
+        "T-P13",
+        "T-D2-S3",
+        "T-D3-S3",
+        "T-D4-S3",
+        "T-D4-S4"
+      ],
+      "length": "still",
+      "brief": "Three tall columns. Left: a poster on a fence with a group of five\nstanding, one pointing. Middle, top: a laptop connected to a TV on a table in a shaded room with\nseated learners; middle, bottom: a group of five crowded around a tablet held by one of them.\nRight: a group of five watching a phone; beneath it, a hand signing on a phone screen with a\nfinger. Under each column, a small drawing of the paper version — a poster roll (left), a\nring-bound flip-book of pictures (middle), a paper register on a clipboard (right) — joined to\nthe column above by a curved arrow."
+    },
+    {
+      "id": "T-P14-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P14 · Hand over, don't take over",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P14-ART.jpg",
+      "used_in": [
+        "T-P14",
+        "T-D3-S3",
+        "T-D3-S4",
+        "T-D4-S4",
+        "T-D5-S2",
+        "T-D5-S4"
+      ],
+      "length": "still",
+      "brief": "In front of a seated group, one facilitator hands a seedling tray to a\nsecond facilitator, like passing a relay baton; both smile. Behind them, a third small scene of\nthe same second facilitator quietly carrying a crate of materials and making marks on a\nclipboard while the first one teaches. In a small inset, a facilitator touches her ear with one\nfinger (the signal) and her partner nods."
+    },
+    {
+      "id": "T-P15-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P15 · Did they learn it?",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P15-ART.jpg",
+      "used_in": [
+        "T-P15",
+        "T-D5-S3"
+      ],
+      "length": "still",
+      "brief": "Three stacked scenes. ① A co-facilitator with a clipboard watches a\nfarmer adjust the string on an A-frame; on the clipboard three simple symbols: a tick, a half\ncircle, a cross. ② A room with three corners, each with a large picture card on the wall\n(a sun low, a mulched bed, a bare bed); learners walk to the corners. ③ A group holds up\nfingers (one to five) toward a big sheet covered in round stickers."
+    },
+    {
+      "id": "T-P16-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P16 · Ready by Day 0 — the course kit",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P16-ART.jpg",
+      "used_in": [
+        "T-P16",
+        "Day 0",
+        "T-D3-SC",
+        "T-D4-SC",
+        "T-D5-S4"
+      ],
+      "length": "still",
+      "brief": "A flat-lay seen from above on a green tarp: four crates, each with\na different plant symbol drawn on it (bean, pumpkin, maize cob, marula fruit), holding spades,\nstring, jars and tins; a poster tube; an open flip folder with forms (lines, not letters); a\nfirst aid kit with a cross symbol, open; a clipboard with a register grid; a stack of blank\ncertificates; two 20 ℓ drums; a phone, a tablet and a power bank; a small A-frame. At the top\nedge, a facilitator at a hall doorway ticks a list."
+    },
+    {
+      "id": "T-P17-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P17 · Everyone learns",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P17-ART.jpg",
+      "used_in": [
+        "T-P17",
+        "T-D2-S3",
+        "T-D4-S1"
+      ],
+      "length": "still",
+      "brief": "A mixed group of five at a raised table outside, mixing seedling\nsoil: a gogo seated, showing seeds in her palm to others; a young man in a wheelchair at the\ntable's end mixing soil with both hands; a young mother with a baby tied on her back; an older\nman seated close to the facilitator, watching her face as she speaks; two young women talking\nside by side (one explaining to the other). A poster with only pictures hangs behind them."
+    },
+    {
+      "id": "T-P18-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P18 · Keep the teacher strong",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P18-ART.jpg",
+      "used_in": [
+        "T-P18",
+        "T-D5-S4"
+      ],
+      "length": "still",
+      "brief": "A facilitator stands at the centre, relaxed, with six small scenes\naround her in a ring: (1) three small hall shapes followed by a house with a garden (three\ncourses, then home); (2) a facilitator alone setting out chairs in an empty hall (Day 0);\n(3) a facilitator drinking from a water bottle, one hand raised as a quiet signal;\n(4) a facilitator sitting in shade in a wide hat while groups work in the background;\n(5) two facilitators talking on a bench at sunset; (6) a facilitator gently pointing a learner\ntoward a clinic building (a cross symbol on the building)."
+    },
+    {
+      "id": "T-P19-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P19 · The 10 elements of agroecology",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P19-ART.jpg",
+      "used_in": [
+        "T-P19",
+        "T-D1-S2",
+        "T-D1-S3",
+        "T-D4-S2"
+      ],
+      "length": "still",
+      "brief": "A wide, busy but orderly village landscape, read left to right, with\nten clear scenes: (1) a field of maize, beans and pumpkin growing together with a fruit tree;\n(2) a woman farmer showing neighbours her trench bed; (3) chickens scratching under fruit trees\nbeside the garden; (4) a compost heap next to a bed (no bags of fertiliser); (5) kitchen scraps\ngoing into a compost bin; (6) a mulched garden still green beside a dry bare field; (7) youth and\nelders planning together around a drawing on the ground; (8) a family eating together from shared\nbowls with local greens; (9) a group at a water tank beside a hand-drawn roster board (lines,\nnot words); (10) a small market stall and a seed-swap table with neighbours. Sun in the north\n(upper part of the scene)."
+    },
+    {
+      "id": "T-P20-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P20 · Twelve design principles",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P20-ART.jpg",
+      "used_in": [
+        "T-P20",
+        "T-D1-S2"
+      ],
+      "length": "still",
+      "brief": "A homestead seen from above in the centre (house, tank, beds, fruit\ntrees, chicken run, swale on the slope), surrounded by twelve small round vignettes like a\nclock face: (1) a woman sitting watching her yard; (2) a tank full of water and a seed jar;\n(3) a hand picking spinach; (4) a person checking a flooded bed and redirecting water;\n(5) the sun and rain falling on a roof; (6) kitchen scraps feeding chickens feeding compost;\n(7) a view of a whole slope, then a single bed; (8) chickens beside the vegetable garden;\n(9) one well-made bed; (10) many crops mixed; (11) plants thriving along a fence line;\n(12) a farmer planting drought-tolerant crops under a hot sky. Thin arrows join each vignette\nto the part of the homestead it relates to."
+    },
+    {
+      "id": "T-P21-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P21 · Test it side by side",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P21-ART.jpg",
+      "used_in": [
+        "T-P21",
+        "T-D3-S2",
+        "T-D5-S0"
+      ],
+      "length": "still",
+      "brief": "Two small plots side by side, divided by a string line. Left plot:\nbare soil, small pale plants. Right plot: mulched soil with compost, taller dark-green plants.\nA group of five farmers crouches between them: one measures a plant against a marked stick,\none draws on a clipboard, one holds a handful of soil from each side, two discuss, pointing.\nAlong the bottom, three small panels show the same two plots getting further apart in growth\nover time (week 1, 4, 8 — shown only by plant size, no numbers)."
+    },
+    {
+      "id": "T-P22-ART",
+      "course": "teach-the-teachers",
+      "kind": "poster-art",
+      "title": "Artwork for T-P22 · Calm in a difficult moment",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-P22-ART.jpg",
+      "used_in": [
+        "T-P22",
+        "T-D4-S1"
+      ],
+      "length": "still",
+      "brief": "Main scene: a facilitator stands relaxed with open palms, shoulders\ndown, facing a learner who is standing and gesturing angrily; other learners seated watch.\nSmall inset lower right: the same facilitator and learner seated together on a bench with cups\nof tea, talking quietly, the learner calmer. No weapons, no aggression beyond gesture."
     }
   ]
 }

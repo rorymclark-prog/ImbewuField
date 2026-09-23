@@ -14,6 +14,8 @@ tables no wider than 4 columns.
   slides.md        every slide, deck by deck (parsed)
   media.md         every image / animation / photo the slides and posters need (parsed)
   resources.md     kit list, per-group materials, learner-brought, substitutes, budget
+  (optional) printables.md, prompt-cards.md, visit-playbook.md, app-track.md,
+  online-programme.md, micro-teaching-bank.md — course-specific extras
 ```
 
 ## IDs

@@ -127,6 +127,8 @@ Send the photo of the register + this report on the programme WhatsApp group eac
 > soil, seedlings, natural pest management, seed saving and garden records.
 > Facilitators: ________ ________ Organisation: ________ [logo] [funder logo]
 
-Attendance certificates are given for attending **at least 4 of 5 days**. They are **not** a
+Attendance certificates are given for attending **at least 4 of 5 days** (Course 1 and 3;
+for the 3-day Courses 2 and 4 and the 2-day Course 5: **every day**, with a catch-up session
+for one missed half-day). Change the course name and topics line to match the course. They are **not** a
 qualification and not a statement of accredited competence. The ceremony matters: hand each
 certificate personally, say the name clearly, shake hands, take a photo (with consent).

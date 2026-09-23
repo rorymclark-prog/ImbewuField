@@ -290,7 +290,7 @@ Screen:
 - Window faces north
 - Mark winter shade with sticks
 - Which way does the shadow point?
-Media: T-ANI-13
+Media: T-IMG-07, T-ANI-13
 Poster: F-P05
 Notes:
 T-D2-S2 steps 2–3. Cardboard house per group, torch or real sun. Stick shadow points south at noon.
