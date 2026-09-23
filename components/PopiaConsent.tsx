@@ -28,12 +28,13 @@ const GOAL_DEFS: GoalDef[] = [
 ];
 
 /** Pill toggle — 34 × 20 px, green when on, muted when off */
-function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={on}
+      aria-label={label}
       onClick={() => onChange(!on)}
       style={{
         display: 'inline-flex',
@@ -122,6 +123,9 @@ export default function PopiaConsent() {
       style={{ background: 'rgba(32,25,15,0.40)', backdropFilter: 'blur(6px)' }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="popia-dialog-heading"
         className="w-full max-w-sm rounded-2xl p-6"
         style={{
           background: '#FFFEFA',
@@ -152,6 +156,7 @@ export default function PopiaConsent() {
                 <ShieldCheck size={22} stroke="#EAF3E2" strokeWidth={1.7} />
               </div>
               <h2
+                id="popia-dialog-heading"
                 className="font-display font-bold"
                 style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.15 }}
               >
@@ -182,7 +187,7 @@ export default function PopiaConsent() {
                     {t('popiaStoreDesc')}
                   </div>
                 </div>
-                <Toggle on={storeData} onChange={setStoreData} />
+                <Toggle on={storeData} onChange={setStoreData} label={t('popiaStoreLabel')} />
               </div>
 
               {/* Optional toggle */}
@@ -195,7 +200,7 @@ export default function PopiaConsent() {
                     {t('popiaShareDesc')}
                   </div>
                 </div>
-                <Toggle on={shareNgo} onChange={setShareNgo} />
+                <Toggle on={shareNgo} onChange={setShareNgo} label={t('popiaShareLabel')} />
               </div>
             </div>
 
@@ -233,6 +238,7 @@ export default function PopiaConsent() {
           <>
             {/* Heading */}
             <h2
+              id="popia-dialog-heading"
               className="font-display font-bold mb-1"
               style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.2 }}
             >

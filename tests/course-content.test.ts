@@ -9,6 +9,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
+import { isCourseTranslationLearnerReady, learnerLessonForLanguage, type CourseTranslationRecord } from '../lib/course-localization.ts';
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
@@ -124,4 +125,39 @@ test('the pairing and cross-link guards actually catch bad data (synthetic fixtu
     (l) => (l.relatedLessonIds ?? []).some((id) => !fixtureIndex.has(id) && id !== l.id),
   );
   assert.deepEqual(danglingFailures.map((l) => l.id), ['fx-4']);
+});
+
+test('an isiZulu lesson cannot reach learners with missing review or a changed quiz answer', () => {
+  const lesson = COURSE_MODULES[0].lessons[0];
+  const published = {
+    title: 'Reviewed title',
+    body: 'Reviewed body',
+    keyPoints: lesson.keyPoints.map((_, i) => `Reviewed point ${i}`),
+    quiz: lesson.quiz.map((q, i) => ({
+      q: `Reviewed question ${i}`,
+      options: q.options.map((_, j) => `Reviewed option ${j}`),
+      correct: q.correct,
+      rationale: `Reviewed rationale ${i}`,
+    })),
+  };
+  const record: CourseTranslationRecord = {
+    lessonId: lesson.id,
+    language: 'zu',
+    status: 'published',
+    published,
+    approvals: [
+      { reviewer: 'Language reviewer', role: 'fluent-isiZulu', reviewedAt: '2026-09-23', accepted: true },
+      { reviewer: 'Farming reviewer', role: 'local-farming', reviewedAt: '2026-09-23', accepted: true },
+    ],
+  };
+
+  assert.equal(learnerLessonForLanguage(lesson, 'zu', { ...record, approvals: [] }).title, lesson.title);
+  assert.equal(learnerLessonForLanguage(lesson, 'zu', { ...record, status: 'review-draft' }).title, lesson.title);
+  assert.equal(learnerLessonForLanguage(lesson, 'zu', {
+    ...record, published: { ...published, quiz: published.quiz.map((q, i) => i === 0 ? { ...q, correct: (q.correct + 1) % q.options.length } : q) },
+  }).title, lesson.title);
+  assert.equal(isCourseTranslationLearnerReady(lesson, { ...record, published: { ...published, quiz: [] } }), false);
+  assert.equal(isCourseTranslationLearnerReady(lesson, { ...record, lessonId: 'different-lesson' }), false);
+  assert.equal(isCourseTranslationLearnerReady(lesson, record), true);
+  assert.equal(learnerLessonForLanguage(lesson, 'zu', record).title, published.title);
 });

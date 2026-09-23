@@ -11,9 +11,11 @@ import { cropByKey } from '@/lib/crop-catalog';
 import { getCropArt } from '@/lib/crop-art';
 import { miniPlanFromCanvas, type MiniPlan } from '@/lib/mini-plan';
 import styles from './SiteCropPlanPreview.module.css';
+import { useLanguage } from '@/lib/i18n';
 
 /** A read-only view of the same beds and planting rows the crop planner opens. */
 export default function SiteCropPlanPreview({ siteId, siteName }: { siteId: string; siteName: string }) {
+  const { t } = useLanguage();
   const [preview, setPreview] = useState<{ plan: MiniPlan | null; beds: number; plots: number; crops: string[] } | null>(null);
   useEffect(() => {
     const refresh = () => {
@@ -35,11 +37,11 @@ export default function SiteCropPlanPreview({ siteId, siteName }: { siteId: stri
     };
   }, [siteId]);
 
-  const counts = preview ? [preview.beds ? `${preview.beds} bed${preview.beds === 1 ? '' : 's'}` : '', preview.plots ? `${preview.plots} plot${preview.plots === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ') : '';
-  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={`${preview?.crops.length ? 'Open' : 'Start'} crop plan for ${siteName}`}>
+  const counts = preview ? [preview.beds ? t('cropPlanBedCount').replace('{count}', String(preview.beds)) : '', preview.plots ? t('cropPlanPlotCount').replace('{count}', String(preview.plots)) : ''].filter(Boolean).join(' · ') : '';
+  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={t(preview?.crops.length ? 'cropPlanOpenAria' : 'cropPlanStartAria').replace('{siteName}', siteName)}>
     <div className={styles.overview}>
       <div className={styles.plan}>{preview?.plan ? <MiniPlanPlate plan={preview.plan} /> : <Sprout size={36} aria-hidden="true" />}</div>
-      <div><strong>Crop plan</strong><span>{preview ? counts || 'Add your growing areas' : 'Loading your plan…'}</span><span className={styles.action}>{preview?.crops.length ? `${preview.crops.length} crops planned` : 'Start crop plan'} <ArrowUpRight size={15} aria-hidden="true" /></span></div>
+      <div><strong>{t('cropPlanTitle')}</strong><span>{preview ? counts || t('cropPlanAddGrowingAreas') : t('cropPlanLoading')}</span><span className={styles.action}>{preview?.crops.length ? t('cropPlanPlannedCount').replace('{count}', String(preview.crops.length)) : t('cropPlanStartAction')} <ArrowUpRight size={15} aria-hidden="true" /></span></div>
     </div>
     {!!preview?.crops.length && <div className={styles.crops}>
       {preview.crops.slice(0, 4).map(key => { const crop = cropByKey(key); const art = getCropArt(key); const name = crop?.name ?? key; return <span key={key} title={name} className={styles.crop}>{art ? <img src={art} alt={name} width={44} height={44} loading="lazy" /> : <span role="img" aria-label={name}>{crop?.icon ?? '🌱'}</span>}</span>; })}

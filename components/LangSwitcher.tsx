@@ -4,7 +4,7 @@ import { Globe } from 'lucide-react';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 
 export default function LangSwitcher() {
-  const { lang, setLang } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
 
   return (
     <div className="flex items-center gap-1.5 px-3.5 rounded-full flex-shrink-0"
@@ -13,7 +13,7 @@ export default function LangSwitcher() {
       <select
         value={lang}
         onChange={(e) => setLang(e.target.value)}
-        aria-label="App language"
+        aria-label={t('language')}
         className="font-mono outline-none cursor-pointer"
         style={{ background: 'transparent', color: '#20190F', border: 'none', fontSize: 20 }}
       >

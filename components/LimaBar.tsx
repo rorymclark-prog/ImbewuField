@@ -113,7 +113,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
         onClose={() => { setPhotoOpen(false); setPhoto(null); }}>
         <div className="sticky top-0 z-10 flex items-center justify-between gap-3 p-4" style={{ background: '#FFFEFA' }}>
           <h2 id="lima-photo-title" className="font-semibold">{t('limaWhoIs')}</h2>
-          <button type="button" aria-label="Close" className="flex min-h-11 min-w-11 items-center justify-center"
+          <button type="button" aria-label={t('limaClosePhotoDialog')} className="flex min-h-11 min-w-11 items-center justify-center"
             onClick={() => dialogRef.current?.close()}><X size={22} /></button>
         </div>
         <div className="p-4 pt-0">

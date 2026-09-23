@@ -381,9 +381,14 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
   assert.doesNotMatch(source,/bottom:|bottom-\[|zIndex:\s*9999/);
   const menu=readFileSync(new URL('../components/NavDrawer.tsx',import.meta.url),'utf8');
   // Rory's September wording decision uses Tour while retaining an explicit exit.
-  assert.match(menu,/Tour controls/);
-  assert.match(menu,/Exit tour/);
-  assert.match(menu,/18 gardens &amp; completed reports/);
+  assert.match(menu,/aria-label=\{t\('navTourControls'\)\}/);
+  assert.match(menu,/onClick=\{\(\)=>\{exitSampleMode\(\);window.location.href='\/home';\}\}/);
+  assert.match(menu,/t\('navExitTour'\)/);
+  assert.match(menu,/t\('navTourGardensReports'\)/);
+  const dictionary=readFileSync(new URL('../lib/i18n.tsx',import.meta.url),'utf8');
+  assert.match(dictionary,/navTourControls: 'Tour controls'/);
+  assert.match(dictionary,/navExitTour: 'Exit tour'/);
+  assert.match(dictionary,/navTourGardensReports: '18 gardens and completed reports'/);
 });
 
 const { validVisitPhotos } = await import('../lib/field-teams');

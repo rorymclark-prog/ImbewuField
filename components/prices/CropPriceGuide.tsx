@@ -3,6 +3,7 @@
 import { AlertTriangle, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
 import { getCropArt } from '@/lib/crop-art';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * The negotiation screen itself: one crop, two numbers, in the biggest type on the page — and,
@@ -12,8 +13,13 @@ import { getCropArt } from '@/lib/crop-art';
  * confidence badge is not a footnote here.
  */
 export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onChangeCrop: () => void }) {
+  const { t, lang } = useLanguage();
   const { price } = crop;
   const sourced = price.confidence === 'sourced';
+  const pricedDate = priceDateLabel(price);
+  const dateForDisplay = lang === 'zu' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => ({
+    January: 'Januwari', February: 'Februwari', March: 'Mashi', April: 'Ephreli', May: 'Meyi', June: 'Juni', July: 'Julayi', August: 'Agasti', September: 'Septhemba', October: 'Okthoba', November: 'Novemba', December: 'Disemba',
+  })[month] ?? month) : pricedDate;
   return (
     <div className="flex flex-col items-center text-center">
       <button
@@ -34,7 +40,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
           minHeight: 44,
         }}
       >
-        <ChevronLeft size={18} strokeWidth={2} /> All crops
+        <ChevronLeft size={18} strokeWidth={2} /> {t('priceAllCrops')}
       </button>
 
       {getCropArt(crop.key) ? (
@@ -61,12 +67,12 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
       >
         {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {sourced ? 'Real market price' : 'Rough estimate — not confirmed'}
+          {t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
         </span>
       </div>
       <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
         {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
-        Priced {priceDateLabel(price)} — always check today&apos;s real price before you agree.
+        {t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
       </div>
 
       <div style={{ width: '100%', marginTop: 22, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -75,7 +81,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'rgba(247,242,233,0.78)', letterSpacing: '0.1em' }}
           >
-            Wholesale
+            {t('priceWholesale')}
           </div>
           <div
             className="font-display font-bold"
@@ -84,7 +90,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.wholesalePerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'rgba(247,242,233,0.78)' }}>
-            per kg — closer to what a trader or market buyer pays
+            {t('pricePerKgTrader')}
           </div>
         </div>
 
@@ -100,7 +106,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}
           >
-            Retail
+            {t('priceRetail')}
           </div>
           <div
             className="font-display font-bold"
@@ -109,7 +115,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.retailPerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted)' }}>
-            per kg — shop shelf price, not a farm-gate price
+            {t('pricePerKgShop')}
           </div>
         </div>
       </div>

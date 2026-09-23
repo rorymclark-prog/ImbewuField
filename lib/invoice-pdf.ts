@@ -43,7 +43,7 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
     pdf.setFontSize(8);
     setInk(MUTED);
     pdf.text(doc.footer, PAGE.width / 2, FOOTER_Y, { align: 'center' });
-    pdf.text(`Invoice ${doc.number} · page ${page}`, PAGE.width - M, FOOTER_Y, { align: 'right' });
+    pdf.text(`${doc.labels.invoice} ${doc.number} · ${doc.labels.page} ${page}`, PAGE.width - M, FOOTER_Y, { align: 'right' });
   };
 
   /** Start a new page, carrying the column headings so a continued table stays readable. */
@@ -55,7 +55,7 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(8);
     setInk(MUTED);
-    pdf.text(`Invoice ${doc.number} continued`, M, y);
+    pdf.text(`${doc.labels.invoice} ${doc.number} · ${doc.labels.continued}`, M, y);
     y += 14;
     setRule(RULE);
     pdf.line(M, y, PAGE.width - M, y);
@@ -125,16 +125,16 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(9.5);
   setInk(INK);
-  pdf.text(`Invoice ${doc.number}`, M, y);
+  pdf.text(`${doc.labels.invoice} ${doc.number}`, M, y);
   pdf.setFont('helvetica', 'normal');
   setInk(MUTED);
-  const meta = [`Issued ${doc.issuedLabel}`];
-  if (doc.dueLabel) meta.push(`Due ${doc.dueLabel}`);
-  if (doc.referenceLabel) meta.push(`Your ref ${doc.referenceLabel}`);
+  const meta = [`${doc.labels.issued} ${doc.issuedLabel}`];
+  if (doc.dueLabel) meta.push(`${doc.labels.due} ${doc.dueLabel}`);
+  if (doc.referenceLabel) meta.push(`${doc.labels.buyerReference} ${doc.referenceLabel}`);
   pdf.text(meta.join('   ·   '), PAGE.width - M, y, { align: 'right' });
   if (doc.paperReferenceLabel) {
     y += 15;
-    const paperLines = pdf.splitTextToSize(`Original paper invoice: ${doc.paperReferenceLabel}`, CONTENT_W);
+    const paperLines = pdf.splitTextToSize(`${doc.labels.originalPaperInvoice}: ${doc.paperReferenceLabel}`, CONTENT_W);
     pdf.text(paperLines, M, y);
     y += Math.max(0, paperLines.length - 1) * 12;
   }
@@ -145,7 +145,7 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   y += 24;
   pdf.setFontSize(7.5);
   setInk(MUTED);
-  pdf.text('BILL TO', M, y);
+  pdf.text(doc.labels.billTo.toUpperCase(), M, y);
   y += 14;
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(12);
@@ -160,8 +160,8 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   y += 18;
   pdf.setFontSize(7.5);
   setInk(MUTED);
-  pdf.text('ITEM', M, y);
-  pdf.text('AMOUNT', PAGE.width - M, y, { align: 'right' });
+  pdf.text(doc.labels.item.toUpperCase(), M, y);
+  pdf.text(doc.labels.amount.toUpperCase(), PAGE.width - M, y, { align: 'right' });
   y += 7;
   setRule(RULE);
   pdf.line(M, y, PAGE.width - M, y);
@@ -228,7 +228,7 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(7.5);
     setInk(MUTED);
-    pdf.text('HOW TO PAY', M, y);
+    pdf.text(doc.labels.howToPay.toUpperCase(), M, y);
     y += 13;
     pdf.setFontSize(9.5);
     setInk(INK);
