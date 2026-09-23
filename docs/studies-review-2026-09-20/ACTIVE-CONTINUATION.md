@@ -1,5 +1,19 @@
 # Active Studies continuation — 22 September 2026
 
+## Market Gardening L1 static slide 4 improvement (23 September)
+
+The prior 390px check found that slide 4's five-column record table was too
+small to read at phone fit. A new deterministic **static** still makes Family
+food, Sales, Gifts and Compost separate large-label rows. Its 272 CSS px
+browser view was inspected in a 390px viewport; the source lesson and English
+narration are unchanged. The one-time course-cache migration invalidates only
+the old saved slide-4 JPEG and preserves the other downloaded lessons. This
+branch asset still needs exact deployed and offline verification before the
+improvement is called released. The [L1 check](../media/studies-animation-quality/market-l1-current-lesson-check.md)
+records the source and local visual evidence. No Flow credit or protected edit
+was used; code-drawn motion remains held for Rory's visual clearance. Farm
+Finance is excluded.
+
 ## Vegetables L1/L4 current English media check (23 September)
 
 The stable 390px Student preview now uses stills and English MP3s, with no

@@ -635,6 +635,21 @@ async function migrateSoilCoverStills() {
   await cache.put(marker, new Response('Improved soil-cover stills'));
 }
 
+// The Market record still now uses phone-size destination labels. A saved pack keeps
+// old bytes at this URL until explicitly cleared; invalidate only this picture so
+// the learner chooses when to download the replacement with their own airtime.
+async function migrateMarketRecordStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/en/.record-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/market-community/en/slide-04.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable harvest destinations'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -650,7 +665,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateMarketRecordStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

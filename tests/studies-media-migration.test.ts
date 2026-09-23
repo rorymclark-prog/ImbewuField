@@ -2,6 +2,37 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
+test('a saved Market record gets its clearer still without discarding other downloaded lessons', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateMarketRecordStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateMarketRecordStill\)\.then/);
+
+  const origin = 'https://field.test';
+  const oldStill = new Request(origin + '/course-decks/market-community/en/slide-04.jpg?cached=1');
+  const otherSlide = new Request(origin + '/course-decks/market-community/en/slide-05.jpg');
+  const otherModule = new Request(origin + '/course-decks/food-forest/en/slide-04.jpg');
+  const rows = new Map<string, Response>([
+    [oldStill.url, new Response('small labels')],
+    [otherSlide.url, new Response('saved')],
+    [otherModule.url, new Response('saved')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(oldStill.url), false);
+  assert.equal(rows.has(otherSlide.url), true);
+  assert.equal(rows.has(otherModule.url), true);
+  assert.equal(rows.has(origin + '/course-decks/market-community/en/.record-still-20260923'), true);
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(otherSlide.url), true);
+});
+
 test('updated Studies cannot pair old downloaded speech with corrected teaching; unrelated files survive', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateStudiesMedia\(\) \{([\s\S]*?)\n\}/)?.[1];

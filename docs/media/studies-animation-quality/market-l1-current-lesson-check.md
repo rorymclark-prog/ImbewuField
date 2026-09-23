@@ -1,6 +1,30 @@
 # Market Gardening L1 English lesson check — 23 September 2026
 
-**Status:** The five-slide English player, current stills and saved-pack offline
+## Slide 4 phone-readable still replacement — 23 September
+
+The deployed check below identified a concrete access gap: the five-column
+record table shrank its destination labels and lower caption at phone fit. A
+new **static** 1920 × 1080 still now keeps the four source destinations as
+large separate rows: Family food, Sales, Gifts and Compost. The long season
+explanation remains in the unchanged English narration and readable lesson
+text; the still says “Season overview.” It introduces no amount, date, yield,
+price, customer or promised outcome. The existing code-drawn animation is
+still held, and no Flow request was made.
+
+The deterministic source is `render-market-record-still.py`, and the local
+asset is `public/course-decks/market-community/en/slide-04.jpg` (SHA-256
+`d4218b9f523ad7effe33ba7290b3b7bcdf2c4c21b83c3df80f4243c5bbe25d8c`).
+The rendered JPEG was inspected at full size and at the actual 272 CSS px
+image width inside a 390 px browser viewport. All four destination labels
+remain visually readable at that width. This is local visual QA pending the
+exact deployed preview and offline migration check; it is not farmer,
+learner, practitioner, human or isiZulu approval. A one-time service-worker
+migration clears only the old saved slide-4 still so a learner can choose when
+to download the improved file, leaving the rest of the pack intact.
+
+## Earlier deployed check — before the slide 4 replacement
+
+**Status at this earlier checkpoint:** The five-slide English player, then-current stills and saved-pack offline
 path were checked. No new Flow request, animation registration, protected lesson
 or quiz edit, narration edit, species, farming figure or `PLAN_VERSION` change
 was made. This is a technical check, not Rory, farmer, learner, practitioner or
