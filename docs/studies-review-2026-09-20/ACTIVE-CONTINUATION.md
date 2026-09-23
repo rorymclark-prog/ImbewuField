@@ -1,5 +1,29 @@
 # Active Studies continuation — 22 September 2026
 
+## Reading the Landscape L2 English release (23 September)
+
+The source-backed sun, shade and frost correction is in commit `7b26b635`.
+The lesson and quiz now qualify seasonal sun and aspect; cold-air pooling is
+tied to observed low hollows, not a south-facing label. The unsupported
+2 m shade duration and north-facing wall frost promise have been removed from
+learner text, narration, transcript and slide 11. A static slide 11 and three
+slide MP3s plus the full English track were generated; WordBoundary matches,
+full decode and exact combined duration are in the [L2 check](../media/studies-animation-quality/reading-landscape-l2-lesson-check.md).
+The saved-pack migration targets only changed English L2 media. Local
+typecheck, 3,717 passing tests / 0 failures / 1 existing TODO and whitespace
+check passed. Exact-head CI `35844410603` passed both `test` and `rules`;
+preview `35844410585` passed and build info reported `7b26b63`. At 390 px,
+the deployed sample Student showed the corrected lesson, quiz and slide 11.
+The still loaded at 1920 px and its English MP3 advanced beyond five seconds.
+The 48-file, 12.5 MB pack reported On this phone. After a network-disabled
+reload, the Offline badge appeared and slide 11 plus its MP3 reopened;
+audio advanced beyond four seconds. Network and viewport were restored.
+This is a browser technical check, not physical-phone or human approval.
+No Flow credit or SVG animation was used. Reading Landscape L3 has a parallel
+[review-only isiZulu packet](../narration-reviews/reading-landscape-l3.zu.review.md)
+for fluent/local review; no ZU learner content was published. Farm Finance
+remains excluded.
+
 ## Reading the Landscape L1 English release (23 September)
 
 The next coordinated English lesson correction covers water exits, A-frame

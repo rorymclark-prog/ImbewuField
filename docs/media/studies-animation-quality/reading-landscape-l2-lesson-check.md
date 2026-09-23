@@ -1,6 +1,6 @@
 # Reading the Landscape L2 English lesson check — 23 September 2026
 
-## Coordinated English correction and release candidate
+## Coordinated English correction and deployed check
 
 The English lesson, quiz, narration and transcript now qualify the northern
 sun path by season and location. Aspect is a tendency, while observed low
@@ -16,7 +16,10 @@ agriculture guidance](https://www.kzndard.gov.za/images/Documents/Horticulture/V
 identifies pawpaw frost sensitivity and citrus frost risk.
 
 The slide 11 text card is a new 1920 × 1080 static still showing site
-observation and low-hollow frost checks. The English slide 8, 10 and 11 MP3s
+observation and low-hollow frost checks. Its public JPEG SHA-256 is
+`856d4d61bc47e837d8d589082dac16accbe5ec77de1b309c5bed9e181927f569`.
+The final JPEG was inspected full size and at the 269 px player fit. The
+English slide 8, 10 and 11 MP3s
 and combined track were regenerated from the matching script. The [audio
 verification](reading-landscape-l2-english-audio-verification.json) records
 exact normalized WordBoundary text matches, full MP3 decode and a
@@ -26,9 +29,20 @@ replacements. The held sun-shadow SVG animation remains outside the player;
 no Flow credits or SVG motion were used. The [isiZulu L2 packet](../../narration-reviews/reading-landscape-l2.zu.review.md)
 is review-only and no learner-facing ZU content changed.
 
-Publication, CI and deployed phone/offline verification are pending for this
-candidate. Human listening, learner, farmer, practitioner and fluent isiZulu
-approval are not claimed.
+Local typecheck, 3,717 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35844410603` passed both `test` and
+`rules`; preview `35844410585` passed and `/api/build-info` reported
+`7b26b63`. At 390 × 844, the deployed sample Student showed the corrected
+lesson and quiz. The slide 11 picture loaded at 1920 px and its English MP3
+played beyond five seconds with `readyState=4`; the player sequence still
+included the static slides 8–10 and no held SVG motion. The Reading the
+Landscape pack finished refreshing its changed files and reported **On this
+phone · 12.5 MB**. After a network-disabled reload, the Offline badge was
+visible; slide 11 reopened at 1920 px and its English MP3 advanced beyond
+four seconds with no media error. Network and temporary viewport settings
+were restored. This is one browser's technical check, not physical-phone
+or human listening. Learner, farmer, practitioner and fluent isiZulu approval
+are not claimed.
 
 ## Earlier 22 September baseline
 
