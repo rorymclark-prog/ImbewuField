@@ -33,6 +33,50 @@ test('a saved Market record gets its clearer still without discarding other down
   assert.equal(rows.has(otherSlide.url), true);
 });
 
+test('Market Community L3 refreshes only corrected English slide and full lesson audio', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateMarketCommunityL3SeedRightsTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateMarketCommunityL3SeedRightsTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-audio/market-community/en/slide-15.mp3',
+    '/course-audio/market-community/en/slide-20.mp3',
+    '/course-audio/market-community/en/full.mp3',
+  ];
+  const keep = [
+    '/course-animations/market-community/flow-market-route.mp4',
+    '/course-decks/market-community/en/slide-15.jpg',
+    '/course-decks/market-community/en/slide-20.jpg',
+    '/course-decks/market-community/en/slide-14.jpg',
+    '/course-decks/market-community/zu/slide-15.jpg',
+    '/course-audio/market-community/zu/full.mp3',
+    '/course-decks/food-forest/en/slide-15.jpg',
+  ];
+  const rows = new Map<string, Response>([
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/market-community/en/.l3-seed-rights-20260923'), true);
+
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected audio'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected audio');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Food Forest layer key replaces only its old still and preserves narration', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateFoodForestLayerKeyStill\(\) \{([\s\S]*?)\n\}/)?.[1];

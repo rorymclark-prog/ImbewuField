@@ -1625,7 +1625,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "15": [
         "Neighbours can share different varieties and the work of saving seed.",
         "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
-        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed."
+        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+        "Before exchanging seed, check whether the variety is protected and whether permission is needed."
       ],
       "16": [
         "Tool sharing puts expensive equipment within reach of the group.",
@@ -1651,7 +1652,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "20": [
         "Choose one real decision from your farm record.",
         "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
-        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Record responsibilities and review what happens."
+        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
       ]
     }
   }

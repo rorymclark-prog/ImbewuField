@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '71f4a1be', changes: [
+    'Check variety rights and permission before sharing seed with neighbours.',
+    'The quiz separates seed quality from exchange permission.',
+  ], tour: [
+    { title: 'Review community seed sharing', where: 'Studies → Market Gardening & Community → lesson 3', href: '/student',
+      detail: 'Read the seed-sharing caution, answer the quiz and listen to slide 15.' },
+  ] },
   { when: '23 September 2026', sha: 'dbf4a468', changes: [
     'Bee lesson 2 now describes what its flower video actually shows.',
     'Its honeybee ranges are described more carefully for South Africa.',

@@ -1,5 +1,38 @@
 # Market Gardening L3 English lesson and seed-sharing check — 23 September 2026
 
+## Coordinated English correction candidate — 23 September
+
+The source hold below is addressed in the English lesson body, key point,
+first quiz answer and rationale, slide 15 narration/transcript and slide 20
+field action narration/transcript. The short instruction is: “Before
+exchanging seed, check whether the variety is protected and whether permission
+is needed.” The quiz keeps crop-specific seed-quality practices separate from
+exchange permission. This follows the official [Plant Breeders' Rights Act
+12 of 2018, sections 7 and 10](https://www.gov.za/sites/default/files/gcis_document/201903/4234729-3-2019plantbreedersact12of2018.pdf),
+which took effect [1 June 2025](https://www.gov.za/news/media-statements/agriculture-commencement-plant-breeders-rights-act-2018-and-regulations-23).
+It does not determine whether any seed shown is protected or prohibit every
+farmer exchange. The course infographic's alt text no longer suggests that
+pooling harvests multiplies the produce; the image itself is unchanged.
+
+The existing slide 15 Flow handover is unchanged and cannot establish seed
+identity, viability or legal permission. No new Flow credit or SVG motion was
+used. English slide 15 and 20 speech and the full track were regenerated.
+The [verification report](market-l3-english-audio-verification.json) records
+exact normalized WordBoundary matches (61/61 and 66/66), full decode and a
+387.120-second full track equal to the sum of all 20 slide clips. SHA-256:
+slide 15 `bf65157ae8e76da3d1e3e9982774213e28f7ac5afd41cbbf67f55878c495692d`,
+slide 20 `37e2838d023df57dd17e0c2b3e83e903ebbea3f234f8022a7a7ee0aa9e94b91f`,
+full `7dbe32a755f2ae7f372258c97169a06f84aa1cf494a7f8c176d1eba1fabb133c`.
+Selective saved-pack migration retires only those three English MP3s, without
+automatic downloads. The [isiZulu packet](../../narration-reviews/market-community-l3.zu.review.md)
+is review-only and unpublished.
+
+Local checks, exact-head CI and deployed phone/offline verification are
+pending. Qualified legal, practical seed-saving, learner, farmer,
+human-listening and fluent isiZulu approval are not claimed.
+
+## Earlier player and source check — before this correction
+
 **Status:** Keep the registered slide-15 Flow film for the narrow seed-handover
 action it shows; keep slide 14 still-only. A protected seed-sharing wording
 hold is recorded below. No new Flow request, SVG/code-drawn registration,

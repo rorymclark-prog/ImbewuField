@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 800 files, 337.1 MB total.
+// 800 files, 338.0 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -131,7 +131,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/intro-permaculture/en/slide-20.mp3': 126720,
   '/course-audio/intro-permaculture/en/slide-21.mp3': 93744,
   '/course-audio/intro-permaculture/en/slide-22.mp3': 106704,
-  '/course-audio/market-community/en/full.mp3': 2255420,
+  '/course-audio/market-community/en/full.mp3': 2322956,
   '/course-audio/market-community/en/slide-01.mp3': 94176,
   '/course-audio/market-community/en/slide-02.mp3': 98064,
   '/course-audio/market-community/en/slide-03.mp3': 107568,
@@ -146,12 +146,12 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/market-community/en/slide-12.mp3': 102960,
   '/course-audio/market-community/en/slide-13.mp3': 107136,
   '/course-audio/market-community/en/slide-14.mp3': 81648,
-  '/course-audio/market-community/en/slide-15.mp3': 141984,
+  '/course-audio/market-community/en/slide-15.mp3': 176400,
   '/course-audio/market-community/en/slide-16.mp3': 86400,
   '/course-audio/market-community/en/slide-17.mp3': 127584,
   '/course-audio/market-community/en/slide-18.mp3': 119232,
   '/course-audio/market-community/en/slide-19.mp3': 137664,
-  '/course-audio/market-community/en/slide-20.mp3': 127440,
+  '/course-audio/market-community/en/slide-20.mp3': 160560,
   '/course-audio/plant-guilds/en/full.mp3': 6533997,
   '/course-audio/plant-guilds/en/slide-01.mp3': 59373,
   '/course-audio/plant-guilds/en/slide-02.mp3': 196077,

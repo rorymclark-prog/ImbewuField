@@ -1329,11 +1329,11 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "market-community-l3",
         "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
-        "infographicAlt": "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
+        "infographicAlt": "Five small farms linked to a shared collection point for their separate harvests.",
         "title": "Building Community Food Networks: Strength in Numbers",
-        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
         "keyPoints": [
-          "Record seed identity, source and quality when sharing",
+          "Record seed identity, source and quality, and check if permission is needed before sharing",
           "Agree care, booking and repair responsibilities for shared tools",
           "Measure losses and net returns for each selling route",
           "Combine shared experience with qualified help when needed"
@@ -1343,12 +1343,12 @@ export const COURSE_MODULES: CourseModule[] = [
             "q": "Neighbours want to share saved seed. What helps make the shared seed useful?",
             "options": [
               "Mix all varieties without labels",
-              "Agree isolation, selection, labelling, storage and germination checks",
+              "Agree seed-quality checks and check whether permission is needed to share the variety",
               "Assume sharing automatically improves every seed lot",
               "Rely only on the size of the group"
             ],
             "correct": 1,
-            "rationale": "Sharing access is useful, but quality still depends on crop-specific seed-saving practices and reliable records."
+            "rationale": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing."
           },
           {
             "q": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
