@@ -23,6 +23,15 @@ These counts describe files and draft blocks, not approved translations. The exi
 course status command currently flags nine isiZulu review holds across the ten modules, including
 Plant Guilds and the two modules with existing Seeds/Plant Guilds audio.
 
+**Voice direction from Rory, 23 September:** use the same woman's isiZulu voice as Seeds:
+Microsoft `zu-ZA-ThandoNeural` at `-12%` rate (0.88). The 165 clips above already have local,
+unpublished review takes using that exact voice and rate in the 20 September review pack; do not
+generate duplicate takes merely to match the voice. These are separate from the learner audio
+manifest and must not be presented as released recordings. Compare each take with the eventual
+approved source and obtain fluent listening/pronunciation review. Re-record only clips whose
+approved words, timing or delivery require it. Seeds English used a different female voice,
+`en-ZA-LeahNeural`; Rory's direction here applies to the isiZulu course voice.
+
 The review queue says comparison packets cover all 27 lessons outside Seeds and Plant Guilds, with
 complete review-only drafts for 25 of those lessons. Water L4 and Soil L3 are the two without full
 drafts because of their separate source holds. Those 25 drafts still need first-language isiZulu
@@ -41,8 +50,10 @@ and local farming review. Farm Finance is outside this count.
    `docs/narration/<module>.zu.md` script. Preserve the existing slide numbering and source claims.
    The current `course-narration-export.mjs` exports whatever is in that path; it does not itself
    establish that the text has been approved.
-4. Export numbered recording sheets, record one clip per slide and a full track, then import the
-   module with `scripts/import-course-audio.mjs`. Its checks compare block counts and duration-based
+4. Export numbered recording sheets. Reuse a matching local review take only when its source
+   hash and spoken words match the approved script and listening review accepts it; otherwise
+   record the affected clip with `zu-ZA-ThandoNeural` at `-12%`. Then import the module with
+   `scripts/import-course-audio.mjs`. Its checks compare block counts and duration-based
    pacing; they do not judge isiZulu fluency, pronunciation, meaning, audio quality, or reviewer
    acceptance. Listen to every imported clip against its approved text before release.
 5. Add/update the module’s `lib/course-audio.ts` manifest in the same change as audio files. Check

@@ -1,5 +1,30 @@
 # Active Studies continuation — 23 September 2026
 
+## IsiZulu interface preview and exact Seeds voice (23 September)
+
+Branch `codex/studies-animation-direction` at `a78837bd` has an expanded
+isiZulu interface preview across the Student/player, daily records, crop
+planner, calendar, surveys, sample workspaces, staff dashboards, account,
+community, tour, Journal and Lima Vision controls. Sample-mode language now
+survives hard navigation without changing the real account preference. The
+deployed branch preview `/api/build-info` reported `a78837b`; its Student,
+sample chooser, Journal and Vision screens were inspected in isiZulu. The
+exact-head CI test and rules jobs and preview deploy passed, after local
+typecheck, full suite (3,731 pass, zero fail, one existing TODO) and
+whitespace check. This is a preview, not a whole-app isiZulu release: lessons,
+quizzes, substantive fieldwork text and AI output remain English where no
+reviewed edition exists; route-level coverage is incomplete.
+
+Rory chose the exact Seeds isiZulu woman's voice for future recordings:
+`zu-ZA-ThandoNeural` at `-12%`. The 165 locally stored review takes for the
+other eight modules already use that voice and rate. Do not duplicate them;
+source-match and listen after fluent review, then re-record only mismatches.
+They are not learner media. See [audio readiness](ISIZULU-AUDIO-RECORDING-READINESS.md)
+and [app readiness](ISIZULU-APP-READINESS.md) for release gates. The two
+remaining full-lesson source holds are Water L4 greywater and Soil L3 mulch/
+leachate; none of the 25 complete isiZulu drafts has first-language/local
+farming approval. Farm Finance course remains excluded.
+
 ## Small Livestock and Market isiZulu full review drafts (23 September)
 
 The [Small Livestock handoff](../narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md)
