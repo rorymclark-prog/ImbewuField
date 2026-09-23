@@ -1,4 +1,36 @@
-# Reading the Landscape L2 English lesson check — 22 September 2026
+# Reading the Landscape L2 English lesson check — 23 September 2026
+
+## Coordinated English correction and release candidate
+
+The English lesson, quiz, narration and transcript now qualify the northern
+sun path by season and location. Aspect is a tendency, while observed low
+hollows, not a south-facing label, signal where cold air may collect. The
+unsupported 2 m shade-cloth duration promise and north-facing wall frost
+guarantee are removed. The learner checks winter shadows at 8am, midday and
+4pm and local frost history before placing tender plants. Pawpaw and young
+citrus remain the existing examples; no new species or threshold was added.
+The [DBE geography material](https://www.education.gov.za/Portals/0/CD/Computer/2017%20FebMarch%20Exam%20Papers/Geography%20P1%20Feb-March%202017%20Memo%20Eng.pdf)
+supports seasonal solar movement. [FAO frost guidance](https://www.fao.org/4/y7223e/y7223e0c.htm)
+identifies cold-air drainage and warns that buildings may block it. [KZN
+agriculture guidance](https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf)
+identifies pawpaw frost sensitivity and citrus frost risk.
+
+The slide 11 text card is a new 1920 × 1080 static still showing site
+observation and low-hollow frost checks. The English slide 8, 10 and 11 MP3s
+and combined track were regenerated from the matching script. The [audio
+verification](reading-landscape-l2-english-audio-verification.json) records
+exact normalized WordBoundary text matches, full MP3 decode and a
+427.056-second combined track equal to the sum of its clips. Selective saved
+pack migration retires only these English assets; it does not fetch
+replacements. The held sun-shadow SVG animation remains outside the player;
+no Flow credits or SVG motion were used. The [isiZulu L2 packet](../../narration-reviews/reading-landscape-l2.zu.review.md)
+is review-only and no learner-facing ZU content changed.
+
+Publication, CI and deployed phone/offline verification are pending for this
+candidate. Human listening, learner, farmer, practitioner and fluent isiZulu
+approval are not claimed.
+
+## Earlier 22 September baseline
 
 **Status:** deployed phone-width and saved-pack media pass; English teaching is
 on a source hold. Protected lesson, quiz, narration and learner media are

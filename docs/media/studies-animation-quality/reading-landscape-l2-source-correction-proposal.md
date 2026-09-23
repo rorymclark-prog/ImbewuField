@@ -1,9 +1,10 @@
 # Reading the Landscape L2 — proposed English source correction
 
-**Review packet only.** The protected lesson, quizzes, narration and learner
-assets are unchanged. Rory's decision about narrow English core corrections
-beyond L4 is pending. This proposal preserves the lesson sequence, existing
-species and quiz answer indices; it adds no construction or crop threshold.
+**Historical proposal, superseded by the [L2 lesson check](reading-landscape-l2-lesson-check.md).**
+The released wording omits the proposed wall-warmth suggestion because FAO
+notes that buildings can block cold-air drainage and worsen frost in some
+layouts. This packet preserves the source-audit reasoning, not the current
+learner text.
 
 ## Exact lesson proposal
 

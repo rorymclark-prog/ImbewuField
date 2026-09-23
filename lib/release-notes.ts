@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '4f63b841', changes: [
+    'Landscape lesson 2 now asks you to check your own sun, shade and frost pockets.',
+    'Its frost picture and spoken lesson no longer promise protection from a wall.',
+  ], tour: [
+    { title: 'Check sun and frost', where: 'Studies → Reading the Landscape → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slides 8 to 11, then answer the two sun and frost questions.' },
+  ] },
   { when: '23 September 2026', sha: 'ccd07edb', changes: [
     'Landscape lesson 1 now checks where rainwater goes before any digging.',
     'Its pictures and narration explain when excess water needs a safe route.',

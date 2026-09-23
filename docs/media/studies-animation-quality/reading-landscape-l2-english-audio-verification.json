@@ -1,0 +1,192 @@
+{
+  "module": "reading-landscape",
+  "language": "en",
+  "slidesRegenerated": [
+    8,
+    10,
+    11
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/reading-landscape.en.md",
+  "sourceScriptSha256": "7f4d462d4942912714054a8ef9ecd046b84879187179c42ecc098bf7afcc9ecb",
+  "textExport": "scripts/course-narration-export.mjs",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 8,
+      "path": "public/course-audio/reading-landscape/en/slide-08.mp3",
+      "seconds": 26.376,
+      "bytes": 158256,
+      "sourceTextSha256": "53557d7964b7f319c89a2fe2fab6eb1a8bb9a32ba631340d1cb43fc79aa7a240",
+      "audioSha256": "ccfd27e374049cf2cdaae05eb1b39a8e0527574cd761eeb1086c855b5ea8d09e",
+      "wordCount": 68,
+      "wordBoundaryCount": 66,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-audio/reading-landscape/en/slide-10.mp3",
+      "seconds": 21.336,
+      "bytes": 128016,
+      "sourceTextSha256": "3b3967c947ed4b46c58a1bdd9cc7a197a0e16be19833c366c0bee14472dd9f7d",
+      "audioSha256": "c78e0bcbdd0c601250f52ed9637861595e86a7a302d9a16b11f2512cf0adf22a",
+      "wordCount": 58,
+      "wordBoundaryCount": 57,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-audio/reading-landscape/en/slide-11.mp3",
+      "seconds": 10.272,
+      "bytes": 61632,
+      "sourceTextSha256": "1a4ea9f23a40e93de48b11819ea05673044e0f77b7746e3db7525fedb389e0b6",
+      "audioSha256": "f8e43648fbe1f0c5870e3f0b70f81f2495a28779ccbf9da297b17ea6fe434c5d",
+      "wordCount": 22,
+      "wordBoundaryCount": 22,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    }
+  ],
+  "fullTrack": {
+    "path": "public/course-audio/reading-landscape/en/full.mp3",
+    "seconds": 427.056,
+    "bytes": 2562572,
+    "audioSha256": "f3f02e73ebf2749d64bc63d0fbcace142150c57b62be4c9a4dedc5424709b131",
+    "fullDecode": "pass",
+    "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
+    "slides": [
+      {
+        "slide": 1,
+        "seconds": 19.752,
+        "bytes": 118512,
+        "audioSha256": "e13214784aebafe5a33cc65c549f912b7c6eddb75b042d39bbf3b125b465b54b"
+      },
+      {
+        "slide": 2,
+        "seconds": 21.024,
+        "bytes": 126144,
+        "audioSha256": "181bb91a42efcc45ec9d309ac541c9871e7387da0b5857de4e50e1f0954ff43c"
+      },
+      {
+        "slide": 3,
+        "seconds": 20.808,
+        "bytes": 124848,
+        "audioSha256": "2b65a10af345cf1ef8b88c9ae884e71f37061c56995a68c079bf49893b1ec2a4"
+      },
+      {
+        "slide": 4,
+        "seconds": 21.288,
+        "bytes": 127728,
+        "audioSha256": "eaa71f95ffe52561e94f44c3b8a0f501601dc4932c355fc838419c83e414be8c"
+      },
+      {
+        "slide": 5,
+        "seconds": 7.896,
+        "bytes": 47376,
+        "audioSha256": "526ab298c413d4075c4dd2394c67d4f2c92d98243d87582d74bab52fbd37f149"
+      },
+      {
+        "slide": 6,
+        "seconds": 32.712,
+        "bytes": 196272,
+        "audioSha256": "e52dbd5bf51de9dbe50c7304ea1dec2a74d308747b15ab13c6b07fb3fe2c401b"
+      },
+      {
+        "slide": 7,
+        "seconds": 22.008,
+        "bytes": 132048,
+        "audioSha256": "08b91e215c05890f3260210fa1aec6638385b63ae19b04334d178a1fc799162f"
+      },
+      {
+        "slide": 8,
+        "seconds": 26.376,
+        "bytes": 158256,
+        "audioSha256": "ccfd27e374049cf2cdaae05eb1b39a8e0527574cd761eeb1086c855b5ea8d09e"
+      },
+      {
+        "slide": 9,
+        "seconds": 7.584,
+        "bytes": 45504,
+        "audioSha256": "69a8af59c23f7d7c20c05c72237bc59a49f7f0c2ef43d2e90f5c36b8bac532e6"
+      },
+      {
+        "slide": 10,
+        "seconds": 21.336,
+        "bytes": 128016,
+        "audioSha256": "c78e0bcbdd0c601250f52ed9637861595e86a7a302d9a16b11f2512cf0adf22a"
+      },
+      {
+        "slide": 11,
+        "seconds": 10.272,
+        "bytes": 61632,
+        "audioSha256": "f8e43648fbe1f0c5870e3f0b70f81f2495a28779ccbf9da297b17ea6fe434c5d"
+      },
+      {
+        "slide": 12,
+        "seconds": 20.976,
+        "bytes": 125856,
+        "audioSha256": "a4c828446832bd208271a19a410fe88b384fccbea1585292daabcc9fd5b8cd89"
+      },
+      {
+        "slide": 13,
+        "seconds": 8.256,
+        "bytes": 49536,
+        "audioSha256": "b8078a76d6919bd7f5edd38ec48888bc4a66c77f8ef778665dd404f6add5bd0e"
+      },
+      {
+        "slide": 14,
+        "seconds": 29.808,
+        "bytes": 178848,
+        "audioSha256": "f147e54bebc716f001d7c2ca6e36ba9cf3ee3e0ff776baf1ce4075d660d64aaf"
+      },
+      {
+        "slide": 15,
+        "seconds": 19.344,
+        "bytes": 116064,
+        "audioSha256": "62e79736b01bc12f423e5687b01d2e05f4af38ec9f8e0b49fa84b43ea47ab6bb"
+      },
+      {
+        "slide": 16,
+        "seconds": 26.52,
+        "bytes": 159120,
+        "audioSha256": "eae883e18debb299186e80bf7d7d1ce664f6ac5d1ad506c80c1063eb785d4dac"
+      },
+      {
+        "slide": 17,
+        "seconds": 9.672,
+        "bytes": 58032,
+        "audioSha256": "762049394cb66c910c37106ae89c55b1d87bcc41b3e7cdbcdb403ab15f93c6c0"
+      },
+      {
+        "slide": 18,
+        "seconds": 22.608,
+        "bytes": 135648,
+        "audioSha256": "5e5a06c9fa0e9aaff5f491b14b3bc58a387e3dfc1bf25a5bc2a862a2e9c3adab"
+      },
+      {
+        "slide": 19,
+        "seconds": 18.864,
+        "bytes": 113184,
+        "audioSha256": "4fdbdd207ab372f2e8e2f1559fe1bbcb912fcb7497213d06a0f35dac5eb8685d"
+      },
+      {
+        "slide": 20,
+        "seconds": 30.408,
+        "bytes": 182448,
+        "audioSha256": "1cbf91bbaa8ebf3dba742b9623dad80ab2f313194935fcdefa4992e4fc434a47"
+      },
+      {
+        "slide": 21,
+        "seconds": 29.544,
+        "bytes": 177264,
+        "audioSha256": "8c1c110008e93cb0cb95903161ea2023f9c17f8ef5a4caf115979603dec6c754"
+      }
+    ],
+    "sumOfSlideDurationsSeconds": 427.056,
+    "durationDifferenceSeconds": 0.0
+  },
+  "humanListeningReview": false
+}

@@ -68,11 +68,11 @@ Poorly laid contours can increase erosion, and soil that takes in water slowly c
 
 **Slide 8 — Lesson 2: Read Sun and Shade**
 
-In South Africa, the sun tracks across the northern sky.
+In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.
 
-North-facing slopes are warmer and drier. South-facing slopes are cooler and moister. On the Highveld, frost can sit in south-facing hollows long after it clears elsewhere.
+North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.
 
-This helps you choose where to place tender crops, trees, buildings, and other parts of your farm.
+Watch your own site before choosing where to place tender crops, trees, or buildings.
 
 ---
 
@@ -84,21 +84,19 @@ Follow the sun, building, tree, and their shadows across the slope. Compare summ
 
 **Slide 10 — Check Winter Shadows Before Building**
 
-Winter sun sits lower and further north than summer sun.
+Winter sun is lower and farther north than summer sun.
 
-A wall that casts no shade in summer can shade a bed for hours in winter. A 2m shade cloth on the north side of a garden can block low winter sun for most of the day.
+A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.
 
-Check the spot at 8am, midday, and 4pm on a winter's day.
+Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.
 
 ---
 
 **Slide 11 — Protect Frost-Tender Plants**
 
-For frost-sensitive plants such as pawpaw and young citrus, use the warmth of a north-facing wall.
+Pawpaw and young citrus are sensitive to frost.
 
-The wall absorbs heat during the day and releases it at night. That night-time warmth can protect a tender plant when frost arrives.
-
-Do not place vulnerable crops in a cold, south-facing hollow. Choose a position that receives warmth and avoids trapped frost.
+Keep tender plants out of known low frost pockets. Observe local frost before planting.
 
 ---
 
