@@ -1,5 +1,34 @@
 # Active Studies continuation — 22 September 2026
 
+## Vegetables L1/L4 current English media check (23 September)
+
+The stable 390px Student preview now uses stills and English MP3s, with no
+player video for either lesson. L1 ran from module slide 4 to 7 (4/4), and
+its final narration ended. The 11.3 MB Vegetables pack reported On this
+phone; its 40 lesson assets comprise 18 deck stills, 18 English MP3s and four
+infographics, with no Vegetables MP4 or poster in the saved pack. After an
+offline reload, slide 6's audio loaded, and L4 slide 16's 1920 × 1080 still
+and audio loaded at 2/2. L4's full end/reset was not checked in this current
+run. The historical candidate-video playback notes in the [L1](../media/studies-animation-quality/vegetables-l1-lesson-check.md)
+and [L4](../media/studies-animation-quality/vegetables-l4-lesson-check.md)
+records now have a dated current-state section. The code-drawn candidates
+remain held pending Rory's visual clearance. No Flow credit, protected edit or
+learner change was made; farmer/learner/practitioner and fluent isiZulu review
+remain open. Farm Finance is excluded.
+
+## Food Forest Design L1 current English check (23 September)
+
+The deployed 390px player reached the final slide of L1 (module slides 4–8).
+Slide 5 currently uses its existing seven-layer still and English MP3, with
+no registered video or Watch control; the older tour/playback account is
+historical. Its small printed labels need the full-size still link or spoken
+teaching at phone width. The 17.7 MB Food Forest pack reported On this phone;
+after an offline reload, slide 5's 1600px still and English MP3 loaded, with
+no video. The [current check](../media/studies-animation-quality/food-forest-l1-lesson-check.md)
+records these observations. No Flow credit, protected edit or learner change
+was made. Rory's visual, farmer/learner/practitioner and fluent isiZulu review
+remain open. Farm Finance is excluded.
+
 ## Market Gardening L3 English media and seed-sharing check (23 September)
 
 The core module's third lesson, slides 14–18, played to its final slide in the

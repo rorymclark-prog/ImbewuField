@@ -1,5 +1,26 @@
 # Vegetables and Staple Crops lesson 4 — Observe and Manage Pests and Disease
 
+## Current deployed English check — 23 September 2026
+
+The stable 390 × 844 Student preview now displays L4 as two still-and-English
+audio slides with no video element. After the 11.3 MB Vegetables module pack
+was saved and the browser reloaded offline, slide 16, “Treat the Cause Before
+the Insect,” opened at 2/2. Its still loaded at 1920 × 1080 and its
+62.352-second English MP3 loaded to `readyState=4` and advanced. The actual
+phone view was inspected: the small printed labels need the existing full-size
+still link or narration, and no movie or video Watch control is present. The L4
+end/reset state was not checked in this current run. Cache Storage held the
+18 module stills, 18 English MP3s and four infographics, but no Vegetables
+MP4 or poster. Network access was restored.
+
+The authored decision sequence described below is a historical candidate,
+withdrawn pending Rory's explicit visual clearance. This is English technical
+evidence, not a claim of Rory, physical-phone, learner, practitioner or fluent
+isiZulu acceptance. No new Flow request, protected teaching, species, figure
+or learner media change was made. Farm Finance is excluded.
+
+## Historical candidate and playback record — 22 September 2026
+
 **Checkpoint:** 22 September 2026. This lesson is module slides 15–16.
 The existing stills, English body, two quiz rationales, narration and
 transcript were compared. Slide 15 shows a farmer checking the underside of a

@@ -1,5 +1,27 @@
 # Vegetables and Staple Crops lesson 1 — Preparing and Planting Your Beds
 
+## Current deployed English check — 23 September 2026
+
+At 390 × 844 in the stable Student preview, the current four-slide player
+opened on module slide 4 and advanced to slide 7 (4/4). English MP3s for slides
+4–7 loaded to `readyState=4`; the last narration ended and Play lesson
+returned. No video element appeared in the checked lesson states. Slide 6,
+“Seed or Seedling?”, currently uses its still and 29.592-second English MP3;
+the earlier Flow transplant and code-drawn comparison described below remain
+outside learner registration. The phone view of slide 4's farmer/bed still and
+player was visually inspected.
+
+The full Vegetables module pack now reports **On this phone · 11.3 MB**.
+Its 40 lesson assets in Cache Storage comprise 18 deck stills, 18 English
+slide MP3s and four infographics, with no Vegetables MP4 or poster. After a
+browser offline reload, slide 6's MP3 loaded from the saved pack to
+`readyState=4`. Network access was restored. This is a browser cache check,
+not a physical-phone, Rory visual, local practitioner, learner or fluent
+isiZulu acceptance. No new Flow request, protected teaching, species, figure
+or learner media change was made. Farm Finance is excluded.
+
+## Historical candidate and playback record — 22 September 2026
+
 **Checkpoint:** 22 September 2026, draft PR #504. The lesson player has four
 slides, module slides 4–7; module slides 1–3 are a separate introduction. The
 English lesson body, two quiz questions, rationale, transcript and narration
