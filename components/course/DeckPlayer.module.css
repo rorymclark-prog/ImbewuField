@@ -1,3 +1,84 @@
+.player {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #ece3c9;
+  border-radius: 14px;
+  background: #fffefa;
+}
+
+.playerHeader {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.slideHeading {
+  flex: 1 1 150px;
+  min-width: 0;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.expandButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 11px;
+  border: 1px solid #9eb59a;
+  border-radius: 10px;
+  background: #eef5ea;
+  color: #214d32;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.slideStage { min-width: 0; }
+
+.player::backdrop { background: rgba(20, 16, 10, .75); }
+
+.rotateHint { display: none; }
+
+.expanded {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  width: 100vw;
+  max-height: none;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.expanded .slideStage {
+  flex: 1 1 auto;
+  min-height: 160px;
+  aspect-ratio: auto !important;
+  background: #f3f0e7 !important;
+}
+
+.player button:focus-visible, .player summary:focus-visible {
+  outline: 3px solid #b88237;
+  outline-offset: 2px;
+}
+
 .controlStrip {
   display: grid;
   grid-template-columns: max-content max-content minmax(0, 1fr) max-content;
@@ -16,6 +97,7 @@
 }
 
 @media (max-width: 480px) {
+  .expanded .rotateHint { display: block; margin: 0; color: #5c5040; font-size: 12px; }
   .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
@@ -47,5 +129,18 @@
     grid-column: 1 / -1;
     grid-row: 3;
     width: 100%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .expanded { gap: 5px; }
+  .expanded .playerHeader { flex-wrap: nowrap; }
+  .expanded .slideHeading { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .expanded .slideStage { min-height: 120px; }
+  .expanded .controlStrip { grid-template-columns: max-content max-content minmax(0, 1fr) max-content; }
+  .expanded .playControl, .expanded .backControl, .expanded .nextControl, .expanded .progress {
+    grid-column: auto;
+    grid-row: auto;
+    width: auto;
   }
 }

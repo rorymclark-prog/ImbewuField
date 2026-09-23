@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 
 import styles from './DeckPlayer.module.css';
 import {
@@ -92,10 +93,46 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [timedVoiceActive, setTimedVoiceActive] = useState(false);
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const playerRef = useRef<HTMLDialogElement | null>(null);
+  const expandButtonRef = useRef<HTMLButtonElement | null>(null);
+  const exitButtonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
+
+  const exitExpanded = useCallback(() => {
+    const dialog = playerRef.current;
+    if (!dialog) return;
+    dialog.close();
+    dialog.show();
+    setExpanded(false);
+  }, []);
+
+  const toggleExpanded = () => {
+    const dialog = playerRef.current;
+    if (!dialog) return;
+    if (expanded) exitExpanded();
+    else {
+      dialog.close();
+      dialog.showModal();
+      setExpanded(true);
+    }
+  };
+
+  // Keep the same audio and video elements when the learner expands the deck. Re-mounting them
+  // would restart the lesson, especially on phones where full-screen media APIs vary by browser.
+  useEffect(() => {
+    if (!expanded) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    exitButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      expandButtonRef.current?.focus();
+    };
+  }, [expanded]);
 
   const current = slides[index];
   const total = slides.length;
@@ -230,14 +267,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     return () => clearTimeout(t);
   }, [running, audioForCurrent, onNarrationEnded]);
 
-  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
     // The player used to listen on window, which meant seeking an audio clip or using any other
     // page control also turned the lesson page. Only the deck surface owns these shortcuts.
     if (e.currentTarget !== e.target || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     else if (e.key === 'Escape' && onClose) onClose();
-  }, [go, onClose]);
+  }, [go, onClose, expanded, exitExpanded]);
 
   // Touch: a horizontal drag turns the page. Vertical is left alone so the page still scrolls.
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -264,18 +302,22 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
 
   return (
-    <div
+    <dialog
+      ref={playerRef}
+      open
       tabIndex={0}
-      role="region"
-      aria-label="Lesson slides. Use Left and Right arrow keys to change slides."
+      role={expanded ? 'dialog' : 'region'}
+      aria-modal={expanded ? true : undefined}
+      aria-label={expanded ? 'Full screen lesson slides' : 'Lesson slides. Use Left and Right arrow keys to change slides.'}
       onKeyDown={onDeckKeyDown}
-      style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}
+      onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
+      className={`${styles.player} ${expanded ? styles.expanded : ''}`}
     >
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+      <div className={styles.playerHeader}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
         </span>
-        <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.25, color: INK, flex: 1, textWrap: 'balance' }}>{heading}</h3>
+        <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
         {languages.length > 1 && (
           <div role="group" aria-label="Narration language" style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
             {languages.map((code) => {
@@ -299,12 +341,24 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             })}
           </div>
         )}
+        <button
+          ref={expanded ? exitButtonRef : expandButtonRef}
+          type="button"
+          className={styles.expandButton}
+          onClick={toggleExpanded}
+          aria-label={expanded ? 'Exit full screen' : 'Show slides full screen'}
+        >
+          {expanded ? <Minimize2 size={17} aria-hidden="true" /> : <Maximize2 size={17} aria-hidden="true" />}
+          <span>{expanded ? 'Exit full screen' : 'Full screen'}</span>
+        </button>
         {onClose && (
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
+      {expanded && <p className={styles.rotateHint}>Turn your phone sideways for a larger slide.</p>}
 
       <div
+        className={styles.slideStage}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#1B1710', aspectRatio: anim?.aspectRatio ?? '16 / 9' }}
@@ -455,6 +509,6 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           </div>
         </details>
       )}
-    </div>
+    </dialog>
   );
 }

@@ -685,74 +685,59 @@ export default function StudentPage() {
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
 
-        {/* Progress hero */}
-        <section className={styles.intro} aria-labelledby="studies-title">
-          <div>
-            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> Learn · practise · grow</p>
-            <h1 id="studies-title" className="font-display">My Studies</h1>
-            <p className={`font-sans ${styles.description}`}>Your permaculture course, one practical lesson at a time.</p>
+        <div className={styles.pageIntro}>
+          <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> Learn · practise · grow</p>
+          <h1 id="studies-title" className="font-display">My Studies</h1>
+          <p className="font-sans">Choose a course to continue, or open the practical app guides below.</p>
+        </div>
+
+        <section className={styles.courseChoices} aria-labelledby="studies-title">
+          <div className={`${styles.courseChoice} ${styles.primaryCourse}`}>
+            <p className={styles.choiceLabel}>Your main course</p>
+            <h2 className="font-display">Permaculture course</h2>
+            <p className={styles.choiceSummary}>{TOTAL_MODULES} modules · Learn one practical lesson at a time.</p>
+            <div className={styles.courseProgress}>
+              <div className={styles.progressRing}>
+                <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
+                  <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
+                  <circle cx="50" cy="50" r={R} fill="none"
+                    stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
+                    strokeWidth="8" strokeLinecap="round" strokeDasharray={C}
+                    strokeDashoffset={fetching ? C : dashOffset}
+                    style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+                  />
+                </svg>
+                <span className="font-display">{fetching ? <Loader2 size={20} className="animate-spin" /> : `${pct}%`}</span>
+              </div>
+              <div>
+                <strong>{pct === 100 ? 'Course complete!' : doneCount === 0 ? 'Ready to start' : 'Keep going'}</strong>
+                <span>{doneCount} of {TOTAL_MODULES} modules complete</span>
+                {pct < 100 && totalMins > 0 && <span>~{formatDuration(totalMins)} remaining</span>}
+                {progressError && <span className={styles.progressError}>Progress could not be loaded or saved. Check your connection or account access.</span>}
+              </div>
+            </div>
             <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
               setExpandedModuleId(studyModule.id);
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-            }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'}</button>
-            <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
-          </div>
-          <div className={styles.progress}>
-          {/* Ring */}
-          <div className="flex-shrink-0 relative" style={{ width: 64, height: 64 }}>
-            <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
-              <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
-              <circle cx="50" cy="50" r={R} fill="none"
-                stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={C}
-                strokeDashoffset={fetching ? C : dashOffset}
-                style={{ transition: 'stroke-dashoffset 0.6s ease' }}
-              />
-            </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              {fetching ? (
-                <Loader2 size={20} className="animate-spin" style={{ color: '#1F4D2B' }} />
-              ) : (
-                <>
-                  <span className="font-display font-bold text-xl leading-none" style={{ color: '#20190F' }}>{pct}%</span>
-                </>
-              )}
-            </div>
+            }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'} →</button>
+            <span className={styles.nextLesson}>Next: {studyModule.title}</span>
           </div>
 
-          {/* Text */}
-          <div className="flex-1 min-w-0">
-            <div className="font-display font-semibold text-base leading-tight" style={{ color: '#20190F' }}>
-              {pct === 100 ? 'Course complete!' : doneCount === 0 ? 'Ready to start' : 'Keep going'}
-            </div>
-            <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
-              {doneCount} of {TOTAL_MODULES} modules complete
-            </div>
-            {progressError && (
-              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
-                Progress could not be loaded or saved. Check your connection or account access.
-              </div>
-            )}
-            {pct < 100 && totalMins > 0 && (
-              <div className="flex items-center gap-1.5 mt-2">
-                <Clock size={12} style={{ color: '#8C7A62' }} />
-                <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-                  ~{formatDuration(totalMins)} remaining
-                </span>
-              </div>
-            )}
-            {pct === 100 && (
-              <div className="flex items-center gap-1.5 mt-2">
-                <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
-                <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
-                  Permaculture practitioner
-                </span>
-              </div>
-            )}
-          </div>
-          </div>
+          <OfflinePageLink href="/student/design" className={styles.courseChoice}>
+            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" className={styles.choiceImage} />
+            <span className={styles.choiceLabel}>English teaching preview · 18 lesson drafts</span>
+            <strong className="font-display">Design a working homestead</strong>
+            <span className={styles.choiceSummary}>Bring the household, site and layout decisions together. This preview does not award course credit.</span>
+            <em>Explore design lessons →</em>
+          </OfflinePageLink>
+
+          <OfflinePageLink href="/student/finance" className={styles.courseChoice}>
+            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" className={styles.choiceImage} />
+            <span className={styles.choiceLabel}>Separate English teaching preview · 24 lesson drafts</span>
+            <strong className="font-display">Farm Finance</strong>
+            <span className={styles.choiceSummary}>Work through farm records, costs and business planning. Final assessment is in preparation.</span>
+            <em>Explore finance lessons →</em>
+          </OfflinePageLink>
         </section>
 
         <LimaBar />
@@ -796,42 +781,21 @@ export default function StudentPage() {
           <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
         </details>
 
-        <section className={styles.companions} aria-labelledby="design-pathway-title">
-          <div>
-            <p className={styles.eyebrow}>Connect the whole plan · English teaching preview</p>
-            <h2 id="design-pathway-title" className="font-display">Design a working homestead</h2>
-            <p>Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.</p>
+        <details className={styles.guides}>
+          <summary>
+            <span><BookOpen size={21} aria-hidden="true" /><strong className="font-display">Practical app guides</strong></span>
+            <span className={styles.guidesHint}>Map, harvest, costs and invoices</span>
+            <ChevronDown size={20} aria-hidden="true" className={styles.guidesChevron} />
+          </summary>
+          <div className={styles.guideList}>
+            <p>Practise in the sample farm before using your own records.</p>
+            {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
+              <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+              <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
+            </OfflinePageLink>)}
+            <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
           </div>
-          <OfflinePageLink href="/student/design" className={styles.guideCard}>
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">Bring the decisions together.</strong><span>Build a design folder with a facilitator or learning partner. This preview does not award course credit.</span><em>Explore the design teaching preview →</em></span>
-          </OfflinePageLink>
-        </section>
-
-        <section className={styles.companions} aria-labelledby="finance-course-title">
-          <div>
-            <p className={styles.eyebrow}>Separate course · English teaching preview</p>
-            <h2 id="finance-course-title" className="font-display">Farm Finance</h2>
-            <p>Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.</p>
-          </div>
-          <OfflinePageLink href="/student/finance" className={styles.guideCard}>
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">Understand the money. Plan the next season.</strong><span>Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.</span><em>Explore the finance teaching preview →</em></span>
-          </OfflinePageLink>
-        </section>
-
-        <section className={styles.companions} aria-labelledby="app-guides-title">
-          <div>
-            <p className={styles.eyebrow}>Practical app guides</p>
-            <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
-            <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
-          </div>
-          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
-          </OfflinePageLink>)}
-          <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
-        </section>
+        </details>
 
         <div className={styles.courseHeading}>
           <h2 className="font-display">Your course</h2>

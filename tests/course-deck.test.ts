@@ -340,7 +340,9 @@ test('deck arrows change slides only while the deck itself has plain-key focus',
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'water-harvesting', lang: 'en' })); });
   try {
-    const deckSurface = () => view.root.findAllByType('div').find(div => div.props['aria-label']?.startsWith('Lesson slides.'))!;
+    // The surface can be a dialog so it can enter the browser's top layer on a phone. The
+    // keyboard rule belongs to the named deck region, whichever native element contains it.
+    const deckSurface = () => view.root.findAll(node => node.props.role === 'region' && node.props['aria-label']?.startsWith('Lesson slides.'))[0]!;
     const press = (key: 'ArrowLeft' | 'ArrowRight', target: unknown, modifiers = {}) => {
       const surface = deckSurface();
       let prevented = false;
