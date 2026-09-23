@@ -60,7 +60,7 @@ members sharing dry seeds**. The relevant existing project locations are
 soil trial and older Fast candidate require direct side-by-side pedagogical and
 physical-mechanism review; neither is a reason to place another order.
 
-## Core animation slots — 51 records, 26 currently registered
+## Core animation slots — 51 records, 27 currently registered
 
 | # | Module | Lesson ID | Slide | Title | Registered `src` | Planned treatment / hold |
 | ---: | --- | --- | ---: | --- | --- | --- |
@@ -262,15 +262,16 @@ farm locations/finances.
 
 ## Source-count validation
 
-- `lib/course-deck.ts` resolved through its narration-derived slides: **50** slots
-  with an `animation.src`; each is listed once above with module, lesson ID, slide,
-  title and registered source.
+- `lib/course-deck.ts` and the media review register: **51** core animation
+  review slots, of which **27** currently have an `animation.src` and **24**
+  use a still without a registered video. Each is listed once above with
+  module, lesson ID, slide, title and current registered source or hold.
 - `reserve/README.md`: **15** proposed modules and **51** drafted lessons; all 51
   are listed, including the animal file's bold lesson headings.
 - `lib/course-finance-content.json`: **24** lesson IDs (`f1-1` through `f8-3`).
 - `lib/course-design-content.json`: **18** lesson IDs (`d1-1` through `d6-3`).
 - `reserve/app-companions/README.md` tutorial table: **14** records (`C01`–`C14`).
 
-Arithmetic: 50 + 51 + 24 + 18 + 14 = **157 coverage records**. The new
+Arithmetic: 51 + 51 + 24 + 18 + 14 = **158 coverage records**. The new
 slide-16 diagram was authored locally without a Flow request or credit spend;
 the register itself does not imply a new media request for any other row.

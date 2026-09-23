@@ -61,7 +61,7 @@ Current player state follows `lib/course-deck.ts` and `animationUrls()`. A regis
 ## Reconciliation summary
 
 - 51 core animation review slots, matching `COVERAGE.md`.
-- 26 current video registrations; every exact `.mp4` path was present on disk.
-- 25 still-only slots; every linked lesson still was present on disk.
+- 27 current video registrations; every exact `.mp4` path was present on disk.
+- 24 still-only slots; every linked lesson still was present on disk.
 - No inference of acceptance from registration or file existence.
 - **Held-source limitation:** the superseded JSON is a historical pre-withdrawal inventory. The withdrawal ledger confirms 22 authored learner registrations were removed, but does not map each held slot to a retained renderer source file. Reasons are transcribed from the coverage register; the ledger is linked without inventing source paths.

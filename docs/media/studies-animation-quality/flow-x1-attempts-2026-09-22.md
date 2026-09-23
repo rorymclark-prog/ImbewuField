@@ -1,10 +1,11 @@
-# Flow x1 animation attempts — 22 September 2026
+# Flow x1 animation attempts — 22–23 September 2026
 
 Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
-**eight seconds**, and **x1**. Each prompt produced one video and cost 100 Flow
-credits. Six prompts used 600 credits in total. The first three and sixth were
-rejected and were not copied into `public/`. The fourth and fifth passed technical
-review and are registered for the bee and compost-building lessons.
+**eight seconds**, and **x1**. Each prompt produced one video and showed a 100
+Flow-credit cost. Nine prompts used 900 displayed credits in total. The first
+three, sixth, seventh and eighth were held or rejected; none is registered in
+the learner player. The fourth, fifth and ninth passed technical review and
+are registered for the bee, compost-building and vegetable-transplant lessons.
 
 ## Plant Guilds lesson 3 — whole-support thinning
 
@@ -100,3 +101,29 @@ the hand dominates much of the action, and there is no clear north arrow. No
 invented text or measurements appeared and the main marks stayed broadly fixed,
 but the film does not teach the complete map step. Slide 17 keeps its existing
 concept still and narration. No locally drawn replacement has Rory's clearance.
+
+## Soil Health lesson 1 — inspect one soil clod
+
+The seventh x1 result shows one clod being lifted and crumbled. It does not
+show the narrated two-example, multi-clue comparison; ambiguous hands and
+exposure also weaken the required portrayal. Slide 5 retains its still. The
+[current lesson check](soil-l1-current-lesson-check.md) records the Flow source,
+hashes and full visual decision. One request used 100 displayed credits.
+
+## Soil Health lesson 3 — rain on bare and covered soil
+
+The eighth x1 result has pooling across the comparison and too little readable
+raindrop-impact contrast at phone width. Slide 14 retains its still. The
+[current lesson check](soil-l3-current-lesson-check.md) records the Flow source,
+hashes and farming-claim limit. One request used 100 displayed credits.
+
+## Vegetables lesson 1 — seat a nursery root plug
+
+The ninth x1 result shows a Black African adult seat one generic nursery root
+plug and firm soil in one continuous shot. The learner copy is silent and uses
+the existing two-method still as its poster. It shows one transplant action;
+the English narration retains the crop-specific direct-sow choice. The
+[current lesson check](vegetables-l1-lesson-check.md) records the source,
+learner-file hashes, deployed phone playback and offline review. One request
+used 100 displayed credits. This is technical registration, with Rory,
+practitioner, learner and fluent-language review still open.
