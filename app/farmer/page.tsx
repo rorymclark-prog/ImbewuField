@@ -269,7 +269,7 @@ function HomeInner() {
     // farmer cannot tell the two apart and neither can this cache.
     // v5 (23 Sep): the biome fallback now uses the coldest monthly mean, so previously cached
     // Grassland answers for warm lowveld farms must be fetched again.
-    const cacheKey = `imbewu_loc_v5_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    const cacheKey = `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {

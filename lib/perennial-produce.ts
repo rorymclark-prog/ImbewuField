@@ -36,7 +36,7 @@
 
 import { pluralFormsOf } from './plural-forms';
 import { SPECIES } from './species-catalog';
-import { isPlantable, type Species, type SpeciesSection, type SpeciesStratum } from './species-palette';
+import { type Species, type SpeciesSection, type SpeciesStratum } from './species-palette';
 
 /** How the picker groups perennial produce. Follows the catalogue's own editorial sections. */
 export type PerennialGroup = 'indigenous_fruit' | 'fruit_nut' | 'other_perennial';
@@ -118,10 +118,10 @@ function slug(label: string): string {
 }
 
 function isFoodPerennial(s: Species): boolean {
-  // 1a and 1b must be removed from the land and may never be planted, so they are never offered —
-  // the same guard the design picker uses. A farmer clearing one can still free-type what came off
-  // it; the app just will not list it as something you grow.
-  return s.uses.includes('food') && (WOODY.has(s.stratum) || FRUIT_SECTIONS.has(s.section)) && isPlantable(s);
+  // Recording an existing harvest is different from recommending a new planting. Category 2/3
+  // produce remains recordable even though those plants are absent from the design picker.
+  return s.uses.includes('food') && (WOODY.has(s.stratum) || FRUIT_SECTIONS.has(s.section))
+    && s.nemba !== '1a' && s.nemba !== '1b';
 }
 
 /*

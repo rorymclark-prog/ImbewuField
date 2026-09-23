@@ -98,7 +98,7 @@ export function siteClimateFromLocationData(data: unknown, lat: number): SiteCli
  * everywhere at once whenever the endpoint would answer differently.
  */
 export function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v5_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v6_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 /**

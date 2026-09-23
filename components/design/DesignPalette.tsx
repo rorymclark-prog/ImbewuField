@@ -72,7 +72,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerKey, type DesignLayerState } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, FROST_CHECK_PLANTING_IDS, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerKey, type DesignLayerState } from '@/lib/design-elements';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever opened the species picker.
 // The one read below (in the picker's onSelect, already only running on a tap) loads it via a
@@ -289,6 +289,8 @@ export interface DesignPaletteProps {
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
+  /** NASA POWER cold minimum, only when the API confirms all monthly minima are present. */
+  siteMinTempC?: number | null;
   /** The bottom chrome ladder, owned by the page so the drone bar and Lima (which live there) shed
    *  in the same order as this palette's own rows. */
   bottomStop: BottomStop;
@@ -517,6 +519,7 @@ export default function DesignPalette({
   swaleControl,
   windControl,
   siteBiome,
+  siteMinTempC,
   bottomStop,
   hiddenSections,
   onBottomStopChange,
@@ -885,17 +888,19 @@ export default function DesignPalette({
   const showElementCatalog = true;
   const showFullCatalogNote = false;
   const siteClimates = biomeClimates(siteBiome);
+  const frostScreenActive = siteMinTempC != null && Number.isFinite(siteMinTempC) && siteMinTempC <= 0;
   const stepCatalog = ELEMENT_CATALOG;
-  const visibleStepCatalog = stepCatalog.filter((def) => (step === 'planting' ? elementVisibleInPalette(def, siteClimates) : !def.deprecated));
+  // The full toolbox is reachable from every step, so climate screening must follow the tree
+  // card everywhere; otherwise a frosty site's Mango disappears only on the Planting step.
+  const visibleStepCatalog = stepCatalog.filter((def) => elementVisibleInPalette(def, siteClimates, siteMinTempC));
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
   // show"). Category → layer mapping lives in CATEGORY_LAYER above.
   const catalog = visibleStepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]);
 
-  // Climate-appropriate trees: on the planting step, hide trees that do not crop in this site's
-  // climate. Unknown site climate still shows all non-deprecated trees.
-  const climateFilterActive = step === 'planting' && !!siteClimates;
+  // Unknown site climate still shows all non-deprecated trees, with uncertainty shown below.
+  const climateFilterActive = !!siteClimates || frostScreenActive;
   // SECTIONS on the planting step. This strip is a single horizontal scroller, and the catalog's
   // own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions 20–22 of 22 —
   // behind seven fruit trees, off the right edge, effectively unreachable (Rory: "why is it not
@@ -912,7 +917,7 @@ export default function DesignPalette({
   const groupRank = (def: DesignElementDef) => PLANTING_GROUP_ORDER.indexOf(plantingGroupFor(def));
   const plantingOrder = (a: DesignElementDef, b: DesignElementDef) =>
     groupRank(a) - groupRank(b) ||
-    Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates));
+    Number(elementSuitsClimate(b.id, siteClimates, siteMinTempC)) - Number(elementSuitsClimate(a.id, siteClimates, siteMinTempC));
   const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
 
   // Re-measure whenever the strip's CONTENTS change (step change, layer toggle) — not just on
@@ -1467,6 +1472,7 @@ export default function DesignPalette({
                     // BIOMES registry key. Convert at this single boundary; converting upstream
                     // silently disabled the climate filter for the whole palette.
                     siteBiome={biomeKeyForName(siteBiome)}
+                    siteMinTempC={siteMinTempC}
                     selectedSpeciesId={placeSpeciesId}
                     onSelect={async (id) => {
                       setPlaceSpeciesId(id);
@@ -2213,7 +2219,8 @@ export default function DesignPalette({
       {orderedCatalog.map((def) => {
         // …or it IS the thing you have selected on the map (selectedIdentity).
         const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
-        const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
+        const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates, siteMinTempC);
+        const checkFrost = frostScreenActive && FROST_CHECK_PLANTING_IDS.has(def.id);
         const group = step === 'planting' ? plantingGroupFor(def) : null;
         const heading = group && group !== lastGroup ? group : null;
         if (group) lastGroup = group;
@@ -2228,7 +2235,7 @@ export default function DesignPalette({
             key={def.id}
             type="button"
             onClick={() => pickElement(def)}
-            title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
             // The photograph seam stays optional. Until an illustrator supplies a real asset the
             // farmer sees the exact emoji she saw before; fake generated symbols would make a
             // tool look more finished while saying less clearly what it places.
@@ -2308,6 +2315,7 @@ export default function DesignPalette({
               <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                 {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
+              {checkFrost && <span style={{ fontSize: 9, fontWeight: 700, color: active ? GOLD : '#9A5E12' }}>{t('designPaletteFrostCheck')}</span>}
             </span>
           </button>
         );
@@ -2422,9 +2430,14 @@ export default function DesignPalette({
               : t('designPaletteProLayers')}
           </div>
         )}
-        {step === 'planting' && !siteClimates && (
+        {!climateFilterActive && (
           <div role="status" style={{ fontSize: 11.5, color: '#6B6355' }}>
             {t('designPaletteClimateUnavailable')}
+          </div>
+        )}
+        {siteClimates && siteMinTempC == null && (
+          <div role="status" style={{ fontSize: 11.5, color: '#6B6355' }}>
+            {t('designPaletteFrostUnavailable')}
           </div>
         )}
         {/* The climate note used to own a whole LINE of this panel to explain a filter the farmer
@@ -2464,7 +2477,7 @@ export default function DesignPalette({
           </button>
           {climateFilterActive && (
             <span
-              title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
+              title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}${frostScreenActive ? ` ${t('designPaletteFrostHidden')}` : ''}`}
               style={{
                 display: 'inline-flex', alignItems: 'center', flexShrink: 0,
                 minHeight: guided ? 44 : 34, padding: '0 8px', borderRadius: 9,
@@ -2472,7 +2485,7 @@ export default function DesignPalette({
                 fontSize: guided ? 12 : 11, cursor: 'help',
               }}
             >
-              ⓘ
+              {frostScreenActive ? t('designPaletteFrostRisk') : 'ⓘ'}
             </span>
           )}
           {chipNodes}

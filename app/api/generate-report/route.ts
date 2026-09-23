@@ -1,4 +1,5 @@
 import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
+import { listedPlantMentions, reportPlantingCandidates, REPORT_PLANTING_SAFETY_RULE } from '@/lib/report-planting-safety';
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -26,6 +27,8 @@ import {
 } from '@/lib/report-site-facts';
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '@/lib/report-boq';
 import { resolveSiteEcology } from '@/lib/site-ecology';
+import { biomeKeyForName } from '@/lib/biome';
+import { plantingColdMinimum } from '@/lib/design-elements';
 import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
@@ -247,6 +250,9 @@ export async function POST(req: NextRequest) {
   // inland site — with the fruit-tree, indigenous-tree and windbreak sections, the ones a farmer
   // plants from, using the coastal one.
   const ecology = resolveSiteEcology(d.biome, d.vegetation);
+  const screenedPlantingCandidates = reportPlantingCandidates(
+    biomeKeyForName(ecology.biome.name), plantingColdMinimum(d.climate),
+  );
   // Real administrative area for this point (municipality / district / province)
   const admin = await reverseGeocode(d.lat, d.lon);
   const rainStr = d.rainfall.monthly.map((v, i) => `${MONTHS[i]}:${Math.round(v)}mm`).join(' · ');
@@ -317,6 +323,9 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
   const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
 
   const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
+
+SCREENED PLANTING CANDIDATES for this biome and known frost risk (a shortlist, not proof of suitability): ${screenedPlantingCandidates}
+${REPORT_PLANTING_SAFETY_RULE}
 
 ---
 SITE DATA
@@ -681,40 +690,46 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
 
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
     try {
-      const msg = await client.messages.create({
-        model: 'claude-sonnet-4-6',
-        max_tokens: perBatchTokens,
-        // THE ANTI-INVENTION RULE, and why it is a system prompt rather than another
-        // paragraph in the user message: sections are generated in independent parallel
-        // batches that cannot see each other, so a rule stated once inside one batch's
-        // prompt does not bind the others. This binds every batch equally.
-        //
-        // It exists because a report for a crèche with a 2,500 L JoJo tank and a municipal
-        // tap told the farmer to "monitor the dam weekly with a marked depth gauge" and
-        // computed a 38-day buffer from a 193 kL reserve. There is no dam. Both numbers
-        // were the model's own arithmetic, filling a storage section the prompt demanded
-        // while nothing in the context said what water the site actually had.
-        system: [
-          'You are writing a site report a South African smallholder will act on and spend money against.',
-          'NEVER state that a physical structure exists — a dam, borehole, reservoir, tank, pond, river, well, pump, fence or building — unless it appears in the site facts supplied to you.',
-          'NEVER attach a capacity, depth, water level, percentage or age to a structure that is not in those facts.',
-          'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
-          'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
-        ].join(' '),
-        messages: [{ role: 'user', content: messageContent(buildPrompt(batchSections, idx === 0)) }],
-      }, {
-        // One hung upstream call must not eat the whole maxDuration window — the catch below
-        // ships an honest per-section placeholder instead.
-        signal: AbortSignal.timeout(240_000),
-      });
-      batchCosts.push(
-        logAiUsage('generate-report', 'claude-sonnet-4-6', msg.usage, `batch ${idx + 1}/${batches.length}`),
-      );
-      const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
-      const cutShort = msg.stop_reason === 'max_tokens';
-      batchResults[idx] = text + (cutShort
-        ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
-        : '');
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        const msg = await client.messages.create({
+          model: 'claude-sonnet-4-6',
+          max_tokens: perBatchTokens,
+          // THE ANTI-INVENTION RULE, and why it is a system prompt rather than another
+          // paragraph in the user message: sections are generated in independent parallel
+          // batches that cannot see each other, so a rule stated once inside one batch's
+          // prompt does not bind the others. This binds every batch equally.
+          //
+          // It exists because a report for a crèche with a 2,500 L JoJo tank and a municipal
+          // tap told the farmer to "monitor the dam weekly with a marked depth gauge" and
+          // computed a 38-day buffer from a 193 kL reserve. There is no dam. Both numbers
+          // were the model's own arithmetic, filling a storage section the prompt demanded
+          // while nothing in the context said what water the site actually had.
+          system: [
+            'You are writing a site report a South African smallholder will act on and spend money against.',
+            'NEVER state that a physical structure exists — a dam, borehole, reservoir, tank, pond, river, well, pump, fence or building — unless it appears in the site facts supplied to you.',
+            'NEVER attach a capacity, depth, water level, percentage or age to a structure that is not in those facts.',
+            'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
+            'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
+            REPORT_PLANTING_SAFETY_RULE,
+          ].join(' '),
+          messages: [{ role: 'user', content: messageContent(buildPrompt(batchSections, idx === 0) + (attempt ? '\n\nYour previous draft named a listed invasive plant. Rewrite without naming or recommending any listed invasive plant.' : '')) }],
+        }, {
+          // One hung upstream call must not eat the whole maxDuration window — the catch below
+          // ships an honest per-section placeholder instead.
+          signal: AbortSignal.timeout(240_000),
+        });
+        batchCosts.push(
+          logAiUsage('generate-report', 'claude-sonnet-4-6', msg.usage, `batch ${idx + 1}/${batches.length}${attempt ? ' retry' : ''}`),
+        );
+        const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
+        if (listedPlantMentions(text).length > 0) continue;
+        const cutShort = msg.stop_reason === 'max_tokens';
+        batchResults[idx] = text + (cutShort
+          ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
+          : '');
+        return;
+      }
+      batchResults[idx] = '\n\n_[This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.]_\n';
     } catch {
       batchResults[idx] = '\n\n_[A section could not be generated — please regenerate the report.]_\n';
     }
