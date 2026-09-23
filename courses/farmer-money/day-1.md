@@ -213,7 +213,7 @@ Teacher talk: **26 of 100 min (26%).**
     - "A funeral in the family. You must give R600 (12 beans)."
     - "The taxi fare goes up by R100 this month (2 beans)."
     - "The fridge breaks. R500 to fix it (10 beans)."
-    - "Karabo needs R300 for a school trip (6 beans)."
+    - "A child needs R300 for a school trip (6 beans)."
 12. GROUPS (8 min): "Find the beans. Take them from your map. Which piles will you make
     smaller? Only from wants first. Then which needs?" Recorder crosses out and redraws.
 13. DO: Debrief (below), then **language time** (2 min): each person tells their neighbour

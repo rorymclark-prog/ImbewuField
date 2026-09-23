@@ -80,7 +80,7 @@ Also: [posters](posters.md) · [slides](slides.md) · [media](media.md) · [reso
 
 Learners **never** have to share their own household's money. Every exercise uses one of three
 made-up families. Each group of 5 "adopts" one family for the whole course. Full cards are in
-[printables.md](printables.md#case-family-cards).
+[printables.md](printables.md#p11--case-family-cards).
 
 | Family | Who | Money comes from | Garden |
 |---|---|---|---|

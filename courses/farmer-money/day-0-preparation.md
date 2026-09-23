@@ -47,7 +47,7 @@ Full specs in [resources.md](resources.md) and [printables.md](printables.md). O
 | Buyer cards (R-IMG-10) | 6 sets of 6 | |
 | Scam-or-safe cards (P15) | 6 sets of 10 | |
 | Loan offer cards (P14) | 6 sets of 4 | |
-| Market-day role cards (P16) | 1 set (30 cards) | |
+| Buyer card backs, market role cards, twist cards (P16) | backs on 6 buyer sets · 6 role cards · 3 twist cards | |
 | Money book (P1–P3) | 1 per learner + 10% | Stapled A5 booklet, 24 pages |
 | Receipt book + duplicate invoice book | 1 each per learner + 10%, *or* photocopied P6/P7 pads | |
 | Harvest record (P4), budget sheet (P5), season calendar (P8), cost sheet (P9), money plan (P10) | 1 per learner + 10% (budget sheet ×2) | |
