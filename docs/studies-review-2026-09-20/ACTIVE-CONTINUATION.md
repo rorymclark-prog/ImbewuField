@@ -1,5 +1,22 @@
 # Active Studies continuation — 23 September 2026
 
+## Water Harvesting and Soil Health isiZulu full review drafts (23 September)
+
+The [Water Harvesting handoff](../narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md)
+links complete review-only proposals for L1–L3; L4 greywater remains on its
+qualified local sanitation/municipal source hold. The [Soil Health
+handoff](../narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md)
+links complete proposals for L1–L2; L3 waits for the documented protected
+English mulch and leachate correction authorization. The drafts cover lesson
+bodies, key points, all quiz options and rationales, and narration slides.
+The integrator checked English meaning and corrected a gutter translation
+that suggested garbage, a generic soap substitution in the jar test, and a
+compost sanitation overstatement. These documents are not fluent-reviewed or
+learner material. No app text, deck, audio, manifest or Flow asset changed.
+Twelve of 27 non-Seeds/non-Guilds core lessons now have complete review-only
+drafts; first-language isiZulu and local farming review remains the release
+gate for each.
+
 ## Reading the Landscape isiZulu full review draft (23 September)
 
 The [Reading handoff](../narration-reviews/READING-LANDSCAPE-ISIZULU-FULL-DRAFT-HANDOFF.md)
