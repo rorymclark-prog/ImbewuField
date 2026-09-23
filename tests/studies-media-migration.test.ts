@@ -33,6 +33,41 @@ test('a saved Market record gets its clearer still without discarding other down
   assert.equal(rows.has(otherSlide.url), true);
 });
 
+test('a saved Food Forest layer key replaces only its old still and preserves narration', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateFoodForestLayerKeyStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateFoodForestLayerKeyStill\)\.then/);
+
+  const origin = 'https://field.test';
+  const oldStill = new Request(origin + '/course-decks/food-forest/en/slide-05.jpg?cached=1');
+  const narration = new Request(origin + '/course-audio/food-forest/en/slide-05.mp3');
+  const nextSlide = new Request(origin + '/course-decks/food-forest/en/slide-06.jpg');
+  const otherModule = new Request(origin + '/course-decks/soil-health/en/slide-05.jpg');
+  const rows = new Map<string, Response>([
+    [oldStill.url, new Response('old key')],
+    [narration.url, new Response('saved speech')],
+    [nextSlide.url, new Response('saved')],
+    [otherModule.url, new Response('saved')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(oldStill.url), false);
+  for (const request of [narration, nextSlide, otherModule]) assert.equal(rows.has(request.url), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'migration must not silently spend a learner’s airtime');
+
+  const replacement = new Request(origin + '/course-decks/food-forest/en/slide-05.jpg');
+  rows.set(replacement.url, new Response('new key'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement.url)!.text(), 'new key');
+});
+
 test('updated Studies cannot pair old downloaded speech with corrected teaching; unrelated files survive', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateStudiesMedia\(\) \{([\s\S]*?)\n\}/)?.[1];

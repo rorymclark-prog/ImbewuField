@@ -121,7 +121,7 @@ held where a generic image could misstate species or a named mechanism.
 
 The complete generated asset index is
 [lib/course-asset-sizes.ts](../../lib/course-asset-sizes.ts): 800 public course
-asset files, 335.5 MB after the Vegetables L1 release. That total
+asset files, 334.9 MB after the Food Forest L1 static revision. That total
 includes posters, deck images, audio and animation variants, not only lesson
 images.
 

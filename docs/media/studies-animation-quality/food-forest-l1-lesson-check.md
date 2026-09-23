@@ -7,10 +7,10 @@ The deployed 390px Student preview opened all five lesson slides (module slides
 Layers,” currently displays `slide-05.jpg` and its English MP3; there is no
 video element or Watch control in this lesson player. The image shows a
 conceptual planted cross-section, with the seven layers named in narration.
-At phone fit, its small printed labels are difficult to read; the full-size
-still link remains available. The slide-5 MP3 loaded to `readyState=4` and
-advanced during playback. The locally authored tour described below is **not
-registered in the current learner player**.
+At phone fit, the full cutaway and title are visible, but the image has no
+printed names for the seven layers; narration names them. The slide-5 MP3
+loaded to `readyState=4` and advanced during playback. The locally authored
+tour described below is **not registered in the current learner player**.
 
 The existing Food Forest module pack reported **On this phone · 17.7 MB**.
 After a browser reload with network disabled, the lesson reopened at slide 5:
@@ -26,6 +26,26 @@ sequence. Any proposed replacement movie must first show a specific teaching
 gain at phone width and receive Rory's explicit visual clearance if it is
 code-drawn animation. A photorealistic Flow shot alone would not reliably
 label all seven planning categories. The prior tour remains held.
+
+## Static still update — 23 September 2026
+
+The still now pairs the existing cutaway artwork with a large, high-contrast
+key for Tall canopy, Smaller trees, Woody shrubs, Herbaceous plants, Ground
+cover, Root crops and Climbers. These names already appear in the existing
+narration/storyboard; no teaching copy or audio changed. The site-dependent
+note preserves the lesson's statement that layers are planning categories,
+not fixed height bands. The equal numbered rows do not map the categories to
+fixed vertical bands.
+
+`docs/media/studies-animation-quality/render-food-forest-l1-still.py` reproduces the static JPEG from
+`forest-layers/source.png`. The 1600 × 900 full-size output and its 390 × 219
+scaled view were inspected. In the scaled view, all seven names remain
+distinguishable; the detailed planting illustration is reduced to the left
+half to make room for the key. This is a local visual inspection, not a new
+deployed preview, physical-phone or learner review. A one-time service-worker
+migration clears only a saved English slide-5 JPEG; narration, neighboring
+slides and other module downloads remain cached, and the learner chooses when
+to fetch the replacement.
 
 ## Historical media observation — 22 September 2026
 
