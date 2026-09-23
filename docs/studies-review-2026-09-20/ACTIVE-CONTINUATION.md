@@ -1,5 +1,31 @@
 # Active Studies continuation — 22 September 2026
 
+## Reading the Landscape L3 English release (23 September)
+
+Commit `5529ffe3` corrected the English wind, frost and late-blight lesson,
+both quiz items, slides 12–15 narration and transcript. Site observations,
+local records and frost-season comparison replace fixed regional wind and
+guaranteed nursery positions. Airflow and morning sun may dry leaves but are
+not presented as a late-blight cure. Static slides 13–15 replace the earlier
+diagram/cards; the held code-drawn movie remains outside the player. Four
+slide MP3s and the full track were regenerated with exact WordBoundary match
+and full decode. The [L3 check](../media/studies-animation-quality/reading-landscape-l3-lesson-check.md)
+records primary sources, hashes, review limits and deployed evidence.
+
+Local typecheck, 3,718 passing tests / 0 failures / 1 existing TODO, and
+whitespace check passed. Exact-head CI `35846142531` passed `test` and
+`rules`; preview `35846142453` passed and build info reported `5529ffe`.
+At 390 px the deployed sample Student showed the corrected text, quiz and
+1920 px stills. Selective saved-pack migration refreshed the 48-file,
+12.9 MB pack. After a network-disabled reload, the Offline badge appeared;
+slides 13–15 loaded and slide 14 MP3 advanced past six seconds with no error.
+Network and viewport were restored. The [isiZulu L3 packet](../narration-reviews/reading-landscape-l3.zu.review.md)
+is review-only and unpublished. This is a browser technical check, not
+physical-phone, learner, farmer, practitioner, human-listening or fluent
+isiZulu approval. No Flow credit or SVG motion was used. Farm Finance is
+excluded. Water Harvesting L1 is the next English source/media hold to
+resolve one complete lesson at a time.
+
 ## Reading the Landscape L2 English release (23 September)
 
 The source-backed sun, shade and frost correction is in commit `7b26b635`.

@@ -37,9 +37,20 @@ does not fetch replacements. The held SVG movie remains outside the player;
 no Flow credit or SVG motion was used. The [L3 isiZulu packet](../../narration-reviews/reading-landscape-l3.zu.review.md)
 is review-only; no ZU learner content changed.
 
-Local verification, exact-head CI and deployed phone/offline checks are
-pending for this candidate. Human listening, learner, farmer, practitioner
-and fluent isiZulu approval are not claimed.
+Local typecheck, full test suite (3,718 passing / 0 failures / 1 existing TODO)
+and whitespace check passed. Commit `5529ffe3` passed exact-head CI
+`35846142531` in both `test` and `rules`; preview `35846142453` passed and
+build info reported `5529ffe`. At a 390 px browser viewport, the deployed
+sample Student showed the corrected lesson and both quiz questions. Slides
+13–15 loaded as 1920 × 1080 stills; their text is small at the player fit,
+with narration, expandable text and full-size links available. The 48-file,
+12.9 MB Reading the Landscape pack refreshed and reported On this phone.
+After a network-disabled reload, the Offline badge appeared; slides 13–15
+reopened as 1920 px stills and slide 14 speech advanced past six seconds with
+`readyState=4` and no error. Network and viewport were restored. This is a
+browser technical check, not a physical-phone or human listening check.
+Human listening, learner, farmer, practitioner and fluent isiZulu approval
+are not claimed.
 
 ## Earlier media baseline and source hold
 
