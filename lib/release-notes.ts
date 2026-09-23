@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '3730584f', changes: [
+    'Food Forest lesson 3 now says cardboard can reduce grass growth; check for regrowth.',
+  ], tour: [
+    { title: 'Review the Food Forest quiz', where: 'Studies → Food Forest Design → lesson 3', href: '/student',
+      detail: 'Read the sheet-mulching question and its explanation.' },
+  ] },
   { when: '23 September 2026', sha: '71f4a1be', changes: [
     'Check variety rights and permission before sharing seed with neighbours.',
     'The quiz and final action card now show the permission check.',

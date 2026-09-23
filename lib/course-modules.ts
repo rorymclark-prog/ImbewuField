@@ -1099,15 +1099,15 @@ export const COURSE_MODULES: CourseModule[] = [
         ],
         "quiz": [
           {
-            "q": "A farmer sheet-mulches a 500m² plot with cardboard and wood chips in September, before the rains. What's the cardboard's main job?",
+            "q": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
             "options": [
               "Creating a moisture barrier that blocks water from the soil",
-              "Smothering existing grass while it decomposes and feeds soil organisms over following months",
+              "Block light and help suppress grass while it breaks down; check for regrowth",
               "Providing a stable base so wood chips don't shift",
               "Reflecting heat upward to warm the soil"
             ],
             "correct": 1,
-            "rationale": "Cardboard cuts off light to existing grass, killing it, and then breaks down itself — feeding the soil rather than blocking it long-term."
+            "rationale": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks."
           },
           {
             "q": "When should a grower consider pruning or thinning temporary support plants?",

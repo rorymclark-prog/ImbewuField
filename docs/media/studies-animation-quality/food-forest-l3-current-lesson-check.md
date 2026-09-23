@@ -1,5 +1,25 @@
 # Food Forest Design L3 current English check — 23 September 2026
 
+## Narrow English quiz correction candidate — 23 September
+
+The first quiz now asks what plain cardboard under suitable mulch **can help**
+do where grass is growing. The keyed answer says it can block light and help
+suppress grass, then asks the learner to check for regrowth. The rationale
+keeps water entry and trunk clearance. This matches the lesson body and slide
+16 speech, and is supported by the [ARC soil and water manual](https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/2.pdf)
+and [ARC subtropical fruit manual](https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf):
+mulch reduces weed growth by blocking light; neither source guarantees that
+all existing grass dies. The old arbitrary 500 m²/September setup was removed
+because area and a fixed calendar month do not determine this mechanism.
+
+This is quiz-only. Current stills, registered slide 16 Flow clip, narration,
+transcript and audio are unchanged. No new Flow credit or SVG/code-drawn
+motion was used; no saved media require migration. Local checks, exact-head
+CI and deployed quiz verification are pending. Human listening, learner,
+farmer, practitioner and fluent isiZulu approval are not claimed.
+
+## Earlier player and source check — before this correction
+
 **Status:** Deployed media and source check with one protected quiz correction
 still open. Human, learner, facilitator and practitioner approval are not
 claimed. No protected teaching was edited. The slide-15 review candidate below
