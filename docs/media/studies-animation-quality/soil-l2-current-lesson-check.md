@@ -46,7 +46,7 @@ documents persistent seed-bank concern; the current quiz's qualified “some
 seeds may survive” answer is appropriately cautious. We did not verify a
 specific seed-coat mechanism in ordinary home heaps and should not add one.
 
-**Authorized English correction, pending deployed verification:** Rory replied
+**Authorized English correction, deployed technical check:** Rory replied
 “carry on” to the three-packet correction request. The former quiz 1 rationale
 called ammonia and sliminess *“the signature of too much nitrogen-rich green
 material relative to carbon.”* The symptoms justify a response, but do not
@@ -58,8 +58,11 @@ also matter. The new `lib/course-modules.ts` rationale reads:
 > nitrogen-rich material. Check that the heap stays damp, not soggy.
 
 The correction is limited to that rationale; the correct answer, lesson body,
-and narration are unchanged. The content edit is present locally but has not
-yet been verified in a deployed player or accepted by a learner. Oregon State
+and narration are unchanged. Commit `9351ff5f` passed exact-head `test` and
+`rules` CI jobs in run `35826665382`; preview run `35826665329` passed and
+`/api/build-info` reported `9351ff5`. In the deployed 390px sample Student
+quiz, option B remained correct and the revised explanation appeared without
+clipping. This is a technical browser check, not learner acceptance. Oregon State
 Extension's [Do the Rot Thing guide](https://extension.oregonstate.edu/catalog/em-9475-do-rot-thing-choosing-using-composting-system)
 supports adding dry browns and turning a too-wet pile, and keeping compost
 damp rather than soggy. The old `soil-health.zu.md` file is an expressly

@@ -1,5 +1,18 @@
 # Active Studies continuation — 22 September 2026
 
+## Soil Health L2 compost quiz correction (23 September)
+
+Rory authorized the named English correction packet. The quiz 1 rationale now
+avoids treating ammonia and sliminess as proof of a single carbon/nitrogen
+cause. The answer and narrated lesson stayed the same. OSU Extension supports
+the too-wet heap action and moisture safeguard in the [L2 check](../media/studies-animation-quality/soil-l2-current-lesson-check.md).
+Commit `9351ff5f` passed local typecheck, 3711 tests with 0 failures and 1
+existing TODO, and whitespace checks; exact-head `test`/`rules` CI and preview
+passed. `/api/build-info` reported `9351ff5`. At 390px, the deployed sample
+Student quiz showed option B correct and the revised explanation without
+clipping. No Flow credit, still, audio, species, figure, isiZulu or Finance
+asset changed. This is technical evidence, not learner or practitioner approval.
+
 ## English core dependency audit (23 September)
 
 The latest Small Livestock L1 documentation checkpoint `c5b9b386` passed both
@@ -10,15 +23,14 @@ motion, or changing protected teaching. The current 27 registered videos and
 24 still-only review slots remain the source-of-truth split in the core status
 and media matrix. Existing stills continue to serve held animation slots.
 
-The next narrow English correction is Soil Health L2's compost quiz rationale:
+The first narrow English correction was Soil Health L2's compost quiz rationale:
 its former single-cause explanation for a wet, slimy, ammonia-smelling heap
 was overconfident. Rory replied “carry on” to a request naming this and the
 Introduction L1 borehole-permission and Small Livestock L3 nutrient-loop
-packets. The Soil L2 replacement is now in the local branch, with its source
+packets. The Soil L2 replacement is now deployed, with its source
 and scope in the [L2 packet](../media/studies-animation-quality/soil-l2-current-lesson-check.md).
-It still needs exact-head CI and a deployed quiz check. Introduction L1 and
-Small Livestock L3 are next, one lesson at a time. `AGENTS.md` protects these
-lesson, quiz and narration fields; the authorization applies to the named
+Introduction L1 and Small Livestock L3 are next, one lesson at a time.
+`AGENTS.md` protects these lesson, quiz and narration fields; the authorization applies to the named
 source-backed English corrections, not wholesale rewriting.
 Other media holds require Rory's visual clearance for code-drawn motion or a
 qualified source/practitioner decision; unapproved candidates remain outside
