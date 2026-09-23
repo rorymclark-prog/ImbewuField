@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '36fd9746', changes: [
+    'Introduction lesson 1 now checks water-sharing rules and supply before an agreement.',
+    'Its two matching pictures and spoken explanations have been updated.',
+  ], tour: [
+    { title: 'Review the borehole example', where: 'Studies → Introduction → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 7 and 8, then answer the borehole quiz.' },
+  ] },
   { when: '23 September 2026', sha: '12fdc12d', changes: [
     'Soil Health lesson 2 now explains why a wet compost heap needs air and dry material.',
   ], tour: [

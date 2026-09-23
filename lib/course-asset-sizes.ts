@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 800 files, 335.8 MB total.
+// 800 files, 336.0 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -108,15 +108,15 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/food-forest/en/slide-18.mp3': 142128,
   '/course-audio/food-forest/en/slide-19.mp3': 114192,
   '/course-audio/food-forest/en/slide-20.mp3': 112608,
-  '/course-audio/intro-permaculture/en/full.mp3': 2873468,
+  '/course-audio/intro-permaculture/en/full.mp3': 2963468,
   '/course-audio/intro-permaculture/en/slide-01.mp3': 142848,
   '/course-audio/intro-permaculture/en/slide-02.mp3': 133776,
   '/course-audio/intro-permaculture/en/slide-03.mp3': 117792,
   '/course-audio/intro-permaculture/en/slide-04.mp3': 117792,
   '/course-audio/intro-permaculture/en/slide-05.mp3': 112608,
   '/course-audio/intro-permaculture/en/slide-06.mp3': 134640,
-  '/course-audio/intro-permaculture/en/slide-07.mp3': 134352,
-  '/course-audio/intro-permaculture/en/slide-08.mp3': 116208,
+  '/course-audio/intro-permaculture/en/slide-07.mp3': 199584,
+  '/course-audio/intro-permaculture/en/slide-08.mp3': 140976,
   '/course-audio/intro-permaculture/en/slide-09.mp3': 120672,
   '/course-audio/intro-permaculture/en/slide-10.mp3': 143856,
   '/course-audio/intro-permaculture/en/slide-11.mp3': 116208,
@@ -440,8 +440,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/en/slide-04.jpg': 937411,
   '/course-decks/intro-permaculture/en/slide-05.jpg': 820804,
   '/course-decks/intro-permaculture/en/slide-06.jpg': 896665,
-  '/course-decks/intro-permaculture/en/slide-07.jpg': 171169,
-  '/course-decks/intro-permaculture/en/slide-08.jpg': 135909,
+  '/course-decks/intro-permaculture/en/slide-07.jpg': 193845,
+  '/course-decks/intro-permaculture/en/slide-08.jpg': 170366,
   '/course-decks/intro-permaculture/en/slide-09.jpg': 175352,
   '/course-decks/intro-permaculture/en/slide-10.jpg': 965719,
   '/course-decks/intro-permaculture/en/slide-11.jpg': 135850,

@@ -453,15 +453,14 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "What does your land get back from you each season?"
       ],
       "7": [
-        "A borehole is producing more water than your household needs.",
-        "You could keep it closed. You could open it to everyone and watch the level drop.",
-        "Sharing access with your neighbours while you monitor the water table serves all three at once. People Care and Fair Share in the sharing. Earth Care in the monitoring.",
-        "The other choices each serve one ethic and ignore the rest."
+        "A borehole serves your household. Neighbours ask for water too.",
+        "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "Who could help you check the rules and the water supply?"
       ],
       "8": [
         "This is what the ethics are actually for.",
         "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
-        "The ethics let you decide without waiting for permission, and explain the decision afterwards.",
+        "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
         "Build these three into how you think before you build anything on the ground."
       ],
       "9": [

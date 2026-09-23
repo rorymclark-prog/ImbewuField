@@ -719,6 +719,60 @@ test('a saved greywater diagram with older source labels is retired without clea
   assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new lesson download');
 });
 
+test('a saved Introduction L1 pack retires only the five superseded English water-use assets once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateIntroL1WaterUseTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateIntroL1WaterUseTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const changed = [
+    '/course-decks/intro-permaculture/en/slide-07.jpg',
+    '/course-decks/intro-permaculture/en/slide-08.jpg',
+    '/course-audio/intro-permaculture/en/slide-07.mp3',
+    '/course-audio/intro-permaculture/en/slide-08.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ];
+  const preserved = [
+    '/course-decks/intro-permaculture/en/slide-06.jpg',
+    '/course-decks/intro-permaculture/en/slide-09.jpg',
+    '/course-decks/intro-permaculture/zu/slide-07.jpg',
+    '/course-audio/intro-permaculture/zu/slide-07.mp3',
+    '/course-decks/food-forest/en/slide-07.jpg',
+    '/course-audio/food-forest/en/slide-07.mp3',
+  ];
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path + '?saved=1', origin).href,
+    new URL(path + '?v=2', origin).href,
+  ]);
+  const preservedUrls = preserved.map(path => new URL(path + '?saved=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded English teaching media')] as const),
+    ...preservedUrls.map(url => [url, new Response('keep saved media')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/intro-permaculture/en/.l1-water-use-20260923';
+  assert.equal(rows.has(marker), true);
+
+  // A later download is left alone after the one-time migration marker is present.
+  const laterDownload = new URL(changed[0] + '?saved=again', origin).href;
+  rows.set(laterDownload, new Response('new learner-selected download'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'new learner-selected download');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache migration must not download replacement media or spend airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

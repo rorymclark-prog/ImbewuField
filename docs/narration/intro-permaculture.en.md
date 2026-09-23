@@ -90,15 +90,13 @@ What does your land get back from you each season?
 
 **Slide 7 — Watch: One Decision, Three Ethics**
 
-A borehole is producing more water than your household needs.
+A borehole serves your household. Neighbours ask for water too.
 
-You could keep it closed. You could open it to everyone and watch the level drop.
-
-Sharing access with your neighbours while you monitor the water table serves all three at once. People Care and Fair Share in the sharing. Earth Care in the monitoring.
+First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.
 
 [pause]
 
-The other choices each serve one ethic and ignore the rest.
+Who could help you check the rules and the water supply?
 
 ---
 
@@ -108,7 +106,7 @@ This is what the ethics are actually for.
 
 A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.
 
-The ethics let you decide without waiting for permission, and explain the decision afterwards.
+The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.
 
 [pause]
 

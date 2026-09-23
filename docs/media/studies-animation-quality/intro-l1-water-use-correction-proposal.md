@@ -1,8 +1,9 @@
 # Introduction L1 water-use correction proposal — 22 September 2026
 
-**Status:** source checked and wording proposed; no protected lesson, quiz,
-narration or learner media changed. Rory's permission for narrow corrections
-beyond Reading the Landscape L4 is pending.
+**Status:** Rory authorized the narrow source-backed English correction on
+23 September 2026. The corrected quiz, narration, transcript, two static
+stills and matching audio are in the Introduction L1 release batch; deployed
+and offline verification must be recorded before calling the batch complete.
 
 ## Why this lesson is held
 
@@ -25,18 +26,19 @@ water-use entitlement.
 
 ## Exact narrow English proposal
 
-Keep the lesson's three-ethics framework, existing answer index and other quiz
-options. Replace only the following linked wording if Rory authorises it:
+Keep the lesson's three-ethics framework and existing answer index. The second
+wrong option also loses its unsupported “surplus” premise:
 
 | Surface | Proposed wording |
 |---|---|
 | Quiz question | “Your borehole serves your household. Neighbours ask for water too. Which action best reflects all three ethics?” |
+| Wrong option B | “Keep all the borehole water for a larger irrigation area” |
 | Correct option C | “Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.” |
 | Rationale | “First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.” |
 | Slide 7 narration | “A borehole serves your household. Neighbours ask for water too. First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed. [pause] Who could help you check the rules and the water supply?” |
-| Slide 7 still caption | “Find out if sharing is allowed. Check that the borehole can serve all users. Agree how to share, then monitor.” |
+| Slide 7 still | Two check-first questions, “Sharing allowed?” and “Enough for all users?”, lead to a conditional agreement or a pause to check. This is a static image; the withdrawn code-drawn movie stays unregistered. |
 | Slide 8 narration sentence | “The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.” |
-| Slide 8 still bullet | “Use the ethics to weigh a decision. Ask permission where needed.” |
+| Slide 8 still | “Use the ethics to weigh a decision. Check the rules and ask permission where needed.” |
 
 The lesson body's shared-spring example is an ethical illustration about an
 already shared source. It should be retained unless editorial review finds that
