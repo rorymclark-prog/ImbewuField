@@ -50,8 +50,6 @@
 
 .player::backdrop { background: rgba(20, 16, 10, .75); }
 
-.rotateHint { display: none; }
-
 .expanded {
   position: fixed;
   z-index: 10000;
@@ -60,7 +58,7 @@
   max-height: none;
   height: 100vh;
   height: 100dvh;
-  overflow-y: auto;
+  overflow: hidden;
   padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
   border: 0;
   border-radius: 0;
@@ -69,10 +67,78 @@
 
 .expanded .slideStage {
   flex: 1 1 auto;
-  min-height: 160px;
+  min-height: 0;
   aspect-ratio: auto !important;
   background: #f3f0e7 !important;
 }
+
+.expanded .stageHidden { display: none; }
+
+.slideCanvas { margin-inline: auto; }
+
+.viewSwitch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #eee9db;
+}
+
+.viewSwitch button {
+  flex: 1;
+  min-height: 44px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #214d32;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.viewSwitch button[aria-pressed='true'] { background: #fffefa; box-shadow: 0 1px 4px #20190f24; }
+
+.readingPanel {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(16px, 4vw, 30px);
+  border: 1px solid #ece3c9;
+  border-radius: 12px;
+  background: #fffefa;
+  color: #20190f;
+  font-size: clamp(19px, 2.5vw, 23px);
+  line-height: 1.5;
+}
+
+.readingPanel p { max-width: 68ch; margin: 0 0 1em; }
+.readingPanel p:last-child { margin-bottom: 0; }
+.readingPanel .readingLabel {
+  margin-bottom: 1.25em;
+  color: #5c5040;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.zoomBar { display: flex; align-items: center; gap: 9px; color: #5c5040; font-size: 14px; }
+.zoomBar button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #9eb59a;
+  border-radius: 9px;
+  background: #eef5ea;
+  color: #214d32;
+  font-size: 24px;
+  cursor: pointer;
+}
+.zoomBar button:disabled { opacity: .45; cursor: default; }
+.panHint { font-size: 13px; }
+.expanded .transcript { display: none; }
 
 .player button:focus-visible, .player summary:focus-visible {
   outline: 3px solid #b88237;
@@ -97,7 +163,6 @@
 }
 
 @media (max-width: 480px) {
-  .expanded .rotateHint { display: block; margin: 0; color: #5c5040; font-size: 12px; }
   .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
@@ -136,7 +201,10 @@
   .expanded { gap: 5px; }
   .expanded .playerHeader { flex-wrap: nowrap; }
   .expanded .slideHeading { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .expanded .slideStage { min-height: 120px; }
+  .expanded .expandButton { min-height: 38px; padding-block: 5px; }
+  .expanded .viewSwitch button { min-height: 38px; }
+  .expanded .readingPanel { padding: 10px 16px; }
+  .expanded .zoomBar button { height: 38px; }
   .expanded .controlStrip { grid-template-columns: max-content max-content minmax(0, 1fr) max-content; }
   .expanded .playControl, .expanded .backControl, .expanded .nextControl, .expanded .progress {
     grid-column: auto;
