@@ -44,7 +44,7 @@ export interface UpdateTourStop {
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '23 September 2026', sha: '71f4a1be', changes: [
     'Check variety rights and permission before sharing seed with neighbours.',
-    'The quiz separates seed quality from exchange permission.',
+    'The quiz and final action card now show the permission check.',
   ], tour: [
     { title: 'Review community seed sharing', where: 'Studies → Market Gardening & Community → lesson 3', href: '/student',
       detail: 'Read the seed-sharing caution, answer the quiz and listen to slide 15.' },

@@ -16,15 +16,26 @@ pooling harvests multiplies the produce; the image itself is unchanged.
 
 The existing slide 15 Flow handover is unchanged and cannot establish seed
 identity, viability or legal permission. No new Flow credit or SVG motion was
-used. English slide 15 and 20 speech and the full track were regenerated.
+used. The deployed slide 20 card initially still omitted the permission
+check, so a replacement static JPEG now shows that check alongside the seed
+swap, tool share, delivery and skills choices. The primary agent inspected
+the former card, replacement 1920 × 1080 JPEG and its 269 px fit; the four
+bullets fit without overlap. Published SHA-256:
+`ceb68f4d1478c28bdce9b0065fb5e21d35b557acf235d7824f0166e43e874351`.
+The [render source](review-candidates/render-market-community-l3-slide20.py)
+and [phone fit](review-candidates/market-community-l3-slide20-fit-269.png)
+are retained. English slide 15 and 20 speech and the full track were
+regenerated.
 The [verification report](market-l3-english-audio-verification.json) records
 exact normalized WordBoundary matches (61/61 and 66/66), full decode and a
 387.120-second full track equal to the sum of all 20 slide clips. SHA-256:
 slide 15 `bf65157ae8e76da3d1e3e9982774213e28f7ac5afd41cbbf67f55878c495692d`,
 slide 20 `37e2838d023df57dd17e0c2b3e83e903ebbea3f234f8022a7a7ee0aa9e94b91f`,
 full `7dbe32a755f2ae7f372258c97169a06f84aa1cf494a7f8c176d1eba1fabb133c`.
-Selective saved-pack migration retires only those three English MP3s, without
-automatic downloads. The [isiZulu packet](../../narration-reviews/market-community-l3.zu.review.md)
+Selective saved-pack migration retires only those three English MP3s; a
+separate one-time migration retires the revised English slide 20 still even
+for users whose audio migration already ran. Neither downloads automatically
+or evicts the registered film. The [isiZulu packet](../../narration-reviews/market-community-l3.zu.review.md)
 is review-only and unpublished.
 
 Local checks, exact-head CI and deployed phone/offline verification are
