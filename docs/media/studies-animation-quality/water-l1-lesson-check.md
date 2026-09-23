@@ -1,6 +1,6 @@
 # Water Harvesting L1 English lesson check — 23 September 2026
 
-## Coordinated English correction and release candidate
+## Coordinated English correction and deployed lesson
 
 The lesson, first quiz/key point, slides 2–5 and 7 narration and transcript now
 teach a level contour swale as one design; a slight designed grade and outlet
@@ -38,10 +38,23 @@ saved-pack migration retires only the changed English stills and speech and
 does not fetch replacements. The [isiZulu L1 packet](../../narration-reviews/water-harvesting-l1.zu.review.md)
 is review-only; no ZU learner content changed.
 
-Local verification, exact-head CI and deployed phone/offline checks are
-pending for this candidate. Human listening, physical-phone, learner,
-farmer, local water/earthworks practitioner and fluent isiZulu approval are
-not claimed.
+Local typecheck, 3,719 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35848676756` passed both `test` and
+`rules`; preview `35848676754` passed for commit `73ce253c`. In the deployed
+sample Student, the revised English body and quiz appeared. The seven-slide
+L1 player opened slide 3's 1920 × 1080 still and played its MP3 beyond three
+seconds with `readyState=4`; slide 4 and slide 7 stills each loaded at
+1920 × 1080 and their MP3s played beyond five seconds. The Water module
+saved 54 files / 12.1 MB and reported **On this phone**. After a
+network-disabled reload, the Offline badge appeared; slide 3's still
+reopened at 1920 × 1080 and its MP3 advanced beyond four seconds with
+`readyState=4`. Network was restored. A 390 px screenshot of slide 3 was
+checked; the illustration's baked text is small at player fit, so learners
+need the narration and full-size link. A separate in-app browser tab crashed
+when its native audio control was clicked; the custom **Play the lesson**
+control and offline playback worked in another tab. This is a browser
+technical check, not physical-phone, human listening, learner, farmer,
+local water/earthworks practitioner or fluent isiZulu approval.
 
 ## Earlier media and source hold
 

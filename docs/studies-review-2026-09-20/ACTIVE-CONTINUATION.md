@@ -1,4 +1,31 @@
-# Active Studies continuation — 22 September 2026
+# Active Studies continuation — 23 September 2026
+
+## Water Harvesting L1 English release (23 September)
+
+Commit `73ce253c` corrected the source-held English swale lesson, first quiz,
+slides 2–5/7 stills and narration, transcript, asset manifest and selective
+offline migration together. A level contour swale is one design; a slight
+graded swale with a designed outlet is another. Infiltration, tree moisture
+and downstream overflow are conditional on the site. The two old swale movies
+remain held outside the player. Primary ARC, DWS, DHS and FAO sources and
+exact media hashes are in the [L1 check](../media/studies-animation-quality/water-l1-lesson-check.md).
+No Flow credit or SVG/code-drawn motion was used.
+
+Local typecheck, 3,719 passing tests / 0 failures / 1 existing TODO, and
+whitespace check passed. Exact-head CI `35848676756` passed `test` and
+`rules`; preview `35848676754` passed. The deployed sample Student showed
+the revised lesson and quiz. Slide 3, 4 and 7 stills loaded at 1920 × 1080;
+their English MP3s advanced with `readyState=4`. The Water module saved
+54 files / 12.1 MB and reported On this phone. After a network-disabled
+reload, the Offline badge appeared; slide 3's still and MP3 reopened and
+the audio advanced beyond four seconds. The connection was restored.
+Small baked slide text needs narration and the full-size link. One browser
+tab crashed on its native audio control, but the custom lesson control and
+offline check succeeded in another tab. The [isiZulu L1 packet](../narration-reviews/water-harvesting-l1.zu.review.md)
+is review-only; fluent language and local earthworks review remain open.
+This is not physical-phone, learner, farmer, practitioner or human-listening
+approval. Farm Finance remains excluded. Water Harvesting L2 is the next
+English source/media hold for one-lesson work.
 
 ## Reading the Landscape L3 English release (23 September)
 
