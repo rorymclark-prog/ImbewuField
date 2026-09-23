@@ -28,8 +28,19 @@ combined duration equal to the slide sum. The saved-pack migration retires
 only the old English slide 13 JPEG, its MP3 and the full MP3, without fetching
 replacements or deleting adjacent/isiZulu assets. No new Flow credit or
 SVG/code-drawn animation was used. Local typecheck, 3,725 passing tests /
-0 failures / 1 existing TODO, and whitespace check passed. Exact-head CI,
-preview/player and offline verification are pending. The [isiZulu packet](../../narration-reviews/vegetables-staples-l3.zu.review.md)
+0 failures / 1 existing TODO, and whitespace check passed. Content/audio commit
+`e6d619fd` passed exact-head CI `35860676505` (`test` and `rules`) and preview
+`35860676607`. The clearer card commit `7c0c30db` passed exact-head CI
+`35861357889` (`test` and `rules`) and preview `35861358014`; `/api/build-info`
+reported `7c0c30d`. In the deployed 390px sample Student, the corrected body,
+key point and slide transcript appeared; the four-card slide 13 loaded at
+1920 × 1080 and its new English MP3 played beyond 12 seconds with no media
+error. A prior saved Vegetables pack refreshed its three changed English assets
+to **On this phone · 18.6 MB**. After a network-disabled reload, the Offline
+badge appeared and the corrected slide 13 card and MP3 reopened; the audio
+advanced beyond five seconds. Connection and viewport were restored. This is
+browser delivery evidence, not physical-phone or human comprehension review.
+The [isiZulu packet](../../narration-reviews/vegetables-staples-l3.zu.review.md)
 is review-only; its old broad dry-period claim is unpublished. Human listening,
 physical-phone, learner, farmer, practitioner and fluent isiZulu approval are
 not claimed.

@@ -1,5 +1,26 @@
 # Active Studies continuation — 23 September 2026
 
+## Vegetables and Staple Crops L3 English release (23 September)
+
+Commits `e6d619fd` and `7c0c30db` qualify the sweet-potato drought claim in
+the English body, key point, slide 13 narration/transcript/audio and a clearer
+four-card static slide. The [L3 check](../media/studies-animation-quality/vegetables-l3-lesson-check.md)
+records the ARC source, image/audio hashes and limits. No video was registered
+for this lesson, and no Flow credit or SVG/code-drawn animation was used. The
+[isiZulu L3 packet](../narration-reviews/vegetables-staples-l3.zu.review.md)
+is review-only; the older draft's broad dry-period claim is unpublished.
+
+Local typecheck, 3,725 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35860676505` and `35861357889` each
+passed `test` and `rules`; previews `35860676607` and `35861358014` passed.
+The deployed 390px sample Student showed corrected text and slide 13's card;
+its new MP3 played past 12 seconds. The 18.6 MB Vegetables pack refreshed the
+changed image/audio. After a network-disabled reload, the Offline badge
+appeared and the card and MP3 reopened, with speech advancing past five seconds.
+Network and viewport were restored. This does not claim human listening,
+physical-phone, learner, farmer, practitioner or fluent isiZulu approval. Farm
+Finance remains excluded.
+
 ## Food Forest Design L3 English quiz release (23 September)
 
 Commit `183b39c1` corrects the first quiz's guarantee that cardboard kills
