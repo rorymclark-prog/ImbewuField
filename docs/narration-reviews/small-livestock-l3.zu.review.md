@@ -10,9 +10,10 @@ farmer, practitioner, learner or veterinary approval is claimed.
 
 - English lesson body and quiz: `lib/course-modules.ts`,
   `small-livestock-l3`.
-- English narration: `docs/narration/small-livestock.en.md`, slides 14–15.
+- English narration: `docs/narration/small-livestock.en.md`, slides 3,
+  14–15 and 19.
 - Existing isiZulu narration: `docs/narration/small-livestock.zu.md`,
-  pages 14–15.
+  pages 3, 14–15 and 19.
 - Source and media context: `docs/media/studies-animation-quality/small-livestock-l3-lesson-check.md`.
 
 The English correction describes partial nutrient return, bought-feed inputs,
@@ -27,8 +28,10 @@ animation or media is proposed by this language review.
 | Surface | Current English | Existing isiZulu draft | Finding |
 |---|---|---|---|
 | Lesson title | “Nutrients Moving Through the Farm” | “Close the Nutrient Loop” | The ZU title promises closure that the corrected English does not claim. |
+| Module outcome, slide 3 | Livestock move nutrients around a farm. | Says the learner will understand the value of closing nutrient loops. | Remove the promise of closure when a fluent reviewer revises the module-wide outcome. |
 | Slide 14 | Some nutrients move from plants to animals; bought feed brings nutrients in; some nutrients may return in manure compost; food/products carry nutrients away. | Tells learners to watch nutrients go plants → animals → manure/compost → growing bed. | Omits feed inputs and product outputs and gives a complete return path. Remove the “watch” instruction because this is a still in the learner player. |
 | Slide 15 | Animals return only some nutrients. Fresh manure may carry harmful germs; compost manure fully before use around food crops. | Says animals return nutrients and manure becomes crop compost, without a treatment safeguard. | Preserve “some” and the fresh-manure hygiene cue. Do not imply raw manure is safe for food crops or that composting makes manure sterile. |
+| Field assignment, slide 19 | Draw one useful link between livestock and the rest of the farm, showing what comes in and what leaves. | Title asks for a farm “loop”; last line asks learners to find one loop. | Align the assignment with partial flows and keep inputs and outputs visible. |
 | Quiz | The two questions concern guinea-fowl tick checks and goat worm control. | No corresponding nutrient-loop question in this narration segment. | No quiz edits or translations proposed. Keep the existing animal-health answers and advice intact. |
 
 The cited FAO source in the English review explains that feed imports and

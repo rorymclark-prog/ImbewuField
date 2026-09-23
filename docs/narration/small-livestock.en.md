@@ -26,7 +26,7 @@ By the end of this module, you will understand how chickens, ducks, bees, and gu
 
 You will know when chickens help a bed, and when their scratching can cause damage.
 
-You will understand pollination, hive placement, and the value of closing nutrient loops.
+You will understand pollination, hive placement, and how livestock move nutrients around a farm.
 
 ---
 
@@ -194,7 +194,7 @@ Do not stop treatment because chickens have visited the grazing camp.
 
 ---
 
-**Slide 19 — Field Assignment: Draw Your Farm Loop**
+**Slide 19 — Field Assignment: Draw Where Resources Go**
 
 Walk your smallholding and choose an area where livestock could support another part of the system.
 
@@ -202,7 +202,7 @@ Record what food, scraps, pests, surplus produce, manure, or flowering resources
 
 Then note what each animal could produce, and what it would need from the farm.
 
-Identify one loop that could work with the resources you already have.
+Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves.
 
 ---
 

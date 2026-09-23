@@ -1365,3 +1365,47 @@ test('a saved Vegetables L3 pack retires only the old sweet-potato card and Engl
   assert.equal(await rows.get(replacement)!.text(), 'new learner-selected card');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
+
+test('a saved livestock module refreshes its loop-framing stills and speech after the earlier L3 migration', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSmallLivestockModuleFlows\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSmallLivestockL3NutrientFlow\)\.then\(migrateSmallLivestockModuleFlows\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-decks/small-livestock/en/slide-03.jpg',
+    '/course-decks/small-livestock/en/slide-19.jpg',
+    '/course-audio/small-livestock/en/slide-03.mp3',
+    '/course-audio/small-livestock/en/slide-19.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/small-livestock/en/slide-14.jpg',
+    '/course-audio/small-livestock/en/slide-14.mp3',
+    '/course-decks/small-livestock/zu/slide-19.jpg',
+    '/course-audio/small-livestock/zu/slide-19.mp3',
+    '/course-decks/food-forest/en/slide-19.jpg',
+  ];
+  const rows = new Map<string, Response>([
+    [origin + '/course-decks/small-livestock/en/.l3-nutrient-flow-20260923', new Response('previous migration')],
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/small-livestock/en/.module-flows-20260923'), true);
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});

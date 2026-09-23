@@ -704,7 +704,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter' },
       { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
       { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control' },
-      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Your Farm Loop' },
+      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Where Resources Go' },
       { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
     ],
   },

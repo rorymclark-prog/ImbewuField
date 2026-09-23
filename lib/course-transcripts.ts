@@ -1451,7 +1451,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "3": [
         "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
         "You will know when chickens help a bed, and when their scratching can cause damage.",
-        "You will understand pollination, hive placement, and the value of closing nutrient loops."
+        "You will understand pollination, hive placement, and how livestock move nutrients around a farm."
       ],
       "4": [
         "Watch the hens peck at the ground among dry plant remains.",
@@ -1539,7 +1539,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Walk your smallholding and choose an area where livestock could support another part of the system.",
         "Record what food, scraps, pests, surplus produce, manure, or flowering resources are already present.",
         "Then note what each animal could produce, and what it would need from the farm.",
-        "Identify one loop that could work with the resources you already have."
+        "Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves."
       ],
       "20": [
         "Choose one safe action from this module.",
