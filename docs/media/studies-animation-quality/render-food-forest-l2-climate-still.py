@@ -77,35 +77,45 @@ def main() -> None:
     draw.line((72, 137, 1848, 137), fill=BORDER, width=4)
 
     cards = (
-        (72, PALE_BLUE, (49, 105, 145), "Highveld",
+        (72, PALE_BLUE, (49, 105, 145), ("Highveld",),
          ("Cold-tolerant trees", "and shrubs"), snowflake),
-        (984, (250, 243, 230), GOLD, "KZN coast / Lowveld",
-         "Warm-climate species", sun),
+        (984, (250, 243, 230), GOLD, ("KZN coast /", "Lowveld"),
+         ("Warm-climate", "species"), sun),
     )
     for x, fill, accent, region, guidance, icon in cards:
-        draw.rounded_rectangle((x, 183, x + 864, 653), radius=30,
+        draw.rounded_rectangle((x, 164, x + 864, 615), radius=30,
                                fill=fill, outline=BORDER, width=4)
-        icon(draw, x + 117, 291)
-        draw.text((x + 214, 224), region, font=font(66, True), fill=TEXT)
-        draw.rounded_rectangle((x + 52, 388, x + 812, 566), radius=23,
+        icon(draw, x + 117, 274)
+        region_font = font(66, True)
+        region_height = 72
+        region_y = 238 - ((len(region) - 1) * region_height // 2)
+        for index, label in enumerate(region):
+            bbox = draw.textbbox((0, 0), label, font=region_font)
+            draw.text((x + 214, region_y + index * region_height), label,
+                      font=region_font, fill=TEXT)
+        draw.rounded_rectangle((x + 52, 366, x + 812, 562), radius=23,
                                fill=CARD, outline=BORDER, width=3)
-        labels = guidance if isinstance(guidance, tuple) else (guidance,)
-        label_font = font(49 if len(labels) > 1 else 52, True)
-        line_height = 60
-        first_y = 447 - ((len(labels) - 1) * line_height // 2)
-        for index, label in enumerate(labels):
+        label_font = font(66, True)
+        line_height = 74
+        first_y = 416 - ((len(guidance) - 1) * line_height // 2)
+        for index, label in enumerate(guidance):
             bbox = draw.textbbox((0, 0), label, font=label_font)
             draw.text((x + (864 - (bbox[2] - bbox[0])) / 2 - bbox[0],
                        first_y + index * line_height),
                       label, font=label_font, fill=TEXT)
 
-    centered(draw, "Match every plant to your site.", 690, 50, TEXT, True)
-    draw.rounded_rectangle((72, 789, 1848, 929), radius=26,
-                           fill=(238, 232, 219), outline=BORDER, width=4)
-    centered(draw, "SITE CHECK FACTORS", 809, 30, MUTED, True)
-    centered(draw, "Frost     ·     Rainfall     ·     Humidity", 850, 48,
-             TEXT, True)
-    centered(draw, "Concept diagram — not to scale", 992, 28, MUTED)
+    centered(draw, "Match every plant to your site.", 638, 66, TEXT, True)
+    draw.text((72, 730), "SITE CHECK FACTORS", font=font(31, True), fill=MUTED)
+    factors = ("Frost", "Rainfall", "Humidity")
+    factor_x = (72, 672, 1272)
+    for x, label in zip(factor_x, factors):
+        draw.rounded_rectangle((x, 780, x + 576, 927), radius=24,
+                               fill=(238, 232, 219), outline=BORDER, width=4)
+        factor_font = font(66, True)
+        bbox = draw.textbbox((0, 0), label, font=factor_font)
+        draw.text((x + (576 - (bbox[2] - bbox[0])) / 2 - bbox[0], 817),
+                  label, font=factor_font, fill=TEXT)
+    centered(draw, "Concept diagram — not to scale", 977, 28, MUTED)
 
     image.save(OUTPUT, format="JPEG", quality=93, subsampling=0, optimize=True)
 

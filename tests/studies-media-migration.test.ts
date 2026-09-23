@@ -76,11 +76,13 @@ test('a saved Food Forest climate comparison clears only slide 10 and leaves its
 
   const origin = 'https://field.test';
   const oldStill = new Request(origin + '/course-decks/food-forest/en/slide-10.jpg?cached=1');
+  const firstPreviewMarker = new Request(origin + '/course-decks/food-forest/en/.climate-match-still-20260923');
   const narration = new Request(origin + '/course-audio/food-forest/en/slide-10.mp3');
   const anotherStill = new Request(origin + '/course-decks/food-forest/en/slide-11.jpg');
   const otherModule = new Request(origin + '/course-decks/market-community/en/slide-10.jpg');
   const rows = new Map<string, Response>([
     [oldStill.url, new Response('old climate diagram')],
+    [firstPreviewMarker.url, new Response('first preview candidate already migrated')],
     [narration.url, new Response('saved narration')],
     [anotherStill.url, new Response('saved next slide')],
     [otherModule.url, new Response('saved other module')],
@@ -95,7 +97,7 @@ test('a saved Food Forest climate comparison clears only slide 10 and leaves its
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(rows.has(oldStill.url), false);
   for (const request of [narration, anotherStill, otherModule]) assert.equal(rows.has(request.url), true);
-  assert.equal(rows.has(origin + '/course-decks/food-forest/en/.climate-match-still-20260923'), true);
+  assert.equal(rows.has(origin + '/course-decks/food-forest/en/.climate-match-still-20260923-v2'), true);
   assert.doesNotMatch(body, /\bfetch\(/, 'the migration must not silently spend learner airtime');
 
   const replacement = new Request(origin + '/course-decks/food-forest/en/slide-10.jpg');

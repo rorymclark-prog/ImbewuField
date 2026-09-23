@@ -681,7 +681,7 @@ async function migrateFoodForestLayerKeyStill() {
 // only that saved picture; learners choose when to download its replacement.
 async function migrateFoodForestClimateMatchStill() {
   const cache = await caches.open(COURSE_CACHE);
-  const marker = '/course-decks/food-forest/en/.climate-match-still-20260923';
+  const marker = '/course-decks/food-forest/en/.climate-match-still-20260923-v2';
   if (await cache.match(marker)) return;
   for (const request of await cache.keys()) {
     if (new URL(request.url).pathname === '/course-decks/food-forest/en/slide-10.jpg') {

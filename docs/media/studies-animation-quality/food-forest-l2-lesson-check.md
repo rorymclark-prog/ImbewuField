@@ -38,10 +38,11 @@ say that a region universally suits a planting. The image heading drops
 “Watch” because the lesson has no video or Watch control; the audio track title
 still contains “Watch,” so that title mismatch remains open. The 1920 × 1080
 candidate was inspected full-size and at the player's 269 × 151 fit. Both
-region labels and guidance panels remain distinct; the factor labels are
-visible but secondary at this size. This is a local still inspection, not a
-deployed-player or learner check. Candidate SHA-256:
-`63a956b57ef480308470fb41b563a9bf00274aa9b544027c657c14ff7040bb58`.
+region labels, guidance panels and three individual site-factor cards remain
+distinct at this size. A second narrow cache marker ensures a phone that saved
+the first preview candidate receives this larger-label replacement. This is a
+local still inspection, not a deployed-player or learner check. Candidate SHA-256:
+`2f17872e8dc56465c0ecb7e35af2a2e92fb384f6ecd463c2a274ee8112d074e8`.
 
 ## Source and farming safeguards
 
