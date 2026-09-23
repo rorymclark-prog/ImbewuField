@@ -24,7 +24,7 @@ Top: a person with a clipboard striding ahead, farmer trailing behind, head down
 Middle: the same person behind the farmer, pointing and pushing (behind). Bottom, largest and
 in full colour: mentor and farmer walking side by side, the farmer pointing at a healthy bed,
 the mentor listening, both smiling. Top two scenes muted (Hairline/grey), bottom in full palette.
-Sun in the north (upper left as drawn from the south-facing view; shadows fall south).
+Sun in the north; shadows fall south.
 **Labels on the poster (≤ 25 words, each ≤ 4 words):**
 1. In front: I lead
 2. Behind: I push

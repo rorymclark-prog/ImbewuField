@@ -22,7 +22,7 @@ courses, with consent) · 5 images REUSE · 7 animations REUSE.**
 
 ---
 
-## Poster artwork (NEW)
+**Poster artwork (NEW)**
 
 ## M-P01-ART · Walk beside — three ways to walk
 - Type: poster-art
@@ -30,8 +30,8 @@ courses, with consent) · 5 images REUSE · 7 animations REUSE.**
 - Used in: M-P01, M-D1-04, M-ON-03
 - Length: still
 
-**Brief:** See posters.md M-P01 art brief. Portrait A1 art area (approx. 60% of 594 × 841 mm),
-export 4960 × 4200 px. Three stacked scenes; top two muted, bottom full colour.
+**Brief:** See posters.md M-P01 art brief. Art area is the middle 60% of an A1 portrait (about 594 × 505 mm);
+export at 300 dpi (about 7016 × 5965 px). Three stacked scenes; top two muted, bottom full colour.
 
 ## M-P02-ART · The mentor's promise — open hand
 - Type: poster-art
@@ -179,7 +179,7 @@ together.
 
 ---
 
-## Still images (NEW)
+**Still images (NEW)**
 
 ## M-IMG-01 · Mentor and farmer at the gate
 - Type: image
@@ -286,7 +286,7 @@ screen. 16:9.
 
 ---
 
-## Still images (REUSE)
+**Still images (REUSE)**
 
 ## M-IMG-11 · A simple record sheet
 - Type: image
@@ -330,7 +330,7 @@ screen. 16:9.
 
 ---
 
-## Animations (NEW)
+**Animations (NEW)**
 
 ## M-ANI-01 · Two ways to listen
 - Type: animation
@@ -356,7 +356,7 @@ farmer plants three alone; the mentor steps back, hands in pockets. 22–24 s: t
 
 ---
 
-## Animations (REUSE)
+**Animations (REUSE)**
 
 ## M-ANI-03 · A-frame: find the level
 - Type: animation
@@ -416,7 +416,7 @@ farmer plants three alone; the mentor steps back, hands in pockets. 22–24 s: t
 
 ---
 
-## Photographs (NEW — taken on real courses, with consent)
+**Photographs (NEW — taken on real courses, with consent)**
 
 ## M-PHO-01 · A real observed farm visit
 - Type: photo
