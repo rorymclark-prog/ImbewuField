@@ -11,13 +11,15 @@ motion, or changing protected teaching. The current 27 registered videos and
 and media matrix. Existing stills continue to serve held animation slots.
 
 The next narrow English correction is Soil Health L2's compost quiz rationale:
-its current single-cause explanation for a wet, slimy, ammonia-smelling heap
-is overconfident; the source-backed replacement is written in the
-[L2 packet](../media/studies-animation-quality/soil-l2-current-lesson-check.md).
-Introduction L1's borehole-permission example and Small Livestock L3's closed
-nutrient-loop teaching/art are the next coordinated packets. `AGENTS.md` protects
-these lesson, quiz and narration fields. Rory's prior explicit permission was
-specific to Reading the Landscape L4, so these three await a new decision.
+its former single-cause explanation for a wet, slimy, ammonia-smelling heap
+was overconfident. Rory replied “carry on” to a request naming this and the
+Introduction L1 borehole-permission and Small Livestock L3 nutrient-loop
+packets. The Soil L2 replacement is now in the local branch, with its source
+and scope in the [L2 packet](../media/studies-animation-quality/soil-l2-current-lesson-check.md).
+It still needs exact-head CI and a deployed quiz check. Introduction L1 and
+Small Livestock L3 are next, one lesson at a time. `AGENTS.md` protects these
+lesson, quiz and narration fields; the authorization applies to the named
+source-backed English corrections, not wholesale rewriting.
 Other media holds require Rory's visual clearance for code-drawn motion or a
 qualified source/practitioner decision; unapproved candidates remain outside
 the learner player. No learner, farmer, practitioner, legal or fluent-language

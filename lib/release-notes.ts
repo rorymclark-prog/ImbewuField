@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '12fdc12d', changes: [
+    'Soil Health lesson 2 now explains why a wet compost heap needs air and dry material.',
+  ], tour: [
+    { title: 'Review the compost quiz', where: 'Studies → Soil Health → lesson 2', href: '/student',
+      detail: 'Answer the question about a wet, slimy compost heap and read the explanation.' },
+  ] },
   { when: '23 September 2026', sha: 'b184b7c5', changes: [
     'Small Livestock lesson 1 shows the chicken-tractor cautions in larger type.',
   ], tour: [

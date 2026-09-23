@@ -552,7 +552,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Add more water — the smell means it's too dry"
             ],
             "correct": 1,
-            "rationale": "Ammonia and sliminess are the signature of too much nitrogen-rich green material relative to carbon — more browns rebalance the mix and let air back in."
+            "rationale": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy."
           },
           {
             "q": "Why keep wattle seed pods out of an ordinary compost heap?",

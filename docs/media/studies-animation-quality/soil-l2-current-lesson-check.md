@@ -46,20 +46,23 @@ documents persistent seed-bank concern; the current quiz's qualified “some
 seeds may survive” answer is appropriately cautious. We did not verify a
 specific seed-coat mechanism in ordinary home heaps and should not add one.
 
-**One protected wording hold:** `lib/course-modules.ts` quiz 1 rationale calls
-ammonia and sliminess *“the signature of too much nitrogen-rich green
-material relative to carbon.”* The symptoms justify the stated response,
-but they do not identify that single cause with certainty; excess moisture
-and poor aeration also matter. A narrower rationale for a coordinated,
-authorised content edit would be:
+**Authorized English correction, pending deployed verification:** Rory replied
+“carry on” to the three-packet correction request. The former quiz 1 rationale
+called ammonia and sliminess *“the signature of too much nitrogen-rich green
+material relative to carbon.”* The symptoms justify a response, but do not
+identify that single cause with certainty; excess moisture and poor aeration
+also matter. The new `lib/course-modules.ts` rationale reads:
 
-> A wet, slimy heap needs more air and drier material. Add dry browns and turn
-> the heap; do not add more greens or water. An ammonia smell can also suggest
-> too much nitrogen-rich material.
+> A wet, slimy heap may need more air and drier material. Add dry browns and
+> turn the heap to open it up. An ammonia smell can also suggest too much
+> nitrogen-rich material. Check that the heap stays damp, not soggy.
 
-The correct answer and lesson action can remain. This proposal is held under
-the project's protected lesson-and-quiz rule until Rory authorises a broader
-correction. The old `soil-health.zu.md` file is an expressly unpublished
-draft; its earlier timings, ratios, sanitation target and seed-coat/bark
-claims must not be presented as approved teaching. English-first scope and
-fluent review remain explicit.
+The correction is limited to that rationale; the correct answer, lesson body,
+and narration are unchanged. The content edit is present locally but has not
+yet been verified in a deployed player or accepted by a learner. Oregon State
+Extension's [Do the Rot Thing guide](https://extension.oregonstate.edu/catalog/em-9475-do-rot-thing-choosing-using-composting-system)
+supports adding dry browns and turning a too-wet pile, and keeping compost
+damp rather than soggy. The old `soil-health.zu.md` file is an expressly
+unpublished draft; its earlier timings, ratios, sanitation target and
+seed-coat/bark claims must not be presented as approved teaching.
+English-first scope and fluent review remain explicit.
