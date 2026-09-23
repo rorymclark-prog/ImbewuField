@@ -1,5 +1,28 @@
 # Active Studies continuation — 22 September 2026
 
+## English core dependency audit (23 September)
+
+The latest Small Livestock L1 documentation checkpoint `c5b9b386` passed both
+exact-head `test` and `rules` jobs in run `35822790639`. A lower-cost parallel
+media audit found no additional English core asset to release safely without
+repeating a checked teaching action, using Flow credit, registering held local
+motion, or changing protected teaching. The current 27 registered videos and
+24 still-only review slots remain the source-of-truth split in the core status
+and media matrix. Existing stills continue to serve held animation slots.
+
+The next narrow English correction is Soil Health L2's compost quiz rationale:
+its current single-cause explanation for a wet, slimy, ammonia-smelling heap
+is overconfident; the source-backed replacement is written in the
+[L2 packet](../media/studies-animation-quality/soil-l2-current-lesson-check.md).
+Introduction L1's borehole-permission example and Small Livestock L3's closed
+nutrient-loop teaching/art are the next coordinated packets. `AGENTS.md` protects
+these lesson, quiz and narration fields. Rory's prior explicit permission was
+specific to Reading the Landscape L4, so these three await a new decision.
+Other media holds require Rory's visual clearance for code-drawn motion or a
+qualified source/practitioner decision; unapproved candidates remain outside
+the learner player. No learner, farmer, practitioner, legal or fluent-language
+approval is inferred from the technical passes.
+
 ## Small Livestock L1 final still clarity (23 September)
 
 Slide 8's four existing chicken-tractor cautions now sit in larger static
