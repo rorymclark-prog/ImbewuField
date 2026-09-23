@@ -130,8 +130,11 @@ same time and outcome:
   because phones get lost, stolen, broken and run out of data.
 - **Mixed room:** groups with a phone do `[APP]`; groups without do `[PAPER]`; the debrief
   compares both. This is often the best version — learners see that the thinking is the same.
-- Note: in current builds the old *Finances* door (/finances) opens **My Records**, one book with
-  tabs: **Picked · Sold · Spent · Charts**, and a desktop **Financial sheet**. Use those names in the room.
+- **Screen names:** there is no separate *Finances* screen any more — /finances opens the one
+  book at **My Records** (/records, shown as "Records" in some menus) with the tabs
+  **Picked · Sold · Spent** (+ Charts). **Sold = money in, Spent = money out.** The till-slip
+  scanner is inside a Spent *New entry*. The desktop **Financial sheet** and the **Invoice
+  builder** (/invoice) sit on the same book. Use these names in the room.
 
 ## Link to the app's Studies → Finance course
 
