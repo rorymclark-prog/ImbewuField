@@ -1,13 +1,13 @@
 # Market Gardening L2 English lesson check — 23 September 2026
 
-**Status:** A static slide-9 readability revision is prepared for preview;
+**Status:** A static slide-9 readability revision is deployed and checked;
 the other four stills and English audio remain. No new Flow
 request, local animation registration, protected lesson/quiz/narration edit,
 species, farming figure or `PLAN_VERSION` change was made. This is technical
 and source review, not Rory, farmer, learner, practitioner or fluent isiZulu
 approval. Farm Finance is outside this pass.
 
-## Current lesson and deployed playback
+## Earlier deployed lesson check, before the slide-9 revision
 
 Module slides 9–13 present roadside stall, group delivery and household box
 routes, then customer needs, direct-selling work, regular orders and matching
@@ -29,7 +29,7 @@ and its English MP3 advanced at `readyState=4`. Playback was stopped and
 network restored. This is one browser cache path, not physical-phone or
 listening acceptance.
 
-## Static slide 9 revision — pending deployed check
+## Static slide 9 revision — deployed check
 
 The existing route still had three small labels and a long explanatory
 paragraph that could not be read at phone fit. The replacement uses three
@@ -47,8 +47,21 @@ overlapping box and Farm labels outside their cards; those were corrected
 before this file was considered ready. The final JPEG is 191,111 bytes,
 SHA-256 `07ed3c60f85fc1c23445e1404161ee99b0ed36169416ce2e2d18a11e64f90cb3`.
 A one-time service-worker migration removes only the prior saved slide-9 JPEG,
-leaving English MP3s and other Market stills in the pack. Deployed phone,
-offline replacement and human visual review remain to be checked.
+leaving English MP3s and other Market stills in the pack.
+
+Exact-head `test` and `rules` passed for `40cdcf50` in run 35809394916;
+preview run 35809394918 passed and `/api/build-info` reported `40cdcf5`.
+At 390 × 844, the actual lesson player showed all three route names clearly
+inside a **269 CSS px** image. The JPEG loaded at `naturalWidth=1920`, its
+English MP3 reached `readyState=4` and advanced, and the lesson had zero video
+elements. The previous saved Market pack became **44 of 45 files**, with
+**187 KB left** for the new JPEG. After `Finish download`, it reported **On
+this phone · 12.8 MB**. With browser networking disabled, `/student` reloaded
+under the Offline badge; slide 9 loaded at 1920 natural pixels and its English
+MP3 again reached `readyState=4` and advanced. Network access was restored
+and playback stopped. This verifies one browser cache path, not a physical
+phone, a learner's comprehension or human visual acceptance. No Flow credit
+was used, and Farm Finance was not changed.
 
 ## Teaching and Flow decision
 

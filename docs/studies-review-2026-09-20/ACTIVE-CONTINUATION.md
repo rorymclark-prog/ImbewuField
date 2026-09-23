@@ -1,5 +1,23 @@
 # Active Studies continuation — 22 September 2026
 
+## Market Gardening L2 static route release (23 September)
+
+Slide 9's small route names and long lower paragraph were replaced by a
+static, large-label view of the three existing choices: roadside stall,
+group delivery to a shop, and a box delivered to a household. A first render
+had two visible overlaps; both were corrected before release. The final
+1920 × 1080 still was inspected full-size, at the player's 269px image width,
+and in the deployed 390px lesson. Exact-head `test` and `rules` passed for
+`40cdcf50`; preview run 35809394918 passed and `/api/build-info` reported
+`40cdcf5`. The English MP3 advanced with no video registered. A one-time
+cache migration removed only the prior slide-9 JPEG. After saving the 187 KB
+replacement, the **12.8 MB** pack showed On this phone; an offline browser
+reload reopened the new still and English MP3. The
+[L2 check](../media/studies-animation-quality/market-l2-current-lesson-check.md)
+records exact visual and playback limits. No Flow credit, protected teaching
+edit, SVG/code-drawn animation or Farm Finance work was used. Rory, learner,
+practitioner and fluent-language review remain open.
+
 ## Food Forest Design L1 static seven-layer key release (23 September)
 
 The former slide-5 cutaway had no printed layer names. A deterministic static
