@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'ff2668f1', changes: [
+    'Small Livestock lesson 3 now shows feed entering and farm products leaving.',
+    'Its stills and narration explain that only some nutrients return through compost.',
+  ], tour: [
+    { title: 'Follow nutrients through the farm', where: 'Studies → Small Livestock → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view slides 14 and 15 and the lesson diagram.' },
+  ] },
   { when: '23 September 2026', sha: '36fd9746', changes: [
     'Introduction lesson 1 now checks water-sharing rules and supply before an agreement.',
     'Its two matching pictures and spoken explanations have been updated.',

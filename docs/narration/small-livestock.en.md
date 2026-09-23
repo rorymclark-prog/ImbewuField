@@ -140,19 +140,19 @@ If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding i
 
 ---
 
-**Slide 14 — Watch: Nutrients Moving in a Closed Livestock Loop**
+**Slide 14 — Nutrients Moving Through the Farm**
 
-Watch nutrients move from plants to animals, then through manure and compost back to the growing bed.
+Some nutrients move from plants to animals. Bought feed also brings nutrients into the farm. Some nutrients may return to the growing area through compost made from manure. Food and other products carry nutrients away.
 
 ---
 
-**Slide 15 — Close the Nutrient Loop**
+**Slide 15 — Some Nutrients Return; Others Enter and Leave**
 
-Animals can return some nutrients to the farm.
+Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.
 
-Chickens eat suitable farm produce and insects, and manure can become compost for crops.
+Chickens eat suitable farm produce and insects.
 
-Keep track of feed bought in and food sold or taken home. These nutrients still enter or leave the system.
+Bought feed brings nutrients into the farm. Food sold or taken home and other products carry nutrients away. Keep track of feed bought in and food sold or taken home.
 
 Scraps alone may not meet the animals’ needs.
 

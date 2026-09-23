@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 800 files, 336.0 MB total.
+// 800 files, 336.4 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -328,7 +328,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/seeds-sovereignty/zu/slide-22.mp3': 261452,
   '/course-audio/seeds-sovereignty/zu/slide-23.mp3': 382412,
   '/course-audio/seeds-sovereignty/zu/slide-24.mp3': 224444,
-  '/course-audio/small-livestock/en/full.mp3': 2266796,
+  '/course-audio/small-livestock/en/full.mp3': 2381276,
   '/course-audio/small-livestock/en/slide-01.mp3': 126144,
   '/course-audio/small-livestock/en/slide-02.mp3': 144864,
   '/course-audio/small-livestock/en/slide-03.mp3': 112752,
@@ -342,8 +342,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/small-livestock/en/slide-11.mp3': 117072,
   '/course-audio/small-livestock/en/slide-12.mp3': 104688,
   '/course-audio/small-livestock/en/slide-13.mp3': 143424,
-  '/course-audio/small-livestock/en/slide-14.mp3': 38592,
-  '/course-audio/small-livestock/en/slide-15.mp3': 123840,
+  '/course-audio/small-livestock/en/slide-14.mp3': 92448,
+  '/course-audio/small-livestock/en/slide-15.mp3': 184464,
   '/course-audio/small-livestock/en/slide-16.mp3': 106848,
   '/course-audio/small-livestock/en/slide-17.mp3': 130464,
   '/course-audio/small-livestock/en/slide-18.mp3': 113184,
@@ -683,8 +683,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/small-livestock/en/slide-11.jpg': 114010,
   '/course-decks/small-livestock/en/slide-12.jpg': 1001026,
   '/course-decks/small-livestock/en/slide-13.jpg': 156404,
-  '/course-decks/small-livestock/en/slide-14.jpg': 164250,
-  '/course-decks/small-livestock/en/slide-15.jpg': 165724,
+  '/course-decks/small-livestock/en/slide-14.jpg': 223444,
+  '/course-decks/small-livestock/en/slide-15.jpg': 212782,
   '/course-decks/small-livestock/en/slide-16.jpg': 156109,
   '/course-decks/small-livestock/en/slide-17.jpg': 829749,
   '/course-decks/small-livestock/en/slide-18.jpg': 150535,
@@ -774,7 +774,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg': 68568,
   '/course-images/small-livestock/small-livestock-l1.jpg': 81375,
   '/course-images/small-livestock/small-livestock-l2.jpg': 79389,
-  '/course-images/small-livestock/small-livestock-l3.jpg': 76081,
+  '/course-images/small-livestock/small-livestock-l3.jpg': 137569,
   '/course-images/soil-health/soil-health-l1.jpg': 660969,
   '/course-images/soil-health/soil-health-l2.jpg': 98639,
   '/course-images/soil-health/soil-health-l3.jpg': 92909,

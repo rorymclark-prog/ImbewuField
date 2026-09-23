@@ -1,10 +1,13 @@
 # Small Livestock L3 English lesson check — 23 September 2026
 
-**Status:** Current still/audio player checked. The “closed nutrient loop”
-picture and wording are on a source hold. This document is the factual
-correction packet required by the media matrix; it is not authority to publish
-new teaching or motion. No protected lesson, quiz, narration, transcript,
-recording or still changed. No Flow credit was spent. Farm Finance is excluded.
+**Status:** The source-backed English correction was authorised by Rory. The
+lesson title and body, slides 14–15, lesson diagram, narration, transcript and
+English audio now show feed entering, only some nutrients returning through
+manure compost, and food/products leaving. The quiz and animal-health safeguards
+remain unchanged. The corrected media and saved-pack migration await deployed
+preview verification; the sections below record the *previous* released state
+and its source hold. No Flow credit was spent. The old code-drawn animation
+remains withdrawn. Farm Finance is excluded.
 
 ## Deployed media and saved-pack check
 
@@ -72,14 +75,16 @@ a veterinary/animal-health practitioner. Relevant local veterinary guidance
 is available from the [University of Pretoria's Anipedia](https://anipedia.up.ac.za/resources/introduction/1293.html).
 
 The English technical review does not constitute human listening, farmer,
-veterinary, practitioner or fluent isiZulu acceptance. Rory's broader
-protected-content decision remains pending.
+veterinary, practitioner or fluent isiZulu acceptance. Rory authorised this
+named English correction; the isiZulu alignment remains an unreviewed draft.
 
 ## Static review candidate
 
-The [unregistered slide-14 candidate](review-candidates/small-livestock-l3-slide-14-nutrient-flow-candidate.md)
+The [earlier unregistered slide-14 candidate](review-candidates/small-livestock-l3-slide-14-nutrient-flow-candidate.md)
 uses existing repo photos and shows feed entering, a partial return through
 managed compost and food/products leaving. Full-size visual review found its
 source claim more faithful than the closed-circle art. At 390 px full-slide
 fit, the smaller flow labels and body copy are too small. It therefore stays
-in `docs/` as a review draft, not a learner replacement or approval claim.
+in `docs/` as a historical review draft. The later partial-flow stills replace
+the learner-facing English art and were inspected at full and phone-fit size;
+they do not constitute learner or practitioner approval.

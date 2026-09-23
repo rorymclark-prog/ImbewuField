@@ -773,6 +773,54 @@ test('a saved Introduction L1 pack retires only the five superseded English wate
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache migration must not download replacement media or spend airtime');
 });
 
+test('a saved Small Livestock L3 pack drops the closed-circle pictures and old speech without clearing other lessons', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSmallLivestockL3NutrientFlow\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSmallLivestockL3NutrientFlow\)\.then/);
+
+  const origin = 'https://field.test';
+  const changed = [
+    '/course-decks/small-livestock/en/slide-14.jpg',
+    '/course-decks/small-livestock/en/slide-15.jpg',
+    '/course-images/small-livestock/small-livestock-l3.jpg',
+    '/course-audio/small-livestock/en/slide-14.mp3',
+    '/course-audio/small-livestock/en/slide-15.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/small-livestock/en/slide-13.jpg',
+    '/course-decks/small-livestock/en/slide-16.jpg',
+    '/course-audio/small-livestock/en/slide-13.mp3',
+    '/course-decks/small-livestock/zu/slide-14.jpg',
+    '/course-audio/small-livestock/zu/slide-14.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ];
+  const oldUrls = changed.map(path => new URL(path + '?saved=old', origin).href);
+  const keepUrls = keep.map(path => new URL(path + '?saved=old', origin).href);
+  const rows = new Map<string, Response>([
+    ...oldUrls.map(url => [url, new Response('old loop')] as const),
+    ...keepUrls.map(url => [url, new Response('saved lesson')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+
+  for (const url of oldUrls) assert.equal(rows.has(url), false, url);
+  for (const url of keepUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(rows.has(origin + '/course-decks/small-livestock/en/.l3-nutrient-flow-20260923'), true);
+  const replacement = new URL(changed[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend the learner’s airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];
