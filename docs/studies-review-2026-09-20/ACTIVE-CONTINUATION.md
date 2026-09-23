@@ -15,9 +15,16 @@ was used. Exact WordBoundary match and full audio decode are recorded in the
 [L3 check](../media/studies-animation-quality/intro-l3-lesson-check.md).
 The targeted saved-pack migration removes only changed English L3 stills and
 MP3s. Local typecheck, 3,715 passing tests / 0 failures / 1 existing TODO,
-and whitespace check passed. Exact-head CI, preview, phone-width player and
-offline saved-pack recheck remain before release.
-Human, farmer, practitioner and fluent isiZulu approval are not inferred.
+and whitespace check passed. Exact-head CI `35836079054` passed `test` and
+`rules`; preview `35836079087` passed and build info reported `dc13ce5`.
+At 390px, the deployed sample player showed the corrected stills and English
+audio. The pack offered a selective 1.8 MB refresh (42/49 files), then
+reported On this phone at 17.3 MB. After a network-disabled browser reload,
+slide 18 and its MP3 reopened with the Offline badge and audio advanced; slide
+19 also loaded offline. Network and viewport were restored. The [isiZulu L3
+packet](../narration-reviews/intro-l3.zu.review.md) is review-only. This is
+one browser's technical check, not physical-phone, human, farmer,
+practitioner or fluent-language approval.
 
 ## Introduction L2 English release and parallel isiZulu review (23 September)
 

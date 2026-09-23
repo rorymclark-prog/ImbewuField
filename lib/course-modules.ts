@@ -139,9 +139,9 @@ export const COURSE_MODULES: CourseModule[] = [
         title: "Zones and Sectors: Organising Your Farm by Energy",
         body: "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [
-          "Zone 1, nearest the house, holds daily-harvest crops like herbs",
+          "In this example, Zone 1 near the house holds often-picked herbs",
           "Zones organise labour by how often you need to visit",
-          "Sectors map incoming energies: sun, wind, frost, flood, fire",
+          "Sectors map incoming sun, wind, rainwater, flood and fire",
           "A simple sketch of zones and sectors is enough to start designing",
         ],
         quiz: [

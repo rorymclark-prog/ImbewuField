@@ -21,9 +21,19 @@ reports exact WordBoundary matches, full decode and a 535.656-second total
 equal to the sum of its tracks. The service worker retires only these changed
 English stills and speech from saved packs; replacement remains a learner
 choice. Local typecheck, 3,715 passing tests / 0 failures / 1 existing TODO,
-and whitespace check passed. Exact-head CI, deployed phone view and offline pack
-recheck are pending. Human listening, learner, practitioner and fluent isiZulu
-review are not claimed.
+and whitespace check passed. Exact-head CI `35836079054` passed both `test`
+and `rules`; preview `35836079087` passed and `/api/build-info` reported
+`dc13ce5`. At 390 × 844, the deployed sample Student displayed the corrected
+body, conditional quiz and slides 17–19 without clipping. Slide 18's image
+loaded at 1920px and its English MP3 reached `readyState=4`, advancing past
+six seconds. The saved module pack first showed 42/49 files and offered a
+1.8 MB replacement, then reported **On this phone · 17.3 MB**. With the
+browser network disabled and the page reloaded, the corrected slide 18 and
+its MP3 loaded again; the Offline badge was visible and audio advanced past
+six seconds. Slide 19 also loaded offline with its MP3 at `readyState=4`.
+Network and temporary viewport were restored. This is one browser's
+technical check, not a physical phone or human listening. The [isiZulu packet](../../narration-reviews/intro-l3.zu.review.md)
+is review-only; learner, practitioner and fluent isiZulu review are not claimed.
 
 ## Original source and media hold
 

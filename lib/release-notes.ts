@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '23 September 2026', sha: 'bc2499f1', changes: [
+  { when: '23 September 2026', sha: 'dc13ce50', changes: [
     'Introduction lesson 3 now asks you to check local wind before marking sectors.',
     'Its zone and windbreak pictures label the examples more clearly.',
   ], tour: [

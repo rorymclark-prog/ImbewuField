@@ -1,0 +1,39 @@
+# Introduction L3 isiZulu review packet — zones, sectors and windbreaks
+
+**Status: REVIEW ONLY.** This packet identifies alignment gaps between the current isiZulu draft and the corrected English Introduction L3 lesson. It is not a translation, fluent review, farmer approval or agronomic sign-off. No learner-facing isiZulu, audio, course content, image or test was changed.
+
+## Sources checked
+
+- Corrected English narration: `docs/narration/intro-permaculture.en.md`, slides 15–20.
+- Current isiZulu narration: `docs/narration/intro-permaculture.zu.md`, slides 15–20.
+- Current English lesson body and quiz: `lib/course-modules.ts`, lesson `intro-permaculture-l3`.
+- English transcript: `lib/course-transcripts.ts`, `intro-permaculture`, slides 15–20. No separate isiZulu transcript or isiZulu quiz text was found in the checked course sources.
+- English correction context and source limits: `docs/media/studies-animation-quality/intro-l3-lesson-check.md` and `intro-l3-source-correction-proposal.md`.
+
+## Exact alignment issues
+
+| Reference | Current isiZulu draft | Corrected English meaning | Review concern / handoff |
+| --- | --- | --- | --- |
+| Slide 15, `intro-permaculture.zu.md` lines 191–199 | Zone 1 is specifically by the kitchen door and holds items harvested daily. | English says that **in this example** Zone 1 is near the house and holds herbs and salad greens picked often. The Zone 2/3 visit frequencies and Zone 5 description otherwise match the current English lesson. | The isiZulu makes the example more specific and the harvest frequency more absolute. Confirm that the reviewer would keep the location and frequency flexible, in line with “near the house” and “picked often.” Do not add distances or a universal planting location. |
+| Slide 16 title and narration, lines 203–213 | “Why Zone 1 Is Not Negotiable”; herbs “need” daily picking to keep producing; placing them in Zone 3 is said to make daily visits stop, after which they quickly go to seed or are neglected. | English title is “Keep Daily Crops Close.” It says herbs picked often are easier to tend near the house; a longer walk **may** mean a missed visit and neglect. | The isiZulu is categorical about daily picking, location and consequences. Check that any revision retains only the conditional labour point and does not imply all herbs require daily harvest or that Zone 3 inevitably causes crop failure. The current English slide 16 narration does not promise bolting or loss of production. |
+| Slide 17, lines 221–223 | “Zones do not organise space only. They organise effort”; one rule “cuts hours of work” over a season. | English says zones help organise space around effort; closer placement **can** save walking and work. | The old contrast can deny that zones have a spatial arrangement, despite the rings in slides 15 and 20. The hours-saved claim is stronger than the corrected conditional claim. Ask the reviewer to preserve both spatial layout and the idea that visit frequency can guide placement, without promising a fixed labour saving. |
+| Slide 18, lines 231–241 | A Lowveld farm facing north-west gets hot, dry berg winds in August; a KwaZulu-Natal farm has a summer rain sector from the north-east. | English removes both regional direction claims. It asks learners to observe strong wind on their own farm, optionally check nearby weather-station records, and observe where rainwater enters and flows. | These are the clearest obsolete claims. They could teach a learner to draw a damaging-wind or rain arrow from a province/region label instead of evidence from their own site. Rain direction is especially unsafe to infer from a wind direction. Preserve the general explanation of sectors and replace fixed regional bearings with local observation/checking. Do not add a new regional bearing, season or weather rule. |
+| Slide 19, title and lines 245–249 | Title says a windbreak “belongs on the wind side”; the Highveld gets hot, dry north-westerly wind in August, with the break prescribed on the north-west boundary between wind and crops. | English frames north-west as “this example,” says airflow may pass through, over or around the break, and says shelter **can** reduce wind speed. Learners must observe damaging winds on their own site before choosing where to plant; the picture is not a planting plan. | The isiZulu makes the regional direction and siting prescription sound general. This could lead to planting on the wrong boundary. It also omits the corrected conditional effect and the explicit boundary between an illustration and a local planting plan. Check that any update marks the north-west as an example, keeps the effect conditional, and retains the instruction to observe local damaging winds before siting. |
+| Slide 20, `intro-permaculture.zu.md` lines 253–263 | The learner draws a boundary, house, visit-frequency rings and incoming arrows for sun, wind, fire and water; the page is called the basis for the design. | English has the same task and describes the page as the design’s “skeleton,” then says it must be true to the site. | No fixed regional direction remains in this segment. Check that “water” does not become an instruction to guess a rain bearing: slide 18’s corrected meaning is to map observed water entry/flow. Ensure the sketch is presented as a starting map, not a completed safe planting or earthworks plan. |
+
+## English quiz and body alignment
+
+The lesson body in `lib/course-modules.ts` has already removed the Lowveld and KwaZulu-Natal direction claims and instructs learners to observe wind and rainwater movement. Its two quiz questions are English only in the checked source; no isiZulu quiz, options or rationales were found.
+
+1. The zones question asks what **may** happen when often-picked herbs are planted far from the house. Preserve the conditional answer: extra walking may mean the learner picks or checks them less often. Do not carry over the isiZulu draft’s claim that daily visits necessarily stop or herbs quickly go to seed.
+2. The windbreak question now begins, “You observe damaging wind coming from the north-west on a Highveld farm.” Its correct answer places shelter on that observed windward boundary, between the wind and crops. The rationale says the windbreak belongs on the side the wind **actually** comes from. If an isiZulu quiz is authored, translate the observed condition, every option and the rationale together; do not make north-west a Highveld rule.
+
+## Questions for the fluent South African isiZulu and local farming reviewer
+
+- In slides 15–17, does the isiZulu clearly mark the zone layout and visit frequencies as examples, while explaining that frequent needs can guide placement without promising daily harvests or a fixed number of hours saved?
+- In slide 18, does the wording remove the Lowveld/north-west/August wind claim and the KwaZulu-Natal/north-east rain-direction claim, and clearly ask learners to observe wind and water movement on their own site?
+- In slide 19, is north-west unmistakably an illustrated example? Does the spoken wording preserve “may reduce wind speed,” airflow around/over/through the break, and local observation before choosing a planting position?
+- Could any wording about drawing sectors or placing a windbreak be taken as a site-specific planting or safety instruction without local observation or advice? What plain isiZulu phrasing would make the limits clear?
+- Are “zone,” “sector,” “windbreak,” “semi-wild,” and “weather-station records” understandable in spoken isiZulu for the intended smallholder audience? Which terms need explanation rather than a new coined translation?
+
+Record reviewer identity and relevant language/farming experience, date, suggested edits, and precisely which parts were reviewed. Fluent language review does not by itself establish local wind data or approve a farm-specific windbreak design.
