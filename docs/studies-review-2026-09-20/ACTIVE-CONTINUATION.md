@@ -6,13 +6,15 @@ The prior 390px check found that slide 4's five-column record table was too
 small to read at phone fit. A new deterministic **static** still makes Family
 food, Sales, Gifts and Compost separate large-label rows. Its 272 CSS px
 browser view was inspected in a 390px viewport; the source lesson and English
-narration are unchanged. The one-time course-cache migration invalidates only
-the old saved slide-4 JPEG and preserves the other downloaded lessons. This
-branch asset still needs exact deployed and offline verification before the
-improvement is called released. The [L1 check](../media/studies-animation-quality/market-l1-current-lesson-check.md)
-records the source and local visual evidence. No Flow credit or protected edit
-was used; code-drawn motion remains held for Rory's visual clearance. Farm
-Finance is excluded.
+narration are unchanged. The one-time course-cache migration invalidated only
+the old saved slide-4 JPEG and preserved another downloaded Market still. The
+deployed 390px lesson showed the new labels; the 12.8 MB pack then saved the
+replacement JPEG, and slide 4's still and English MP3 reopened offline. The
+[L1 check](../media/studies-animation-quality/market-l1-current-lesson-check.md)
+records source, exact hash, deployed and offline evidence. Exact-head `test`
+and `rules` passed in run 35804424658; preview run 35804424854 passed. No
+Flow credit or protected edit was used; code-drawn motion remains held for
+Rory's visual clearance. Farm Finance is excluded.
 
 ## Vegetables L1/L4 current English media check (23 September)
 

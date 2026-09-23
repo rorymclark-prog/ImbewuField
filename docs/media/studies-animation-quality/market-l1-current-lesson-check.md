@@ -16,16 +16,29 @@ asset is `public/course-decks/market-community/en/slide-04.jpg` (SHA-256
 `d4218b9f523ad7effe33ba7290b3b7bcdf2c4c21b83c3df80f4243c5bbe25d8c`).
 The rendered JPEG was inspected at full size and at the actual 272 CSS px
 image width inside a 390 px browser viewport. All four destination labels
-remain visually readable at that width. This is local visual QA pending the
-exact deployed preview and offline migration check; it is not farmer,
-learner, practitioner, human or isiZulu approval. A one-time service-worker
-migration clears only the old saved slide-4 still so a learner can choose when
-to download the improved file, leaving the rest of the pack intact.
+remain visually readable at that width. The deployed preview reported build
+`a9e7c9c` and served the same still in the L1 player at 390 px. Online, the
+slide-4 JPEG loaded at `naturalWidth=1920`, its unchanged English MP3 played
+with `readyState=4` (11.04 seconds), and no video element appeared.
+
+The existing browser had the **old 189,442-byte slide-4 still** and the saved
+slide-5 still before its service-worker update. On reload, the one-time
+migration removed only slide 4, retained slide 5, and wrote its marker. The
+Market pack then offered “Finish download · 220 KB left” at 44/45 files.
+After that tap it reported **On this phone · 12.8 MB**; the cached replacement
+was 224,944 bytes with the source SHA-256 above. With the browser offline,
+the lesson reopened and the replacement slide-4 still loaded at
+`naturalWidth=1920`; its MP3 again reached `readyState=4` and advanced.
+Network access was restored. This proves this browser cache path, not a
+physical-phone, farmer, learner, practitioner, human or isiZulu approval.
+Exact-head `test` and `rules` passed in run 35804424658; preview run
+35804424854 passed. No new Flow credit was used.
 
 ## Earlier deployed check — before the slide 4 replacement
 
-**Status at this earlier checkpoint:** The five-slide English player, then-current stills and saved-pack offline
-path were checked. No new Flow request, animation registration, protected lesson
+**Status at this earlier checkpoint:** The five-slide English player,
+then-current stills and saved-pack offline path were checked. No new Flow
+request, animation registration, protected lesson
 or quiz edit, narration edit, species, farming figure or `PLAN_VERSION` change
 was made. This is a technical check, not Rory, farmer, learner, practitioner or
 fluent isiZulu approval. The separate Farm Finance course is outside this pass.
@@ -33,9 +46,9 @@ fluent isiZulu approval. The separate Farm Finance course is outside this pass.
 ## Actual lesson and media
 
 Module slides 4–8 cover recording a harvest, reviewing a season, costs and a
-household food gap. Slide 4, “Watch: What the Farm Record Shows,” currently
-uses its still; the locally drawn farm-record film is withdrawn and needs
-Rory's explicit visual clearance before registration. The still's table keeps
+household food gap. Slide 4, “Watch: What the Farm Record Shows,” then used its
+old still; the locally drawn farm-record film was withdrawn and still needs
+Rory's explicit visual clearance before registration. The old still's table keeps
 family food, sales, gifts and compost separate, but its labels and lower
 explanation are too small to read at 390 px full-slide fit. The deployed
 player exposes an “Open still image · tap to zoom” link. Slide 5 has a
