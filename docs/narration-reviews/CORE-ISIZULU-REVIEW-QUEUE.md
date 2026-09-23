@@ -17,7 +17,7 @@ audio set is described here as fluent-approved. Farm Finance is excluded.
 
 | Module | Review-only packets | Main unresolved checks |
 | --- | --- | --- |
-| Introduction L1–L3 | [L1](intro-l1.zu.review.md), [L2](intro-l2.zu.review.md), [L3](intro-l3.zu.review.md) | Water-use permission and supply; qualified swale and overflow advice; zone/sector terms. |
+| Introduction L1–L3 | [L1 comparison](intro-l1.zu.review.md), [L2 comparison](intro-l2.zu.review.md), [L3 comparison](intro-l3.zu.review.md); [complete review drafts and handoff](INTRODUCTION-ISIZULU-FULL-DRAFT-HANDOFF.md) | Water-use permission and supply; qualified swale and overflow advice; zone/sector terms. Full draft is not learner-approved. |
 | Reading the Landscape L1–L4 | [L1](reading-landscape-l1.zu.review.md), [L2](reading-landscape-l2.zu.review.md), [L3](reading-landscape-l3.zu.review.md), [L4](reading-landscape-l4.zu.review.md) | Conditional water, aspect, wind and frost claims; a paced sketch is not automatically to scale; weeds do not prove compaction. L4 slide 17 stays a still. |
 | Water Harvesting L1–L4 | [L1](water-harvesting-l1.zu.review.md), [L2](water-harvesting-l2.zu.review.md), [L3](water-harvesting-l3.zu.review.md), [L4](water-harvesting-l4.zu.review.md) | Qualified earthwork and roof-water limits; stale first-flush numbers; L4 greywater source/use needs local sanitation and municipal reconciliation before translation or recording. |
 | Soil Health & Composting L1–L3 | [L1](soil-health-l1.zu.review.md), [L2](soil-health-l2.zu.review.md), [L3](soil-health-l3.zu.review.md) | No single-clue soil diagnosis, fixed compost recipe or sanitation guarantee; L3 mulch and leachate wording awaits an authorized English correction. |

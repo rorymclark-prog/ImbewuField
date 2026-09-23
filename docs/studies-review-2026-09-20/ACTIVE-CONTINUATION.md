@@ -1,5 +1,17 @@
 # Active Studies continuation — 23 September 2026
 
+## Introduction isiZulu full review draft (23 September)
+
+The [Introduction handoff](../narration-reviews/INTRODUCTION-ISIZULU-FULL-DRAFT-HANDOFF.md)
+now links complete proposed isiZulu lesson bodies, key points, quizzes and
+slides 1–22 for L1–L3. Lower-cost agents prepared L1/L2 independently and
+cross-checked L2/L3; the integrator corrected identified wording shifts.
+These are review-only documents, not learner scripts, recordings or fluent
+approval. An isiZulu-speaking farmer or agricultural educator must review the
+three lesson packets and return corrections before the learner app, slides,
+transcripts or MP3s can be localized. The current Introduction deck/audio
+remain English-only; no new Flow media is needed for this language step.
+
 ## Core isiZulu review preparation (23 September)
 
 The [review queue](../narration-reviews/CORE-ISIZULU-REVIEW-QUEUE.md)
