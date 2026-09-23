@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'fdd773e9', changes: [
+    'My Studies now keeps each course and guide list folded until you open it.',
+  ], tour: [
+    { title: 'Open a course', where: 'My Studies', href: '/student',
+      detail: 'Tap a course heading to see its lessons or guides.' },
+  ] },
   { when: '23 September 2026', sha: 'b336a9ec', changes: [
     'Introduction lesson 2 now checks the site before any water earthworks.',
     'Four pictures and the narration no longer promise crops will survive hail.',

@@ -476,6 +476,7 @@ export default function StudentPage() {
   const [toggling, setToggling] = useState<string | null>(null);
   const [progressError, setProgressError] = useState(false);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  const [courseOpen, setCourseOpen] = useState(false);
   // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
   // not durable UI state — see jumpToLesson() and the effect that consumes it.
   const [jumpToLessonId, setJumpToLessonId] = useState<string | null>(null);
@@ -554,6 +555,7 @@ export default function StudentPage() {
   function jumpToLesson(lessonId: string) {
     const owner = LESSON_INDEX.get(lessonId);
     if (!owner) return;
+    setCourseOpen(true);
     setExpandedModuleId(owner.moduleId);
     setJumpToLessonId(lessonId);
   }
@@ -692,6 +694,7 @@ export default function StudentPage() {
             <h1 id="studies-title" className="font-display">My Studies</h1>
             <p className={`font-sans ${styles.description}`}>Your permaculture course, one practical lesson at a time.</p>
             <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
+              setCourseOpen(true);
               setExpandedModuleId(studyModule.id);
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
             }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'}</button>
@@ -796,34 +799,40 @@ export default function StudentPage() {
           <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
         </details>
 
-        <section className={styles.companions} aria-labelledby="design-pathway-title">
-          <div>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="design-pathway-title">
             <p className={styles.eyebrow}>Connect the whole plan · English teaching preview</p>
             <h2 id="design-pathway-title" className="font-display">Design a working homestead</h2>
+          </summary>
+          <div>
             <p>Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.</p>
           </div>
           <OfflinePageLink href="/student/design" className={styles.guideCard}>
             <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
             <span><strong className="font-display">Bring the decisions together.</strong><span>Build a design folder with a facilitator or learning partner. This preview does not award course credit.</span><em>Explore the design teaching preview →</em></span>
           </OfflinePageLink>
-        </section>
+        </details>
 
-        <section className={styles.companions} aria-labelledby="finance-course-title">
-          <div>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="finance-course-title">
             <p className={styles.eyebrow}>Separate course · English teaching preview</p>
             <h2 id="finance-course-title" className="font-display">Farm Finance</h2>
+          </summary>
+          <div>
             <p>Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.</p>
           </div>
           <OfflinePageLink href="/student/finance" className={styles.guideCard}>
             <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
             <span><strong className="font-display">Understand the money. Plan the next season.</strong><span>Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.</span><em>Explore the finance teaching preview →</em></span>
           </OfflinePageLink>
-        </section>
+        </details>
 
-        <section className={styles.companions} aria-labelledby="app-guides-title">
-          <div>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="app-guides-title">
             <p className={styles.eyebrow}>Practical app guides</p>
             <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
+          </summary>
+          <div>
             <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
@@ -831,12 +840,13 @@ export default function StudentPage() {
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
-        </section>
+        </details>
 
-        <div className={styles.courseHeading}>
-          <h2 className="font-display">Your course</h2>
-          <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
-        </div>
+        <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
+          <summary className={styles.courseHeading}>
+            <h2 className="font-display">Your course</h2>
+            <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
+          </summary>
 
         {/* Module list */}
         <div className={styles.modules}>
@@ -1125,6 +1135,7 @@ export default function StudentPage() {
             </Link>
           )}
         </div>
+        </details>
 
         {/* Completion banner */}
         {pct === 100 && (

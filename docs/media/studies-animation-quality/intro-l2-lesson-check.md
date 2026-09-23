@@ -1,6 +1,7 @@
 # Introduction L2 English lesson check — 22 September 2026
 
-**Status (23 September):** English release candidate prepared for verification.
+**Status (23 September):** English correction released on the Studies preview
+as `fdd773e9`.
 The source-backed lesson, quiz, narration, transcript, four corrected static
 stills and six matching English slide MP3s now agree. The combined narration
 was rebuilt and decoded; the [audio verification record](intro-l2-english-audio-verification.json)
@@ -9,10 +10,20 @@ the older code-drawn motion still held. The revised stills were inspected at
 full and 269 px fit sizes. At the small fit, supporting text needs the zoom
 link or spoken narration. Selective offline cache migration retires only this
 lesson’s changed English media from saved packs. No Flow credit was spent.
-Local checks, exact-head CI, deployed phone view and offline recheck are still
-required before this is described as released. Human and fluent isiZulu review
-are still open; [isiZulu packet](../../narration-reviews/intro-l2.zu.review.md)
-is review-only.
+Local typecheck, 3,714 passing tests / 0 failures / 1 existing TODO, and
+whitespace checks passed. Exact-head CI `35832925424` passed both `test` and
+`rules`. Preview run `35832925320` passed on attempt 2 after a transient
+Google-font fetch failure on attempt 1; `/api/build-info` reported `fdd773e`.
+At 390 × 844, the deployed sample Student showed the corrected lesson text,
+quiz and slides 11–14 without clipping. On slide 13, the English MP3 reached
+`readyState=4` and advanced past five seconds. The selectively migrated pack
+first showed 39 of 49 files and offered the 1.8 MB replacement; after finishing
+it reported **On this phone · 17.3 MB**. With the browser network disabled and
+the page reloaded, slide 13 reopened with the Offline badge and its English MP3
+again reached `readyState=4` and advanced past five seconds. Network was
+restored. This verifies one browser at phone width, not a physical phone or
+human listening. Human and fluent isiZulu review are still open;
+[isiZulu packet](../../narration-reviews/intro-l2.zu.review.md) is review-only.
 
 ## Original 22 September check and holds
 

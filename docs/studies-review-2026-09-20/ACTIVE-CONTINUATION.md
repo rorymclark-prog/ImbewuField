@@ -1,6 +1,6 @@
 # Active Studies continuation — 22 September 2026
 
-## Introduction L2 English release candidate and parallel isiZulu review (23 September)
+## Introduction L2 English release and parallel isiZulu review (23 September)
 
 The source-backed L2 correction now attributes Holmgren’s twelve principles
 precisely, treats observation as a first step before any swale decision, removes
@@ -15,8 +15,14 @@ inspected. No new Flow credit or SVG/code-drawn motion was used, and the old
 diversity movie stays withdrawn. A lower-cost parallel agent prepared the
 L2 isiZulu comparison as **review only**; no learner-facing ZU edit or
 approval is claimed. Local typecheck, 3,714 passing tests / 0 failures /
-1 existing TODO, and whitespace check passed. Exact-head CI, preview and
-offline recheck remain to be completed before release is claimed.
+1 existing TODO, and whitespace check passed. Exact-head CI `35832925424`
+passed both `test` and `rules`; preview `35832925320` passed on attempt 2
+after a transient font-fetch failure. Build info reported `fdd773e`. At 390px,
+the deployed sample Student showed the corrected lesson, quiz and stills.
+The pack migrated selectively from 39/49 files, then reported On this phone
+at 17.3 MB; after a network-disabled reload, slide 13 rendered and its
+English MP3 advanced with `readyState=4`. Network was restored. This is one
+browser's technical check, not physical-phone or human approval.
 
 The [L2 check](../media/studies-animation-quality/intro-l2-lesson-check.md)
 and [isiZulu review packet](../narration-reviews/intro-l2.zu.review.md)
