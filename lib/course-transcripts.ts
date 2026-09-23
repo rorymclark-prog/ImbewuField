@@ -700,7 +700,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "12": [
         "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
-        "Size the dam to the catchment area draining toward it."
+        "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
       ],
       "13": [
         "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",

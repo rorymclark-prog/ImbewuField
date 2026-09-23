@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '89bbca73', changes: [
+    'Water lesson 2 now explains that catchment runoff alone cannot size a dam.',
+    'Its dam picture and narration call for qualified site and spillway design.',
+  ], tour: [
+    { title: 'Review dam design', where: 'Studies → Water Harvesting → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slide 12, then review the dam safety questions.' },
+  ] },
   { when: '23 September 2026', sha: 'cba197fc', changes: [
     'Water lesson 1 now compares two swale designs and calls for a local site check.',
     'Its pictures no longer promise deep root moisture or a safe overflow route.',

@@ -1,5 +1,43 @@
 # Water Harvesting L2 English lesson check — 23 September 2026
 
+## Coordinated English correction candidate
+
+The source-held slide 12 sentence was replaced in the English narration and
+generated transcript with: “Catchment runoff is one input. A suitably
+qualified person must assess the site, dam and spillway design before
+construction.” The heading now says “Dam and Spillway: A Concept” because
+the slide is a still. The lesson body and quiz already require qualified site and
+spillway assessment, so neither changed. [FAO's small earth dams manual,
+sections 5.5–5.8](https://www.fao.org/4/i1531e/i1531e01.pdf) treats
+catchment area as one input to yield and peak-flood calculations, alongside
+rainfall/runoff, topography and catchment shape; the same-size catchments can
+produce different peak floods. The manual separately discusses storage and
+spillway dimensions. This is a general engineering source, not a site design
+or a universal South African permission rule. No measurements were added.
+
+A new static slide 12 uses three large concept labels and a short caption,
+“Catchment runoff is one input. A qualified person must design the dam and
+spillway.” It is explicitly not to scale and gives no construction dimensions
+or safe-capacity claim. The primary agent inspected the 1920 × 1080 candidate,
+the 269 px phone fit and the published JPEG. The fuller narration carries the
+site-assessment instruction. The previously withdrawn code-drawn animation
+stays outside the player; no Flow credit or SVG/code-drawn motion was used.
+Slide JPEG SHA-256: `c43a6a2a1d2d3f99d913e526a57fc6ecc825d5f9df0ce3e100e0c5911316e63e`.
+English slide-12 MP3 SHA-256: `8364b9c3b63bbfb1cc4afa5b3b65345b6bcc2343b394fb464a1bd557bdeb0d30`.
+English full MP3 SHA-256: `af3739d359ab7da4448890e9e796af757bd060c132defcb248718104491ca4a3`.
+The [audio verification](water-l2-english-audio-verification.json) records
+exact normalized WordBoundary match, full decode, and a 456.648-second full
+track equal to the sum of all 24 slide clips. Selective saved-pack migration
+retires only this changed English still, slide MP3 and full recording, with
+no automatic fetch. The [isiZulu L2 packet](../../narration-reviews/water-harvesting-l2.zu.review.md)
+is review-only; no ZU learner content changed.
+
+Local verification, exact-head CI and deployed player/offline check are
+pending. Human listening, physical-phone, learner, farmer, qualified local
+dam designer and fluent isiZulu approval are not claimed.
+
+## Earlier media and source hold
+
 **Status:** deployed phone and offline media pass; slide 12 caption and
 narration remain on a source hold. The protected lesson, quiz, narration,
 transcript, stills and audio have not changed. No Flow credit was spent.

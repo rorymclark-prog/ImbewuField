@@ -1079,6 +1079,48 @@ test('a saved water L1 pack retires old swale advice while keeping neighboring E
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
 
+test('a saved water L2 pack drops catchment-only dam sizing media without clearing other water lessons', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateWaterL2DamSizingTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWaterL2DamSizingTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-decks/water-harvesting/en/slide-12.jpg',
+    '/course-audio/water-harvesting/en/slide-12.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/water-harvesting/en/slide-11.jpg',
+    '/course-audio/water-harvesting/en/slide-11.mp3',
+    '/course-decks/water-harvesting/en/slide-03.jpg',
+    '/course-audio/water-harvesting/en/slide-03.mp3',
+    '/course-decks/water-harvesting/zu/slide-12.jpg',
+    '/course-audio/water-harvesting/zu/slide-12.mp3',
+  ];
+  const rows = new Map<string, Response>([
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/water-harvesting/en/.l2-dam-sizing-20260923'), true);
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

@@ -96,13 +96,13 @@ An uncontrolled overflow can erode and breach the wall. Plan a safe route for ex
 
 ---
 
-**Slide 12 — Watch: Dam and Spillway**
+**Slide 12 — Dam and Spillway: A Concept**
 
 Design the spillway before the wall — an overtopped wall can breach catastrophically.
 
 [pause]
 
-Size the dam to the catchment area draining toward it.
+Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction.
 
 ---
 

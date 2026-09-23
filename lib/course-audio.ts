@@ -170,7 +170,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Roots Help Hold Soil' },
       { slide: 10, lesson: 'water-harvesting-l2', title: 'Store Rain for the Dry Season' },
       { slide: 11, lesson: 'water-harvesting-l2', title: 'Design the Spillway Before the Wall' },
-      { slide: 12, lesson: 'water-harvesting-l2', title: 'Watch: Dam and Spillway' },
+      { slide: 12, lesson: 'water-harvesting-l2', title: 'Dam and Spillway: A Concept' },
       { slide: 13, lesson: 'water-harvesting-l2', title: 'Care for the Dam and Its Banks' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
