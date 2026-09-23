@@ -8,8 +8,13 @@ no-improvised-dose cautions on the same image. The public JPEG was inspected
 full-size and at the 269px learner-image fit. The [L4 check](../media/studies-animation-quality/vegetables-l4-lesson-check.md)
 records its exact hash, source limits and selective cache replacement. The
 text-heavy safety detail also remains in the unchanged English narration and
-transcript. Exact-head CI, preview player and offline pack checks await this
-batch's push. No new Flow credit, code-drawn animation, protected teaching,
+transcript. Exact-head `test` and `rules` passed for `f471b20d`; preview run
+`35818771423` passed, `/api/build-info` reported `f471b20`, and the deployed
+JPEG matched the inspected local hash. The deployed 390px sample learner
+showed the new still with English audio. After selective migration, the pack
+offered only the missing 434 KB file and returned to On this phone · 18.6 MB.
+On an offline browser reload, slide 16 and its MP3 reopened; audio reached the
+end and Play lesson/reset returned at 2/2. No new Flow credit, code-drawn animation, protected teaching,
 isiZulu or Finance work was used.
 
 ## Vegetables and Staples L2 still clarity (23 September)

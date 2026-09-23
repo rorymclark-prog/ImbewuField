@@ -1,6 +1,6 @@
 # Vegetables and Staple Crops lesson 4 — Observe and Manage Pests and Disease
 
-## Static English slide-16 revision — 23 September 2026 (not yet deployed)
+## Static English slide-16 revision — 23 September 2026
 
 The English slide-16 JPEG now uses the reviewed static decision visual from
 [`render-vegetables-l4-slide16-review-v2.py`](render-vegetables-l4-slide16-review-v2.py).
@@ -29,10 +29,19 @@ focused migration test checks preservation of English audio and neighboring
 lesson assets and idempotence. The regenerated asset-size manifest includes the
 new JPEG.
 
-This is local asset and cache-code review only. The revised still has not yet
-been checked in the deployed learner player or a saved-pack offline reload; the
-earlier playback notes below describe the pre-revision still. Rory, learner,
-practitioner, fluent-language and field acceptance are not inferred.
+Exact-head `test` and `rules` passed for `f471b20d`; preview run
+`35818771423` passed and `/api/build-info` reported `f471b20`. The deployed
+JPEG matched the local SHA-256 above. In the deployed `/samples` Student route
+at 390 × 844, slide 16 displayed the revised still and its English MP3 reached
+`readyState=4` and advanced without error. The older saved Vegetables pack
+showed **41 of 42 files, 434 KB left** after selective cache migration;
+Finish download restored **On this phone · 18.6 MB**. With browser network
+disabled, a reload retained the sample Student shell and saved-pack status.
+Slide 16's new 1920px still and English MP3 loaded offline; narration played
+to the end, then Play lesson returned and Next stayed disabled at 2/2. Network
+access and the temporary viewport were restored. This is a deployed sample-mode
+technical check, not an authenticated learner account, physical phone, Rory,
+learner, practitioner, fluent-language or field acceptance.
 
 ## Deployed English check — 23 September 2026 (pre-revision still)
 
