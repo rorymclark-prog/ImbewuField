@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'dbf4a468', changes: [
+    'Bee lesson 2 now describes what its flower video actually shows.',
+    'Its honeybee ranges are described more carefully for South Africa.',
+  ], tour: [
+    { title: 'Review bee lesson', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Watch the bee on slide 9 and read the native honeybee card on slide 11.' },
+  ] },
   { when: '23 September 2026', sha: '5f41be93', changes: [
     'Water lesson 3 now asks you to check your roof material before collecting rain.',
     'The first-flush diagram is labelled as a concept still, with no drinking-water promise.',

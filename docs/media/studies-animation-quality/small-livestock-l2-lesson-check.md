@@ -1,5 +1,50 @@
 # Small Livestock L2 English lesson check — 23 September 2026
 
+## Matched English correction candidate
+
+The registered silent slide 9 Flow clip shows one bee moving between adjacent
+blossoms. It does not show a hive departure or establish pollen transfer,
+fertilisation, fruit set or yield. The English title now says “Watch: A Bee
+Moves Between Two Blossoms”; matched narration/transcript say “Watch one bee
+move from one blossom to another. Bees can carry pollen as they visit
+flowers.” This separates the visible action from the general pollination
+mechanism, which [SANBI's Cape honeybee account](https://www.sanbi.org/animal-of-the-week/cape-honeybee/)
+describes. The lesson and quiz already qualify crop outcomes. The existing
+one-output Flow asset remains registered; it was not regenerated or copied.
+No Flow credit or SVG/code-drawn motion was used.
+
+The body, slide 11 narration/transcript and replacement static card now use
+SANBI's broad regional description: Cape honeybee in the Western Cape and
+parts of the Eastern Cape, African honeybee native to central and most of
+southern Africa. This is broad context, not a field boundary or local bee
+identification. The lesson retains local beekeeper and movement-rule advice.
+The primary agent inspected the prior card, the new 1920 × 1080 JPEG and its
+269 px fit. Large two-panel labels replace the tiny old bullet layout; no
+person appears. Published still SHA-256:
+`9eee3e4c2fe82fb2c76896b06a5832c8914cdc81f997a2ac9af1597386887a10`.
+The still has no distribution map or hive-moving instruction. Its [render
+source](review-candidates/render-small-livestock-l2-slide11.py) and
+[phone-fit image](review-candidates/small-livestock-l2-slide11-fit-269.png)
+are retained for review.
+
+The English slide 9 MP3 SHA-256 is
+`ee5a17966afe61448267c0e1aa921aed1cf9a1e49d2fab5a80ca1c11d09be500`;
+slide 11 is `879e524fda5d4cd7f832a2377464c37b01df15904b7354bfcbc256dbeb2a3d47`;
+the full track is `f07cab4c9ac3b8b8d33f655ead7de70f1bd415560cfc3c079b8169e10d23b0cf`.
+The [audio report](small-livestock-l2-english-audio-verification.json)
+records exact normalized WordBoundary matches, full decode, and a 397.008-
+second full track equal to the sum of all 20 slide clips. Selective saved-
+pack migration retires only changed English speech, the corrected card and
+the full track; it does not fetch automatically or delete other lessons.
+The [isiZulu L2 packet](../../narration-reviews/small-livestock-l2.zu.review.md)
+is review-only and unpublished.
+
+Local checks, exact-head CI and deployed phone/offline verification of this
+correction are pending. Human listening, physical-phone, learner, farmer,
+local beekeeper and fluent isiZulu approval are not claimed.
+
+## Earlier player and source check — before this correction
+
 **Status:** Existing Flow bee shot works in the deployed browser and saved
 offline pack. Slide 9 narration/title and slide 11 bee-range wording need a
 coordinated protected correction before English content clearance. No teaching

@@ -88,11 +88,11 @@ There is no single number of chickens that guarantees enough fertility for every
 
 ---
 
-**Slide 9 — Watch: Bees Moving Between Hive and Crops**
+**Slide 9 — Watch: A Bee Moves Between Two Blossoms**
 
-Watch the bees leave the hive and move among flowering crops.
+Watch one bee move from one blossom to another.
 
-Their movement carries pollen between flowers across the site.
+Bees can carry pollen as they visit flowers.
 
 ---
 
@@ -110,7 +110,7 @@ A hive does not guarantee higher yields everywhere. Weather, water, plant health
 
 South Africa has two native honeybee subspecies.
 
-The Cape bee lives in the southern and south-western Cape. The African honeybee occurs across the north and east.
+The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.
 
 Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas.
 

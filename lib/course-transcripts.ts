@@ -1483,8 +1483,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "There is no single number of chickens that guarantees enough fertility for every plot."
       ],
       "9": [
-        "Watch the bees leave the hive and move among flowering crops.",
-        "Their movement carries pollen between flowers across the site."
+        "Watch one bee move from one blossom to another.",
+        "Bees can carry pollen as they visit flowers."
       ],
       "10": [
         "Honeybees and other insects carry pollen between flowers.",
@@ -1493,7 +1493,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "11": [
         "South Africa has two native honeybee subspecies.",
-        "The Cape bee lives in the southern and south-western Cape. The African honeybee occurs across the north and east.",
+        "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
         "Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas."
       ],
       "12": [

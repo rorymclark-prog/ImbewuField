@@ -1161,6 +1161,49 @@ test('a saved water L3 pack refreshes roof-suitability speech without deleting s
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
 
+test('a saved bee lesson replaces misleading English speech and range still without losing neighboring media', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSmallLivestockL2BeeTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSmallLivestockL2BeeTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-decks/small-livestock/en/slide-11.jpg',
+    '/course-audio/small-livestock/en/slide-09.mp3',
+    '/course-audio/small-livestock/en/slide-11.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ];
+  const keep = [
+    '/course-animations/small-livestock/flow-bee-between-blossoms.mp4',
+    '/course-decks/small-livestock/en/slide-10.jpg',
+    '/course-audio/small-livestock/en/slide-10.mp3',
+    '/course-decks/small-livestock/zu/slide-11.jpg',
+    '/course-audio/small-livestock/zu/slide-11.mp3',
+  ];
+  const rows = new Map<string, Response>([
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  const marker = origin + '/course-decks/small-livestock/en/.l2-bee-teaching-20260923';
+  assert.equal(rows.has(marker), true);
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

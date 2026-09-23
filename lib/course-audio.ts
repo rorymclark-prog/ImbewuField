@@ -694,7 +694,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time' },
       { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
       { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
-      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: Bees Moving Between Hive and Crops' },
+      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: A Bee Moves Between Two Blossoms' },
       { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops' },
       { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees' },
       { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care' },
