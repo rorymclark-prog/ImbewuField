@@ -20,6 +20,10 @@ evidence and authored course/guide material retain their English meaning and are
 translated shell could otherwise be mistaken for translated teaching.
 The sample workspace now retains its chosen interface language across hard
 navigation and reloads without changing the real account preference.
+The Journal and Lima Vision controls have a further draft pass. Journal notes,
+fieldwork examples and storage warnings remain in their authored English;
+Vision retains English AI results and the original estimates, with an isiZulu
+notice beside the result.
 
 This pass does not change role permissions, saved measurements, prices,
 calculations or learner course publication status. Route-level work continues;

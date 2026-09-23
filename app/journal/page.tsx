@@ -7,8 +7,11 @@ import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import { useLanguage } from '@/lib/i18n';
 
 export default function JournalPage() {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
@@ -22,9 +25,9 @@ export default function JournalPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Field Journal</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{isZulu ? 'Ijenali Yasensimini' : 'Field Journal'}</span>
         <div className="flex-1" />
-        <LessonLink id="journal:overview" label="Learn" />
+        <LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />
         <SettingsButton />
       </header>
 
