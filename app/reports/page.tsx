@@ -57,13 +57,15 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   }
   const choices = reportSiteChoices(reports, places);
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  const hasEnglishSavedReport = reports.some(report => report.lang === 'en');
   if (opened) return <ReportView locationData={opened.location} siteData={opened.siteData} waterData={opened.waterData} savedPlaces={places} savedReport={opened} activePlaceId={places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(opened.location))?.id} onClose={() => setOpened(null)} />;
   return <main className={styles.root} style={{ height: '100dvh' }}><div className={styles.wrap}>
     <header className={styles.row}><MenuButton /><BackButton fallback="/home" /><SettingsButton /></header>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
-    {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p>{t('reportsLoading')}</p> : <>
+    {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
-      <div className={styles.row} aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
+      {lang === 'zu' && hasEnglishSavedReport && <p className={styles.notice} role="note">Eminye imibiko egciniwe inombhalo ophelele wesiNgisi. Izilawuli zalapha zisesiZulu.</p>}
+      <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
       <Link href="/farmer?reportSite=new&guided=1" className={styles.card} style={{ display:'flex', gap:14, alignItems:'center', margin:'20px 0' }}><Plus size={28}/><div><h2>{t('reportsSelectNewSite')}</h2><p style={{margin:0}}>{t('reportsSelectNewSiteHelp')}</p></div><ArrowRight style={{marginLeft:'auto',flexShrink:0}}/></Link>
       {error && <p role="alert" className={styles.error}>{error}</p>}
       {view==='sites'&&<><h2>{t('reportsSavedSites')}</h2><p>{t('reportsSitesDescription')}</p>
