@@ -1,6 +1,40 @@
 # Vegetables and Staple Crops lesson 4 — Observe and Manage Pests and Disease
 
-## Current deployed English check — 23 September 2026
+## Static English slide-16 revision — 23 September 2026 (not yet deployed)
+
+The English slide-16 JPEG now uses the reviewed static decision visual from
+[`render-vegetables-l4-slide16-review-v2.py`](render-vegetables-l4-slide16-review-v2.py).
+The public-path file is 1920 × 1080; SHA-256
+`8f919c5d6595f00b8e5fe926d42f7e9bc5b4a111d06a51b1cd25ddbd8cc8e95f`,
+size 443,907 bytes. Its reviewed 1920 × 1080 source PNG remains under
+[`review-candidates/`](review-candidates/vegetables-l4-slide16-review-v2.png)
+with SHA-256
+`461c62e30ea0a8021961ffe15226ae91a88494d995cdd86b5ed03439f01879e2`.
+Both the full-size JPEG and an exact 269 × 151 proportional JPEG preview were
+inspected. The ordered sequence and all conditional safeguards are visible at
+that fit: observe damage; check moisture, roots, spacing, nutrition and
+drainage; protect beneficial insects; only then act and monitor; if treatment
+is needed, use a product registered for this crop and pest, follow its label,
+check protection and harvest waiting instructions, and do not improvise
+mixtures or stronger doses. This reuses the existing slide, lesson and source
+packet concepts and adds no diagnosis, pest/crop/chemical, number or species.
+The protected lesson, quiz, narration and audio are unchanged. No video or
+poster is registered.
+
+The service worker now has a one-time selective migration for the old English
+slide-16 still URL. It removes only cached requests whose pathname is exactly
+`/course-decks/vegetables-staples/en/slide-16.jpg` (including query variants),
+then records its marker; it does not fetch the replacement automatically. The
+focused migration test checks preservation of English audio and neighboring
+lesson assets and idempotence. The regenerated asset-size manifest includes the
+new JPEG.
+
+This is local asset and cache-code review only. The revised still has not yet
+been checked in the deployed learner player or a saved-pack offline reload; the
+earlier playback notes below describe the pre-revision still. Rory, learner,
+practitioner, fluent-language and field acceptance are not inferred.
+
+## Deployed English check — 23 September 2026 (pre-revision still)
 
 The stable 390 × 844 Student preview now displays L4 as two still-and-English
 audio slides with no video element. After the 11.3 MB Vegetables module pack
@@ -19,10 +53,11 @@ evidence, not a claim of Rory, physical-phone, learner, practitioner or fluent
 isiZulu acceptance. No new Flow request, protected teaching, species, figure
 or learner media change was made. Farm Finance is excluded.
 
-## Static decision candidate held — 23 September 2026
+## Earlier static decision candidate hold — 23 September 2026 (before v2)
 
-The [new static review candidate](review-candidates/vegetables-l4-slide16-decision-candidate.jpg)
-places the existing four steps in order and retains the current illustration's
+The superseded first static review candidate (not the current public still) is
+[preserved here](review-candidates/vegetables-l4-slide16-decision-candidate.jpg).
+It placed the existing four steps in order and retained the current illustration's
 leaf, helpful-insect, barrier and hand-removal symbols. It also keeps the
 conditional product-registration, label, protection, harvest-waiting and
 no-improvisation safeguards. The deterministic

@@ -677,3 +677,43 @@ test('a saved greywater diagram with older source labels is retired without clea
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new lesson download');
 });
+
+test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateVegetablesL4DecisionStill\)/);
+
+  const changed = '/course-decks/vegetables-staples/en/slide-16.jpg';
+  const keep = [
+    '/course-audio/vegetables-staples/en/slide-16.mp3',
+    '/course-decks/vegetables-staples/en/slide-15.jpg',
+    '/course-decks/vegetables-staples/en/slide-17.jpg',
+    '/course-decks/vegetables-staples/zu/slide-16.jpg',
+    '/course-decks/soil-health/en/slide-16.jpg',
+  ];
+  const rows = new Map<string, Response>([
+    [changed, new Response('old english still without query')],
+    [changed + '?saved=1', new Response('old english still')],
+    [changed + '?width=269', new Response('old thumbnail variant')],
+    ...keep.map(path => [path + '?saved=1', new Response('preserved')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(changed), false);
+  assert.equal(rows.has(changed + '?saved=1'), false);
+  assert.equal(rows.has(changed + '?width=269'), false);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=1'), true, path);
+  assert.equal(rows.has('/course-decks/vegetables-staples/en/.l4-slide16-decision-still-20260923'), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'the migration must let the learner choose when to download the replacement');
+
+  rows.set(changed + '?saved=1', new Response('replacement still downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed + '?saved=1')!.text(), 'replacement still downloaded later');
+});

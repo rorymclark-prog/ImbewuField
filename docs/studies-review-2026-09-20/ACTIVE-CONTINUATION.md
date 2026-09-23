@@ -1,5 +1,17 @@
 # Active Studies continuation — 22 September 2026
 
+## Vegetables and Staples L4 static decision still (23 September)
+
+The English slide-16 still now presents the existing four-step pest-response
+order and keeps product registration, label, protection, harvest waiting and
+no-improvised-dose cautions on the same image. The public JPEG was inspected
+full-size and at the 269px learner-image fit. The [L4 check](../media/studies-animation-quality/vegetables-l4-lesson-check.md)
+records its exact hash, source limits and selective cache replacement. The
+text-heavy safety detail also remains in the unchanged English narration and
+transcript. Exact-head CI, preview player and offline pack checks await this
+batch's push. No new Flow credit, code-drawn animation, protected teaching,
+isiZulu or Finance work was used.
+
 ## Vegetables and Staples L2 still clarity (23 September)
 
 Slides 9 and 11 now reflow their existing English titles and statements into
@@ -8,8 +20,14 @@ unchanged. Both replacement JPEGs were inspected at full size and the player's
 269px image width. A one-time cache marker removes only the former English
 slide-9/11 stills. The [L2 check](../media/studies-animation-quality/vegetables-l2-lesson-check.md)
 records hashes and the local phone-fit limit. Full local typecheck, tests and
-whitespace checks passed; exact-head CI, preview player and offline pack
-verification are pending the batch push. No Flow credits, SVG/code motion,
+whitespace checks passed. Exact-head `test` and `rules` passed for `55364ff2`,
+preview run `35817316741` passed, `/api/build-info` reported `55364ff`, and
+both deployed JPEGs matched the local hashes. A real browser at 390px opened
+each direct JPEG with no clipping. The deployed `/samples` Student lesson then
+displayed slides 9/11 and advanced their English audio at 390px. Its 18.3 MB
+Vegetables pack reported On this phone; after an offline browser reload, both
+revised JPEGs and MP3s loaded and playback advanced. An authenticated account,
+physical phone and full end/reset were not checked. No Flow credits, SVG/code motion,
 isiZulu edits or Farm Finance work were used.
 
 ## Soil Health L3 static comparison release (23 September)

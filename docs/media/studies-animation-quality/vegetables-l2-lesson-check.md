@@ -30,8 +30,21 @@ slide 11 is 1920 × 1080, 261,180 bytes, SHA-256
 offline size manifest was regenerated. A one-time worker migration clears only
 the previous English slide 9 and 11 stills, including query variants, while
 preserving all other saved lesson media; learners choose when to download the
-replacements. No post-deploy or offline-pack check has yet been made against
-these new files.
+replacements. Exact-head `test` and `rules` passed for `55364ff2`; preview run
+`35817316741` passed and `/api/build-info` reported `55364ff`. Both deployed
+JPEGs matched the local SHA-256 values above. In a real browser at a 390px
+viewport, each direct image opened and the larger text fitted without clipping.
+
+The public `/samples` Student route then opened this exact deployed L2 lesson
+at 390 × 844. Its four-slide Watch and listen player displayed revised slides
+9 and 11 at 2/4 and 4/4, with English audio advancing and no media error.
+The Vegetables pack reported **On this phone · 18.3 MB**. With browser network
+disabled, a reload kept the sample Student shell and saved-pack status; slide
+9 and slide 11 each displayed the revised 1920px JPEG, and their MP3 elements
+reached `readyState=4` with playback advancing and no error. Network access
+and the test viewport were restored afterward. This is a deployed sample-mode
+browser/offline technical check, not an authenticated learner account, physical
+phone, full end/reset playback or Rory/learner/practitioner acceptance.
 
 The English body and two quizzes retain the safeguards that a sequence of
 sowings **may** reduce risk but cannot guarantee a harvest, that the first
