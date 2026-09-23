@@ -1,5 +1,38 @@
 # Introduction L1 English lesson check — 22 September 2026
 
+## 23 September correction and deployed check
+
+Rory authorized the narrow source-backed English borehole correction. The
+quiz and slides 7–8 narration now ask whether sharing is allowed and whether
+the source can serve all users before an agreement. The earlier “surplus”
+premise and “without waiting for permission” advice are gone. The two
+replacement pictures are static; the withdrawn code-drawn movie is still not
+registered. No Flow credit was spent. The [correction packet](intro-l1-water-use-correction-proposal.md)
+records the National Water Act basis and the exact linked wording.
+
+The replacement JPEGs were inspected at 1920 × 1080 and the player's 269px
+image fit. Both conditions are visible on slide 7; its outcome labels remain
+small at phone fit, so the English narration, transcript and full-size link
+carry the detail. Slide 8's check-rules message is readable at phone fit. The
+two new MP3s match their exported script through WordBoundary records and fully
+decode; the 22-track English full MP3 fully decodes and its 493.872-second
+duration equals the sum of its tracks. No human listening review is claimed.
+
+Commit `762617ac` passed local typecheck, 3,712 passing tests with zero
+failures and one existing TODO, and whitespace checks. Exact-head CI run
+`35828413942` passed both `test` and `rules`; preview run `35828413934`
+passed; `/api/build-info` reported `762617a`. At 390px, the deployed sample
+Student showed slides 7 and 8 and their English narration durations (33 and
+23 seconds). The corrected borehole answer C and its full explanation were
+visible and unclipped. The 49-file, 16.8 MB Introduction pack reported “On
+this phone”; after a network-disabled reload, both corrected stills reopened
+and each MP3 played from the saved pack. This is sample-browser technical
+evidence, not physical-phone, learner, farmer, legal or practitioner approval.
+
+The original source hold below is historical; this correction resolves the
+specific English borehole wording. IsiZulu remains an unpublished draft
+pending fluent and local review.
+
 ## Scope and current result
 
 Introduction to Permaculture lesson 1 is five learner slides, module slides

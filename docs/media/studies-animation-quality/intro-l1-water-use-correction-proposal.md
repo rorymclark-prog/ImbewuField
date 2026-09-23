@@ -2,8 +2,8 @@
 
 **Status:** Rory authorized the narrow source-backed English correction on
 23 September 2026. The corrected quiz, narration, transcript, two static
-stills and matching audio are in the Introduction L1 release batch; deployed
-and offline verification must be recorded before calling the batch complete.
+stills and matching audio were deployed in `762617ac`. The exact-head CI,
+phone-size and saved-pack checks are in [the lesson check](intro-l1-lesson-check.md).
 
 ## Why this lesson is held
 

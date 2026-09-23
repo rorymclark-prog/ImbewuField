@@ -1,5 +1,28 @@
 # Active Studies continuation — 22 September 2026
 
+## Introduction L1 English release and parallel isiZulu preparation (23 September)
+
+Rory asked for all ten core modules in English, one lesson at a time, while a
+lower-cost agent lane begins isiZulu work in parallel. Farm Finance stays out
+of this pass; Seeds remains the completed baseline. Four **unreviewed** isiZulu
+alignment packets are now prepared for Introduction L1, Reading Landscape L4,
+Soil Health L2 and Vegetables L2 in `docs/narration-reviews/`. They are not
+learner scripts or approvals. Fluent isiZulu and local farming review is
+required before any ZU audio or publication.
+
+The authorized Introduction L1 borehole correction is deployed as `762617ac`.
+Its quiz, English narration, transcript, two static stills, two slide MP3s,
+full MP3, exact asset sizes and selective offline cache migration moved
+together. Local typecheck, 3,712 passing tests / 0 failures / 1 existing TODO,
+and whitespace check passed. Exact-head CI `35828413942` passed `test` and
+`rules`; preview `35828413934` passed; build info reported `762617a`.
+At 390px the deployed sample player showed the two corrected stills, audio
+durations and quiz explanation. Its 49-file 16.8 MB pack reopened both stills
+and MP3s after a network-disabled reload. The [L1 check](../media/studies-animation-quality/intro-l1-lesson-check.md)
+records the source, media and review limits. No Flow credit or SVG/code-drawn
+animation was used. Small Livestock L3 is the next authorized English lesson
+correction. Other English source holds and human/fluent review remain open.
+
 ## Soil Health L2 compost quiz correction (23 September)
 
 Rory authorized the named English correction packet. The quiz 1 rationale now
