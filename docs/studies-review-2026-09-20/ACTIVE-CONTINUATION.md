@@ -1,5 +1,21 @@
 # Active Studies continuation — 23 September 2026
 
+## Food Forest and Vegetables isiZulu full review drafts (23 September)
+
+The [Food Forest handoff](../narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md)
+links complete review-only proposals for L1–L3. The [Vegetables
+handoff](../narration-reviews/VEGETABLES-ISIZULU-FULL-DRAFT-HANDOFF.md)
+links complete proposals for L1–L4. They cover lesson bodies, key points,
+all quiz options and rationales, and current narrated slides. The integrator
+checked the English meaning, corrected a Food Forest edible-plant wording
+shift, and retained flagged English source conflicts for the course owner.
+The held Food Forest grass-removal candidate remains held, and the
+Vegetables transplant film remains a generic single-plant illustration.
+These are not fluent-reviewed or learner material; no app text, deck, audio,
+manifest or Flow asset changed. Nineteen of 27 non-Seeds/non-Guilds core
+lessons now have complete review-only drafts. Each still needs
+first-language isiZulu and local farming review before release.
+
 ## Water Harvesting and Soil Health isiZulu full review drafts (23 September)
 
 The [Water Harvesting handoff](../narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md)
