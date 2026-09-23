@@ -285,8 +285,8 @@ Teacher talk: **21 of 75 min (28%).**
 3. DO: Point to **R-P04 Plan the month before it starts**: ① count what will come in
    ② pay needs first ③ put some away — save ④ put the farm's money aside ⑤ wants with what is
    left ⑥ keep a little for surprises.
-4. GROUPS (20 min): "Materials: go to the bank (facilitator) and collect your family's money for
-   one month, in play money. Lay the budget sheet on the table. Put real notes on each row, **in
+4. GROUPS (20 min): "Materials: count your family's money for one month out of your play-money
+   bag (the amount is on the family card). Lay the budget sheet on the table. Put real notes on each row, **in
    the order on the poster.** Needs first. Recorder writes or draws the amount. You must keep
    **at least R100** in the *surprises* row."
    Walk round. ASK: "Where did you put the airtime? Why?" "How much did you save?"

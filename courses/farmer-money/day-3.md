@@ -135,7 +135,7 @@ receipt, and keep track of money owed.
 **Materials (per group of 5):** 20 paper "bunch" tokens (green card strips), play money bag,
 1 duplicate invoice book (P6) and 1 receipt book (P7) — or photocopied pads, 1 money book with
 an *Owed to me* page, carbon paper if the books are not carbonless. **Buyer groups:** 1 buyer
-role card each (P16), a buyer's wallet of play money (R500).
+role card each (P16); each buyer group counts a R1 500 wallet out of its own bag.
 **Whole class:** 3 twist cards. **App ON:** 1 phone per group.
 **Room:** the market corner — 3 buyer tables; seller groups at their own tables.
 
@@ -170,11 +170,14 @@ Teacher talk: **27 of 100 min (27%).**
    groups do it.**
 4. DO: Set up. Groups Bean, Pumpkin, Maize are **sellers** (Round 1). Groups Banana, Marula,
    Spinach are **buyers** — each goes to a table: SPAZA, CRECHE or HAWKER, with its role card
-   and a wallet of R500.
+   and a wallet of **R1 500** counted out of its own play-money bag.
 5. GROUPS (Round 1, 20 min): "Buyers: read your role card. Visit **every** seller once and
    place a real order. Sellers: take the order, deliver tokens, write an invoice, get paid (now
    or later — the buyer decides from the card), write a receipt when paid. Any money not paid
    goes on your **Owed to me** page."
+   DO: At 11:22 ring the bell and call **"Month-end!"** — buyers who promised to pay at
+   month-end now pay; sellers write receipts and tick the Owed page. "Next Friday" and "next
+   week" stay owed — that is the point.
    Role cards (P16) say, for example:
    - SPAZA: "Order 20 bunches. Offer R9. Accept R10. Pay **half now, half next Friday**."
    - CRECHE: "Order 30 bunches for Monday at R12. You need an invoice for the committee. Pay
@@ -185,7 +188,7 @@ Teacher talk: **27 of 100 min (27%).**
    - "The committee treasurer is away — you can only pay next week."
    - "You paid, but the seller forgot to give a receipt. Ask for it."
 7. DO (11:25): Swap: sellers become buyers, buyers become sellers. Round 2, same rules, 20 min.
-   New groups get fresh wallets from the bank.
+   New buyer groups count a fresh R1 500 wallet out of their own bag. Call "Month-end!" at 11:42.
 8. SAY (step 11:45): "Now each person writes their own invoice and receipt for the Sizanani
    garden: **Monday order from the creche, 30 bunches at R12 = R360, due at month-end.** Then on
    the 30th the creche pays R360."
@@ -296,9 +299,9 @@ Teacher talk: **22 of 75 min (29%).**
    ④ **Is the lender registered?** An NCR registration number (NCRCP…) on the paper.
    ⑤ **What if** something goes wrong — sickness, frost, the pump breaks?
 4. GROUPS (20 min): "Four offer cards. For each one, **count it out with play money**:
-   - Put down what Bongani **gets**.
-   - Put down what he **pays back**, in total.
-   - The difference is the **cost of the loan**. Put it in a separate pile.
+   - Put down what Bongani **gets** (R3 000).
+   - Add notes on top until the pile equals what he **pays back** in total.
+   - The notes you added are the **cost of the loan**. Move them to a separate pile and count.
    - Then check with the Sizanani card: the garden has about **R400 a month** left after
      costs. Can they pay?"
 

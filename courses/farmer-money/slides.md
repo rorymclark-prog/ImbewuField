@@ -131,7 +131,7 @@ Screen:
 - Keep R100 for surprises (20 min)
 Media: R-IMG-03
 Notes:
-R-D1-S3. Materials collects the month's money from the bank (facilitator). Recorder writes or draws amounts on the budget sheet (P5). Walk round: where did the airtime go? Reporters: "We kept R__ by cutting __".
+R-D1-S3. Materials counts the family's month out of the group's play-money bag. Recorder writes or draws amounts on the budget sheet (P5). Walk round: where did the airtime go? Reporters: "We kept R__ by cutting __".
 
 ## R-D1-15 · Three tins
 Screen:
