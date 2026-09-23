@@ -239,7 +239,7 @@ Type: activity
 Screen:
 - Opening balance R150
 - 10 cards: move money, write a line
-- Cards 3 and 9: does money move? (20 min)
+- Cards 3, 9: money moves? (20 min)
 Media: R-IMG-03
 Notes:
 R-D2-S1. Materials moves play money; Recorder writes. Card 3 = Owed page (spaza R200). Card 7 = taken home R50. Card 9 = harvest record only. Closing balance R315.

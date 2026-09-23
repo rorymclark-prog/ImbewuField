@@ -438,7 +438,7 @@ visible. If consent is not given, use R-IMG-06 only.
 
 ---
 
-## Poster art (text-free, one per poster)
+**Poster art (text-free, one per poster)**
 
 Each brief is the **Art brief** of the poster in [posters.md](posters.md). Deliver at the size of
 the art area: A1 portrait art area 4 000 × 3 400 px (60% of the sheet), A0 landscape art area
@@ -598,7 +598,7 @@ three tins, book and sun/moon, calendar and padlock tin, footprint to a buyer).
 
 ---
 
-## Summary
+**Summary**
 
 | Kind | NEW | REUSE |
 |---|---|---|
