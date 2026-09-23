@@ -1,5 +1,21 @@
 # Active Studies continuation — 22 September 2026
 
+## Reading the Landscape L1 English candidate (23 September)
+
+The next coordinated English lesson correction covers water exits, A-frame
+limits and water-works siting. Lower-cost agents prepared the narrow lesson,
+quiz, narration and transcript changes, a review-only isiZulu alignment
+packet, and static slide 4/7 candidates. The primary agent checked the three
+FAO sources, reviewed the text and both stills full-size and at the 269px
+player image width, corrected the heavy-rain walking instruction, and kept the
+existing A-frame Flow clip as an illustration. Five English slide MP3s and the
+full track were regenerated and machine-verified against their exported
+script. Selective offline migration retires only changed English assets.
+No Flow credit or SVG/code-drawn motion was used. The [L1 check](../media/studies-animation-quality/reading-landscape-l1-lesson-check.md)
+records sources, hashes and exact review limits. Local checks, CI, deployed
+player and offline pack verification remain before release. Farm Finance is
+excluded; isiZulu has no fluent review or learner publication.
+
 ## Introduction L3 English release candidate (23 September)
 
 The next complete English lesson is Introduction L3 (zones and sectors).

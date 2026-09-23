@@ -34,9 +34,9 @@ You will draw a simple site map with water flow, seasonal winds, frost pockets, 
 
 Before you harvest water, learn where it already goes.
 
-Walk your land during and right after heavy rain. Watch for rills, places where water fans out, ponds, and every point where water leaves your property.
+Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.
 
-Water that leaves is a resource lost. Water that stays can support soil, trees, crops, and a healthier farm.
+Some excess water needs a safe route away so it does not cause damage.
 
 ---
 
@@ -52,17 +52,17 @@ Build an A-frame level from three poles and a weighted string.
 
 Walk it across the land to find points at the same height. Join these points to trace a contour line.
 
-Two people can trace contour lines across a two-hectare property in a morning. No surveyor is needed. This simple tool is practical for placing swales, dams, and tree rows.
+An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.
 
 ---
 
-**Slide 7 — Slow It High, Sink It Mid, Control It Low**
+**Slide 7 — Observe Water Before You Build**
 
 Water picks up speed and erosive force as it runs downhill.
 
-Slow it as high on the slope as possible. Sink it in the middle of the slope. Control it at the bottom.
+There is no one placement rule for every slope. Observe where water moves and gathers.
 
-This keeps more moisture in the land and prevents damage lower down. The higher you slow water, the earlier you stop erosion from growing.
+Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.
 
 ---
 
@@ -176,7 +176,7 @@ Update the sketch season by season. A pencil map you actually use is worth more 
 
 **Slide 20 — Field Assignment**
 
-Walk your land during or right after heavy rain. Mark rills, spreading water, ponds, and every place water leaves your property.
+When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.
 
 Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.
 
@@ -188,6 +188,6 @@ On paper, draw your boundary, mark north, and add the house, water, roads, fence
 
 Build an A-frame level from three poles and a weighted string.
 
-Use it to trace contour lines across your land. Mark where you would slow water high, sink it mid-slope, and control it at the bottom.
+Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.
 
 Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.

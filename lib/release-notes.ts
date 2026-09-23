@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'ccd07edb', changes: [
+    'Landscape lesson 1 now checks where rainwater goes before any digging.',
+    'Its pictures and narration explain when excess water needs a safe route.',
+  ], tour: [
+    { title: 'Observe water safely', where: 'Studies → Reading the Landscape → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 4 to 7, then answer the water questions.' },
+  ] },
   { when: '23 September 2026', sha: 'dc13ce50', changes: [
     'Introduction lesson 3 now asks you to check local wind before marking sectors.',
     'Its zone and windbreak pictures label the examples more clearly.',

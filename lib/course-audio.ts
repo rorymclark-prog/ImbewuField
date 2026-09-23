@@ -135,7 +135,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 4,  lesson: 'reading-landscape-l1', title: 'Lesson 1: Where Rain Goes' },
       { slide: 5,  lesson: 'reading-landscape-l1', title: 'Watch: Water Slows, Sinks, and Leaves' },
       { slide: 6,  lesson: 'reading-landscape-l1', title: 'Trace Contours with an A-Frame' },
-      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Slow It High, Sink It Mid, Control It Low' },
+      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Observe Water Before You Build' },
       { slide: 8,  lesson: 'reading-landscape-l2', title: 'Lesson 2: Read Sun and Shade' },
       { slide: 9,  lesson: 'reading-landscape-l2', title: 'Watch: Follow the Sun Across the Site' },
       { slide: 10, lesson: 'reading-landscape-l2', title: 'Check Winter Shadows Before Building' },
