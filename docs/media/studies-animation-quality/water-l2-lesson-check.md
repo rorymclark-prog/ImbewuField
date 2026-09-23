@@ -1,6 +1,6 @@
 # Water Harvesting L2 English lesson check — 23 September 2026
 
-## Coordinated English correction candidate
+## Coordinated English correction and deployed check
 
 The source-held slide 12 sentence was replaced in the English narration and
 generated transcript with: “Catchment runoff is one input. A suitably
@@ -32,15 +32,25 @@ retires only this changed English still, slide MP3 and full recording, with
 no automatic fetch. The [isiZulu L2 packet](../../narration-reviews/water-harvesting-l2.zu.review.md)
 is review-only; no ZU learner content changed.
 
-Local verification, exact-head CI and deployed player/offline check are
-pending. Human listening, physical-phone, learner, farmer, qualified local
-dam designer and fluent isiZulu approval are not claimed.
+Local typecheck, 3,720 passing tests / 0 failures / 1 existing TODO, and
+whitespace check passed. Exact-head CI `35850936852` passed both `test` and
+`rules`; preview `35850936768` passed. At 390 px, the deployed sample
+Student showed the corrected English lesson and existing quiz. Slide 12's
+still loaded at 1920 × 1080 and its matching MP3 advanced beyond four
+seconds with `readyState=4`. The diagram's small labels need narration and
+the full-size link at phone width. The Water pack finished at 54 files /
+12.2 MB and reported On this phone. After a network-disabled browser
+reload, the Offline badge appeared; slide 12's still and MP3 reopened and
+the MP3 advanced beyond four seconds without error. Network and viewport
+were restored. This is one browser's technical check; human listening,
+physical-phone, learner, farmer, qualified local dam designer and fluent
+isiZulu approval are not claimed.
 
-## Earlier media and source hold
+## Earlier media and source hold — superseded by the correction above
 
-**Status:** deployed phone and offline media pass; slide 12 caption and
-narration remain on a source hold. The protected lesson, quiz, narration,
-transcript, stills and audio have not changed. No Flow credit was spent.
+The following records the previous state and decision trail. Its slide 12
+source hold and proposed wording are resolved by the English correction above;
+the withdrawn animation remains held. No Flow credit was spent.
 
 ## Actual media and player
 

@@ -1,5 +1,32 @@
 # Active Studies continuation — 23 September 2026
 
+## Water Harvesting L2 English release (23 September)
+
+Commit `cbdd25fd` corrected the English dam/spillway slide 12 caption,
+narration and transcript together. The static concept diagram and speech now
+state that catchment runoff is one input and qualified site, dam and spillway
+design is required. The existing lesson and quiz already carried those
+safeguards. The [L2 check](../media/studies-animation-quality/water-l2-lesson-check.md)
+records the FAO source, media hashes and review limits. The withdrawn
+code-drawn animation stays outside the player. No Flow credit or SVG motion
+was used. The [isiZulu L2 packet](../narration-reviews/water-harvesting-l2.zu.review.md)
+is review-only and unpublished.
+
+Local typecheck, 3,720 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35850936852` passed both `test` and
+`rules`; preview `35850936768` passed. In the deployed 390 px sample
+Student, the corrected English lesson, unchanged quiz and slide 12 still
+loaded; its matching MP3 advanced beyond four seconds with `readyState=4`.
+The 54-file, 12.2 MB Water pack reported On this phone. After a
+network-disabled browser reload, the Offline badge appeared and slide 12's
+still and MP3 reopened, with audio advancing beyond four seconds. Network
+and viewport were restored. The diagram labels remain small at phone fit;
+narration and the full-size link carry the detail. This is a browser
+technical check, not physical-phone, human-listening, learner, farmer,
+qualified dam-designer or fluent isiZulu approval. Farm Finance remains
+excluded. Water L3 English is the next lesson to reassess against its
+existing source/player record before any further media work.
+
 ## Water Harvesting L1 English release (23 September)
 
 Commit `73ce253c` corrected the source-held English swale lesson, first quiz,
