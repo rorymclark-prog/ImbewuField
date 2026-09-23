@@ -1,0 +1,31 @@
+Grow Food Grow Strong — look: Linocut Garden
+
+STEP 1 — open a NEW ChatGPT chat just for this course. Paste this whole prompt first.
+Save the result as: character-sheet.png (keep it; attach it to later prompts so faces stay the same).
+
+---- COPY FROM HERE ----
+Style: hand-carved linocut relief print, 3-colour print on warm off-white rag paper (#EFE6D2).
+Bold black carved outlines (#1B1A17) with visible gouge marks and slight ink texture; flat fills
+in deep leaf green (#2F5D34), terracotta (#B24E2A) and small touches of maize yellow (#E0A526);
+water only in indigo (#2B4F7E). Slight mis-registration between colours like a real hand print.
+Simple, bold shapes readable from 6 metres; no gradients, no photorealism, no watercolour, no 3D.
+Setting: rural KwaZulu-Natal, South Africa. SOUTHERN HEMISPHERE: the sun is in the NORTH and
+shadows fall SOUTH. People are Black South African smallholders of mixed ages and genders in
+work clothes. Generic plant shapes only (no recognisable invasive species).
+ABSOLUTELY NO TEXT: no letters, numbers, labels, signs or watermarks anywhere in the image.
+
+Make a CHARACTER SHEET: all of these recurring characters standing side by side, full body,
+front view, plain background, so they can be reused consistently in later images:
+- **Gogo Thandi** — about 68, round face, reading glasses on a cord, green headscarf, brown
+  cardigan, long skirt, black gumboots. Calm, knowing.
+- **Sipho** — about 24, slim, red cap worn backwards, navy overalls with rolled sleeves, sneakers.
+  Energetic, first garden.
+- **Nomsa** (facilitator) — about 35, braids tied up, plain mustard T-shirt (no logo), jeans,
+  holds a rolled poster. Warm, points and asks.
+---- TO HERE ----
+
+STEP 2 — paste the prompts in 01-images.md one at a time (attach the character sheet when people
+appear). Save each image with the file name shown above its prompt.
+STEP 3 — paste 02-posters.md prompts for the finished bilingual posters. CHECK EVERY WORD
+(ChatGPT misspells isiZulu); if wrong, reply: "Keep everything the same, only correct the
+spelling of X to Y."
