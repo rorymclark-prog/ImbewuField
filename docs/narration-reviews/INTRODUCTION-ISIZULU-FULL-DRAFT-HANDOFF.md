@@ -45,6 +45,11 @@ drawn Introduction clips remain held for Rory's visual clearance. A fluent
 review decision must precede changes to the learner lesson, quiz, script,
 transcript, slide text, MP3s and manifest. Reuse the existing acceptable
 imagery and clip; no new Flow prompt is indicated by this translation work.
+The student page currently reads lesson bodies, key points and quizzes
+directly from English `COURSE_MODULES`; selecting isiZulu for audio would not
+translate those fields. The release needs a lesson-text localization route as
+well as the audio/deck language registrations, with an explicit English
+fallback only where a lesson has not been approved.
 When approved, release one lesson at a time and check its exact spoken script,
 phone-width slides, audio and saved offline pack before calling it available.
 

@@ -1,5 +1,16 @@
 # Active Studies continuation — 23 September 2026
 
+## Reading the Landscape isiZulu full review draft (23 September)
+
+The [Reading handoff](../narration-reviews/READING-LANDSCAPE-ISIZULU-FULL-DRAFT-HANDOFF.md)
+links complete review-only isiZulu proposals for L1–L4: lesson text, key
+points, all quiz options and rationales, and slides 1–21. Lower-cost agents
+prepared separate lessons and second-read the higher-risk L3/L4 claims; the
+integrator checked the English teaching and corrected identified wording
+shifts. No learner script, audio, deck, manifest or Flow asset changed. Fluent
+isiZulu/local farming review remains required before any release; L3 also
+has an English body-versus-narration wording difference for that review.
+
 ## Introduction isiZulu full review draft (23 September)
 
 The [Introduction handoff](../narration-reviews/INTRODUCTION-ISIZULU-FULL-DRAFT-HANDOFF.md)
