@@ -1,5 +1,23 @@
 # Active Studies continuation — 23 September 2026
 
+## Small Livestock and Market isiZulu full review drafts (23 September)
+
+The [Small Livestock handoff](../narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md)
+and [Market handoff](../narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md)
+link complete review-only proposals for all three lessons in each module:
+current English lesson bodies, key points, every quiz option and rationale,
+and narrated slides. The integrator checked the source holds: bee ranges and
+registration scope, manure and animal health, illustrative prices, local
+trading rules, variety rights, and the Market L3 key-point/body gap. A
+second AI read found the Water L3 food-crop and drinking-water safeguards
+and Vegetables L4 registered-product/label safeguards intact; it identified
+a minor first-flush quiz term, which was corrected in the draft. No fluent
+approval is implied by these checks. No app text, deck, audio, manifest or
+Flow asset changed. Twenty-five of 27 non-Seeds/non-Guilds lessons now have
+complete review-only drafts. Water L4 and Soil L3 remain on source holds;
+each draft still needs first-language isiZulu and local farming review before
+learner release.
+
 ## Food Forest and Vegetables isiZulu full review drafts (23 September)
 
 The [Food Forest handoff](../narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md)

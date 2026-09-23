@@ -112,7 +112,7 @@ Correct answer index is 1 for both questions; preserve these positions.
 | # | English option | isiZulu proposal |
 | --- | --- | --- |
 | 0 | It doesn't matter for irrigation, only drinking water | Akubalulekile uma kuniselwa; kubalulekile emanzini okuphuza kuphela |
-| 1 — correct | The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops | Amanzi okuqala athwala ubulongwe, uthuli namagciwane amaningi angangcolisa izitshalo ezidliwayo |
+| 1 — correct | The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops | Amanzi okuqala athwala ubulongwe obunqwabelene, uthuli namagciwane abangela izifo angangcolisa izitshalo ezidliwayo |
 | 2 | It's more acidic and changes soil pH over time | Ane-asidi eningi futhi aguqula i-pH yomhlabathi ngokuhamba kwesikhathi |
 | 3 | It stops the tank overfilling in storms | Avimbela ithangi ukuba ligcwale ngokweqile ngesikhathi seziphepho |
 
