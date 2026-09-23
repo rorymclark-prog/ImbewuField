@@ -1,5 +1,29 @@
 # Active Studies continuation — 23 September 2026
 
+## Market Gardening & Community L3 English release (23 September)
+
+Commits `583457a6` and `2652f752` add the qualified seed-variety rights check
+to the English body, key point, quiz, slide 15 speech and slide 20 field
+action. The corrected static slide 20 card now shows the caution alongside
+all neighbour activity choices. The existing slide 15 Flow handover was
+reused; no new Flow credit or SVG/code-drawn motion was used. Official South
+African Act/commencement sources, exact media hashes and review limits are
+in the [L3 check](../media/studies-animation-quality/market-l3-current-lesson-check.md).
+The [isiZulu L3 packet](../narration-reviews/market-community-l3.zu.review.md)
+is review-only and unpublished.
+
+Local typecheck, 3,724 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35856329470` and `35857433390` each
+passed `test` and `rules`; previews `35856329346` and `35857433481` passed.
+In the deployed 390 px sample Student, the corrected body/quiz, slide 15
+video with new English speech, and slide 20 still/speech appeared. The 45-file,
+13.0 MB Market pack reported On this phone. After a network-disabled reload,
+the Offline badge appeared; slide 15 video/audio and slide 20 still/audio
+reopened and advanced beyond five seconds. Connection and viewport were
+restored. No human listening, physical-phone, learner, farmer, qualified
+legal/seed-saving or fluent isiZulu approval is claimed. Farm Finance remains
+excluded.
+
 ## Small Livestock L2 English release (23 September)
 
 Commit `da28234f` aligned the existing bee Flow clip's title and English

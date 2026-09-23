@@ -38,9 +38,23 @@ for users whose audio migration already ran. Neither downloads automatically
 or evicts the registered film. The [isiZulu packet](../../narration-reviews/market-community-l3.zu.review.md)
 is review-only and unpublished.
 
-Local checks, exact-head CI and deployed phone/offline verification are
-pending. Qualified legal, practical seed-saving, learner, farmer,
-human-listening and fluent isiZulu approval are not claimed.
+Local typecheck, 3,724 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed for the final still/cache batch. Exact-head CI
+`35856329470` for English teaching/audio and `35857433390` for the revised
+card each passed both `test` and `rules`; previews `35856329346` and
+`35857433481` passed. In the deployed 390 px sample Student, the corrected
+body, key point and quiz appeared. The existing 1280 × 720 slide 15 Flow
+handover and new MP3 played with `readyState=4` beyond five seconds; its
+transcript included the rights caution. The corrected slide 20 JPEG loaded
+at 1920 × 1080 and its MP3 played beyond five seconds.
+
+The 45-file, 13.0 MB Market pack reported **On this phone**. With network
+disabled and the **Offline** badge visible after a reload, slide 15 video
+and new MP3 reopened and advanced beyond five seconds. The corrected slide 20
+card and MP3 also reopened, with speech advancing beyond five seconds. Network
+and viewport were restored. This is a browser technical check, not a
+physical-phone, human-listening, qualified legal, practical seed-saving,
+learner, farmer or fluent isiZulu approval.
 
 ## Earlier player and source check — before this correction
 
