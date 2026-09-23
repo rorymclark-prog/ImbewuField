@@ -993,6 +993,49 @@ test('a saved landscape L2 pack retires old frost advice without clearing its ot
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
 });
 
+test('a saved landscape L3 pack retires wind and blight advice without clearing nearby English and isiZulu lessons', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateLandscapeL3WindAndFrostTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateLandscapeL3WindAndFrostTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const changed = [
+    ...[13, 14, 15].map(n => `/course-decks/reading-landscape/en/slide-${String(n).padStart(2, '0')}.jpg`),
+    ...[12, 13, 14, 15].map(n => `/course-audio/reading-landscape/en/slide-${String(n).padStart(2, '0')}.mp3`),
+    '/course-audio/reading-landscape/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/reading-landscape/en/slide-12.jpg',
+    '/course-decks/reading-landscape/en/slide-11.jpg',
+    '/course-audio/reading-landscape/en/slide-11.mp3',
+    '/course-decks/reading-landscape/en/slide-16.jpg',
+    '/course-decks/reading-landscape/zu/slide-15.jpg',
+    '/course-audio/reading-landscape/zu/slide-15.mp3',
+    '/course-animations/reading-landscape/flow-a-frame.mp4',
+  ];
+  const rows = new Map<string, Response>([
+    ...changed.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/reading-landscape/en/.l3-wind-frost-20260923'), true);
+  const replacement = new URL(changed[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected still'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected still');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Vegetables L4 still is replaced once without clearing audio or neighboring lesson media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateVegetablesL4DecisionStill\(\) \{([\s\S]*?)\n\}/)?.[1];

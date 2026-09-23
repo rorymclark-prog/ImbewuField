@@ -102,17 +102,17 @@ Keep tender plants out of known low frost pockets. Observe local frost before pl
 
 **Slide 12 — Lesson 3: Read Wind, Frost, and Slope**
 
-Wind can damage a smallholding even when it is hard to see.
+Wind can damage crops on a smallholding.
 
-Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies in summer.
+The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.
 
-Know your region's pattern before planting. Wind direction affects windbreaks, crop protection, drying, and disease.
+Wind, cold air and slope all matter when choosing places for crops and shelter.
 
 ---
 
 **Slide 13 — Watch: See Wind and Cold Air on the Map**
 
-Follow wind across the ridges and gaps. Trace cold air downhill into low ground, and notice where the land creates shelter or exposure.
+A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately.
 
 ---
 
@@ -120,19 +120,19 @@ Follow wind across the ridges and gaps. Trace cold air downhill into low ground,
 
 On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.
 
-Frost is ice that forms on a cold surface. Mist alone does not prove there is frost.
+Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.
 
-Walk the land after a cold night. Look for frost on plants and compare low ground with slopes. Mark places where frost lasts longest. Keep sensitive plants away from those cold pockets.
+Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.
+
+Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.
 
 ---
 
 **Slide 15 — Choose Airflow and Warmth**
 
-Put your most frost-sensitive seedling nursery on a gently sloping, north-facing hillside above the frost-pool zone.
+Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.
 
-For tomatoes troubled by late blight, move the bed somewhere with good airflow and morning sun. Morning sun dries leaves quickly.
-
-Air movement and dry leaves make it harder for fungal disease to keep the damp conditions it needs.
+For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.
 
 ---
 

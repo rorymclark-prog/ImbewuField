@@ -1,5 +1,48 @@
 # Reading the Landscape L3 English lesson check — 23 September 2026
 
+## Coordinated English correction and release candidate
+
+The English lesson, both quizzes, narration and transcript now ask farmers to
+observe damaging wind and consult local records instead of using fixed
+Highveld/KZN directions. Cold-air drainage is conditional on clear, still
+nights; frost damage can happen without visible ice. Nursery siting compares
+candidate places through the local frost season and checks local minimum
+temperatures or advice before a permanent choice. Tomato airflow and morning
+sun are framed as ways leaves may dry, not a treatment or cure for late
+blight. The named crops and quiz answer indices are unchanged; no new
+weather threshold or species was introduced. The source basis is [ARC's
+climate network](https://www.arc.agric.za/arc-iscw/Pages/Climate-Monitoring-Services.aspx),
+[FAO frost guidance](https://www.fao.org/4/y7223e/y7223e0c.htm), [SAWS's
+frost definitions](https://www.weathersa.co.za/home/weatherques), [KZN
+agriculture's tomato guidance](https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/tomato.pdf),
+[ARC's summer-vegetable guidance](https://www.arc.agric.za/arc-vopi/Leaflets%20Library/Production%20Guideline%20for%20Summer%20Vegetables.pdf)
+and [UMN Extension's leaf-drying guidance](https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/late-blight).
+
+Static 1920 × 1080 JPEGs now replace slides 13–15's old diagram and text
+cards. Slide 13 keeps “Concept diagram — not to scale” and separates wind
+shelter from cold-air pooling; slides 14–15 carry the qualified frost and
+late-blight copy. The actual JPEGs were inspected full-size and at the
+269 px player fit. SHA-256 hashes: slide 13
+`09c3f8c71c5389712a92dd02b82c66e049394b051930a9f983ff3b43d9cb1ad0`,
+slide 14
+`3d6a7948f0df58a891e81b65195d93ff7c9cddd2f2520a874422f4756acd3dbb`,
+slide 15
+`881f34153c9d59a4c9d4e30d1dd1ab767c084357431f76973a23ea6c638c9bdc`.
+Slides 12–15 and the full English audio track were regenerated from the
+matching script. The [audio verification](reading-landscape-l3-english-audio-verification.json)
+records exact normalized WordBoundary matches, full decode and a
+464.688-second full track equal to the sum of its 21 clips. Selective
+saved-pack migration retires only changed English L3 stills and speech and
+does not fetch replacements. The held SVG movie remains outside the player;
+no Flow credit or SVG motion was used. The [L3 isiZulu packet](../../narration-reviews/reading-landscape-l3.zu.review.md)
+is review-only; no ZU learner content changed.
+
+Local verification, exact-head CI and deployed phone/offline checks are
+pending for this candidate. Human listening, learner, farmer, practitioner
+and fluent isiZulu approval are not claimed.
+
+## Earlier media baseline and source hold
+
 **Status:** deployed phone-width and saved-pack media pass; English teaching is
 on a source hold. Protected lesson, quiz, narration and learner assets are
 unchanged. No Flow credit was spent.

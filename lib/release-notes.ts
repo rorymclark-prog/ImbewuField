@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'c3a85757', changes: [
+    'Landscape lesson 3 now asks you to check local wind and frost before siting crops.',
+    'Its pictures and narration show that a bed move alone cannot control late blight.',
+  ], tour: [
+    { title: 'Check wind and frost', where: 'Studies → Reading the Landscape → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, view slides 12 to 15, then answer the nursery and tomato questions.' },
+  ] },
   { when: '23 September 2026', sha: '4f63b841', changes: [
     'Landscape lesson 2 now asks you to check your own sun, shade and frost pockets.',
     'Its frost picture and spoken lesson no longer promise protection from a wall.',
