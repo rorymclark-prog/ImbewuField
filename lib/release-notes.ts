@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'd7f2299a', changes: [
+    'Choose from three courses at the top of My Studies; app guides now fold away.',
+    'Open lesson slides full screen and turn your phone sideways for a larger view.',
+  ], tour: [
+    { title: 'Choose a course', where: 'My Studies', href: '/student',
+      detail: 'Choose Permaculture, Design or Farm Finance. Open Practical app guides when needed.' },
+    { title: 'Make slides larger', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen on the slide player. Turn your phone sideways, then tap Exit full screen.' },
+  ] },
   { when: '22 September 2026', sha: '714b1786', changes: [
     'The larger garden photo now stays on Home, even after many visits.',
   ], tour: [
