@@ -1,0 +1,236 @@
+{
+  "module": "water-harvesting",
+  "language": "en",
+  "slidesRegenerated": [
+    2,
+    3,
+    4,
+    5,
+    7
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/water-harvesting.en.md",
+  "sourceScriptSha256": "511e82a3b6569ed2ca5fd09e15e2a7da0736dd6bf8880be901258d6cdb2a271d",
+  "textExport": "scripts/course-narration-export.mjs",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 2,
+      "path": "public/course-audio/water-harvesting/en/slide-02.mp3",
+      "seconds": 21.192,
+      "bytes": 127152,
+      "sourceTextSha256": "2a9d933dc0cde08abc6be31adf9792e6edef240440fbdead8fcc18362c4f6c17",
+      "audioSha256": "b0d1523435a15e21d29c1de20e19a8a52a12fa511c34596a0a21d1abfb81c0a6",
+      "wordCount": 54,
+      "wordBoundaryCount": 52,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-audio/water-harvesting/en/slide-03.mp3",
+      "seconds": 24.48,
+      "bytes": 146880,
+      "sourceTextSha256": "810bf4339d7dec24806edabd27fd8536078314c7149bdc4e4327d3202baf7ce0",
+      "audioSha256": "05fbc0adc431d5c1890c3ccc22235a8c0585f95b6fc445f4e2851ef4f27b4bb4",
+      "wordCount": 60,
+      "wordBoundaryCount": 60,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-audio/water-harvesting/en/slide-04.mp3",
+      "seconds": 16.248,
+      "bytes": 97488,
+      "sourceTextSha256": "250ee74c6eda0db3e7406f7387e61e5536ca548eacbb921a0a47b91f5dbe6fc9",
+      "audioSha256": "951a5d75b57b0ac943bd5a47f0077e5f5d0f137290f8d06e2a5dfbcbb1c36836",
+      "wordCount": 44,
+      "wordBoundaryCount": 44,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-audio/water-harvesting/en/slide-05.mp3",
+      "seconds": 14.064,
+      "bytes": 84384,
+      "sourceTextSha256": "562274a7a91442699702616ab4047c04ccf0ee0081710d4576927cd15c26d788",
+      "audioSha256": "32cf5403d2c3f88c430f9e4bcf22c73fc9ddc7fad4dcaa3e088ec1bfffa689a8",
+      "wordCount": 39,
+      "wordBoundaryCount": 39,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-audio/water-harvesting/en/slide-07.mp3",
+      "seconds": 14.472,
+      "bytes": 86832,
+      "sourceTextSha256": "644fa2d9ab4f0efd92db10d06f088cfbe6e200ff1b5438cd511c69021eb4fa47",
+      "audioSha256": "6997884148391096bb71da40f765b667bf590d9b57c7f19988cee3901a578462",
+      "wordCount": 41,
+      "wordBoundaryCount": 41,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    }
+  ],
+  "fullTrack": {
+    "path": "public/course-audio/water-harvesting/en/full.mp3",
+    "seconds": 451.416,
+    "bytes": 2708732,
+    "audioSha256": "c4473fa586bdc32a705b82c51181fa3c1d036a4769cf157c86dab0065380d50c",
+    "fullDecode": "pass",
+    "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
+    "slides": [
+      {
+        "slide": 1,
+        "seconds": 7.224,
+        "bytes": 43344,
+        "audioSha256": "fc7fb1cdc1b63b1ca116164f8b9d0f0d0f542ca984a50a6fd2eab31f79fbe61b"
+      },
+      {
+        "slide": 2,
+        "seconds": 21.192,
+        "bytes": 127152,
+        "audioSha256": "b0d1523435a15e21d29c1de20e19a8a52a12fa511c34596a0a21d1abfb81c0a6"
+      },
+      {
+        "slide": 3,
+        "seconds": 24.48,
+        "bytes": 146880,
+        "audioSha256": "05fbc0adc431d5c1890c3ccc22235a8c0585f95b6fc445f4e2851ef4f27b4bb4"
+      },
+      {
+        "slide": 4,
+        "seconds": 16.248,
+        "bytes": 97488,
+        "audioSha256": "951a5d75b57b0ac943bd5a47f0077e5f5d0f137290f8d06e2a5dfbcbb1c36836"
+      },
+      {
+        "slide": 5,
+        "seconds": 14.064,
+        "bytes": 84384,
+        "audioSha256": "32cf5403d2c3f88c430f9e4bcf22c73fc9ddc7fad4dcaa3e088ec1bfffa689a8"
+      },
+      {
+        "slide": 6,
+        "seconds": 24.312,
+        "bytes": 145872,
+        "audioSha256": "1172c702186bb38e6c85630a33c6aa0d0c5832ff10d775ffe28749a7f62caa81"
+      },
+      {
+        "slide": 7,
+        "seconds": 14.472,
+        "bytes": 86832,
+        "audioSha256": "6997884148391096bb71da40f765b667bf590d9b57c7f19988cee3901a578462"
+      },
+      {
+        "slide": 8,
+        "seconds": 21.576,
+        "bytes": 129456,
+        "audioSha256": "16829e41e21daa4d2b68d3ed3ba1f4be0f9cdd946e515a71151e5312ca767779"
+      },
+      {
+        "slide": 9,
+        "seconds": 9.24,
+        "bytes": 55440,
+        "audioSha256": "d68731e74e7791a296c8cdae389f20f3eb4dcc11888eb93b3fa6249fd90ffb83"
+      },
+      {
+        "slide": 10,
+        "seconds": 24.12,
+        "bytes": 144720,
+        "audioSha256": "035e7115049d70d4cdd9b31fa30e8d77abb5f28b9a040320c5d1805011613cbf"
+      },
+      {
+        "slide": 11,
+        "seconds": 25.416,
+        "bytes": 152496,
+        "audioSha256": "8579545434df77c3f85c40cd33961129f4cb85f606983b1b6b5d8300e1c3ba48"
+      },
+      {
+        "slide": 12,
+        "seconds": 9.216,
+        "bytes": 55296,
+        "audioSha256": "9184e6486ae26765628597945af094a1a978e4670016de9e37b8d771d0740ba7"
+      },
+      {
+        "slide": 13,
+        "seconds": 22.2,
+        "bytes": 133200,
+        "audioSha256": "27c0665ac04fda1100159cb83deb548aac06bf7db516d46b1093031f5b47df53"
+      },
+      {
+        "slide": 14,
+        "seconds": 25.368,
+        "bytes": 152208,
+        "audioSha256": "6c5a7b7c121b54ba72ed43b5306041b9c19c0738424e933b92212ad5f08dd814"
+      },
+      {
+        "slide": 15,
+        "seconds": 23.064,
+        "bytes": 138384,
+        "audioSha256": "81f1a068ed13bc52cae56e5013efcf7aaee1571dacbb6b489c67721773eb8a9a"
+      },
+      {
+        "slide": 16,
+        "seconds": 9.432,
+        "bytes": 56592,
+        "audioSha256": "dfb6168caf3f6b778b17d646902d290bb5f3f80083c842ca5ce648cf5b51217b"
+      },
+      {
+        "slide": 17,
+        "seconds": 21.72,
+        "bytes": 130320,
+        "audioSha256": "b3a8d605d14598314d7d875b03d4d0598dae9b03b01436588eef8893b05a71cb"
+      },
+      {
+        "slide": 18,
+        "seconds": 28.152,
+        "bytes": 168912,
+        "audioSha256": "c3d4486087824027105637f5da97d2ced0115f7d1e5cbbc4afdbafb234aca012"
+      },
+      {
+        "slide": 19,
+        "seconds": 19.968,
+        "bytes": 119808,
+        "audioSha256": "6d81c3befdd3cae5bb8358cc10497031c440da4d60e4c842b1d55fad61d5bb6f"
+      },
+      {
+        "slide": 20,
+        "seconds": 24.648,
+        "bytes": 147888,
+        "audioSha256": "e127df1642cdd54fa5d68b4b3f61c725483c9e29bbda5b665766a27643fca34b"
+      },
+      {
+        "slide": 21,
+        "seconds": 10.992,
+        "bytes": 65952,
+        "audioSha256": "b964dbcfcb51fdbfd9a39be78d59faa3ed7bac13028cae403834e5636b03d2ec"
+      },
+      {
+        "slide": 22,
+        "seconds": 24.456,
+        "bytes": 146736,
+        "audioSha256": "10316929c734b0d299a779579ff0aebb14982046d07624fe41a88b51a2747f9c"
+      },
+      {
+        "slide": 23,
+        "seconds": 10.992,
+        "bytes": 65952,
+        "audioSha256": "84f7dd69d12fe8975492e7e33588b507bfadd8af55e954ee25810467f104d22c"
+      },
+      {
+        "slide": 24,
+        "seconds": 18.864,
+        "bytes": 113184,
+        "audioSha256": "bf7bbf46761120b019af20038eaec13c88fdcfc292aad6cc221b2f827f5ce3ab"
+      }
+    ],
+    "sumOfSlideDurationsSeconds": 451.416,
+    "durationDifferenceSeconds": 0.0
+  },
+  "humanListeningReview": false
+}

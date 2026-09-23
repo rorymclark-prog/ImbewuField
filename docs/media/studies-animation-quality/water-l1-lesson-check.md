@@ -1,5 +1,50 @@
 # Water Harvesting L1 English lesson check — 23 September 2026
 
+## Coordinated English correction and release candidate
+
+The lesson, first quiz/key point, slides 2–5 and 7 narration and transcript now
+teach a level contour swale as one design; a slight designed grade and outlet
+is another. They qualify infiltration, tree access to soil moisture and the
+overflow receiver by site. The steep-land quiz, named crops and species,
+answer indices and other water lessons are unchanged. The primary basis is
+[ARC Agricultural Engineering's contour and slight-grade swales](https://arc.agric.za/Agricultural%20Sector%20News/Simple%20solutions%20to%20combat%20soil%20erosion.pdf),
+[DWS's off-contour drainage and level-contour spillway guidance](https://www.dws.gov.za/Documents/Other/WMA/12/RainwaterHarvesting.pdf),
+[DHS's site/receiver/outfall checks](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_L_Stormwater_v1.pdf)
+and [FAO's soil-water movement limits](https://www.fao.org/4/y4690e/y4690e07.htm).
+The DHS guide is general stormwater guidance, not a universal smallholder
+permit rule. No grade, spacing, infiltration depth, storm size or root-water
+duration was invented.
+
+Static 1920 × 1080 JPEGs replace slides 2–5 and 7's old cards. They were
+inspected at full size and at the 269 px player fit. Slide 2 matches the
+qualified learning outcome. Slide 3 compares two designs without prescribing
+a line. Slide 4 has no water-table or guaranteed root-moisture picture. Slide
+5 qualifies tree access to nearby soil moisture. Slide 7 asks about route,
+outlet and receiving point instead of depicting a guaranteed safe pond inflow.
+Text is small at phone image fit; narration, expandable text and full-size
+links remain needed. The two old swale movies remain held outside the player;
+no new Flow credit or SVG/code-drawn motion was used.
+
+Slide JPEG SHA-256: slide 2 `a683f5aadeac9c48ab83261dfbb0ac793ed9ecb414545e55971938c521334ad4`,
+slide 3 `d53813b3899abc8bee0060780889f67acda9555ab3208d6333ed096336316d9a`,
+slide 4 `f262846e847defc865866ccb58b110129db1748b3e8e31af9e88d0ecde0bdcf5`,
+slide 5 `72a73b1ef4a085391c0598953a22fa675e4f043c6d16f230c437df8f502b1f6c`,
+slide 7 `11195dd0c9d8db7bc7856da7730b518dee38a2f1c3ff9240a58c31e2b0aacc60`.
+The five changed English slide MP3s and full track were regenerated from the
+revised script. The [audio verification](water-l1-english-audio-verification.json)
+records exact normalized WordBoundary matches, full decoding and a
+451.416-second full track equal to the sum of all 24 slide clips. Selective
+saved-pack migration retires only the changed English stills and speech and
+does not fetch replacements. The [isiZulu L1 packet](../../narration-reviews/water-harvesting-l1.zu.review.md)
+is review-only; no ZU learner content changed.
+
+Local verification, exact-head CI and deployed phone/offline checks are
+pending for this candidate. Human listening, physical-phone, learner,
+farmer, local water/earthworks practitioner and fluent isiZulu approval are
+not claimed.
+
+## Earlier media and source hold
+
 **Status:** two existing swale clips held outside the learner player; English
 teaching remains on a source hold. The protected lesson, quiz, narration,
 transcript, stills and audio have not changed. No Flow credit was spent.

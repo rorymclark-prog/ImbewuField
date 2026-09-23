@@ -654,24 +654,22 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
       ],
       "2": [
-        "Explain how a level contour swale holds water for infiltration.",
+        "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
         "Explain why dams need a designed spillway and a site assessment.",
         "Explain what a first-flush diverter does and why tank water still needs a safety check.",
         "Keep greywater away from people, food and drinking-water pipes."
       ],
       "3": [
-        "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.",
-        "The excavated soil forms a berm on the downhill side.",
-        "Trees planted there draw on stored water long after the rain has stopped."
+        "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+        "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
       ],
       "4": [
-        "A swale is a level trench on contour — it sinks water, it doesn't direct it.",
-        "Water fills it evenly and soaks in rather than running off."
+        "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+        "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
       ],
       "5": [
-        "The excavated soil forms a berm on the downhill side.",
-        "The berm, the downhill mound of excavated soil, is where you plant trees.",
-        "Trees planted there draw on stored water long after the rain has stopped."
+        "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+        "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
       ],
       "6": [
         "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
@@ -679,8 +677,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
       ],
       "7": [
-        "Include a safe overflow point so storms don't breach the berm.",
-        "The overflow leads to the next swale or a dam."
+        "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+        "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
       ],
       "8": [
         "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",

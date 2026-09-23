@@ -338,27 +338,27 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "water-harvesting-l1",
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l1.jpg",
-        infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
+        infographicAlt: "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
-        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+        body: "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
         keyPoints: [
-          "A contour swale holds water for infiltration",
+          "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
           "Keep good ground cover and plan a safe overflow",
           "Assess soil, drainage, slope and storm flow before digging",
           "A concept picture is not a construction design",
         ],
         quiz: [
           {
-            q: "After heavy rain, one end of your swale fills fast while the other stays dry. What went wrong?",
+            q: "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
             options: [
-              "The swale is too wide",
-              "It's not level — dug at a slight angle instead of true contour",
-              "The downhill berm is too high",
-              "The soil is too sandy to hold water at all",
+              "Whether the trench can be made deeper without a site check",
+              "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+              "Whether a new dam at the lowest point will catch every overflow",
+              "Whether the soil should be compacted to stop all infiltration",
             ],
             correct: 1,
-            rationale: "A swale only works if every point sits at the same height. Even a slight angle sends water to the low end instead of spreading evenly.",
+            rationale: "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
           },
           {
             q: "A farmer wants to control erosion on steep land. What should she do before digging?",

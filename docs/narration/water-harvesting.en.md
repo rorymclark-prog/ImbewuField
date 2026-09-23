@@ -6,7 +6,7 @@ Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink eve
 
 **Slide 2 — Learning Outcomes**
 
-Explain how a level contour swale holds water for infiltration.
+Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.
 
 Explain why dams need a designed spillway and a site assessment.
 
@@ -16,33 +16,27 @@ Keep greywater away from people, food and drinking-water pipes.
 
 ---
 
-**Slide 3 — Swales Slow Water on the Slope**
+**Slide 3 — Two Swale Designs**
 
-A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.
+A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.
 
-The excavated soil forms a berm on the downhill side.
-
-Trees planted there draw on stored water long after the rain has stopped.
+Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging.
 
 ---
 
-**Slide 4 — Watch: A Swale Sinks Water**
+**Slide 4 — A Swale May Let Water Soak In**
 
-A swale is a level trench on contour — it sinks water, it doesn't direct it.
+This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.
 
-[pause]
-
-Water fills it evenly and soaks in rather than running off.
+It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building.
 
 ---
 
-**Slide 5 — Plant on the Downhill Berm**
+**Slide 5 — The Downhill Berm**
 
-The excavated soil forms a berm on the downhill side.
+The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.
 
-The berm, the downhill mound of excavated soil, is where you plant trees.
-
-Trees planted there draw on stored water long after the rain has stopped.
+Trees may draw on moisture stored in nearby soil after rain; the result varies by site.
 
 ---
 
@@ -56,13 +50,13 @@ Ask a trained local adviser to assess the soil, slope and storm flow. A picture 
 
 ---
 
-**Slide 7 — Watch: The Overflow Point**
+**Slide 7 — Assess the Overflow Before Digging**
 
-Include a safe overflow point so storms don't breach the berm.
+A swale needs a planned overflow route for heavy rain. Check it before digging.
 
 [pause]
 
-The overflow leads to the next swale or a dam.
+Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage.
 
 ---
 

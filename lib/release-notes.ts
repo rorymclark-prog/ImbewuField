@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'cba197fc', changes: [
+    'Water lesson 1 now compares two swale designs and calls for a local site check.',
+    'Its pictures no longer promise deep root moisture or a safe overflow route.',
+  ], tour: [
+    { title: 'Check a swale site', where: 'Studies → Water Harvesting → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 2 to 7, then answer the contour and steep-land questions.' },
+  ] },
   { when: '23 September 2026', sha: 'c3a85757', changes: [
     'Landscape lesson 3 now asks you to check local wind and frost before siting crops.',
     'Its pictures and narration show that a bed move alone cannot control late blight.',
