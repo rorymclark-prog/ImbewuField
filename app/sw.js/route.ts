@@ -676,6 +676,24 @@ async function migrateVegetablesL2ReadableStills() {
   await cache.put(marker, new Response('Readable Vegetables L2 English stills'));
 }
 
+// L3 now explains when sweet potato can tolerate some drought. Old saved speech
+// and the old card would teach the broader claim beside the corrected lesson.
+// Retire only those English bytes; fetching replacements stays the learner's choice.
+async function migrateVegetablesL3SweetPotatoTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/en/.l3-sweet-potato-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/en/slide-13.jpg',
+    '/course-audio/vegetables-staples/en/slide-13.mp3',
+    '/course-audio/vegetables-staples/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Qualified sweet potato teaching'));
+}
+
 // Slide 16 now presents the existing pest-response order and conditional safeguards at phone width.
 // Retire only that saved English still; the learner chooses when to download the replacement.
 async function migrateVegetablesL4DecisionStill() {
@@ -1026,7 +1044,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

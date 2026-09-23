@@ -200,7 +200,7 @@ Maize gives calories, and stores dry. Open-pollinated maize also lets you save y
 
 Beans and cowpeas give a storable protein harvest.
 
-Sweet potato tolerates dry periods, and its leaves are edible too.
+Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.
 
 Amadumbe handles wetter ground, where other staples struggle.
 

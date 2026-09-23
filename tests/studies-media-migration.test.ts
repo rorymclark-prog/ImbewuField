@@ -1324,3 +1324,44 @@ test('a saved Vegetables L4 still is replaced once without clearing audio or nei
   await run({ open: async () => cache }, 'imbewu-course-v1', Response);
   assert.equal(await rows.get(changed + '?saved=1')!.text(), 'replacement still downloaded later');
 });
+
+test('a saved Vegetables L3 pack retires only the old sweet-potato card and English speech', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesL3SweetPotatoTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateVegetablesL3SweetPotatoTeaching\)\.then/);
+
+  const origin = 'https://field.test';
+  const obsolete = [
+    '/course-decks/vegetables-staples/en/slide-13.jpg',
+    '/course-audio/vegetables-staples/en/slide-13.mp3',
+    '/course-audio/vegetables-staples/en/full.mp3',
+  ];
+  const keep = [
+    '/course-decks/vegetables-staples/en/slide-12.jpg',
+    '/course-audio/vegetables-staples/en/slide-12.mp3',
+    '/course-decks/vegetables-staples/zu/slide-13.jpg',
+    '/course-audio/vegetables-staples/zu/slide-13.mp3',
+    '/course-decks/food-forest/en/slide-13.jpg',
+  ];
+  const rows = new Map<string, Response>([
+    ...obsolete.map(path => [new URL(path + '?saved=old', origin).href, new Response('old teaching')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of obsolete) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/vegetables-staples/en/.l3-sweet-potato-20260923'), true);
+  const replacement = new URL(obsolete[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected card'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected card');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});

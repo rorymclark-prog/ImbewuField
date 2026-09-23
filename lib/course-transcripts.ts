@@ -962,7 +962,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Each staple protects you against something different.",
         "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
         "Beans and cowpeas give a storable protein harvest.",
-        "Sweet potato tolerates dry periods, and its leaves are edible too.",
+        "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
         "Amadumbe handles wetter ground, where other staples struggle.",
         "Notice that they fail in different conditions. That's the whole point."
       ],

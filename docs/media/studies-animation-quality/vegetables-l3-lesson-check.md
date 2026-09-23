@@ -1,5 +1,39 @@
 # Vegetables and Staple Crops lesson 3 — Staple Crops
 
+## English sweet-potato qualification — 23 September 2026
+
+The [South African ARC summer vegetable guideline](https://www.arc.agric.za/arc-vopi/Leaflets%20Library/Production%20Guideline%20for%20Summer%20Vegetables.pdf)
+describes a degree of drought tolerance **after storage roots form**, while
+water stress in the first weeks or during root formation can reduce yield. It
+also identifies young leaves as edible. The earlier body, key point, slide 13
+speech/transcript and still said only that sweet potato tolerates dry periods.
+The coordinated English correction now carries the stage and early-water
+limits without importing the guideline's general water amount as a local
+threshold. No species list, quiz answer, spacing or harvest date was changed.
+
+Slide 13 is a static card; the existing L3 infographic and other two stills
+are unchanged. The corrected 1920 × 1080 JPEG was visually inspected at full
+size and a 269px fit, with no clipping. At whole-slide phone fit, text remains
+small; the matching English speech, expandable transcript and full-size link
+remain necessary. Image SHA-256:
+`dabb64e667702ad515214271883a9286a8f9eb9eed9639ee7ec0529b6ce31528`.
+The deterministic [renderer](render-vegetables-l3-slide-13.py) starts from a
+pinned source image; rerunning reproduced this hash.
+
+The slide 13 English MP3 and full 18-slide MP3 were regenerated. The
+[audio verification](vegetables-l3-english-audio-verification.json) records
+91/91 exact normalized WordBoundary tokens, full decoding, and a 693.672-second
+combined duration equal to the slide sum. The saved-pack migration retires
+only the old English slide 13 JPEG, its MP3 and the full MP3, without fetching
+replacements or deleting adjacent/isiZulu assets. No new Flow credit or
+SVG/code-drawn animation was used. Local checks, exact-head CI, preview/player
+and offline verification are pending. The [isiZulu packet](../../narration-reviews/vegetables-staples-l3.zu.review.md)
+is review-only; its old broad dry-period claim is unpublished. Human listening,
+physical-phone, learner, farmer, practitioner and fluent isiZulu approval are
+not claimed.
+
+## Earlier technical checkpoint — before the correction
+
 **Checkpoint:** 22 September 2026, deployed English sample build `0f505fe`.
 This lesson is module slides 12–14. All three checked-in stills and the lesson
 infographic were inspected at full size; slide 12 was also inspected in the
