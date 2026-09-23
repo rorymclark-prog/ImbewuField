@@ -11,12 +11,13 @@ The coordinated English correction now carries the stage and early-water
 limits without importing the guideline's general water amount as a local
 threshold. No species list, quiz answer, spacing or harvest date was changed.
 
-Slide 13 is a static card; the existing L3 infographic and other two stills
-are unchanged. The corrected 1920 × 1080 JPEG was visually inspected at full
-size and a 269px fit, with no clipping. At whole-slide phone fit, text remains
-small; the matching English speech, expandable transcript and full-size link
-remain necessary. Image SHA-256:
-`dabb64e667702ad515214271883a9286a8f9eb9eed9639ee7ec0529b6ce31528`.
+Slide 13 is a static four-card comparison; the existing L3 infographic and
+other two stills are unchanged. The corrected 1920 × 1080 JPEG was visually
+inspected at full size and a 269px fit, with no clipping. Crop names are about
+9.3px and supporting lines about 8.1px at that fit, clearer than the old
+roughly 5px bullet text. The matching English speech, expandable transcript
+and full-size link remain available. Image SHA-256:
+`557b3dec511b95c8013d22dce1dff40e94aabf61cf58aa40b0e521f674bc4b01`.
 The deterministic [renderer](render-vegetables-l3-slide-13.py) starts from a
 pinned source image; rerunning reproduced this hash.
 
@@ -26,8 +27,9 @@ The slide 13 English MP3 and full 18-slide MP3 were regenerated. The
 combined duration equal to the slide sum. The saved-pack migration retires
 only the old English slide 13 JPEG, its MP3 and the full MP3, without fetching
 replacements or deleting adjacent/isiZulu assets. No new Flow credit or
-SVG/code-drawn animation was used. Local checks, exact-head CI, preview/player
-and offline verification are pending. The [isiZulu packet](../../narration-reviews/vegetables-staples-l3.zu.review.md)
+SVG/code-drawn animation was used. Local typecheck, 3,725 passing tests /
+0 failures / 1 existing TODO, and whitespace check passed. Exact-head CI,
+preview/player and offline verification are pending. The [isiZulu packet](../../narration-reviews/vegetables-staples-l3.zu.review.md)
 is review-only; its old broad dry-period claim is unpublished. Human listening,
 physical-phone, learner, farmer, practitioner and fluent isiZulu approval are
 not claimed.

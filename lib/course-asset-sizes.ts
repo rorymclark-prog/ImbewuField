@@ -722,7 +722,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/en/slide-10.jpg': 1044467,
   '/course-decks/vegetables-staples/en/slide-11.jpg': 261180,
   '/course-decks/vegetables-staples/en/slide-12.jpg': 489787,
-  '/course-decks/vegetables-staples/en/slide-13.jpg': 127048,
+  '/course-decks/vegetables-staples/en/slide-13.jpg': 182433,
   '/course-decks/vegetables-staples/en/slide-14.jpg': 118941,
   '/course-decks/vegetables-staples/en/slide-15.jpg': 728993,
   '/course-decks/vegetables-staples/en/slide-16.jpg': 443907,
