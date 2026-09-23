@@ -162,8 +162,8 @@ Ask on the invitation (read it aloud when inviting):
 | Spinach for Day 2 (if no bed) + two bunches Day 3 | 8 | 12–20 | 96–160 |
 | Certificates (card) | 28 | 5 | 140 |
 | **App ON:** data, 1 GB per group phone | 6 | 50–100 | 300–600 |
-| **Total (photocopied invoice/receipt pads, app OFF)** | | | **≈ R4 800 – R7 300** |
-| **Total (bought books, app ON)** | | | **≈ R7 000 – R10 700** |
+| **Total (photocopied invoice/receipt pads, app OFF)** | | | **≈ R5 200 – R8 200** |
+| **Total (bought books, app ON)** | | | **≈ R6 800 – R11 400** |
 
 Play money, card sets, posters and scales are **reused** for every course — the first course
 carries most of the cost. Catering, venue, transport and facilitator fees are not included.
