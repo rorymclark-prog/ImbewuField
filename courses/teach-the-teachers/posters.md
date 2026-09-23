@@ -39,7 +39,7 @@ a notebook, an older man with a walking stick, two young women, an extension off
 work shirt. In the centre, all their hands rest together on a large blank sheet of paper on the
 ground. Warm afternoon light from the upper left (north). Lower 55% of the poster is left as
 plain Paper with faint Hairline ruled lines for writing the group's rules and signatures.
-**Labels on the poster (11 words):**
+**Labels on the poster (13 words):**
 1. We made it
 2. We keep it
 Question: *What helps you learn?*
@@ -102,7 +102,7 @@ lean forward, two pointing. ② A group of five kneels at a bed, every pair of h
 the facilitator standing back, hands behind her back. ③ The group sits in a circle beside a
 poster on a fence, one learner speaking, others listening. ④ A learner walks along a village
 path toward a house carrying a seedling tray. Each band has a thin Hairline divider.
-**Labels on the poster (16 words):**
+**Labels on the poster (19 words):**
 1. Hook them
 2. Hands on
 3. Three questions
@@ -267,7 +267,7 @@ two figures with several branching bubble shapes. On the top rung, a figure look
 whole garden, hand on chin, with a bubble shaped like a sprouting seed. At the ladder's foot:
 an open hand with five fingers spread (wait), and a group of three passing a ball between them
 (bounce back).
-**Labels on the poster (19 words):**
+**Labels on the poster (17 words):**
 1. Closed
 2. Open
 3. Deeper
@@ -303,7 +303,7 @@ numbered ochre circles, a band of short grey bars where labels go (bars, not let
 thin bar at the bottom. On the ground, a line of six footprints leads away from the fence to a
 young man and a gogo standing about six metres away, both reading the poster easily, the gogo
 pointing at it.
-**Labels on the poster (22 words):**
+**Labels on the poster (23 words):**
 1. One idea
 2. 25 words, max
 3. Short headline
@@ -372,7 +372,7 @@ compass arrow pointing up (north); (2) people jumping, sitting and waving in a c
 ball of string criss-crossing a circle of people; (4) people rubbing hands, clicking and
 stamping; (5) a circle passing a clap, hands mid-clap; (6) two people swapping small paper
 seed packets. In one scene an elder sits on a chair calling the game.
-**Labels on the poster (21 words):**
+**Labels on the poster (23 words):**
 1. Sun and Shade
 2. Compost Heap
 3. Web of Life
@@ -442,7 +442,7 @@ Right: a group of five watching a phone; beneath it, a hand signing on a phone s
 finger. Under each column, a small drawing of the paper version — a poster roll (left), a
 ring-bound flip-book of pictures (middle), a paper register on a clipboard (right) — joined to
 the column above by a curved arrow.
-**Labels on the poster (15 words):**
+**Labels on the poster (14 words):**
 1. Poster
 2. Slides
 3. App
@@ -647,7 +647,7 @@ elders planning together around a drawing on the ground; (8) a family eating tog
 bowls with local greens; (9) a group at a water tank beside a hand-drawn roster board (lines,
 not words); (10) a small market stall and a seed-swap table with neighbours. Sun in the north
 (upper part of the scene).
-**Labels on the poster (22 words):**
+**Labels on the poster (23 words):**
 1. Diversity
 2. Sharing knowledge
 3. Synergies

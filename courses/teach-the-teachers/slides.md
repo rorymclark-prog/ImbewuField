@@ -495,7 +495,7 @@ Screen:
 Media: T-IMG-03
 Poster: T-P13
 Notes:
-T-D3-S3 steps 1. Energiser first. Show this slide on the projector with curtains open; trainees
+T-D3-S3 step 1. Energiser first. Show this slide on the projector with curtains open; trainees
 at the back wall.
 
 ## T-D3-12 · When slides help
