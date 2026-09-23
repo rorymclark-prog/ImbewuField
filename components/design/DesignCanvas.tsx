@@ -756,6 +756,15 @@ export default function DesignCanvas({
   // hover to fall back on.
   const [blockAnchor, setBlockAnchor] = useState<[number, number] | null>(null);
   const [blockAim, setBlockAim] = useState<[number, number] | null>(null);
+  const bedBlockActive = !!bedBlock;
+  useEffect(() => {
+    // Cancelling after the first corner must not reuse that corner when the farmer starts a new
+    // block. The ghost disappears when bedBlock is null, but its local anchor used to survive.
+    if (!bedBlockActive) {
+      setBlockAnchor(null);
+      setBlockAim(null);
+    }
+  }, [bedBlockActive]);
   // Aim angle from anchor to pointer, in PIXEL space. Computing it from normalised coordinates
   // would fold the frame's aspect ratio into the angle, so the block would follow the finger on
   // a square frame and lag it on every other one.

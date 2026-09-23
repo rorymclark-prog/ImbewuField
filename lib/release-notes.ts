@@ -43,6 +43,10 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '23 September 2026', sha: '1d184155', changes: [
+    'Raised Bed opens the bed block sizes and count above the Elements list.',
+    'Ubhejane tree choices now reflect its warm climate; saved site analyses refresh.',
+  ] },
+  { when: '23 September 2026', sha: '1d184155', changes: [
     'Read lesson slides in large text on your phone. Switch to the picture and zoom in.',
   ], tour: [
     { title: 'Read a lesson slide', where: 'My Studies → a module → slides', href: '/student',

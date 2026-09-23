@@ -513,3 +513,31 @@ export function resolveBiome(opts: {
   if (guess === BIOMES.UNCLASSIFIED) return { biome: guess, source: 'unavailable' };
   return { biome: guess, source: 'estimated' };
 }
+
+/** The fallback classifier needs the mean temperature of the coldest MONTH, not the mean daily
+ * minimum in that month. NASA POWER supplies both; confusing them made subtropical Ubhejane
+ * appear frosty and offered temperate trees instead of its own climate's trees.
+ * https://power.larc.nasa.gov/docs/methodology/data/processing/ */
+export function resolveBiomeFromMonthlyClimate(opts: {
+  lat: number;
+  lon: number;
+  annualRainfall?: number;
+  monthlyRain?: number[];
+  monthlyTemp?: number[];
+  sanbiBiome?: string | null;
+}): ResolvedBiome {
+  const monthlyTemp = opts.monthlyTemp;
+  const coldestMonthTemp = Array.isArray(monthlyTemp)
+    && monthlyTemp.length === 12
+    && monthlyTemp.every(Number.isFinite)
+    ? Math.min(...monthlyTemp)
+    : NaN;
+  return resolveBiome({
+    lat: opts.lat,
+    lon: opts.lon,
+    annualRainfall: opts.annualRainfall ?? NaN,
+    monthlyRain: opts.monthlyRain ?? [],
+    coldestMonthTemp,
+    sanbiBiome: opts.sanbiBiome,
+  });
+}

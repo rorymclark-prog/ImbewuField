@@ -566,7 +566,7 @@ export default function FacilitatorPrintPage() {
     }
 
     // Prefer the site's own satellite-derived rainfall over the 7-point regional
-    // table when this device has already analysed the site (same imbewu_loc_v4
+    // table when this device has already analysed the site (same imbewu_loc_v5
     // cache the sector card and tank calculator read — synchronous and offline-
     // safe). describeHarvest's sentence states which basis it used either way.
     const siteClimate = state.bgSite

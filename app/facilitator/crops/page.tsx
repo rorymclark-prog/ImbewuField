@@ -1061,7 +1061,7 @@ function FacilitatorCropsPageInner() {
   // Per-site climate (Task: climatically correct plans for ANY SA site). When the
   // site has coordinates, the pattern comes from the site's OWN monthly climate —
   // the same NASA POWER/Open-Meteo → Köppen path the Atlas and site reports use —
-  // via the shared imbewu_loc_v4 localStorage cache (offline-safe) with a network
+  // via the shared imbewu_loc_v5 localStorage cache (offline-safe) with a network
   // fetch behind it. nearestRainfall() above remains the explicit, labelled
   // fallback: it put the demo farm's frost-free Mkuze-valley coordinates on
   // Durban's mild-frost profile from 255 km away, which is exactly the mistake

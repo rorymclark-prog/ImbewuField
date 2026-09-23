@@ -462,7 +462,7 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
 }
 
 function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v5_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 function readCachedLocationData(lat: number, lon: number): LocationData | null {
@@ -2361,7 +2361,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       ],
     }));
     setBedBlockArmed(false);
-  }, [handleChange]);
+    handleSetTool('select');
+  }, [handleChange, handleSetTool]);
 
   const bedBlockControl = useMemo(
     () => ({
@@ -2377,7 +2378,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         setPlaceDefId(null);
         setBedBlockArmed(true);
       },
-      onCancel: () => setBedBlockArmed(false),
+      onCancel: () => handleSetTool('select'),
     }),
     [bedBlockSpec, bedBlockArmed, handleSetTool],
   );

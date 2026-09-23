@@ -109,8 +109,8 @@ test('an open-meteo tagged reading derives too, and keeps its provenance', () =>
   assert.equal(derived.rainfallSource, 'open-meteo');
 });
 
-test('the cache key matches the app-wide imbewu_loc_v4 format at 5 dp', () => {
+test('the cache key matches the app-wide imbewu_loc_v5 format at 5 dp', () => {
   // Format and version are policed app-wide by tests/location-cache-version.test.ts;
   // this pins the 5-dp precision that keeps two nearby sites from colliding.
-  assert.equal(locationDataCacheKey(-27.726231, 31.963044), 'imbewu_loc_v4_-27.72623_31.96304');
+  assert.equal(locationDataCacheKey(-27.726231, 31.963044), 'imbewu_loc_v5_-27.72623_31.96304');
 });

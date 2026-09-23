@@ -267,7 +267,9 @@ function HomeInner() {
     // Ocean Coastal Belt" off a cache written before the fix. Rory: "On the main app it still says
     // this." The rule above is the rule; a changed ANSWER counts as much as a new field, because a
     // farmer cannot tell the two apart and neither can this cache.
-    const cacheKey = `imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    // v5 (23 Sep): the biome fallback now uses the coldest monthly mean, so previously cached
+    // Grassland answers for warm lowveld farms must be fetched again.
+    const cacheKey = `imbewu_loc_v5_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {

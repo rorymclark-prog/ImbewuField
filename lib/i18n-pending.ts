@@ -243,6 +243,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteBedCount: 'Beds',
   designPaletteBedBlockPlace: 'Place block',
   designPaletteBedBlockCancel: 'Cancel',
+  designPaletteClimateUnavailable: 'Climate data unavailable — all tree options shown.',
   designPaletteLayerExisting: 'Existing',
   designPaletteLayerWater: 'Water',
   designPaletteLayerEarthworks: 'Earthworks',

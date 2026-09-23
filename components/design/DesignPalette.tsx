@@ -2422,6 +2422,11 @@ export default function DesignPalette({
               : t('designPaletteProLayers')}
           </div>
         )}
+        {step === 'planting' && !siteClimates && (
+          <div role="status" style={{ fontSize: 11.5, color: '#6B6355' }}>
+            {t('designPaletteClimateUnavailable')}
+          </div>
+        )}
         {/* The climate note used to own a whole LINE of this panel to explain a filter the farmer
             never asked for — a sentence you read once, charged against the map forever. It is now
             the ⓘ chip at the head of the strip below: same words on hover/long-press, zero rows. */}
@@ -2836,7 +2841,11 @@ export default function DesignPalette({
     // armed so the Cancel is never stranded. Choosing a bed chip is a clear statement that beds
     // are what you are doing.
     const bedArmed = !!placeDefId && (BED_DEF_IDS as readonly string[]).includes(placeDefId);
-    if (!bedArmed && !bedBlockControl.armed) return null;
+    // A selected bed lights the same card without arming a new placement. That is useful for
+    // identifying it, but made the old block control vanish exactly when Rory tapped an existing
+    // bed and then looked for the dimensions. Selection should expose the control too.
+    const bedSelected = !!selectedIdentity?.defId && (BED_DEF_IDS as readonly string[]).includes(selectedIdentity.defId);
+    if (!bedArmed && !bedSelected && !bedBlockControl.armed) return null;
     const { spec, armed, onSpecChange, onArm, onCancel } = bedBlockControl;
     // Label BESIDE the input, not above it. Stacked, this row stood taller than every other chip
     // strip and the parent clipped its bottom edge — the number boxes were cut in half and the
@@ -2883,7 +2892,7 @@ export default function DesignPalette({
       </label>
     );
     return (
-      <div style={{ ...scrollStripStyle(guided ? 10 : 6), alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, padding: '8px 0', borderBottom: '1px solid rgba(11,18,11,0.14)', flexShrink: 0 }}>
         <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
           🛏️ {t('designPaletteBedBlock')}
         </span>
@@ -2917,7 +2926,6 @@ export default function DesignPalette({
   function renderBodyRows() {
     return (
       <>
-        {renderBedBlock()}
         {renderElementCatalog()}
         {renderAreaChips()}
         {renderSectorWind()}
@@ -2989,6 +2997,7 @@ export default function DesignPalette({
         <div style={{ padding: '0 12px', display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, flexShrink: 0 }}>
           {renderToolRow()}
         </div>
+        {sheetOpen && <div style={{ padding: '0 12px', flexShrink: 0 }}>{renderBedBlock()}</div>}
         {sheetOpen && (
           <div
             style={{
@@ -3101,6 +3110,7 @@ export default function DesignPalette({
           where the owner was looking for it. One component, one behaviour, both layouts. */}
       {renderHandleRow()}
       {renderToolRow()}
+      {renderBedBlock()}
 
       {/* Below the tool row, everything is unbounded in height: the element catalog can carry a
           note line, the hint/lesson block can run to two lines, and which chip row shows at all
