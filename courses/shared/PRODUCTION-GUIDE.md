@@ -25,7 +25,8 @@ file holds the palette, fonts, recurring characters, an **image anchor** (ChatGP
 |---|---|---|
 | **Images** (slide images, cards, poster art, photos) | **Rory, in ChatGPT** | Paste from `courses/build/<course>/prompts-images.md` |
 | **Animations** | **Claude, with Veo** (the model behind Google Flow) | `scripts/courses/generate-media.py` |
-| **Posters and decks** | the build script + a print layout tool | §4 |
+| **Infographic posters** (finished, isiZulu + English lettering) | **Rory, in ChatGPT** | Paste from `courses/build/<course>/prompts-posters.md` |
+| **Decks** | the build script | isiZulu + English, per-course theme |
 
 ### Images — ChatGPT (your separate billing)
 `courses/build/<course>/prompts-images.md` has one block per image, with the course's look
@@ -61,6 +62,12 @@ Veo is billed per second of video — run one course at a time and check the loo
    JPG ≤ 800 KB; clips 1280×720, silent, ≤ 3 MB, plus a still `.jpg`.
 
 ## 4. Posters: bilingual, isiZulu first
+
+**Quickest route:** `courses/build/<course>/prompts-posters.md` — one block per poster with the
+course's own poster look (lettering, banner, label style differ per course), the picture, and the
+exact isiZulu and English words. Check every word after generating; image models misspell,
+especially isiZulu. For a crisp A1 print, rebuild the lettering in a layout tool using the same
+words (below).
 
 Layout per `poster-standards.md` (grid, ≤ 25 words per language) with the course's fonts and
 palette from `style.md`. Text comes from the manifest: each `poster` item has English

@@ -42,6 +42,17 @@ work clothes. Generic plant shapes only (no recognisable invasive species).
 ABSOLUTELY NO TEXT: no letters, numbers, labels, signs or watermarks anywhere in the image.
 ```
 
+## Poster anchor (full poster with isiZulu + English text, for ChatGPT)
+```
+Finished A1 teaching poster in the LINOCUT GARDEN style: the whole poster looks like one
+hand-carved 3-colour relief print on warm off-white rag paper (#EFE6D2). Carved black outlines
+(#1B1A17), flat deep-leaf green (#2F5D34), terracotta (#B24E2A), touches of maize yellow
+(#E0A526), water only in indigo (#2B4F7E), visible gouge texture. LETTERING: bold carved slab-serif
+letters, as if cut into the lino, sitting in a terracotta banner across the top; labels in clean,
+heavy, very legible slab lettering inside carved ovals with numbered circles (1, 2, 3 …) that point
+to the picture. Rural KwaZulu-Natal; sun in the NORTH, shadows SOUTH.
+```
+
 ## Animation anchor (Google Flow)
 ```
 Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm

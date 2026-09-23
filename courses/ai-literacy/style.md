@@ -43,6 +43,17 @@ person. Speech bubbles and phone screens are EMPTY. If outdoors: SOUTHERN HEMISP
 NORTH. ABSOLUTELY NO TEXT, letters or numbers anywhere, including bubbles, screens and signs.
 ```
 
+## Poster anchor (full poster with isiZulu + English text, for ChatGPT)
+```
+Finished A1 teaching poster in the COMIC PANELS style: bold comic-book page, thick black ink
+outlines (#111111), flat cyan (#1FA3C8), magenta (#D6336C, danger/stop) and yellow (#F7C948,
+safe/check) with halftone-dot shading on white. The picture is 3–4 comic panels telling a small
+story. LETTERING: comic headline lettering (like Bangers) in a yellow burst at the top; labels in
+rectangular comic caption boxes with numbered circles; speech bubbles contain ONLY the words given
+below. The AI is never a robot or a person — only a small glowing cyan speech shape with three
+dots. People are Black South Africans in township/rural settings.
+```
+
 ## Animation anchor (Google Flow)
 ```
 Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and

@@ -46,6 +46,17 @@ clothes, dignified. Leave calm, uncluttered space on one side of the frame for t
 ABSOLUTELY NO TEXT: no signs, logos, labels, writing on clothes, packets or tanks.
 ```
 
+## Poster anchor (full poster with isiZulu + English text, for ChatGPT)
+```
+Finished A1 teaching poster in the FIELD NOTES style: a warm 35 mm documentary photograph
+(Kodak Portra look, natural light) fills most of the poster, as if taped onto a page of a field
+notebook (#FAF7F0, faint ruled lines). Orange (#D9622B) hand-drawn marker circles and arrows point
+to things in the photo. LETTERING: headline in an elegant bold serif (like Lora) in charcoal
+(#232323); labels printed on small torn notebook-paper strips taped next to numbered orange circles.
+A tiny caption bottom-right: 'AI-generated illustration'. Rural KwaZulu-Natal homestead; sun in the
+NORTH, shadows SOUTH.
+```
+
 ## Animation anchor (Google Flow)
 ```
 Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow

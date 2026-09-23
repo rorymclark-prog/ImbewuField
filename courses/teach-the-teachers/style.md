@@ -41,6 +41,16 @@ ABSOLUTELY NO WORDS OR LETTERS anywhere — sticky notes and flipcharts are blan
 icons and scribble-lines.
 ```
 
+## Poster anchor (full poster with isiZulu + English text, for ChatGPT)
+```
+Finished A1 teaching poster in the CHALK & KRAFT style: brown kraft paper (#C9A77C) with
+masking-tape corners, drawn with thick black marker (#1C1C1C), red (#D2452C), blue (#2C6FB7, water
+only) and yellow highlighter (#F2C230); doodle icons, arrows, stars. LETTERING: big friendly
+hand-lettered marker headline (like Kalam Bold), neat and very legible; labels written on yellow
+sticky notes (#FFE680) stuck beside numbered marker circles. It should look like the best flipchart
+a trainer ever made — and one a trainee could copy by hand.
+```
+
 ## Animation anchor (Google Flow)
 ```
 Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves

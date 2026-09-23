@@ -45,6 +45,17 @@ Clay people are Black South Africans of mixed ages. If outdoors: SOUTHERN HEMISP
 NORTH. ABSOLUTELY NO TEXT, numbers or symbols on notes, coins, signs, labels or books.
 ```
 
+## Poster anchor (full poster with isiZulu + English text, for ChatGPT)
+```
+Finished A1 teaching poster in the CLAY MARKET style: a stop-motion claymation miniature set
+photographed from the front on a cream background (#FFF4E0); everything is matte plasticine with
+fingerprints — clay people, clay tins, generic clay coins and plain coloured clay notes (NEVER real
+South African banknotes or coins). Money in = teal (#2A8C82) with an arrow in; money out = coral
+(#E0664A) with an arrow out; savings = mustard (#E3A72F). LETTERING: chunky rounded letters (like
+Baloo 2 ExtraBold) in charcoal (#2B2B2B) on a clay-coloured plaque at the top; labels on small
+rounded clay tags next to numbered clay counters (1, 2, 3 …).
+```
+
 ## Animation anchor (Google Flow)
 ```
 Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with
