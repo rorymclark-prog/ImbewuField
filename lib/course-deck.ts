@@ -196,9 +196,12 @@ const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
 };
 
-// The two replacement diagrams remain outside the learner player until Rory has reviewed their
-// visual quality. Their existing stills continue to carry these lessons in the meantime.
-const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {};
+// Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
+// footage completes only the transplant action; the choice between methods stays in the
+// narration and still. The locally drawn diagrams remain held for Rory's visual clearance.
+const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
+  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true },
+};
 
 // Keep the reviewed Flow hand action; the three locally authored scenes await visual clearance.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {

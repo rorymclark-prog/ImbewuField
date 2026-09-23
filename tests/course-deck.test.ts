@@ -118,10 +118,15 @@ test('food forest sheet mulching plays the reviewed Flow hand action once and ho
   assert.equal(clip.playOnce, true);
 });
 
-test('vegetable lesson 1 keeps its still while the unfinished film and unapproved diagram stay out of the player', () => {
+test('vegetable lesson 1 offers the reviewed Flow transplant and holds its planted end state', () => {
   const slides = deckFor('vegetables-staples')!.slides.filter(s => s.lesson === 'vegetables-staples-l1');
   assert.deepEqual(slides.map(s => s.slide), [4, 5, 6, 7]);
-  assert.equal(animationUrls('vegetables-staples', 6), null);
+  const clip = animationUrls('vegetables-staples', 6);
+  assert.ok(clip);
+  assert.equal(clip.video, '/course-animations/vegetables-staples/flow-transplant-root-plug.mp4');
+  assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg');
+  assert.equal(clip.seconds, 8);
+  assert.equal(clip.playOnce, true);
 });
 
 test('vegetable pest lesson keeps its still while the unapproved decision animation stays out of the player', () => {
