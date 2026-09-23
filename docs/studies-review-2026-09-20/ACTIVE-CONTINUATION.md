@@ -1,5 +1,13 @@
 # Active Studies continuation — 22 September 2026
 
+## Rory's Vegetables L1 version-one feedback (23 September)
+
+Rory says the transplant in the current Flow clip looks like a small tree. He
+accepts it for version one and wants a different, clearly vegetable-looking
+transplant in a later round. Keep the current checked clip for this release;
+do not spend another Flow prompt now or infer crop identity from the film.
+Finance remains outside the current finish.
+
 ## Market Gardening L3 static network still release (23 September)
 
 Slide 14's small network labels were replaced with a deterministic static

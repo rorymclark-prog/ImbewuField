@@ -22,9 +22,12 @@ while the English narration was still at 22/29 seconds. The actual phone-size
 end frame was inspected. Network access was restored afterwards. CI `test`
 and `rules` and the preview deployment passed for this exact asset commit.
 
-This is technical and source review. Rory's visual acceptance, a real learner,
-local practitioner, physical-phone and fluent isiZulu review remain open. The
-separate Farm Finance course was untouched.
+Rory reviewed the visible clip on 23 September and said the plant reads like
+a small tree. He accepted this clip for version 1 and wants a different,
+clearly vegetable-looking transplant in a later round. Do not treat that as
+crop identification, practitioner approval or a reason to spend another Flow
+prompt now. A real learner, local practitioner, physical-phone and fluent
+isiZulu review remain open. The separate Farm Finance course was untouched.
 
 ## Previous deployed still-only check — 23 September 2026
 
