@@ -2,9 +2,9 @@
 
 Every prompt in this pass used **Veo 3.1 Quality**, **16:9**, **720p**,
 **eight seconds**, and **x1**. Each prompt produced one video and showed a 100
-Flow-credit cost. Nine prompts used 900 displayed credits in total. The first
-three, sixth, seventh and eighth were held or rejected; none is registered in
-the learner player. The fourth, fifth and ninth passed technical review and
+credit cost. Ten prompts used 1,000 displayed credits in total. The first
+three, sixth, seventh, eighth and tenth were held or rejected; none is registered
+in the learner player. The fourth, fifth and ninth passed technical review and
 are registered for the bee, compost-building and vegetable-transplant lessons.
 
 ## Plant Guilds lesson 3 — whole-support thinning
@@ -127,3 +127,37 @@ the English narration retains the crop-specific direct-sow choice. The
 learner-file hashes, deployed phone playback and offline review. One request
 used 100 displayed credits. This is technical registration, with Rory,
 practitioner, learner and fluent-language review still open.
+
+## Food Forest lesson 3 — slide 15 grass removal
+
+One Veo 3.1 Quality request used **x1**, 16:9, 720p and eight seconds. The
+displayed cost was 100 AI credits. Google One showed Flow credits **0 → 0** and
+AI credits **3,780 → 3,680**; the -100 AI-credit transaction appeared at
+05:28:04 on 23 September 2026. Flow project:
+<https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/1165b14f-af29-41c8-aa27-5d107a2e1a07>.
+
+The existing Food Forest L3 `source.png` was used as the opening frame and
+visual reference. Exact prompt:
+
+> Use the uploaded image as the exact visual reference and opening frame. Photorealistic documentary, one continuous locked 16:9 medium-close shot in the same South African smallholder food forest, same adult Black African woman, same young tree, mulch, light and viewpoint. Show only one clear action: she gently grips a single small tuft of grass growing near the young tree and loosens it by hand, then lifts that tuft away and sets it on the ground beside the bed. Keep the young tree upright and still; keep mulch clear of its trunk. Do not pull the tree, disturb its roots, or move or pile mulch against its trunk. Keep her hand and the tuft visible throughout. Natural restrained body motion; no other work. End with only that tuft removed, with the tree and mulch otherwise unchanged. No new plants, tools, weeds, species, water, labels, text, graphics, narration, sound, or music. No cuts, transitions, time lapse, slow motion, reframing, or camera movement.
+
+The Flow original downloaded as
+`/Users/roryclark/Downloads/Woman_gripping_tree_in_forest_20260923053008.mp4`
+(7,924,046 bytes; SHA-256
+`fc96cc673fe84238b52c454d3c85e2cc17540e7868a766e956410eac00f0067a`). The
+original contains an AAC audio stream despite the silent prompt. A silent H.264
+review copy was saved outside the public/player tree at
+`docs/media/studies-animation-quality/review-candidates/food-forest-l3-slide15-grass-removal-flow-x1-review.mp4`
+(7,739,744 bytes; SHA-256
+`ce46382289b6b4df01208d699e0f3a78ce0f1bba85e80ff2dc85c2ddfc44cbab`). It is
+8.0 seconds, 1280 × 720 at 24 fps, with no audio stream.
+
+Full-motion playback and a 390-pixel-wide frame were inspected. The Black
+African woman and young tree stay in frame and the composition fits phone
+width. The action does not read as one small grass tuft: a large dark soil/turf
+clod appears to be lifted beside the trunk, then set down again, raising a
+possible root-disturbance implication. Keep this as a **HELD review candidate
+on motion and farming grounds**. Rory can revisit it later; his latest direction
+allows subsequent animation work without waiting for approval. It is not registered or published; no second
+request or reroll was made. This is a technical inspection only, not farmer,
+practitioner, learner, human or isiZulu approval.

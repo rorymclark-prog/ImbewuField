@@ -464,3 +464,45 @@ test('the soil-cover still upgrade removes only its replaced images, including c
   await run(caches, COURSE_CACHE, Response);
   assert.equal(deleteCalls, 4, 'the durable marker makes a later deploy leave a new chosen download alone');
 });
+
+test('the Soil L3 comparison still migration clears only its old English slide 14, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilL3ComparisonStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'the comparison still migration must run before the new worker claims clients');
+  assert.match(source, /then\(migrateSoilL3ComparisonStill\)\.then/);
+  const marker = '/course-decks/soil-health/en/.l3-slide14-comparison-20260923';
+  const old = [
+    '/course-decks/soil-health/en/slide-14.jpg',
+    '/course-decks/soil-health/en/slide-14.jpg?revision=old',
+  ];
+  const kept = [
+    '/course-decks/soil-health/en/slide-13.jpg',
+    '/course-decks/soil-health/en/slide-15.jpg',
+    '/course-decks/soil-health/zu/slide-14.jpg',
+    '/course-audio/soil-health/en/slide-14.mp3',
+  ];
+  const rows = new Map<string, Response>([...old, ...kept].map(path => [path, new Response(path)]));
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return fakeCache; } };
+  await run(caches, COURSE_CACHE, Response);
+  for (const path of old) assert.equal(rows.has(path), false, `${path} must be replaced only on a learner-chosen download`);
+  for (const path of kept) assert.equal(rows.has(path), true, `${path} must remain saved offline`);
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, old.length);
+
+  rows.set('/course-decks/soil-health/en/slide-14.jpg', new Response('new chosen still'));
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(await rows.get('/course-decks/soil-health/en/slide-14.jpg')!.text(), 'new chosen still');
+  assert.equal(deleteCalls, old.length, 'the migration marker must protect a newly downloaded still on later deploys');
+});

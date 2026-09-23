@@ -69,7 +69,7 @@ stills or registered videos and shows which candidates remain held.
 ### Current Flow and video work
 
 The current batch uses one eight-second x1 Flow video per prompt to control cost.
-The documented current tally is **9 prompts / 900 displayed Flow credits: 6 held
+The documented current tally is **10 prompts / 1,000 displayed credits: 7 held
 or rejected and 3 registered as technical candidates**. The sixth site-map
 drawing shot was rejected because its boundary remained open and its marks were
 ambiguous at phone
@@ -84,6 +84,13 @@ records the one x1 request and review copy; slide 14 remains a still. The ninth,
 for Vegetables L1 slide 6, shows a nursery root plug seated and soil firmed in
 one continuous shot. Its [current lesson check](../media/studies-animation-quality/vegetables-l1-lesson-check.md)
 records the silent learner copy, deployed phone playback and offline check.
+
+The tenth, Food Forest L3 slide 15, used 100 AI credits while Flow credits were
+0 and AI credits went from 3,780 to 3,680. Full-motion and 390-pixel phone-width
+review found a large soil/turf clod lifted beside the young tree, then set down
+again, so it remains held by motion and farming review.
+The exact prompt, project, hashes and audio-stream correction are in the
+[Food Forest L3 current check](../media/studies-animation-quality/food-forest-l3-current-lesson-check.md).
 
 - **Current bee Flow candidate:** Small Livestock L2 slide 9,
   `flow-bee-between-blossoms`. It shows one coherent bee moving between adjacent

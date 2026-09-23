@@ -1,5 +1,20 @@
 # Active Studies continuation — 22 September 2026
 
+## Food Forest Design L3 slide-17 still (23 September)
+
+The final bullet on slide 17 was clipped even in the full-size still. A
+deterministic static reflow keeps all three existing statements, including the
+local-suitability and no-fixed-year cautions, wholly inside three larger
+cards. Full-size and 269px fits were inspected. Exact-head `test` and `rules`
+passed for `d9aa951f`, preview run 35813885562 passed, `/api/build-info`
+reported `d9aa951`, and the deployed JPEG matched the local SHA-256. A
+one-time cache marker removes only saved slide-17 JPEGs. A fresh browser
+redirected `/student` to `/login`, so the current learner player and offline
+pack have not been rechecked after this release. The
+[L3 check](../media/studies-animation-quality/food-forest-l3-current-lesson-check.md)
+records that limit. No Flow credit, SVG/code-drawn animation, protected
+teaching or Farm Finance work changed.
+
 ## Water L4 source reconciliation (23 September)
 
 A parallel English audit found that the earlier greywater review overstated
@@ -987,3 +1002,15 @@ frost-sensitive nursery siting quiz and overcertain late-blight advice. See
 An exact proposed correction is in
 `docs/media/studies-animation-quality/reading-landscape-l3-source-correction-proposal.md`.
 Protected content remains unchanged, and no Flow credit was spent.
+
+## Food Forest Design L3 slide-15 Flow candidate (23 September)
+
+One Veo 3.1 Quality x1 request used 100 AI credits (Flow credits 0 → 0;
+AI credits 3,780 → 3,680). Full-motion and phone-width inspection found a
+large turf/soil clod lifted beside the young tree, then put back; the intended
+single small grass tuft is not clearly removed. It is held outside the player
+on motion and farming grounds; Rory has since asked animation work to continue
+without waiting for approval. The prompt, original and silent review-copy
+hashes, and Flow project are in
+`docs/media/studies-animation-quality/food-forest-l3-current-lesson-check.md`.
+No learner registration, publication or reroll was made.

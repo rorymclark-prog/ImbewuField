@@ -2,8 +2,9 @@
 
 **Status:** Deployed media and source check with one protected quiz correction
 still open. Human, learner, facilitator and practitioner approval are not
-claimed. No protected teaching was edited and no Flow credit was spent. Farm
-Finance remains excluded.
+claimed. No protected teaching was edited. The slide-15 review candidate below
+used 100 AI credits while the Flow balance remained 0. Farm Finance remains
+excluded.
 
 ## Current player and actual media
 
@@ -32,16 +33,26 @@ the English audio advanced; the final video frame held while narration
 continued. The browser was restored online. This is a browser check, not a
 physical-phone or human listening assessment.
 
-## Slide 17 static still candidate — 23 September
+## Slide 17 static still release — 23 September
 
 The existing three statements were reflowed into larger cards in a deterministic
 1920 × 1080 static still. Their wording, including the local-suitability and
 competition cautions, is unchanged. The render was inspected full-size and at
 269 × 151 px; it has no clipped text and gives the long pruning statement more
-space than the previous bullet layout. This is a local image inspection, not a
-deployed-player, physical-phone or learner readability result. Existing
-narration and expandable text remain available. SHA-256:
+space than the previous bullet layout. Existing narration and expandable text
+remain available. SHA-256:
 `4f8f3d9ffe505a05e251249ad98f5d95a7450267b4f9b8a1799656b196c50a0b`.
+
+Exact-head `test` and `rules` CI jobs passed for `d9aa951f`; preview run
+`35813885562` passed and `/api/build-info` reported `d9aa951`. The deployed
+slide-17 JPEG returned the same SHA-256 and 1920 × 1080 dimensions, and the
+public image URL opened in a real browser. The one-time cache migration removes
+only old saved slide-17 JPEGs, without fetching the replacement or deleting
+other stills/audio. A fresh unauthenticated browser was redirected from
+`/student` to `/login`, so this release has **not** had a current deployed
+390px learner-player or offline-pack recheck. The phone fit was inspected on
+the exact deployed bytes, but physical-phone and learner readability remain
+unverified.
 
 The previous [`food-forest-l3-lesson-check.md`](food-forest-l3-lesson-check.md)
 describes a 13-second authored composite and a 34.6 MB pack from an earlier
@@ -72,3 +83,36 @@ No species or numbers should change.
 
 This review is a technical preview check, not final content or practical
 farming clearance; isiZulu remains for a fluent review cycle.
+
+## Slide 15 grass-removal Flow candidate — 23 September
+
+One request used Veo 3.1 Quality, 16:9, 720p, eight seconds and x1. The
+displayed cost was 100 AI credits; Google One showed Flow credits 0 → 0 and AI
+credits 3,780 → 3,680. The existing Food Forest L3 `source.png` was attached as
+the opening frame. Flow project:
+<https://flow.google.com/project/7d35cc98-916e-4c7b-89b0-86365cac5442/edit/1165b14f-af29-41c8-aa27-5d107a2e1a07>.
+
+Exact prompt:
+
+> Use the uploaded image as the exact visual reference and opening frame. Photorealistic documentary, one continuous locked 16:9 medium-close shot in the same South African smallholder food forest, same adult Black African woman, same young tree, mulch, light and viewpoint. Show only one clear action: she gently grips a single small tuft of grass growing near the young tree and loosens it by hand, then lifts that tuft away and sets it on the ground beside the bed. Keep the young tree upright and still; keep mulch clear of its trunk. Do not pull the tree, disturb its roots, or move or pile mulch against its trunk. Keep her hand and the tuft visible throughout. Natural restrained body motion; no other work. End with only that tuft removed, with the tree and mulch otherwise unchanged. No new plants, tools, weeds, species, water, labels, text, graphics, narration, sound, or music. No cuts, transitions, time lapse, slow motion, reframing, or camera movement.
+
+The original Flow download is
+`/Users/roryclark/Downloads/Woman_gripping_tree_in_forest_20260923053008.mp4`
+(7,924,046 bytes; SHA-256
+`fc96cc673fe84238b52c454d3c85e2cc17540e7868a766e956410eac00f0067a`). It
+contains an AAC audio stream even though the prompt asked for no sound. The
+silent local review copy is
+`docs/media/studies-animation-quality/review-candidates/food-forest-l3-slide15-grass-removal-flow-x1-review.mp4`
+(7,739,744 bytes; SHA-256
+`ce46382289b6b4df01208d699e0f3a78ce0f1bba85e80ff2dc85c2ddfc44cbab`),
+8.0 seconds, 1280 × 720 at 24 fps, with no audio stream.
+
+Full-motion and 390-pixel phone-width inspection found that the adult and young
+tree stay in frame and the composition fits. The removal itself is not cleanly
+legible as one small grass tuft: a large dark clod of soil/turf appears to be
+lifted beside the trunk, then set down again, raising a possible root-disturbance
+implication. The candidate is **HELD by the motion and farming review**; Rory
+can revisit it later, but his latest direction allows work to continue without
+waiting for an animation approval. It remains outside the learner player and
+public assets. No reroll was made. This
+inspection is not human, farmer, practitioner, learner or isiZulu approval.

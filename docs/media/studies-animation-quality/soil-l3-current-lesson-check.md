@@ -1,18 +1,20 @@
 # Soil Health L3 English lesson and Flow check — 23 September 2026
 
-**Decision:** Keep slide 14's existing still. The new one-output Flow rain shot is
-held outside the learner player because it does not make the taught mechanism
-clear at phone width. No further prompt, local/SVG animation registration,
-lesson edit, quiz edit, narration edit, species, farming figure or
-`PLAN_VERSION` change followed. This is a technical and source check, not Rory,
+**Decision — 23 September 2026:** Replace only slide 14's still with the static
+comparison below. The one-output Flow rain shot remains held outside the learner
+player because it does not make the taught mechanism clear at phone width. No
+lesson body, quiz, narration, audio, species, farming figure, video registration
+or `PLAN_VERSION` changed. This is a technical and source check, not Rory,
 farmer, learner, practitioner or fluent isiZulu approval. Farm Finance is outside
 this pass.
 
 ## Current five-slide lesson
 
-The English lesson occupies slides 14–18. Slide 14's still is a labelled bare
-soil/mulch comparison; its embedded labels are small in a 390 px player, so the
-English narration and the full-size still link carry the explanation. Slide 15
+The English lesson occupies slides 14–18. Slide 14 now uses a static concept
+diagram with large “Bare Soil” and “Loose Mulch” labels, equal sparse rain marks,
+and only a small bare-surface splash. The caption says “Loose cover can cushion
+raindrop impact”; the figure is marked “Concept diagram · not to scale.” It
+shows no pooling, runoff, infiltration path, or universal erosion result. Slide 15
 shows Black African hands placing leaf mulch clear of a tomato stem. Slide 16
 **already has** a photorealistic cover-crop field with a Black African woman;
 slide 17 shows a Black African woman inspecting a worm bin. Slide 18 **already
@@ -23,13 +25,14 @@ locally drawn slide-14 film remains held under Rory's explicit visual-clearance
 rule. The earlier Fast and Quality Flow comparisons also failed the readable,
 equal-raindrop-impact gate.
 
-The deployed 390 × 844 Student preview reopened from the saved **23.0 MB** Soil
-module pack after a browser reload with network disabled. It showed Offline and
-“On this phone”; slide 14's current still loaded with `naturalWidth=1920`, its
-English MP3 had `readyState=4` and advanced to 8.138 of 8.448 seconds, and the
-player moved to slide 15. Network was restored and playback stopped. This proves
-one browser cache path for the **existing** still/audio, not a physical-phone,
-listening or newly published video check.
+Before this still replacement, the deployed 390 × 844 Student preview reopened
+from the saved **23.0 MB** Soil module pack with network disabled. That check
+covered the former slide 14 still and existing audio only. The replacement was
+inspected locally at 1920 × 1080 and as a proportional 269 × 151 phone-size
+render. The two labels, rain marks and small bare-surface flecks remain visible
+there. This is not a post-deploy offline-pack check, physical-phone check, or
+listening or screen-reader review. The earlier browser run does not prove that
+the new still has reached saved packs.
 
 ## One new Flow result, held
 
@@ -60,8 +63,32 @@ bare/mulch boundary and over the covered half, however, so pooled water
 dominates the shot. The few impact/grain differences are not legible at 390 px,
 and equal forcing is unclear. Showing it under “Watch: Bare Soil and Mulch”
 would imply a water-retention result the lesson and source do not establish.
-**Hold/reject** this candidate. Slide 14 remains a still and no new learner
-asset, poster or offline manifest entry is made.
+**Hold/reject** this Flow candidate. Slide 14 remains still-only; the separate
+static replacement below does not register the movie or add a poster.
+
+## Static comparison still — V1 clarity replacement
+
+The protected English narration remains: “Compare bare soil with mulched soil.
+Watch how the mulch protects topsoil when a South African summer storm brings
+intense rain.” The paired still clarifies that comparison but does not simulate
+a storm or show water movement beyond surface impact. Its conditional caption is
+limited to a mechanism supported by USDA NRCS [Soil Health: Principle 1 — Soil
+Armor](https://www.nrcs.usda.gov/state-offices/north-dakota/soil-health-principle-1-of-4-soil-armor):
+when rainfall hits cover rather than bare soil, much of the raindrop energy is
+dissipated. NRCS's [Mulching practice standard](https://www.nrcs.usda.gov/sites/default/files/2022-09/Mulching_CPS_484_Oct_2017.pdf)
+also cautions that material, site and application matter. Neither source makes
+this concept diagram evidence of a universal infiltration, runoff, erosion or
+water-storage outcome.
+
+The deterministic renderer is
+[`render-soil-l3-slide14-static.py`](../../review-candidates/render-soil-l3-slide14-static.py).
+It produces the public still and review copy from the same authored static
+diagram. The public asset is `public/course-decks/soil-health/en/slide-14.jpg`,
+1920 × 1080 JPEG, 221,671 bytes, SHA-256
+`4e06cb5c1e7707c191f1744efe7935045a2f922b7b4fea1f032edc254c02658c`. The exact
+byte-size manifest was regenerated. A one-time worker migration removes only
+the saved English slide-14 still, including query variants, and preserves other
+downloaded lesson files; the learner chooses when to fetch its replacement.
 
 ## Teaching and source limits
 

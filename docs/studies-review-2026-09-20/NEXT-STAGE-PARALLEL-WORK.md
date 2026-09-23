@@ -26,10 +26,12 @@ programme; they are not counts of approvals.
   smallholder context. Visual appearance cannot establish identity; flag
   uncertain representation for Rory. Do not add people to diagrams that do not
   need them.
-- Rory must visually approve any SVG or code-drawn motion before it is
-  registered in the learner player. Show **each Flow candidate** for visual
-  review before registration too. Limit each Flow prompt to **one video output**;
-  do not request another prompt without a specific, source-backed gap.
+- Keep SVG or code-drawn motion out of the learner player under Rory's earlier
+  visual-quality hold. Rory subsequently authorized continuing Flow animation
+  work while he sleeps **without waiting for per-video approval**. Post each
+  candidate for later visual review, but root must still reject inaccurate or
+  unsafe motion before registration. Limit each Flow prompt to **one video
+  output**; do not request another prompt without a distinct, source-backed gap.
 
 ## Parallel lanes and root supervision
 
@@ -48,7 +50,8 @@ cache-migration and release ownership before work begins.
    is inadequate. Root supervises every credit spend. A prompt yields **one x1
    video**, with no batch outputs or automatic rerolls. Inspect full motion,
    representative frames and phone fit; post every resulting candidate for
-   Rory's visual approval before any learner-player registration. A rejected or
+   Rory to review later. Per-video approval is no longer a blocking gate for
+   Flow, but root's farming and motion checks still are. A rejected or
    held result stays out of public assets, player manifests and offline packs.
 2. **Independent module audit/implementation lane A:** own one assigned module
    at a time. Check its English lesson, source limits, narration, slides and
@@ -70,7 +73,8 @@ Rory, learner, practitioner, legal or fluent-language approval.
 Static work can proceed in parallel across independent modules; release work
 stays serial by lesson so every preview presents one coherent, inspectable
 teaching unit. Keep any media candidate out of the learner manifest while its
-source, content or Rory visual decision is open. Preserve protected copy,
+source or content decision is open, or root's motion/farming check has failed.
+Preserve protected copy,
 species, numbers and quiz rationales unless the required explicit editorial
 authorization is recorded.
 

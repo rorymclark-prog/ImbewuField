@@ -19,6 +19,22 @@ evidence, not a claim of Rory, physical-phone, learner, practitioner or fluent
 isiZulu acceptance. No new Flow request, protected teaching, species, figure
 or learner media change was made. Farm Finance is excluded.
 
+## Static decision candidate held — 23 September 2026
+
+The [new static review candidate](review-candidates/vegetables-l4-slide16-decision-candidate.jpg)
+places the existing four steps in order and retains the current illustration's
+leaf, helpful-insect, barrier and hand-removal symbols. It also keeps the
+conditional product-registration, label, protection, harvest-waiting and
+no-improvisation safeguards. The deterministic
+[`render-vegetables-l4-decision-still.py`](render-vegetables-l4-decision-still.py)
+uses the current public slide as its visual source. Candidate SHA-256:
+`8450670b7317067007562769d5c30e41cd80bd3dce0a865c7ee070d91f530710`.
+Full-size inspection found the sequence coherent, but at the actual 269 × 151
+phone fit its detail and safety text is too small to replace the present still
+with confidence. It stays under `docs/`; the public slide, audio, offline pack
+and player remain unchanged. This is a legibility hold, not a request for
+another Flow prompt or acceptance of the earlier authored movie.
+
 ## Historical candidate and playback record — 22 September 2026
 
 **Checkpoint:** 22 September 2026. This lesson is module slides 15–16.

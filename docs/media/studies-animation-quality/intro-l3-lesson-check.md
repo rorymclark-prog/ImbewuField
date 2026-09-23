@@ -28,6 +28,30 @@ African adults in plausible smallholding scenes. Other L3 slides are diagrams
 or text without people. These stills were visually inspected, as was slide 19
 inside the deployed player.
 
+## Static slide-19 large-label candidate — 23 September 2026
+
+The unregistered review candidate is
+`review-candidates/intro-permaculture-l3-slide19-static.png`, rendered by
+`render-intro-l3-slide19-static.py` from the existing slide-19 illustration.
+It is a static still candidate; it does not add motion, people, species,
+spacing, protection distance, or wind-direction guidance. The north-west wind
+is presented under the existing “Look at this example” caption. The remaining
+headings and text use the existing windbreak storyboard labels and narration,
+including “The shelter can reduce wind speed behind it,” “Observe your own
+site,” and “This picture is not a planting plan.” The statement about wind
+reduction stays conditional.
+
+The candidate is now 1920 × 1080 (16:9). I inspected it full-size and at the
+actual 269 × 151 media-frame fit used in the 390-pixel lesson. The north-west
+caption is explicitly introduced as an example. The conditional shelter
+statement and the “Observe your own site” / “This picture is not a planting
+plan” caution are visible in the short label panel. Some airflow detail remains
+in unchanged narration. This is a local visual check only. The candidate has
+not been registered, deployed, checked in the offline pack, or approved by
+Rory, learners or practitioners.
+The protected English body, quiz and narration remain unchanged; slide 18 and
+related source holds still require their separate editorial decision.
+
 ## Source and teaching holds
 
 1. Slide 18 narration and the lesson body say a Lowveld farm facing north-west
