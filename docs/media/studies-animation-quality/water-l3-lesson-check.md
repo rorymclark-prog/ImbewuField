@@ -32,9 +32,21 @@ automatic fetching or deleting neighboring slides and isiZulu assets. The
 is review-only and unpublished; it lists broader stale volume, water-safety
 and tank-size statements needing fluent and local review.
 
-Local checks, exact-head CI and deployed phone/offline verification of this
-change are pending. Human listening, physical-phone, learner, farmer,
-plumbing/practitioner and fluent isiZulu approval are not claimed.
+Local typecheck, 3,721 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35852698053` passed both `test` and
+`rules`; preview `35852697983` passed. At 390 px the deployed sample Student
+showed the corrected body and slide 14 transcript, plus the unchanged quiz.
+The registered slide 14 roof Flow video played at 1280 × 720 while its new
+English MP3 advanced beyond five seconds with `readyState=4`; neither the
+video nor still represents a roof-material inspection. Slide 16 was labelled
+as a concept and showed a 1920 × 1080 still with no video; its MP3 advanced
+beyond six seconds. The small diagram labels still need narration and the
+full-size link. The 54-file, 12.2 MB Water pack reported On this phone.
+After a network-disabled browser reload, the Offline badge appeared and
+slide 14 video/new MP3 reopened with `readyState=4`, both advancing beyond
+five seconds. Network and viewport were restored. This is one browser's
+technical check, not human listening, physical-phone, learner, farmer,
+plumbing/practitioner or fluent isiZulu approval.
 
 ## Earlier English source and player check — before this correction
 

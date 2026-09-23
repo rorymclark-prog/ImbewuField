@@ -1,5 +1,31 @@
 # Active Studies continuation — 23 September 2026
 
+## Water Harvesting L3 English release (23 September)
+
+Commit `0146fe0d` adds the South African source-backed roof-material
+suitability check to the English rainwater lesson, slide 14 narration and
+transcript. The existing slide 14 Flow clip remains a roof catchment setup,
+not proof that the roof material is suitable. Slide 16 is now labelled as a
+static first-flush concept; its held code-drawn animation remains outside
+the player. The [L3 check](../media/studies-animation-quality/water-l3-lesson-check.md)
+records the DHS sources, exact audio hashes and review limits. No new Flow
+credit or SVG motion was used. The [isiZulu L3 packet](../narration-reviews/water-harvesting-l3.zu.review.md)
+identifies stale first-flush volumes, tank figures and water-safety claims;
+it is review-only and unpublished.
+
+Local typecheck, 3,721 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35852698053` passed `test` and
+`rules`; preview `35852697983` passed. At 390 px, the deployed sample
+Student showed the updated body/transcript, unchanged quiz, slide 14 video
+and new MP3, and slide 16 concept still/audio. The 54-file, 12.2 MB Water
+pack reported On this phone. After a network-disabled reload, the Offline
+badge appeared and slide 14 video/new MP3 reopened and advanced beyond
+five seconds. Network and viewport were restored. This is a browser
+technical check, not physical-phone, human-listening, learner, farmer,
+plumbing/practitioner or fluent isiZulu approval. Farm Finance is excluded.
+Water L4's local greywater source conflict remains the next Water hold; do
+not expand its learner advice without qualified local reconciliation.
+
 ## Water Harvesting L2 English release (23 September)
 
 Commit `cbdd25fd` corrected the English dam/spillway slide 12 caption,
