@@ -762,6 +762,20 @@ async function migrateMarketCommunityNetworkStill() {
   await cache.put(marker, new Response('Phone-readable community sharing labels'));
 }
 
+// Small Livestock slide 8's replacement keeps the existing teaching and URL. Retire
+// only the saved English still once so learners can choose when to download it.
+async function migrateSmallLivestockSlide8Still() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/small-livestock/en/.slide08-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/small-livestock/en/slide-08.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Updated Small Livestock slide 8 still'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -777,7 +791,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateSmallLivestockSlide8Still).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

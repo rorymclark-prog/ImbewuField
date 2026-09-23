@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: 'b184b7c5', changes: [
+    'Small Livestock lesson 1 shows the chicken-tractor cautions in larger type.',
+  ], tour: [
+    { title: 'Read the chicken-tractor cautions', where: 'Studies → Small Livestock → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, then go to Rotate the Tractor Across the Plot.' },
+  ] },
   { when: '23 September 2026', sha: '781a2a7c', changes: [
     'In Vegetables lesson 1, watch a seedling go into the bed and stay planted.',
     'In Market Gardening lesson 1, read the four harvest destinations at phone size.',

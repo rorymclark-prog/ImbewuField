@@ -179,6 +179,47 @@ test('a saved Market community network gets the phone-readable still without cle
   assert.equal(await rows.get(replacement.url)!.text(), 'new network still');
 });
 
+test('a saved Small Livestock slide 8 clears only its English still once and preserves the downloaded lesson', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSmallLivestockSlide8Still\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSmallLivestockSlide8Still\)\.then/);
+
+  const changed = '/course-decks/small-livestock/en/slide-08.jpg';
+  const audio = '/course-audio/small-livestock/en/slide-08.mp3';
+  const otherSlide = '/course-decks/small-livestock/en/slide-09.jpg';
+  const otherLanguage = '/course-decks/small-livestock/zu/slide-08.jpg';
+  const otherLesson = '/course-decks/food-forest/en/slide-08.jpg';
+  const rows = new Map([
+    [changed, new Response('old still')],
+    [changed + '?saved=1', new Response('old still query variant')],
+    [audio, new Response('saved English narration')],
+    [otherSlide, new Response('saved neighboring still')],
+    [otherLanguage, new Response('saved isiZulu still')],
+    [otherLesson, new Response('saved other lesson still')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(key => new Request('https://example.com' + key)),
+    delete: async (request: Request) => {
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(changed), false);
+  assert.equal(rows.has(changed + '?saved=1'), false);
+  for (const path of [audio, otherSlide, otherLanguage, otherLesson]) assert.equal(rows.has(path), true, path);
+  assert.equal(rows.has('/course-decks/small-livestock/en/.slide08-still-20260923'), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'the migration must not silently spend learner airtime');
+
+  rows.set(changed, new Response('replacement downloaded later'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed)!.text(), 'replacement downloaded later');
+});
+
 test('a saved Market route diagram replaces only slide 9 and preserves the rest of the lesson', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateMarketL2RouteStill\(\) \{([\s\S]*?)\n\}/)?.[1];

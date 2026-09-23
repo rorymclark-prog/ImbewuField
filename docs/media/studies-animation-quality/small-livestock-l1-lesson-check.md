@@ -41,6 +41,23 @@ settings were restored. This establishes current sample-browser playback for
 both registered L1 clips; it is not physical-phone, learner, poultry-practitioner
 or Rory visual approval.
 
+## Slide 8 static clarity release candidate — 23 September
+
+The earlier 390px check found that slide 8's four unboxed bullets were too
+small in the deck image. A deterministic static reflow now keeps its title and
+all four existing statements verbatim in larger cards. The public JPEG is
+1920 × 1080, 296,063 bytes, SHA-256
+`622dcb7bcea69b402b768fe2c474068d8ed80f75e44284fa6440c35f54937f8d`.
+The [renderer and two review sizes](review-candidates/small-livestock-l1-slide08-readable-candidate.md)
+were inspected full-size and at the 269px image fit. Nothing is clipped; the
+text is clearer than before but remains about 7.7px high at 269px and cannot
+be called comfortably readable at that fit. Narration, the expandable English
+lesson text and the full-size link remain important. A one-time selective cache
+migration retires only the old saved English slide-8 JPEG, leaving downloaded
+audio, other slides and other languages in place; the learner chooses when to
+fetch the replacement. The deployed player and offline saved-pack result are
+pending. No Flow credits or code-drawn motion were used.
+
 The lesson's care warning is supported by [University of Maryland Extension's
 flock guide](https://extension.umd.edu/resource/raising-your-home-chicken-flock),
 which requires balanced feed, water and daily care. [University of Minnesota
