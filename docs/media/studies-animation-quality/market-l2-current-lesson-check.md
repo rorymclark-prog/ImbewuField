@@ -1,6 +1,7 @@
 # Market Gardening L2 English lesson check — 23 September 2026
 
-**Status:** Retain the five existing stills and English audio. No new Flow
+**Status:** A static slide-9 readability revision is prepared for preview;
+the other four stills and English audio remain. No new Flow
 request, local animation registration, protected lesson/quiz/narration edit,
 species, farming figure or `PLAN_VERSION` change was made. This is technical
 and source review, not Rory, farmer, learner, practitioner or fluent isiZulu
@@ -27,6 +28,27 @@ Offline badge; L2 reopened, slide 9's still loaded at `naturalWidth=1920`,
 and its English MP3 advanced at `readyState=4`. Playback was stopped and
 network restored. This is one browser cache path, not physical-phone or
 listening acceptance.
+
+## Static slide 9 revision — pending deployed check
+
+The existing route still had three small labels and a long explanatory
+paragraph that could not be read at phone fit. The replacement uses three
+equal, separate farm-to-destination rows. Its labels repeat the existing
+English narration exactly: Roadside stall; Group delivery to a shop; Box
+delivered to a household. Each row retains a farm origin and outward arrow.
+No row is preferred, no price or income is promised, and the choices remain
+conditional on supply, demand, costs and local rules in the unchanged lesson.
+
+`docs/media/studies-animation-quality/render-market-l2-routes-still.py`
+deterministically renders the 1920 × 1080 JPEG. The full image and a 270px
+copy approximating the player's picture width were inspected; all three labels
+are legible without overlapping the icons. The first candidate had an
+overlapping box and Farm labels outside their cards; those were corrected
+before this file was considered ready. The final JPEG is 191,111 bytes,
+SHA-256 `07ed3c60f85fc1c23445e1404161ee99b0ed36169416ce2e2d18a11e64f90cb3`.
+A one-time service-worker migration removes only the prior saved slide-9 JPEG,
+leaving English MP3s and other Market stills in the pack. Deployed phone,
+offline replacement and human visual review remain to be checked.
 
 ## Teaching and Flow decision
 

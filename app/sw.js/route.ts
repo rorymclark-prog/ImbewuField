@@ -570,6 +570,18 @@ async function migrateHeldWaterSwaleMedia() {
   await cache.put(marker, new Response('Water swale clips held for review'));
 }
 
+// Slide 9's route choices were too small at phone fit; replace only its saved still.
+async function migrateMarketL2RouteStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.l2-route-still-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = '/course-decks/market-community/en/slide-09.jpg';
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === obsolete) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Market L2 route still replaced'));
+}
+
 // Historical migration from the original drawn bee route to the now-withdrawn composite. Keep its
 // marker for clients crossing that release; the broader migration above retires both generations.
 async function migrateBeeHiveAndBlossomMedia() {
@@ -680,7 +692,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

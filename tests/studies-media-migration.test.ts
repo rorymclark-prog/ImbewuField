@@ -68,6 +68,41 @@ test('a saved Food Forest layer key replaces only its old still and preserves na
   assert.equal(await rows.get(replacement.url)!.text(), 'new key');
 });
 
+test('a saved Market route diagram replaces only slide 9 and preserves the rest of the lesson', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateMarketL2RouteStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateMarketL2RouteStill\)\.then/);
+
+  const origin = 'https://field.test';
+  const oldStill = new Request(origin + '/course-decks/market-community/en/slide-09.jpg?cached=1');
+  const narration = new Request(origin + '/course-audio/market-community/en/slide-09.mp3');
+  const nextSlide = new Request(origin + '/course-decks/market-community/en/slide-10.jpg');
+  const otherLesson = new Request(origin + '/course-decks/market-community/en/slide-04.jpg');
+  const rows = new Map<string, Response>([
+    [oldStill.url, new Response('tiny route labels')],
+    [narration.url, new Response('saved speech')],
+    [nextSlide.url, new Response('saved')],
+    [otherLesson.url, new Response('saved')],
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(rows.has(oldStill.url), false);
+  for (const request of [narration, nextSlide, otherLesson]) assert.equal(rows.has(request.url), true);
+  assert.doesNotMatch(body, /\bfetch\(/, 'migration must not silently redownload the still');
+
+  const replacement = new Request(origin + '/course-decks/market-community/en/slide-09.jpg');
+  rows.set(replacement.url, new Response('readable route diagram'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement.url)!.text(), 'readable route diagram');
+});
+
 test('updated Studies cannot pair old downloaded speech with corrected teaching; unrelated files survive', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateStudiesMedia\(\) \{([\s\S]*?)\n\}/)?.[1];
