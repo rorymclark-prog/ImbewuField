@@ -24,7 +24,7 @@ file holds the palette, fonts, recurring characters, an **image anchor** (ChatGP
 | Media | Made by | How |
 |---|---|---|
 | **Images** (slide images, cards, poster art, photos) | **Rory, in ChatGPT** | Paste from `courses/build/<course>/prompts-images.md` |
-| **Animations** | **Claude, with Veo** (the model behind Google Flow) | `scripts/courses/generate-media.py` |
+| **Animations** | **Claude in Google Flow**, driven through the Chrome connector in a local session (or the Veo API script) | `prompts-animations.md` / `generate-media.py` |
 | **Infographic posters** (finished, isiZulu + English lettering) | **Rory, in ChatGPT** | Paste from `courses/build/<course>/prompts-posters.md` |
 | **Decks** | the build script | isiZulu + English, per-course theme |
 
@@ -37,7 +37,12 @@ baked in and the exact file name to save it under.
   `public/course-media/farmer-5day/F-P06-ART.jpg`), commit, and run
   `python3 scripts/courses/build.py` — the decks swap the placeholders for your images.
 
-### Animations — Veo (Claude runs it)
+### Animations — Google Flow via Chrome (Claude runs it)
+In a Claude Code session on Rory's computer with the Chrome connector and Flow signed in, Claude
+pastes each block from `prompts-animations.md` into Flow (Text to Video, 16:9), extends multi-shot
+items in Scenebuilder, downloads, strips audio, saves a still and commits. Two test clips first.
+
+Alternative — Veo API, no browser:
 ```bash
 python3 scripts/courses/generate-media.py --course farmer-5day --limit 2   # animations only by default
 python3 scripts/courses/build.py
