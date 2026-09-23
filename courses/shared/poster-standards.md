@@ -57,7 +57,38 @@ practical kit can run every course with no power at all.
 Posters must still read when photocopied in black and white: never rely on colour alone to
 separate two things (use pattern or a label as well).
 
-## Art rules (same as the app's course images)
+## Each course has its own look
+
+The in-app student course uses naturalistic botanical watercolour on cream. **These five courses
+deliberately do not.** Each has its own look, palette and fonts in `<course>/style.md`:
+
+| Course | Look |
+|---|---|
+| farmer-5day | Linocut Garden — 3-ink relief print |
+| mentor-3day | Field Notes — warm 35 mm documentary photo + notebook marks |
+| teach-the-teachers | Chalk & Kraft — marker and chalk sketch-notes |
+| farmer-money | Clay Market — stop-motion claymation miniatures |
+| ai-literacy | Comic Panels — ink, halftone, empty speech bubbles |
+
+The palette table above is the ImbewuField house palette (logos, the top strip); the art and
+fonts come from the course's `style.md`.
+
+## Bilingual posters: isiZulu first, English second
+
+One poster carries both languages (cheaper to print, and every learner can read one of them):
+
+- **Headline:** isiZulu on top at full size; English directly below at ~60% size, in the
+  course's accent colour.
+- **Labels:** isiZulu in bold; English underneath in regular weight, smaller.
+- **Room question:** isiZulu only on the poster; English is on the back card.
+- Word limit becomes ≤ 25 words **per language**. isiZulu runs ~30% longer — size the label
+  band for it, not for English.
+- Other languages (Sesotho, siSwati, Xitsonga, Sepedi, isiXhosa) replace the isiZulu line in a
+  separate print run: `<ID>.st.pdf`, `<ID>.ss.pdf` …
+- Text source: `<course>/i18n/zu.json` (drafts — must be read back by a first-language speaker
+  who farms before printing).
+
+## Art rules (all courses)
 
 1. **Southern hemisphere.** Sun in the **north**, shadows fall **south**. Any compass shows N up.
 2. **No text inside the artwork.** Words are typeset on the layout so they can be translated.

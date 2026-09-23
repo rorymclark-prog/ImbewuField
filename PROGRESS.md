@@ -58,7 +58,7 @@ and a phone, optional slides), a mentor course (in person or online, a visit sch
 the app's finance/invoice mentoring switchable on/off), and Teach the Teachers (posters or PowerPoint,
 inspired by — not copied from — the Morrow-based TTT he sat); then added Farmer Money and AI Literacy.
 All five live in `courses/` (README = the pathway). ~230k words, 351 slides, 90 posters, 412 media items.
-- `courses/shared/`: FORMAT (parsed syntax), poster standards, facilitation toolkit, forms, CODEX-HANDOFF.
+- `courses/shared/`: FORMAT (parsed syntax), poster standards, facilitation toolkit, forms, PRODUCTION-GUIDE.
 - Courses: `farmer-5day/` (93 slides, 21 posters), `mentor-3day/` (61, 16; Visit Hand, visit playbook,
   app-track ON/OFF), `teach-the-teachers/` (86, 22; micro-teaching bank), `farmer-money/` (67, 17;
   printables), `ai-literacy/` (44, 14; prompt cards). Every app session has a `[PAPER]` twin.
@@ -66,7 +66,7 @@ All five live in `courses/` (README = the pathway). ~230k words, 351 slides, 90 
   `courses/media-manifest.json` (Codex's work list: NEW vs REUSE of existing clips). `--check` = 0 problems.
 - Field lessons from the 2022/2023 reports are design rules (groups of 5, no demo-only practicals,
   ≤30% teacher talk, Day 0, registers, max 30 learners).
-- **Next:** Codex makes the NEW art/animations/posters per CODEX-HANDOFF.md and re-runs the build;
+- **Next:** Codex makes the NEW art/animations/posters per PRODUCTION-GUIDE.md and re-runs the build;
   helpline numbers and Rand prices are marked "check locally"; decks not visually previewed here
   (no LibreOffice Impress in the container).
 

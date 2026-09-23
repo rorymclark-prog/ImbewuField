@@ -27,3 +27,4 @@ ui-debug.log
 # `npm run course:review-packet` — a committed copy would drift from the scripts it summarises,
 # and the reviewer's answers belong in the .zu.md source, not in a generated file.
 docs/narration/review/
+scripts/courses/__pycache__/

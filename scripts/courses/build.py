@@ -239,6 +239,33 @@ def still_for(item: dict) -> Path | None:
     return None
 
 
+# ── per-course look (courses/<course>/style.md) ──────────────────────────────────────────────
+
+def _code_after(md: str, heading: str) -> str:
+    m = re.search(r"^##\s+" + re.escape(heading) + r".*?\n```[a-z]*\n(.*?)\n```", md, re.S | re.M)
+    return m.group(1).strip() if m else ""
+
+
+def load_style(course: str) -> dict:
+    """Deck theme + generator anchors for a course. Falls back to the ImbewuField palette."""
+    p = COURSES / course / "style.md"
+    md = p.read_text(encoding="utf-8") if p.exists() else ""
+    theme = {"bg": PAPER, "ink": INK, "accent": OCHRE, "accent2": WATER, "section_bg": FOREST,
+             "section_ink": PAPER, "fallback_head": HEAD_FONT, "fallback_body": BODY_FONT}
+    raw = _code_after(md, "Deck theme")
+    if raw:
+        theme.update(json.loads(raw))
+    title = re.search(r"^# .*?[—-]\s*\"?(.+?)\"?\s*$", md, re.M)
+    return {"theme": theme, "look": title.group(1) if title else "",
+            "image_anchor": _code_after(md, "Image anchor"),
+            "animation_anchor": _code_after(md, "Animation anchor")}
+
+
+def load_i18n(course: str, lang: str) -> dict:
+    p = COURSES / course / "i18n" / f"{lang}.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
 # ── validation ───────────────────────────────────────────────────────────────────────────────
 
 def validate(course_dirs: list[Path], catalog: dict) -> list[str]:
@@ -278,7 +305,7 @@ def validate(course_dirs: list[Path], catalog: dict) -> list[str]:
 
 # ── PowerPoint ───────────────────────────────────────────────────────────────────────────────
 
-def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: bool) -> None:
+def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: bool, lang: str = "en") -> None:
     from pptx import Presentation
     from pptx.dml.color import RGBColor
     from pptx.enum.shapes import MSO_SHAPE
@@ -287,6 +314,15 @@ def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: b
 
     def rgb(h: str) -> RGBColor:
         return RGBColor.from_string(h)
+
+    style = load_style(course)
+    T = style["theme"]
+    # Shadow the house palette with this course's own look (see style.md).
+    PAPER, INK, OCHRE, WATER = T["bg"], T["ink"], T["accent"], T["accent2"]
+    SEC_BG, SEC_INK, HEADC = T["section_bg"], T["section_ink"], T["ink"]
+    CARD, HAIR, LEAF = T.get("card", T["bg"]), T.get("rule", T["accent2"]), T["section_ink"]
+    HEAD_FONT, BODY_FONT = T["fallback_head"], T["fallback_body"]
+    tr = (load_i18n(course, lang).get("slides") or {}) if lang != "en" else {}
 
     prs = Presentation()
     prs.slide_width, prs.slide_height = Emu(12192000), Emu(6858000)  # 16:9, 13.333 × 7.5 in
@@ -357,51 +393,55 @@ def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: b
         text(slide, x + 0.25 * IN, y + 0.2 * IN, w - 0.5 * IN, 0.4 * IN, f"{kind} · {mid} · coming",
              size=12, color=OCHRE, bold=True)
         text(slide, x + 0.25 * IN, y + 0.62 * IN, w - 0.5 * IN, 0.5 * IN, item["title"], size=18,
-             color=FOREST, font=HEAD_FONT, bold=True)
+             color=HEADC, font=HEAD_FONT, bold=True)
         brief = re.sub(r"\s+", " ", item.get("brief") or "")
         if len(brief) > 360:
             brief = brief[:357].rsplit(" ", 1)[0] + "…"
         text(slide, x + 0.25 * IN, y + 1.2 * IN, w - 0.5 * IN, h - 1.4 * IN, brief, size=11, color=INK)
 
     for s in deck.slides:
+        t = tr.get(s.id) or {}
+        title = t.get("title") or s.title
+        screen = t.get("screen") if t.get("screen") and len(t["screen"]) == len(s.screen) else s.screen
         slide = prs.slides.add_slide(blank)
         bg = slide.background.fill
-        bg.solid(); bg.fore_color.rgb = rgb(FOREST if s.type == "section" else PAPER)
+        bg.solid(); bg.fore_color.rgb = rgb(SEC_BG if s.type == "section" else PAPER)
 
         # footer: slide id + poster to switch to
         foot = f"{s.id}" + (f"   ·   Poster {', '.join(s.posters)}" if s.posters else "")
         text(slide, 0.5 * IN, H - 0.45 * IN, 8 * IN, 0.35 * IN, foot, size=10,
-             color=LEAF if s.type == "section" else "6B6255")
+             color=LEAF if s.type == "section" else INK)
         text(slide, W - 4.5 * IN, H - 0.45 * IN, 4 * IN, 0.35 * IN, COURSE_TITLES.get(course, course),
-             size=10, color=LEAF if s.type == "section" else "6B6255", align=PP_ALIGN.RIGHT)
+             size=10, color=LEAF if s.type == "section" else INK, align=PP_ALIGN.RIGHT)
         if s.track == "app":
             b = box(slide, W - 1.6 * IN, 0.3 * IN, 1.1 * IN, 0.4 * IN, fill=WATER, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
             text(slide, W - 1.6 * IN, 0.3 * IN, 1.1 * IN, 0.4 * IN, "APP", size=12, color=PAPER, bold=True,
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
         if s.type == "section":
-            text(slide, 0.9 * IN, 1.6 * IN, 7 * IN, 1.8 * IN, s.title, size=48, color=PAPER, font=HEAD_FONT,
+            text(slide, 0.9 * IN, 1.6 * IN, 7 * IN, 1.8 * IN, title, size=48, color=SEC_INK, font=HEAD_FONT,
                  bold=True, anchor=MSO_ANCHOR.BOTTOM)
             box(slide, 0.9 * IN, 3.55 * IN, 1.6 * IN, 0.08 * IN, fill=OCHRE)
-            text(slide, 0.9 * IN, 3.8 * IN, 6.6 * IN, 2 * IN, s.screen, size=24, color=LEAF)
+            text(slide, 0.9 * IN, 3.8 * IN, 6.6 * IN, 2 * IN, screen, size=24, color=LEAF)
             if s.media:
                 place_media(slide, s.media[0], 8.2 * IN, 1.0 * IN, 4.6 * IN, 5.2 * IN)
         else:
             if s.type == "activity":
                 b = box(slide, 0.5 * IN, 0.35 * IN, 1.9 * IN, 0.45 * IN, fill=OCHRE, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
-                text(slide, 0.5 * IN, 0.35 * IN, 1.9 * IN, 0.45 * IN, "YOUR TURN", size=14, color=PAPER, bold=True,
+                text(slide, 0.5 * IN, 0.35 * IN, 1.9 * IN, 0.45 * IN, ("SEBENZANI" if lang == "zu" else "YOUR TURN"), size=14, color=PAPER, bold=True,
                      align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
                 ty = 0.9 * IN
             else:
                 ty = 0.45 * IN
-            text(slide, 0.5 * IN, ty, 12.3 * IN, 1.1 * IN, s.title, size=38, color=FOREST, font=HEAD_FONT, bold=True)
+            text(slide, 0.5 * IN, ty, 12.3 * IN, 1.1 * IN, title, size=38, color=HEADC, font=HEAD_FONT, bold=True)
             box(slide, 0.5 * IN, ty + 1.15 * IN, 12.3 * IN, Emu(9525), fill=HAIR)
             has_media = bool(s.media)
+            s_screen = screen
             tw = 5.6 * IN if has_media else 12.3 * IN
             size = 30 if s.type == "activity" else 28
-            if has_media and max((len(b) for b in s.screen), default=0) > 30:
+            if has_media and max((len(b) for b in screen), default=0) > 30:
                 size -= 4  # half-width column: keep long bullets to two lines
-            text(slide, 0.5 * IN, ty + 1.45 * IN, tw, H - ty - 2.3 * IN, s.screen, size=size, color=INK,
+            text(slide, 0.5 * IN, ty + 1.45 * IN, tw, H - ty - 2.3 * IN, s_screen, size=size, color=INK,
                  bold=(s.type == "activity"), bullets=True, spacing=16)
             if has_media:
                 place_media(slide, s.media[0], 6.4 * IN, ty + 1.4 * IN, 6.4 * IN, H - ty - 2.1 * IN)
@@ -483,6 +523,68 @@ def build_pack(cdir: Path, out: Path) -> None:
     out.write_text(page, encoding="utf-8")
 
 
+# ── generation prompts (for Gemini/Imagen, Veo, Google Flow, ChatGPT) ────────────────────────
+
+FORMATS = {
+    "image": "Landscape 16:9 composition.",
+    "poster-art": "Portrait 3:4 composition for an A1 teaching poster; keep the top 15% and bottom 20% "
+                  "calm and uncluttered (text is added there later).",
+    "photo": "Landscape 16:9.",
+    "animation": "16:9, 8-second shot, silent.",
+}
+
+
+def attach_prompts(catalog: dict) -> None:
+    styles: dict[str, dict] = {}
+    for it in catalog.values():
+        if it["kind"] == "poster" or it.get("status") != "NEW":
+            continue
+        st = styles.setdefault(it["course"], load_style(it["course"]))
+        anchor = st["animation_anchor"] if it["kind"] == "animation" else st["image_anchor"]
+        fmt = FORMATS.get(it["kind"], "")
+        if it["kind"] == "image" and "card" in (it.get("length") or ""):
+            fmt = "Portrait 2:3 card composition, one subject centred, plain background."
+        brief = re.sub(r"\s+", " ", it.get("brief") or it["title"]).strip()
+        it["prompt"] = f"{anchor}\n\n{fmt}\n\nSubject: {brief}".strip()
+        if it["kind"] == "animation":
+            secs = re.search(r"(\d+)\s*s", it.get("length") or "")
+            n = max(1, -(-int(secs.group(1)) // 8)) if secs else 1
+            it["shots"] = n
+
+
+def attach_translations(catalog: dict, course_dirs: list[Path]) -> None:
+    for cdir in course_dirs:
+        zu = load_i18n(cdir.name, "zu").get("posters") or {}
+        for pid, text in zu.items():
+            if pid in catalog:
+                catalog[pid]["zu"] = text
+
+
+def write_prompt_packs(course: str, catalog: dict, out_dir: Path) -> None:
+    st = load_style(course)
+    items = [it for it in catalog.values() if it["course"] == course and it.get("prompt")]
+    imgs = [it for it in items if it["kind"] != "animation"]
+    anis = [it for it in items if it["kind"] == "animation"]
+    head = (f"# {COURSE_TITLES.get(course, course)} — %s prompts ({st['look']})\n\n"
+            "Generated by scripts/courses/build.py. Paste each block as-is. Save the result at the path shown, "
+            "then re-run the build — the decks pick it up.\n\n")
+    lines = [head % "image"]
+    lines.append("Tips for ChatGPT / Gemini: keep one chat per course so the look stays consistent; generate the "
+                 "character sheet first and attach it as a reference to later prompts.\n\n")
+    for it in sorted(imgs, key=lambda i: i["id"]):
+        lines.append(f"## {it['id']} · {it['title']}\nSave as: `{it['target']}`  ·  used in: {', '.join(it['used_in'])}\n\n```\n{it['prompt']}\n```\n\n")
+    (out_dir / "prompts-images.md").write_text("".join(lines), encoding="utf-8")
+    lines = [head % "animation"]
+    lines.append("Google Flow makes ~8-second shots. Items marked with more than one shot: make shot 1 from the "
+                 "prompt, then use Scenebuilder → Extend (or Frames to Video from the last frame) for the rest, "
+                 "describing the next step of the Subject. Export MP4 720p, mute the audio track, and save a "
+                 "still frame as .jpg with the same name.\n\n")
+    for it in sorted(anis, key=lambda i: i["id"]):
+        lines.append(f"## {it['id']} · {it['title']}\nSave as: `{it['target']}` (+ `.jpg` still)  ·  shots: {it.get('shots', 1)}  ·  "
+                     f"length: {it.get('length', '')}\n\n```\n{it['prompt']}\n```\n\n")
+    (out_dir / "prompts-animations.md").write_text("".join(lines), encoding="utf-8")
+
+
 # ── main ─────────────────────────────────────────────────────────────────────────────────────
 
 def main() -> int:
@@ -499,6 +601,8 @@ def main() -> int:
         return 2
 
     catalog = build_catalog(all_dirs)
+    attach_prompts(catalog)
+    attach_translations(catalog, all_dirs)
     problems = validate(wanted, catalog)
     for p in problems:
         print("WARN", p)
@@ -508,19 +612,23 @@ def main() -> int:
 
     manifest = {
         "about": "Generated by scripts/courses/build.py from courses/*/media.md and posters.md. Do not edit by hand.",
-        "rules": "courses/shared/poster-standards.md (Art rules) and courses/shared/CODEX-HANDOFF.md",
+        "rules": "courses/shared/poster-standards.md (Art rules) and courses/shared/PRODUCTION-GUIDE.md",
         "items": sorted(catalog.values(), key=lambda it: (it["course"], it["kind"], it["id"])),
     }
     (COURSES / "media-manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     for cdir in wanted:
         decks = parse_slides(cdir / "slides.md")
+        langs = ["en"] + [l for l in ("zu",) if (cdir / "i18n" / f"{l}.json").exists()]
         for d in decks:
-            build_deck(cdir.name, d, catalog, BUILD / cdir.name / f"{d.id}.pptx", args.embed_video)
+            for lang in langs:
+                name = f"{d.id}.pptx" if lang == "en" else f"{d.id}.{lang}.pptx"
+                build_deck(cdir.name, d, catalog, BUILD / cdir.name / name, args.embed_video, lang)
+        write_prompt_packs(cdir.name, catalog, BUILD / cdir.name)
         build_pack(cdir, BUILD / cdir.name / f"{cdir.name}-phone-pack.html")
         n_new = sum(1 for it in catalog.values() if it["course"] == cdir.name and it["status"] == "NEW" and it["kind"] != "poster")
         n_reuse = sum(1 for it in catalog.values() if it["course"] == cdir.name and it["status"] == "REUSE")
-        print(f"{cdir.name}: {len(decks)} decks, {sum(len(d.slides) for d in decks)} slides; media NEW {n_new} / REUSE {n_reuse}")
+        print(f"{cdir.name} [{'+'.join(langs)}]: {len(decks)} decks, {sum(len(d.slides) for d in decks)} slides; media NEW {n_new} / REUSE {n_reuse}")
     print(f"manifest: {len(catalog)} items → courses/media-manifest.json")
     return 0
 

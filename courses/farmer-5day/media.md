@@ -1,7 +1,7 @@
 # Course 1 media — Grow Food, Grow Strong
 
 Every image, animation and card the slides, posters and day files use. `REUSE` items already exist
-in the repo; `NEW` items are for Codex (see `../shared/CODEX-HANDOFF.md`). House rules for all art:
+in the repo; `NEW` items are to be generated (see `../shared/PRODUCTION-GUIDE.md`). House rules for all art:
 `../shared/poster-standards.md` §Art rules (southern hemisphere, no text in art, generic plants,
 people who look like the learners, flat warm illustration, palette).
 

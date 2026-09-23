@@ -62,7 +62,7 @@ courses/
     poster-standards.md      print sizes, layout grid, typography, colours, art rules, translation
     facilitation-toolkit.md  circles, energisers, attention signals, groups of 5, debriefs, feedback
     forms.md                 register, POPIA consent, skills checklists, evaluation, certificates
-    CODEX-HANDOFF.md         what Codex builds (images, animations, poster layouts), where files go
+    PRODUCTION-GUIDE.md      how to make the media: Gemini/Veo script, Flow + ChatGPT packs, Canva; bilingual posters
   farmer-5day/               Course 1
   mentor-3day/               Course 2
   teach-the-teachers/        Course 3
