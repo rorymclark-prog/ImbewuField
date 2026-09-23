@@ -94,13 +94,48 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [view, setView] = useState<'read' | 'slide'>('slide');
+  const [zoom, setZoom] = useState(1);
+  const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const playerRef = useRef<HTMLDialogElement | null>(null);
+  const slideViewportRef = useRef<HTMLDivElement | null>(null);
+  const readingRef = useRef<HTMLDivElement | null>(null);
   const expandButtonRef = useRef<HTMLButtonElement | null>(null);
   const exitButtonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
+  const current = slides[index];
+  const total = slides.length;
+  const transcript = current && spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
+
+  useEffect(() => {
+    setZoom(1);
+    if (readingRef.current) readingRef.current.scrollTop = 0;
+    if (slideViewportRef.current) {
+      slideViewportRef.current.scrollTop = 0;
+      slideViewportRef.current.scrollLeft = 0;
+    }
+  }, [index]);
+
+  useEffect(() => {
+    if (!transcript && view === 'read') setView('slide');
+  }, [transcript, view]);
+
+  useEffect(() => {
+    if (!expanded || view !== 'slide' || !slideViewportRef.current) return;
+    const viewport = slideViewportRef.current;
+    const measure = () => {
+      const { width, height } = viewport.getBoundingClientRect();
+      setViewportSize((previous) => previous.width === width && previous.height === height
+        ? previous : { width, height });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [expanded, view]);
 
   const exitExpanded = useCallback(() => {
     const dialog = playerRef.current;
@@ -117,6 +152,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     else {
       dialog.close();
       dialog.showModal();
+      // The slide artwork is a fixed 16:9 image with type baked into it. On a phone the
+      // narration text is readable at normal size; the picture remains one tap away.
+      setView(transcript && window.matchMedia?.('(max-width: 1024px)').matches ? 'read' : 'slide');
+      setZoom(1);
       setExpanded(true);
     }
   };
@@ -134,8 +173,6 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     };
   }, [expanded]);
 
-  const current = slides[index];
-  const total = slides.length;
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
   const timedTour = !!current && !!animationUrls(moduleId, current.slide, lang)?.narrationTimed;
@@ -285,6 +322,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const onTouchEnd = (e: React.TouchEvent) => {
     const s = touchStart.current;
     if (!s) return;
+    if (expanded && zoom > 1) { touchStart.current = null; return; }
     const dx = e.changedTouches[0].clientX - s.x;
     const dy = e.changedTouches[0].clientY - s.y;
     if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
@@ -299,7 +337,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
-  const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
+  const slideRatio = anim?.aspectRatio ?? 16 / 9;
+  const fittedWidth = expanded && viewportSize.width && viewportSize.height
+    ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
 
   return (
     <dialog
@@ -355,14 +395,38 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
-      {expanded && <p className={styles.rotateHint}>Turn your phone sideways for a larger slide.</p>}
+      {expanded && transcript && (
+        <div className={styles.viewSwitch} role="group" aria-label="Choose how to view this slide">
+          <button type="button" aria-pressed={view === 'read'} onClick={() => setView('read')}>Read text</button>
+          <button type="button" aria-pressed={view === 'slide'} onClick={() => setView('slide')}>See slide</button>
+        </div>
+      )}
+
+      {expanded && view === 'read' && transcript && (
+        <div ref={readingRef} className={styles.readingPanel} lang={spokenLang!.lang}>
+          <p className={styles.readingLabel}>Slide narration · {langName(spokenLang!.lang)}</p>
+          {transcript.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+        </div>
+      )}
+
+      {expanded && view === 'slide' && (
+        <div className={styles.zoomBar} role="group" aria-label="Slide image size">
+          <span>Slide image</span>
+          <button type="button" aria-label="Zoom out" disabled={zoom === 1} onClick={() => setZoom((value) => Math.max(1, value - 1))}>−</button>
+          <span aria-live="polite">{zoom}×</span>
+          <button type="button" aria-label="Zoom in" disabled={zoom === 3} onClick={() => setZoom((value) => Math.min(3, value + 1))}>+</button>
+          {zoom > 1 && <span className={styles.panHint}>Drag to move around</span>}
+        </div>
+      )}
 
       <div
-        className={styles.slideStage}
+        ref={slideViewportRef}
+        className={`${styles.slideStage} ${expanded && view === 'read' ? styles.stageHidden : ''}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#1B1710', aspectRatio: anim?.aspectRatio ?? '16 / 9' }}
+        style={{ position: 'relative', borderRadius: 10, overflow: expanded ? 'auto' : 'hidden', background: '#1B1710', aspectRatio: expanded ? undefined : slideRatio }}
       >
+        <div className={styles.slideCanvas} style={{ position: 'relative', width: expanded && fittedWidth ? `${Math.round(fittedWidth * zoom)}px` : '100%', aspectRatio: slideRatio }}>
         {isPlaying && anim && !animationFailed ? (
           <video
             ref={videoRef}
@@ -412,6 +476,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             <span style={{ fontSize: 12.5, fontWeight: 700 }}>Watch · {Number(anim.seconds.toFixed(1))}s · {formatBytes(anim.bytes)}</span>
           </button>
         )}
+        </div>
       </div>
 
       {audio && (
@@ -500,7 +565,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       </div>
 
       {transcript && (
-        <details style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
+        <details className={styles.transcript} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
             Read this slide · {langName(spokenLang!.lang)}
           </summary>

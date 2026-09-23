@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '1d184155', changes: [
+    'Read lesson slides in large text on your phone. Switch to the picture and zoom in.',
+  ], tour: [
+    { title: 'Read a lesson slide', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen. Read text opens first on a phone. Tap See slide to view the picture and use + to enlarge it.' },
+  ] },
   { when: '23 September 2026', sha: 'd7f2299a', changes: [
     'Choose from three courses at the top of My Studies; app guides now fold away.',
     'Open lesson slides full screen and turn your phone sideways for a larger view.',
