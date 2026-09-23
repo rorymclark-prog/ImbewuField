@@ -506,3 +506,49 @@ test('the Soil L3 comparison still migration clears only its old English slide 1
   assert.equal(await rows.get('/course-decks/soil-health/en/slide-14.jpg')!.text(), 'new chosen still');
   assert.equal(deleteCalls, old.length, 'the migration marker must protect a newly downloaded still on later deploys');
 });
+
+test('the Vegetables L2 still migration clears only English slides 9 and 11, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesL2ReadableStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'the L2 still migration must run before the new worker claims clients');
+  assert.match(source, /then\(migrateVegetablesL2ReadableStills\)\.then/);
+  const marker = '/course-decks/vegetables-staples/en/.l2-readable-stills-20260923';
+  const replaced = [
+    '/course-decks/vegetables-staples/en/slide-09.jpg',
+    '/course-decks/vegetables-staples/en/slide-09.jpg?revision=old',
+    '/course-decks/vegetables-staples/en/slide-11.jpg',
+    '/course-decks/vegetables-staples/en/slide-11.jpg?revision=old',
+  ];
+  const kept = [
+    '/course-decks/vegetables-staples/en/slide-08.jpg',
+    '/course-decks/vegetables-staples/en/slide-10.jpg',
+    '/course-decks/vegetables-staples/en/slide-12.jpg',
+    '/course-decks/vegetables-staples/zu/slide-09.jpg',
+    '/course-audio/vegetables-staples/en/slide-09.mp3',
+    '/course-audio/vegetables-staples/en/slide-11.mp3',
+  ];
+  const rows = new Map<string, Response>([...replaced, ...kept].map(path => [path, new Response(path)]));
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return fakeCache; } };
+  await run(caches, COURSE_CACHE, Response);
+  for (const path of replaced) assert.equal(rows.has(path), false, `${path} must be cleared for an optional learner-chosen replacement`);
+  for (const path of kept) assert.equal(rows.has(path), true, `${path} must remain saved offline`);
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, replaced.length);
+
+  rows.set('/course-decks/vegetables-staples/en/slide-09.jpg', new Response('new chosen slide 9'));
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(await rows.get('/course-decks/vegetables-staples/en/slide-09.jpg')!.text(), 'new chosen slide 9');
+  assert.equal(deleteCalls, replaced.length, 'the marker must leave a later chosen download intact');
+});

@@ -1,16 +1,37 @@
 # Vegetables and Staple Crops lesson 2 — Succession Planting and Intercropping
 
-**Checkpoint:** 22 September 2026, deployed English sample build `0f505fe`.
-This lesson is module slides 8–11, four narrated stills; it has no registered
-Watch movie. The existing media was inspected at full size and in the 390px
-deployed learner player. The lesson played in order to slide 4, “Plan Backwards
-From Your Hungry Gap”, with “Play lesson” restored and Next disabled. English
-audio on the observed slides reached `readyState=4` without a media error.
-Slide 10's maize/bean/pumpkin image communicates the relationship but is not
-evidence of a particular local spacing, timing, survival or harvest. The text
-on slides 9/11 is small in the phone deck; the narration, transcript and
-existing full-size image link are the accessible reading routes. No new movie
-is warranted by a concrete media failure in this English lesson.
+**Checkpoint:** 22 September 2026, deployed English sample build `0f505fe`;
+updated 23 September 2026 for two still-only clarity replacements. This lesson
+is module slides 8–11, four narrated stills; it has no registered Watch movie.
+The original media was inspected at full size and in the 390px deployed learner
+player. The lesson played in order to slide 4, “Plan Backwards From Your Hungry
+Gap”, with “Play lesson” restored and Next disabled. English audio on observed
+slides reached `readyState=4` without a media error. The new slide 9 and 11 stills
+reflow only their existing visible sentences into larger type; slides 8 and 10
+are unchanged. The new stills were inspected at full size and at a proportional
+269 × 151 render. That is a local image-fit check, not a deployed player or
+physical-phone recheck. Slide 10's maize/bean/pumpkin image communicates the
+relationship but is not evidence of a particular local spacing, timing, survival
+or harvest. No new movie is warranted by a concrete media failure in this
+English lesson.
+
+## Static readability replacements — 23 September 2026
+
+Slides 9 and 11 were the only stills with teaching text too small to read at the
+269px fit. The two replacements preserve the exact title and visible statement
+wording from each previous still, in the same order. No body, quiz, narration,
+audio, crop/species name, interval, claim or lesson meaning changed. The
+deterministic renderer is
+[`render-vegetables-l2-readable-stills.py`](render-vegetables-l2-readable-stills.py).
+It writes only the two English JPEGs. Slide 9 is 1920 × 1080, 244,029 bytes,
+SHA-256 `bcae1eaba6e1b198d1f4e15a51c9b15914afe7d72104993a761ca155671232e7`;
+slide 11 is 1920 × 1080, 261,180 bytes, SHA-256
+`b2bb6092e21bb29c5d91bf817240181efed1301059b3465a2aacfc0c9dee4601`. The
+offline size manifest was regenerated. A one-time worker migration clears only
+the previous English slide 9 and 11 stills, including query variants, while
+preserving all other saved lesson media; learners choose when to download the
+replacements. No post-deploy or offline-pack check has yet been made against
+these new files.
 
 The English body and two quizzes retain the safeguards that a sequence of
 sowings **may** reduce risk but cannot guarantee a harvest, that the first

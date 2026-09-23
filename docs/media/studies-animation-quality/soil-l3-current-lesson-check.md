@@ -90,6 +90,14 @@ byte-size manifest was regenerated. A one-time worker migration removes only
 the saved English slide-14 still, including query variants, and preserves other
 downloaded lesson files; the learner chooses when to fetch its replacement.
 
+Exact-head `test` and `rules` passed for `860b4c62`, and preview run
+`35816126882` passed. `/api/build-info` reported `860b4c6`; the deployed
+slide-14 JPEG returned the same SHA-256 as the local candidate and opened in
+a real browser. Its 269 × 151 fit was inspected from those exact bytes. A
+fresh browser redirected `/student` to `/login`, so this release has not had
+a post-deploy authenticated learner-player or offline-pack check. The earlier
+23.0 MB offline observation above applies only to the former still.
+
 ## Teaching and source limits
 
 [USDA NRCS soil-armor guidance](https://www.nrcs.usda.gov/state-offices/north-dakota/soil-health-principle-1-of-4-soil-armor)

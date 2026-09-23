@@ -100,21 +100,22 @@ commit. This preserves the shared deployment budget while keeping each review
 concrete. Do not bump `PLAN_VERSION`. Keep secrets, logs and local browser
 artifacts out of commits.
 
-## Prioritized next five actions
+## First five priorities and current outcomes
 
-These are supervised next actions, not approvals. The first three are static
-improvements; Food Forest L3 slide 17 is already assigned separately and must
-not be duplicated. Soil L3 is an investigation, not an automatic Flow order.
-The separate September x1 attempt ledger records nine prompts / 900 displayed
-credits; this is historical spend, **not** an account balance or authorization
-for more prompts.
+These were the first supervised priorities. Food Forest L3 slide 17 and Soil L3
+slide 14 have since received static replacements on the preview. The Vegetables
+and Introduction static concepts were held outside the player after phone/source
+review. The separate September x1 attempt ledger now records **10 prompts /
+1,000 displayed credits: 7 held or rejected, 3 technically registered**.
+After the latest 100-credit Food Forest attempt, Google One showed Flow 0 and
+AI 3,680; this is a point-in-time balance, not a reason to order another clip.
 
 | Priority | Lesson / exact gap | Next action | Cost and gate |
 | ---: | --- | --- | --- |
-| 1 | **Food Forest Design L3**, slide 17: bullets are small at phone fit; slide 15's old Watch title has no current movie. | Large-label static improvement for slide 17 is already assigned separately; coordinate with that owner and do not start duplicate edits. Preserve existing teaching and coordinate the separate quiz source hold. | 0 Flow; separately assigned. No protected quiz correction without authorization. |
-| 2 | **Vegetables L4**, slide 16: the current still shows possible pest responses but not the order in the protected English narration. | Create a readable static sequence at the existing 269px fit using only the already taught order and safeguards. Keep the withdrawn code-drawn animation out of the player. | 0 Flow. Preserve exact teaching claims; show the static candidate in the lesson review before release. |
-| 3 | **Introduction to Permaculture L3**, slide 19: the windbreak still's embedded captions are tiny at phone width. | Make a large-label static layout from the existing slide content, keeping its hypothetical example and site-observation boundary clear. Keep the held code-drawn animation out. | 0 Flow. The lesson has separate source holds; do not add unsupported regional wind/rain directions or edit protected copy. |
-| 4 | **Soil Health & Composting L3**, slide 14: current still is small at phone fit; prior rain comparisons, including the latest x1 shot, did not show a readable equal-rain impact contrast and the latest pooled water. | Flow lane investigates existing projects/reference material and whether one physically coherent, phone-legible impact contrast is achievable. Prepare one x1 prompt only if the gap remains concrete and a still cannot teach it; show the single output to Rory before registration. | 100 displayed credits per documented x1 prompt in the current attempt ledger; root supervises any spend. No prompt or reroll is pre-approved by this plan. |
+| 1 | **Food Forest Design L3**, slide 17: final caution was clipped. | Static three-card replacement deployed at `d9aa951f`; direct JPEG and 269px fit checked. Protected quiz source hold and post-deploy authenticated/offline recheck remain. | 0 Flow. Slide 15's separate grass-removal Flow x1 was held for an inaccurate large-clod action. |
+| 2 | **Vegetables L4**, slide 16: current still lacks the decision order. | A source-safe static candidate was made, but its critical detail was too small at 269px; public still remains. A larger treatment would need coordinated lesson layout and safeguards. | 0 Flow. Do not use the rejected code-drawn movie or omit label/harvest safety text. |
+| 3 | **Introduction to Permaculture L3**, slide 19: captions are tiny at phone width. | A 16:9 large-label example candidate is saved under `docs/`; it remains unregistered until the adjacent regional wind/rain source holds are resolved with protected teaching. | 0 Flow. Do not turn the north-west example into a general site direction. |
+| 4 | **Soil Health & Composting L3**, slide 14: rain-impact labels were small; prior Flow shots pooled water. | Static large-label equal-rain comparison deployed at `860b4c62`. Direct JPEG/phone fit checked; authenticated player and offline-pack recheck remain. | 0 new Flow for this release. Prior rain clips remain held. |
 | 5 | **Plant Selection & Guilds L1**, slide 23: labelled clip's text is small in the ordinary video frame; the full-size poster and narration carry detail. | Run the learner legibility check for the existing poster-zoom path before considering any static replacement. | 0 Flow. Retain the current clip absent a concrete learner failure. |
 
 ### Separate source holds — not Flow-lane candidates yet

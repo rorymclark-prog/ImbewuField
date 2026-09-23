@@ -1,5 +1,30 @@
 # Active Studies continuation — 22 September 2026
 
+## Vegetables and Staples L2 still clarity (23 September)
+
+Slides 9 and 11 now reflow their existing English titles and statements into
+larger static type; slides 8 and 10, the lesson body, quizzes and narration are
+unchanged. Both replacement JPEGs were inspected at full size and the player's
+269px image width. A one-time cache marker removes only the former English
+slide-9/11 stills. The [L2 check](../media/studies-animation-quality/vegetables-l2-lesson-check.md)
+records hashes and the local phone-fit limit. Full local typecheck, tests and
+whitespace checks passed; exact-head CI, preview player and offline pack
+verification are pending the batch push. No Flow credits, SVG/code motion,
+isiZulu edits or Farm Finance work were used.
+
+## Soil Health L3 static comparison release (23 September)
+
+Slide 14 now has a large-label static bare-soil/loose-mulch comparison with
+equal sparse rain and only a small bare-surface splash. It adds no runoff,
+infiltration or universal erosion claim. Exact-head `test` and `rules` passed
+for `860b4c62`; preview run 35816126882 passed, `/api/build-info` reported
+`860b4c6`, and the deployed JPEG matched the inspected 1920 × 1080 asset.
+The old cached slide-14 JPEG is selectively invalidated. A fresh browser
+redirected `/student` to `/login`, so post-deploy learner-player and offline
+pack checks remain open. [Current L3 check](../media/studies-animation-quality/soil-l3-current-lesson-check.md).
+The held Flow rain attempts remain outside the player; no new video, Flow
+credit, protected teaching, isiZulu or Finance work was used in this release.
+
 ## Food Forest Design L3 slide-17 still (23 September)
 
 The final bullet on slide 17 was clipped even in the full-size still. A
