@@ -28,6 +28,19 @@ This is a browser/cache check, not evidence from a physical phone. Unrelated
 unsaved assets and update checks generated offline network errors without
 blocking the saved lesson.
 
+**Current saved-pack recheck, 23 September:** In the deployed `/samples` → Open
+Student route at 390 × 844, the Small Livestock pack saved all 49 files and
+reported **On this phone · 23.7 MB**. After a network-disabled browser reload,
+the Offline badge appeared and the saved pack still reported On this phone.
+L1 slide 4's registered hen video reached ready state 4, played beyond four
+seconds of its eight-second duration and showed foraging hens at phone width.
+An independent check also played the slide-7 duck clip and its English MP3
+offline at the same viewport; both advanced with no media errors. The slide-4
+English MP3 loaded and advanced in that check. Browser network and viewport
+settings were restored. This establishes current sample-browser playback for
+both registered L1 clips; it is not physical-phone, learner, poultry-practitioner
+or Rory visual approval.
+
 The lesson's care warning is supported by [University of Maryland Extension's
 flock guide](https://extension.umd.edu/resource/raising-your-home-chicken-flock),
 which requires balanced feed, water and daily care. [University of Minnesota

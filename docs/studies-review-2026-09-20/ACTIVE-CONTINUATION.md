@@ -1,5 +1,22 @@
 # Active Studies continuation — 22 September 2026
 
+## Food Forest L3 and Small Livestock L1 offline rechecks (23 September)
+
+The deployed 390px `/samples` Student player showed Food Forest L3 slide 17
+as 4/5 with the reflowed still and English MP3. Its 17.4 MB / 45-file pack
+reported On this phone; after a network-disabled reload, the 1920px still
+loaded and narration advanced beyond five seconds. The three cards are not
+clipped, though their long text remains small in the phone-width image; the
+full-size link and expandable lesson text remain available. [Food Forest L3
+check](../media/studies-animation-quality/food-forest-l3-current-lesson-check.md).
+
+The Small Livestock pack saved all 49 files (23.7 MB). After an offline
+browser reload, the sample player reopened L1 and its registered hen and duck
+clips and English narration played without media errors at 390px. [Small
+Livestock L1 check](../media/studies-animation-quality/small-livestock-l1-lesson-check.md).
+These are sample-browser checks, not account, physical-phone, learner,
+practitioner or Rory approval. No Flow credit or teaching content changed.
+
 ## Vegetables and Staples L4 static decision still (23 September)
 
 The English slide-16 still now presents the existing four-step pest-response
@@ -42,9 +59,12 @@ equal sparse rain and only a small bare-surface splash. It adds no runoff,
 infiltration or universal erosion claim. Exact-head `test` and `rules` passed
 for `860b4c62`; preview run 35816126882 passed, `/api/build-info` reported
 `860b4c6`, and the deployed JPEG matched the inspected 1920 × 1080 asset.
-The old cached slide-14 JPEG is selectively invalidated. A fresh browser
-redirected `/student` to `/login`, so post-deploy learner-player and offline
-pack checks remain open. [Current L3 check](../media/studies-animation-quality/soil-l3-current-lesson-check.md).
+The old cached slide-14 JPEG is selectively invalidated. In the deployed
+390px sample Student player, the revised 1920px still loaded. The Soil pack
+reported On this phone · 23.1 MB; after a network-disabled browser reload,
+slide 14 loaded again and its English MP3 advanced beyond four seconds with
+no media error. Authenticated-account and physical-phone checks remain open.
+[Current L3 check](../media/studies-animation-quality/soil-l3-current-lesson-check.md).
 The held Flow rain attempts remain outside the player; no new video, Flow
 credit, protected teaching, isiZulu or Finance work was used in this release.
 
@@ -56,9 +76,8 @@ local-suitability and no-fixed-year cautions, wholly inside three larger
 cards. Full-size and 269px fits were inspected. Exact-head `test` and `rules`
 passed for `d9aa951f`, preview run 35813885562 passed, `/api/build-info`
 reported `d9aa951`, and the deployed JPEG matched the local SHA-256. A
-one-time cache marker removes only saved slide-17 JPEGs. A fresh browser
-redirected `/student` to `/login`, so the current learner player and offline
-pack have not been rechecked after this release. The
+one-time cache marker removes only saved slide-17 JPEGs. The later sample
+player and saved-pack/offline recheck is recorded above. The
 [L3 check](../media/studies-animation-quality/food-forest-l3-current-lesson-check.md)
 records that limit. No Flow credit, SVG/code-drawn animation, protected
 teaching or Farm Finance work changed.

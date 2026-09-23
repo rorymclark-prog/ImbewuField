@@ -54,6 +54,20 @@ other stills/audio. A fresh unauthenticated browser was redirected from
 the exact deployed bytes, but physical-phone and learner readability remain
 unverified.
 
+**Post-release sample-player check, 23 September:** The deployed `/samples` →
+Open Student route entered the sample learning workspace without an account.
+At 390 × 844, L3 slide 17 appeared as slide 4/5, “Adjust as the Trees Grow.”
+Its 1920px still loaded with all three cards within the image; the screenshot
+also shows that the long text remains small at the 269px image fit, with the
+full-size link, English MP3 and expandable lesson text available. The MP3
+advanced beyond five seconds of 25.13 without a media error. The Food Forest
+pack saved all 45 files and reported **On this phone · 17.4 MB**. With network
+disabled, `/student` reloaded under the Offline badge; slide 17 again loaded
+at 1920px and its MP3 advanced from 0.24 to 5.29 seconds with ready state 4
+and no error. Network and viewport settings were restored. This closes the
+sample-browser offline technical check, not authenticated-account, physical-
+phone, learner-readability, human or practitioner review.
+
 The previous [`food-forest-l3-lesson-check.md`](food-forest-l3-lesson-check.md)
 describes a 13-second authored composite and a 34.6 MB pack from an earlier
 player state. Its top warning now marks that account as historical. The

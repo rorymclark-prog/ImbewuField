@@ -94,9 +94,16 @@ Exact-head `test` and `rules` passed for `860b4c62`, and preview run
 `35816126882` passed. `/api/build-info` reported `860b4c6`; the deployed
 slide-14 JPEG returned the same SHA-256 as the local candidate and opened in
 a real browser. Its 269 × 151 fit was inspected from those exact bytes. A
-fresh browser redirected `/student` to `/login`, so this release has not had
-a post-deploy authenticated learner-player or offline-pack check. The earlier
-23.0 MB offline observation above applies only to the former still.
+fresh browser redirected `/student` to `/login`; the subsequent sample Student
+route provided a post-deploy technical player check. At 390 × 844, lesson L3
+opened slide 14 as the first of five lesson slides. The revised still completed
+loading at its 1920px source width, and the English MP3 had ready state 4.
+The Soil pack reported **On this phone · 23.1 MB**. With the browser network
+disabled, `/student` reloaded with the Offline badge; L3 slide 14 again loaded
+at 1920px, and its English narration advanced from 0 to 4.57 seconds of 8.45
+without a media error. Network and viewport settings were restored. This is a
+sample-browser check, not an authenticated-account, physical-phone, learner
+readability, listening or practitioner review.
 
 ## Teaching and source limits
 
