@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  BIOMES, classifyBiome, biomeFromSanbi, resolveBiome, kmFromEastCoast,
+  BIOMES, classifyBiome, biomeFromSanbi, resolveBiome, resolveBiomeFromMonthlyClimate, kmFromEastCoast,
 } from '../lib/biome.ts';
 
 // HOW DO YOU KNOW IT IS RIGHT ONCE IT IS SENT OUT.
@@ -42,7 +42,7 @@ interface Site {
   lon: number;
   /** Mean annual precipitation, mm. */
   rain: number;
-  /** Mean temperature of the coldest month, °C — what NASA POWER's minTemp feeds in. */
+  /** Mean temperature of the coldest month, °C — from NASA POWER's monthlyTemp, not minTemp. */
   coldest: number;
   monthly: (annual: number) => number[];
   expect: string; // BIOMES key
@@ -107,6 +107,34 @@ test('the climate fallback places every known site in the right biome', () => {
     }
   }
   assert.deepEqual(wrong, [], `\n  ${wrong.join('\n  ')}\n`);
+});
+
+test('Ubhejane uses its coldest monthly mean, so a daily minimum does not turn it into Grassland', () => {
+  // The live location response on 23 Sep had monthly means bottoming at 16.75°C while minTemp
+  // was 5.4°C. Feeding that daily minimum to classifyBiome offered plum and olive on a
+  // subtropical site even though the response itself called its climate humid subtropical.
+  const monthlyTemp = [24.71, 24.73, 23.84, 21.45, 19.37, 17.21, 16.75, 18.46, 20.62, 21.73, 22.88, 24.25];
+  const monthlyRain = [128.7, 100.2, 84.6, 48.6, 18, 14.4, 15.5, 18.6, 38.7, 69.8, 111.9, 119];
+  const result = resolveBiomeFromMonthlyClimate({
+    lat: -27.7262, lon: 31.9632, annualRainfall: 768,
+    monthlyRain, monthlyTemp,
+  });
+  assert.equal(result.biome, BIOMES.SAVANNA);
+  assert.equal(result.source, 'estimated');
+  assert.equal(classifyBiome(-27.7262, 31.9632, 768, 5.4, monthlyRain), BIOMES.GRASSLAND,
+    'guard: the old daily-minimum input must distinguish this case');
+});
+
+test('a missing monthly climate cannot turn fallback constants into a tree recommendation', () => {
+  const result = resolveBiomeFromMonthlyClimate({
+    lat: -27.7262, lon: 31.9632, annualRainfall: 600,
+    monthlyRain: summer(600), monthlyTemp: [],
+  });
+  assert.equal(result.source, 'unavailable');
+  assert.equal(result.biome, BIOMES.UNCLASSIFIED);
+  assert.equal(resolveBiomeFromMonthlyClimate({
+    lat: -27.7262, lon: 31.9632, monthlyTemp: [], sanbiBiome: 'Savanna',
+  }).source, 'sanbi', 'a mapped vegetation polygon still decides the biome without climate normals');
 });
 
 test('SANBI outranks the heuristic wherever it answers', () => {

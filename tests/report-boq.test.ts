@@ -84,6 +84,26 @@ test('existing items are excluded from the bill and counted separately', () => {
   assert.equal(boq.existingCount, 2);
 });
 
+test('a saved listed plant is counted without becoming a purchase in the site report', () => {
+  const facts: ReportSiteFacts = {
+    ...FACTS,
+    design: {
+      ...FACTS.design!,
+      elements: [
+        { name: 'Renamed orchard tree', category: 'growing', count: 2, status: 'proposed', defId: 'tree_guava' },
+        { name: 'Purple granadilla', category: 'growing', count: 1, status: 'proposed', defId: 'tree_other' },
+      ],
+    },
+  };
+  const boq = buildBillOfQuantities(facts);
+  assert.equal(boq.lines.filter((line) => line.unpriced === 'listed-plant').length, 2);
+  assert.equal(boq.lines.filter((line) => line.unpriced === 'listed-plant').reduce((sum, line) => sum + Number.parseInt(line.quantity, 10), 0), 3);
+  assert.equal(boq.lines.filter((line) => line.unpriced === 'listed-plant').every((line) => line.zar === null), true);
+  const markdown = billOfQuantitiesMarkdown(boq);
+  assert.doesNotMatch(markdown, /guava|granadilla/i);
+  assert.match(markdown, /do not buy or propagate/i);
+});
+
 test('the subtotal sums only the priced lines', () => {
   const boq = buildBillOfQuantities(FACTS);
   const manual = boq.lines.reduce((sum, l) => sum + (l.zar ?? 0), 0);

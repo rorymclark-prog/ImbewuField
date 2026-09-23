@@ -156,6 +156,24 @@ test('NASA daily climatology is multiplied by each month length before annual su
     result.rainfall.monthly.reduce((sum, mm) => sum + mm, 0),
   );
   assert.equal(result.rainfall.rainfallSource, 'nasa-power');
+  assert.equal(result.climate.minTempSource, 'nasa-power');
+});
+
+test('a missing monthly minimum cannot be stamped as evidence that a site is warm', async () => {
+  const incomplete = monthValues(-1.9);
+  delete incomplete.JUL;
+  let calls = 0;
+  const result = await withFetch(
+    (async () => {
+      calls += 1;
+      return calls === 1
+        ? response(nasaPayload({ T2M_MIN: incomplete }))
+        : response({}, false, 503);
+    }) as typeof fetch,
+    () => fetchNasaPower(-23.9, 29.45),
+  );
+  assert.equal(result.climate.minTempSource, undefined,
+    'the fallback numeric minimum must never count as a complete frost reading');
 });
 
 test('both climate requests carry bounded abort signals', async () => {
