@@ -1,5 +1,24 @@
 # Active Studies continuation — 22 September 2026
 
+## Market Gardening L3 static network still release (23 September)
+
+Slide 14's small network labels were replaced with a deterministic static
+diagram naming the four existing narration categories: seed, tools, skills and
+transport. Full-size and 269 px image fits were inspected, with no overlap.
+Exact-head `test` and `rules` passed for `05f722e0`; preview run 35810405714
+passed and `/api/build-info` reported `05f722e`. The deployed 390 px lesson
+showed the 1920 px still at 269 CSS px, English MP3 advancing, and no player
+video. A one-time migration removed only the previous slide-14 JPEG. The
+204 KB replacement brought the saved Market pack to **On this phone · 12.8
+MB**; the new still and MP3 reopened after an offline browser reload. The
+[L3 check](../media/studies-animation-quality/market-l3-current-lesson-check.md)
+records the source limits: the existing slide-15 Flow seed handover cannot
+establish seed identity, viability or permission to exchange a protected
+variety. Its coordinated protected wording correction awaits separate
+editorial ownership/review. No new Flow credit, code-drawn animation,
+protected teaching edit or Farm Finance work was used. Rory, learner,
+practitioner, legal and fluent-language review remain open.
+
 ## Market Gardening L2 static route release (23 September)
 
 Slide 9's small route names and long lower paragraph were replaced by a

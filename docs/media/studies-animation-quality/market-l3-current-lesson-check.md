@@ -8,7 +8,7 @@ was made. This is technical/source review, not Rory, farmer, learner,
 practitioner, legal or fluent isiZulu approval. Farm Finance is outside this
 pass.
 
-## Slide 14 static still candidate
+## Slide 14 static still release
 
 The original network illustration's small labels and dense narration panel
 became difficult to read at the learner's 269 px image width. A deterministic
@@ -18,17 +18,26 @@ sharing categories — seed, tools, skills and transport — large, with a
 sale or income result. I inspected the 1920 × 1080 output and a proportional
 269 × 151 px fit; the four labels remain distinct and no text or cards overlap.
 The English slide-14 narration and protected lesson text are unchanged. This
-is a still replacement only; slide 14 has no registered animation. The generic seed
-sharing rights qualification remains unresolved as recorded below and is not
-resolved by this diagram. It still needs product-level deployed/player review
-before release. Rory's visual-clearance gate remains in force for the separate
+is a still replacement only; slide 14 has no registered animation. The generic
+seed-sharing rights qualification remains unresolved as recorded below and is
+not resolved by this diagram. The exact-head `test` and `rules` CI jobs passed
+for `05f722e0`; preview run `35810405714` passed and `/api/build-info`
+reported `05f722e`. In the deployed 390 px player, the image rendered at 269
+CSS px with `naturalWidth=1920`, all four labels were readable, the English
+MP3 advanced with `readyState=4`, and no video was registered. A one-time
+cache migration removed only the previous slide-14 JPEG. After saving the
+204 KB replacement, the 45-file Market pack reported **On this phone · 12.8
+MB**. Following an offline browser reload, the new JPEG and MP3 reopened at
+the same image width and `readyState=4`. Network was restored and playback
+stopped. This is technical browser evidence, not physical-phone or human
+acceptance. Rory's visual-clearance gate remains in force for the separate
 locally drawn animation, which is not registered in the learner player.
 
 ## Current lesson and actual media
 
 Module slides 14–18 discuss a local network, seed, shared tools, produce loss
-and learning from neighbours. Slide 14's still is a labelled grower network;
-its small labels need the full-size image link or English narration at 390 px.
+and learning from neighbours. Slide 14 now has a large-label static diagram
+for the four narrated sharing categories.
 The locally drawn network animation remains withdrawn pending Rory's visual
 clearance. Slide 15's existing `flow-seed-sharing.mp4` is an eight-second
 continuous shot of Black African adults handling seed jars and envelopes at a
