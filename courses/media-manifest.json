@@ -5158,6 +5158,583 @@
       "brief": "Two matching views of the same bed from the same spot, side by side:\nleft \"before\" — bare, cracked soil; right \"after\" — mulched, planted at even spacing, healthy.\nBelow, the mentor and the farmer look at a notebook together; the farmer points at a line. A\nsmall wall-calendar square with a tick. Same fence post in both views so the viewer sees it is\nthe same place."
     },
     {
+      "id": "T-ANI-01",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "The learning cycle",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-01.mp4",
+      "used_in": [
+        "T-D1-06",
+        "T-D1-S1"
+      ],
+      "length": "16 s loop, silent",
+      "brief": "Four scenes appear in turn around a circle, joined by a Mid-green arrow that grows\nclockwise: (1) hands fold a paper seed envelope (0–4 s); (2) two people look at the torn envelope,\none points (4–8 s); (3) a small group draws in the soil with a stick, one nods (8–12 s); (4) at a\nkitchen table, bean seed pours into a finished envelope (12–16 s); the arrow completes and the\nloop restarts. No text. Poster frame: all four scenes visible."
+    },
+    {
+      "id": "T-ANI-02",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "From one demo to five groups",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-02.mp4",
+      "used_in": [
+        "T-D3-02",
+        "T-D3-S1"
+      ],
+      "length": "12 s loop, silent",
+      "brief": "Top view of a practical site. 0–4 s: one facilitator digging, 25 small figures\nstanding around her in a crowd, still. 4–8 s: the crowd splits into five groups of five that\nwalk to five stations 3 m apart, each with its own small pile of tools. 8–12 s: every figure is\nmoving — digging, carrying, mixing; the facilitator walks between stations with hands behind her\nback. Loop by fading back. Poster frame: the final busy state."
+    },
+    {
+      "id": "T-ANI-10",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "A-frame: find the level",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/reading-landscape/flow-a-frame.mp4",
+      "target": null,
+      "used_in": [
+        "T-D3-05",
+        "MT-11"
+      ],
+      "length": "loop, silent",
+      "brief": "Use the whole loop to show what the one-kit carousel station does."
+    },
+    {
+      "id": "T-ANI-11",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Three ethics",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/intro-permaculture/watch-07-three-ethics.mp4",
+      "target": null,
+      "used_in": [
+        "T-D1-S2",
+        "T-D1-09",
+        "MT-01"
+      ],
+      "length": "loop, silent",
+      "brief": "Optional in the model lesson; play once after groups find the ethics in the good garden."
+    },
+    {
+      "id": "T-ANI-12",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Diversity",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/intro-permaculture/watch-13-diversity.mp4",
+      "target": null,
+      "used_in": [
+        "T-D1-09"
+      ],
+      "length": "loop, silent",
+      "brief": "Background to the two-gardens question; mute, loop."
+    },
+    {
+      "id": "T-ANI-13",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Sun and shadows",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
+      "target": null,
+      "used_in": [
+        "T-D2-09",
+        "MT-02",
+        "MT-20"
+      ],
+      "length": "loop, silent",
+      "brief": "Slide mode only, after the cardboard-house task — confirms winter vs summer shade."
+    },
+    {
+      "id": "T-ANI-14",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Water movement",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/reading-landscape/watch-05-water-movement.mp4",
+      "target": null,
+      "used_in": [
+        "T-D2-10",
+        "MT-03",
+        "MT-20",
+        "MT-21"
+      ],
+      "length": "loop, silent",
+      "brief": "Show after the bottle runoff test."
+    },
+    {
+      "id": "T-ANI-15",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Roof rain",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/water-harvesting/flow-roof-rain.mp4",
+      "target": null,
+      "used_in": [
+        "T-D2-S2",
+        "MT-04",
+        "MT-21"
+      ],
+      "length": "loop, silent",
+      "brief": "Before the roof sum."
+    },
+    {
+      "id": "T-ANI-16",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Swale infiltration",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/water-harvesting/watch-04-swale-infiltration.mp4",
+      "target": null,
+      "used_in": [
+        "MT-12"
+      ],
+      "length": "loop, silent",
+      "brief": "Round 4 mode idea for the tray-model swale."
+    },
+    {
+      "id": "T-ANI-17",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Living soil",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/soil-health/watch-05-living-soil.mp4",
+      "target": null,
+      "used_in": [
+        "T-D2-05",
+        "T-D3-07",
+        "T-D3-S3 (tablet station)"
+      ],
+      "length": "loop, silent",
+      "brief": "The tablet-station clip in T-D3-S3: watch once, then teach it in 2 minutes."
+    },
+    {
+      "id": "T-ANI-18",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Compost heap",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
+      "target": null,
+      "used_in": [
+        "T-D3-12",
+        "MT-06"
+      ],
+      "length": "loop, silent",
+      "brief": "Example of \"a thing that changes over weeks\" — why slides can help."
+    },
+    {
+      "id": "T-ANI-19",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Soil observation",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
+      "target": null,
+      "used_in": [
+        "T-D3-08",
+        "MT-05"
+      ],
+      "length": "loop, silent",
+      "brief": "Slide mode only during the four tests."
+    },
+    {
+      "id": "T-ANI-20",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Helpful insects",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4",
+      "target": null,
+      "used_in": [
+        "T-D4-09",
+        "MT-17"
+      ],
+      "length": "loop, silent",
+      "brief": "With the ladder — helpers do the work before any spray."
+    },
+    {
+      "id": "T-ANI-21",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Seed dry processing",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/seeds-sovereignty/seed-dry-processing.mp4",
+      "target": null,
+      "used_in": [
+        "T-D4-10",
+        "MT-18"
+      ],
+      "length": "loop, silent",
+      "brief": "Seed station content refresh."
+    },
+    {
+      "id": "T-ANI-22",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Seed storage: jar vs bag",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/seeds-sovereignty/new_seed-storage-jar-vs-bag.mp4",
+      "target": null,
+      "used_in": [
+        "T-D4-S2",
+        "MT-09"
+      ],
+      "length": "loop, silent",
+      "brief": "Content refresh on storage."
+    },
+    {
+      "id": "T-ANI-23",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "The farm record",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
+      "target": null,
+      "used_in": [
+        "T-D5-04",
+        "MT-10",
+        "MT-24"
+      ],
+      "length": "loop, silent",
+      "brief": "After the beans-and-tins task."
+    },
+    {
+      "id": "T-ANI-24",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Seven layers",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/food-forest/watch-05-seven-layers.mp4",
+      "target": null,
+      "used_in": [
+        "T-D4-S2",
+        "MT-22"
+      ],
+      "length": "loop, silent",
+      "brief": "Station 5 content refresh; Round 5 food-forest session."
+    },
+    {
+      "id": "T-ANI-25",
+      "course": "teach-the-teachers",
+      "kind": "animation",
+      "title": "Seed or seedling",
+      "status": "REUSE",
+      "reuse_path": "public/course-animations/vegetables-staples/flow-seed-or-seedling.mp4",
+      "target": null,
+      "used_in": [
+        "MT-08",
+        "MT-15"
+      ],
+      "length": "loop, silent",
+      "brief": "Round 4 mode idea for seedling cards."
+    },
+    {
+      "id": "T-IMG-01",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "A learning circle under a tree",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-01.jpg",
+      "used_in": [
+        "T-D1-01",
+        "T-D1-04",
+        "T-D2-02"
+      ],
+      "length": "still",
+      "brief": "Twenty adults sit in a wide circle on plastic chairs and a wooden bench under a big\nshade tree beside a rural community hall. Mixed ages: young graduates in trainers and T-shirts,\ntwo extension officers in work shirts, gogos in headscarves, an older lead farmer in a hat.\nOne young woman stands, mid-sentence, hands open; others lean in, some laughing. Posters hang\non the hall wall behind them (drawn as rectangles with simple shapes, no letters). Sun high in\nthe upper part of the scene (north); shadows fall toward the viewer."
+    },
+    {
+      "id": "T-IMG-02",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Notes on the phone, poster on the fence",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-02.jpg",
+      "used_in": [
+        "T-D2-13"
+      ],
+      "length": "still",
+      "brief": "A young female facilitator stands beside (not in front of) a poster tied to a wire\nfence with cable ties. She holds a phone low in one hand, glancing at it, and points with an\nopen hand at a numbered circle on the poster. Five learners stand in a horseshoe facing the\nposter, one stepping forward to touch it. Garden beds behind. Poster content drawn as simple\nshapes with ochre numbered circles, no letters."
+    },
+    {
+      "id": "T-IMG-03",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Projector in daylight",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-03.jpg",
+      "used_in": [
+        "T-D3-11",
+        "T-D4-16"
+      ],
+      "length": "still",
+      "brief": "Split image. Left: a bright church hall with open windows; a projector on a table\nthrows a pale, washed-out rectangle onto a white wall — nothing on it can be seen; learners at\nthe back squint and shade their eyes. Right: the same group in a shaded corner of the hall,\ngathered close around a large TV on a table; the TV shows a clear picture of a green plant;\nlearners lean in, engaged. A thin Hairline divider between panels."
+    },
+    {
+      "id": "T-IMG-04",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "A tablet for a group of five",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-04.jpg",
+      "used_in": [
+        "T-D3-01",
+        "T-D3-10",
+        "T-D3-13",
+        "T-D4-15"
+      ],
+      "length": "still",
+      "brief": "Five learners crowd round a tablet held by a young man (the Recorder) at a garden\ntable outdoors in shade. The tablet screen shows a simple animation frame of water soaking into\nsoil (Water blue, soil Ochre). An older woman points at the screen; a young woman beside her\nalready has her hands in a tray of soil, doing what they just watched. A facilitator stands a\nstep back."
+    },
+    {
+      "id": "T-IMG-05",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "A micro-teach in a small circle",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-05.jpg",
+      "used_in": [
+        "T-D1-02",
+        "T-D1-16",
+        "T-D2-15",
+        "T-D5-06"
+      ],
+      "length": "still",
+      "brief": "Five adults in a small circle of chairs in the corner of a hall. One young man\n(teaching) holds up a cut-open 2 ℓ bottle of soil while three peers lean forward, one pouring\nwater. A fourth person, an older woman, sits slightly back with a clipboard, making tally\nmarks (simple strokes). A second person holds up a small red card (the STOP card, no text).\nA hand-made poster is stuck to the wall behind them with Prestik."
+    },
+    {
+      "id": "T-IMG-06",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "The poster studio",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-06.jpg",
+      "used_in": [
+        "T-D1-05",
+        "T-D1-13"
+      ],
+      "length": "still",
+      "brief": "Seen from slightly above: trainees kneel and sit on a clean hall floor around large\nsheets of paper, drawing posters with thick markers. One sheet shows a pencilled bean plant\nwith numbered circles; another person holds a finished poster up at arm's length while a\npartner stands far away checking it. Markers, rulers, Prestik and paper offcuts scattered.\nNo readable letters anywhere — draw text areas as grey bars."
+    },
+    {
+      "id": "T-IMG-07",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "The cardboard house and the sun",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-07.jpg",
+      "used_in": [
+        "T-D2-09"
+      ],
+      "length": "still",
+      "brief": "Close view on bare ground: a shoebox house with a card triangle roof and small\nwindows on each side, sitting on a patch of soil. A compass arrow drawn on the ground points\nup-screen (north). Sunlight comes from the north (upper part), low (winter), casting a long\nshadow of the house down-screen (south). Small sticks mark the edge of the shadow. Two hands\nhold a torch low from the north side, and another hand pushes a stick into the ground."
+    },
+    {
+      "id": "T-IMG-08",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Tree talk",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-08.jpg",
+      "used_in": [
+        "T-D2-01",
+        "T-D2-08"
+      ],
+      "length": "still",
+      "brief": "A teaching circle under a big shade tree: a poster tied to the trunk at seated eye\nlevel; about twelve learners in a horseshoe on chairs and a log, faces in shade, the sun behind\nthem in the upper part of the scene (north). The facilitator stands to one side of the poster.\nOn the ground in the middle: two cut-open 2 ℓ bottles and a cardboard house. A dirt road in\nthe far background."
+    },
+    {
+      "id": "T-IMG-09",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "A gallery walk",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-09.jpg",
+      "used_in": [
+        "T-D4-01",
+        "T-D4-04",
+        "T-D4-07",
+        "T-D4-08"
+      ],
+      "length": "still",
+      "brief": "An outdoor space with six stations along a fence and two walls, each with a poster\n(simple shapes) and a small table of objects: seed trays, string, jars, seed packets, insect\npicture cards. Four small groups are each busy at a different station — sowing, measuring with\nstring, sorting cards. A facilitator rings a small hand bell near the middle. Flipcharts beside\nposters carry ticks and drawings (no letters)."
+    },
+    {
+      "id": "T-IMG-10",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Role play in threes",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-10.jpg",
+      "used_in": [
+        "T-D4-02",
+        "T-D4-03",
+        "T-D4-06"
+      ],
+      "length": "still",
+      "brief": "Three adults standing on a veranda. An older man plays an annoyed learner, arms\ncrossed, frowning (acted, a little comic). A young woman plays the facilitator: relaxed\nshoulders, open palms, calm face. A third person watches from the side holding a card and\nsmiling. In the background other trios doing the same. Friendly, safe mood."
+    },
+    {
+      "id": "T-IMG-11",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Two facilitators, one lesson",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-11.jpg",
+      "used_in": [
+        "T-D3-16",
+        "T-D5-05",
+        "T-D5-14"
+      ],
+      "length": "still",
+      "brief": "In front of a seated group, a young woman facilitator hands a seedling tray to a\nyoung man facilitator, both smiling, like passing a relay baton. Behind them a crate of tools\nand a clipboard with tally marks on a chair. Learners watch, one already reaching toward\nthe tray."
+    },
+    {
+      "id": "T-IMG-12",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Beans in tins",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-12.jpg",
+      "used_in": [
+        "T-D5-02",
+        "T-D5-03"
+      ],
+      "length": "still",
+      "brief": "On a wooden table: two tins, one with a drawn arrow pointing in, one with an arrow\npointing out (arrows as shapes, no letters); a pile of dried beans; a ruled sheet with small\npictures heading each column (a calendar page, a coin going in, a coin going out, a spinach\nbunch); a plate with vegetables of many colours (orange butternut, dark green leaves, red\ntomato, beans). Hands of three people moving beans."
+    },
+    {
+      "id": "T-IMG-13",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "The certificate handshake",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-13.jpg",
+      "used_in": [
+        "T-D4-17",
+        "T-D5-16"
+      ],
+      "length": "still",
+      "brief": "Inside a hall decorated with posters, an older male trainer shakes hands with a\nyoung woman trainee while handing her a certificate (a sheet with a border and a seal shape,\nno readable text). Colleagues around them clap. Warm, proud mood."
+    },
+    {
+      "id": "T-IMG-14",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "The paper flip-book",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-14.jpg",
+      "used_in": [
+        "T-D3-14"
+      ],
+      "length": "still",
+      "brief": "A group of five seated round a small table outdoors. One person holds a ring-bound\nA4 book of big pictures (a slide printed on each page — simple garden drawings, no text),\nturning a page toward the group; another points at the picture. No devices anywhere."
+    },
+    {
+      "id": "T-IMG-15",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "The register at the door",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-15.jpg",
+      "used_in": [
+        "T-D1-08",
+        "T-D1-18",
+        "T-D2-17"
+      ],
+      "length": "still",
+      "brief": "A small table at a hall doorway in the morning light. A young man signs a register\non a clipboard (grid lines, no letters) while an older woman presses her thumb onto an ink pad\nto mark her name. A facilitator beside them holds name tags; a small sheet of green dot stickers\nsits on the table. A queue of three learners waits, chatting."
+    },
+    {
+      "id": "T-IMG-16",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Spot the hazard",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-16.jpg",
+      "used_in": [
+        "T-D3-06"
+      ],
+      "length": "still",
+      "brief": "A busy practical site with eight hazards for learners to find: a spade lying\npoint-up on a path; a garden fork leaning at head height; an open spray bottle next to a plate\nof food; a hosepipe across a walkway; a group working in full midday sun with no hats; a first\naid box inside a closed car; someone swinging a pick with a person standing just behind; no\nwater container anywhere. Everything else looks normal and friendly — no injuries shown."
+    },
+    {
+      "id": "T-IMG-17",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Screenshot: My Studies → Study offline",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-17.jpg",
+      "used_in": [
+        "T-D4-12"
+      ],
+      "length": "still",
+      "brief": "Capture from the live ImbewuField app on a phone (sample account, no personal data):\n**My Studies** with the **Study offline** panel open and the button \"Save available lessons to\nthis phone\" visible. Frame it inside a simple drawn phone outline on Paper background, 16:9.\nRe-capture whenever the screen changes."
+    },
+    {
+      "id": "T-IMG-18",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Screenshot: Mentor → Training",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-18.jpg",
+      "used_in": [
+        "T-D4-13"
+      ],
+      "length": "still",
+      "brief": "Capture from the app (sample mode only — invented sample names, no real people):\nthe **Mentor** workspace, **Training** view showing an attendance list, a signature box and the\nvenue/date fields. Blur or replace any real names. Frame in a phone or tablet outline."
+    },
+    {
+      "id": "T-IMG-19",
+      "course": "teach-the-teachers",
+      "kind": "image",
+      "title": "Screenshot: Lima Vision result",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-IMG-19.jpg",
+      "used_in": [
+        "T-D4-14"
+      ],
+      "length": "still",
+      "brief": "Capture from the app (sample account): a **Lima Vision** result for a photo of a\nleafy crop, showing the crop identification and the yield/weigh screen. Photo subject must be a\nplant, not a person. Frame in a phone outline."
+    },
+    {
+      "id": "T-PHO-01",
+      "course": "teach-the-teachers",
+      "kind": "photo",
+      "title": "Trainee-made posters",
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-PHO-01.jpg",
+      "used_in": [
+        "T-D1-15"
+      ],
+      "length": "still",
+      "brief": "Take during the first run of this course, **with POPIA consent** from the makers:\n3–4 hand-made trainee posters that follow T-P09 (≤ 25 words, big picture, numbered labels),\nphotographed flat, straight on, in daylight, no people in frame. Until then, use T-IMG-06."
+    },
+    {
       "id": "T-P01",
       "course": "teach-the-teachers",
       "kind": "poster",

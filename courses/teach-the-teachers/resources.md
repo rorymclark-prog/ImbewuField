@@ -91,7 +91,7 @@ roughly **R8 000–R12 500** — check locally. A banner set lasts many courses.
 | 5 | Tins marked IN / OUT | 8 |
 | 5 | Event cards (6); money-book sheets | 4 sets; 20 |
 | 5 | Plate + vegetables of 6 colours (or pictures) | 1 |
-| 5 | Picture quiz cards (F-IMG-30 → F-IMG-37) + corner signs A, B, C | 1 set |
+| 5 | Picture quiz cards (F-IMG-70 → F-IMG-77) + corner signs A, B, C | 1 set |
 | All | Stickers: round dots (2 colours) | 4 sheets |
 | All | Hand bell or whistle (gallery walk, signal) | 1 |
 

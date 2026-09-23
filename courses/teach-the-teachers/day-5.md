@@ -177,7 +177,7 @@ on the tick / half / cross checklist during a practical, **run** the learner eva
 form in the flip folder and when it's used.
 
 **Poster:** T-P15 · **Slides:** T-D5-08 → T-D5-11
-**Materials:** 8 picture-quiz cards (F-IMG-30 → F-IMG-37, or hand-drawn), corner signs A, B, C;
+**Materials:** 8 picture-quiz cards (F-IMG-70 → F-IMG-77, or hand-drawn), corner signs A, B, C;
 20 copies each of forms.md §3, §4, §5, §6; 1 flip folder (sample, fully organised); stickers.
 
 | Time | Step | Trainer talk |

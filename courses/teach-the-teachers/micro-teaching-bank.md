@@ -69,7 +69,7 @@ Print each assignment as an **A6 card** (two sets). Session IDs follow the Cours
 - **Take home:** "Squeeze my garden soil."
 
 ### MT-06 · Greens and browns
-- **From:** F-D3-S2 · **Poster:** F-P11 · **Clip:** T-ANI-18
+- **From:** F-D3-S3 · **Poster:** F-P11 · **Clip:** T-ANI-18
 - **Outcome (5):** Learners **sort** a pile into greens and browns.
 - **Outcome (10):** …and **show** the 2 brown : 1 green mix in a bucket.
 - **Materials:** a pile of mixed garden waste, 2 feed bags, a bucket.
@@ -77,7 +77,7 @@ Print each assignment as an **A6 card** (two sets). Session IDs follow the Cours
 - **Take home:** "Start a brown pile."
 
 ### MT-07 · Liquid manure
-- **From:** F-D3-S2 · **Poster:** F-P12
+- **From:** F-D3-S3 · **Poster:** F-P12
 - **Outcome (5):** Learners **name** the three things in liquid manure (manure, water, time).
 - **Outcome (10):** …and **mix** a jar-sized batch and **show** the weak-tea colour to use.
 - **Materials:** a small bag of dry manure, a sock or cloth, a jar, water, gloves.
@@ -137,7 +137,7 @@ Print each assignment as an **A6 card** (two sets). Session IDs follow the Cours
 - **Take home:** "Jar-test my garden soil."
 
 ### MT-14 · A trench bed in layers
-- **From:** F-D3-S3 · **Poster:** F-P13
+- **From:** F-D3-S2 · **Poster:** F-P13
 - **Outcome:** Learners **build** the layers of a trench bed in a bucket or clear 5 ℓ bottle.
 - **Materials (per group):** a cut-open 5 ℓ bottle or bucket, tins / stones, dry sticks, greens,
   browns, manure, soil.

@@ -839,7 +839,7 @@ Type: activity
 Screen:
 - Walk to corner A, B or C
 - Count heads, not names
-Media: F-IMG-30
+Media: F-IMG-70
 Poster: T-P15
 Notes:
 T-D5-S3 step 1. Run 4 of the 8 questions from forms.md §5. Nobody needs to read.

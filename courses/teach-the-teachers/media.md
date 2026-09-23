@@ -19,7 +19,7 @@ only), Paper #F7F2E9, Ink #20190F · 16:9 at 1920 × 1080 for slide images unles
 | Poster art (T-Pxx-ART) | 22 | 0 |
 | **Total** | **44** | **16** |
 
-Cross-course: slide T-D5-09 uses **F-IMG-30** (Course 1 picture-quiz card) — made for Course 1.
+Cross-course: slide T-D5-09 uses **F-IMG-70** (Course 1 picture-quiz card) — made for Course 1.
 
 ---
 
