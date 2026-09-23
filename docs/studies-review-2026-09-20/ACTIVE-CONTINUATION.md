@@ -1,5 +1,45 @@
 # Active Studies continuation — 22 September 2026
 
+## Market Gardening L3 English media and seed-sharing check (23 September)
+
+The core module's third lesson, slides 14–18, played to its final slide in the
+deployed 390px English player. Slide 15's existing eight-second Flow film shows
+Black African adults handling seed containers; it reached its end while the
+longer MP3 continued. The saved 12.7 MB Market pack reopened this MP4/MP3 pair
+after an offline browser reload; all current stills were inspected. Slide 14's
+locally drawn network motion remains outside the player under Rory's visual
+clearance rule. The [current check](../media/studies-animation-quality/market-l3-current-lesson-check.md)
+also records a source-backed protected wording hold: generic seed swapping
+needs an applicable-rights check for protected varieties under South Africa's
+Plant Breeders' Rights Act. No new Flow credit, protected edit, legal,
+human/practitioner, learner or isiZulu approval is claimed. Farm Finance is
+excluded.
+
+## Market Gardening L2 English technical check (23 September)
+
+The core module's second lesson, slides 9–13, played through to the final
+slide in the deployed 390px Student preview. The existing route still's
+labels are small at phone fit; its full-size link and English MP3 remain
+available. The saved 12.7 MB Market pack reopened slide 9's still and English
+MP3 after an offline browser reload. No new Flow prompt is justified by this
+conditional sales-choice lesson, and the withdrawn locally drawn film remains
+held for Rory's visual decision. The [current check](../media/studies-animation-quality/market-l2-current-lesson-check.md)
+does not claim market/legal, human, practitioner, learner or isiZulu approval.
+Farm Finance is outside this pass.
+
+## Market Gardening L1 English technical check (23 September)
+
+The core module's first lesson, slides 4–8, played through to its final slide
+in the deployed 390px Student preview. Slide 4's record table is too small at
+phone fit, but its full-size still link and English MP3 remain available. The
+12.7 MB / 45-file Market pack saved; after an offline browser reload, slide
+4's still and English MP3 loaded and advanced. All current L1 stills were
+inspected, including Black African farmers in slides 5 and 7. The withdrawn
+code-drawn record film remains held under Rory's visual-clearance rule; no
+Flow credit or protected edit was used. [Current check](../media/studies-animation-quality/market-l1-current-lesson-check.md).
+This is English technical evidence, not human/farmer/learner/isiZulu approval.
+The separate Farm Finance course remains outside the pass.
+
 ## Soil Health L3 English and Flow check (23 September)
 
 Slides 14–18 were checked against their current full-size stills; slide 16
@@ -13,7 +53,8 @@ visibly pools water but does not clearly show the bare-versus-covered raindrop
 impact, so the silent review copy is [held under `docs/`](../media/studies-animation-quality/soil-l3-current-lesson-check.md)
 and no learner video was registered. No second prompt, SVG clearance, protected
 teaching edit or isiZulu/human/practitioner approval is claimed. Farm Finance
-remains excluded.
+remains excluded. Commit `b5fbce6a` passed exact-head `test` and `rules` CI jobs
+in run 35800826653; it contains review evidence only, with no learner change.
 
 ## Soil Health L2 English media and source check (23 September)
 
