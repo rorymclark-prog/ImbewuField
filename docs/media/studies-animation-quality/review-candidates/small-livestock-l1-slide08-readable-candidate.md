@@ -1,7 +1,7 @@
 # Small Livestock L1 slide 8 — static readability candidate
 
-**Status:** Selected for a branch preview release; deployed learner check is
-pending. This static still is not human-approved teaching media. No lesson,
+**Status:** Deployed to the branch preview with a sample-player and offline
+technical check. This static still is not human-approved teaching media. No lesson,
 narration, quiz, species, farming number, video or `PLAN_VERSION` changed.
 
 ## Content and layout
@@ -23,11 +23,10 @@ Source wording: `public/course-decks/small-livestock/en/slide-08.jpg` and `docs/
 
 Inspected the candidate at 1920 × 1080 and the fit preview at 269 × 151. All
 four statements fit without clipping: statements one and three use one line;
-statements two and four use two. At 269 px wide the body text is about 7.7 px
-high and is too small for comfortable reading at displayed size. At a 390 px
-fit, the 55 px body type scales to about 11.2 px; this is substantially larger
-than the original slide's body type at that width, though still dependent on
-device display and viewer scaling. The result improves hierarchy and fit but
-needs assessment at the actual learner player size before acceptance. The
-English narration, expandable lesson text and full-size still link carry the
-detail when the image is too small to read.
+statements two and four use two. In the deployed 390px learner viewport, the
+deck image occupies about 269px, so the body type is about 7.7px high. The
+cards improve grouping and type size compared with the old bullet layout, but
+the longer statements remain too small for comfortable reading in that image.
+No low-literacy comprehension claim follows. The English narration, expandable
+lesson text and full-size still link carry the detail when the image is too
+small to read. Exact deployed/offline observations are in the [L1 check](../small-livestock-l1-lesson-check.md).

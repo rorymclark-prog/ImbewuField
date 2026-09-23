@@ -1,5 +1,20 @@
 # Active Studies continuation — 22 September 2026
 
+## Small Livestock L1 final still clarity (23 September)
+
+Slide 8's four existing chicken-tractor cautions now sit in larger static
+cards. The full-size and 269px fit were inspected; the deployed 390px sample
+player showed no clipping and its English MP3 advanced. The text is still
+small at the phone image fit, so narration, expandable lesson text and the
+full-size link remain important. Exact-head `test`/`rules` and preview passed
+for `e6d13901`; the build info and public JPEG hash matched. The selective
+cache migration left 48/49 Small Livestock files saved and offered only the
+289 KB replacement. After finishing the download, the 23.9 MB pack reported
+On this phone; slide 8 and audio reopened after a network-disabled reload.
+[L1 check](../media/studies-animation-quality/small-livestock-l1-lesson-check.md).
+No Flow credit, code-drawn motion or protected teaching was used. Account,
+physical-phone, learner, Rory and practitioner review remain open.
+
 ## Food Forest L3 and Small Livestock L1 offline rechecks (23 September)
 
 The deployed 390px `/samples` Student player showed Food Forest L3 slide 17

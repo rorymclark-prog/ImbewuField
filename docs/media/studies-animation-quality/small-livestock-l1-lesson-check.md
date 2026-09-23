@@ -55,8 +55,22 @@ be called comfortably readable at that fit. Narration, the expandable English
 lesson text and the full-size link remain important. A one-time selective cache
 migration retires only the old saved English slide-8 JPEG, leaving downloaded
 audio, other slides and other languages in place; the learner chooses when to
-fetch the replacement. The deployed player and offline saved-pack result are
-pending. No Flow credits or code-drawn motion were used.
+fetch the replacement. No Flow credits or code-drawn motion were used.
+
+Exact-head `test` and `rules` passed for `e6d13901`; preview run
+`35822273901` passed. `/api/build-info` reported `e6d1390`, and the deployed
+JPEG returned the exact hash above. In the deployed 390px sample Student
+player, L1 slide 8 appeared as 5/5 and loaded the 1920px still, with its four
+cards unclipped. The screenshot confirmed improved grouping and type size,
+while long wording remains small in the phone-width image. Its English MP3
+advanced beyond six seconds of 20.98 without error. The previously saved
+Small Livestock pack showed **48 of 49 files** and offered only **289 KB**
+to finish; after that download it reported **On this phone · 23.9 MB**. With
+network disabled, `/student` reloaded under the Offline badge, the revised
+still completed loading at 1920px and the MP3 advanced from 0.04 to 6.17
+seconds with ready state 4 and no error. Network and viewport settings were
+restored. This is technical sample-browser evidence, not authenticated-account,
+physical-phone, learner or poultry-practitioner acceptance.
 
 The lesson's care warning is supported by [University of Maryland Extension's
 flock guide](https://extension.umd.edu/resource/raising-your-home-chicken-flock),
