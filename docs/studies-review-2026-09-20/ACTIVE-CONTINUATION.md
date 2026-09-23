@@ -1,5 +1,26 @@
 # Active Studies continuation — 23 September 2026
 
+## Food Forest Design L3 English quiz release (23 September)
+
+Commit `183b39c1` corrects the first quiz's guarantee that cardboard kills
+existing grass. The question, keyed answer and rationale now describe possible
+grass suppression, checking for regrowth, water entry and trunk clearance,
+matching the existing body and slide 16 speech. The registered Flow close-up,
+stills and audio are unchanged; the slide 15 Flow review candidate remains
+held. The [current L3 check](../media/studies-animation-quality/food-forest-l3-current-lesson-check.md)
+records ARC source links, evidence and limits. An
+[isiZulu L3 packet](../narration-reviews/food-forest-l3.zu.review.md) is
+review-only and unpublished.
+
+Local typecheck, 3,724 passing tests / 0 failures / 1 existing TODO and
+whitespace check passed. Exact-head CI `35858553132` passed `test` and `rules`;
+preview `35858553092` passed. The corrected quiz and rationale appeared in the
+deployed 390px sample Student; the saved 17.4 MB Food Forest pack reopened the
+corrected quiz with an Offline badge after a network-disabled reload. Network
+and viewport were restored. This is browser delivery evidence, not human,
+learner, farmer, practitioner or fluent isiZulu approval. No new Flow credits
+or SVG/code-drawn animation were used. Farm Finance remains excluded.
+
 ## Market Gardening & Community L3 English release (23 September)
 
 Commits `583457a6` and `2652f752` add the qualified seed-variety rights check

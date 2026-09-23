@@ -1,6 +1,6 @@
 # Food Forest Design L3 current English check — 23 September 2026
 
-## Narrow English quiz correction candidate — 23 September
+## Narrow English quiz correction release — 23 September
 
 The first quiz now asks what plain cardboard under suitable mulch **can help**
 do where grass is growing. The keyed answer says it can block light and help
@@ -14,15 +14,23 @@ because area and a fixed calendar month do not determine this mechanism.
 
 This is quiz-only. Current stills, registered slide 16 Flow clip, narration,
 transcript and audio are unchanged. No new Flow credit or SVG/code-drawn
-motion was used; no saved media require migration. Local checks, exact-head
-CI and deployed quiz verification are pending. Human listening, learner,
-farmer, practitioner and fluent isiZulu approval are not claimed.
+motion was used; no saved media require migration. Commit `183b39c1` passed
+local typecheck, 3,724 passing tests / 0 failures / 1 existing TODO, and
+whitespace check. Exact-head CI `35858553132` passed both `test` and `rules`;
+preview `35858553092` passed. In the deployed 390px sample Student, the
+corrected question, answer and rationale appeared in the lesson and fit the
+phone layout. The existing 17.4 MB Food Forest pack reported On this phone;
+after a network-disabled reload, the Offline badge and corrected quiz appeared.
+Connection and viewport were restored. This verifies browser delivery of the
+quiz; unchanged media retains its earlier player/offline evidence below. Human
+listening, physical-phone, learner, farmer, practitioner and fluent isiZulu
+approval are not claimed.
 
 ## Earlier player and source check — before this correction
 
-**Status:** Deployed media and source check with one protected quiz correction
-still open. Human, learner, facilitator and practitioner approval are not
-claimed. No protected teaching was edited. The slide-15 review candidate below
+**Historical status:** This section recorded a deployed media and source check
+before the protected quiz correction above. Human, learner, facilitator and
+practitioner approval are not claimed. The slide-15 review candidate below
 used 100 AI credits while the Flow balance remained 0. Farm Finance remains
 excluded.
 
