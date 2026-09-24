@@ -119,6 +119,9 @@ export default function MessageThreadPage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+      {/* The person you are talking to IS this page's subject, but in the header they are a link
+          back to the profile, not a heading. Name the page for screen readers separately. */}
+      <h1 className="sr-only">{otherName}</h1>
       <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         <MenuButton /><BackButton fallback="/home" />
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>

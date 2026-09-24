@@ -56,6 +56,7 @@ import {
   EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
   validateExpenseReceipt, saveExpenseWithReceipt,
 } from '@/lib/expense-receipts';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -1479,7 +1480,7 @@ export default function RecordsPage() {
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto"
-        style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
+        style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
         <BackButton fallback="/home" />

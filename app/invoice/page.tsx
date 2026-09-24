@@ -35,6 +35,7 @@ import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -697,7 +698,7 @@ export default function InvoicePage() {
           and unreachable before the menu button was added here. Scrolling is not
           the prettiest answer, but a control a farmer cannot reach is worse than
           one they have to swipe to. */}
-      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/records?tab=sold" />
         <BrandLogo />

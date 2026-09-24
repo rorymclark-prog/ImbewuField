@@ -61,6 +61,10 @@ function ExampleInner() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#F7F2E9' }}>
+      {/* This page leads with the demonstration banner, not a title, so the heading that names
+          it is for screen readers only — a page with no h1 gives "jump to heading 1" nowhere
+          to land. Reuses the banner's own translated string rather than a new English literal. */}
+      <h1 className="sr-only">{t('demoBannerLabel')}</h1>
       {/* Fixed top banner — always visible, above the content */}
       <div
         style={{

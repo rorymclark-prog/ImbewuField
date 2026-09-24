@@ -191,7 +191,7 @@ export default function CommunityProfilePage() {
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="community:profile" label="Learn" />
-        <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</span>
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</h1>
       </header>
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>

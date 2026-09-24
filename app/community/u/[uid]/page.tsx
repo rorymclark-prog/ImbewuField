@@ -113,7 +113,7 @@ export default function PublicCommunityProfilePage() {
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 20, color: '#20190F' }}>{profile.display_name}</div>
+                <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: '#20190F' }}>{profile.display_name}</h1>
                 {profile.area_text && (
                   <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
                     <MapPin size={12} style={{ color: '#755942' }} />

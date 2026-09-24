@@ -14,6 +14,7 @@ import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 /**
  * A standalone screen a farmer can open DURING a negotiation: pick a crop with a tap (no typing —
@@ -41,13 +42,13 @@ export default function PricesPage() {
           components/BackButton.tsx and tests/back-control.test.ts. */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
+        style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="flex-1" />
         <LessonLink id="prices:overview" label={t('pricesLearn')} />
         <SettingsButton />

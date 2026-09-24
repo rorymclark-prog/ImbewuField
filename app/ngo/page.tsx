@@ -91,7 +91,7 @@ export default function NgoPage() {
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</span>
+        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: '#5C5040' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</h1>
         {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
             gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label

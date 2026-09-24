@@ -166,7 +166,7 @@ export default function ContactPage() {
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="contact:overview" label="Learn" />
-        <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Contact</span>
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: '#20190F' }}>Contact</h1>
       </header>
 
       {/* Content */}

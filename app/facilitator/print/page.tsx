@@ -712,7 +712,7 @@ export default function FacilitatorPrintPage() {
           {/* Title block */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 700 }}>{title}</div>
+              <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>{title}</h1>
               {state.bgSite && (
                 <div style={{ fontSize: 11, marginTop: 3, color: '#3A352C' }}>
                   {state.bgSite.name} · {state.bgSite.lat.toFixed(4)}, {state.bgSite.lon.toFixed(4)}

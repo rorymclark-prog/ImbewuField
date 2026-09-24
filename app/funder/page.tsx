@@ -92,7 +92,7 @@ export default function FunderPage() {
         <BackButton />
         <BrandLogo icon="🏛" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>{tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}</span>
+        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: '#5C5040' }}>{tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}</h1>
         {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
             and only falls back to its sample gardens when there is no backend configured, so the
             label now tracks that same condition — no backend, or sample mode. A permanent "demo" badge on real programme

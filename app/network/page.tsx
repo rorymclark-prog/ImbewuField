@@ -63,6 +63,7 @@ import {
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
 import type { GardenStatus } from '@/lib/db/types';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -194,15 +195,15 @@ export default function NetworkPage() {
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={{ height: 52, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+        style={{ ...APP_HEADER_INSET, background: PAPER, borderBottom: `1px solid ${LINE}` }}
       >
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: INK_SOFT }}>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: INK_SOFT }}>
           {tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
-        </span>
+        </h1>
         <div className="flex-1" />
 
         {/* The org picker only appears for a caller entitled to more than one org — a

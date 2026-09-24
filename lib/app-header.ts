@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 
 /**
- * The 52px top bar shared by the role and study pages.
+ * The 52px top bar shared by the role, study and record pages.
  *
  * WHY THE INSET IS NOT OPTIONAL. app/layout.tsx sets `viewportFit: 'cover'`, which is what stops
  * content being cut off at the BOTTOM of the screen — but it is a two-part bargain: once the
@@ -25,9 +25,24 @@ import type { CSSProperties } from 'react';
  * NOTE: below 650px globals.css overrides this bar's height and padding with !important (to keep
  * one compact layout on every phone). That rule carries the same formula — change both together.
  */
-export const APP_HEADER_STYLE: CSSProperties = {
+
+/**
+ * Just the status-bar inset, for a bar that paints its own colours.
+ *
+ * /records and /prices draw the same 52px bar but with theme tokens rather than the literals
+ * below, so a string match on the literal version missed them and they kept sitting under the
+ * clock after everything else was fixed. Spread this instead of copying the two calc()s.
+ */
+export const APP_HEADER_INSET: CSSProperties = {
   height: 'calc(52px + env(safe-area-inset-top, 0px))',
   paddingTop: 'env(safe-area-inset-top, 0px)',
+};
+
+export const APP_HEADER_STYLE: CSSProperties = {
+  ...APP_HEADER_INSET,
+  // NOTE: these are literals, not tokens, so this bar does not follow the theme. The seven pages
+  // using it are staff screens outside the farmer routes that went through the dark-mode pass —
+  // worth tokenising when dark mode is extended to them.
   background: '#FFFEFA',
   borderBottom: '1px solid #E2D8C4',
 };

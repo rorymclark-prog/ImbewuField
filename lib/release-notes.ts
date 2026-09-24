@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'f3ae3586', changes: [
+    'The top bar now clears your phone\u2019s clock on every screen, not just some.',
+  ], tour: [
+    { title: 'Check the top bar on Journal', where: 'Field Journal', href: '/journal',
+      detail: 'The title and Back button now sit clear of the clock and battery.' },
+  ] },
   { when: '25 September 2026', sha: '44f938b4', changes: [
     'The Journal card on Home says “Notes & photos” in isiZulu.',
   ] },

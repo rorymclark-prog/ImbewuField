@@ -35,7 +35,7 @@ export default function GatePage() {
               </svg>
             </div>
           </div>
-          <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-ink)', letterSpacing: '-0.02em', marginBottom: 4 }}>ImbewuField</div>
+          <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 22, color: 'var(--color-ink)', letterSpacing: '-0.02em', marginBottom: 4 }}>ImbewuField</h1>
           <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>Private prototype — enter the password to continue.</div>
         </div>
         <input
