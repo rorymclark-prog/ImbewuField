@@ -2,19 +2,19 @@
 
 ## Direct interface dictionary key coverage — 24 September
 
-The direct dictionary has 1,441 English keys and 1,507 isiZulu keys. Their
-intersection is 1,426 keys; 15 English keys remain on English fallback. Existing
+The direct dictionary has 1,441 English keys and 1,508 isiZulu keys. Their
+intersection is 1,427 keys; 14 English keys remain on English fallback. Existing
 review guards hold `designStudioLabel`, `bookTabPicked`, `bookTabSold`,
-`bookTabSpent`, `bookTabCharts`, and `homeQuickJournalDesc`; source-backed soil
+`bookTabSpent`, and `bookTabCharts`; source-backed soil
 recommendations and coaching claims also remain in English. There are 81
 isiZulu-only keys. Forty-six shared values are identical to English, including
 numeric chips, compact calendar month labels and explicitly held claims. These
 counts describe dictionary key presence only; they do not prove fluency, route
 coverage or correct rendering.
 
-Of 288 direct-key candidates, 250 now have proposed isiZulu draft values, 23
+Of 288 direct-key candidates, 251 now have proposed isiZulu draft values, 23
 retain the exact English source for financial guidance, privacy, deletion,
-offline and save-status claims, and 15 remain absent from the locale dictionary
+offline and save-status claims, and 14 remain absent from the locale dictionary
 under existing review guards or because they express unreviewed soil/coaching
 claims. None of the proposed drafts has fluent review. The survey route shows a
 persistent bilingual draft notice before its isiZulu instructions. Its

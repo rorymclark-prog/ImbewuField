@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '44f938b4', changes: [
+    'The Journal card on Home says “Notes & photos” in isiZulu.',
+  ] },
   { when: '24 September 2026', sha: '25dfb01a', changes: [
     'The top bar no longer sits under your phone\u2019s clock and battery.',
     'Lesson slides are wider on a phone, so the picture is easier to see.',
