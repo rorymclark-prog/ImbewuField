@@ -70,7 +70,7 @@ export default function ComingUpHarvests({
       <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: '#5C5040' }}>
         <CalendarClock size={13} /> {text('Coming up', 'Okuzayo')}
       </p>
-      <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+      <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>
         {text('What your crop plan says is due to be picked over the next ', 'Incazelo enemininingwane ngesiNgisi okwamanje: What your crop plan says is due to be picked over the next ')}
         {book.horizonMonths === 1 ? text('month', 'inyanga') : `${book.horizonMonths} ${text('months', 'izinyanga')}`}.
       </p>
@@ -81,7 +81,7 @@ export default function ComingUpHarvests({
     return (
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
-        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: '#8C7A62' }}>{text('Reading your crop plan…', 'Kufundwa uhlelo lwezitshalo…')}</div>
+        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: '#755942' }}>{text('Reading your crop plan…', 'Kufundwa uhlelo lwezitshalo…')}</div>
       </section>
     );
   }
@@ -157,7 +157,7 @@ export default function ComingUpHarvests({
         )}
       </div>
 
-      <p className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
+      <p className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: '#755942', lineHeight: 1.45 }}>
         {text('Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises.', 'Incazelo enemininingwane ngesiNgisi okwamanje: Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises.')}
       </p>
 
@@ -182,7 +182,7 @@ function Figure({ label, value, tone = '#20190F' }: { label: string; value: stri
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{label}</span>
     </span>
   );
 }
@@ -201,7 +201,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
         <span className="flex items-center gap-2 min-w-0">
           <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : month.label}</span>
           {!empty && (
-            <span className="font-sans truncate" style={{ fontSize: 12, color: '#8C7A62' }}>
+            <span className="font-sans truncate" style={{ fontSize: 12, color: '#755942' }}>
               {month.harvests.length === 1 ? month.harvests[0].name : lang === 'zu' ? `${month.harvests.length} izitshalo` : `${month.harvests.length} crops`}
             </span>
           )}
@@ -212,7 +212,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
             {empty ? '—' : kgLabel(month.kg)}
           </span>
           {!empty && (
-            <ChevronDown size={13} style={{ color: '#9A8268', transform: open ? 'rotate(180deg)' : undefined, transition: 'transform 120ms' }} />
+            <ChevronDown size={13} style={{ color: '#755942', transform: open ? 'rotate(180deg)' : undefined, transition: 'transform 120ms' }} />
           )}
         </span>
       </button>
@@ -222,9 +222,9 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
             <li key={h.plantingId} className="flex items-baseline justify-between gap-3">
               <span className="font-sans min-w-0" style={{ fontSize: 12, color: '#5C5040' }}>
                 <span aria-hidden="true">{h.icon}</span> {h.name}
-                <span style={{ color: '#9A8268' }}> · {h.bedLabel}</span>
+                <span style={{ color: '#755942' }}> · {h.bedLabel}</span>
                 {h.endMonth !== h.startMonth && (
-                  <span style={{ color: '#9A8268' }}> · {lang === 'zu' ? `ukukha kuqhubeka kuze kube u-${MONTH_ZU[h.endMonth]}` : `picking runs into ${MONTH_NAME[h.endMonth]}`}</span>
+                  <span style={{ color: '#755942' }}> · {lang === 'zu' ? `ukukha kuqhubeka kuze kube u-${MONTH_ZU[h.endMonth]}` : `picking runs into ${MONTH_NAME[h.endMonth]}`}</span>
                 )}
               </span>
               <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: '#20190F' }}>{kgLabel(h.kg)}</span>
@@ -274,7 +274,7 @@ function Exclusions({
   return (
     <div className="px-4 py-2.5" style={{ borderTop: '1px solid #E2D8C4', background: '#FBF7EF' }}>
       {lines.map((l) => (
-        <p key={l} className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>{lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: ${l}` : l}</p>
+        <p key={l} className="font-sans" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>{lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: ${l}` : l}</p>
       ))}
     </div>
   );

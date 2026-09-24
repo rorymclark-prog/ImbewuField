@@ -34,7 +34,7 @@ function renderMarkdown(text: string) {
         return (
           <div key={i}>
             <h3 className="font-display font-semibold text-sm mb-2 pb-1.5 flex items-center gap-2"
-                style={{ color: '#C07A1E', borderBottom: '1px solid #E2D8C4' }}>
+                style={{ color: '#7A4408', borderBottom: '1px solid #E2D8C4' }}>
               {heading}
             </h3>
             <div className="space-y-1.5">
@@ -130,7 +130,7 @@ export default function AreaPanel({ coords }: Props) {
             Area &amp; community
           </div>
           {lastUpdated && !loading && (
-            <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8C70' }}>
+            <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
               Cached · refreshes in {Math.max(0, 7 - Math.floor((Date.now() - lastUpdated) / 86400000))}d
             </div>
           )}
@@ -140,7 +140,7 @@ export default function AreaPanel({ coords }: Props) {
           className="px-2.5 py-1 rounded-lg text-xs font-display font-semibold flex items-center gap-1.5"
           style={loading
             ? { background: '#FFFEFA', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
-            : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: '#C07A1E' }}>
+            : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: '#7A4408' }}>
           {loading
             ? <><Loader2 size={14} className="animate-spin" /> Loading...</>
             : <><RefreshCw size={14} /> Refresh</>}

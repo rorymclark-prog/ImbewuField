@@ -109,7 +109,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       {/* Heading */}
       <div className="flex items-center justify-between">
         <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#235E86' }}>Water balance</span>
-        <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>estimates</span>
+        <span className="text-xs font-mono" style={{ color: '#755942' }}>estimates</span>
       </div>
 
       {/* Main chart */}
@@ -165,12 +165,12 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
           {/* X axis labels */}
           {MONTHS.map((m, i) => (
-            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#8C7A62" fontFamily="monospace">{m}</text>
+            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#755942" fontFamily="monospace">{m}</text>
           ))}
 
           {/* Y axis labels */}
           {ticks.filter((_, i) => i % 2 === 0).map(({ v, y, label }) => (
-            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#8C7A62" fontFamily="monospace">{label}</text>
+            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#755942" fontFamily="monospace">{label}</text>
           ))}
         </svg>
       </div>
@@ -202,7 +202,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
         <StatBox label="People estimated" value={String(people)} sub={`${(monthlyHouseKL * 1000).toFixed(0)} L/month household`} color="#235E86" />
         {capacity > 0
           ? <StatBox label="Storage capacity" value={`${capacity.toFixed(0)} kL`} sub={`Min safe: ${minSafe.toFixed(0)} kL`} color="#1F4D2B" />
-          : <StatBox label="Storage" value="Not mapped" sub="Draw a water area to calculate" color="#8C7A62" />
+          : <StatBox label="Storage" value="Not mapped" sub="Draw a water area to calculate" color="#755942" />
         }
         {hasVeg && <StatBox label="Veg irrigation" value={`${(months.find(m => m.isDry)?.irrigVeg ?? 0).toFixed(1)} kL`} sub="per dry month (est.)" color="#C07A1E" />}
         {hasFruit && <StatBox label="Fruit trees" value={`${fruitTrees}`} sub={`${(months.find(m => m.isDry)?.irrigFruit ?? 0).toFixed(1)} kL/dry month`} color="#C07A1E" />}
@@ -242,9 +242,9 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 function StatBox({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
     <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <p className="text-xs font-mono" style={{ color: '#8C7A62', marginBottom: 2 }}>{label}</p>
+      <p className="text-xs font-mono" style={{ color: '#755942', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs font-mono mt-1" style={{ color: '#8C7A62', fontSize: 12 }}>{sub}</p>
+      <p className="text-xs font-mono mt-1" style={{ color: '#755942', fontSize: 12 }}>{sub}</p>
     </div>
   );
 }

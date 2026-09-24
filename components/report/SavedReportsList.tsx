@@ -50,7 +50,7 @@ interface Props {
 }
 
 const LABEL_STYLE: React.CSSProperties = {
-  font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62',
+  font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942',
 };
 
 export default function SavedReportsList({
@@ -137,7 +137,7 @@ export default function SavedReportsList({
                       {' · '}{new Date(g.reports[0].savedAt).toLocaleDateString()}
                     </div>
                   </div>
-                  <ChevronRight size={16} style={{ color: '#8A7C62', flexShrink: 0 }} />
+                  <ChevronRight size={16} style={{ color: '#755942', flexShrink: 0 }} />
                 </button>
               );
             })}

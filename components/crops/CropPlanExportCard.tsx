@@ -155,7 +155,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
         📤 Take this plan with you
       </div>
-      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
+      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
         Both files are made on this phone — nothing is uploaded, and they work with no signal.
       </p>
 
@@ -227,7 +227,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
         )}
       </div>
 
-      <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.55 }}>
+      <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#755942', lineHeight: 1.55 }}>
         The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
         first of their month — this plan works in months, not exact days — with a reminder three days before.
         The PDF opens with the year at a glance, then a one-page calendar of every bed, the full plan bed by bed,

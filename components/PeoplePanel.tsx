@@ -220,7 +220,7 @@ function PersonCard({
           <p
             style={{
               fontSize: 12,
-              color: '#8C7A62',
+              color: '#755942',
               margin: '4px 0 0',
               lineHeight: 1.4,
               overflow: 'hidden',
@@ -249,7 +249,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
           <MapPin size={22} style={{ color: '#C0531E' }} />
         </div>
         <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: '#20190F' }}>People unavailable</p>
-        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: '#8C7A62' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: '#755942' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
       </div>
     );
   }
@@ -401,7 +401,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             style={{
               fontSize: 12,
               fontFamily: 'var(--font-sans)',
-              color: '#8C7A62',
+              color: '#755942',
             }}
           >
             {people.length} {people.length === 1 ? 'member' : 'members'}

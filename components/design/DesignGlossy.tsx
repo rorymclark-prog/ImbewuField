@@ -16394,7 +16394,7 @@ export default function DesignGlossy({
               <button
                 onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16489,7 +16489,7 @@ export default function DesignGlossy({
                   </div>
                 </div>
               ) : gallery.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>{t('designGlossyNoSaved')}</p>
+                <p style={{ fontSize: 13, color: '#755942', margin: 0 }}>{t('designGlossyNoSaved')}</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
@@ -16549,7 +16549,7 @@ export default function DesignGlossy({
                               style={{
                                 display: 'flex', width: '100%', height: '100%', alignItems: 'center',
                                 justifyContent: 'center', padding: 6, textAlign: 'center',
-                                background: '#EDE7DB', color: '#9A8268', fontSize: 10, fontWeight: 700,
+                                background: '#EDE7DB', color: '#755942', fontSize: 10, fontWeight: 700,
                                 lineHeight: 1.25,
                               }}
                             >
@@ -16649,7 +16649,7 @@ export default function DesignGlossy({
                           <button
                             onClick={() => void exportSelection('share')}
                             disabled={exportSel.size === 0 || exportBusy}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#9A8268', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#755942', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
                           >
                             <Share2 size={15} /> {t('designShare')}
                           </button>
@@ -16664,7 +16664,7 @@ export default function DesignGlossy({
                     </div>
                   )}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
+                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#755942', margin: 0 }}>
                       {storageWarning ?? t('designGlossySavedOnDevice')}
                     </p>
                     <button

@@ -50,7 +50,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
           <div style={{ padding: '20px 22px 0', position: 'sticky', top: 0, background: '#FBF8F1', zIndex: 2, borderBottom: '1px solid #EFE7D6', paddingBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
               <div>
-                <div style={{ font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#B07A1E', marginBottom: 7 }}>
+                <div style={{ font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#9A6018', marginBottom: 7 }}>
                   Evidence library
                 </div>
                 <div style={{ font: '600 22px/1.1 Newsreader, Georgia, serif', color: '#2D2519' }}>
@@ -60,7 +60,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                   A good site report works down the <em>scale of permanence</em> — water first, then structures & access, soil, living things, and animal systems.
                 </div>
               </div>
-              <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62', flexShrink: 0 }}>
+              <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#755942', flexShrink: 0 }}>
                 <X size={22} />
               </button>
             </div>
@@ -149,7 +149,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                       {sp.name}
                       {sp.protected && <span style={{ font: '400 10px/1 system-ui, sans-serif', color: '#3C6B3F', marginLeft: 4 }}>·protected</span>}
                     </span>
-                    <span style={{ font: '400 12px/1 system-ui, sans-serif', color: '#8A7C62' }}>{sp.desc}</span>
+                    <span style={{ font: '400 12px/1 system-ui, sans-serif', color: '#755942' }}>{sp.desc}</span>
                   </div>
                 ))}
               </div>

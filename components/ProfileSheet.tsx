@@ -107,7 +107,7 @@ function Toggle({
           {label}
         </div>
         {sub && (
-          <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>
+          <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>
             {sub}
           </div>
         )}
@@ -431,7 +431,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               </span>
               <span
                 className="font-sans"
-                style={{ fontSize: 12, color: '#94876F' }}
+                style={{ fontSize: 12, color: '#755942' }}
               >
                 Roles are set by your programme admin
               </span>
@@ -446,7 +446,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 className="font-sans"
                 style={{
                   fontSize: 12,
-                  color: bioRemaining < 20 ? '#B83A18' : '#94876F',
+                  color: bioRemaining < 20 ? '#B83A18' : '#755942',
                 }}
               >
                 {bioRemaining} left
@@ -524,7 +524,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 >
                   <p
                     className="font-sans"
-                    style={{ fontSize: 12.5, color: '#C07A1E', lineHeight: 1.5 }}
+                    style={{ fontSize: 12.5, color: '#7A4408', lineHeight: 1.5 }}
                   >
                     Pan the map to where you want to appear, then return here to save.
                   </p>

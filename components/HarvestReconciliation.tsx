@@ -40,12 +40,12 @@ function MatchedRow({ row }: { row: CropRow }) {
           )}{' '}
           {row.cropName}
         </p>
-        <p className="text-xs font-mono flex-shrink-0" style={{ color: '#8C7A62' }}>
+        <p className="text-xs font-mono flex-shrink-0" style={{ color: '#755942' }}>
           {lang === 'zu' ? `Kuvunyiwe ${fmtKg(row.harvestedKg)} · Kuthengisiwe ${fmtKg(row.soldKg)}` : `Harvested ${fmtKg(row.harvestedKg)} · Sold ${fmtKg(row.soldKg)}`}
         </p>
       </div>
       {row.intendedKg !== null && (
-        <p className="text-xs font-sans mt-1.5" style={{ color: '#8C7A62' }}>
+        <p className="text-xs font-sans mt-1.5" style={{ color: '#755942' }}>
           {lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.` : `Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.`}
         </p>
       )}
@@ -80,7 +80,7 @@ function SoftRow({ row }: { row: CropRow }) {
         )}{' '}
         {row.cropName}
       </p>
-      <p className="text-xs font-sans text-right" style={{ color: '#8C7A62' }}>
+      <p className="text-xs font-sans text-right" style={{ color: '#755942' }}>
         {lang === 'zu' ? 'Asikho isivuno esirekhodiwe kulo nyaka' : 'No harvest logged this year'}
         {row.intendedKg !== null && <><br />{fmtKg(row.intendedKg)} {lang === 'zu' ? 'isilinganiso somjikelezo owodwa' : 'one-cycle benchmark'}</>}
       </p>
@@ -94,14 +94,14 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
     <div className="px-4 py-2.5">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-display" style={{ color: '#20190F' }}>{row.label}</p>
-        <p className="text-xs font-mono flex-shrink-0" style={{ color: '#8C7A62' }}>
+        <p className="text-xs font-mono flex-shrink-0" style={{ color: '#755942' }}>
           {row.harvestedKg > 0 && `${lang === 'zu' ? 'Kuvunyiwe' : 'Harvested'} ${fmtKg(row.harvestedKg)}`}
           {row.harvestedKg > 0 && row.soldKg > 0 && ' · '}
           {row.soldKg > 0 && `${lang === 'zu' ? 'Kuthengisiwe' : 'Sold'} ${fmtKg(row.soldKg)}`}
         </p>
       </div>
       {row.ambiguous && (
-        <p className="text-xs font-sans mt-1 flex items-start gap-1.5" style={{ color: '#C07A1E' }}>
+        <p className="text-xs font-sans mt-1 flex items-start gap-1.5" style={{ color: '#7A4408' }}>
           <AlertTriangle size={12} style={{ flexShrink: 0, marginTop: 2 }} />
           <span>{lang === 'zu' ? `“${row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele.` : `“${row.label}” could be several crops — log a fuller name to count it against the right one.`}</span>
         </p>
@@ -143,7 +143,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
       </div>
 
       {isLoading ? (
-        <div className="px-4 py-6 text-xs font-sans" style={{ color: '#8C7A62' }}>{lang === 'zu' ? 'Kuyalayishwa…' : 'Loading…'}</div>
+        <div className="px-4 py-6 text-xs font-sans" style={{ color: '#755942' }}>{lang === 'zu' ? 'Kuyalayishwa…' : 'Loading…'}</div>
       ) : !hasPlan ? (
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
           <Sprout size={20} style={{ color: '#1F4D2B' }} />
@@ -152,7 +152,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
           </p>
         </div>
       ) : !hasAnything ? (
-        <div className="px-4 py-6 text-xs font-sans" style={{ color: '#8C7A62' }}>
+        <div className="px-4 py-6 text-xs font-sans" style={{ color: '#755942' }}>
           {lang === 'zu' ? `Akukho okurekhodiwe ${periodLabel}. Incazelo enemininingwane ngesiNgisi okwamanje: Monthly and seasonal targets are not invented from a crop-cycle benchmark.` : `Nothing logged ${periodLabel}. Monthly and seasonal targets are not invented from a crop-cycle benchmark.`}
         </div>
       ) : (
@@ -168,7 +168,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
           ))}
           {result.unplannedActivity.length > 0 && (
             <div>
-              <div className="px-4 pt-2.5 pb-1 text-xs font-sans uppercase tracking-wider" style={{ color: '#94876F' }}>
+              <div className="px-4 pt-2.5 pb-1 text-xs font-sans uppercase tracking-wider" style={{ color: '#755942' }}>
                 {lang === 'zu' ? 'Omunye umsebenzi — awukho ohlelweni lwezitshalo' : 'Other activity — not in your crop plan'}
               </div>
               {result.unplannedActivity.map((row) => (

@@ -76,7 +76,7 @@ export default function ExchangePage() {
           <h1 className="font-display font-bold" style={{ fontSize: 15.5, color: '#20190F', margin: 0, lineHeight: 1.2 }}>
             Farmer exchange
           </h1>
-          <p className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', margin: 0, lineHeight: 1.3 }}>
+          <p className="font-sans" style={{ fontSize: 11.5, color: '#755942', margin: 0, lineHeight: 1.3 }}>
             Seed, seedlings, surplus and tools — between farmers
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function ExchangePage() {
             borderRadius: 100,
             background: 'rgba(192,122,30,0.12)',
             border: '1px solid rgba(192,122,30,0.3)',
-            color: '#C07A1E',
+            color: '#7A4408',
             whiteSpace: 'nowrap',
           }}
         >
@@ -118,7 +118,7 @@ export default function ExchangePage() {
             {SAMPLE_SUMMARY.wants} wanted.
           </p>
           {SAMPLE_TOP_CROPS.length > 0 && (
-            <p className="font-sans" style={{ fontSize: 12.5, color: '#8C7A62', lineHeight: 1.6, margin: '8px 0 0' }}>
+            <p className="font-sans" style={{ fontSize: 12.5, color: '#755942', lineHeight: 1.6, margin: '8px 0 0' }}>
               Most traded right now:{' '}
               {SAMPLE_TOP_CROPS.map((crop, i) => (
                 <span key={crop.cropKey} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>

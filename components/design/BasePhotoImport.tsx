@@ -637,7 +637,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   <RotateCw size={16} />
                 </button>
               </div>
-              <div style={{ fontSize: 11, color: '#8C7A62', marginTop: 2 }}>
+              <div style={{ fontSize: 11, color: '#755942', marginTop: 2 }}>
                 {rotationDeg === 0
                   ? t('designPhotoNotTurned')
                   : formatDesignTranslation(t('designPhotoTurned'), { degrees: rotationDeg })}
@@ -709,7 +709,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   borderRadius: 12,
                   border: 'none',
                   background: calibrationReady && !busy ? GREEN : 'rgba(226,216,196,0.6)',
-                  color: calibrationReady && !busy ? PAPER : '#8C7A62',
+                  color: calibrationReady && !busy ? PAPER : '#755942',
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: calibrationReady && !busy ? 'pointer' : 'default',

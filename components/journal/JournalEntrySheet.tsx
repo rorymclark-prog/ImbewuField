@@ -127,7 +127,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#8A7C62', marginTop: 1 }}>
+              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#755942', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               type="button"
               onClick={onClose}
               aria-label={ui('Close', 'Vala')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#8A7C62' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#755942' }}
             >
               <X size={20} />
             </button>
@@ -348,7 +348,7 @@ function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: '#8A7C62', marginBottom: 8,
+      textTransform: 'uppercase', color: '#755942', marginBottom: 8,
     }}>
       {children}
     </div>

@@ -119,7 +119,7 @@ function QuestionBuilder({
         <button
           onClick={onRemove}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.05)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'pointer' }}
+          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.05)', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
           aria-label={localUi('Remove question', 'Susa umbuzo', lang)}
         >
           <X size={14} />
@@ -162,7 +162,7 @@ function QuestionBuilder({
                 style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
               />
               {q.options.length > 2 && (
-                <button onClick={() => removeOption(i)} aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)} style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <button onClick={() => removeOption(i)} aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)} style={{ color: '#755942', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   <X size={12} />
                 </button>
               )}
@@ -172,7 +172,7 @@ function QuestionBuilder({
             <button
               onClick={addOption}
               className="flex items-center gap-1.5 text-xs font-display font-semibold"
-              style={{ color: '#C07A1E', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
+              style={{ color: '#7A4408', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
             >
               <Plus size={12} /> {localUi('Add option', 'Engeza impendulo ongakhetha kuyo', lang)}
             </button>
@@ -248,12 +248,12 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
       >
         <div className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 34, height: 34, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.25)' }}>
-          <Plus size={16} style={{ color: '#C07A1E' }} strokeWidth={1.8} />
+          <Plus size={16} style={{ color: '#7A4408' }} strokeWidth={1.8} />
         </div>
         <span className="flex-1 font-display font-semibold text-sm" style={{ color: '#20190F' }}>{localUi('New survey', 'Inhlolovo entsha', lang)}</span>
         {open
-          ? <ChevronUp size={15} style={{ color: '#8C7A62' }} />
-          : <ChevronDown size={15} style={{ color: '#8C7A62' }} />}
+          ? <ChevronUp size={15} style={{ color: '#755942' }} />
+          : <ChevronDown size={15} style={{ color: '#755942' }} />}
       </button>
 
       {open && (
@@ -277,7 +277,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
             />
           </div>
 
-          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
+          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.08em' }}>
             {localUi('Questions', 'Imibuzo', lang)}
           </div>
 
@@ -301,7 +301,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
           </button>
 
           {sampleNote && (
-            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#C07A1E', border: '1px solid rgba(192,122,30,0.2)' }}>
+            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#7A4408', border: '1px solid rgba(192,122,30,0.2)' }}>
               {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
             </p>
           )}
@@ -423,9 +423,9 @@ function FarmerSurveyCard({
             <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
           </div>
         ) : open ? (
-          <ChevronUp size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
+          <ChevronUp size={15} style={{ color: '#755942', flexShrink: 0 }} />
         ) : (
-          <ChevronDown size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
+          <ChevronDown size={15} style={{ color: '#755942', flexShrink: 0 }} />
         )}
       </button>
 
@@ -604,14 +604,14 @@ export default function SurveysPage() {
               </div>
             ) : surveys.length === 0 ? (
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <ClipboardList size={26} style={{ color: '#755942', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
                   {localUi('No surveys yet. Build the first one above.', 'Azikho izinhlolovo okwamanje. Yakha eyokuqala ngenhla.', lang)}
                 </p>
               </div>
             ) : (
               <>
-                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
+                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.08em' }}>
                   {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
                 <div className="space-y-3">
@@ -633,7 +633,7 @@ export default function SurveysPage() {
               </div>
             ) : surveys.length === 0 ? (
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <ClipboardList size={26} style={{ color: '#755942', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
                   {localUi('No surveys available right now.', 'Azikho izinhlolovo ezitholakalayo okwamanje.', lang)}
                 </p>
@@ -655,7 +655,7 @@ export default function SurveysPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
+          <p className="text-center text-xs font-sans" style={{ color: '#755942' }}>
             {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
           </p>
         )}

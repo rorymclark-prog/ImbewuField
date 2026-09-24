@@ -268,7 +268,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             onClick={() => (hasSample ? clearSampleFarmData() : loadSampleFarmData())}
             className="w-full text-left px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={hasSample
-              ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }
+              ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#7A4408' }
               : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: '#1F4D2B' }}>
             <FlaskConical size={13} className="inline mr-1" />
             {hasSample ? "Ubhejane farm data loaded — tap to clear" : "Load Ubhejane farm data (to test finance questions)"}
@@ -295,7 +295,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
               : { maxWidth: '92%', background: '#FFFEFA', border: '1px solid #E7DDC9', color: '#20190F', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
-              ? <span style={{ color: '#D4922A' }}>{m.content}</span>
+              ? <span style={{ color: '#A83A2C' }}>{m.content}</span>
               : m.content || (loading && i === messages.length - 1 ? <span className="lima-shimmer">Thinking…</span> : '')}
           </div>
         </div>
@@ -308,7 +308,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
           <div className="flex items-center gap-2 mb-1.5">
             <img src={pendingImage.preview} alt="" className="rounded-lg" style={{ width: 44, height: 44, objectFit: 'cover' }} />
             <span className="text-xs" style={{ color: '#5C5040' }}>Photo attached</span>
-            <button onClick={() => setPendingImage(null)} className="flex items-center gap-0.5 text-xs" style={{ color: '#D4922A' }}>
+            <button onClick={() => setPendingImage(null)} className="flex items-center gap-0.5 text-xs" style={{ color: '#9A6018' }}>
               <X size={12} />remove
             </button>
           </div>
@@ -332,7 +332,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             style={{ minHeight: 46,
               background: isDisabled ? 'rgba(226,216,196,0.4)' : '#1F4D2B',
               border: isDisabled ? '1px solid #E2D8C4' : 'none',
-              color: isDisabled ? '#8C7A62' : '#F7F2E9' }}>
+              color: isDisabled ? '#755942' : '#F7F2E9' }}>
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
         </form>

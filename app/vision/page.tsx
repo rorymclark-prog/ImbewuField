@@ -43,7 +43,7 @@ type LimaResult = CropResult | WeighResult | ErrorResult;
 
 const CONFIDENCE_STYLE: Record<'high' | 'medium' | 'low', { bg: string; color: string; label: string }> = {
   high:   { bg: 'rgba(31,77,43,0.10)',   color: '#1F4D2B', label: 'High confidence' },
-  medium: { bg: 'rgba(192,122,30,0.10)', color: '#C07A1E', label: 'Medium confidence' },
+  medium: { bg: 'rgba(192,122,30,0.10)', color: '#7A4408', label: 'Medium confidence' },
   low:    { bg: 'rgba(92,80,64,0.10)',   color: '#5C5040', label: 'Low confidence' },
 };
 
@@ -254,7 +254,7 @@ export default function VisionPage() {
                     <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>
                       {t('Take / choose a photo', 'Thatha / khetha isithombe')}
                     </div>
-                    <div className="font-sans text-xs mt-1" style={{ color: '#8C7A62' }}>
+                    <div className="font-sans text-xs mt-1" style={{ color: '#755942' }}>
                       {mode === 'crop'
                         ? t('Photo of your planted bed', 'Isithombe sendawo oyitshalile')
                         : t('Photo of your harvested produce', 'Isithombe sesivuno sakho')}
@@ -295,7 +295,7 @@ export default function VisionPage() {
                 <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>
                   {t('Lima is reading the photo…', 'ULima ubheka isithombe…')}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: '#755942' }}>
                   {t('Usually 5–15 seconds', 'Ngokuvamile kuthatha imizuzwana engu-5–15')}
                 </div>
               </div>
@@ -330,7 +330,7 @@ export default function VisionPage() {
                 {/* Error result */}
                 {errResult && (
                   <>
-                    {zu && <p className="font-sans text-xs mb-2" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {zu && <p className="font-sans text-xs mb-2" style={{ color: '#755942' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
                     <p className="font-sans text-sm" style={{ color: '#5C5040' }}>{errResult.error}</p>
                   </>
                 )}
@@ -347,7 +347,7 @@ export default function VisionPage() {
                       </div>
                     </div>
                     <ConfidencePill level={cropResult.confidence} zu={zu} />
-                    {zu && <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {zu && <p className="font-sans text-xs" style={{ color: '#755942' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
                     <p className="font-sans text-sm leading-relaxed" style={{ color: '#20190F' }}>
                       {cropResult.note}
                     </p>
@@ -363,7 +363,7 @@ export default function VisionPage() {
                       </div>
                     </div>
                     <ConfidencePill level={weighResult.confidence} zu={zu} />
-                    {zu && <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    {zu && <p className="font-sans text-xs" style={{ color: '#755942' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
                     <p className="font-sans text-sm leading-relaxed" style={{ color: '#20190F' }}>
                       {weighResult.note}
                     </p>

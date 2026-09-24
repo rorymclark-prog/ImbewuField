@@ -53,7 +53,7 @@ const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprou
   sow:                { Icon: Sprout,        color: '#1F4D2B', short: 'Sow' },
   transplant:         { Icon: Leaf,          color: '#2E6B3A', short: 'Transplant' },
   mulch:              { Icon: Layers,        color: '#2E6B3A', short: 'Mulch' },
-  harvest:            { Icon: Leaf,          color: '#C07A1E', short: 'Harvest' },
+  harvest:            { Icon: Leaf,          color: '#7A4408', short: 'Harvest' },
   'terminate-cover':  { Icon: Scissors,      color: '#5C4F3C', short: 'Cut down' },
   'weed-early':       { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
   'weed-mid':         { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
@@ -105,7 +105,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
   if (tasks.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-6 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <p className="font-sans" style={{ fontSize: 14, color: '#8C7A62', lineHeight: 1.5 }}>{emptyMessage}</p>
+        <p className="font-sans" style={{ fontSize: 14, color: '#755942', lineHeight: 1.5 }}>{emptyMessage}</p>
       </div>
     );
   }
@@ -133,7 +133,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
               >
                 {task.title}
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 13, color: '#8C7A62' }}>{task.subtitle}</div>
+              <div className="font-sans truncate" style={{ fontSize: 13, color: '#755942' }}>{task.subtitle}</div>
             </div>
           </div>
         );
@@ -233,7 +233,7 @@ export default function CropPlanPage() {
           <Link
             href="/facilitator/crops"
             className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
-            style={{ fontSize: 12, background: '#fff', color: '#C07A1E', textDecoration: 'none' }}
+            style={{ fontSize: 12, background: '#fff', color: '#7A4408', textDecoration: 'none' }}
           >
             {ui('Plan my crops', 'Hlela izitshalo zami')}
           </Link>
@@ -253,7 +253,7 @@ export default function CropPlanPage() {
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
+              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#7A4408', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {mounted && view === 'month' && monthName}
                 {mounted && view === 'season' && seasonLabel}
@@ -288,7 +288,7 @@ export default function CropPlanPage() {
               whose picking months have all passed. */}
           {planYieldsNothing && (
             <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: '#FFFEFA', border: '1px solid #C07A1E' }}>
-              <AlertCircle size={18} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
+              <AlertCircle size={18} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
               <div>
                 <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
                   {ui('Your crop plan is not producing any jobs', 'Uhlelo lwakho lwezitshalo alukhiqizi imisebenzi')}
@@ -327,14 +327,14 @@ export default function CropPlanPage() {
                         cursor: 'pointer',
                       }}>
                       <span className="font-sans font-semibold" style={{ fontSize: 11, color: on ? '#EAF3E2' : '#5C5040' }}>{label}</span>
-                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : '#C6BBA4' }}>{n}</span>
+                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : '#755942' }}>{n}</span>
                     </button>
                   );
                 })}
               </div>
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
+                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#755942', letterSpacing: '0.12em' }}>
                   {monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
@@ -372,7 +372,7 @@ export default function CropPlanPage() {
                 </div>
               </div>
               <div className={workspace.cards}>
-              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
+              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (

@@ -22,7 +22,7 @@ function renderMarkdown(text: string) {
         return (
           <div key={i}>
             <h3 className="font-display font-semibold text-sm mb-2 pb-2 flex items-center gap-2"
-                style={{ color: '#C07A1E', borderBottom: '1px solid #E2D8C4' }}>
+                style={{ color: '#7A4408', borderBottom: '1px solid #E2D8C4' }}>
               {heading}
             </h3>
             <div className="space-y-1.5">
@@ -39,7 +39,7 @@ function renderMarkdown(text: string) {
                 if (line.match(/^\d+\./)) {
                   return (
                     <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                      <span className="flex-shrink-0 w-4 text-right" style={{ color: '#C07A1E' }}>{line.match(/^\d+/)?.[0]}.</span>
+                      <span className="flex-shrink-0 w-4 text-right" style={{ color: '#7A4408' }}>{line.match(/^\d+/)?.[0]}.</span>
                       <span>{line.replace(/^\d+\.\s*/, '')}</span>
                     </div>
                   );
@@ -150,7 +150,7 @@ export default function InsightsPanel({ locationData }: Props) {
       {error && (
         <div
           className="text-xs font-mono px-3 py-2 rounded-lg mb-3"
-          style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: '#D4922A' }}
+          style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: '#9A6018' }}
         >
           {error}
         </div>

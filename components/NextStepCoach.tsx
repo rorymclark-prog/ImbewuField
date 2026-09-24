@@ -173,7 +173,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
       <div className="flex items-center gap-2">
         <span
           className="font-sans font-bold uppercase flex-shrink-0"
-          style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.05em' }}
+          style={{ fontSize: 12, color: '#7A4408', letterSpacing: '0.05em' }}
         >
           {t('coachOverline')}
         </span>
@@ -212,17 +212,17 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           </div>
           <span
             className="font-sans font-bold uppercase flex-1 min-w-0"
-            style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.06em' }}
+            style={{ fontSize: 12, color: '#7A4408', letterSpacing: '0.06em' }}
           >
             {t('coachOverline')}
           </span>
-          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="#8C7A62" />
+          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="#755942" />
           <button
             type="button"
             onClick={handleDismiss}
             aria-label={t('coachDismiss')}
             className="flex items-center justify-center rounded-full flex-shrink-0"
-            style={{ width: 44, height: 44, margin: '-8px -8px -8px 0', color: '#8C7A62', background: 'transparent', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, margin: '-8px -8px -8px 0', color: '#755942', background: 'transparent', border: 'none', cursor: 'pointer' }}
           >
             <X size={17} strokeWidth={1.8} aria-hidden />
           </button>
@@ -258,8 +258,8 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
 
         {showGoal && GoalIcon && (
           <div className="flex items-start gap-1.5 mt-2">
-            <GoalIcon size={14} strokeWidth={1.8} style={{ color: '#8C7A62', marginTop: 1, flexShrink: 0 }} aria-hidden />
-            <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+            <GoalIcon size={14} strokeWidth={1.8} style={{ color: '#755942', marginTop: 1, flexShrink: 0 }} aria-hidden />
+            <span className="font-sans" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
               {t(GOAL_COPY_KEY[goal as Goal])}
             </span>
           </div>

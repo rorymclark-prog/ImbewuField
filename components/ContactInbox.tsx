@@ -144,9 +144,9 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   if (!isLive && !sample) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <MessageCircle size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Isistimu ayikaxhunyaniswa' : 'Backend not connected'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>{lang === 'zu' ? 'Xhuma i-Firebase ukuze wamukele imilayezo' : 'Connect Firebase to receive messages'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Xhuma i-Firebase ukuze wamukele imilayezo' : 'Connect Firebase to receive messages'}</p>
       </div>
     );
   }
@@ -164,7 +164,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8' }}>
         <Mail size={26} style={{ color: '#8C4938', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#8C4938' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : 'Messages unavailable'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
       </div>
     );
   }
@@ -172,9 +172,9 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   if (messages.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <Mail size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <Mail size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Akukho milayezo okwamanje' : 'No messages yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : 'Messages from learners appear here'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : 'Messages from learners appear here'}</p>
       </div>
     );
   }
@@ -234,7 +234,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   >
                     {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : 'Unknown sender')}
                   </span>
-                  <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#8C7A62' }}>
+                  <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#755942' }}>
                     {formatDate(msg.created_at, lang)}
                   </span>
                 </div>
@@ -242,21 +242,21 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   {msg.subject || (lang === 'zu' ? '(Akunasihloko)' : '(no subject)')}
                 </div>
                 {!isOpen && (
-                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: '#8C7A62' }}>
+                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: '#755942' }}>
                     {msg.body}
                   </div>
                 )}
               </div>
 
               {isOpen
-                ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />
-                : <ChevronDown size={14} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />}
+                ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />
+                : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />}
             </button>
 
             {/* Expanded body */}
             {isOpen && (
               <div className="px-10 pb-4" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
-                <div className="font-sans text-xs pt-2 pb-3" style={{ color: '#8C7A62' }}>
+                <div className="font-sans text-xs pt-2 pb-3" style={{ color: '#755942' }}>
                   {lang === 'zu' ? 'Ithunyelwe ku: ' : 'Sent to: '}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
                   {msg.status === 'replied' && (
                     <span className="ml-2 px-1.5 py-0.5 rounded font-mono" style={{ fontSize: 10, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)' }}>
@@ -272,7 +272,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                 {/* Reply box */}
                 <div className="mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
                   <div className="flex items-center gap-1.5 mb-2">
-                    <CornerDownRight size={12} style={{ color: '#8C7A62' }} />
+                    <CornerDownRight size={12} style={{ color: '#755942' }} />
                     <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Phendula' : 'Reply'}</span>
                   </div>
                   <textarea
@@ -290,7 +290,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     className="mt-2 flex items-center gap-1.5 font-display font-semibold text-xs px-4 py-2 rounded-xl"
                     style={{
                       background: replyText[msg.id]?.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.08)',
-                      color: replyText[msg.id]?.trim() ? '#F7F2E9' : '#8C7A62',
+                      color: replyText[msg.id]?.trim() ? '#F7F2E9' : '#755942',
                       border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
                     }}
                   >

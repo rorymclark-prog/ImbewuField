@@ -141,7 +141,7 @@ export default function Illustration({ name, className = '' }: IllustrationProps
   if (name === 'empty-sprout') {
     return (
       <div className={`flex items-center justify-center ${className}`} style={{ width: 80, height: 80, background: '#F7F2E9', borderRadius: '50%', border: '1px dashed #D4922A' }}>
-        <Sprout size={32} style={{ color: '#D4922A', opacity: 0.5 }} />
+        <Sprout size={32} style={{ color: '#9A6018', opacity: 0.5 }} />
       </div>
     );
   }

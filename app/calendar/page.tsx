@@ -273,7 +273,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
         fontWeight: 700,
         letterSpacing: '0.10em',
         textTransform: 'uppercase',
-        color: '#8C7A62',
+        color: '#755942',
         marginBottom: 8,
       }}
     >
@@ -471,7 +471,7 @@ export default function CalendarPage() {
                     marginTop: 4,
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 11,
-                    color: '#8C7A62',
+                    color: '#755942',
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
                   }}
@@ -496,7 +496,7 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#8C7A62', fontStyle: 'italic' }}>
+                  <span style={{ fontSize: 13, color: '#755942', fontStyle: 'italic' }}>
                     No planting recommended this month
                   </span>
                 )}
@@ -517,7 +517,7 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#8C7A62', fontStyle: 'italic' }}>
+                  <span style={{ fontSize: 13, color: '#755942', fontStyle: 'italic' }}>
                     Nothing ready to harvest this month
                   </span>
                 )}
@@ -706,7 +706,7 @@ export default function CalendarPage() {
                 otherwise see a table with a header row and nothing under it, with
                 no clue why. Name what this grid covers instead of just going blank. */}
             {isFiltered && visibleCrops.length === 0 ? (
-              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: '#8C7A62', lineHeight: 1.5 }}>
+              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: '#755942', lineHeight: 1.5 }}>
                 This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
@@ -737,7 +737,7 @@ export default function CalendarPage() {
                         fontWeight: 700,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#8C7A62',
+                        color: '#755942',
                         borderBottom: '1px solid #E2D8C4',
                         whiteSpace: 'nowrap',
                         minWidth: 110,
@@ -759,7 +759,7 @@ export default function CalendarPage() {
                           fontSize: 10,
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
-                          color: idx === selectedMonth ? '#1F4D2B' : '#8C7A62',
+                          color: idx === selectedMonth ? '#1F4D2B' : '#755942',
                           borderBottom: '1px solid #E2D8C4',
                           borderLeft: '1px solid #E2D8C420',
                           background:

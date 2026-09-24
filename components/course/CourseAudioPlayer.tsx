@@ -26,7 +26,7 @@ import { narrationReviewPending } from '@/lib/narration-blockers';
 
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
-const MUTED = '#8C7A62';
+const MUTED = '#755942';
 const HAIRLINE = '#E2D8C4';
 
 /** Human names for the languages we can record in. Shown only in the mismatch notice and the

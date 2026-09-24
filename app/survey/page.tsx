@@ -224,7 +224,7 @@ function SurveyInner() {
         {step === 5 && (
           <button onClick={printPlan} disabled={pdfBusy}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: pdfBusy ? 'default' : 'pointer', opacity: pdfBusy ? 0.6 : 1 }}>
+            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#7A4408', cursor: pdfBusy ? 'default' : 'pointer', opacity: pdfBusy ? 0.6 : 1 }}>
             <Printer size={13} />{pdfBusy ? localUi('Building…', 'Kuyakhiwa…', lang) : localUi('Print', 'Phrinta', lang)}
           </button>
         )}
@@ -242,7 +242,7 @@ function SurveyInner() {
                   <div key={i} className="flex-1 rounded-full" style={{ height: 4, background: i <= step ? '#1F4D2B' : 'rgba(32,25,15,0.10)' }} />
                 ))}
               </div>
-              <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#C07A1E', letterSpacing: '0.1em' }}>
+              <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#7A4408', letterSpacing: '0.1em' }}>
                 {localUi('Your garden', 'Ingadi yakho', lang)} · {step + 1} {localUi('of', 'ku', lang)} {TOTAL}
               </div>
             </div>
@@ -260,7 +260,7 @@ function SurveyInner() {
               {/* Which parcel is this survey for? */}
               {savedPins.length > 0 && (
                 <div className="rounded-2xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{localUi('Survey for', 'Inhlolovo yenzelwa', lang)}</div>
+              <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('Survey for', 'Inhlolovo yenzelwa', lang)}</div>
                   <div className="flex flex-wrap gap-2">
                     {savedPins.map(p => (
                       <button key={p.id}
@@ -297,15 +297,15 @@ function SurveyInner() {
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="flex items-center gap-2 mb-3">
                   <Check size={14} style={{ color: '#1F4D2B' }} />
-                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{localUi('Already known from the map', 'Sekuvele kwaziwa emephini', lang)}</span>
+                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('Already known from the map', 'Sekuvele kwaziwa emephini', lang)}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(31,77,43,0.06)' }}>
-                    <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>{localUi('Land size', 'Ubukhulu bomhlaba', lang)}</div>
+                    <div className="text-xs font-sans" style={{ color: '#755942' }}>{localUi('Land size', 'Ubukhulu bomhlaba', lang)}</div>
                     <div className="font-display font-bold text-lg" style={{ color: '#20190F' }}>{known.ha} ha</div>
                   </div>
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(35,94,134,0.07)' }}>
-                    <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>{localUi('Rain caught / yr', 'Amanzi emvula aqoqwayo / ngonyaka', lang)}</div>
+                    <div className="text-xs font-sans" style={{ color: '#755942' }}>{localUi('Rain caught / yr', 'Amanzi emvula aqoqwayo / ngonyaka', lang)}</div>
                     <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{known.rainL.toLocaleString('en-ZA')} L</div>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ function SurveyInner() {
                 </Link>
               </div>
               {!known.hasSite && (
-                <p className="text-xs font-sans flex items-center gap-1.5" style={{ color: '#8C7A62' }}>
+                <p className="text-xs font-sans flex items-center gap-1.5" style={{ color: '#755942' }}>
                   <MapPin size={12} />{localUi('Showing an example plot — analyse a site on the map for your real numbers.', 'Kuboniswa isibonelo sendawo — hlaziya indawo emephini ukuze ubone izinombolo zangempela.', lang)}
                 </p>
               )}
@@ -326,7 +326,7 @@ function SurveyInner() {
             <div className={workspace.twoColumns}>
               <h1 className={`${workspace.fullRow} font-display font-bold text-2xl`} style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{localUi('Sun & slope', 'Ilanga nomthambeka', lang)}</h1>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>How much sun does it get?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>How much sun does it get?</div>
                 <div className="grid grid-cols-3 gap-2">
                   {SUN_OPTS.map(({ v, label, Icon }) => {
                     const on = sun === v;
@@ -342,7 +342,7 @@ function SurveyInner() {
                 </div>
               </div>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>What&rsquo;s the slope?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>What&rsquo;s the slope?</div>
                 <div className="grid grid-cols-3 gap-2">
                   {SLOPE_OPTS.map(({ v, label }) => {
                     const on = slope === v;
@@ -405,7 +405,7 @@ function SurveyInner() {
                       style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <div className="flex-1">
                         <div className="font-display font-semibold text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</div>
-                        <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#8C7A62' }}>{desc}</div>
+                        <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#755942' }}>{desc}</div>
                       </div>
                       <div className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 22, height: 22, background: on ? '#EAF3E2' : 'transparent', border: `1.5px solid ${on ? '#EAF3E2' : '#C9BBA1'}` }}>
                         {on && <Check size={13} style={{ color: '#1F4D2B' }} />}
@@ -432,7 +432,7 @@ function SurveyInner() {
               <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div>
                   <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{beds} beds</div>
-                  <div className="font-sans text-xs" style={{ color: '#8C7A62' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
+                  <div className="font-sans text-xs" style={{ color: '#755942' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
                   <button onClick={() => setBeds((b) => Math.max(1, b - 1))} aria-label={localUi('Remove one bed', 'Yehlisa umbhede owodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={14} /></button>
@@ -457,7 +457,7 @@ function SurveyInner() {
           {step === 5 && (
             <div id="plan-doc" className="space-y-5">
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#C07A1E', letterSpacing: '0.1em' }}>{localUi('Garden plan', 'Uhlelo lwengadi', lang)}</div>
+                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#7A4408', letterSpacing: '0.1em' }}>{localUi('Garden plan', 'Uhlelo lwengadi', lang)}</div>
                 <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{beds} beds · {(beds * BED_M2).toFixed(1)} m²</h1>
                 <p className="font-sans text-sm mt-1" style={{ color: '#5C5040' }}>
                   {known.ha} ha · {sunLabel} · {tanksPhrase}{goal ? ` · goal: ${GOALS.find((g) => g.v === goal)?.label.toLowerCase()}` : ''}
@@ -468,7 +468,7 @@ function SurveyInner() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
                   <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
+                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
                     <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{crop}</div>
                   </div>
                 ))}
@@ -476,7 +476,7 @@ function SurveyInner() {
 
               {/* Week-by-week plan — slide the weeks */}
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{localUi('First six weeks', 'Amaviki okuqala ayisithupha', lang)}</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('First six weeks', 'Amaviki okuqala ayisithupha', lang)}</div>
                 <div className="no-print flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
                   {WEEK_PLAN.map((w) => {
                     const on = week === w.wk;
@@ -542,7 +542,7 @@ function SurveyInner() {
                 </Link>
               </div>
 
-              <div className="print-only text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
+              <div className="print-only text-center text-xs font-sans" style={{ color: '#755942' }}>
                 Generated by ImbewuField · imbewufield.vercel.app
               </div>
             </div>
@@ -560,7 +560,7 @@ function SurveyInner() {
             {step < 4 && (
               <button onClick={() => canNext && setStep((s) => s + 1)} disabled={!canNext}
                 className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: canNext ? '#1F4D2B' : 'rgba(226,216,196,0.6)', color: canNext ? '#F7F2E9' : '#8C7A62', border: 'none', cursor: canNext ? 'pointer' : 'not-allowed' }}>
+                style={{ background: canNext ? '#1F4D2B' : 'rgba(226,216,196,0.6)', color: canNext ? '#F7F2E9' : '#755942', border: 'none', cursor: canNext ? 'pointer' : 'not-allowed' }}>
                 {localUi('Continue', 'Qhubeka', lang)}<ChevronRight size={15} />
               </button>
             )}

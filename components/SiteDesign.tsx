@@ -145,15 +145,15 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       )}
 
       {!locationData && (
-        <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: '#9A8268', background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: '#755942', background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
           Select a location on the map to open the Design Studio for it.
         </p>
       )}
 
-      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
+      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#755942', borderTop: '1px solid #E2D8C4' }}>
         Sketch → AI Design
       </div>
-      <p className="text-xs font-display leading-relaxed" style={{ color: '#9A8268' }}>
+      <p className="text-xs font-display leading-relaxed" style={{ color: '#755942' }}>
         Upload a hand-drawn plan of your land (or a photo of one). Claude reads it and lays out a permaculture design on your sketch, using this site&apos;s climate, soil, sun and wind.
       </p>
 
@@ -172,8 +172,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         ) : (
           <div>
             <PenLine size={22} className="mx-auto mb-1.5" style={{ color: '#1F4D2B' }} />
-            <p className="text-xs font-display" style={{ color: '#9A8268' }}>Drop your site sketch here or click to upload</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
+            <p className="text-xs font-display" style={{ color: '#755942' }}>Drop your site sketch here or click to upload</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
           </div>
         )}
       </div>
@@ -199,7 +199,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <button onClick={generate} disabled={loading || !locationData}
           className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all"
           style={loading
-            ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
+            ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#755942' }
             : { background: 'rgba(158,92,8,0.12)', border: '1px solid rgba(158,92,8,0.4)', color: '#9E5C08' }}>
           {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site…</span> : <span className="flex items-center justify-center gap-1.5"><PencilRuler size={14} /> Generate design</span>}
         </button>

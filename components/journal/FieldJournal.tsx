@@ -294,11 +294,11 @@ export default function FieldJournal() {
             textAlign: 'center', padding: '30px 22px 26px', borderRadius: 16,
             background: '#FFFEFA', border: '1px dashed #D9CDB4', marginBottom: 20,
           }}>
-            <NotebookPen size={26} style={{ color: '#9A8268', margin: '0 auto 10px' }} />
+            <NotebookPen size={26} style={{ color: '#755942', margin: '0 auto 10px' }} />
             <div style={{ font: '600 16px Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 6 }}>
               {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
-            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#8A7C62', maxWidth: 320, margin: '0 auto' }}>
+            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#755942', maxWidth: 320, margin: '0 auto' }}>
               {ui('Write down the date, what you did and what happened. One season of notes is what makes next season’s decisions better — here’s what that looks like.', 'Bhala usuku, okwenzile nokwenzekile. Amanothi esizini eyodwa angasiza ekuthatheni izinqumo ezingcono ngesizini elandelayo — nasi isibonelo.')}
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function FieldJournal() {
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
               font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: '#A66A16',
+              textTransform: 'uppercase', color: '#9A6018',
             }}>
               <Sparkles size={12} />
               {ui('Example — what an entry looks like', 'Isibonelo — indlela okufakwa ngayo')}
@@ -335,14 +335,14 @@ export default function FieldJournal() {
                     <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: '#D9CDB4', border: '2px solid #E4DCC6' }} />
                     <span style={{
                       position: 'absolute', top: 10, right: 10,
-                      padding: '3px 7px', borderRadius: 6, background: '#C07A1E', color: '#fff',
+                      padding: '3px 7px', borderRadius: 6, background: '#9A6018', color: '#fff',
                       font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
                     }}>
                       {ui('Example', 'Isibonelo')}
                     </span>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
+                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#755942' }}>
                         {ex.dateLabel}
                       </span>
                       <span style={{
@@ -421,7 +421,7 @@ export default function FieldJournal() {
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
+                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#755942' }}>
                           {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
@@ -513,7 +513,7 @@ function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
       <div style={{ font: '600 21px/1 Newsreader, Georgia, serif', color: '#1F4D2B' }}>{value}</div>
-      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: '#8A7C62', marginTop: 4 }}>{label}</div>
+      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: '#755942', marginTop: 4 }}>{label}</div>
     </div>
   );
 }

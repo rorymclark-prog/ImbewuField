@@ -28,8 +28,8 @@ const SCALE_COLOR: Record<string, string> = {
 function SectionHead({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div className="flex items-center gap-2 mt-5 mb-2">
-      <span style={{ color: '#C07A1E' }}>{icon}</span>
-      <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#C07A1E' }}>{label}</span>
+      <span style={{ color: '#7A4408' }}>{icon}</span>
+      <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#7A4408' }}>{label}</span>
     </div>
   );
 }
@@ -38,7 +38,7 @@ function Chip({ label, dim }: { label: string; dim?: boolean }) {
   return (
     <span
       className="inline-block px-2 py-0.5 rounded-full text-xs font-mono"
-      style={{ background: dim ? 'rgba(140,122,98,0.12)' : 'rgba(31,77,43,0.10)', color: dim ? '#8C7A62' : '#1F4D2B' }}
+      style={{ background: dim ? 'rgba(140,122,98,0.12)' : 'rgba(31,77,43,0.10)', color: dim ? '#755942' : '#1F4D2B' }}
     >
       {label}
     </span>
@@ -50,7 +50,7 @@ function PlantRow({ p }: { p: PlantEntry }) {
     <div className="py-2" style={{ borderBottom: '1px solid rgba(226,216,196,0.6)' }}>
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{p.name}</span>
-        {p.localName && <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>{p.localName}</span>}
+        {p.localName && <span className="text-xs font-mono" style={{ color: '#755942' }}>{p.localName}</span>}
         {p.season && <Chip label={p.season} />}
       </div>
       {(p.role || p.notes) && (
@@ -76,7 +76,7 @@ function AnimalCard({ a }: { a: AnimalEntry }) {
         </span>
       </div>
       {a.breeds && (
-        <p className="text-xs font-mono mb-1" style={{ color: '#C07A1E' }}>{a.breeds}</p>
+        <p className="text-xs font-mono mb-1" style={{ color: '#7A4408' }}>{a.breeds}</p>
       )}
       <p className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>{a.notes}</p>
     </div>
@@ -135,22 +135,22 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
   }, [locationData]);
 
   if (!locationData) {
-    return <p className="text-xs font-display text-center py-8" style={{ color: '#8C7A62' }}>{t('lifeGuideSelectLocation')}</p>;
+    return <p className="text-xs font-display text-center py-8" style={{ color: '#755942' }}>{t('lifeGuideSelectLocation')}</p>;
   }
 
   if (loading) {
     return (
       <div className="space-y-3 py-2">
         <div className="flex items-center gap-2 mb-3">
-          <Loader2 size={14} className="animate-spin" style={{ color: '#C07A1E' }} />
-          <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>{t('lifeGuideBuilding')}</span>
+          <Loader2 size={14} className="animate-spin" style={{ color: '#7A4408' }} />
+          <span className="text-xs font-mono" style={{ color: '#755942' }}>{t('lifeGuideBuilding')}</span>
         </div>
         {[80, 60, 90, 50, 70].map((w, i) => <SkeletonLine key={i} w={`${w}%`} />)}
       </div>
     );
   }
 
-  if (error) return <p className="text-xs font-display py-4 text-center" style={{ color: '#D4922A' }}>{error}</p>;
+  if (error) return <p className="text-xs font-display py-4 text-center" style={{ color: '#A83A2C' }}>{error}</p>;
 
   if (!data) return null;
 
@@ -176,8 +176,8 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.vegetables ?? []).map((v, i) => (
           <div key={i} className="rounded-lg p-2" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{v.name}</p>
-            {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#C07A1E', fontSize: 12 }}>{v.season}</p>}
-            {v.notes && <p className="text-xs font-display mt-0.5 leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{v.notes}</p>}
+            {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#7A4408', fontSize: 12 }}>{v.season}</p>}
+            {v.notes && <p className="text-xs font-display mt-0.5 leading-snug" style={{ color: '#755942', fontSize: 12 }}>{v.notes}</p>}
           </div>
         ))}
       </div>
@@ -188,7 +188,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.fruitTrees ?? []).map((f, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{f.name}</p>
-            {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{f.notes}</p>}
+            {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#755942', fontSize: 12 }}>{f.notes}</p>}
           </div>
         ))}
       </div>
@@ -205,7 +205,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.nuts ?? []).map((n, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{n.name}</p>
-            {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{n.notes}</p>}
+            {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#755942', fontSize: 12 }}>{n.notes}</p>}
           </div>
         ))}
       </div>

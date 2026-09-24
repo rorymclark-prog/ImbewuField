@@ -175,11 +175,11 @@ function Disclosure({
         <span style={{ color: '#1F4D2B', display: 'flex' }}>{icon}</span>
         <span className="flex-1 min-w-0">
           <span className="block font-display text-sm font-semibold" style={{ color: '#20190F' }}>{title}</span>
-          <span className="block text-xs font-sans" style={{ color: '#8C7A62' }}>{hint}</span>
+          <span className="block text-xs font-sans" style={{ color: '#755942' }}>{hint}</span>
         </span>
         <ChevronDown
           size={16}
-          style={{ color: '#8C7A62', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+          style={{ color: '#755942', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
         />
       </button>
       {open && <div className="px-3 pb-3 space-y-2.5" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 12 }}>{children}</div>}
@@ -710,7 +710,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={13} />{ui('Share PDF', 'Yabelana nge-PDF')}
         </button>
@@ -718,7 +718,7 @@ export default function InvoicePage() {
           onClick={printInvoice}
           disabled={!valid}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Printer size={13} />{ui('Print', 'Phrinta')}
         </button>
@@ -747,7 +747,7 @@ export default function InvoicePage() {
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
-                <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
+                <span className="text-xs font-sans" style={{ color: '#755942' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
               )}
             </div>
 
@@ -842,7 +842,7 @@ export default function InvoicePage() {
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}
                 </div>
                 {saved.length === 0 ? (
-                  <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
+                  <div className="px-3 py-3 text-xs font-sans" style={{ color: '#755942' }}>
                     {ui('No saved invoices yet — save your first invoice here.')}
                   </div>
                 ) : saved.map((inv) => (
@@ -852,7 +852,7 @@ export default function InvoicePage() {
                         <div className="font-display text-sm" style={{ color: '#20190F' }}>
                           #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                         </div>
-                        <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+                        <div className="text-xs font-sans" style={{ color: '#755942' }}>
                           {new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       </button>
@@ -863,7 +863,7 @@ export default function InvoicePage() {
                         className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                         style={inv.status === 'paid'
                           ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
-                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
+                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#7A4408', cursor: 'pointer' }}>
                         {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
                       </button>
                       {/* Two taps to destroy accounting history. The first tap used to be enough. */}
@@ -918,13 +918,13 @@ export default function InvoicePage() {
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
-                <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+                <div className="text-xs font-sans mt-1" style={{ color: '#755942' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
                     : ui('Leave empty to invoice under your own name. Add a logo in Account.')}
                 </div>
               </label>
-              <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>
+              <p className="text-xs font-sans leading-relaxed" style={{ color: '#755942' }}>
                 {ui('Your name and phone come from your account. Everything else here is added to the letterhead on every invoice, and stays on this device.')}
               </p>
               <label className="block">
@@ -1075,12 +1075,12 @@ export default function InvoicePage() {
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
                     <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
-                      <span className="text-sm font-display" style={{ color: '#8C7A62' }}>R</span>
+                      <span className="text-sm font-display" style={{ color: '#755942' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
                         className="w-full text-sm font-display outline-none tabular-nums"
                         style={{ background: 'transparent', border: 'none', color: '#20190F' }} />
-                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: '#8C7A62' }}>{ui('each')}</span>
+                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: '#755942' }}>{ui('each')}</span>
                     </div>
                   </div>
                   {(() => {
@@ -1164,12 +1164,12 @@ export default function InvoicePage() {
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>
@@ -1187,7 +1187,7 @@ export default function InvoicePage() {
             )}
 
             {!valid && (
-              <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
+              <p className="text-center text-xs font-sans" style={{ color: '#755942' }}>
                 {entryError ? ui(entryError) : (!paymentStatus ? ui('Choose paid or unpaid to continue.') : recordBasis === '' ? ui('Confirm whether this sale is already recorded.') : recordBasis === 'existing' && !sourceSaleId ? ui('Select the existing sale to continue.') : ui('Add a buyer and at least one item to save, print or share.'))}
               </p>
             )}

@@ -56,7 +56,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
     <div className="rounded-2xl px-4 py-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="flex items-center gap-2">
         <ShieldCheck size={16} style={{ color: '#5C5040' }} />
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>
+        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
           What you share
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
       </p>
 
       {loading ? (
-        <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: '#8C7A62' }}>
+        <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: '#755942' }}>
           <Loader2 size={14} className="animate-spin" /> Loading…
         </div>
       ) : (
@@ -91,11 +91,11 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
                   />
                   <span className="flex-1 min-w-0">
                     <span className="block text-sm font-display" style={{ color: '#20190F' }}>{label}</span>
-                    <span id={`consent-detail-${id}`} className="block text-xs font-display mt-0.5" style={{ color: '#8C7A62' }}>
+                    <span id={`consent-detail-${id}`} className="block text-xs font-display mt-0.5" style={{ color: '#755942' }}>
                       {detail}
                     </span>
                   </span>
-                  {busy === id && <Loader2 size={14} className="animate-spin mt-0.5" style={{ color: '#8C7A62' }} />}
+                  {busy === id && <Loader2 size={14} className="animate-spin mt-0.5" style={{ color: '#755942' }} />}
                 </label>
               );
             })}
@@ -108,7 +108,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
           )}
 
           <div className="flex items-center gap-3 mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-            <span className="text-xs font-display flex-1" style={{ color: '#8C7A62' }}>
+            <span className="text-xs font-display flex-1" style={{ color: '#755942' }}>
               {on === 0 ? 'You are not sharing anything.' : `You are sharing ${on} of ${CONSENT_SCOPES.length} things.`}
             </span>
             <button

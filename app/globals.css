@@ -9,7 +9,12 @@
   --color-leaf-500: #5FA66A;
   --color-border: #DDE3DC;
   --color-muted-strong: #4B554D;
-  --color-muted: #667168;
+    /* #556352, not #667168: measured against the three surfaces this token is actually painted on in
+     this column (card #FFFEFA, page #E4DCC6, inset #F7F3E6) it read 5.04 / 3.72 / 4.58 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #556352;
   --color-surface: #FFFFFF;
   /* #7A4408, not the paler #D18A1F this used to carry: at #D18A1F this token read 2.82:1 against
      the card and 2.08:1 against the page — both well under the 4.5:1 body-text floor. It renders
@@ -35,7 +40,14 @@
   --color-card: #FFFEFA;
   --color-ink: #1F2420;
   --color-ink-muted: #5C5040;
-  --color-ink-faint: #8C7A62;
+  /* #755942, not #8C7A62. As a body-text colour this token measured 3.02:1 against the page
+     (#E4DCC6), 4.10:1 against the card (#FFFEFA) and 3.36:1 against an inset (#EDE7DB) — under the
+     4.5:1 floor on all three surfaces it is ever painted on, and it carried 453 declarations of
+     real copy: overlines, captions, entry dates and the whole /calendar month strip. #755942 is
+     the value --text-muted already settled on for exactly this reason (4.70 page / 6.38 card /
+     5.22 inset) and stays visibly lighter than --color-ink-muted. Guarded by
+     tests/component-text-contrast.test.ts, which scans components for literal text hexes. */
+  --color-ink-faint: #755942;
   --color-hairline: #ECE3C9;
   --font-display: 'Newsreader', Georgia, serif;
   --font-sans: 'Public Sans', system-ui, sans-serif;
@@ -87,7 +99,7 @@
 
   --text: #20190F;
   --text-2: #5C5040;
-  --text-3: #8C7A62;
+  --text-3: #755942;      /* was #8C7A62 — see --color-ink-faint above */
 
   /* status — separate from the accent; soft-filled + a solid dot */
   --ok: #3A7518;     --ok-soft: rgba(58,117,24,0.12);
@@ -241,7 +253,12 @@ html[data-theme="earth"].dark {
   --color-leaf-500: #B6F078;
   --color-border: #2C2114;
   --color-muted-strong: #A8906C;
-  --color-muted: #685040;
+    /* #9C8160, not #685040: measured against the three surfaces this token is actually painted on in
+     this column (card #181208, page #0D0A06, inset #22190E) it read 2.49 / 2.64 / 2.32 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #9C8160;
   --color-surface: #181208;
   --color-harvest: #D8A840;
   --color-canvas: #0D0A06;
@@ -266,7 +283,10 @@ html[data-theme="earth"].dark {
   /* #957A58, not the previous #685040: that value read 2.49:1 against the card, under the 4.5:1
      floor for the same ThemePanel copy the light-mode fix above addresses. #957A58 clears 4.5:1
      against both the card (4.61:1) and the page (4.89:1). */
-  --text-muted: #957A58;
+    /* #A08564, not #957A58: the previous value cleared the card and the page but read 4.29:1 against
+     --bg-2 (#22190E) — the ThemePanel row surface its own descriptions sit on, a surface the
+     earlier fix did not model. #A08564 clears 4.5:1 on all three (5.34 / 5.68 / 4.97). */
+  --text-muted: #A08564;
 
   --emerald: #82C844;
   --emerald-bright: #A8E860;
@@ -298,7 +318,12 @@ html[data-theme="slate"] {
   --color-leaf-500: #35A879;
   --color-border: #E2E8F2;
   --color-muted-strong: #445266;
-  --color-muted: #8898AA;
+    /* #5F6E80, not #8898AA: measured against the three surfaces this token is actually painted on in
+     this column (card #F8FAFC, page #FFFFFF, inset #F1F5F9) it read 2.82 / 2.95 / 2.69 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #5F6E80;
   --color-surface: #F8FAFC;
   --color-harvest: #AA5C08;
   --color-canvas: #FFFFFF;
@@ -355,7 +380,12 @@ html[data-theme="slate"].dark {
   --color-leaf-500: #60D0A2;
   --color-border: #1A2540;
   --color-muted-strong: #8898AA;
-  --color-muted: #4A5A6E;
+    /* #8090AC, not #4A5A6E: measured against the three surfaces this token is actually painted on in
+     this column (card #0C1526, page #060A12, inset #1A2540) it read 2.59 / 2.81 / 2.15 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #8090AC;
   --color-surface: #0C1526;
   --color-harvest: #E8A030;
   --color-canvas: #060A12;
@@ -380,7 +410,10 @@ html[data-theme="slate"].dark {
   /* #7284A0, not the previous #4A5A6E: that value read 2.59:1 against the card, under the 4.5:1
      floor for the same ThemePanel copy the earth-theme fixes above address. #7284A0 clears 4.5:1
      against both the card (4.80:1) and the page (5.21:1). */
-  --text-muted: #7284A0;
+    /* #8090AC, not #7284A0: the previous value cleared the card and the page but read 4.00:1 against
+     --bg-2 (#1A2540) — the ThemePanel row surface its own descriptions sit on, a surface the
+     earlier fix did not model. #8090AC clears 4.5:1 on all three (5.65 / 6.14 / 4.70). */
+  --text-muted: #8090AC;
 
   --emerald: #18A878;
   --emerald-bright: #50CCA0;

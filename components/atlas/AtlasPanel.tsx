@@ -78,8 +78,8 @@ function MiniStat({ label, value, sub }: { label: string; value: string; sub?: s
   return (
     <div className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
       <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{value}</div>
-      <div className="font-sans mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{label}</div>
-      {sub && <div className="font-sans" style={{ color: '#94876F', fontSize: 9.5 }}>{sub}</div>}
+      <div className="font-sans mt-0.5" style={{ color: '#755942', fontSize: 10 }}>{label}</div>
+      {sub && <div className="font-sans" style={{ color: '#755942', fontSize: 9.5 }}>{sub}</div>}
     </div>
   );
 }
@@ -179,7 +179,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             {placeName}
           </div>
         )}
-        <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: placeName ? 2 : 0 }}>
+        <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: placeName ? 2 : 0 }}>
           {coordLabel} · {Math.round(elevation.elevation)} m
         </div>
       </div>
@@ -213,7 +213,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
           </p>
         )}
-        <p className="font-sans mt-2.5" style={{ fontSize: 10.5, color: '#94876F', lineHeight: 1.45 }}>
+        <p className="font-sans mt-2.5" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.45 }}>
           Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate.
         </p>
       </Card>
@@ -231,7 +231,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
             height={86}
           />
-          <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: '#8C7A62' }}>
+          <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: '#755942' }}>
             <span>Wet: <b style={{ color: '#5C5040', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
             <span>Dry: <b style={{ color: '#5C5040', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
           </div>
@@ -269,7 +269,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
         </div>
         <div className="space-y-2 mt-3">
           {[
-            { name: 'Sand', pct: soil.sand, color: '#C07A1E' },
+            { name: 'Sand', pct: soil.sand, color: '#7A4408' },
             { name: 'Silt', pct: soil.silt, color: '#1F4D2B' },
             { name: 'Clay', pct: soil.clay, color: '#2D6B3C' },
           ].map(({ name, pct, color }) => (
@@ -304,7 +304,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
           {data.vegetation && (
             <div className="mb-2">
               <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{data.vegetation.vegUnit}</div>
-              <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 1 }}>
+              <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 1 }}>
                 {data.vegetation.biome} · {data.vegetation.bioregion} (SANBI 2018)
               </div>
             </div>
@@ -314,10 +314,10 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
                 Bioresource zone {data.bru.brucode}
               </div>
-              <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 1 }}>
+              <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 1 }}>
                 Zone rainfall {Math.round(data.bru.map)} mm/yr · mean {data.bru.tmean}°C
               </div>
-              <div className="font-sans" style={{ fontSize: 10, color: '#94876F', marginTop: 3 }}>{data.bru.attribution}</div>
+              <div className="font-sans" style={{ fontSize: 10, color: '#755942', marginTop: 3 }}>{data.bru.attribution}</div>
             </div>
           )}
         </Card>
@@ -327,7 +327,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       {pattern && (
         <Card accent="#C07A1E">
           <Label icon={<Sprout size={12} />}>What could grow here</Label>
-          <p className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginBottom: 10 }}>
+          <p className="font-sans" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.5, marginBottom: 10 }}>
             From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under a{' '}
             <b style={{ color: '#5C5040', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> pattern
             {northern ? ' (calendar shifted six months for the northern hemisphere)' : ''}.

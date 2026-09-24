@@ -29,7 +29,7 @@ function Label({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="invoice-label text-xs font-sans uppercase mb-1"
-      style={{ color: '#8C7A62', letterSpacing: '0.1em' }}
+      style={{ color: '#755942', letterSpacing: '0.1em' }}
     >
       {children}
     </div>
@@ -58,7 +58,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
           )}
           <div className="min-w-0">
             <div className="invoice-seller-name font-display font-bold text-xl" style={{ color: '#20190F', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
-              {doc.sellerName || <span style={{ color: '#B8AC97' }}>{doc.labels.sellerPlaceholder}</span>}
+              {doc.sellerName || <span style={{ color: '#755942' }}>{doc.labels.sellerPlaceholder}</span>}
             </div>
             {doc.sellerLines.map((line) => (
               <div key={line} className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{line}</div>
@@ -81,12 +81,12 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         style={{ borderTop: '1px solid #E2D8C4', borderBottom: '1px solid #E2D8C4' }}
       >
         <span className="text-xs font-sans font-semibold" style={{ color: '#20190F' }}>{doc.labels.invoice} {doc.number}</span>
-        <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.issued} {doc.issuedLabel}</span>
+        <span className="text-xs font-sans" style={{ color: '#755942' }}>{doc.labels.issued} {doc.issuedLabel}</span>
         {doc.dueLabel && (
-          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.due} {doc.dueLabel}</span>
+          <span className="text-xs font-sans" style={{ color: '#755942' }}>{doc.labels.due} {doc.dueLabel}</span>
         )}
         {doc.referenceLabel && (
-          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.buyerReference} {doc.referenceLabel}</span>
+          <span className="text-xs font-sans" style={{ color: '#755942' }}>{doc.labels.buyerReference} {doc.referenceLabel}</span>
         )}
         {doc.paperReferenceLabel && (
           <span className="w-full text-xs font-sans" style={{ color: '#5C5040' }}>{doc.labels.originalPaperInvoice}: {doc.paperReferenceLabel}</span>
@@ -96,7 +96,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
       {/* Bill to */}
       <div className="mt-3.5">
         <Label>{doc.labels.billTo}</Label>
-        <div className="font-display text-sm" style={{ color: doc.buyerName ? '#20190F' : '#B8AC97' }}>
+        <div className="font-display text-sm" style={{ color: doc.buyerName ? '#20190F' : '#755942' }}>
           {doc.buyerName || doc.labels.buyerPlaceholder}
         </div>
         {doc.buyerLines.map((line) => (
@@ -108,12 +108,12 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
       <div className="invoice-rows mt-4">
         <div
           className="invoice-rows-head flex items-baseline justify-between pb-1.5 text-xs font-sans uppercase"
-          style={{ color: '#8C7A62', letterSpacing: '0.08em', borderBottom: '1px solid #E2D8C4' }}
+          style={{ color: '#755942', letterSpacing: '0.08em', borderBottom: '1px solid #E2D8C4' }}
         >
           <span>{doc.labels.item}</span><span>{doc.labels.amount}</span>
         </div>
         {doc.rows.length === 0 ? (
-          <div className="py-3 text-sm font-display" style={{ color: '#B8AC97' }}>{doc.labels.noItems}</div>
+          <div className="py-3 text-sm font-display" style={{ color: '#755942' }}>{doc.labels.noItems}</div>
         ) : doc.rows.map((row, index) => (
           <div
             key={`${row.desc}-${index}`}
@@ -122,7 +122,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
           >
             <div className="min-w-0">
               <div className="font-display text-sm" style={{ color: '#20190F' }}>{row.desc}</div>
-              <div className="text-xs font-sans mt-0.5" style={{ color: '#8C7A62' }}>{row.detail}</div>
+              <div className="text-xs font-sans mt-0.5" style={{ color: '#755942' }}>{row.detail}</div>
             </div>
             <div
               className="font-display text-sm font-semibold tabular-nums flex-shrink-0"
@@ -172,7 +172,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         </div>
       )}
 
-      <div className="invoice-footer text-center text-xs font-sans mt-6" style={{ color: '#8C7A62' }}>
+      <div className="invoice-footer text-center text-xs font-sans mt-6" style={{ color: '#755942' }}>
         {doc.footer}
       </div>
     </div>

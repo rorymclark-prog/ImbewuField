@@ -46,7 +46,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
     return (
       <div
         className="font-sans rounded-2xl px-3.5 py-2.5"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 12, color: '#94876F' }}
+        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 12, color: '#755942' }}
       >
         Weather unavailable right now — showing site climate data below instead.
       </div>
@@ -121,7 +121,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
             </div>
             <div className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>{currentDesc.label}</div>
           </div>
-          <div className="flex items-center gap-1 flex-shrink-0" style={{ color: '#94876F' }}>
+          <div className="flex items-center gap-1 flex-shrink-0" style={{ color: '#755942' }}>
             <Wind size={14} />
             <span className="font-sans" style={{ fontSize: 12 }}>{Math.round(current.windKph)} km/h</span>
           </div>
@@ -146,7 +146,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                 className="flex flex-col items-center flex-shrink-0 px-2 py-2"
                 style={{ minWidth: 58, borderRight: i < stripDays.length - 1 ? '1px solid #F0E9D8' : 'none' }}
               >
-                <div className="font-sans font-medium" style={{ fontSize: 12, color: '#94876F' }}>{dayLabel(d.date, i)}</div>
+                <div className="font-sans font-medium" style={{ fontSize: 12, color: '#755942' }}>{dayLabel(d.date, i)}</div>
                 {getElementArt2(desc.key) ? (
                   <img src={getElementArt2(desc.key)} alt="" aria-hidden style={{ width: 23, height: 23, margin: '1px 0' }} />
                 ) : (
@@ -154,7 +154,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                 )}
                 <div className="font-display" style={{ fontSize: 13, color: '#20190F' }}>
                   <span className="font-semibold">{Math.round(d.tMaxC)}°</span>
-                  <span style={{ color: '#94876F' }}> {Math.round(d.tMinC)}°</span>
+                  <span style={{ color: '#755942' }}> {Math.round(d.tMinC)}°</span>
                 </div>
                 <div className="font-sans" style={{ fontSize: 12, color: d.precipMm > 0 ? '#235E86' : '#C4BAA4', marginTop: 2 }}>
                   {d.precipMm > 0 ? `${d.precipMm.toFixed(0)}mm` : '—'}

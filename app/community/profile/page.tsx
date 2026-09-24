@@ -48,7 +48,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
     <div className="flex items-center justify-between" style={{ background: 'rgba(226,216,196,0.3)', borderRadius: 12, padding: '12px 14px', border: '1px solid #E2D8C4' }}>
       <div className="flex-1 min-w-0 pr-3">
         <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{label}</div>
-        {sub && <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{sub}</div>}
+        {sub && <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{sub}</div>}
       </div>
       <button
         type="button"
@@ -201,7 +201,7 @@ export default function CommunityProfilePage() {
 
         <div className={workspace.twoColumns}>
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityDisplayNameLabel')}
             </div>
             <input
@@ -215,7 +215,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityAreaLabel')}
             </div>
             <input
@@ -226,11 +226,11 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans"
               style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 4 }}>{t('communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 4 }}>{t('communityAreaHint')}</div>
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityBioLabel')}
             </div>
             <textarea
@@ -244,7 +244,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityCropsLabel')}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -255,7 +255,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityPhotosLabel')} <span style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('communityPhotosHint')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -276,7 +276,7 @@ export default function CommunityProfilePage() {
                   disabled={uploading}
                   style={{ width: 72, height: 72, borderRadius: 10, background: '#FFFEFA', border: '1px dashed #C8BCA8', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                 >
-                  {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: '#8C7A62' }} /> : <Camera size={20} style={{ color: '#8C7A62' }} strokeWidth={1.6} />}
+                  {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: '#755942' }} /> : <Camera size={20} style={{ color: '#755942' }} strokeWidth={1.6} />}
                 </button>
               )}
               <input ref={fileRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
@@ -284,7 +284,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityShowOnMapLabel')}
             </div>
             <Toggle

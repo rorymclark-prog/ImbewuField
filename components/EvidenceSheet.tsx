@@ -263,7 +263,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Photo grid */}
         {photoItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
               Photos · {photoItems.length}
             </div>
             <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
@@ -292,7 +292,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Doc list */}
         {docItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
               On file · {docItems.length}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -312,12 +312,12 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                     {ev.note&&<p style={{fontSize:13,lineHeight:1.5,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{ev.note}</p>}
                     {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>Download original PDF</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>Filename reference only. Upload the PDF again to retain its contents.</p>}
                     {ev.sizeBytes && (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 3 }}>
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#755942', marginTop: 3 }}>
                         {(ev.sizeBytes / 1024 / 1024).toFixed(1)} MB
                       </div>
                     )}
                   </div>
-                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9A8B6E', padding: 4 }}>
+                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942', padding: 4 }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -329,7 +329,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Quick numbers */}
         {quickFields.length > 0 && (
           <div style={{ padding: '16px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
               Quick numbers (optional)
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>

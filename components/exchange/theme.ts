@@ -18,7 +18,7 @@ export const EX = {
   /** Secondary text. */
   muted: '#5C5040',
   /** Tertiary text, captions, metadata. */
-  faint: '#8C7A62',
+  faint: '#755942',
   /** Brand green — offers, primary actions. */
   green: '#1F4D2B',
   /** Blue — wants. Same blue the community board uses for its "want" kind. */

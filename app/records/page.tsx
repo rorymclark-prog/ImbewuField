@@ -745,7 +745,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
               <button key={k} type="button" disabled={form.loading} onClick={() => { clearReceiptDraft(); setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
                 style={kind === k
-                  ? { background: k === 'in' ? '#2E6B3A' : '#C07A1E', color: '#fff', fontSize: 13 }
+                  ? { background: k === 'in' ? '#2E6B3A' : '#9A6018', color: '#fff', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
                 {label}
               </button>
@@ -868,7 +868,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
                   onClick={() => setForm((f) => ({ ...f, category: f.category === c ? null : c }))}
                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                   style={form.category === c
-                    ? { background: '#C07A1E', color: '#fff', border: '1px solid #C07A1E', cursor: 'pointer' }
+                    ? { background: '#9A6018', color: '#fff', border: '1px solid #9A6018', cursor: 'pointer' }
                     : { background: 'var(--color-canvas)', color: 'var(--color-muted-strong)', border: '1px solid var(--color-border)', cursor: 'pointer' }}>
                   {c}
                 </button>
@@ -1134,7 +1134,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   {r.desc}
                   <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
                   {r.duplicateSuspect && (
-                    <span className="block font-sans" style={{ fontSize: 12, color: '#B07A1E', marginTop: 2 }}>
+                    <span className="block font-sans" style={{ fontSize: 12, color: '#9A6018', marginTop: 2 }}>
                       {recordsText(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
                     </span>
                   )}

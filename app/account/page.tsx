@@ -29,9 +29,9 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
   if (!value) return null;
   return (
     <div className="flex items-center gap-3 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <Icon size={16} style={{ color: '#8C7A62', flexShrink: 0 }} />
+      <Icon size={16} style={{ color: '#755942', flexShrink: 0 }} />
       <div className="flex-1 min-w-0">
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>{label}</div>
+        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>{label}</div>
         <div className="text-sm font-display mt-0.5" style={{ color: '#20190F' }}>{value}</div>
       </div>
     </div>
@@ -225,10 +225,10 @@ export default function AccountPage() {
           {/* Edit form */}
           {editing ? (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>{copy('Edit profile', 'Hlela iphrofayela')}</div>
+              <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#755942' }}>{copy('Edit profile', 'Hlela iphrofayela')}</div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Full name', 'Amagama aphelele')}</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#755942' }}>{copy('Full name', 'Amagama aphelele')}</div>
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
@@ -236,7 +236,7 @@ export default function AccountPage() {
               </label>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Phone', 'Ucingo')}</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#755942' }}>{copy('Phone', 'Ucingo')}</div>
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
@@ -249,12 +249,12 @@ export default function AccountPage() {
                   then leads with the personal name, which is what a farmer trading under
                   their own name wants. Nothing is ever substituted for an unset value. */}
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#755942' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
-                <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+                <div className="text-xs font-sans mt-1" style={{ color: '#755942' }}>
                   {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
                 </div>
               </label>
@@ -263,7 +263,7 @@ export default function AccountPage() {
                   waiting for Save — the picture is already visible by then, so a logo that
                   vanished on Cancel would read as a failed upload. */}
               <div className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#755942' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
                     style={{ width: 56, height: 56, background: '#fff', border: '1px solid #D8CBB2' }}>
@@ -282,12 +282,12 @@ export default function AccountPage() {
                       {profile?.farm_logo && !logoUploading && (
                         <button type="button" onClick={handleRemoveLogo}
                           className="px-3 py-1.5 rounded-lg text-xs font-sans"
-                          style={{ background: 'transparent', border: '1px solid #D8CBB2', color: '#8C7A62', cursor: 'pointer' }}>
+                          style={{ background: 'transparent', border: '1px solid #D8CBB2', color: '#755942', cursor: 'pointer' }}>
                           {copy('Remove', 'Susa')}
                         </button>
                       )}
                     </div>
-                    <div className="text-xs font-sans" style={{ color: logoError ? '#A8443A' : '#8C7A62' }}>
+                    <div className="text-xs font-sans" style={{ color: logoError ? '#A8443A' : '#755942' }}>
                       {logoError ?? copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
                     </div>
                   </div>
@@ -296,7 +296,7 @@ export default function AccountPage() {
               </div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>{copy('Language', 'Ulimi')}</div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#755942' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}>
@@ -344,12 +344,12 @@ export default function AccountPage() {
             <button onClick={() => setChangingPw(true)}
               className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
-              <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#8C7A62' }} />{copy('Change password', 'Shintsha iphasiwedi')}</span>
-              <ChevronRight size={16} style={{ color: '#8C7A62' }} />
+              <span className="flex items-center gap-2"><Lock size={14} style={{ color: '#755942' }} />{copy('Change password', 'Shintsha iphasiwedi')}</span>
+              <ChevronRight size={16} style={{ color: '#755942' }} />
             </button>
           ) : (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
 
               {pwSuccess ? (
                 <div className="flex items-center gap-2 py-2 text-sm font-display" style={{ color: '#1F4D2B' }}>
@@ -371,13 +371,13 @@ export default function AccountPage() {
                         <button type="button" onClick={() => setShowPw((s) => !s)}
                           aria-label={showPw ? copy('Hide passwords', 'Fihla amaphasiwedi') : copy('Show passwords', 'Bonisa amaphasiwedi')}
                           className="absolute right-3 top-1/2 -translate-y-1/2"
-                          style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                          style={{ color: '#755942', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                           {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
                         </button>
                       )}
                     </div>
                   ))}
-                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: '#D4922A' }}>{pwError}</p>}
+                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: '#A83A2C' }}>{pwError}</p>}
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
@@ -400,18 +400,18 @@ export default function AccountPage() {
             className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
             style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer', textAlign: 'left' }}>
             <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
-            <ChevronRight size={16} style={{ color: '#8C7A62' }} />
+            <ChevronRight size={16} style={{ color: '#755942' }} />
           </button>
 
           {/* Sign out */}
           <button onClick={handleSignOut} disabled={signingOut}
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
-            style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#8C7A62' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
+            style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#755942' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
             <LogOut size={15} />
             {signingOut ? copy('Signing out...', 'Kuyaphuma...') : copy('Sign out', 'Phuma')}
           </button>
 
-          <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
+          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
             {copy('ImbewuField · growing with you', 'ImbewuField · ikhula nawe')}
           </p>
           </section>

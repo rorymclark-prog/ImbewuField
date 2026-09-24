@@ -4016,7 +4016,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 placeholder={t('savePlaceNamePlaceholder')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
-              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>{t('savePlaceLabelHeader')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#755942', letterSpacing: '0.08em' }}>{t('savePlaceLabelHeader')}</div>
               <div className="grid grid-cols-4 gap-2 mb-3">
                 {PLACE_LABELS.map((l) => {
                   const on = placeLabel === l.v && !customPlaceColor;
@@ -4031,17 +4031,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               {/* Custom pin colour */}
               <div className="flex items-center gap-2 mb-4">
-                <span style={{ fontSize: 12, color: '#8C7A62', fontWeight: 600 }}>{t('savePlaceCustomColourLabel')}</span>
+                <span style={{ fontSize: 12, color: '#755942', fontWeight: 600 }}>{t('savePlaceCustomColourLabel')}</span>
                 <label className="flex items-center gap-2 flex-1 rounded-xl cursor-pointer transition-all"
                   style={{ padding: '6px 10px', background: customPlaceColor ? `${customPlaceColor}22` : 'rgba(226,216,196,0.3)', border: `1.5px solid ${customPlaceColor || '#E2D8C4'}` }}>
                   <input type="color" value={customPlaceColor || placeColor(placeLabel)} onChange={(e) => setCustomPlaceColor(e.target.value)}
                     className="w-6 h-6 rounded cursor-pointer" style={{ border: 'none', background: 'transparent', padding: 0 }} />
-                  <span style={{ fontSize: 12, fontWeight: 600, color: customPlaceColor ? '#20190F' : '#8C7A62' }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: customPlaceColor ? '#20190F' : '#755942' }}>
                     {customPlaceColor ? customPlaceColor.toUpperCase() : t('savePlacePickColourPrompt')}
                   </span>
                   {customPlaceColor && (
                     <button onClick={(e) => { e.preventDefault(); setCustomPlaceColor(''); }}
-                      style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62', fontSize: 18, lineHeight: 1 }}>×</button>
+                      style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', color: '#755942', fontSize: 18, lineHeight: 1 }}>×</button>
                   )}
                 </label>
               </div>
@@ -4080,7 +4080,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 placeholder={t(shapeNaming.type === 'water' ? 'shapeNamingPlaceholderWater' : 'shapeNamingPlaceholderLand')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
-              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>{t('shapeNamingCategoryHeader')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#755942', letterSpacing: '0.08em' }}>{t('shapeNamingCategoryHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {SHAPE_CATEGORIES[shapeNaming.type].map((c) => {
                   const on = shapeCategory === c;
@@ -4096,7 +4096,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               {savedPins.length > 0 && (
                 <>
-                  <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>{t('shapeNamingLinkToPlaceHeader')}</div>
+                  <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#755942', letterSpacing: '0.08em' }}>{t('shapeNamingLinkToPlaceHeader')}</div>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {savedPins.map((pin) => {
                       const on = shapeNamePlaceId === pin.id;
@@ -4145,7 +4145,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 placeholder={t('waterPointNamingPlaceholder')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
-              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>{t('waterPointNamingTypeHeader')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: '#755942', letterSpacing: '0.08em' }}>{t('waterPointNamingTypeHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {WATER_POINT_CATEGORIES.map((c) => {
                   const on = wpCategory === c.v;
@@ -4254,7 +4254,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
                   )}
                   <div className="flex items-center justify-between px-0.5">
-                    <span className="font-sans" style={{ fontSize: 13, color: '#9A8268' }}>how many</span>
+                    <span className="font-sans" style={{ fontSize: 13, color: '#755942' }}>how many</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
                         className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
@@ -4324,7 +4324,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
                 <div>
                   <div className="font-display italic font-semibold" style={{ fontSize: 16, color: '#20190F', lineHeight: 1.1 }}>Lima</div>
-                  <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{t('mapGuideHeading')}</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{t('mapGuideHeading')}</div>
                 </div>
               </div>
               <p className="font-sans mb-3" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>

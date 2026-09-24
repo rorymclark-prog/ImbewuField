@@ -543,7 +543,7 @@ function HomeInner() {
           <BrandLogo />
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
-          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#94876F' }}>{t('tagline')}</span>
+          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#755942' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
@@ -632,7 +632,7 @@ function HomeInner() {
             {mapHeld ? (
               <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
                 style={{ background: '#E9E4D3' }}>
-                <AlertTriangle size={22} style={{ color: '#C07A1E' }} />
+                <AlertTriangle size={22} style={{ color: '#7A4408' }} />
                 <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
                   {t('mapHeldTitle')}
                 </div>
@@ -826,7 +826,7 @@ function HomeInner() {
                 className="rounded-full"
                 style={{ width: 40, height: 4, background: '#E2D8C4', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: '#8C7A62', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-mono" style={{ color: '#755942', opacity: 0.6, letterSpacing: '0.05em' }}>
                 {t('tapToClose')}
               </span>
             </button>

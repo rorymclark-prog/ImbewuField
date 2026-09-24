@@ -39,7 +39,7 @@ export default function UpdatesPage() {
         </h1>
         <div className="flex-1" />
         {buildSha && (
-          <span className="text-[11px] font-mono" style={{ color: '#9A8268' }}>
+          <span className="text-[11px] font-mono" style={{ color: '#755942' }}>
             build {buildSha}
           </span>
         )}
@@ -64,7 +64,7 @@ export default function UpdatesPage() {
                   {entry.when}
                 </h2>
                 {entry.sha && (
-                  <span className="text-[10px] font-mono" style={{ color: '#9A8268' }}>
+                  <span className="text-[10px] font-mono" style={{ color: '#755942' }}>
                     {entry.sha}
                   </span>
                 )}

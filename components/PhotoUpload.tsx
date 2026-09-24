@@ -152,7 +152,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
       const body = lines.slice(1).join('\n').trim();
       return (
         <div key={i} className="mb-4">
-          <h4 className="text-xs font-display font-semibold mb-2" style={{ color: '#C07A1E' }}>{heading}</h4>
+          <h4 className="text-xs font-display font-semibold mb-2" style={{ color: '#7A4408' }}>{heading}</h4>
           <div className="space-y-1">
             {body.split('\n').map((line, j) => {
               if (!line.trim()) return null;
@@ -174,7 +174,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
 
   return (
     <div className="space-y-3">
-      <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>
+      <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#755942' }}>
         Site Photo Analysis
       </div>
 
@@ -187,7 +187,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           <img src={`data:image/jpeg;base64,${mapCapture}`} alt="map" className="w-16 h-12 rounded-lg object-cover flex-shrink-0" style={{ border: '1px solid #E2D8C4' }} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-display font-medium mb-1" style={{ color: '#20190F' }}>Current satellite view</div>
-            <div className="text-xs font-display" style={{ color: '#8C7A62' }}>Captured from map — Claude will analyse what it sees</div>
+            <div className="text-xs font-display" style={{ color: '#755942' }}>Captured from map — Claude will analyse what it sees</div>
           </div>
           <button
             onClick={() => analyse([{ data: mapCapture, mediaType: 'image/jpeg' }], 'satellite')}
@@ -196,7 +196,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             style={{
               background: loading ? 'rgba(226,216,196,0.6)' : 'rgba(35,94,134,0.15)',
               border: `1px solid ${loading ? '#E2D8C4' : 'rgba(35,94,134,0.4)'}`,
-              color: loading ? '#8C7A62' : '#235E86',
+              color: loading ? '#755942' : '#235E86',
             }}
           >
             {loading
@@ -217,7 +217,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             <div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>
               {analysis ? 'Claude is analysing the imagery...' : 'Sending to Claude Vision...'}
             </div>
-            <div className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>
+            <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
               Reads vegetation, water, terrain &amp; assets · ~15–30s
             </div>
           </div>
@@ -255,8 +255,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             <div className="flex justify-center mb-1">
               <Camera size={32} style={{ color: '#1F4D2B' }} />
             </div>
-            <p className="text-xs font-display" style={{ color: '#8C7A62' }}>Drop site photos here or click to upload</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62', opacity: 0.6 }}>Up to 5 photos · soil, vegetation, terrain, structures</p>
+            <p className="text-xs font-display" style={{ color: '#755942' }}>Drop site photos here or click to upload</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942', opacity: 0.6 }}>Up to 5 photos · soil, vegetation, terrain, structures</p>
           </div>
         )}
       </div>
@@ -271,7 +271,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             style={{
               background: loading ? 'rgba(226,216,196,0.6)' : '#1F4D2B',
               border: loading ? '1px solid #E2D8C4' : 'none',
-              color: loading ? '#8C7A62' : '#F7F2E9',
+              color: loading ? '#755942' : '#F7F2E9',
             }}
           >
             {loading
@@ -288,14 +288,14 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               onAnalysisComplete('');
             }}
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#8C7A62' }}
+            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#755942' }}
           >
             Clear
           </button>
         </div>
       )}
 
-      {error && <p className="text-xs font-mono" style={{ color: '#D4922A' }}>{error}</p>}
+      {error && <p className="text-xs font-mono" style={{ color: '#A83A2C' }}>{error}</p>}
 
       {/* Analysis output — streams in progressively */}
       {analysis && (
@@ -308,8 +308,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           {!loading && (
             <div className="mt-3 pt-3 flex items-center gap-2" style={{ borderTop: '1px solid rgba(31,77,43,0.15)' }}>
               <span style={{ color: '#1F4D2B', fontSize: 13, fontWeight: 700 }}>+</span>
-              <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>
-                Added to your report — click <span style={{ color: '#C07A1E' }}>Generate Full Report</span> above
+              <span className="text-xs font-mono" style={{ color: '#755942' }}>
+                Added to your report — click <span style={{ color: '#7A4408' }}>Generate Full Report</span> above
               </span>
             </div>
           )}
@@ -317,7 +317,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
       )}
 
       {!locationData && (
-        <p className="text-xs font-display text-center" style={{ color: '#8C7A62' }}>
+        <p className="text-xs font-display text-center" style={{ color: '#755942' }}>
           Select a location on the map first
         </p>
       )}
