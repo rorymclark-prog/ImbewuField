@@ -855,6 +855,8 @@ const dict: Dict = {
   offlineQualityStandardNote: 'eyamafoni asebenzisa idatha',
   offlineQualityHigher: 'Ikhwalithi ephezulu',
   offlineQualityHigherNote: 'abagqugquzeli nabaxhasi · i-wifi',
+  offlineDownloadBytesProgress: 'Kulandiwe: {current} / {total}',
+  offlineEnglishMediaFallback: 'Le phakheji inamaslayidi noma umsindo wesiNgisi lapho okungesiZulu kungakatholakali khona.',
   offlineFilesProgress: 'Amafayela angu-{done} kwayi-{total}',
   offlineFilesFailed: 'Ukulanda amafayela angu-{count} kuhlulekile. Thepha okuthi Qedela ukulanda futhi usenethiwekhi — amanye asevele egciniwe.',
   offlineSavedMayClear: 'Kulondoloziwe, kodwa le foni ingakususa uma isikhala siphela. Hlola futhi ukuthi izifundo zakho zisagciniwe ngaphambi kokuphuma kunethiwekhi.',

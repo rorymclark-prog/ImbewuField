@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'a94ac88a', changes: [
+    'Offline download progress follows isiZulu and marks any English lesson media.',
+    'Project assessment controls follow isiZulu; question wording still needs review.',
+  ], tour: [
+    { title: 'Check assessment language', where: 'Project assessments', href: '/assessments',
+      detail: 'Choose isiZulu and read the review notice before using translated assessment text.' },
+  ] },
   { when: '24 September 2026', sha: 'e252926a', changes: [
     'Settings and Field Journal controls follow isiZulu; example notes remain in English.',
   ], tour: [

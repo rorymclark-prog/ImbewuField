@@ -49,6 +49,8 @@ export const LEARNER_UI_ENGLISH: Record<string, string> = {
   offlineQualityStandardNote: 'for phones on data',
   offlineQualityHigher: 'Higher quality',
   offlineQualityHigherNote: 'facilitators & funders · wifi',
+  offlineDownloadBytesProgress: '{current} of {total}',
+  offlineEnglishMediaFallback: 'This pack includes English slides or narration where isiZulu is not available yet.',
   offlineFilesProgress: '{done} of {total} files',
   offlineFilesFailed: '{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.',
   offlineSavedMayClear: 'Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.',

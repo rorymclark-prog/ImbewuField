@@ -2,6 +2,15 @@
 
 ## 24 September verification batch
 
+The following batch drafts more safe project-assessment controls and offline
+download progress text in isiZulu. The assessment page marks its existing
+isiZulu questions and participation wording as pending fluent review; the
+agent did not change that meaning, the assessment data, permission checks or
+the private/published report rules. An [exact consent review dependency](ISIZULU-CONSENT-REVIEW-DEPENDENCY.md)
+holds the Account sharing promises in English with the existing isiZulu
+warning until a fluent reviewer and a POPIA/privacy reviewer reconcile the
+six scopes with the actual rules and data views.
+
 The next preview batch drafts isiZulu settings and Field Journal controls,
 including photo and storage feedback, without changing saved entries, access
 rules or paid-AI preferences. Example journal entries and authored farmer notes
