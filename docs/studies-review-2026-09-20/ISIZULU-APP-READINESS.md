@@ -216,6 +216,8 @@ output remain English. Calendar and task planner now reuse the site's existing
 isiZulu month abbreviations: a phone browser check found `Intl` fell back to
 English even though Node returned localized months. These are route checks,
 not a whole-app or fluent-language completion claim.
+The remaining questionnaire terms are listed with exact English sources and
+conservative holds in [the Site Survey Agy packet](SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
 ## Release gate
 
