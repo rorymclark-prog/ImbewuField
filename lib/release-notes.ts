@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '3bcbed40', changes: [
+    'Slide images open inside My Studies with a visible Close button and zoom controls.',
+  ], tour: [
+    { title: 'View a slide image', where: 'My Studies · lesson slides', href: '/student',
+      detail: 'Tap View slide image, zoom if needed, then tap Close to return to the same slide.' },
+  ] },
   { when: '24 September 2026', sha: '79653b5b', changes: [
     'Settings, offline map status and the map tool guide follow isiZulu as review drafts.',
     'Farming advice and technical report content still need source and language review.',
