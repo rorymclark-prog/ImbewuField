@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'e252926a', changes: [
+    'Settings and Field Journal controls follow isiZulu; example notes remain in English.',
+  ], tour: [
+    { title: 'Use the field journal in isiZulu', where: 'Field Journal', href: '/journal',
+      detail: 'Choose isiZulu in Settings, then open a journal entry to see its controls.' },
+  ] },
   { when: '24 September 2026', sha: 'ffebaba4', changes: [
     'My Studies shows the English lesson notice before the course list in isiZulu mode.',
     'Downloads flag English media; Plant Guilds voice flags pending review.',

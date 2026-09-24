@@ -2,6 +2,17 @@
 
 ## 24 September verification batch
 
+The next preview batch drafts isiZulu settings and Field Journal controls,
+including photo and storage feedback, without changing saved entries, access
+rules or paid-AI preferences. Example journal entries and authored farmer notes
+stay in their source language, with a visible notice. A standalone script,
+`scripts/build-isizulu-review-pack.mjs`, assembles the 33 current core English
+lessons next to 25 full drafts, two source-hold packets and six audio-history
+entries. It writes only outside the repository and learner app, includes no
+recordings, and records no approval. Its source fingerprints match the existing
+read-only audit; the 165 older Thando recordings remain stale pending review.
+This reviewer artifact is not a localized learner course.
+
 The current preview batch adds isiZulu controls to the Design Studio and
 programme evidence/reports, plus clearer English-content notices in the NGO,
 funder and mentor workspaces. The report composer still preserves authored
