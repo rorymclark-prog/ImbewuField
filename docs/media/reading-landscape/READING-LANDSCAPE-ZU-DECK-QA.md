@@ -1,12 +1,12 @@
 # Reading the Landscape isiZulu still deck QA
 
-Status: unreviewed isiZulu draft for review only. This deck is not approved for learners or recording. No fluent speaker, farmer, crop-health, engineering or earthworks approval is claimed.
+Status: machine-drafted isiZulu deck and narration for labelled learner preview. Rory authorised publication before later review. No fluent speaker, farmer, crop-health, engineering or earthworks approval is claimed.
 
 ## Source pairing and audio status
 
-The 21 frames were rendered from the corrected isiZulu script snapshot rebuilt from the four current full-draft review packets and paired to the current English narration. Its SHA-256 is `a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b`. The exact input copy is [`reading-landscape-zu-render-source.md`](reading-landscape-zu-render-source.md). The build does not edit lesson, narration or audio files. All source hashes are in [`verification-zu.json`](verification-zu.json), and the deterministic renderer is [`render-zu-stills.py`](render-zu-stills.py).
+The 21 frames were rendered from the corrected isiZulu script snapshot rebuilt from the four current full-draft review packets. Its SHA-256 is `a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b`. The exact input copy is [`reading-landscape-zu-render-source.md`](reading-landscape-zu-render-source.md). The recorded isiZulu script now has the same SHA-256, and `zu-ZA-ThandoNeural` recordings are registered for all 21 slides and the full lesson. The deck build itself does not edit lesson, narration or audio files. All still source hashes are in [`verification-zu.json`](verification-zu.json), and the deterministic renderer is [`render-zu-stills.py`](render-zu-stills.py). Audio boundary and file proofs are in [`../../narration-reviews/reading-landscape-zu-audio-assets.md`](../../narration-reviews/reading-landscape-zu-audio-assets.md).
 
-The supplied snapshot at commit `b7fbda65a1e0e59de06a4365c6c5947babd270f2` has SHA-256 `5907cc0e4f1c8573f64855e1e8acde0d744ea65d0b596b3da5cf1689e8ca5c55`. It is stale and was not used for the deck. The checked-in `docs/narration/reading-landscape.zu.md` is also marked stale by the current handoff and was not used. The audio clips were not changed and are not claimed to match these slide texts.
+The supplied snapshot at commit `b7fbda65a1e0e59de06a4365c6c5947babd270f2` has SHA-256 `5907cc0e4f1c8573f64855e1e8acde0d744ea65d0b596b3da5cf1689e8ca5c55`. It is stale and was not used for the deck or audio. The checked-in `docs/narration/reading-landscape.zu.md` has since been replaced with the corrected source and recorded from that exact text.
 
 The supplied snapshot and the old checked-in isiZulu script have wording differences in every slide block. The notable safety and accuracy conflicts below cite physical line ranges in the supplied snapshot and old checked-in script. Corrected deck wording follows the exact a22e0b2 script snapshot and its indicated full-draft slide sections:
 
