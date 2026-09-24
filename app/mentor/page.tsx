@@ -104,12 +104,17 @@ function initials(name: string | null) {
   return (name ?? '?').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 }
 
-function ProgressBar({ value, max }: { value: number; max: number }) {
+function ProgressBar({ value, max, lang }: { value: number; max: number; lang: string }) {
   const pct = max === 0 ? 0 : (value / max) * 100;
   const col = pct >= 100 ? '#1F4D2B' : pct >= 50 ? '#805416' : '#235E86';
   return (
     <div className="flex items-center gap-2 mt-0.5">
-      <div className="flex-1 rounded-full overflow-hidden" style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}>
+      <div
+        className="flex-1 rounded-full overflow-hidden"
+        role="img"
+        aria-label={tr(lang, `${value} of ${max} modules complete`, `Kuqediwe amamojula angu-${value} kwangu-${max}`)}
+        style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}
+      >
         <div style={{ width: `${pct}%`, height: '100%', background: col, borderRadius: 999, transition: 'width 0.4s' }} />
       </div>
       <span className="text-xs font-mono flex-shrink-0" style={{ color: '#755942' }}>{value}/{max}</span>
@@ -151,7 +156,11 @@ function TraineeCard({
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <button onClick={() => setOpen((o) => !o)} aria-expanded={open}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={tr(lang, `${trainee.full_name ?? 'Learner'} — ${open ? 'hide' : 'show'} learning details`, `${trainee.full_name ?? 'Umfundi'} — ${open ? 'fihla' : 'bonisa'} imininingwane yokufunda`)}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
         <ProfileAvatar id={trainee.id} name={trainee.full_name || tr(lang, 'Unnamed', 'Akanagama')} photoUrl={trainee.photo_url} sample={isSampleMode()} size={44}/>
@@ -177,7 +186,7 @@ function TraineeCard({
               "11/10" — the exact drift enrollmentProgress in lib/course-enrollment.ts already
               guards against for the status badge above; this bar was reading doneIds.size
               directly and skipping that guard. */}
-          <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} />
+          <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} lang={lang} />
         </div>
         {open ? <ChevronUp size={15} style={{ color: '#755942' }} /> : <ChevronDown size={15} style={{ color: '#755942' }} />}
       </button>
@@ -544,7 +553,10 @@ export default function MentorPage() {
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
+            type="button"
             onClick={() => { setView(key); setVisitPerson(''); if (key === 'trainees') void load(); }}
+            aria-label={label}
+            aria-pressed={view === key}
             className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
             style={{
               background: 'transparent',
@@ -567,7 +579,7 @@ export default function MentorPage() {
         ))}
       </DashboardTabs>
 
-      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#755942' }}>Imininingwane yokuqeqeshwa, imibiko nokuhlolwa isaboniswa ngesiNgisi okwamanje.</p>}
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#755942' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
 
       <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
@@ -630,8 +642,9 @@ export default function MentorPage() {
 
         {/* List */}
         {fetching ? (
-          <div className="flex justify-center py-10">
+          <div role="status" aria-live="polite" className="flex flex-col items-center gap-2 justify-center py-10">
             <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+            <span className="text-xs" style={{ color: '#5C5040' }}>{tr(lang, 'Loading learning records…', 'Kulayishwa amarekhodi okufunda…')}</span>
           </div>
         ) : loadError ? null : filtered.length === 0 ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>

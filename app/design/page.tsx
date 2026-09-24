@@ -144,6 +144,7 @@ import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+import { useLanguage } from '@/lib/i18n';
 import {
   DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
@@ -489,6 +490,8 @@ function cacheLocationData(lat: number, lon: number, data: LocationData): void {
 }
 
 function EmptyState() {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
   // Saved places double as direct entry points: pick one and the studio fetches its
   // satellite straight away — no need to open the site on the main map first.
   // Loaded in an effect (not a useState initializer) so SSR HTML and hydration match.
@@ -515,7 +518,7 @@ function EmptyState() {
       {places.length > 0 ? (
         <>
           <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
-            Pick a saved place to start designing
+            {isZulu ? 'Khetha indawo oyigcinile ukuze uqale ukuklama' : 'Pick a saved place to start designing'}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 380 }}>
             {places.map((p) => (
@@ -545,17 +548,17 @@ function EmptyState() {
                     <span style={{ display: 'block', fontSize: 11.5, color: '#94876F' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>Design →</span>
+                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
           <p style={{ fontSize: 12.5, color: '#94876F', maxWidth: 340 }}>
-            Tip: sites with a traced boundary get a perfectly-fitted satellite view.
+            {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
           </p>
         </>
       ) : (
         <p style={{ fontSize: 16, maxWidth: 320, lineHeight: 1.5 }}>
-          Open a site on the map first, then tap Design Studio — or save a place and it will appear here.
+          {isZulu ? 'Vula indawo kumephu kuqala, bese ucindezela Isitudiyo Sokuklama — noma gcina indawo ukuze ivele lapha.' : 'Open a site on the map first, then tap Design Studio — or save a place and it will appear here.'}
         </p>
       )}
       <Link
@@ -574,13 +577,16 @@ function EmptyState() {
         }}
       >
         <ArrowLeft size={18} />
-        Back to map
+        {isZulu ? 'Buyela kumephu' : 'Back to map'}
       </Link>
     </div>
   );
 }
 
 function DesignStudioInner() {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const tr = (en: string, zu: string) => isZulu ? zu : en;
   const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
   const params = useSearchParams();
@@ -3019,7 +3025,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <MenuButton />
         <Link
           href="/farmer"
-          aria-label="Back to map"
+          aria-label={tr('Back to map', 'Buyela kumephu')}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -3034,11 +3040,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <ArrowLeft size={20} />
         </Link>
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
-          <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
+          <span style={{ fontWeight: 700, fontSize: 15 }}>{tr('Design Studio', 'Isitudiyo Sokuklama')}</span>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
         <span style={{ flexShrink: 0, display: isPhone ? 'none' : undefined }}>
-          <LessonLink id="design:overview" label="Learn" />
+          <LessonLink id="design:overview" label={tr('Learn', 'Funda')} />
         </span>
         <span style={{ marginLeft: 'auto' }} />
         {canvasState && canvasState.step !== 'glossy' && (
@@ -3052,7 +3058,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 : canvasState.step === 'structures' ? 'structures'
                 : 'all',
             )}
-            aria-label="Preview map and choose a plan sheet"
+            aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
             style={{
               display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
@@ -3060,7 +3066,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               cursor: 'pointer', fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
             }}
           >
-            <ImageIcon size={15} /> Preview map
+            <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
           </button>
         )}
         {/* RETIRED — the Geometry Lock chip. It is jargon, it confused its own author, and the
@@ -3069,7 +3075,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {canvasState && (
           <Link
             href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
-            aria-label="Open this farm's crop plan"
+            aria-label={tr("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
@@ -3077,15 +3083,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
             }}
           >
-            <Sprout size={15} /> Crop plan
+            <Sprout size={15} /> {tr('Crop plan', 'Uhlelo lwezitshalo')}
           </Link>
         )}
         {canvasState && frame && (
           <button
             type="button"
             onClick={() => setPrintOpen(true)}
-            aria-label="Print / Export plan set"
-            title="Print / Export — export your exact maps as a PDF plan set or PNGs"
+            aria-label={tr('Print / Export plan set', 'Phrinta / Khipha isethi yohlelo')}
+            title={tr('Print / Export — export your exact maps as a PDF plan set or PNGs', 'Phrinta / Khipha — khipha amamephu akho abe yi-PDF noma amafayela e-PNG')}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -3101,7 +3107,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               fontWeight: 800,
             }}
           >
-            <Printer size={15} /> Print / Export
+            <Printer size={15} /> {tr('Print / Export', 'Phrinta / Khipha')}
           </button>
         )}
         {buildInfo?.sha && !isPhone && (
@@ -3137,7 +3143,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             lineHeight: 1.15,
           }}
         >
-          {saveError ? '⚠ NOT saved — storage full' : saved ? 'Saved' : 'Saving…'}
+          {saveError ? tr('⚠ NOT saved — storage full', '⚠ AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
         </div>
       </header>
 
@@ -3277,14 +3283,14 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             });
             return (
               <>
-                <button type="button" aria-label="Previous step" disabled={idx <= 0} onClick={() => idx > 0 && setStep(STEP_ORDER[idx - 1])} style={navBtn(idx <= 0)}>
+                <button type="button" aria-label={tr('Previous step', 'Isinyathelo esedlule')} disabled={idx <= 0} onClick={() => idx > 0 && setStep(STEP_ORDER[idx - 1])} style={navBtn(idx <= 0)}>
                   <ChevronLeft size={16} />
                 </button>
                 <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
-                  {STEP_LABELS[canvasState.step]}
+                  {isZulu ? ({ base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba', zones: 'Izindawo', planting: 'Ukutshala', structures: 'Izakhiwo', review: 'Buyekeza', glossy: 'Umklamo oqediwe' } as Record<typeof canvasState.step, string>)[canvasState.step] : STEP_LABELS[canvasState.step]}
                   <span style={{ color: '#9A8268', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
                 </span>
-                <button type="button" aria-label="Next step" disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
+                <button type="button" aria-label={tr('Next step', 'Isinyathelo esilandelayo')} disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
                   <ChevronRight size={16} />
                 </button>
               </>
@@ -3312,10 +3318,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                           : 'all',
                 )
               }
-              aria-label="Preview map and choose a plan sheet"
+              aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
               style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 44, padding: '0 4px' }}
             >
-              <ImageIcon size={15} /> Preview map
+              <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
             </button>
           )}
           <span style={{ marginLeft: 'auto' }}>
@@ -3327,7 +3333,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               stops={TOP_STOPS}
               onChange={setTopStop}
               invert
-              label="Show or hide the steps and header"
+              label={tr('Show or hide the steps and header', 'Bonisa noma fihla izinyathelo nesihloko')}
             />
           </span>
           <button
@@ -3335,7 +3341,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onClick={() => setTopStop((c) => (c === 'full' ? 'slim' : 'full'))}
             style={{ display: 'none' }}
           >
-            {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
+            {chromeCollapsed ? <><ChevronDown size={15} /> {tr('Show steps', 'Bonisa izinyathelo')}</> : <><ChevronUp size={15} /> {tr('More space', 'Isikhala esengeziwe')}</>}
           </button>
         </div>
       )}
@@ -3356,7 +3362,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {!isPhone && canvasState?.step !== 'glossy' && (
           <div
             role="group"
-            aria-label="Workspace layout"
+            aria-label={tr('Workspace layout', 'Ukuhlelwa kwendawo yokusebenza')}
             style={{
               position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', zIndex: 24,
               display: 'inline-flex', alignItems: 'center', gap: 3, padding: 4, borderRadius: 12,
@@ -3369,7 +3375,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 key={layout}
                 type="button"
                 aria-pressed={workspaceMode === layout}
-                title={`${layout[0].toUpperCase()}${layout.slice(1)} workspace`}
+                title={tr(`${layout[0].toUpperCase()}${layout.slice(1)} workspace`, `Indawo yokusebenza: ${layout === 'docked' ? 'amaphaneli amile' : layout === 'floating' ? 'amaphaneli antantayo' : 'iphaneli elingezansi'}`)}
                 onClick={() => changeWorkspaceMode(layout)}
                 style={{
                   minWidth: 54, minHeight: 34, padding: '4px 9px', borderRadius: 8,
@@ -3721,8 +3727,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       {Math.round((liveAlign.scale ?? 1) * 100)}%
                     </span>
                   </span>
-                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title="Fade your photo to see the satellite underneath while you line them up">
-                    <span style={{ fontSize: 11, opacity: 0.75 }}>See through</span>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title={tr('Fade your photo to see the satellite underneath while you line them up', 'Fiphaza isithombe sakho ukuze ubone esesathelayithi ngaphansi ngesikhathi usiqondanisa')}>
+                    <span style={{ fontSize: 11, opacity: 0.75 }}>{tr('See through', 'Bona okungaphansi')}</span>
                     <input
                       type="range"
                       min={0.1}
@@ -3780,11 +3786,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             /* Was a dashed, small-text row sitting in a stack of similar-looking dashed hint rows,
                so it read as a tip rather than a control — Rory asked for a way to import a drone
                photo while looking straight at the button for it. Solid fill, a real label, and
-               the question moved to a subtitle. The copy now names Google Earth as well as a
-               drone: rural-SA Mapbox/Esri imagery is often blurry (which is what sends a farmer
-               looking for a better base in the first place), and nothing here cares where the
-               aerial came from. Hardcoded English matches the rest of this row today; the whole
-               row still needs an i18n key. */
+               the question moved to a subtitle. The copy names Google Earth as well as a
+               drone: rural-SA Mapbox/Esri imagery is often blurry, and nothing here cares where
+               the aerial came from. */
             <button
               type="button"
               onClick={() => setShowPhotoImport(true)}
@@ -3792,8 +3796,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             >
               <ImageIcon size={18} style={{ flexShrink: 0 }} />
               <span style={{ flex: 1, lineHeight: 1.3 }}>
-                <span style={{ display: 'block', fontWeight: 800, fontSize: 14 }}>Use your own aerial photo</span>
-                <span style={{ display: 'block', fontSize: 12, opacity: 0.85 }}>A drone shot or a Google Earth capture — sharper than this satellite view. Line it up and set the scale.</span>
+                <span style={{ display: 'block', fontWeight: 800, fontSize: 14 }}>{tr('Use your own aerial photo', 'Sebenzisa isithombe sakho esithathwe phezulu')}</span>
+                <span style={{ display: 'block', fontSize: 12, opacity: 0.85 }}>{tr('A drone shot or a Google Earth capture — sharper than this satellite view. Line it up and set the scale.', 'Isithombe sedrone noma esithathwe ku-Google Earth — sicace kakhulu kunalesi sesathelayithi. Siqondanise nesithombe esingaphansi bese usetha isikali.')}</span>
               </span>
               <ChevronRight size={18} style={{ flexShrink: 0 }} />
             </button>
@@ -3839,7 +3843,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           >
             <Sprout size={15} style={{ flexShrink: 0 }} />
             <span style={{ flex: 1 }}>
-              <span style={{ fontWeight: 800 }}>Just want beds &amp; trees?</span> Skip ahead — place them, then plan your crops.
+              <span style={{ fontWeight: 800 }}>{tr('Just want beds & trees?', 'Ufuna imibhede nezihlahla kuphela?')}</span> {tr('Skip ahead — place them, then plan your crops.', 'Yeqela phambili — kubeke, bese uhlela izitshalo zakho.')}
             </span>
             <ChevronRight size={16} style={{ flexShrink: 0 }} />
           </button>
@@ -3858,7 +3862,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.10)', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5, flexShrink: 0 }}
           >
             <span aria-hidden>💧</span>
-            <span><span style={{ fontWeight: 800 }}>Drip all beds</span> — one line down the centre of each</span>
+            <span><span style={{ fontWeight: 800 }}>{tr('Drip all beds', 'Faka imigqa yokunisela kuyo yonke imibhede')}</span> — {tr('one line down the centre of each', 'umugqa owodwa phakathi nendawo embhedeni ngamunye')}</span>
           </button>
           {dripNote && (
             <span style={{ fontSize: 11.5, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
@@ -4135,13 +4139,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: PAPER, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid #E2D8C4', flexShrink: 0 }}>
             <ImageIcon size={18} color={OCHRE} />
-            <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>Preview map</span>
+            <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>{tr('Preview map', 'Buka imephu')}</span>
             <button
               type="button"
               onClick={() => setPreviewFilter(null)}
               style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', minHeight: 40, padding: '0 6px' }}
             >
-              <X size={18} /> Close
+              <X size={18} /> {tr('Close', 'Vala')}
             </button>
           </div>
           <div style={{ flex: 1, position: 'relative', minHeight: 0 }}>
