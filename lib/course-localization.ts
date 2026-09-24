@@ -1,4 +1,5 @@
 import type { Lesson, QuizQuestion } from './course-modules';
+import { COURSE_TRANSLATION_DRAFTS } from './course-translation-drafts.ts';
 
 export type CourseLanguage = 'en' | 'zu';
 export type CourseTranslationStatus =
@@ -31,9 +32,9 @@ export interface CourseTranslationRecord {
   lessonId: string;
   language: 'zu';
   status: CourseTranslationStatus;
-  /** Path to a comparison packet/handoff. It is review material, never learner content. */
+  /** Path to a comparison packet/handoff; the packet itself stays outside the learner UI. */
   reviewDocument?: string;
-  /** Proposed copy stays separate from the learner resolver until it is explicitly approved. */
+  /** Proposed copy may be shown only through the owner-authorized, visibly labelled draft path. */
   draft?: LocalizedLessonContent;
   /** Only a published record with both named human approvals can be returned to learners. */
   published?: LocalizedLessonContent;
@@ -65,7 +66,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'food-forest-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'food-forest-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'small-livestock-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'small-livestock-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
+  'small-livestock-l2': { status: 'source-held', reviewDocument: 'docs/narration-reviews/small-livestock-l2.zu.review.md' },
   'small-livestock-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
@@ -121,6 +122,47 @@ export function learnerLessonForLanguage(
     keyPoints: lesson.keyPoints,
     quiz: lesson.quiz,
   };
+}
+
+export interface LearnerLessonPresentation {
+  content: LocalizedLessonContent;
+  status: 'approved' | 'draft' | 'english-fallback';
+}
+
+/** Rory authorised clearly labelled review drafts in the learner view on 24 September.
+ * This path never upgrades a draft to an approved translation, and keeps source-held
+ * lessons in English until their underlying farming claims are resolved. */
+export function resolveLearnerLessonPresentation(
+  lesson: Lesson,
+  language: string,
+  translation?: CourseTranslationRecord,
+): LearnerLessonPresentation {
+  const source: LocalizedLessonContent = {
+    title: lesson.title,
+    body: lesson.body,
+    keyPoints: lesson.keyPoints,
+    quiz: lesson.quiz,
+  };
+  if (language !== 'zu') return { content: source, status: 'approved' };
+
+  if (REVIEW_STATE_BY_LESSON[lesson.id]?.status === 'source-held') {
+    return { content: source, status: 'english-fallback' };
+  }
+
+  if (translation?.lessonId === lesson.id && hasReleaseApprovals(translation) &&
+    hasCompleteLessonShape(lesson, translation.published!)) {
+    return { content: translation.published!, status: 'approved' };
+  }
+
+  if (REVIEW_STATE_BY_LESSON[lesson.id]?.status === 'review-draft') {
+    const draft = translation?.lessonId === lesson.id && translation.status === 'review-draft'
+      ? translation.draft
+      : COURSE_TRANSLATION_DRAFTS[lesson.id];
+    if (draft && hasCompleteLessonShape(lesson, draft)) {
+      return { content: draft, status: 'draft' };
+    }
+  }
+  return { content: source, status: 'english-fallback' };
 }
 
 /** Review tools may show where a packet lives and why it is held, without exposing its proposed text to learners. */

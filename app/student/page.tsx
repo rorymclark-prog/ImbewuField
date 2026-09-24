@@ -30,6 +30,7 @@ import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from 
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
+import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
@@ -172,6 +173,8 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
   const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
+  const presentation = resolveLearnerLessonPresentation(lesson, lang === 'zu' ? 'zu' : 'en');
+  const lessonContent = presentation.content;
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -195,8 +198,20 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
           : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
-          <span className={`font-display ${styles.lessonTitle}`}>{lesson.title}</span>
-          <span className={`font-sans ${styles.lessonHint}`}>{open ? t('studentCloseLesson') : t('studentOpenLesson')}{hasAudio ? ` · ${t('studentListenOrRead')}` : ` · ${t('studentReadAndPractise')}`}</span>
+          <span className={`font-display ${styles.lessonTitle}`}>{lessonContent.title}</span>
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className={`font-sans ${styles.lessonHint}`}>{open ? t('studentCloseLesson') : t('studentOpenLesson')}{hasAudio ? ` · ${t('studentListenOrRead')}` : ` · ${t('studentReadAndPractise')}`}</span>
+            {lang === 'zu' && presentation.status === 'draft' && (
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>
+                {t('studentZuluLessonDraftBadge')}
+              </span>
+            )}
+            {lang === 'zu' && presentation.status === 'english-fallback' && (
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
+                {t('studentZuluLessonEnglishBadge')}
+              </span>
+            )}
+          </span>
         </span>
         {open
           ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
@@ -205,6 +220,16 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
 
       {open && (
         <div className={`px-4 pb-5 space-y-5 ${styles.lessonContent}`} style={{ borderTop: `1px solid ${color}18` }}>
+          {lang === 'zu' && presentation.status === 'draft' && (
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>
+              {t('studentZuluLessonDraftNotice')}
+            </div>
+          )}
+          {lang === 'zu' && presentation.status === 'english-fallback' && (
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
+              {t('studentZuluLessonEnglishFallbackNotice')}
+            </div>
+          )}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -253,7 +278,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {lesson.body.split('\n\n').map((para, i) => (
+            {lessonContent.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
               </p>
@@ -264,7 +289,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
             <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>{t('studentKeyPoints')}</p>
             <ul className="space-y-1.5">
-              {lesson.keyPoints.map((kp, i) => (
+              {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
                   <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}</span>
@@ -296,7 +321,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
             <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
               {t('studentCheckUnderstanding')}
             </p>
-            {lesson.quiz.map((q, i) => (
+            {lessonContent.quiz.map((q, i) => (
               <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
             ))}
           </div>
@@ -719,11 +744,9 @@ export default function StudentPage() {
         {lang === 'zu' && (
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
             style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-            {t('studentEnglishContentNotice')}
+            {t('studentZuluCourseLanguageNote')}
           </p>
         )}
-
-
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
