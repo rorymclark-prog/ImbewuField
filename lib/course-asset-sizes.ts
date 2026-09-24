@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1007 files, 410.4 MB total.
+// 1007 files, 410.6 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -415,7 +415,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/seeds-sovereignty/zu/slide-22.mp3': 261452,
   '/course-audio/seeds-sovereignty/zu/slide-23.mp3': 382412,
   '/course-audio/seeds-sovereignty/zu/slide-24.mp3': 224444,
-  '/course-audio/small-livestock/en/full.mp3': 2398412,
+  '/course-audio/small-livestock/en/full.mp3': 2508428,
   '/course-audio/small-livestock/en/slide-01.mp3': 126144,
   '/course-audio/small-livestock/en/slide-02.mp3': 144864,
   '/course-audio/small-livestock/en/slide-03.mp3': 114624,
@@ -426,9 +426,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/small-livestock/en/slide-08.mp3': 125856,
   '/course-audio/small-livestock/en/slide-09.mp3': 41040,
   '/course-audio/small-livestock/en/slide-10.mp3': 128160,
-  '/course-audio/small-livestock/en/slide-11.mp3': 127152,
+  '/course-audio/small-livestock/en/slide-11.mp3': 151344,
   '/course-audio/small-livestock/en/slide-12.mp3': 104688,
-  '/course-audio/small-livestock/en/slide-13.mp3': 143424,
+  '/course-audio/small-livestock/en/slide-13.mp3': 229248,
   '/course-audio/small-livestock/en/slide-14.mp3': 92448,
   '/course-audio/small-livestock/en/slide-15.mp3': 184464,
   '/course-audio/small-livestock/en/slide-16.mp3': 106848,

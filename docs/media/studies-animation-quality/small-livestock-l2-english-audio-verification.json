@@ -2,13 +2,13 @@
   "module": "small-livestock",
   "language": "en",
   "slidesRegenerated": [
-    9,
-    11
+    11,
+    13
   ],
   "voice": "en-ZA-LukeNeural",
   "rate": "-12%",
   "sourceScript": "docs/narration/small-livestock.en.md",
-  "sourceScriptSha256": "68a4cc727118e6e888d2ca4aff6602ec885ca2b8d1e02dd66f510a7720ed9500",
+  "sourceScriptSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
   "textExport": "scripts/course-narration-export.mjs",
   "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
   "clips": [
@@ -27,21 +27,33 @@
     {
       "slide": 11,
       "path": "public/course-audio/small-livestock/en/slide-11.mp3",
-      "seconds": 21.192,
-      "bytes": 127152,
-      "sourceTextSha256": "7b0e68de32e4a65f24861de100d035b27f8c492e6990ace9e72c438bb31dfb55",
-      "audioSha256": "879e524fda5d4cd7f832a2377464c37b01df15904b7354bfcbc256dbeb2a3d47",
-      "wordCount": 54,
-      "wordBoundaryCount": 54,
+      "seconds": 25.224,
+      "bytes": 151344,
+      "sourceTextSha256": "04f8406d6a73ba12be24e89730a4be247393a564c4c9c09094c79212a35181f1",
+      "audioSha256": "127ebc0512767bf1de61361e7c3fc59a27044916e577bed2935cd15a4f0377cd",
+      "wordCount": 64,
+      "wordBoundaryCount": 64,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-audio/small-livestock/en/slide-13.mp3",
+      "seconds": 38.208,
+      "bytes": 229248,
+      "sourceTextSha256": "2a09750606b8b8c0adb8579aa5527e33da2fa56323239cbbed38951634b45614",
+      "audioSha256": "57048a389b6973b8c83c7a59f7d4150dc8a8287c99785dae89bb1bebff877ceb",
+      "wordCount": 89,
+      "wordBoundaryCount": 89,
       "wordBoundaryTextMatch": true,
       "fullDecode": "pass"
     }
   ],
   "fullTrack": {
     "path": "public/course-audio/small-livestock/en/full.mp3",
-    "seconds": 397.008,
-    "bytes": 2382284,
-    "audioSha256": "f07cab4c9ac3b8b8d33f655ead7de70f1bd415560cfc3c079b8169e10d23b0cf",
+    "seconds": 418.032,
+    "bytes": 2508428,
+    "audioSha256": "7b87f0a20af02c3cb9bb43352bb56be4a3f9ff2375f4e678614e835a5f6481cc",
     "fullDecode": "pass",
     "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
     "slides": [
@@ -59,9 +71,9 @@
       },
       {
         "slide": 3,
-        "seconds": 18.792,
-        "bytes": 112752,
-        "audioSha256": "c5fc8bb6c7c5cd785339c3aec53e82416ce54c547fd103a707f048fbe49d0ecd"
+        "seconds": 19.104,
+        "bytes": 114624,
+        "audioSha256": "cf41d916b678e0dc2bad7510dcd521d44303cfaf3b150f64d5936b91a31f4722"
       },
       {
         "slide": 4,
@@ -107,9 +119,9 @@
       },
       {
         "slide": 11,
-        "seconds": 21.192,
-        "bytes": 127152,
-        "audioSha256": "879e524fda5d4cd7f832a2377464c37b01df15904b7354bfcbc256dbeb2a3d47"
+        "seconds": 25.224,
+        "bytes": 151344,
+        "audioSha256": "127ebc0512767bf1de61361e7c3fc59a27044916e577bed2935cd15a4f0377cd"
       },
       {
         "slide": 12,
@@ -119,9 +131,9 @@
       },
       {
         "slide": 13,
-        "seconds": 23.904,
-        "bytes": 143424,
-        "audioSha256": "eb1242f4bce796046bb083a3352d4569b026a07bc9c1a19202855d53fe1cf30c"
+        "seconds": 38.208,
+        "bytes": 229248,
+        "audioSha256": "57048a389b6973b8c83c7a59f7d4150dc8a8287c99785dae89bb1bebff877ceb"
       },
       {
         "slide": 14,
@@ -155,9 +167,9 @@
       },
       {
         "slide": 19,
-        "seconds": 22.776,
-        "bytes": 136656,
-        "audioSha256": "7d655a9c79e068be86b5ca60d39649100986d308a619c81822887edda099dba2"
+        "seconds": 25.152,
+        "bytes": 150912,
+        "audioSha256": "46d8c67a91accac2473a833db8a8f00803c51d96c1bcfb50e5f5869420ceddb6"
       },
       {
         "slide": 20,
@@ -166,8 +178,8 @@
         "audioSha256": "b57ef36a9516ca2aa72f986898c26f32bc6ec83f11a2d7c44689d5649eaaf624"
       }
     ],
-    "sumOfSlideDurationsSeconds": 397.008,
-    "durationDifferenceSeconds": 0.0
+    "sumOfSlideDurationsSeconds": 418.032,
+    "durationDifferenceSeconds": -0.0
   },
   "humanListeningReview": false
 }

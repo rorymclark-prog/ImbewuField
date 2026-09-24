@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '6d0c39b2', changes: [
+    'Small Livestock now explains bee ranges and movement rules.',
+    'Bee registration guidance names the activities covered by national rules.',
+  ], tour: [
+    { title: 'Read the bee lesson', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Open Small Livestock and choose the bees lesson.' },
+  ] },
   { when: '24 September 2026', sha: '072257f8', changes: [
     'Vegetables and Staples now has 18 isiZulu slides and the woman’s narration.',
     'The isiZulu lesson remains a draft for language and farming review.',
