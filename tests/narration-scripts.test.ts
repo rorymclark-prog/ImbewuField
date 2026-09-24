@@ -17,14 +17,10 @@ import { NARRATION_BLOCKER_MARKERS, NARRATION_RELEASE_EXCEPTIONS } from '@/lib/n
 //    HLOLA labels, "participants", "the group". 48 clips were nearly recorded telling a farmer
 //    alone on a homestead to turn to the person next to them.
 //
-// 2. vegetables-staples.zu.md carries an appendix its own author wrote as a BLOCKER: a table of 22
-//    agronomic terms marked "uncertain isiZulu terminology, coined or adapted for this draft",
-//    with the note that it "needs a human reviewer ... before this script goes anywhere near a
-//    learner". The module production pack meanwhile calls Vegetables "the fastest route to a
-//    second complete module ... it needs only the deck and the recording". Following that would
-//    have put 22 invented farming terms into a farmer's ears in the voice of an authority — and
-//    the appendix sits after the last slide heading, so a parser that reads to end-of-file would
-//    also have recorded the glossary itself as a nine-minute clip.
+// 2. vegetables-staples.zu.md has an explicit terminology-review appendix. Older drafts used
+//    unsupported farming claims. A pending owner-authorized release may retain that warning and
+//    publish only when its exact script hash and review record are registered. The appendix must
+//    never enter the transcript.
 //
 // These tests do not judge translation quality; no automated check can. They make it impossible to
 // promote a script that has declared itself unfinished.
@@ -128,15 +124,13 @@ test('both languages of a released module have the same number of blocks', () =>
   }
 });
 
-test('the vegetables isiZulu script is still recognised as blocked', () => {
-  // Named explicitly, because this is the one that a plan document actively recommends recording.
-  // If the appendix is ever removed, this fails and someone has to say out loud whether the
-  // agronomist review actually happened.
+test('the vegetables isiZulu script keeps its human-review warning', () => {
+  // Pending audio release does not waive the requirement to keep this label until review occurs.
   const zu = PARSED.find((s) => s.file === 'vegetables-staples.zu.md');
   assert.ok(zu, 'vegetables-staples.zu.md is missing — if it moved, update this test');
   assert.ok(
     hasBlocker(zu!),
-    'vegetables-staples.zu.md no longer declares itself a draft. If an isiZulu-speaking agronomist has reviewed its 22 coined terms, say so in the commit and delete this test. If not, restore the appendix.',
+    'vegetables-staples.zu.md no longer declares itself a draft; record human review before removing this warning.',
   );
 });
 
