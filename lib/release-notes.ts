@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '94cb6ed8', changes: [
+    'Full-screen lesson slides now use large text that fits your phone in either direction.',
+    'Animations fill the available height when you turn your phone sideways.',
+  ], tour: [
+    { title: 'See a lesson full screen', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen. Turn your phone sideways for a larger animation. Tap the slide to show the controls.' },
+  ] },
   { when: '23 September 2026', sha: '39ebc4e9', changes: [
     'Raised Bed opens the bed block sizes and count above the Elements list.',
     'Ubhejane tree choices now reflect its warm climate; saved site analyses refresh.',
