@@ -1402,7 +1402,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           <div className={styles.recordTools}>
           {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
-          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
+          <ReportPreparation language={language} location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           </div>
         </div>
       </div>
