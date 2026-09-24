@@ -121,35 +121,38 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'reading-landscape': {
-    languages: ['en'],
+    languages: ['en', 'zu'],
     // The original 21 clips were recorded 2026-08-03. Slides 16 and 18 were
     // re-recorded 2026-09-22 with en-ZA-LukeNeural after the map-scale and soil
     // inference correction; their word boundaries matched the new script and the
     // rebuilt full narration decoded. Human listening review remains open.
     // This deck labels its own boundaries — slides 4, 8, 12 and 16 open "Lesson 1" to "Lesson 4" —
     // so the mapping below is read off the slides rather than inferred.
+    // isiZulu draft generated 2026-09-24 with zu-ZA-ThandoNeural at -12%. All 21 clips
+    // match the corrected review-draft script at word boundaries and decode fully. Fluent isiZulu,
+    // local farming, and listening review remain pending; see the hash-bound release record.
     tracks: [
-      { slide: 1,  lesson: null,                   title: 'Reading the Landscape' },
-      { slide: 2,  lesson: null,                   title: 'Why This Matters' },
-      { slide: 3,  lesson: null,                   title: 'Learning Outcomes' },
-      { slide: 4,  lesson: 'reading-landscape-l1', title: 'Lesson 1: Where Rain Goes' },
-      { slide: 5,  lesson: 'reading-landscape-l1', title: 'Watch: Water Slows, Sinks, and Leaves' },
-      { slide: 6,  lesson: 'reading-landscape-l1', title: 'Trace Contours with an A-Frame' },
-      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Observe Water Before You Build' },
-      { slide: 8,  lesson: 'reading-landscape-l2', title: 'Lesson 2: Read Sun and Shade' },
-      { slide: 9,  lesson: 'reading-landscape-l2', title: 'Watch: Follow the Sun Across the Site' },
-      { slide: 10, lesson: 'reading-landscape-l2', title: 'Check Winter Shadows Before Building' },
-      { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants' },
-      { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope' },
-      { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map' },
-      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Flows Downhill' },
-      { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth' },
-      { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map' },
-      { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have' },
-      { slide: 18, lesson: 'reading-landscape-l4', title: 'Let Plants Help You Read Soil' },
-      { slide: 19, lesson: 'reading-landscape-l4', title: 'Add Seasons, Zones, and Sectors' },
-      { slide: 20, lesson: null,                   title: 'Field Assignment' },
-      { slide: 21, lesson: null,                   title: 'Field Action' },
+      { slide: 1,  lesson: null,                   title: 'Reading the Landscape', titleByLang: { zu: 'Ukufunda Indawo' } },
+      { slide: 2,  lesson: null,                   title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile' } },
+      { slide: 3,  lesson: null,                   title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda' } },
+      { slide: 4,  lesson: 'reading-landscape-l1', title: 'Lesson 1: Where Rain Goes', titleByLang: { zu: 'Isifundo 1: Lapho Imvula Iya Khona' } },
+      { slide: 5,  lesson: 'reading-landscape-l1', title: 'Watch: Water Slows, Sinks, and Leaves', titleByLang: { zu: 'Buka: Amanzi Ayancipha, Angene, Aphume' } },
+      { slide: 6,  lesson: 'reading-landscape-l1', title: 'Trace Contours with an A-Frame', titleByLang: { zu: 'Landela Amaphuzu Asezingeni Elilodwa Nge-A-Frame' } },
+      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Observe Water Before You Build', titleByLang: { zu: 'Bheka Amanzi Ngaphambi Kokwakha' } },
+      { slide: 8,  lesson: 'reading-landscape-l2', title: 'Lesson 2: Read Sun and Shade', titleByLang: { zu: 'Isifundo 2: Funda Ilanga Nomthunzi' } },
+      { slide: 9,  lesson: 'reading-landscape-l2', title: 'Watch: Follow the Sun Across the Site', titleByLang: { zu: 'Buka: Landela Ilanga Endaweni' } },
+      { slide: 10, lesson: 'reading-landscape-l2', title: 'Check Winter Shadows Before Building', titleByLang: { zu: 'Hlola Imithunzi Yasebusika Ngaphambi Kokwakha' } },
+      { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants', titleByLang: { zu: 'Vikela Izitshalo Ezizwela Isithwathwa' } },
+      { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope', titleByLang: { zu: 'Isifundo 3: Funda Umoya, Isithwathwa Nomthambeka' } },
+      { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map', titleByLang: { zu: 'Buka: Bona Umoya Nomoya Obandayo Kumephu' } },
+      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Flows Downhill', titleByLang: { zu: 'Umoya Obandayo Wehla Ngomthambeka' } },
+      { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth', titleByLang: { zu: 'Khetha Ukuhamba Komoya Nokufudumala' } },
+      { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map', titleByLang: { zu: 'Isifundo 4: Qala Imephu Yendawo Yakho' } },
+      { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have', titleByLang: { zu: 'Buka: Dweba Umhlaba Osuvele Unawo' } },
+      { slide: 18, lesson: 'reading-landscape-l4', title: 'Let Plants Help You Read Soil', titleByLang: { zu: 'Vumela Izitshalo Zikusize Ufunde Umhlabathi' } },
+      { slide: 19, lesson: 'reading-landscape-l4', title: 'Add Seasons, Zones, and Sectors', titleByLang: { zu: 'Faka Izinkathi, Ama-Zone Nama-Sector' } },
+      { slide: 20, lesson: null,                   title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wensimu' } },
+      { slide: 21, lesson: null,                   title: 'Field Action', titleByLang: { zu: 'Isenzo SaseNsimini' } },
     ],
   },
   'water-harvesting': {

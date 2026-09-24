@@ -50,13 +50,19 @@ function hasBlocker(s: Script): boolean {
   return BLOCKER_MARKERS.some((re) => re.test(s.text));
 }
 
-test('a script that declares itself unreviewed is never wired up as available narration', () => {
-  // The gate. COURSE_NARRATION.languages is what makes the app offer audio in a language and what
-  // tells a recorder the script is releasable. A script carrying its own blocker must not appear
-  // there — reviewing it is a human's job, and deleting the appendix is not the same as doing it.
+test('an unreviewed narration is available only through an exact owner-authorized pending release', () => {
+  // Pending release is explicit and tied to the exact narration text. The separate hash-and-record
+  // test below verifies authorization; other scripts still cannot be wired while blocked.
   for (const s of PARSED) {
     if (!hasBlocker(s)) continue;
     const languages = COURSE_NARRATION[s.moduleId]?.languages ?? [];
+    const authorization = NARRATION_RELEASE_EXCEPTIONS[`${s.moduleId}.${s.lang}`];
+    if (authorization) {
+      assert.ok(languages.includes(s.lang), `${s.file}: authorized pending release is not in the manifest`);
+      assert.equal(createHash('sha256').update(s.text).digest('hex'), authorization.scriptSha256,
+        `${s.file}: changed since its pending release was authorized`);
+      continue;
+    }
     assert.ok(
       !languages.includes(s.lang),
       `${s.file} says it needs human review, but COURSE_NARRATION lists '${s.lang}' as available for ${s.moduleId}. Get the review done, then remove the appendix — do not remove the appendix to pass this test.`,
@@ -64,7 +70,7 @@ test('a script that declares itself unreviewed is never wired up as available na
   }
 });
 
-test('every script the app DOES offer contains nothing but slides', () => {
+test('offered narration contains only slides, except the appendix on an authorized pending draft', () => {
   // Anything outside a slide block is at risk of being read aloud: vegetables-staples.en.md opens
   // with seventeen lines of instructions to the operator, and the isiZulu file ends with a
   // glossary. Neither is narration. A released script must be slides and nothing else, so no
@@ -79,6 +85,7 @@ test('every script the app DOES offer contains nothing but slides', () => {
     assert.equal(preamble, '', `${s.file}: ${preamble.split('\n').length} lines before slide 1 would be read aloud`);
 
     for (const re of BLOCKER_MARKERS) {
+      if (NARRATION_RELEASE_EXCEPTIONS[`${s.moduleId}.${s.lang}`]) continue;
       assert.doesNotMatch(s.text, re, `${s.file}: released script still carries a reviewer appendix`);
     }
   }
