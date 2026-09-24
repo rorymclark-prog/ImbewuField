@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '28e5beb2', changes: [
+    'My Studies folds the courses and app guides until you open them.',
+    'Read lesson slides full screen, switch to the picture, and zoom in.',
+    'IsiZulu screens now say when a lesson, quiz or voice is still in English.',
+    'English lessons give clearer cautions for water, soil and planting decisions.',
+  ], tour: [
+    { title: 'Open a study course', where: 'My Studies', href: '/student',
+      detail: 'Open the course list, then choose a module or the Design preview.' },
+    { title: 'Read a slide on your phone', where: 'My Studies → lesson slides', href: '/student',
+      detail: 'Tap Full screen, switch between text and picture, then enlarge the picture.' },
+  ] },
   { when: '23 September 2026', sha: '39ebc4e9', changes: [
     'Raised Bed opens the bed block sizes and count above the Elements list.',
     'Ubhejane tree choices now reflect its warm climate; saved site analyses refresh.',
