@@ -14,7 +14,7 @@ import { parseScriptBlocks } from '../lib/narration-check.ts';
 const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
 const narrationRoot = join(root, 'docs/narration');
 const reviewRoot = join(root, 'docs/narration-reviews');
-const expected = { lessons: 33, drafts: 25, held: 2, audioOnly: 6 };
+const expected = { lessons: 33, drafts: 24, held: 3, audioOnly: 6 };
 
 function fail(message) {
   console.error(message);
@@ -180,7 +180,7 @@ const html = `<!doctype html>
   @media print{body{background:#fff}.intro,.module{border:0;padding:0}.lesson{break-inside:avoid}.markdown{max-height:none}nav{display:none}}
 </style></head><body><main>
 <section class="intro"><h1>isiZulu core course review pack</h1>
-<p>Static comparison for independent fluent-language and local farming review. English source material appears beside the complete draft or source-hold packet. Drafts are not learner-ready. This pack records no human approval.</p>
+<p>Static comparison for independent fluent-language and local farming review. English source material appears beside the draft or source-hold packet. Rory authorised labelled learner display of 24 unreviewed drafts on 24 September; three source-held lessons stay in English. This pack records no human approval.</p>
 <div class="warning"><strong>Recording freshness:</strong> a prior inventory counted 165 older isiZulu review recordings. They predate English lesson corrections made on 23 September 2026 and are treated as stale pending recheck. No audio files are included here.</div>
 <p>Generated: <time datetime="${escapeHtml(generatedAt)}">${escapeHtml(generatedAt)}</time></p>
 <div class="overview"><span class="pill">${lessons.length} core lessons</span><span class="pill">${counts['review-draft']} full draft comparisons</span><span class="pill">${counts['source-held']} source holds</span><span class="pill">${counts['published-audio-only']} audio-history-only</span></div>

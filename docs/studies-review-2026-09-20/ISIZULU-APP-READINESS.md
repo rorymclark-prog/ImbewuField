@@ -39,11 +39,12 @@ including photo and storage feedback, without changing saved entries, access
 rules or paid-AI preferences. Example journal entries and authored farmer notes
 stay in their source language, with a visible notice. A standalone script,
 `scripts/build-isizulu-review-pack.mjs`, assembles the 33 current core English
-lessons next to 25 full drafts, two source-hold packets and six audio-history
+lessons next to 24 draft-status packets, three source-hold packets and six audio-history
 entries. It writes only outside the repository and learner app, includes no
 recordings, and records no approval. Its source fingerprints match the existing
 read-only audit; the 165 older Thando recordings remain stale pending review.
-This reviewer artifact is not a localized learner course.
+The reviewer artifact is separate from the learner course; the later owner
+decision to show labelled draft text does not make it fluent-approved.
 
 The current preview batch adds isiZulu controls to the Design Studio and
 programme evidence/reports, plus clearer English-content notices in the NGO,
@@ -53,12 +54,13 @@ interface translations are drafts pending fluent review.
 
 `node scripts/course-isizulu-audit.mjs` now emits a read-only, per-lesson
 English-source fingerprint and review-packet inventory. On the 24 September
-source there are 33 core lessons: 25 review drafts, 2 source-held lessons,
+source there are 33 core lessons: 24 draft-status lessons, 3 source-held lessons,
 and 6 lessons with published isiZulu audio but no approved lesson/quiz text.
 The audit does not certify meaning, fluency or approval. The older 165 Thando
 review takes predate the English corrections and must be matched against
 accepted scripts before any learner import. The course content gate remains
-in place; this batch does not turn review drafts into learner lessons.
+in place for approved translations; owner-authorized learner drafts keep their
+unreviewed status and a persistent disclosure.
 
 The next batch extends isiZulu controls through staff access, the network,
 cohort and garden register. My Studies now presents its English-content notice
@@ -166,11 +168,17 @@ document translations remain review drafts on this branch.
 
 ## Release gate
 
-For each farming lesson, a first-language isiZulu reviewer with local farming
-knowledge must return exact corrections, scope and an accepted/revise/hold
-decision. Resolve specialist/source holds separately. Then add the approved
-lesson/quiz data, slide text, transcript, audio and manifest in the same
-lesson sequence; inspect the actual phone player, narration and saved offline
-pack. App control translations also need fluent review, especially farming,
-finance, safety, consent and data-loss language. Automated checks and AI
-agents do not constitute human language or practitioner approval.
+Rory authorised labelled unreviewed lesson drafts for immediate learner
+display on 24 September. This is a draft publication exception, not human
+acceptance: keep each lesson/quiz visibly marked as unreviewed, keep source-held
+lessons in English, and disclose that narration and deck media may remain in
+English. No new isiZulu audio is implied by the translated reading text.
+
+For an approved release, a first-language isiZulu reviewer with local farming
+knowledge must still return exact corrections, scope and an accepted/revise/hold
+decision for each lesson. Resolve specialist/source holds separately, then
+update the lesson/quiz, slide text, transcript, audio and manifest together;
+inspect the phone player, narration and saved offline pack. App control
+translations also need fluent review, especially farming, finance, safety,
+consent and data-loss language. Automated checks and AI agents do not
+constitute human language or practitioner approval.

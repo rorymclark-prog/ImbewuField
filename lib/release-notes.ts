@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'bae05c01', changes: [
+    '24 core lessons now show unreviewed isiZulu reading and quizzes.',
+    '3 held lessons stay in English; narration may also be English.',
+  ], tour: [
+    { title: 'Check draft lessons', where: 'Student course', href: '/student',
+      detail: 'Choose isiZulu, open a core lesson, and check its draft notice and quiz.' },
+  ] },
   { when: '24 September 2026', sha: '79653b5b', changes: [
     'Settings, offline map status and the map tool guide follow isiZulu as review drafts.',
     'Farming advice and technical report content still need source and language review.',

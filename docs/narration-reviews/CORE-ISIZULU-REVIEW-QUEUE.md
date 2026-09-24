@@ -1,10 +1,13 @@
 # Core isiZulu review queue — 23 September 2026
 
-**Release boundary:** these are AI-prepared comparison packets, not approved
-translations or learner material. Do not copy draft wording into the course,
-record audio or publish it until a fluent isiZulu reviewer with local farming
-knowledge has checked the meaning and safety instructions. Record the reviewer,
-date, corrections and acceptance per lesson. No such approval is claimed here.
+**24 September owner decision:** Rory authorised showing the available lesson
+translations to learners now as conspicuously labelled, unreviewed drafts,
+with human review to follow. This does not make them approved translations or
+authorise new audio. The source-held Water L4 and Soil L3 stay in English.
+Independent QA found a held bee-registration claim and an editorial note in
+Small Livestock L2, so that lesson also stays in English until its source
+scope is resolved. Record the fluent isiZulu and local farming reviewer, date,
+corrections and acceptance per lesson; no such approval is claimed here.
 
 The ten core modules contain 33 lessons. All have draft isiZulu narration in
 the repository, but most are not published in the audio manifest. Review-only
@@ -19,8 +22,10 @@ Complete review-only drafts now cover 25 of those 27 lessons: Introduction
 L1–L3, Reading the Landscape L1–L4, Water Harvesting L1–L3, Soil Health
 L1–L2, Vegetables L1–L4, Food Forest L1–L3, Small Livestock L1–L3 and Market
 L1–L3. Water L4 and Soil L3 have comparison packets but no full draft
-because of their separate source holds. None of the 25 drafts has fluent
-language or farming approval.
+because of their separate source holds. All 25 packets remain review material;
+24 are now eligible for labelled learner draft display, while Small Livestock
+L2 is additionally held from learner display. None has fluent language or
+farming approval.
 
 | Module | Review-only packets | Main unresolved checks |
 | --- | --- | --- |
