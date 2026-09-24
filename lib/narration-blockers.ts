@@ -51,6 +51,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md',
     scriptSha256: 'faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667',
   },
+  'reading-landscape.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/reading-landscape.zu-audio-2026-09-24.md',
+    scriptSha256: 'a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b',
+  },
 };
 
 export function narrationReviewPending(moduleId: string, lang: string): boolean {

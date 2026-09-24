@@ -51,6 +51,19 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
       detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
   ] },
+  { when: '24 September 2026', sha: '897edc38', changes: [
+    'Reading the Landscape now has 21 isiZulu slides.',
+    'Hear the woman’s isiZulu narration; both are drafts for review.',
+  ], tour: [
+    { title: 'Hear Reading the Landscape in isiZulu', where: 'My Studies · Reading the Landscape', href: '/student',
+      detail: 'Choose isiZulu, open Reading the Landscape, then play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '3b87d7c9', changes: [
+    'Full-screen lesson text now fits your phone; use − and + to change its size.',
+  ], tour: [
+    { title: 'Fit a lesson slide', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Open Learning Outcomes full screen and use the size buttons above the slide.' },
+  ] },
   { when: '24 September 2026', sha: '146257a1', changes: [
     'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
     'Three teaching diagrams show the farm record, sales routes and neighbour network.',

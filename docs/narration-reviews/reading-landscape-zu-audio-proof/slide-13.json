@@ -1,0 +1,107 @@
+{
+  "seconds": 12.936,
+  "bytes": 77616,
+  "audioSha256": "a9b9cbccf30a59e5fd426dcaf90ab239cef97fc10d3ffe81b93f682644f85ed8",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Indawo",
+      "offset": 1460410,
+      "duration": 4971660
+    },
+    {
+      "text": "evikelekile",
+      "offset": 7142080,
+      "duration": 9517080
+    },
+    {
+      "text": "emoyeni",
+      "offset": 17085410,
+      "duration": 6392080
+    },
+    {
+      "text": "isengaba",
+      "offset": 23903330,
+      "duration": 6250000
+    },
+    {
+      "text": "yindawo",
+      "offset": 30153330,
+      "duration": 5397910
+    },
+    {
+      "text": "lapho",
+      "offset": 35551250,
+      "duration": 3835000
+    },
+    {
+      "text": "kuqoqana",
+      "offset": 39386250,
+      "duration": 6960410
+    },
+    {
+      "text": "khona",
+      "offset": 46488750,
+      "duration": 3977080
+    },
+    {
+      "text": "umoya",
+      "offset": 51034160,
+      "duration": 4687500
+    },
+    {
+      "text": "obandayo",
+      "offset": 56147910,
+      "duration": 7812500
+    },
+    {
+      "text": "Hlola",
+      "offset": 73812500,
+      "duration": 3693330
+    },
+    {
+      "text": "ukuvikeleka",
+      "offset": 78215830,
+      "duration": 8664580
+    },
+    {
+      "text": "emoyeni",
+      "offset": 87164580,
+      "duration": 6392080
+    },
+    {
+      "text": "nobungozi",
+      "offset": 93556660,
+      "duration": 7954580
+    },
+    {
+      "text": "besithwathwa",
+      "offset": 101511250,
+      "duration": 7954580
+    },
+    {
+      "text": "ngokwehlukana",
+      "offset": 109465830,
+      "duration": 9659160
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "reading-landscape",
+  "lesson": "reading-landscape-l3",
+  "language": "zu",
+  "slide": 13,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-13.txt",
+  "sourceSha256": "3d5dffc5b865619b970835d0e82ef95761bcfa8fe7cb5fafad4a6a32723e0ec5",
+  "scriptFile": "docs/narration/reading-landscape.zu.md",
+  "scriptSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+  "englishSourceFile": "docs/narration/reading-landscape.en.md",
+  "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "70d193ffe2fe07f05039b5f445b21fb38634150990fe04867eafd57c1cc44c76",
+  "generatedAt": "2026-09-24T13:47:49.528306+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

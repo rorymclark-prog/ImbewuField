@@ -1,0 +1,512 @@
+{
+  "seconds": 73.896,
+  "bytes": 443376,
+  "audioSha256": "c7fd2eca151716a9ed19efb3e340f1f3789c00636d8b0071fc5ec081a5c33915",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Ngobusuku",
+      "offset": 1176250,
+      "duration": 7954580
+    },
+    {
+      "text": "obucacile",
+      "offset": 9556660,
+      "duration": 8380830
+    },
+    {
+      "text": "nobungenamoya",
+      "offset": 17937500,
+      "duration": 11079580
+    },
+    {
+      "text": "umoya",
+      "offset": 30437500,
+      "duration": 5823750
+    },
+    {
+      "text": "obandayo",
+      "offset": 36687500,
+      "duration": 7102080
+    },
+    {
+      "text": "ungehla",
+      "offset": 44784160,
+      "duration": 6250000
+    },
+    {
+      "text": "ngomthambeka",
+      "offset": 51034160,
+      "duration": 7954580
+    },
+    {
+      "text": "uqoqane",
+      "offset": 59414580,
+      "duration": 6818330
+    },
+    {
+      "text": "ezindaweni",
+      "offset": 66517080,
+      "duration": 7102080
+    },
+    {
+      "text": "eziphansi",
+      "offset": 73761250,
+      "duration": 9090830
+    },
+    {
+      "text": "Lezi",
+      "offset": 93005830,
+      "duration": 3835410
+    },
+    {
+      "text": "zindawo",
+      "offset": 97125000,
+      "duration": 5823750
+    },
+    {
+      "text": "zingabanda",
+      "offset": 102948750,
+      "duration": 6818330
+    },
+    {
+      "text": "kakhulu",
+      "offset": 109767080,
+      "duration": 5681660
+    },
+    {
+      "text": "kunemithambeka",
+      "offset": 115448750,
+      "duration": 9943330
+    },
+    {
+      "text": "eseduze",
+      "offset": 125534160,
+      "duration": 8238750
+    },
+    {
+      "text": "Isithwathwa",
+      "offset": 144284160,
+      "duration": 7244160
+    },
+    {
+      "text": "siyizinhlayiya",
+      "offset": 151954580,
+      "duration": 10085410
+    },
+    {
+      "text": "zeqhwa",
+      "offset": 162181660,
+      "duration": 4971660
+    },
+    {
+      "text": "ezakheka",
+      "offset": 167437500,
+      "duration": 6676250
+    },
+    {
+      "text": "phezu",
+      "offset": 174113750,
+      "duration": 3977080
+    },
+    {
+      "text": "kwendawo",
+      "offset": 178090830,
+      "duration": 5681660
+    },
+    {
+      "text": "ebandayo",
+      "offset": 183914580,
+      "duration": 7954580
+    },
+    {
+      "text": "Inkungu",
+      "offset": 201954580,
+      "duration": 5681660
+    },
+    {
+      "text": "iyodwa",
+      "offset": 208488750,
+      "duration": 5965830
+    },
+    {
+      "text": "ayisho",
+      "offset": 214738750,
+      "duration": 5539580
+    },
+    {
+      "text": "ukuthi",
+      "offset": 220420410,
+      "duration": 3835410
+    },
+    {
+      "text": "sekwakheke",
+      "offset": 224255830,
+      "duration": 7528330
+    },
+    {
+      "text": "lezo",
+      "offset": 231784160,
+      "duration": 3835000
+    },
+    {
+      "text": "zinhlayiya",
+      "offset": 235619160,
+      "duration": 6676250
+    },
+    {
+      "text": "zeqhwa",
+      "offset": 242437500,
+      "duration": 5397910
+    },
+    {
+      "text": "futhi",
+      "offset": 250107910,
+      "duration": 4261250
+    },
+    {
+      "text": "isithwathwa",
+      "offset": 254511250,
+      "duration": 7670410
+    },
+    {
+      "text": "singalimaza",
+      "offset": 262750000,
+      "duration": 9232910
+    },
+    {
+      "text": "izitshalo",
+      "offset": 272409160,
+      "duration": 7386250
+    },
+    {
+      "text": "kungabonakali",
+      "offset": 280221660,
+      "duration": 9801250
+    },
+    {
+      "text": "iqhwa",
+      "offset": 290590830,
+      "duration": 3977080
+    },
+    {
+      "text": "Bheka",
+      "offset": 304653330,
+      "duration": 3551250
+    },
+    {
+      "text": "iqhwa",
+      "offset": 309056660,
+      "duration": 4261250
+    },
+    {
+      "text": "nomonakalo",
+      "offset": 313318330,
+      "duration": 8522910
+    },
+    {
+      "text": "ezitshalweni",
+      "offset": 322267080,
+      "duration": 8948750
+    },
+    {
+      "text": "uqhathanise",
+      "offset": 332920410,
+      "duration": 9375000
+    },
+    {
+      "text": "izindawo",
+      "offset": 342579580,
+      "duration": 6250000
+    },
+    {
+      "text": "eziphansi",
+      "offset": 348971660,
+      "duration": 7528330
+    },
+    {
+      "text": "nemithambeka",
+      "offset": 356500000,
+      "duration": 9375000
+    },
+    {
+      "text": "futhi",
+      "offset": 368290000,
+      "duration": 4545410
+    },
+    {
+      "text": "uhlole",
+      "offset": 373261250,
+      "duration": 4829580
+    },
+    {
+      "text": "amazinga",
+      "offset": 378517080,
+      "duration": 6676250
+    },
+    {
+      "text": "okushisa",
+      "offset": 385619160,
+      "duration": 6392080
+    },
+    {
+      "text": "aphansi",
+      "offset": 392295410,
+      "duration": 5539580
+    },
+    {
+      "text": "lapho",
+      "offset": 397835410,
+      "duration": 3977080
+    },
+    {
+      "text": "ukwazi",
+      "offset": 402238750,
+      "duration": 4403330
+    },
+    {
+      "text": "khona",
+      "offset": 406642080,
+      "duration": 4829580
+    },
+    {
+      "text": "Maka",
+      "offset": 421415000,
+      "duration": 3551250
+    },
+    {
+      "text": "izindawo",
+      "offset": 425534160,
+      "duration": 6534160
+    },
+    {
+      "text": "lapho",
+      "offset": 432068330,
+      "duration": 3977080
+    },
+    {
+      "text": "amakhaza",
+      "offset": 436329580,
+      "duration": 7528330
+    },
+    {
+      "text": "noma",
+      "offset": 443857910,
+      "duration": 3267080
+    },
+    {
+      "text": "umonakalo",
+      "offset": 447551250,
+      "duration": 8096660
+    },
+    {
+      "text": "kuhlala",
+      "offset": 455647910,
+      "duration": 4971660
+    },
+    {
+      "text": "khona",
+      "offset": 460761250,
+      "duration": 3693330
+    },
+    {
+      "text": "isikhathi",
+      "offset": 464738750,
+      "duration": 5965830
+    },
+    {
+      "text": "eside",
+      "offset": 470846660,
+      "duration": 6392080
+    },
+    {
+      "text": "Gcina",
+      "offset": 487607910,
+      "duration": 3409160
+    },
+    {
+      "text": "izitshalo",
+      "offset": 491727500,
+      "duration": 7102080
+    },
+    {
+      "text": "ezizwela",
+      "offset": 499255830,
+      "duration": 6676250
+    },
+    {
+      "text": "amakhaza",
+      "offset": 506215830,
+      "duration": 7386250
+    },
+    {
+      "text": "zikude",
+      "offset": 513602500,
+      "duration": 5681660
+    },
+    {
+      "text": "nezindawo",
+      "offset": 519284160,
+      "duration": 6960410
+    },
+    {
+      "text": "ezibandayo",
+      "offset": 526386250,
+      "duration": 8380830
+    },
+    {
+      "text": "ozibonile",
+      "offset": 535051250,
+      "duration": 9375000
+    },
+    {
+      "text": "Qhathanisa",
+      "offset": 554085410,
+      "duration": 7244160
+    },
+    {
+      "text": "izindawo",
+      "offset": 561897910,
+      "duration": 7244160
+    },
+    {
+      "text": "ongakhetha",
+      "offset": 569426250,
+      "duration": 7244160
+    },
+    {
+      "text": "kuzo",
+      "offset": 576670410,
+      "duration": 3835410
+    },
+    {
+      "text": "zenkulisa",
+      "offset": 580505830,
+      "duration": 7528330
+    },
+    {
+      "text": "yezithombo",
+      "offset": 588034160,
+      "duration": 7812500
+    },
+    {
+      "text": "kuyo",
+      "offset": 595988750,
+      "duration": 3551250
+    },
+    {
+      "text": "yonke",
+      "offset": 599540000,
+      "duration": 4403330
+    },
+    {
+      "text": "inkathi",
+      "offset": 604227500,
+      "duration": 5113330
+    },
+    {
+      "text": "yesithwathwa",
+      "offset": 609340830,
+      "duration": 7812500
+    },
+    {
+      "text": "yasendaweni",
+      "offset": 617153330,
+      "duration": 9232910
+    },
+    {
+      "text": "Hlola",
+      "offset": 636613750,
+      "duration": 3693330
+    },
+    {
+      "text": "amarekhodi",
+      "offset": 641017080,
+      "duration": 8664580
+    },
+    {
+      "text": "endawo",
+      "offset": 650107910,
+      "duration": 5681660
+    },
+    {
+      "text": "okushisa",
+      "offset": 655931660,
+      "duration": 6676250
+    },
+    {
+      "text": "okuphansi",
+      "offset": 662892080,
+      "duration": 7386250
+    },
+    {
+      "text": "noma",
+      "offset": 670278330,
+      "duration": 3551250
+    },
+    {
+      "text": "ubuze",
+      "offset": 674255830,
+      "duration": 4687500
+    },
+    {
+      "text": "umeluleki",
+      "offset": 679511250,
+      "duration": 7954580
+    },
+    {
+      "text": "wezolimo",
+      "offset": 687607910,
+      "duration": 7386250
+    },
+    {
+      "text": "wendawo",
+      "offset": 694994160,
+      "duration": 5823750
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 701386250,
+      "duration": 5397910
+    },
+    {
+      "text": "kokukhetha",
+      "offset": 706784160,
+      "duration": 6818330
+    },
+    {
+      "text": "indawo",
+      "offset": 714028330,
+      "duration": 4971660
+    },
+    {
+      "text": "ehlala",
+      "offset": 719284160,
+      "duration": 4687500
+    },
+    {
+      "text": "njalo",
+      "offset": 723971660,
+      "duration": 5397910
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "reading-landscape",
+  "lesson": "reading-landscape-l3",
+  "language": "zu",
+  "slide": 14,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-14.txt",
+  "sourceSha256": "ad3557464c111a046abc0fcfb635ac67253cd3f95f222d5e76c05eed47ede33c",
+  "scriptFile": "docs/narration/reading-landscape.zu.md",
+  "scriptSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+  "englishSourceFile": "docs/narration/reading-landscape.en.md",
+  "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "70d193ffe2fe07f05039b5f445b21fb38634150990fe04867eafd57c1cc44c76",
+  "generatedAt": "2026-09-24T13:47:55.750074+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

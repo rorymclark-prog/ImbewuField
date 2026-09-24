@@ -1,0 +1,27 @@
+{
+  "5": {
+    "path": "docs/media/reading-landscape/diagram-05.jpg",
+    "layout": "scene",
+    "reason": "Static isiZulu-labelled diagram; no animation asset is generated."
+  },
+  "8": {
+    "path": "docs/media/reading-landscape/diagram-08.jpg",
+    "layout": "scene",
+    "reason": "Static isiZulu-labelled diagram; no animation asset is generated."
+  },
+  "9": {
+    "path": "docs/media/reading-landscape/diagram-09.jpg",
+    "layout": "scene",
+    "reason": "Static isiZulu-labelled diagram; no animation asset is generated."
+  },
+  "13": {
+    "path": "docs/media/reading-landscape/diagram-13.jpg",
+    "layout": "scene",
+    "reason": "Static isiZulu-labelled diagram; no animation asset is generated."
+  },
+  "17": {
+    "path": "docs/media/reading-landscape/diagram-17.jpg",
+    "layout": "scene",
+    "reason": "Static isiZulu-labelled diagram; no animation asset is generated."
+  }
+}
