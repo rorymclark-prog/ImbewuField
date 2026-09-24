@@ -61,7 +61,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   };
   const btnGhost: React.CSSProperties = {
     minHeight: 40, padding: '0 12px', borderRadius: 9, border: `1px solid ${BORDER}`, cursor: 'pointer',
-    background: '#FFFEFA', color: MUTED, fontSize: 13.5, fontWeight: 600,
+    background: 'var(--bg-1)', color: MUTED, fontSize: 13.5, fontWeight: 600,
   };
 
   return (
@@ -85,7 +85,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
           role="menu"
           style={{
             position: 'absolute', right: 0, top: '100%', marginTop: 6, zIndex: 60, width: 232,
-            background: '#FFFEFA', border: `1px solid ${BORDER}`, borderRadius: 12,
+            background: 'var(--bg-1)', border: `1px solid ${BORDER}`, borderRadius: 12,
             boxShadow: '0 10px 30px rgba(32,25,15,0.18)', padding: 6,
           }}
         >

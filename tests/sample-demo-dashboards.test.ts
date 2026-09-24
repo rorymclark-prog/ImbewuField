@@ -17,6 +17,7 @@
 //   node --import ./tests/register-alias.mjs --test tests/sample-demo-dashboards.test.ts
 
 import test from 'node:test';
+import { numberLabel } from '@/lib/format-figures';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { SAMPLE_GARDENS, SAMPLE_PARTICIPANTS } from '../lib/sample-gardens';
@@ -154,7 +155,7 @@ test('every catalogue garden has its own complete prepared PDF and layout', () =
     assert.equal(sections.length, 9);
     assert.ok(sections.find(s => s.title === 'Orchard bookkeeping example')?.lines.some(l => l.includes('kg sold')));
     assert.ok(sections[0].lines.some(line => line.includes(garden.name)));
-    assert.ok(sections[1].lines.some(line => line.includes(garden.production.vegetableM2.toLocaleString('en-ZA', { maximumFractionDigits: 1 }))));
+    assert.ok(sections[1].lines.some(line => line.includes(numberLabel(garden.production.vegetableM2, 1))));
     assert.ok(sections.every(s => s.lines.length >= 4));
   }
   assert.equal(sampleGardenReportUrl('missing-garden'), undefined);

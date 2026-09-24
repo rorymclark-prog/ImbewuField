@@ -45,7 +45,7 @@ export default function RolePlaceholder({ role, icon, title, subtitle, blurb, fe
               </div>
             ))}
           </div>
-          <p className="text-xs font-mono mt-6" style={{ color: '#9A8268' }}>
+          <p className="text-xs font-mono mt-6" style={{ color: '#755942' }}>
             Built once the NGO pilot is funded · part of the ImbewuField suite
           </p>
         </div>

@@ -150,7 +150,7 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
       </div>
       {revealed && rationale && (
         <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
-          <Lightbulb size={13} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
+          <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
           <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>{rationale}</p>
         </div>
       )}
@@ -216,8 +216,8 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           </span>
         </span>
         {open
-          ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
-          : <ChevronDown size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+          ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0 }} />
+          : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0 }} />}
       </button>
 
       {open && (
@@ -310,17 +310,17 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
               style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
             >
-              <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <Video size={14} style={{ color: '#755942', flexShrink: 0 }} />
               <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
                 {t('studentFacilitatorVideo')}
               </span>
-              <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <ExternalLink size={12} style={{ color: '#755942', flexShrink: 0 }} />
             </a>
           )}
 
           {/* Quiz */}
           <div className="space-y-3">
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
               {t('studentCheckUnderstanding')}
             </p>
             {lessonContent.quiz.map((q, i) => (
@@ -332,7 +332,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               above rather than rendered as a dead button. */}
           {related.length > 0 && (
             <div className="space-y-2">
-              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
                 {t('studentRelatedLessons')}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -439,7 +439,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
               >
                 {isChecked
                   ? <CheckCircle size={15} style={{ color, flexShrink: 0 }} />
-                  : <Circle size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+                  : <Circle size={15} style={{ color: '#755942', flexShrink: 0 }} />}
                 <span className="font-sans text-sm" style={{ color: '#3A3020' }}>{item}</span>
               </button>
             );
@@ -473,7 +473,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
         style={{ background: '#FFFEFA', border: `1px dashed ${voiceFile ? color : '#E2D8C4'}` }}
       >
-        <Mic size={16} style={{ color: voiceFile ? color : '#8C7A62', flexShrink: 0 }} />
+        <Mic size={16} style={{ color: voiceFile ? color : '#755942', flexShrink: 0 }} />
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
           {voiceFile ? t('studentVoiceAdded').replace('{name}', voiceFile.name) : t('studentVoiceOptional')}
         </span>
@@ -488,7 +488,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
         style={{
           background: canSubmit ? color : 'rgba(226,216,196,0.6)',
-          color: canSubmit ? '#FFFEFA' : '#8C7A62',
+          color: canSubmit ? '#FFFEFA' : '#755942',
           cursor: canSubmit ? 'pointer' : 'not-allowed',
         }}
       >
@@ -498,7 +498,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       </button>
 
       {existing && (
-        <p className="font-sans text-xs text-center" style={{ color: '#8C7A62' }}>
+        <p className="font-sans text-xs text-center" style={{ color: '#755942' }}>
           {t('studentAlreadySubmitted')}
         </p>
       )}
@@ -698,7 +698,7 @@ export default function StudentPage() {
               <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
             </div>
             <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{t('studentPortalTitle')}</p>
-            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
               {t('studentPortalBody')}
             </p>
             <button
@@ -809,8 +809,8 @@ export default function StudentPage() {
             )}
             {pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
-                <Clock size={12} style={{ color: '#8C7A62' }} />
-                <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                <Clock size={12} style={{ color: '#755942' }} />
+                <span className="font-sans text-xs" style={{ color: '#755942' }}>
                   ~{formatDuration(totalMins, t)} {t('studentRemaining')}
                 </span>
               </div>
@@ -847,12 +847,12 @@ export default function StudentPage() {
               )}
               {assignSummary.dueSoon > 0 && ' '}
               {assignSummary.dueSoon > 0 && (
-                <span style={{ color: '#C07A1E', fontWeight: 600 }}>
+                <span style={{ color: '#7A4408', fontWeight: 600 }}>
                   {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
                 </span>
               )}
             </p>
-            <p className="font-sans text-xs mt-1.5" style={{ color: '#8C7A62' }}>
+            <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
               {t('studentAssignmentsOrder')}
             </p>
           </div>
@@ -998,7 +998,7 @@ export default function StudentPage() {
                         className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={contentComplete
                           ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
-                          : { background: 'rgba(32,25,15,0.05)', color: '#8C7A62', border: '1px solid #E2D8C4' }}
+                          : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
                       >
                       {readiness?.text === 'Fully built'
                         ? t('studentReadinessComplete')
@@ -1028,8 +1028,8 @@ export default function StudentPage() {
                     </p>
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
-                        <Clock size={11} style={{ color: '#8C7A62' }} />
-                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins, t)}</span>
+                        <Clock size={11} style={{ color: '#755942' }} />
+                        <span className="font-mono text-xs" style={{ color: '#755942' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
@@ -1044,12 +1044,12 @@ export default function StudentPage() {
                       )}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                          <span className="font-sans text-xs" style={{ color: '#755942' }}>
                             {mod.lessons.length} {mod.lessons.length === 1 ? t('studentLessonOne') : t('studentLessons')}
                           </span>
                           {isExpanded
-                            ? <ChevronUp size={11} style={{ color: '#8C7A62' }} />
-                            : <ChevronDown size={11} style={{ color: '#8C7A62' }} />}
+                            ? <ChevronUp size={11} style={{ color: '#755942' }} />
+                            : <ChevronDown size={11} style={{ color: '#755942' }} />}
                         </div>
                       )}
                     </div>
@@ -1130,7 +1130,7 @@ export default function StudentPage() {
                         />
                       </div>
                     ) : null}
-                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
+                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#755942' }}>
                       {t('studentLessonsLabel')}
                     </p>
                     {mod.lessons.map((lesson) => (
@@ -1196,12 +1196,12 @@ export default function StudentPage() {
           <div className="flex items-center gap-2 mb-2">
             {capstoneUnlocked
               ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
-              : <Lock size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
-            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#8C7A62' }}>
+              : <Lock size={14} style={{ color: '#755942', flexShrink: 0 }} />}
+            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#755942' }}>
               {t('studentCapstone')}
             </span>
           </div>
-          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
+          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#755942' }}>
             {capstoneUnlocked
               ? t('studentCapstoneComplete')
               : t('studentCapstoneLocked').replace('{count}', String(TOTAL_MODULES))}
@@ -1283,7 +1283,7 @@ export default function StudentPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
+          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
             {t('studentProgressFirebase')}
           </p>
         )}

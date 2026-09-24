@@ -77,7 +77,7 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 width: 20, height: 20, borderRadius: 999, flexShrink: 0,
                 background: active ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)',
-                color: active ? PAPER : '#9A8268',
+                color: active ? PAPER : '#755942',
                 fontSize: 10.5, fontWeight: 800, letterSpacing: '0.02em',
               }}
             >

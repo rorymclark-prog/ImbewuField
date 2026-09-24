@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
@@ -1227,8 +1228,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
                   ...(d.bru ? [{ label: 'BRU Zone', value: `${d.bru.brucode} · approx. ${d.bru.nearestBrg}`, color: bColor }] : []),
                   ...(facts?.boundary ? [{ label: tr('Mapped boundary', 'Umngcele obalazwe'), value: `${(facts.boundary.areaM2 / 10000).toFixed(3)} ha`, color: 'var(--report-green)' }] : []),
-                  ...(facts?.design ? [{ label: tr('Mapped growing area', 'Indawo yokutshala ebalazwe'), value: `${facts.design.growingAreaM2.toLocaleString()} m²`, color: 'var(--report-green)' }] : []),
-                  ...(facts?.water ? [{ label: tr('Tank capacity in plan', 'Umthamo wamathangi ohlelweni'), value: `${facts.water.statedStorageLitres.toLocaleString()} L`, color: 'var(--report-blue)' }] : []),
+                  ...(facts?.design ? [{ label: tr('Mapped growing area', 'Indawo yokutshala ebalazwe'), value: `${numberLabel(facts.design.growingAreaM2)} m²`, color: 'var(--report-green)' }] : []),
+                  ...(facts?.water ? [{ label: tr('Tank capacity in plan', 'Umthamo wamathangi ohlelweni'), value: `${numberLabel(facts.water.statedStorageLitres)} L`, color: 'var(--report-blue)' }] : []),
                 ].map(({ label, value, color }) => (
                   <div key={label} className={styles.summaryTile} style={{ borderTop: `3px solid ${color ?? 'var(--report-border)'}` }}>
                     <div className={`${styles.summaryLabel} font-sans`}>{label}</div>

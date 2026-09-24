@@ -32,6 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
+import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import { planNotesDateLabel } from '@/lib/crop-plan';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
@@ -1110,7 +1111,7 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
               ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
               : item.count === null
                 ? 'Confirm quantity'
-                : `~${item.count.toLocaleString('en-ZA')} ${item.unit} positions`,
+                : `~${numberLabel(item.count)} ${item.unit} positions`,
         method: item.quantityStatus === 'spacing-confirmation-required'
           ? 'Local row layout needed'
           : !item.transplant && item.unit !== 'seeds'

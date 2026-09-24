@@ -36,13 +36,13 @@ export interface JournalCategoryDef {
 // is edited by everything; lib/task-board.ts sets the precedent of hardcoding a
 // small verb/label set here and translating it in a later pass.
 export const JOURNAL_CATEGORIES: readonly JournalCategoryDef[] = Object.freeze([
-  { key: 'planting',    label: 'Planting',        icon: '🌱', tint: 'rgba(31,77,43,0.10)',   ink: '#1F4D2B' },
-  { key: 'harvest',     label: 'Harvest',         icon: '🧺', tint: 'rgba(164,110,20,0.12)', ink: '#8A5B0F' },
-  { key: 'weather',     label: 'Weather',         icon: '🌦️', tint: 'rgba(37,99,143,0.12)',  ink: '#1F5C82' },
-  { key: 'pest',        label: 'Pest / disease',  icon: '🐛', tint: 'rgba(160,50,45,0.12)',  ink: '#9B3630' },
-  { key: 'maintenance', label: 'Maintenance',     icon: '🛠️', tint: 'rgba(92,80,64,0.12)',   ink: '#5C5040' },
-  { key: 'training',    label: 'Visitor / training', icon: '👥', tint: 'rgba(103,66,145,0.12)', ink: '#5C3F86' },
-  { key: 'other',       label: 'Other',           icon: '📝', tint: 'rgba(92,80,64,0.10)',   ink: '#5C5040' },
+  { key: 'planting',    label: 'Planting',        icon: '🌱', tint: 'rgba(31,77,43,0.10)',   ink: 'var(--color-forest-800)' },
+  { key: 'harvest',     label: 'Harvest',         icon: '🧺', tint: 'rgba(164,110,20,0.12)', ink: 'var(--gold)' },
+  { key: 'weather',     label: 'Weather',         icon: '🌦️', tint: 'rgba(37,99,143,0.12)',  ink: 'var(--blue)' },
+  { key: 'pest',        label: 'Pest / disease',  icon: '🐛', tint: 'rgba(160,50,45,0.12)',  ink: 'var(--orange)' },
+  { key: 'maintenance', label: 'Maintenance',     icon: '🛠️', tint: 'rgba(92,80,64,0.12)',   ink: 'var(--text-secondary)' },
+  { key: 'training',    label: 'Visitor / training', icon: '👥', tint: 'rgba(103,66,145,0.12)', ink: 'var(--violet)' },
+  { key: 'other',       label: 'Other',           icon: '📝', tint: 'rgba(92,80,64,0.10)',   ink: 'var(--text-secondary)' },
 ]);
 
 const CATEGORY_KEYS = new Set<string>(JOURNAL_CATEGORIES.map((c) => c.key));

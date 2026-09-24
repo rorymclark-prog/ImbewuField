@@ -35,8 +35,8 @@ const SHELL_STYLE: CSSProperties = {
 };
 
 const PILL_STYLE: CSSProperties = {
-  background: '#E4DCC6',
-  color: '#1F4D2B',
+  background: 'var(--bg-0)',
+  color: 'var(--color-forest-800)',
   borderRadius: 100,
   padding: '8px 16px',
   fontSize: 13,
@@ -188,7 +188,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             width: '100%', minHeight: 52,
-            background: '#E4DCC6', color: '#1F4D2B',
+            background: 'var(--bg-0)', color: 'var(--color-forest-800)',
             borderRadius: 100, fontSize: 15, letterSpacing: '-0.01em',
             textDecoration: 'none', marginBottom: 12,
             boxShadow: '0 2px 8px rgba(15,30,18,0.22)',

@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import type { BillOfQuantities } from './report-boq';
@@ -44,7 +45,7 @@ export function zuluReportMatter(facts: ReportSiteFacts | null, d: LocationData,
   const cover = `# Umbiko wokuhlola indawo · ${cell(facts?.farmName ?? 'ImbewuField')}\n\nImbewuField · ${date}\n\nLo mbiko usebenzisa imininingwane yendawo nohlelo olugciniwe lapho lukhona. Akukona ukuqinisekiswa ukuthi konke okuhleliwe sekwenziwe.\n`;
   const glance = `## Indawo kafushane\n\n${summary[0].lines.join('\n\n')}`;
   const crop = `## Uhlelo lwezitshalo olugciniwe\n\n${summary[1].lines.join('\n\n')}`;
-  const costs = ['## Uhlu lobuningi nezindleko', '', ...summary[3].lines.slice(0, 3), '', '| Into | Ubuningi | Intengo ngeyunithi | Isamba |', '|---|---|---|---|', ...boq.lines.map(l => `| ${cell(l.description)} | ${cell(l.quantity)} | ${l.rate ?? 'Intengo ayikho'} | ${l.zar === null ? l.unpriced === 'existing' ? 'Ikhona; ayifakiwe ezindlekweni ezintsha' : 'Kudingeka intengo noma isilinganiso' : `R ${l.zar.toLocaleString('en-ZA')}`} |`), '', 'Ubuningi buvela emklamweni. Izintengo ziyizilinganiso zokuhlela; qinisekisa ukuthutha, abasebenzi, intela namanani akamuva ngaphambi kokuthenga.'].join('\n');
+  const costs = ['## Uhlu lobuningi nezindleko', '', ...summary[3].lines.slice(0, 3), '', '| Into | Ubuningi | Intengo ngeyunithi | Isamba |', '|---|---|---|---|', ...boq.lines.map(l => `| ${cell(l.description)} | ${cell(l.quantity)} | ${l.rate ?? 'Intengo ayikho'} | ${l.zar === null ? l.unpriced === 'existing' ? 'Ikhona; ayifakiwe ezindlekweni ezintsha' : 'Kudingeka intengo noma isilinganiso' : `R ${numberLabel(l.zar)}`} |`), '', 'Ubuningi buvela emklamweni. Izintengo ziyizilinganiso zokuhlela; qinisekisa ukuthutha, abasebenzi, intela namanani akamuva ngaphambi kokuthenga.'].join('\n');
   const monitoring = ['## Ukuqapha, ukuhlola nokufunda', '',
     'Bhala isimo sokuqala ngaphambi kokuba kuqale usizo. Uma idatha iqoqwe sekudlule isikhathi, yibize ngokuthi ukubika okubheka emuva.',
     'Bhala isivuno ngesitshalo nangesisindo ngaso sonke isikhathi uvuna. Bhala nokuthengisa, ukudla okudliwe, okunikelwe nokonakele ngokwehlukana. Isivuno esingathengiswanga asisho ukuthi sonke sidliwe ekhaya.',

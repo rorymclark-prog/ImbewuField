@@ -56,7 +56,7 @@ export default function AccountButton() {
         // olive-green) is a different hue from the brand forest green every other screen still
         // hardcodes — this chip is the app's most-visited header, not the place to fork the
         // brand accent in two.
-        color: '#2D6B3C',
+        color: 'var(--color-forest-700)',
         textDecoration: 'none',
         minHeight: 56,
         fontSize: 20,

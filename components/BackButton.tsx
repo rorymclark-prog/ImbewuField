@@ -25,9 +25,9 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
       title="Back"
       className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
       style={{
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
-        color: '#20190F',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
+        color: 'var(--text-primary)',
         cursor: 'pointer',
         // 44px is the touch-target floor this app holds itself to elsewhere (see the floating
         // fallback in BackControl.tsx) — this in-flow button rendered on 15+ page headers was

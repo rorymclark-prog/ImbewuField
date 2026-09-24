@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import { portfolioTotals, type NetworkFarmerSummary } from './network';
 import type { productionAreaSummary } from './production-sites';
 import type { ProgrammeMilestone } from './programme-evidence';
@@ -50,7 +51,7 @@ export const PROGRESS_TEMPLATES: { id: string; category: ProgressArea; title: st
 export type ProgressMetric = { id: string; category: ProgressArea; label: string; value: number | null; unit: string; note: string };
 export type AreaSummary = ReturnType<typeof productionAreaSummary>;
 export type ProgrammeRecords = { metrics: ProgressMetric[]; notes: string[]; errors: string[] };
-const number = (n: number, digits = 2) => n.toLocaleString('en-ZA', { maximumFractionDigits: digits });
+const number = (n: number, digits = 2) => numberLabel(n, digits);
 export function progressValue(value: number | null, unit = '') {
   if (value === null) return 'Not reported';
   return unit === 'R' ? `R ${number(value)}` : `${number(value,unit==='ha'?4:2)}${unit ? ` ${unit}` : ''}`;

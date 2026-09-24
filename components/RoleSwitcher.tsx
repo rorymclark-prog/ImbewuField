@@ -27,17 +27,17 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
   const effectiveCurrent = ROLE_ALIASES[current] ?? current;
   return (
     <div data-header-secondary className="flex items-center gap-1 px-1.5 py-1 rounded-full"
-      style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', ...(inMenu ? { width: '100%', flexWrap: 'wrap', borderRadius: 12 } : {}) }}>
+      style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', ...(inMenu ? { width: '100%', flexWrap: 'wrap', borderRadius: 12 } : {}) }}>
       {ROLES.filter(r => visible.includes(r.key)).map((r) => {
         const active = r.key === effectiveCurrent;
         const isAliasMatch = active && current !== r.key;
         // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).
         const base = `flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-sans font-semibold text-[15px] lg:text-base transition-all whitespace-nowrap${inMenu ? ' min-h-[44px]' : ''}`;
         const style = active
-          ? { background: inMenu ? '#e9f1e9' : 'var(--badge-bg)', border: '1px solid #1F4D2B', color: '#2D6B3C' }
+          ? { background: inMenu ? '#e9f1e9' : 'var(--badge-bg)', border: '1px solid #1F4D2B', color: 'var(--color-forest-700)' }
           : r.ready
-          ? { background: 'transparent', border: '1px solid transparent', color: '#20190F' }
-          : { background: 'transparent', border: '1px solid transparent', color: '#5C5040', opacity: 0.5, cursor: 'not-allowed' };
+          ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }
+          : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };
         const ariaLabel = `${t(r.labelKey)}${active ? ' (current)' : ''}`;
 
         if (!r.ready) {

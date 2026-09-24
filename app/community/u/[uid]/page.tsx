@@ -116,8 +116,8 @@ export default function PublicCommunityProfilePage() {
                 <div className="font-display font-bold" style={{ fontSize: 20, color: '#20190F' }}>{profile.display_name}</div>
                 {profile.area_text && (
                   <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
-                    <MapPin size={12} style={{ color: '#8C7A62' }} />
-                    <span className="font-sans" style={{ fontSize: 13, color: '#8C7A62' }}>{profile.area_text}</span>
+                    <MapPin size={12} style={{ color: '#755942' }} />
+                    <span className="font-sans" style={{ fontSize: 13, color: '#755942' }}>{profile.area_text}</span>
                   </div>
                 )}
               </div>
@@ -184,7 +184,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleReport}
                   disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#755942', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>

@@ -310,7 +310,8 @@ test('the red benchmark state names the conflicting plantings and can open each 
 
 test('a disabled "Suggest a plan" says why, without softening the irrigation gate', () => {
   const page = source('../app/facilitator/crops/page.tsx');
-  const at = page.indexOf('✨ Suggest a plan');
+  // Anchored on the words, not the icon that precedes them.
+  const at = page.indexOf('Suggest a plan</>');
   assert.ok(at > 0);
   const block = page.slice(at - 1800, at + 900);
   assert.match(block, /Turn on “Reliable irrigation for every crop cycle” above/);
@@ -331,14 +332,14 @@ test('the two long reference cards open on demand, with nothing deleted', () => 
   assert.match(cardBody, /aria-expanded=\{open\}/, 'the collapse must be announced to a screen reader');
   assert.match(cardBody, /\{open && </, 'the body must actually be gated on open');
   // The honesty CLAIM stays on screen even while the method is collapsed.
-  const proveAt = page.indexOf('🔎 What the planner can prove');
+  const proveAt = page.indexOf('What the planner can prove');
   assert.match(
     page.slice(proveAt, proveAt + 700),
     /summary="Every yield figure and date here is either from a published source or labelled as an estimate/,
     'the always-visible summary must carry the honesty claim itself, not just name the topic',
   );
 
-  for (const title of ['🔎 What the planner can prove', '🔄 Rotate by botanical family']) {
+  for (const title of ['What the planner can prove', 'Rotate by botanical family']) {
     const at = page.indexOf(title);
     assert.ok(at > 0, `${title} is gone`);
     assert.match(page.slice(at - 200, at + 200), /DisclosureCard/, `${title} is expanded again`);
@@ -352,7 +353,7 @@ test('the on-screen buying card is the dated calendar, not the flat aggregate', 
   const page = source('../app/facilitator/crops/page.tsx');
   assert.match(page, /buildBuyingSchedule\(plantings, beds, currentMonth\)/);
   // Anchored to the card itself rather than grepping the whole file.
-  const at = page.indexOf('🌱 Seeds &amp; seedlings');
+  const at = page.indexOf('Seeds &amp; seedlings');
   assert.ok(at > 0, 'the buying card is gone; rewrite this test rather than deleting it');
   const card = page.slice(at, at + 4000);
   assert.doesNotMatch(card, /seedBoqForPlan/, 'the aggregate BOQ must not still feed the card');

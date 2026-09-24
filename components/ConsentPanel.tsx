@@ -53,21 +53,21 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   const who = orgName ? `${orgName}` : 'the organisation running your programme';
 
   return (
-    <div className="rounded-2xl px-4 py-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl px-4 py-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="flex items-center gap-2">
-        <ShieldCheck size={16} style={{ color: '#5C5040' }} />
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>
+        <ShieldCheck size={16} style={{ color: 'var(--text-secondary)' }} />
+        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
           What you share
         </div>
       </div>
 
-      <p className="text-sm font-display mt-2 leading-snug" style={{ color: '#5C5040' }}>
+      <p className="text-sm font-display mt-2 leading-snug" style={{ color: 'var(--text-secondary)' }}>
         Nothing here is shared unless you switch it on. You can change your mind at any time,
         and {who} will stop seeing it straight away.
       </p>
 
       {loading ? (
-        <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: '#8C7A62' }}>
+        <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: 'var(--text-muted)' }}>
           <Loader2 size={14} className="animate-spin" /> Loading…
         </div>
       ) : (
@@ -79,7 +79,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
                 <label
                   key={id}
                   className="flex items-start gap-3 py-3 cursor-pointer"
-                  style={{ borderTop: '1px solid #E2D8C4' }}
+                  style={{ borderTop: '1px solid var(--border)' }}
                 >
                   <input
                     type="checkbox"
@@ -90,12 +90,12 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
                     aria-describedby={`consent-detail-${id}`}
                   />
                   <span className="flex-1 min-w-0">
-                    <span className="block text-sm font-display" style={{ color: '#20190F' }}>{label}</span>
-                    <span id={`consent-detail-${id}`} className="block text-xs font-display mt-0.5" style={{ color: '#8C7A62' }}>
+                    <span className="block text-sm font-display" style={{ color: 'var(--text-primary)' }}>{label}</span>
+                    <span id={`consent-detail-${id}`} className="block text-xs font-display mt-0.5" style={{ color: 'var(--text-muted)' }}>
                       {detail}
                     </span>
                   </span>
-                  {busy === id && <Loader2 size={14} className="animate-spin mt-0.5" style={{ color: '#8C7A62' }} />}
+                  {busy === id && <Loader2 size={14} className="animate-spin mt-0.5" style={{ color: 'var(--text-muted)' }} />}
                 </label>
               );
             })}
@@ -107,8 +107,8 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
             </div>
           )}
 
-          <div className="flex items-center gap-3 mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-            <span className="text-xs font-display flex-1" style={{ color: '#8C7A62' }}>
+          <div className="flex items-center gap-3 mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+            <span className="text-xs font-display flex-1" style={{ color: 'var(--text-muted)' }}>
               {on === 0 ? 'You are not sharing anything.' : `You are sharing ${on} of ${CONSENT_SCOPES.length} things.`}
             </span>
             <button

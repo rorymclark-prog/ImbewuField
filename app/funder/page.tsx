@@ -23,7 +23,7 @@ const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 
 function DashboardLoading({ cohort = false }: { cohort?: boolean }) {
   const { lang } = useLanguage();
-  return <div className="flex-1 flex items-center justify-center" style={{ color: '#9A8268' }}>
+  return <div className="flex-1 flex items-center justify-center" style={{ color: '#755942' }}>
     <span className="text-sm font-display">{tr(lang, cohort ? 'Loading the cohort…' : 'Loading dashboard…', cohort ? 'Kusalayishwa iqembu…' : 'Kusalayishwa ideshibhodi…')}</span>
   </div>;
 }

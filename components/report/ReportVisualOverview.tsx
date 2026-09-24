@@ -1,4 +1,5 @@
 'use client';
+import { numberLabel } from '@/lib/format-figures';
 import { reportChartSvg, REPORT_COLOURS, type ReportChart, type ReportVisuals } from '@/lib/report-visuals';
 import { Maximize2 } from 'lucide-react';
 import SidewaysScroller from './SidewaysScroller';
@@ -12,7 +13,7 @@ export function ReportChartCard({ chart, ink = false, slideHint, onOpenImage, vi
   return <figure className={`${styles.chart} ${chart.id === 'cost' ? styles.wideChart : ''}`}>
     <figcaption><div><span className={styles.kicker}>{chart.unit || 'JAN – DEC'}</span><h3>{chart.title}</h3></div>{onOpenImage && <button type="button" className={`${styles.enlarge} no-print`} onClick={() => onOpenImage(chart.title, `data:image/svg+xml;charset=utf-8,${encodeURIComponent(art.svg)}`)}><Maximize2 size={16} aria-hidden="true"/>{viewLabel}</button>}</figcaption>
     {chart.kind === 'bars' ? <div className={styles.bars}>{chart.rows.length ? chart.rows.map((row, i) => <div key={`${row.label}-${i}`}>
-      <div className={styles.barLabel}><span>{row.label}</span><strong>{row.value.toLocaleString('en-ZA', { maximumFractionDigits: 1 })} {chart.unit}</strong></div>
+      <div className={styles.barLabel}><span>{row.label}</span><strong>{numberLabel(row.value, 1)} {chart.unit}</strong></div>
       <div className={styles.track}><span style={{ width: `${row.value / maximum * 100}%`, background: ink ? '#333' : REPORT_COLOURS[i % REPORT_COLOURS.length] }} /></div>
       {row.detail && <small>{row.detail}</small>}
     </div>) : <p>No priced or measured values available.</p>}</div> : chart.kind === 'figure' && chart.figure ? <SidewaysScroller className={styles.chartScroll} label={chart.title} hint={slideHint}>

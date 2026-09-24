@@ -147,7 +147,7 @@ export default function AtlasExplorer() {
               height: 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
             }}
           >
-            <Search size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
+            <Search size={15} style={{ color: '#755942', flexShrink: 0 }} />
             <input
               value={query}
               onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
@@ -159,7 +159,7 @@ export default function AtlasExplorer() {
               <button
                 onClick={() => { setQuery(''); setSuggestions([]); }}
                 aria-label="Clear search"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#8C7A62', display: 'flex' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#755942', display: 'flex' }}
               >
                 <X size={14} />
               </button>
@@ -217,7 +217,7 @@ export default function AtlasExplorer() {
           {/* Sheet chrome */}
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div className="md:hidden mx-auto absolute left-1/2 -translate-x-1/2 top-2" style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }} />
-            <span className="font-sans font-bold uppercase" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: '#8C7A62', marginTop: 6 }}>
+            <span className="font-sans font-bold uppercase" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: '#755942', marginTop: 6 }}>
               This point
             </span>
             <button

@@ -190,6 +190,31 @@ export function exitSampleMode(): void {
    (sessionStorage) while module state does not: the first localStorage touch of
    the reloaded sample tab must find the crèche already there. */
 
+/**
+ * APPEARANCE IS THE DEVICE'S, NOT THE FARM'S.
+ *
+ * The shim below shadows localStorage wholesale while sampling, which is right for farm data:
+ * a demo must not read a real farmer's records and must not clobber them. But three keys in
+ * there are not farm data at all — they are how the person can see the screen:
+ *
+ *   fp-theme      earth or slate
+ *   fp-mode       light, dark or follow the system
+ *   fp-textscale  the Appearance panel's text-size slider
+ *
+ * Shadowing them meant lib/theme.tsx's mount read answered from an empty sandbox, so entering
+ * the tour reset the app to earth light at 1x and threw away whatever the person had chosen —
+ * measured: with sample mode on, a saved `fp-mode: dark` left `<html>` without its `dark` class;
+ * with sample mode off, the same value applied. Anything set during the tour was then dropped on
+ * the way out. Someone who needs larger text needs it in the demo too, and a demo that quietly
+ * undoes an accessibility setting is worse than the leak that shadowing them prevents — there
+ * is none to prevent; these hold no farm data and nothing derives farm data from them.
+ *
+ * `permamap_lang` is deliberately NOT here: the tour picks its own language and mirrors it to
+ * sessionStorage (see SAMPLE_LANG_KEY below), so a sample language choice is meant to be
+ * sandboxed and not to overwrite the real one.
+ */
+const APPEARANCE_KEYS = new Set(['fp-theme', 'fp-mode', 'fp-textscale']);
+
 let shimStore: Map<string, string> | null = null;
 
 function resetShimStore(): void {
@@ -223,7 +248,8 @@ function installStorageShim(): void {
     clear: proto.clear,
   };
 
-  const shimmed = (self: Storage): boolean => {
+  const shimmed = (self: Storage, key?: string): boolean => {
+    if (key !== undefined && APPEARANCE_KEYS.has(String(key))) return false; // see APPEARANCE_KEYS
     try {
       return self === window.localStorage && isSampleMode();
     } catch {
@@ -232,11 +258,11 @@ function installStorageShim(): void {
   };
 
   proto.getItem = function (key: string): string | null {
-    if (shimmed(this)) { const v = shimStoreEnsured().get(String(key)); return v === undefined ? null : v; }
+    if (shimmed(this, key)) { const v = shimStoreEnsured().get(String(key)); return v === undefined ? null : v; }
     return orig.getItem.call(this, key);
   };
   proto.setItem = function (key: string, value: string): void {
-    if (shimmed(this)) {
+    if (shimmed(this, key)) {
       shimStoreEnsured().set(String(key), String(value));
       if (String(key) === 'permamap_lang') {
         try { window.sessionStorage.setItem(SAMPLE_LANG_KEY, String(value)); } catch { /* current tab still changes */ }
@@ -246,7 +272,7 @@ function installStorageShim(): void {
     orig.setItem.call(this, key, value);
   };
   proto.removeItem = function (key: string): void {
-    if (shimmed(this)) {
+    if (shimmed(this, key)) {
       shimStoreEnsured().delete(String(key));
       if (String(key) === 'permamap_lang') {
         try { window.sessionStorage.removeItem(SAMPLE_LANG_KEY); } catch { /* no persistent sample choice */ }

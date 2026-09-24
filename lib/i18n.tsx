@@ -758,7 +758,7 @@ const T_en: Dict = {
   homeStatASL: 'ASL',
   homeMainSite: 'Main site',
   homeSetAsMain: 'Set as main site',
-  homeMainSiteLabel: '★ Main',
+  homeMainSiteLabel: 'Main',   // the ★ that used to prefix this is a Lucide icon's job, not a string's
   homeLimaSuggests: 'Lima suggests',
   homeSurveyNew: 'Survey a new site',
   homeSurveyDesc: 'Drop a pin and Lima will read its climate, soil and water.',

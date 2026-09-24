@@ -101,7 +101,7 @@ const SITE_ZOOM = 7.6;
 
 const INK = '#20190F';
 const INK_SOFT = '#5C5040';
-const INK_MUTED = '#8C7A62';
+const INK_MUTED = '#755942';
 const LINE = '#E2D8C4';
 const PAPER = '#FFFEFA';
 const PANEL = '#F4EFE4';

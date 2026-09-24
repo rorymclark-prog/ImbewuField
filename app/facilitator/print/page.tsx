@@ -13,6 +13,7 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type {
   ElType, LineKind, SectorKind, LayerId,
@@ -512,7 +513,7 @@ export default function FacilitatorPrintPage() {
         //
         // Summing each tank's own cost also prices a MIXED bank correctly, which an average of the
         // litres could not: one 2 500 and one 10 000 average to two 5 000s and are wrong both ways.
-        qty = `×${t.count} (${Math.round(t.litres).toLocaleString()} L)`;
+        qty = `×${t.count} (${numberLabel(Math.round(t.litres))} L)`;
         const perTank = plannedItemPts
           .filter(({ it }) => it.type === type)
           .map(({ it }) => {
@@ -721,7 +722,7 @@ export default function FacilitatorPrintPage() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: 0.5, color: '#1F4D2B' }}>ImbewuField</div>
-              <div style={{ fontSize: 9.5, color: '#9A8268' }}>Permaculture plan sheet</div>
+              <div style={{ fontSize: 9.5, color: '#755942' }}>Permaculture plan sheet</div>
             </div>
           </div>
 
@@ -765,7 +766,7 @@ export default function FacilitatorPrintPage() {
                     );
                   })}
                   {Object.keys(c.itemTally).length === 0 && Object.keys(c.lineTally).length === 0 && (
-                    <div style={{ fontSize: 9, color: '#9A8268' }}>No elements placed yet.</div>
+                    <div style={{ fontSize: 9, color: '#755942' }}>No elements placed yet.</div>
                   )}
                 </div>
               </div>
@@ -795,7 +796,7 @@ export default function FacilitatorPrintPage() {
                       </tr>
                     ))}
                     {c.boqRows.length === 0 && (
-                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#9A8268' }}>Nothing to cost yet.</td></tr>
+                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#755942' }}>Nothing to cost yet.</td></tr>
                     )}
                   </tbody>
                   <tfoot>
@@ -823,7 +824,7 @@ export default function FacilitatorPrintPage() {
                     </table>
                   </div>
                 )}
-                <div style={{ fontSize: 7.5, color: '#9A8268', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
+                <div style={{ fontSize: 7.5, color: '#755942', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
               </div>
             </div>
           </div>

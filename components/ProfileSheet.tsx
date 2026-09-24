@@ -43,7 +43,7 @@ interface Props {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="font-sans font-semibold mb-2" style={{ fontSize: 13, color: '#5C5040' }}>
+    <div className="font-sans font-semibold mb-2" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );
@@ -96,18 +96,18 @@ function Toggle({
         background: 'rgba(226,216,196,0.3)',
         borderRadius: 12,
         padding: '12px 14px',
-        border: '1px solid #E2D8C4',
+        border: '1px solid var(--border)',
       }}
     >
       <div className="flex-1 min-w-0 pr-3">
         <div
           className="font-sans font-semibold"
-          style={{ fontSize: 13.5, color: '#20190F' }}
+          style={{ fontSize: 13.5, color: 'var(--text-primary)' }}
         >
           {label}
         </div>
         {sub && (
-          <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>
+          <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
             {sub}
           </div>
         )}
@@ -277,12 +277,12 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
       aria-modal="true"
       aria-label="Your profile"
       className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: '#E4DCC6' }}
+      style={{ background: 'var(--bg-0)' }}
     >
       {/* ── Header ── */}
       <div
         className="flex items-center gap-3 px-4 flex-shrink-0"
-        style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 60, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}
       >
         <button
           type="button"
@@ -293,12 +293,12 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
             height: 38,
             borderRadius: 11,
             background: 'rgba(32,25,15,0.06)',
-            border: '1px solid #E2D8C4',
+            border: '1px solid var(--border)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#5C5040',
+            color: 'var(--text-secondary)',
             flexShrink: 0,
           }}
         >
@@ -307,7 +307,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         <div className="flex-1 min-w-0">
           <div
             className="font-display font-semibold"
-            style={{ fontSize: 16, color: '#20190F' }}
+            style={{ fontSize: 16, color: 'var(--text-primary)' }}
           >
             Your profile
           </div>
@@ -333,7 +333,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                     height: 80,
                     borderRadius: '50%',
                     objectFit: 'cover',
-                    border: '2px solid #E2D8C4',
+                    border: '2px solid var(--border)',
                   }}
                 />
               ) : (
@@ -377,8 +377,8 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 fontSize: 13,
                 cursor: uploading ? 'default' : 'pointer',
                 background: 'rgba(226,216,196,0.5)',
-                color: '#5C5040',
-                border: '1px solid #E2D8C4',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border)',
                 opacity: uploading ? 0.6 : 1,
               }}
             >
@@ -399,10 +399,10 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
-                background: '#FFFEFA',
-                border: '1px solid #E2D8C4',
+                background: 'var(--bg-1)',
+                border: '1px solid var(--border)',
                 fontSize: 14,
-                color: '#20190F',
+                color: 'var(--text-primary)',
                 outline: 'none',
               }}
             />
@@ -431,7 +431,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               </span>
               <span
                 className="font-sans"
-                style={{ fontSize: 12, color: '#94876F' }}
+                style={{ fontSize: 12, color: 'var(--text-muted)' }}
               >
                 Roles are set by your programme admin
               </span>
@@ -446,7 +446,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 className="font-sans"
                 style={{
                   fontSize: 12,
-                  color: bioRemaining < 20 ? '#B83A18' : '#94876F',
+                  color: bioRemaining < 20 ? '#B83A18' : '#755942',
                 }}
               >
                 {bioRemaining} left
@@ -461,10 +461,10 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
-                background: '#FFFEFA',
-                border: '1px solid #E2D8C4',
+                background: 'var(--bg-1)',
+                border: '1px solid var(--border)',
                 fontSize: 14,
-                color: '#20190F',
+                color: 'var(--text-primary)',
                 outline: 'none',
                 resize: 'none',
                 lineHeight: 1.5,
@@ -507,7 +507,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 >
                   <p
                     className="font-sans"
-                    style={{ fontSize: 12.5, color: '#1F4D2B', lineHeight: 1.5 }}
+                    style={{ fontSize: 12.5, color: 'var(--color-forest-800)', lineHeight: 1.5 }}
                   >
                     Your location will be placed at the current map view centre when you save.
                   </p>
@@ -524,7 +524,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 >
                   <p
                     className="font-sans"
-                    style={{ fontSize: 12.5, color: '#C07A1E', lineHeight: 1.5 }}
+                    style={{ fontSize: 12.5, color: 'var(--gold)', lineHeight: 1.5 }}
                   >
                     Pan the map to where you want to appear, then return here to save.
                   </p>
@@ -542,8 +542,8 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         style={{
           padding: '14px 20px',
           paddingBottom: 'calc(14px + env(safe-area-inset-bottom))',
-          background: '#FFFEFA',
-          borderTop: '1px solid #E2D8C4',
+          background: 'var(--bg-1)',
+          borderTop: '1px solid var(--border)',
         }}
       >
         <button

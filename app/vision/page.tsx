@@ -42,9 +42,9 @@ type LimaResult = CropResult | WeighResult | ErrorResult;
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const CONFIDENCE_STYLE: Record<'high' | 'medium' | 'low', { bg: string; color: string; label: string }> = {
-  high:   { bg: 'rgba(31,77,43,0.10)',   color: '#1F4D2B', label: 'High confidence' },
-  medium: { bg: 'rgba(192,122,30,0.10)', color: '#C07A1E', label: 'Medium confidence' },
-  low:    { bg: 'rgba(92,80,64,0.10)',   color: '#5C5040', label: 'Low confidence' },
+  high:   { bg: 'rgba(31,77,43,0.10)',   color: 'var(--color-forest-800)', label: 'High confidence' },
+  medium: { bg: 'rgba(192,122,30,0.10)', color: 'var(--gold)', label: 'Medium confidence' },
+  low:    { bg: 'rgba(92,80,64,0.10)',   color: 'var(--text-secondary)', label: 'Low confidence' },
 };
 
 function ConfidencePill({ level, zu }: { level: 'high' | 'medium' | 'low'; zu: boolean }) {
@@ -164,18 +164,18 @@ export default function VisionPage() {
   const errResult = result && !result.ok ? (result as ErrorResult) : null;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
 
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}
       >
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Lima Vision</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>Lima Vision</h1>
         <div className="flex-1" />
         <LessonLink id="vision:overview" label={t('Learn', 'Funda')} />
         <SettingsButton />
@@ -188,7 +188,7 @@ export default function VisionPage() {
           {/* Mode toggle */}
           <div
             className="flex rounded-2xl p-1 gap-1"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
           >
             {([
               { v: 'crop' as Mode,  label: t("What's growing?", 'Kukhula ini?'),   Icon: Leaf  },
@@ -232,7 +232,7 @@ export default function VisionPage() {
               onClick={() => inputRef.current?.click()}
               className="w-full rounded-2xl transition-all"
               style={{
-                background: '#FFFEFA',
+                background: 'var(--bg-1)',
                 border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
                 cursor: 'pointer',
                 padding: 0,
@@ -249,12 +249,12 @@ export default function VisionPage() {
                 />
               ) : (
                 <div className="flex flex-col items-center gap-3 py-12 px-6">
-                  <Camera size={36} style={{ color: '#1F4D2B' }} strokeWidth={1.5} />
+                  <Camera size={36} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.5} />
                   <div className="text-center">
-                    <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>
+                    <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
                       {t('Take / choose a photo', 'Thatha / khetha isithombe')}
                     </div>
-                    <div className="font-sans text-xs mt-1" style={{ color: '#8C7A62' }}>
+                    <div className="font-sans text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                       {mode === 'crop'
                         ? t('Photo of your planted bed', 'Isithombe sendawo oyitshalile')
                         : t('Photo of your harvested produce', 'Isithombe sesivuno sakho')}
@@ -288,14 +288,14 @@ export default function VisionPage() {
               className="flex items-center gap-3 rounded-2xl px-4 py-4"
               role="status"
               aria-live="polite"
-              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
             >
-              <Loader2 size={20} className="animate-spin flex-shrink-0" style={{ color: '#1F4D2B' }} />
+              <Loader2 size={20} className="animate-spin flex-shrink-0" style={{ color: 'var(--color-forest-800)' }} />
               <div>
-                <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>
+                <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
                   {t('Lima is reading the photo…', 'ULima ubheka isithombe…')}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   {t('Usually 5–15 seconds', 'Ngokuvamile kuthatha imizuzwana engu-5–15')}
                 </div>
               </div>
@@ -316,13 +316,13 @@ export default function VisionPage() {
           {result && !loading && (
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderLeft: '3px solid #1F4D2B' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid #1F4D2B' }}
             >
               <div className="px-4 pt-4 pb-3">
                 {/* Header row */}
                 <div className="flex items-center gap-2 mb-3">
                   <LimaSprout size={20} />
-                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: '#1F4D2B', letterSpacing: '0.08em' }}>
+                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>
                     {t('Lima says', 'Impendulo kaLima')}
                   </span>
                 </div>
@@ -330,8 +330,8 @@ export default function VisionPage() {
                 {/* Error result */}
                 {errResult && (
                   <>
-                    {zu && <p className="font-sans text-xs mb-2" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm" style={{ color: '#5C5040' }}>{errResult.error}</p>
+                    {zu && <p className="font-sans text-xs mb-2" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>{errResult.error}</p>
                   </>
                 )}
 
@@ -339,16 +339,16 @@ export default function VisionPage() {
                 {cropResult && mode === 'crop' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: '#1F4D2B', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         {cropResult.crop}
                       </div>
-                      <div className="font-sans text-sm mt-1" style={{ color: '#5C5040' }}>
+                      <div className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
                         ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? 'week' : 'weeks'} {t('to harvest', 'kuze kuvunwe')}
                       </div>
                     </div>
                     <ConfidencePill level={cropResult.confidence} zu={zu} />
-                    {zu && <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: '#20190F' }}>
+                    {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
                   </div>
@@ -358,13 +358,13 @@ export default function VisionPage() {
                 {weighResult && mode === 'weigh' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: '#1F4D2B', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         ~{weighResult.estimatedKg} kg
                       </div>
                     </div>
                     <ConfidencePill level={weighResult.confidence} zu={zu} />
-                    {zu && <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: '#20190F' }}>
+                    {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
+                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>
                   </div>
@@ -373,12 +373,12 @@ export default function VisionPage() {
 
               {/* Action hints */}
               {result.ok && (
-                <div style={{ borderTop: '1px solid #E2D8C4' }}>
+                <div style={{ borderTop: '1px solid var(--border)' }}>
                   {mode === 'crop' ? (
                     <Link
                       href="/journal"
                       className="flex items-center gap-2 px-4 py-3 text-xs font-display font-semibold"
-                      style={{ color: '#1F4D2B', textDecoration: 'none' }}
+                      style={{ color: 'var(--color-forest-800)', textDecoration: 'none' }}
                     >
                       <ChevronRight size={14} />
                       {t('Log to journal', 'Bhala encwadini yensimu')}
@@ -387,7 +387,7 @@ export default function VisionPage() {
                     <Link
                       href="/records?tab=charts"
                       className="flex items-center gap-2 px-4 py-3 text-xs font-display font-semibold"
-                      style={{ color: '#1F4D2B', textDecoration: 'none' }}
+                      style={{ color: 'var(--color-forest-800)', textDecoration: 'none' }}
                     >
                       <ChevronRight size={14} />
                       {t('Log a sale', 'Bhala ukuthengisa')}
@@ -405,8 +405,8 @@ export default function VisionPage() {
               className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-display font-semibold"
               style={{
                 background: 'transparent',
-                border: '1px solid #E2D8C4',
-                color: '#5C5040',
+                border: '1px solid var(--border)',
+                color: 'var(--text-secondary)',
                 cursor: 'pointer',
               }}
             >

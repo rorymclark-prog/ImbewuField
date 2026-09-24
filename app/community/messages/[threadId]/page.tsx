@@ -133,7 +133,7 @@ export default function MessageThreadPage() {
         <button
           onClick={() => setReportOpen((s) => !s)}
           aria-label={t('communityReportButton')}
-          style={{ marginLeft: 8, background: 'transparent', border: 'none', color: '#8C7A62', cursor: 'pointer', display: 'flex' }}
+          style={{ marginLeft: 8, background: 'transparent', border: 'none', color: '#755942', cursor: 'pointer', display: 'flex' }}
         >
           <Flag size={16} />
         </button>
@@ -153,7 +153,7 @@ export default function MessageThreadPage() {
             onClick={handleReport}
             disabled={!reportReason.trim() || reportBusy}
             className="font-sans font-semibold rounded-xl"
-            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#755942', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
           >
             {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
           </button>
@@ -185,7 +185,7 @@ export default function MessageThreadPage() {
                 >
                   {m.body}
                 </div>
-                <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
+                <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
                   {timeAgo(m.created_at)}
                 </div>
               </div>
@@ -216,7 +216,7 @@ export default function MessageThreadPage() {
           className="flex items-center justify-center rounded-full flex-shrink-0"
           style={{ width: 40, height: 40, background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', border: 'none', cursor: body.trim() ? 'pointer' : 'default' }}
         >
-          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? '#F7F2E9' : '#94876F' }} />}
+          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? '#F7F2E9' : '#755942' }} />}
         </button>
       </div>
     </div>

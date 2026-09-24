@@ -173,13 +173,13 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
       <div className="flex items-center gap-2">
         <span
           className="font-sans font-bold uppercase flex-shrink-0"
-          style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.05em' }}
+          style={{ fontSize: 12, color: 'var(--gold)', letterSpacing: '0.05em' }}
         >
           {t('coachOverline')}
         </span>
         <span
           className="font-display font-semibold truncate flex-1 min-w-0"
-          style={{ fontSize: 14, color: '#20190F' }}
+          style={{ fontSize: 14, color: 'var(--text-primary)' }}
         >
           {title}
         </span>
@@ -187,7 +187,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           type="button"
           onClick={handleCta}
           className="flex items-center gap-1 font-sans font-semibold flex-shrink-0 rounded-full"
-          style={{ fontSize: 13, color: '#1F4D2B', minHeight: 44, padding: '0 8px', background: 'transparent', border: 'none', cursor: 'pointer' }}
+          style={{ fontSize: 13, color: 'var(--color-forest-800)', minHeight: 44, padding: '0 8px', background: 'transparent', border: 'none', cursor: 'pointer' }}
         >
           <CtaIcon size={15} strokeWidth={1.8} aria-hidden />
           {ctaLabel}
@@ -199,7 +199,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: '#FBF6EC', border: '1px solid #E2D8C4', borderRadius: 16 }}
+      style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 16 }}
     >
       <div className="absolute left-0 top-0 bottom-0" style={{ width: 3, background: '#C07A1E' }} aria-hidden />
       <div className="pl-4 pr-3 py-3.5">
@@ -212,17 +212,17 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           </div>
           <span
             className="font-sans font-bold uppercase flex-1 min-w-0"
-            style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.06em' }}
+            style={{ fontSize: 12, color: 'var(--gold)', letterSpacing: '0.06em' }}
           >
             {t('coachOverline')}
           </span>
-          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="#8C7A62" />
+          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="#755942" />
           <button
             type="button"
             onClick={handleDismiss}
             aria-label={t('coachDismiss')}
             className="flex items-center justify-center rounded-full flex-shrink-0"
-            style={{ width: 44, height: 44, margin: '-8px -8px -8px 0', color: '#8C7A62', background: 'transparent', border: 'none', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, margin: '-8px -8px -8px 0', color: 'var(--text-muted)', background: 'transparent', border: 'none', cursor: 'pointer' }}
           >
             <X size={17} strokeWidth={1.8} aria-hidden />
           </button>
@@ -230,7 +230,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
 
         <h4
           className="font-display font-semibold"
-          style={{ fontSize: 16, color: '#20190F', lineHeight: 1.25, margin: '0 0 4px' }}
+          style={{ fontSize: 16, color: 'var(--text-primary)', lineHeight: 1.25, margin: '0 0 4px' }}
         >
           {title}
         </h4>
@@ -238,7 +238,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           className="font-sans"
           style={{
             fontSize: 13,
-            color: '#5C5040',
+            color: 'var(--text-secondary)',
             lineHeight: 1.45,
             margin: 0,
             display: '-webkit-box',
@@ -258,8 +258,8 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
 
         {showGoal && GoalIcon && (
           <div className="flex items-start gap-1.5 mt-2">
-            <GoalIcon size={14} strokeWidth={1.8} style={{ color: '#8C7A62', marginTop: 1, flexShrink: 0 }} aria-hidden />
-            <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+            <GoalIcon size={14} strokeWidth={1.8} style={{ color: 'var(--text-muted)', marginTop: 1, flexShrink: 0 }} aria-hidden />
+            <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
               {t(GOAL_COPY_KEY[goal as Goal])}
             </span>
           </div>

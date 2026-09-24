@@ -137,7 +137,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (!offlineSupported()) {
     return compact ? null : (
-      <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+      <p className="font-sans text-xs" style={{ color: '#755942' }}>
         {t('offlineDownloadUnsupported')}
       </p>
     );
@@ -184,7 +184,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={remove}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
               <Trash2 size={12} />{t('offlineRemovePack')}
             </button>
           </>
@@ -199,7 +199,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
               {t('offlineStopDownload')}
             </button>
           </>
@@ -247,7 +247,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                 <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
-                <span className="font-sans block" style={{ fontSize: 10.5, color: '#8C7A62' }}>{opt.note}</span>
+                <span className="font-sans block" style={{ fontSize: 10.5, color: '#755942' }}>{opt.note}</span>
               </button>
             );
           })}
@@ -259,7 +259,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(32,25,15,0.08)' }}>
             <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: '#1F4D2B' }} />
           </div>
-          <p className="font-mono text-xs mt-1" style={{ color: '#8C7A62' }}>
+          <p className="font-mono text-xs mt-1" style={{ color: '#755942' }}>
             {t('offlineFilesProgress').replace('{done}', String(doneFiles)).replace('{total}', String(totalFiles))}
           </p>
         </div>
@@ -275,7 +275,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
       )}
 
       {phase === 'done' && notPersisted && (
-        <p className="font-sans text-xs leading-relaxed" style={{ color: '#8C7A62' }}>
+        <p className="font-sans text-xs leading-relaxed" style={{ color: '#755942' }}>
           {t('offlineSavedMayClear')}
         </p>
       )}

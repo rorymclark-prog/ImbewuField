@@ -10,7 +10,7 @@ interface Props { locationData: LocationData | null }
 
 function renderMarkdown(text: string) {
   const sections = text.split(/(?=^## )/m).filter(Boolean);
-  if (!sections.length) return <p className="text-xs font-display" style={{ color: '#20190F' }}>{text}</p>;
+  if (!sections.length) return <p className="text-xs font-display" style={{ color: 'var(--text-primary)' }}>{text}</p>;
 
   return (
     <div className="space-y-5">
@@ -22,7 +22,7 @@ function renderMarkdown(text: string) {
         return (
           <div key={i}>
             <h3 className="font-display font-semibold text-sm mb-2 pb-2 flex items-center gap-2"
-                style={{ color: '#C07A1E', borderBottom: '1px solid #E2D8C4' }}>
+                style={{ color: 'var(--gold)', borderBottom: '1px solid var(--border)' }}>
               {heading}
             </h3>
             <div className="space-y-1.5">
@@ -30,22 +30,22 @@ function renderMarkdown(text: string) {
                 if (!line.trim()) return null;
                 if (line.startsWith('- ') || line.startsWith('• ')) {
                   return (
-                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                      <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: '#1F4D2B' }}>-</span>
+                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                      <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-forest-800)' }}>-</span>
                       <span>{line.replace(/^[-•]\s*/, '')}</span>
                     </div>
                   );
                 }
                 if (line.match(/^\d+\./)) {
                   return (
-                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                      <span className="flex-shrink-0 w-4 text-right" style={{ color: '#C07A1E' }}>{line.match(/^\d+/)?.[0]}.</span>
+                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                      <span className="flex-shrink-0 w-4 text-right" style={{ color: 'var(--gold)' }}>{line.match(/^\d+/)?.[0]}.</span>
                       <span>{line.replace(/^\d+\.\s*/, '')}</span>
                     </div>
                   );
                 }
                 return (
-                  <p key={j} className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+                  <p key={j} className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     {line.replace(/\*\*/g, '')}
                   </p>
                 );
@@ -103,7 +103,7 @@ export default function InsightsPanel({ locationData }: Props) {
   if (!locationData) {
     return (
       <div className="flex flex-col items-center justify-center h-32 text-center">
-        <p className="text-xs font-display" style={{ color: '#5C5040' }}>{t('insightsSelectLocation')}</p>
+        <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>{t('insightsSelectLocation')}</p>
       </div>
     );
   }
@@ -113,11 +113,11 @@ export default function InsightsPanel({ locationData }: Props) {
       {/* Generate button */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: '#5C5040' }}>
+          <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--text-secondary)' }}>
             {t('insightsReportTitle')}
           </div>
           {!insights && !loading && (
-            <div className="text-xs font-display" style={{ color: '#5C5040' }}>
+            <div className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>
               {t('insightsReportSubtitle')}
             </div>
           )}
@@ -128,11 +128,11 @@ export default function InsightsPanel({ locationData }: Props) {
           className="px-4 py-2 rounded-xl text-xs font-display font-semibold transition-all duration-200 flex items-center gap-1.5"
           style={
             loading
-              ? { background: 'rgba(226,216,196,0.70)', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
+              ? { background: 'rgba(226,216,196,0.70)', color: 'var(--text-secondary)', cursor: 'wait', border: '1px solid var(--border)' }
               : {
                   background: 'rgba(31,77,43,0.14)',
                   border: '1px solid rgba(31,77,43,0.28)',
-                  color: '#2D6B3C',
+                  color: 'var(--color-forest-700)',
                   boxShadow: '0 0 16px rgba(31,77,43,0.10)',
                 }
           }
@@ -150,7 +150,7 @@ export default function InsightsPanel({ locationData }: Props) {
       {error && (
         <div
           className="text-xs font-mono px-3 py-2 rounded-lg mb-3"
-          style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: '#D4922A' }}
+          style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--gold)' }}
         >
           {error}
         </div>
@@ -162,7 +162,7 @@ export default function InsightsPanel({ locationData }: Props) {
           className="rounded-xl p-5 text-center"
           style={{ background: 'rgba(31,77,43,0.04)', border: '1px dashed rgba(31,77,43,0.20)' }}
         >
-          <p className="text-xs font-display" style={{ color: '#5C5040' }}>
+          <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>
             {t('insightsEmptyPrompt')}
           </p>
         </div>

@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'b20f40eb', changes: [
+    'Faint grey text across the app is darker, so it holds up in bright sun.',
+    'Dark mode now works properly — cards, text and borders all follow it.',
+  ], tour: [
+    { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
+      detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
+  ] },
   { when: '24 September 2026', sha: '01504a6d', changes: [
     'Plant Guilds lessons now show isiZulu reading and quiz drafts.',
     'Each lesson says language and local farming review is still due.',

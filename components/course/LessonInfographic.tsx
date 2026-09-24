@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { ImageIcon, AlertCircle } from 'lucide-react';
 
 const GREEN = '#1F4D2B';
-const MUTED = '#8C7A62';
+const MUTED = '#755942';
 const HAIRLINE = '#E2D8C4';
 
 interface LessonInfographicProps {

@@ -96,7 +96,7 @@ export default function LessonLink({
               maxWidth: 460,
               maxHeight: '82vh',
               overflowY: 'auto',
-              background: '#FFFEFA',
+              background: 'var(--bg-1)',
               borderTopLeftRadius: 18,
               borderTopRightRadius: 18,
               padding: 14,

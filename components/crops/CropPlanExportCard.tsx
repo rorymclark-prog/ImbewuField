@@ -12,6 +12,7 @@
 // opening the crop plan does not pay for a document nobody asked for.
 
 import { useEffect, useState } from 'react';
+import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
@@ -153,9 +154,9 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
-        📤 Take this plan with you
+        <Share2 size={14} aria-hidden style={{ flexShrink: 0 }} /> Take this plan with you
       </div>
-      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
+      <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
         Both files are made on this phone — nothing is uploaded, and they work with no signal.
       </p>
 
@@ -167,7 +168,9 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           style={buttonStyle(true, empty || busy !== null)}
           title={empty ? 'Add some crops first — there are no tasks to export yet' : 'Every task of the year as a calendar file'}
         >
-          {busy === 'ics' ? '⏳ Building…' : empty ? '📅 Add tasks to calendar' : `📅 Add ${tasks.length} tasks to calendar`}
+          {busy === 'ics'
+            ? <><Hourglass size={14} aria-hidden /> Building…</>
+            : <><CalendarPlus size={14} aria-hidden /> {empty ? 'Add tasks to calendar' : `Add ${tasks.length} tasks to calendar`}</>}
         </button>
         <button
           onClick={exportPdf}
@@ -176,7 +179,11 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           style={buttonStyle(false, busy !== null)}
           title="The whole plan as a PDF — bed by bed, what seed to buy when, and every month's jobs"
         >
-          {busy === 'pdf' ? '⏳ Building…' : shareFirst ? '📤 Share the plan (PDF)' : '⬇ Download the plan (PDF)'}
+          {busy === 'pdf'
+            ? <><Hourglass size={14} aria-hidden /> Building…</>
+            : shareFirst
+              ? <><Share2 size={14} aria-hidden /> Share the plan (PDF)</>
+              : <><Download size={14} aria-hidden /> Download the plan (PDF)</>}
         </button>
       </div>
 
@@ -188,7 +195,9 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           style={buttonStyle(false, busy !== null)}
           title="Two pages only: the bed calendar and a month-by-month task list — made for pinning on a wall"
         >
-          {busy === 'pdf' ? '⏳ Building…' : '📋 Quick print (2 pages)'}
+          {busy === 'pdf'
+            ? <><Hourglass size={14} aria-hidden /> Building…</>
+            : <><ClipboardList size={14} aria-hidden /> Quick print (2 pages)</>}
         </button>
         <select
           value={quickPrintFormat}
@@ -227,7 +236,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
         )}
       </div>
 
-      <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.55 }}>
+      <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#755942', lineHeight: 1.55 }}>
         The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
         first of their month — this plan works in months, not exact days — with a reminder three days before.
         The PDF opens with the year at a glance, then a one-page calendar of every bed, the full plan bed by bed,

@@ -207,7 +207,7 @@ const STEP_BTN: CSSProperties = {
   border: '1px solid rgba(192,122,30,0.4)',
   borderRadius: 6,
   background: '#FFFDF7',
-  color: '#C07A1E',
+  color: '#7A4408',
   cursor: 'pointer',
   fontSize: 10,
   lineHeight: 1,
@@ -550,14 +550,14 @@ function EmptyState() {
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: '#94876F' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 11.5, color: '#755942' }}>{p.biome}</span>
                   )}
                 </span>
                 <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
-          <p style={{ fontSize: 12.5, color: '#94876F', maxWidth: 340 }}>
+          <p style={{ fontSize: 12.5, color: '#755942', maxWidth: 340 }}>
             {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
           </p>
         </>
@@ -3352,7 +3352,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 </button>
                 <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
                   {stepName(canvasState.step)}
-                  <span style={{ color: '#9A8268', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
+                  <span style={{ color: '#755942', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
                 </span>
                 <button type="button" aria-label={tr('Next step', 'Isinyathelo esilandelayo')} disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
                   <ChevronRight size={16} />

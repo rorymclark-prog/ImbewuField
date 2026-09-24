@@ -47,7 +47,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
   return (
     <div
       className="px-4 pt-2 pb-2.5"
-      style={{ background: '#FFFEFA', borderTop: '1px solid #E2D8C4', flexShrink: 0 }}
+      style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)', flexShrink: 0 }}
     >
       <div className="w-full max-w-5xl mx-auto">
         {/* Who Lima is — said every time rather than once, because it costs one short line and a
@@ -98,8 +98,8 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
             className="flex items-center justify-center gap-1.5 font-sans"
             style={{
               minHeight: 46, padding: '0 13px', borderRadius: 12, textDecoration: 'none',
-              background: '#fff', border: '1.5px solid #D8CBB2',
-              color: '#4A4034', fontSize: 13.5, fontWeight: 700,
+              background: 'var(--bg-1)', border: '1.5px solid var(--border-strong)',
+              color: 'var(--text-secondary)', fontSize: 13.5, fontWeight: 700,
             }}
           >
             <Camera size={17} strokeWidth={2} />
@@ -109,9 +109,9 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
       </div>
       <dialog ref={dialogRef} aria-labelledby="lima-photo-title"
         className="m-auto rounded-2xl p-0 backdrop:bg-black/40"
-        style={{ width: 'min(94vw, 560px)', maxHeight: '85dvh', background: '#FFFEFA', color: '#20190F' }}
+        style={{ width: 'min(94vw, 560px)', maxHeight: '85dvh', background: 'var(--bg-1)', color: 'var(--text-primary)' }}
         onClose={() => { setPhotoOpen(false); setPhoto(null); }}>
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 p-4" style={{ background: '#FFFEFA' }}>
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 p-4" style={{ background: 'var(--bg-1)' }}>
           <h2 id="lima-photo-title" className="font-semibold">{t('limaWhoIs')}</h2>
           <button type="button" aria-label={t('limaClosePhotoDialog')} className="flex min-h-11 min-w-11 items-center justify-center"
             onClick={() => dialogRef.current?.close()}><X size={22} /></button>

@@ -50,17 +50,17 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
           <div style={{ padding: '20px 22px 0', position: 'sticky', top: 0, background: '#FBF8F1', zIndex: 2, borderBottom: '1px solid #EFE7D6', paddingBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
               <div>
-                <div style={{ font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#B07A1E', marginBottom: 7 }}>
+                <div style={{ font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 7 }}>
                   Evidence library
                 </div>
-                <div style={{ font: '600 22px/1.1 Newsreader, Georgia, serif', color: '#2D2519' }}>
+                <div style={{ font: '600 22px/1.1 Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                   The more the land tells us, the better the plan
                 </div>
                 <div style={{ font: '400 13.5px/1.5 Newsreader, Georgia, serif', color: '#4A4030', marginTop: 6, maxWidth: 460 }}>
                   A good site report works down the <em>scale of permanence</em> — water first, then structures & access, soil, living things, and animal systems.
                 </div>
               </div>
-              <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62', flexShrink: 0 }}>
+              <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-muted)', flexShrink: 0 }}>
                 <X size={22} />
               </button>
             </div>
@@ -77,7 +77,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                       {EVIDENCE_GROUP_ICON[group.key]}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <span style={{ font: '600 15px/1 system-ui, sans-serif', color: '#2D2519' }}>{group.label}</span>
+                      <span style={{ font: '600 15px/1 system-ui, sans-serif', color: 'var(--text-primary)' }}>{group.label}</span>
                     </div>
                     {count > 0 && (
                       <span style={{ font: '600 11px/1 system-ui, sans-serif', color: group.color, background: group.bg, padding: '4px 9px', borderRadius: 20 }}>
@@ -135,7 +135,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
 
             {/* Indigenous edibles reference */}
             <div style={{ background: '#F7F4EC', border: '1px solid #E6DDC9', borderRadius: 14, padding: '18px 20px' }}>
-              <div style={{ font: '400 14px/1.5 Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 14 }}>
+              <div style={{ font: '400 14px/1.5 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 14 }}>
                 Existing indigenous trees are <strong>free yield and free shade</strong> — Lima keeps them in the design instead of clearing them.
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -145,11 +145,11 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                     paddingBottom: i < INDIGENOUS_EDIBLES.length - 1 ? 10 : 0,
                     borderBottom: i < INDIGENOUS_EDIBLES.length - 1 ? '1px solid #EFE7D6' : 'none',
                   }}>
-                    <span style={{ font: '600 14.5px/1 Newsreader, Georgia, serif', color: '#2D2519', flexShrink: 0, width: 110 }}>
+                    <span style={{ font: '600 14.5px/1 Newsreader, Georgia, serif', color: 'var(--text-primary)', flexShrink: 0, width: 110 }}>
                       {sp.name}
-                      {sp.protected && <span style={{ font: '400 10px/1 system-ui, sans-serif', color: '#3C6B3F', marginLeft: 4 }}>·protected</span>}
+                      {sp.protected && <span style={{ font: '400 10px/1 system-ui, sans-serif', color: 'var(--color-forest-700)', marginLeft: 4 }}>·protected</span>}
                     </span>
-                    <span style={{ font: '400 12px/1 system-ui, sans-serif', color: '#8A7C62' }}>{sp.desc}</span>
+                    <span style={{ font: '400 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>{sp.desc}</span>
                   </div>
                 ))}
               </div>

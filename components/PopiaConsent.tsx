@@ -183,7 +183,7 @@ export default function PopiaConsent() {
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
                     {t('popiaStoreLabel')}
                   </div>
-                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
                     {t('popiaStoreDesc')}
                   </div>
                 </div>
@@ -196,7 +196,7 @@ export default function PopiaConsent() {
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
                     {t('popiaShareLabel')}
                   </div>
-                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
                     {t('popiaShareDesc')}
                   </div>
                 </div>
@@ -213,7 +213,7 @@ export default function PopiaConsent() {
               style={{
                 fontSize: 15,
                 background: storeData ? '#1F4D2B' : 'rgba(226,216,196,0.6)',
-                color: storeData ? '#F7F2E9' : '#8C7A62',
+                color: storeData ? '#F7F2E9' : '#755942',
                 border: 'none',
                 cursor: storeData ? 'pointer' : 'not-allowed',
                 boxShadow: storeData ? '0 4px 12px rgba(31,77,43,0.18)' : 'none',
@@ -226,7 +226,7 @@ export default function PopiaConsent() {
             </button>
 
             {!storeData && (
-              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
+              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#755942' }}>
                 {t('popiaStorageRequired')}
               </p>
             )}
@@ -244,7 +244,7 @@ export default function PopiaConsent() {
             >
               {t('popiaGoalTitle')}
             </h2>
-            <p className="font-sans mb-5" style={{ fontSize: 13, color: '#8C7A62', lineHeight: 1.5 }}>
+            <p className="font-sans mb-5" style={{ fontSize: 13, color: '#755942', lineHeight: 1.5 }}>
               {t('popiaGoalBody')}
             </p>
 
@@ -286,7 +286,7 @@ export default function PopiaConsent() {
                       </div>
                       <div
                         className="font-sans mt-0.5"
-                        style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : '#8C7A62', lineHeight: 1.4 }}
+                        style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : '#755942', lineHeight: 1.4 }}
                       >
                         {t(descKey)}
                       </div>
@@ -318,7 +318,7 @@ export default function PopiaConsent() {
               style={{
                 fontSize: 15,
                 background: goal ? '#C07A1E' : 'rgba(226,216,196,0.6)',
-                color: goal ? '#fff' : '#8C7A62',
+                color: goal ? '#fff' : '#755942',
                 border: 'none',
                 cursor: goal ? 'pointer' : 'not-allowed',
                 boxShadow: goal ? '0 4px 12px rgba(192,122,30,0.22)' : 'none',
@@ -331,7 +331,7 @@ export default function PopiaConsent() {
             </button>
 
             {!goal && (
-              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
+              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#755942' }}>
                 {t('popiaGoalPickOne')}
               </p>
             )}

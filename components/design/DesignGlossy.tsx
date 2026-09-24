@@ -4,6 +4,7 @@
 // the app owns factual geometry, placed features, labels and sheet chrome. Satellite
 // Overlay remains the explicit model-authored comparison/rollback style.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
@@ -7587,16 +7588,16 @@ function roofHarvestFooterLines(
   }, 0);
 
   const lines = [
-    `Roof catchment traced: ${Math.round(roofM2).toLocaleString()} m²`,
-    `Annual rainfall: ${Math.round(rainfallMm as number).toLocaleString()} mm`,
+    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
+    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
     `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${Math.round(harvestL).toLocaleString()} L a year`,
+    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
   ];
   // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
   // size in its name contributes nothing, so a total built from those would understate the storage
   // and make it look inadequate.
   if (storedL > 0) {
-    lines.push(`Storage placed: ${Math.round(storedL).toLocaleString()} L`);
+    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
     lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
   }
   return lines;
@@ -16394,7 +16395,7 @@ export default function DesignGlossy({
               <button
                 onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16489,7 +16490,7 @@ export default function DesignGlossy({
                   </div>
                 </div>
               ) : gallery.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>{t('designGlossyNoSaved')}</p>
+                <p style={{ fontSize: 13, color: '#755942', margin: 0 }}>{t('designGlossyNoSaved')}</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
@@ -16549,7 +16550,7 @@ export default function DesignGlossy({
                               style={{
                                 display: 'flex', width: '100%', height: '100%', alignItems: 'center',
                                 justifyContent: 'center', padding: 6, textAlign: 'center',
-                                background: '#EDE7DB', color: '#9A8268', fontSize: 10, fontWeight: 700,
+                                background: '#EDE7DB', color: '#755942', fontSize: 10, fontWeight: 700,
                                 lineHeight: 1.25,
                               }}
                             >
@@ -16649,7 +16650,7 @@ export default function DesignGlossy({
                           <button
                             onClick={() => void exportSelection('share')}
                             disabled={exportSel.size === 0 || exportBusy}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#9A8268', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#755942', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
                           >
                             <Share2 size={15} /> {t('designShare')}
                           </button>
@@ -16664,7 +16665,7 @@ export default function DesignGlossy({
                     </div>
                   )}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
+                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#755942', margin: 0 }}>
                       {storageWarning ?? t('designGlossySavedOnDevice')}
                     </p>
                     <button

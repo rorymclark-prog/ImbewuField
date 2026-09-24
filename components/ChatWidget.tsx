@@ -104,7 +104,24 @@ export default function ChatWidget() {
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
-    pathname.startsWith('/ngo') || pathname.startsWith('/pitch')
+    pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    // MEASURED COLLISIONS, 24 September. The FAB is fixed at 56x56, 130px up, z-60, in the same
+    // spot on every route that has not bought its way out of the offset table below — and the
+    // table had grown one page at a time while these five kept overlapping. Boxes measured at
+    // 390x844 against the rendered pages: /cropplan, the FAB covers a task row's 20x20 "Mark
+    // done" checkbox at (33,705) — a tap target, not decoration; /facilitator/crops, it covers a
+    // "Green beans (69%)" Gantt bar button even after the right-dock offset; /records, the
+    // "1169.6 kg" headline and its label; /journal, an entry's body text; /calendar, the very
+    // Lima seasonal-advice card it belongs to.
+    //
+    // Another offset would move the problem, not end it: the content under it is mid-scroll, so
+    // no resting position is safe. These pages mount <LimaBar /> in the document flow instead —
+    // the swap /student and /home already made, help that cannot cover reading. Paired by
+    // tests/chat-widget-fab-overlap.test.ts, which fails if a route is excluded here without a
+    // LimaBar, or gains a LimaBar without being excluded here.
+    pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
@@ -120,11 +137,15 @@ export default function ChatWidget() {
   // reaches ~137px. 188px clears it with a thumb's width to spare. Only below lg, because the
   // pill is lg:hidden and the desktop corner really is free.
   //
-  // /facilitator/crops is the same 12 Aug complaint on a different page: everything that page
+  // /facilitator/crops USED TO take a right-dock offset for the same 12 Aug complaint — everything
+  // that page
   // shows — section headings, the Availability tab, the benchmark kg headline, every task line —
   // is LEFT-aligned, so a bottom-left FAB sits on top of the content and the tab's hit area at
   // 375px. That page docks nothing to the bottom-right (its only fixed elements are full-screen
-  // modal overlays, which cover the FAB anyway), so the right corner is genuinely free.
+  // modal overlays, which cover the FAB anyway), so the right corner was genuinely free. It was
+  // not enough: measured on 24 September the FAB still covered a Gantt bar button there, because
+  // the plan scrolls sideways under it. That route is excluded above and mounts LimaBar instead,
+  // so the offset is gone rather than tuned again.
   //
   // /invoice's last screen is a two-up "Share PDF" / "Print" row that is the literal end of that
   // page's scroll container — nothing follows it but the tab bar. At rest (scrolled to the
@@ -139,11 +160,9 @@ export default function ChatWidget() {
   // can't both be fully clear: the 29px gap between them is smaller than the 56px FAB.
   const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
     ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
-    : pathname.startsWith('/facilitator/crops')
-      ? 'bottom-[130px] right-4 lg:bottom-[100px] lg:right-4'
-      : pathname.startsWith('/invoice')
-        ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
-        : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+    : pathname.startsWith('/invoice')
+      ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
+      : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
 
   return (
     <>

@@ -16,7 +16,7 @@ export default {
         water:    '#235E86',
         paper:    '#E4DCC6',
         card:     '#FFFEFA',
-        ink:    { DEFAULT: '#20190F', muted: '#5C5040', faint: '#8C7A62' },
+        ink:    { DEFAULT: '#20190F', muted: '#5C5040', faint: '#755942' }, // faint was #8C7A62 — failed 4.5:1 on every surface (see globals.css)
         hairline: '#ECE3C9',
       },
       borderRadius: {

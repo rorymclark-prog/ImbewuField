@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { numberLabel } from '@/lib/format-figures';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -221,7 +222,7 @@ test('area and roof harvest obey their dimensional rules and shared coefficient 
     WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   );
   assert.ok(doc.sections.water?.harvestingOpportunities.includes(
-    `Roof catchment ~${Math.round(harvest / 1_000).toLocaleString()} kL/yr to tanks.`,
+    `Roof catchment ~${numberLabel(Math.round(harvest / 1_000))} kL/yr to tanks.`,
   ));
 
   const source = readFileSync(new URL('../lib/report-doc.ts', import.meta.url), 'utf8');
@@ -269,7 +270,7 @@ test('all approved roofs and gardens contribute to their derived report facts', 
     WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   );
   assert.ok(doc.sections.water?.harvestingOpportunities.includes(
-    `Roof catchment ~${Math.round(harvest / 1_000).toLocaleString()} kL/yr to tanks.`,
+    `Roof catchment ~${numberLabel(Math.round(harvest / 1_000))} kL/yr to tanks.`,
   ));
   assert.ok(doc.sections.executive?.topOpportunities.some(
     (text) => text.includes(`${firstGarden.areaM2 + secondGarden.areaM2} m² vegetable garden`),

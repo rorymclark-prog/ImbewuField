@@ -1,4 +1,5 @@
 'use client';
+import { numberLabel } from '@/lib/format-figures';
 import { useState, useCallback, useEffect, useRef, useId } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles, Sprout, NotebookPen, ArrowRight, MapPin, CircleCheck, Circle, Pencil, Info, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -627,9 +628,9 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             {totalRoof > 0 && <div className={styles.roofVisual}>
               <h3>{t('surveyRoofEstimateTitle')}</h3>
               <div className={styles.roofFlow}>
-                <div><Home size={30}/><strong>{totalRoof.toLocaleString()} m²</strong><span>{t('liveEstimateTotalRoofArea')}</span></div><span aria-hidden="true">×</span>
-                <div><Droplets size={30}/><strong>{rainfallMm === null ? '—' : `${rainfallMm.toLocaleString()} mm`}</strong><span>{t('surveyAnnualRainfall')}</span></div><ArrowRight size={20} aria-hidden="true"/>
-                <div><Droplets size={30}/><strong>{localRoofHarvest === null ? '—' : `~${localRoofHarvest.toLocaleString()} kL`}</strong><span>{t('surveyEstimatedCollection')}</span></div>
+                <div><Home size={30}/><strong>{numberLabel(totalRoof)} m²</strong><span>{t('liveEstimateTotalRoofArea')}</span></div><span aria-hidden="true">×</span>
+                <div><Droplets size={30}/><strong>{rainfallMm === null ? '—' : `${numberLabel(rainfallMm)} mm`}</strong><span>{t('surveyAnnualRainfall')}</span></div><ArrowRight size={20} aria-hidden="true"/>
+                <div><Droplets size={30}/><strong>{localRoofHarvest === null ? '—' : `~${numberLabel(localRoofHarvest)} kL`}</strong><span>{t('surveyEstimatedCollection')}</span></div>
               </div>
               <p>{localRoofHarvest === null ? t('surveyRainfallMissing') : t('surveyRoofInputs')}</p>
             </div>}

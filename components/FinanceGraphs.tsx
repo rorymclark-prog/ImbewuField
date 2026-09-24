@@ -46,7 +46,7 @@ import {
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { useLanguage } from '@/lib/i18n';
 
-const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
+const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
 const INK = '#20190F';
 const MUTED = '#5C5040';
@@ -540,7 +540,7 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
           inside it, the loss allowance is the target mark. One shared scale across
           every crop, so the rows are comparable to each other and not just to
           themselves. */}
-      <div className="mt-1.5 relative" style={{ height: 14, background: '#F5F0E8', borderRadius: 3 }}>
+      <div className="mt-1.5 relative" style={{ height: 14, background: 'var(--bg-2)', borderRadius: 3 }}>
         <div style={{ position: 'absolute', inset: 0, width: pct(row.benchmarkKg), background: BENCH, borderRadius: 3 }} />
         <div style={{ position: 'absolute', top: 3.5, left: 0, height: 7, width: pct(row.harvestedKg), background: SOLD, borderRadius: 2 }} />
         {row.afterLossKg !== null && (

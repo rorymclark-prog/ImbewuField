@@ -140,8 +140,8 @@ function ExampleFarm({ className }: { className: string }) {
 export default function Illustration({ name, className = '' }: IllustrationProps) {
   if (name === 'empty-sprout') {
     return (
-      <div className={`flex items-center justify-center ${className}`} style={{ width: 80, height: 80, background: '#F7F2E9', borderRadius: '50%', border: '1px dashed #D4922A' }}>
-        <Sprout size={32} style={{ color: '#D4922A', opacity: 0.5 }} />
+      <div className={`flex items-center justify-center ${className}`} style={{ width: 80, height: 80, background: 'var(--bg-1)', borderRadius: '50%', border: '1px dashed #D4922A' }}>
+        <Sprout size={32} style={{ color: 'var(--gold)', opacity: 0.5 }} />
       </div>
     );
   }

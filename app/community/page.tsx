@@ -171,7 +171,7 @@ export default function CommunityHubPage() {
             className="flex-1 font-sans font-semibold"
             style={{
               padding: '12px 8px', fontSize: 13.5, background: 'transparent', border: 'none', cursor: 'pointer',
-              color: tab === tb ? '#1F4D2B' : '#8C7A62',
+              color: tab === tb ? '#1F4D2B' : '#755942',
               borderBottom: tab === tb ? '2.5px solid #1F4D2B' : '2.5px solid transparent',
             }}
           >
@@ -241,7 +241,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
       )}
       {nearby.length === 0 ? (
         <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <MapPin size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
+          <MapPin size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
           <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{tr('communityNearbyEmpty')}</p>
         </div>
       ) : (
@@ -260,7 +260,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{p.display_name}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{p.area_text || '—'}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{p.area_text || '—'}</div>
               </div>
             </button>
           ))}
@@ -306,17 +306,17 @@ function BoardTab({
                 <span className="font-sans font-bold" style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {kindLabel(p.kind, lang)}
                 </span>
-                <span className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62' }}>{categoryLabel(p.category, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 11.5, color: '#755942' }}>{categoryLabel(p.category, lang)}</span>
                 <div style={{ flex: 1 }} />
-                <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{timeAgo(p.created_at, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#755942' }}>{timeAgo(p.created_at, lang)}</span>
               </div>
               {p.photo_url && (
                 <img data-photo-preview src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
               )}
               <p className="font-sans" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.5, marginBottom: 6 }}>{p.description}</p>
               <div className="flex items-center gap-1.5" style={{ marginBottom: 10 }}>
-                <MapPin size={11} style={{ color: '#8C7A62' }} />
-                <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{p.area_text} · {p.owner_name}</span>
+                <MapPin size={11} style={{ color: '#755942' }} />
+                <span className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{p.area_text} · {p.owner_name}</span>
               </div>
               <div className="flex items-center gap-2">
                 {p.owner_id === myUid ? (
@@ -393,7 +393,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
   return (
     <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
         <div className="flex gap-2">
           {(['have', 'want', 'free'] as BoardKind[]).map((k) => (
             <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : '#5C5040', border: `1px solid ${kind === k ? KIND_COLOR[k] : '#E2D8C4'}` }}>
@@ -403,7 +403,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         </div>
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
         <select
           value={category}
           aria-label={tr('communityBoardCategory')}
@@ -415,7 +415,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         </select>
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
         <textarea
           value={description}
           aria-label={tr('communityBoardDescription')}
@@ -427,7 +427,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         />
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
         <input
           type="text"
           value={areaText}
@@ -462,7 +462,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         <button onClick={onCancel} className="font-sans font-semibold rounded-xl" style={{ flex: 1, padding: '10px', fontSize: 13.5, background: 'transparent', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
           {copyCommunity('Cancel', lang)}
         </button>
-          <button onClick={handlePost} disabled={posting || !description.trim()} aria-busy={posting} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', color: description.trim() ? '#F7F2E9' : '#94876F', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
+          <button onClick={handlePost} disabled={posting || !description.trim()} aria-busy={posting} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', color: description.trim() ? '#F7F2E9' : '#755942', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
           {posting ? <span className="flex items-center justify-center gap-2"><Loader2 size={14} className="animate-spin" />{copyCommunity('Posting…', lang)}</span> : tr('communityBoardPost')}
         </button>
       </div>
@@ -475,7 +475,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
   if (threads.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <MessageCircle size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{copyCommunity(t('communityMessagesEmpty'), lang)}</p>
       </div>
     );
@@ -498,7 +498,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="flex items-baseline justify-between gap-2">
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{otherName}</span>
-                <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', flexShrink: 0 }}>{timeAgo(th.last_message_at, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#755942', flexShrink: 0 }}>{timeAgo(th.last_message_at, lang)}</span>
               </div>
               <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040' }}>{th.last_message || copyCommunity('Say hello…', lang)}</div>
             </div>
