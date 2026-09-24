@@ -44,6 +44,7 @@ import {
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -667,7 +668,7 @@ export default function StudentPage() {
   if (isLive && (loading || !user) && !isSampleMode()) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
         </header>
@@ -684,7 +685,7 @@ export default function StudentPage() {
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -733,7 +734,7 @@ export default function StudentPage() {
 
   return (
     <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: '#EEEBDD' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />

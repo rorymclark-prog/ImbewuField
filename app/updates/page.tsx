@@ -12,6 +12,7 @@ import BrandLogo from '@/components/BrandLogo';
 import MenuButton from '@/components/MenuButton';
 import { RELEASE_NOTES } from '@/lib/release-notes';
 import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 export default function UpdatesPage() {
   // The sha of the build the reader is LOOKING AT — fetched, not imported, so a stale
@@ -28,7 +29,7 @@ export default function UpdatesPage() {
     <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={APP_HEADER_STYLE}
       >
         <MenuButton />
         <BackButton />

@@ -22,6 +22,7 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
@@ -565,7 +566,7 @@ export default function SurveysPage() {
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={APP_HEADER_STYLE}
       >
         <MenuButton />
         <BackButton fallback="/home" />
