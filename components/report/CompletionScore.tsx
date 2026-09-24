@@ -11,6 +11,7 @@
 // let this component compute it.
 
 import { computeCompletionScore, type CompletionScoreInputs, type CompletionScoreResult } from '@/lib/completion-score';
+import { useLanguage } from '@/lib/i18n';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -75,6 +76,7 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
 }
 
 export default function CompletionScore({ score, inputs, title, className }: CompletionScoreProps) {
+  const { t } = useLanguage();
   const result = score ?? (inputs ? computeCompletionScore(inputs) : undefined);
   if (!result) return null;
 
@@ -95,10 +97,10 @@ export default function CompletionScore({ score, inputs, title, className }: Com
         maxWidth: 420,
         width: '100%',
       }}
-      aria-label="Site completion score"
+      aria-label={t('completionScoreAria')}
     >
       <h3 style={{ margin: '0 0 14px', fontSize: 15, fontWeight: 700, letterSpacing: '0.01em', color: GOLD }}>
-        {title ?? 'Site completeness'}
+        {title ?? t('completionScoreTitle')}
       </h3>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
@@ -109,7 +111,7 @@ export default function CompletionScore({ score, inputs, title, className }: Com
             width={128}
             height={128}
             role="img"
-            aria-label={`${overallPct}% complete, ${doneCount} of ${steps.length} stages done`}
+            aria-label={t('completionScoreProgressAria').replace('{percent}', String(overallPct)).replace('{done}', String(doneCount)).replace('{total}', String(steps.length))}
           >
             <circle
               cx={64} cy={64} r={R}
@@ -136,8 +138,8 @@ export default function CompletionScore({ score, inputs, title, className }: Com
             }}
           >
             <span style={{ fontSize: 26, fontWeight: 800, lineHeight: 1, color: GOLD }}>{overallPct}%</span>
-            <span style={{ fontSize: 10, color: 'rgba(247,201,126,0.7)', marginTop: 4 }}>
-              {doneCount}/{steps.length} done
+            <span style={{ fontSize: 12.5, color: 'rgba(247,201,126,0.7)', marginTop: 4 }}>
+              {t('completionScoreDoneCount').replace('{done}', String(doneCount)).replace('{total}', String(steps.length))}
             </span>
           </div>
         </div>
@@ -160,10 +162,10 @@ export default function CompletionScore({ score, inputs, title, className }: Com
                   color: step.done ? GOLD : 'rgba(247,201,126,0.8)',
                 }}
               >
-                {step.label}
+                {t(({ located: 'completionStepLocated', boundary: 'completionStepBoundary', survey: 'completionStepSurvey', design: 'completionStepDesign', cropPlan: 'completionStepCropPlan' } as const)[step.key])}
               </span>
-              <span style={{ marginLeft: 'auto', fontSize: 11, color: 'rgba(247,201,126,0.55)' }}>
-                {step.done ? 'Done' : step.pct > 0 ? 'Partial' : 'Not started'}
+              <span style={{ marginLeft: 'auto', fontSize: 12.5, color: 'rgba(247,201,126,0.55)' }}>
+                {step.done ? t('completionStatusDone') : step.pct > 0 ? t('completionStatusPartial') : t('completionStatusNotStarted')}
               </span>
             </li>
           ))}

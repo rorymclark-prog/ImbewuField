@@ -96,7 +96,7 @@ export interface NextStepCoachProps {
 }
 
 export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 'card' }: NextStepCoachProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const router = useRouter();
 
   // Hydration-safe: nothing localStorage-derived is read until after mount, and
@@ -249,6 +249,12 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
         >
           {body}
         </p>
+
+        {lang === 'zu' && (
+          <p className="font-sans" style={{ fontSize: 12.5, color: '#775F3E', lineHeight: 1.4, margin: '6px 0 0' }}>
+            {t('coachZuluEnglishGuidanceNotice')}
+          </p>
+        )}
 
         {showGoal && GoalIcon && (
           <div className="flex items-start gap-1.5 mt-2">

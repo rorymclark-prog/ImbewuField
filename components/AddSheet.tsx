@@ -29,7 +29,7 @@ const INK_MUTED = '#7A6E58';
 const OCHRE = '#C07A1E';
 
 export default function AddSheet({ open, surface, onClose, onPick }: AddSheetProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
@@ -107,6 +107,11 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
             <p className="font-sans" style={{ fontSize: 13, color: INK_MUTED, margin: '2px 0 0' }}>
               {t('addSheetSub')}
             </p>
+            {lang === 'zu' && (
+              <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, margin: '5px 0 0' }}>
+                {t('addZuluDraftNotice')}
+              </p>
+            )}
           </div>
           <button
             onClick={onClose}
