@@ -245,7 +245,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {

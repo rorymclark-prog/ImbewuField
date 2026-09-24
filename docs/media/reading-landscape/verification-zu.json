@@ -1,0 +1,291 @@
+{
+  "module": "reading-landscape",
+  "language": "zu",
+  "status": "unreviewed draft",
+  "sourceFiles": {
+    "englishNarration": {
+      "path": "docs/narration/reading-landscape.en.md",
+      "sha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f"
+    },
+    "correctedIsiZuluReviewDrafts": {
+      "docs/narration-reviews/reading-landscape-l1.zu.full-draft.md": "8723761873cf83cb419a15894e023b421fa675871dbfc05a0278cc2c131718eb",
+      "docs/narration-reviews/reading-landscape-l2.zu.full-draft.md": "bdf6630c1a624a49f42030af0cda7a3c09489d28f831c732dedb171db910f2e3",
+      "docs/narration-reviews/reading-landscape-l3.zu.full-draft.md": "d12314f84752381c78f57223c34ea767ff8c0777a465c6591c927b2363d4b371",
+      "docs/narration-reviews/reading-landscape-l4.zu.full-draft.md": "16559c40cefb22b9e24ccbf7552853d7dbaaaaec5f383dcaf7e21060e82cd148"
+    },
+    "combinedRenderInput": {
+      "path": "docs/media/reading-landscape/reading-landscape-zu-render-source.md",
+      "sha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b"
+    }
+  },
+  "staleSources": {
+    "checkedInIsiZuluNarration": {
+      "path": "docs/narration/reading-landscape.zu.md",
+      "sha256": "3e691d4fe6a52c051659bed3acdbcdaaba05efe27e09692fa08f3f63725ec022",
+      "usedForDeck": false,
+      "reason": "The current-main handoff explicitly identifies this narration as stale and directs that it not be used as learner speech."
+    },
+    "providedAudioSnapshot": {
+      "commit": "b7fbda65a1e0e59de06a4365c6c5947babd270f2",
+      "fileSha256": "5907cc0e4f1c8573f64855e1e8acde0d744ea65d0b596b3da5cf1689e8ca5c55",
+      "scriptUsedForDeck": false,
+      "audioChanged": false,
+      "matchesDeck": false
+    }
+  },
+  "staleClaimCorrections": {
+    "slide4": "Old narration frames water leaving as a lost resource; corrected draft says some excess water needs a safe route away.",
+    "slide6": "Old A-frame claims include unsupported tracing rates and assurances; corrected draft limits it to equal-height observations and requires site assessment before earthworks.",
+    "slide7": "Old fixed high/middle/low placement rule removed; corrected slide says there is no universal placement rule.",
+    "slides8-9": "Corrected sun guidance is scoped to much of South Africa and season/location; observe the actual site.",
+    "slides10-12": "Unsupported shade timing and regional month/wind assertions removed; current drafts call for checking actual shadows, local weather records/adviser.",
+    "slides14-15": "No guaranteed frost-free slope; airflow and morning sun do not cure late blight; local records/adviser and crop-health advice remain.",
+    "slide16": "Sketch remains marked not to scale until distances have been checked.",
+    "slide18": "Khakibos/blackjack presence alone does not diagnose compaction.",
+    "slides20-21": "Field walk is conditional on safety; A-frame is observation, not earthworks design or approval."
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "file": "public/course-decks/reading-landscape/zu/slide-01.jpg",
+      "bytes": 94361,
+      "sha256": "07ac3db0e4cef80a4f9093c6bfa3054b25db381e57be7a28031be415a0be072b"
+    },
+    {
+      "slide": 2,
+      "file": "public/course-decks/reading-landscape/zu/slide-02.jpg",
+      "bytes": 79810,
+      "sha256": "69232d4c724d5e26504a790852e84f0e2f124e5eebd0e82aa084e7a6a3816255"
+    },
+    {
+      "slide": 3,
+      "file": "public/course-decks/reading-landscape/zu/slide-03.jpg",
+      "bytes": 80659,
+      "sha256": "8d3988e5b7b209689a92a271807182a30da7ddf53b602e48f0894cd92eb449ca"
+    },
+    {
+      "slide": 4,
+      "file": "public/course-decks/reading-landscape/zu/slide-04.jpg",
+      "bytes": 73038,
+      "sha256": "955d3c7eee8397ed63c0ba71ffa888e80779e2402f9ed4b5d34145691786b5d8"
+    },
+    {
+      "slide": 5,
+      "file": "public/course-decks/reading-landscape/zu/slide-05.jpg",
+      "bytes": 119647,
+      "sha256": "4b6dc697fd52821de19a99b2459e9a53efa77c1abfb330e42cbd2638eb104c52"
+    },
+    {
+      "slide": 6,
+      "file": "public/course-decks/reading-landscape/zu/slide-06.jpg",
+      "bytes": 548850,
+      "sha256": "8ffaf70625733434283eec6a7654c5ab5812fc98f5d4b2b1537caf712f283781"
+    },
+    {
+      "slide": 7,
+      "file": "public/course-decks/reading-landscape/zu/slide-07.jpg",
+      "bytes": 86570,
+      "sha256": "f4528a9ccbc4495800c9bfe74c207448c1bacf5b5cb9d41b02ef907fcfa088da"
+    },
+    {
+      "slide": 8,
+      "file": "public/course-decks/reading-landscape/zu/slide-08.jpg",
+      "bytes": 114425,
+      "sha256": "68f45ee34af4b02001ba58bc663a57051317f897e7d488cb9680e3de949519ed"
+    },
+    {
+      "slide": 9,
+      "file": "public/course-decks/reading-landscape/zu/slide-09.jpg",
+      "bytes": 116987,
+      "sha256": "64b884914b75f8409816546e80a32f747ec712586221516be1dd8312f55d6f0b"
+    },
+    {
+      "slide": 10,
+      "file": "public/course-decks/reading-landscape/zu/slide-10.jpg",
+      "bytes": 609185,
+      "sha256": "34d0840eb7575bfbd2a52c235f9d1cb9570a1cda21b2e8ba82a4356f5f5c06ef"
+    },
+    {
+      "slide": 11,
+      "file": "public/course-decks/reading-landscape/zu/slide-11.jpg",
+      "bytes": 110309,
+      "sha256": "1788814857897c37bda367931239b2eb2261f340ad1f49fe38ffc5136e0cead9"
+    },
+    {
+      "slide": 12,
+      "file": "public/course-decks/reading-landscape/zu/slide-12.jpg",
+      "bytes": 343810,
+      "sha256": "4040e1d3884bcd6341eefe32406dcb07d07616d0ed331b3077966575d37e11f6"
+    },
+    {
+      "slide": 13,
+      "file": "public/course-decks/reading-landscape/zu/slide-13.jpg",
+      "bytes": 124142,
+      "sha256": "f9cb5112e5ac230e62a55ee92237f70911f5826300deb11c52c70a33150b85c1"
+    },
+    {
+      "slide": 14,
+      "file": "public/course-decks/reading-landscape/zu/slide-14.jpg",
+      "bytes": 139873,
+      "sha256": "de84d16da97425a71e4766489160138ac5b8fe6509729c8ba8c1e0211ba79ceb"
+    },
+    {
+      "slide": 15,
+      "file": "public/course-decks/reading-landscape/zu/slide-15.jpg",
+      "bytes": 130204,
+      "sha256": "874ad9e74aff2f2f20012b023b1f126fd2fbaf866c15381d73069e59cd318179"
+    },
+    {
+      "slide": 16,
+      "file": "public/course-decks/reading-landscape/zu/slide-16.jpg",
+      "bytes": 132375,
+      "sha256": "3b8309701852a7d3e2b6fa59ef1a9b45f32a11ebd54715caab181fc9ff69fcbb"
+    },
+    {
+      "slide": 17,
+      "file": "public/course-decks/reading-landscape/zu/slide-17.jpg",
+      "bytes": 147397,
+      "sha256": "d550e9fc4563e968e9dd5e596880d0e7701079b66e2cb2f6ff54ae2b44ec1a4c"
+    },
+    {
+      "slide": 18,
+      "file": "public/course-decks/reading-landscape/zu/slide-18.jpg",
+      "bytes": 538432,
+      "sha256": "8cbe07a15f009ee77cc49d72bfba4c8e5d60c7deb3536608d8184093a48239f0"
+    },
+    {
+      "slide": 19,
+      "file": "public/course-decks/reading-landscape/zu/slide-19.jpg",
+      "bytes": 122213,
+      "sha256": "7dcde68048180ed847c65de9849d9b0a5b74deed021310f499aa2861eb33b14b"
+    },
+    {
+      "slide": 20,
+      "file": "public/course-decks/reading-landscape/zu/slide-20.jpg",
+      "bytes": 691452,
+      "sha256": "67a244ff387e01e50891d13f0d0130ddd93b6f6f07a8df7e6c3fed67ff5f650b"
+    },
+    {
+      "slide": 21,
+      "file": "public/course-decks/reading-landscape/zu/slide-21.jpg",
+      "bytes": 165471,
+      "sha256": "671ffe898204d0c0def188c41beec6ed09565dfe82d44491a6a3f3d2513e5cb2"
+    }
+  ],
+  "staticDiagrams": {
+    "5": {
+      "file": "docs/media/reading-landscape/diagram-05.jpg",
+      "bytes": 82036,
+      "sha256": "bf068043a4062792da05782a496e675dc3bcf28c7af209f407a5b3426cad7295"
+    },
+    "8": {
+      "file": "docs/media/reading-landscape/diagram-08.jpg",
+      "bytes": 77728,
+      "sha256": "09f75e7cb229877f3f642f0ed574c7d8289802964ad744d4f08cf98a38fe956f"
+    },
+    "9": {
+      "file": "docs/media/reading-landscape/diagram-09.jpg",
+      "bytes": 79448,
+      "sha256": "dfcbdd735ba8bd176e7ba6bd0097f71f293b8fef2c89b17c5f91011faf2627e3"
+    },
+    "13": {
+      "file": "docs/media/reading-landscape/diagram-13.jpg",
+      "bytes": 84630,
+      "sha256": "3d329663a4b46c7c3f64589127a74d5548507fde8ac4de8467a726e9dfa42421"
+    },
+    "17": {
+      "file": "docs/media/reading-landscape/diagram-17.jpg",
+      "bytes": 99759,
+      "sha256": "6e451e85511808d03dbd65f3324e0029d3f4f39739a0579f51ba4fbfe2088dea"
+    }
+  },
+  "review": {
+    "visual": "21 slides checked in the contact sheet; slides 5, 6, 13, 16, 17, 18, 20 and 21 checked at 390px wide. Diagram overlaps were revised; localized safety captions inspected.",
+    "contactSheet": {
+      "path": "docs/media/reading-landscape/reading-landscape-zu-contact-sheet.jpg",
+      "bytes": 334710,
+      "sha256": "a69c755c170e6a5f283d8a86b53890fe087e8d4ef63570c137c4068a35e4ecf4"
+    },
+    "phoneSamples": [
+      {
+        "slide": 2,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-02.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "11b46830a70d66a787c4cf164bfb5321e48ea416767ad08c21317455595b9ee5"
+      },
+      {
+        "slide": 3,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-03.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "b439ea6059854192bf6679f46b7399c597ba0d825644eabb889cae295cad90a4"
+      },
+      {
+        "slide": 5,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-05.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "df457067a115f54c60751a25f163785de1d7913f9f1641535f32b714cf26e1f7"
+      },
+      {
+        "slide": 6,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-06.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "bb0306ada07d643ee0e433dc4604dac60c15f38ae3626924be8af1e5828e61c8"
+      },
+      {
+        "slide": 13,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-13.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "812d4f34e00c0f16b1bdd419de8fb5147e62cbc649ae9b24125034764e4fcdc1"
+      },
+      {
+        "slide": 14,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-14.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "0ed756aa810936452fb0b0ca359101f7c1b29c2ed4f1a6b94bab5378d9243499"
+      },
+      {
+        "slide": 16,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-16.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "bb962e607806fe47d87e2a333a40bd5d52ec9dad6a39c7cfb5d1eebb3c6c1a6b"
+      },
+      {
+        "slide": 17,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-17.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "c0905a04dc5e0dfc0b1d74531f0e60ce5ca3b554863cb90744ca5a77e3131a91"
+      },
+      {
+        "slide": 18,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-18.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "19b0d03d8612a882f204f67e609e40139d4443b469be397a6c4317f9323aaf7b"
+      },
+      {
+        "slide": 20,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-20.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "da02c068fbb198e667ed2931086b4544330f6c0c6e6527731385438dd23409d8"
+      },
+      {
+        "slide": 21,
+        "path": "docs/media/reading-landscape/reading-landscape-zu-390px/slide-21.jpg",
+        "width": 390,
+        "height": 219,
+        "sha256": "e81f92278e574c19c4608639665d0e35edd90fbd3814bdd5c21ed5eec808c93a"
+      }
+    ],
+    "language": "No fluent-speaker or local farming review claimed.",
+    "motion": "No animations or video files generated. Slide 17 remains a still and its map says not to scale."
+  }
+}

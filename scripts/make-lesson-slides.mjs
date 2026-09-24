@@ -31,10 +31,12 @@ const imgFlag = argv.indexOf('--images');
 const imagesDir = imgFlag >= 0 && argv[imgFlag + 1] ? resolve(argv[imgFlag + 1].replace(/^~/, homedir())) : null;
 const overrideFlag = argv.indexOf('--art-overrides');
 const brandingFlag = argv.indexOf('--branding');
+const sourceFlag = argv.indexOf('--source');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
-const skipped = new Set(['--images', '--art-overrides', '--branding']);
-const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag].filter((i) => i >= 0).map((i) => i + 1));
+const sourcePath = sourceFlag >= 0 ? resolve(argv[sourceFlag + 1]) : null;
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
@@ -42,9 +44,9 @@ if (!moduleId || !lang) {
   process.exit(1);
 }
 
-const scriptPath = resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${lang}.md`));
+const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${lang}.md`));
 if (!existsSync(scriptPath)) {
-  console.error(`\n  ✗ no narration script at docs/narration/${moduleId}.${lang}.md\n`);
+  console.error(`\n  ✗ no narration script at ${scriptPath}\n`);
   process.exit(1);
 }
 
@@ -257,6 +259,13 @@ F_EYE    = font(SANS_B, 22)    # IMBEWUFIELD · MODULE 4
 F_FOOT   = font(SANS,   22)
 F_SUBT   = font(SERIF_I, 30)   # the English gloss under an isiZulu slide title
 
+# Some isiZulu decks include an explicit phone review. Let those opt into a larger signpost size
+# while keeping the established defaults for the rest of the course.
+if cfg.get('branding', {}).get('largeText'):
+    F_TITLE = font(SERIF_B, 68)
+    F_BULL = font(SANS, 52)
+    F_CAP = font(SANS_B, 42)
+
 def track(d, xy, text, fnt, fill, sp=3):
     """Letter-spaced caps. Pillow has no tracking, and the eyebrow is the one place it matters."""
     x, y = xy
@@ -391,7 +400,7 @@ for s in cfg['slides']:
             eyebrow(d, x, 64, EYE)
             y = 136
             for ln in wrap(d, s['title'], F_TITLE, W - 2*x):
-                d.text((x,y),ln,font=F_TITLE,fill=GREEN); y += 72
+                d.text((x,y),ln,font=F_TITLE,fill=GREEN); y += F_TITLE.size + 12
             top = y + 20
             im = fit(im, W - 2*x, H - top - 105)
             img.paste(im, ((W-im.width)//2, top + (H-top-105-im.height)//2))
@@ -400,7 +409,7 @@ for s in cfg['slides']:
         eyebrow(d, x, 64, EYE + ' · ' + BADGE_ANIMATION)
         y = 138
         for ln in wrap(d, s['title'], F_TITLE, W - x - 240):
-            d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += 74
+            d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += F_TITLE.size + 14
         top = y + 30
         box_w = int(W * 0.66)
         box_h = H - top - (140 if s.get('caption') else 90)
@@ -416,7 +425,7 @@ for s in cfg['slides']:
         if s.get('caption'):
             cy = top + 42
             for ln in wrap(d, s['caption'], F_CAP, int(W * 0.72)):
-                d.text((W // 2, cy), ln, font=F_CAP, fill=INK, anchor='ma'); cy += 38
+                d.text((W // 2, cy), ln, font=F_CAP, fill=INK, anchor='ma'); cy += F_CAP.size + 11
 
     else:
         # A watch slide whose picture does not exist lands here rather than in the branch above.
@@ -429,7 +438,7 @@ for s in cfg['slides']:
         eyebrow(d, x, 64, EYE)
         y = 138
         for ln in wrap(d, s['title'], F_TITLE, text_w):
-            d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += 72
+            d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += F_TITLE.size + 12
         if s['subtitle']:
             for ln in wrap(d, s['subtitle'], F_SUBT, text_w):
                 d.text((x, y + 4), ln, font=F_SUBT, fill=MUTED); y += 42
@@ -446,8 +455,9 @@ for s in cfg['slides']:
         # Drop whole bullets until the block fits, rather than letting one run under the footer.
         # Nothing is truncated mid-sentence any more, so a bullet is either shown in full or not
         # shown — a slide is a signpost and the narration carries the detail either way.
+        line_h = F_BULL.size + 12
         def height(bs):
-            return sum(len(ls) * 46 + 30 for ls in bs) - (30 if bs else 0)
+            return sum(len(ls) * line_h + 30 for ls in bs) - (30 if bs else 0)
         while len(blocks) > 1 and height(blocks) > avail:
             blocks.pop()
 
@@ -455,9 +465,9 @@ for s in cfg['slides']:
         if block_h < avail:
             y += (avail - block_h) // 2
         for ls in blocks:
-            d.ellipse([x + 3, y + 13, x + 17, y + 27], fill=AMBER)
+            d.ellipse([x + 3, y + (F_BULL.size - 14) // 2, x + 17, y + (F_BULL.size + 14) // 2], fill=AMBER)
             for ln in ls:
-                d.text((x + 48, y), ln, font=F_BULL, fill=INK2); y += 46
+                d.text((x + 48, y), ln, font=F_BULL, fill=INK2); y += line_h
             y += 30
         if illus:
             try:
@@ -479,7 +489,7 @@ for s in cfg['slides']:
 const pyPath = join(tmpdir(), 'imbewu-render-slides.py');
 writeFileSync(pyPath, PY);
 
-console.log(`\n  ${moduleId} · ${lang} — ${payload.length} slides from docs/narration/${moduleId}.${lang}.md\n`);
+console.log(`\n  ${moduleId} · ${lang} — ${payload.length} slides from ${scriptPath}\n`);
 try {
   const out = execFileSync('python3', [pyPath, jsonPath], { encoding: 'utf8' });
   process.stdout.write(out);
