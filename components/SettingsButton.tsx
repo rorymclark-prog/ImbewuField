@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Settings } from 'lucide-react';
 import ThemePanel from './ThemePanel';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * Self-contained settings control: a gear icon that opens the appearance/settings
@@ -12,13 +13,14 @@ import ThemePanel from './ThemePanel';
  */
 export default function SettingsButton({ showLabel = false }: { showLabel?: boolean } = {}) {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
   return (
     <>
       <button
         data-header-secondary
         onClick={() => setOpen(true)}
-        aria-label="Settings"
-        title="Settings"
+        aria-label={t('settingsButtonAriaLabel')}
+        title={t('settingsButtonLabel')}
         className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
         style={{
           // Tokens, not the '#FFFEFA'/'#E2D8C4'/'#20190F' this used to carry: dropped into a
@@ -33,7 +35,7 @@ export default function SettingsButton({ showLabel = false }: { showLabel?: bool
         }}
       >
         <Settings size={13} strokeWidth={1.7} />
-        <span className={showLabel ? undefined : 'hidden sm:inline'}>Settings</span>
+        <span className={showLabel ? undefined : 'hidden sm:inline'}>{t('settingsButtonLabel')}</span>
       </button>
       {open && createPortal(<div style={{ position: 'relative', zIndex: 90 }}><ThemePanel open={open} onClose={() => setOpen(false)} /></div>, document.body)}
     </>

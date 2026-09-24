@@ -151,6 +151,13 @@ and staff routes, and unknown server errors still contain English. This table
 is a scope map, not a claim those routes or the whole app are finished.
 User-entered records and notes stay in the author's language.
 
+The 24 September map UI pass adds draft isiZulu for the Add menu, site
+completeness card, settings button, offline canvas status, map layer tooltips
+and Lima's map guide. The guide retains a visible draft notice. The site
+completeness percentage measures setup steps, not farm quality. Farming advice,
+weather/soil claims, report interpretation and source-language place names are
+still outside this UI pass and require their own checks.
+
 The direct UI dictionary currently has more isiZulu entries than before this
 pass, but dictionary coverage is not route coverage. `node
 scripts/course-i18n-status.mjs` counts direct keys and real audio files; it
