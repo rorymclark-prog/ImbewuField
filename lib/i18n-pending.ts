@@ -24,8 +24,9 @@ export type Dict = Record<string, string>;
  * copy in ten languages without a first-language reviewer is what tests/farmer-i18n-gaps.test.ts
  * exists to prevent, and a true sentence in English beats a fluent false one in isiZulu. Spread
  * into every locale (not left to translate()'s fallback) so the gap is explicit in each slot —
- * the same reason the Design Studio block below is spread. A reviewer overrides the key inside
- * their own locale, below the spread, and it stops being pending.
+ * the same reason the Design Studio block below is spread. Rory has since authorised labelled
+ * learner-visible isiZulu drafts before fluent review. The isiZulu override names the Journal's
+ * actual notes and photos; its review status remains recorded separately.
  */
 /*
  * The home help strip, pending review.
