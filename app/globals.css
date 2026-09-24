@@ -763,6 +763,39 @@ body.is-sample-mode .pwa-update-notifier {
 .produce-art-fallback { display:inline-block; line-height:1.1; vertical-align:middle; }
 @media print { .produce-art { min-width:0; min-height:0; } }
 
+/* ═══════════════════════════════════════════════════════
+   KEYBOARD FOCUS — visible on every control, in every theme
+
+   There were two :focus-visible rules in this file (the Design Studio edge grips and the photo
+   previews below), focus was mentioned in 15 of 239 component files, and 22 components set
+   `outline: 'none'` INLINE on a text input — so for anyone navigating by keyboard, most of this
+   app gave no indication of where they were. A farmer on a borrowed laptop, a mentor tabbing
+   through a survey, anyone using a switch or a screen magnifier: no caret, no ring, nothing.
+
+   `!important` is deliberate and is the only thing that works here. An inline `outline: 'none'`
+   beats any ordinary stylesheet rule on specificity, and those 22 declarations are spread across
+   community, contact, survey and profile forms — the rule has to win from the stylesheet or it
+   would have to be deleted from every one of them by hand, and the next hand-written input would
+   reintroduce it. :where() keeps the selector at zero specificity so nothing ELSE about these
+   controls is affected.
+
+   `currentColor` rather than a token: the ring then inherits whatever colour the control's own
+   text already uses, which is a colour already checked against that control's own background —
+   white on the forest CTA, ink on a card, paper on the dark map panels. One rule, correct in
+   every theme and on every surface, with no per-theme override to keep in step.
+
+   :focus-visible, not :focus — a mouse click on a button does not draw a ring; a Tab to it does.
+   ═══════════════════════════════════════════════════════ */
+:where(a[href], button, [role="button"], input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+/* Inputs sit inside their own border, so an offset ring reads as a double border. Tuck it in. */
+:where(input, select, textarea):focus-visible {
+  outline-offset: 1px !important;
+}
+
 /* Photo previews are keyboard controls as well as tap targets. */
 img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }
 

@@ -406,9 +406,13 @@ function HomeLandingInner() {
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
-          <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
+          {/* The app's own name, or the farmer's greeting — the first screen's title, and until now
+              a <span>, so /home rendered no <h1> and an outline view or a screen reader had no page
+              title to land on. Heading sizes are reset by Tailwind preflight and globals.css styles
+              headings for family and tracking only, so the tag change is not a look change. */}
+          <h1 className="font-display font-bold m-0" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
             {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}
-          </span>
+          </h1>
         </div>
 
         <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />

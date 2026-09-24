@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -334,6 +334,23 @@ export default function CalendarPage() {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
 
+  // THE SELECTED MONTH WAS OFF-SCREEN. The strip already paints the active chip forest-filled,
+  // but it is twelve chips wide and starts at January, so at 390px only Jan–Aug fit and the
+  // September a farmer opens the page on sits past the right edge — unreachable without a
+  // sideways drag nobody is prompted to make, and invisible, so the screen read as a row of
+  // twelve identical outlined months above a heading that said "Sep". The state was fine; it was
+  // never brought into view. Scrolling it to the centre on mount and on every change is the fix.
+  const activeChipRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    // `nearest` on the block axis so centring a chip never scrolls the page itself.
+    activeChipRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
+  }, [selectedMonth]);
+
+  // The month the farmer is actually in, kept apart from the one they are reading. Tapping March
+  // in January used to leave nothing on screen saying which month was now — the heading follows
+  // the selection, so "this month" had no marker at all once you browsed away from it.
+  const currentMonth = new Date().getMonth();
+
   useEffect(() => {
     try {
       const raw = localStorage.getItem(
@@ -365,7 +382,7 @@ export default function CalendarPage() {
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: '#5C5040' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
         <div className="flex-1" />
         <LessonLink id="crops:calendar" label="Learn" />
         <SettingsButton />
@@ -407,15 +424,20 @@ export default function CalendarPage() {
               return (
                 <button
                   key={abbr}
+                  ref={active ? activeChipRef : undefined}
                   onClick={() => setSelectedMonth(idx)}
                   style={{
                     background: active ? '#1F4D2B' : 'transparent',
-                    border: active ? '1px solid #1F4D2B' : '1px solid #E2D8C4',
+                    // The month you are in, when you are reading a different one: a ring rather
+                    // than a fill, so "now" and "showing" never look like the same thing.
+                    border: active
+                      ? '1px solid #1F4D2B'
+                      : idx === currentMonth ? '1px solid #9A6018' : '1px solid #E2D8C4',
                     borderRadius: 8,
-                    color: active ? '#EAF3E2' : '#5C5040',
+                    color: active ? '#EAF3E2' : idx === currentMonth ? '#7A4408' : '#5C5040',
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 12,
-                    fontWeight: active ? 700 : 500,
+                    fontWeight: active || idx === currentMonth ? 700 : 500,
                     padding: '5px 11px',
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
@@ -423,7 +445,12 @@ export default function CalendarPage() {
                     letterSpacing: '0.04em',
                   }}
                   aria-pressed={active}
-                  aria-label={localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${MONTH_ABBR[idx]}`, lang)}
+                  aria-current={idx === currentMonth ? 'date' : undefined}
+                  aria-label={
+                    idx === currentMonth
+                      ? localUi(`Select ${MONTH_ABBR[idx]} — this month`, `Khetha u-${MONTH_ABBR[idx]} — le nyanga`, lang)
+                      : localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${MONTH_ABBR[idx]}`, lang)
+                  }
                 >
                   {abbr}
                 </button>

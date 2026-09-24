@@ -1051,7 +1051,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
           <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
-          <h1 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h1>
+          <h2 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h2>
         </div>
         <div className="flex items-center gap-2">
           {onSeeSample && (
@@ -1489,7 +1489,7 @@ export default function RecordsPage() {
             nothing. The bottom nav already names this screen and highlights it, so below sm the
             label simply steps aside — the same pattern the funder and NGO headers use. */}
         <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0 hidden sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</h1>
         <div className="flex-1" />
         {/* 'finances:overview', which is the id lib/lesson-registry.ts actually holds. The old
             /records header asked for 'finance:overview' — no such lesson — so Learn opened onto
