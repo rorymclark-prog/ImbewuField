@@ -141,7 +141,7 @@ export default function ProductTourProvider({ children }: { children: React.Reac
       <h2 id="product-tour-title">{inView && feature ? feature.title : stepCopy.title}</h2>
       <p className={styles.time}>{stepCopy.title}{inView && features.length > 1 ? ` · ${tourUi('tip', 'Tip')} ${featureIndex + 1} / ${features.length}` : ` · ${tourUi('aboutMinutes', `About ${step.minutes} min`, { duration: step.minutes === 1 ? 'umzuzu' : `imizuzu engu-${step.minutes}` })}`}</p>
       <p>{inView && feature ? feature.text : stepCopy.task}</p>
-      {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={tourUi('tip', `Tip ${featureIndex + 1} of ${features.length}`)}>
+      {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={tourUi('tipAria', `Tip ${featureIndex + 1} of ${features.length}: ${feature?.title ?? stepCopy.title}`, { current: featureIndex + 1, total: features.length, title: feature?.title ?? stepCopy.title })}>
         {features.map((tip, i) => {
           const translatedTip = productTourFeatureCopy(step.id, i, lang, tip)!;
           return <button key={tip.title} type="button" aria-label={tourUi('tipAria', `Tip ${i + 1}: ${tip.title}`, { current: i + 1, total: features.length, title: translatedTip.title })} aria-current={i === featureIndex ? 'step' : undefined} onClick={() => setFeatureIndex(i)} />;

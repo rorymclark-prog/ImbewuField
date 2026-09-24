@@ -30,6 +30,8 @@ test('isiZulu tour copy covers every source stop and tip while preserving the En
     }
   }
   assert.match(productTourUi('draftDisclosure', 'zu') ?? '', /Uhlaka lwesiZulu olungakabuyekezwa/);
+  assert.equal(productTourUi('tipAria', 'zu', { current: 2, total: 3, title: 'Isihloko' }), 'Ithiphu 2 kwezingu-3: Isihloko',
+    'feature progress keeps its index, total and translated title in the accessible isiZulu label');
 });
 
 test('the short product tour includes grower tools, support and both partner views', () => {
