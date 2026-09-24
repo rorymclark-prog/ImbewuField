@@ -1,0 +1,223 @@
+{
+  "complete": true,
+  "module": "reading-landscape",
+  "language": "zu",
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "humanListeningReview": false,
+  "scriptSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+  "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "lessonSourceSha256": "70d193ffe2fe07f05039b5f445b21fb38634150990fe04867eafd57c1cc44c76",
+  "slides": [
+    {
+      "slide": 1,
+      "file": "Slide_01_isiZulu.mp3",
+      "seconds": 33.312,
+      "bytes": 199872,
+      "sha256": "af4e167b6af15f71742d326d2230c8f9efc9ff0024d9a930a86256bc19866c79",
+      "proof": true
+    },
+    {
+      "slide": 2,
+      "file": "Slide_02_isiZulu.mp3",
+      "seconds": 34.656,
+      "bytes": 207936,
+      "sha256": "c5dedb087b4d7cc511435a8530907cf018ea16717cbcbbc389a6e329ce742770",
+      "proof": true
+    },
+    {
+      "slide": 3,
+      "file": "Slide_03_isiZulu.mp3",
+      "seconds": 37.152,
+      "bytes": 222912,
+      "sha256": "0cdcec0ddf41296e4597bb7cf118189489179b64de6841a11db254ba1afaa31d",
+      "proof": true
+    },
+    {
+      "slide": 4,
+      "file": "Slide_04_isiZulu.mp3",
+      "seconds": 34.104,
+      "bytes": 204624,
+      "sha256": "10e2418ffc8dae69fd7d8c0217b59127e187eca261475fb0256d7cf76fb95083",
+      "proof": true
+    },
+    {
+      "slide": 5,
+      "file": "Slide_05_isiZulu.mp3",
+      "seconds": 16.56,
+      "bytes": 99360,
+      "sha256": "a203d7e38f6ba77549f0773740a3ad572385f8fed1e08885ff916c450c899f74",
+      "proof": true
+    },
+    {
+      "slide": 6,
+      "file": "Slide_06_isiZulu.mp3",
+      "seconds": 57.576,
+      "bytes": 345456,
+      "sha256": "1ddc2ea085344cd99411354c7f36d545c5c728f0febfc2ed4aa84f51593b3f94",
+      "proof": true
+    },
+    {
+      "slide": 7,
+      "file": "Slide_07_isiZulu.mp3",
+      "seconds": 40.344,
+      "bytes": 242064,
+      "sha256": "9026d9b17f64a9711a3af8da366647135a7d26d498e3484bf5e462dbc8acb644",
+      "proof": true
+    },
+    {
+      "slide": 8,
+      "file": "Slide_08_isiZulu.mp3",
+      "seconds": 47.184,
+      "bytes": 283104,
+      "sha256": "524e9052191eb1b3c447735775c2341f7658e74c7203a1660609948142b76232",
+      "proof": true
+    },
+    {
+      "slide": 9,
+      "file": "Slide_09_isiZulu.mp3",
+      "seconds": 13.632,
+      "bytes": 81792,
+      "sha256": "b18e3904d9938fa3c7b19fa0fd71dcd5dd2796abe9ded3f892c79e82aa9e44f0",
+      "proof": true
+    },
+    {
+      "slide": 10,
+      "file": "Slide_10_isiZulu.mp3",
+      "seconds": 34.8,
+      "bytes": 208800,
+      "sha256": "c05c4ed3c4e3b6ff66d46f284960cd5867d6c58dff67d70d8a37be17f2f369e7",
+      "proof": true
+    },
+    {
+      "slide": 11,
+      "file": "Slide_11_isiZulu.mp3",
+      "seconds": 20.016,
+      "bytes": 120096,
+      "sha256": "bf7b42cf7eeafcb24877230cb88054b2c75dcd74bff4250d3391157870028933",
+      "proof": true
+    },
+    {
+      "slide": 12,
+      "file": "Slide_12_isiZulu.mp3",
+      "seconds": 41.544,
+      "bytes": 249264,
+      "sha256": "67cbfb1d86e497f2cd566aba66be3ef22f4c3813e7474be65bd5fc0dd62b3cd9",
+      "proof": true
+    },
+    {
+      "slide": 13,
+      "file": "Slide_13_isiZulu.mp3",
+      "seconds": 12.936,
+      "bytes": 77616,
+      "sha256": "a9b9cbccf30a59e5fd426dcaf90ab239cef97fc10d3ffe81b93f682644f85ed8",
+      "proof": true
+    },
+    {
+      "slide": 14,
+      "file": "Slide_14_isiZulu.mp3",
+      "seconds": 73.896,
+      "bytes": 443376,
+      "sha256": "c7fd2eca151716a9ed19efb3e340f1f3789c00636d8b0071fc5ec081a5c33915",
+      "proof": true
+    },
+    {
+      "slide": 15,
+      "file": "Slide_15_isiZulu.mp3",
+      "seconds": 62.544,
+      "bytes": 375264,
+      "sha256": "e5364c56cdf2774d681bf10321de5b44a3f0e28e1c3c0c3b90608e1de2e03704",
+      "proof": true
+    },
+    {
+      "slide": 16,
+      "file": "Slide_16_isiZulu.mp3",
+      "seconds": 36.0,
+      "bytes": 216000,
+      "sha256": "9ebd784b29beaf2c171fabbd745ac8a74e392e0d721e01ff252566fd6c7aa328",
+      "proof": true
+    },
+    {
+      "slide": 17,
+      "file": "Slide_17_isiZulu.mp3",
+      "seconds": 16.08,
+      "bytes": 96480,
+      "sha256": "8ea251d2093e3bce4ae25def8551b837ebb92f00e77e77350bc872df574ac27b",
+      "proof": true
+    },
+    {
+      "slide": 18,
+      "file": "Slide_18_isiZulu.mp3",
+      "seconds": 37.152,
+      "bytes": 222912,
+      "sha256": "2e015c166458890f54b6361e6ef306953dc93e8c1401390d40a8774ddbfdb232",
+      "proof": true
+    },
+    {
+      "slide": 19,
+      "file": "Slide_19_isiZulu.mp3",
+      "seconds": 33.648,
+      "bytes": 201888,
+      "sha256": "a2e28050f2714e1c3f94ee2d50d3794f11806252be5581a81e8fbdbf613e8f0a",
+      "proof": true
+    },
+    {
+      "slide": 20,
+      "file": "Slide_20_isiZulu.mp3",
+      "seconds": 50.52,
+      "bytes": 303120,
+      "sha256": "820646de67ee4717698c9f636b849b184d81d9353c8e7b101356cf84e12a513b",
+      "proof": true
+    },
+    {
+      "slide": 21,
+      "file": "Slide_21_isiZulu.mp3",
+      "seconds": 48.96,
+      "bytes": 293760,
+      "sha256": "ada28c7e101efeda5ad48b678f52cd4b2ca1fdc82a977b70401638314eb10558",
+      "proof": true
+    }
+  ],
+  "full": {
+    "module": "reading-landscape",
+    "lesson": null,
+    "scope": "slides-1-through-21",
+    "language": "zu",
+    "file": "Full_Narration_isiZulu.mp3",
+    "voice": "zu-ZA-ThandoNeural",
+    "rate": "-12%",
+    "seconds": 782.616,
+    "bytes": 4695932,
+    "audioSha256": "dbea7ff7be41899b87d40e8f737f45e12119aebeff7af7025975148af140b1a4",
+    "fullDecode": "pass",
+    "humanListeningReview": false,
+    "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+    "scriptSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+    "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "lessonSourceSha256": "70d193ffe2fe07f05039b5f445b21fb38634150990fe04867eafd57c1cc44c76",
+    "slideAudioSha256": [
+      "af4e167b6af15f71742d326d2230c8f9efc9ff0024d9a930a86256bc19866c79",
+      "c5dedb087b4d7cc511435a8530907cf018ea16717cbcbbc389a6e329ce742770",
+      "0cdcec0ddf41296e4597bb7cf118189489179b64de6841a11db254ba1afaa31d",
+      "10e2418ffc8dae69fd7d8c0217b59127e187eca261475fb0256d7cf76fb95083",
+      "a203d7e38f6ba77549f0773740a3ad572385f8fed1e08885ff916c450c899f74",
+      "1ddc2ea085344cd99411354c7f36d545c5c728f0febfc2ed4aa84f51593b3f94",
+      "9026d9b17f64a9711a3af8da366647135a7d26d498e3484bf5e462dbc8acb644",
+      "524e9052191eb1b3c447735775c2341f7658e74c7203a1660609948142b76232",
+      "b18e3904d9938fa3c7b19fa0fd71dcd5dd2796abe9ded3f892c79e82aa9e44f0",
+      "c05c4ed3c4e3b6ff66d46f284960cd5867d6c58dff67d70d8a37be17f2f369e7",
+      "bf7b42cf7eeafcb24877230cb88054b2c75dcd74bff4250d3391157870028933",
+      "67cbfb1d86e497f2cd566aba66be3ef22f4c3813e7474be65bd5fc0dd62b3cd9",
+      "a9b9cbccf30a59e5fd426dcaf90ab239cef97fc10d3ffe81b93f682644f85ed8",
+      "c7fd2eca151716a9ed19efb3e340f1f3789c00636d8b0071fc5ec081a5c33915",
+      "e5364c56cdf2774d681bf10321de5b44a3f0e28e1c3c0c3b90608e1de2e03704",
+      "9ebd784b29beaf2c171fabbd745ac8a74e392e0d721e01ff252566fd6c7aa328",
+      "8ea251d2093e3bce4ae25def8551b837ebb92f00e77e77350bc872df574ac27b",
+      "2e015c166458890f54b6361e6ef306953dc93e8c1401390d40a8774ddbfdb232",
+      "a2e28050f2714e1c3f94ee2d50d3794f11806252be5581a81e8fbdbf613e8f0a",
+      "820646de67ee4717698c9f636b849b184d81d9353c8e7b101356cf84e12a513b",
+      "ada28c7e101efeda5ad48b678f52cd4b2ca1fdc82a977b70401638314eb10558"
+    ]
+  }
+}
