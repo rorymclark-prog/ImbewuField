@@ -1,10 +1,7 @@
 # Water Harvesting L4 — isiZulu alignment review
 
-**UNREVIEWED AI COMPARISON — not approved for recording, publication or learner use.**
-This packet compares the current English greywater lesson with an older,
-unpublished isiZulu narration draft. It proposes review questions, not a
-learner translation or a greywater system design. Fluent isiZulu, local
-sanitation/municipal and farming review are required before any release.
+**SUPERSEDED COMPARISON — see [current full draft](water-harvesting-l4.zu.full-draft.md).**
+This older packet records the prior English and isiZulu wording only. It is not the current translation brief or learner content. The current isiZulu risk-recognition draft is available to learners with a persistent draft label under Rory's 24 September authorization. Fluent isiZulu, local sanitation/municipal, farming and listening review remain pending; no approval is claimed.
 
 ## Surfaces compared
 
@@ -15,10 +12,7 @@ sanitation/municipal and farming review are required before any release.
 - Current media and legal/source limits:
   [Water L4 current lesson check](../media/studies-animation-quality/water-l4-current-lesson-check.md).
 
-The English learner player uses static slides 19–22 with English speech.
-Slide 21 has no registered film; its older code-drawn candidate remains
-withdrawn pending Rory's visual clearance. No isiZulu media or script change
-is made here.
+The current English learner player and labelled isiZulu draft use static safety cards and matching speech. Slide 21 remains still-only. The corrected English source removes the reuse recipe and directs learners to qualified local advice before any reuse.
 
 ## Meaning and safety gaps for review
 
@@ -37,9 +31,7 @@ biologically active topsoil (p. 17). The [Department of Human Settlements
 Redbook, J.4.2.4 and glossary](https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_J_Water_v1-1.pdf)
 excludes kitchen sources as a potential reuse resource in that guide and
 warns of health and plumbing risks. These passages do not establish a
-universal statutory ban or permission for this learner. A qualified local
-sanitation/municipal reviewer must reconcile the intended source, use and
-rules before the English teaching and any isiZulu version are changed.
+universal statutory ban or permission for this learner. The English lesson now asks the learner to obtain qualified local source/use/site advice before any reuse and to avoid reuse if that advice is unavailable or unclear. A qualified local reviewer has not approved a particular route. Any isiZulu rewrite still requires fluent-language and qualified local review.
 
 ## Fluent-review questions
 
@@ -55,8 +47,5 @@ rules before the English teaching and any isiZulu version are changed.
 
 ## Publication boundary
 
-Leave the older isiZulu draft unpublished. Do not record it, translate the
-current quiz into the learner player, alter the static stills, or re-register
-the withdrawn animation from this packet. English source/quiz decisions and
-Rory's visual clearance remain separate gates. No fluent, municipal, farmer,
+Leave the older isiZulu draft unpublished. Do not record it or put its quiz in the learner player. Translate the revised decision-safety lesson only after source wording is stable and arrange fluent isiZulu and local sanitation review. Slide 21 remains a static card; do not re-register the withdrawn animation. No fluent, municipal, farmer,
 learner or practitioner approval is claimed.

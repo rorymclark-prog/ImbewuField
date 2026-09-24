@@ -54,7 +54,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'water-harvesting-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'water-harvesting-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'water-harvesting-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'water-harvesting-l4': { status: 'source-held', reviewDocument: 'docs/narration-reviews/water-harvesting-l4.zu.review.md' },
+  'water-harvesting-l4': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/water-harvesting-l4.zu.full-draft.md' },
   'soil-health-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'soil-health-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'soil-health-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/soil-health-l3.zu.review.md' },
@@ -66,7 +66,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'food-forest-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'food-forest-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'small-livestock-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'small-livestock-l2': { status: 'source-held', reviewDocument: 'docs/narration-reviews/small-livestock-l2.zu.review.md' },
+  'small-livestock-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/small-livestock-l2.zu.full-draft.md' },
   'small-livestock-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
@@ -75,9 +75,10 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'seeds-sovereignty-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l1.zu.full-draft.md' },
   'seeds-sovereignty-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l2.zu.full-draft.md' },
   'seeds-sovereignty-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l3.zu.full-draft.md' },
-  'plant-guilds-l1': { status: 'published-audio-only' },
-  'plant-guilds-l2': { status: 'published-audio-only' },
-  'plant-guilds-l3': { status: 'published-audio-only' },
+  // Existing narration remains review-pending; the source-paired lesson drafts are visibly labelled.
+  'plant-guilds-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l1.zu.full-draft.md' },
+  'plant-guilds-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l2.zu.full-draft.md' },
+  'plant-guilds-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l3.zu.full-draft.md' },
 };
 
 const REQUIRED_REVIEW_ROLES: HumanReviewApproval['role'][] = ['fluent-isiZulu', 'local-farming'];

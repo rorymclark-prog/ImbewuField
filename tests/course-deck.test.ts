@@ -386,13 +386,13 @@ test('Water playback respects language gaps, download choice and the whole clear
       createNodeMock: element => element.type === 'video' ? videoDevice : element.type === 'audio' ? audioDevice : null,
     }); });
     try {
-      assert.match(view.root.findByType('audio').props.src, /water-harvesting\/en\/slide-01.mp3$/);
+      assert.match(view.root.findByType('audio').props.src, /water-harvesting\/zu\/slide-01.mp3$/);
       const messages = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
-      assert.match(messages, /Narration is in English/);
-      assert.match(messages, /isiZulu narration is not available/);
-      assert.doesNotMatch(messages, /spoken lesson is in your language/);
+      assert.match(messages, /isiZulu narration is awaiting review by a fluent speaker/);
+      assert.doesNotMatch(messages, /Narration is in English/);
+      assert.doesNotMatch(messages, /isiZulu narration is not available/);
       for (let i = 0; i < 13; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
-      assert.equal(view.root.findByType('h3').children.join(''), 'Your Roof Is a Harvesting Surface');
+      assert.equal(view.root.findByType('h3').children.join(''), 'Uphahla Lwakho Lungavuna Amanzi');
       assert.equal(view.root.findAllByType('video').length, 0, 'opening a Watch slide must not download video');
       const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
       assert.ok(watch);

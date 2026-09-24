@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Converts the 25 source comparison packets into learner-shape data without rewriting proposals.
+// Converts source comparison packets into learner-shape data without rewriting proposals.
 // The English catalog supplies canonical answer indexes; every translated field is read verbatim
 // from its packet and this script fails closed when it cannot find a complete field.
 
@@ -16,8 +16,8 @@ const output = resolve(root, 'lib/course-translation-drafts.ts');
 const expectedIds = COURSE_MODULES.flatMap(module => module.lessons)
   .filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft')
   .map(lesson => lesson.id);
-if (courseTranslationReviewState('small-livestock-l2').status !== 'source-held') {
-  throw new Error('small-livestock-l2 is excluded because its English bee-registration and range claims remain source-held.');
+if (courseTranslationReviewState('small-livestock-l2').status !== 'review-draft') {
+  throw new Error('small-livestock-l2 should be a visibly labelled review draft after the English scope correction.');
 }
 
 function packetPath(id) {
@@ -90,7 +90,7 @@ function bodyFor(text, source) {
     return { title, body: bodyText.split(/\n\s*\n/).map(clean).join('\n\n') };
   }
   const part = section(text, 'Lesson body', /^## (?:Key points|Quiz)\b/m);
-  if (!part) throw new Error('Lesson body section missing');
+  if (!part) throw new Error(`${source.id ?? 'lesson'}: lesson body section missing`);
   const blocks = proposalBlocks(part);
   if (!blocks.length) throw new Error(`${source.id ?? 'lesson'}: no isiZulu body proposal found`);
   return { title: source.title, body: blocks.join('\n\n') };
@@ -234,10 +234,10 @@ for (const module of COURSE_MODULES) for (const lesson of module.lessons) {
   data[lesson.id] = { ...body, keyPoints, quiz };
 }
 
-if (Object.keys(data).length !== 24 || expectedIds.length !== 24) throw new Error(`Expected 24 releasable review drafts; found ${Object.keys(data).length}`);
-if (Object.keys(COURSE_TRANSLATION_DRAFT_OVERRIDES.titles).length !== 23 ||
-    Object.values(COURSE_TRANSLATION_DRAFT_OVERRIDES.quizQuestions).flat().length !== 4) {
-  throw new Error('Expected exactly 23 title and 4 question overrides; reconcile the explicit draft additions.');
+if (Object.keys(data).length !== expectedIds.length) throw new Error(`Expected ${expectedIds.length} releasable review drafts; found ${Object.keys(data).length}`);
+if (Object.keys(COURSE_TRANSLATION_DRAFT_OVERRIDES.titles).length !== 24 ||
+    Object.values(COURSE_TRANSLATION_DRAFT_OVERRIDES.quizQuestions).flat().length !== 6) {
+  throw new Error('Expected exactly 24 title and 6 question overrides; reconcile the explicit draft additions.');
 }
 const editorialMarker = /\*\*Explicit source holds?:\*\*|^\s*#{1,6}\s*(?:Reviewer questions?|Questions for|Source and safety holds?|Release boundary)|^\s*\*\*(?:Status|Unreviewed|English meaning|Sources and holds|Review only|Drafting note|Media\/source hold|Safety hold|Release boundary):/im;
 for (const [lessonId, content] of Object.entries(data)) {

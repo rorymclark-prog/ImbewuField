@@ -1,0 +1,212 @@
+{
+  "seconds": 29.544,
+  "bytes": 177264,
+  "audioSha256": "bd82c7fa7e1170caa30aae67a2625ba5aa432817a5ee6fefd166d5081e260d60",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Ama-guinea",
+      "offset": 1460410,
+      "duration": 6676250
+    },
+    {
+      "text": "fowl",
+      "offset": 8704580,
+      "duration": 3835410
+    },
+    {
+      "text": "azifunela",
+      "offset": 12965830,
+      "duration": 7670410
+    },
+    {
+      "text": "izinambuzane",
+      "offset": 20920410,
+      "duration": 9659160
+    },
+    {
+      "text": "futhi",
+      "offset": 30721660,
+      "duration": 3977080
+    },
+    {
+      "text": "angadla",
+      "offset": 34840830,
+      "duration": 5113750
+    },
+    {
+      "text": "imikhaza",
+      "offset": 40096660,
+      "duration": 8096660
+    },
+    {
+      "text": "Ungathembeli",
+      "offset": 58630830,
+      "duration": 8948750
+    },
+    {
+      "text": "kuwo",
+      "offset": 68005830,
+      "duration": 3977080
+    },
+    {
+      "text": "ukuvikela",
+      "offset": 72267080,
+      "duration": 7102080
+    },
+    {
+      "text": "abantu",
+      "offset": 79653330,
+      "duration": 4687500
+    },
+    {
+      "text": "noma",
+      "offset": 84340830,
+      "duration": 3125000
+    },
+    {
+      "text": "imfuyo",
+      "offset": 87892080,
+      "duration": 5681660
+    },
+    {
+      "text": "emikhazeni",
+      "offset": 93715830,
+      "duration": 8096660
+    },
+    {
+      "text": "noma",
+      "offset": 101812500,
+      "duration": 3125000
+    },
+    {
+      "text": "ezifweni",
+      "offset": 105363750,
+      "duration": 6392080
+    },
+    {
+      "text": "ezithwalwa",
+      "offset": 112039580,
+      "duration": 6960410
+    },
+    {
+      "text": "yimikhaza",
+      "offset": 119000000,
+      "duration": 8380830
+    },
+    {
+      "text": "Qhubeka",
+      "offset": 137465830,
+      "duration": 5255830
+    },
+    {
+      "text": "uhlola",
+      "offset": 143289580,
+      "duration": 4687500
+    },
+    {
+      "text": "izilwane",
+      "offset": 148261250,
+      "duration": 7528330
+    },
+    {
+      "text": "ulandele",
+      "offset": 157352080,
+      "duration": 7528330
+    },
+    {
+      "text": "uhlelo",
+      "offset": 165306660,
+      "duration": 5255830
+    },
+    {
+      "text": "lwezempilo",
+      "offset": 170562500,
+      "duration": 7528330
+    },
+    {
+      "text": "yezilwane",
+      "offset": 178090830,
+      "duration": 7528330
+    },
+    {
+      "text": "olufanele",
+      "offset": 186329580,
+      "duration": 7670410
+    },
+    {
+      "text": "indawo",
+      "offset": 194426250,
+      "duration": 4403330
+    },
+    {
+      "text": "yakini",
+      "offset": 198829580,
+      "duration": 6107910
+    },
+    {
+      "text": "Izinyoni",
+      "offset": 215448750,
+      "duration": 6676250
+    },
+    {
+      "text": "ezizifunela",
+      "offset": 222977080,
+      "duration": 9090830
+    },
+    {
+      "text": "ukudla",
+      "offset": 232494160,
+      "duration": 5255830
+    },
+    {
+      "text": "ziyingxenye",
+      "offset": 237750000,
+      "duration": 7386250
+    },
+    {
+      "text": "yepulazi",
+      "offset": 245136250,
+      "duration": 7528330
+    },
+    {
+      "text": "azithathi",
+      "offset": 254511250,
+      "duration": 7812500
+    },
+    {
+      "text": "indawo",
+      "offset": 262465830,
+      "duration": 5113750
+    },
+    {
+      "text": "yokunakekelwa",
+      "offset": 267579580,
+      "duration": 9517080
+    },
+    {
+      "text": "kwezempilo",
+      "offset": 277096660,
+      "duration": 8522910
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "small-livestock",
+  "lesson": "small-livestock-l3",
+  "language": "zu",
+  "slide": 16,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-16.txt",
+  "sourceSha256": "27d12a518f19641cfa99f27d40af8ed637f559e9dd2c48f5139f411a06e64e92",
+  "scriptFile": "docs/narration/small-livestock.zu.md",
+  "scriptSha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+  "englishSourceFile": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+  "generatedAt": "2026-09-24T18:51:34.502875+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

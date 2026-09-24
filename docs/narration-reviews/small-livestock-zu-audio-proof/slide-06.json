@@ -1,0 +1,187 @@
+{
+  "seconds": 28.08,
+  "bytes": 168480,
+  "audioSha256": "998e6877143a6006caf05d8050563ce0f5d23cc897acac04e8ac604880424b1e",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Sebenzisa",
+      "offset": 1460410,
+      "duration": 6960410
+    },
+    {
+      "text": "izinkukhu",
+      "offset": 9130830,
+      "duration": 6818330
+    },
+    {
+      "text": "embhedeni",
+      "offset": 16232910,
+      "duration": 7386250
+    },
+    {
+      "text": "ongenalutho",
+      "offset": 24045410,
+      "duration": 8806660
+    },
+    {
+      "text": "ngemva",
+      "offset": 32852080,
+      "duration": 4119160
+    },
+    {
+      "text": "kokuvuna",
+      "offset": 36971660,
+      "duration": 8238750
+    },
+    {
+      "text": "Zigcine",
+      "offset": 55931660,
+      "duration": 5113750
+    },
+    {
+      "text": "zikude",
+      "offset": 61613750,
+      "duration": 5539580
+    },
+    {
+      "text": "nezithombo",
+      "offset": 67153330,
+      "duration": 7954580
+    },
+    {
+      "text": "nezitshalo",
+      "offset": 75107910,
+      "duration": 7670410
+    },
+    {
+      "text": "ezivunelwa",
+      "offset": 83204580,
+      "duration": 8380830
+    },
+    {
+      "text": "ukudliwa",
+      "offset": 91869160,
+      "duration": 7244160
+    },
+    {
+      "text": "Umquba",
+      "offset": 109909160,
+      "duration": 5681660
+    },
+    {
+      "text": "omusha",
+      "offset": 116443330,
+      "duration": 5823750
+    },
+    {
+      "text": "ungaba",
+      "offset": 122551250,
+      "duration": 4119160
+    },
+    {
+      "text": "namagciwane",
+      "offset": 126670410,
+      "duration": 9090830
+    },
+    {
+      "text": "Buza",
+      "offset": 145846660,
+      "duration": 4545410
+    },
+    {
+      "text": "umeluleki",
+      "offset": 151102080,
+      "duration": 8096660
+    },
+    {
+      "text": "wezolimo",
+      "offset": 159198750,
+      "duration": 7386250
+    },
+    {
+      "text": "ukuthi",
+      "offset": 167011250,
+      "duration": 4687500
+    },
+    {
+      "text": "ungawusebenzisa",
+      "offset": 172267080,
+      "duration": 11647500
+    },
+    {
+      "text": "kanjani",
+      "offset": 183914580,
+      "duration": 5965830
+    },
+    {
+      "text": "ngokuphepha",
+      "offset": 190306660,
+      "duration": 7670410
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 197977080,
+      "duration": 5255830
+    },
+    {
+      "text": "kwesivuno",
+      "offset": 203232910,
+      "duration": 7102080
+    },
+    {
+      "text": "esilandelayo",
+      "offset": 210761250,
+      "duration": 10653330
+    },
+    {
+      "text": "Hambisa",
+      "offset": 231215830,
+      "duration": 5539580
+    },
+    {
+      "text": "izinkukhu",
+      "offset": 237323750,
+      "duration": 7102080
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 244426250,
+      "duration": 5113330
+    },
+    {
+      "text": "kokuba",
+      "offset": 249539580,
+      "duration": 4971660
+    },
+    {
+      "text": "zilimaze",
+      "offset": 254653330,
+      "duration": 7386250
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 262181660,
+      "duration": 8806660
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "small-livestock",
+  "lesson": "small-livestock-l1",
+  "language": "zu",
+  "slide": 6,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-06.txt",
+  "sourceSha256": "ff6b9ab0e29473fe6a8e4084782af0e1e8b873416445b0181e843eb34886015b",
+  "scriptFile": "docs/narration/small-livestock.zu.md",
+  "scriptSha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+  "englishSourceFile": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+  "generatedAt": "2026-09-24T18:50:43.129700+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

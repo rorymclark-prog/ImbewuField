@@ -1,0 +1,250 @@
+{
+  "complete": true,
+  "module": "water-harvesting",
+  "language": "zu",
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "humanListeningReview": false,
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "slides": [
+    {
+      "slide": 1,
+      "file": "Slide_01_isiZulu.mp3",
+      "seconds": 16.92,
+      "bytes": 101520,
+      "sha256": "63f71b13043eefd453921686f2b71209a01ec2b3a4851f51c229e0997874ac01",
+      "proof": true
+    },
+    {
+      "slide": 2,
+      "file": "Slide_02_isiZulu.mp3",
+      "seconds": 35.112,
+      "bytes": 210672,
+      "sha256": "5b8da7fa22b8663ff29cb7ee09463f00ea99171ca12644548182187574fa77dd",
+      "proof": true
+    },
+    {
+      "slide": 3,
+      "file": "Slide_03_isiZulu.mp3",
+      "seconds": 41.232,
+      "bytes": 247392,
+      "sha256": "09225932390eaf3095df12a782a7454e9265a9fac8d114d4d2f4e9d6be11d91f",
+      "proof": true
+    },
+    {
+      "slide": 4,
+      "file": "Slide_04_isiZulu.mp3",
+      "seconds": 26.4,
+      "bytes": 158400,
+      "sha256": "11ddc1c6c025b6210bdd08289f283020dfdab19e5839c20d90076c0564b4a9d8",
+      "proof": true
+    },
+    {
+      "slide": 5,
+      "file": "Slide_05_isiZulu.mp3",
+      "seconds": 21.432,
+      "bytes": 128592,
+      "sha256": "24a27a2663dac1ef129e8268d6e519377c5557bc52bd66043b47ae7c3e45df86",
+      "proof": true
+    },
+    {
+      "slide": 6,
+      "file": "Slide_06_isiZulu.mp3",
+      "seconds": 38.328,
+      "bytes": 229968,
+      "sha256": "4e45be6e25f281a7751bacf92d3ae80909cefac627c2640e714491b44144e0a4",
+      "proof": true
+    },
+    {
+      "slide": 7,
+      "file": "Slide_07_isiZulu.mp3",
+      "seconds": 23.664,
+      "bytes": 141984,
+      "sha256": "cfb3e973d2595a4d8aafe3f4dcf3bb58fba20ebbe4afe2346ac274f1444b476f",
+      "proof": true
+    },
+    {
+      "slide": 8,
+      "file": "Slide_08_isiZulu.mp3",
+      "seconds": 32.232,
+      "bytes": 193392,
+      "sha256": "40eb559492410080e2726957d47d29c3397fbaa077ad913a9734bed772a8885c",
+      "proof": true
+    },
+    {
+      "slide": 9,
+      "file": "Slide_09_isiZulu.mp3",
+      "seconds": 15.552,
+      "bytes": 93312,
+      "sha256": "49ae251e3f705d15a6feb3bbcedecd29648e0507b70f0848ef0899f9a8b53c75",
+      "proof": true
+    },
+    {
+      "slide": 10,
+      "file": "Slide_10_isiZulu.mp3",
+      "seconds": 42.192,
+      "bytes": 253152,
+      "sha256": "954826bc076f2091e0357e9ae68b5e63c9a2ef37075334dd0be7cb76be6d579f",
+      "proof": true
+    },
+    {
+      "slide": 11,
+      "file": "Slide_11_isiZulu.mp3",
+      "seconds": 40.536,
+      "bytes": 243216,
+      "sha256": "ac804e4ee2520e0da20ef2fd69ba841b8ba719704bf26a80e5732e63e4fe9017",
+      "proof": true
+    },
+    {
+      "slide": 12,
+      "file": "Slide_12_isiZulu.mp3",
+      "seconds": 23.616,
+      "bytes": 141696,
+      "sha256": "3c740cf3eecc2e543aece6ebfec4d0517faec256d00413cf562b78581cf3b95a",
+      "proof": true
+    },
+    {
+      "slide": 13,
+      "file": "Slide_13_isiZulu.mp3",
+      "seconds": 35.04,
+      "bytes": 210240,
+      "sha256": "d2a271b099cd28f778a82b97f2d92f48571dd6c347667e5fe362cf2b947765ed",
+      "proof": true
+    },
+    {
+      "slide": 14,
+      "file": "Slide_14_isiZulu.mp3",
+      "seconds": 46.584,
+      "bytes": 279504,
+      "sha256": "bb558c0057e49b08dc329b3470c32b90c2d9e0a790315d0c69dd696d8854494c",
+      "proof": true
+    },
+    {
+      "slide": 15,
+      "file": "Slide_15_isiZulu.mp3",
+      "seconds": 36.384,
+      "bytes": 218304,
+      "sha256": "443a82cc602262f8cb79a2230ae6e878281fbd4351e32176eb30952968da3523",
+      "proof": true
+    },
+    {
+      "slide": 16,
+      "file": "Slide_16_isiZulu.mp3",
+      "seconds": 17.928,
+      "bytes": 107568,
+      "sha256": "041d50e56c585f9cd1a9f83723f52d40251c551064e6aea862e4f1a7af7b5b6e",
+      "proof": true
+    },
+    {
+      "slide": 17,
+      "file": "Slide_17_isiZulu.mp3",
+      "seconds": 34.08,
+      "bytes": 204480,
+      "sha256": "3f8e1afd99bbd7abe4182085201e0dde8b68499427e08d24b86236ae7273531a",
+      "proof": true
+    },
+    {
+      "slide": 18,
+      "file": "Slide_18_isiZulu.mp3",
+      "seconds": 43.32,
+      "bytes": 259920,
+      "sha256": "49bdf07691acef3561af0e66bb4f768040d59253b68746c4df7570eea154fd8e",
+      "proof": true
+    },
+    {
+      "slide": 19,
+      "file": "Slide_19_isiZulu.mp3",
+      "seconds": 38.52,
+      "bytes": 231120,
+      "sha256": "14ecb056a9cc6db89c265788419f24f76a3dab05e3d506a224c7acfe31634e00",
+      "proof": true
+    },
+    {
+      "slide": 20,
+      "file": "Slide_20_isiZulu.mp3",
+      "seconds": 32.064,
+      "bytes": 192384,
+      "sha256": "6d930d34c67377aa72333e9177620eeaecd9deabac2ce2485286050c74047a4d",
+      "proof": true
+    },
+    {
+      "slide": 21,
+      "file": "Slide_21_isiZulu.mp3",
+      "seconds": 27.528,
+      "bytes": 165168,
+      "sha256": "d4770737eda0510ecf338b26b8115a9726160ea75dcb3b9f4f9106a46958bd71",
+      "proof": true
+    },
+    {
+      "slide": 22,
+      "file": "Slide_22_isiZulu.mp3",
+      "seconds": 36.48,
+      "bytes": 218880,
+      "sha256": "ccffbd64b6dbc98008b824838959d175f787999e208c62bef6575497901de794",
+      "proof": true
+    },
+    {
+      "slide": 23,
+      "file": "Slide_23_isiZulu.mp3",
+      "seconds": 17.232,
+      "bytes": 103392,
+      "sha256": "8c985d95773cf4ac266fbd8648a76443b69635dd402981a8877fd1f349cd90ea",
+      "proof": true
+    },
+    {
+      "slide": 24,
+      "file": "Slide_24_isiZulu.mp3",
+      "seconds": 29.112,
+      "bytes": 174672,
+      "sha256": "cbac724f1ad1090f2f020534a0ad25e0daf064d438f3792f3544dfc6f0ea3244",
+      "proof": true
+    }
+  ],
+  "full": {
+    "module": "water-harvesting",
+    "lesson": null,
+    "scope": "slides-1-through-21",
+    "language": "zu",
+    "file": "Full_Narration_isiZulu.mp3",
+    "voice": "zu-ZA-ThandoNeural",
+    "rate": "-12%",
+    "seconds": 751.488,
+    "bytes": 4509164,
+    "audioSha256": "8ed984911e94468f3102c954db77b75d7614bad4c94933887da4ac2e708b65d3",
+    "fullDecode": "pass",
+    "humanListeningReview": false,
+    "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+    "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+    "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+    "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+    "slideAudioSha256": [
+      "63f71b13043eefd453921686f2b71209a01ec2b3a4851f51c229e0997874ac01",
+      "5b8da7fa22b8663ff29cb7ee09463f00ea99171ca12644548182187574fa77dd",
+      "09225932390eaf3095df12a782a7454e9265a9fac8d114d4d2f4e9d6be11d91f",
+      "11ddc1c6c025b6210bdd08289f283020dfdab19e5839c20d90076c0564b4a9d8",
+      "24a27a2663dac1ef129e8268d6e519377c5557bc52bd66043b47ae7c3e45df86",
+      "4e45be6e25f281a7751bacf92d3ae80909cefac627c2640e714491b44144e0a4",
+      "cfb3e973d2595a4d8aafe3f4dcf3bb58fba20ebbe4afe2346ac274f1444b476f",
+      "40eb559492410080e2726957d47d29c3397fbaa077ad913a9734bed772a8885c",
+      "49ae251e3f705d15a6feb3bbcedecd29648e0507b70f0848ef0899f9a8b53c75",
+      "954826bc076f2091e0357e9ae68b5e63c9a2ef37075334dd0be7cb76be6d579f",
+      "ac804e4ee2520e0da20ef2fd69ba841b8ba719704bf26a80e5732e63e4fe9017",
+      "3c740cf3eecc2e543aece6ebfec4d0517faec256d00413cf562b78581cf3b95a",
+      "d2a271b099cd28f778a82b97f2d92f48571dd6c347667e5fe362cf2b947765ed",
+      "bb558c0057e49b08dc329b3470c32b90c2d9e0a790315d0c69dd696d8854494c",
+      "443a82cc602262f8cb79a2230ae6e878281fbd4351e32176eb30952968da3523",
+      "041d50e56c585f9cd1a9f83723f52d40251c551064e6aea862e4f1a7af7b5b6e",
+      "3f8e1afd99bbd7abe4182085201e0dde8b68499427e08d24b86236ae7273531a",
+      "49bdf07691acef3561af0e66bb4f768040d59253b68746c4df7570eea154fd8e",
+      "14ecb056a9cc6db89c265788419f24f76a3dab05e3d506a224c7acfe31634e00",
+      "6d930d34c67377aa72333e9177620eeaecd9deabac2ce2485286050c74047a4d",
+      "d4770737eda0510ecf338b26b8115a9726160ea75dcb3b9f4f9106a46958bd71",
+      "ccffbd64b6dbc98008b824838959d175f787999e208c62bef6575497901de794",
+      "8c985d95773cf4ac266fbd8648a76443b69635dd402981a8877fd1f349cd90ea",
+      "cbac724f1ad1090f2f020534a0ad25e0daf064d438f3792f3544dfc6f0ea3244"
+    ]
+  }
+}

@@ -49,6 +49,28 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
       detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
   ] },
+  { when: '24 September 2026', sha: '01504a6d', changes: [
+    'Plant Guilds lessons now show isiZulu reading and quiz drafts.',
+    'Each lesson says language and local farming review is still due.',
+  ], tour: [
+    { title: 'Read Plant Guilds in isiZulu', where: 'My Studies · Plant Selection & Guilds', href: '/student',
+      detail: 'Choose isiZulu, open Plant Selection & Guilds, and read a labelled lesson draft.' },
+  ] },
+  { when: '24 September 2026', sha: '5a9f11af', changes: [
+    'Small Livestock now has twenty isiZulu slides and the woman’s narration.',
+    'Its three isiZulu lessons and quizzes are marked as drafts for review.',
+  ], tour: [
+    { title: 'Hear Small Livestock in isiZulu', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Choose isiZulu, open Small Livestock, and play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '8483e254', changes: [
+    'Water Harvesting now has isiZulu slides and the same woman’s voice as Seeds.',
+    'The greywater lesson asks for qualified local advice before any reuse.',
+    'The isiZulu lessons are marked as drafts.',
+  ], tour: [
+    { title: 'Hear Water Harvesting in isiZulu', where: 'My Studies · Water Harvesting', href: '/student',
+      detail: 'Choose isiZulu, open Water Harvesting, and play a narrated slide. The greywater lesson is lesson 4.' },
+  ] },
   { when: '24 September 2026', sha: 'f249ea06', changes: [
     'Soil Health now has isiZulu slides and the same woman’s voice as Seeds.',
     'Both are review drafts; slides 10–11 use matching still pictures.',

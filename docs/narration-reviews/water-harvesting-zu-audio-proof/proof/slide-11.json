@@ -1,0 +1,287 @@
+{
+  "seconds": 40.536,
+  "bytes": 243216,
+  "audioSha256": "ac804e4ee2520e0da20ef2fd69ba841b8ba719704bf26a80e5732e63e4fe9017",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Idamu",
+      "offset": 1460410,
+      "duration": 5255830
+    },
+    {
+      "text": "lidinga",
+      "offset": 7142080,
+      "duration": 5823750
+    },
+    {
+      "text": "ukuhlolwa",
+      "offset": 13392080,
+      "duration": 6534160
+    },
+    {
+      "text": "kwendawo",
+      "offset": 19926250,
+      "duration": 5965830
+    },
+    {
+      "text": "nokuklanywa",
+      "offset": 26034160,
+      "duration": 7386250
+    },
+    {
+      "text": "ngumuntu",
+      "offset": 33420410,
+      "duration": 5539580
+    },
+    {
+      "text": "oneziqu",
+      "offset": 39102080,
+      "duration": 7386250
+    },
+    {
+      "text": "nolwazi",
+      "offset": 46488750,
+      "duration": 6107910
+    },
+    {
+      "text": "olufanele",
+      "offset": 52880830,
+      "duration": 8522910
+    },
+    {
+      "text": "Amanzi",
+      "offset": 71272910,
+      "duration": 5539580
+    },
+    {
+      "text": "agelezayo",
+      "offset": 77522910,
+      "duration": 9090830
+    },
+    {
+      "text": "aya",
+      "offset": 87039580,
+      "duration": 3125000
+    },
+    {
+      "text": "edamini",
+      "offset": 90448750,
+      "duration": 7528330
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 98971660,
+      "duration": 9801250
+    },
+    {
+      "text": "izisekelo",
+      "offset": 110335410,
+      "duration": 9943330
+    },
+    {
+      "text": "ingozi",
+      "offset": 122551250,
+      "duration": 6960410
+    },
+    {
+      "text": "engase",
+      "offset": 129795410,
+      "duration": 5255830
+    },
+    {
+      "text": "yehlele",
+      "offset": 135051250,
+      "duration": 4829580
+    },
+    {
+      "text": "ezindaweni",
+      "offset": 140164580,
+      "duration": 7386250
+    },
+    {
+      "text": "ezingezansi",
+      "offset": 147835410,
+      "duration": 10227080
+    },
+    {
+      "text": "kanye",
+      "offset": 160193330,
+      "duration": 4119160
+    },
+    {
+      "text": "ne-spillway",
+      "offset": 164312500,
+      "duration": 7102080
+    },
+    {
+      "text": "ephephile",
+      "offset": 172125000,
+      "duration": 6676250
+    },
+    {
+      "text": "konke",
+      "offset": 178943330,
+      "duration": 4687500
+    },
+    {
+      "text": "kubalulekile",
+      "offset": 183914580,
+      "duration": 11079580
+    },
+    {
+      "text": "Ungacabangi",
+      "offset": 204937500,
+      "duration": 7812500
+    },
+    {
+      "text": "ukuthi",
+      "offset": 213460410,
+      "duration": 4119160
+    },
+    {
+      "text": "imvula",
+      "offset": 217721660,
+      "duration": 5539580
+    },
+    {
+      "text": "yonyaka",
+      "offset": 223261250,
+      "duration": 5397910
+    },
+    {
+      "text": "ikutshela",
+      "offset": 228943330,
+      "duration": 6107910
+    },
+    {
+      "text": "ubukhulu",
+      "offset": 235477080,
+      "duration": 6676250
+    },
+    {
+      "text": "besikhukhula",
+      "offset": 242153330,
+      "duration": 8806660
+    },
+    {
+      "text": "noma",
+      "offset": 250960410,
+      "duration": 3267080
+    },
+    {
+      "text": "inani",
+      "offset": 254795410,
+      "duration": 4261250
+    },
+    {
+      "text": "lamanzi",
+      "offset": 259056660,
+      "duration": 6250000
+    },
+    {
+      "text": "ozowagcina",
+      "offset": 265732910,
+      "duration": 8806660
+    },
+    {
+      "text": "Amanzi",
+      "offset": 284909160,
+      "duration": 5397910
+    },
+    {
+      "text": "aphuma",
+      "offset": 291159160,
+      "duration": 4971660
+    },
+    {
+      "text": "ngaphandle",
+      "offset": 296130830,
+      "duration": 6107910
+    },
+    {
+      "text": "kokulawulwa",
+      "offset": 302238750,
+      "duration": 8096660
+    },
+    {
+      "text": "angagugula",
+      "offset": 311045410,
+      "duration": 8664580
+    },
+    {
+      "text": "futhi",
+      "offset": 319852500,
+      "duration": 3977080
+    },
+    {
+      "text": "abhidlize",
+      "offset": 324113750,
+      "duration": 6818330
+    },
+    {
+      "text": "udonga",
+      "offset": 331500000,
+      "duration": 6107910
+    },
+    {
+      "text": "Hlela",
+      "offset": 347977500,
+      "duration": 3551250
+    },
+    {
+      "text": "indlela",
+      "offset": 352238750,
+      "duration": 5113750
+    },
+    {
+      "text": "ephephile",
+      "offset": 357636250,
+      "duration": 7102080
+    },
+    {
+      "text": "yokuphuma",
+      "offset": 364738750,
+      "duration": 6250000
+    },
+    {
+      "text": "kwamanzi",
+      "offset": 370988750,
+      "duration": 6107910
+    },
+    {
+      "text": "amaningi",
+      "offset": 377380830,
+      "duration": 6534160
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 383915000,
+      "duration": 4971250
+    },
+    {
+      "text": "kokwakha",
+      "offset": 388886250,
+      "duration": 6676250
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l2",
+  "language": "zu",
+  "slide": 11,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-11.txt",
+  "sourceSha256": "243ffa118a7de6cc2b6b0ee2c0aa4773a32971adacb402d85808efaad61c30c6",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:47:59.254982+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

@@ -1,0 +1,237 @@
+{
+  "seconds": 34.248,
+  "bytes": 205488,
+  "audioSha256": "4eef96ce1f43a74f252f48c0e5c6c650a4558b28f65e03a51ebe58395f5a95bf",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Izinyosi",
+      "offset": 1460410,
+      "duration": 6676250
+    },
+    {
+      "text": "zoju",
+      "offset": 8562500,
+      "duration": 5113750
+    },
+    {
+      "text": "nezinye",
+      "offset": 13676250,
+      "duration": 5681660
+    },
+    {
+      "text": "izinambuzane",
+      "offset": 19784160,
+      "duration": 9659160
+    },
+    {
+      "text": "zithwala",
+      "offset": 29585410,
+      "duration": 5539580
+    },
+    {
+      "text": "impova",
+      "offset": 35409160,
+      "duration": 5113750
+    },
+    {
+      "text": "phakathi",
+      "offset": 40522910,
+      "duration": 5113330
+    },
+    {
+      "text": "kwezimbali",
+      "offset": 45636250,
+      "duration": 8806660
+    },
+    {
+      "text": "Lokhu",
+      "offset": 64170410,
+      "duration": 4119160
+    },
+    {
+      "text": "kusiza",
+      "offset": 68573750,
+      "duration": 5681660
+    },
+    {
+      "text": "izitshalo",
+      "offset": 74681660,
+      "duration": 6676250
+    },
+    {
+      "text": "eziningi",
+      "offset": 81642080,
+      "duration": 6392080
+    },
+    {
+      "text": "zezithelo",
+      "offset": 88034160,
+      "duration": 7244160
+    },
+    {
+      "text": "nemifino",
+      "offset": 95278330,
+      "duration": 7528330
+    },
+    {
+      "text": "kuhlanganise",
+      "offset": 104227080,
+      "duration": 9659160
+    },
+    {
+      "text": "nokwatapheya",
+      "offset": 113886250,
+      "duration": 9943330
+    },
+    {
+      "text": "Izitshalo",
+      "offset": 134340830,
+      "duration": 6676250
+    },
+    {
+      "text": "nezinhlobo",
+      "offset": 141443330,
+      "duration": 7102080
+    },
+    {
+      "text": "zazo",
+      "offset": 148545410,
+      "duration": 4971660
+    },
+    {
+      "text": "zinezidingo",
+      "offset": 153517080,
+      "duration": 8522910
+    },
+    {
+      "text": "ezingafani",
+      "offset": 162323750,
+      "duration": 8522910
+    },
+    {
+      "text": "zokuthuthwa",
+      "offset": 170846660,
+      "duration": 6960000
+    },
+    {
+      "text": "kwempova",
+      "offset": 177806660,
+      "duration": 7102080
+    },
+    {
+      "text": "Ukuba",
+      "offset": 195420410,
+      "duration": 3977080
+    },
+    {
+      "text": "ne-hive",
+      "offset": 199823750,
+      "duration": 5823750
+    },
+    {
+      "text": "akuqinisekisi",
+      "offset": 206357910,
+      "duration": 11505830
+    },
+    {
+      "text": "ukuthi",
+      "offset": 218005830,
+      "duration": 4261250
+    },
+    {
+      "text": "isivuno",
+      "offset": 222409160,
+      "duration": 6817910
+    },
+    {
+      "text": "sizokwanda",
+      "offset": 229227080,
+      "duration": 7528330
+    },
+    {
+      "text": "yonke",
+      "offset": 236897910,
+      "duration": 4119160
+    },
+    {
+      "text": "indawo",
+      "offset": 241301250,
+      "duration": 5965830
+    },
+    {
+      "text": "Isimo",
+      "offset": 257352080,
+      "duration": 4403330
+    },
+    {
+      "text": "sezulu",
+      "offset": 262181660,
+      "duration": 6676250
+    },
+    {
+      "text": "amanzi",
+      "offset": 269852500,
+      "duration": 7670410
+    },
+    {
+      "text": "impilo",
+      "offset": 278659160,
+      "duration": 5681660
+    },
+    {
+      "text": "yezitshalo",
+      "offset": 284340830,
+      "duration": 7528330
+    },
+    {
+      "text": "nezinye",
+      "offset": 291869160,
+      "duration": 5539580
+    },
+    {
+      "text": "izinambuzane",
+      "offset": 297835410,
+      "duration": 9517080
+    },
+    {
+      "text": "ezithutha",
+      "offset": 307778330,
+      "duration": 6392080
+    },
+    {
+      "text": "impova",
+      "offset": 314454580,
+      "duration": 5255830
+    },
+    {
+      "text": "nakho",
+      "offset": 319852500,
+      "duration": 4119160
+    },
+    {
+      "text": "kunendima",
+      "offset": 323971660,
+      "duration": 8096660
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "small-livestock",
+  "lesson": "small-livestock-l2",
+  "language": "zu",
+  "slide": 10,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-10.txt",
+  "sourceSha256": "b8688b3c1244377d669a218fc18950da871d2a0240bc2588cbcf7db8033ebc78",
+  "scriptFile": "docs/narration/small-livestock.zu.md",
+  "scriptSha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+  "englishSourceFile": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+  "generatedAt": "2026-09-24T18:50:59.241805+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

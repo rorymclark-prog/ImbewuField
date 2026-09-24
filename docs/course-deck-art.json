@@ -139,11 +139,6 @@
       "layout": "scene",
       "purpose": "protected-tank"
     },
-    "19": {
-      "path": "public/course-images/water-harvesting/water-harvesting-l4.jpg",
-      "layout": "diagram",
-      "purpose": "authored lesson illustration"
-    },
     "4": {
       "path": "public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
       "layout": "scene",
@@ -161,11 +156,6 @@
     },
     "12": {
       "path": "public/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg",
-      "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
-    },
-    "21": {
-      "path": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
       "layout": "scene",
       "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
     },
@@ -348,9 +338,9 @@
       "purpose": "careful-hive-site"
     },
     "15": {
-      "path": "public/course-images/small-livestock/small-livestock-l3.jpg",
+      "path": "docs/media/small-livestock/zu-preview/art/nutrient-flow-slide-15-zu.jpg",
       "layout": "diagram",
-      "purpose": "authored lesson illustration"
+      "purpose": "Localized static diagram with the full-composting food-safety step."
     },
     "17": {
       "path": "docs/media/studies-illustrated-release/art/small-livestock/plan-animal-needs.jpg",
@@ -363,14 +353,14 @@
       "reason": "Full-frame foraging scene; title and full narration remain available in the player."
     },
     "9": {
-      "path": "public/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg",
+      "path": "public/course-animations/small-livestock/posters/flow-bee-between-blossoms.jpg",
       "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+      "reason": "Still from the registered eight-second Flow clip; no title is baked into the image."
     },
     "14": {
-      "path": "public/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg",
-      "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
+      "path": "docs/media/small-livestock/zu-preview/art/nutrient-flow-slide-14-zu.jpg",
+      "layout": "diagram",
+      "purpose": "Localized static flow diagram; the source only claims some nutrients may return through compost."
     }
   },
   "market-community": {

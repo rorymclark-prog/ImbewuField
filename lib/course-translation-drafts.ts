@@ -2,6 +2,108 @@ import type { LocalizedLessonContent } from './course-localization';
 
 /** Unreviewed packet proposals, kept separate from published learner translations. */
 export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> = {
+  "plant-guilds-l1": {
+    title: "Izitshalo Ezibopha I-nitrogen: Khetha Futhi Uphathe Izitshalo Ezisekelayo",
+    body: "Ama-rhizobia aguqula i-nitrogen esemoyeni ibe yizinhlobo ezingasetshenziswa yi-legume.\n\nBheka ama-nodule esitshalweni se-legume esingasetshenziswa ukuhlola. Ukwakheka kwama-nodule nokukhula kuncike esitshalweni, emabhaktheriyeni afanele nasezimweni zokukhula.\n\nBuyisela emhlabathini njenge-mulch amagatsha anamaqabunga afanele athenwe, amaqabunga awileyo nezinsalela zezitshalo. Izidalwa zomhlabathi zikhulula izakhamzimba ngesikhathi sokubola.\n\nLokhu kuthatha isikhathi. I-legume ephilayo ayilona ipayipi elifaka umanyolo ngokushesha emuthini wezithelo.\n\nI-Sesbania sesban idabuka kwaZulu-Natali. Ezimweni ezifudumele ezifanele, ingaphathwa njengesihlahlana noma umuthi omncane wesikhashana osekelayo.\n\nYinike indawo yokukhula. Yithene ukuze uthole i-mulch, uphinde uyihlole uma umthunzi noma ukuncintisana ngamanzi kukhula.\n\nI-Sesbania punicea yi-red sesbania, uhlobo oluhlaselayo. Izithelo zayo ezomile zinamaphiko amane ahamba ngobude. Qinisekisa ukuthi uhlobo luni usebenzisa umhlahlandlela othembekile wezitshalo.\n\nHlola igama eligcwele ngaphambi kokutshala. Landela uhlu lwezitshalo oluvunyelwene ngalo yiphrojekthi, kuhlanganise nanoma yimuphi umkhawulo nge-Sesbania sesban.\n\nYitshale endaweni enelanga nalapho amanzi ephuma kahle emhlabathini. I-pigeon pea iyisihlahlana esisekelayo sesikhashana; isithwathwa namanzi ame emhlabathini kungayiphazamisa.\n\nNquma ukuthi isitshalo ngasinye usikhulisela kakhulu uphizi noma amaqabunga. Ukusika kakhulu nangokuvamile kungasilimaza kunciphise nokudla okuvunwayo.\n\nI-cowpea imboza izikhala ezinelanga. I-pigeon pea inikeza ukudla namaqabunga. I-Sesbania sesban elawulwayo ingakhula ibe yinde ibe isitshalo esisekelayo sesikhashana.\n\nFaka izitshalo eziqhakazayo nezamaqabunga e-mulch ezifanele. Gcina isiqu sikamango singamboziwe, ulawule umthunzi, amanzi nendlela yokufinyelela.\n\nBala izihlahla nezihlahlana ezisekelayo ezindaweni eziphakathi kwezihlahla zezithelo. Hlwayela izitshalo ezifanele zokumboza umhlabathi ngokwendawo.\n\nAlikho inani elilodwa elifanele zonke izihlahla zezithelo. Lungisa ukuminyana ngokwamanzi, umhlabathi, ubukhulu bezitshalo namandla akho okuthena nokunciphisa.",
+    keyPoints: [
+      "Ama-legume asebenzisana nama-rhizobia kuma-nodule asezimpandeni; ukubopha i-nitrogen kuncike ezimweni ezifanele.",
+      "Buyisela emhlabathini izinsalela zezitshalo ezifanele; ukukhululwa kwezakhamzimba kuthatha isikhathi.",
+      "Sebenzisa izitshalo zonyaka zokumboza umhlabathi, izihlahlana ezisekelayo nemithi yesikhashana efanele indawo.",
+      "Lawula ukuminyana kwezitshalo ezisekelayo njengoba zikhula; alikho inani elilodwa elifanele zonke izihlahla zezithelo.",
+    ],
+    quiz: [
+      {
+        q: "I-nitrogen esezingxenyeni ze-legume ezisikiwe iqala nini ukutholakala kwezinye izitshalo?",
+        options: [
+          "Ngokushesha nje lapho isikwa",
+          "Lapho izidalwa zomhlabathi sezibolisa lezo zinsalela",
+          "Kuphela lapho umuthi wezithelo uthinta i-legume",
+          "Ayisoze yatholakala kwezinye izitshalo",
+        ],
+        correct: 1,
+        rationale: "Ukubola kukhulula izakhamzimba ngokuhamba kwesikhathi. Ukushesha kwako kuncike ohlotsheni lwezinsalela nasezimweni zokukhula.",
+      },
+      {
+        q: "Yini okufanele inqume inani lezitshalo ezisekelayo ozitshalayo?",
+        options: [
+          "Inani elifanayo elimisiwe kuzo zonke izindawo",
+          "Amanzi, umhlabathi, ubukhulu bezitshalo nokunakekela okwaziyo ukukwenza",
+          "Ukubeka zonke izitshalo ezisekelayo endaweni ephakeme ngaso sonke isikhathi",
+          "Ukutshala izihlahla eziningi ngangokunokwenzeka endaweni ekhona",
+        ],
+        correct: 1,
+        rationale: "Izitshalo ezisekelayo nazo zidinga izinsiza nokunakekelwa. Bheka ukukhula nokuncintisana, bese ulungisa.",
+      },
+    ],
+  },
+  "plant-guilds-l2": {
+    title: "Izitshalo Ze-mulch Nezinambuzane Eziwusizo",
+    body: "Ividiyo ibonisa igatsha lisikwa, kodwa isihlahla esisekelayo sihlala simile. Shiya amaqabunga anempilo anele ukuze isitshalo silulame.\n\nThena ngokohlobo lwesitshalo. Gwema ukusika i-pigeon pea kakhulu futhi kaningi, ikakhulukazi uma uyitshalele ukuvuna uphizi.\n\nI-mulch ivikela ubuso bomhlabathi, isize ukugcina umswakama futhi ibuyisele izinto eziphilayo emhlabathini.\n\nShiya indlela yokunisela nokuhlola. Sika izinsalela zibe izingcezu ezilawulekayo, uqhubeke ubheka umswakama nokubola kwazo.\n\nThola i-cultivar efanele. I-Bocking 14 ayisakazeki ngembewu ekwazi ukuhluma, kodwa izingcezu zezimpande zingaphinde zikhule.\n\nYibeke lapho inendawo nomswakama owanele khona. Sika amaqabunga njengoba isitshalo silulama; ungaminyanisi umuthi omncane wezithelo.\n\nAma-ladybird amaningi adla ama-aphid; amanye ama-parasitoid wasp ahlasela izinambuzane ezilimaza izitshalo. Izitshalo eziqhakazayo njenge-African basil zinganikeza lezi zinambuzane izinto ezizidingayo.\n\nBheka ukuthi yiziphi izinambuzane ezivakashayo nokuthi umonakalo uyashintsha yini. Isitshalo esiqhakazayo asiqinisekisi ukulawulwa kwezinambuzane ezilimazayo.\n\nI-Tulbaghia violacea inamaqabunga amancane nezimbali ezinsomi ngokukhanyayo. Beka isixha lapho sithola ukukhanya nendawo yokukhula.\n\nBheka izinambuzane ezivakashayo. Ungathembisi ukuthi indilinga ye-wild garlic izoxosha izinambuzane ezilimazayo noma iqede ukuhlasela kwazo.",
+    keyPoints: [
+      "Ukuthena kusika amagatsha kodwa kushiye isitshalo esisekelayo simile.",
+      "Buyisela emhlabathini amaqabunga asikiwe afanele njenge-mulch, ushiye isiqu singamboziwe.",
+      "I-Bocking 14 ayisakazeki ngembewu ekwazi ukuhluma, kodwa izingcezu zezimpande zingaphinde zikhule.",
+      "Izitshalo eziqhakazayo zingasiza izinambuzane eziwusizo; bheka ezivakashayo nomonakalo ezitshalweni.",
+    ],
+    quiz: [
+      {
+        q: "Ividiyo yokusika igatsha ibonisani?",
+        options: [
+          "Ukususa sonke isihlahla esisekelayo",
+          "Ukuthena isihlahla esisekelayo esishiywayo ukuze kutholakale ukukhanya ne-mulch",
+          "Ukuvuna izithelo emthini wezithelo",
+          "Ubufakazi bokuthi ukuncintisana kwezimpande sekuphelile",
+        ],
+        correct: 1,
+        rationale: "Igatsha liwa, kodwa isihlahla esisekelayo sihlala simile. Lokhu ukuthena bese kushiywa okusikiwe emhlabathini njenge-mulch.",
+      },
+      {
+        q: "Kufanele uzihlole kanjani izitshalo eziqhakazayo ezitshalwe ukusiza izinambuzane eziwusizo?",
+        options: [
+          "Cabanga ukuthi zizoqeda izinambuzane ezilimazayo",
+          "Bheka izinambuzane ezivakashayo nokushintsha komonakalo ezitshalweni",
+          "Susa zonke izimbali zingakavuleki",
+          "Bala zonke izitshalo eziqhakazayo njengezibopha i-nitrogen",
+        ],
+        correct: 1,
+        rationale: "Izimbali zinganikeza izinambuzane izinto ezizidingayo, kodwa ukuba khona kwazo akuqinisekisi ukulawulwa kwezinambuzane ezilimazayo.",
+      },
+    ],
+  },
+  "plant-guilds-l3": {
+    title: "Hlela I-guild Bese Uyilungisa Njengoba Ikhula",
+    body: "Hlanganisa imisebenzi edingwa yindawo yakho: ukubopha i-nitrogen, ukudla, i-mulch, izimbali nokumboza umhlabathi. Ezinye izitshalo zenza imisebenzi eminingi.\n\nGcina indawo yesiqu nendlela kuvulekile. Hlola ilungu ngalinye le-guild njengoba umango nezitshalo ezingomakhelwane zikhula.\n\nGcina iziqu ezinabayo zikabhatata kude nomuthi omncane wezithelo, ushiye indlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.\n\nLapho izinsiza zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi nendawo ezungeze umuthi embozwe nge-mulch evamile.\n\nTshala ngesikhathi sonyaka esifanele, faka i-mulch futhi uqhubeke nokunikeza amanzi adingekayo ngesikhathi isitshalo simila. Shiya indlela yokufinyelela ivulekile.\n\nQala ngenani lezitshalo ezisekelayo okwazi ukuzinakekela. Bheka ukuthi ziyaphila yini nokuthi zikhula kanjani ngaphambi kokwengeza ezinye.\n\nSika phansi izitshalo ezisekelayo ezikhethiwe ezincintisana ngesikhala. Izinsalela ezifanele zingashiywa njenge-mulch; lokhu ukunciphisa inani lezitshalo ngokusika nokushiya okusikiwe emhlabathini.\n\nLawula ukukhula kabusha ukuze indawo evulekile ihlale ikhona. Bheka ukukhanya, umswakama womhlabathi nokukhula; ukunciphisa izitshalo akukuqedi ngokushesha ukuncintisana kwezimpande.\n\nBuyisela amagatsha athenwe afanele ezihlahleni esezimile. Gcina izitshalo ezingomakhelwane kuphela uma zisaqhubeka nokwenza umsebenzi wazo kahle.\n\nIzihlahla zezithelo esezikhulile zisadinga izakhamzimba. Bheka ukukhula, isivuno nesimo somhlabathi; izitshalo ezisekelayo azisusi leso sidingo.\n\nBheka ukukhula kwesihlahla sezithelo, umthunzi, umswakama womhlabathi, ukudla okuwusizo okuvunwayo nomonakalo wezinambuzane. Bhala ukuthi yini ethenwe, ebuyiselwe emhlabathini noma esusiwe.\n\nSebenzisa lokhu okubukile ukuze ushintshe ukuhlelwa nokunakekela. Isitshalo sihlala ku-guild uma sibonisa ukuthi senza umsebenzi owusizo kule ndawo.",
+    keyPoints: [
+      "Nikeza isitshalo ngasinye umsebenzi owusizo, uvikele nendawo yesihlahla sezithelo.",
+      "Izitshalo eziphilayo ezimboza umhlabathi nazo zincintisana ngamanzi nezakhamzimba.",
+      "Susa izitshalo ezisekelayo ezikhethiwe lapho ukuthena amagatsha kungasanikezi indawo eyanele.",
+      "Izinsalela zezitshalo ezifanele zingashiywa njenge-mulch; lawula ukukhula kabusha ukuze indawo evulekile ihlale ikhona.",
+    ],
+    quiz: [
+      {
+        q: "Isitshalo esisekelayo sisaminyanisa umango ngemva kokuthena. Ukunciphisa izitshalo kungahlanganisani?",
+        options: [
+          "Ukusika elinye igatsha elincane kuphela",
+          "Ukusika phansi isitshalo esisekelayo esikhethiwe esincintisanayo bese ulawula ukukhula kabusha",
+          "Ukususa umango esikhundleni salokho",
+          "Ukususa zonke izinsalela ezisikiwe kule ndawo ngaso sonke isikhathi",
+        ],
+        correct: 1,
+        rationale: "Ukunciphisa izitshalo kususa ezinye izitshalo ezisekelayo ezikhethiwe ezisamile. Izinsalela ezifanele zingashiywa njenge-mulch.",
+      },
+      {
+        q: "Ingabe ubhatata uhlale ungcono kunendawo ezungeze umuthi omncane wezithelo embozwe nge-mulch?",
+        options: [
+          "Yebo, ngoba awusebenzisi amanzi",
+          "Yebo, ngoba ubopha i-nitrogen",
+          "Cha; qhathanisa ukudla nokumboza komhlabathi okukulethayo nokuncintisana ngezinsiza",
+          "Cha, ngoba izitshalo ezimboza umhlabathi azisoze zaba wusizo",
+        ],
+        correct: 2,
+        rationale: "Khetha okumboza umhlabathi ngokwendawo. Shiya indlela nendawo yesiqu kuvulekile, uqhubeke ubheka umuthi omncane.",
+      },
+    ],
+  },
   "seeds-sovereignty-l1": {
     title: "Kungani Ukulondoloza Imbewu Kubalulekile",
     body: "Imbewu yohlobo oluzinzile oluvulekele impova ingaveza izitshalo ezifanayo uma impova ilawulwa ngendlela efanele. Ama-hybrid e-F1 avela kubazali abakhethwe ngokukhethekile. Imbewu egcinwe kulezi zitshalo ingahluma, kodwa izitshalo zesizukulwane esilandelayo ziyahlukahluka; zingase zingabi nazo zonke izici obuzifuna.\n\nUbukhosi bembewu buhlanganisa ulwazi nokukhetha okudingekayo ukuze utshale, ulondoloze futhi wabelane ngembewu efanele. Bhala igama lesitshalo nohlobo lwaso ngeqoqo ngalinye.\n\nKhetha izitshalo ezinempilo nezinezici ozifunayo. Qala ngesitshalo osaziyo, bese ubuza umeluleki wokulondoloza imbewu ukuthi impova ingalawulwa kanjani nokuthi izitshalo zizokhethwa kanjani.",
@@ -444,6 +546,40 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
       }
     ]
   },
+  "water-harvesting-l4": {
+    "title": "Amanzi Asetshenzisiwe Asekhaya: Hlola Ngaphambi Kokuphinda Uwasebenzise",
+    "body": "Amanzi asetshenzisiwe asekhaya angaqukatha amagciwane, usawoti, imikhiqizo yokuhlanza nezinye izinto. Imihlahlandlela ayichazi yonke imithombo ngendlela efanayo. Imihlahlandlela yaseNingizimu Afrika iyahluka ngamanzi asekhishini nangawelondolo.\n\nUngafaki amanzi asendlini yangasese, amanzi avela kumanabukeni, ekugezeni umuntu ogulayo noma ekugezeni izilwane ohlelweni lokuphinda usebenzise amanzi. Ungawasebenzisi amanzi anamakhemikhali ayingozi.\n\nNgaphambi kokuphinda usebenzise noma yimaphi amanzi, cela umasipala nomeluleki oqeqeshiwe wokukhucululwa kwendle bahlole umthombo oqondile, izinsiza zamanzi nezokukhucululwa kwendle zasekhaya, ukusetshenziswa okuhlosiwe nendawo. Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi.\n\nIsithombe esijwayelekile asiwona umklamo wepulazi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile. Gcina amanzi kude namapayipi amanzi okuphuza futhi uvimbele ukuthintana kwawo nabantu noma izilwane. Ungawafafazi, ungawavumeli aqoqane noma agelezele emgwaqweni, emseleni noma emfuleni.\n\nUma uhlelo lokuphinda lusebenzise amanzi selusebenza kodwa amanzi enuka kabi, eqoqana noma elimaza izitshalo, yeka ukuwasebenzisa bese ucela iseluleko sendawo esiqeqeshiwe.",
+    "keyPoints": [
+      "Imithombo yamanzi nemihlahlandlela yokuphinda iwasebenzise ingahluka.",
+      "Ngaphambi kokuphinda usebenzise amanzi, hlola umthombo, izinsiza zasekhaya, ukusetshenziswa okuhlosiwe nendawo nochwepheshe bendawo.",
+      "Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile.",
+      "Vimbela ukuthintana, ukufafaza, ukuqoqana, ukugeleza kwamanzi angcolile nokuxhuma kumapayipi amanzi okuphuza."
+    ],
+    "quiz": [
+      {
+        "q": "Yini okufanele yenziwe ngaphambi kokuphinda kusetshenziswe noma yimaphi amanzi okugeza asekhaya?",
+        "options": [
+          "Awahambise ngaphansi kwe-mulch azungeze isihlahla",
+          "Cela umasipala nomeluleki oqeqeshiwe bahlole umthombo, izinsiza zasekhaya, ukusetshenziswa okuhlosiwe nendawo",
+          "Asetshenziswe uma ebonakala ecacile",
+          "Asetshenziswe ezitshalweni ezingadliwa ziluhlaza kuphela"
+        ],
+        "correct": 1,
+        "rationale": "Imihlahlandlela iyahluka ngeminye imithombo yamanzi nangezinsiza ezidingekayo ukuze aphinde asetshenziswe. Kudingeka uchwepheshe wendawo ahlole ngaphambi kokunquma ukuthi umthombo othile nokusetshenziswa kwawo kuyafaneleka noma kuvunyelwe yini."
+      },
+      {
+        "q": "Kungani kufanele kuhlolwe umthombo oqondile wamanzi nemikhiqizo yokuhlanza ngaphambi kokucabanga ukuwasebenzisa futhi?",
+        "options": [
+          "Yonke imikhiqizo yokuhlanza iphephile uma amanzi exutshwa namanye",
+          "Ukwakheka kwamanzi nemiphumela yemikhiqizo kuyahlukahluka, ngakho kudingeka kuhlolwe umthombo nemikhiqizo esetshenzisiwe",
+          "Amanzi angaphinda asetshenziswe uma enganuki",
+          "I-mulch isusa zonke izinto eziyingozi"
+        ],
+        "correct": 1,
+        "rationale": "Amanzi asetshenzisiwe angaqukatha izinhlobo ezahlukene zamagciwane, usawoti namakhemikhali. Ukubukeka ecacile, ukungabi nephunga noma i-mulch akufakazeli ukuthi aphephile noma ayafaneleka."
+      }
+    ]
+  },
   "soil-health-l1": {
     "title": "Ukuqonda Umhlabathi Wakho: Isisekelo Sako Konke",
     "body": "Umhlabathi unezinhlobo eziningi zezinto eziphilayo. Amagciwane nesikhunta kusiza ukubolisa izinto eziphilayo nokujikeleza kwezakhamzimba.\n\nEzinye izinhlobo zesikhunta zisiza izimpande zimunce izakhamzimba. Imigudu yezibungu ingasiza amanzi nomoya kungene emhlabathini.\n\nBheka izimpande, ukwakheka komhlabathi nokuhamba kwamanzi, kanye nezinto eziphilayo ozibonayo emhlabathini.\n\nFaka umhlabathi namanzi embizeni yengilazi ecacile, ufake nenani elincane le-detergent efanele yokuhlakaza izinhlayiya zomhlabathi. Yivale uyinyakazise, bese uyishiya inganyakazi.\n\nIsihlabathi sihlala phansi kuqala. I-silt ilandela; ubumba lungahlala luntanta isikhathi eside.\n\nLolu wuvivinyo lokufunda olulinganiselwe. Izigaxa nomhlabathi wobumba ongakahlali phansi kungakudukisa. Uma kudingeka ukwazi ukuthungwa komhlabathi ngokunembile, sebenzisa ilabhorethri yomhlabathi.\n\nUngqimba olujiyile lwesihlabathi ngaphansi kwamanzi afiphele alukakutsheli izilinganiso zokugcina. Ezinye izinhlayiya ezincane kungenzeka zisantanta.\n\nQhathanisa izingqimba esezihlale phansi, futhi uzwe nokuthungwa komhlabathi osensimini.\n\nBhala lokho okubonayo nalokho okungakaqinisekiswa. Ungancomi indlela yokunisela noma yokwelapha umhlabathi ngebhodlela elilodwa kuphela.\n\nUkucinana komhlabathi, ukungaphumi kahle kwamanzi nokuncipha kwezinto eziphilayo kunganciphisa ukukhula kwezimpande nokuphila komhlabathi.\n\nUmbala ophaphathekile noma izibungu ezimbalwa akufakazeli ukuthi amakhemikhali abulale umhlabathi. Umsebenzi wezibungu nawo uyashintsha kuye ngomswakama nenkathi yonyaka.\n\nBheka amaphethini ezindaweni ezahlukene zensimu. Hlola umlando wokunakekela, ukuphuma kwamanzi nokukhula kwezitshalo ngaphambi kokukhetha ikhambi.",
@@ -815,6 +951,40 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         ],
         "correct": 1,
         "rationale": "Amadada awaklwebhi njengezinkukhu. Asengazinyathela noma azidle izitshalo; ngakho qapha umhlabathi, uwahambise uma kudingeka."
+      }
+    ]
+  },
+  "small-livestock-l2": {
+    "title": "Izinyosi: Ukuthutha Impova, Uju Nokuphila Kwepulazi",
+    "body": "Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali. Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova. Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima.\n\nINingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa. Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika. Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.\n\nNgaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi. Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane. Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala. Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.\n\nHlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane. Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo. Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango. Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa.",
+    "keyPoints": [
+      "Izinambuzane ezithutha impova zisiza izitshalo eziningi; usizo luncike esitshalweni nasezimweni",
+      "Funda ukunakekela ama-hive ngokuphepha kumfuyi wezinyosi wendawo onolwazi",
+      "Khetha indawo ephephile yama-hive ekude nezindlela ezihanjwa abantu abaningi nezindawo zezingane",
+      "Bhalisa eMnyangweni uma wenza umsebenzi odinga ukubhaliswa ngaphansi kwemithetho kazwelonke yokulawula izinyosi zoju"
+    ],
+    "quiz": [
+      {
+        "q": "Izihlahla zikakwatapheya ziyaqhakaza kodwa zibopha izithelo ezimbalwa. Yini okufanele umlimi ayihlole ngokuthuthwa kwempova?",
+        "options": [
+          "Cabanga ukuthi ukuthuthwa kwempova kuhlale kwanele, ungahloli lutho",
+          "Cabanga ukuthi uhlobo olulodwa kuphela lwebhungane olungathwala impova",
+          "Hlola ukuthi izinambuzane ziyazivakashela yini izimbali futhi zithwala impova; hlola nezinye izimbangela zokungabophi kwezithelo kahle",
+          "Cabanga ukuthi ukungabophi kwezithelo kahle kuhlale kusho umonakalo wesithwathwa"
+        ],
+        "correct": 2,
+        "rationale": "Izinyosi nezinye izinambuzane zingahambisa impova phakathi kwezimbali zikakwatapheya. Ukuvakashelwa okumbalwa kunganciphisa ukuthuthwa kwempova, kodwa isimo sezulu nempilo yesitshalo nakho kungathinta ukubopha kwezithelo."
+      },
+      {
+        "q": "Ikoloni lezinyosi liphume ngamaqoqo kaningi. Yisiphi isinyathelo esilandelayo esifanele?",
+        "options": [
+          "Cela umfuyi wezinyosi oqeqeshiwe ahlole ikoloni, kuhlanganise nendawo, indlovukazi nempilo yalo",
+          "Shintsha indlovukazi ngaphandle kokuhlola ikoloni",
+          "Cabanga ukuthi akukho okungahlolwa noma kulawulwe",
+          "Phendula i-hive ngaphandle kokuthola imbangela"
+        ],
+        "correct": 0,
+        "rationale": "Ukuminyana kungakhuthaza ukuphuma kweqoqo, kodwa akusona ukuphela kwesizathu. Ukuhlola kuqondisa isinyathelo esilandelayo; ukwengeza indawo akuqinisekisi ukuthi inkinga izoxazululeka."
       }
     ]
   },

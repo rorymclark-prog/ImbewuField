@@ -1,0 +1,356 @@
+{
+  "module": "small-livestock",
+  "language": "zu",
+  "status": "clearly labelled learner review draft; not approved for fluency, local farming, beekeeping, legal scope or human listening",
+  "sourceSha256": {
+    "isiZuluNarration": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+    "englishNarration": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+    "courseModulesFile": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+    "deckArtManifest": "73c6133a4172e157e76f8fc0945149d696bfbd3631191305902b17868139b2f9",
+    "slideRenderer": "a22076ab35332f5903aeb6bec8958755a310ad6f8ffffb1b2a9292c5326517d2",
+    "l2ReviewPacket": "72ce03d0327e8dae57d2802622ae544d8fddc584d7d52a7db0d23ca2274e7a24"
+  },
+  "audio": {
+    "voice": "zu-ZA-ThandoNeural",
+    "rate": "-12%",
+    "fullAudioSha256": "da9475e2cdc2890f0a96effcc88d3b077a0bd440777bb81b7d7976a29b456d24",
+    "fullAudioBytes": 3964700,
+    "fullAudioSeconds": 660.744,
+    "fullDecode": "pass",
+    "humanListeningReview": false,
+    "slideBoundaryMatches": 20,
+    "slideCount": 20,
+    "proofDirectory": "docs/narration-reviews/small-livestock-zu-audio-proof/"
+  },
+  "rendering": {
+    "renderer": "scripts/make-lesson-slides.mjs small-livestock zu",
+    "stillCount": 20,
+    "imageDimensions": "1920x1080",
+    "visualReview": "Final full contact sheet and 390 px samples inspected. Existing people shown are Black South African smallholder farmers. Bee slide uses the registered eight-second Flow poster. Slides 14–15 use localized static diagrams; no English nutrient labels remain in those ZU stills.",
+    "artSources": {
+      "1": {
+        "path": "public/course-images/small-livestock/small-livestock-l1.jpg",
+        "sha256": "dba4e34107451eb984b91c579bb9bec6fac0b2b3c0c8253c28e6d5fe97b64cb6"
+      },
+      "5": {
+        "path": "public/course-images/small-livestock/small-livestock-l1.jpg",
+        "sha256": "dba4e34107451eb984b91c579bb9bec6fac0b2b3c0c8253c28e6d5fe97b64cb6"
+      },
+      "6": {
+        "path": "docs/media/studies-illustrated-release/art/small-livestock/chickens-after-harvest.jpg",
+        "sha256": "6aa2758f0011db276e6d486b2fe28e654672dcd074ef8c3ed0cfb3185eee06b6"
+      },
+      "7": {
+        "path": "docs/media/studies-illustrated-release/art/small-livestock/ducks-understorey.jpg",
+        "sha256": "4338b9ebc4a48d68835fedd14c86c07330ecb6c2de67e336cc621532b5243dea"
+      },
+      "10": {
+        "path": "public/course-images/small-livestock/small-livestock-l2.jpg",
+        "sha256": "32072d15edc3b204ec40e803a25954b81fdbd4d102a22d2fa21f6ba80c7c596f"
+      },
+      "12": {
+        "path": "docs/media/studies-illustrated-release/art/small-livestock/careful-hive-site.jpg",
+        "sha256": "fd68a704d4cf6195af899e34e019effe6acdf61c6727f9d7e737162b1ae1ff00"
+      },
+      "15": {
+        "path": "docs/media/small-livestock/zu-preview/art/nutrient-flow-slide-15-zu.jpg",
+        "sha256": "e12edd83838d9327da19b63a3562997d6f5745ac56618fa25c1cca60cca0cfc8"
+      },
+      "17": {
+        "path": "docs/media/studies-illustrated-release/art/small-livestock/plan-animal-needs.jpg",
+        "sha256": "4622d1aec222a3ad0484d17cb722143ce36c7a9a0b63ca3735d948f193c2b5e9"
+      },
+      "4": {
+        "path": "public/course-animations/small-livestock/posters/flow-hens-foraging.jpg",
+        "sha256": "6db8ba32a9606b90cab2d190abe8c78f18156080bf010e0df07607d7dfad80d6"
+      },
+      "9": {
+        "path": "public/course-animations/small-livestock/posters/flow-bee-between-blossoms.jpg",
+        "sha256": "30534c32c09c8ad9d45004a50440439816b4b1274d58810199d1e6ff29ad5516"
+      },
+      "14": {
+        "path": "docs/media/small-livestock/zu-preview/art/nutrient-flow-slide-14-zu.jpg",
+        "sha256": "8d411a499658885047dceb9c4d5e34dce2b90bf4b089558490a42dd5c175a246"
+      }
+    },
+    "noNewAnimation": true,
+    "noFlowGeneration": true
+  },
+  "sourceCaveats": [
+    "Broad honeybee subspecies ranges are not movement boundaries or permission. Check current Department movement rules before moving bees or hives.",
+    "Registration wording covers only defined beekeeping activities in national controls; uncertain cases should be checked with the Department.",
+    "The bee animation shows movement between blossoms, not proven pollen transfer or crop yield."
+  ],
+  "reviewHolds": {
+    "pending": [
+      "first-language isiZulu and learner comprehension",
+      "local farming and beekeeper review",
+      "legal registration-scope check",
+      "human listening review"
+    ]
+  },
+  "contactSheet": "docs/media/small-livestock/zu-preview/contact-sheet.jpg",
+  "mobileSamples390": "docs/media/small-livestock/zu-preview/mobile-samples-390.jpg",
+  "slides": [
+    {
+      "slide": 1,
+      "image": "public/course-decks/small-livestock/zu/slide-01.jpg",
+      "imageBytes": 124737,
+      "imageSha256": "60ed1f3e8d61463e5131917de0a4fb61cb5be8284f490f49d0ac105a753bf3ee",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-01.mp3",
+      "audioBytes": 185184,
+      "audioSha256": "7c493a7b2951aabdb95ace2e635f97e805197db7eadf796a222eaa4f22bc6e9d",
+      "audioSeconds": 30.864,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 2,
+      "image": "public/course-decks/small-livestock/zu/slide-02.jpg",
+      "imageBytes": 107374,
+      "imageSha256": "ed90d62d93b708e251c43fd21f6e8cf2b3a77582f5034ae8183c10d5c911af50",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-02.mp3",
+      "audioBytes": 218736,
+      "audioSha256": "95ea54938adc595deb46ac403e42209ab14ebe690358d6c341fc25fefd36a50c",
+      "audioSeconds": 36.456,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 3,
+      "image": "public/course-decks/small-livestock/zu/slide-03.jpg",
+      "imageBytes": 116058,
+      "imageSha256": "57c2236d196049be0daf4bcd1f5389db2db5ae599430c74a57b8ceb9dda9696b",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-03.mp3",
+      "audioBytes": 173520,
+      "audioSha256": "898c8aae2c281fb5e7aa5b50fda09099e318ca28601852a5c7f2c5194e3a3591",
+      "audioSeconds": 28.92,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 4,
+      "image": "public/course-decks/small-livestock/zu/slide-04.jpg",
+      "imageBytes": 600390,
+      "imageSha256": "8a90b5bfedbe2367539b02c5d051de54c9c414180bdabaf1ac30e5fd73909fbb",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-04.mp3",
+      "audioBytes": 141984,
+      "audioSha256": "309c060d15d234e0637b1e01677b221510f8775587b4a73eea817a57cba654e0",
+      "audioSeconds": 23.664,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 5,
+      "image": "public/course-decks/small-livestock/zu/slide-05.jpg",
+      "imageBytes": 133553,
+      "imageSha256": "fe0ff8c7e320e1f8f4bf2261eb9d9fb1748af785c771cec582c40b5351cae62b",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-05.mp3",
+      "audioBytes": 191808,
+      "audioSha256": "014637ea3fa0a7c6133630c014ae4a0649af3b8b7449791d8a332c1cc9256dbe",
+      "audioSeconds": 31.968,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 6,
+      "image": "public/course-decks/small-livestock/zu/slide-06.jpg",
+      "imageBytes": 719922,
+      "imageSha256": "f82b47de84d94426806802fce7fb9eb0a32ba718d76ad955061e23e095fdd7b9",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-06.mp3",
+      "audioBytes": 168480,
+      "audioSha256": "998e6877143a6006caf05d8050563ce0f5d23cc897acac04e8ac604880424b1e",
+      "audioSeconds": 28.08,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 7,
+      "image": "public/course-decks/small-livestock/zu/slide-07.jpg",
+      "imageBytes": 742292,
+      "imageSha256": "6e86608db72ee3f1b4d31e913ce49cc567c6727ecea4adba15d2467633b9f28c",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-07.mp3",
+      "audioBytes": 195696,
+      "audioSha256": "bc9d7b6f7fd5e1ca290b3c91657f9cbc63192f2a3f9c0b1b53b64344a6ff37cc",
+      "audioSeconds": 32.616,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 8,
+      "image": "public/course-decks/small-livestock/zu/slide-08.jpg",
+      "imageBytes": 109517,
+      "imageSha256": "996fd6d08018455c2d37460395a898719929c845ab1700760505be0d1988b35e",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-08.mp3",
+      "audioBytes": 191664,
+      "audioSha256": "756564929b5603c5bbefe94e32b798f2dc91f73dcb3885254a9bbadb7ea3c7c3",
+      "audioSeconds": 31.944,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 9,
+      "image": "public/course-decks/small-livestock/zu/slide-09.jpg",
+      "imageBytes": 210454,
+      "imageSha256": "bf793a0d87a43eead23e9d4278afe0d30de5dbfd286d76a0a5a1335080cef089",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-09.mp3",
+      "audioBytes": 60480,
+      "audioSha256": "b5a230f7d1f5f99a73be3d2941c443dc3218f820fd51f45abb366a5a097ca7a3",
+      "audioSeconds": 10.08,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 10,
+      "image": "public/course-decks/small-livestock/zu/slide-10.jpg",
+      "imageBytes": 135019,
+      "imageSha256": "86171548710dd806b248092b7aa94fb10b156299295b48a28ca3be1bb6c0dda1",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-10.mp3",
+      "audioBytes": 205488,
+      "audioSha256": "4eef96ce1f43a74f252f48c0e5c6c650a4558b28f65e03a51ebe58395f5a95bf",
+      "audioSeconds": 34.248,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 11,
+      "image": "public/course-decks/small-livestock/zu/slide-11.jpg",
+      "imageBytes": 113916,
+      "imageSha256": "0d9b50186bd85ce13b01c4b38c10d875e69b7ee6019b071fd096e32be1ce9948",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-11.mp3",
+      "audioBytes": 283248,
+      "audioSha256": "9495358f0078c81079275798f70c174f40d40d70367ead7db751248e9d0095fc",
+      "audioSeconds": 47.208,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 12,
+      "image": "public/course-decks/small-livestock/zu/slide-12.jpg",
+      "imageBytes": 721174,
+      "imageSha256": "c458a5a61bfd77ba89be3106b721ed45ba25b3bb77b40d8369631a96333cd899",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-12.mp3",
+      "audioBytes": 157104,
+      "audioSha256": "1a71d8c7361e357c5806721fc422b835221ba47848f30ebb0b791b6e75587bfd",
+      "audioSeconds": 26.184,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 13,
+      "image": "public/course-decks/small-livestock/zu/slide-13.jpg",
+      "imageBytes": 150058,
+      "imageSha256": "800d827be389a23c594a690082b2cb166117d7c249a19770e16c13c1eea5edf9",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-13.mp3",
+      "audioBytes": 391536,
+      "audioSha256": "93da8a1ff7133c268651dfbbf4688a2ea6d3b6c03a8c493b0a2b5bf7480889a8",
+      "audioSeconds": 65.256,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 14,
+      "image": "public/course-decks/small-livestock/zu/slide-14.jpg",
+      "imageBytes": 110272,
+      "imageSha256": "e269d20d78224b961e42427b2c8efa0279028a33362fe0fe69fa55cf72e6783f",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-14.mp3",
+      "audioBytes": 140976,
+      "audioSha256": "aff28f59082f74ead41937eb2807db50c5ecab3ce2c66f1198bb0ae7cec1c457",
+      "audioSeconds": 23.496,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 15,
+      "image": "public/course-decks/small-livestock/zu/slide-15.jpg",
+      "imageBytes": 121069,
+      "imageSha256": "3d50ff5fb29dad11333462f3d896e4437f2c7b460b9941870bf4b14705a003f1",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-15.mp3",
+      "audioBytes": 307440,
+      "audioSha256": "7b3d2cf50b462277bd1b8bb70b8e266df49f5e82b65b9d401785f18419eaf558",
+      "audioSeconds": 51.24,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 16,
+      "image": "public/course-decks/small-livestock/zu/slide-16.jpg",
+      "imageBytes": 136984,
+      "imageSha256": "bcc8598024d3c30d04f56e4f9fd6c3e87307f0aca404bbab16788c56ddcab034",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-16.mp3",
+      "audioBytes": 177264,
+      "audioSha256": "bd82c7fa7e1170caa30aae67a2625ba5aa432817a5ee6fefd166d5081e260d60",
+      "audioSeconds": 29.544,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 17,
+      "image": "public/course-decks/small-livestock/zu/slide-17.jpg",
+      "imageBytes": 614770,
+      "imageSha256": "9e0f10d3994347f1a170181a3434da562f31c1a2bafa54fc674a737b5e188007",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-17.mp3",
+      "audioBytes": 177696,
+      "audioSha256": "e60ada7d9d5742c483358d273b8ba1fbc4744c7ecb6460a9934614c9d45988df",
+      "audioSeconds": 29.616,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 18,
+      "image": "public/course-decks/small-livestock/zu/slide-18.jpg",
+      "imageBytes": 147203,
+      "imageSha256": "4b62bc8d1bb2ca0e3962dd4caddc72b693cf4be8a935dd59d0ab9b06c4689b22",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-18.mp3",
+      "audioBytes": 192096,
+      "audioSha256": "589c09b995475dbeeaa8b5d238619c128c2cb0472284a0f054d942c359c22c78",
+      "audioSeconds": 32.016,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 19,
+      "image": "public/course-decks/small-livestock/zu/slide-19.jpg",
+      "imageBytes": 143968,
+      "imageSha256": "d1a99d3cf337ae851847402964d980434b9af25b335b6a338a71d707d9166a11",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-19.mp3",
+      "audioBytes": 216000,
+      "audioSha256": "f927e2936993d4de2fc732ae8ecd21830fda0e7eb6c41173a5950ad7fc41eed9",
+      "audioSeconds": 36.0,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 20,
+      "image": "public/course-decks/small-livestock/zu/slide-20.jpg",
+      "imageBytes": 123357,
+      "imageSha256": "f70d366cd49d3fb392eaec057a756de7c9b50f2e772626af8af02a7730f5e94f",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/small-livestock/zu/slide-20.mp3",
+      "audioBytes": 188064,
+      "audioSha256": "9ba19ad4d52af2c3d4cd41d5479ff861bf810c43194b7bb8faecdc10ddd39ec6",
+      "audioSeconds": 31.344,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    }
+  ]
+}

@@ -89,6 +89,10 @@ export const COURSE_TRANSLATION_DRAFT_OVERRIDES: {
       source: 'Chickens in the System: Pest Control, Fertility, and Food',
       proposal: 'Izinkukhu Ohlelweni Lwepulazi: Ukulawula Izinambuzane, Ukuvunda Komhlabathi Nokudla',
     },
+    'small-livestock-l2': {
+      source: 'Bees: Pollination, Honey, and System Ecology',
+      proposal: 'Izinyosi: Ukuthutha Impova, Uju Nokuphila Kwepulazi',
+    },
     'small-livestock-l3': {
       source: 'Integrating Livestock Cycles: Nutrients Moving Through the Farm',
       proposal: 'Ukuhlanganisa Imijikelezo Yemfuyo: Izakhamzimba Ezihamba Epulazini',
@@ -115,6 +119,16 @@ export const COURSE_TRANSLATION_DRAFT_OVERRIDES: {
       {
         source: 'Why are ducks better suited than chickens to an established food forest understorey?',
         proposal: 'Kungani amadada engase afaneleke kakhulu kunezinkukhu endaweni enezitshalo ezingaphansi kwe-food forest esesimile?',
+      },
+    ],
+    'small-livestock-l2': [
+      {
+        source: 'Avocado trees flower but set little fruit. What should the farmer check about pollination?',
+        proposal: 'Izihlahla zikakwatapheya ziyaqhakaza kodwa zibopha izithelo ezimbalwa. Yini okufanele umlimi ayihlole ngokuthuthwa kwempova?',
+      },
+      {
+        source: 'A hive has swarmed repeatedly. What is the best next step?',
+        proposal: 'Ikoloni lezinyosi liphume ngamaqoqo kaningi. Yisiphi isinyathelo esilandelayo esifanele?',
       },
     ],
     'small-livestock-l3': [
