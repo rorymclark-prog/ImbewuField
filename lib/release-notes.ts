@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '25dfb01a', changes: [
+    'The top bar no longer sits under your phone\u2019s clock and battery.',
+    'Lesson slides are wider on a phone, so the picture is easier to see.',
+  ], tour: [
+    { title: 'See the wider lesson slides', where: 'My Studies \u00b7 Introduction to Permaculture', href: '/student',
+      detail: 'Open the module and look at the slide \u2014 it now reaches the edge of its card.' },
+  ] },
   { when: '24 September 2026', sha: 'af29e1cc', changes: [
     'Survey controls have isiZulu drafts and a review notice.',
   ] },
