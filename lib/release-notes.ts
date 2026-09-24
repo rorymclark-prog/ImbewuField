@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'e7440154', changes: [
+    'Map place and drawing controls follow isiZulu; print details remain in English.',
+    'Sample assessment statuses follow isiZulu; questions still need language review.',
+  ], tour: [
+    { title: 'Check map and assessment language', where: 'Farmer map and project assessments', href: '/farmer',
+      detail: 'Choose isiZulu to see the map controls; assessment questions remain under review.' },
+  ] },
   { when: '24 September 2026', sha: 'a94ac88a', changes: [
     'Offline download progress follows isiZulu and marks any English lesson media.',
     'Project assessment controls follow isiZulu; question wording still needs review.',

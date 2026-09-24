@@ -2,6 +2,15 @@
 
 ## 24 September verification batch
 
+The assessment sample now drafts routine status badges, counts and form controls
+in isiZulu. It displays an explicit unreviewed-question notice; permission and
+funder-sharing scope remains in English with an isiZulu warning. The farmer map
+now drafts place, drawing, GPS, search and toolbar controls in isiZulu without
+changing saved geometry or measurements. The print-base-map tooltip remains
+English because its boundary, house-outline and contour details need an exact
+translation. Broader GIS/guide claims are still outside this interface pass.
+These are interface drafts, not fluent or field approval.
+
 The following batch drafts more safe project-assessment controls and offline
 download progress text in isiZulu. The assessment page marks its existing
 isiZulu questions and participation wording as pending fluent review; the

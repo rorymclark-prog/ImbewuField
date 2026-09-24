@@ -1145,7 +1145,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
   const addPinFromGPS = useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
-      showGpsError('GPS not available on this device.');
+      showGpsError(t('mapGpsUnavailable'));
       return;
     }
     setGpsAdding(true);
@@ -1158,10 +1158,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         if (map) map.easeTo({ center: [lng, lat], zoom: Math.max(map.getZoom(), 18), duration: 600 });
         setGpsAdding(false);
       },
-      () => { setGpsAdding(false); showGpsError('Could not get your location — allow GPS and try outside.'); },
+      () => { setGpsAdding(false); showGpsError(t('mapGpsFailed')); },
       { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
     );
-  }, [showGpsError]);
+  }, [showGpsError, t]);
 
   const undoPin = useCallback(() => {
     setDraftPoints((prev) => prev.slice(0, -1));
@@ -1585,9 +1585,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       }
     } catch { /* fall through */ }
 
-    setSearchError('Not found — try adding "South Africa"');
+    setSearchError(t('searchErrorNotFound'));
     setSearching(false);
-  }, [onLocationSelect]);
+  }, [onLocationSelect, t]);
 
   // ── Autofill: debounced place suggestions while typing (Mapbox geocoding) ──
   const fetchSuggestions = useCallback((q: string) => {
@@ -2406,28 +2406,28 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   onClick={() => { mapRef.current?.flyTo({ center: [p.lon, p.lat], zoom: 17, duration: 900 }); onLocationSelect(p.lat, p.lon); onPlaceSelect?.({ name: p.name, id: p.id }); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
-                  <LocateFixed size={14} style={{ color: '#1F4D2B' }} />Go to
+                  <LocateFixed size={14} style={{ color: '#1F4D2B' }} />{t('placePopupGoTo')}
                 </button>
                 <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
                 <button
                   onClick={() => { startEditPlace(p); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
-                  <PenLine size={14} style={{ color: '#1F4D2B' }} />Edit
+                  <PenLine size={14} style={{ color: '#1F4D2B' }} />{t('placePopupEdit')}
                 </button>
                 <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
                 <button
                   onClick={() => { setMovingPin(p.id); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-stone-100 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: '#20190F', fontSize: 13, fontWeight: 600 }}>
-                  <Move size={14} style={{ color: '#1F4D2B' }} />Move
+                  <Move size={14} style={{ color: '#1F4D2B' }} />{t('placePopupMove')}
                 </button>
                 <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
                 <button
                   onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); setActivePin(null); }}
                   className="flex items-center gap-1.5 active:bg-red-50 transition-colors"
                   style={{ padding: '10px 14px', background: 'transparent', border: 'none', cursor: 'pointer', color: MAP_COLOR_ALERT, fontSize: 13, fontWeight: 600 }}>
-                  <Trash2 size={14} />Delete
+                  <Trash2 size={14} />{t('mapDeleteButton')}
                 </button>
                 <div style={{ width: 1, height: 32, background: 'rgba(32,25,15,0.08)' }} />
                 <button
@@ -2438,7 +2438,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {placeShareId === p.id && placeShareStatus === 'saving'
                     ? <Loader2 size={14} className="animate-spin" style={{ color: '#20190F' }} />
                     : <Share2 size={14} style={{ color: placeShareId === p.id && placeShareStatus === 'copied' ? '#1F4D2B' : '#20190F' }} />}
-                  {placeShareId === p.id && placeShareStatus === 'copied' ? 'Copied!' : 'Share'}
+                  {placeShareId === p.id && placeShareStatus === 'copied' ? t('mapCopiedToast') : t('mapShareButton')}
                 </button>
               </div>
             </Popup>
@@ -2566,7 +2566,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 ? { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.95)', border: '1.5px solid rgba(212,110,66,0.9)', color: '#fff' }
                 : { flex: '0 1 52px', minWidth: 0, padding: '9px 0', background: 'rgba(28,14,10,0.94)', border: '1.5px solid rgba(212,110,66,0.85)', color: 'var(--orange)' }}>
               <X size={17} />
-              <span style={{ fontSize: 12.5, marginTop: 3 }}>{cancelArmed ? 'Discard?' : 'Cancel'}</span>
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>{cancelArmed ? t('mapDrawDiscard') : t('drawCancelButton')}</span>
             </button>
 
             <button onClick={undoPin} disabled={draftPoints.length === 0}
@@ -2574,12 +2574,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               style={{ flex: '0 1 44px', minWidth: 0, padding: '9px 0', opacity: draftPoints.length === 0 ? 0.45 : 1,
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(58,104,48,0.7)', color: 'var(--text-secondary)' }}>
               <span style={{ fontSize: 16, lineHeight: 1 }}>↶</span>
-              <span style={{ fontSize: 12.5, marginTop: 3 }}>Undo</span>
+              <span style={{ fontSize: 12.5, marginTop: 3 }}>{t('drawUndoButton')}</span>
             </button>
 
             {/* Walk it with GPS — drop a corner at the farmer's actual position */}
             <button onClick={addPinFromGPS} disabled={gpsAdding}
-              title="Stand on a corner of your land and tap to drop it here"
+              title={t('mapGpsDrawTitle')}
               className="flex flex-col items-center justify-center rounded-2xl font-sans transition-all active:scale-95"
               style={{ flex: '0 1 44px', minWidth: 0, padding: '9px 0', cursor: gpsAdding ? 'wait' : 'pointer',
                 background: 'rgba(10,18,12,0.94)', border: '1.5px solid rgba(168,216,138,0.6)', color: MAP_COLOR_BOUNDARY_FILL }}>
@@ -2749,7 +2749,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)' }}>
               <X size={17} />
-              <span style={{ fontSize: 11, marginTop: 3 }}>Cancel</span>
+              <span style={{ fontSize: 11, marginTop: 3 }}>{t('drawCancelButton')}</span>
             </button>
             <button onClick={removeEditCorner} disabled={selCorner == null || editPoints.length <= 3}
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
@@ -2762,7 +2762,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'rgba(22,37,20,0.85)', border: `1px solid ${draftStroke}66`, color: draftStroke }}>
               <PenLine size={15} />
-              <span style={{ fontSize: 11, marginTop: 3 }}>Rename</span>
+              <span style={{ fontSize: 11, marginTop: 3 }}>{t('nativeEditRenameButton')}</span>
             </button>
             <button onClick={addEditCorner}
               className="flex items-center justify-center gap-1 rounded-2xl font-display font-bold transition-all active:scale-95"
@@ -2833,7 +2833,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {!pinDraw && !editPin && !activeDraw && toolbarMin && !guided && (
         <button
           onClick={openPanel}
-          aria-label="Show map tools"
+          aria-label={t('mapShowTools')}
           className="absolute top-3 left-3 flex items-center font-sans transition-all active:scale-95"
           style={{
             zIndex: 10, height: 48, padding: '0 16px', gap: 9, borderRadius: 14,
@@ -2881,7 +2881,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <button
               onClick={handleShare}
               disabled={shareState === 'saving'}
-              title="Share this site"
+              title={t('shareButtonTitle')}
+              aria-label={t('shareButtonTitle')}
               className="flex items-center justify-center flex-shrink-0 relative transition-all active:scale-90"
               style={{
                 width: 38, height: 38, borderRadius: 11,
@@ -2901,7 +2902,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     fontSize: 12, borderRadius: 8, padding: '5px 10px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
                   }}>
-                  Link copied!
+                  {t('shareCopiedToast')}
                 </span>
               )}
               {shareState === 'error' && (
@@ -2912,15 +2913,15 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     fontSize: 12, borderRadius: 8, padding: '5px 10px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.35)', zIndex: 20,
                   }}>
-                  Share failed
+                  {t('shareFailedToast')}
                 </span>
               )}
             </button>
             {/* Lima quick-guide — reopen the coach-marks any time */}
             <button
               onClick={() => setGuideOpen(true)}
-              aria-label="Lima's quick guide"
-              title="How the map tools work"
+              aria-label={t('mapGuideButton')}
+              title={t('mapGuideTitle')}
               className="flex items-center justify-center rounded-full transition-all active:scale-95"
               style={{ width: 26, height: 26, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.3)', color: MAP_COLOR_BOUNDARY_FILL, cursor: 'pointer' }}
             >
@@ -2928,7 +2929,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
             <button
               onClick={() => setToolbarMin(true)}
-              aria-label="Hide map tools"
+              aria-label={t('mapHideTools')}
               className="flex items-center gap-1 transition-all active:scale-95"
               style={{ background: 'transparent', border: 'none', color: 'rgba(234,243,226,0.55)', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
             >
@@ -2958,7 +2959,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           <button
             type="submit"
             disabled={searching || !searchQuery.trim()}
-            aria-label="Search"
+            aria-label={t('mapSearchButton')}
             className="flex items-center justify-center transition-all flex-shrink-0 active:scale-95"
             style={{ width: 34, height: 34, borderRadius: 9, border: 'none',
               background: searching || !searchQuery.trim() ? 'rgba(46,107,58,0.5)' : '#2E6B3A',
@@ -3142,7 +3143,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* Save the current spot as a place */}
           <button onClick={saveCurrentPlace} disabled={!selectedLocation}
-            title={selectedLocation ? 'Save this spot to your Places' : 'Tap a spot on the map first'}
+            title={selectedLocation ? t('mapSaveSpotTitle') : t('mapSelectSpotTitle')}
             className="flex items-center gap-2 transition-all active:scale-95"
             style={{
               background: placeSaved ? 'rgba(168,216,138,0.32)' : 'rgba(247,242,233,0.07)',
@@ -3155,7 +3156,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* Print a clean base map (no hatch) for the farmer to sketch on by hand */}
           <button onClick={printBaseMap}
-            title="Print a clean base map (boundary, house outlines + contours, no hatching) to sketch your design on by hand"
+            title={t('mapPrintBaseTitle')}
             className="flex items-center gap-2 transition-all active:scale-95"
             style={{
               background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
@@ -3202,7 +3203,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 ) : savedPins.map((p) => (
                   <div key={p.id} className="flex items-center gap-3 font-sans"
                     style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 10px 10px 12px' }}>
-                    <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                    <button onClick={() => startEditPlace(p)} title={t('mapEditPlaceTitle')}
                       className="flex items-center justify-center flex-shrink-0 active:scale-90 transition-all rounded-[9px]"
                       style={{ width: 36, height: 36, background: placeColor(p.label), cursor: 'pointer', border: 'none' }}>
                       <MapPin size={16} strokeWidth={2} style={{ color: '#fff' }} />
@@ -3220,13 +3221,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{p.name}</div>
                       <div style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>{p.elevation} m elev.</div>
                     </button>
-                    <button onClick={() => startEditPlace(p)} title="Edit name or colour"
+                    <button onClick={() => startEditPlace(p)} title={t('mapEditPlaceTitle')}
                       className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                       style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                       <PenLine size={15} style={{ color: 'rgba(234,243,226,0.55)' }} />
                     </button>
                     <button onClick={() => { deletePlace(p.id); setSavedPins(loadPlaces()); }}
-                      aria-label={`Delete ${p.name}`} title="Delete this place"
+                      aria-label={`${t('mapDeleteButton')} ${p.name}`} title={t('mapDeletePlaceTitle')}
                       className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                       style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
                       <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />
@@ -3250,7 +3251,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <button onClick={cancelDraw}
                 className="px-2 py-1 rounded-lg text-xs font-display transition-all"
                 style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
-                <X size={13} className="inline mr-1" />Cancel
+                <X size={13} className="inline mr-1" />{t('drawCancelButton')}
               </button>
             </>
           )}
@@ -3277,7 +3278,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 }}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 32, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
-                <Undo2 size={12} className="inline mr-1" />Undo
+                <Undo2 size={12} className="inline mr-1" />{t('nativeEditUndoButton')}
               </button>
               <button onClick={() => {
                   const f = drawRef.current?.get(editingFeatureId);
@@ -3286,14 +3287,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 }}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: MAP_COLOR_BOUNDARY_FILL, minHeight: 32 }}>
-                <PenLine size={12} className="inline mr-1" />Rename
+                <PenLine size={12} className="inline mr-1" />{t('nativeEditRenameButton')}
               </button>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
-                <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? 'Confirm delete' : 'Delete'}
+                <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? t('nativeEditConfirmDeleteButton') : t('nativeEditDeleteButton')}
               </button>
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
@@ -3376,13 +3377,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           <button onClick={() => startEdit(sf.id, 'site')}
                             className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                             style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                            title="Edit shape"><PenLine size={15} style={{ color: MAP_COLOR_BOUNDARY_FILL }} /></button>
+                            title={t('mapEditShapeTitle')}><PenLine size={15} style={{ color: MAP_COLOR_BOUNDARY_FILL }} /></button>
                           <button onClick={() => requestDelete(sf.id)}
                             className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                             style={pendingDelete === sf.id
                               ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: MAP_COLOR_ALERT, border: '1px solid ${MAP_COLOR_ALERT}', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
                               : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                            title="Delete parcel">{pendingDelete === sf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
+                            aria-label={`${t('nativeEditDeleteButton')} ${t('parcelDefaultName')}`} title={t('nativeEditDeleteButton')}>{pendingDelete === sf.id ? t('mapDeleteConfirmShort') : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
                         </div>
                       ))}
                       <button onClick={() => startPinDraw('site')}
@@ -3444,13 +3445,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                           <button onClick={() => startEdit(wf.id, 'water')}
                             className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                             style={{ width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                            title="Edit shape"><PenLine size={15} style={{ color: MAP_COLOR_WATER_FILL }} /></button>
+                            title={t('mapEditShapeTitle')}><PenLine size={15} style={{ color: MAP_COLOR_WATER_FILL }} /></button>
                           <button onClick={() => requestDelete(wf.id)}
                             className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                             style={pendingDelete === wf.id
                               ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: MAP_COLOR_ALERT, border: '1px solid ${MAP_COLOR_ALERT}', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
                               : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}
-                            title="Delete area">{pendingDelete === wf.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
+                            aria-label={`${t('nativeEditDeleteButton')} ${t('waterAreaDefaultName')}`} title={t('nativeEditDeleteButton')}>{pendingDelete === wf.id ? t('mapDeleteConfirmShort') : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}</button>
                         </div>
                       ))}
                       {/* Water infrastructure points */}
@@ -3573,12 +3574,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                               })()}
                             </button>
                             <button onClick={() => requestDeleteElement(el.id)}
-                              aria-label={`Delete ${el.label || meta.label}`} title="Delete this element"
+                              aria-label={`${t('nativeEditDeleteButton')} ${el.label || meta.label}`} title={t('nativeEditDeleteButton')}
                               className="flex items-center justify-center flex-shrink-0 transition-all active:scale-90"
                               style={pendingDeleteElement === el.id
                                 ? { width: 'auto', padding: '0 10px', height: 38, borderRadius: 11, background: MAP_COLOR_ALERT, border: '1px solid ${MAP_COLOR_ALERT}', color: '#fff', fontSize: 12, fontWeight: 700, cursor: 'pointer' }
                                 : { width: 38, height: 38, borderRadius: 11, background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', cursor: 'pointer' }}>
-                              {pendingDeleteElement === el.id ? 'Sure?' : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}
+                              {pendingDeleteElement === el.id ? t('mapDeleteConfirmShort') : <Trash2 size={15} style={{ color: 'rgba(224,150,130,0.85)' }} />}
                             </button>
                           </div>
                         );
