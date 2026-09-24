@@ -2,6 +2,12 @@
 
 ## 24 September verification batch
 
+A second farmer-map interface batch adds isiZulu for drawing prompts, corner
+actions, placing water or site points, place naming, and the map's site-element
+heading. The visible corner count remains in the prompt. Map category names,
+saved user text, measurements, GIS explanations and detailed print guidance
+remain in their source language; no geometry or saved record is changed.
+
 The assessment sample now drafts routine status badges, counts and form controls
 in isiZulu. It displays an explicit unreviewed-question notice; permission and
 funder-sharing scope remains in English with an isiZulu warning. The farmer map
