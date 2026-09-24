@@ -216,6 +216,12 @@ export default function CropPlanPage() {
         <SettingsButton />
       </header>
 
+      {lang === 'zu' && (
+        <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+          Task names and seasonal farming guidance are still shown in English. / Amagama emisebenzi nezeluleko zesizini kusaboniswa ngesiNgisi.
+        </p>
+      )}
+
       {/* No-plan notice — pinned outside the scroll area so it can't be scrolled past.
           Gated on the SAME source the jobs come from (lib/task-board.ts's
           loadCropBoardYear, which reads imbewu_crop_plan_v1): savedPlantings is the
@@ -373,7 +379,6 @@ export default function CropPlanPage() {
                 </div>
               </div>
               <div className={workspace.cards}>
-              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (
