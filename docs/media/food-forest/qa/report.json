@@ -1,0 +1,36 @@
+{
+  "moduleId": "food-forest",
+  "lang": "zu",
+  "slideCount": 20,
+  "source": "docs/media/food-forest/food-forest-zu-render-source.md",
+  "sourceSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "sourceWordCount": 806,
+  "sourceHashes": {
+    "foodForestL1Draft": "bbd4c5a5615a2ddfdb7dd129940f8717cc4b3dcdf6605717d8afc5af3b0007af",
+    "foodForestL2Draft": "4d4da97b5cebf7166517f6c73cdd90cb9db21f4f90ba4491de849cbcb63d9d38",
+    "foodForestL3Draft": "699fb952b901b6847295520fffdbe71c194cd55cd780feb1e146b5d1545d7e84",
+    "currentEnglishNarration": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5"
+  },
+  "sourceBasis": "current packet proposals slides 3–18 plus current-English-aligned opening and closing from audio lane; not the stale canonical narration file",
+  "slidePixels": "1920x1080 JPEG",
+  "renderScript": "docs/media/food-forest/render-zu-stills.py",
+  "stillOnly": true,
+  "audioChanged": false,
+  "humanLanguageApproval": false,
+  "reviewArtifacts": [
+    "docs/media/food-forest/qa/contact-sheet.jpg",
+    "docs/media/food-forest/qa/slide-05-390.jpg",
+    "docs/media/food-forest/qa/slide-08-390.jpg",
+    "docs/media/food-forest/qa/slide-10-390.jpg",
+    "docs/media/food-forest/qa/slide-15-390.jpg",
+    "docs/media/food-forest/qa/slide-16-390.jpg",
+    "docs/media/food-forest/qa/slide-18-390.jpg"
+  ],
+  "visualChecks": "Contact sheet and listed 390px samples inspected at full resolution on 2026-09-24.",
+  "holds": [
+    "Slide 10 climate wording remains pending English source-owner alignment: English is categorical; isiZulu is qualified per current reviewed draft.",
+    "L2 slide 9 mango frost and quince chill nuance remains under source review; no new species or suitability recommendation added.",
+    "Existing English examples include species names; no names were added and the deck does not imply legal approval or local suitability.",
+    "Slide 5 layers are planning roles, not fixed heights; scene slides are still photographs and do not imply animation."
+  ]
+}

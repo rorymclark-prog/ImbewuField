@@ -42,14 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '24 September 2026', sha: 'a809e35a', changes: [
+  { when: '24 September 2026', sha: '110be164', changes: [
     'Faint grey text across the app is darker, so it holds up in bright sun.',
     'Dark mode now works properly — cards, text and borders all follow it.',
-    'The smallest text on Journal, Calendar and Crop Plan is bigger.',
-    'Lima no longer sits on top of buttons like Mark done.',
   ], tour: [
     { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
       detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
+  ] },
+  { when: '24 September 2026', sha: 'a59fbec9', changes: [
+    'Food Forest Design now has 20 isiZulu slides.',
+    'Hear the woman’s isiZulu narration; both are drafts for review.',
+  ], tour: [
+    { title: 'Hear Food Forest Design in isiZulu', where: 'My Studies · Food Forest Design', href: '/student',
+      detail: 'Choose isiZulu, open Food Forest Design, then play a narrated slide.' },
   ] },
   { when: '24 September 2026', sha: '897edc38', changes: [
     'Reading the Landscape now has 21 isiZulu slides.',
