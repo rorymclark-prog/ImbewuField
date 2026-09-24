@@ -121,6 +121,8 @@ const T_en: Dict = {
   locateMeButton: 'Locate me',
   savePlaceButton: 'Save place',
   printBaseMapButton: 'Print base map',
+  siteElementsHeader: 'Site elements',
+  siteElementEditTitle: 'Edit name or note',
   savePlaceConfirmedButton: 'Saved',
   placesSectionLabel: 'Places',
   placesLabelsToggle: 'Labels',
@@ -173,6 +175,7 @@ const T_en: Dict = {
   // Phase 3). English-only for now: t() falls back to the English slot per key, so the
   // other language slots pick this up until real translations land.
   labelsDesignToggle: 'My design',
+  editCornerLabel: 'Corner',
   pinDrawHintStart: 'Mark each corner of your land — tap the map, or centre the crosshair and tap Add corner',
   pinDrawHintStartWater: 'Mark each corner of your harvesting area — tap the map, or centre the crosshair and tap Add corner',
   pinDrawHintOneCorner: 'corner marked — add 2 more, then tap Finish',

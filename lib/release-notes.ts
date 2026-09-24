@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'e3d4e286', changes: [
+    'More map drawing, naming and place controls follow isiZulu.',
+    'Map category names and technical guidance remain in English for review.',
+  ], tour: [
+    { title: 'Check map controls', where: 'Farmer map', href: '/farmer',
+      detail: 'Choose isiZulu, open map tools and inspect drawing and naming controls.' },
+  ] },
   { when: '24 September 2026', sha: 'e56a5d2b', changes: [
     'Map place and drawing controls follow isiZulu; print details remain in English.',
     'Sample assessment statuses follow isiZulu; questions still need language review.',
