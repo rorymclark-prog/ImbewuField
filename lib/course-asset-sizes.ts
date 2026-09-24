@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 800 files, 338.1 MB total.
+// 821 files, 345.3 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -152,6 +152,27 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-audio/market-community/en/slide-18.mp3': 119232,
   '/course-audio/market-community/en/slide-19.mp3': 137664,
   '/course-audio/market-community/en/slide-20.mp3': 160560,
+  '/course-audio/market-community/zu/full.mp3': 3643148,
+  '/course-audio/market-community/zu/slide-01.mp3': 136512,
+  '/course-audio/market-community/zu/slide-02.mp3': 151632,
+  '/course-audio/market-community/zu/slide-03.mp3': 167760,
+  '/course-audio/market-community/zu/slide-04.mp3': 99216,
+  '/course-audio/market-community/zu/slide-05.mp3': 174960,
+  '/course-audio/market-community/zu/slide-06.mp3': 183168,
+  '/course-audio/market-community/zu/slide-07.mp3': 282960,
+  '/course-audio/market-community/zu/slide-08.mp3': 196128,
+  '/course-audio/market-community/zu/slide-09.mp3': 83520,
+  '/course-audio/market-community/zu/slide-10.mp3': 198288,
+  '/course-audio/market-community/zu/slide-11.mp3': 225648,
+  '/course-audio/market-community/zu/slide-12.mp3': 157968,
+  '/course-audio/market-community/zu/slide-13.mp3': 175248,
+  '/course-audio/market-community/zu/slide-14.mp3': 95616,
+  '/course-audio/market-community/zu/slide-15.mp3': 291744,
+  '/course-audio/market-community/zu/slide-16.mp3': 142416,
+  '/course-audio/market-community/zu/slide-17.mp3': 208800,
+  '/course-audio/market-community/zu/slide-18.mp3': 192528,
+  '/course-audio/market-community/zu/slide-19.mp3': 194400,
+  '/course-audio/market-community/zu/slide-20.mp3': 284400,
   '/course-audio/plant-guilds/en/full.mp3': 6533997,
   '/course-audio/plant-guilds/en/slide-01.mp3': 59373,
   '/course-audio/plant-guilds/en/slide-02.mp3': 196077,

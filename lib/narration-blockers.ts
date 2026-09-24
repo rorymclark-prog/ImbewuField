@@ -41,6 +41,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/plant-guilds.zu.md',
     scriptSha256: '63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa',
   },
+  'market-community.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/MARKET-COMMUNITY-ZU-AUDIO-HOLD-2026-09-24.md',
+    scriptSha256: 'da430cefdedadb574602aa1d3a1fa9373f90d20daffddab4d32a4d0f533ed92b',
+  },
 };
 
 export function narrationReviewPending(moduleId: string, lang: string): boolean {

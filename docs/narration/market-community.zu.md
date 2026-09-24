@@ -1,5 +1,3 @@
-ISIZULU DRAFT UPDATE — 24 September 2026: slides 2, 7, 8, 10–13, 15, 17, 18 and 20 now use proposals paired with the current English narration. The earlier recordings no longer match this text and must be regenerated. This remains an unreviewed isiZulu draft; it has not received fluent-speaker, farmer or practitioner approval.
-
 **Ikhasi 1 — Ingadi Yezimakethe Nomphakathi (Slide 1 — Market Gardening & Community)**
 
 
@@ -75,7 +73,7 @@ Buyekeza inani lokuthengisa, izindleko nokuthi uzotshala ini ngokulandelayo. Hlo
 
 ---
 
-**Ikhasi 8 — Tshala Ukuvala Igebe Lokudla (Slide 8 — Plant for the Food Gap)**
+**Ikhasi 8 — Hlela Ngesikhathi Sokushoda Kokudla (Slide 8 — Plan for the Food Gap)**
 
 Sebenzisa irekhodi lakho ukuthola ukuthi ukudla komuzi kushoda nini.
 
@@ -103,7 +101,7 @@ Hlola imithetho yemakethe nezimfuneko zendawo zokuhweba nokudla. Ukuthi itafula 
 
 ---
 
-**Ikhasi 11 — Gcina Okuningi Ngokuthengisa Ngqo (Slide 11 — Keep More Through Direct Selling)**
+**Ikhasi 11 — Bala Umsebenzi Wokuthengisa Ngqo (Slide 11 — Count the Work of Direct Selling)**
 
 Ukuthengisa ngqo kungagcina ingxenye enkulu yenani lokuthengisa kumlimi, kodwa kudinga nesikhathi, ukupakisha, ukuthutha nokunakekela amakhasimende.
 
@@ -113,7 +111,7 @@ Vumelanani ngokuqukethwe kwebhokisi, inani, ukukhokha nokuthi kuzokwenzekani uma
 
 ---
 
-**Ikhasi 12 — Hlela Ngamakhasimende E-Box Scheme (Slide 12 — Plan Around Box Customers)**
+**Ikhasi 12 — Hlela Ngama-oda Angempela (Slide 12 — Plan Around Real Orders)**
 
 Qala ngalokho ongakuhlinzeka ngokwethembeka kanye nalokho okufunwa amakhasimende.
 
@@ -137,7 +135,7 @@ Chaza ngokwethembeka izindlela okhulisa ngazo izitshalo. Ngaphambi kokufaka ileb
 
 Ipulazi elilodwa lingakhiqiza ukudla.
 
-Iqembu lingabelana ngembewu, amathuluzi, amakhono, nezindleko zokuthutha.
+Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.
 
 Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla.
 
@@ -165,7 +163,7 @@ Ukusetshenziswa ngokuhlanganyela kusabalalisa inzuzo yethuluzi futhi kusize ipul
 
 ---
 
-**Ikhasi 17 — Thengisa Eduze Ukuze Unciphise Ukulahleka (Slide 17 — Sell Locally to Reduce Loss)**
+**Ikhasi 17 — Nciphisa Ukulahleka Phakathi Kokuvuna Nokuthengisa (Slide 17 — Reduce Loss Between Harvest and Sale)**
 
 Phatha umkhiqizo ngobumnene futhi uwugcine emthunzini ofanele, upakishwe futhi ugcinwe kahle ngesikhathi sokulethwa.
 
@@ -175,7 +173,7 @@ Qhathanisa imali engenile ngemva kwezimali ezikhokhiwe, ezokuthutha nokonakala k
 
 ---
 
-**Ikhasi 18 — Yabelanani Ngamakhono Kanye Nezinto (Slide 18 — Share Skills as Well as Things)**
+**Ikhasi 18 — Yabelanani Ngamakhono Niphinde Nihlole Imiphumela (Slide 18 — Share Skills and Check Results)**
 
 Omakhelwane bangakhombisa amakhono awusizo futhi baqhathanise okwenzeke emapulazini abo.
 
@@ -204,38 +202,3 @@ Khetha isinqumo esisodwa sangempela esivela kurekhodi lepulazi lakho.
 Qhathanisa izindleko nembuyiselo yesitshalo noma yendlela yokuthengisa, noma uhlelele isikhathi sokushoda kokudla komuzi usebenzisa izimo zokutshala zendawo.
 
 Bese nivumelana nomakhelwane ngesinyathelo esisodwa esisebenzayo: ukushintshisana ngembewu, ukwabelana ngethuluzi, ukuletha umkhiqizo ndawonye noma ukufunda ikhono. Ngaphambi kokushintshisana ngembewu, hlolani ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini. Qophani izibopho zomuntu ngamunye bese nibuyekeza okwenzekile.
-
-## Notes for the Human Reviewer
-
-**This is a draft translation only. It must be read by a first-language isiZulu speaker who
-farms before this script goes anywhere near a learner.** Nothing here has been reviewed by a
-person.
-
-It was written to match `docs/narration/market-community.en.md` slide for slide — 20 isiZulu blocks
-against 20 English ones — so the deck and the narration cannot drift apart.
-
-**The instruction was to BORROW, never to coin.** An earlier isiZulu draft in this course invented
-22 agronomic terms and is still blocked from recording because of it, so where no everyday isiZulu
-word exists the English word was kept and carried on an isiZulu noun-class prefix instead. Those
-borrowings are listed below — they are the first thing to check, because a borrowing that a farmer
-would not actually say out loud is the same failure as a coined term:
-
-- `ama-dozen`
-- `i-compost`
-- `i-grafting`
-- `i-grain`
-- `i-oda`
-- `i-WhatsApp`
-- `ku-compost`
-- `ku-Ephreli`
-
-Please also confirm:
-
-- The register is ordinary spoken farming isiZulu — the words a KwaZulu-Natal farmer uses aloud,
-  not written or academic isiZulu.
-- Every number and every plant or animal name matches the English script. Nothing was to be added,
-  and no species may be named that the English does not name.
-- Nothing addresses a room. The learner is alone on a phone; there is no group and no facilitator.
-
-When the review is done, correct the script and delete this appendix. Deleting the appendix without
-doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.

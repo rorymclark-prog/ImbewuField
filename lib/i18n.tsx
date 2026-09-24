@@ -940,6 +940,7 @@ const T_en: Dict = {
   studentZuluLessonDraftBadge: 'Unreviewed isiZulu draft',
   studentZuluLessonEnglishBadge: 'English lesson text',
   studentZuluCourseLanguageNote: 'Some lessons have unreviewed isiZulu drafts; other lessons are shown in English. Audio availability is separate from lesson text review.',
+  studentZuluAudioDraftNotice: 'This isiZulu narration is a generated draft. Human listening, fluent isiZulu and local farming review are still pending.',
   studentZuluModuleDraftBadge: 'Unreviewed isiZulu draft',
   studentZuluModuleEnglishBadge: 'English title',
   studentDesignEnglishPreview: 'Design course · English teaching preview',

@@ -1550,6 +1550,111 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
     }
   },
   "market-community": {
+    "zu": {
+      "1": [
+        "Ingadi yakho inikeza umndeni ukudla, imali, nolwazi oluwusizo.",
+        "Kule module uzofunda ukugcina amarekhodi, ukuthengisa okusele, nokwakha amanethiwekhi okudla aseduze.",
+        "Inhloso yipulazi elondla umuzi futhi lisebenze njengomnotho omncane ocacile."
+      ],
+      "2": [
+        "Isivuno singondla umuzi, sithengiswe, sabelwane ngaso noma silahleke.",
+        "Ukubhala lezi zindlela esisetshenziswe ngazo kukusiza ubone ukuthi ipulazi likhiqiza ini nokuthi yini efinyelela kubathengi.",
+        "Sebenzisa lolo lwazi ukuze uvikele ukudla komuzi futhi wenze izinqumo ezingcono zebhizinisi."
+      ],
+      "3": [
+        "Ekupheleni kwale module uzokwazi ukubhala isivuno nokuthi siyephi.",
+        "Uzokwazi ukubala izindleko zangempela zokukhiqiza ngaphambi kokubeka inani lokuthengisa.",
+        "Uzokwazi ukuqhathanisa okusele nomthengi noma nendlela efanele yokuthengisa.",
+        "Uzokwazi ukwakha inethiwekhi yasendaweni yezimbewu, amathuluzi, amakhono, nokudla."
+      ],
+      "4": [
+        "Irekhodi lilandela isivuno esiya emndenini, ekuthengisweni, ekunikezweni noma ku-compost.",
+        "Funda irekhodi lonke lesizini ukuze ubone ipulazi njengomnotho ngaphambi kwesinqumo sebhizinisi."
+      ],
+      "5": [
+        "Bhala phansi sonke isivuno ngesikhathi sivunwa.",
+        "Qopha amakhilogremu katamatisi, ama-dozen amaqanda, nezinyanda ze-morogo, bese ubhala ukuthi ngakunye kuyephi.",
+        "Sebenzisa lo mkhuba ekudleni okugcinelwe umuzi, umkhiqizo othengisiwe, onikezwe omunye, noma ofakwe ku-compost.",
+        "Ungathembeli enkumbulweni ekupheleni kwesizini."
+      ],
+      "6": [
+        "Irekhodi lesizini eyodwa liphendula imibuzo ebalulekile.",
+        "Yiziphi izitshalo ezinikeza isivuno esingcono embhedeni ngamunye? Yiziphi ezibuyisa imali eningi ngehora lomsebenzi?",
+        "Yiziphi ezisebenzisa imbewu, amanzi, ne-compost eningi kunalokho ezikubuyisayo?",
+        "Irekhodi libuye libonise izinyanga lapho umuzi ugcina uthenga khona ukudla."
+      ],
+      "7": [
+        "Ngaphambi kokubeka inani lokuthengisa, qopha izindleko zokukhiqiza, ukupakisha nokuthengisa, kuhlanganise nomsebenzi nezokuthutha.",
+        "Nasi isibonelo sokufundisa, asiyona inani lentengo yamanje emakethe: utamatisi ubiza u-R18 ngekhilogremu ukuwukhiqiza, kodwa uthengiswa ngo-R15 ngekhilogremu. Lelo nani alizikhokhi izindleko ezishiwo.",
+        "Buyekeza inani lokuthengisa, izindleko nokuthi uzotshala ini ngokulandelayo. Hlola ukuthi abathengi bazothengani ngempela; inani eliphakeme elicelwayo aliqinisekisi ukuthi umkhiqizo uzothengiswa."
+      ],
+      "8": [
+        "Sebenzisa irekhodi lakho ukuthola ukuthi ukudla komuzi kushoda nini.",
+        "Khetha izitshalo ezifanele indawo yangakini, uhlele uhlehle usuka esikhathini sokuvuna osidingayo. Hlola izimo zokutshala nesikhathi esilindelekile kuze kuvunwe.",
+        "Usuku olusebenza kwelinye ipulazi lungase lungasebenzi lapha. Yiba nohlelo lwesibili uma imvula, amanzi noma izitshalo kungahambi kahle."
+      ],
+      "9": [
+        "Okusele kungaya esitolo esiseceleni komgwaqo, ekulethweni kweqembu esitolo, noma ebhokisini elilethwa emzini.",
+        "Imicibisholo ikhombisa indlela ngayinye."
+      ],
+      "10": [
+        "Buza ukuthi umthengi udingani: umkhiqizo, inani, ikhwalithi, ukulethwa nosuku lokukhokha.",
+        "Qhathanisa izimali zemakethe, ezokuthutha, ukupakisha nomkhiqizo ongathengiswanga kanye nenani lokuthengisa.",
+        "Hlola imithetho yemakethe nezimfuneko zendawo zokuhweba nokudla. Ukuthi itafula lokuthengisa alihlelekile akusho ngokuzenzakalelayo ukuthi alinayo imithetho noma izindleko."
+      ],
+      "11": [
+        "Ukuthengisa ngqo kungagcina ingxenye enkulu yenani lokuthengisa kumlimi, kodwa kudinga nesikhathi, ukupakisha, ukuthutha nokunakekela amakhasimende.",
+        "I-box scheme iletha izinhlobo ezivamile zemikhiqizo kumakhasimende okuvunyelwene nawo.",
+        "Vumelanani ngokuqukethwe kwebhokisi, inani, ukukhokha nokuthi kuzokwenzekani uma isivuno sishoda. Ama-oda avamile asiza ukuhlela kuphela uma amakhasimende nabalimi bekwazi ukugcina isivumelwano."
+      ],
+      "12": [
+        "Qala ngalokho ongakuhlinzeka ngokwethembeka kanye nalokho okufunwa amakhasimende.",
+        "Hlola izindleko nezidingo zokudla komuzi ngaphambi kokuthembisa amabhokisi avamile.",
+        "Ubukhulu bengadi noma inani lamakhasimende kukodwa akubikezeli imali engenayo. Zama indlela ongakwazi ukuyiphatha bese uqopha imiphumela."
+      ],
+      "13": [
+        "Uma ukukhiqiza kushintsha isonto nesonto, gwema ukuthembisa ukulethwa okungaguquki ongeke ukwazi ukukufeza.",
+        "Nikeza ngomkhiqizo osele onawo bese nivumelana ngemigomo ecacile namakhasimende.",
+        "Chaza ngokwethembeka izindlela okhulisa ngazo izitshalo. Ngaphambi kokufaka ilebula, hlola isitifiketi noma isimangalo esidingwa umthengi."
+      ],
+      "14": [
+        "Ipulazi elilodwa lingakhiqiza ukudla.",
+        "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.",
+        "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla."
+      ],
+      "15": [
+        "Omakhelwane bangabelana ngezinhlobo ezahlukene zezitshalo nangomsebenzi wokugcina imbewu.",
+        "Bhala isitshalo, uhlobo lwaso, lapho imbewu ivela khona nosuku eyabuthwa ngalo. Hlela ukuhlukanisa impova, ukukhetha izitshalo zembewu, ukomisa nokugcina ngokwendlela efanele isitshalo ngasinye.",
+        "Ukwabelana akukhulisi ukuhlukahluka ngokuzenzakalelayo futhi akuqinisekisi ikhwalithi engcono. Hlola ukuthi imbewu ingeyaluphi uhlobo nokuthi iyahluma yini ngaphambi kokuthembela kuyo.",
+        "Ngaphambi kokushintshisana ngembewu, hlola ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini."
+      ],
+      "16": [
+        "Ukwabelana ngamathuluzi kwenza imishini ebizayo ifinyeleleke eqenjini lonke.",
+        "I-water pump noma i-grain mill ingaba ngaphezu kwamandla emuzi owodwa.",
+        "Ukusetshenziswa ngokuhlanganyela kusabalalisa inzuzo yethuluzi futhi kusize ipulazi ngalinye lenze umsebenzi ebelingeke liwenze lodwa."
+      ],
+      "17": [
+        "Phatha umkhiqizo ngobumnene futhi uwugcine emthunzini ofanele, upakishwe futhi ugcinwe kahle ngesikhathi sokulethwa.",
+        "Umthengi oseduze anganciphisa uhambo, kodwa ukulahleka komkhiqizo nezindleko zokuthengisa kusadinga ukubalwa.",
+        "Qhathanisa imali engenile ngemva kwezimali ezikhokhiwe, ezokuthutha nokonakala komkhiqizo endleleni ngayinye. Ungacabangi ukuthi umthengi oseduze uhlala enikeza inzuzo engcono."
+      ],
+      "18": [
+        "Omakhelwane bangakhombisa amakhono awusizo futhi baqhathanise okwenzeke emapulazini abo.",
+        "Qopha indlela esetshenzisiwe, izimo nomphumela ukuze abanye bakwazi ukwahlulela ukuthi leyo ndlela ingase iwafanele yini umhlaba wabo.",
+        "Funa iseluleko sochwepheshe abafanele ngezifo ezingajwayelekile noma izinkinga zobuchwepheshe. Ulwazi lomphakathi lungasebenza kanye nosizo lochwepheshe."
+      ],
+      "19": [
+        "Sebenzisa izigaba ezibhalwe ukuthi isivuno, lapho siye khona, izindleko, nomsebenzi.",
+        "Qopha wonke amakhilogremu, ama-dozen, noma izinyanda njengoba ziphuma epulazini.",
+        "Faka ukudla okugcinelwe umuzi, okuthengisiwe, okunikezwe abanye, nokufakwe ku-compost.",
+        "Ekupheleni kwesizini eyodwa, thola isivuno esibuyisa kahle kanye nenyanga lapho umuzi uthenga khona ukudla."
+      ],
+      "20": [
+        "Khetha isinqumo esisodwa sangempela esivela kurekhodi lepulazi lakho.",
+        "Qhathanisa izindleko nembuyiselo yesitshalo noma yendlela yokuthengisa, noma uhlelele isikhathi sokushoda kokudla komuzi usebenzisa izimo zokutshala zendawo.",
+        "Bese nivumelana nomakhelwane ngesinyathelo esisodwa esisebenzayo: ukushintshisana ngembewu, ukwabelana ngethuluzi, ukuletha umkhiqizo ndawonye noma ukufunda ikhono. Ngaphambi kokushintshisana ngembewu, hlolani ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini. Qophani izibopho zomuntu ngamunye bese nibuyekeza okwenzekile."
+      ]
+    },
     "en": {
       "1": [
         "Your garden gives food, income, and useful knowledge.",

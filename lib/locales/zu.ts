@@ -916,6 +916,7 @@ const dict: Dict = {
   studentZuluLessonDraftBadge: 'Uhlaka lwesiZulu olungakabuyekezwa',
   studentZuluLessonEnglishBadge: 'Umbhalo wesiNgisi',
   studentZuluCourseLanguageNote: 'Ezinye izifundo zinohlaka lwesiZulu olungakabuyekezwa; ezinye ziboniswa ngesiNgisi. Ukutholakala komsindo akusho ukuthi umbhalo wesifundo ubuyekeziwe.',
+  studentZuluAudioDraftNotice: 'Lo msindo wesiZulu uwuhlaka olwenziwe yikhompyutha. Ukulalelwa nokubuyekezwa ngumuntu okhuluma kahle isiZulu kanye nomuntu onolwazi lokulima kwasendaweni kusalindile.',
   studentZuluModuleDraftBadge: 'Uhlaka lwesiZulu olungakabuyekezwa',
   studentZuluModuleEnglishBadge: 'Isihloko sesiNgisi',
   studentDesignEnglishPreview: 'Isifundo sokuklama · okokufundisa kuboniswa ngesiNgisi',
