@@ -1,6 +1,6 @@
 # Seeds and Seed Sovereignty L2 — isiZulu comparison draft
 
-**Status: review-only draft. Not registered learner text, not audio copy, and not fluent-reviewed.**
+**Status: unreviewed translation draft. Learners may see the proposed lesson text only with the app's visible draft label. This packet is not audio copy and has not had fluent isiZulu review.**
 
 This packet pairs the current English L2 lesson in `lib/course-modules.ts` (`seeds-sovereignty-l2`) with proposed isiZulu for its body, key points, quiz questions, choices, and rationales. Existing English and isiZulu narration and the isiZulu deck are comparison material only; they do not approve this draft. No protected lesson source was changed.
 
@@ -12,7 +12,7 @@ This packet pairs the current English L2 lesson in `lib/course-modules.ts` (`see
 - Existing isiZulu deck: `public/course-decks/seeds-sovereignty/zu/slide-11.jpg` through `slide-16.jpg`.
 - Lesson infographic: `public/course-images/seeds-sovereignty/seeds-sovereignty-l2.jpg`.
 
-The existing isiZulu narration distinguishes dry seed from seed in fleshy fruit, and describes tomato fermentation as a useful method rather than a universal rule. It preserves that tomatoes mostly self-pollinate while crossing remains possible. It uses “ukubilisa kancane” for fermentation; since that can read as boiling, this draft uses “ukuvutshelisa” pending fluent review. Review whether the proposed wording is clear in the local language variety and when read aloud.
+The existing isiZulu narration distinguishes dry seed from seed in fleshy fruit, and describes tomato fermentation as a useful method rather than a universal rule. It preserves that tomatoes mostly self-pollinate while crossing remains possible. The proposed lesson uses “ukuvutshelisa” for fermentation and describes the jar as actively fermenting; review whether the wording is clear in the local language variety and when read aloud.
 
 ## English lesson body
 
@@ -87,6 +87,7 @@ Indlela impova ehamba ngayo nayo ibalulekile. Ummbila uthola impova ehamba nomoy
 - Maize is described as wind-pollinated and able to cross with other varieties. No numeric distance is supplied. Do not add one.
 - Quiz answer indices remain 1 and 1. Confirm that option 2 in quiz 2 remains clearly false without accidentally teaching that tomatoes never cross.
 - Existing slide 14 narration gives a two-to-three-day fermentation window and signs. Those operational details are not in this English lesson body or its quiz; this packet does not move them into the lesson draft.
+- The learner draft is stored in `lib/course-translation-drafts.ts` and is served only through the visibly labelled draft presentation. The lesson fields and answer indexes were compared with the current English source when registered.
 
 ## Exact review dependency
 

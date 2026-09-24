@@ -36,6 +36,74 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
       },
     ],
   },
+  "seeds-sovereignty-l2": {
+    title: "Indlela Yokulondoloza Imbewu: Izindlela Ezomile Nezimanzi",
+    body: "Imbewu eyomile kufanele ivuthwe ngaphambi kokuba iqoqwe. Susa amakhoba nembewu eyonakele, bese uqedela ukuyomisa emthunzini lapho kuhamba khona umoya.\n\nImbewu engaphakathi kwesithelo esinenyama idinga indlela eqondene naleso sitshalo. Imbewu katamatisi ingavutsheliswa isikhashana ukuze kususwe ijeli eyizungezile, bese iyahlanzwa futhi yomiswa ngokuphelele. Shiya imbiza lapho imbewu ivutsheliswa khona ivulekile noma uyimboze ngokuxega. Ukuvutshelisa akudingeki kuzo zonke izitshalo ezinembewu emanzi futhi akuqinisekisi ukuthi imbewu ayinazifo.\n\nIndlela impova ehamba ngayo nayo ibalulekile. Ummbila uthola impova ehamba nomoya futhi ungaxubana nezinye izinhlobo. Utamatisi uvame ukuzithuthela impova, kodwa ukuxubana kusengenzeka. Hlola isitshalo nohlobo lwaso ngaphambi kokuhlela ukusihlukanisa noma ukulondoloza imbewu yaso.",
+    keyPoints: [
+      "Izitshalo zendlela eyomile (ubhontshisi, ummbila, ubhekilanga) zomiswa esitshalweni ngaphambi kokuqoqwa.",
+      "Ukuvutshelisa imbewu katamatisi kusiza ukususa ijeli; enye imbewu emanzi idinga indlela yayo yokuyilungisa.",
+      "Utamatisi awudingi ukuhlukaniswa okukhulu; ummbila udinga ibanga elikhulu phakathi kwezinhlobo ukuze zigcine ubumsulwa bazo.",
+      "Hlanza imbewu katamatisi esilungisiwe, bese uyomisa ngokuphelele ngaphambi kokuyigcina.",
+    ],
+    quiz: [
+      {
+        q: "Ukuvutshelisa imbewu katamatisi isikhashana kusiza ukususa ini?",
+        options: [
+          "Ukuvutshelisa kuthuthukisa ukunambitheka kwembewu.",
+          "Kusiza ukususa ijeli ezungeze imbewu ngaphambi kokuyihlanza nokuyomisa.",
+          "Kubulala zonke izinambuzane ezingaphakathi kwesithelo.",
+          "Kuyisiko kuphela, akunamsebenzi osebenzayo.",
+        ],
+        correct: 1,
+        rationale: "Ukuvutshelisa kusiza ukuhlukanisa imbewu katamatisi nejeli. Akuqinisekisi ukuhluma noma ukuthi imbewu ayinazifo; yomisa iqoqo, uligcine, bese ulihlola.",
+      },
+      {
+        q: "Kungani ummbila udinga ibanga elikhulu kakhulu lokuhlukaniswa kunotamatisi ukuze uhlobo lugcine izici zalo?",
+        options: [
+          "Imbewu yommbila intekenteke kakhulu.",
+          "Ummbila uthola impova ethwalwa umoya futhi ungaxubana kalula ngebanga; utamatisi uvame ukuzithuthela impova.",
+          "Utamatisi awuxubani nempova ngaphansi kwanoma yiziphi izimo.",
+          "Ummbila uqhakaza isikhathi esifushane.",
+        ],
+        correct: 1,
+        rationale: "Umoya uthwala impova yommbila ibanga elide. Lokhu kuhlukile endleleni impova katamatisi ehamba ngayo, njengoba utamatisi uvame ukuzithuthela impova. Yile ndlela ehlukile yokuthuthwa kwempova eyenza kudingeke izindlela ezahlukene zokuhlukanisa izitshalo.",
+      },
+    ],
+  },
+  "seeds-sovereignty-l3": {
+    title: "Ukomisa, Ukugcina Nokwabelana Ngembewu",
+    body: "Yomisa imbewu eyomile kahle ngaphambi kokuyigcina: yifake emvilophini yephepha, hhayi kwepulasitiki, uyibeke endaweni enomthunzi nenomoya ohambayo — ungayibeki elangeni eliqondile noma endaweni evaliwe eshisayo. Izinto ezintathu ezilimaza amandla embewu okuhluma ukushisa, ukukhanya nomswakama. Yehlisa konke lokhu, imbewu ingahlala iminyaka.\n\nBhala emvilophini ngayinye igama lesitshalo, uhlobo nosuku imbewu eyalondolozwa ngalo. Gcina endaweni epholile, emnyama neyomile — isitsha esivaliwe esinelayisi elincane noma impuphu yobisi olomisiwe singasiza ukumunca umswakama.\n\nNgaphambi kwesizini entsha yokutshala, hlola iqoqo elincane ukuthi liyahluma yini ukuze unganciki embewini esilahlekelwe amandla okuhluma ungakuqapheli.\n\nHlela ukushintshisana ngembewu nomakhelwane kule sizini. Lokho ikhaya elilodwa elikulondoloze kahle, amakhaya amaningana angabelana ngakho — futhi izinhlobo ezahlukahlukene zeqembu lonke ziyakhula kukho konke ukushintshisana.",
+    keyPoints: [
+      "Yomisa imbewu emthunzini lapho kuhamba khona umoya; ungayibeki elangeni eliqondile noma endaweni evaliwe eshisayo.",
+      "Gcina imbewu enelebula endaweni epholile, emnyama neyomile — ukushisa, ukukhanya nomswakama yizinto ezintathu ezilimaza amandla okuhluma.",
+      "Hlola iqoqo elincane lembewu ukuthi liyahluma yini ngaphambi kokuncika kuyo ukuze utshale.",
+      "Ukushintshisana ngembewu kwandisa izinhlobo ezahlukene zeqembu ngokushesha kunokulondoloza uwedwa.",
+    ],
+    quiz: [
+      {
+        q: "Yiziphi izinto ezintathu eziyinhloko ezilimaza amandla embewu egciniwe okuhluma?",
+        options: [
+          "Umoya, izinambuzane nesikhunta.",
+          "Ukushisa, ukukhanya nomswakama.",
+          "Ukubanda, ubumnyama nokoma.",
+          "Ukuthinta inhlabathi, izinambuzane namagundane.",
+        ],
+        correct: 1,
+        rationale: "Ukugcina imbewu ipholile, isemnyameni futhi yomile kunciphisa lezi zinto ezintathu — yingakho isitsha esivaliwe ekhabetheni elinomthunzi sisebenza kahle.",
+      },
+      {
+        q: "Kungani kufanele uhlole iqoqo elincane lembewu egciniwe ukuthi liyahluma yini ngaphambi kwesizini yokutshala?",
+        options: [
+          "Kuyisidingo somthetho lapho kwabelwana ngembewu.",
+          "Imbewu ingalahlekelwa amandla okuhluma ngesikhathi igciniwe ungakuqapheli; ukuhlola kusiza ukuba unganciki embewini engeke ikhule.",
+          "Kuthuthukisa ukunambitheka kwembewu.",
+          "Kudingeka embewini ye-hybrid kuphela.",
+        ],
+        correct: 1,
+        rationale: "Ukuhlola ukuhluma kuveza imbewu esifile ngesikhathi igciniwe, ngaphambi kokuba uthembele kuyo ekutshaleni kwesizini yonke.",
+      },
+    ],
+  },
   "intro-permaculture-l1": {
     "title": "Izimiso Ezintathu Zokuziphatha: Ukunakekela Umhlaba, Abantu Nokubuyisela Okusele",
     "body": "I-Permaculture isekelwe kuma-ethics amathathu. I-Earth Care isho ukuphatha inhlabathi, amanzi, izitshalo nezilwane njengezinhlelo eziphilayo okufanele zivikelwe, hhayi njengezinsiza okufanele zisetshenziswe zize ziphele. I-People Care isho ukuthi izidingo zomndeni wakho ziza kuqala, bese kulandela izidingo zomphakathi wakho. I-Fair Share isho ukuthatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi.\n\nLa ma-ethics akuwona nje amazwi angenamsebenzi. Umlimi othengisa wonke amaqanda nayo yonke imifino, angashiyi lutho etafuleni lomndeni, uyeqa i-People Care. Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela wephula i-Fair Share.\n\nAma-ethics abalulekile ngoba akusiza wenze izinqumo lapho kungekho mithetho ecacile — njengalapho umakhelwane ecela ukwelusela izinkomo ngemva kwesomiso, noma lapho isikhukhula silimaza ama-swale akho. Faka la ma-ethics amathathu endleleni ocabanga ngayo ngaphambi kokwakha noma yini emhlabeni.",
