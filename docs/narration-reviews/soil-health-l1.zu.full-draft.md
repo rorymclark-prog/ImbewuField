@@ -2,11 +2,16 @@
 
 **REVIEW ONLY — not approved for learners, recording or publication.** This draft aligns the current English lesson body, key points, both quiz questions with every option and rationale, and exact narration slides 1–8. It is a working draft for a first-language isiZulu farmer/practitioner to review. English meanings below control; no fluent-language or agronomic approval is claimed.
 
+**24 September media update:** the revised 20-slide isiZulu narration source,
+still deck and Thando voice audio were prepared from this full-draft packet and
+the L2/L3 packets. They remain unreviewed AI draft assets. See
+[`SOIL-HEALTH-ZU-REVIEW.md`](../media/soil-health/SOIL-HEALTH-ZU-REVIEW.md).
+
 ## Sources and holds
 
 - Current lesson authority: `soil-health-l1` in `lib/course-modules.ts`.
 - Current narration: slides 1–8 in `docs/narration/soil-health.en.md`.
-- Previous isiZulu text: slides 1–8 in `docs/narration/soil-health.zu.md`; it is stale and reference-only.
+- Current isiZulu text: slides 1–8 in `docs/narration/soil-health.zu.md`; it now follows this corrected draft and still needs fluent/local review.
 - Use several clues to assess soil. Colour, smell, worm channels or worm counts alone do not diagnose a cause.
 - The jar test is a rough learning exercise. Clumps and unsettled clay can mislead; use a soil laboratory when accurate texture is needed. Do not infer watering or treatment from one jar.
 - The English uses “safe compost” in its opening overview; do not strengthen this into a sanitation guarantee. Later compost lessons hold explicit sanitation cautions.

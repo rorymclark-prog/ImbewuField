@@ -512,6 +512,40 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
       }
     ]
   },
+  "soil-health-l3": {
+    "title": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Nokwakha Umhlabathi",
+    "body": "Mboza umhlabathi ongenalutho nge-mulch ehlanzekile nefanele, njenge-straw, utshani obomile noma ama-wood chips.\n\nI-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwamaconsi emvula futhi icindezele ukhula. Uma imvula ishaya i-mulch esikhundleni somhlabathi ongenalutho, ingxenye enkulu yamandla amaconsi emvula ingadamba.\n\nYigcine ingathinti iziqu zezihlahla nezitshalo. Hlola umswakama ngaphansi kwayo bese ulungisa ungqimba; i-mulch eningi ayihlali ingcono.\n\nIzitshalo zokumboza umhlabathi zingawuvikela phakathi kwezilimo eziyinhloko. Khetha ngokwesimo sezulu sendawo, amanzi atholakalayo nesitshalo ozositshala ngokulandelayo.\n\nIzibonelo ezikulesi sifundo ama-oats, ama-lupins, i-sunn hemp ne-cowpea. Hlola ukuthi zikufanele yini indawo yakho ngaphambi kokuzihlwanyela.\n\nIzitshalo zohlobo lwe-legume zidinga amagciwane afanele nezimo zokukhula ezifanele ukuze zibophe i-nitrogen. Izakhamzimba ezisezinsaleleni zazo zitholakala njengoba lezo nsalela zibola.\n\nAmapulazi ezikelemu angaguqula izinsalela zokudla ezifanele nezinto zokulala kwezikelemu zibe ama-castings. Hlola umgqomo kunokulindela isikhathi esinqunyiwe sokuvuna.\n\nUketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate. Alufani netiye lezikelemu elilungiswe ngendlela ethile.\n\nI-leachate ingaba nezinto eziphilayo noma ezinye izinto eziyingozi. Ungayisebenzisi ezitshalweni ezidliwayo futhi ungacabangi ukuthi ukuyixuba namanzi kuyenza iphephe.\n\nInsimu yase-Highveld eshiywe ingenalutho ngemva kokuvuna ummbila ibhekene nezingozi ezimbili eziyinhloko.\n\nUmoya wasebusika ungathwala umhlabathi ongaphezulu owomile uwususe.\n\nIsiphepho sokuqala esinamandla sentwasahlobo singashaya umhlabathi ongenalutho sonakalise ingaphezulu lawo nokwakheka kwawo. Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe awususe.\n\nIzitshalo zokumboza umhlabathi, i-mulch nezinto zemvelo zingasiza ukugcina umhlabathi endaweni yawo futhi ziwusize uhlale uphila.",
+    "keyPoints": [
+      "Vikela umhlabathi oveziwe nge-mulch efanele.",
+      "Gcina i-mulch ingathinti iziqu zezihlahla nezitshalo.",
+      "Khetha izitshalo zokumboza ngokwesimo sezulu namanzi endawo, ucabange ngesitshalo esizolandela.",
+      "Ungacabangi ukuthi i-leachate iphephile njengomanyolo; ungayisebenzisi ezitshalweni ezidliwayo."
+    ],
+    "quiz": [
+      {
+        "q": "Umlimi wase-Highveld uvuna ummbila ngo-Ephreli bese eshiya insimu ingenalutho ebusika bonke. Yiziphi izingozi ezimbili eziyinhloko?",
+        "options": [
+          "Ukushisa ngokweqile elangeni lasebusika nokugcwala kwamanzi ngenxa yemvula",
+          "Isithwathwa sibulala impilo yomhlabathi, bese ukhula luhlasela kusenesikhathi",
+          "Ukuguguleka komhlabathi ongaphezulu owomile ngenxa yomoya nokulimala kokwakheka komhlabathi ngenxa yokushaya kwesiphepho sentwasahlobo",
+          "I-pH yomhlabathi iyehla bese i-nitrogen iyanda"
+        ],
+        "correct": 2,
+        "rationale": "Umoya wasebusika ungathwala umhlabathi ongaphezulu owomile uwususe. Ukushaya kwamaconsi emvula kungalimaza ingaphezulu lomhlabathi; lapho amanzi egeleza phezu komhlaba, angathwala umhlabathi osuxegisiwe awususe."
+      },
+      {
+        "q": "Yini okufanele uyikhumbule ngoketshezi oluphuma emgqonyeni wezikelemu?",
+        "options": [
+          "Luhlala luphephile uma lusetshenziswa emaqabungeni esaladi",
+          "Lungaba nezinto eziphilayo noma ezinye izinto eziyingozi; ukuluxuba namanzi akuqinisekisi ukuthi luphephile",
+          "Lufana nama-worm castings aqediwe",
+          "Ukuluxuba namanzi ngenani elinqunyiwe kwenza lonke uketshezi luphephe"
+        ],
+        "correct": 1,
+        "rationale": "I-leachate iwuketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu. Ukwakheka kwalo kuyahlukahluka. Ukuluxuba namanzi akuqinisekisi ukuthi luphephile, ngakho ungalusebenzisi ezitshalweni ezidliwayo."
+      }
+    ]
+  },
   "vegetables-staples-l1": {
     "title": "Ukulungisa Nokutshala Emibhedeni Yakho",
     "body": "Umhlabathi ominyene ulahlekelwa yizikhala zomoya. Izimpande zikhula kancane. Amanzi angena ngendlela ehlukile. Umbhede uba nzima ukuwusebenza inkathi ngayinye.\n\nUkuvikela kulula: yiba nezindlela ezihlala njalo, nombhede omncane ngokwanele ukuthi ufinyelele kuwo uvela ezinhlangothini zombili.\n\nUbubanzi obusebenzayo busuka kumitha elilodwa kuya kumamitha angu-1.2. Ngalobo bubanzi, ungafinyelela maphakathi uvela kunoma iyiphi indlela, izinyawo zakho zingangeni endaweni okukhulela kuyo izitshalo.\n\nManje cabanga ngamabhede akho. Ungafinyelela phakathi ngaphandle kokungena kuwo? Hamba uyokuzama lokhu ngaphambi kokutshala enye into.\n\nAwukho umumo wombhede owodwa ofanele yonke indawo.\n\nQala ngokuphazamisa umhlabathi kancane ngangokunokwenzeka ukuze uxazulule inkinga yakho.\n\nIndlela ye-no-dig ifanele inhlabathi yezingadi eminingi. Shiya ukwakheka komhlabathi kungaphazamisekile, wakhe ukuvunda phezu kwawo.\n\nUngawumbi ubumba olumanzi. Uma ukucinana noma ukungaphumi kahle kwamanzi kukukhulu, thola imbangela ngosizo lwendawo ngaphambi kokukhetha ukulima ujule.\n\nAmabhede aphakanyisiwe afanele umhlabathi omanzi, lapho amanzi edinga khona indawo yokuphuma.\n\nAmabhede acwile phansi afanele umhlabathi owomile, lapho ufuna ukubamba khona amanzi emvula uwagcine.\n\nNgemva kwemvula enkulu, bheka ukuthi amanzi ahlala kuphi noma ageleza ngakuphi. Hlanganisa lokho okubonile neseluleko ngomhlabathi nangokuphuma kwamanzi ngaphambi kokukhetha uhlobo lombhede.\n\nEzinye izitshalo azikuthandi ukuphazanyiswa kwezimpande. Zikhula kangcono uma zihlwanyelwa ngqo lapho zizokhulela khona. Izimbotyi, izaqathe nommbila kungena kulelo qembu.\n\nEzinye zikhula kangcono uma ziqala zisesitshalweni esincane endaweni evikelekile yokukhulisela izithombo, bese zitshalwa kwenye indawo. Utamatisi nezitshalo zohlobo lwe-brassica kungena kulelo qembu.\n\nSebenzisa iseluleko sebanga lokutshala esifanele isitshalo, uhlobo lwaso nezimo zendawo. Hlola iphakethe lembewu neseluleko somlimi wendawo. Njengoba izitshalo zikhula, bheka ukuthi aziminyene yini.\n\nNgaphambi kokutshala, maka indawo yombhede.\n\nUmbhede owodwa wokuzijwayeza: ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.\n\nSebenzisa izikhonkwane nentambo. Maka unxande kanye nezindlela zokungena kuzo zombili izinhlangothi.\n\nBese ulungiselela umhlabathi wakho: qala nge-no-dig, bese umba ujule kuphela uma umhlabathi wakho ukudinga ngempela.\n\nUmugqa wentambo uguqula umbono ube yisinqumo. Uma usunezindlela, zigcine zikhona. Uma usunendawo yokukhulisela izitshalo, yivikele.\n\nLowo mbhede uba lula ukuwuthuthukisa inkathi ngayinye, ngoba uyeka ukuhamba phezu kwawo.",

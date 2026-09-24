@@ -475,6 +475,42 @@ test('the soil tour replaces old timed speech once and preserves other downloade
   assert.doesNotMatch(body, /\bfetch\(/, 'updating a lesson must not silently spend a learner’s airtime');
 });
 
+test('corrected Soil Health L3 narration clears only the superseded English clips', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilHealthL3CorrectedNarration\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateSoilHealthL3CorrectedNarration\)/);
+  const changed = [
+    '/course-audio/soil-health/en/full.mp3',
+    '/course-audio/soil-health/en/slide-14.mp3',
+    '/course-audio/soil-health/en/slide-17.mp3',
+    '/course-audio/soil-health/en/slide-18.mp3',
+  ];
+  const keep = [
+    '/course-audio/soil-health/en/slide-13.mp3',
+    '/course-audio/soil-health/en/slide-16.mp3',
+    '/course-audio/soil-health/zu/slide-17.mp3',
+    '/course-decks/soil-health/zu/slide-11.jpg',
+    '/course-animations/soil-health/flow-compost-materials.mp4',
+    '/course-audio/food-forest/en/slide-17.mp3',
+  ];
+  const rows = new Map([...changed, ...keep].map(path => [path + '?saved=old', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(key => new Request('https://example.com' + key)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=old'), false, path);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=old'), true, path);
+  rows.set(changed[0] + '?saved=new', new Response('new corrected narration'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0] + '?saved=new')!.text(), 'new corrected narration');
+  assert.doesNotMatch(body, /\bfetch\(/, 'migration must not spend learner airtime');
+});
+
 test('the young-forest tour refreshes its speech and still once without erasing other downloads', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateForestEstablishmentMedia\(\) \{([\s\S]*?)\n\}/)?.[1];

@@ -181,6 +181,18 @@ test('the compost lesson shows dry browns being placed over fresh greens and the
   assert.equal(clip.playOnce, true);
 });
 
+test('Soil isiZulu uses localized stills instead of mismatched English Flow scenes', () => {
+  for (const slide of [10, 11]) {
+    assert.ok(animationUrls('soil-health', slide, 'en'), `English slide ${slide} keeps its existing clip`);
+    assert.equal(animationUrls('soil-health', slide, 'zu'), null,
+      `isiZulu slide ${slide} must use the localized still while its Flow scene is visually mismatched`);
+    assert.deepEqual(slideImageFor('soil-health', 'zu', slide), {
+      url: `/course-decks/soil-health/zu/slide-${String(slide).padStart(2, '0')}.jpg`,
+      lang: 'zu', exact: true,
+    });
+  }
+});
+
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // The isiZulu deck came back from PowerPoint as "Repaired" with 23 of its 24 slides — the repair
   // dropped slide 13, "Buka: Indlela Eyomile". Falling the whole module back to English because of

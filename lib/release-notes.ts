@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'f249ea06', changes: [
+    'Soil Health now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Both are review drafts; slides 10–11 use matching still pictures.',
+  ], tour: [
+    { title: 'Hear Soil Health in isiZulu', where: 'My Studies · Soil Health', href: '/student',
+      detail: 'Choose isiZulu, open Soil Health, then play a narrated slide. Review drafts are labelled.' },
+  ] },
   { when: '24 September 2026', sha: '6d0c39b2', changes: [
     'Small Livestock now explains bee ranges and movement rules.',
     'Bee registration guidance names the activities covered by national rules.',
