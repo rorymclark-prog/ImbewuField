@@ -331,9 +331,11 @@ function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
 // ---------------------------------------------------------------------------
 
 export default function CalendarPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const monthLabels = lang === 'zu'
-    ? MONTH_ABBR.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'short' }))
+    ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+       t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+       t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
     : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
