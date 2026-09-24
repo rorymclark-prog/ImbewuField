@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '81a0adf0', changes: [
+    'Market Gardening now has 20 isiZulu voice clips marked as unreviewed drafts.',
+    'The English voice remains available; lesson text has its own draft status.',
+  ], tour: [
+    { title: 'Hear Market Gardening', where: 'My Studies · Market Gardening', href: '/student',
+      detail: 'Choose isiZulu, open Market Gardening, then play a narrated slide.' },
+  ] },
   { when: '24 September 2026', sha: 'e1a0d221', changes: [
     'All 10 core module cards show labelled isiZulu draft names and descriptions.',
     'Lesson slides and narration still show their own language status.',
