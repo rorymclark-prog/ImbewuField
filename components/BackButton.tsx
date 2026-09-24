@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { useRegisterBackControl } from '@/components/BackControl';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * A consistent "← Back" control for every sub-page header.
@@ -10,6 +11,7 @@ import { useRegisterBackControl } from '@/components/BackControl';
  */
 export default function BackButton({ fallback = '/' }: { fallback?: string }) {
   const router = useRouter();
+  const { lang, t } = useLanguage();
   // Tells the global fallback (BackControl) that this page already offers a way back, so the
   // farmer never sees two back buttons on one screen.
   useRegisterBackControl();
@@ -21,8 +23,8 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
     <button
       type="button"
       onClick={goBack}
-      aria-label="Go back"
-      title="Back"
+      aria-label={lang === 'zu' ? 'Buyela emuva' : 'Go back'}
+      title={t('buttonBack')}
       className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
       style={{
         background: 'var(--bg-1)',
@@ -37,7 +39,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
       }}
     >
       <ChevronLeft size={14} strokeWidth={2} />
-      <span>Back</span>
+      <span>{t('buttonBack')}</span>
     </button>
   );
 }

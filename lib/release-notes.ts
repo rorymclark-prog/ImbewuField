@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '2c15ac6c', changes: [
+    'Back and menu controls now follow your isiZulu setting.',
+  ], tour: [
+    { title: 'Check Back in isiZulu', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu, then look at the Back button in the top bar.' },
+    { title: 'Check the menu', where: 'Planting Calendar', href: '/calendar',
+      detail: 'The menu button has an isiZulu label for screen readers.' },
+  ] },
   { when: '25 September 2026', sha: '95be15e8', changes: [
     'Calendar month labels now appear in isiZulu.',
     'Task Planner labels its English farming guidance.',

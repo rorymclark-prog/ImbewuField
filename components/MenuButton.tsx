@@ -24,9 +24,11 @@ import NavDrawer from './NavDrawer';
 import FieldSyncBadge from './FieldSyncBadge';
 import { ProductTourButton } from './ProductTourProvider';
 import { useSampleRole } from '@/lib/use-role-navigation';
+import { useLanguage } from '@/lib/i18n';
 
 export default function MenuButton() {
   const [open, setOpen] = useState(false);
+  const { lang, t } = useLanguage();
   const sample = !!useSampleRole();
   return (
     <>
@@ -34,9 +36,9 @@ export default function MenuButton() {
         type="button"
         data-app-menu
         onClick={() => setOpen(true)}
-        aria-label="Open navigation"
+        aria-label={t('openNavigationAriaLabel')}
         aria-expanded={open}
-        title={sample ? 'Tour — open choices and exit' : 'Menu'}
+        title={sample ? (lang === 'zu' ? 'Uhambo — vula izinketho bese uphuma' : 'Tour — open choices and exit') : t('openNavigationAriaLabel')}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
@@ -53,7 +55,7 @@ export default function MenuButton() {
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>Tour</span>}
+        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
       </button>
       <FieldSyncBadge />
       <ProductTourButton />
