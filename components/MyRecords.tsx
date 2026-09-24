@@ -62,6 +62,11 @@ import {
   CreditPackSampleModeError,
 } from '@/lib/credit-pack-pdf';
 
+function recordsUi(lang: string, english: string, isiZulu: string, paired = false): string {
+  if (lang !== 'zu') return english;
+  return paired ? `${english} — ${isiZulu}` : isiZulu;
+}
+
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
 // WriteTimeoutError comment there. Deliberately NOT run through t(): this repo never invents
 // isiZulu (or any other) translation, and translate()'s fallback would silently show the same
@@ -147,7 +152,7 @@ function SubmitBtn({
   loading: boolean;
   children: React.ReactNode;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
     <button
       type="submit"
@@ -336,7 +341,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     <Card accent="#1F4D2B">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
-        {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">AI-generated crop reference · add your own harvest photo below.</figcaption></figure>}
+        {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
           <CropSelect
@@ -545,9 +550,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             )}
           </div>
         )}
-        <label className="block text-sm">Growing area for this sale (optional)
+        <label className="block text-sm">{recordsUi(lang, 'Growing area for this sale (optional)', 'Indawo yokulima yalokhu kuthengisa (akuphoqelekile)')}
           <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
-            <option value="">Unassigned</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option><option value="other">Orchard / other</option>
+            <option value="">{recordsUi(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsUi(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsUi(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option><option value="other">{recordsUi(lang, 'Orchard / other', 'Ingadi yezihlahla zezithelo / okunye')}</option>
           </select>
         </label>
         <div className="grid grid-cols-2 gap-2">
@@ -577,7 +582,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </p>
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
-        <Link href="/invoice" className="block py-2 text-sm underline">Multiple products or payment later? Create an invoice</Link>
+        <Link href="/invoice" className="block py-2 text-sm underline">{recordsUi(lang, 'Multiple products or payment later? Create an invoice', 'Imikhiqizo eminingi noma ukukhokha kamuva? Dala i-invoyisi', true)}</Link>
       </form>
     </Card>
   );
@@ -771,7 +776,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 /* ── Sales list ──────────────────────────────────────────────────────────── */
 
 function SalesList({ items }: { items: SalesLog[] }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
@@ -842,8 +847,8 @@ function SalesList({ items }: { items: SalesLog[] }) {
             <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
-            {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`View invoice for ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />Invoice #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · View</Link>}
-            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${item.invoice_source_sale ? 'Recover' : 'Create'} invoice for ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{item.invoice_source_sale ? 'Recover invoice' : 'Create invoice'}</Link>}
+            {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
+            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
@@ -937,6 +942,7 @@ function CreditPackCard({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const sampling = isSampleMode();
+  const { lang } = useLanguage();
   const ready = creditPackHasAnyRecords(production, sales, expenses, invoices);
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
@@ -978,34 +984,32 @@ function CreditPackCard({
         </div>
         <div>
           <p className="text-xl font-display font-semibold" style={{ color: 'var(--color-ink)' }}>
-            Records for a lender
+            {recordsUi(lang, 'Records for a lender', 'Amarekhodi okubolekwa imali')}
           </p>
           <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
-            A summary of your logged harvests, sales and costs — income consistency, cash flow and
-            a track record, built only from what you have entered. Material for a conversation with
-            a lender, not a credit score or a loan approval.
+            {recordsUi(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.', true)}
           </p>
         </div>
       </div>
 
       {!ready ? (
         <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: 'var(--bg-1)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
-          Log at least one harvest, sale or cost first — there is nothing to summarise yet.
+          {recordsUi(lang, 'Log at least one harvest, sale or cost first — there is nothing to summarise yet.', 'Rekhoda okungenani isivuno esisodwa, ukuthengisa noma izindleko kuqala — akukho okungafingqwa okwamanje.', true)}
         </p>
       ) : (
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
-          {[['Income', money(totals.income)], ['Costs', money(totals.spent)], ['Harvested', `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
+          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
             <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{previewOpen ? 'Close summary' : 'View summary'}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
-            <caption className="text-left py-2 font-semibold">Monthly income and costs</caption>
-            <thead><tr><th className="text-left p-2">Month</th><th className="text-right p-2">Income</th><th className="text-right p-2">Costs</th><th className="text-right p-2">Balance</th></tr></thead>
+            <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
+            <thead><tr><th className="text-left p-2">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className="text-right p-2">{recordsUi(lang, 'Income', 'Imali engenayo')}</th><th className="text-right p-2">{recordsUi(lang, 'Costs', 'Izindleko')}</th><th className="text-right p-2">{recordsUi(lang, 'Balance', 'Ibhalansi')}</th></tr></thead>
             <tbody>{months.map(month => <tr key={month.monthKey} style={{ borderTop: '1px solid var(--color-border)' }}><td className="p-2">{month.label}</td><td className="p-2 text-right">{money(month.incomeZar)}</td><td className="p-2 text-right">{money(month.expensesZar)}</td><td className="p-2 text-right">{money(month.netZar)}</td></tr>)}</tbody>
           </table>
         </div>}
@@ -1080,7 +1084,7 @@ export default function MyRecords({
 }) {
   const showPicked = section === 'all' || section === 'picked';
   const showSold = section === 'all' || section === 'sold';
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [sales, setSales] = useState<SalesLog[]>([]);
@@ -1356,15 +1360,15 @@ export default function MyRecords({
              same page, below this component. ── */}
       {showSold && (
         <Card accent="#315939">
-          <SectionLabel>Record a sale</SectionLabel>
-          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>Create an invoice to keep the buyer, produce, quantity and payment together.</p>
+          <SectionLabel>{recordsUi(lang, 'Record a sale', 'Rekhoda ukuthengisa')}</SectionLabel>
+          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Create an invoice to keep the buyer, produce, quantity and payment together.', 'Dala i-invoyisi ukuze ugcine umthengi, umkhiqizo, inani nenkokhelo ndawonye.', true)}</p>
           <div className="flex flex-wrap gap-2">
-            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />New sale &amp; invoice</Link>
-            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>Past sale / paper invoice<ArrowRight size={16} /></Link>
+            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />{recordsUi(lang, 'New sale & invoice', 'Ukuthengisa okusha ne-invoyisi')}</Link>
+            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>{recordsUi(lang, 'Past sale / paper invoice', 'Ukuthengisa kwangaphambilini / i-invoyisi yephepha')}<ArrowRight size={16} /></Link>
           </div>
-          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>Already logged this sale? Use Create invoice on its row below to keep one record.</p>
+          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>{recordsUi(lang, 'Already logged this sale? Use Create invoice on its row below to keep one record.', 'Usuvele ukuqophile lokhu kuthengisa? Sebenzisa okuthi Dala i-invoyisi emgqeni wako ngezansi ukuze kuhlale kuyirekhodi elilodwa.', true)}</p>
           <details className="mt-3">
-            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>Quick sale entry</summary>
+            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Quick sale entry', 'Faka ukuthengisa ngokushesha')}</summary>
             <LogSaleForm onSaved={handleSaved} />
           </details>
         </Card>
