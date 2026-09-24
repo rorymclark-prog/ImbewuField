@@ -2,6 +2,14 @@
 
 ## 24 September verification batch
 
+The farmer Add menu now has proposed isiZulu section labels, map choices and
+short action hints, with a visible fluent-review notice. The site progress
+card localizes presentation labels by stable step key while keeping its
+weights, thresholds, inputs and calculated percentage unchanged. The Next
+step card localizes routine controls and clearly marks its remaining English
+farming/Lima guidance for source and fluent review. None of these drafts is a
+reviewed agricultural instruction.
+
 A second farmer-map interface batch adds isiZulu for drawing prompts, corner
 actions, placing water or site points, place naming, and the map's site-element
 heading. The visible corner count remains in the prompt. Map category names,

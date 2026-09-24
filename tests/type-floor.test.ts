@@ -183,7 +183,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/report/CompletionScore.tsx': {
     reason: 'the report scorecard, same print scale',
-    budget: 3,
+    budget: 1,
   },
   'components/design/LessonPanel.tsx': { reason: 'design studio, laptop tool', budget: 3 },
   'components/AreaPanel.tsx': { reason: 'the drawing tool\'s measurement readout', budget: 0 },
