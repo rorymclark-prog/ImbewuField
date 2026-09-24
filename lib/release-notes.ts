@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'a809e35a', changes: [
+    'Faint grey text across the app is darker, so it holds up in bright sun.',
+    'Dark mode now works properly — cards, text and borders all follow it.',
+    'The smallest text on Journal, Calendar and Crop Plan is bigger.',
+    'Lima no longer sits on top of buttons like Mark done.',
+  ], tour: [
+    { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
+      detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
+  ] },
   { when: '24 September 2026', sha: '146257a1', changes: [
     'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
     'Three teaching diagrams show the farm record, sales routes and neighbour network.',
