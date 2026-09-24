@@ -29,6 +29,7 @@ import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
+import { narrationReviewPending } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
@@ -1082,6 +1083,12 @@ export default function StudentPage() {
                       compact
                       label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
                     />
+                    {narrationReviewPending(mod.id, lang) && (
+                      <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+                        {t('studentZuluAudioDraftNotice')}
+                      </p>
+                    )}
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
                         Rory, on opening a finished module: "i wanted the full slidedeck at the
                         beginning of the lesson, in a window so you can immediately see it — press

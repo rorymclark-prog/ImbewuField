@@ -10,6 +10,7 @@ import {
   moduleLevelTracks, narrationFor, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { narrationReviewPending } from '../lib/narration-blockers.ts';
 
 const PUBLIC_AUDIO = join(process.cwd(), 'public', 'course-audio');
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -44,6 +45,28 @@ test('the seeds module is recorded in isiZulu and English', () => {
   const slides = n.tracks.map((t) => t.slide);
   assert.deepEqual(slides, [...slides].sort((a, b) => a - b), 'tracks must be in slide order');
   assert.deepEqual(slides, Array.from({ length: slides.length }, (_, i) => i + 1), 'slides must run 1..N with no gaps');
+});
+
+test('Market isiZulu audio is exposed as a pending review draft with all slide mappings', () => {
+  const narration = narrationFor('market-community');
+  assert.ok(narration);
+  assert.ok(narration.languages.includes('zu'));
+  assert.equal(narrationReviewPending('market-community', 'zu'), true);
+  assert.equal(narrationReviewPending('market-community', 'en'), false);
+  assert.deepEqual(narration.tracks.map((track) => track.slide), Array.from({ length: 20 }, (_, i) => i + 1));
+  const script = readFileSync(join(process.cwd(), 'docs/narration/market-community.zu.md'), 'utf8');
+  const zuluHeadings = new Map(
+    [...script.matchAll(/^\*\*Ikhasi\s+(\d+)\s+[—-]\s+(.+?)\s+\(Slide\s+\d+\s+[—-][^)]+\)\*\*$/gm)]
+      .map((heading) => [Number(heading[1]), heading[2]] as const),
+  );
+  for (const track of narration.tracks) {
+    assert.equal(trackTitle(track, 'zu'), zuluHeadings.get(track.slide),
+      `slide ${track.slide}: the isiZulu player caption must match the current narration heading`);
+  }
+  assert.deepEqual(
+    narration.tracks.map((track) => track.lesson),
+    [null, null, null, ...Array(5).fill('market-community-l1'), ...Array(5).fill('market-community-l2'), ...Array(5).fill('market-community-l3'), null, null],
+  );
 });
 
 test('language resolution prefers the app language, then English, and reports the swap', () => {
