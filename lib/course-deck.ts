@@ -233,7 +233,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {

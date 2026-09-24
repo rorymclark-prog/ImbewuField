@@ -1,0 +1,258 @@
+{
+  "seconds": 37.128,
+  "bytes": 222768,
+  "audioSha256": "bde79ef3d78e0277d833ab30b04b8535bb8321f1e38c1412d2e4e09f8cdd0772",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Bheka",
+      "offset": 1318330,
+      "duration": 3409160
+    },
+    {
+      "text": "ukuthi",
+      "offset": 5437500,
+      "duration": 4261250
+    },
+    {
+      "text": "umthunzi",
+      "offset": 9982910,
+      "duration": 7670410
+    },
+    {
+      "text": "izimpande",
+      "offset": 18931660,
+      "duration": 7812500
+    },
+    {
+      "text": "namanzi",
+      "offset": 26744160,
+      "duration": 6107910
+    },
+    {
+      "text": "kuthinta",
+      "offset": 32852080,
+      "duration": 5113750
+    },
+    {
+      "text": "kanjani",
+      "offset": 37965830,
+      "duration": 5823750
+    },
+    {
+      "text": "izitshalo",
+      "offset": 44215830,
+      "duration": 6960410
+    },
+    {
+      "text": "ezingomakhelwane",
+      "offset": 51602080,
+      "duration": 12784160
+    },
+    {
+      "text": "I-Comfrey",
+      "offset": 74397910,
+      "duration": 6392080
+    },
+    {
+      "text": "ne-wild",
+      "offset": 81215830,
+      "duration": 5255830
+    },
+    {
+      "text": "garlic",
+      "offset": 86613750,
+      "duration": 5113750
+    },
+    {
+      "text": "kuvela",
+      "offset": 92721660,
+      "duration": 5965830
+    },
+    {
+      "text": "esibonelweni",
+      "offset": 98971660,
+      "duration": 8664580
+    },
+    {
+      "text": "sokuqala",
+      "offset": 107636250,
+      "duration": 7670410
+    },
+    {
+      "text": "hlola",
+      "offset": 117721660,
+      "duration": 4261250
+    },
+    {
+      "text": "ukuthi",
+      "offset": 122267080,
+      "duration": 4403330
+    },
+    {
+      "text": "kuyifanele",
+      "offset": 126670410,
+      "duration": 7386250
+    },
+    {
+      "text": "yini",
+      "offset": 134056660,
+      "duration": 3977080
+    },
+    {
+      "text": "indawo",
+      "offset": 138460410,
+      "duration": 4403330
+    },
+    {
+      "text": "yakho",
+      "offset": 142863750,
+      "duration": 5113750
+    },
+    {
+      "text": "Thena",
+      "offset": 157636250,
+      "duration": 3551250
+    },
+    {
+      "text": "noma",
+      "offset": 161471660,
+      "duration": 3835410
+    },
+    {
+      "text": "unciphise",
+      "offset": 165732910,
+      "duration": 7102080
+    },
+    {
+      "text": "izitshalo",
+      "offset": 173261250,
+      "duration": 7386250
+    },
+    {
+      "text": "ezisiza",
+      "offset": 181215830,
+      "duration": 7528330
+    },
+    {
+      "text": "ezinye",
+      "offset": 189170410,
+      "duration": 4971660
+    },
+    {
+      "text": "uma",
+      "offset": 194710410,
+      "duration": 2698750
+    },
+    {
+      "text": "kudingeka",
+      "offset": 197409160,
+      "duration": 7954580
+    },
+    {
+      "text": "usebenzise",
+      "offset": 208204580,
+      "duration": 8664580
+    },
+    {
+      "text": "izindlela",
+      "offset": 217153330,
+      "duration": 6392080
+    },
+    {
+      "text": "ezifanele",
+      "offset": 223829580,
+      "duration": 7812500
+    },
+    {
+      "text": "uhlobo",
+      "offset": 232068330,
+      "duration": 4829580
+    },
+    {
+      "text": "lwesitshalo",
+      "offset": 236897910,
+      "duration": 8096660
+    },
+    {
+      "text": "Izingcezu",
+      "offset": 254511250,
+      "duration": 7102080
+    },
+    {
+      "text": "ezihlanzekile",
+      "offset": 262465830,
+      "duration": 10937500
+    },
+    {
+      "text": "ezifanele",
+      "offset": 273829580,
+      "duration": 7670410
+    },
+    {
+      "text": "zingasetshenziswa",
+      "offset": 281500000,
+      "duration": 11363750
+    },
+    {
+      "text": "njenge-mulch",
+      "offset": 292863750,
+      "duration": 8664580
+    },
+    {
+      "text": "Ungalindi",
+      "offset": 312323750,
+      "duration": 6818330
+    },
+    {
+      "text": "unyaka",
+      "offset": 319994160,
+      "duration": 4829580
+    },
+    {
+      "text": "omisiwe",
+      "offset": 325107910,
+      "duration": 7102080
+    },
+    {
+      "text": "uma",
+      "offset": 332920410,
+      "duration": 2982910
+    },
+    {
+      "text": "ukuncintisana",
+      "offset": 336187500,
+      "duration": 9517080
+    },
+    {
+      "text": "sekulimaza",
+      "offset": 345704580,
+      "duration": 8522910
+    },
+    {
+      "text": "izitshalo",
+      "offset": 354653330,
+      "duration": 7244160
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "food-forest",
+  "lesson": "food-forest-l3",
+  "language": "zu",
+  "slide": 17,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-17.txt",
+  "sourceSha256": "87d06e187a09412af2948631b77292ae9dde7007f39e63572acdca4da028aa13",
+  "scriptFile": "docs/narration/food-forest.zu.md",
+  "scriptSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "englishSourceFile": "docs/narration/food-forest.en.md",
+  "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T14:09:01.545052+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "revalidatedAt": "2026-09-24T14:09:01.544990+00:00"
+}
