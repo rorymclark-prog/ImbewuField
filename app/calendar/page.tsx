@@ -331,7 +331,12 @@ function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
 // ---------------------------------------------------------------------------
 
 export default function CalendarPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
+  const monthLabels = lang === 'zu'
+    ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+       t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+       t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
+    : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
 
@@ -385,7 +390,7 @@ export default function CalendarPage() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
         <div className="flex-1" />
-        <LessonLink id="crops:calendar" label="Learn" />
+        <LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />
         <SettingsButton />
       </header>
 
@@ -449,11 +454,11 @@ export default function CalendarPage() {
                   aria-current={idx === currentMonth ? 'date' : undefined}
                   aria-label={
                     idx === currentMonth
-                      ? localUi(`Select ${MONTH_ABBR[idx]} — this month`, `Khetha u-${MONTH_ABBR[idx]} — le nyanga`, lang)
-                      : localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${MONTH_ABBR[idx]}`, lang)
+                      ? localUi(`Select ${MONTH_ABBR[idx]} — this month`, `Khetha u-${monthLabels[idx]} — le nyanga`, lang)
+                      : localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${monthLabels[idx]}`, lang)
                   }
                 >
-                  {abbr}
+                  {monthLabels[idx]}
                 </button>
               );
             })}
@@ -490,7 +495,7 @@ export default function CalendarPage() {
                     lineHeight: 1.2,
                   }}
                 >
-                  {MONTH_ABBR[selectedMonth]} — {localUi('What to do', 'Ongakwenza', lang)}
+                  {monthLabels[selectedMonth]} — {localUi('What to do', 'Ongakwenza', lang)}
                 </div>
                 <div
                   style={{
@@ -796,7 +801,7 @@ export default function CalendarPage() {
                           minWidth: 36,
                         }}
                       >
-                        {abbr}
+                        {monthLabels[idx]}
                       </th>
                     ))}
                   </tr>

@@ -56,6 +56,42 @@ const SAMPLE_SURVEYS: Survey[] = [
   },
 ];
 
+// Only these built-in demonstration records have paired AI draft text. Live organization copy
+// stays exactly as authored, and the English option strings remain the stored response values.
+const SAMPLE_SURVEY_ZU_DRAFTS: Record<string, { title?: string; questions?: Record<string, string>; options?: Record<string, string> }> = {
+  'sample-1': {
+    title: 'Ukuhlola phakathi nesizini',
+    questions: {
+      sq1: 'Ingabe usuvunile kule sizini?',
+      sq2: 'Udayise cishe ngokungakanani?',
+    },
+    options: {
+      'Nothing yet': 'Akukho okwamanje',
+      'Under R500': 'Ngaphansi kuka-R500',
+      'R500–2000': 'Phakathi kuka-R500 no-R2000',
+      'Over R2000': 'Ngaphezulu kuka-R2000',
+    },
+  },
+  'sample-2': {
+    title: 'Ukuhlola ukutholakala kwamanzi',
+    questions: {
+      sq3: 'Ingabe unokuthola amanzi okuthembekile esivandeni sakho?',
+      sq4: 'Yimuphi umthombo wakho omkhulu wamanzi?',
+      sq5: 'Ingabe zikhona izinselelo zamanzi ofuna ukusitshela ngazo?',
+    },
+    options: {
+      Municipal: 'Amanzi kamasipala',
+      Borehole: 'I-borehole',
+      'Rain tank': 'Ithangi lemvula',
+      'River / stream': 'Umfula / umfudlana',
+    },
+  },
+};
+
+function showSampleDraft(survey: Survey, source: string, draft: string | undefined, lang: string) {
+  return lang === 'zu' && survey.id.startsWith('sample-') && draft ? `${draft} / ${source}` : source;
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeQuestionId(i: number) {
@@ -349,7 +385,7 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
     <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
+          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSampleDraft(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
             {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
           </div>
@@ -412,7 +448,7 @@ function FarmerSurveyCard({
         style={{ background: 'transparent', border: 'none', cursor: submitted ? 'default' : 'pointer' }}
       >
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
+          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSampleDraft(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
           </div>
@@ -434,7 +470,7 @@ function FarmerSurveyCard({
         <div className="px-4 pb-4 space-y-4" style={{ borderTop: '1px solid #E2D8C4' }}>
           {survey.questions.map((q) => (
             <div key={q.id} className="pt-3 space-y-2">
-              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{q.text}</div>
+              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{showSampleDraft(survey, q.text, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.questions?.[q.id], lang)}</div>
 
               {q.type === 'yesno' && (
                 <div className="flex gap-2">
@@ -453,7 +489,9 @@ function FarmerSurveyCard({
                           cursor: 'pointer',
                         }}
                       >
-                        {localUi(v, v === 'Yes' ? 'Yebo' : 'Cha', lang)}
+                        {lang === 'zu' && survey.id.startsWith('sample-')
+                          ? showSampleDraft(survey, v, v === 'Yes' ? 'Yebo' : 'Cha', lang)
+                          : localUi(v, v === 'Yes' ? 'Yebo' : 'Cha', lang)}
                       </button>
                     );
                   })}
@@ -480,7 +518,7 @@ function FarmerSurveyCard({
                           style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : '#C9BBA1'}`, background: on ? '#1F4D2B' : 'transparent' }}>
                           {on && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#EAF3E2' }} />}
                         </div>
-                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{opt}</span>
+                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{showSampleDraft(survey, opt, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.options?.[opt], lang)}</span>
                       </button>
                     );
                   })}
@@ -582,7 +620,9 @@ export default function SurveysPage() {
 
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-            Imibuzo nezimpendulo zokukhetha kuboniswa njengoba kubhalwe umdali wenhlolovo.
+            {lang === 'zu'
+              ? 'ISIZULU DRAFT — Only built-in demonstration questions and choices include unreviewed AI draft isiZulu beside the exact English source. Live survey questions and choices appear exactly as authored and are not translated. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wesiZulu ezinhlolovweni eziyisibonelo ezakhelwe ngaphakathi uwuhlaka lwe-AI olungabuyekezwanga, oluboniswa eceleni komthombo wesiNgisi. Izinhlolovo ezenziwe yizinhlangano ziboniswa njengoba zibhaliwe ngqo futhi azihunyushwe lapha. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
+              : ''}
           </p>
         )}
 

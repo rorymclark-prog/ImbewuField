@@ -146,13 +146,16 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function CropPlanPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
+  const zuMonths = [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+    t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+    t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')];
   const monthNames = lang === 'zu'
-    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'long' }))
+    ? MONTHS.map((english, month) => `${zuMonths[month]} / ${english}`)
     : MONTHS;
   const monthShortNames = lang === 'zu'
-    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'short' }))
+    ? zuMonths
     : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
   const [cursorMonth, setCursorMonth] = useState(1);
@@ -215,6 +218,12 @@ export default function CropPlanPage() {
         <LessonLink id="crops:planner" label={ui('Learn', 'Funda')} />
         <SettingsButton />
       </header>
+
+      {lang === 'zu' && (
+        <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+          Task names and seasonal farming guidance are still shown in English. / Amagama emisebenzi nezeluleko zesizini kusaboniswa ngesiNgisi.
+        </p>
+      )}
 
       {/* No-plan notice — pinned outside the scroll area so it can't be scrolled past.
           Gated on the SAME source the jobs come from (lib/task-board.ts's
@@ -373,7 +382,6 @@ export default function CropPlanPage() {
                 </div>
               </div>
               <div className={workspace.cards}>
-              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (

@@ -29,6 +29,11 @@ function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
 }
 
+// These proposals stay beside the English source until a first-language farmer reviewer accepts them.
+function surveyDraft(en: string, zu: string, lang: string) {
+  return lang === 'zu' ? `${zu} / ${en}` : en;
+}
+
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
 function surveyKey(placeId: string | null) {
   return placeId ? `${BASE_SURVEY_KEY}_${placeId}` : `${BASE_SURVEY_KEY}_default`;
@@ -40,28 +45,28 @@ type Sun = 'full' | 'partial' | 'shade';
 type Slope = 'flat' | 'gentle' | 'steep';
 type Goal = 'feed' | 'income' | 'soil';
 
-const SUN_OPTS: { v: Sun; label: string; Icon: typeof Sun }[] = [
-  { v: 'full', label: 'Full sun', Icon: Sun },
-  { v: 'partial', label: 'Partial shade', Icon: CloudSun },
-  { v: 'shade', label: 'Mostly shade', Icon: CloudFog },
+const SUN_OPTS: { v: Sun; label: string; zu: string; Icon: typeof Sun }[] = [
+  { v: 'full', label: 'Full sun', zu: 'Ilanga eligcwele', Icon: Sun },
+  { v: 'partial', label: 'Partial shade', zu: 'Isithunzi esiyingxenye', Icon: CloudSun },
+  { v: 'shade', label: 'Mostly shade', zu: 'Isithunzi esikhulu', Icon: CloudFog },
 ];
-const SLOPE_OPTS: { v: Slope; label: string }[] = [
-  { v: 'flat', label: 'Flat' },
-  { v: 'gentle', label: 'Gentle slope' },
-  { v: 'steep', label: 'Steep' },
+const SLOPE_OPTS: { v: Slope; label: string; zu: string }[] = [
+  { v: 'flat', label: 'Flat', zu: 'Isicaba' },
+  { v: 'gentle', label: 'Gentle slope', zu: 'Umthambeka omncane' },
+  { v: 'steep', label: 'Steep', zu: 'Umthambeka owehle kakhulu' },
 ];
-const RESOURCES: { v: string; label: string; Icon: typeof Zap }[] = [
-  { v: 'rain-tanks', label: 'Rain tanks', Icon: Droplets },
-  { v: 'borehole', label: 'Borehole', Icon: Waves },
-  { v: 'municipal', label: 'Municipal water', Icon: Droplets },
-  { v: 'electricity', label: 'Electricity', Icon: Zap },
-  { v: 'fencing', label: 'Fencing', Icon: Fence },
-  { v: 'compost', label: 'Compost area', Icon: Recycle },
+const RESOURCES: { v: string; label: string; zu: string; Icon: typeof Zap }[] = [
+  { v: 'rain-tanks', label: 'Rain tanks', zu: 'Amathangi emvula', Icon: Droplets },
+  { v: 'borehole', label: 'Borehole', zu: 'I-borehole', Icon: Waves },
+  { v: 'municipal', label: 'Municipal water', zu: 'Amanzi kamasipala', Icon: Droplets },
+  { v: 'electricity', label: 'Electricity', zu: 'Ugesi', Icon: Zap },
+  { v: 'fencing', label: 'Fencing', zu: 'Ucingo', Icon: Fence },
+  { v: 'compost', label: 'Compost area', zu: 'Indawo yomquba', Icon: Recycle },
 ];
-const GOALS: { v: Goal; label: string; desc: string }[] = [
-  { v: 'feed', label: 'Feed my family', desc: 'A steady spread of vegetables through the year' },
-  { v: 'income', label: 'Earn an income', desc: 'Lima leans to market crops you can sell' },
-  { v: 'soil', label: 'Rebuild the soil', desc: 'Cover crops and legumes to restore the land' },
+const GOALS: { v: Goal; label: string; zu: string; desc: string }[] = [
+  { v: 'feed', label: 'Feed my family', zu: 'Ukondla umndeni wami', desc: 'A steady spread of vegetables through the year' },
+  { v: 'income', label: 'Earn an income', zu: 'Ukuthola imali engenayo', desc: 'Lima leans to market crops you can sell' },
+  { v: 'soil', label: 'Rebuild the soil', zu: 'Ukuvuselela umhlabathi', desc: 'Cover crops and legumes to restore the land' },
 ];
 
 // Season-appropriate crops to assign to beds (SA southern hemisphere).
@@ -82,6 +87,39 @@ const WEEK_PLAN = [
   { wk: 5, title: 'Feed & thin', tasks: ['Thin seedlings to spacing', 'Side-dress with compost tea', 'Stake climbers if needed'] },
   { wk: 6, title: 'First harvest', tasks: ['Pick leafy greens as they size up', 'Log harvests in the journal', 'Plan the next succession sow'] },
 ];
+
+// AI proposals remain paired with their English source until a first-language reviewer accepts them.
+const ZU_WEEK_TITLE: Record<string, string> = {
+  'Mark & clear': 'Maka & susa',
+  'Water & mulch': 'Chelela & mboza umhlabathi',
+  Plant: 'Tshala',
+  Tend: 'Nakekela',
+  'Feed & thin': 'Vundisa & nciphisa',
+  'First harvest': 'Ukuvuna kokuqala',
+};
+const ZU_WEEK_TASK: Record<string, string> = {
+  'Peg out the beds (1.2 m × 8 m)': 'Shaya izikhonkwane zemibhede (1.2 m × 8 m)',
+  'Clear weeds and old roots': 'Susa ukhula nezimpande ezindala',
+  'Dig in mature compost': 'Gubhela umquba ovuthiwe enhlabathini',
+  'Set up water near the beds': 'Lungiselela amanzi eduze kwemibhede',
+  'Mulch thickly to hold moisture': 'Mboza umhlabathi ngesendlalo esiwugqinsi ukuze ugcine umswakama',
+  'Rake beds level and fine': 'Reyika imibhede ilingane futhi icoleke',
+  'Sow / transplant your first beds': 'Hlwanyela / thutha izithombo emibhedeni yakho yokuqala',
+  'Water gently morning & evening': 'Chelela ngobumnene ekuseni & ntambama',
+  'Label each bed': 'Faka ilebula embhedeni ngamunye',
+  'Water deeply, weed weekly': 'Chelela ngokugcwele, hlakula masonto onke',
+  'Watch for pests on new leaves': 'Qaphela izinambuzane emaqabungeni amasha',
+  'Fill any gaps with reseeds': 'Vala noma yiziphi izikhala ngokuhlwanyela kabusha',
+  'Thin seedlings to spacing': 'Nciphisa izithombo ngokwesikhala esifanele',
+  'Stake climbers if needed': 'Sekela izitshalo ezikhuphukayo ngezinti uma kudingeka',
+  'Pick leafy greens as they size up': 'Kha imifino enamahlamvu njengoba ikhula ngokwesilinganiso',
+  'Log harvests in the journal': 'Bhala phansi okuvuniwe kwijenali',
+  'Plan the next succession sow': 'Hlela ukuhlwanyela okulandelayo ngokulandelana',
+};
+
+function planDraft(en: string, zu: string | undefined, lang: string) {
+  return lang === 'zu' && zu ? `${zu} / ${en}` : en;
+}
 
 export default function SurveyPage() {
   return <Suspense><SurveyInner /></Suspense>;
@@ -188,10 +226,24 @@ function SurveyInner() {
         beds: bedCrops.map((crop, i) => ({ letter: bedLetter(i), crop })),
         bedAreaM2: BED_M2,
         ha: known.ha,
-        sunLabel,
+        sunLabel: planDraft(sunLabel, SUN_OPTS.find((s) => s.v === sun)?.zu, lang),
         tanksPhrase,
-        goalLabel: goal ? GOALS.find((g) => g.v === goal)?.label ?? null : null,
-        weeks: WEEK_PLAN,
+        goalLabel: goal ? planDraft(GOALS.find((g) => g.v === goal)!.label, GOALS.find((g) => g.v === goal)?.zu, lang) : null,
+        titleLabel: lang === 'zu' ? 'Uhlelo lwengadi / Garden plan' : undefined,
+        bedLabel: lang === 'zu' ? 'Umbhede / Bed' : undefined,
+        bedsSectionLabel: lang === 'zu' ? 'Imibhede / Beds' : undefined,
+        summaryBedLabel: lang === 'zu' ? 'imibhede / beds' : undefined,
+        summaryGoalLabel: lang === 'zu' ? 'umgomo / goal' : undefined,
+        weekLabel: lang === 'zu' ? 'Iviki / Week' : undefined,
+        weeksTitleLabel: lang === 'zu' ? 'Amaviki ayisithupha okuqala / First six weeks' : undefined,
+        reviewNotice: lang === 'zu'
+          ? 'ISIZULU DRAFT — isiZulu text is an unreviewed AI draft paired with its exact English source. Goal descriptions, crop names, measurements and the Week 5 “Side-dress with compost tea” task remain in English. Check the English before using this plan. / UMBHALO WESIZULU WOKUQALA — Umbhalo wesiZulu uwuhlaka lwe-AI olungakabuyekezwa, oluboniswa kanye nomthombo wawo wesiNgisi. Izincazelo zemigomo, amagama ezitshalo, izilinganiso nomsebenzi weviki lesi-5 othi “Side-dress with compost tea” kuhlala ngesiNgisi. Hlola isiNgisi ngaphambi kokusebenzisa lolu hlelo.'
+          : undefined,
+        weeks: WEEK_PLAN.map((w) => ({
+          ...w,
+          title: planDraft(w.title, ZU_WEEK_TITLE[w.title], lang),
+          tasks: w.tasks.map((task) => planDraft(task, ZU_WEEK_TASK[task], lang)),
+        })),
       });
       await deliverFile(blob, surveyPdfFilename(), 'ImbewuField Garden Survey');
     } catch {
@@ -211,6 +263,8 @@ function SurveyInner() {
 
   const sunLabel = SUN_OPTS.find((s) => s.v === sun)?.label.toLowerCase() ?? 'full sun';
   const tanksPhrase = resources.includes('rain-tanks') ? `${tanks} tank${tanks > 1 ? 's' : ''}` : 'no tanks yet';
+  const planSuggestionEn = `Lima: From ${known.ha} ha · ${sunLabel} · ${tanksPhrase}, I suggest ${beds} beds at 1.2 m × 8 m. Adjust the count, then save your plan.`;
+  const planSuggestionZu = `Lima: Ngokusekelwe ku-${known.ha} ha · ${sunLabel} · ${tanksPhrase}, ngiphakamisa imibhede engu-${beds} engu-1.2 m × 8 m. Lungisa isibalo, bese ugcina uhlelo lwakho.`;
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -251,8 +305,8 @@ function SurveyInner() {
           )}
 
           {lang === 'zu' && (
-            <p role="note" className="no-print mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-              Isiqondiso sokuhlela kanye nemibuzo nezimpendulo zale nhlolovo kuboniswa ngesiNgisi.
+            <p role="note" className="mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+              Unreviewed isiZulu draft. Check the paired English before using this plan. Crop names, figures, save messages and “Side-dress with compost tea” remain English. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esihambisana naso ngaphambi kokusebenzisa lolu hlelo. Amagama ezitshalo, izinombolo, imiyalezo yokugcina nomsebenzi othi “Side-dress with compost tea” kuse ngesiNgisi.
             </p>
           )}
 
@@ -294,7 +348,7 @@ function SurveyInner() {
               )}
               <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Your land', 'Umhlaba wakho', lang)}</h1>
               <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Size and water come straight from your map analysis. The next steps only ask what the map can&rsquo;t see.
+                {surveyDraft('Size and water come straight from your map analysis. The next steps only ask what the map can’t see.', 'Ubukhulu bomhlaba namanzi kuvela ekuhlaziyweni kwemephu yakho. Izinyathelo ezilandelayo zibuza kuphela lokho imephu engakwazi ukukubona.', lang)}
               </p>
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="flex items-center gap-2 mb-3">
@@ -328,32 +382,32 @@ function SurveyInner() {
             <div className={workspace.twoColumns}>
               <h1 className={`${workspace.fullRow} font-display font-bold text-2xl`} style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Sun & slope', 'Ilanga nomthambeka', lang)}</h1>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>How much sun does it get?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{surveyDraft('How much sun does it get?', 'Ithola ilanga elingakanani?', lang)}</div>
                 <div className="grid grid-cols-3 gap-2">
-                  {SUN_OPTS.map(({ v, label, Icon }) => {
+                  {SUN_OPTS.map(({ v, label, zu, Icon }) => {
                     const on = sun === v;
                     return (
                       <button key={v} onClick={() => setSun(v)}
                         className="flex flex-col items-center gap-1.5 py-3 rounded-2xl transition-all"
                         style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                         <Icon size={20} style={{ color: on ? '#EAF3E2' : '#1F4D2B' }} strokeWidth={1.6} />
-                        <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
+                        <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{surveyDraft(label, zu, lang)}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>What&rsquo;s the slope?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{surveyDraft('What’s the slope?', 'Linjani ithambeka?', lang)}</div>
                 <div className="grid grid-cols-3 gap-2">
-                  {SLOPE_OPTS.map(({ v, label }) => {
+                  {SLOPE_OPTS.map(({ v, label, zu }) => {
                     const on = slope === v;
                     return (
                       <button key={v} onClick={() => setSlope(v)}
                         className="flex flex-col items-center gap-1.5 py-3 rounded-2xl transition-all"
                         style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                         <Mountain size={20} style={{ color: on ? '#EAF3E2' : '#1F4D2B', opacity: v === 'flat' ? 0.5 : v === 'gentle' ? 0.8 : 1 }} strokeWidth={1.6} />
-                        <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
+                        <span className="font-display text-xs text-center" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{surveyDraft(label, zu, lang)}</span>
                       </button>
                     );
                   })}
@@ -366,16 +420,16 @@ function SurveyInner() {
           {step === 2 && (
             <div className="space-y-4">
               <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Resources on site', 'Izinsiza ezikhona endaweni', lang)}</h1>
-              <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>What&rsquo;s on the land? Tap all that apply.</p>
+              <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>{surveyDraft('What’s on the land? Tap all that apply.', 'Yini esemhlabeni? Thinta konke okusebenzayo.', lang)}</p>
               <div className="flex flex-wrap gap-2">
-                {RESOURCES.map(({ v, label, Icon }) => {
+                {RESOURCES.map(({ v, label, zu, Icon }) => {
                   const on = resources.includes(v);
                   return (
                     <button key={v} onClick={() => toggleResource(v)}
                       className="flex items-center gap-2 px-3.5 py-2.5 rounded-full transition-all"
                       style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <Icon size={15} style={{ color: on ? '#EAF3E2' : '#1F4D2B' }} strokeWidth={1.7} />
-                      <span className="font-display text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</span>
+                      <span className="font-display text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{surveyDraft(label, zu, lang)}</span>
                       {on && <Check size={13} style={{ color: '#EAF3E2' }} />}
                     </button>
                   );
@@ -397,16 +451,16 @@ function SurveyInner() {
           {/* ── Step 3 · Goal ── */}
           {step === 3 && (
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>What do you most want from your land?</h1>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{surveyDraft('What do you most want from your land?', 'Yini oyifuna kakhulu emhlabeni wakho?', lang)}</h1>
               <div className={workspace.twoColumns}>
-                {GOALS.map(({ v, label, desc }) => {
+                {GOALS.map(({ v, label, zu, desc }) => {
                   const on = goal === v;
                   return (
                     <button key={v} onClick={() => setGoal(v)}
                       className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all"
                       style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <div className="flex-1">
-                        <div className="font-display font-semibold text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{label}</div>
+                        <div className="font-display font-semibold text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{surveyDraft(label, zu, lang)}</div>
                         <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#755942' }}>{desc}</div>
                       </div>
                       <div className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 22, height: 22, background: on ? '#EAF3E2' : 'transparent', border: `1.5px solid ${on ? '#EAF3E2' : '#C9BBA1'}` }}>
@@ -422,18 +476,18 @@ function SurveyInner() {
           {/* ── Step 4 · Confirm beds ── */}
           {step === 4 && (
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Confirm your beds</h1>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{surveyDraft('Confirm your beds', 'Qinisekisa imibhede yakho', lang)}</h1>
               <div className="rounded-xl px-4 py-3 flex gap-3 items-start" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
                 <Sprout size={16} style={{ color: 'var(--color-forest-800)', flexShrink: 0, marginTop: 1 }} />
                 <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                  Lima: From {known.ha} ha · {sunLabel} · {tanksPhrase}, I suggest <strong>{beds} beds</strong> at 1.2 m × 8 m. Adjust the count, then save your plan.
+                  {lang === 'zu' ? <>{planSuggestionZu} / {planSuggestionEn}</> : planSuggestionEn}
                 </p>
               </div>
 
               {/* Bed count stepper */}
               <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div>
-                  <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{beds} beds</div>
+                  <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{beds} {lang === 'zu' ? 'imibhede / beds' : 'beds'}</div>
                   <div className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
@@ -447,7 +501,7 @@ function SurveyInner() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
                   <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#1F4D2B' }}>
-                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'rgba(234,243,226,0.6)', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
+                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'rgba(234,243,226,0.6)', letterSpacing: '0.06em' }}>{lang === 'zu' ? `Umbhede / Bed ${bedLetter(i)} · ${BED_M2} m²` : `Bed ${bedLetter(i)} · ${BED_M2} m²`}</div>
                     <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#F7F2E9' }}>{crop}</div>
                   </div>
                 ))}
@@ -459,10 +513,10 @@ function SurveyInner() {
           {step === 5 && (
             <div id="plan-doc" className="space-y-5">
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--gold)', letterSpacing: '0.1em' }}>{localUi('Garden plan', 'Uhlelo lwengadi', lang)}</div>
-                <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{beds} beds · {(beds * BED_M2).toFixed(1)} m²</h1>
+                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--gold)', letterSpacing: '0.1em' }}>{surveyDraft('Garden plan', 'Uhlelo lwengadi', lang)}</div>
+                <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{beds} {lang === 'zu' ? 'imibhede / beds' : 'beds'} · {(beds * BED_M2).toFixed(1)} m²</h1>
                 <p className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-                  {known.ha} ha · {sunLabel} · {tanksPhrase}{goal ? ` · goal: ${GOALS.find((g) => g.v === goal)?.label.toLowerCase()}` : ''}
+                  {known.ha} ha · {planDraft(sunLabel, SUN_OPTS.find((s) => s.v === sun)?.zu, lang)} · {tanksPhrase}{goal ? ` · ${lang === 'zu' ? 'umgomo / goal' : 'goal'}: ${planDraft(GOALS.find((g) => g.v === goal)!.label.toLowerCase(), GOALS.find((g) => g.v === goal)?.zu.toLowerCase(), lang)}` : ''}
                 </p>
               </div>
 
@@ -470,7 +524,7 @@ function SurveyInner() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
                   <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
+                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.06em' }}>{lang === 'zu' ? `Umbhede / Bed ${bedLetter(i)} · ${BED_M2} m²` : `Bed ${bedLetter(i)} · ${BED_M2} m²`}</div>
                     <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--text-primary)' }}>{crop}</div>
                   </div>
                 ))}
@@ -478,7 +532,7 @@ function SurveyInner() {
 
               {/* Week-by-week plan — slide the weeks */}
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{localUi('First six weeks', 'Amaviki okuqala ayisithupha', lang)}</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{surveyDraft('First six weeks', 'Amaviki ayisithupha okuqala', lang)}</div>
                 <div className="no-print flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
                   {WEEK_PLAN.map((w) => {
                     const on = week === w.wk;
@@ -486,7 +540,7 @@ function SurveyInner() {
                       <button key={w.wk} onClick={() => setWeek(w.wk)}
                         className="flex-shrink-0 px-3 py-1.5 rounded-full font-display text-xs font-semibold transition-all"
                         style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, color: on ? '#EAF3E2' : '#5C5040', cursor: 'pointer' }}>
-                        Week {w.wk}
+                        {lang === 'zu' ? `Iviki / Week ${w.wk}` : `Week ${w.wk}`}
                       </button>
                     );
                   })}
@@ -494,11 +548,11 @@ function SurveyInner() {
                 {/* Screen: selected week. Print: all weeks. */}
                 {WEEK_PLAN.filter((w) => w.wk === week).map((w) => (
                   <div key={w.wk} className="no-print rounded-2xl px-4 py-3.5 mt-2" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                    <div className="font-display font-semibold text-sm mb-2" style={{ color: 'var(--color-forest-800)' }}>Week {w.wk} · {w.title}</div>
+                    <div className="font-display font-semibold text-sm mb-2" style={{ color: 'var(--color-forest-800)' }}>{lang === 'zu' ? `Iviki / Week ${w.wk} · ${planDraft(w.title, ZU_WEEK_TITLE[w.title], lang)}` : `Week ${w.wk} · ${w.title}`}</div>
                     {w.tasks.map((t, i) => (
                       <div key={i} className="flex items-start gap-2 py-1">
                         <div className="rounded-full flex-shrink-0 mt-1.5" style={{ width: 5, height: 5, background: '#C07A1E' }} />
-                        <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{t}</span>
+                        <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{planDraft(t, ZU_WEEK_TASK[t], lang)}</span>
                       </div>
                     ))}
                   </div>
@@ -507,8 +561,8 @@ function SurveyInner() {
                 <div className="print-only space-y-2 mt-2">
                   {WEEK_PLAN.map((w) => (
                     <div key={w.wk} className="rounded-2xl px-4 py-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                      <div className="font-display font-semibold text-sm mb-1" style={{ color: 'var(--color-forest-800)' }}>Week {w.wk} · {w.title}</div>
-                      {w.tasks.map((t, i) => <div key={i} className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>· {t}</div>)}
+                      <div className="font-display font-semibold text-sm mb-1" style={{ color: 'var(--color-forest-800)' }}>{lang === 'zu' ? `Iviki / Week ${w.wk} · ${planDraft(w.title, ZU_WEEK_TITLE[w.title], lang)}` : `Week ${w.wk} · ${w.title}`}</div>
+                      {w.tasks.map((t, i) => <div key={i} className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>· {planDraft(t, ZU_WEEK_TASK[t], lang)}</div>)}
                     </div>
                   ))}
                 </div>
@@ -521,7 +575,7 @@ function SurveyInner() {
                   style={saveFailed
                     ? { background: '#9A3412', color: '#FDF3EC', border: 'none', cursor: 'pointer' }
                     : { background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
-                  <Check size={15} />{saveFailed ? localUi('Not saved — no space on this phone', 'Akulondoloziwe — asikho isikhala kule foni', lang) : saved ? localUi('Saved!', 'Kulondoloziwe!', lang) : localUi('Save this plan', 'Londoloza lolu hlelo', lang)}
+                  <Check size={15} />{saveFailed ? localUi('Not saved — no space on this phone', 'Not saved — no space on this phone', lang) : saved ? localUi('Saved!', 'Saved!', lang) : localUi('Save this plan', 'Save this plan', lang)}
                 </button>
                 {saveFailed && (
                   // Sticky, and it names the recovery a farmer can actually act on. The answers are

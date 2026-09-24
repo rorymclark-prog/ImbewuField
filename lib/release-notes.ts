@@ -42,6 +42,20 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '95be15e8', changes: [
+    'Calendar month labels now appear in isiZulu.',
+    'Task Planner labels its English farming guidance.',
+    'Report preparation headings and actions have isiZulu drafts.',
+    'Offline sync keeps its isiZulu drafts with English source details.',
+    'Garden Survey choices and plan show paired isiZulu drafts.',
+  ], tour: [
+    { title: 'See isiZulu calendar months', where: 'Planting Calendar', href: '/calendar',
+      detail: 'Choose isiZulu and open the calendar month strip.' },
+    { title: 'Check Task Planner language', where: 'Task Planner', href: '/cropplan',
+      detail: 'The note above the plan says which guidance remains in English.' },
+    { title: 'See the Garden Survey draft', where: 'Garden Survey', href: '/survey',
+      detail: 'The choices and plan pair isiZulu drafts with their English source.' },
+  ] },
   { when: '25 September 2026', sha: '16056954', changes: [
     'Contact messages now reach your mentor or organisation when your account is linked to one.',
     'The partners and pitch pages appear straight away when opened from a link.',

@@ -1410,6 +1410,7 @@ const T_en: Dict = {
   loginErrorUnexpected: 'Something went wrong. Please try again.',
 
   // Offline preparation and queued fieldwork.
+  offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
   offlineTitle: 'Offline & sync',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',

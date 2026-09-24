@@ -1105,6 +1105,7 @@ const dict: Dict = {
   loginErrorUnexpected: 'Kube nephutha. Zama futhi.',
 
   // Offline preparation and queued fieldwork.
+  offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
   offlineTitle: 'Akukho uxhumano nokuvumelanisa',
   offlineConnected: 'Kuxhunyiwe',
   offlineUsingSavedCopies: 'Awukho ku-inthanethi — usebenzisa amakhophi agcinwe kule divayisi',
@@ -1412,7 +1413,7 @@ const dict: Dict = {
   surveySaveReminder: "Answers are saved when you finish and tap Save.",
   surveyUnsaved: "Changes not yet saved",
   surveyReviewTitle: "Buyekeza inhlolovo yakho",
-  surveySaveContinue: "Gcina bese uqhubeka",
+  surveySaveContinue: "Save & continue",
   surveyUnknownHint: "Shiya umbuzo ungaphenduliwe uma ungenasiqiniseko. Okungaziwa kunosizo kakhulu kunokuqagela.",
   surveyFieldGuide: "Endleleni",
   surveyObserveFirst: "Buka, bese uyarekhoda.",
