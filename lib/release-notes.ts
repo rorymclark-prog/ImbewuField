@@ -42,16 +42,23 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '02ce8aa9', changes: [
+    'Full-screen lesson slides now use large text that fits your phone in either direction.',
+    'Animations fill the available height when you turn your phone sideways.',
+  ], tour: [
+    { title: 'See a lesson full screen', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen. Turn your phone sideways for a larger animation. Tap the slide to show the controls.' },
+  ] },
   { when: '24 September 2026', sha: '28e5beb2', changes: [
     'My Studies folds the courses and app guides until you open them.',
-    'Read lesson slides full screen, switch to the picture, and zoom in.',
+    'Lesson slides gained a full-screen view and picture zoom.',
     'IsiZulu screens now say when a lesson, quiz or voice is still in English.',
     'English lessons give clearer cautions for water, soil and planting decisions.',
   ], tour: [
     { title: 'Open a study course', where: 'My Studies', href: '/student',
       detail: 'Open the course list, then choose a module or the Design preview.' },
     { title: 'Read a slide on your phone', where: 'My Studies → lesson slides', href: '/student',
-      detail: 'Tap Full screen, switch between text and picture, then enlarge the picture.' },
+      detail: 'Tap Full screen on a lesson slide. Tap the slide to show its controls.' },
   ] },
   { when: '23 September 2026', sha: '39ebc4e9', changes: [
     'Raised Bed opens the bed block sizes and count above the Elements list.',
@@ -65,10 +72,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Open a site report and review the suggested plants for your location.' },
   ] },
   { when: '23 September 2026', sha: '1d184155', changes: [
-    'Read lesson slides in large text on your phone. Switch to the picture and zoom in.',
+    'Lesson slides gained larger phone text and picture zoom.',
   ], tour: [
     { title: 'Read a lesson slide', where: 'My Studies → a module → slides', href: '/student',
-      detail: 'Tap Full screen. Read text opens first on a phone. Tap See slide to view the picture and use + to enlarge it.' },
+      detail: 'Tap Full screen on a lesson slide, then tap the slide to show its controls.' },
   ] },
   { when: '23 September 2026', sha: 'd7f2299a', changes: [
     'My Studies folds the courses and app guides until you open them.',

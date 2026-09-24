@@ -59,73 +59,168 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  padding: 0;
   border: 0;
   border-radius: 0;
   box-sizing: border-box;
+  background: #1b1710;
 }
 
 .expanded .slideStage {
-  flex: 1 1 auto;
+  position: absolute !important;
+  inset: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
   min-height: 0;
   aspect-ratio: auto !important;
-  background: #f3f0e7 !important;
+  border-radius: 0 !important;
+  background: #1b1710 !important;
 }
-
-.expanded .stageHidden { display: none; }
 
 .slideCanvas { margin-inline: auto; }
+.expanded .slideCanvas { flex: none; margin: auto; }
+.expanded .canvasHidden { display: none; }
+.turnPhoneHint { display: none; }
 
-.viewSwitch {
+@media (orientation: portrait) and (max-width: 600px) {
+  .expanded .turnPhoneHint {
+    position: absolute;
+    top: 20%;
+    left: 20px;
+    right: 20px;
+    z-index: 1;
+    display: block;
+    margin: 0;
+    color: #fffefa;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+  }
+}
+
+.presentationSlide {
   display: flex;
-  flex: 0 0 auto;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 12px;
-  background: #eee9db;
-}
-
-.viewSwitch button {
-  flex: 1;
-  min-height: 44px;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: #214d32;
-  font: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.viewSwitch button[aria-pressed='true'] { background: #fffefa; box-shadow: 0 1px 4px #20190f24; }
-
-.readingPanel {
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: none;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: max(70px, env(safe-area-inset-top)) clamp(24px, 5vw, 76px) max(116px, env(safe-area-inset-bottom));
   overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: clamp(16px, 4vw, 30px);
-  border: 1px solid #ece3c9;
-  border-radius: 12px;
-  background: #fffefa;
+  background: #faf7ee;
   color: #20190f;
-  font-size: clamp(19px, 2.5vw, 23px);
-  line-height: 1.5;
 }
+.presentationIntro { flex: 0 0 auto; }
 
-.readingPanel p { max-width: 68ch; margin: 0 0 1em; }
-.readingPanel p:last-child { margin-bottom: 0; }
-.readingPanel .readingLabel {
-  margin-bottom: 1.25em;
-  color: #5c5040;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .04em;
+.presentationEyebrow {
+  width: fit-content;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #bd792c;
+  color: #a25f1c;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
   text-transform: uppercase;
 }
+.presentationSlide h2 {
+  margin: 14px 0 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e1d8c5;
+  color: #1f4d2b;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4.8vw, 62px);
+  line-height: 1.12;
+}
+.presentationSlide ul {
+  display: grid;
+  list-style: disc outside;
+  gap: clamp(8px, 2vh, 24px);
+  align-content: center;
+  flex: 1;
+  width: min(100%, 95ch);
+  margin: 18px auto;
+  padding-left: 1.25em;
+  font-size: clamp(22px, 2.7vw, 36px);
+  line-height: 1.3;
+  font-weight: 650;
+}
+.presentationSlide li { padding-left: .2em; }
+.presentationSlide li::marker { color: #bd792c; }
+.presentationSlide footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #786952;
+  font-size: 12px;
+}
 
-.zoomBar { display: flex; align-items: center; gap: 9px; color: #5c5040; font-size: 14px; }
+.expanded .playerHeader,
+.expanded .zoomBar,
+.expanded .zoomLink,
+.expanded .audioControl,
+.expanded .controlStrip {
+  position: absolute;
+  z-index: 5;
+  transition: opacity .22s ease;
+}
+
+.expanded .playerHeader {
+  top: max(8px, env(safe-area-inset-top));
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  min-height: 44px;
+  padding: 5px 8px;
+  border-radius: 12px;
+  background: rgba(255, 254, 250, .96);
+  box-shadow: 0 1px 9px #20190f33;
+}
+.expanded .slideHeading { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.expanded .audioControl {
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  bottom: calc(max(8px, env(safe-area-inset-bottom)) + 62px);
+  width: calc(100% - max(8px, env(safe-area-inset-left)) - max(8px, env(safe-area-inset-right))) !important;
+}
+.expanded .controlStrip {
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 5px;
+  border-radius: 12px;
+  background: rgba(255, 254, 250, .96);
+  box-shadow: 0 1px 9px #20190f33;
+}
+.expanded .zoomLink {
+  top: calc(max(8px, env(safe-area-inset-top)) + 66px);
+  right: max(8px, env(safe-area-inset-right));
+  max-width: min(50vw, 240px);
+  padding: 4px 9px;
+  border-radius: 10px;
+  background: rgba(255, 254, 250, .96);
+  font-size: 12px;
+  line-height: 1.2;
+}
+.expanded.chromeHidden .playerHeader,
+.expanded.chromeHidden .zoomBar,
+.expanded.chromeHidden .zoomLink,
+.expanded.chromeHidden .audioControl,
+.expanded.chromeHidden .controlStrip { opacity: 0; pointer-events: none; }
+
+.zoomBar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  top: calc(max(8px, env(safe-area-inset-top)) + 62px);
+  left: max(8px, env(safe-area-inset-left));
+  padding: 3px 6px;
+  border-radius: 10px;
+  background: rgba(255, 254, 250, .96);
+  color: #5c5040;
+  font-size: 14px;
+}
 .zoomBar button {
   width: 44px;
   height: 44px;
@@ -137,7 +232,6 @@
   cursor: pointer;
 }
 .zoomBar button:disabled { opacity: .45; cursor: default; }
-.panHint { font-size: 13px; }
 .expanded .transcript { display: none; }
 
 .player button:focus-visible, .player summary:focus-visible {
@@ -174,34 +268,34 @@
 }
 
 @media (max-width: 480px) {
-  .controlStrip {
+  .player:not(.expanded) .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
-  .playControl {
+  .player:not(.expanded) .playControl {
     grid-column: 1 / -1;
     grid-row: 1;
     width: 100%;
     justify-content: center;
   }
 
-  .backControl,
-  .nextControl {
+  .player:not(.expanded) .backControl,
+  .player:not(.expanded) .nextControl {
     width: 100%;
     justify-content: center;
   }
 
-  .backControl {
+  .player:not(.expanded) .backControl {
     grid-column: 1;
     grid-row: 2;
   }
 
-  .nextControl {
+  .player:not(.expanded) .nextControl {
     grid-column: 2;
     grid-row: 2;
   }
 
-  .progress {
+  .player:not(.expanded) .progress {
     grid-column: 1 / -1;
     grid-row: 3;
     width: 100%;
@@ -209,17 +303,23 @@
 }
 
 @media (orientation: landscape) and (max-height: 560px) {
-  .expanded { gap: 5px; }
   .expanded .playerHeader { flex-wrap: nowrap; }
-  .expanded .slideHeading { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .expanded .expandButton { min-height: 38px; padding-block: 5px; }
-  .expanded .viewSwitch button { min-height: 38px; }
-  .expanded .readingPanel { padding: 10px 16px; }
   .expanded .zoomBar button { height: 38px; }
-  .expanded .controlStrip { grid-template-columns: max-content max-content minmax(0, 1fr) max-content; }
-  .expanded .playControl, .expanded .backControl, .expanded .nextControl, .expanded .progress {
-    grid-column: auto;
-    grid-row: auto;
-    width: auto;
+  .expanded .presentationSlide {
+    display: grid;
+    grid-template-columns: minmax(170px, .3fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px 24px;
+    padding: 52px 26px 64px;
   }
+  .expanded .presentationSlide h2 { font-size: clamp(30px, 4vw, 46px); }
+  .expanded .presentationSlide ul {
+    margin: 0;
+    font-size: clamp(22px, 2.6vw, 27px);
+    line-height: 1.22;
+    gap: 6px;
+  }
+  .expanded .presentationSlide footer { grid-column: 1 / -1; }
 }
