@@ -8,6 +8,7 @@ import { useLanguage } from '@/lib/i18n';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite, freshSampleMessages, type SampleMessage } from '@/lib/sample-operations';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { getMyProfile } from '@/lib/db/queries';
 
 interface ContactMessage {
   id: string;
@@ -47,6 +48,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [noOrg, setNoOrg] = useState(false);
   const [actionError, setActionError] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [replyText, setReplyText] = useState<Record<string, string>>({});
@@ -57,14 +59,25 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   const load = useCallback(async () => {
     setLoadError(false);
+    setNoOrg(false);
     if (isSampleMode()) { const rows = sampleRead(`messages-${recipient}`, () => freshSampleMessages(recipient)); setSample(true); setMessages(rows); onUnreadCount?.(rows.filter(m => m.status === 'unread').length); setLoading(false); return; }
     if (sample || !isLive) { setLoading(false); return; }
     const fb = getFirebase();
     if (!fb) { setLoading(false); return; }
     try {
+      // Recipient names are shared across every organisation. Scope the query to the signed-in
+      // staff member's organisation so Firestore can prove the same boundary as the rules.
+      const profile = await getMyProfile();
+      if (!profile?.org_id) {
+        setMessages([]);
+        setNoOrg(true);
+        onUnreadCount?.(0);
+        return;
+      }
       const q = query(
         collection(fb.db, 'contact_messages'),
         where('recipient', '==', recipient),
+        where('org_id', '==', profile.org_id),
         orderBy('created_at', 'desc'),
       );
       const snap = await getDocs(q);
@@ -165,6 +178,16 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
         <Mail size={26} style={{ color: '#8C4938', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#8C4938' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : 'Messages unavailable'}</p>
         <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
+      </div>
+    );
+  }
+
+  if (noOrg) {
+    return (
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+        <Mail size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Ayikho inhlangano exhunywe' : 'No organisation linked yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Imilayezo izovela uma i-akhawunti yakho isixhunywe enhlanganweni.' : 'Messages appear here once your account is linked to an organisation.'}</p>
       </div>
     );
   }

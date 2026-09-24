@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '16056954', changes: [
+    'Contact messages now reach your mentor or organisation when your account is linked to one.',
+    'The partners and pitch pages appear straight away when opened from a link.',
+    'The partner pitch slide stays on screen when you turn your phone.',
+  ], tour: [
+    { title: 'Send a message', where: 'Contact', href: '/contact',
+      detail: 'Choose your mentor, organisation or support and send a message.' },
+    { title: 'Open the partner page', where: 'For partners', href: '/partners',
+      detail: 'The page content is available as soon as the link opens.' },
+  ] },
   { when: '25 September 2026', sha: 'f3ae3586', changes: [
     'The top bar now clears your phone\u2019s clock on every screen, not just some.',
   ], tour: [

@@ -642,6 +642,10 @@ export default function PitchPage() {
           background: #0c1a11;
           display: grid;
           place-items: center;
+          /* The unscaled deck is wider and taller than a phone. Auto grid tracks took its
+             1280×720 size, placing the scaled slide beyond the visible viewport. */
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: minmax(0, 1fr);
           overflow: hidden;
           z-index: 40;
         }
