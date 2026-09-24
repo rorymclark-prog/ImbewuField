@@ -19,6 +19,22 @@ The history below describes the earlier media branch. The current illustrated re
 
 Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The verification JSON records bytes, audio hashes, captions and motion checks for that historical illustrated release only. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
 
+## isiZulu learner review draft — 24 September 2026
+
+A clearly labelled, unreviewed isiZulu draft now includes 20 localized still slides, the complete lesson and quiz localization, and 20 Thando narration clips plus a full track. The recordings use `zu-ZA-ThandoNeural` at `-12%`. Fluent isiZulu, local farming/beekeeping, legal-scope and human listening reviews remain pending. No practitioner approval is claimed.
+
+The bee scene reuses the registered eight-second `flow-bee-between-blossoms.mp4`. Its isiZulu narration says only that the scene shows a bee moving between adjacent blossoms; it does not claim confirmed pollen transfer or yield. Broad natural subspecies ranges remain separate from movement controls, and registration wording names only activities defined by the national controls. No new Flow generation or animation was made.
+
+All people shown in the localized deck are Black South African smallholder farmers. The final contact sheet, 390 px samples and per-slide image/audio hashes are in [`zu-preview/`](zu-preview/); complete word-boundary and decode proofs are in [`../../narration-reviews/small-livestock-zu-audio-proof/`](../../narration-reviews/small-livestock-zu-audio-proof/). Slides 14–15 use localized static nutrient diagrams.
+
+Rebuild the stills with:
+
+```sh
+node scripts/make-lesson-slides.mjs small-livestock zu public/course-decks/small-livestock/zu
+```
+
+Run audio recording with `uv run --with edge-tts python scripts/record-small-livestock-zu-draft.py`; the script stages files outside the learner payload until imported. The draft badge, narration notice and pending review state remain active.
+
 ## Earlier branch record
 
 

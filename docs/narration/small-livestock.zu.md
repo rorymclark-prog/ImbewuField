@@ -30,11 +30,13 @@ Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikele
 
 ---
 
-**Ikhasi 4 — Buka: Ihhoko Lezinkukhu Elihambayo (Slide 4 — Watch: A Chicken Tractor Moving Across a Bed)**
+**Ikhasi 4 — Buka: Izinkukhu Zicosha Phakathi Kwezinsalela Ngemva Kokuvuna (Slide 4 — Watch: Hens Foraging After Harvest)**
 
-I-chicken tractor iyihhoko lezinkukhu elihambayo elingenaphansi. Buka lihamba phezu kombhede wengadi ongenalutho.
+Buka izinkukhu zicosha ukudla phansi phakathi kwezinsalela ezomile zezitshalo.
 
-Ukuklwebha kususa izinsalela zezitshalo nezinye izinambuzane. Umquba usala enhlabathini.
+Izinkukhu zingadla ezinye izinambuzane nembewu yokhula. Zisadinga ukudla okunomsoco, amanzi ahlanzekile nendawo yokukhosela.
+
+Zigcine zikude nezithombo nokudla okulungele ukuvunwa.
 
 ---
 
@@ -86,71 +88,71 @@ Alikho inani elilodwa lezinkukhu eliqinisekisa ukuvunda okwanele kuzo zonke izin
 
 ---
 
-**Ikhasi 9 — Buka: Izinyosi Zihamba Phakathi Kwe-Hive Nezitshalo (Slide 9 — Watch: Bees Moving Between Hive and Crops)**
+**Ikhasi 9 — Buka: Inyosi Isuka Embalini Eyodwa Iya Kwenye (Slide 9 — Watch: A Bee Moves Between Two Blossoms)**
 
-Buka izinyosi ziphuma ku-hive ziye ezitshalweni eziqhakazayo.
+Buka inyosi eyodwa isuka kwenye imbali iye kwenye.
 
-Ukuhamba kwazo kuthwala impova phakathi kwezimbali kuyo yonke indawo.
-
----
-
-**Ikhasi 10 — Izinyosi Zisiza Ukuthutha Impova (Slide 10 — Bees Help Pollinate Many Crops)**
-
-Izinyosi nezinye izinambuzane zithutha impova phakathi kwezimbali.
-
-Lokhu kusiza izithelo nemifino eminingi, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo azidingi ukuthuthwa kwempova ngendlela efanayo.
-
-I-hive ayiqinisekisi isivuno esikhulu kuyo yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kubalulekile.
+Izinyosi zingathwala impova lapho zivakashela izimbali.
 
 ---
 
-**Ikhasi 11 — Izinyosi Zomdabu ZaseNingizimu Afrika (Slide 11 — South Africa’s Native Honeybees)**
+**Ikhasi 10 — Izinyosi Zisiza Ekuthutheni Impova Ezitshalweni Eziningi (Slide 10 — Bees Help Pollinate Many Crops)**
+
+Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali.
+
+Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova.
+
+Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima.
+
+---
+
+**Ikhasi 11 — Izinyosi Zoju Zomdabu ENingizimu Afrika (Slide 11 — South Africa’s Native Honeybees)**
 
 INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.
 
-I-Cape bee itholakala eningizimu naseningizimu-ntshonalanga yeKapa. I-African honeybee itholakala enyakatho nasempumalanga.
+Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika.
 
-Funda ukunakekela i-hive ngokuphepha kumfuyi wezinyosi wendawo onolwazi. Hlola imithetho yamanje ngaphambi kokuhambisa izinyosi noma ama-hive phakathi kwezindawo.
+Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.
 
 ---
 
-**Ikhasi 12 — Khetha Indawo Ye-Hive Ngokucophelela (Slide 12 — Place the Hive With Care)**
+**Ikhasi 12 — Beka I-hive Ngokucophelela (Slide 12 — Place the Hive With Care)**
 
-Funda kumfuyi wezinyosi wendawo onolwazi ngaphambi kokuthola i-hive.
+Ngaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi.
 
-Gcina ama-hive ekude nezindlela ezisetshenziswa kakhulu, amakhaya nezindawo zokudlala zezingane.
+Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane.
 
 Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala.
 
-Hlela ukuthi abantu nezilwane bazohamba kanjani kule ndawo.
+Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.
 
 ---
 
-**Ikhasi 13 — Izinyosi Zidinga Ukunakekelwa Nezimbali (Slide 13 — Strong Colonies Need Care and Flowers)**
+**Ikhasi 13 — Amakoloni Aqinile Adinga Ukunakekelwa Nezimbali (Slide 13 — Strong Colonies Need Care and Flowers)**
 
-Yiba nezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, ugweme ukubeka izinyosi engozini yezibulala-zinambuzane.
+Hlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane.
 
-Ukubona izinyosi zisebenza akusho ukuthi ipulazi alinawo amakhemikhali noma izifo.
+Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo.
 
-Bonke abafuyi bezinyosi kufanele babhalise eMnyangweni Wezolimo kazwelonke.
+Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango.
 
-Uma izinyosi ziphuma ngamaqoqo kaningi, cela umfuyi oqeqeshiwe ahlole i-hive. Ukuminyana kungaba yisizathu esisodwa; ungaphethi ngokuthi yikho ngaphandle kokuhlola.
-
----
-
-**Ikhasi 14 — Buka: Izakhamzimba Zihamba Kumjikelezo Ovalekile Wemfuyo (Slide 14 — Watch: Nutrients Moving in a Closed Livestock Loop)**
-
-Buka izakhamzimba zisuka ezitshalweni ziye ezilwaneni, bese zibuya ngomquba ne-compost ziye embhedeni okhulayo.
+Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa.
 
 ---
 
-**Ikhasi 15 — Buyisela Izakhamzimba Epulazini (Slide 15 — Close the Nutrient Loop)**
+**Ikhasi 14 — Izakhamzimba Ezihamba Epulazini (Slide 14 — Nutrients Moving Through the Farm)**
 
-Izilwane zingabuyisela ezinye izakhamzimba epulazini.
+Ezinye izakhamzimba zisuka ezitshalweni ziye ezilwaneni. Ukudla kwezilwane okuthengwayo nakho kuletha izakhamzimba epulazini. Ezinye zingabuyela endaweni yokutshala nge-compost eyenziwe ngomquba. Ukudla neminye imikhiqizo kuthwala izakhamzimba kuziphume epulazini.
 
-Izinkukhu zidla ukudla okufanele okuvela epulazini nezinambuzane. Umquba ungenziwa i-compost yezitshalo.
+---
 
-Bhala ukudla kwezilwane okuthengwayo nokudla okuthengiswayo noma okuyiswa ekhaya. Lezi zakhamzimba zisangena noma ziphuma ohlelweni.
+**Ikhasi 15 — Ezinye Izakhamzimba Ziyabuya; Ezinye Ziyangena Futhi Ziphume (Slide 15 — Some Nutrients Return; Others Enter and Leave)**
+
+Izilwane zingabuyisela ezinye izakhamzimba nge-compost eyenziwe ngomquba. Umquba omusha ungaba namagciwane ayingozi. Vumela umquba uvundiswe ngokuphelele ngaphambi kokuwusebenzisa ezitshalweni zokudla.
+
+Izinkukhu zidla ukudla okufanele okuvela epulazini nezinambuzane.
+
+Ukudla kwezilwane okuthengwayo kuletha izakhamzimba epulazini. Ukudla okuthengiswayo noma okuyiswa ekhaya neminye imikhiqizo kuthwala izakhamzimba kuziphume. Bhala phansi ukudla kwezilwane okuthengwayo nokudla okuthengiswayo noma okuyiswa ekhaya.
 
 Izinsalela zokudla kuphela zingase zinganelisi izidingo zezilwane.
 
@@ -192,15 +194,15 @@ Ungayeki ukwelapha ngenxa yokuthi izinkukhu bezikade zisekamu ledlelo.
 
 ---
 
-**Ikhasi 19 — Umsebenzi Wensimu: Dweba Umjikelezo Wepulazi Lakho (Slide 19 — Field Assignment: Draw Your Farm Loop)**
+**Ikhasi 19 — Umsebenzi Wensimu: Dweba Ukuthi Izinsiza Ziya Kuphi (Slide 19 — Field Assignment: Draw Where Resources Go)**
 
-Hamba epulazini lakho, ukhethe indawo lapho imfuyo ingase isekele enye ingxenye yohlelo.
+Hamba epulazini lakho elincane, ukhethe indawo lapho imfuyo ingase isekele enye ingxenye yohlelo.
 
-Bhala ukudla, izinsalela, izinambuzane, ukukhiqiza okusele, umquba, noma izimbali ezikhona kakade.
+Bhala phansi ukudla, izinsalela, izinambuzane, umkhiqizo oweqile, umquba noma izimbali ezikhona kakade.
 
-Bese ubhala ukuthi isilwane ngasinye singakhiqizani, nokuthi singadingani epulazini.
+Bese ubhala ukuthi isilwane ngasinye singakhiqizani, nokuthi sidingani epulazini.
 
-Thola umjikelezo owodwa ongasebenza ngezinsiza osuvele unazo.
+Dweba ukuxhumana okukodwa okuwusizo phakathi kwemfuyo nayo yonke ipulazi lakho. Bonisa okungenayo nokuphumayo.
 
 ---
 
@@ -216,39 +218,8 @@ Qala ngezinto nosizo ongakwazi ukukuhlinzeka njalo.
 
 ## Notes for the Human Reviewer
 
-**20 September 2026: factual corrections mirrored from English. This revised draft is NOT approved for learners. Previous review audio for changed slides is stale and must be regenerated. Check the animal-health wording, bee subspecies, borrowed terms and meaning against the corrected English.**
+**This is a draft translation only.** The complete isiZulu lesson, quiz, twenty-slide deck and narration are available for review; none has been approved by a first-language isiZulu speaker, a smallholder farmer or beekeeper, or a legal reviewer. Human listening review of the synthetic narration is also pending.
 
-**This is a draft translation only. It must be read by a first-language isiZulu speaker who
-farms before this script goes anywhere near a learner.** Nothing here has been reviewed by a
-person.
+The bee scene describes only one bee moving between adjacent blossoms. It does not claim that the filmed bee transferred pollen. The regional subspecies ranges are broad natural descriptions, not movement permission or a way to identify a local bee. Follow the Department's current demarcation and movement rules. Registration applies only to the listed beekeeping activities in the national control measures; check with the Department if unsure.
 
-It was written to match `docs/narration/small-livestock.en.md` slide for slide — 20 isiZulu blocks
-against 20 English ones — so the deck and the narration cannot drift apart.
-
-**The instruction was to BORROW, never to coin.** An earlier isiZulu draft in this course invented
-22 agronomic terms and is still blocked from recording because of it, so where no everyday isiZulu
-word exists the English word was kept and carried on an isiZulu noun-class prefix instead. Those
-borrowings are listed below — they are the first thing to check, because a borrowing that a farmer
-would not actually say out loud is the same failure as a coined term:
-
-- `ama-slug`
-- `i-chicken`
-- `i-compost`
-- `i-guinea`
-- `i-hive`
-- `i-split`
-- `i-super`
-- `i-understorey`
-- `ku-hive`
-- `ku-watermelon`
-
-Please also confirm:
-
-- The register is ordinary spoken farming isiZulu — the words a KwaZulu-Natal farmer uses aloud,
-  not written or academic isiZulu.
-- Every number and every plant or animal name matches the English script. Nothing was to be added,
-  and no species may be named that the English does not name.
-- Nothing addresses a room. The learner is alone on a phone; there is no group and no facilitator.
-
-When the review is done, correct the script and delete this appendix. Deleting the appendix without
-doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
+The narration reuses the current registered eight-second Flow bee clip. No new Flow clip or code-drawn animation was made. The audio uses `zu-ZA-ThandoNeural` at `-12%`; its word-boundary and decode proofs are recorded under `docs/narration-reviews/small-livestock-zu-audio-proof/`.
