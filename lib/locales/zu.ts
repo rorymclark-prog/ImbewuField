@@ -1105,7 +1105,7 @@ const dict: Dict = {
   loginErrorUnexpected: 'Kube nephutha. Zama futhi.',
 
   // Offline preparation and queued fieldwork.
-  offlineZuluDraftNotice: 'ISIZULU DRAFT — This page’s isiZulu interface wording has not been reviewed by a fluent isiZulu speaker. Save, sync, removal and error details have an immediately available English source. / ISIZULU SISALUHLAKA — IsiZulu esikuleli khasi siwuhlaka olungakabuyekezwa isikhulumi sesiZulu esinekhono. Imininingwane yokugcina, yokuvumelanisa, yokususa nephutha inomthombo wesiNgisi ongavulwa ngokushesha.',
+  offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
   offlineTitle: 'Akukho uxhumano nokuvumelanisa',
   offlineConnected: 'Kuxhunyiwe',
   offlineUsingSavedCopies: 'Awukho ku-inthanethi — usebenzisa amakhophi agcinwe kule divayisi',

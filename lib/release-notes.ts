@@ -45,6 +45,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '25 September 2026', sha: '2796d624', changes: [
     'Calendar month labels now appear in isiZulu.',
     'Task Planner labels its English farming guidance.',
+    'Report preparation headings and actions have isiZulu drafts.',
+    'Offline sync keeps its isiZulu drafts with English source details.',
   ], tour: [
     { title: 'See isiZulu calendar months', where: 'Planting Calendar', href: '/calendar',
       detail: 'Choose isiZulu and open the calendar month strip.' },
