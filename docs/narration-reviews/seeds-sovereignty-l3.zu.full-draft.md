@@ -2,7 +2,7 @@
 
 **Status: unreviewed translation draft. Learners may see the proposed lesson text only with the app's visible draft label. This packet is not audio copy and has not had fluent isiZulu review.**
 
-This packet pairs the current English L3 lesson in `lib/course-modules.ts` (`seeds-sovereignty-l3`) with proposed isiZulu for its body, key points, quiz questions, choices, and rationales. Existing English and isiZulu narration and the isiZulu deck are comparison material only; they do not approve this draft. No protected lesson source was changed.
+This packet originally paired the English L3 lesson in `lib/course-modules.ts` (`seeds-sovereignty-l3`) with proposed isiZulu for its body, key points, quiz questions, choices, and rationales. Existing English and isiZulu narration and the isiZulu deck are comparison material only; they do not approve this draft. The storage body and first quiz rationale were subsequently corrected in both languages; see [the dated source correction](seeds-l2-l3-source-correction-2026-09-24.md). The quoted body and rationale below are a historical comparison, and the learner files are authoritative.
 
 ## Source scope
 
@@ -95,4 +95,4 @@ Hlela ukushintshisana ngembewu nomakhelwane kule sizini. Lokho ikhaya elilodwa e
 
 ## Exact review dependency
 
-Before learner registration or recording, obtain review from a fluent first-language South African isiZulu reviewer with seed-saving knowledge. Return exact wording changes and their English meanings; identify reviewer, language variety/region and date; check technical terms, quiz clarity, distractors, rationales and audio pronunciation. The English content owner should resolve the drying/sealing sequence, the unsupported “years” lifespan wording, the desiccant wording, and the quiz rationale’s missing drying condition before translation is locked. No review or approval is claimed by this draft.
+The learner draft is registered under Rory's authorization and remains visibly marked unreviewed. For fluent approval, obtain review from a first-language South African isiZulu reviewer with seed-saving knowledge. Return exact wording changes and their English meanings; identify reviewer, language variety/region and date; check technical terms, quiz clarity, distractors, rationales and audio pronunciation. The drying/sealing sequence, lifespan wording, desiccant wording and first quiz rationale were reconciled in the dated source correction. No fluent or farming approval is claimed by this draft.

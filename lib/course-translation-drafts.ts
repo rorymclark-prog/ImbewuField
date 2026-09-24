@@ -42,7 +42,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
     keyPoints: [
       "Izitshalo zendlela eyomile (ubhontshisi, ummbila, ubhekilanga) zomiswa esitshalweni ngaphambi kokuqoqwa.",
       "Ukuvutshelisa imbewu katamatisi kusiza ukususa ijeli; enye imbewu emanzi idinga indlela yayo yokuyilungisa.",
-      "Utamatisi awudingi ukuhlukaniswa okukhulu; ummbila udinga ibanga elikhulu phakathi kwezinhlobo ukuze zigcine ubumsulwa bazo.",
+      "Utamatisi uvame ukuzithuthela impova kodwa ungaxubana; ummbila uthola impova ethwalwa umoya. Hlola isiqondiso sesitshalo nohlobo ngaphambi kokulondoloza imbewu.",
       "Hlanza imbewu katamatisi esilungisiwe, bese uyomisa ngokuphelele ngaphambi kokuyigcina.",
     ],
     quiz: [
@@ -72,7 +72,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
   },
   "seeds-sovereignty-l3": {
     title: "Ukomisa, Ukugcina Nokwabelana Ngembewu",
-    body: "Yomisa imbewu eyomile kahle ngaphambi kokuyigcina: yifake emvilophini yephepha, hhayi kwepulasitiki, uyibeke endaweni enomthunzi nenomoya ohambayo — ungayibeki elangeni eliqondile noma endaweni evaliwe eshisayo. Izinto ezintathu ezilimaza amandla embewu okuhluma ukushisa, ukukhanya nomswakama. Yehlisa konke lokhu, imbewu ingahlala iminyaka.\n\nBhala emvilophini ngayinye igama lesitshalo, uhlobo nosuku imbewu eyalondolozwa ngalo. Gcina endaweni epholile, emnyama neyomile — isitsha esivaliwe esinelayisi elincane noma impuphu yobisi olomisiwe singasiza ukumunca umswakama.\n\nNgaphambi kwesizini entsha yokutshala, hlola iqoqo elincane ukuthi liyahluma yini ukuze unganciki embewini esilahlekelwe amandla okuhluma ungakuqapheli.\n\nHlela ukushintshisana ngembewu nomakhelwane kule sizini. Lokho ikhaya elilodwa elikulondoloze kahle, amakhaya amaningana angabelana ngakho — futhi izinhlobo ezahlukahlukene zeqembu lonke ziyakhula kukho konke ukushintshisana.",
+    body: "Yomisa imbewu eyomile kahle ngaphambi kokuyigcina: yifake emvilophini yephepha, hhayi kwepulasitiki, uyibeke endaweni enomthunzi nenomoya ohambayo — ungayibeki elangeni eliqondile noma endaweni evaliwe eshisayo. Izinto ezintathu ezilimaza amandla embewu okuhluma ukushisa, ukukhanya nomswakama. Isikhathi imbewu ehlala ngaso ihluma siyahlukahluka ngesitshalo nangezimo zokuyigcina; yihlole ngaphambi kokuncika kuyo.\n\nBhala emvilophini ngayinye igama lesitshalo, uhlobo nosuku imbewu eyalondolozwa ngalo. Gcina imbewu eyome ngokuphelele esitsheni esivaliwe endaweni epholile, emnyama neyomile. Ukuvala imbewu esemanzi kungabamba umswakama bese kuyilimaza.\n\nNgaphambi kwesizini entsha yokutshala, hlola iqoqo elincane ukuthi liyahluma yini ukuze unganciki embewini esilahlekelwe amandla okuhluma ungakuqapheli.\n\nHlela ukushintshisana ngembewu nomakhelwane kule sizini. Lokho ikhaya elilodwa elikulondoloze kahle, amakhaya amaningana angabelana ngakho — futhi izinhlobo ezahlukahlukene zeqembu lonke ziyakhula kukho konke ukushintshisana.",
     keyPoints: [
       "Yomisa imbewu emthunzini lapho kuhamba khona umoya; ungayibeki elangeni eliqondile noma endaweni evaliwe eshisayo.",
       "Gcina imbewu enelebula endaweni epholile, emnyama neyomile — ukushisa, ukukhanya nomswakama yizinto ezintathu ezilimaza amandla okuhluma.",
@@ -89,7 +89,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
           "Ukuthinta inhlabathi, izinambuzane namagundane.",
         ],
         correct: 1,
-        rationale: "Ukugcina imbewu ipholile, isemnyameni futhi yomile kunciphisa lezi zinto ezintathu — yingakho isitsha esivaliwe ekhabetheni elinomthunzi sisebenza kahle.",
+        rationale: "Ukugcina imbewu eyome ngokuphelele ipholile futhi isemnyameni kunciphisa lezi zinto ezintathu. Isitsha esivaliwe sigcina imbewu eyomile yomile, kodwa singabamba umswakama uma imbewu ifakwe isemanzi.",
       },
       {
         q: "Kungani kufanele uhlole iqoqo elincane lembewu egciniwe ukuthi liyahluma yini ngaphambi kwesizini yokutshala?",
