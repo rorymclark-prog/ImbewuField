@@ -71,8 +71,8 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'market-community-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  // These modules have isiZulu narration history, but that is not approval of lesson text or quizzes.
-  'seeds-sovereignty-l1': { status: 'published-audio-only' },
+  // Existing narration does not approve lesson text; this packet still needs fluent and local-farming review.
+  'seeds-sovereignty-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l1.zu.full-draft.md' },
   'seeds-sovereignty-l2': { status: 'published-audio-only' },
   'seeds-sovereignty-l3': { status: 'published-audio-only' },
   'plant-guilds-l1': { status: 'published-audio-only' },
