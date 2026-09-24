@@ -75,9 +75,10 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'seeds-sovereignty-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l1.zu.full-draft.md' },
   'seeds-sovereignty-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l2.zu.full-draft.md' },
   'seeds-sovereignty-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/seeds-sovereignty-l3.zu.full-draft.md' },
-  'plant-guilds-l1': { status: 'published-audio-only' },
-  'plant-guilds-l2': { status: 'published-audio-only' },
-  'plant-guilds-l3': { status: 'published-audio-only' },
+  // Existing narration remains review-pending; the source-paired lesson drafts are visibly labelled.
+  'plant-guilds-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l1.zu.full-draft.md' },
+  'plant-guilds-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l2.zu.full-draft.md' },
+  'plant-guilds-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/plant-guilds-l3.zu.full-draft.md' },
 };
 
 const REQUIRED_REVIEW_ROLES: HumanReviewApproval['role'][] = ['fluent-isiZulu', 'local-farming'];

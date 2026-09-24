@@ -170,6 +170,14 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
   assert.ok(draftIds.includes('seeds-sovereignty-l1'), 'the authorized Seeds L1 packet is learner-visible as a labelled draft');
   assert.ok(draftIds.includes('seeds-sovereignty-l2'), 'the authorized Seeds L2 packet is learner-visible as a labelled draft');
   assert.ok(draftIds.includes('seeds-sovereignty-l3'), 'the authorized Seeds L3 packet is learner-visible as a labelled draft');
+  for (const lessonId of ['plant-guilds-l1', 'plant-guilds-l2', 'plant-guilds-l3']) {
+    assert.ok(draftIds.includes(lessonId), `${lessonId}: authorized Guilds packet is learner-visible as a labelled draft`);
+    const lesson = lessons.find(item => item.id === lessonId)!;
+    const presentation = resolveLearnerLessonPresentation(lesson, 'zu');
+    assert.equal(presentation.status, 'draft', `${lessonId}: lesson must carry the unreviewed-draft label`);
+    assert.deepEqual(presentation.content.quiz.map(question => question.correct), lesson.quiz.map(question => question.correct),
+      `${lessonId}: draft must preserve every English answer index`);
+  }
   assert.ok(draftIds.includes('soil-health-l3'), 'the corrected Soil Health L3 packet is learner-visible as a labelled draft');
   assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
   const seedsL1 = lessons.find(lesson => lesson.id === 'seeds-sovereignty-l1')!;
@@ -196,6 +204,12 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
     assert.equal(draft.quiz.length, lesson.quiz.length, `${lessonId}: all quiz questions must be translated`);
     assert.doesNotMatch(draft.body, /\b(?:Dry|Seed|Tomato|Maize|Store|Test)\b/, `${lessonId}: learner body must not fall back to English`);
   }
+  assert.match(COURSE_TRANSLATION_DRAFTS['plant-guilds-l1'].body, /Lokhu kuthatha isikhathi/,
+    'Guilds L1 keeps nutrient release gradual instead of promising an immediate transfer');
+  assert.match(COURSE_TRANSLATION_DRAFTS['plant-guilds-l2'].body, /I-Bocking 14 ayisakazeki ngembewu ekwazi ukuhluma, kodwa izingcezu zezimpande zingaphinde zikhule/,
+    'Guilds L2 preserves the cultivar-specific seed and root-fragment distinction');
+  assert.match(COURSE_TRANSLATION_DRAFTS['plant-guilds-l3'].body, /akukuqedi ngokushesha ukuncintisana kwezimpande/,
+    'Guilds L3 does not promise that thinning instantly ends root competition');
   assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 
