@@ -31,6 +31,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 
 type Filter = 'all' | JournalCategory;
@@ -153,8 +154,8 @@ export default function FieldJournal() {
   function persist(next: JournalEntry[]) {
     const result = saveJournal(next);
     setEntries(result.entries);
-    if (!result.ok) setNotice('Storage is full — this entry could not be saved. Delete an old entry and try again.');
-    else if (result.trimmed) setNotice('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.');
+    if (!result.ok) setNotice(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
+    else if (result.trimmed) setNotice(ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.'));
     else setNotice(null);
   }
 
@@ -256,7 +257,7 @@ export default function FieldJournal() {
                   background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
                   font: '600 10px/1 system-ui, sans-serif', color: '#fff',
                 }}>
-                  {formatJournalDate(p.date)}
+                  {isZulu ? formatZuluJournalDate(p.date) : formatJournalDate(p.date)}
                 </div>
               </div>
             ))}
@@ -267,7 +268,7 @@ export default function FieldJournal() {
       </aside>
       <div className={workspace.journalTimeline}>
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: '#FEF6E7', color: '#7A5B14', font: '500 12px/1.45 system-ui, sans-serif' }}>
-        Izibonelo namanothi agciniwe akhonjiswa njengoba ebhaliwe; eminye imibhalo yasensimini nezexwayiso zokulondoloza zisesiNgisini.
+        Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
       {/* Category filter */}
       {usedCategories.length > 1 && (
@@ -298,8 +299,7 @@ export default function FieldJournal() {
               {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
             <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#8A7C62', maxWidth: 320, margin: '0 auto' }}>
-              Write down the date, what you did and what happened. One season of notes is
-              what makes next season&apos;s decisions better — here&apos;s what that looks like.
+              {ui('Write down the date, what you did and what happened. One season of notes is what makes next season’s decisions better — here’s what that looks like.', 'Bhala usuku, okwenzile nokwenzekile. Amanothi esizini eyodwa angasiza ekuthatheni izinqumo ezingcono ngesizini elandelayo — nasi isibonelo.')}
             </div>
           </div>
 
@@ -350,7 +350,7 @@ export default function FieldJournal() {
                         padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
                         font: '700 10px/1 system-ui, sans-serif',
                       }}>
-                        {cat.icon} {cat.label}
+                        {cat.icon} {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
                     </div>
 
@@ -398,7 +398,7 @@ export default function FieldJournal() {
             font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.1em',
             textTransform: 'uppercase', color: '#7A6B52',
           }}>
-            {group.label} · {group.entries.length}
+            {isZulu ? formatZuluMonth(group.key) : group.label} · {group.entries.length}
           </div>
 
           <div style={{ position: 'relative', paddingLeft: 16 }}>
@@ -422,7 +422,7 @@ export default function FieldJournal() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
                         <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
-                          {formatJournalDate(entry.date)}
+                          {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -475,7 +475,7 @@ export default function FieldJournal() {
                       type="button"
                       className={motion.editEntry}
                       onClick={() => setSheet({ open: true, entry })}
-                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || formatJournalDate(entry.date)}`}
+                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
                         background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: '#1F4D2B',
@@ -516,19 +516,6 @@ function Stat({ value, label }: { value: string; label: string }) {
       <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: '#8A7C62', marginTop: 4 }}>{label}</div>
     </div>
   );
-}
-
-function journalCategoryLabel(key: JournalCategory): string {
-  const labels: Record<JournalCategory, string> = {
-    planting: 'Ukutshala',
-    harvest: 'Ukuvuna',
-    weather: 'Isimo sezulu',
-    pest: 'Izinambuzane / izifo',
-    maintenance: 'Ukunakekela',
-    training: 'Isivakashi / ukuqeqesha',
-    other: 'Okunye',
-  };
-  return labels[key];
 }
 
 function Heading({ children }: { children: React.ReactNode }) {
