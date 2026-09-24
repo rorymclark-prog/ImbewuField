@@ -951,7 +951,7 @@ const dict: Dict = {
   courseDeckClose: 'Vala',
   courseDeckWatch: 'Buka · {seconds}s · {size}',
   courseDeckOpenImageAria: 'Vula isithombe esinganyakazi sika-{title} ngosayizi ogcwele',
-  courseDeckOpenImage: 'Vula isithombe esinganyakazi · thepha ukuze usisondeze ↗',
+  courseDeckOpenImage: 'Vula isithombe esinganyakazi · thepha ukuze usisondeze',
   courseDeckNarrationAria: 'Ukulandisa kuka-{title}',
   courseDeckNarrationFailed: 'Umsindo wokulandisa awudlalekanga. Hlola uxhumano bese ucindezela okuthi Dlala isifundo futhi, noma ufunde umbhalo ongezansi kwalesi silayidi.',
   courseDeckAnimationFailed: 'Ukugqwayiza akulayisekanga. Ungaqhubeka nokulalela, ufunde umbhalo, noma uthephe okuthi Buka ukuze uzame futhi.',
