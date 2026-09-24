@@ -23,6 +23,7 @@ import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { buildSurveyPdf, surveyPdfFilename } from '@/lib/survey-pdf';
 import { deliverFile } from '@/lib/file-delivery';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
@@ -214,7 +215,7 @@ function SurveyInner() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header */}
-      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />

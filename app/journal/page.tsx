@@ -9,6 +9,7 @@ import BackButton from '@/components/BackButton';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 export default function JournalPage() {
   const { lang } = useLanguage();
@@ -21,7 +22,7 @@ export default function JournalPage() {
           the pill rendered on top of the brand logo and clipped the title, so
           the page read "ield Journal". Suppressing the pill instead would
           strand the page — tests/back-control.test.ts defends that. */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />

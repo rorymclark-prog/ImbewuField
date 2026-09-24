@@ -63,6 +63,7 @@ import {
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
 import type { GardenStatus } from '@/lib/db/types';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -194,7 +195,7 @@ export default function NetworkPage() {
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={{ height: 52, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+        style={{ ...APP_HEADER_INSET, background: PAPER, borderBottom: `1px solid ${LINE}` }}
       >
         <MenuButton />
         <BackButton fallback="/home" />

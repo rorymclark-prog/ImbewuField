@@ -19,6 +19,7 @@ import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 const ROLE_LABELS: Record<UserRole, string> = {
   farmer: 'Farmer', mentor: 'Mentor',
@@ -162,7 +163,7 @@ export default function AccountPage() {
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
