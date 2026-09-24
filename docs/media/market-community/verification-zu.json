@@ -28,8 +28,8 @@
     {
       "slide": 4,
       "file": "public/course-decks/market-community/zu/slide-04.jpg",
-      "bytes": 112743,
-      "sha256": "78e3e841de6940712047498947e0376d4a08dfffd928eb3d46840c871d655f54"
+      "bytes": 113605,
+      "sha256": "3b25e3a0cc9ad2e13ff60ffb775bfca6ae688300aca1f36f8f23fd334b74e0b2"
     },
     {
       "slide": 5,
@@ -58,8 +58,8 @@
     {
       "slide": 9,
       "file": "public/course-decks/market-community/zu/slide-09.jpg",
-      "bytes": 128227,
-      "sha256": "d7c63da8162f61cc61d0af29e780ce8a89a045e1319f710f7b9c478100d4d1ea"
+      "bytes": 129027,
+      "sha256": "eb07a5e3a95687527b6525dc7bea8561ed6aa90268bf9556a6aa6e098a0abc7b"
     },
     {
       "slide": 10,
@@ -88,8 +88,8 @@
     {
       "slide": 14,
       "file": "public/course-decks/market-community/zu/slide-14.jpg",
-      "bytes": 111813,
-      "sha256": "c13a37f31279ff8233801ad0dfe44129c37e55c1ed7ae1516167c1102e9d518c"
+      "bytes": 109943,
+      "sha256": "6a935180a5d86dad2bbe9725107cf1ec795aa2d734934c459f903beb11a918f9"
     },
     {
       "slide": 15,
@@ -131,18 +131,18 @@
   "diagrams": {
     "4": {
       "file": "docs/media/market-community/market-community-zu-diagram-04.jpg",
-      "bytes": 124227,
-      "sha256": "a11797e9809ae650060c764f701dc7ac4eaa5df680b176476c1529e7ea7776c2"
+      "bytes": 125078,
+      "sha256": "b7ab091b5d109855126d0d814465e14331324721b5867fe29f968b12d4c99c9d"
     },
     "9": {
       "file": "docs/media/market-community/market-community-zu-diagram-09.jpg",
-      "bytes": 141040,
-      "sha256": "5548bf53dfea269298a0394380b7494fb180d0b2f23fddb737956f1004e0c8e7"
+      "bytes": 141903,
+      "sha256": "e584f33646fa813b104ab2b353fb87adb8cf24dfc5e4f94f3cf2ae3c1628545e"
     },
     "14": {
       "file": "docs/media/market-community/market-community-zu-diagram-14.jpg",
-      "bytes": 123439,
-      "sha256": "a0f41e44411e1875b12888c923ce5f8dae86827d7827f92f0e5d3ef69f5afbcd"
+      "bytes": 121317,
+      "sha256": "a05a42057f809e6b22d1c67621110ec31a74c02695fbf906037f2dc97d0ac91f"
     }
   },
   "review": {

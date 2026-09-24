@@ -1,6 +1,6 @@
 # Market Gardening & Community media — 20 September 2026
 
-Twenty English slides and three authored Watch clips use the module's unchanged twenty English recordings. This branch follows Small Livestock (#452) and records its successful deployed offline follow-up. No lesson, quiz, narration, species, farming figure, geometry or PLAN_VERSION changed. isiZulu stays review-only.
+Twenty English slides and three authored Watch clips use the module's unchanged twenty English recordings. This branch follows Small Livestock (#452) and records its successful deployed offline follow-up. No lesson, quiz, narration, species, farming figure, geometry or PLAN_VERSION changed. The isiZulu draft media added later is documented below.
 
 ## Teaching scenes
 

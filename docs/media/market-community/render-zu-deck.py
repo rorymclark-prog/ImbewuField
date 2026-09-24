@@ -69,7 +69,7 @@ def base(title, caption):
     centered(d,title,(W//2,56),font(38,True),INK,1720,5)
     d.rounded_rectangle((70,865,1850,1035), radius=18, fill=CARD, outline=BORDER, width=2)
     centered(d,caption,(W//2,895),font(32),INK,1680,8)
-    centered(d,"Umdwebo womqondo — awulinganiswanga",(W//2,1018),font(28),MUTED,1600,5)
+    centered(d,"Umdwebo womqondo — awulinganiswanga",(W//2,990),font(28),MUTED,1600,5)
     return im,d
 
 def basket(d,cx,cy,s=26):
@@ -142,13 +142,13 @@ def grower(d,cx,cy):
     d.polygon([(cx-22,cy-5),(cx,cy-24),(cx+22,cy-5)],fill=GREEN)
 
 def render14(path):
-    im,d=base("Buka: Omakhelwane Basqinisa Kanjani Isivuno", "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha. Imizi eyahlukene iba inethiwekhi yokudla yasendaweni.")
+    im,d=base("Buka: Ukubambisana Komakhelwane", "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha. Imizi eyahlukene iba inethiwekhi yokudla yasendaweni.")
     pts=[(960,275),(1340,405),(1195,690),(725,690),(580,405)]
     # Growers linked as peers; each label sits beside its own exchange node.
     for i,p in enumerate(pts):
         q=pts[(i+1)%len(pts)];arrow(d,p,q,GREEN,5)
     for p in pts: grower(d,*p)
-    labels=[("Imbewu",960,210),("Amathuluzi",1450,385),("Amakhono",1260,755),("Ezokuthutha",660,755),("Abalimi",455,385)]
+    labels=[("Imbewu",960,210),("Amathuluzi",1535,385),("Amakhono",1260,755),("Ezokuthutha",660,755),("Abalimi",455,385)]
     for text,x,y in labels:
         centered(d,text,(x,y),font(29,True),INK,300,3)
     d.rounded_rectangle((700,455,1220,555),radius=14,fill=GREEN_LIGHT,outline=GOLD,width=3)
