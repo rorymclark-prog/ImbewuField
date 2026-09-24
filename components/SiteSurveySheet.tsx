@@ -22,6 +22,7 @@ import { studioRoofAreasM2, surveyRoofAreaM2 } from '@/lib/studio-traced-areas';
 import Illustration from '@/components/Illustration';
 import styles from './SiteSurveySheet.module.css';
 import SiteSurveyReview from './SiteSurveyReview';
+import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -379,7 +380,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   };
   const closeWithConfirm = useCallback(async () => {
     if (dirty && !(await appConfirm({
-      message: t('surveyDiscardConfirm'), confirmLabel: t('surveyDiscardBtn'),
+      message: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardConfirm'), SURVEY_DISCARD_CONFIRM_ENGLISH) : t('surveyDiscardConfirm'),
+      confirmLabel: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardBtn'), SURVEY_DISCARD_BUTTON_ENGLISH) : t('surveyDiscardBtn'),
       cancelLabel: t('cancelBtn'), destructive: true,
     }))) return;
     onClose();
@@ -443,7 +445,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
             <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? t('surveyGrowingResources') : STEPS[id]}</span>
           </button>; })}
-          <p className={styles.navNote}><Info size={16}/>{t('surveySaveReminder')}</p>
+          <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
         <div ref={scrollRef} className={styles.scroll}>
         {!started ? <div className={styles.welcome}>
@@ -607,7 +609,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5 }}>
                 <span className="font-semibold" style={{ color: 'var(--blue)' }}>{t('roofCatchmentWhyMattersLabel')}</span>
-                {t('roofCatchmentWhyMattersText')}
+                {lang === 'zu' ? <SurveyZuluDraftPair english="Lima uses roof area to calculate how much rainwater you can harvest each year — it directly sizes your tank recommendations, swale design, and irrigation planning.">{t('roofCatchmentWhyMattersText')}</SurveyZuluDraftPair> : t('roofCatchmentWhyMattersText')}
               </p>
             </div>
 
@@ -633,14 +635,14 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 <div><Droplets size={30}/><strong>{rainfallMm === null ? '—' : `${numberLabel(rainfallMm)} mm`}</strong><span>{t('surveyAnnualRainfall')}</span></div><ArrowRight size={20} aria-hidden="true"/>
                 <div><Droplets size={30}/><strong>{localRoofHarvest === null ? '—' : `~${numberLabel(localRoofHarvest)} kL`}</strong><span>{t('surveyEstimatedCollection')}</span></div>
               </div>
-              <p>{localRoofHarvest === null ? t('surveyRainfallMissing') : t('surveyRoofInputs')}</p>
+              <p>{localRoofHarvest === null ? t('surveyRainfallMissing') : lang === 'zu' ? <SurveyZuluDraftPair english="Uses your entered or traced roof area and rainfall from the site analysis. Collection efficiency is an assumption: 80% with gutters, 60% without. Actual collection varies.">{t('surveyRoofInputs')}</SurveyZuluDraftPair> : t('surveyRoofInputs')}</p>
             </div>}
             {totalRoof > 0 && (
               <details className={styles.workedExample}><summary>{t('surveyRoofExample')}</summary><div style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(31,77,43,0.2)' }}>
                 <div className="font-sans font-semibold mb-1" style={{ fontSize: 13, color: 'var(--brand)' }}>{t('liveEstimateTitle')} · {t('surveyIllustrativeOnly')}</div>
                 <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6 }}>
                   {t('liveEstimateTotalRoofArea')} <strong>{totalRoof} m²</strong><br />
-                  {t('liveEstimateAt600mmRain')} <strong>~{roofHarvest600} {t('liveEstimatePerYear')}</strong> ({hasGutters ? '80%' : '60%'} {t('surveyEfficiencySuffix')})<br />
+                  {t('liveEstimateAt600mmRain')} <strong>~{roofHarvest600} {t('liveEstimatePerYear')}</strong> ({hasGutters ? '80%' : '60%'} {lang === 'zu' ? <SurveyZuluDraftPair english="efficiency">{t('surveyEfficiencySuffix')}</SurveyZuluDraftPair> : t('surveyEfficiencySuffix')})<br />
                   <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('liveEstimateActualRainfallNote')}</span>
                 </div>
               </div></details>
@@ -746,7 +748,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             {mode === 'full' ? <div>
               <SectionLabel>{t('surveyCurrentProductionSurveyLabel')}</SectionLabel>
               <div className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.45 }}>
-                {t('surveyReportWhatYouKnow')} {t('surveySameYearUnit')}
+                {t('surveyReportWhatYouKnow')} {lang === 'zu' ? <SurveyZuluDraftPair english="Use the same year and unit for quantity, household use and sales. Income is for that same year.">{t('surveySameYearUnit')}</SurveyZuluDraftPair> : t('surveySameYearUnit')}
               </div>
               <div className="space-y-3">
                 {PRODUCTION_ROWS.map(({ category, label, hint }) => {
@@ -759,7 +761,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                       </button>
                       {openProduction === category && <div id={`${guideId}-${category}`} className={styles.productionBody}>
                       {hint && <p>{hint}</p>}
-                      {productionNeedsReview(row) && <p className={styles.warning} role="status">{t('surveyProductionCheck')}</p>}
+                      {productionNeedsReview(row) && <p className={styles.warning} role="status">{lang === 'zu' ? <SurveyZuluDraftPair english="Check these figures: quantities need a unit, and household use plus sales cannot exceed the yearly quantity. Name an Other item before saving.">{t('surveyProductionCheck')}</SurveyZuluDraftPair> : t('surveyProductionCheck')}</p>}
                       {category === 'other' && (
                         <input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} aria-label={t('surveyWhatDoYouProducePlaceholder')} placeholder={t('surveyWhatDoYouProducePlaceholder')}
                           className="w-full font-sans mt-2" style={{ minHeight: 44, padding: '8px 10px', borderRadius: 9, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 13, color: 'var(--text)' }} />
@@ -812,7 +814,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 {reportedGroups.length > 0
                   ? <><strong>{t('surveyFoodGroupsReportedCount').replace('{n}', String(reportedGroups.length))}</strong> </>
                   : <><strong>{t('surveyFoodGroupsNotReported')}</strong> </>}
-                {t('surveyFaoHddsFooter')}
+                {lang === 'zu' ? <SurveyZuluDraftPair english="These groups describe your production. They do not measure what your household ate or give a nutrition score.">{t('surveyFaoHddsFooter')}</SurveyZuluDraftPair> : t('surveyFaoHddsFooter')}
               </div>
             </div> : <button className={styles.detailLink} onClick={() => setMode('full')}><NotebookPen size={20}/><span><strong>{t('surveyAddProduction')}</strong><small>{t('surveyAddProductionHint')}</small></span><ArrowRight size={18}/></button>}
 
@@ -951,13 +953,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
 
       <footer className={styles.footer}>
         {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}<ArrowRight size={18}/></button></div>}
-        {saveError && <p role="alert" className={styles.warning}>{t('surveySaveError')}</p>}
-        {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{t('surveyFixBeforeSave')}</p>}
+        {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
+        {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.">{t('surveyFixBeforeSave')}</SurveyZuluDraftPair> : t('surveyFixBeforeSave')}</p>}
         {started && <div className={styles.footerInner}>
           <button className={styles.back} onClick={() => routeIndex > 0 ? goTo(route[routeIndex - 1]) : setStarted(false)}><ChevronLeft size={17}/>{t('buttonBack')}</button>
-          <span className={styles.saveReminder}>{dirty ? t('surveyUnsaved') : t('surveySaveReminder')}</span>
+          <span className={styles.saveReminder}>{lang === 'zu' ? dirty ? <SurveyZuluDraftPair english="Changes not yet saved">{t('surveyUnsaved')}</SurveyZuluDraftPair> : <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : dirty ? t('surveyUnsaved') : t('surveySaveReminder')}</span>
           <button className={styles.primary} disabled={step === 7 && !canSave} onClick={() => step === 7 ? handleSave() : goTo(route[routeIndex + 1])}>
-            {step === 7 ? <><Check size={18}/>{t('surveySaveContinue')}</> : <>{step === 6 ? t('surveyReviewTitle') : t('buttonNext')}<ChevronRight size={18}/></>}
+            {step === 7 ? <><Check size={18}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Save & continue">{t('surveySaveContinue')}</SurveyZuluDraftPair> : t('surveySaveContinue')}</> : <>{step === 6 ? t('surveyReviewTitle') : t('buttonNext')}<ChevronRight size={18}/></>}
           </button>
         </div>}
       </footer>
