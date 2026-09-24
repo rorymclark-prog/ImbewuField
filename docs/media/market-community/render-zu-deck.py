@@ -175,6 +175,15 @@ def main():
         png=OUT/f"slide-{n:02d}.png"; jpg=OUT/f"slide-{n:02d}.jpg"
         with Image.open(png) as im: im.convert("RGB").save(jpg,format="JPEG",quality=85,optimize=True)
         png.unlink()
+    sheet=Image.new("RGB",(1200,1800),"white")
+    label_font=font(14)
+    draw=ImageDraw.Draw(sheet)
+    for n in range(1,21):
+        x=((n-1)%3)*400; y=((n-1)//3)*255
+        draw.text((x+5,y+3),f"slide-{n:02d}.jpg",font=label_font,fill=INK)
+        with Image.open(OUT/f"slide-{n:02d}.jpg") as im:
+            sheet.paste(im.resize((400,225)),(x,y+24))
+    sheet.save(MEDIA/"market-community-zu-contact-sheet.jpg",quality=87,optimize=True)
     en=ROOT/"docs/narration/market-community.en.md";zu=ROOT/"docs/narration/market-community.zu.md"
     source={"module":"market-community","language":"zu","status":"unreviewed draft","sourceFiles":{str(p.relative_to(ROOT)):sha(p) for p in (en,zu)},"slides":[]}
     for n in range(1,21):

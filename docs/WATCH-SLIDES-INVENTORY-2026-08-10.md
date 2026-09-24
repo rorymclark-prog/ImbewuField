@@ -234,7 +234,7 @@ Shares distribution network graphics with market-community Slide 4 and Slide 14.
 ### 9. Module: `market-community` — Slide 14
 
 - **Exact Heading (EN)**: `**Slide 14 — Watch: How Neighbours Strengthen a Harvest**`
-- **Exact Heading (ZU)**: `**Ikhasi 14 — Buka: Omakhelwane Basqinisa Kanjani Isivuno (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**`
+- **Exact Heading (ZU)**: `**Ikhasi 14 — Buka: Ukubambisana Komakhelwane (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**`
 - **Status & Location**: Missing (No clip in public/course-animations/)
 
 #### Verbatim Narration Body (Specification)

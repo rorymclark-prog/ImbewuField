@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '146257a1', changes: [
+    'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
+    'Three teaching diagrams show the farm record, sales routes and neighbour network.',
+  ], tour: [
+    { title: 'View Market Gardening in isiZulu', where: 'My Studies · Market Gardening', href: '/student',
+      detail: 'Choose isiZulu, open Market Gardening, and view the narrated slides.' },
+  ] },
   { when: '24 September 2026', sha: '66f24e47', changes: [
     'Seeds lessons 2 and 3 now show isiZulu reading and quiz drafts.',
     'Seed lessons now explain tomato crossing and why stored seed must be dry.',
