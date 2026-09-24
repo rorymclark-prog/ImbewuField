@@ -171,7 +171,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
       {hasEnglishMedia && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
-          Le phakheji inamaslayidi noma umsindo wesiNgisi lapho okwasisiZulu kungakatholakali.
+          {t('offlineEnglishMediaFallback')}
         </p>
       )}
 
@@ -193,7 +193,9 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold"
               style={{ background: '#1F4D2B', color: '#EAF3E2' }}>
               <Loader2 size={13} className="animate-spin" />
-              {formatPackSize(bytes)} of {formatPackSize(totalBytes)}
+              {t('offlineDownloadBytesProgress')
+                .replace('{current}', formatPackSize(bytes))
+                .replace('{total}', formatPackSize(totalBytes))}
             </span>
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"

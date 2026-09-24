@@ -110,7 +110,11 @@ test('the LABELS strip does not sit on top of "Find your land"', () => {
   assert.match(map, /top: isPhone \? \(toolsPillShowing \? 68 : 14\) : 14/, 'the strip is back on the top row on phone');
 
   // 68 must actually clear the button: top-3 (12px) + its 48px height = 60.
-  const btn = map.slice(map.indexOf('aria-label="Show map tools"'), map.indexOf('aria-label="Show map tools"') + 400);
+  // Anchor to the action rather than its displayed language: the clearance protects
+  // the same button when the farmer switches the map controls to isiZulu.
+  const toolsButton = map.indexOf('onClick={openPanel}');
+  assert.ok(toolsButton > 0, 'the map tools button is missing; recheck the strip clearance');
+  const btn = map.slice(toolsButton, toolsButton + 400);
   assert.match(btn, /top-3 left-3/, 'the tools button moved; the 68px clearance needs rechecking');
   assert.match(btn, /height: 48/, 'the tools button changed height; 68px may no longer clear it');
 
