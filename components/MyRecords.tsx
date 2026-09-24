@@ -1009,7 +1009,7 @@ function CreditPackCard({
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
             <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
-            <thead><tr><th className="text-left p-2">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className="text-right p-2">{recordsUi(lang, 'Income', 'Imali engenayo')}</th><th className="text-right p-2">{recordsUi(lang, 'Costs', 'Izindleko')}</th><th className="text-right p-2">{recordsUi(lang, 'Balance', 'Ibhalansi')}</th></tr></thead>
+            <thead><tr><th className="text-left p-2">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className="text-right p-2">{recordsUi(lang, 'Income', 'Imali engenayo', true)}</th><th className="text-right p-2">{recordsUi(lang, 'Costs', 'Izindleko', true)}</th><th className="text-right p-2">{recordsUi(lang, 'Balance', 'Ibhalansi', true)}</th></tr></thead>
             <tbody>{months.map(month => <tr key={month.monthKey} style={{ borderTop: '1px solid var(--color-border)' }}><td className="p-2">{month.label}</td><td className="p-2 text-right">{money(month.incomeZar)}</td><td className="p-2 text-right">{money(month.expensesZar)}</td><td className="p-2 text-right">{money(month.netZar)}</td></tr>)}</tbody>
           </table>
         </div>}
