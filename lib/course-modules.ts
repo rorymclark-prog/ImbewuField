@@ -779,7 +779,7 @@ export const COURSE_MODULES: CourseModule[] = [
         keyPoints: [
           "Stable open-pollinated varieties need suitable pollination management",
           "Seed sovereignty means freedom from depending on a seed company every season",
-          "Genetic diversity across many saved varieties is real protection against climate unpredictability",
+          "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
           "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
         ],
         quiz: [

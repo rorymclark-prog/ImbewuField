@@ -8,8 +8,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
     keyPoints: [
       "Izinhlobo ezizinzile ezivulekele impova zidinga ukulawulwa okufanele kwempova.",
       "Ubukhosi bembewu busho inkululeko yokunganciki enkampanini yembewu njalo ngesizini.",
-      // The packet flags this categorical climate claim for the English content owner; keep its source wording visible.
-      "Genetic diversity across many saved varieties is real protection against climate unpredictability",
+      "Ukuhlukahluka kwezitshalo nezinhlobo zazo kungasiza ekuzivumelaniseni nokushintsha kwesimo sezulu, uma izinhlobo zifanele izimo zendawo.",
       "Khetha izitshalo ezinempilo nezinezici ozifunayo; landela isiqondiso sokulondoloza imbewu esiqondene nesitshalo ngasinye.",
     ],
     quiz: [

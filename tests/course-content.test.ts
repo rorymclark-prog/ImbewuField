@@ -170,8 +170,10 @@ test('owner-authorized isiZulu drafts remain labelled drafts and never include s
   assert.ok(draftIds.includes('seeds-sovereignty-l1'), 'the authorized Seeds L1 packet is learner-visible as a labelled draft');
   assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
   const seedsL1 = lessons.find(lesson => lesson.id === 'seeds-sovereignty-l1')!;
-  assert.equal(COURSE_TRANSLATION_DRAFTS[seedsL1.id].keyPoints[2], seedsL1.keyPoints[2],
-    'the climate protection claim stays in English pending its source-owner decision');
+  assert.match(seedsL1.keyPoints[2], /can support adaptation to climate change when varieties are suited to local conditions/,
+    'the climate point describes conditional support for adaptation rather than guaranteed protection');
+  assert.match(COURSE_TRANSLATION_DRAFTS[seedsL1.id].keyPoints[2], /kungasiza.*uma izinhlobo zifanele izimo zendawo/,
+    'the isiZulu draft preserves the same conditional climate claim');
   assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 
