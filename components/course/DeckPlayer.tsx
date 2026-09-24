@@ -17,6 +17,7 @@ import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { COURSE_CACHE } from '@/lib/offline-cache';
+import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
 
 // The module as it was actually written: slides in a teaching order, narrated, with animations
 // where a still cannot carry the idea. Built for one farmer alone with a phone and metered data.
@@ -58,6 +59,19 @@ const LANG_NAME: Record<string, string> = {
 };
 const langName = (code: string) => LANG_NAME[code] ?? code;
 
+// Match the short points on the published slide images. The full narration remains available
+// below the inline player; a full-screen slide shows the slide, not a second reading mode.
+function slidePoints(paragraphs: string[]): string[] {
+  const numbered = paragraphs.filter((p) => /^(?:One|Two|Three|Four|Five|Six|\d+)[.)]\s/i.test(p));
+  if (numbered.length > 1) {
+    return numbered.map((p) => p.replace(/^(?:One|Two|Three|Four|Five|Six|\d+)[.)]\s+/i, ''));
+  }
+  return paragraphs
+    .map((p) => (p.split(/(?<=[.!?])\s/)[0] || p).trim())
+    .filter((p) => p.length >= 12)
+    .slice(0, 4);
+}
+
 export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose }: DeckPlayerProps) {
   const deck = deckFor(moduleId);
   const narration = COURSE_NARRATION[moduleId];
@@ -94,12 +108,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [view, setView] = useState<'read' | 'slide'>('slide');
+  const [chromeVisible, setChromeVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const playerRef = useRef<HTMLDialogElement | null>(null);
   const slideViewportRef = useRef<HTMLDivElement | null>(null);
-  const readingRef = useRef<HTMLDivElement | null>(null);
   const expandButtonRef = useRef<HTMLButtonElement | null>(null);
   const exitButtonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
@@ -112,7 +125,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   useEffect(() => {
     setZoom(1);
-    if (readingRef.current) readingRef.current.scrollTop = 0;
+    setChromeVisible(true);
     if (slideViewportRef.current) {
       slideViewportRef.current.scrollTop = 0;
       slideViewportRef.current.scrollLeft = 0;
@@ -120,11 +133,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [index]);
 
   useEffect(() => {
-    if (!transcript && view === 'read') setView('slide');
-  }, [transcript, view]);
-
-  useEffect(() => {
-    if (!expanded || view !== 'slide' || !slideViewportRef.current) return;
+    if (!expanded || !slideViewportRef.current) return;
     const viewport = slideViewportRef.current;
     const measure = () => {
       const { width, height } = viewport.getBoundingClientRect();
@@ -135,7 +144,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     const observer = new ResizeObserver(measure);
     observer.observe(viewport);
     return () => observer.disconnect();
-  }, [expanded, view]);
+  }, [expanded]);
+
+  useEffect(() => {
+    if (!expanded || !chromeVisible) return;
+    const timeout = window.setTimeout(() => setChromeVisible(false), 10000);
+    return () => window.clearTimeout(timeout);
+  }, [expanded, chromeVisible, index]);
 
   const exitExpanded = useCallback(() => {
     const dialog = playerRef.current;
@@ -143,6 +158,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     dialog.close();
     dialog.show();
     setExpanded(false);
+    setChromeVisible(true);
   }, []);
 
   const toggleExpanded = () => {
@@ -152,9 +168,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     else {
       dialog.close();
       dialog.showModal();
-      // The slide artwork is a fixed 16:9 image with type baked into it. On a phone the
-      // narration text is readable at normal size; the picture remains one tap away.
-      setView(transcript && window.matchMedia?.('(max-width: 1024px)').matches ? 'read' : 'slide');
+      setChromeVisible(true);
       setZoom(1);
       setExpanded(true);
     }
@@ -206,6 +220,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     // It doubles as the browser's autoplay unlock: a tap on Next is a user gesture, so the same
     // <audio> element is permitted to play from here on.
     setRunning(true);
+    setChromeVisible(true);
     setIndex((i) => Math.min(total - 1, Math.max(0, i + delta)));
   }, [total]);
 
@@ -305,6 +320,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [running, audioForCurrent, onNarrationEnded]);
 
   const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (expanded) setChromeVisible(true);
     if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
     // The player used to listen on window, which meant seeking an audio clip or using any other
     // page control also turned the lesson page. Only the deck surface owns these shortcuts.
@@ -338,6 +354,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
   const slideRatio = anim?.aspectRatio ?? 16 / 9;
+  const artModule = (COURSE_DECK_ART as Record<string, Record<string, { layout: string }>>)[moduleId];
+  const art = artModule?.[current.slide];
+  const presentationPoints = transcript ? slidePoints(transcript) : [];
+  const showReflowedSlide = expanded && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
   const fittedWidth = expanded && viewportSize.width && viewportSize.height
     ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
 
@@ -350,8 +370,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       aria-modal={expanded ? true : undefined}
       aria-label={expanded ? 'Full screen lesson slides' : 'Lesson slides. Use Left and Right arrow keys to change slides.'}
       onKeyDown={onDeckKeyDown}
+      onMouseMove={() => { if (expanded && !chromeVisible) setChromeVisible(true); }}
       onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
-      className={`${styles.player} ${expanded ? styles.expanded : ''}`}
+      className={`${styles.player} ${expanded ? styles.expanded : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
     >
       <div className={styles.playerHeader}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
@@ -395,38 +416,34 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
-      {expanded && transcript && (
-        <div className={styles.viewSwitch} role="group" aria-label="Choose how to view this slide">
-          <button type="button" aria-pressed={view === 'read'} onClick={() => setView('read')}>Read text</button>
-          <button type="button" aria-pressed={view === 'slide'} onClick={() => setView('slide')}>See slide</button>
-        </div>
-      )}
-
-      {expanded && view === 'read' && transcript && (
-        <div ref={readingRef} className={styles.readingPanel} lang={spokenLang!.lang}>
-          <p className={styles.readingLabel}>Slide narration · {langName(spokenLang!.lang)}</p>
-          {transcript.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
-        </div>
-      )}
-
-      {expanded && view === 'slide' && (
-        <div className={styles.zoomBar} role="group" aria-label="Slide image size">
-          <span>Slide image</span>
-          <button type="button" aria-label="Zoom out" disabled={zoom === 1} onClick={() => setZoom((value) => Math.max(1, value - 1))}>−</button>
+      {expanded && !showReflowedSlide && (
+        <div className={styles.zoomBar} role="group" aria-label="Slide size">
+          <button type="button" aria-label="Zoom out" disabled={zoom === 1} onClick={() => { setChromeVisible(true); setZoom((value) => Math.max(1, value - 1)); }}>−</button>
           <span aria-live="polite">{zoom}×</span>
-          <button type="button" aria-label="Zoom in" disabled={zoom === 3} onClick={() => setZoom((value) => Math.min(3, value + 1))}>+</button>
-          {zoom > 1 && <span className={styles.panHint}>Drag to move around</span>}
+          <button type="button" aria-label="Zoom in" disabled={zoom === 3} onClick={() => { setChromeVisible(true); setZoom((value) => Math.min(3, value + 1)); }}>+</button>
         </div>
       )}
 
       <div
         ref={slideViewportRef}
-        className={`${styles.slideStage} ${expanded && view === 'read' ? styles.stageHidden : ''}`}
+        className={styles.slideStage}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onClick={() => { if (expanded) setChromeVisible(true); }}
         style={{ position: 'relative', borderRadius: 10, overflow: expanded ? 'auto' : 'hidden', background: '#1B1710', aspectRatio: expanded ? undefined : slideRatio }}
       >
-        <div className={styles.slideCanvas} style={{ position: 'relative', width: expanded && fittedWidth ? `${Math.round(fittedWidth * zoom)}px` : '100%', aspectRatio: slideRatio }}>
+        {expanded && anim && <p className={styles.turnPhoneHint}>Turn your phone sideways to see the whole animation larger.</p>}
+        {showReflowedSlide && (
+          <section className={styles.presentationSlide} aria-label={`${heading} slide`} lang={spokenLang?.lang}>
+            <div className={styles.presentationIntro}>
+              <div className={styles.presentationEyebrow}>ImbewuField</div>
+              <h2>{heading}</h2>
+            </div>
+            <ul>{presentationPoints.map((point, i) => <li key={i}>{point}</li>)}</ul>
+            <footer><span>ImbewuField · Imbewu Yoshintso</span><span>{index + 1} / {total}</span></footer>
+          </section>
+        )}
+        <div className={`${styles.slideCanvas} ${showReflowedSlide ? styles.canvasHidden : ''}`} style={{ position: 'relative', width: expanded && fittedWidth ? `${Math.round(fittedWidth * zoom)}px` : '100%', aspectRatio: slideRatio }}>
         {isPlaying && anim && !animationFailed ? (
           <video
             ref={videoRef}
@@ -481,6 +498,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {audio && (
         <audio
+          className={styles.audioControl}
           ref={audioRef}
           src={audio}
           aria-label={`Narration for ${heading}`}
