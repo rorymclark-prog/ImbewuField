@@ -896,6 +896,7 @@ const T_en: Dict = {
   studentSaveModule: 'Save {title} to this phone',
   studentYourCourse: 'Your course',
   studentModule: 'Module {number}',
+  studentModules: 'modules',
   studentLocked: 'Locked',
   studentComplete: 'Complete',
   studentContinueHere: 'Continue here',

@@ -82,8 +82,17 @@
 .expanded .slideCanvas { flex: none; margin: auto; }
 .expanded .canvasHidden { display: none; }
 .turnPhoneHint { display: none; }
+.rotationTip { display: none; }
 
 @media (orientation: portrait) and (max-width: 600px) {
+  .player:not(.expanded) .rotationTip {
+    display: block;
+    margin: 0;
+    color: #35503b;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
   .expanded .turnPhoneHint {
     position: absolute;
     top: 20%;

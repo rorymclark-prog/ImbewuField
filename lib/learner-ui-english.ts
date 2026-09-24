@@ -21,6 +21,7 @@ export const LEARNER_UI_ENGLISH: Record<string, string> = {
   courseDeckZoomOut: 'Zoom out',
   courseDeckZoomIn: 'Zoom in',
   courseDeckPanHint: 'Drag to move around',
+  courseDeckTurnPhoneHint: 'Turn your phone sideways for a wider animation.',
   courseDeckClose: 'Close',
   courseDeckWatch: 'Watch · {seconds}s · {size}',
   courseDeckOpenImageAria: 'Open still image for {title} at full size',
