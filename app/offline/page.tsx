@@ -41,7 +41,7 @@ const WRITE_LABEL_KEYS: Record<string, string> = {
 };
 
 export default function OfflinePage(){
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const {user,profile,role}=useAuth();
   const [online,setOnline]=useState(true),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
   const [pages,setPages]=useState<Record<string,FieldPageStatus>>({}),[rows,setRows]=useState<DeviceRow[]>([]),[confirmDiscard,setConfirmDiscard]=useState('');
@@ -102,9 +102,10 @@ export default function OfflinePage(){
   const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:18,background:'var(--bg-1)'};
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8};
   return <main style={{height:'100%',overflowY:'auto',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 90px'}}>
+    {lang==='zu'&&<p role="note" style={{...card,marginTop:0,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:28,margin:0}}>{t('offlineTitle')}</h1></header>
-    <p role="status"><strong>{online?t('offlineConnected'):t('offlineUsingSavedCopies')}</strong>{writes.length?` · ${t('offlineEntriesWaiting').replace('{count}',String(writes.length))}`:''}</p>
-    <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p><button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?t('offlineWorking'):t('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{t('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>
+    <p role="status"><strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{writes.length?` · ${t('offlineEntriesWaiting').replace('{count}',String(writes.length))}`:''}</p>
+    <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p><button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?t('offlineWorking'):lang==='zu'?`${t('offlinePrepareButton')} (Prepare fieldwork on this device)`:t('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{t('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>
       <details><summary style={{minHeight:44,cursor:'pointer'}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}</summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p></details>
     </section>
     <section style={card}><h2>{t('offlineSavedEntriesTitle')}</h2><p>{t('offlineSavedEntriesDescription')}</p><button style={button} disabled={!online||busy||!user||isSampleMode()} onClick={()=>void sync()}>{t('offlineSyncNow')}</button>{!writes.length&&<p>{t('offlineQueueEmpty')}</p>}

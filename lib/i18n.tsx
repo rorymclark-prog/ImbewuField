@@ -1410,6 +1410,7 @@ const T_en: Dict = {
   loginErrorUnexpected: 'Something went wrong. Please try again.',
 
   // Offline preparation and queued fieldwork.
+  offlineZuluDraftNotice: 'ISIZULU DRAFT — This page’s isiZulu interface wording has not been reviewed by a fluent isiZulu speaker. Save, sync, removal and error details remain in English. / ISIZULU SISALUHLAKA — IsiZulu esikuleli khasi siwuhlaka olungakabuyekezwa isikhulumi sesiZulu esinekhono. Imininingwane yokugcina, yokuvumelanisa, yokususa namaphutha isesiNgisini.',
   offlineTitle: 'Offline & sync',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
