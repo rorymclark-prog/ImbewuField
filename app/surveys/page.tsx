@@ -21,6 +21,11 @@ import {
   myRespondedSurveyIds,
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n';
+
+function localUi(en: string, zu: string, lang: string) {
+  return lang === 'zu' ? zu : en;
+}
 
 // ─── Sample data (shown when backend is not configured) ──────────────────────
 
@@ -76,6 +81,7 @@ function QuestionBuilder({
   onChange: (updated: DraftQuestion) => void;
   onRemove: () => void;
 }) {
+  const { lang } = useLanguage();
   function setType(t: SurveyQType) {
     onChange({ ...q, type: t, options: t === 'choice' ? ['', ''] : [] });
   }
@@ -94,9 +100,9 @@ function QuestionBuilder({
   }
 
   const TYPE_OPTS: { v: SurveyQType; label: string }[] = [
-    { v: 'yesno', label: 'Yes / No' },
-    { v: 'choice', label: 'Multiple choice' },
-    { v: 'text', label: 'Short text' },
+    { v: 'yesno', label: localUi('Yes / No', 'Yebo / Cha', lang) },
+    { v: 'choice', label: localUi('Multiple choice', 'Izimpendulo ongakhetha kuzo', lang) },
+    { v: 'text', label: localUi('Short text', 'Umbhalo omfushane', lang) },
   ];
 
   return (
@@ -105,7 +111,8 @@ function QuestionBuilder({
         <input
           value={q.text}
           onChange={(e) => onChange({ ...q, text: e.target.value })}
-          placeholder="Question text..."
+          placeholder={localUi('Question text...', 'Umbhalo wombuzo...', lang)}
+          aria-label={localUi('Question text', 'Umbhalo wombuzo', lang)}
           className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none"
           style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
         />
@@ -113,6 +120,7 @@ function QuestionBuilder({
           onClick={onRemove}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.05)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'pointer' }}
+          aria-label={localUi('Remove question', 'Susa umbuzo', lang)}
         >
           <X size={14} />
         </button>
@@ -154,7 +162,7 @@ function QuestionBuilder({
                 style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
               />
               {q.options.length > 2 && (
-                <button onClick={() => removeOption(i)} style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <button onClick={() => removeOption(i)} aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)} style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   <X size={12} />
                 </button>
               )}
@@ -166,7 +174,7 @@ function QuestionBuilder({
               className="flex items-center gap-1.5 text-xs font-display font-semibold"
               style={{ color: '#C07A1E', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
             >
-              <Plus size={12} /> Add option
+              <Plus size={12} /> {localUi('Add option', 'Engeza impendulo ongakhetha kuyo', lang)}
             </button>
           )}
         </div>
@@ -176,6 +184,7 @@ function QuestionBuilder({
 }
 
 function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () => void }) {
+  const { lang } = useLanguage();
   const { profile } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -232,6 +241,8 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
     <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={localUi('Create a new survey', 'Dala inhlolovo entsha', lang)}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
       >
@@ -239,7 +250,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
           style={{ width: 34, height: 34, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.25)' }}>
           <Plus size={16} style={{ color: '#C07A1E' }} strokeWidth={1.8} />
         </div>
-        <span className="flex-1 font-display font-semibold text-sm" style={{ color: '#20190F' }}>New survey</span>
+        <span className="flex-1 font-display font-semibold text-sm" style={{ color: '#20190F' }}>{localUi('New survey', 'Inhlolovo entsha', lang)}</span>
         {open
           ? <ChevronUp size={15} style={{ color: '#8C7A62' }} />
           : <ChevronDown size={15} style={{ color: '#8C7A62' }} />}
@@ -251,21 +262,23 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Survey title..."
+              placeholder={localUi('Survey title...', 'Isihloko senhlolovo...', lang)}
+              aria-label={localUi('Survey title', 'Isihloko senhlolovo', lang)}
               className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
               style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
             />
             <input
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
-              placeholder="Organisation name..."
+              placeholder={localUi('Organisation name...', 'Igama lenhlangano...', lang)}
+              aria-label={localUi('Organisation name', 'Igama lenhlangano', lang)}
               className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
               style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
             />
           </div>
 
           <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
-            Questions
+            {localUi('Questions', 'Imibuzo', lang)}
           </div>
 
           <div className="space-y-2.5">
@@ -284,12 +297,12 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
             className="flex items-center gap-2 font-display text-sm font-semibold"
             style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
-            <Plus size={14} strokeWidth={1.8} /> Add question
+            <Plus size={14} strokeWidth={1.8} /> {localUi('Add question', 'Engeza umbuzo', lang)}
           </button>
 
           {sampleNote && (
             <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#C07A1E', border: '1px solid rgba(192,122,30,0.2)' }}>
-              tour mode — connect Firebase to save surveys live.
+              {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
             </p>
           )}
 
@@ -309,7 +322,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               : saved
                 ? <Check size={14} />
                 : <Send size={14} strokeWidth={1.8} />}
-            {saving ? 'Sending...' : saved ? 'Survey sent!' : 'Send survey'}
+            {saving ? localUi('Sending...', 'Iyathunyelwa...', lang) : saved ? localUi('Survey sent!', 'Inhlolovo ithunyelwe!', lang) : localUi('Send survey', 'Thumela inhlolovo', lang)}
           </button>
         </div>
       )}
@@ -320,6 +333,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 // ─── Staff: existing survey card ──────────────────────────────────────────────
 
 function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }) {
+  const { lang } = useLanguage();
   const [responseCount, setResponseCount] = useState<number | null>(null);
 
   useEffect(() => {
@@ -336,14 +350,14 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
-            {survey.org_name} &middot; {survey.questions.length} question{survey.questions.length !== 1 ? 's' : ''}
+            {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
           style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.18)' }}>
           <ClipboardList size={11} style={{ color: '#1F4D2B' }} strokeWidth={1.8} />
           <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>
-            {responseCount === null ? '—' : responseCount} response{responseCount !== 1 ? 's' : ''}
+            {responseCount === null ? '—' : responseCount} {localUi('response', 'impendulo', lang)}{responseCount !== 1 && lang !== 'zu' ? 's' : ''}
           </span>
         </div>
       </div>
@@ -364,6 +378,7 @@ function FarmerSurveyCard({
   isLive: boolean;
   onAnswered: (id: string) => void;
 }) {
+  const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -398,14 +413,14 @@ function FarmerSurveyCard({
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
-            From {survey.org_name} &middot; {survey.questions.length} question{survey.questions.length !== 1 ? 's' : ''}
+            {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
           </div>
         </div>
         {submitted ? (
           <div className="flex items-center gap-1.5 flex-shrink-0 px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.25)' }}>
             <Check size={12} style={{ color: '#1F4D2B' }} strokeWidth={2} />
-            <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>Answered</span>
+            <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
           </div>
         ) : open ? (
           <ChevronUp size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
@@ -428,6 +443,7 @@ function FarmerSurveyCard({
                       <button
                         key={v}
                         onClick={() => setAnswer(q.id, v)}
+                        aria-pressed={on}
                         className="flex-1 py-2.5 rounded-xl font-display font-semibold text-sm"
                         style={{
                           background: on ? '#1F4D2B' : '#fff',
@@ -436,7 +452,7 @@ function FarmerSurveyCard({
                           cursor: 'pointer',
                         }}
                       >
-                        {v}
+                        {localUi(v, v === 'Yes' ? 'Yebo' : 'Cha', lang)}
                       </button>
                     );
                   })}
@@ -451,6 +467,7 @@ function FarmerSurveyCard({
                       <button
                         key={opt}
                         onClick={() => setAnswer(q.id, opt)}
+                        aria-pressed={on}
                         className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left"
                         style={{
                           background: on ? 'rgba(31,77,43,0.08)' : '#fff',
@@ -473,7 +490,8 @@ function FarmerSurveyCard({
                 <textarea
                   value={answers[q.id] ?? ''}
                   onChange={(e) => setAnswer(q.id, e.target.value)}
-                  placeholder="Your answer..."
+                  placeholder={localUi('Your answer...', 'Impendulo yakho...', lang)}
+                  aria-label={localUi('Your answer', 'Impendulo yakho', lang)}
                   rows={3}
                   className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
@@ -494,7 +512,7 @@ function FarmerSurveyCard({
             }}
           >
             {submitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} strokeWidth={1.8} />}
-            {submitting ? 'Submitting...' : 'Submit'}
+            {submitting ? localUi('Submitting...', 'Kuyathunyelwa...', lang) : localUi('Submit', 'Thumela', lang)}
           </button>
         </div>
       )}
@@ -505,6 +523,7 @@ function FarmerSurveyCard({
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function SurveysPage() {
+  const { lang } = useLanguage();
   const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
@@ -552,7 +571,7 @@ export default function SurveysPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Surveys</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
         <div className="flex-1" />
         <LessonLink id="surveys:overview" label="Learn" />
         <SettingsButton />
@@ -560,11 +579,17 @@ export default function SurveysPage() {
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+            Imibuzo nezimpendulo zokukhetha kuboniswa njengoba kubhalwe umdali wenhlolovo.
+          </p>
+        )}
+
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
           <ClipboardList size={16} style={{ color: '#1F4D2B' }} strokeWidth={1.7} />
           <h1 className="font-display font-bold text-lg leading-tight" style={{ color: '#20190F', letterSpacing: '-0.01em' }}>
-            {isStaff ? 'Survey builder' : 'Available surveys'}
+            {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang)}
           </h1>
         </div>
 
@@ -581,13 +606,13 @@ export default function SurveysPage() {
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
-                  No surveys yet. Build the first one above.
+                  {localUi('No surveys yet. Build the first one above.', 'Azikho izinhlolovo okwamanje. Yakha eyokuqala ngenhla.', lang)}
                 </p>
               </div>
             ) : (
               <>
                 <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
-                  Existing surveys
+                  {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
                 <div className="space-y-3">
                   {surveys.map((s) => (
@@ -610,7 +635,7 @@ export default function SurveysPage() {
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
                 <p className="font-display text-sm" style={{ color: '#5C5040' }}>
-                  No surveys available right now.
+                  {localUi('No surveys available right now.', 'Azikho izinhlolovo ezitholakalayo okwamanje.', lang)}
                 </p>
               </div>
             ) : (
@@ -631,7 +656,7 @@ export default function SurveysPage() {
 
         {!isLive && (
           <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
-            demonstration records — connect Firebase to go live
+            {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
           </p>
         )}
       </main>

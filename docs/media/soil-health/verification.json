@@ -31,6 +31,8 @@
     },
     {
       "slide": 10,
+      "status": "withdrawn 22 September 2026 under Rory's visual-quality hold",
+      "replacement": "public/course-animations/soil-health/flow-build-compost-heap.mp4",
       "file": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
       "bytes": 119193,
       "seconds": 14.0,

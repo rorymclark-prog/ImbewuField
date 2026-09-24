@@ -108,10 +108,10 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact' },
       { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy' },
       { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal' },
-      { slide: 13, lesson: 'intro-permaculture-l2', title: 'Watch: Diversity Against One Bad Day' },
+      { slide: 13, lesson: 'intro-permaculture-l2', title: 'Use and Value Diversity' },
       { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
       { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
-      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Daily Crops Close' },
       { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops' },
@@ -122,8 +122,10 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'reading-landscape': {
     languages: ['en'],
-    // 21 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
-    // import-course-audio: every clip matched its script block.
+    // The original 21 clips were recorded 2026-08-03. Slides 16 and 18 were
+    // re-recorded 2026-09-22 with en-ZA-LukeNeural after the map-scale and soil
+    // inference correction; their word boundaries matched the new script and the
+    // rebuilt full narration decoded. Human listening review remains open.
     // This deck labels its own boundaries — slides 4, 8, 12 and 16 open "Lesson 1" to "Lesson 4" —
     // so the mapping below is read off the slides rather than inferred.
     tracks: [
@@ -133,7 +135,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 4,  lesson: 'reading-landscape-l1', title: 'Lesson 1: Where Rain Goes' },
       { slide: 5,  lesson: 'reading-landscape-l1', title: 'Watch: Water Slows, Sinks, and Leaves' },
       { slide: 6,  lesson: 'reading-landscape-l1', title: 'Trace Contours with an A-Frame' },
-      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Slow It High, Sink It Mid, Control It Low' },
+      { slide: 7,  lesson: 'reading-landscape-l1', title: 'Observe Water Before You Build' },
       { slide: 8,  lesson: 'reading-landscape-l2', title: 'Lesson 2: Read Sun and Shade' },
       { slide: 9,  lesson: 'reading-landscape-l2', title: 'Watch: Follow the Sun Across the Site' },
       { slide: 10, lesson: 'reading-landscape-l2', title: 'Check Winter Shadows Before Building' },
@@ -159,20 +161,20 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     tracks: [
       { slide: 1,  lesson: null,                  title: 'Water Harvesting' },
       { slide: 2,  lesson: null,                  title: 'Learning Outcomes' },
-      { slide: 3,  lesson: 'water-harvesting-l1', title: 'Swales Slow Water on the Slope' },
-      { slide: 4,  lesson: 'water-harvesting-l1', title: 'Watch: A Swale Sinks Water' },
-      { slide: 5,  lesson: 'water-harvesting-l1', title: 'Plant on the Downhill Berm' },
+      { slide: 3,  lesson: 'water-harvesting-l1', title: 'Two Swale Designs' },
+      { slide: 4,  lesson: 'water-harvesting-l1', title: 'A Swale May Let Water Soak In' },
+      { slide: 5,  lesson: 'water-harvesting-l1', title: 'The Downhill Berm' },
       { slide: 6,  lesson: 'water-harvesting-l1', title: 'Storms Need a Safe Overflow' },
-      { slide: 7,  lesson: 'water-harvesting-l1', title: 'Watch: The Overflow Point' },
+      { slide: 7,  lesson: 'water-harvesting-l1', title: 'Assess the Overflow Before Digging' },
       { slide: 8,  lesson: 'water-harvesting-l1', title: 'Check the Site Before Digging' },
       { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Roots Help Hold Soil' },
       { slide: 10, lesson: 'water-harvesting-l2', title: 'Store Rain for the Dry Season' },
       { slide: 11, lesson: 'water-harvesting-l2', title: 'Design the Spillway Before the Wall' },
-      { slide: 12, lesson: 'water-harvesting-l2', title: 'Watch: Dam and Spillway' },
+      { slide: 12, lesson: 'water-harvesting-l2', title: 'Dam and Spillway: A Concept' },
       { slide: 13, lesson: 'water-harvesting-l2', title: 'Care for the Dam and Its Banks' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
-      { slide: 16, lesson: 'water-harvesting-l3', title: 'Watch: First Flush to Tank' },
+      { slide: 16, lesson: 'water-harvesting-l3', title: 'First Flush to Tank: A Concept' },
       { slide: 17, lesson: 'water-harvesting-l3', title: 'Match Tank Size to Water Demand' },
       { slide: 18, lesson: 'water-harvesting-l3', title: 'Keep Stored Water Protected' },
       { slide: 19, lesson: 'water-harvesting-l4', title: 'Greywater Is Used Washwater' },
@@ -692,17 +694,17 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time' },
       { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
       { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
-      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: Bees Moving Between Hive and Crops' },
+      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: A Bee Moves Between Two Blossoms' },
       { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops' },
       { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees' },
       { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care' },
       { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Care and Flowers' },
-      { slide: 14, lesson: 'small-livestock-l3', title: 'Watch: Nutrients Moving in a Closed Livestock Loop' },
-      { slide: 15, lesson: 'small-livestock-l3', title: 'Close the Nutrient Loop' },
+      { slide: 14, lesson: 'small-livestock-l3', title: 'Nutrients Moving Through the Farm' },
+      { slide: 15, lesson: 'small-livestock-l3', title: 'Some Nutrients Return; Others Enter and Leave' },
       { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter' },
       { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
       { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control' },
-      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Your Farm Loop' },
+      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Where Resources Go' },
       { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
     ],
   },

@@ -16,7 +16,6 @@
  */
 
 import type { InvoiceItem, InvoiceStatus, PaymentMethod } from './invoices';
-import { paymentMethodLabel } from './invoices';
 
 /** Where the app actually lives. `fieldproof.vercel.app` is retired and resolves nowhere. */
 export const INVOICE_FOOTER = 'Generated with ImbewuField · imbewufield.vercel.app';
@@ -54,16 +53,16 @@ export function formatQuantity(n: number): string {
     : rounded.toString().replace('.', ',');
 }
 
-function longDate(iso: string): string | null {
+function longDate(iso: string, language?: string): string | null {
   const ms = Date.parse(iso);
   if (!Number.isFinite(ms)) return null;
-  return new Date(ms).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  return new Date(ms).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function shortDate(iso: string): string | null {
+function shortDate(iso: string, language?: string): string | null {
   const ms = Date.parse(iso);
   if (!Number.isFinite(ms)) return null;
-  return new Date(ms).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return new Date(ms).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 /** Trim, drop blanks, and split a freeform address on newlines or commas. */
@@ -83,8 +82,14 @@ function lines(...values: (string | null | undefined)[]): string[] {
 const SINGULAR_UNIT: Record<string, string> = {
   bags: 'bag', crates: 'crate', bunches: 'bunch', trays: 'tray',
 };
-export function unitLabel(qty: number, unit: string): string {
-  return qty === 1 ? (SINGULAR_UNIT[unit] ?? unit) : unit;
+export function unitLabel(qty: number, unit: string, language?: string): string {
+  const label = qty === 1 ? (SINGULAR_UNIT[unit] ?? unit) : unit;
+  if (language !== 'zu') return label;
+  const isiZuluUnits: Record<string, string> = {
+    bag: 'isaka', bags: 'amasaka', crate: 'ikhreyithi', crates: 'amakhreyithi',
+    bunch: 'isinyanda', bunches: 'izinyanda', tray: 'ithreyi', trays: 'amathreyi', each: 'ngayinye',
+  };
+  return isiZuluUnits[label] ?? label;
 }
 
 export interface InvoiceParty {
@@ -105,6 +110,8 @@ export interface InvoiceBanking {
 }
 
 export interface InvoiceDocumentInput {
+  /** The selected app language for generated document labels. User-entered values stay as typed. */
+  language?: string;
   no: number;
   /** The date the invoice was ISSUED. Not "today" — a reprint must not re-date the document. */
   issuedISO: string;
@@ -151,7 +158,7 @@ export interface InvoiceDocument {
   referenceLabel: string | null;
   paperReferenceLabel: string | null;
   rows: InvoiceDocumentRow[];
-  totalHeading: 'Invoice total' | 'Total due';
+  totalHeading: string;
   totalLabel: string;
   /** "How to pay" block. Empty when the farmer has not entered banking details. */
   bankingLines: string[];
@@ -159,17 +166,51 @@ export interface InvoiceDocument {
   /** Set only on a paid invoice, so an unpaid document can never look settled. */
   paidStamp: string | null;
   footer: string;
+  labels: {
+    sellerPlaceholder: string;
+    invoice: string;
+    issued: string;
+    due: string;
+    buyerReference: string;
+    originalPaperInvoice: string;
+    billTo: string;
+    buyerPlaceholder: string;
+    item: string;
+    amount: string;
+    noItems: string;
+    howToPay: string;
+    page: string;
+    continued: string;
+  };
 }
 
+const DOCUMENT_COPY = {
+  en: {
+    sellerPlaceholder: 'Your business name', invoice: 'Invoice', issued: 'Issued', due: 'Due',
+    buyerReference: 'Your ref', originalPaperInvoice: 'Original paper invoice', billTo: 'Bill to',
+    buyerPlaceholder: 'Buyer name', item: 'Item', amount: 'Amount', noItems: 'No items yet',
+    howToPay: 'How to pay', paid: 'Paid', account: 'Account', branchCode: 'Branch code',
+    total: 'Invoice total', totalDue: 'Total due', footer: 'Generated with ImbewuField', page: 'page', continued: 'continued',
+  },
+  zu: {
+    sellerPlaceholder: 'Igama lebhizinisi lakho', invoice: 'I-invoyisi', issued: 'Ikhishwe', due: 'Kufanele ikhokhwe',
+    buyerReference: 'Ireferensi yakho', originalPaperInvoice: 'I-invoyisi yephepha yokuqala', billTo: 'Ikhokhiswa ku',
+    buyerPlaceholder: 'Igama lomthengi', item: 'Umkhiqizo', amount: 'Inani', noItems: 'Akukho mikhiqizo okwamanje',
+    howToPay: 'Indlela yokukhokha', paid: 'Ikhokhiwe', account: 'I-akhawunti', branchCode: 'Ikhodi yegatsha',
+    total: 'Isamba se-invoyisi', totalDue: 'Isamba esisafuneka', footer: 'Kwenziwe nge-ImbewuField', page: 'ikhasi', continued: 'iyaqhubeka',
+  },
+} as const;
+
 export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocument {
+  const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : DOCUMENT_COPY.en;
   const items = input.items.filter((item) => item.desc.trim().length > 0);
   const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
   const rows: InvoiceDocumentRow[] = items.map((item) => ({
     desc: item.desc.trim(),
     detail: item.price > 0
-      ? `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit)} × ${formatInvoiceZar(item.price)}`
-      : `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit)}`,
+      ? `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit, input.language)} × ${formatInvoiceZar(item.price)}`
+      : `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit, input.language)}`,
     amount: formatInvoiceZar(item.qty * item.price),
   }));
 
@@ -177,8 +218,8 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
   const bankingLines = lines(
     banking.accountName,
     banking.bankName,
-    banking.accountNumber ? `Account ${banking.accountNumber.trim()}` : null,
-    banking.branchCode ? `Branch code ${banking.branchCode.trim()}` : null,
+    banking.accountNumber ? `${copy.account} ${banking.accountNumber.trim()}` : null,
+    banking.branchCode ? `${copy.branchCode} ${banking.branchCode.trim()}` : null,
   );
 
   // Who the document is FROM. A farmer trading as "Ubhejane Creche" is owed an
@@ -191,9 +232,12 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
 
   const logo = (input.seller.logo ?? '').trim();
 
-  const paidOn = input.status === 'paid' && input.paidAt ? shortDate(input.paidAt) : null;
+  const paidOn = input.status === 'paid' && input.paidAt ? shortDate(input.paidAt, input.language) : null;
+  const paymentLabels = input.language === 'zu'
+    ? { cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' }
+    : { cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other' };
   const paidStamp = input.status === 'paid'
-    ? ['Paid', paidOn, input.paymentMethod ? paymentMethodLabel(input.paymentMethod) : null]
+    ? [copy.paid, paidOn, input.paymentMethod ? paymentLabels[input.paymentMethod] : null]
       .filter((part): part is string => Boolean(part))
       .join(' · ')
     : null;
@@ -202,8 +246,8 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     number: `#${String(Math.max(1, Math.trunc(input.no))).padStart(4, '0')}`,
     // An unparseable issue date is a bug upstream, not something to paper over with today's
     // date — a wrong date on an invoice is worse than a visibly missing one.
-    issuedLabel: longDate(input.issuedISO) ?? '—',
-    dueLabel: input.dueISO ? longDate(input.dueISO) : null,
+    issuedLabel: longDate(input.issuedISO, input.language) ?? '—',
+    dueLabel: input.dueISO ? longDate(input.dueISO, input.language) : null,
     sellerName: sellerHeading,
     sellerLines: lines(
       // When the enterprise took the heading, the person becomes a contact line.
@@ -225,7 +269,7 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     paperReferenceLabel: input.paperReference?.trim() ? input.paperReference.trim() : null,
     rows,
     // A paid copy still showed ‘Total due’, asking the buyer for money already received.
-    totalHeading: input.status === 'paid' ? 'Invoice total' : 'Total due',
+    totalHeading: input.status === 'paid' ? copy.total : copy.totalDue,
     totalLabel: formatInvoiceZar(total),
     bankingLines,
     notes: input.notes?.trim() ? input.notes.trim() : null,
@@ -233,6 +277,13 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     // Only a real image payload counts. A stray non-image string would otherwise
     // render as a broken-image icon on a document a buyer keeps.
     sellerLogo: logo.startsWith('data:image/') ? logo : null,
-    footer: INVOICE_FOOTER,
+    footer: `${copy.footer} · imbewufield.vercel.app`,
+    labels: {
+      sellerPlaceholder: copy.sellerPlaceholder, invoice: copy.invoice, issued: copy.issued, due: copy.due,
+      buyerReference: copy.buyerReference, originalPaperInvoice: copy.originalPaperInvoice, billTo: copy.billTo,
+      buyerPlaceholder: copy.buyerPlaceholder, item: copy.item, amount: copy.amount, noItems: copy.noItems,
+      howToPay: copy.howToPay,
+      page: copy.page, continued: copy.continued,
+    },
   };
 }

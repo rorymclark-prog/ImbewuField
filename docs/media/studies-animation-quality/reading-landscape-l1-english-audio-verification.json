@@ -1,0 +1,1939 @@
+{
+  "module": "reading-landscape",
+  "language": "en",
+  "slidesRegenerated": [
+    4,
+    6,
+    7,
+    20,
+    21
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/reading-landscape.en.md",
+  "sourceScriptSha256": "83543f9b455c839359d273c91cfa9bea08aa83e3603185d97c80dc188442b159",
+  "textExport": "scripts/course-narration-export.mjs",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 4,
+      "path": "public/course-audio/reading-landscape/en/slide-04.mp3",
+      "seconds": 21.288,
+      "bytes": 127728,
+      "sourceTextSha256": "70f82ab83bede6474cf93a5332a9826edca3d65251224295dedebd8b8af05028",
+      "audioSha256": "eaa71f95ffe52561e94f44c3b8a0f501601dc4932c355fc838419c83e414be8c",
+      "wordCount": 54,
+      "wordBoundaryCount": 54,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass",
+      "wordBoundaries": [
+        {
+          "text": "Before",
+          "offset": 1068330,
+          "duration": 2982910
+        },
+        {
+          "text": "you",
+          "offset": 4335410,
+          "duration": 426250
+        },
+        {
+          "text": "harvest",
+          "offset": 5329580,
+          "duration": 3693330
+        },
+        {
+          "text": "water",
+          "offset": 9164580,
+          "duration": 4261250
+        },
+        {
+          "text": "learn",
+          "offset": 16409160,
+          "duration": 2414580
+        },
+        {
+          "text": "where",
+          "offset": 19107910,
+          "duration": 1420410
+        },
+        {
+          "text": "it",
+          "offset": 20528330,
+          "duration": 852080
+        },
+        {
+          "text": "already",
+          "offset": 21664580,
+          "duration": 3125000
+        },
+        {
+          "text": "goes",
+          "offset": 25357910,
+          "duration": 2840830
+        },
+        {
+          "text": "Watch",
+          "offset": 39772910,
+          "duration": 2414580
+        },
+        {
+          "text": "from",
+          "offset": 42613750,
+          "duration": 2130410
+        },
+        {
+          "text": "a",
+          "offset": 44744160,
+          "duration": 568330
+        },
+        {
+          "text": "safe",
+          "offset": 45738750,
+          "duration": 2556660
+        },
+        {
+          "text": "place",
+          "offset": 49147910,
+          "duration": 2556660
+        },
+        {
+          "text": "during",
+          "offset": 52272910,
+          "duration": 2982910
+        },
+        {
+          "text": "heavy",
+          "offset": 55397910,
+          "duration": 2698750
+        },
+        {
+          "text": "rain",
+          "offset": 58806660,
+          "duration": 2698750
+        },
+        {
+          "text": "When",
+          "offset": 71590830,
+          "duration": 1846660
+        },
+        {
+          "text": "it",
+          "offset": 73437500,
+          "duration": 1420410
+        },
+        {
+          "text": "is",
+          "offset": 75000000,
+          "duration": 1136250
+        },
+        {
+          "text": "safe",
+          "offset": 76136250,
+          "duration": 2840830
+        },
+        {
+          "text": "afterward",
+          "offset": 78977080,
+          "duration": 5539580
+        },
+        {
+          "text": "walk",
+          "offset": 87215830,
+          "duration": 2272910
+        },
+        {
+          "text": "your",
+          "offset": 89772910,
+          "duration": 994160
+        },
+        {
+          "text": "land",
+          "offset": 91051250,
+          "duration": 3125000
+        },
+        {
+          "text": "Look",
+          "offset": 104687500,
+          "duration": 2130830
+        },
+        {
+          "text": "for",
+          "offset": 107244160,
+          "duration": 1562500
+        },
+        {
+          "text": "rills",
+          "offset": 109232910,
+          "duration": 3267080
+        },
+        {
+          "text": "places",
+          "offset": 115482910,
+          "duration": 3267080
+        },
+        {
+          "text": "where",
+          "offset": 119034160,
+          "duration": 1562500
+        },
+        {
+          "text": "water",
+          "offset": 121164580,
+          "duration": 2840830
+        },
+        {
+          "text": "fans",
+          "offset": 124289580,
+          "duration": 3125000
+        },
+        {
+          "text": "out",
+          "offset": 127982910,
+          "duration": 2130830
+        },
+        {
+          "text": "ponds",
+          "offset": 132954580,
+          "duration": 3693330
+        },
+        {
+          "text": "and",
+          "offset": 139062500,
+          "duration": 1278330
+        },
+        {
+          "text": "where",
+          "offset": 140482910,
+          "duration": 1704580
+        },
+        {
+          "text": "water",
+          "offset": 142755830,
+          "duration": 3267080
+        },
+        {
+          "text": "leaves",
+          "offset": 146306660,
+          "duration": 2698750
+        },
+        {
+          "text": "your",
+          "offset": 149147910,
+          "duration": 710410
+        },
+        {
+          "text": "property",
+          "offset": 150852080,
+          "duration": 4403330
+        },
+        {
+          "text": "Some",
+          "offset": 166051250,
+          "duration": 2982910
+        },
+        {
+          "text": "excess",
+          "offset": 169176250,
+          "duration": 3409160
+        },
+        {
+          "text": "water",
+          "offset": 173153330,
+          "duration": 2840830
+        },
+        {
+          "text": "needs",
+          "offset": 176278330,
+          "duration": 1988750
+        },
+        {
+          "text": "a",
+          "offset": 178267080,
+          "duration": 710410
+        },
+        {
+          "text": "safe",
+          "offset": 179403330,
+          "duration": 2698750
+        },
+        {
+          "text": "route",
+          "offset": 182528330,
+          "duration": 2272910
+        },
+        {
+          "text": "away",
+          "offset": 184943330,
+          "duration": 2414580
+        },
+        {
+          "text": "so",
+          "offset": 187784160,
+          "duration": 1420410
+        },
+        {
+          "text": "it",
+          "offset": 189630830,
+          "duration": 994160
+        },
+        {
+          "text": "does",
+          "offset": 190625000,
+          "duration": 1846660
+        },
+        {
+          "text": "not",
+          "offset": 193181660,
+          "duration": 1704580
+        },
+        {
+          "text": "cause",
+          "offset": 195738750,
+          "duration": 1846660
+        },
+        {
+          "text": "damage",
+          "offset": 198579580,
+          "duration": 3267080
+        }
+      ]
+    },
+    {
+      "slide": 6,
+      "path": "public/course-audio/reading-landscape/en/slide-06.mp3",
+      "seconds": 32.712,
+      "bytes": 196272,
+      "sourceTextSha256": "f5d32d3af60cad5afafcc656d0edb856eb738a2f591b2ae3339ca1065c014490",
+      "audioSha256": "e52dbd5bf51de9dbe50c7304ea1dec2a74d308747b15ab13c6b07fb3fe2c401b",
+      "wordCount": 84,
+      "wordBoundaryCount": 82,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass",
+      "wordBoundaries": [
+        {
+          "text": "Build",
+          "offset": 1068330,
+          "duration": 2556660
+        },
+        {
+          "text": "an",
+          "offset": 3625000,
+          "duration": 1278330
+        },
+        {
+          "text": "A-frame",
+          "offset": 5471660,
+          "duration": 4261250
+        },
+        {
+          "text": "level",
+          "offset": 9875000,
+          "duration": 2840830
+        },
+        {
+          "text": "from",
+          "offset": 13000000,
+          "duration": 2130830
+        },
+        {
+          "text": "three",
+          "offset": 15556660,
+          "duration": 2272910
+        },
+        {
+          "text": "poles",
+          "offset": 18823750,
+          "duration": 2840830
+        },
+        {
+          "text": "and",
+          "offset": 22232910,
+          "duration": 1136250
+        },
+        {
+          "text": "a",
+          "offset": 23369160,
+          "duration": 426250
+        },
+        {
+          "text": "weighted",
+          "offset": 24647910,
+          "duration": 3267080
+        },
+        {
+          "text": "string",
+          "offset": 28198750,
+          "duration": 3693330
+        },
+        {
+          "text": "Walk",
+          "offset": 41903330,
+          "duration": 2840830
+        },
+        {
+          "text": "it",
+          "offset": 44744160,
+          "duration": 1136250
+        },
+        {
+          "text": "across",
+          "offset": 45880830,
+          "duration": 3409160
+        },
+        {
+          "text": "the",
+          "offset": 49857910,
+          "duration": 994160
+        },
+        {
+          "text": "land",
+          "offset": 51136250,
+          "duration": 2272910
+        },
+        {
+          "text": "to",
+          "offset": 53977080,
+          "duration": 568330
+        },
+        {
+          "text": "find",
+          "offset": 54971660,
+          "duration": 2414580
+        },
+        {
+          "text": "points",
+          "offset": 58380830,
+          "duration": 2414580
+        },
+        {
+          "text": "at",
+          "offset": 61363750,
+          "duration": 852080
+        },
+        {
+          "text": "the",
+          "offset": 62642080,
+          "duration": 710410
+        },
+        {
+          "text": "same",
+          "offset": 63778330,
+          "duration": 2556660
+        },
+        {
+          "text": "height",
+          "offset": 66477080,
+          "duration": 3409160
+        },
+        {
+          "text": "Join",
+          "offset": 81107910,
+          "duration": 3125000
+        },
+        {
+          "text": "these",
+          "offset": 84659160,
+          "duration": 1562500
+        },
+        {
+          "text": "points",
+          "offset": 87073750,
+          "duration": 2414580
+        },
+        {
+          "text": "to",
+          "offset": 89914580,
+          "duration": 852080
+        },
+        {
+          "text": "trace",
+          "offset": 91619160,
+          "duration": 2414580
+        },
+        {
+          "text": "a",
+          "offset": 94034160,
+          "duration": 568330
+        },
+        {
+          "text": "contour",
+          "offset": 95454580,
+          "duration": 3267080
+        },
+        {
+          "text": "line",
+          "offset": 99005830,
+          "duration": 2698750
+        },
+        {
+          "text": "An",
+          "offset": 112073750,
+          "duration": 1704580
+        },
+        {
+          "text": "A-frame",
+          "offset": 114488750,
+          "duration": 4119160
+        },
+        {
+          "text": "can",
+          "offset": 119318330,
+          "duration": 1278330
+        },
+        {
+          "text": "help",
+          "offset": 120596660,
+          "duration": 2556660
+        },
+        {
+          "text": "you",
+          "offset": 123153330,
+          "duration": 710410
+        },
+        {
+          "text": "mark",
+          "offset": 124289580,
+          "duration": 2130830
+        },
+        {
+          "text": "points",
+          "offset": 127414580,
+          "duration": 2414580
+        },
+        {
+          "text": "at",
+          "offset": 130255830,
+          "duration": 852080
+        },
+        {
+          "text": "the",
+          "offset": 131392080,
+          "duration": 710410
+        },
+        {
+          "text": "same",
+          "offset": 132528330,
+          "duration": 2556660
+        },
+        {
+          "text": "height",
+          "offset": 135369160,
+          "duration": 3267080
+        },
+        {
+          "text": "and",
+          "offset": 138920410,
+          "duration": 994160
+        },
+        {
+          "text": "trace",
+          "offset": 139914580,
+          "duration": 2982910
+        },
+        {
+          "text": "a",
+          "offset": 142897910,
+          "duration": 426250
+        },
+        {
+          "text": "contour",
+          "offset": 144176250,
+          "duration": 3267080
+        },
+        {
+          "text": "line",
+          "offset": 147585410,
+          "duration": 2698750
+        },
+        {
+          "text": "Its",
+          "offset": 160369160,
+          "duration": 1846660
+        },
+        {
+          "text": "marks",
+          "offset": 162784160,
+          "duration": 3267080
+        },
+        {
+          "text": "are",
+          "offset": 166051250,
+          "duration": 710000
+        },
+        {
+          "text": "an",
+          "offset": 166761250,
+          "duration": 994160
+        },
+        {
+          "text": "observation",
+          "offset": 168039580,
+          "duration": 7528330
+        },
+        {
+          "text": "not",
+          "offset": 177840830,
+          "duration": 1988750
+        },
+        {
+          "text": "a",
+          "offset": 179971660,
+          "duration": 568330
+        },
+        {
+          "text": "design",
+          "offset": 181392080,
+          "duration": 3551250
+        },
+        {
+          "text": "or",
+          "offset": 185227080,
+          "duration": 568330
+        },
+        {
+          "text": "approval",
+          "offset": 185795410,
+          "duration": 4545410
+        },
+        {
+          "text": "for",
+          "offset": 190625000,
+          "duration": 1136250
+        },
+        {
+          "text": "earthworks",
+          "offset": 192613750,
+          "duration": 4971660
+        },
+        {
+          "text": "Before",
+          "offset": 208806660,
+          "duration": 3409160
+        },
+        {
+          "text": "digging",
+          "offset": 213068330,
+          "duration": 3409160
+        },
+        {
+          "text": "have",
+          "offset": 220312500,
+          "duration": 1420410
+        },
+        {
+          "text": "the",
+          "offset": 221732910,
+          "duration": 1136250
+        },
+        {
+          "text": "site",
+          "offset": 223295410,
+          "duration": 2698750
+        },
+        {
+          "text": "assessed",
+          "offset": 226278330,
+          "duration": 4971660
+        },
+        {
+          "text": "Soil",
+          "offset": 241761250,
+          "duration": 4403330
+        },
+        {
+          "text": "slope",
+          "offset": 249005830,
+          "duration": 4119160
+        },
+        {
+          "text": "drainage",
+          "offset": 255681660,
+          "duration": 4403330
+        },
+        {
+          "text": "storm",
+          "offset": 261647910,
+          "duration": 3125000
+        },
+        {
+          "text": "flow",
+          "offset": 265198750,
+          "duration": 2840830
+        },
+        {
+          "text": "and",
+          "offset": 270738750,
+          "duration": 1278330
+        },
+        {
+          "text": "a",
+          "offset": 272017080,
+          "duration": 568330
+        },
+        {
+          "text": "safe",
+          "offset": 273153330,
+          "duration": 2698750
+        },
+        {
+          "text": "overflow",
+          "offset": 276704580,
+          "duration": 4403330
+        },
+        {
+          "text": "route",
+          "offset": 281676250,
+          "duration": 2272910
+        },
+        {
+          "text": "all",
+          "offset": 284659160,
+          "duration": 1420410
+        },
+        {
+          "text": "matter",
+          "offset": 286505830,
+          "duration": 3551250
+        },
+        {
+          "text": "Ask",
+          "offset": 300142080,
+          "duration": 2840830
+        },
+        {
+          "text": "a",
+          "offset": 302982910,
+          "duration": 568330
+        },
+        {
+          "text": "trained",
+          "offset": 304545410,
+          "duration": 2414580
+        },
+        {
+          "text": "local",
+          "offset": 307386250,
+          "duration": 3551250
+        },
+        {
+          "text": "adviser",
+          "offset": 310937500,
+          "duration": 5681660
+        }
+      ]
+    },
+    {
+      "slide": 7,
+      "path": "public/course-audio/reading-landscape/en/slide-07.mp3",
+      "seconds": 22.008,
+      "bytes": 132048,
+      "sourceTextSha256": "2ab7fb3ae65afcf5330966de34d4f8da4b8c841e8d705d3d3de94fb03fc1d304",
+      "audioSha256": "08b91e215c05890f3260210fa1aec6638385b63ae19b04334d178a1fc799162f",
+      "wordCount": 58,
+      "wordBoundaryCount": 58,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass",
+      "wordBoundaries": [
+        {
+          "text": "Water",
+          "offset": 1068330,
+          "duration": 3267080
+        },
+        {
+          "text": "picks",
+          "offset": 5187500,
+          "duration": 1846660
+        },
+        {
+          "text": "up",
+          "offset": 7176250,
+          "duration": 1136250
+        },
+        {
+          "text": "speed",
+          "offset": 8596660,
+          "duration": 3267080
+        },
+        {
+          "text": "and",
+          "offset": 11863750,
+          "duration": 1420410
+        },
+        {
+          "text": "erosive",
+          "offset": 13284160,
+          "duration": 5113750
+        },
+        {
+          "text": "force",
+          "offset": 18539580,
+          "duration": 3551250
+        },
+        {
+          "text": "as",
+          "offset": 22801250,
+          "duration": 1278330
+        },
+        {
+          "text": "it",
+          "offset": 24079580,
+          "duration": 1420410
+        },
+        {
+          "text": "runs",
+          "offset": 25784160,
+          "duration": 2698750
+        },
+        {
+          "text": "downhill",
+          "offset": 29619160,
+          "duration": 3835410
+        },
+        {
+          "text": "There",
+          "offset": 44176250,
+          "duration": 1562500
+        },
+        {
+          "text": "is",
+          "offset": 45880830,
+          "duration": 994160
+        },
+        {
+          "text": "no",
+          "offset": 47301250,
+          "duration": 1278330
+        },
+        {
+          "text": "one",
+          "offset": 48721660,
+          "duration": 1704580
+        },
+        {
+          "text": "placement",
+          "offset": 51278330,
+          "duration": 3977080
+        },
+        {
+          "text": "rule",
+          "offset": 55397910,
+          "duration": 2698750
+        },
+        {
+          "text": "for",
+          "offset": 58522910,
+          "duration": 1420410
+        },
+        {
+          "text": "every",
+          "offset": 60937500,
+          "duration": 2698750
+        },
+        {
+          "text": "slope",
+          "offset": 64062500,
+          "duration": 3835410
+        },
+        {
+          "text": "Observe",
+          "offset": 77698750,
+          "duration": 4687500
+        },
+        {
+          "text": "where",
+          "offset": 82528330,
+          "duration": 1420410
+        },
+        {
+          "text": "water",
+          "offset": 84517080,
+          "duration": 3125000
+        },
+        {
+          "text": "moves",
+          "offset": 87926250,
+          "duration": 3267080
+        },
+        {
+          "text": "and",
+          "offset": 91477080,
+          "duration": 994160
+        },
+        {
+          "text": "gathers",
+          "offset": 93181660,
+          "duration": 4119160
+        },
+        {
+          "text": "Poorly",
+          "offset": 108096660,
+          "duration": 2556660
+        },
+        {
+          "text": "laid",
+          "offset": 111079580,
+          "duration": 1988750
+        },
+        {
+          "text": "contours",
+          "offset": 113778330,
+          "duration": 3693330
+        },
+        {
+          "text": "can",
+          "offset": 118181660,
+          "duration": 1278330
+        },
+        {
+          "text": "increase",
+          "offset": 119460410,
+          "duration": 4687500
+        },
+        {
+          "text": "erosion",
+          "offset": 124147910,
+          "duration": 5681660
+        },
+        {
+          "text": "and",
+          "offset": 133096660,
+          "duration": 1420410
+        },
+        {
+          "text": "soil",
+          "offset": 134801250,
+          "duration": 2982910
+        },
+        {
+          "text": "that",
+          "offset": 138068330,
+          "duration": 1420410
+        },
+        {
+          "text": "takes",
+          "offset": 140198750,
+          "duration": 1988750
+        },
+        {
+          "text": "in",
+          "offset": 142329580,
+          "duration": 710410
+        },
+        {
+          "text": "water",
+          "offset": 143181660,
+          "duration": 3125000
+        },
+        {
+          "text": "slowly",
+          "offset": 146590830,
+          "duration": 3693330
+        },
+        {
+          "text": "can",
+          "offset": 150994160,
+          "duration": 1420410
+        },
+        {
+          "text": "hold",
+          "offset": 152414580,
+          "duration": 3267080
+        },
+        {
+          "text": "too",
+          "offset": 155681660,
+          "duration": 852080
+        },
+        {
+          "text": "much",
+          "offset": 157102080,
+          "duration": 2698750
+        },
+        {
+          "text": "Choose",
+          "offset": 171306660,
+          "duration": 2982910
+        },
+        {
+          "text": "any",
+          "offset": 174573750,
+          "duration": 1846660
+        },
+        {
+          "text": "water",
+          "offset": 176704580,
+          "duration": 3125000
+        },
+        {
+          "text": "works",
+          "offset": 180397910,
+          "duration": 2130830
+        },
+        {
+          "text": "for",
+          "offset": 182954580,
+          "duration": 1136250
+        },
+        {
+          "text": "the",
+          "offset": 184375000,
+          "duration": 852080
+        },
+        {
+          "text": "site",
+          "offset": 185653330,
+          "duration": 3125000
+        },
+        {
+          "text": "and",
+          "offset": 188920410,
+          "duration": 1136250
+        },
+        {
+          "text": "plan",
+          "offset": 190909160,
+          "duration": 1988750
+        },
+        {
+          "text": "a",
+          "offset": 192897910,
+          "duration": 568330
+        },
+        {
+          "text": "safe",
+          "offset": 194034160,
+          "duration": 2556660
+        },
+        {
+          "text": "route",
+          "offset": 197159160,
+          "duration": 2130830
+        },
+        {
+          "text": "for",
+          "offset": 199573750,
+          "duration": 1278330
+        },
+        {
+          "text": "excess",
+          "offset": 201562500,
+          "duration": 3693330
+        },
+        {
+          "text": "water",
+          "offset": 205823750,
+          "duration": 3693330
+        }
+      ]
+    },
+    {
+      "slide": 20,
+      "path": "public/course-audio/reading-landscape/en/slide-20.mp3",
+      "seconds": 30.408,
+      "bytes": 182448,
+      "sourceTextSha256": "d5e6bb90010eedff77f63bf047294ea1af98428124d6a5f3294ab6d5ad0c83cd",
+      "audioSha256": "1cbf91bbaa8ebf3dba742b9623dad80ab2f313194935fcdefa4992e4fc434a47",
+      "wordCount": 67,
+      "wordBoundaryCount": 67,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass",
+      "wordBoundaries": [
+        {
+          "text": "When",
+          "offset": 1068330,
+          "duration": 1846250
+        },
+        {
+          "text": "it",
+          "offset": 2914580,
+          "duration": 1420410
+        },
+        {
+          "text": "is",
+          "offset": 4477080,
+          "duration": 1136250
+        },
+        {
+          "text": "safe",
+          "offset": 5613750,
+          "duration": 2840830
+        },
+        {
+          "text": "after",
+          "offset": 8596660,
+          "duration": 2982910
+        },
+        {
+          "text": "heavy",
+          "offset": 12147910,
+          "duration": 2556660
+        },
+        {
+          "text": "rain",
+          "offset": 15130830,
+          "duration": 2698750
+        },
+        {
+          "text": "walk",
+          "offset": 20954580,
+          "duration": 2130830
+        },
+        {
+          "text": "your",
+          "offset": 23369160,
+          "duration": 1136250
+        },
+        {
+          "text": "land",
+          "offset": 24789580,
+          "duration": 3125000
+        },
+        {
+          "text": "Mark",
+          "offset": 38494160,
+          "duration": 2982910
+        },
+        {
+          "text": "rills",
+          "offset": 41761250,
+          "duration": 3551250
+        },
+        {
+          "text": "spreading",
+          "offset": 47443330,
+          "duration": 4403330
+        },
+        {
+          "text": "water",
+          "offset": 52414580,
+          "duration": 4119160
+        },
+        {
+          "text": "ponds",
+          "offset": 59659160,
+          "duration": 3551250
+        },
+        {
+          "text": "and",
+          "offset": 65198750,
+          "duration": 1278330
+        },
+        {
+          "text": "where",
+          "offset": 66619160,
+          "duration": 1846660
+        },
+        {
+          "text": "water",
+          "offset": 69034160,
+          "duration": 3409160
+        },
+        {
+          "text": "leaves",
+          "offset": 72727080,
+          "duration": 2840830
+        },
+        {
+          "text": "your",
+          "offset": 75710410,
+          "duration": 710410
+        },
+        {
+          "text": "property",
+          "offset": 77272910,
+          "duration": 4119160
+        },
+        {
+          "text": "Note",
+          "offset": 92045410,
+          "duration": 3125000
+        },
+        {
+          "text": "where",
+          "offset": 95596660,
+          "duration": 1136250
+        },
+        {
+          "text": "excess",
+          "offset": 97585410,
+          "duration": 3551250
+        },
+        {
+          "text": "water",
+          "offset": 101562500,
+          "duration": 2982910
+        },
+        {
+          "text": "may",
+          "offset": 104829580,
+          "duration": 1136250
+        },
+        {
+          "text": "need",
+          "offset": 106676250,
+          "duration": 1704580
+        },
+        {
+          "text": "a",
+          "offset": 108380830,
+          "duration": 568330
+        },
+        {
+          "text": "safe",
+          "offset": 109375000,
+          "duration": 2698750
+        },
+        {
+          "text": "route",
+          "offset": 112500000,
+          "duration": 2414580
+        },
+        {
+          "text": "away",
+          "offset": 114914580,
+          "duration": 2556660
+        },
+        {
+          "text": "Return",
+          "offset": 128409160,
+          "duration": 4119160
+        },
+        {
+          "text": "at",
+          "offset": 132528330,
+          "duration": 1278330
+        },
+        {
+          "text": "dawn",
+          "offset": 134517080,
+          "duration": 1988750
+        },
+        {
+          "text": "on",
+          "offset": 136647910,
+          "duration": 1420410
+        },
+        {
+          "text": "a",
+          "offset": 138068330,
+          "duration": 568330
+        },
+        {
+          "text": "cold",
+          "offset": 139630830,
+          "duration": 2272910
+        },
+        {
+          "text": "June",
+          "offset": 142187500,
+          "duration": 1988750
+        },
+        {
+          "text": "morning",
+          "offset": 144318330,
+          "duration": 4261250
+        },
+        {
+          "text": "Mark",
+          "offset": 158380830,
+          "duration": 3125000
+        },
+        {
+          "text": "mist",
+          "offset": 162073750,
+          "duration": 3409160
+        },
+        {
+          "text": "frozen",
+          "offset": 168892080,
+          "duration": 4545410
+        },
+        {
+          "text": "dew",
+          "offset": 174289580,
+          "duration": 1846660
+        },
+        {
+          "text": "and",
+          "offset": 179971660,
+          "duration": 994160
+        },
+        {
+          "text": "the",
+          "offset": 181107910,
+          "duration": 710410
+        },
+        {
+          "text": "places",
+          "offset": 182528330,
+          "duration": 3693330
+        },
+        {
+          "text": "frost",
+          "offset": 186363750,
+          "duration": 3409160
+        },
+        {
+          "text": "lasts",
+          "offset": 190056660,
+          "duration": 3125000
+        },
+        {
+          "text": "longest",
+          "offset": 193607910,
+          "duration": 5255830
+        },
+        {
+          "text": "On",
+          "offset": 209232910,
+          "duration": 1704580
+        },
+        {
+          "text": "paper",
+          "offset": 211647910,
+          "duration": 3835410
+        },
+        {
+          "text": "draw",
+          "offset": 219176250,
+          "duration": 1988750
+        },
+        {
+          "text": "your",
+          "offset": 221590830,
+          "duration": 852080
+        },
+        {
+          "text": "boundary",
+          "offset": 222869160,
+          "duration": 5113750
+        },
+        {
+          "text": "mark",
+          "offset": 231107910,
+          "duration": 2698750
+        },
+        {
+          "text": "north",
+          "offset": 234375000,
+          "duration": 3409160
+        },
+        {
+          "text": "and",
+          "offset": 240056660,
+          "duration": 1420410
+        },
+        {
+          "text": "add",
+          "offset": 242471660,
+          "duration": 1278330
+        },
+        {
+          "text": "the",
+          "offset": 243892080,
+          "duration": 852080
+        },
+        {
+          "text": "house",
+          "offset": 245312500,
+          "duration": 3267080
+        },
+        {
+          "text": "water",
+          "offset": 251704580,
+          "duration": 3977080
+        },
+        {
+          "text": "roads",
+          "offset": 259375000,
+          "duration": 3693330
+        },
+        {
+          "text": "fences",
+          "offset": 265909160,
+          "duration": 5539580
+        },
+        {
+          "text": "slopes",
+          "offset": 273721660,
+          "duration": 4829580
+        },
+        {
+          "text": "and",
+          "offset": 280397910,
+          "duration": 1278330
+        },
+        {
+          "text": "existing",
+          "offset": 281676250,
+          "duration": 5397910
+        },
+        {
+          "text": "vegetation",
+          "offset": 287215830,
+          "duration": 6818330
+        }
+      ]
+    },
+    {
+      "slide": 21,
+      "path": "public/course-audio/reading-landscape/en/slide-21.mp3",
+      "seconds": 29.544,
+      "bytes": 177264,
+      "sourceTextSha256": "e890c2ede2e273b0a92869117d4ea8d1808ec1dccffc6e40b1078fa6782b99b7",
+      "audioSha256": "8c1c110008e93cb0cb95903161ea2023f9c17f8ef5a4caf115979603dec6c754",
+      "wordCount": 78,
+      "wordBoundaryCount": 77,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass",
+      "wordBoundaries": [
+        {
+          "text": "Build",
+          "offset": 1068330,
+          "duration": 2556660
+        },
+        {
+          "text": "an",
+          "offset": 3625000,
+          "duration": 1278330
+        },
+        {
+          "text": "A-frame",
+          "offset": 5471660,
+          "duration": 4261250
+        },
+        {
+          "text": "level",
+          "offset": 9875000,
+          "duration": 2840830
+        },
+        {
+          "text": "from",
+          "offset": 13000000,
+          "duration": 2130830
+        },
+        {
+          "text": "three",
+          "offset": 15556660,
+          "duration": 2272910
+        },
+        {
+          "text": "poles",
+          "offset": 18823750,
+          "duration": 2840830
+        },
+        {
+          "text": "and",
+          "offset": 22232910,
+          "duration": 1136250
+        },
+        {
+          "text": "a",
+          "offset": 23369160,
+          "duration": 426250
+        },
+        {
+          "text": "weighted",
+          "offset": 24647910,
+          "duration": 3267080
+        },
+        {
+          "text": "string",
+          "offset": 28198750,
+          "duration": 3693330
+        },
+        {
+          "text": "Use",
+          "offset": 41903330,
+          "duration": 2556660
+        },
+        {
+          "text": "it",
+          "offset": 44460410,
+          "duration": 1136250
+        },
+        {
+          "text": "to",
+          "offset": 46022910,
+          "duration": 710410
+        },
+        {
+          "text": "mark",
+          "offset": 47159160,
+          "duration": 1846660
+        },
+        {
+          "text": "points",
+          "offset": 50000000,
+          "duration": 2414580
+        },
+        {
+          "text": "at",
+          "offset": 52414580,
+          "duration": 994160
+        },
+        {
+          "text": "the",
+          "offset": 53551250,
+          "duration": 852080
+        },
+        {
+          "text": "same",
+          "offset": 54829580,
+          "duration": 2556660
+        },
+        {
+          "text": "height",
+          "offset": 57528330,
+          "duration": 3125000
+        },
+        {
+          "text": "and",
+          "offset": 60937500,
+          "duration": 1136250
+        },
+        {
+          "text": "trace",
+          "offset": 62642080,
+          "duration": 2556660
+        },
+        {
+          "text": "a",
+          "offset": 65198750,
+          "duration": 426250
+        },
+        {
+          "text": "contour",
+          "offset": 66477080,
+          "duration": 3125000
+        },
+        {
+          "text": "line",
+          "offset": 69886250,
+          "duration": 2698750
+        },
+        {
+          "text": "This",
+          "offset": 82670410,
+          "duration": 1988750
+        },
+        {
+          "text": "is",
+          "offset": 84943330,
+          "duration": 1278330
+        },
+        {
+          "text": "an",
+          "offset": 86221660,
+          "duration": 1278330
+        },
+        {
+          "text": "observation",
+          "offset": 87642080,
+          "duration": 6960410
+        },
+        {
+          "text": "not",
+          "offset": 96875000,
+          "duration": 2130830
+        },
+        {
+          "text": "a",
+          "offset": 99005830,
+          "duration": 426250
+        },
+        {
+          "text": "design",
+          "offset": 100426250,
+          "duration": 3551250
+        },
+        {
+          "text": "for",
+          "offset": 104119160,
+          "duration": 1136250
+        },
+        {
+          "text": "earthworks",
+          "offset": 106250000,
+          "duration": 5113750
+        },
+        {
+          "text": "Before",
+          "offset": 122585410,
+          "duration": 3409160
+        },
+        {
+          "text": "digging",
+          "offset": 126846660,
+          "duration": 3551250
+        },
+        {
+          "text": "ask",
+          "offset": 133238750,
+          "duration": 2556660
+        },
+        {
+          "text": "a",
+          "offset": 135795410,
+          "duration": 568330
+        },
+        {
+          "text": "trained",
+          "offset": 137357910,
+          "duration": 2414580
+        },
+        {
+          "text": "local",
+          "offset": 140056660,
+          "duration": 3551250
+        },
+        {
+          "text": "adviser",
+          "offset": 143607910,
+          "duration": 4403330
+        },
+        {
+          "text": "to",
+          "offset": 148579580,
+          "duration": 568330
+        },
+        {
+          "text": "assess",
+          "offset": 149715830,
+          "duration": 3125000
+        },
+        {
+          "text": "the",
+          "offset": 153409160,
+          "duration": 710410
+        },
+        {
+          "text": "site",
+          "offset": 154545410,
+          "duration": 3267080
+        },
+        {
+          "text": "and",
+          "offset": 158096660,
+          "duration": 994160
+        },
+        {
+          "text": "plan",
+          "offset": 159801250,
+          "duration": 2414580
+        },
+        {
+          "text": "a",
+          "offset": 162215830,
+          "duration": 426250
+        },
+        {
+          "text": "safe",
+          "offset": 163210410,
+          "duration": 2698750
+        },
+        {
+          "text": "route",
+          "offset": 166477080,
+          "duration": 1988750
+        },
+        {
+          "text": "for",
+          "offset": 168750000,
+          "duration": 1278330
+        },
+        {
+          "text": "excess",
+          "offset": 170596660,
+          "duration": 3693330
+        },
+        {
+          "text": "water",
+          "offset": 174857910,
+          "duration": 3693330
+        },
+        {
+          "text": "Add",
+          "offset": 188778330,
+          "duration": 1846660
+        },
+        {
+          "text": "summer",
+          "offset": 190909160,
+          "duration": 2982910
+        },
+        {
+          "text": "and",
+          "offset": 194176250,
+          "duration": 852080
+        },
+        {
+          "text": "winter",
+          "offset": 195312500,
+          "duration": 2982910
+        },
+        {
+          "text": "wind",
+          "offset": 199005830,
+          "duration": 1988750
+        },
+        {
+          "text": "arrows",
+          "offset": 201704580,
+          "duration": 4119160
+        },
+        {
+          "text": "shade",
+          "offset": 207670410,
+          "duration": 2414580
+        },
+        {
+          "text": "observations",
+          "offset": 210937500,
+          "duration": 6676250
+        },
+        {
+          "text": "from",
+          "offset": 217755830,
+          "duration": 1846660
+        },
+        {
+          "text": "8am",
+          "offset": 219886250,
+          "duration": 6676239
+        },
+        {
+          "text": "midday",
+          "offset": 228977080,
+          "duration": 4261250
+        },
+        {
+          "text": "and",
+          "offset": 235795410,
+          "duration": 1136250
+        },
+        {
+          "text": "4pm",
+          "offset": 237073750,
+          "duration": 7812909
+        },
+        {
+          "text": "and",
+          "offset": 246164580,
+          "duration": 1278330
+        },
+        {
+          "text": "your",
+          "offset": 247727080,
+          "duration": 710410
+        },
+        {
+          "text": "zones",
+          "offset": 248863750,
+          "duration": 3125000
+        },
+        {
+          "text": "and",
+          "offset": 252130830,
+          "duration": 1278330
+        },
+        {
+          "text": "sectors",
+          "offset": 253693330,
+          "duration": 4687500
+        },
+        {
+          "text": "Keep",
+          "offset": 269744160,
+          "duration": 1988750
+        },
+        {
+          "text": "the",
+          "offset": 272301250,
+          "duration": 852080
+        },
+        {
+          "text": "map",
+          "offset": 273579580,
+          "duration": 2556660
+        },
+        {
+          "text": "and",
+          "offset": 276136250,
+          "duration": 1278330
+        },
+        {
+          "text": "update",
+          "offset": 278125000,
+          "duration": 4261250
+        },
+        {
+          "text": "it",
+          "offset": 282528330,
+          "duration": 1704580
+        }
+      ]
+    }
+  ],
+  "fullTrack": {
+    "path": "public/course-audio/reading-landscape/en/full.mp3",
+    "seconds": 427.2,
+    "bytes": 2563436,
+    "audioSha256": "4eec00fb0f3162c2f6dd8d7f4e506120da9154028459ca906cfdda8038ca0a00",
+    "fullDecode": "pass",
+    "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
+    "slides": [
+      {
+        "slide": 1,
+        "seconds": 19.752,
+        "bytes": 118512,
+        "audioSha256": "e13214784aebafe5a33cc65c549f912b7c6eddb75b042d39bbf3b125b465b54b",
+        "wordCount": 49
+      },
+      {
+        "slide": 2,
+        "seconds": 21.024,
+        "bytes": 126144,
+        "audioSha256": "181bb91a42efcc45ec9d309ac541c9871e7387da0b5857de4e50e1f0954ff43c",
+        "wordCount": 58
+      },
+      {
+        "slide": 3,
+        "seconds": 20.808,
+        "bytes": 124848,
+        "audioSha256": "2b65a10af345cf1ef8b88c9ae884e71f37061c56995a68c079bf49893b1ec2a4",
+        "wordCount": 60
+      },
+      {
+        "slide": 4,
+        "seconds": 21.288,
+        "bytes": 127728,
+        "audioSha256": "eaa71f95ffe52561e94f44c3b8a0f501601dc4932c355fc838419c83e414be8c",
+        "wordCount": 54
+      },
+      {
+        "slide": 5,
+        "seconds": 7.896,
+        "bytes": 47376,
+        "audioSha256": "526ab298c413d4075c4dd2394c67d4f2c92d98243d87582d74bab52fbd37f149",
+        "wordCount": 18
+      },
+      {
+        "slide": 6,
+        "seconds": 32.712,
+        "bytes": 196272,
+        "audioSha256": "e52dbd5bf51de9dbe50c7304ea1dec2a74d308747b15ab13c6b07fb3fe2c401b",
+        "wordCount": 84
+      },
+      {
+        "slide": 7,
+        "seconds": 22.008,
+        "bytes": 132048,
+        "audioSha256": "08b91e215c05890f3260210fa1aec6638385b63ae19b04334d178a1fc799162f",
+        "wordCount": 58
+      },
+      {
+        "slide": 8,
+        "seconds": 19.896,
+        "bytes": 119376,
+        "audioSha256": "12d3ebb223926b2e06c3091e1a7f6e383f4dbdafdb379501551d6d20be02a0e6",
+        "wordCount": 56
+      },
+      {
+        "slide": 9,
+        "seconds": 7.584,
+        "bytes": 45504,
+        "audioSha256": "69a8af59c23f7d7c20c05c72237bc59a49f7f0c2ef43d2e90f5c36b8bac532e6",
+        "wordCount": 21
+      },
+      {
+        "slide": 10,
+        "seconds": 17.568,
+        "bytes": 105408,
+        "audioSha256": "a4a7c76c194f6042f84bcda3154f665a04befc047121b095b7069a281ba631e8",
+        "wordCount": 60
+      },
+      {
+        "slide": 11,
+        "seconds": 20.664,
+        "bytes": 123984,
+        "audioSha256": "3f9fa8fc7c02516d5fbe620264005d3ce42ded33d6bcc452239578ee1b219835",
+        "wordCount": 63
+      },
+      {
+        "slide": 12,
+        "seconds": 20.976,
+        "bytes": 125856,
+        "audioSha256": "a4c828446832bd208271a19a410fe88b384fccbea1585292daabcc9fd5b8cd89",
+        "wordCount": 54
+      },
+      {
+        "slide": 13,
+        "seconds": 8.256,
+        "bytes": 49536,
+        "audioSha256": "b8078a76d6919bd7f5edd38ec48888bc4a66c77f8ef778665dd404f6add5bd0e",
+        "wordCount": 23
+      },
+      {
+        "slide": 14,
+        "seconds": 29.808,
+        "bytes": 178848,
+        "audioSha256": "f147e54bebc716f001d7c2ca6e36ba9cf3ee3e0ff776baf1ce4075d660d64aaf",
+        "wordCount": 72
+      },
+      {
+        "slide": 15,
+        "seconds": 19.344,
+        "bytes": 116064,
+        "audioSha256": "62e79736b01bc12f423e5687b01d2e05f4af38ec9f8e0b49fa84b43ea47ab6bb",
+        "wordCount": 58
+      },
+      {
+        "slide": 16,
+        "seconds": 26.52,
+        "bytes": 159120,
+        "audioSha256": "eae883e18debb299186e80bf7d7d1ce664f6ac5d1ad506c80c1063eb785d4dac",
+        "wordCount": 62
+      },
+      {
+        "slide": 17,
+        "seconds": 9.672,
+        "bytes": 58032,
+        "audioSha256": "762049394cb66c910c37106ae89c55b1d87bcc41b3e7cdbcdb403ab15f93c6c0",
+        "wordCount": 21
+      },
+      {
+        "slide": 18,
+        "seconds": 22.608,
+        "bytes": 135648,
+        "audioSha256": "5e5a06c9fa0e9aaff5f491b14b3bc58a387e3dfc1bf25a5bc2a862a2e9c3adab",
+        "wordCount": 57
+      },
+      {
+        "slide": 19,
+        "seconds": 18.864,
+        "bytes": 113184,
+        "audioSha256": "4fdbdd207ab372f2e8e2f1559fe1bbcb912fcb7497213d06a0f35dac5eb8685d",
+        "wordCount": 60
+      },
+      {
+        "slide": 20,
+        "seconds": 30.408,
+        "bytes": 182448,
+        "audioSha256": "1cbf91bbaa8ebf3dba742b9623dad80ab2f313194935fcdefa4992e4fc434a47",
+        "wordCount": 67
+      },
+      {
+        "slide": 21,
+        "seconds": 29.544,
+        "bytes": 177264,
+        "audioSha256": "8c1c110008e93cb0cb95903161ea2023f9c17f8ef5a4caf115979603dec6c754",
+        "wordCount": 78
+      }
+    ],
+    "sumOfSlideDurationsSeconds": 427.2,
+    "durationDifferenceSeconds": 0.0
+  },
+  "humanListeningReview": false
+}

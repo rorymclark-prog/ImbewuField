@@ -60,13 +60,148 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Tap Full screen. Read text opens first on a phone. Tap See slide to view the picture and use + to enlarge it.' },
   ] },
   { when: '23 September 2026', sha: 'd7f2299a', changes: [
-    'Choose from three courses at the top of My Studies; app guides now fold away.',
+    'My Studies folds the courses and app guides until you open them.',
     'Open lesson slides full screen and turn your phone sideways for a larger view.',
   ], tour: [
     { title: 'Choose a course', where: 'My Studies', href: '/student',
-      detail: 'Choose Permaculture, Design or Farm Finance. Open Practical app guides when needed.' },
+      detail: 'Open a course section to see its lessons or preview, and open the app guides when needed.' },
     { title: 'Make slides larger', where: 'My Studies → a module → slides', href: '/student',
       detail: 'Tap Full screen on the slide player. Turn your phone sideways, then tap Exit full screen.' },
+  ] },
+  { when: '23 September 2026', sha: '3730584f', changes: [
+    'Food Forest lesson 3 now says cardboard can reduce grass growth; check for regrowth.',
+  ], tour: [
+    { title: 'Review the Food Forest quiz', where: 'Studies → Food Forest Design → lesson 3', href: '/student',
+      detail: 'Read the sheet-mulching question and its explanation.' },
+  ] },
+  { when: '23 September 2026', sha: '71f4a1be', changes: [
+    'Check variety rights and permission before sharing seed with neighbours.',
+    'The quiz and final action card now show the permission check.',
+  ], tour: [
+    { title: 'Review community seed sharing', where: 'Studies → Market Gardening & Community → lesson 3', href: '/student',
+      detail: 'Read the seed-sharing caution, answer the quiz and listen to slide 15.' },
+  ] },
+  { when: '23 September 2026', sha: 'dbf4a468', changes: [
+    'Bee lesson 2 now describes what its flower video actually shows.',
+    'Its honeybee ranges are described more carefully for South Africa.',
+  ], tour: [
+    { title: 'Review bee lesson', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Watch the bee on slide 9 and read the native honeybee card on slide 11.' },
+  ] },
+  { when: '23 September 2026', sha: '5f41be93', changes: [
+    'Water lesson 3 now asks you to check your roof material before collecting rain.',
+    'The first-flush diagram is labelled as a concept still, with no drinking-water promise.',
+  ], tour: [
+    { title: 'Check roof collection', where: 'Studies → Water Harvesting → lesson 3', href: '/student',
+      detail: 'Read lesson 3, listen to slide 14, and view the first-flush concept on slide 16.' },
+  ] },
+  { when: '23 September 2026', sha: '89bbca73', changes: [
+    'Water lesson 2 now explains that catchment runoff alone cannot size a dam.',
+    'Its dam picture and narration call for qualified site and spillway design.',
+  ], tour: [
+    { title: 'Review dam design', where: 'Studies → Water Harvesting → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slide 12, then review the dam safety questions.' },
+  ] },
+  { when: '23 September 2026', sha: 'cba197fc', changes: [
+    'Water lesson 1 now compares two swale designs and calls for a local site check.',
+    'Its pictures no longer promise deep root moisture or a safe overflow route.',
+  ], tour: [
+    { title: 'Check a swale site', where: 'Studies → Water Harvesting → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 2 to 7, then answer the contour and steep-land questions.' },
+  ] },
+  { when: '23 September 2026', sha: 'c3a85757', changes: [
+    'Landscape lesson 3 now asks you to check local wind and frost before siting crops.',
+    'Its pictures and narration show that a bed move alone cannot control late blight.',
+  ], tour: [
+    { title: 'Check wind and frost', where: 'Studies → Reading the Landscape → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, view slides 12 to 15, then answer the nursery and tomato questions.' },
+  ] },
+  { when: '23 September 2026', sha: '4f63b841', changes: [
+    'Landscape lesson 2 now asks you to check your own sun, shade and frost pockets.',
+    'Its frost picture and spoken lesson no longer promise protection from a wall.',
+  ], tour: [
+    { title: 'Check sun and frost', where: 'Studies → Reading the Landscape → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slides 8 to 11, then answer the two sun and frost questions.' },
+  ] },
+  { when: '23 September 2026', sha: 'ccd07edb', changes: [
+    'Landscape lesson 1 now checks where rainwater goes before any digging.',
+    'Its pictures and narration explain when excess water needs a safe route.',
+  ], tour: [
+    { title: 'Observe water safely', where: 'Studies → Reading the Landscape → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 4 to 7, then answer the water questions.' },
+  ] },
+  { when: '23 September 2026', sha: 'dc13ce50', changes: [
+    'Introduction lesson 3 now asks you to check local wind before marking sectors.',
+    'Its zone and windbreak pictures label the examples more clearly.',
+  ], tour: [
+    { title: 'Check zones and sectors', where: 'Studies → Introduction → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, view slides 15 to 20, then answer the windbreak question.' },
+  ] },
+  { when: '23 September 2026', sha: 'fdd773e9', changes: [
+    'My Studies now keeps each course and guide list folded until you open it.',
+  ], tour: [
+    { title: 'Open a course', where: 'My Studies', href: '/student',
+      detail: 'Tap a course heading to see its lessons or guides.' },
+  ] },
+  { when: '23 September 2026', sha: 'b336a9ec', changes: [
+    'Introduction lesson 2 now checks the site before any water earthworks.',
+    'Four pictures and the narration no longer promise crops will survive hail.',
+  ], tour: [
+    { title: 'Review the principles', where: 'Studies → Introduction → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, view slides 9 to 14, then answer the two lesson questions.' },
+  ] },
+  { when: '23 September 2026', sha: 'ff2668f1', changes: [
+    'Small Livestock lesson 3 now shows feed entering and farm products leaving.',
+    'Its stills and narration explain that only some nutrients return through compost.',
+  ], tour: [
+    { title: 'Follow nutrients through the farm', where: 'Studies → Small Livestock → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view slides 14 and 15 and the lesson diagram.' },
+  ] },
+  { when: '23 September 2026', sha: '36fd9746', changes: [
+    'Introduction lesson 1 now checks water-sharing rules and supply before an agreement.',
+    'Its two matching pictures and spoken explanations have been updated.',
+  ], tour: [
+    { title: 'Review the borehole example', where: 'Studies → Introduction → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, view slides 7 and 8, then answer the borehole quiz.' },
+  ] },
+  { when: '23 September 2026', sha: '12fdc12d', changes: [
+    'Soil Health lesson 2 now explains why a wet compost heap needs air and dry material.',
+  ], tour: [
+    { title: 'Review the compost quiz', where: 'Studies → Soil Health → lesson 2', href: '/student',
+      detail: 'Answer the question about a wet, slimy compost heap and read the explanation.' },
+  ] },
+  { when: '23 September 2026', sha: 'b184b7c5', changes: [
+    'Small Livestock lesson 1 shows the chicken-tractor cautions in larger type.',
+  ], tour: [
+    { title: 'Read the chicken-tractor cautions', where: 'Studies → Small Livestock → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, then go to Rotate the Tractor Across the Plot.' },
+  ] },
+  { when: '23 September 2026', sha: '781a2a7c', changes: [
+    'In Vegetables lesson 1, watch a seedling go into the bed and stay planted.',
+    'In Market Gardening lesson 1, read the four harvest destinations at phone size.',
+  ], tour: [
+    { title: 'Watch the transplant', where: 'Studies → Vegetables → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, go to Seed or Seedling?, then play the eight-second clip.' },
+  ] },
+  { when: '22 September 2026', sha: '528e077a', changes: [
+    'In Soil Health lesson 2, watch dry leaves and straw cover fresh green material.',
+  ], tour: [
+    { title: 'Watch the compost heap take shape', where: 'Studies → Soil Health → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then play Build the Compost Heap.' },
+  ] },
+  { when: '22 September 2026', sha: 'a51ca51c', changes: [
+    'In Small Livestock lesson 2, watch one bee move between two blossoms.',
+    'Study clips awaiting visual review now show their lesson still pictures.',
+  ], tour: [
+    { title: 'Watch the bee move between blossoms', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then play Bees Moving Between Hive and Crops.' },
+  ] },
+  { when: '22 September 2026', sha: 'ff9577cc', changes: [
+    'Plant Guilds lesson 3 uses its still picture while a new film is reviewed.',
+    'Vegetables lessons 1 and 4 use their still pictures while new films are reviewed.',
+  ], tour: [
+    { title: 'Review the study stills', where: 'Studies → Plant Guilds or Vegetables', href: '/student',
+      detail: 'Open Watch and listen; check Plant Guilds lesson 3, Vegetables lesson 1 or Vegetables lesson 4.' },
   ] },
   { when: '22 September 2026', sha: '714b1786', changes: [
     'The larger garden photo now stays on Home, even after many visits.',
@@ -87,11 +222,68 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Meet your farm plan sprout', where: 'Home → green card', href: '/home',
       detail: 'Hover over or tap the sprout to see it wave and read what it means.' },
   ] },
+  { when: '22 September 2026', sha: '633fcf3f', changes: [
+    'In Food Forest lesson 3, watch hands spread mulch over cardboard.',
+  ], tour: [
+    { title: 'Watch mulch cover cardboard', where: 'Studies → Food Forest → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view Prepare a Manageable First Area on slide 3 of 5.' },
+  ] },
+  { when: '22 September 2026', sha: '26472a11', changes: [
+    'In Food Forest lesson 3, see mulch above cardboard in the overview picture.',
+    'In Water Harvesting lesson 4, see the labelled greywater route and enlarge slide pictures.',
+    'In Small Livestock, watch hens forage and a bee visit a blossom.',
+    'In Farm Finance lesson 2, follow sales, cash and money owed across the source cards.',
+  ], tour: [
+    { title: 'See the mulch layer', where: 'Studies → Food Forest → lesson 3', href: '/student',
+      detail: 'Open Watch and listen, then view slide 16.' },
+    { title: 'Read greywater slides', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen; enlarge a still or watch the labelled greywater route.' },
+    { title: 'Watch the livestock clips', where: 'Studies → Small Livestock → lessons 1 and 2', href: '/student',
+      detail: 'Open Watch and listen to see the hens and bee scenes.' },
+    { title: 'Follow the finance cards', where: 'Studies → Farm Finance → lesson 2', href: '/student/finance',
+      detail: 'Use Next card to see how a sale, cash and a later payment differ.' },
+  ] },
   { when: '22 September 2026', sha: '5c606c8a', changes: [
     'The Take a tour garden photo on Home now stays fully visible.',
   ], tour: [
     { title: 'Garden tour photo', where: 'Home → Take a tour', href: '/home',
       detail: 'Scroll below the shortcut cards to see the full garden photo and tour invitation.' },
+  ] },
+  { when: '22 September 2026', sha: '9d216d80', changes: [
+    'Open any Study slide picture at full size to read its details on your phone.',
+  ], tour: [
+    { title: 'Enlarge greywater slides', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen, then use Open still image on slide 2 or 4.' },
+  ] },
+  { when: '22 September 2026', sha: '67ac4bf2', changes: [
+    'Water Harvesting lesson 4 now labels non-food planting and washwater sources.',
+  ], tour: [
+    { title: 'Check the greywater route', where: 'Studies → Water Harvesting → lesson 4', href: '/student',
+      detail: 'Open Watch and listen, then view slide 21.' },
+  ] },
+  { when: '22 September 2026', sha: '80c81387', changes: [
+    'Food Forest lesson 3 now shows mulch over cardboard in its overview picture.',
+    'Watch a bee on a blossom in Small Livestock lesson 2.',
+  ], tour: [
+    { title: 'See the mulch layers', where: 'Studies → Food Forest → lesson 3', href: '/student',
+      detail: 'Open the lesson overview and look at the first planting stage.' },
+    { title: 'Watch the bee visit', where: 'Studies → Small Livestock → lesson 2', href: '/student',
+      detail: 'Open Watch and listen, then view slide 9.' },
+  ] },
+  { when: '22 September 2026', sha: '98ac62c1', changes: [
+    'Open a lesson animation still at full size, then tap to zoom in.',
+  ], tour: [
+    { title: 'Read the farm record', where: 'Studies → Market Gardening → lesson 1', href: '/student',
+      detail: 'Open Watch and listen. Use Open still image to read the whole record.' },
+  ] },
+  { when: '22 September 2026', sha: '51132398', changes: [
+    'In Farm Finance lesson 2, see cash, sales and money owed change with each card.',
+    'In Small Livestock lesson 1, watch real hens peck among plant remains.',
+  ], tour: [
+    { title: 'Follow the finance cards', where: 'Studies → Farm Finance → lesson 2', href: '/student/finance',
+      detail: 'Open lesson 2. Use Next card to see why a later buyer payment is not another sale.' },
+    { title: 'Watch hens forage', where: 'Studies → Small Livestock → lesson 1', href: '/student',
+      detail: 'Open Watch and listen, then watch the first slide.' },
   ] },
   { when: '22 September 2026', sha: 'e8cf8ece', changes: [
     'The bottom navigation now responds as you move between pages.',

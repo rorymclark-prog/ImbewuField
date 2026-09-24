@@ -1,5 +1,16 @@
 # Introduction to Permaculture media — 20 September 2026
 
+## Current learner-player status — 22 September 2026
+
+The production notes below record the 20 September authored concept clips. They
+are historical: the code-drawn Watch animations on slides 7, 13 and 19 are now
+withdrawn from the learner player under Rory's visual-clearance rule. The
+current English lesson 1 player uses the existing Flow Earth Care clip on slide
+4 and stills on slides 5–8, including the slide 7 concept diagram. See
+`../studies-animation-quality/intro-l1-lesson-check.md` for the current lesson
+review and its unresolved source hold. Do not count the historical clips as
+accepted media.
+
 The English Introduction now has 22 slides and three opt-in Watch animations, using its existing 22 recordings. It follows the Water media branch and shares that branch's player/offline fixes. No narration, lesson, quiz, species, farming figure, saved geometry or PLAN_VERSION was changed. isiZulu remains a draft and is not published by this change.
 
 ## Teaching sequences

@@ -11,6 +11,11 @@ import BackButton from '@/components/BackButton';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
+import { useLanguage } from '@/lib/i18n';
+
+function localUi(en: string, zu: string, lang: string) {
+  return lang === 'zu' ? zu : en;
+}
 
 // ---------------------------------------------------------------------------
 // Data
@@ -245,14 +250,14 @@ function SeasonIcon({ season, size = 16 }: { season: MonthData['season']; size?:
   return <Leaf size={size} color="#5C5040" strokeWidth={1.6} />;
 }
 
-function seasonLabel(season: MonthData['season']) {
-  const map: Record<MonthData['season'], string> = {
-    summer: 'Summer',
-    autumn: 'Autumn',
-    winter: 'Winter',
-    spring: 'Spring',
+function seasonLabel(season: MonthData['season'], lang: string) {
+  const map: Record<MonthData['season'], [string, string]> = {
+    summer: ['Summer', 'Ihlobo'],
+    autumn: ['Autumn', 'Ikwindla'],
+    winter: ['Winter', 'Ubusika'],
+    spring: ['Spring', 'Intwasahlobo'],
   };
-  return map[season];
+  return localUi(map[season][0], map[season][1], lang);
 }
 
 // ---------------------------------------------------------------------------
@@ -300,7 +305,7 @@ function Pill({ color, children }: { color: string; children: React.ReactNode })
   );
 }
 
-function Dot({ mark }: { mark: PlantMark }) {
+function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
   if (mark === 'B') {
     return (
       <span
@@ -312,7 +317,7 @@ function Dot({ mark }: { mark: PlantMark }) {
           background: '#1F4D2B',
           flexShrink: 0,
         }}
-        aria-label="Best time to plant"
+        aria-label={localUi('Best time to plant', 'Isikhathi esihle sokutshala', lang)}
       />
     );
   }
@@ -324,6 +329,7 @@ function Dot({ mark }: { mark: PlantMark }) {
 // ---------------------------------------------------------------------------
 
 export default function CalendarPage() {
+  const { lang } = useLanguage();
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
 
@@ -358,7 +364,7 @@ export default function CalendarPage() {
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Planting Calendar</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</span>
         <div className="flex-1" />
         <LessonLink id="crops:calendar" label="Learn" />
         <SettingsButton />
@@ -372,6 +378,11 @@ export default function CalendarPage() {
           background: '#E4DCC6',
         }}
       >
+        {lang === 'zu' && (
+          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', fontSize: 12 }}>
+            Iseluleko somsebenzi nezikhathi zokutshala nokuvuna kuboniswa ngesiNgisi.
+          </p>
+        )}
         {/* ---- Month strip ---- */}
         <div
           style={{
@@ -411,7 +422,7 @@ export default function CalendarPage() {
                     letterSpacing: '0.04em',
                   }}
                   aria-pressed={active}
-                  aria-label={`Select ${MONTH_ABBR[idx]}`}
+                  aria-label={localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${MONTH_ABBR[idx]}`, lang)}
                 >
                   {abbr}
                 </button>
@@ -450,7 +461,7 @@ export default function CalendarPage() {
                     lineHeight: 1.2,
                   }}
                 >
-                  {MONTH_ABBR[selectedMonth]} — What to do
+                  {MONTH_ABBR[selectedMonth]} — {localUi('What to do', 'Ongakwenza', lang)}
                 </div>
                 <div
                   style={{
@@ -466,7 +477,7 @@ export default function CalendarPage() {
                   }}
                 >
                   <SeasonIcon season={monthData.season} size={13} />
-                  {seasonLabel(monthData.season)}
+                  {seasonLabel(monthData.season, lang)}
                 </div>
               </div>
             </div>
@@ -475,7 +486,7 @@ export default function CalendarPage() {
             <div style={{ marginBottom: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                 <Sprout size={14} color="#1F4D2B" strokeWidth={1.7} />
-                <SectionLabel>Plant now</SectionLabel>
+                <SectionLabel>{localUi('Plant now', 'Tshala manje', lang)}</SectionLabel>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {monthData.plant.length > 0 ? (
@@ -496,7 +507,7 @@ export default function CalendarPage() {
             <div style={{ marginBottom: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                 <Leaf size={14} color="#C07A1E" strokeWidth={1.7} />
-                <SectionLabel>Harvest ready</SectionLabel>
+                <SectionLabel>{localUi('Harvest ready', 'Okulungele ukuvunwa', lang)}</SectionLabel>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {monthData.harvest.length > 0 ? (
@@ -517,7 +528,7 @@ export default function CalendarPage() {
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
                 <Droplets size={14} color="#235E86" strokeWidth={1.7} />
-                <SectionLabel>Maintain</SectionLabel>
+                <SectionLabel>{localUi('Maintain', 'Umsebenzi wokunakekela', lang)}</SectionLabel>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
                 {monthData.maintain.map((task) => (
@@ -606,7 +617,7 @@ export default function CalendarPage() {
                   marginBottom: 5,
                 }}
               >
-                Lima — Seasonal advice
+                {localUi('Lima — Seasonal advice', 'Lima — Iseluleko sesizini', lang)}
               </div>
               <p
                 style={{
@@ -648,12 +659,12 @@ export default function CalendarPage() {
                   marginBottom: 2,
                 }}
               >
-                12-Month Planting Grid
+                {localUi('12-Month Planting Grid', 'Igridi yokutshala yezinyanga eziyi-12', lang)}
               </div>
               {/* Legend */}
               <div style={{ display: 'flex', gap: 14, marginTop: 6 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <Dot mark="B" />
+                  <Dot mark="B" lang={lang} />
                   <span
                     style={{
                       fontSize: 11,
@@ -661,7 +672,7 @@ export default function CalendarPage() {
                       color: '#5C5040',
                     }}
                   >
-                    In catalog sowing window
+                    {localUi('In catalog sowing window', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
                   </span>
                 </div>
                 <span
@@ -671,7 +682,7 @@ export default function CalendarPage() {
                     color: '#5C5040',
                   }}
                 >
-                  Summer-rainfall pattern
+                  {localUi('Summer-rainfall pattern', 'Iphethini yemvula yasehlobo', lang)}
                 </span>
               </div>
             </div>
@@ -681,11 +692,11 @@ export default function CalendarPage() {
               <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
                   {visibleCrops.length > 0
-                    ? `Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`
-                    : 'None of your planned crops are in this calendar yet'}
+                    ? localUi(`Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`, `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}`, lang)
+                    : localUi('None of your planned crops are in this calendar yet', 'Azikho izitshalo zakho ezihleliwe kule khalenda okwamanje', lang)}
                 </span>
                 <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-                  Show all
+                  {localUi('Show all', 'Bonisa konke', lang)}
                 </button>
               </div>
             )}
@@ -713,7 +724,7 @@ export default function CalendarPage() {
                   width: '100%',
                   minWidth: 560,
                 }}
-                aria-label="South African planting calendar"
+                aria-label={localUi('South African planting calendar', 'Ikhalenda lokutshala laseNingizimu Afrika', lang)}
               >
                 <thead>
                   <tr style={{ background: '#E4DCC6' }}>
@@ -736,7 +747,7 @@ export default function CalendarPage() {
                         zIndex: 1,
                       }}
                     >
-                      Crop
+                      {localUi('Crop', 'Isitshalo', lang)}
                     </th>
                     {MONTH_ABBR.map((abbr, idx) => (
                       <th
@@ -808,7 +819,7 @@ export default function CalendarPage() {
                               alignItems: 'center',
                             }}
                           >
-                            <Dot mark={mark} />
+                            <Dot mark={mark} lang={lang} />
                           </div>
                         </td>
                       ))}

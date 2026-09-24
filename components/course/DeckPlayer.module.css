@@ -162,6 +162,17 @@
   min-width: 0;
 }
 
+.zoomLink {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: #2f6b3a;
+  font-size: 14px;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 480px) {
   .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
