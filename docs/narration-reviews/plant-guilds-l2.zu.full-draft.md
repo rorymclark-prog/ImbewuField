@@ -1,6 +1,6 @@
 # Plant Selection & Guilds L2 — isiZulu full review draft
 
-**Status: UNREVIEWED DRAFT — REVIEW ONLY; NOT APPROVED FOR LEARNERS, RECORDING OR PUBLICATION.**
+**Status: UNREVIEWED DRAFT — learner-visible with a persistent draft label; not fluent, farming or listening approved.**
 
 Scope: `plant-guilds-l2`, “Mulch Plants and Helpful Insects.” This source-paired packet contains the current English lesson body, key points and both quiz questions with every option, correct answer index and rationale. It is a translation proposal, not fluent certification or planting advice.
 
@@ -87,7 +87,7 @@ Keep the English correct answer index: Question 1 = 1; Question 2 = 1.
 
 **English rationale:** A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.
 
-**IsiZulu rationale proposal:** Iqabunga liyawa, kodwa isihlahla esisekelayo sihlala simile. Lokhu ukuthena bese kushiywa okusikiwe emhlabathini njenge-mulch.
+**IsiZulu rationale proposal:** Igatsha liwa, kodwa isihlahla esisekelayo sihlala simile. Lokhu ukuthena bese kushiywa okusikiwe emhlabathini njenge-mulch.
 
 ### Question 2 — assessing flowering plants for helpful insects
 

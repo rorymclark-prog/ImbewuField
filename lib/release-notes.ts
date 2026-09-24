@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '01504a6d', changes: [
+    'Plant Guilds lessons now show isiZulu reading and quiz drafts.',
+    'Each lesson says language and local farming review is still due.',
+  ], tour: [
+    { title: 'Read Plant Guilds in isiZulu', where: 'My Studies · Plant Selection & Guilds', href: '/student',
+      detail: 'Choose isiZulu, open Plant Selection & Guilds, and read a labelled lesson draft.' },
+  ] },
   { when: '24 September 2026', sha: '5a9f11af', changes: [
     'Small Livestock now has twenty isiZulu slides and the woman’s narration.',
     'Its three isiZulu lessons and quizzes are marked as drafts for review.',
