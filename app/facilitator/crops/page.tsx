@@ -9,6 +9,7 @@
 // Zero network, zero new deps.
 
 import { numberLabel } from '@/lib/format-figures';
+import { useLanguage } from '@/lib/i18n';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -64,6 +65,11 @@ import {
 } from '@/lib/crop-export-schedule';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
+
+// This route has sourced crop timing, climate, price and task claims mixed with
+// ordinary controls. Only pass interface labels through this helper; keep the
+// source-backed farming copy in its original English until it is reviewed.
+const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
 // The rolling timeline shows this many months ahead from today (column 0),
 // scrollable. TWO FULL YEARS as of 2026-08-05 (Rory: "the last month i feel
@@ -167,9 +173,10 @@ function HarvestShareRow({
  * flat line is the right shape.
  */
 function TaskList({ tasks }: { tasks: CropTask[] }) {
+  const { lang } = useLanguage();
   const groups = groupTasksByAction(tasks);
   if (groups.length === 0) {
-    return <div className="font-sans" style={{ fontSize: 12.5, color: '#755942' }}>Nothing due.</div>;
+    return <div className="font-sans" style={{ fontSize: 12.5, color: '#755942' }}>{cropUi(lang, 'Nothing due.', 'Akukho okumele kwenziwe okwamanje.')}</div>;
   }
   return (
     <div className="space-y-2">
@@ -598,6 +605,7 @@ const PATTERN_META: Record<RainPattern, { Icon: LucideIcon; label: string }> = {
 // ── Page ─────────────────────────────────────────────────────────────────
 
 function FacilitatorCropsPageInner() {
+  const { lang } = useLanguage();
   // Deep-link entry from the Design Studio Simple Path: ?canvasSite=<siteId> feeds
   // beds straight from the DesignCanvasState (via the bridge) instead of the
   // facilitator/Firestore design picker; &auto=1 opens the auto-suggest
@@ -1457,7 +1465,7 @@ function FacilitatorCropsPageInner() {
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
         >
-          ‹ Back to design
+          ‹ {cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
         </Link>
         {!canvasSite && myDesignsList && myDesignsList.length > 0 && (
           <button
@@ -1466,7 +1474,7 @@ function FacilitatorCropsPageInner() {
             style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}
             title="Switch to a different design's crop plan"
           >
-            ‹ All crop plans
+            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
           </button>
         )}
         {canvasSite && ((myDesignsList?.length ?? 0) + studioChoices.length > 1) && (
@@ -1479,7 +1487,7 @@ function FacilitatorCropsPageInner() {
             style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
             title="Switch to a different design's crop plan"
           >
-            ‹ All crop plans
+            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
           </Link>
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
@@ -1490,14 +1498,14 @@ function FacilitatorCropsPageInner() {
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
+              <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
               <span className="font-sans truncate" style={{ fontSize: 11, color: '#755942', maxWidth: 220 }}>{designTitle}</span>
             </div>
             <ChevronDown size={13} style={{ color: '#755942', flexShrink: 0 }} />
           </button>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Crop plan</span>
+            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
             <span className="font-sans truncate" style={{ fontSize: 11, color: '#755942', maxWidth: 220 }}>
               {canvasSite ? 'Beds from your Design Studio map' : designTitle}
             </span>
@@ -1543,6 +1551,12 @@ function FacilitatorCropsPageInner() {
         )}
       </header>
 
+      {lang === 'zu' && (
+        <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: '#FFF8E8', borderBottom: '1px solid rgba(154,96,24,0.3)', color: '#5C5040', fontSize: 12, lineHeight: 1.45 }}>
+          <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
+        </div>
+      )}
+
       {/* Bed check — "button or clicker... to verify number and size" (Rory, 2026-08-03).
           Reads the SAME beds array the plan itself uses, so what it lists is by
           construction what the engine plans over — no separate lookup to drift. */}
@@ -1574,13 +1588,13 @@ function FacilitatorCropsPageInner() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <span className="font-display text-sm" style={{ color: '#755942' }}>Loading crop plan…</span>
+          <span className="font-display text-sm" style={{ color: '#755942' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
         </div>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
             <div className="flex items-start justify-between gap-3">
-              <h1 className="font-display font-semibold" style={{ fontSize: 19, color: '#20190F', letterSpacing: '-0.01em' }}>Which site are you planning?</h1>
+              <h1 className="font-display font-semibold" style={{ fontSize: 19, color: '#20190F', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
               {chosenDesignId !== null && (
                 <button
                   onClick={() => setSwitchingSite(false)}
@@ -1597,10 +1611,10 @@ function FacilitatorCropsPageInner() {
                   design exists — and "0 saved designs. Each one is drawn…" was nonsense
                   in exactly the moment a farmer most needs telling what to do next. */}
               {cloudCards.length + studioCards.length === 0
-                ? 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.'
+                ? cropUi(lang, 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.', 'Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.')
                 : cloudCards.length + studioCards.length === 1
                   ? 'One saved design — here is what is on it.'
-                  : `${cloudCards.length + studioCards.length} saved designs. Each one is drawn as it sits on the ground.`}
+                  : `${cloudCards.length + studioCards.length} ${cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')}`}
             </p>
 
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))' }}>
@@ -1638,7 +1652,7 @@ function FacilitatorCropsPageInner() {
               className="w-full mt-3 px-4 py-3 rounded-xl text-left font-sans transition-all"
               style={{ background: 'transparent', border: '1px dashed #C7BCA6', color: '#755942', fontSize: 13 }}
             >
-              Or use the design already open on this device
+              {cropUi(lang, 'Or use the design already open on this device', 'Noma sebenzisa umklamo ovuliwe kule divayisi')}
             </button>
           </div>
         </div>
@@ -1650,7 +1664,7 @@ function FacilitatorCropsPageInner() {
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
-                <Link href={designHref} style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Place real beds on the Planting step</Link> to replace it.
+                <Link href={designHref} style={{ color: '#1F4D2B', textDecoration: 'underline' }}>{cropUi(lang, 'Place real beds on the Planting step', 'Faka imibhede yangempela esigabeni sokuTshala')}</Link> {cropUi(lang, 'to replace it.', 'ukuze uwushintshe.')}
               </div>
             )}
 
@@ -1684,7 +1698,7 @@ function FacilitatorCropsPageInner() {
                 className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
                 style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: 'pointer' }}
               >
-                <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Auto-suggest a plan
+                <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
               </button>
               {planHistory.length > 0 && (
                 <button
@@ -1693,7 +1707,7 @@ function FacilitatorCropsPageInner() {
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
                   title="Undo the last change to this plan"
                 >
-                  <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Undo
+                  <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
                 </button>
               )}
               {plantings.length > 0 && (
@@ -1703,7 +1717,7 @@ function FacilitatorCropsPageInner() {
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
                   title="Clear every planting from this plan"
                 >
-                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Clear all
+                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Clear all', 'Sula konke')}
                 </button>
               )}
             </div>
@@ -1753,7 +1767,7 @@ function FacilitatorCropsPageInner() {
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
                 <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: '#F5F0E8', borderRight: '1px solid #D8CDB4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
-                  <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>Bed</span>
+                  <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
                 </div>
                 <div
                   ref={monthHeaderScrollRef}
@@ -1879,7 +1893,7 @@ function FacilitatorCropsPageInner() {
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><ClipboardList size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Tasks</div>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><ClipboardList size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Tasks', 'Imisebenzi')}</div>
                 {([[currentMonth, currentTasks], [nextMonth, nextTasks]] as [number, CropTask[]][]).map(([m, t], idx) => (
                   <div key={m} className="mb-2.5">
                     <div className="font-display font-semibold flex items-baseline gap-2 mb-1" style={{ fontSize: 13.5, color: '#20190F' }}>
@@ -1899,7 +1913,7 @@ function FacilitatorCropsPageInner() {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-display font-semibold mb-3"
                   style={{ fontSize: 12, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
                 >
-                  <Share2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Share tasks
+                  <Share2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Share tasks', 'Yabelana ngemisebenzi')}
                 </button>
                 <div style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
                   <button
@@ -1907,7 +1921,7 @@ function FacilitatorCropsPageInner() {
                     className="font-sans uppercase tracking-widest w-full flex items-center justify-between"
                     style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                   >
-                    <span>Looking ahead</span>
+                    <span>{cropUi(lang, 'Looking ahead', 'Okulandelayo')}</span>
                     <span>{showLookingAhead ? '▾' : '▸'}</span>
                   </button>
                   {showLookingAhead && (
@@ -1927,7 +1941,7 @@ function FacilitatorCropsPageInner() {
                         );
                       })}
                       {allTasks.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>No plantings yet — tap + crop on a bed above.</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'No plantings yet — tap + crop on a bed above.', 'Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.')}</div>
                       )}
                     </div>
                   )}
@@ -1949,7 +1963,7 @@ function FacilitatorCropsPageInner() {
                           color: harvestBoxView === v ? '#FFFEFA' : '#5C5040',
                         }}
                       >
-                        {v === 'crop' ? 'By crop' : 'By bed'}
+                        {v === 'crop' ? cropUi(lang, 'By crop', 'Ngesilimo') : cropUi(lang, 'By bed', 'Ngombhede')}
                       </button>
                     ))}
                   </div>
@@ -2076,7 +2090,7 @@ function FacilitatorCropsPageInner() {
                         );
                       })}
                       {plantings.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Nothing planted yet.</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
                   ) : (
@@ -2093,7 +2107,7 @@ function FacilitatorCropsPageInner() {
                         </HarvestShareRow>
                       ))}
                       {plantings.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Nothing planted yet.</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
                   )}
@@ -2325,20 +2339,21 @@ export default function FacilitatorCropsPage() {
 // ── Empty state ──────────────────────────────────────────────────────────
 
 function EmptyState({ onVirtual, designHref }: { onVirtual: () => void; designHref: string }) {
+  const { lang } = useLanguage();
   return (
     <div className="flex-1 flex items-center justify-center px-6">
       <div className="text-center" style={{ maxWidth: 360 }}>
         <div><Sprout size={40} aria-hidden style={{ color: 'var(--color-forest-700)' }} /></div>
-        <div className="font-display font-semibold mt-2" style={{ fontSize: 18, color: '#20190F' }}>No beds designed yet</div>
+        <div className="font-display font-semibold mt-2" style={{ fontSize: 18, color: '#20190F' }}>{cropUi(lang, 'No beds designed yet', 'Ayikho imibhede eklanyiwe okwamanje')}</div>
         <p className="font-sans mt-1.5" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.5 }}>
-          Place veg beds on the Planting step first — then come back here to plan what goes in them.
+          {cropUi(lang, 'Place veg beds on the Planting step first — then come back here to plan what goes in them.', 'Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.')}
         </p>
         <Link
           href={designHref}
           className="inline-flex items-center justify-center mt-4 px-4 py-2 rounded-xl font-display font-semibold"
           style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}
         >
-          ‹ Back to design
+          ‹ {cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
         </Link>
         <div className="mt-3">
           <button
@@ -3431,6 +3446,7 @@ function CropPickerModal({
   /** A staple plot takes one crop at FULL area — no fraction presets, no sharing opt-in. */
   isPlot: boolean;
 }) {
+  const { lang } = useLanguage();
   // Favourites sort to the top of whatever's currently filtered — a quick-
   // access shortlist, same idea as Tend's personal Crop Library, just
   // without per-farmer custom crop data.
@@ -3450,9 +3466,9 @@ function CropPickerModal({
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
           <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-            {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : 'Add a crop'}
+            {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : cropUi(lang, 'Add a crop', 'Engeza isilimo')}
           </span>
-          <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
             <X size={18} />
           </button>
         </div>
@@ -3465,7 +3481,7 @@ function CropPickerModal({
                 autoFocus
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
-                placeholder="Search crops…"
+                placeholder={cropUi(lang, 'Search crops…', 'Sesha izitshalo…')}
                 className="flex-1 font-sans outline-none bg-transparent"
                 style={{ fontSize: 14, color: '#20190F' }}
               />
@@ -3504,7 +3520,7 @@ function CropPickerModal({
                     </button>
                     <button
                       onClick={() => onToggleFavourite(c.key)}
-                      aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+                      aria-label={isFav ? cropUi(lang, 'Remove from favourites', 'Susa ezintandokazini') : cropUi(lang, 'Add to favourites', 'Engeza ezintandokazini')}
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
                     >
                       <Star size={16} aria-hidden fill={isFav ? 'currentColor' : 'none'} />
@@ -3513,7 +3529,7 @@ function CropPickerModal({
                 );
               })}
               {filtered.length === 0 && (
-                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: '#755942' }}>No crops match “{search}”.</div>
+                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: '#755942' }}>{cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)}</div>
               )}
             </div>
           </div>
@@ -3521,7 +3537,7 @@ function CropPickerModal({
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
               <button onClick={onBack} className="font-sans" style={{ fontSize: 12, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                ‹ Back to list
+                ‹ {cropUi(lang, 'Back to list', 'Buyela ohlwini')}
               </button>
               <button
                 onClick={() => onToggleFavourite(crop.key)}
@@ -3719,7 +3735,7 @@ function CropPickerModal({
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
               style={{ fontSize: 14, background: crop.timingVerified === false ? '#D8D3C9' : '#1F4D2B', color: crop.timingVerified === false ? '#81796D' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
             >
-              {isEditing ? 'Save changes' : existing ? 'Add as existing' : 'Add to bed'}
+              {isEditing ? cropUi(lang, 'Save changes', 'Londoloza izinguquko') : existing ? cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade') : cropUi(lang, 'Add to bed', 'Engeza embhedeni')}
             </button>
           </div>
         )}
@@ -3738,6 +3754,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
   onRemove: () => void;
   onClose: () => void;
 }) {
+  const { lang } = useLanguage();
   // Removal stays deliberately separate from choosing a crop. The accepted
   // plan does not persist the farmer's original whitelist, so this screen
   // cannot safely infer which alternative food they would actually choose.
@@ -3762,7 +3779,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
-          <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
             <X size={16} />
           </button>
         </div>
@@ -3808,14 +3825,14 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
               >
-                Cancel
+                {cropUi(lang, 'Cancel', 'Khansela')}
               </button>
               <button
                 onClick={onRemove}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
               >
-                Remove crop
+                {cropUi(lang, 'Remove crop', 'Susa isilimo')}
               </button>
             </div>
           </div>
@@ -3826,14 +3843,14 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
             >
-              Edit
+              {cropUi(lang, 'Edit', 'Hlela')}
             </button>
             <button
               onClick={() => setConfirmingRemove(true)}
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
             >
-              Remove
+              {cropUi(lang, 'Remove', 'Susa')}
             </button>
           </div>
         )}
@@ -3895,6 +3912,7 @@ function AutoSuggestModal({
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
+  const { lang } = useLanguage();
   const [cropSearch, setCropSearch] = useState('');
   const tileStyle = (active: boolean): CSSProperties => ({
     background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#F7F2E9' : '#5C5040',
@@ -3915,7 +3933,7 @@ function AutoSuggestModal({
           <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: '#20190F' }}>
             <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>
-          <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
             <X size={18} />
           </button>
         </div>
@@ -4317,7 +4335,7 @@ function AutoSuggestModal({
             )}
             <div className="flex gap-2 pt-1">
               <button onClick={onBackToQuestions} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                ‹ Back
+                ‹ {cropUi(lang, 'Back', 'Buyela')}
               </button>
               {result && result.plantings.length > 0 && (
                 <button onClick={onAccept} className="flex-1 font-display font-semibold rounded-xl py-2" style={{ fontSize: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
@@ -4325,7 +4343,7 @@ function AutoSuggestModal({
                 </button>
               )}
               <button onClick={onClose} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                Discard
+                {cropUi(lang, 'Discard', 'Lahla')}
               </button>
             </div>
           </div>
