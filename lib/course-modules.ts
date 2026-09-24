@@ -572,7 +572,7 @@ export const COURSE_MODULES: CourseModule[] = [
         "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
         "infographicAlt": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         "title": "Mulching and Cover Crops: Protecting and Building Soil",
-        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.",
+        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
         "keyPoints": [
           "Protect exposed soil with suitable cover",
           "Keep mulch away from trunks and stems",
@@ -589,7 +589,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil pH drops and nitrogen builds up"
             ],
             "correct": 2,
-            "rationale": "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly."
+            "rationale": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away."
           },
           {
             "q": "What should you remember about liquid draining from a worm bin?",
@@ -600,7 +600,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "A fixed dilution makes every liquid safe"
             ],
             "correct": 1,
-            "rationale": "Leachate is drainage from unfinished material. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
+            "rationale": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
           }
         ]
       }
@@ -1174,12 +1174,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/small-livestock/small-livestock-l2.jpg",
         infographicAlt: "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
         title: "Bees: Pollination, Honey, and System Ecology",
-        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. Learn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first.\n\nProvide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. All beekeepers must register with the national Department of Agriculture. Check the current rules before moving bees or hives. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
         keyPoints: [
           "Pollinators help many crops; the benefit depends on the crop and conditions",
           "Learn safe hive care from an experienced local beekeeper",
           "Choose a safe hive site away from busy paths and children",
-          "All beekeepers must register with the national Department of Agriculture",
+          "Register with the Department for activities covered by the national honey-bee control measures",
         ],
         quiz: [
           {

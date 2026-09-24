@@ -91,3 +91,21 @@ source check: slide 7 asks learners to check sharing permission and borehole
 capacity; slide 13 says hail damage depends on the storm and maize growth stage
 and makes no survival promise. No fluent isiZulu or human farming review is
 claimed by the contact sheet or viewport check.
+
+### Zone still update — 24 September 2026
+
+Slide 15 now uses a static isiZulu derivative of Rory's ChatGPT Library image
+`ImbewuField_M1_Zones_Footpath.png`, saved as
+`zone-footpath-numbered-zu.png`. The derivative keeps the smallholder landscape
+and numbered markers while removing the English cards. The slide title and
+caption follow the existing narration: Zones 0–5 are organised by visits and
+work, not by fences. The short caption keeps that point readable at phone width,
+and the AI-draft badge remains at the top right. The picture is conceptual and
+not to scale; its markers show examples, not required boundaries or fixed
+distances. Its numbered scenes
+show the home and kitchen garden close by, a garden and poultry, a field, a
+managed tree area, and a wild river edge. The narration remains authoritative
+for the examples: Zone 2 is the larger garden and chicken run, Zone 3 the large
+field, and Zone 4 semi-wild fruit trees and fodder. This is an unreviewed AI
+draft; no narration or lesson text was changed and no Flow credits or SVG were
+used.

@@ -57,7 +57,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'water-harvesting-l4': { status: 'source-held', reviewDocument: 'docs/narration-reviews/water-harvesting-l4.zu.review.md' },
   'soil-health-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'soil-health-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'soil-health-l3': { status: 'source-held', reviewDocument: 'docs/narration-reviews/soil-health-l3.zu.review.md' },
+  'soil-health-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/soil-health-l3.zu.review.md' },
   'vegetables-staples-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/VEGETABLES-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'vegetables-staples-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/VEGETABLES-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'vegetables-staples-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/VEGETABLES-ISIZULU-FULL-DRAFT-HANDOFF.md' },
@@ -130,8 +130,8 @@ export interface LearnerLessonPresentation {
 }
 
 /** Rory authorised clearly labelled review drafts in the learner view on 24 September.
- * This path never upgrades a draft to an approved translation, and keeps source-held
- * lessons in English until their underlying farming claims are resolved. */
+ * This path never upgrades a draft to an approved translation, and keeps lessons
+ * with unresolved farming claims in English until their sources are checked. */
 export function resolveLearnerLessonPresentation(
   lesson: Lesson,
   language: string,

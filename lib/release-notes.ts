@@ -49,6 +49,33 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
       detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
   ] },
+  { when: '24 September 2026', sha: 'f249ea06', changes: [
+    'Soil Health now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Both are review drafts; slides 10–11 use matching still pictures.',
+  ], tour: [
+    { title: 'Hear Soil Health in isiZulu', where: 'My Studies · Soil Health', href: '/student',
+      detail: 'Choose isiZulu, open Soil Health, then play a narrated slide. Review drafts are labelled.' },
+  ] },
+  { when: '24 September 2026', sha: '6d0c39b2', changes: [
+    'Small Livestock now explains bee ranges and movement rules.',
+    'Bee registration guidance names the activities covered by national rules.',
+  ], tour: [
+    { title: 'Read the bee lesson', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Open Small Livestock and choose the bees lesson.' },
+  ] },
+  { when: '24 September 2026', sha: '072257f8', changes: [
+    'Vegetables and Staples now has 18 isiZulu slides and the woman’s narration.',
+    'The isiZulu lesson remains a draft for language and farming review.',
+  ], tour: [
+    { title: 'Hear Vegetables and Staples in isiZulu', where: 'My Studies · Vegetables and Staples', href: '/student',
+      detail: 'Choose isiZulu, open Vegetables and Staples, and play a slide.' },
+  ] },
+  { when: '24 September 2026', sha: '9a3326e0', changes: [
+    'The Introduction zones slide now shows a walking path with Zones 0–5.',
+  ], tour: [
+    { title: 'See the Zones picture', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction, and view slide 15.' },
+  ] },
   { when: '24 September 2026', sha: 'a59fbec9', changes: [
     'Food Forest Design now has 20 isiZulu slides.',
     'Hear the woman’s isiZulu narration; both are drafts for review.',

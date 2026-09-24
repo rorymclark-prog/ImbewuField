@@ -965,6 +965,110 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
     }
   },
   "soil-health": {
+    "zu": {
+      "1": [
+        "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+        "Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.",
+        "Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza i-compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm."
+      ],
+      "2": [
+        "Isimo somhlabathi sithinta izimpande, amanzi nesivuno.",
+        "Ukushiya umhlabathi ungenalutho ngokuphindaphindiwe, ukuwucinanisa nokuncipha kwezinto eziphilayo kungawulimaza. Umbala wodwa awuchazi konke.",
+        "Bheka umhlabathi wakho, bese ukhetha izindlela zokuwuvikela nokuwuthuthukisa."
+      ],
+      "3": [
+        "Bheka izimpawu eziningana zesimo somhlabathi.",
+        "Sebenzisa ibhodlela ukuze uhlole ukuthungwa komhlabathi, kodwa uqaphele imingcele yalolu vivinyo.",
+        "Nakekela inqwaba ye-compost, vikela umhlabathi ongenalutho, futhi uhlukanise ama-worm castings noketshezi oluphuma emgqonyeni wezikelemu."
+      ],
+      "4": [
+        "Umhlabathi unezinhlobo eziningi zezinto eziphilayo. Amagciwane nesikhunta kusiza ukubolisa izinto eziphilayo nokujikeleza kwezakhamzimba.",
+        "Ezinye izinhlobo zesikhunta zisiza izimpande zimunce izakhamzimba. Imigudu yezibungu ingasiza amanzi nomoya kungene emhlabathini.",
+        "Bheka izimpande, ukwakheka komhlabathi nokuhamba kwamanzi, kanye nezinto eziphilayo ozibonayo emhlabathini."
+      ],
+      "5": [
+        "Bhekisisa lezi zibonelo ezimbili zomhlabathi.",
+        "Okokuqala, bheka ukwakheka kwawo. Ensimini, thinta ucezu olunomswakama ubone ukuthi luphuka kanjani.",
+        "Bheka izimpande nezikhala ezizizungezile.",
+        "Bheka okumboze umhlabathi phezulu. Esinye isibonelo simbozwe nge-mulch exegayo.",
+        "Sebenzisa izimpawu eziningana ndawonye. Umbala wodwa awukutsheli impilo yomhlabathi. Hlola umswakama, ukukhula kwezitshalo nokungena kwamanzi emhlabathini."
+      ],
+      "6": [
+        "Faka umhlabathi namanzi embizeni yengilazi ecacile, ufake nenani elincane le-detergent efanele yokuhlakaza izinhlayiya zomhlabathi. Yivale uyinyakazise, bese uyishiya inganyakazi.",
+        "Isihlabathi sihlala phansi kuqala. I-silt ilandela; ubumba lungahlala luntanta isikhathi eside.",
+        "Lolu wuvivinyo lokufunda olulinganiselwe. Izigaxa nobumba olungakahlali phansi kungakudukisa. Uma kudingeka ukwazi ukuthungwa komhlabathi ngokunembile, sebenzisa ilabhorethri yomhlabathi."
+      ],
+      "7": [
+        "Ungqimba olujiyile lwesihlabathi ngaphansi kwamanzi afiphele alukakutsheli izilinganiso zokugcina. Ezinye izinhlayiya ezincane kungenzeka zisantanta.",
+        "Qhathanisa izingqimba esezihlale phansi, futhi uzwe nokuthungwa komhlabathi osensimini.",
+        "Bhala lokho okubonayo nalokho okungakaqinisekiswa. Ungancomi indlela yokunisela noma yokwelapha umhlabathi ngebhodlela elilodwa kuphela."
+      ],
+      "8": [
+        "Ukucinana komhlabathi, ukungaphumi kahle kwamanzi nokuncipha kwezinto eziphilayo kunganciphisa ukukhula kwezimpande nokuphila komhlabathi.",
+        "Umbala ophaphathekile noma izibungu ezimbalwa akufakazeli ukuthi amakhemikhali abulale umhlabathi. Umsebenzi wezibungu nawo uyashintsha kuye ngomswakama nenkathi yonyaka.",
+        "Bheka amaphethini ezindaweni ezahlukene zensimu. Hlola umlando wokunakekela, ukuphuma kwamanzi nokukhula kwezitshalo ngaphambi kokukhetha ikhambi."
+      ],
+      "9": [
+        "I-compost yizinto eziphilayo ezibolile ngaphansi kwezimo ezilawulwayo.",
+        "I-compost esilungile ingathuthukisa ukwakheka komhlabathi futhi ifake izakhamzimba kuwo.",
+        "Isikhathi sokuthi i-compost ilunge siyashintsha kuye ngezinto ezifakiwe, umswakama, umoya nokushisa. Igama lesifundazwe noma inani elinqunyiwe lamasonto akusho ukuthi i-compost isilungile."
+      ],
+      "10": [
+        "Yakha inqwaba ngama-browns omile nama-greens amasha.",
+        "Gcina izingqimba zimanzi kodwa zingacwili, ukuze kungene umoya futhi izinto ezibolisa inqwaba zisebenze."
+      ],
+      "11": [
+        "Hlanganisa ama-browns omile nama-greens amasha. Gwema izingqimba eziwugqinsi nezimanzi ezivimba umoya.",
+        "Uma inqwaba iba bushelelezi ngokushelela noma inuka kakhulu i-ammonia, faka ama-browns omile bese uyiphendula.",
+        "Hlola umswakama nomoya njengoba inqwaba ishintsha; iresiphi eyodwa ayifaneli zonke izingxube zezinto."
+      ],
+      "12": [
+        "Ukuthi indawo emaphakathi nenqwaba iyashisa akufakazeli ukuthi yonke ingxenye yayo ithole ukwelashwa. Isikhathi, izinga lokushisa nendlela yokuphatha konke kubalulekile.",
+        "Ungafaki inyama, ubisi nemikhiqizo yobisi, izitshalo ezigulayo, indle yezilwane ezifuywayo noma izinto ezingcolile kule ndlela elula yasekhaya.",
+        "Ungacabangi ukuthi ukwenza i-compost ekhaya kuqeda yonke imbewu yokhula noma zonke izinto eziphilayo ezibangela izifo. Uma kudingeka ukuhlanzwa kwe-compost, sebenzisa inqubo eyamukelekile."
+      ],
+      "13": [
+        "Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost. Inqwaba evamile ingase ingayenzi yonke imbewu ingasakwazi ukuhluma.",
+        "Sebenzisa izinto ezihlanzekile kuphela, ezingakaze zelashwe. Amagxolo abola kancane; igama lawo lodwa aliqinisekisi ukuthi awangcolisiwe.",
+        "Hlola inqwaba, uyiphendule lapho idinga umoya owengeziwe noma ukuxutshwa. Yigcine inomswakama, ingagcwali amanzi."
+      ],
+      "14": [
+        "Qhathanisa umhlabathi ongenalutho nomhlabathi ombozwe nge-mulch.",
+        "Uma imvula ishaya i-mulch esikhundleni sokushaya umhlabathi ongenalutho, ingxenye enkulu yamandla amaconsi emvula ingadamba. Lo mdwebo ukhombisa lo mbono wokushaya kwemvula kuphela; awusho ukuthi amanzi azongena, azogeleza noma azogcinwa kanjani endaweni ethile."
+      ],
+      "15": [
+        "Mboza umhlabathi ongenalutho nge-mulch ehlanzekile nefanele, njenge-straw, utshani obomile noma ama-wood chips.",
+        "I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwemvula futhi icindezele ukhula.",
+        "Yigcine ingathinti iziqu zezihlahla nezitshalo. Hlola umswakama ngaphansi kwayo bese ulungisa ungqimba. I-mulch eningi ayihlali ingcono."
+      ],
+      "16": [
+        "Izitshalo zokumboza umhlabathi zingawuvikela phakathi kwezilimo eziyinhloko. Khetha ngokwesimo sezulu sendawo, amanzi atholakalayo nesitshalo esizolandela.",
+        "Izibonelo ezikulesi sifundo zifaka ama-oats, ama-lupins, i-sunn hemp ne-cowpea. Hlola ukuthi zifanele yini indawo yakho ngaphambi kokuzihlwanyela.",
+        "Izitshalo zomndeni wama-legume zidinga amagciwane afanele nezimo zokukhula ezifanele ukuze zibophe i-nitrogen. Izakhamzimba ezinsaleleni zazo zitholakala njengoba lezo zinsalela zibola."
+      ],
+      "17": [
+        "Amapulazi ezikelemu angaguqula izinsalela zokudla ezifanele nezinto zokulala kwezikelemu zibe ama-castings. Hlola umgqomo; ungalindeli usuku oluqondile lokuvuna.",
+        "Uketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate. Alufani netiye lezikelemu elilungiswe ngendlela ethile.",
+        "I-leachate ingaba nezinto eziphilayo noma ezinye izinto eziyingozi. Ungayisebenzisi ezitshalweni ezidliwayo futhi ungacabangi ukuthi ukuyixuba namanzi kuyenza iphephe."
+      ],
+      "18": [
+        "Insimu yase-Highveld eshiywe ingenalutho ngemva kokuvuna ummbila ibhekana nezingozi ezimbili ezinkulu.",
+        "Umoya wasebusika ungathwala umhlabathi ongaphezulu owomile uwususe.",
+        "Isiphepho sokuqala esinamandla sentwasahlobo singashaya umhlabathi ongenalutho silimaze ingaphezulu lawo nokwakheka kwawo. Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe awususe.",
+        "Izitshalo zokumboza umhlabathi, i-mulch nezinto zemvelo zingasiza ukubamba umhlabathi endaweni yawo futhi ziwusize uhlale uphila."
+      ],
+      "19": [
+        "Hlola umhlabathi endaweni osebenza kuyo. Bhala umbala, ukwakheka, izimpande, umswakama nanoma yimiphi imigudu yezibungu.",
+        "Qhathanisa nenye indawo, ubhale ngesimo sezulu sakamuva nangendlela indawo ebiphethwe ngayo.",
+        "Zama ukuhlola ngebhodlela. Bhala ukuthi yini okubonakala sengathi iyavela, yini engakaqinisekiswa, nokuthi ukuhlolwa kwelabhorethri noma iseluleko somuntu wendawo onguchwepheshe kungasiza yini."
+      ],
+      "20": [
+        "Qala isenzo esisodwa sokwakha umhlabathi esikule modyuli.",
+        "Mboza umhlabathi ongenalutho nge-mulch, qala inqwaba ye-compost elinganiselayo, hlwanyela isitshalo sokumboza esifanele, noma lungisa i-worm farm.",
+        "Uma i-compost yakho inuka i-ammonia futhi ishelela, faka izinto ezomile ezine-carbon njenge-straw bese uphendula inqwaba.",
+        "Yakha impilo yomhlabathi kancane kancane."
+      ]
+    },
     "en": {
       "1": [
         "Soil is more than the ground under your feet.",
@@ -1034,7 +1138,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "14": [
         "Compare bare soil with mulched soil.",
-        "Watch how the mulch protects topsoil when a South African summer storm brings intense rain."
+        "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
       ],
       "15": [
         "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
@@ -1048,14 +1152,14 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "17": [
         "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
-        "Liquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.",
+        "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
         "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
       ],
       "18": [
         "A Highveld field left bare after the maize harvest faces two main risks.",
         "Winter wind can carry away dry topsoil.",
-        "The first heavy spring storm can strike bare ground and damage soil structure.",
-        "Cover crops, mulch, and organic matter keep soil in place and help it stay alive."
+        "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+        "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
       ],
       "19": [
         "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
@@ -1206,6 +1310,142 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
         "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
         "Use your record with reliable local advice when making the next decision."
+      ]
+    },
+    "zu": {
+      "1": [
+        "Siyakwamukela. Lesi isifundo Semifino Nezitshalo Eziyisisekelo. Singesinye sezingxenye eziyishumi zokuqeqeshwa kwe-ImbewuField.",
+        "Ingadi ekhiqizayo akuyona egcwele kakhulu ngosuku olulodwa. Yileyo eqhubeka iletha ukudla ekhaya, isonto ngalinye.",
+        "Emizuzwini embalwa ezayo, sizokhuluma ngezinto ezine: indlela yokwenza umbhede; indlela yokugcina isivuno siqhubeka; ukuthi yiziphi izitshalo eziyisisekelo ongazitshala; nokuthi wenzeni uma kuvela izinambuzane."
+      ],
+      "2": [
+        "Ake siqale ngenkinga.",
+        "Ukuhlwanyela okuningi ngesikhathi esisodwa kungaletha isivuno esiningi esilungele ukuvunwa ngesikhathi esisodwa. Udla ongakudla, uphe abanye, bese okunye kumoshakala.",
+        "Bese kufika isikhathi lapho kungekho okuvuthiwe. Ingadi igcwele izitshalo, kodwa akukho ukudla okulungele ukuvunwa.",
+        "Ukuhlwanyela okuncane ngezikhathi ezihlukene kudala isigqi. Ukutshala, ukunakekela nokuvuna kuyagqagqana. Kuhlala kunokuthile okusondela esikhathini sokuvunwa.",
+        "Yileso sigqi esiletha ukudla ekhaya, hhayi ubukhulu bengadi."
+      ],
+      "3": [
+        "Ekupheleni kwale mojuli, uzokwazi ukwenza izinqumo ezine ensimini yakho.",
+        "Okokuqala. Yakha umbhede ofanele, uhambisanise ububanzi nohlobo lombhede nomhlabathi wakho nemvula etholwa indawo yakho.",
+        "Okwesibili. Gcina ukuvunwa kuqhubeka ngokuhlwanyela ngezigaba nangokutshala izitshalo ezahlukene ndawonye.",
+        "Okwesithathu. Khetha izitshalo eziyisisekelo ezikunika ezinye izindlela uma esinye isitshalo sihluleka.",
+        "Okwesine. Funda inkinga yezinambuzane ngaphambi kokwelapha.",
+        "Lezi zinto ezine zihambisana. Umbhede omuhle usengahluleka uma yonke into itshalwa ngosuku olulodwa. Ukutshala izitshalo ezahlukene nakho kungaba nenkinga uma wonke amaqabunga aphuzi ethathwa njengomonakalo wezinambuzane."
+      ],
+      "4": [
+        "Umhlabathi ominyene ulahlekelwa yizikhala zomoya. Izimpande zikhula kancane. Amanzi angena ngendlela ehlukile. Umbhede uba nzima ukuwusebenza inkathi ngayinye.",
+        "Ukuvikela kulula: yiba nezindlela ezihlala njalo, nombhede omncane ngokwanele ukuthi ufinyelele kuwo uvela ezinhlangothini zombili.",
+        "Ububanzi obusebenzayo busuka kumitha elilodwa kuya kumamitha angu-1.2. Ngalobo bubanzi ungafinyelela maphakathi uvela kunoma iyiphi indlela, izinyawo zakho zingangeni endaweni okukhulela kuyo izitshalo.",
+        "Manje cabanga ngamabhede akho. Ungafinyelela phakathi ngaphandle kokungena kuwo? Hamba uyokuzama lokhu ngaphambi kokutshala enye into."
+      ],
+      "5": [
+        "Awukho umumo wombhede owodwa ofanele yonke indawo.",
+        "Qala ngokuphazamisa umhlabathi kancane ngangokunokwenzeka ukuze uxazulule inkinga yakho.",
+        "Indlela ye-no-dig ifanele inhlabathi yezingadi eminingi. Shiya ukwakheka komhlabathi kungaphazamisekile, wakhe ukuvunda phezu kwawo.",
+        "Ungawumbi ubumba olumanzi. Uma ukucinana noma ukungaphumi kahle kwamanzi kukukhulu, thola imbangela ngosizo lwendawo ngaphambi kokukhetha ukulima ujule.",
+        "Amabhede aphakanyisiwe afanele umhlabathi omanzi, lapho amanzi edinga khona indawo yokuphuma.",
+        "Amabhede acwile phansi afanele umhlabathi owomile, lapho ufuna ukubamba khona amanzi emvula uwagcine.",
+        "Ngemva kwemvula enkulu, bheka ukuthi amanzi ahlala kuphi noma ageleza ngakuphi. Hlanganisa lokho okubonile neseluleko ngomhlabathi nangokuphuma kwamanzi ngaphambi kokukhetha uhlobo lombhede."
+      ],
+      "6": [
+        "Ezinye izitshalo azikuthandi ukuphazanyiswa kwezimpande. Zikhula kangcono uma zihlwanyelwa ngqo lapho zizokhulela khona. Izimbotyi, izaqathe nommbila kungena kulelo qembu.",
+        "Ezinye zikhula kangcono uma ziqala zisesitshalweni esincane endaweni evikelekile yokukhulisela izithombo, bese zitshalwa kwenye indawo. Utamatisi nezitshalo zohlobo lwe-brassica kungena kulelo qembu.",
+        "Sebenzisa iseluleko sebanga lokutshala esifanele isitshalo, uhlobo lwaso nezimo zendawo. Hlola iphakethe lembewu neseluleko somlimi wendawo. Njengoba izitshalo zikhula, bheka ukuthi aziminyene yini."
+      ],
+      "7": [
+        "Ngaphambi kokutshala, maka indawo yombhede.",
+        "Umbhede owodwa wokuzijwayeza: ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.",
+        "Sebenzisa izikhonkwane nentambo. Maka unxande kanye nezindlela zokungena kuzo zombili izinhlangothi.",
+        "Bese ulungiselela umhlabathi wakho: qala nge-no-dig, bese umba ujule kuphela uma umhlabathi wakho ukudinga ngempela.",
+        "Umugqa wentambo uguqula umbono ube yisinqumo. Uma usunezindlela, zigcine zikhona. Uma usunendawo yokukhulisela izitshalo, yivikele.",
+        "Lowo mbhede uba lula ukuwuthuthukisa inkathi ngayinye ngoba uyeka ukuhamba phezu kwawo."
+      ],
+      "8": [
+        "Ukuhlwanyela ngokulandelana kuwumkhuba wokuhlela ikhalenda, akusona isitshalo esikhethekile.",
+        "Khetha into umuzi wakho oyidla njalo ngempela. Bese uhlwanyela isilinganiso esincane sayo, uphinde wenze njalo.",
+        "Tshala umugqa omfushane njalo ngemva kwamaviki amabili kuya kwamathathu.",
+        "Lokhu kunganciphisa ukumoshakala ngesikhathi isivuno sisiningi kakhulu. Kungaletha ukudla okusha isikhathi eside futhi kusabalalise umsebenzi kuyo yonke inkathi, esikhundleni sokuwenza wonke ngesikhathi esisodwa.",
+        "Ukuhlwanyela ngezikhathi ezihlukene kunganciphisa ingozi yokulahlekelwa yikho konke ngesikhathi esisodwa. Kodwa akukuqinisekisi ukuvuna uma izimo ezinzima ziqhubeka.",
+        "Yisiphi isitshalo esikhula ngokushesha ongasihlwanyela ngamaqoqo amancane? Khetha esisodwa, bese uqala ukusihlwanyela kuleli sonto."
+      ],
+      "9": [
+        "Nansi indlela esebenza ngayo.",
+        "Hlwanyela iqoqo lokuqala. Ngemva kwamaviki amabili kuya kwamathathu, hlwanyela elesibili. Bese uhlwanyela elesithathu, bese elesine.",
+        "Uma isikhathi sokukhula kwesitshalo sikuvumela, ukuvuna kwamaqoqo kungaqala ukuhlangana. Iqoqo lokuqala alihlali lilungele ukuvunwa ngesikhathi kuhlwanyelwa iqoqo lesine.",
+        "Amaviki amabili kuya kwamathathu ayisiqalo sesigqi sokuhlwanyela, akuwona umthetho. Isitshalo samaqabunga senkathi epholile singathatha isikhathi eside. Ukushisa kungasheshisa ukukhula noma kubangele ukwehluleka.",
+        "Bheka okwenzeka engadini yakho, bese ulungisa isikhawu sokuhlwanyela. Lelo khono lokubuka nokulungisa libalulekile."
+      ],
+      "10": [
+        "Ukutshala izitshalo ezahlukene ndawonye akukhona ukuminyanisa izitshalo nje. Isitshalo ngasinye sidinga umsebenzi waso nesikhala esanele sokuwenza.",
+        "I-Three Sisters iyisibonelo esivela emasikweni okulima abantu boMdabu baseMelika.",
+        "Ummbila unikeza ukuphakama nesakhiwo.",
+        "Izimbotyi zikhwela ummbila futhi zingagcinwa njengomthombo wamaprotheni.",
+        "Ithanga lisabalala phansi, lenze umthunzi emhlabathini futhi lisize ukuwugcina unomswakama.",
+        "Isikhathi sokutshala sibalulekile. Qala ngokutshala ummbila ukuze uqine ngokwanele ukuthwala izimbotyi lapho seziqala ukukhwela.",
+        "Lezi zitshalo zisengancintisana. Zinike isikhala, amanzi nokukhanya okufanele. Izimbotyi zibopha i-nitrogen ngosizo lwamagciwane asezimpandeni, kodwa ungacabangi ukuthi zondla ummbila ngokushesha; izakhamzimba ezisezinsaleleni zitholakala lapho sezibola."
+      ],
+      "11": [
+        "Umuzi ungase ube nesikhathi sokushoda kokudla: amasonto lapho ukudla okugcinwe khona sekuncipha ngaphambi kokuba isivuno esilandelayo silungele ukuvunwa.",
+        "Kowenu leso sikhathi singafika ngemva kokuphela kommbila ogciniwe. Singafika ngaphambi kokuba imifino yasebusika ilungele ukuvunwa. Singafika nangesikhathi esomile lapho amanzi enciphisa okungatshalwa engadini.",
+        "Ungakopeli ikhalenda lomunye umuntu. Qala ngokusho izinyanga zakho.",
+        "Zibhale phansi. Bese ukhetha isitshalo nesikhathi sokusihlwanyela ukuze ukudla kutholakale ngaleso sikhathi sokushoda.",
+        "Lokho ukuhlela usuka ekudingeni uye emuva. Kwenza umehluko phakathi kwengadi ebonakala ikhiqiza nomuzi othola ukudla."
+      ],
+      "12": [
+        "Isitshalo esiyisisekelo sikufanele ukutshalwa uma sondla umuzi nangemva kosuku lokuvuna.",
+        "Sinikeza amandla okudla noma amaprotheni. Singagcinwa, noma sihlale emhlabathini size sisidinge. Sivame nokuthwala umlando wesiko.",
+        "Ukuthembela esitshalweni esisodwa kukushiya usengozini. Izitshalo eziyisisekelo ezimbili noma ngaphezulu zikunika izindlela ongakhetha kuzo lapho isimo sezulu noma izinambuzane zidala umonakalo.",
+        "Tshala okungenani ezimbili, hhayi esisodwa.",
+        "Yisiphi isitshalo esiyisisekelo umuzi wakho oncike kuso kakhulu njengamanje? Uma singavuni, yisona esingawulimaza kakhulu umuzi wakho ngokushoda kokudla; cabanga ngesinye esingahambisana naso."
+      ],
+      "13": [
+        "Isitshalo ngasinye esiyisisekelo singasiza ngezimo ezihlukene.",
+        "Ummbila unikeza amakhalori futhi ungomiswa ugcinwe. Ummbila ovulekele impova yezinye izitshalo zohlobo olufanayo ungakuvumela ugcine imbewu yakho, uma ulawula ukuhlangana kwempova nokukhetha izitshalo zembewu.",
+        "Izimbotyi nezindumba zinikeza isivuno samaprotheni esingagcinwa.",
+        "Ubhatata ungakhula ubekezelele ukoma ngezinga elithile ngemva kokwakheka kwezimpande zawo ezigcinela ukudla. Udinga amanzi emasontweni okuqala nangesikhathi kwakheka lezo zimpande; ukuntuleka kwamanzi ngalezo zikhathi kunganciphisa isivuno. Amaqabunga awo amancane nawo ayadliwa.",
+        "Amadumbe abhekana nomhlabathi omanzi kakhulu, lapho ezinye izitshalo eziyisisekelo zingase zingakhuli kahle khona.",
+        "Qaphela ukuthi lezi zitshalo azihluleki ezimweni ezifanayo. Yilokho okubalulekile."
+      ],
+      "14": [
+        "Ukukwazi ukuqhubeka nezinhlelo akusho ukuthi akukho lutho oluzohluleka.",
+        "Kusho ukuthi ukwehluleka kwesitshalo esisodwa akupheli uhlelo lokudla lomndeni wakho.",
+        "Ukuthembela esitshalweni esisodwa kubeka umuzi engcupheni eyodwa.",
+        "Izitshalo ezimbili noma ngaphezulu zikunika izindlela eziningi zokuqhubeka uthola ukudla.",
+        "Izitshalo ezahlukene zisebenzisa amanzi, umhlabathi nezinkathi ngezindlela ezahlukene. Lo mehluko unikeza ezinye izindlela uma isimo sishintsha."
+      ],
+      "15": [
+        "Ukwanda kwezinambuzane ezilimaza izitshalo kuvame ukuba nesizathu.",
+        "Izitshalo zingacindezeleka. Uhlobo olulodwa lwesitshalo lungabusa indawo. Noma ukusetshenziswa kabanzi kwamakhemikhali kungase kube sekususe izilwane ezidla izinambuzane ezazikusiza.",
+        "Ngakho ngaphambi kokwelapha noma yini, bheka lonke uhlelo.",
+        "Ingabe isitshalo sishoda ngamanzi? Ingabe umhlabathi uminyene noma untula izakhamzimba? Ingabe izilwane ezidla izinambuzane sezisiza kule nkinga?",
+        "Iqabunga eliphuzi alisho ngokuzenzakalelayo ukuthi kunesinambuzane. Kungabangelwa amanzi, ukondleka noma ukulimala kwezimpande. Thola ukuthi iyiphi imbangela ngaphambi kokuthatha isinyathelo."
+      ],
+      "16": [
+        "Landela izinyathelo ezine ngokulandelana.",
+        "Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.",
+        "Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.",
+        "Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.",
+        "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; qala ngesenzo esilula kunazo zonke esifanele. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+        "Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.",
+        "Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya."
+      ],
+      "17": [
+        "Manje isifundo siphetha ngomsebenzi emhlabathini.",
+        "Yenza umbhede owodwa ongakusiza uqhubeke uthola ukudla. Ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.",
+        "Finyelela maphakathi uvela ezinhlangothini zombili. Hamba ezindleleni kuphela. Shiya isikhala esifanele phakathi kwezitshalo ngokwesimo sezulu sendawo yakho. Mboza umbhede nge-mulch.",
+        "Bheka umbhede njalo kusukela ngosuku otshalwe ngalo. Isithombe sezinsuku eziyishumi siyisikhathi sokuhlola umsebenzi; akusona isizathu sokulinda ngaphambi kokunakekela umbhede.",
+        "Thatha isithombe lapho usanda kutshalwa. Buya ngemva kwezinsuku eziyishumi nokubone kwenzeka.",
+        "Inhloso akusona isithombe esiphelele. Inhloso umbhede omumo wawo, isikhala sezitshalo nesigqi sokuhlwanyela okukhethe ngamabomu."
+      ],
+      "18": [
+        "Kuleli sonto, sebenzisa umbhede owodwa.",
+        "Okokuqala. Maka umbhede nezindlela.",
+        "Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.",
+        "Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.",
+        "Bese ubheka, ulungise, ubhale phansi.",
+        "Bhala usuku lokuhlwanyela, imvula, okumilile, ukwanda kwezinambuzane, nokuvunile.",
+        "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho. Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo."
       ]
     }
   },
@@ -1760,7 +2000,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "11": [
         "South Africa has two native honeybee subspecies.",
         "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
-        "Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas."
+        "These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives."
       ],
       "12": [
         "Learn from an experienced local beekeeper before getting a hive.",
@@ -1771,7 +2011,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "13": [
         "Provide flowering plants through the seasons and avoid exposing bees to pesticides.",
         "Active bees do not prove that the farm is free of chemicals or disease.",
-        "All beekeepers must register with the national Department of Agriculture.",
+        "Registration is required for activities defined by the national honey-bee control measures. These include keeping managed hives for bee products, queen rearing, commercial pollination, and removing, eradicating or relocating colonies. Check with the Department if you are unsure whether your activity is covered.",
         "If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis."
       ],
       "14": [
