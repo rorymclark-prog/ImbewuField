@@ -134,7 +134,7 @@ Check the heap and turn when it needs more air or mixing. Keep it moist rather t
 
 Compare bare soil with mulched soil.
 
-Watch how the mulch protects topsoil when a South African summer storm brings intense rain.
+When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site.
 
 ---
 
@@ -162,7 +162,7 @@ Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients
 
 Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.
 
-Liquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.
+Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.
 
 Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.
 
@@ -174,9 +174,9 @@ A Highveld field left bare after the maize harvest faces two main risks.
 
 Winter wind can carry away dry topsoil.
 
-The first heavy spring storm can strike bare ground and damage soil structure.
+The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.
 
-Cover crops, mulch, and organic matter keep soil in place and help it stay alive.
+Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.
 
 ---
 

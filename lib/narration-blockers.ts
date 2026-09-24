@@ -56,6 +56,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/reading-landscape.zu-audio-2026-09-24.md',
     scriptSha256: 'a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b',
   },
+  'soil-health.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/soil-health.zu.review.md',
+    scriptSha256: 'edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51',
+  },
   'food-forest.zu': {
     reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
     reviewRecord: 'docs/narration-reviews/food-forest.zu-audio-2026-09-24.md',

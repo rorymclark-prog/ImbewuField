@@ -164,12 +164,13 @@ test('an isiZulu lesson cannot reach learners with missing review or a changed q
   assert.equal(learnerLessonForLanguage(lesson, 'zu', record).title, published.title);
 });
 
-test('owner-authorized isiZulu drafts remain labelled drafts and never include source-held lessons', () => {
+test('owner-authorized isiZulu drafts remain labelled drafts after their English source is cleared', () => {
   const lessons = COURSE_MODULES.flatMap(module => module.lessons);
   const draftIds = lessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft').map(lesson => lesson.id);
   assert.ok(draftIds.includes('seeds-sovereignty-l1'), 'the authorized Seeds L1 packet is learner-visible as a labelled draft');
   assert.ok(draftIds.includes('seeds-sovereignty-l2'), 'the authorized Seeds L2 packet is learner-visible as a labelled draft');
   assert.ok(draftIds.includes('seeds-sovereignty-l3'), 'the authorized Seeds L3 packet is learner-visible as a labelled draft');
+  assert.ok(draftIds.includes('soil-health-l3'), 'the corrected Soil Health L3 packet is learner-visible as a labelled draft');
   assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
   const seedsL1 = lessons.find(lesson => lesson.id === 'seeds-sovereignty-l1')!;
   assert.match(seedsL1.keyPoints[2], /can support adaptation to climate change when varieties are suited to local conditions/,
@@ -189,6 +190,18 @@ test('owner-authorized isiZulu drafts remain labelled drafts and never include s
   assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 
+  const soilHealthL3 = COURSE_TRANSLATION_DRAFTS['soil-health-l3'];
+  assert.match(soilHealthL3.body, /Uma imvula ishaya i-mulch .* ingxenye enkulu yamandla amaconsi emvula ingadamba/,
+    'the mulch claim stays conditional on rain hitting the cover');
+  assert.match(soilHealthL3.body, /Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe/,
+    'the spring rain passage separates soil impact from conditional runoff transport');
+  assert.match(soilHealthL3.body, /Uketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate/,
+    'leachate means natural liquid drainage from a worm bin');
+  assert.match(soilHealthL3.body, /Ungayisebenzisi ezitshalweni ezidliwayo/,
+    'the translated leachate warning keeps it off edible plants');
+  assert.match(soilHealthL3.body, /zingasiza ukugcina umhlabathi endaweni yawo/,
+    'cover crops, mulch and organic matter are described as helping to hold soil');
+
   for (const lesson of lessons) {
     const presentation = resolveLearnerLessonPresentation(lesson, 'zu');
     if (courseTranslationReviewState(lesson.id).status === 'review-draft') {
@@ -206,7 +219,7 @@ test('owner-authorized isiZulu drafts remain labelled drafts and never include s
     }
   }
 
-  for (const heldId of ['water-harvesting-l4', 'soil-health-l3', 'small-livestock-l2']) {
+  for (const heldId of ['water-harvesting-l4', 'small-livestock-l2']) {
     const lesson = lessons.find(item => item.id === heldId)!;
     assert.equal(resolveLearnerLessonPresentation(lesson, 'zu', {
       lessonId: heldId, language: 'zu', status: 'review-draft', draft: COURSE_TRANSLATION_DRAFTS[draftIds[0]],

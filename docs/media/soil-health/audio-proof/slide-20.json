@@ -1,0 +1,241 @@
+{
+  "seconds": 32.328,
+  "bytes": 193968,
+  "audioSha256": "3846b87cf5aba10150747ea3daa9a10b9a3717d07ed0a7aeeb64319a6e24d9a9",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Qala",
+      "offset": 1318330,
+      "duration": 3125000
+    },
+    {
+      "text": "isenzo",
+      "offset": 5153330,
+      "duration": 5539580
+    },
+    {
+      "text": "esisodwa",
+      "offset": 10977080,
+      "duration": 7102080
+    },
+    {
+      "text": "sokwakha",
+      "offset": 18079580,
+      "duration": 6250000
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 24471660,
+      "duration": 7386250
+    },
+    {
+      "text": "esikule",
+      "offset": 32000000,
+      "duration": 5539580
+    },
+    {
+      "text": "modyuli",
+      "offset": 37539580,
+      "duration": 7244160
+    },
+    {
+      "text": "Mboza",
+      "offset": 54653330,
+      "duration": 5113750
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 60335410,
+      "duration": 7954580
+    },
+    {
+      "text": "ongenalutho",
+      "offset": 68573750,
+      "duration": 8948750
+    },
+    {
+      "text": "nge-mulch",
+      "offset": 77522910,
+      "duration": 6676250
+    },
+    {
+      "text": "qala",
+      "offset": 86613750,
+      "duration": 4119160
+    },
+    {
+      "text": "inqwaba",
+      "offset": 91159160,
+      "duration": 5539580
+    },
+    {
+      "text": "ye-compost",
+      "offset": 96698750,
+      "duration": 7670410
+    },
+    {
+      "text": "elinganiselayo",
+      "offset": 105221660,
+      "duration": 12073750
+    },
+    {
+      "text": "hlwanyela",
+      "offset": 119568330,
+      "duration": 5965830
+    },
+    {
+      "text": "isitshalo",
+      "offset": 125818330,
+      "duration": 6675830
+    },
+    {
+      "text": "sokumboza",
+      "offset": 132494160,
+      "duration": 7670410
+    },
+    {
+      "text": "esifanele",
+      "offset": 140448750,
+      "duration": 8096660
+    },
+    {
+      "text": "noma",
+      "offset": 151244160,
+      "duration": 3977080
+    },
+    {
+      "text": "lungisa",
+      "offset": 155363750,
+      "duration": 5255830
+    },
+    {
+      "text": "i-worm",
+      "offset": 160903330,
+      "duration": 3977080
+    },
+    {
+      "text": "farm.",
+      "offset": 165022910,
+      "duration": 4261250
+    },
+    {
+      "text": "Uma",
+      "offset": 179937500,
+      "duration": 2982910
+    },
+    {
+      "text": "i-compost",
+      "offset": 183772910,
+      "duration": 7102080
+    },
+    {
+      "text": "yakho",
+      "offset": 191443330,
+      "duration": 4261250
+    },
+    {
+      "text": "inuka",
+      "offset": 196414580,
+      "duration": 4687500
+    },
+    {
+      "text": "i-ammonia",
+      "offset": 201386250,
+      "duration": 7528330
+    },
+    {
+      "text": "futhi",
+      "offset": 209056660,
+      "duration": 4261250
+    },
+    {
+      "text": "ishelela",
+      "offset": 213460410,
+      "duration": 7528330
+    },
+    {
+      "text": "faka",
+      "offset": 223119160,
+      "duration": 3835410
+    },
+    {
+      "text": "izinto",
+      "offset": 227380830,
+      "duration": 4829580
+    },
+    {
+      "text": "ezomile",
+      "offset": 232352080,
+      "duration": 6676250
+    },
+    {
+      "text": "ezine-carbon",
+      "offset": 239454580,
+      "duration": 9090830
+    },
+    {
+      "text": "njenge-straw",
+      "offset": 248829580,
+      "duration": 8096660
+    },
+    {
+      "text": "bese",
+      "offset": 257068330,
+      "duration": 3835410
+    },
+    {
+      "text": "uphendula",
+      "offset": 261329580,
+      "duration": 6818330
+    },
+    {
+      "text": "inqwaba",
+      "offset": 268573750,
+      "duration": 6250000
+    },
+    {
+      "text": "Yakha",
+      "offset": 284909160,
+      "duration": 4119160
+    },
+    {
+      "text": "impilo",
+      "offset": 289596660,
+      "duration": 4829580
+    },
+    {
+      "text": "yomhlabathi",
+      "offset": 294426250,
+      "duration": 7528330
+    },
+    {
+      "text": "kancane",
+      "offset": 301954580,
+      "duration": 4829580
+    },
+    {
+      "text": "kancane",
+      "offset": 306784160,
+      "duration": 6534160
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "soil-health",
+  "language": "zu",
+  "slide": 20,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-20.txt",
+  "sourceSha256": "2221c89a260e664a6829c8d9f3a9a8fcd03530c51e59dd28ff3a1df201f49a73",
+  "scriptFile": "docs/narration/soil-health.zu.md",
+  "scriptSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+  "englishSourceFile": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "363d6d84d2ed56731b22fa482c0c1037346455b4283e58680bad5d51076dc0c3",
+  "generatedAt": "2026-09-24T18:22:47.680208+00:00",
+  "reviewStatus": "unreviewed-draft; fluent isiZulu and local farming review pending"
+}
