@@ -167,8 +167,11 @@ test('an isiZulu lesson cannot reach learners with missing review or a changed q
 test('owner-authorized isiZulu drafts remain labelled drafts and never include source-held lessons', () => {
   const lessons = COURSE_MODULES.flatMap(module => module.lessons);
   const draftIds = lessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft').map(lesson => lesson.id);
-  assert.equal(draftIds.length, 24);
+  assert.ok(draftIds.includes('seeds-sovereignty-l1'), 'the authorized Seeds L1 packet is learner-visible as a labelled draft');
   assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
+  const seedsL1 = lessons.find(lesson => lesson.id === 'seeds-sovereignty-l1')!;
+  assert.equal(COURSE_TRANSLATION_DRAFTS[seedsL1.id].keyPoints[2], seedsL1.keyPoints[2],
+    'the climate protection claim stays in English pending its source-owner decision');
   assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 

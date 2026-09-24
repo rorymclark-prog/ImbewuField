@@ -2,6 +2,41 @@ import type { LocalizedLessonContent } from './course-localization';
 
 /** Unreviewed packet proposals, kept separate from published learner translations. */
 export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> = {
+  "seeds-sovereignty-l1": {
+    title: "Kungani Ukulondoloza Imbewu Kubalulekile",
+    body: "Imbewu yohlobo oluzinzile oluvulekele impova ingaveza izitshalo ezifanayo uma impova ilawulwa ngendlela efanele. Ama-hybrid e-F1 avela kubazali abakhethwe ngokukhethekile. Imbewu egcinwe kulezi zitshalo ingahluma, kodwa izitshalo zesizukulwane esilandelayo ziyahlukahluka; zingase zingabi nazo zonke izici obuzifuna.\n\nUbukhosi bembewu buhlanganisa ulwazi nokukhetha okudingekayo ukuze utshale, ulondoloze futhi wabelane ngembewu efanele. Bhala igama lesitshalo nohlobo lwaso ngeqoqo ngalinye.\n\nKhetha izitshalo ezinempilo nezinezici ozifunayo. Qala ngesitshalo osaziyo, bese ubuza umeluleki wokulondoloza imbewu ukuthi impova ingalawulwa kanjani nokuthi izitshalo zizokhethwa kanjani.",
+    keyPoints: [
+      "Izinhlobo ezizinzile ezivulekele impova zidinga ukulawulwa okufanele kwempova.",
+      "Ubukhosi bembewu busho inkululeko yokunganciki enkampanini yembewu njalo ngesizini.",
+      // The packet flags this categorical climate claim for the English content owner; keep its source wording visible.
+      "Genetic diversity across many saved varieties is real protection against climate unpredictability",
+      "Khetha izitshalo ezinempilo nezinezici ozifunayo; landela isiqondiso sokulondoloza imbewu esiqondene nesitshalo ngasinye.",
+    ],
+    quiz: [
+      {
+        q: "Kungani imbewu egcinwe kutamatisi we-hybrid (F1) ingaqinisekisi ukuthi izitshalo zesizini elandelayo zizofana nesitshalo esingumzali?",
+        options: [
+          "Imbewu ye-hybrid ayikwazi ukumila nhlobo.",
+          "I-hybrid ye-F1 iwumphumela wokuwela imigqa ethile yabazali; inzalo yayo ingahluka ngendlela engabikezeleki esitshalweni esingumzali.",
+          "Ama-hybrid akhula ezindlini zokukhulisela izitshalo zezentengiselwano kuphela.",
+          "Imbewu ye-hybrid ilahlekelwa amandla okuhluma ngokushesha lapho igcinwa.",
+        ],
+        correct: 1,
+        rationale: "Ama-hybrid e-F1 atholakala ngokuwela imigqa ethile yezitshalo ezimbili ezingabazali. Imbewu yawo inenhlanganisela yofuzo engabikezeleki, ayiyona ikhophi ezinzile yesitshalo esingumzali.",
+      },
+      {
+        q: "Uma ukhetha isitshalo esingumzali ozogcina kuso imbewu, yini okufanele iqondise ukukhetha kwakho?",
+        options: [
+          "Isitshalo esithele isithelo esisodwa esikhulu kunazo zonke.",
+          "Isitshalo esinempilo kakhulu, esinezimpawu ezimbalwa kakhulu zesifo nesimo esihle, ngisho noma singakhiqizi isivuno esikhulu kunazo zonke.",
+          "Isitshalo esivuthwe kuqala, kungakhathaliseki ukuthi sinempilo yini.",
+          "Noma yisiphi isitshalo — ukukhetha akuthinti ikhwalithi yembewu yesikhathi esizayo.",
+        ],
+        correct: 1,
+        rationale: "Ukhetha izici ofuna ziqhubekele esizukulwaneni esilandelayo. Impilo namandla esitshalo kubalulekile esikhathini eside kunokuvuna isithelo esisodwa esikhulu kunazo zonke.",
+      },
+    ],
+  },
   "intro-permaculture-l1": {
     "title": "Izimiso Ezintathu Zokuziphatha: Ukunakekela Umhlaba, Abantu Nokubuyisela Okusele",
     "body": "I-Permaculture isekelwe kuma-ethics amathathu. I-Earth Care isho ukuphatha inhlabathi, amanzi, izitshalo nezilwane njengezinhlelo eziphilayo okufanele zivikelwe, hhayi njengezinsiza okufanele zisetshenziswe zize ziphele. I-People Care isho ukuthi izidingo zomndeni wakho ziza kuqala, bese kulandela izidingo zomphakathi wakho. I-Fair Share isho ukuthatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi.\n\nLa ma-ethics akuwona nje amazwi angenamsebenzi. Umlimi othengisa wonke amaqanda nayo yonke imifino, angashiyi lutho etafuleni lomndeni, uyeqa i-People Care. Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela wephula i-Fair Share.\n\nAma-ethics abalulekile ngoba akusiza wenze izinqumo lapho kungekho mithetho ecacile — njengalapho umakhelwane ecela ukwelusela izinkomo ngemva kwesomiso, noma lapho isikhukhula silimaza ama-swale akho. Faka la ma-ethics amathathu endleleni ocabanga ngayo ngaphambi kokwakha noma yini emhlabeni.",
