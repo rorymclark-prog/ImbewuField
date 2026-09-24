@@ -1,6 +1,6 @@
 # Introduction to Permaculture isiZulu audio — unreviewed staged draft (24 September 2026)
 
-> **UNREVIEWED AI DRAFT — pending fluent isiZulu and local farming review.** Rory authorized preparation of clearly labelled draft narration. This status does not imply approval for learner release.
+> **UNREVIEWED AI DRAFT — pending fluent isiZulu and local farming review.** Rory authorized publication of clearly labelled drafts before that review; this status does not imply linguistic or farming approval.
 
 ## Decision and review status
 
@@ -55,4 +55,4 @@ The AI-only source-alignment audit at `/tmp/imbewufield-intro-zu-agy-source-qa-2
 
 ## Release warning
 
-**fluent review pending.** This report does not certify translation or pronunciation. It also does not certify local farming suitability or human listening quality. Keep the batch marked unreviewed until a fluent isiZulu speaker and local farming reviewer provide a named, dated accept/revise/hold decision and the exact script hash they reviewed. Any script edit requires new hashes and rerecording affected clips before learner release.
+**Fluent review pending.** This report does not certify translation or pronunciation. It also does not certify local farming suitability or human listening quality. Keep the published batch marked unreviewed until a fluent isiZulu speaker and local farming reviewer provide a named, dated accept/revise/hold decision and the exact script hash they reviewed. Any spoken script edit requires new hashes and rerecording of affected clips before an updated batch is published.
