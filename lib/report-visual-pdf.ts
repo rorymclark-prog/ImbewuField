@@ -122,7 +122,14 @@ export function packReportCards(cards: ReportCardBox[], start: { y: number; fres
 
 /** The PDF reuses the screen's exact chart artwork and data, at print resolution.
  * The caller owns page numbering, branding and the full narrative that follows. */
-export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string): void {
+export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: 'en' | 'zu' = 'en'): void {
+  const label = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const standardLabel = (value: string) => ({
+    'IMBEWUFIELD / SITE REPORT': label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA'),
+    'The site at a glance': label('The site at a glance','Indawo le njengoba injalo'),
+    'Report basis': label('Report basis','Isisekelo sombiko'),
+    'Planting through the year': label('Planting through the year','Ukutshala phakathi nonyaka'),
+  } as Record<string,string>)[value] ?? value;
   const scale = doc.internal.pageSize.getWidth() / 600;
   const u = (v: number) => v * scale;
   // A figure such as "R 15 890" must not break across two lines: its spaces become non-breaking ones.
@@ -135,7 +142,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     doc.text(rows, u(x), u(top));
     return rows.length * size * 1.3;
   };
-  const page = (label: string | null) => { doc.addPage(); rect(0, 0, 600, 6, '#245738'); write('IMBEWUFIELD / SITE REPORT', 44, 35, 400, 9, '#526258'); y = label === null ? CONTINUED_TOP : Math.max(PAGE_TOP, 70 + write(label, 44, 70, 512, 23, '#245738', true) + 20); };
+  const page = (title: string | null) => { doc.addPage(); rect(0, 0, 600, 6, '#245738'); write(standardLabel('IMBEWUFIELD / SITE REPORT'), 44, 35, 400, 9, '#526258'); y = title === null ? CONTINUED_TOP : Math.max(PAGE_TOP, 70 + write(standardLabel(title), 44, 70, 512, 23, '#245738', true) + 20); };
   const image = (photo: VisualImage, x: number, top: number, width: number, height: number) => {
     const data = doc.getImageProperties(photo.image);
     const fit = Math.min(width / data.width, height / data.height);
@@ -151,12 +158,12 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   // Under a drawing that wants the height, the title band is only as deep as the title needs.
   const headingHeight = coverPlan ? 95 + titleRows.length * 39 + (visuals.subtitle ? 44 : 14) : Math.max(215, 138 + titleRows.length * 37);
   rect(0, 0, 600, headingHeight, '#173f2d');
-  write('IMBEWUFIELD / SITE REPORT', 44, 40, 350, 10, '#d6e7d9');
+  write(standardLabel('IMBEWUFIELD / SITE REPORT'), 44, 40, 350, 10, '#d6e7d9');
   write(date, 430, 40, 125, 9, '#d6e7d9');
   y = 95 + write(visuals.title, 44, 95, 494, 30, '#ffffff', true);
   write(visuals.subtitle, 44, y + 18, 494, 11, '#d6e7d9');
   y = headingHeight + 20;
-  const glance = visuals.overviewTitle ?? 'The site at a glance';
+  const glance = visuals.overviewTitle ?? standardLabel('The site at a glance');
   let onGlancePage = false;
   if (assets.photos[0]) { image(assets.photos[0], 44, y, 512, 310); y += 327; y += write(assets.photos[0].caption, 44, y, 512, 8, '#526258') + 18; }
   else if (coverPlan) {
