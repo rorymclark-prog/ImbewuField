@@ -42,6 +42,36 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '146257a1', changes: [
+    'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
+    'Three teaching diagrams show the farm record, sales routes and neighbour network.',
+  ], tour: [
+    { title: 'View Market Gardening in isiZulu', where: 'My Studies · Market Gardening', href: '/student',
+      detail: 'Choose isiZulu, open Market Gardening, and view the narrated slides.' },
+  ] },
+  { when: '24 September 2026', sha: '66f24e47', changes: [
+    'Seeds lessons 2 and 3 now show isiZulu reading and quiz drafts.',
+    'Seed lessons now explain tomato crossing and why stored seed must be dry.',
+  ], tour: [
+    { title: 'Read more Seeds lessons in isiZulu', where: 'My Studies · Seeds', href: '/student',
+      detail: 'Choose isiZulu, open Seeds lessons 2 and 3, and read the language review notice.' },
+  ] },
+  { when: '24 September 2026', sha: '1d40dcc6', changes: [
+    'Introduction now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Seeds lesson 1 now has isiZulu reading and a quiz draft, labelled for review.',
+    'The guided tour follows isiZulu when you choose it in Settings.',
+  ], tour: [
+    { title: 'Hear Introduction in isiZulu', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction to Permaculture, then play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '77b49be9', changes: [
+    'Design views on your phone opens any Studio section, including Preview & Export.',
+    'Map, Crop plan and Print / Export are under More in the Studio.',
+    'In isiZulu, course cards show when slides or audio are still in English.',
+  ], tour: [
+    { title: 'Switch design views', where: 'Farmer map → Design Studio', href: '/farmer',
+      detail: 'Open your site in Design Studio, then use Design views to choose a section.' },
+  ] },
   { when: '24 September 2026', sha: '1ce587e1', changes: [
     'Your course comes first in My Studies; other courses have photos and guides are last.',
     'Landscape slides open clear; tap the picture to show or hide controls.',

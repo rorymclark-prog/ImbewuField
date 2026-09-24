@@ -225,7 +225,7 @@ const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'market-community': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
   },
   'small-livestock': {
@@ -249,7 +249,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {

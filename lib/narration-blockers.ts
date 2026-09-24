@@ -44,7 +44,12 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
   'market-community.zu': {
     reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
     reviewRecord: 'docs/narration-reviews/MARKET-COMMUNITY-ZU-AUDIO-HOLD-2026-09-24.md',
-    scriptSha256: 'da430cefdedadb574602aa1d3a1fa9373f90d20daffddab4d32a4d0f533ed92b',
+    scriptSha256: '31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca',
+  },
+  'intro-permaculture.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md',
+    scriptSha256: 'faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667',
   },
 };
 

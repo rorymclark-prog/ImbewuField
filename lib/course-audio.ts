@@ -87,7 +87,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'intro-permaculture': {
-    languages: ['en'],
+    languages: ['en', 'zu'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
     // Slide 19 re-recorded 2026-09-21 with the same Luke voice at -12%, verified against
@@ -96,28 +96,28 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
     // re-record seeds EN for a single course voice.
     tracks: [
-      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture' },
-      { slide: 2,  lesson: null,                    title: 'Why This Matters' },
-      { slide: 3,  lesson: null,                    title: 'Learning Outcomes' },
-      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care' },
-      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care' },
-      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share' },
-      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics' },
-      { slide: 8,  lesson: 'intro-permaculture-l1', title: 'When There Is No Rulebook' },
-      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles' },
-      { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact' },
-      { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy' },
-      { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal' },
-      { slide: 13, lesson: 'intro-permaculture-l2', title: 'Use and Value Diversity' },
-      { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
-      { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
-      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Daily Crops Close' },
-      { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
-      { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
-      { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops' },
-      { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design' },
-      { slide: 21, lesson: null,                    title: 'Field Assignment' },
-      { slide: 22, lesson: null,                    title: 'Field Action' },
+      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture', titleByLang: { zu: 'Isingeniso Se-Permaculture' } },
+      { slide: 2,  lesson: null,                    title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile' } },
+      { slide: 3,  lesson: null,                    title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda' } },
+      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care', titleByLang: { zu: 'Ukunakekela Umhlaba' } },
+      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care', titleByLang: { zu: 'Ukunakekela Abantu' } },
+      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share', titleByLang: { zu: 'Ukwabelana Ngokulinganayo' } },
+      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics', titleByLang: { zu: 'Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu' } },
+      { slide: 8,  lesson: 'intro-permaculture-l1', title: 'When There Is No Rulebook', titleByLang: { zu: 'Lapho Kungekho Rulebook' } },
+      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles', titleByLang: { zu: 'Izimiso Eziyishumi Nambili' } },
+      { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact', titleByLang: { zu: 'Bheka Bese Uxhumana Nomhlaba Wakho' } },
+      { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy', titleByLang: { zu: 'Bamba Ugcine Amandla' } },
+      { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal', titleByLang: { zu: 'Sebenzisa Imiphetho Nezindawo Eziseceleni' } },
+      { slide: 13, lesson: 'intro-permaculture-l2', title: 'Use and Value Diversity', titleByLang: { zu: 'Sebenzisa futhi wazise ukwehlukahlukana kwezinto eziphilayo' } },
+      { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate', titleByLang: { zu: 'Hlanganisa, Ungahlukanisi' } },
+      { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit', titleByLang: { zu: 'Ama-Zone: Ukuhlela Ngokuthi Uvakashela Kangaki' } },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Daily Crops Close', titleByLang: { zu: 'Gcina Izinto Ozikha Kaningi Ziseduze' } },
+      { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour', titleByLang: { zu: 'Ama-Zone Asiza Ukuhlela Umsebenzi' } },
+      { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside', titleByLang: { zu: 'Ama-Sector: Izinto Ezifika Zivela Ngaphandle' } },
+      { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops', titleByLang: { zu: 'Buka: I-Windbreak Phakathi Komoya Nezitshalo' } },
+      { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design', titleByLang: { zu: 'Dweba Ukuze Uqale Uhlelo' } },
+      { slide: 21, lesson: null,                    title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wasensimini' } },
+      { slide: 22, lesson: null,                    title: 'Field Action', titleByLang: { zu: 'Isenzo Sasensimini' } },
     ],
   },
   'reading-landscape': {
@@ -713,7 +713,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
     // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     // IsiZulu generated 2026-09-24 with zu-ZA-ThandoNeural at -12%, against corrected
-    // slide-only script SHA da430cef. Clip text, timing and full decode checks pass; human listening,
+    // slide-only script body recorded at SHA da430cef; its slide 14 display heading was later
+    // shortened without changing spoken text. Clip text and full decode checks pass; human listening,
     // fluent-language and local farming review are still pending. Keep this visible as a draft.
     tracks: [
       { slide: 1,  lesson: null,                  title: 'Market Gardening & Community', titleByLang: { zu: 'Ingadi Yezimakethe Nomphakathi' } },
@@ -729,7 +730,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'market-community-l2', title: 'Count the Work of Direct Selling', titleByLang: { zu: 'Bala Umsebenzi Wokuthengisa Ngqo' } },
       { slide: 12, lesson: 'market-community-l2', title: 'Plan Around Real Orders', titleByLang: { zu: 'Hlela Ngama-oda Angempela' } },
       { slide: 13, lesson: 'market-community-l2', title: 'Match the Channel to Your Supply', titleByLang: { zu: 'Qondanisa Indlela Nokukhiqiza Kwakho' } },
-      { slide: 14, lesson: 'market-community-l3', title: 'Watch: How Neighbours Strengthen a Harvest', titleByLang: { zu: 'Buka: Omakhelwane Basqinisa Kanjani Isivuno' } },
+      { slide: 14, lesson: 'market-community-l3', title: 'Watch: How Neighbours Strengthen a Harvest', titleByLang: { zu: 'Buka: Ukubambisana Komakhelwane' } },
       { slide: 15, lesson: 'market-community-l3', title: 'Save Seed Together', titleByLang: { zu: 'Gcinani Imbewu Ndawonye' } },
       { slide: 16, lesson: 'market-community-l3', title: 'Share Expensive Tools', titleByLang: { zu: 'Yabelanani Ngamathuluzi Abizayo' } },
       { slide: 17, lesson: 'market-community-l3', title: 'Reduce Loss Between Harvest and Sale', titleByLang: { zu: 'Nciphisa Ukulahleka Phakathi Kokuvuna Nokuthengisa' } },

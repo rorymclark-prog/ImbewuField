@@ -167,8 +167,25 @@ test('an isiZulu lesson cannot reach learners with missing review or a changed q
 test('owner-authorized isiZulu drafts remain labelled drafts and never include source-held lessons', () => {
   const lessons = COURSE_MODULES.flatMap(module => module.lessons);
   const draftIds = lessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft').map(lesson => lesson.id);
-  assert.equal(draftIds.length, 24);
+  assert.ok(draftIds.includes('seeds-sovereignty-l1'), 'the authorized Seeds L1 packet is learner-visible as a labelled draft');
+  assert.ok(draftIds.includes('seeds-sovereignty-l2'), 'the authorized Seeds L2 packet is learner-visible as a labelled draft');
+  assert.ok(draftIds.includes('seeds-sovereignty-l3'), 'the authorized Seeds L3 packet is learner-visible as a labelled draft');
   assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
+  const seedsL1 = lessons.find(lesson => lesson.id === 'seeds-sovereignty-l1')!;
+  assert.match(seedsL1.keyPoints[2], /can support adaptation to climate change when varieties are suited to local conditions/,
+    'the climate point describes conditional support for adaptation rather than guaranteed protection');
+  assert.match(COURSE_TRANSLATION_DRAFTS[seedsL1.id].keyPoints[2], /kungasiza.*uma izinhlobo zifanele izimo zendawo/,
+    'the isiZulu draft preserves the same conditional climate claim');
+  for (const lessonId of ['seeds-sovereignty-l2', 'seeds-sovereignty-l3']) {
+    const lesson = lessons.find(item => item.id === lessonId)!;
+    const draft = COURSE_TRANSLATION_DRAFTS[lessonId];
+    const presentation = resolveLearnerLessonPresentation(lesson, 'zu');
+    assert.equal(presentation.status, 'draft', `${lessonId}: lesson text must be labelled as an unreviewed draft`);
+    assert.deepEqual(draft.quiz.map(question => question.correct), lesson.quiz.map(question => question.correct), `${lessonId}: answer indexes must stay fixed`);
+    assert.equal(draft.keyPoints.length, lesson.keyPoints.length, `${lessonId}: all key points must be translated`);
+    assert.equal(draft.quiz.length, lesson.quiz.length, `${lessonId}: all quiz questions must be translated`);
+    assert.doesNotMatch(draft.body, /\b(?:Dry|Seed|Tomato|Maize|Store|Test)\b/, `${lessonId}: learner body must not fall back to English`);
+  }
   assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 

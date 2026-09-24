@@ -29,7 +29,13 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
 const imagesDir = imgFlag >= 0 && argv[imgFlag + 1] ? resolve(argv[imgFlag + 1].replace(/^~/, homedir())) : null;
-const positional = argv.filter((a, i) => a !== '--images' && argv[i - 1] !== '--images');
+const overrideFlag = argv.indexOf('--art-overrides');
+const brandingFlag = argv.indexOf('--branding');
+const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
+const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
+const skipped = new Set(['--images', '--art-overrides', '--branding']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag].filter((i) => i >= 0).map((i) => i + 1));
+const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
   console.error('\n  node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]\n');
@@ -45,6 +51,8 @@ if (!existsSync(scriptPath)) {
 const raw = readFileSync(scriptPath, 'utf8');
 const artPlanPath = resolve('docs/course-deck-art.json');
 const artPlan = existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
+const artOverrides = overridesPath && existsSync(overridesPath) ? JSON.parse(readFileSync(overridesPath, 'utf8')) : {};
+Object.assign(artPlan, artOverrides);
 for (const art of Object.values(artPlan)) {
   art.path = resolve(art.path);
   if (!existsSync(art.path)) throw new Error(`Teaching illustration is missing: ${art.path}`);
@@ -154,7 +162,8 @@ const s1Title = s1 && !MARKER_TITLE.test(s1.title.trim()) ? s1.title.trim() : ''
 const s1Sub = s1?.subtitle?.trim() || '';
 
 const deckTitle = h1Local || s1Title || mod?.title || moduleId;
-const deckTagline = h1English || s1Sub || mod?.description || '';
+const branding = brandingPath && existsSync(brandingPath) ? JSON.parse(readFileSync(brandingPath, 'utf8')) : {};
+const deckTagline = branding.deckTagline ?? (lang === 'zu' ? '' : (h1English || s1Sub || mod?.description || ''));
 
 // A slide the script marked as carried by a picture: "Watch: Bare Soil and Mulch". The words are
 // deliberately thin on these — the picture is the teaching — so they get their own layout rather
@@ -168,8 +177,11 @@ const payload = slides.map((s) => {
   const body = bullets(s.body);
   return {
     n: s.n,
-    title: s.n === 1 ? deckTitle : s.title.replace(WATCH, ''),
-    subtitle: s.n === 1 ? deckTagline : s.subtitle,
+    title: s.n === 1 ? (branding.deckTitle || deckTitle) : s.title.replace(WATCH, ''),
+    // An English gloss underneath every isiZulu heading made a learner's home-study deck
+    // English-first on the very slides meant to serve isiZulu. Keep the slide copy in its chosen
+    // language; translation review notes live beside the script, not in the learner's frame.
+    subtitle: s.n === 1 ? deckTagline : ((lang === 'zu' || branding.hideBilingualGloss) ? '' : s.subtitle),
     watch,
     // A watch slide gets one line under the picture, not a bullet list competing with it.
     caption: watch ? body[0] || '' : '',
@@ -196,7 +208,8 @@ writeFileSync(
     artPlan,
     lessonArt,
     moduleNumber,
-    footer: 'ImbewuField · Imbewu Yoshintso',
+    footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
+    branding,
   }),
 );
 
@@ -270,7 +283,9 @@ def wrap(draw, text, fnt, maxw):
 total = len(cfg['slides'])
 MODNUM = cfg.get('moduleNumber') or 0
 LESSON_ART = [p for p in (cfg.get('lessonArt') or []) if os.path.exists(p)]
-EYE = ('ImbewuField · Module %d' % MODNUM) if MODNUM else 'ImbewuField'
+EYE = cfg.get('branding', {}).get('eyebrow') or ((('ImbewuField · Imojuli %d' if cfg.get('lang') == 'zu' else 'ImbewuField · Module %d') % MODNUM) if MODNUM else 'ImbewuField')
+BADGE_ANIMATION = cfg.get('branding', {}).get('animationBadge') or ('Isithombe esinyakazayo' if cfg.get('lang') == 'zu' else 'Animation')
+HOME_STUDY = cfg.get('branding', {}).get('homeStudy') or ('ISIFUNDO SOKUFUNDA EKHAYA' if cfg.get('lang') == 'zu' else 'HOME-STUDY LESSON')
 
 def find_illustration(n):
     """slide-NN.<ext> in the images dir, if one was supplied. Slides without one are not a
@@ -362,7 +377,7 @@ for s in cfg['slides']:
         y += 30
         for ln in wrap(d, s['subtitle'], F_TAG, tw):
             d.text((x, y), ln, font=F_TAG, fill=RUST); y += 52
-        track(d, (x, H - 98), 'HOME-STUDY LESSON', F_EYE, GREEN)
+        track(d, (x, H - 98), HOME_STUDY, F_EYE, GREEN)
 
     elif str(s['n']) in cfg.get('artPlan', {}):
         # Guilds alternates complete teaching pictures with quiet text cards. Keep each picture
@@ -382,7 +397,7 @@ for s in cfg['slides']:
             img.paste(im, ((W-im.width)//2, top + (H-top-105-im.height)//2))
 
     elif s.get('watch') and illus:
-        eyebrow(d, x, 64, EYE + ' · Animation')
+        eyebrow(d, x, 64, EYE + ' · ' + BADGE_ANIMATION)
         y = 138
         for ln in wrap(d, s['title'], F_TITLE, W - x - 240):
             d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += 74

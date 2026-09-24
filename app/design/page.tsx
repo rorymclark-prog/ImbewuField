@@ -232,6 +232,11 @@ const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
 const DARK = '#0B120B';
+const ZULU_STEP_LABELS: Record<WizardStep, string> = {
+  base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba',
+  zones: 'Izindawo', planting: 'Ukutshala', structures: 'Izakhiwo', review: 'Buyekeza',
+  glossy: 'Buka kuqala futhi ukhiphe',
+};
 
 const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
@@ -1101,6 +1106,7 @@ function DesignStudioInner() {
   // tappable) instead of the prev/next mini-nav; nothing about step semantics changes, it is
   // the same setStep the arrows call.
   const [cardsUi, setCardsUi] = useState(DEFAULT_UI_VERSION === 'cards');
+  const [phoneActionsOpen, setPhoneActionsOpen] = useState(false);
   useEffect(() => {
     const sync = () => setCardsUi(uiVersion() === 'cards');
     sync();
@@ -2988,6 +2994,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  const stepName = (step: WizardStep) => isZulu ? ZULU_STEP_LABELS[step] : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
 
   return (
     <div
@@ -3027,7 +3034,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           href="/farmer"
           aria-label={tr('Back to map', 'Buyela kumephu')}
           style={{
-            display: 'flex',
+            display: isPhone && canvasState ? 'none' : 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             width: 44,
@@ -3077,7 +3084,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
             aria-label={tr("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi')}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
+              display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
               border: '1px solid rgba(31,77,43,0.20)', background: PAPER, color: GREEN,
               fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
@@ -3093,7 +3100,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             aria-label={tr('Print / Export plan set', 'Phrinta / Khipha isethi yohlelo')}
             title={tr('Print / Export — export your exact maps as a PDF plan set or PNGs', 'Phrinta / Khipha — khipha amamephu akho abe yi-PDF noma amafayela e-PNG')}
             style={{
-              display: 'inline-flex',
+              display: isPhone ? 'none' : 'inline-flex',
               alignItems: 'center',
               gap: 6,
               minHeight: 32,
@@ -3108,6 +3115,17 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             }}
           >
             <Printer size={15} /> {tr('Print / Export', 'Phrinta / Khipha')}
+          </button>
+        )}
+        {isPhone && canvasState && (
+          <button
+            type="button"
+            aria-expanded={phoneActionsOpen}
+            aria-controls="design-studio-more-actions"
+            onClick={() => setPhoneActionsOpen((open) => !open)}
+            style={{ flexShrink: 0, minHeight: 44, padding: '0 12px', borderRadius: 12, border: '1px solid #D8D0BB', background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}
+          >
+            {tr('More', 'Okunye')}
           </button>
         )}
         {buildInfo?.sha && !isPhone && (
@@ -3146,6 +3164,39 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           {saveError ? tr('⚠ NOT saved — storage full', '⚠ AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
         </div>
       </header>
+
+      {isPhone && canvasState && (
+        <div id="design-studio-more-actions" hidden={!phoneActionsOpen} style={{ padding: '10px 14px', borderBottom: '1px solid #E2D8C4', background: PAPER }}>
+          <div role="group" aria-label={tr('Other Studio actions', 'Ezinye izenzo zesitudiyo')} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <Link href="/farmer" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
+              {tr('Back to map', 'Buyela kumephu')}
+            </Link>
+            <Link href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
+              {tr('Crop plan', 'Uhlelo lwezitshalo')}
+            </Link>
+            {frame && <button type="button" onClick={() => { setPhoneActionsOpen(false); setPrintOpen(true); }} style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
+              {tr('Print / Export', 'Phrinta / Khipha')}
+            </button>}
+            {canvasState.step !== 'glossy' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setPhoneActionsOpen(false);
+                  setPreviewFilter(canvasState.step === 'water' ? 'water'
+                    : canvasState.step === 'earthworks' ? 'earthworks'
+                    : canvasState.step === 'zones' ? 'zones'
+                    : canvasState.step === 'planting' ? 'planting'
+                    : canvasState.step === 'structures' ? 'structures' : 'all');
+                }}
+                aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
+                style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}
+              >
+                <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* SAFE MODE (lib/crash-loop.ts). Amber, not red: nothing is broken and nothing is lost —
           the farmer's whole design is on screen and every measurement is its real value. Only the
@@ -3267,11 +3318,24 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           ~half the screen). Collapsed: a one-line step nav + "Show steps"; expanded: a
           quiet "More space" that folds the auto-design bar + wizard away. */}
       {canvasState && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none', background: PAPER, position: isPhone && topShow.stepNav ? 'sticky' : undefined, top: isPhone && topShow.stepNav ? 54 : undefined, zIndex: isPhone && topShow.stepNav ? 19 : undefined }}>
           {!isPhone && (
             <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto' }}>
               <CardsStepper step={canvasState.step} onStep={setStep} />
             </div>
+          )}
+          {isPhone && (
+            <label style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: '1 1 auto', color: GREEN, fontSize: 12, fontWeight: 800 }}>
+              <span style={{ flexShrink: 0 }}>{tr('Design views', 'Izingxenye zomklamo')}</span>
+              <select
+                aria-label={tr('Choose a design view', 'Khetha ingxenye yomklamo')}
+                value={canvasState.step}
+                onChange={(event) => { setPhoneActionsOpen(false); setStep(event.target.value as WizardStep); }}
+                style={{ flex: '1 1 auto', minWidth: 0, maxWidth: '100%', minHeight: 44, padding: '0 6px', border: '1px solid #B9CCB4', borderRadius: 10, background: PAPER, color: GREEN, fontSize: 13, fontWeight: 700 }}
+              >
+                {STEP_ORDER.map((step, index) => <option key={step} value={step}>{String(index + 1).padStart(2, '0')} · {stepName(step)}</option>)}
+              </select>
+            </label>
           )}
           {!cardsUi && chromeCollapsed && (() => {
             const idx = STEP_ORDER.indexOf(canvasState.step);
@@ -3287,7 +3351,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   <ChevronLeft size={16} />
                 </button>
                 <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
-                  {isZulu ? ({ base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba', zones: 'Izindawo', planting: 'Ukutshala', structures: 'Izakhiwo', review: 'Buyekeza', glossy: 'Umklamo oqediwe' } as Record<typeof canvasState.step, string>)[canvasState.step] : STEP_LABELS[canvasState.step]}
+                  {stepName(canvasState.step)}
                   <span style={{ color: '#755942', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
                 </span>
                 <button type="button" aria-label={tr('Next step', 'Isinyathelo esilandelayo')} disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
@@ -3296,34 +3360,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               </>
             );
           })()}
-          {/* Phone-only: the header renders its own Preview map button on wider screens
-              (hidden there on phones), so without this gate a desktop user saw the same
-              button twice — once in the header, once here at the end of the steps strip,
-              where it also read like a tenth step. One button per viewport. */}
-          {isPhone && canvasState.step !== 'glossy' && (
-            <button
-              type="button"
-              onClick={() =>
-                setPreviewFilter(
-                  canvasState.step === 'water'
-                    ? 'water'
-                    : canvasState.step === 'earthworks'
-                    ? 'earthworks'
-                    : canvasState.step === 'zones'
-                      ? 'zones'
-                      : canvasState.step === 'planting'
-                        ? 'planting'
-                        : canvasState.step === 'structures'
-                          ? 'structures'
-                          : 'all',
-                )
-              }
-              aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
-              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 44, padding: '0 4px' }}
-            >
-              <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
-            </button>
-          )}
           <span style={{ marginLeft: 'auto' }}>
             {/* THE TOP HANDLE. Was a two-state "More space" toggle, which could reclaim the wizard
                 and nothing else — there was no way to get to just the map. Now a ladder: full →

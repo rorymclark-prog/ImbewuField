@@ -6,9 +6,33 @@ import { createElement } from 'react';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
 import {
-  FARM_TOUR, PRODUCT_TOUR, cleanTourProgress, cleanProductTourProgress,
+  FARM_TOUR, PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, cleanTourProgress, cleanProductTourProgress,
   nextProductTourStep, sampleChoicesForAccount,
 } from '../lib/sample-tour';
+import { Ctx, type LangCtx } from '../lib/i18n-context';
+import {
+  PRODUCT_TOUR_FEATURES_ZU, PRODUCT_TOUR_ZU, productTourFeatureCopy,
+  productTourLocalizationIsComplete, productTourStepCopy, productTourUi,
+} from '../lib/sample-tour-localization';
+
+test('isiZulu tour copy covers every source stop and tip while preserving the English destinations', () => {
+  assert.equal(productTourLocalizationIsComplete(), true);
+  assert.deepEqual(Object.keys(PRODUCT_TOUR_ZU).sort(), PRODUCT_TOUR.map(step => step.id).sort());
+  assert.deepEqual(Object.keys(PRODUCT_TOUR_FEATURES_ZU).sort(), Object.keys(PRODUCT_TOUR_FEATURES).sort());
+  for (const step of PRODUCT_TOUR) {
+    const translated = productTourStepCopy(step, 'zu');
+    assert.ok(translated.title && translated.task, step.id);
+    assert.deepEqual(productTourStepCopy(step, 'en'), step, `English copy remains the source for ${step.id}`);
+    assert.equal(step.href, PRODUCT_TOUR.find(source => source.id === step.id)?.href, `route stays fixed for ${step.id}`);
+    const sourceTips = PRODUCT_TOUR_FEATURES[step.id] ?? [];
+    for (let index = 0; index < sourceTips.length; index += 1) {
+      assert.ok(productTourFeatureCopy(step.id, index, 'zu', sourceTips[index])?.text, `${step.id} tip ${index + 1}`);
+    }
+  }
+  assert.match(productTourUi('draftDisclosure', 'zu') ?? '', /Uhlaka lwesiZulu olungakabuyekezwa/);
+  assert.equal(productTourUi('tipAria', 'zu', { current: 2, total: 3, title: 'Isihloko' }), 'Ithiphu 2 kwezingu-3: Isihloko',
+    'feature progress keeps its index, total and translated title in the accessible isiZulu label');
+});
 
 test('the short product tour includes grower tools, support and both partner views', () => {
   assert.equal(PRODUCT_TOUR.reduce((minutes, step) => minutes + step.minutes, 0), 15);
@@ -78,6 +102,7 @@ const pageHarness = {
   value: null as TourTestState | null,
   starts: 0,
   jumps: [] as number[],
+  lang: 'en' as string,
   createElement,
 };
 function tourState(overrides: { active?: boolean; ready?: boolean; error?: string; blocked?: number[] } = {}): TourTestState {
@@ -119,10 +144,14 @@ const pageHooks = registerHooks({
 const { default: TourPage } = await import('../app/tour/page.tsx');
 pageHooks.deregister();
 
-function renderTour(value = tourState()) {
-  pageHarness.value = value; pageHarness.starts = 0; pageHarness.jumps = [];
+function tourPageTree() {
+  const context: LangCtx = { lang: pageHarness.lang, setLang: () => {}, t: key => key, onboarded: true, completeOnboarding: () => {} };
+  return createElement(Ctx.Provider, { value: context }, createElement(TourPage));
+}
+function renderTour(value = tourState(), lang: LangCtx['lang'] = 'en') {
+  pageHarness.value = value; pageHarness.starts = 0; pageHarness.jumps = []; pageHarness.lang = lang;
   let renderer!: ReactTestRenderer;
-  act(() => { renderer = create(createElement(TourPage)); });
+  act(() => { renderer = create(tourPageTree()); });
   return renderer;
 }
 function stopButtons(renderer: ReactTestRenderer) {
@@ -141,11 +170,27 @@ test('every tour card opens its chosen stop on first entry after workspace activ
     assert.deepEqual(pageHarness.jumps, [], 'a card must not jump before the isolated workspace is active');
     act(() => {
       pageHarness.value = { ...pageHarness.value!, active: true };
-      renderer.update(createElement(TourPage));
+      renderer.update(tourPageTree());
     });
     assert.deepEqual(pageHarness.jumps, [index], 'first entry must jump once to the chosen stop, not stop zero');
     act(() => { renderer.unmount(); });
   }
+});
+
+test('isiZulu stop cards visibly carry the unreviewed disclosure and localized stop instructions', () => {
+  const renderer = renderTour(tourState(), 'zu');
+  const renderedText = renderer.root.findAllByType('p').map(node => String(node.children.join(''))).join('\n');
+  assert.match(renderedText, /Uhlaka lwesiZulu olungakabuyekezwa/);
+  assert.match(renderedText, /Buka izithombe zengadi/);
+  assert.doesNotMatch(renderedText, /Browse garden photos, layouts and grower profiles/);
+  act(() => { renderer.unmount(); });
+});
+
+test('tour setup errors are also shown in isiZulu', () => {
+  const renderer = renderTour(tourState({ error: 'The example farm could not load. Please try again.' }), 'zu');
+  const alert = renderer.root.findByProps({ role: 'alert' });
+  assert.equal(alert.children.join(''), 'Ipulazi lesibonelo alikwazanga ukuvuleka. Sicela uzame futhi.');
+  act(() => { renderer.unmount(); });
 });
 
 test('an active tour card jumps directly without restarting the existing checklist', () => {
@@ -175,12 +220,12 @@ test('tour cards preserve account restrictions and a failed start cannot later j
   act(() => { stopButtons(failed)[7].props.onClick(); });
   act(() => {
     pageHarness.value = { ...pageHarness.value!, error: 'Workspace could not be prepared.' };
-    failed.update(createElement(TourPage));
+    failed.update(tourPageTree());
   });
   assert.deepEqual(pageHarness.jumps, []);
   act(() => {
     pageHarness.value = { ...pageHarness.value!, active: true, error: '' };
-    failed.update(createElement(TourPage));
+    failed.update(tourPageTree());
   });
   assert.deepEqual(pageHarness.jumps, [], 'a failed card request must not reappear during a later successful start');
   act(() => { failed.unmount(); });
