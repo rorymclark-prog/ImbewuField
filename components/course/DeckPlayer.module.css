@@ -374,6 +374,24 @@
   object-fit: contain;
 }
 
+/* THE PICTURE IS THE LESSON, SO GIVE IT THE CARD.
+   Measured on a 390px phone: the slide arrived 280px wide. Nothing was broken — it was four
+   nested levels of horizontal padding, and the innermost 24px of it is this player's own. The
+   stage also carried a 10px radius sitting inside the module card's 28px one, so the farmer saw
+   two rounded rectangles 12px apart with a sliver of card between them.
+   Side padding earns its keep beside text; beside the largest thing on the screen it costs
+   picture. Below 650px the stage reaches the card's edge instead, which takes the image from
+   280x158 to 304x171 and leaves the corner rounding to the card that owns it.
+   Only the non-expanded player: .expanded already fills the viewport and overrides these.
+   border-radius needs !important because DeckPlayer.tsx sets it inline. */
+@media (max-width: 650px) {
+  .player:not(.expanded) .slideStage {
+    width: calc(100% + 24px);
+    margin-inline: -12px;
+    border-radius: 0 !important;
+  }
+}
+
 @media (max-width: 480px) {
   .player:not(.expanded) .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
