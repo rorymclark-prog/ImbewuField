@@ -270,7 +270,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <div
       style={{
         fontFamily: 'var(--font-mono, monospace)',
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: 700,
         letterSpacing: '0.10em',
         textTransform: 'uppercase',
@@ -498,7 +498,7 @@ export default function CalendarPage() {
                     gap: 5,
                     marginTop: 4,
                     fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: 11,
+                    fontSize: 12,
                     color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
@@ -637,7 +637,7 @@ export default function CalendarPage() {
               <div
                 style={{
                   fontFamily: 'var(--font-mono, monospace)',
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: '0.10em',
                   textTransform: 'uppercase',
@@ -695,7 +695,7 @@ export default function CalendarPage() {
                   <Dot mark="B" lang={lang} />
                   <span
                     style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       fontFamily: 'var(--font-mono, monospace)',
                       color: 'var(--text-secondary)',
                     }}
@@ -705,7 +705,7 @@ export default function CalendarPage() {
                 </div>
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     fontFamily: 'var(--font-mono, monospace)',
                     color: 'var(--text-secondary)',
                   }}
@@ -723,7 +723,7 @@ export default function CalendarPage() {
                     ? localUi(`Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`, `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}`, lang)
                     : localUi('None of your planned crops are in this calendar yet', 'Azikho izitshalo zakho ezihleliwe kule khalenda okwamanje', lang)}
                 </span>
-                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                   {localUi('Show all', 'Bonisa konke', lang)}
                 </button>
               </div>
@@ -761,7 +761,7 @@ export default function CalendarPage() {
                         padding: '7px 14px',
                         textAlign: 'left',
                         fontFamily: 'var(--font-mono, monospace)',
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: 700,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
@@ -784,7 +784,7 @@ export default function CalendarPage() {
                           padding: '7px 4px',
                           textAlign: 'center',
                           fontFamily: 'var(--font-mono, monospace)',
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
                           color: idx === selectedMonth ? 'var(--color-forest-800)' : 'var(--text-muted)',

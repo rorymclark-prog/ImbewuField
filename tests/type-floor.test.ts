@@ -48,6 +48,14 @@ const ROUTES = [
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
   'app/reports/page.tsx',
+  // Added 24 September. The audit measured the rendered pages at 390x844 and found 46 sub-12px
+  // text nodes on /journal (the smallest at 10.5px), 19 on /calendar (every month chip at 10px)
+  // and 15 on /cropplan — none of them covered by this file, because none of these routes was on
+  // the list. They are four of the five things the bottom nav and the home tiles send her to.
+  // All three are now at the floor; these entries are what stops them drifting back.
+  'app/journal/page.tsx',
+  'app/calendar/page.tsx',
+  'app/cropplan/page.tsx',
 ];
 
 // The NGO, funder and public-showcase routes — added 29 August after the same audit found
@@ -114,6 +122,11 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/SampleLimaConversation.tsx': 'role-specific sample conversation with readable messages',
   'components/MelDashboard.tsx': 'farmer assessment forms and NGO analysis',
   'components/funder/FunderAssessments.tsx': 'approved assessment summaries',
+  'app/journal/page.tsx': 'the journal she writes her own season into',
+  'components/journal/FieldJournal.tsx': 'every entry, its date, its kind and its bed — 46 sub-12px nodes before 24 September',
+  'components/journal/JournalEntrySheet.tsx': 'the sheet she writes an entry in',
+  'app/calendar/page.tsx': 'when to sow and when to pick — every month chip was 10px',
+  'app/cropplan/page.tsx': 'the month grid and the job list the home card links into',
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',
   'app/records/page.tsx': 'the money book — Picked, Sold, Spent, and the charts inside it',
   'app/finances/page.tsx': 'the old money door, now a redirect onto the book — it must stay empty of type',

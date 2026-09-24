@@ -1099,7 +1099,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
             <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
-            <div className="font-display font-bold mt-1" style={{ fontSize: 28, color: s.color, letterSpacing: '-0.02em' }}>{loading ? '…' : s.value}</div>
+            <div className="t-hero mt-1" style={{ color: s.color }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
       </div>

@@ -254,7 +254,7 @@ export default function CropPlanPage() {
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--gold-dim)', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
+              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {mounted && view === 'month' && monthName}
                 {mounted && view === 'season' && seasonLabel}
@@ -327,7 +327,7 @@ export default function CropPlanPage() {
                         border: `1px solid ${on ? '#1F4D2B' : isNow ? '#1F4D2B' : '#E2D8C4'}`,
                         cursor: 'pointer',
                       }}>
-                      <span className="font-sans font-semibold" style={{ fontSize: 11, color: on ? '#EAF3E2' : '#5C5040' }}>{label}</span>
+                      <span className="font-sans font-semibold" style={{ fontSize: 12, color: on ? '#EAF3E2' : '#5C5040' }}>{label}</span>
                       <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : '#755942' }}>{n}</span>
                     </button>
                   );
@@ -335,7 +335,7 @@ export default function CropPlanPage() {
               </div>
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
+                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                   {monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
@@ -343,7 +343,7 @@ export default function CropPlanPage() {
                     next year's August still belongs in the August bucket. "This month"
                     here would read as a claim about the jobs. */}
                 {mounted && (
-                  <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: away === 0 ? 'var(--brand-soft)' : 'var(--bg-2)', color: away === 0 ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
+                  <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: away === 0 ? 'var(--brand-soft)' : 'var(--bg-2)', color: away === 0 ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
                     {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
                   </span>
                 )}
@@ -366,7 +366,7 @@ export default function CropPlanPage() {
                   <season.Icon size={22} style={{ color: '#EAF3E2' }} strokeWidth={1.6} />
                 </div>
                 <div>
-                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'rgba(234,243,226,0.55)', letterSpacing: '0.1em' }}>
+                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'rgba(234,243,226,0.55)', letterSpacing: '0.1em' }}>
                     {mounted && season.months.includes(todayMonth) ? ui('This season', 'Lesi sikhathi sonyaka') : ui('Season', 'Isikhathi sonyaka')}
                   </div>
                   <div className="font-display font-bold" style={{ fontSize: 'clamp(20px, 2.2vw, 26px)', color: '#F7F2E9', lineHeight: 1.1 }}>{seasonLabel} {ui('in South Africa', 'eNingizimu Afrika')}</div>
@@ -382,8 +382,8 @@ export default function CropPlanPage() {
                     style={{ background: 'var(--bg-1)', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
-                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
-                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(226,216,196,0.6)', color: 'var(--text-secondary)' }}>
+                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
+                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'rgba(226,216,196,0.6)', color: 'var(--text-secondary)' }}>
                         {n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}
                       </span>
                     </div>

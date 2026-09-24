@@ -255,7 +255,7 @@ export default function FieldJournal() {
                 <div style={{
                   position: 'absolute', left: 0, right: 0, bottom: 0, padding: '10px 6px 4px',
                   background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
-                  font: '600 10px/1 system-ui, sans-serif', color: '#fff',
+                  font: '600 12px/1 system-ui, sans-serif', color: '#fff',
                 }}>
                   {isZulu ? formatZuluJournalDate(p.date) : formatJournalDate(p.date)}
                 </div>
@@ -311,7 +311,7 @@ export default function FieldJournal() {
           <div style={{ marginBottom: 4 }}>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
-              font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+              font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
               textTransform: 'uppercase', color: 'var(--gold)',
             }}>
               <Sparkles size={12} />
@@ -336,19 +336,19 @@ export default function FieldJournal() {
                     <span style={{
                       position: 'absolute', top: 10, right: 10,
                       padding: '3px 7px', borderRadius: 6, background: '#9A6018', color: '#fff',
-                      font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
+                      font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
                     }}>
                       {ui('Example', 'Isibonelo')}
                     </span>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
+                      <span style={{ font: '600 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
                         {ex.dateLabel}
                       </span>
                       <span style={{
                         display: 'inline-flex', alignItems: 'center', gap: 4,
                         padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
-                        font: '700 10px/1 system-ui, sans-serif',
+                        font: '700 12px/1 system-ui, sans-serif',
                       }}>
                         {cat.icon} {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
@@ -395,7 +395,7 @@ export default function FieldJournal() {
             zIndex: 1,
             padding: '6px 2px 8px', margin: '0 0 6px',
             background: 'linear-gradient(var(--bg-0) 72%, rgba(228,220,198,0))',
-            font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+            font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
             textTransform: 'uppercase', color: '#7A6B52',
           }}>
             {isZulu ? formatZuluMonth(group.key) : group.label} · {group.entries.length}
@@ -421,13 +421,13 @@ export default function FieldJournal() {
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
+                        <span style={{ font: '600 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
                           {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
                           padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
-                          font: '700 10px/1 system-ui, sans-serif',
+                          font: '700 12px/1 system-ui, sans-serif',
                         }}>
                           {getElementArt2(`journal_${entry.category}`) ? (
                             <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
@@ -512,8 +512,8 @@ export default function FieldJournal() {
 function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
-      <div style={{ font: '600 21px/1 Newsreader, Georgia, serif', color: 'var(--color-forest-800)' }}>{value}</div>
-      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
+      <div className="t-hero" style={{ color: 'var(--color-forest-800)' }}>{value}</div>
+      <div style={{ font: '500 12px/1.2 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
     </div>
   );
 }
@@ -521,7 +521,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 function Heading({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+      font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
       textTransform: 'uppercase', color: '#7A6B52', marginBottom: 8,
     }}>
       {children}
@@ -534,7 +534,7 @@ function Pill({ children }: { children: React.ReactNode }) {
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 8,
       background: 'rgba(92,80,64,0.07)', border: '1px solid #E7DFCC',
-      font: '500 11.5px/1 system-ui, sans-serif', color: 'var(--text-secondary)',
+      font: '500 12px/1 system-ui, sans-serif', color: 'var(--text-secondary)',
     }}>
       {children}
     </span>

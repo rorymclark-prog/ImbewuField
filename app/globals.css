@@ -171,6 +171,48 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════════════
+   THE §0 TYPE SCALE, AS CLASSES
+
+   DESIGN.md calls reusing phone pixels on desktop "the #1 recurring mistake" and prints a table
+   of what each role should be at each width. It kept recurring because it is not a discipline
+   problem: this app sets type in 1,717 inline `fontSize` declarations, and an inline style cannot
+   carry a media query. There were 23 `clamp()` uses and exactly ONE responsive text utility in
+   the whole app, so a breakpoint had almost nothing to act on. Measured at 390 and 1440: every
+   hero number on /home, /records, /journal, /calendar, /survey and /invoice renders at the same
+   26px on both, against a 40px desktop target; section titles sit at 16px against 22.
+
+   /cropplan is the exception — it uses `sm:` classes — which is the proof the mechanism works
+   when something reaches for it.
+
+   These are that table, once, so a role can be named instead of a pixel. Applying one means
+   DELETING the element's inline fontSize: inline wins over a class, so a leftover px silently
+   keeps the old behaviour.
+
+   Sizes are the §0 values with one deliberate change: the overline is 12px, not the table's 11.
+   tests/type-floor.test.ts holds a hard 12px floor on every farmer surface, that floor came out
+   of watching someone read this app on a hand-me-down Android, and it is the stricter rule.
+   ═══════════════════════════════════════════════════════ */
+.t-hero  { font-family: var(--font-display); font-size: 25px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+.t-h1    { font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+.t-h2    { font-family: var(--font-display); font-size: 17px; font-weight: 600; line-height: 1.25; }
+.t-body  { font-family: var(--font-sans); font-size: 15px; line-height: 1.55; }
+.t-small { font-family: var(--font-sans); font-size: 13px; line-height: 1.45; }
+.t-label { font-family: var(--font-sans); font-size: 12px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; }
+
+@media (min-width: 768px) {
+  .t-hero  { font-size: 34px; }
+  .t-h1    { font-size: 26px; }
+  .t-h2    { font-size: 20px; }
+  .t-body  { font-size: 16px; }
+}
+
+@media (min-width: 1024px) {
+  .t-hero  { font-size: 40px; }
+  .t-h1    { font-size: 30px; }
+  .t-h2    { font-size: 22px; }
+}
+
+/* ═══════════════════════════════════════════════════════
    LEGIBILITY — nudge the smallest text utilities up a touch for readability,
    but NOT oversized (the previous values ~doubled every class app-wide, which
    made the report sidebar and everything else far too big). These come after
@@ -680,7 +722,11 @@ body.is-sample-mode .pwa-update-notifier {
 /* Display scale — Newsreader-tuned (gentler negative tracking than a grotesk). */
 .u-display-lg { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.08; letter-spacing: -0.02em; font-weight: 700; }
 .u-display-md { font-family: var(--font-display); font-size: 2.1rem;  line-height: 1.1;  letter-spacing: -0.015em; font-weight: 700; }
-.u-display-sm { font-family: var(--font-display); font-size: 1.5rem;  line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+.u-display-sm { font-family: var(--font-display); font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+/* The home hero's heading followed the §0 hero row the moment this stopped being a flat
+   1.5rem: it rendered at 24px on a 1440 screen, against a 40px target. */
+@media (min-width: 768px) { .u-display-sm { font-size: 30px; } }
+@media (min-width: 1024px) { .u-display-sm { font-size: 34px; } }
 .u-tabular { font-variant-numeric: tabular-nums; }
 .u-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
 
