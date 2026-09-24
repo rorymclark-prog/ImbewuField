@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '24 September 2026', sha: '94cb6ed8', changes: [
+  { when: '24 September 2026', sha: '02ce8aa9', changes: [
     'Full-screen lesson slides now use large text that fits your phone in either direction.',
     'Animations fill the available height when you turn your phone sideways.',
   ], tour: [
