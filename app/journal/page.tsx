@@ -2,6 +2,7 @@
 
 import FieldJournal from '@/components/journal/FieldJournal';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
@@ -37,6 +38,13 @@ export default function JournalPage() {
       <main className="flex-1 overflow-y-auto" style={{ background: '#E4DCC6' }}>
         <FieldJournal />
       </main>
+
+      {/* Lima in the document flow, not floating over the page. The draggable FAB was measured
+          covering real content on every one of these screens — on /cropplan it sat on a task
+          row's "Mark done" checkbox, a tap target. components/ChatWidget.tsx excludes these
+          routes; this strip is the help it owes them, the same swap /student and /home already
+          made. */}
+      <LimaBar />
 
       <TabBar />
     </div>

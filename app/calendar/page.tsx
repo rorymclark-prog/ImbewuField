@@ -5,6 +5,7 @@ import { Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -835,6 +836,13 @@ export default function CalendarPage() {
           <div style={{ height: 8 }} />
         </div>
       </main>
+
+      {/* Lima in the document flow, not floating over the page. The draggable FAB was measured
+          covering real content on every one of these screens — on /cropplan it sat on a task
+          row's "Mark done" checkbox, a tap target. components/ChatWidget.tsx excludes these
+          routes; this strip is the help it owes them, the same swap /student and /home already
+          made. */}
+      <LimaBar />
 
       <TabBar />
     </div>

@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, ChevronDown, Home } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
+import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
@@ -2299,6 +2300,12 @@ function FacilitatorCropsPageInner() {
           onClose={() => setAutoPhase('idle')}
         />
       )}
+
+      {/* Lima in the document flow. The draggable FAB was measured covering a "Green beans
+          (69%)" Gantt bar button here even after the right-dock offset it had been given —
+          the plan scrolls horizontally, so no resting position is safe. components/ChatWidget.tsx
+          excludes this route; this is the help it owes. */}
+      <LimaBar />
 
     </div>
   );
