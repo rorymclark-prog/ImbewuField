@@ -41,6 +41,7 @@ import {
   assignmentDocId, assignmentState, daysBetween, formatDue, toDateKey,
   type CourseAssignment,
 } from '@/lib/course-assignments';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
@@ -477,7 +478,7 @@ export default function MentorPage() {
   if (!loading && user && isLive && !sample && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton />
           <BackButton />
           <BrandLogo />
@@ -531,7 +532,7 @@ export default function MentorPage() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
         <MenuButton />
           <BackButton />
         <BrandLogo />

@@ -870,7 +870,13 @@ img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924
 
 /* Keep the same compact navigation on every phone; secondary tools live in the drawer. */
 @media (max-width: 650px) {
-  header:has(> [data-app-menu]) { height:52px !important; min-height:52px; padding:4px 8px !important; gap:6px !important; flex-wrap:nowrap; }
+  /* The top status-bar inset, the other half of the viewport-fit=cover bargain that
+     .workspace-main below already pays at the bottom. Without it the clock and signal icons
+     land on the Back button and the page title. Border-box is global, so the height grows by
+     the inset and the content is pushed down by the same amount: the content box stays 52px,
+     and with no inset both calc()s collapse to the original values. Mirrors APP_HEADER_STYLE
+     in lib/app-header.ts — change both together. */
+  header:has(> [data-app-menu]) { height:calc(52px + env(safe-area-inset-top, 0px)) !important; min-height:52px; padding:4px 8px !important; padding-top:calc(4px + env(safe-area-inset-top, 0px)) !important; gap:6px !important; flex-wrap:nowrap; }
   header:has(> [data-app-menu]) > [data-header-secondary] { display:none !important; }
   header:has(> [data-app-menu]) > span:has(> [data-header-secondary]) { display:none !important; }
   header:has(> [data-app-menu]) > a[aria-label="ImbewuField home"] { min-height:44px; }

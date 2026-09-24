@@ -19,6 +19,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 
 function DashboardLoading({ cohort = false }: { cohort?: boolean }) {
@@ -86,7 +87,7 @@ export default function FunderPage() {
   return (
     <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        style={APP_HEADER_STYLE}>
         <MenuButton />
         <BackButton />
         <BrandLogo icon="🏛" />
