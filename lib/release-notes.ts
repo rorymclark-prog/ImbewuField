@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '77b49be9', changes: [
+    'Design views on your phone opens any Studio section, including Preview & Export.',
+    'Map, Crop plan and Print / Export are under More in the Studio.',
+    'In isiZulu, course cards show when slides or audio are still in English.',
+  ], tour: [
+    { title: 'Switch design views', where: 'Farmer map → Design Studio', href: '/farmer',
+      detail: 'Open your site in Design Studio, then use Design views to choose a section.' },
+  ] },
   { when: '24 September 2026', sha: '1ce587e1', changes: [
     'Your course comes first in My Studies; other courses have photos and guides are last.',
     'Landscape slides open clear; tap the picture to show or hide controls.',
