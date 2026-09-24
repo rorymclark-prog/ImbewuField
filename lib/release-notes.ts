@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '5501336b', changes: [
+  { when: '25 September 2026', sha: '95be15e8', changes: [
     'Calendar month labels now appear in isiZulu.',
     'Task Planner labels its English farming guidance.',
     'Report preparation headings and actions have isiZulu drafts.',
