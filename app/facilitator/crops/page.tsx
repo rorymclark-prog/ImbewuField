@@ -13,7 +13,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSPr
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert } from 'lucide-react';
+import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2 } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
@@ -3507,7 +3507,7 @@ function CropPickerModal({
                       aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, fontSize: 16, color: isFav ? '#C07A1E' : '#D8CFBC' }}
                     >
-                      {isFav ? '★' : '☆'}
+                      <Star size={16} aria-hidden fill={isFav ? 'currentColor' : 'none'} />
                     </button>
                   </div>
                 );
@@ -3528,7 +3528,7 @@ function CropPickerModal({
                 aria-label={favouriteCropKeys.has(crop.key) ? 'Remove from favourites' : 'Add to favourites'}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: favouriteCropKeys.has(crop.key) ? '#C07A1E' : '#D8CFBC' }}
               >
-                {favouriteCropKeys.has(crop.key) ? '★' : '☆'}
+                <Star size={18} aria-hidden fill={favouriteCropKeys.has(crop.key) ? 'currentColor' : 'none'} />
               </button>
             </div>
             <div className="flex items-center gap-1.5 mb-2">
@@ -4078,7 +4078,7 @@ function AutoSuggestModal({
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
               style={tileStyle(allowMixedCropsInBed)}
             >
-              <span style={{ fontSize: 16, lineHeight: 1 }}>{allowMixedCropsInBed ? '▦' : '⭘'}</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center' }}>{allowMixedCropsInBed ? <Grid2x2 size={16} aria-hidden /> : <Circle size={16} aria-hidden />}</span>
               <span>
                 <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Divide beds into crop sections</div>
                 <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>

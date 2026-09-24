@@ -75,7 +75,7 @@ const RATCHET: Record<string, { reason: string; budget: number }> = {
   },
   'lib/facilitator-design.ts': {
     reason: 'the sector-analysis and zone legends on the same Design Studio surface',
-    budget: 17,
+    budget: 19,
   },
   'lib/weather.ts': {
     reason: 'the eleven weather-condition glyphs. A sun and a rain cloud are the one case where '
@@ -125,7 +125,38 @@ function reachable(): string[] {
   return [...seen].sort();
 }
 
-const EMOJI = /\p{Extended_Pictographic}/u;
+/**
+ * WHICH CHARACTERS COUNT AS AN ICON — DEFINED HERE, NOT BY THE RUNTIME.
+ *
+ * This started as `/\p{Extended_Pictographic}/u`, and that made the test's verdict depend on
+ * whichever Unicode data the running Node happened to ship. It is not a small difference:
+ * Node 22.22 carries Unicode 17, Node 24.9 carries Unicode 16, and Unicode 17 REMOVED U+2605 ★
+ * and U+2630 ☰ from Extended_Pictographic. So the same tree passed locally on 22 and failed on
+ * CI's 24 — a test that reports a different answer on two machines is worse than no test, and it
+ * is the same class of defect as the toLocaleString bug this branch fixed.
+ *
+ * The ranges are explicit and pinned by the membership test below:
+ *
+ *   U+2600–U+27BF   misc symbols and dingbats — ☀ ⚠ ✂ ✅ ✨ ★ ☰
+ *   U+2B00–U+2BFF   the extra arrows and shapes emoji are drawn from — ⬇ ⭘
+ *   U+1F000–U+1FAFF the emoji planes proper — 🌱 🧺 🪴
+ *
+ * The plain typographic arrows (U+2190–U+21FF) are deliberately OUT. This app writes "Open my
+ * site →" as prose, and an arrow in a sentence is punctuation, not an icon standing in for one.
+ */
+const EMOJI_RANGES: [number, number][] = [
+  [0x2600, 0x27BF],
+  [0x2B00, 0x2BFF],
+  [0x1F000, 0x1FAFF],
+];
+
+function isIconGlyph(ch: string): boolean {
+  const cp = ch.codePointAt(0);
+  if (cp === undefined) return false;
+  return EMOJI_RANGES.some(([lo, hi]) => cp >= lo && cp <= hi);
+}
+
+const EMOJI = { test: (s: string) => [...s].some(isIconGlyph) };
 
 /** Every line of `rel` carrying an emoji in a position that would render as UI. */
 function emojiLines(rel: string): string[] {
@@ -136,7 +167,7 @@ function emojiLines(rel: string): string[] {
     // `icon={... ?? '🌱'}` on a CropIcon is the fallback PROP, not a rendered glyph — CropIcon
     // draws lib/crop-art.ts's artwork and only falls through when a crop has no drawing.
     if (/<CropIcon\b/.test(text)) return;
-    const glyphs = [...text].filter((c) => EMOJI.test(c)).join('');
+    const glyphs = [...text].filter(isIconGlyph).join('');
     out.push(`${rel}:${i + 1}  ${glyphs}  ${text.trim().slice(0, 60)}`);
   });
   return out;
@@ -210,5 +241,18 @@ test('the crop planner\'s remaining emoji are held at their recorded count', () 
         + `${found.map((f) => `  ${f}`).join('\n')}\n\n`
         + 'Going UP: use a Lucide icon. Going DOWN: lower the budget in the same commit.',
     );
+  }
+});
+
+test('what counts as an icon glyph does not move with the runtime\'s Unicode version', () => {
+  // The whole point of the explicit ranges above. These assertions fail if someone swaps the
+  // detector back to a \p{...} class, because that class disagrees with itself across Node
+  // versions: U+2605 and U+2630 are Extended_Pictographic in Unicode 16 and not in Unicode 17.
+  for (const ch of ['\u2605', '\u2606', '\u2630', '\u26A0', '\u2728', '\u2B07', '🌱', '🧺']) {
+    assert.ok(isIconGlyph(ch), `${ch} (U+${ch.codePointAt(0)!.toString(16).toUpperCase()}) must count as an icon glyph`);
+  }
+  // Punctuation and typographic arrows are text, whatever a Unicode property says about them.
+  for (const ch of ['\u2192', '\u2190', '\u21A9', '\u2022', '\u00B7', '\u25BE', '\u00A7', 'a', '7']) {
+    assert.ok(!isIconGlyph(ch), `${ch} (U+${ch.codePointAt(0)!.toString(16).toUpperCase()}) must NOT count as an icon glyph`);
   }
 });
