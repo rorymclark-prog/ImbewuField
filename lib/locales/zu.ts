@@ -749,6 +749,7 @@ const dict: Dict = {
   homeQuickContact: 'Xhumana',
   homeQuickContactDesc: 'Imeluleki · INhlangano',
   homeQuickJournal: 'Ijenali',
+  homeQuickJournalDesc: 'Amanothi nezithombe',
   homeQuickCropPlanner: 'Umhleli Wezitshalo',
   homeQuickCropPlannerDesc: 'Hlela isikhathi sonyaka',
   homeQuickMyRecords: 'Amarekhodi Ami',
