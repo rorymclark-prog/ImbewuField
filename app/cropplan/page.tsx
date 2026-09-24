@@ -248,7 +248,7 @@ export default function CropPlanPage() {
           <Link href="/facilitator/crops"
             className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', textDecoration: 'none' }}>
-            🌱 {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
+            <Sprout size={14} aria-hidden style={{ display: "inline", verticalAlign: "-2px" }} /> {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
           </Link>
 
           {/* Title row */}

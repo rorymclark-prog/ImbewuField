@@ -3,17 +3,30 @@
 // tubers"...) rather than 24 individual crop names; the auto-suggest engine
 // (lib/crop-autosuggest.ts) expands a group into its member crops.
 
+import type { LucideIcon } from 'lucide-react';
+import { Wheat, Bean, Leaf, Carrot, Sprout, Apple } from 'lucide-react';
 import type { CropDef } from './crop-catalog';
 
 export type FoodGroup = 'staple_grain' | 'legume' | 'leafy_green' | 'root_tuber' | 'allium_aromatic' | 'fruiting_veg';
 
-export const FOOD_GROUP_META: Record<FoodGroup, { label: string; icon: string }> = {
-  staple_grain: { label: 'Staple grain', icon: '🌽' },
-  legume: { label: 'Legumes & beans', icon: '🫘' },
-  leafy_green: { label: 'Leafy greens', icon: '🍃' },
-  root_tuber: { label: 'Roots & tubers', icon: '🥕' },
-  allium_aromatic: { label: 'Alliums & herbs', icon: '🧅' },
-  fruiting_veg: { label: 'Fruiting veg', icon: '🍅' },
+/**
+ * `Icon` is a Lucide component, not an emoji.
+ *
+ * These six render on the crop plan's bed labels — up to three per bed, all year. As emoji they
+ * were the app's largest surviving cluster of colour glyphs in a farmer's view, against
+ * CLAUDE.md's Lucide-only rule, and they sat beside the plan's own hand-drawn produce art, so
+ * one bed row could carry two different kinds of picture.
+ *
+ * `label` still carries the meaning: the single-group case prints icon AND words, and the
+ * multi-group case puts the words in a title attribute.
+ */
+export const FOOD_GROUP_META: Record<FoodGroup, { label: string; Icon: LucideIcon }> = {
+  staple_grain: { label: 'Staple grain', Icon: Wheat },
+  legume: { label: 'Legumes & beans', Icon: Bean },
+  leafy_green: { label: 'Leafy greens', Icon: Leaf },
+  root_tuber: { label: 'Roots & tubers', Icon: Carrot },
+  allium_aromatic: { label: 'Alliums & herbs', Icon: Sprout },
+  fruiting_veg: { label: 'Fruiting veg', Icon: Apple },
 };
 
 // Priority order for the family/hybrid breadth-first selection loop: fast

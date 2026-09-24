@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import workspace from '@/components/layout/Workspace.module.css';
 import Link from 'next/link';
+import { Handshake } from 'lucide-react';
 import {
   DEMO_EXCHANGE,
   filterListings,
@@ -71,7 +72,7 @@ export default function ExchangePage() {
             <path d="m15 18-6-6 6-6" />
           </svg>
         </Link>
-        <span aria-hidden="true" style={{ fontSize: 17 }}>🤝</span>
+        <Handshake size={17} aria-hidden style={{ flexShrink: 0 }} />
         <div style={{ minWidth: 0 }}>
           <h1 className="font-display font-bold" style={{ fontSize: 15.5, color: '#20190F', margin: 0, lineHeight: 1.2 }}>
             Farmer exchange

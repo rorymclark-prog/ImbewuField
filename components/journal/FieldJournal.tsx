@@ -4,7 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Pencil, NotebookPen, Sparkles } from 'lucide-react';
+import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
@@ -350,7 +350,12 @@ export default function FieldJournal() {
                         padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
                         font: '700 12px/1 system-ui, sans-serif',
                       }}>
-                        {cat.icon} {isZulu ? journalCategoryLabel(cat.key) : cat.label}
+                        {getElementArt2(`journal_${cat.key}`) ? (
+                          <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                        ) : (
+                          cat.icon
+                        )}{' '}
+                        {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
                     </div>
 
@@ -362,8 +367,8 @@ export default function FieldJournal() {
                     </div>
 
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-                      <Pill>📍 {ex.bedLabel}</Pill>
-                      <Pill>🌿 {ex.cropName}</Pill>
+                      <Pill><MapPin size={12} aria-hidden /> {ex.bedLabel}</Pill>
+                      <Pill><Leaf size={12} aria-hidden /> {ex.cropName}</Pill>
                     </div>
                   </article>
                 );
@@ -451,8 +456,8 @@ export default function FieldJournal() {
 
                       {(entry.bedLabel || entry.cropName) && (
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-                          {entry.bedLabel && <Pill>📍 {entry.bedLabel}</Pill>}
-                          {entry.cropName && <Pill>🌿 {entry.cropName}</Pill>}
+                          {entry.bedLabel && <Pill><MapPin size={12} aria-hidden /> {entry.bedLabel}</Pill>}
+                          {entry.cropName && <Pill><Leaf size={12} aria-hidden /> {entry.cropName}</Pill>}
                         </div>
                       )}
 
