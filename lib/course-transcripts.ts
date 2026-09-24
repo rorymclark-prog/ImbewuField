@@ -1633,6 +1633,72 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Protect exposed soil, check plant suitability, or prepare nursery plants.",
         "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition."
       ]
+    },
+    "zu": {
+      "1": [
+        "Yakha uhlelo lokudla oluphilayo olunezingqimba. Khulisa ukudla kusukela ku-canopy ende kuye ezitshalweni zezimpande. Sebenzisa indawo eya phezulu, ukuphila komhlabathi, umthunzi nomswakama ndawonye. Funda ukuklama nokusungula i-food forest yepulazi lakho."
+      ],
+      "2": [
+        "I-food forest ikhula izitshalo eziwusizo ezindaweni eziphakeme ezahlukene. Umklamo omuhle ungahlanganisa isivuno, umthunzi nesembozo somhlabathi. Izitshalo zisancintisana ngokukhanya, amanzi nezakhamzimba. Hlela ukunakekela ongakwazi ukukwenza, bese ubheka ukuthi ukutshala kushintsha kanjani."
+      ],
+      "3": [
+        "Yisho izingxenye eziyisikhombisa ezivame ukuchazwa ze-food forest. Hlola ukuthi izitshalo ziyifanele yini indawo yakho, imvelo yangakini nohlu lwezitshalo olugunyazwe yiphrojekthi. Hlela ukunakekelwa ngesikhathi izitshalo zimila nangemva kwalokho, ungacabangi ukuthi kukhona usuku olumisiwe lokuvuna noma lokuvaleka kophahla lwezihlahla."
+      ],
+      "4": [
+        "Ihlathi lezitshalo zomdabu ligcwalisa indawo kusukela emagatsheni aphakeme kakhulu kuze kufike ezimpandeni. Izitshalo ezahlukene zisebenzisa ukukhanya nomswakama okutholakala ezingeni ezikhula kulo. I-food forest ilingisa le ndlela ngezitshalo ezikhiqizayo: izingqimba eziningi eziwusizo zikhula ndawonye esikhundleni sesitshalo esisodwa emugqeni owodwa."
+      ],
+      "5": [
+        "Isithombe esimile nokulandisa kuveza izingxenye eziyisikhombisa zokuhlela: Uphahla lwezihlahla ezinde, Izihlahla ezincane, Izihlahlana ezinamagatsha aqinile, Izitshalo ezineziqu ezithambile, Izitshalo ezimboza umhlabathi, Izitshalo zezimpande nezitshalo ezikhuphukayo. Lezi akuzona izilinganiso zokuphakama ezimisiwe; khetha izitshalo nezikhala ngokwendawo yakho."
+      ],
+      "6": [
+        "Cabanga ngophahla lwezihlahla ezinde, izihlahla ezincane, izihlahlana nezitshalo ezineziqu ezithambile. Izitshalo ezimboza umhlabathi zivikela ingaphezulu lawo, izitshalo zezimpande zikhula ngaphansi kwalo, kanti izitshalo ezikhuphukayo zidinga izisekelo ezifanele. Ukuphakama nezikhala kuncike ezitshalweni nasendaweni; lezi yizingxenye zokuhlela, azizona izilinganiso zokuphakama ezimisiwe."
+      ],
+      "7": [
+        "Isibonelo sokuqala sase-Highveld sifaka i-Wild Fig noma i-pecan ngaphezu kukalamula, i-naartjie ne-black mulberry. Sihlanganisa i-Cape gooseberry ne-Wild Medlar nemifino, i-wild garlic, ubhatata ne-granadilla. Lesi yisibonelo sokuhlela kuphela; asiyona imvume yokutshala zonke izinhlobo zezitshalo ezisohlwini. Qinisekisa ukuthi isitshalo siyini, siyakwazi yini ukumelana nesithwathwa, sizoba sikhulu kangakanani nokuthi ayikho yini imingcele yendawo ngaphambi kokutshala."
+      ],
+      "8": [
+        "Izitshalo ezisencane zidinga ukuhlolwa komswakama, ukulawulwa kokhula nokuvikelwa ekulimaleni. Njengoba zikhula, umthunzi namaqabunga awelayo kushintsha izimo ezingaphansi kwazo. Hlola ukuncintisana phakathi kwezitshalo nokufinyelela kuzo. Thena, nciphisa noma ulungise izitshalo ezingezansi lapho okubukayo kukukhombisa ukuthi kudingeka; ukunakekela akupheli ngosuku olumisiwe."
+      ],
+      "9": [
+        "Ngaphambi kokukhetha izitshalo, hlola imvula yasendaweni, isithwathwa, ukushisa, umhlabathi namanzi atholakalayo. Umango ungonakaliswa yisithwathwa. I-quince idinga amakhaza asebusika afanele ukuze ithele ngokuthembekile. Igama lesifunda noma indawo evikelekile yodwa akwanele; qinisekisa isitshalo ngasinye nohlobo lwaso ngokweseluleko esithembekile sendawo."
+      ],
+      "10": [
+        "Isimo sezulu siyasiza ekunqumeni ukuthi yiziphi izitshalo ezingase ziyifanele indawo. E-Highveld, khetha izihlahla nezihlahlana ezimelana namakhaza; ogwini lwase-KZN nase-Lowveld khetha izitshalo ezithanda izindawo ezifudumele. Qondanisa isitshalo ngasinye nendawo yakho."
+      ],
+      "11": [
+        "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Hlola isitshalo ngasinye ngokuphathelene nesithwathwa, umhlabathi, ubukhulu esizofinyelela kubo nohlu lwendawo olugunyaziwe. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
+      ],
+      "12": [
+        "Izibonelo zokuqala zezindawo ezifudumele zihlanganisa i-mango, i-avocado, i-Natal Mahogany, i-banana, i-pawpaw, i-litchi, i-Wild Fig, i-Barbados cherry ne-Wild Dagga. I-Marula, i-Mopane ne-baobab nazo zikhona ezibonelweni zase-Limpopo. Hlola ukufaneleka kwendawo yangakini. Ukuba wusizo kwesihlahla akusho ukuthi singadliwa; qinisekisa ukuthi isitshalo siyini nokuthi siphephile yini ukusetshenziswa, ngoba isithombe sendawo asiwona umhlahlandlela wokuhlonza ukudla."
+      ],
+      "13": [
+        "Izitshalo zomdabu eziyifanele indawo zingasiza indawo yokuhlala yezilwane nezinye izinto eziphilayo. Khetha izitshalo ngokwemvelo yakini nangomsebenzi wesitshalo ngasinye; lesi sifundo asibeki iphesenti elithile elisekelwe emthonjeni. Vikela izitshalo zemvelo esezikhona. Ungaguquli indawo enotshani bemvelo obunempilo ibe yi-food forest ngoba nje izihlahla ziwusizo kwezinye izindawo."
+      ],
+      "14": [
+        "Hlola indawo, amanzi nokunakekela okutholakalayo; vikela umhlabathi oveziwe kusenesikhathi. Izitshalo zesikhashana ezisiza ezinye zingase zinikeze indawo yokukhosela nezinto eziwusizo zokuzisika lapho kufanele khona. Tshala izihlahla eziyinhloko nezingqimba ezingezansi njengoba izimo zivuma. Izitshalo ezimboza umhlabathi zingatshalwa ngaphambi kokufika ekugcineni; gwema ukuncintisana nezihlahla ezisencane."
+      ],
+      "15": [
+        "Isithombe sibonisa i-food forest esencane. Qala ngendawo okwazi ukuyinakekela. Vikela umhlabathi oveziwe nge-mulch exegayo. Shiya indawo engenalutho ezungeze isiqu sesihlahla. Bheka ukuncintisana; kulesi sithombe umlimi ususa utshani eduze kwesihlahla esincane. Ngaphambi kokufaka ezinye izitshalo, hlola umswakama, indawo yokukhosela nokunakekela okutholakalayo. Vumela okubukayo kuqondise isinyathelo esilandelayo."
+      ],
+      "16": [
+        "Qala ngendawo ongakwazi ukuyinisela nokuyinakekela; hlola izitshalo ezikhona ngaphambi kokususa noma yini. Lapho kufanele khona, amakhadibhodi angenalutho ngaphansi kwe-mulch efanele angasiza ukunciphisa ukukhula kwezinto ongazifuni. Vumela amanzi angene emhlabathini futhi ushiye indawo engenalutho ezungeze iziqu. Hlela izikhala ngokobukhulu izitshalo ezizofinyelela kubo sezikhulile; lungiselela izitshalo zasenkulisa ithuba elilandelayo elifanele."
+      ],
+      "17": [
+        "Bheka ukuthi umthunzi, izimpande namanzi kuthinta kanjani izitshalo ezingomakhelwane. I-Comfrey ne-wild garlic kuvela esibonelweni sokuqala; hlola ukuthi kuyifanele yini indawo yakho. Thena noma unciphise izitshalo ezisiza ezinye uma kudingeka, usebenzise izindlela ezifanele uhlobo lwesitshalo. Izingcezu ezihlanzekile ezifanele zingasetshenziswa njenge-mulch. Ungalindi unyaka omisiwe uma ukuncintisana sekulimaza izitshalo."
+      ],
+      "18": [
+        "Khetha isikhathi sokutshala lapho umswakama womhlabathi nesimo sezulu esilindelekile kungasiza izitshalo zimile. Imvula ingasiza, kodwa hlola umswakama endaweni yezimpande futhi ugcine olunye uhlelo lokunisela. Gwema umhlabathi ogcwele amanzi. Hlola izitshalo ezisencane ngemva kokutshala. Isikhathi sokuvuna nezinto zangaphandle ezidingekayo kuncike ohlotsheni lwesitshalo, endaweni nasekunakekelweni; asikho isiqinisekiso somphumela ngonyaka wesihlanu."
+      ],
+      "19": [
+        "Dweba izendlalelo zokutshala ozihlelile. Maka izindlela zokungena, amanzi nezitshalo zemvelo ezikhona.",
+        "Bhala phansi isithwathwa sendawo, imvula, umhlabathi nokunakekela okutholakalayo.",
+        "Esitshalweni ngasinye esisohlwini olugunyaziwe, bhala umsebenzi osihlelele wona neseluleko sendawo esisadingeka ngaphambi kokutshala."
+      ],
+      "20": [
+        "Hlola indawo ongakwazi ukuyinakekela, bese ukhetha isinyathelo esisodwa esilandelayo.",
+        "Vikela umhlabathi oveziwe, hlola ukufaneleka kwesitshalo, noma lungiselela izithombo zasenkulisa.",
+        "Tshala kuphela uma izimo nokunakekela okulandelayo kufanelekile. Buyela endaweni efanayo uhlole ukuthi izitshalo zisaphila yini, umswakama womhlabathi nokuncintisana."
+      ]
     }
   },
   "small-livestock": {
