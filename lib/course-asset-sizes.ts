@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 866 files, 361.0 MB total.
+// 886 files, 365.5 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -542,6 +542,26 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/en/slide-18.jpg': 860955,
   '/course-decks/market-community/en/slide-19.jpg': 154910,
   '/course-decks/market-community/en/slide-20.jpg': 257692,
+  '/course-decks/market-community/zu/slide-01.jpg': 231014,
+  '/course-decks/market-community/zu/slide-02.jpg': 99870,
+  '/course-decks/market-community/zu/slide-03.jpg': 110807,
+  '/course-decks/market-community/zu/slide-04.jpg': 112743,
+  '/course-decks/market-community/zu/slide-05.jpg': 329274,
+  '/course-decks/market-community/zu/slide-06.jpg': 106387,
+  '/course-decks/market-community/zu/slide-07.jpg': 506997,
+  '/course-decks/market-community/zu/slide-08.jpg': 98568,
+  '/course-decks/market-community/zu/slide-09.jpg': 128227,
+  '/course-decks/market-community/zu/slide-10.jpg': 529918,
+  '/course-decks/market-community/zu/slide-11.jpg': 124215,
+  '/course-decks/market-community/zu/slide-12.jpg': 97910,
+  '/course-decks/market-community/zu/slide-13.jpg': 109717,
+  '/course-decks/market-community/zu/slide-14.jpg': 111813,
+  '/course-decks/market-community/zu/slide-15.jpg': 471220,
+  '/course-decks/market-community/zu/slide-16.jpg': 553093,
+  '/course-decks/market-community/zu/slide-17.jpg': 136297,
+  '/course-decks/market-community/zu/slide-18.jpg': 544791,
+  '/course-decks/market-community/zu/slide-19.jpg': 135405,
+  '/course-decks/market-community/zu/slide-20.jpg': 138860,
   '/course-decks/plant-guilds/en/slide-01.jpg': 432945,
   '/course-decks/plant-guilds/en/slide-02.jpg': 92697,
   '/course-decks/plant-guilds/en/slide-03.jpg': 339682,

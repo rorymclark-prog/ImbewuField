@@ -26,3 +26,26 @@ python3 scripts/render-market-concepts.py --output OUTPUT --audio-dir public/cou
 Requires Pillow, FFmpeg/FFprobe and Arial/DejaVu. Missing or invalid audio fails explicitly. The existing slide generator uses unchanged narration, Watch posters and the original title illustration padded to retain the full image. App slides are 1920×1080 JPEGs at quality 85.
 
 Local typecheck, full suite (3,632 pass, zero failures, one existing TODO), and diff check passed in order.
+
+## isiZulu still deck — 24 September 2026
+
+This branch adds 20 isiZulu-labelled still slides at `public/course-decks/market-community/zu/`.
+The current paired English and isiZulu narration files are the source for the content and headings.
+The three Watch frames are static diagrams with isiZulu captions and labels; no animation was
+generated. Generic course badges and footers are localized, and English glosses under isiZulu
+headings are hidden. The original English deck and its existing recordings remain the source of
+the app's English experience.
+
+The deck is an unreviewed language draft. No fluent-speaker or farming-expert review is claimed.
+The narration and lesson text were not edited. The seed variety permission caution, local market
+and food rules, record keeping, and cost checks remain in their paired source narration.
+
+Reproduce the stills and QA hashes from the repository root with:
+
+```sh
+python3 docs/media/market-community/render-zu-deck.py
+```
+
+The script uses Pillow and the existing `scripts/make-lesson-slides.mjs` renderer. The 20-slide
+contact sheet and source/output hashes are saved beside this README in `market-community-zu-contact-sheet.jpg`
+and `verification-zu.json`.
