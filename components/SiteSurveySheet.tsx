@@ -185,7 +185,7 @@ function AutoFillNote({ areaM2 }: { areaM2: number }) {
 }
 
 export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onSaved, onClose }: Props) {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const appConfirm = useAppConfirm();
   const STEPS = [...surveySteps(t), t('surveyReviewTitle')];
   const PRODUCTION_ROWS = productionRows(t);
@@ -436,6 +436,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {started && <button className={styles.modeButton} onClick={() => setStarted(false)}>{mode === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}<ChevronDown size={14}/></button>}
         <button onClick={closeWithConfirm} aria-label={t('surveyCloseAriaLabel')} className={styles.close}><X size={20}/></button>
       </header>
+      {lang === 'zu' && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
       <div className={styles.workspace}>
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>

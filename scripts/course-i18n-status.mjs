@@ -97,9 +97,14 @@ console.log(`   en    ${String(Object.keys(en).length).padStart(4)} keys`);
 for (const [code, d] of Object.entries(dict)) {
   if (code === 'en') continue;
   const keys = Object.keys(d);
-  const same = keys.filter((k) => en[k] !== undefined && en[k] === d[k]).length;
-  const pct = keys.length ? Math.round(((keys.length - same) / keys.length) * 100) : 0;
-  console.log(`   ${code.padEnd(5)} ${String(keys.length).padStart(4)} keys  ${String(pct).padStart(3)}% of these values differ from English`);
+  const englishKeys = Object.keys(en);
+  const covered = englishKeys.filter((key) => Object.hasOwn(d, key));
+  const missing = englishKeys.filter((key) => !Object.hasOwn(d, key));
+  const localeOnly = keys.filter((key) => !Object.hasOwn(en, key));
+  const same = covered.filter((key) => en[key] === d[key]).length;
+  console.log(`   ${code.padEnd(5)} ${String(keys.length).padStart(4)} direct keys`);
+  console.log(`         English keys present: ${covered.length}/${englishKeys.length}; missing: ${missing.length}; locale-only: ${localeOnly.length}`);
+  console.log(`         Values identical to English: ${same}/${covered.length} (not a fluency or route-coverage measure)`);
 }
 
 const zuAudio = COURSE_MODULES.map((m) => {

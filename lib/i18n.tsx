@@ -1220,6 +1220,7 @@ const T_en: Dict = {
   surveyCardHint: 'Choose a short or comprehensive survey. Review your answers before using them in your site report.',
   surveyFieldNotebook: 'Your field notebook',
   surveyWelcomeTitle: 'A good plan starts with your land.',
+  surveyZuluDraftNotice: 'ISI ZULU DRAFT — This survey’s isiZulu wording has not been reviewed. If anything is unclear, switch to English before saving your answers.',
   surveyWelcomeIntro: 'Tell us what you see, what you have, and what matters to you. Your observations help shape a more useful site report.',
   surveyShortTitle: 'Short & simple',
   surveyFullTitle: 'Comprehensive',
