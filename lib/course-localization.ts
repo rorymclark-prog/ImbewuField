@@ -54,7 +54,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'water-harvesting-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'water-harvesting-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'water-harvesting-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'water-harvesting-l4': { status: 'source-held', reviewDocument: 'docs/narration-reviews/water-harvesting-l4.zu.review.md' },
+  'water-harvesting-l4': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/water-harvesting-l4.zu.full-draft.md' },
   'soil-health-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'soil-health-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SOIL-HEALTH-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'soil-health-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/soil-health-l3.zu.review.md' },

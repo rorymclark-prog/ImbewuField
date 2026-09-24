@@ -933,22 +933,20 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
       ],
       "19": [
-        "Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.",
-        "Do not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed."
+        "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.",
+        "South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals."
       ],
       "20": [
-        "Where local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.",
-        "Do not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.",
-        "Use it promptly. Stored greywater needs specialist advice and appropriate treatment."
+        "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.",
+        "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater."
       ],
       "21": [
-        "Where permitted, direct suitable greywater below mulch around non-food planting.",
-        "Mulch does not disinfect water. Keep it away from people and food."
+        "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.",
+        "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater."
       ],
       "22": [
-        "Keep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.",
-        "Check municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.",
-        "If the water smells bad, pools or harms plants, stop using it and seek advice."
+        "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+        "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice."
       ],
       "23": [
         "Build an A-frame level from three poles and a weighted string.",
@@ -961,6 +959,118 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "I have marked at least three points at the same height across my slope.",
         "My marked line runs across the slope, not down it.",
         "Realistic minimum time for the real work: 5 days."
+      ]
+    },
+    "zu": {
+      "1": [
+        "Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye namanzi asetshenzisiwe asekhaya — nciphisa ukugeleza, usakaze amanzi, futhi uwavumele angene lapho umhlabathi nendawo kukufanele."
+      ],
+      "2": [
+        "Chaza ukuthi i-swale elandela umugqa olinganayo ingabambezela futhi isabalalise kanjani amanzi agelezayo ukuze angene emhlabathini ofanele.",
+        "Chaza ukuthi kungani idamu lidinga i-spillway eklanyiwe nokuhlolwa kwendawo.",
+        "Chaza umsebenzi wesiphambukisi samanzi okuqala nokuthi kungani amanzi ethangi esadinga ukuhlolwa kokuphepha.",
+        "Gcina amanzi asetshenzisiwe kude nabantu, nokudla, namapayipi amanzi okuphuza."
+      ],
+      "3": [
+        "I-swale elandela umugqa olinganayo we-contour ingenye indlela yokubambezela amanzi agelezayo. Umsele wayo ulandela umugqa olinganayo ukuze amanzi asabalale futhi angene emhlabathini ofanele.",
+        "Amanye ama-swale aklanywa abe nomthambeka omncane olawulwayo, nendawo yokuphuma ephephile eklanyiwe. Umhlabathi, umthambeka, ukugeleza kwamanzi nokugeleza kwamanzi eziphepho kunquma ukuthi iyiphi indlela efanele. Cela umeluleki wendawo oqeqeshiwe ahlole indawo ngaphambi kokumba."
+      ],
+      "4": [
+        "Lesi sithombe sibonisa i-swale elinganayo ku-contour njengomqondo. Amanzi angasabalala emseleni futhi angene emhlabathini lapho umhlabathi ukuvumela khona.",
+        "Isithombe asibonisi ukuthi umswakama uzofika ujule kangakanani emhlabeni wakho. Hlola umhlabathi, umthambeka nendlela yokuchichima ngaphambi kokwakha."
+      ],
+      "5": [
+        "Umhlabathi ombiwe wakha i-berm ohlangothini olungaphansi komthambeka. Izihlahla zingatshalwa lapho uma uhlelo lwendawo lufanele.",
+        "Izihlahla zingasebenzisa umswakama ogcinwe emhlabathini oseduze ngemva kwemvula; umphumela uyashiyana kuye ngendawo."
+      ],
+      "6": [
+        "Imvula enkulu ingagcwalisa i-swale ngokushesha kunokuba amanzi angene emhlabathini. Hlela indlela ephephile yokuchichima ngaphambi kokumba.",
+        "Indlela akufanele igugule umthambeka noma ithumele amanzi alimazayo komakhelwane. I-swale noma idamu elingezansi kufanele likwazi ukwamukela la manzi ngokuphepha.",
+        "Cela umeluleki wendawo oqeqeshiwe ahlole umhlabathi, umthambeka nokugeleza kwamanzi eziphepho. Isithombe asiwona umklamo wokwakha."
+      ],
+      "7": [
+        "I-swale idinga indlela yokuchichima ehleliwe uma kunemvula enkulu. Yihlole ngaphambi kokumba.",
+        "Amanzi angaya kwenye i-swale noma edamini kuphela uma ukuhlolwa kwendawo kukhombisa ukuthi indlela, indawo yokuphuma nendawo ezowamukela kungawamukela amanzi ngaphandle komonakalo."
+      ],
+      "8": [
+        "Umthambeka wodwa awusho ukuthi i-swale iyayifanelekela yini indawo. Umhlabathi, ukugeleza kwamanzi, umhlaba ongazinzile namanzi afika evela phezulu komthambeka kubalulekile.",
+        "Gcina umhlabathi umbozekile. Thola ukuhlolwa kwendawo ngaphambi kokumba endaweni ewummango, emanzi noma engazinzile. Imigoqo yotshani nama-terrace nakho kudinga ukwakhelwa indawo efanele."
+      ],
+      "9": [
+        "Izimpande zisiza ukubamba umhlabathi emgqeni otshaliwe we-contour.",
+        "Khetha izindlela zokulawula ukuguguleka komhlabathi ngosizo lwendawo; umhlaba omqansa udinga ukuhlolwa kwendawo."
+      ],
+      "10": [
+        "Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.",
+        "Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.",
+        "Ngaphambi kokushintsha umfula noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo."
+      ],
+      "11": [
+        "Idamu lidinga ukuhlolwa kwendawo nokuklanywa ngumuntu oneziqu nolwazi olufanele. Amanzi agelezayo aya edamini, umhlabathi, izisekelo, ingozi engase yehlele ezindaweni ezingezansi, kanye ne-spillway ephephile konke kubalulekile.",
+        "Ungacabangi ukuthi imvula yonyaka ikutshela ubukhulu besikhukhula noma inani lamanzi ozowagcina.",
+        "Amanzi aphuma ngaphandle kokulawulwa angagugula futhi abhidlize udonga. Hlela indlela ephephile yokuphuma kwamanzi amaningi ngaphambi kokwakha."
+      ],
+      "12": [
+        "Klama i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.",
+        "Ukugeleza kwamanzi avela endaweni eqoqela amanzi kuyisici esisodwa. Umuntu oneziqu nolwazi olufanele kufanele ahlole indawo, idamu nomklamo we-spillway ngaphambi kokwakha."
+      ],
+      "13": [
+        "Amanzi angalahleka ngokuhwamuka noma ngokungena emhlabathini. Hlola izinga lamanzi, ubheke ukuvuza nokuguguleka.",
+        "Gcina i-spillway ingenamfucumfucu futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+        "Izilwane zingalimaza amabhange zifake nobulongwe emanzini. Ukuba khona kwazo akusho ukuthi amanzi ahlanzekile noma aphephile."
+      ],
+      "14": [
+        "Uphahla lwakho lungaqoqa amanzi emvula. Inani lincike endaweni yophahla, emvuleni nasekulahlekeni kwamanzi.",
+        "Hlola ukuthi uphahla lwakho lufanele yini ukuqoqa amanzi emvula ngaphambi kokuxhuma ithangi.",
+        "Sebenzisa indawo yophahla oyibona uma ulubuka phezulu kanye namarekhodi emvula endawo. Bese ubala amanzi angangeni emseleni wamanzi, aphambukiswayo noma achichima ethangini eligcwele.",
+        "Ingqikithi yonyaka ayisho ukuthi uzoba namanzi angakanani ngesikhathi esomile. Qhathanisa amanzi ongawaqoqa nalokho ohlela ukuwasebenzisa."
+      ],
+      "15": [
+        "Amanzi ageleza ophahleni angathwala uthuli, ubulongwe bezinyoni nokunye ukungcola. Isiphambukisi samanzi okuqala sigcina amanye ala manzi okuqala engangeni ethangini.",
+        "Inani okufanele liphambukiswe lincike ophahleni nasohlelweni lwakho. Landela imiyalelo yomthengisi yokulinganisa nokunakekela; alikho inani elilodwa elifanele lonke uphahla.",
+        "Isiphambukisi asiqinisekisi ukuthi amanzi asele aphephile ukuphuzwa."
+      ],
+      "16": [
+        "Isiphambukisi samanzi okuqala sigcina amanye amanzi okuqala ageleza ophahleni engangeni ethangini.",
+        "Silungiselele futhi usinakekele ngokophahla lwakho; amanzi alandelayo nawo asadinga ukuhlolwa kokuphepha."
+      ],
+      "17": [
+        "Usayizi wethangi uncike esidingweni samanzi, emvuleni, endaweni yophahla nasekutheni izikhathi ezomile zinde kangakanani.",
+        "Bhala ukuthi uzowasebenzisela ini amanzi, bese ulinganisela isidingo ngerekhodi lakho. Qhathanisa nalokho ongakuqoqa ngezinkathi zonyaka.",
+        "Hlela ozokwenza uma amanzi agciniwe esephela. Igama lesifundazwe lodwa alikwazi ukukutshela usayizi wethangi oludingayo."
+      ],
+      "18": [
+        "Gcina ithangi limboziwe, faka izisefo ezivimbela izinambuzane emigodini, futhi unakekele uphahla, imisele yesiphepho nesiphambukisi. Gcina la manzi ehlukile emapayipini amanzi okuphuza.",
+        "Amanzi abonakala ecacile asengaba namagciwane noma amakhemikhali. Buza abezempilo bendawo ngokuhlolwa nokwelashwa okufanele ukusetshenziswa okuhlosiwe.",
+        "Isihlungi esilula sodwa asiqinisekisi ukuthi amanzi aphephile ukuphuzwa. Amanzi asetshenziswa ezitshalweni zokudla nawo adinga ukuhlolwa kokuphepha."
+      ],
+      "19": [
+        "Amanzi asetshenzisiwe asekhaya angaqukatha amagciwane, usawoti, imikhiqizo yokuhlanza nezinye izinto. Imihlahlandlela ayichazi yonke imithombo ngendlela efanayo.",
+        "Imihlahlandlela yaseNingizimu Afrika iyahluka ngamanzi asekhishini nangawelondolo. Ungafaki emgomweni wokuphinda usebenzise amanzi asendlini yangasese, avela kumanabukeni, ekugezeni umuntu ogulayo noma ukugeza izilwane. Ungawasebenzisi amanzi anamakhemikhali ayingozi."
+      ],
+      "20": [
+        "Ngaphambi kokuphinda usebenzise noma yimaphi amanzi, cela umasipala nomeluleki oqeqeshiwe wokukhucululwa kwendle bahlole umthombo oqondile, izinsiza zamanzi nezokukhucululwa kwendle zasekhaya, ukusetshenziswa okuhlosiwe nendawo.",
+        "Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile."
+      ],
+      "21": [
+        "Lesi sithombe esijwayelekile asiwona umklamo wepulazi ohloliwe noma ogunyaziwe. Asifakazeli ukuthi umthombo, indlela noma indawo yokugcina amanzi iphephile.",
+        "Thola iseluleko kubeluleki bendawo abaqeqeshiwe ngaphambi kokuphinda usebenzise amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile."
+      ],
+      "22": [
+        "Vimbela abantu nezilwane ukuthi zingathintani namanzi. Ungawaxhumi emapayipini amanzi okuphuza, ungawafafazi, ungawavumeli ukuthi aqoqane abe yichibi, futhi ungawavumeli agelezele emgwaqweni, emseleni noma emfuleni ngaphandle kwendawo yakho.",
+        "Uma uhlelo lokuphinda lusebenzise amanzi selusebenza kodwa amanzi enuka kabi, eqoqana noma elimaza izitshalo, yeka ukuwasebenzisa bese ucela iseluleko sendawo esiqeqeshiwe."
+      ],
+      "23": [
+        "Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo.",
+        "Yisebenzise ukuthola umugqa owodwa olinganayo onqamula umthambeka wakho.",
+        "Thatha isithombe se-A-frame kanye nomugqa owumakile."
+      ],
+      "24": [
+        "I-A-frame yami yakhiwe futhi ngiyihlolile.",
+        "Yiphendule ngakolunye uhlangothi — kufanele ikhombise okufanayo.",
+        "Ngimake okungenani amaphuzu amathathu asezingeni elifanayo anqamula umthambeka wami.",
+        "Umugqa engiwumakile unqamula umthambeka, awehli nawo.",
+        "Isikhathi esincane esingokoqobo somsebenzi wangempela: izinsuku ezi-5."
       ]
     }
   },

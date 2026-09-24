@@ -177,6 +177,15 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
     'the climate point describes conditional support for adaptation rather than guaranteed protection');
   assert.match(COURSE_TRANSLATION_DRAFTS[seedsL1.id].keyPoints[2], /kungasiza.*uma izinhlobo zifanele izimo zendawo/,
     'the isiZulu draft preserves the same conditional climate claim');
+  const waterL4 = lessons.find(lesson => lesson.id === 'water-harvesting-l4')!;
+  const waterL4Zu = resolveLearnerLessonPresentation(waterL4, 'zu');
+  assert.equal(waterL4Zu.status, 'draft', 'the owner-authorized L4 draft stays visibly unreviewed');
+  assert.equal(waterL4.infographicUrl, undefined, 'the old diagram cannot imply a safe direct washwater route');
+  assert.match(waterL4.body, /If this advice is unavailable or unclear, do not reuse the water/);
+  assert.match(waterL4Zu.content.body, /Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi/);
+  assert.match(waterL4Zu.content.body, /Umhlabathi ne-mulch akuwabulali amagciwane/);
+  assert.doesNotMatch(waterL4Zu.content.body, /izihlahla zezithelo|ngaphansi kwe-mulch azungeze isihlahla/i,
+    'the new lesson cannot inherit the withdrawn fruit-tree reuse recipe');
   for (const lessonId of ['seeds-sovereignty-l2', 'seeds-sovereignty-l3']) {
     const lesson = lessons.find(item => item.id === lessonId)!;
     const draft = COURSE_TRANSLATION_DRAFTS[lessonId];
@@ -219,7 +228,7 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
     }
   }
 
-  for (const heldId of ['water-harvesting-l4', 'small-livestock-l2']) {
+  for (const heldId of ['small-livestock-l2']) {
     const lesson = lessons.find(item => item.id === heldId)!;
     assert.equal(resolveLearnerLessonPresentation(lesson, 'zu', {
       lessonId: heldId, language: 'zu', status: 'review-draft', draft: COURSE_TRANSLATION_DRAFTS[draftIds[0]],

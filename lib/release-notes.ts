@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '8483e254', changes: [
+    'Water Harvesting now has isiZulu slides and the same woman’s voice as Seeds.',
+    'The greywater lesson asks for qualified local advice before any reuse.',
+    'The isiZulu lessons are marked as drafts.',
+  ], tour: [
+    { title: 'Hear Water Harvesting in isiZulu', where: 'My Studies · Water Harvesting', href: '/student',
+      detail: 'Choose isiZulu, open Water Harvesting, and play a narrated slide. The greywater lesson is lesson 4.' },
+  ] },
   { when: '24 September 2026', sha: 'f249ea06', changes: [
     'Soil Health now has isiZulu slides and the same woman’s voice as Seeds.',
     'Both are review drafts; slides 10–11 use matching still pictures.',

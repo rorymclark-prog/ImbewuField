@@ -263,7 +263,7 @@ F_SUBT   = font(SERIF_I, 30)   # the English gloss under an isiZulu slide title
 # while keeping the established defaults for the rest of the course.
 if cfg.get('branding', {}).get('largeText'):
     F_TITLE = font(SERIF_B, 68)
-    F_BULL = font(SANS, 52)
+    F_BULL = font(SANS, 56)
     F_CAP = font(SANS_B, 42)
 
 def track(d, xy, text, fnt, fill, sp=3):

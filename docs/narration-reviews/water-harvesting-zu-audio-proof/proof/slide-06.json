@@ -1,0 +1,267 @@
+{
+  "seconds": 38.328,
+  "bytes": 229968,
+  "audioSha256": "4e45be6e25f281a7751bacf92d3ae80909cefac627c2640e714491b44144e0a4",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Imvula",
+      "offset": 1460410,
+      "duration": 5397910
+    },
+    {
+      "text": "enkulu",
+      "offset": 7710410,
+      "duration": 5539580
+    },
+    {
+      "text": "ingagcwalisa",
+      "offset": 13818330,
+      "duration": 8948750
+    },
+    {
+      "text": "i-swale",
+      "offset": 23051250,
+      "duration": 5965830
+    },
+    {
+      "text": "ngokushesha",
+      "offset": 29159160,
+      "duration": 7812500
+    },
+    {
+      "text": "kunokuba",
+      "offset": 36971660,
+      "duration": 6250000
+    },
+    {
+      "text": "amanzi",
+      "offset": 43505830,
+      "duration": 5681660
+    },
+    {
+      "text": "angene",
+      "offset": 49471660,
+      "duration": 4829580
+    },
+    {
+      "text": "emhlabathini",
+      "offset": 54585410,
+      "duration": 9090830
+    },
+    {
+      "text": "Hlela",
+      "offset": 74238750,
+      "duration": 3551250
+    },
+    {
+      "text": "indlela",
+      "offset": 78500000,
+      "duration": 4971660
+    },
+    {
+      "text": "ephephile",
+      "offset": 83755830,
+      "duration": 6960000
+    },
+    {
+      "text": "yokuchichima",
+      "offset": 90715830,
+      "duration": 8664580
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 99522910,
+      "duration": 4971250
+    },
+    {
+      "text": "kokumba",
+      "offset": 104494160,
+      "duration": 6392080
+    },
+    {
+      "text": "Indlela",
+      "offset": 121414580,
+      "duration": 4971660
+    },
+    {
+      "text": "akufanele",
+      "offset": 127096660,
+      "duration": 6960410
+    },
+    {
+      "text": "igugule",
+      "offset": 134482910,
+      "duration": 6676250
+    },
+    {
+      "text": "umthambeka",
+      "offset": 141727080,
+      "duration": 7670410
+    },
+    {
+      "text": "noma",
+      "offset": 149397910,
+      "duration": 3267080
+    },
+    {
+      "text": "ithumele",
+      "offset": 153090830,
+      "duration": 6107910
+    },
+    {
+      "text": "amanzi",
+      "offset": 159625000,
+      "duration": 5681660
+    },
+    {
+      "text": "alimazayo",
+      "offset": 165590830,
+      "duration": 7954580
+    },
+    {
+      "text": "komakhelwane",
+      "offset": 173545410,
+      "duration": 9659160
+    },
+    {
+      "text": "I-swale",
+      "offset": 193289580,
+      "duration": 5681660
+    },
+    {
+      "text": "noma",
+      "offset": 199397910,
+      "duration": 3409160
+    },
+    {
+      "text": "idamu",
+      "offset": 203232910,
+      "duration": 5539580
+    },
+    {
+      "text": "elingezansi",
+      "offset": 209198750,
+      "duration": 9090830
+    },
+    {
+      "text": "kufanele",
+      "offset": 218289580,
+      "duration": 6250000
+    },
+    {
+      "text": "likwazi",
+      "offset": 224539580,
+      "duration": 5823750
+    },
+    {
+      "text": "ukwamukela",
+      "offset": 230505830,
+      "duration": 7528330
+    },
+    {
+      "text": "la",
+      "offset": 238034160,
+      "duration": 1420410
+    },
+    {
+      "text": "manzi",
+      "offset": 239596660,
+      "duration": 4545410
+    },
+    {
+      "text": "ngokuphepha",
+      "offset": 244142080,
+      "duration": 7528330
+    },
+    {
+      "text": "Cela",
+      "offset": 261915000,
+      "duration": 3551250
+    },
+    {
+      "text": "umeluleki",
+      "offset": 266176250,
+      "duration": 7386250
+    },
+    {
+      "text": "wendawo",
+      "offset": 273562500,
+      "duration": 6250000
+    },
+    {
+      "text": "oqeqeshiwe",
+      "offset": 280096660,
+      "duration": 8806660
+    },
+    {
+      "text": "ahlole",
+      "offset": 289329580,
+      "duration": 4971660
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 294727500,
+      "duration": 8664580
+    },
+    {
+      "text": "umthambeka",
+      "offset": 305380830,
+      "duration": 8664580
+    },
+    {
+      "text": "nokugeleza",
+      "offset": 314045410,
+      "duration": 8522910
+    },
+    {
+      "text": "kwamanzi",
+      "offset": 322568330,
+      "duration": 6534160
+    },
+    {
+      "text": "eziphepho",
+      "offset": 329386250,
+      "duration": 7670410
+    },
+    {
+      "text": "Isithombe",
+      "offset": 346840830,
+      "duration": 6534160
+    },
+    {
+      "text": "asiwona",
+      "offset": 354369160,
+      "duration": 6676250
+    },
+    {
+      "text": "umklamo",
+      "offset": 361329580,
+      "duration": 5681660
+    },
+    {
+      "text": "wokwakha",
+      "offset": 367011250,
+      "duration": 5965830
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l1",
+  "language": "zu",
+  "slide": 6,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-06.txt",
+  "sourceSha256": "eb9a954d09e0ba11ce965b27e56de479d1069a85cbc23d5cf5153b11e34fc6f1",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:47:38.121807+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

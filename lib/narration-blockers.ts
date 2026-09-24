@@ -56,6 +56,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/reading-landscape.zu-audio-2026-09-24.md',
     scriptSha256: 'a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b',
   },
+  'water-harvesting.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/water-harvesting-zu-audio-2026-09-24.md',
+    scriptSha256: 'f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255',
+  },
   'soil-health.zu': {
     reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
     reviewRecord: 'docs/narration-reviews/soil-health.zu.review.md',

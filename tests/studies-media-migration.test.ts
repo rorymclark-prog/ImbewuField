@@ -836,6 +836,76 @@ test('a saved greywater diagram with older source labels is retired without clea
   assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new lesson download');
 });
 
+test('saved Water L4 English lesson retires obsolete safety cards and narration once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateWaterL4DecisionOnly\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWaterL4DecisionOnly\)/);
+  const changed = [19, 20, 21, 22].flatMap(slide => [
+    `/course-decks/water-harvesting/en/slide-${slide}.jpg`,
+    `/course-audio/water-harvesting/en/slide-${slide}.mp3`,
+  ]).concat('/course-audio/water-harvesting/en/full.mp3');
+  const keep = [
+    '/course-decks/water-harvesting/en/slide-18.jpg',
+    '/course-decks/water-harvesting/zu/slide-19.jpg',
+    '/course-audio/water-harvesting/en/slide-18.mp3',
+  ];
+  const rows = new Map([...changed, ...keep].map(path => [path + '?saved=1', new Response('saved')]));
+  const cache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => { const url = new URL(request.url); return rows.delete(url.pathname + url.search); },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(path + '?saved=1'), false, path);
+  for (const path of keep) assert.equal(rows.has(path + '?saved=1'), true, path);
+  assert.equal(rows.has('/course-decks/water-harvesting/en/.l4-greywater-safety-20260924'), true);
+  rows.set(changed[0] + '?saved=1', new Response('new lesson download'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(changed[0] + '?saved=1')!.text(), 'new lesson download');
+});
+
+test('a saved Water Harvesting isiZulu pack drops superseded draft slides and speech once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateWaterHarvestingZuluDraft\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assert.match(source, /then\(migrateWaterHarvestingZuluDraft\)/);
+  const origin = 'https://field.test';
+  const changed = Array.from({ length: 24 }, (_, i) => String(i + 1).padStart(2, '0'))
+    .flatMap(slide => [
+      `/course-decks/water-harvesting/zu/slide-${slide}.jpg`,
+      `/course-audio/water-harvesting/zu/slide-${slide}.mp3`,
+    ]).concat('/course-audio/water-harvesting/zu/full.mp3');
+  changed.push('/course-images/water-harvesting/water-harvesting-l4.jpg');
+  const keep = [
+    '/course-decks/water-harvesting/en/slide-18.jpg',
+    '/course-audio/water-harvesting/en/full.mp3',
+    '/course-audio/reading-landscape/zu/slide-15.mp3',
+  ];
+  const rows = new Map<string, Response>([
+    ...changed.map(path => [new URL(path + '?saved=old', origin).href, new Response('old draft')] as const),
+    ...keep.map(path => [new URL(path + '?saved=old', origin).href, new Response('keep')] as const),
+  ]);
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  for (const path of changed) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(path + '?saved=old', origin).href), true, path);
+  assert.equal(rows.has(origin + '/course-decks/water-harvesting/.zulu-review-draft-20260924'), true);
+  const replacement = new URL(changed[0] + '?saved=new', origin).href;
+  rows.set(replacement, new Response('new learner-selected draft slide'));
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(await rows.get(replacement)!.text(), 'new learner-selected draft slide');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'migration must not spend learner airtime');
+});
+
 test('a saved Introduction L1 pack retires only the five superseded English water-use assets once', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateIntroL1WaterUseTeaching\(\) \{([\s\S]*?)\n\}/)?.[1];
