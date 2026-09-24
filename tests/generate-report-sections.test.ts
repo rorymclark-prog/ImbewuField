@@ -22,10 +22,26 @@ test('report route, report selector, and prompt template advertise the same sect
 
 
 import { reportSectionsForGeneration, PLANTING_SUITABILITY_PROMPT } from '../lib/report-planting-guide.ts';
+import { listedPlantMentions, reportPlantingCandidates } from '../lib/report-planting-safety.ts';
 test('legacy planting section selections become one suitability request without mutating saved choices', () => {
   const saved = ['Natural Vegetation & Biome', 'Fruit, Nut & Berry Trees', 'Indigenous Trees', 'Agroecosystem Planting Guide', 'Planting Calendar'];
   const before = [...saved];
   assert.deepEqual(reportSectionsForGeneration(saved), ['Natural Vegetation & Biome', 'Suitable Plants for This Site', 'Planting Calendar']);
   assert.deepEqual(saved, before);
   for (const heading of ['Vegetables, staples and herbs', 'Fruit, nuts and berries', 'Useful indigenous plants']) assert.ok(PLANTING_SUITABILITY_PROMPT.includes(heading));
+});
+
+test('site report candidates cannot put listed invasive plants back into the planting advice', () => {
+  for (const [biome, minimum] of [['SAVANNA', 5.4], ['SAVANNA', -1.9], ['IOCB', 12.6], ['FYNBOS', 9.2]] as const) {
+    const candidates = reportPlantingCandidates(biome, minimum);
+    assert.ok(candidates.length > 0, `${biome} must still have planting choices`);
+    assert.deepEqual(listedPlantMentions(candidates), [], `${biome} includes a listed plant`);
+  }
+  assert.match(reportPlantingCandidates('SAVANNA', 5.4), /Mango/);
+  assert.doesNotMatch(reportPlantingCandidates('SAVANNA', -1.9), /Mango/);
+  assert.doesNotMatch(reportPlantingCandidates('SAVANNA', 5.4), /Guava/);
+  assert.ok(listedPlantMentions('| Guava | grows well |').includes('guava'));
+  assert.ok(listedPlantMentions('Plant Passiflora edulis on the fence').includes('passiflora edulis'));
+  assert.deepEqual(listedPlantMentions('Black mulberry and Cape silver willow are choices'), []);
+  assert.match(reportRoute, /if \(listedPlantMentions\(text\)\.length > 0\) continue/);
 });

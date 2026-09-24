@@ -40,6 +40,7 @@ import {
 } from '@/lib/price-book';
 import { groupDigits, type ReportSiteFacts, type FactStatus } from '@/lib/report-site-facts';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
+import { listedPlantMentions } from '@/lib/report-planting-safety';
 
 /**
  * Beds are billed ONCE, from their traced area, and must never also appear as counted items.
@@ -63,7 +64,9 @@ export type UnpricedReason =
   /** Outside the range the price book covers (e.g. a tank below its smallest size). */
   | 'out-of-range'
   /** Already on the farm — a cost to no one. */
-  | 'existing';
+  | 'existing'
+  /** A saved plan cannot turn a regulated plant into a purchase recommendation. */
+  | 'listed-plant';
 
 export interface BoqLine {
   /** Section of the bill: what kind of work this is. */
@@ -114,7 +117,6 @@ const ITEM_RATE_BY_DEF_ID: Record<string, string> = {
   tree_avocado: 'avo_tree',
   tree_mango: 'generic_fruit_tree',
   tree_macadamia: 'generic_fruit_tree',
-  tree_guava: 'generic_fruit_tree',
   tree_litchi: 'generic_fruit_tree',
   tree_pawpaw: 'generic_fruit_tree',
   tree_apple: 'generic_fruit_tree',
@@ -181,6 +183,7 @@ const UNPRICED_TEXT: Record<UnpricedReason, string> = {
   'no-area': 'quantity not measured — trace its footprint to price it',
   'out-of-range': 'outside the price book\'s size range — get a local quote',
   existing: 'already on the farm — not a build cost',
+  'listed-plant': 'listed plant on saved plan — obtain local legal and ecological advice; do not buy or propagate from this bill',
 };
 
 function rateText(entry: PriceEntry): string {
@@ -324,6 +327,10 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     if (isExisting(group.status)) { existingCount += group.count; continue; }
     const source = 'Placed in the Design Studio';
     const defId = group.defId;
+    if (defId === 'tree_guava' || listedPlantMentions(group.name).length > 0) {
+      unpriced('Structures & planting', 'Listed plant on saved plan', countQty(group.count), 'listed-plant', source);
+      continue;
+    }
     // Tanks are billed above from FactWater, which is the only place their capacity is known.
     if (defId && (defId in TANK_RATE_BY_DEF_ID || defId.startsWith('jojo_') || defId === 'rain_barrel')) continue;
     // Beds are billed above from their traced area — see BED_DEF_ID_SET.

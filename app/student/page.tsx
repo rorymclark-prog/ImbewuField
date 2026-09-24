@@ -714,16 +714,19 @@ export default function StudentPage() {
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
 
+
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
             <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> {t('studentLearnPracticeGrow')}</p>
             <h1 id="studies-title" className="font-display">{t('studentMyStudies')}</h1>
             <p className={`font-sans ${styles.description}`}>{t('studentCourseDescription')}</p>
+
             <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
               setCourseOpen(true);
               setExpandedModuleId(studyModule.id);
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+
             }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
             <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
           </div>
@@ -783,6 +786,7 @@ export default function StudentPage() {
             )}
           </div>
           </div>
+
         </section>
 
         <LimaBar />
@@ -826,6 +830,7 @@ export default function StudentPage() {
           <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label={t('studentSaveAvailable')} />
         </details>
 
+
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary aria-labelledby="design-pathway-title">
             <p className={styles.eyebrow}>{t('studentDesignEnglishPreview')}</p>
@@ -867,6 +872,7 @@ export default function StudentPage() {
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
+
         </details>
 
         {lang === 'zu' && (

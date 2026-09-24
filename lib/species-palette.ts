@@ -28,9 +28,8 @@
 //    without being copied into nine lists that then drift apart.
 //
 // 5. LEGALLY HONEST. Which species may be propagated in South Africa is regulated (NEM:BA Alien and
-//    Invasive Species lists). `nemba` is a required field, not an optional note: a Category 1a or
-//    1b species must never reach the picker, and a Category 2 or 3 species that is genuinely
-//    standard practice must carry its category to the screen so nobody plants it unknowingly.
+//    Invasive Species lists). `nemba` is a required field, not an optional note: listed species
+//    may remain in the catalogue for records, but are never suggested as new plantings.
 //    `source` is required for the same reason — an unsourced size or suitability claim is a guess
 //    wearing the same typeface as a fact.
 //
@@ -145,9 +144,9 @@ export interface SpeciesBiomeFit {
   rank: number;
 }
 
-/** Nothing regulated as 1a/1b may ever be offered. Belt and braces beside the guard test. */
+/** New planting advice must not depend on a permit or a province-specific exemption. */
 export function isPlantable(s: Species): boolean {
-  return s.nemba !== '1a' && s.nemba !== '1b';
+  return s.nemba === 'none';
 }
 
 /** Rank within a biome, or null when the species is not offered there. */
@@ -162,9 +161,18 @@ export function rankIn(s: Species, biome: string): number | null {
  * Ties break on common name so the list is stable between renders and between builds — a picker
  * whose rows reshuffle is a picker a farmer stops trusting.
  */
-export function paletteFor(all: Species[], biome: string): Species[] {
+export function speciesSuitsColdMinimum(s: Species, minTempC?: number | null): boolean {
+  // A modelled minimum at/below freezing is evidence of frost exposure, while a warm grid
+  // reading cannot prove a particular planting pocket frost-free. Screen perennial woody plants
+  // using the existing frostTolerance field. A summer cowpea or pumpkin can be sown after frost;
+  // hiding every frost-tender annual from a frosty farm would be a new wrong recommendation.
+  const woody = s.stratum === 'canopy' || s.stratum === 'sub-canopy' || s.stratum === 'shrub';
+  return !(minTempC != null && Number.isFinite(minTempC) && minTempC <= 0 && woody && s.frostTolerance === 'none');
+}
+
+export function paletteFor(all: Species[], biome: string, minTempC?: number | null): Species[] {
   return all
-    .filter((s) => isPlantable(s) && rankIn(s, biome) !== null)
+    .filter((s) => isPlantable(s) && rankIn(s, biome) !== null && speciesSuitsColdMinimum(s, minTempC))
     .sort((a, b) => {
       const d = (rankIn(a, biome) ?? 0) - (rankIn(b, biome) ?? 0);
       return d !== 0 ? d : a.commonName.localeCompare(b.commonName);
@@ -178,8 +186,8 @@ export function paletteFor(all: Species[], biome: string): Species[] {
  * indigenous fruit worth planting, and inventing an entry to fill the row would be the one failure
  * mode this whole file is built to avoid.
  */
-export function sectionedPaletteFor(all: Species[], biome: string): Array<{ section: SpeciesSection; species: Species[] }> {
-  const ranked = paletteFor(all, biome);
+export function sectionedPaletteFor(all: Species[], biome: string, minTempC?: number | null): Array<{ section: SpeciesSection; species: Species[] }> {
+  const ranked = paletteFor(all, biome, minTempC);
   return SPECIES_SECTIONS
     .map((section) => ({ section, species: ranked.filter((s) => s.section === section) }))
     .filter((g) => g.species.length > 0);
@@ -193,9 +201,9 @@ export function sectionedPaletteFor(all: Species[], biome: string): Array<{ sect
  * species that succeed most widely, on the honest grounds that breadth is the best available proxy
  * for "probably fine here". Callers should say on screen that the list is not localised.
  */
-export function broadReachPalette(all: Species[], minBiomes = 4): Species[] {
+export function broadReachPalette(all: Species[], minBiomes = 4, minTempC?: number | null): Species[] {
   return all
-    .filter((s) => isPlantable(s) && s.biomes.length >= minBiomes)
+    .filter((s) => isPlantable(s) && s.biomes.length >= minBiomes && speciesSuitsColdMinimum(s, minTempC))
     .sort((a, b) => b.biomes.length - a.biomes.length || a.commonName.localeCompare(b.commonName));
 }
 
@@ -222,7 +230,7 @@ export function validateSpecies(all: Species[]): string[] {
     if (prior && prior !== s.id) problems.push(`${s.botanicalName} appears twice (${prior}, ${s.id})`);
     seenBotanical.set(s.botanicalName.toLowerCase(), s.id);
 
-    if (!isPlantable(s)) problems.push(`${s.commonName} is NEMBA ${s.nemba} and must not be offered`);
+    if (s.nemba === '1a' || s.nemba === '1b') problems.push(`${s.commonName} is NEMBA ${s.nemba} and must not be offered`);
     if (s.uses.length === 0) problems.push(`${s.commonName} has no use — a palette entry must earn its place`);
     if (s.biomes.length === 0) problems.push(`${s.commonName} suits no biome`);
     if (!s.source.trim()) problems.push(`${s.commonName} has no source`);

@@ -6,7 +6,7 @@ export function reportSectionsForGeneration(sections: readonly string[]): string
 }
 export const PLANTING_SUITABILITY_PROMPT = `## Suitable Plants for This Site
 
-Write a concise, evidence-based assessment in the following three subsections. This is the site's planting strategy. Detailed bed allocations, quantities, rotations and buying tasks belong in the separate crop-plan report. Do not repeat the sowing calendar.
+Write a concise, evidence-based assessment in the following three subsections. This is the site's planting strategy. Detailed bed allocations, quantities, rotations and buying tasks belong in the separate crop-plan report. Do not repeat the sowing calendar. Propose no listed alien invasive plant, even if it appears in a saved design or a broad biome description; a saved plant is not a new-planting recommendation.
 
 ### Vegetables, staples and herbs
 Assess the crops actually recorded in the saved plan. Group only where the same reasoning applies. Explain which recorded conditions support the choice and which conditions or missing evidence limit it. Consider season and temperature, reliable water, soil and drainage, available growing space/sunlight, labour and the household or organisation's food needs. A crop in a saved plan is a proposal, not proof of suitability. Flag conflicts rather than manufacture a justification. If no plan is recorded, identify priorities and evidence needed without inventing a saved crop plan.

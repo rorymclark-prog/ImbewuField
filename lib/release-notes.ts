@@ -42,6 +42,32 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 September 2026', sha: '39ebc4e9', changes: [
+    'Raised Bed opens the bed block sizes and count above the Elements list.',
+    'Ubhejane tree choices now reflect its warm climate; saved site analyses refresh.',
+    'Frost-sensitive planting choices stay out of the palette when a site may freeze.',
+    'Listed invasive plants stay out of new planting choices and site report recommendations.',
+  ], tour: [
+    { title: 'Place a bed block', where: 'Design Studio → Planting', href: '/design',
+      detail: 'Tap Raised Bed, set the count and sizes, then place and rotate the block on the map.' },
+    { title: 'Review planting advice', where: 'Site reports', href: '/reports',
+      detail: 'Open a site report and review the suggested plants for your location.' },
+  ] },
+  { when: '23 September 2026', sha: '1d184155', changes: [
+    'Read lesson slides in large text on your phone. Switch to the picture and zoom in.',
+  ], tour: [
+    { title: 'Read a lesson slide', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen. Read text opens first on a phone. Tap See slide to view the picture and use + to enlarge it.' },
+  ] },
+  { when: '23 September 2026', sha: 'd7f2299a', changes: [
+    'My Studies folds the courses and app guides until you open them.',
+    'Open lesson slides full screen and turn your phone sideways for a larger view.',
+  ], tour: [
+    { title: 'Choose a course', where: 'My Studies', href: '/student',
+      detail: 'Open a course section to see its lessons or preview, and open the app guides when needed.' },
+    { title: 'Make slides larger', where: 'My Studies → a module → slides', href: '/student',
+      detail: 'Tap Full screen on the slide player. Turn your phone sideways, then tap Exit full screen.' },
+  ] },
   { when: '23 September 2026', sha: '3730584f', changes: [
     'Food Forest lesson 3 now says cardboard can reduce grass growth; check for regrowth.',
   ], tour: [

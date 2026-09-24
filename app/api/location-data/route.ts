@@ -3,7 +3,7 @@ import { fetchNasaPower } from '@/lib/nasa-power';
 import { fetchSoilData } from '@/lib/isric-soil';
 import { fetchElevation } from '@/lib/elevation';
 import { fetchVegetation } from '@/lib/sanbi';
-import { resolveBiome } from '@/lib/biome';
+import { resolveBiomeFromMonthlyClimate } from '@/lib/biome';
 import { lookupBRU } from '@/lib/bru';
 
 export async function GET(req: NextRequest) {
@@ -62,11 +62,11 @@ export async function GET(req: NextRequest) {
     // `source` travels with the answer so the UI can say which it is holding. A polygon lookup on
     // the national vegetation map and a guess from rainfall are not the same claim, and until now
     // they were printed in the same type.
-    const resolved = resolveBiome({
+    const resolved = resolveBiomeFromMonthlyClimate({
       lat, lon,
       annualRainfall: rainfall.annual,
-      coldestMonthTemp: climate.minTemp,
-      monthlyRain: rainfall.monthly,
+      monthlyRain: nasaResult.status === 'fulfilled' ? rainfall.monthly : [],
+      monthlyTemp: nasaResult.status === 'fulfilled' ? climate.monthlyTemp : [],
       sanbiBiome: veg?.biome,
     });
     const biome = resolved.biome;

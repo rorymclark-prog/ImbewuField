@@ -387,7 +387,9 @@ test('Water playback respects language gaps, download choice and the whole clear
       act(() => watch.props.onClick());
       const clip = view.root.findByType('video');
       assert.match(clip.props.src, /flow-roof-rain\.mp4$/);
-      assert.equal(clip.parent!.props.style.aspectRatio, '16 / 9');
+      // The player now fits the source clip numerically for full-screen sizing; use the
+      // manifest's ratio so a future portrait clip is not forced into this video's frame.
+      assert.equal(clip.parent!.props.style.aspectRatio, animationUrls('water-harvesting', 14)?.aspectRatio ?? 16 / 9);
       assert.equal(clip.props.loop, false, 'a selected animation must be able to finish under play-through');
       const title = view.root.findByType('h3').children.join('');
       if (videoFirst) {
@@ -418,7 +420,9 @@ test('deck arrows change slides only while the deck itself has plain-key focus',
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'water-harvesting', lang: 'en' })); });
   try {
-    const deckSurface = () => view.root.findAllByType('div').find(div => div.props['aria-label']?.startsWith('Lesson slides.'))!;
+    // The surface can be a dialog so it can enter the browser's top layer on a phone. The
+    // keyboard rule belongs to the named deck region, whichever native element contains it.
+    const deckSurface = () => view.root.findAll(node => node.props.role === 'region' && node.props['aria-label']?.startsWith('Lesson slides.'))[0]!;
     const press = (key: 'ArrowLeft' | 'ArrowRight', target: unknown, modifiers = {}) => {
       const surface = deckSurface();
       let prevented = false;

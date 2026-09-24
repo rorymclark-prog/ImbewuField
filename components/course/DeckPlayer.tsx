@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 
 import styles from './DeckPlayer.module.css';
 import {
@@ -96,10 +97,20 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [timedVoiceActive, setTimedVoiceActive] = useState(false);
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [view, setView] = useState<'read' | 'slide'>('slide');
+  const [zoom, setZoom] = useState(1);
+  const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
+  const playerRef = useRef<HTMLDialogElement | null>(null);
+  const slideViewportRef = useRef<HTMLDivElement | null>(null);
+  const readingRef = useRef<HTMLDivElement | null>(null);
+  const expandButtonRef = useRef<HTMLButtonElement | null>(null);
+  const exitButtonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => { setAudioFailed(false); setAnimationFailed(false); }, [index, lang]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
+
 
   // The separate audio-only playlist can be opened beside this deck. If the
   // learner starts another spoken clip, stop this tour instead of talking over it.
@@ -119,8 +130,74 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     return () => document.removeEventListener('play', pauseForOtherAudio, true);
   }, []);
 
+
   const current = slides[index];
   const total = slides.length;
+  const transcript = current && spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
+
+  useEffect(() => {
+    setZoom(1);
+    if (readingRef.current) readingRef.current.scrollTop = 0;
+    if (slideViewportRef.current) {
+      slideViewportRef.current.scrollTop = 0;
+      slideViewportRef.current.scrollLeft = 0;
+    }
+  }, [index]);
+
+  useEffect(() => {
+    if (!transcript && view === 'read') setView('slide');
+  }, [transcript, view]);
+
+  useEffect(() => {
+    if (!expanded || view !== 'slide' || !slideViewportRef.current) return;
+    const viewport = slideViewportRef.current;
+    const measure = () => {
+      const { width, height } = viewport.getBoundingClientRect();
+      setViewportSize((previous) => previous.width === width && previous.height === height
+        ? previous : { width, height });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [expanded, view]);
+
+  const exitExpanded = useCallback(() => {
+    const dialog = playerRef.current;
+    if (!dialog) return;
+    dialog.close();
+    dialog.show();
+    setExpanded(false);
+  }, []);
+
+  const toggleExpanded = () => {
+    const dialog = playerRef.current;
+    if (!dialog) return;
+    if (expanded) exitExpanded();
+    else {
+      dialog.close();
+      dialog.showModal();
+      // The slide artwork is a fixed 16:9 image with type baked into it. On a phone the
+      // narration text is readable at normal size; the picture remains one tap away.
+      setView(transcript && window.matchMedia?.('(max-width: 1024px)').matches ? 'read' : 'slide');
+      setZoom(1);
+      setExpanded(true);
+    }
+  };
+
+  // Keep the same audio and video elements when the learner expands the deck. Re-mounting them
+  // would restart the lesson, especially on phones where full-screen media APIs vary by browser.
+  useEffect(() => {
+    if (!expanded) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    exitButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      expandButtonRef.current?.focus();
+    };
+  }, [expanded]);
+
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
   const timedTour = !!current && !!animationUrls(moduleId, current.slide, lang)?.narrationTimed;
@@ -252,14 +329,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     return () => clearTimeout(t);
   }, [running, audioForCurrent, onNarrationEnded]);
 
-  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
     // The player used to listen on window, which meant seeking an audio clip or using any other
     // page control also turned the lesson page. Only the deck surface owns these shortcuts.
     if (e.currentTarget !== e.target || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
     else if (e.key === 'Escape' && onClose) onClose();
-  }, [go, onClose]);
+  }, [go, onClose, expanded, exitExpanded]);
 
   // Touch: a horizontal drag turns the page. Vertical is left alone so the page still scrolls.
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -269,6 +347,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const onTouchEnd = (e: React.TouchEvent) => {
     const s = touchStart.current;
     if (!s) return;
+    if (expanded && zoom > 1) { touchStart.current = null; return; }
     const dx = e.changedTouches[0].clientX - s.x;
     const dy = e.changedTouches[0].clientY - s.y;
     if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) go(dx < 0 ? 1 : -1);
@@ -283,22 +362,32 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
   const isPlaying = playing.has(current.slide);
-  const transcript = spokenLang ? COURSE_TRANSCRIPTS[moduleId]?.[spokenLang.lang]?.[current.slide] : null;
+
+  const slideRatio = anim?.aspectRatio ?? 16 / 9;
+  const fittedWidth = expanded && viewportSize.width && viewportSize.height
+    ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
   const fullSizeImageUrl = anim?.poster ?? img?.url;
 
+
   return (
-    <div
+    <dialog
+      ref={playerRef}
+      open
       tabIndex={0}
-      role="region"
+
+      role={expanded ? 'dialog' : 'region'}
+      aria-modal={expanded ? true : undefined}
       aria-label={t('courseDeckRegion')}
+
       onKeyDown={onDeckKeyDown}
-      style={{ display: 'flex', flexDirection: 'column', gap: 10, background: PAPER, borderRadius: 14, border: `1px solid ${LINE}`, padding: 12 }}
+      onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
+      className={`${styles.player} ${expanded ? styles.expanded : ''}`}
     >
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+      <div className={styles.playerHeader}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
         </span>
-        <h3 style={{ margin: 0, fontSize: 15, lineHeight: 1.25, color: INK, flex: 1, textWrap: 'balance' }}>{heading}</h3>
+        <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
         {languages.length > 1 && (
           <div role="group" aria-label={t('courseNarrationLanguage')} style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
             {languages.map((code) => {
@@ -322,16 +411,52 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             })}
           </div>
         )}
+        <button
+          ref={expanded ? exitButtonRef : expandButtonRef}
+          type="button"
+          className={styles.expandButton}
+          onClick={toggleExpanded}
+          aria-label={t(expanded ? 'courseDeckFullscreenExitAria' : 'courseDeckFullscreenEnterAria')}
+        >
+          {expanded ? <Minimize2 size={17} aria-hidden="true" /> : <Maximize2 size={17} aria-hidden="true" />}
+          <span>{t(expanded ? 'courseDeckFullscreenExit' : 'courseDeckFullscreenEnter')}</span>
+        </button>
         {onClose && (
           <button onClick={onClose} aria-label={t('courseDeckClose')} style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
+      {expanded && transcript && (
+        <div className={styles.viewSwitch} role="group" aria-label={t('courseDeckViewMode')}>
+          <button type="button" aria-pressed={view === 'read'} onClick={() => setView('read')}>{t('courseDeckReadText')}</button>
+          <button type="button" aria-pressed={view === 'slide'} onClick={() => setView('slide')}>{t('courseDeckSeeSlide')}</button>
+        </div>
+      )}
+
+      {expanded && view === 'read' && transcript && (
+        <div ref={readingRef} className={styles.readingPanel} lang={spokenLang!.lang}>
+          <p className={styles.readingLabel}>{t('courseDeckSlideNarration')} · {langName(spokenLang!.lang, uiLang)}</p>
+          {transcript.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+        </div>
+      )}
+
+      {expanded && view === 'slide' && (
+        <div className={styles.zoomBar} role="group" aria-label={t('courseDeckSlideImageSize')}>
+          <span>{t('courseDeckSlideImageSize')}</span>
+          <button type="button" aria-label={t('courseDeckZoomOut')} disabled={zoom === 1} onClick={() => setZoom((value) => Math.max(1, value - 1))}>−</button>
+          <span aria-live="polite">{zoom}×</span>
+          <button type="button" aria-label={t('courseDeckZoomIn')} disabled={zoom === 3} onClick={() => setZoom((value) => Math.min(3, value + 1))}>+</button>
+          {zoom > 1 && <span className={styles.panHint}>{t('courseDeckPanHint')}</span>}
+        </div>
+      )}
 
       <div
+        ref={slideViewportRef}
+        className={`${styles.slideStage} ${expanded && view === 'read' ? styles.stageHidden : ''}`}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: '#1B1710', aspectRatio: anim?.aspectRatio ?? '16 / 9' }}
+        style={{ position: 'relative', borderRadius: 10, overflow: expanded ? 'auto' : 'hidden', background: '#1B1710', aspectRatio: expanded ? undefined : slideRatio }}
       >
+        <div className={styles.slideCanvas} style={{ position: 'relative', width: expanded && fittedWidth ? `${Math.round(fittedWidth * zoom)}px` : '100%', aspectRatio: slideRatio }}>
         {isPlaying && anim && !animationFailed ? (
           <video
             ref={videoRef}
@@ -381,6 +506,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             <span style={{ fontSize: 12.5, fontWeight: 700 }}>{t('courseDeckWatch').replace('{seconds}', String(Number(anim.seconds.toFixed(1)))).replace('{size}', formatBytes(anim.bytes))}</span>
           </button>
         )}
+        </div>
       </div>
 
       {fullSizeImageUrl && (
@@ -490,7 +616,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       </div>
 
       {transcript && (
-        <details style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
+        <details className={styles.transcript} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
             {t('courseDeckReadSlide').replace('{language}', langName(spokenLang!.lang, uiLang))}
           </summary>
@@ -499,6 +625,6 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           </div>
         </details>
       )}
-    </div>
+    </dialog>
   );
 }

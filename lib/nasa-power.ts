@@ -241,6 +241,8 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
   const monthlyTemp = MONTH_KEYS.map((k) => clean(temperatureByMonth[k]) ?? 20);
   const meanTemp = parseFloat((monthlyTemp.reduce((a: number, b: number) => a + b, 0) / 12).toFixed(1));
   const hotMonthTemp = reduceParam(p.T2M_MAX, (vals) => Math.max(...vals), 25);
+  const minTemperatureByMonth = asRecord(p.T2M_MIN);
+  const hasMinimumReading = MONTH_KEYS.every((key) => clean(minTemperatureByMonth[key]) !== null);
   const coldMonthTemp = reduceParam(p.T2M_MIN, (vals) => Math.min(...vals), 5);
   // NASA POWER returns ALLSKY_SFC_SW_DWN in MJ/m²/day — convert to kWh/m²/day (÷3.6) to match labels
   const solarByMonth = asRecord(p.ALLSKY_SFC_SW_DWN);
@@ -322,6 +324,6 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, monthlyTemp, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, minTemp, ...(hasMinimumReading ? { minTempSource: 'nasa-power' as const } : {}), monthlyTemp, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
   };
 }
