@@ -44,6 +44,7 @@ import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { canAccessRolePage } from '@/lib/role-access';
+import { useLanguage } from '@/lib/i18n';
 import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import type { UserRole } from '@/lib/db/types';
@@ -65,14 +66,19 @@ import type { GardenStatus } from '@/lib/db/types';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
-  loading: () => (
+  loading: () => <NetworkMapLoading />,
+});
+
+function NetworkMapLoading() {
+  const { lang } = useLanguage();
+  return (
     <div className="flex-1 flex items-center justify-center" style={{ background: '#E4DCC6' }}>
       <span className="font-display" style={{ fontSize: 14, color: '#5C5040' }}>
-        Loading the portfolio map…
+        {lang === 'zu' ? 'Kulayishwa imephu yohlelo…' : 'Loading the portfolio map…'}
       </span>
     </div>
-  ),
-});
+  );
+}
 
 const INK = '#20190F';
 const INK_SOFT = '#5C5040';
@@ -102,16 +108,15 @@ function statPct(n: number | null): string {
   return n === null ? DASH : `${Math.round(n)}%`;
 }
 
-const SORTS: Array<{ key: NetworkSortKey; label: string }> = [
-  { key: 'attention', label: 'Attention' },
-  { key: 'name', label: 'Name' },
-  { key: 'production', label: 'Harvest' },
-];
+const SORTS: NetworkSortKey[] = ['attention', 'name', 'production'];
 
 /* Reads other people's finances — same set as the NGO area, plus funder. */
 const NETWORK_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'funder', 'admin']);
 
 export default function NetworkPage() {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const tr = (en: string, zu: string) => isZulu ? zu : en;
   const { user, role, loading: authLoading } = useAuth();
   const router = useRouter();
   const sampleRole = useSampleRole();
@@ -156,14 +161,14 @@ export default function NetworkPage() {
   };
 
   const stats: Array<{ label: string; value: string; tone?: 'attention' }> = [
-    { label: 'Sites', value: String(totals.farmerCount) },
-    { label: 'Under plan', value: `${totals.totalPlotHa} ha` },
-    { label: 'Districts', value: String(totals.municipalityCount) },
-    { label: 'Harvested', value: statKg(totals.producedKg) },
-    { label: 'Farmer income', value: statZar(totals.incomeZar) },
-    { label: 'Median progress', value: statPct(totals.medianProgressPct) },
+    { label: tr('Sites', 'Izindawo'), value: String(totals.farmerCount) },
+    { label: tr('Under plan', 'Indawo ehleliwe'), value: `${totals.totalPlotHa} ha` },
+    { label: tr('Districts', 'Izifunda'), value: String(totals.municipalityCount) },
+    { label: tr('Harvested', 'Okuvunyiwe'), value: statKg(totals.producedKg) },
+    { label: tr('Farmer income', 'Imali engenayo yabalimi'), value: statZar(totals.incomeZar) },
+    { label: tr('Median progress', 'Inqubekelaphambili emaphakathi'), value: statPct(totals.medianProgressPct) },
     {
-      label: 'Needs attention',
+      label: tr('Needs attention', 'Kudinga ukunakwa'),
       value: String(totals.needsAttentionCount),
       tone: totals.needsAttentionCount > 0 ? 'attention' : undefined,
     },
@@ -175,10 +180,9 @@ export default function NetworkPage() {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: PAPER, border: `1px solid ${LINE}` }}>
-          <p className="text-sm font-display font-semibold mb-1" style={{ color: INK }}>This is the portfolio view</p>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: INK }}>{tr('This is the portfolio view', 'Leli yikhasi lohlelo lwabalimi')}</p>
           <p className="text-xs font-sans leading-relaxed" style={{ color: INK_MUTED }}>
-            It shows farmers&apos; own production and income figures, so it is limited to programme
-            teams and their funders.
+            {tr('It shows farmers’ own production and income figures, so access is limited to programme teams and their funders.', 'Libonisa izibalo zokukhiqiza nemali engenayo zabalimi, ngakho livulekele amaqembu ohlelo nabaxhasi bawo kuphela.')}
           </p>
         </div>
       </div>
@@ -197,7 +201,7 @@ export default function NetworkPage() {
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: INK_SOFT }}>
-          Network · funder portfolio
+          {tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
         </span>
         <div className="flex-1" />
 
@@ -205,7 +209,7 @@ export default function NetworkPage() {
             single-org NGO has nothing to choose and should not be asked to. */}
         {!portfolio.isDemo && portfolio.orgs.length > 1 && (
           <select
-            aria-label="Organisation"
+            aria-label={tr('Organisation', 'Inhlangano')}
             value={portfolio.orgId ?? ''}
             onChange={(e) => portfolio.setOrgId(e.target.value)}
             className="font-sans"
@@ -244,7 +248,7 @@ export default function NetworkPage() {
               marginRight: 4,
             }}
           >
-            Programme portfolio
+            {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
           </span>
         )}
         <SettingsButton />
@@ -261,7 +265,11 @@ export default function NetworkPage() {
         >
           <AlertTriangle size={13} style={{ color: '#9E5C08', flexShrink: 0 }} />
           <span className="font-sans" style={{ fontSize: 11.5, color: '#7A4A06' }}>
-            {portfolio.error}
+            {portfolio.error === 'No organisation is linked to this account yet.'
+              ? tr(portfolio.error, 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
+              : portfolio.error === 'Could not reach the portfolio service.'
+                ? tr(portfolio.error, 'Isevisi yohlelo ayitholakali okwamanje.')
+                : portfolio.error}
           </span>
           <button
             onClick={portfolio.reload}
@@ -272,7 +280,7 @@ export default function NetworkPage() {
               padding: '2px 9px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
             }}
           >
-            Try again
+            {tr('Try again', 'Zama futhi')}
           </button>
         </div>
       )}
@@ -282,8 +290,15 @@ export default function NetworkPage() {
           className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
           style={{ fontSize: 11, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
         >
-          Loading the portfolio…
+          {tr('Loading the portfolio…', 'Kulayishwa uhlelo…')}
         </div>
+      )}
+
+      {isZulu && (
+        <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
+          style={{ fontSize: 11, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
+          Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.
+        </p>
       )}
 
       {/* ── Summary bar ── */}
@@ -345,7 +360,7 @@ export default function NetworkPage() {
               }}
             >
               <List size={13} />
-              {listOpen ? 'Hide list' : 'Site list'}
+              {listOpen ? tr('Hide list', 'Fihla uhlu') : tr('Site list', 'Uhlu lwezindawo')}
             </button>
           </div>
         </div>
@@ -354,10 +369,15 @@ export default function NetworkPage() {
             className="font-sans px-3 md:px-4"
             style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}
           >
-            Totals cover {totals.reportingCount} of {totals.farmerCount} sites — the
-            rest are not readable by this account.
+            {tr(
+              `Totals cover ${totals.reportingCount} of ${totals.farmerCount} sites — the rest are not readable by this account.`,
+              `Izibalo zihlanganisa izindawo ezingu-${totals.reportingCount} kwezingu-${totals.farmerCount} kuphela — le akhawunti ayikwazi ukufunda ezinye.`,
+            )}
           </p>
         )}
+        <p className="font-sans px-3 md:px-4" style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}>
+          {tr('A dash (—) means no readable value. It never means zero.', 'Udeshi (—) usho ukuthi alikho inani elifundekayo. Akusho uziro.')}
+        </p>
       </div>
 
       {/* ── Body: roster + map ── */}
@@ -379,15 +399,15 @@ export default function NetworkPage() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Farmer, site or district…"
-                aria-label="Search the portfolio"
+                placeholder={tr('Farmer, site or district…', 'Umlimi, indawo noma isifunda…')}
+                aria-label={tr('Search the portfolio', 'Sesha ohlelweni')}
                 className="flex-1 font-sans bg-transparent outline-none"
                 style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
               />
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  aria-label="Clear search"
+                  aria-label={tr('Clear search', 'Sula umbhalo wosesho')}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: INK_MUTED, display: 'flex' }}
                 >
                   <X size={13} />
@@ -395,7 +415,7 @@ export default function NetworkPage() {
               )}
               <button
                 onClick={() => setListOpen(false)}
-                aria-label="Close site list"
+                aria-label={tr('Close site list', 'Vala uhlu lwezindawo')}
                 className="lg:hidden"
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: INK_SOFT, display: 'flex' }}
               >
@@ -409,7 +429,9 @@ export default function NetworkPage() {
                 return (
                   <button
                     key={d.key}
+                    type="button"
                     onClick={() => toggleDistrict(d.key)}
+                    aria-pressed={on}
                     className="font-sans font-semibold"
                     style={{
                       fontSize: 11,
@@ -429,24 +451,30 @@ export default function NetworkPage() {
 
             <div className="flex items-center gap-1.5" style={{ marginTop: 8 }}>
               <span className="font-sans" style={{ fontSize: 10, color: INK_MUTED, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                Sort
+                {tr('Sort', 'Hlela ngokulandelana')}
               </span>
-              {SORTS.map((s) => (
+              {SORTS.map((key) => (
                 <button
-                  key={s.key}
-                  onClick={() => setSort(s.key)}
+                  key={key}
+                  type="button"
+                  onClick={() => setSort(key)}
+                  aria-pressed={sort === key}
                   className="font-sans font-semibold"
                   style={{
                     fontSize: 11,
                     borderRadius: 999,
                     padding: '3px 8px',
                     cursor: 'pointer',
-                    background: sort === s.key ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: sort === s.key ? '#1F4D2B' : INK_MUTED,
-                    border: `1px solid ${sort === s.key ? 'rgba(31,77,43,0.35)' : LINE}`,
+                    background: sort === key ? 'rgba(31,77,43,0.12)' : 'transparent',
+                    color: sort === key ? '#1F4D2B' : INK_MUTED,
+                    border: `1px solid ${sort === key ? 'rgba(31,77,43,0.35)' : LINE}`,
                   }}
                 >
-                  {s.label}
+                  {key === 'attention'
+                    ? tr('Attention', 'Okudinga ukunakwa')
+                    : key === 'name'
+                      ? tr('Name', 'Igama')
+                      : tr('Harvest', 'Isivuno')}
                 </button>
               ))}
             </div>
@@ -456,7 +484,7 @@ export default function NetworkPage() {
           <div className="flex-1 overflow-y-auto px-2.5 py-2" style={{ minHeight: 0 }}>
             {sorted.length === 0 && (
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, padding: '14px 8px' }}>
-                No sites match that search.
+                {tr('No sites match that search.', 'Azikho izindawo ezihambisana nalolu sesho.')}
               </p>
             )}
             {sorted.map((row) => {
@@ -466,7 +494,9 @@ export default function NetworkPage() {
               return (
                 <button
                   key={farmer.id}
+                  type="button"
                   onClick={() => select(farmer.id)}
+                  aria-pressed={on}
                   className="w-full text-left"
                   style={{
                     display: 'block',
@@ -528,14 +558,20 @@ export default function NetworkPage() {
               }}
             >
               {portfolio.isDemo
-                ? DEMO_NETWORK_NOTICE
+                ? tr(DEMO_NETWORK_NOTICE, 'Iphothifoliyo yesibonelo sohambo; izinombolo azimele imiphumela yohlelo lwangempela.')
                 : portfolio.withheldForConsent > 0
                   // Stated, not silent. A roster shorter than the programme's roll is a
                   // consent outcome; unexplained, it reads as a small or shrinking programme.
-                  ? `${portfolio.withheldForConsent} more ${
-                      portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'
-                    } enrolled here but have not agreed to share their figures, so they are not listed.`
-                  : 'Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.'}
+                  ? tr(
+                      `${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed.`,
+                      portfolio.withheldForConsent === 1
+                        ? 'Omunye umlimi ubhalisiwe lapha kodwa akakavumi ukwabelana ngezibalo zakhe, ngakho akafakiwe ohlwini.'
+                        : `Abanye abalimi abangu-${portfolio.withheldForConsent} babhalisiwe lapha kodwa abakavumi ukwabelana ngezibalo zabo, ngakho abafakiwe ohlwini.`,
+                    )
+                  : tr(
+                      'Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.',
+                      'Wonke amanani alapha abelwane ngabalimi bawo, futhi aboniswa ezigabeni kuphela abavumele ukwabelana ngazo.',
+                    )}
             </p>
           </div>
         </aside>

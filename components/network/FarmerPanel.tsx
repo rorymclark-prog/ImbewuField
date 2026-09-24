@@ -83,6 +83,7 @@ import { isSampleMode } from '@/lib/sample-mode';
  */
 
 import { useMemo } from 'react';
+import { useLanguage } from '@/lib/i18n';
 import {
   AlertTriangle, CalendarDays, Check, ClipboardList, GraduationCap, Info,
   Leaf, ListChecks, MapPin, Minus, Ruler, ShieldAlert, Sprout, TrendingUp, Wallet, X,
@@ -122,6 +123,39 @@ const STATUS_COLOR: Record<string, string> = {
   establishing: OCHRE,
   support: RUST,
 };
+
+// Farmer-entered survey answers and report/source prose stay in their original
+// language. Translate only fixed interface and disclosure copy in this panel.
+function panelText(text: string, lang: string): string {
+  if (lang !== 'zu') return text;
+  const copy: Record<string, string> = {
+    'Not visible': 'Akubonakali',
+    'Thriving': 'Kuyachuma',
+    'Establishing': 'Kuyasungulwa',
+    'Needs support': 'Kudinga ukwesekwa',
+    'This account cannot read that record': 'Le akhawunti ayikwazi ukufunda lelo rekhodi',
+    'Not recorded yet': 'Akukarekhodwa',
+    'Readable — nothing has been logged': 'Kuyafundeka — akukho okufakiwe',
+    'The site survey is stored on the farmer’s own account and is not readable here.': 'Inhlolovo yendawo igcinwe ku-akhawunti yomlimi futhi ayifundeki lapha.',
+    'Setup progress is derived from the farmer’s own map data, which is not readable here.': 'Intuthuko yokusetha ithathwe kudatha yemephu yomlimi, engafundeki lapha.',
+    'No ledger rows were passed to the panel, so there is nothing to plot over time.': 'Awekho amarekhodi ezimali adluliselwe kuleli phaneli, ngakho akukho okungaboniswa ngokuhamba kwesikhathi.',
+    'None of the production, sales or expense books are readable for this farmer.': 'Amarekhodi okukhiqiza, okuthengisa noma ezindleko alo mlimi awafundeki.',
+    'Close farmer record': 'Vala irekhodi lomlimi',
+    'The site survey is complete.': 'Inhlolovo yendawo iphelele.',
+    'No dated entries yet': 'Awekho amarekhodi anedethi okwamanje',
+    'Last entry in any book': 'Okufakwe ekugcineni kunoma yiliphi irekhodi',
+    'Show this site on the map': 'Bonisa le ndawo ebalazweni',
+    'Financials — this season': 'Ezezimali — kule sizini',
+    'Month by month': 'Inyanga nenyanga',
+    'Surveys': 'Izinhlolovo',
+    'Progress': 'Intuthuko',
+    'Site survey': 'Inhlolovo yendawo',
+    'Course modules completed': 'Amamojula esifundo aqediwe',
+    'Training records are not readable for this farmer, so no proportion is shown.': 'Amarekhodi okuqeqeshwa alo mlimi awafundeki, ngakho isilinganiso asiboniswa.',
+    'Farmer record': 'Irekhodi lomlimi',
+  };
+  return copy[text] ?? text;
+}
 
 export interface FarmerPanelProps {
   /** The clicked farmer. Identity and site details are read from here. */
@@ -168,14 +202,14 @@ export interface FarmerPanelProps {
  * Small shared pieces
  * ──────────────────────────────────────────────────────────────────────────*/
 
-function SectionLabel({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+function SectionLabel({ icon, children, lang }: { icon: React.ReactNode; children: string; lang: string }) {
   return (
     <div
       className="flex items-center gap-1.5 font-sans font-bold uppercase"
       style={{ color: GOLD, letterSpacing: '0.12em', fontSize: 10.5 }}
     >
       {icon}
-      {children}
+      {panelText(children, lang)}
     </div>
   );
 }
@@ -202,8 +236,8 @@ function Card({ children, accent }: { children: React.ReactNode; accent?: string
  * or `not_recorded` state is physically incapable of rendering as a figure.
  */
 function ReadoutValue({
-  readout, selector, size = 17, tone,
-}: { readout: Readout; selector: string; size?: number; tone?: string }) {
+  readout, selector, size = 17, tone, lang = 'en',
+}: { readout: Readout; selector: string; size?: number; tone?: string; lang?: string }) {
   if (readout.state === 'value') {
     return (
       <span
@@ -221,7 +255,7 @@ function ReadoutValue({
       className="font-sans inline-flex items-center gap-1"
       data-selector={selector}
       data-state={readout.state}
-      title={readout.note}
+      title={panelText(readout.note, lang)}
       style={{
         fontSize: Math.max(11, size - 5.5),
         fontWeight: 600,
@@ -231,13 +265,13 @@ function ReadoutValue({
       }}
     >
       {isDenied ? <ShieldAlert size={11} aria-hidden /> : <Minus size={11} aria-hidden />}
-      {readout.text}
+      {panelText(readout.text, lang)}
     </span>
   );
 }
 
 /** One labelled figure in a grid. */
-function StatBlock({ row }: { row: PanelRow }) {
+function StatBlock({ row, lang = 'en' }: { row: PanelRow; lang?: string }) {
   const tone =
     row.readout.state !== 'value'
       ? undefined
@@ -254,10 +288,10 @@ function StatBlock({ row }: { row: PanelRow }) {
       <div className="font-sans" style={{ color: MUTED, fontSize: 10, marginBottom: 3 }}>
         {row.label}
       </div>
-      <ReadoutValue readout={row.readout} selector={row.selector} tone={tone} />
+      <ReadoutValue readout={row.readout} selector={row.selector} tone={tone} lang={lang} />
       {row.readout.state !== 'value' && row.readout.note && (
         <div className="font-sans" style={{ color: FAINT, fontSize: 9.5, marginTop: 3, lineHeight: 1.3 }}>
-          {row.readout.note}
+          {panelText(row.readout.note, lang)}
         </div>
       )}
     </div>
@@ -427,6 +461,8 @@ function FlagChip({ flag }: { flag: NetworkAttentionFlag }) {
 export function FarmerPanel({
   farmer, summary, onClose, sources, onViewOnMap, demoNotice, variant = 'sheet', className,
 }: FarmerPanelProps) {
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
   const m = summary.metrics;
 
   const flags = useMemo(() => attentionFlags(summary), [summary]);          // ← attentionFlags()
@@ -492,7 +528,7 @@ export function FarmerPanel({
               }}
             >
               <Sprout size={10} aria-hidden />
-              {statusLabel(farmer.status)}
+              {panelText(statusLabel(farmer.status), lang)}
             </span>
           </div>
         </div>
@@ -586,10 +622,10 @@ export function FarmerPanel({
 
         {/* ══ FINANCIALS ══════════════════════════════════════════════════ */}
         <section className="space-y-2">
-          <SectionLabel icon={<Wallet size={12} />}>Financials — this season</SectionLabel>
+          <SectionLabel icon={<Wallet size={12} />} lang={lang}>Financials — this season</SectionLabel>
           <Card accent={FOREST}>
             <div className="grid grid-cols-2 gap-2">
-              {money.map((row) => <StatBlock key={row.key} row={row} />)}
+              {money.map((row) => <StatBlock key={row.key} row={row} lang={lang} />)}
             </div>
             {money.map((row) =>
               row.caveat && row.readout.state === 'value' ? (
@@ -605,7 +641,7 @@ export function FarmerPanel({
 
             <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 10 }}>
               <div className="grid grid-cols-3 gap-2">
-                {produce.map((row) => <StatBlock key={row.key} row={row} />)}
+                {produce.map((row) => <StatBlock key={row.key} row={row} lang={lang} />)}
               </div>
 
               {/* ← NetworkFarmerMetrics.soldPct — share of the harvest sold.
@@ -674,7 +710,7 @@ export function FarmerPanel({
             Rendered only when the ledgers were passed AND cover enough months
             to be a trend. Otherwise the panel says why, and draws nothing. */}
         <section className="space-y-2">
-          <SectionLabel icon={<TrendingUp size={12} />}>Month by month</SectionLabel>
+          <SectionLabel icon={<TrendingUp size={12} />} lang={lang}>Month by month</SectionLabel>
           <Card>
             {series.renderable ? (
               <MonthStrip series={series} />
@@ -692,7 +728,7 @@ export function FarmerPanel({
 
         {/* ══ SURVEYS ═════════════════════════════════════════════════════ */}
         <section className="space-y-2">
-          <SectionLabel icon={<ClipboardList size={12} />}>Surveys</SectionLabel>
+          <SectionLabel icon={<ClipboardList size={12} />} lang={lang}>Surveys</SectionLabel>
           <Card accent={survey.state === 'complete' ? FOREST : GOLD}>
             <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 6 }}>
               <span className="font-sans font-semibold" style={{ fontSize: 11.5, color: BODY }}>
@@ -748,6 +784,7 @@ export function FarmerPanel({
                   selector="NetworkFarmerMetrics.surveysAnswered"
                   size={12.5}
                   tone={BODY}
+                  lang={lang}
                 />
               </div>
             </div>
@@ -756,7 +793,7 @@ export function FarmerPanel({
 
         {/* ══ PROGRESS ════════════════════════════════════════════════════ */}
         <section className="space-y-2">
-          <SectionLabel icon={<ListChecks size={12} />}>Progress</SectionLabel>
+          <SectionLabel icon={<ListChecks size={12} />} lang={lang}>Progress</SectionLabel>
           <Card accent={BLUE}>
             {progress.visible && progress.pct !== null ? (
               <>
@@ -845,6 +882,7 @@ export function FarmerPanel({
                   selector="NetworkFarmerMetrics.modulesDone"
                   size={12.5}
                   tone={BODY}
+                  lang={lang}
                 />
               </div>
               {progress.trainingPct !== null ? (
@@ -865,14 +903,15 @@ export function FarmerPanel({
         >
           <ShieldAlert size={12} style={{ color: MUTED, flexShrink: 0, marginTop: 2 }} />
           <span className="font-sans" style={{ fontSize: 9.5, color: MUTED, lineHeight: 1.45 }}>
-            Every figure here is derived by <code style={{ fontSize: 9 }}>lib/network.ts</code> from
-            already-loaded records; hover any value for its source, or read its{' '}
-            <code style={{ fontSize: 9 }}>data-selector</code> attribute.{' '}
-            <strong style={{ color: BODY }}>Not visible</strong> means this account could not read
-            that record — it never means zero.
-            {farmer.consent === 'demo'
-              ? ' Tour records do not contain private farmer data.'
-              : ' Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.'}
+            {zu ? 'Zonke izibalo lapha zithathwe ku-' : 'Every figure here is derived by '}<code style={{ fontSize: 9 }}>lib/network.ts</code>{zu ? ' kumarekhodi asevele elayishiwe. ' : ' from already-loaded records; '}
+            {zu ? 'Hambisa isikhombi kunani ukuze ubone umthombo walo, noma ufunde isibaluli se-' : 'hover any value for its source, or read its '}
+            <code style={{ fontSize: 9 }}>data-selector</code>{zu ? '. ' : ' attribute. '}
+            <strong style={{ color: BODY }}>{zu ? 'Akubonakali' : 'Not visible'}</strong>{zu ? ' kusho ukuthi le akhawunti ayikwazanga ukufunda lelo rekhodi — akusho uziro.' : ' means this account could not read that record — it never means zero.'}
+            {zu
+              ? ` ${farmer.consent === 'demo' ? 'Amarekhodi okuvakasha awanalo ulwazi oluyimfihlo lomlimi.' : 'Ukubonisa amarekhodi omlimi wangempela kwenye i-akhawunti kudinga ukuhlolwa kwemvume kuseva kanye nemvume yomlimi erekhodiwe.'} Ezinye izincazelo ezinde zisaboniswa ngesiNgisi. Izimpendulo namanothi abhaliwe kusala ngolimi lwazo lokuqala.`
+              : farmer.consent === 'demo'
+                ? ' Tour records do not contain private farmer data.'
+                : ' Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.'}
           </span>
         </div>
     </>
@@ -883,7 +922,7 @@ export function FarmerPanel({
   if (variant === 'embedded') {
     return (
       <div
-        aria-label={`Farmer record — ${farmer.name}`}
+        aria-label={`${zu ? 'Irekhodi lomlimi' : 'Farmer record'} — ${farmer.name}`}
         className={['space-y-3.5', className ?? ''].join(' ')}
       >
         {content}
@@ -893,7 +932,7 @@ export function FarmerPanel({
 
   return (
     <aside
-      aria-label={`Farmer record — ${farmer.name}`}
+      aria-label={`${zu ? 'Irekhodi lomlimi' : 'Farmer record'} — ${farmer.name}`}
       className={[
         // mobile: bottom sheet
         'absolute inset-x-0 bottom-0 z-20 rounded-t-3xl shadow-float max-h-[80dvh]',
@@ -910,13 +949,13 @@ export function FarmerPanel({
         />
         <div className="min-w-0" style={{ marginTop: 4 }}>
           <span className="font-sans font-bold uppercase" style={{ fontSize: 10, letterSpacing: '0.12em', color: MUTED }}>
-            Farmer record
+            {zu ? 'Irekhodi lomlimi' : 'Farmer record'}
           </span>
         </div>
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close farmer record"
+          aria-label={zu ? 'Vala irekhodi lomlimi' : 'Close farmer record'}
           style={{
             background: 'rgba(32,25,15,0.06)', border: `1px solid ${BORDER}`, borderRadius: 8,
             padding: 6, cursor: 'pointer', color: BODY, display: 'flex', flexShrink: 0,

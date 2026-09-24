@@ -17,6 +17,15 @@ review takes predate the English corrections and must be matched against
 accepted scripts before any learner import. The course content gate remains
 in place; this batch does not turn review drafts into learner lessons.
 
+The next batch extends isiZulu controls through staff access, the network,
+cohort and garden register. My Studies now presents its English-content notice
+before the course list; narration and offline downloads disclose pending review
+or English media at the point of use. These are interface drafts. Farmer-entered
+names and evidence remain as recorded; source claims, calculations, permissions
+and consent gates retain their existing authority. Several charts, report
+bodies, map details and assessment prompts remain English, with notices on the
+affected screens. The count of approved isiZulu lessons has not increased.
+
 **Status: work in progress, not a whole-app isiZulu release.** Selecting
 isiZulu already loads a shared interface dictionary, but missing keys fall
 back to English. A language switch by itself does not mean a course, form,

@@ -52,6 +52,9 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const abortRef = useRef<AbortController | null>(null);
 
   const totalBytes = packs.reduce((s, p) => s + p.bytes, 0);
+  const hasEnglishMedia = lang === 'zu' && packs.some(pack => pack.entries.some(entry =>
+    (entry.kind === 'slide' || entry.kind === 'audio') && entry.url.includes('/en/'),
+  ));
   // Both totals are known up front so the choice can be made with the two numbers side by side,
   // rather than by toggling and watching a figure change.
   const sizeFor = useCallback((q: PackQuality) => moduleIds
@@ -164,6 +167,12 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </p>
           </div>
         </div>
+      )}
+
+      {hasEnglishMedia && (
+        <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+          Le phakheji inamaslayidi noma umsindo wesiNgisi lapho okwasisiZulu kungakatholakali.
+        </p>
       )}
 
       <div className="flex flex-wrap items-center gap-2">

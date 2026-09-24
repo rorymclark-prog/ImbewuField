@@ -54,12 +54,14 @@ import {
   rollupBy,
   sortNetwork,
   type NetworkFarmerSummary,
+  type NetworkAttentionFlag,
   type NetworkSortKey,
 } from '@/lib/network';
 import { cohortCsv, cohortCsvFilename, cohortTraining } from '@/lib/cohort-report';
 import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_NETWORK_NOTICE, demoFarmerById } from '@/lib/network-demo';
 import { kgTotalLabel, randLabel } from '@/lib/format-figures';
+import { useLanguage } from '@/lib/i18n';
 import FarmerPanel from '@/components/network/FarmerPanel';
 import { CohortTimeline, CohortTrainingChart } from './CohortCharts';
 import type { GardenStatus } from '@/lib/db/types';
@@ -149,6 +151,8 @@ function Tile({ label, value, sub, tone }: {
  * ──────────────────────────────────────────────────────────────────────────*/
 
 export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'ngo' }) {
+  const { lang } = useLanguage();
+  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const { user } = useAuth();
   const portfolio = useNetworkPortfolio(Boolean(user));
   const all = portfolio.rows;
@@ -210,42 +214,42 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
 
   const tiles: Array<{ label: string; value: string; sub?: string; tone?: 'attention' }> = [
     {
-      label: mode === 'funder' ? 'Farms funded' : 'Farms',
+      label: mode === 'funder' ? ui('Farms funded','Amapulazi axhasiwe') : ui('Farms','Amapulazi'),
       value: String(totals.farmerCount),
-      sub: `${totals.municipalityCount} ${totals.municipalityCount === 1 ? 'district' : 'districts'}`,
+      sub: `${totals.municipalityCount} ${ui(totals.municipalityCount === 1 ? 'district' : 'districts', totals.municipalityCount === 1 ? 'isifunda' : 'izifunda')}`,
     },
     {
-      label: 'Reported plot area',
+      label: ui('Reported plot area','Indawo ebikiwe yeziza'),
       value: `${totals.totalPlotHa} ha`,
-      sub: `${group(totals.totalPlotM2)} m² · reported; may include shared gardens`,
+      sub: `${group(totals.totalPlotM2)} m² · ${ui('reported; may include shared gardens','kubikiwe; kungafaka nezingadi ezabiwe')}`,
     },
-    { label: 'Harvested', value: statKg(totals.producedKg), sub: `${statKg(totals.soldKg)} sold` },
+    { label: ui('Harvested','Okuvunyiwe'), value: statKg(totals.producedKg), sub: `${statKg(totals.soldKg)} ${ui('sold','kudayisiwe')}` },
     {
-      label: 'Farmer income',
+      label: ui('Farmer income','Imali engenayo yabalimi'),
       value: statZar(totals.incomeZar),
-      sub: totals.netZar === null ? undefined : `${statZar(totals.netZar)} after costs`,
+      sub: totals.netZar === null ? undefined : `${statZar(totals.netZar)} ${ui('after costs','emva kwezindleko')}`,
     },
     {
-      label: 'Training records shared',
+      label: ui('Training records shared','Amarekhodi okuqeqeshwa abiwe'),
       value: `${training.reporting} / ${training.total}`,
-      sub: 'farmers sharing course progress',
+      sub: ui('farmers sharing course progress','abalimi ababelana ngenqubekelaphambili yesifundo'),
     },
     {
-      label: 'Logged this month',
+      label: ui('Logged this month','Okuqoshiwe kule nyanga'),
       value: thisMonth === null ? DASH : String(thisMonth.activeFarmers),
-      sub: thisMonth === null ? 'no month-by-month data' : `farms recording in ${thisMonth.longLabel}`,
+      sub: thisMonth === null ? ui('no month-by-month data','ayikho idatha yenyanga ngayinye') : `${ui('farms recording in','amapulazi aqopha ngo-')}${thisMonth.longLabel}`,
     },
     {
-      label: 'Course finished',
+      label: ui('Course finished','Isifundo esiqediwe'),
       value: training.reporting === 0 ? DASH : `${training.averagePct ?? 0}%`,
       sub: training.reporting === 0
-        ? 'no training records shared'
-        : `average over ${training.reporting} of ${training.total} farms`,
+        ? ui('no training records shared','akukho marekhodi okuqeqeshwa abiwe')
+        : `${ui('average over','isilinganiso samapulazi angu-')}${training.reporting} ${ui('of','kwangu-')} ${training.total}`,
     },
     {
-      label: 'Needs a visit',
+      label: ui('Needs a visit','Idinga ukuvakashelwa'),
       value: String(totals.needsAttentionCount),
-      sub: `${totals.activeLast90Days} active in 90 days`,
+      sub: `${totals.activeLast90Days} ${ui('active in 90 days','asebenze ezinsukwini ezingu-90')}`,
       tone: totals.needsAttentionCount > 0 ? 'attention' : undefined,
     },
   ];
@@ -277,7 +281,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                 padding: '3px 10px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
               }}
             >
-              Try again
+              {ui('Try again','Zama futhi')}
             </button>
           </div>
         )}
@@ -286,7 +290,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
             className="px-3 md:px-5 py-1.5 font-sans"
             style={{ fontSize: MICRO, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
           >
-            Loading the cohort…
+            {ui('Loading the cohort…','Kusalayishwa iqembu…')}
           </div>
         )}
         {portfolio.isDemo && !isSampleMode() && (
@@ -297,9 +301,13 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               background: 'rgba(158,92,8,0.10)', borderBottom: '1px solid rgba(158,92,8,0.25)',
             }}
           >
-            {DEMO_NETWORK_NOTICE}
+            {ui(DEMO_NETWORK_NOTICE,'Iphothifoliyo yesibonelo')}
           </div>
         )}
+
+        {lang === 'zu' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
+          Izilawuli nezaziso zokwabelana kuleli khasi zisesiZulu. Amanye amagrafu, izexwayiso zesimo sedatha nephaneli yemininingwane yomlimi zisaboniswa ngesiNgisi; amagama, amanani nobufakazi obuqoshwe ngabantu kuboniswa njengoba kugcinwe.
+        </p>}
 
         <div className="px-3 md:px-5 pt-4" style={{ paddingBottom: 160, maxWidth: 1480, margin: '0 auto' }}>
           {/* ── 1. what the cohort adds up to ─────────────────────────────────────────── */}
@@ -307,12 +315,12 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
             className="font-display font-bold"
             style={{ fontSize: 'clamp(25px, 2.5vw, 32px)', color: INK, margin: '0 0 2px' }}
           >
-            {mode === 'funder' ? 'The cohort you are funding' : 'The cohort'}
+            {mode === 'funder' ? ui('The cohort you are funding','Iqembu olixhasayo') : ui('The cohort','Iqembu')}
           </h2>
           <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, margin: '0 0 12px', lineHeight: 1.5 }}>
             {totals.reportingCount === totals.farmerCount
-              ? `Every figure below is recorded by the ${totals.farmerCount} ${totals.farmerCount === 1 ? 'farmer' : 'farmers'} it belongs to, and shown only for the categories they agreed to share.`
-              : `Totals cover the ${totals.reportingCount} of ${totals.farmerCount} farms whose records this account may read. The other ${totals.farmerCount - totals.reportingCount} are counted as farms, never as zeros.`}
+              ? ui(`Every figure below is recorded by the ${totals.farmerCount} ${totals.farmerCount === 1 ? 'farmer' : 'farmers'} it belongs to, and shown only for the categories they agreed to share.`,`Isibalo ngasinye esingezansi siqoshwe umlimi esingesakhe kubalimi abangu-${totals.farmerCount}, futhi siboniswa ezigabeni avume ukwabelana ngazo kuphela.`)
+              : ui(`Totals cover the ${totals.reportingCount} of ${totals.farmerCount} farms whose records this account may read. The other ${totals.farmerCount - totals.reportingCount} are counted as farms, never as zeros.`,`Amarekhodi amapulazi angu-${totals.reportingCount} kwangu-${totals.farmerCount} ayafundeka kule akhawunti. Amanye angu-${totals.farmerCount - totals.reportingCount} asabalwa njengamapulazi, hhayi njengoziro.`)}
           </p>
 
           {emptyPortfolio ? (
@@ -321,14 +329,13 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               style={{ background: PAPER, border: `1px solid ${LINE}` }}
             >
               <p className="font-display font-semibold" style={{ fontSize: 15, color: INK, margin: '0 0 6px' }}>
-                No farms are visible to this account yet
+                {ui('No farms are visible to this account yet','Awekho amapulazi abonakala kule akhawunti okwamanje')}
               </p>
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_SOFT, margin: 0, lineHeight: 1.6 }}>
-                Farmers appear here once they have agreed to share their records with the
-                organisation.{' '}
+                {ui('Farmers appear here once they have agreed to share their records with the organisation.','Abalimi babonakala lapha uma sebevumile ukwabelana ngenhlangano ngamarekhodi abo.')}{' '}
                 {portfolio.withheldForConsent > 0
-                  ? `${portfolio.withheldForConsent} ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here and have not yet done so.`
-                  : 'Nothing is hidden by an error — the list is genuinely empty.'}
+                  ? ui(`${portfolio.withheldForConsent} ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here and have not yet done so.`,`Abalimi abangu-${portfolio.withheldForConsent} babhalisiwe lapha kodwa abakavumi ukwabelana ngamarekhodi abo.`)
+                  : ui('Nothing is hidden by an error — the list is genuinely empty.','Akukho okufihlwe iphutha — uhlu alunalutho ngempela.')}
               </p>
             </div>
           ) : (
@@ -356,7 +363,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       className="font-display font-bold"
                       style={{ fontSize: 15, color: INK, margin: 0, marginRight: 'auto' }}
                     >
-                      Farm by farm
+                      {ui('Farm by farm','Ipulazi ngalinye')}
                     </h3>
                     <button
                       type="button"
@@ -372,7 +379,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       }}
                     >
                       <Download size={13} />
-                      Export {sorted.length === all.length ? 'all' : sorted.length} as CSV
+                      {ui(`Export ${sorted.length === all.length ? 'all' : sorted.length} as CSV`,`Khipha ${sorted.length === all.length ? 'konke' : sorted.length} njenge-CSV`)}
                     </button>
                   </div>
 
@@ -385,8 +392,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                     <input
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Farmer, site, district or cohort…"
-                      aria-label="Search the cohort"
+                      placeholder={ui('Farmer, site, district or cohort…','Umlimi, indawo, isifunda noma iqembu…')}
+                      aria-label={ui('Search the cohort','Sesha iqembu')}
                       className="flex-1 font-sans bg-transparent outline-none"
                       style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
                     />
@@ -394,7 +401,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       <button
                         type="button"
                         onClick={() => setQuery('')}
-                        aria-label="Clear search"
+                        aria-label={ui('Clear search','Sula usesho')}
                         style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: INK_MUTED, display: 'flex' }}
                       >
                         <X size={14} />
@@ -437,7 +444,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       }}
                     >
                       <AlertTriangle size={12} />
-                      Needs a visit {totals.needsAttentionCount}
+                      {ui('Needs a visit','Idinga ukuvakashelwa')} {totals.needsAttentionCount}
                     </button>
                   </div>
 
@@ -448,7 +455,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       style={{ fontSize: MICRO, color: INK_MUTED, letterSpacing: '0.08em' }}
                     >
                       <SlidersHorizontal size={12} />
-                      Sort
+                      {ui('Sort','Hlela')}
                     </span>
                     {SORTS.map((s) => (
                       <button
@@ -464,16 +471,13 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           border: `1px solid ${sort === s.key ? 'rgba(31,77,43,0.35)' : LINE}`,
                         }}
                       >
-                        {s.label}
+                        {{ attention: ui('Needs a visit','Idinga ukuvakashelwa'), production: ui('Harvest','Isivuno'), income: ui('Income','Imali engenayo'), joined: ui('Joined','Yabhaliswa'), name: ui('Name','Igama'), progress: ui('Progress','Inqubekelaphambili'), size: ui('Plot size','Usayizi wesiza'), nearest: ui('Distance','Ibanga') }[s.key]}
                       </button>
                     ))}
                   </div>
 
                   <p className="font-sans" style={{ fontSize: MICRO, color: INK_MUTED, margin: '9px 0 0', lineHeight: 1.5 }}>
-                    Showing {sorted.length} of {all.length} {all.length === 1 ? 'farm' : 'farms'}.
-                    {' '}The totals and charts above always cover the whole cohort — the month-by-month
-                    figures are worked out for the organisation, not per district, so a filter here
-                    cannot change them.
+                    {ui(`Showing ${sorted.length} of ${all.length} ${all.length === 1 ? 'farm' : 'farms'}. The totals and charts above always cover the whole cohort — the month-by-month figures are worked out for the organisation, not per district, so a filter here cannot change them.`,`Kuboniswa amapulazi angu-${sorted.length} kwangu-${all.length}. Izibalo namagrafu angenhla ahlanganisa iqembu lonke njalo — izibalo zenyanga ngayinye zenziwa ngenhlangano, hhayi ngesifunda, ngakho isihlungi salapha asikwazi ukuzishintsha.`)}
                     {filtersOn && (
                       <>
                         {' '}
@@ -486,7 +490,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                             color: FOREST, cursor: 'pointer', textDecoration: 'underline',
                           }}
                         >
-                          Clear the filters
+                          {ui('Clear the filters','Sula izihlungi')}
                         </button>
                       </>
                     )}
@@ -496,7 +500,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                 {/* ── the roster: a table on a laptop, cards on a phone ──────────────── */}
                 {sorted.length === 0 ? (
                   <p className="font-sans" style={{ fontSize: 13, color: INK_MUTED, padding: '18px 16px', margin: 0 }}>
-                    No farms match that search.
+                    {ui('No farms match that search.','Alikho ipulazi elihambisana nalolu sesho.')}
                   </p>
                 ) : (
                   <>
@@ -504,7 +508,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <thead>
                           <tr>
-                            {['Farmer', 'Site', 'Harvested', 'Sold', 'Income', 'Course', 'Last logged', ''].map((h, i) => (
+                            {[ui('Farmer','Umlimi'), ui('Site','Indawo'), ui('Harvested','Okuvunyiwe'), ui('Sold','Okudayisiwe'), ui('Income','Imali engenayo'), ui('Course','Isifundo'), ui('Last logged','Okokugcina okuqoshiwe'), ''].map((h, i) => (
                               <th
                                 key={h || `blank-${i}`}
                                 scope="col"
@@ -528,6 +532,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                               row={row}
                               selected={row.farmer.id === selectedId}
                               onOpen={() => setSelectedId(row.farmer.id)}
+                              ui={ui}
                             />
                           ))}
                         </tbody>
@@ -541,6 +546,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           row={row}
                           selected={row.farmer.id === selectedId}
                           onOpen={() => setSelectedId(row.farmer.id)}
+                          ui={ui}
                         />
                       ))}
                     </div>
@@ -555,10 +561,10 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                   }}
                 >
                   {portfolio.isDemo
-                    ? 'A dash means a missing figure. It never means zero.'
+                    ? ui('A dash means a missing figure. It never means zero.','Udeshi usho ukuthi inani alikho. Awusho ukuthi kunguziro.')
                     : portfolio.withheldForConsent > 0
-                      ? `${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.`
-                      : 'A dash means a figure this account may not read. It never means zero.'}
+                      ? ui(`${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.`,`Abalimi abangu-${portfolio.withheldForConsent} babhalisiwe kodwa abavumanga ukwabelana ngezibalo zabo, ngakho ababoniswa. Udeshi usho ukuthi le akhawunti ayikwazi ukufunda inani — awusho ukuthi kunguziro.`)
+                      : ui('A dash means a figure this account may not read. It never means zero.','Udeshi usho ukuthi le akhawunti ayikwazi ukufunda inani. Awusho ukuthi kunguziro.')}
                 </p>
               </section>
             </>
@@ -581,12 +587,12 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               className="font-sans font-bold uppercase"
               style={{ fontSize: MICRO, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
             >
-              Farmer
+              {ui('Farmer','Umlimi')}
             </span>
             <button
               type="button"
               onClick={() => setSelectedId(null)}
-              aria-label="Close farmer record"
+              aria-label={ui('Close farmer record','Vala irekhodi lomlimi')}
               style={{
                 background: 'rgba(32,25,15,0.06)', border: `1px solid ${LINE}`, borderRadius: 8,
                 padding: 6, cursor: 'pointer', color: INK_SOFT, display: 'flex', marginTop: 4,
@@ -620,9 +626,12 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
  * ──────────────────────────────────────────────────────────────────────────*/
 
 /** The cells both layouts print, worked out once so the phone and the laptop cannot disagree. */
-function farmCells(row: NetworkFarmerSummary) {
+type CohortUi = (en: string, zu: string) => string;
+
+function farmCells(row: NetworkFarmerSummary, ui: CohortUi) {
   const { farmer, metrics } = row;
   const flags = attentionFlags(row);
+  const days = metrics.daysSinceActivity;
   return {
     flags,
     harvested: statKg(metrics.producedKg),
@@ -632,21 +641,31 @@ function farmCells(row: NetworkFarmerSummary) {
       metrics.modulesDone === null
         ? DASH
         : `${metrics.modulesDone}/${metrics.modulesTotal}`,
-    lastLogged:
-      metrics.daysSinceActivity === null
-        ? DASH
-        : metrics.daysSinceActivity === 0
-          ? 'today'
-          : `${metrics.daysSinceActivity} ${metrics.daysSinceActivity === 1 ? 'day' : 'days'} ago`,
+    lastLogged: days === null
+      ? DASH
+      : days === 0
+        ? ui('today','namuhla')
+        : `${days} ${days === 1 ? ui('day ago','usuku olwedlule') : ui('days ago','izinsuku ezedlule')}`,
     place: `${farmer.siteName} · ${farmer.district}`,
   };
 }
 
-function FarmRow({ row, selected, onOpen }: {
-  row: NetworkFarmerSummary; selected: boolean; onOpen: () => void;
+function attentionLabel(kind: NetworkAttentionFlag['kind'], ui: CohortUi) {
+  return ({
+    dormant: ui('No recent logs','Akukho okusha okuqoshiwe'),
+    under_plan: ui('Under plan','Kungaphansi kohlelo'),
+    loss_making: ui('Costs above income','Izindleko zingaphezu kwemali engenayo'),
+    stalled_setup: ui('Setup incomplete','Ukulungiselela akuphelile'),
+    no_survey: ui('Site survey incomplete','Ukuhlolwa kwendawo akuphelile'),
+    no_data: ui('No records visible','Awekho amarekhodi abonakalayo'),
+  })[kind];
+}
+
+function FarmRow({ row, selected, onOpen, ui }: {
+  row: NetworkFarmerSummary; selected: boolean; onOpen: () => void; ui: CohortUi;
 }) {
   const { farmer } = row;
-  const c = farmCells(row);
+  const c = farmCells(row, ui);
   const cell: React.CSSProperties = {
     padding: '9px 12px', borderBottom: `1px solid ${LINE}`, fontSize: 13,
     color: INK_SOFT, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums',
@@ -661,7 +680,7 @@ function FarmRow({ row, selected, onOpen }: {
           />
           <span className="font-display font-semibold" style={{ fontSize: 13.5 }}>{farmer.name}</span>
           {c.flags.length > 0 && (
-            <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} aria-label="Needs a visit" />
+            <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} aria-label={ui('Needs attention','Idinga ukunakwa')} />
           )}
         </span>
       </td>
@@ -675,6 +694,7 @@ function FarmRow({ row, selected, onOpen }: {
         <button
           type="button"
           onClick={onOpen}
+          aria-label={ui(`Open ${farmer.name}'s record`,`Vula irekhodi lika-${farmer.name}`)}
           className="inline-flex items-center gap-1 font-sans font-semibold"
           style={{
             fontSize: MICRO, color: FOREST, background: 'rgba(31,77,43,0.08)',
@@ -682,7 +702,7 @@ function FarmRow({ row, selected, onOpen }: {
             padding: '4px 9px', cursor: 'pointer',
           }}
         >
-          Open
+          {ui('Open','Vula')}
           <ArrowUpRight size={12} />
         </button>
       </td>
@@ -690,15 +710,16 @@ function FarmRow({ row, selected, onOpen }: {
   );
 }
 
-function FarmCard({ row, selected, onOpen }: {
-  row: NetworkFarmerSummary; selected: boolean; onOpen: () => void;
+function FarmCard({ row, selected, onOpen, ui }: {
+  row: NetworkFarmerSummary; selected: boolean; onOpen: () => void; ui: CohortUi;
 }) {
   const { farmer } = row;
-  const c = farmCells(row);
+  const c = farmCells(row, ui);
   return (
     <button
       type="button"
       onClick={onOpen}
+      aria-label={ui(`Open ${farmer.name}'s record`,`Vula irekhodi lika-${farmer.name}`)}
       className="w-full text-left"
       style={{
         display: 'block', background: selected ? 'rgba(31,77,43,0.06)' : 'transparent',
@@ -723,11 +744,11 @@ function FarmCard({ row, selected, onOpen }: {
         className="block font-sans"
         style={{ fontSize: 12.5, color: INK_SOFT, marginTop: 3, paddingLeft: 17, fontVariantNumeric: 'tabular-nums' }}
       >
-        {c.harvested} picked · {c.income} in · course {c.course}
+        {c.harvested} {ui('picked','kuvuniwe')} · {c.income} {ui('income','imali engenayo')} · {ui('course','isifundo')} {c.course}
       </span>
       <span className="block font-sans" style={{ fontSize: MICRO, color: INK_MUTED, marginTop: 2, paddingLeft: 17 }}>
-        Last logged {c.lastLogged}
-        {c.flags.length > 0 ? ` · ${c.flags[0].label}` : ''}
+        {ui('Last logged','Okokugcina okuqoshiwe')} {c.lastLogged}
+        {c.flags.length > 0 ? ` · ${attentionLabel(c.flags[0].kind,ui)}` : ''}
       </span>
     </button>
   );

@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'ffebaba4', changes: [
+    'My Studies shows the English lesson notice before the course list in isiZulu mode.',
+    'Downloads flag English media; Plant Guilds voice flags pending review.',
+    'More organisation access and portfolio controls respond to the isiZulu setting.',
+  ], tour: [
+    { title: 'Check a lesson download', where: 'My Studies → a module', href: '/student',
+      detail: 'Choose isiZulu and open a module. Read the language notice before downloading or playing narration.' },
+  ] },
   { when: '24 September 2026', sha: '106ca711', changes: [
     'More Design Studio, mentor and organisation controls respond to the isiZulu setting.',
     'Programme reports now say when their evidence and PDF text remain in English.',
