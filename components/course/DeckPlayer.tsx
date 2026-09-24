@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Maximize2, Minimize2 } from 'lucide-react';
 
 import styles from './DeckPlayer.module.css';
@@ -116,6 +116,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [landscape, setLandscape] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
+  const [textScale, setTextScale] = useState(1);
   const [imageZoom, setImageZoom] = useState(1);
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const playerRef = useRef<HTMLDialogElement | null>(null);
@@ -164,6 +165,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   useEffect(() => {
     setZoom(1);
+    setTextScale(1);
     if (slideViewportRef.current) {
       slideViewportRef.current.scrollTop = 0;
       slideViewportRef.current.scrollLeft = 0;
@@ -214,6 +216,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       dialog.showModal();
       setChromeVisible(!landscape);
       setZoom(1);
+      setTextScale(1);
       setExpanded(true);
     }
   };
@@ -426,7 +429,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       onKeyDown={onDeckKeyDown}
       onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
-      className={`${styles.player} ${expanded ? styles.expanded : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
+      className={`${styles.player} ${expanded ? styles.expanded : ''} ${showReflowedSlide ? styles.textSlide : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
     >
       <div className={styles.playerHeader}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
@@ -470,11 +473,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           <button onClick={onClose} aria-label={t('courseDeckClose')} style={{ border: 'none', background: 'none', color: MUTED, fontSize: 20, lineHeight: 1, cursor: 'pointer', padding: 4 }}>×</button>
         )}
       </div>
-      {expanded && !showReflowedSlide && (
+      {expanded && (
         <div className={styles.zoomBar} role="group" aria-label={t('courseDeckSlideImageSize')}>
-          <button type="button" aria-label={t('courseDeckZoomOut')} disabled={zoom === 1} onClick={() => { setChromeVisible(true); setZoom((value) => Math.max(1, value - 1)); }}>−</button>
-          <span aria-live="polite">{zoom}×</span>
-          <button type="button" aria-label={t('courseDeckZoomIn')} disabled={zoom === 3} onClick={() => { setChromeVisible(true); setZoom((value) => Math.min(3, value + 1)); }}>+</button>
+          <button type="button" aria-label={t('courseDeckZoomOut')} disabled={showReflowedSlide ? textScale <= .75 : zoom === 1} onClick={() => { setChromeVisible(true); if (showReflowedSlide) setTextScale((value) => Math.max(.75, value - .125)); else setZoom((value) => Math.max(1, value - 1)); }}>−</button>
+          <span aria-live="polite">{showReflowedSlide ? `${Math.round(textScale * 100)}%` : `${zoom}×`}</span>
+          <button type="button" aria-label={t('courseDeckZoomIn')} disabled={showReflowedSlide ? textScale >= 1.5 : zoom === 3} onClick={() => { setChromeVisible(true); if (showReflowedSlide) setTextScale((value) => Math.min(1.5, value + .125)); else setZoom((value) => Math.min(3, value + 1)); }}>+</button>
         </div>
       )}
 
@@ -489,7 +492,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       >
         {expanded && anim && <p className={styles.turnPhoneHint}>{t('courseDeckTurnPhoneHint')}</p>}
         {showReflowedSlide && (
-          <section className={styles.presentationSlide} aria-label={`${heading} slide`} lang={spokenLang?.lang}>
+          <section className={styles.presentationSlide} aria-label={`${heading} slide`} lang={spokenLang?.lang} style={{ '--presentation-scale': textScale } as CSSProperties}>
             <div className={styles.presentationIntro}>
               <div className={styles.presentationEyebrow}>ImbewuField</div>
               <h2>{heading}</h2>
