@@ -25,10 +25,10 @@ import DeckPlayer from '@/components/course/DeckPlayer';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
-import { hasDeck, deckSlideCount } from '@/lib/course-deck';
+import { hasDeck, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
-import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
+import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
 import { narrationReviewPending } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
@@ -889,6 +889,8 @@ export default function StudentPage() {
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today), lang, t) : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
+            const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
+            const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
@@ -1032,8 +1034,13 @@ export default function StudentPage() {
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
-                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>{t('studentAudio')}</span>
+                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : t('studentAudio')}
+                          </span>
                         </div>
+                      )}
+                      {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
+                        <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
@@ -1083,6 +1090,16 @@ export default function StudentPage() {
                       compact
                       label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
                     />
+                    {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
+                      <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+                        {(!zuluSlidesReady && !zuluAudioReady)
+                          ? 'Izilayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.'
+                          : !zuluSlidesReady
+                            ? 'Izilayidi zale mojuli kusekhona ngesiNgisi; umsindo uyatholakala ngesiZulu.'
+                            : 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.'}
+                      </p>
+                    )}
                     {narrationReviewPending(mod.id, lang) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
