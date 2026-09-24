@@ -124,6 +124,25 @@ def intro_watch(draw, slide_num):
         draw.text((1390, 1036), 'OKUSALUNGISWA NGE-AI · AKUKABUYEKEZWA', font=font(24, True), fill=(236, 211, 151))
 
 
+def intro_zones(image):
+    """Use a localized, static derivative for slide 15; labels follow its narration."""
+    art_path = Path('docs/media/intro-permaculture/zone-footpath-numbered-zu.png')
+    if not art_path.exists():
+        raise SystemExit(f'Missing localized zone still: {art_path}')
+    art = Image.open(art_path).convert('RGB').resize((1920, 1080), Image.Resampling.LANCZOS)
+    image.paste(art, (0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0, 0, 1920, 150), fill=PAPER)
+    write_text(draw, (72, 26), 'Ama-zone 0–5: Ukuhlela ngokuvakasha', font(58, True), GREEN, 1320, 66)
+    draft_badge(draw, 1470, 35)
+    draw.rectangle((0, 920, 1920, 1080), fill=GREEN)
+    write_text(
+        draw, (72, 952),
+        'Ama-zone alandela ukuvakashela kwakho, hhayi izicingo.',
+        font(58, True), WHITE, 1775, 66,
+    )
+
+
 CURRENT_SLIDE_TITLE = 'I-Windbreak Phakathi Komoya Nezitshalo'
 
 
@@ -159,6 +178,8 @@ def main():
             scene_panel(draw, slide)
         if args.module == 'intro-permaculture' and number in {7, 13, 19}:
             intro_watch(draw, number)
+        elif args.module == 'intro-permaculture' and number == 15:
+            intro_zones(image)
         else:
             draft_badge(draw, 1470, 35)
         image.save(out_dir / f'slide-{number:02}.jpg', 'JPEG', quality=88, optimize=True)

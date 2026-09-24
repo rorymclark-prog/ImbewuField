@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '9a3326e0', changes: [
+    'The Introduction zones slide now shows a walking path with Zones 0–5.',
+  ], tour: [
+    { title: 'See the Zones picture', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction, and view slide 15.' },
+  ] },
   { when: '24 September 2026', sha: 'a59fbec9', changes: [
     'Food Forest Design now has 20 isiZulu slides.',
     'Hear the woman’s isiZulu narration; both are drafts for review.',

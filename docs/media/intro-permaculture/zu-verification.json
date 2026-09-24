@@ -146,8 +146,8 @@
     {
       "slide": 15,
       "path": "public/course-decks/intro-permaculture/zu/slide-15.jpg",
-      "bytes": 218701,
-      "sha256": "aab39792824830d80485dcbc6dab17283e3c8c8a81878c196afcdbe03280737b",
+      "bytes": 659781,
+      "sha256": "6f57d9be42e56ff501d9f0cdd477eaddf6b9cd00fd2ecc58d2508f386ba61f75",
       "dimensions": [
         1920,
         1080
@@ -226,8 +226,8 @@
   ],
   "contact_sheet": {
     "path": "docs/media/intro-permaculture/zu-contact-sheet.jpg",
-    "bytes": 794688,
-    "sha256": "36e080c8233703be85e0c6dc275f0aefb3ca5077fc31adf9216b32487cdc906e"
+    "bytes": 781525,
+    "sha256": "645f7c2f37b24967e665a53a8b233f5bda0f330a8ec2328bf8ed20cea89000d0"
   },
-  "visual_review": "22/22 slides viewed as contact sheet; samples reviewed at 390x219; no physical device or fluent isiZulu review claimed."
+  "visual_review": "22/22 slides viewed as contact sheet; revised slide 15 inspected at 390x219 with all six markers, title, caption and AI-draft disclosure visible. No physical device or fluent isiZulu review claimed."
 }
