@@ -22,6 +22,7 @@ import {
   type NarrationTrack,
 } from '@/lib/course-audio';
 import { useLanguage } from '@/lib/i18n-context';
+import { narrationReviewPending } from '@/lib/narration-blockers';
 
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -184,6 +185,14 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {t('courseAudioLanguageMissing')
             .replace('{appLanguage}', langName(appLang, appLang))
             .replace('{playingLanguage}', langName(lang, appLang))}
+        </p>
+      )}
+
+      {lang === 'zu' && narrationReviewPending(moduleId, lang) && (
+        <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
+          {appLang === 'zu'
+            ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
+            : 'This isiZulu narration is awaiting review by a fluent speaker.'}
         </p>
       )}
 

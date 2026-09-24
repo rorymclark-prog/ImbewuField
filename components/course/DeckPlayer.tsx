@@ -19,6 +19,7 @@ import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
 import { useLanguage } from '@/lib/i18n-context';
+import { narrationReviewPending } from '@/lib/narration-blockers';
 
 // The module as it was actually written: slides in a teaching order, narrated, with animations
 // where a still cannot carry the idea. Built for one farmer alone with a phone and metered data.
@@ -592,6 +593,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           {t('courseDeckNarrationFallback')
             .replace('{spokenLanguage}', langName(spokenLang.lang, uiLang))
             .replace('{appLanguage}', langName(lang, uiLang))}
+        </p>
+      )}
+
+      {spokenLang?.lang === 'zu' && narrationReviewPending(moduleId, 'zu') && (
+        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+          {uiLang === 'zu'
+            ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
+            : 'This isiZulu narration is awaiting review by a fluent speaker.'}
         </p>
       )}
 

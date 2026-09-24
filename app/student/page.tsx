@@ -645,7 +645,10 @@ export default function StudentPage() {
           <BrandLogo />
         </header>
         <main className="flex-1 flex items-center justify-center">
-          <Loader2 size={28} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: '#5C5040' }}>
+            <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: '#1F4D2B' }} />
+            <span>{lang === 'zu' ? 'Sicela ulinde…' : 'Loading your account…'}</span>
+          </div>
         </main>
       </div>
     );
@@ -713,6 +716,12 @@ export default function StudentPage() {
       </header>
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
+        {lang === 'zu' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            {t('studentEnglishContentNotice')}
+          </p>
+        )}
 
 
         {/* Progress hero */}
@@ -757,12 +766,16 @@ export default function StudentPage() {
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <div className="font-display font-semibold text-base leading-tight" style={{ color: '#20190F' }}>
-              {pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
+            <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: '#20190F' }}>
+              {fetching
+                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili…' : 'Loading progress…'
+                : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
-            <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
-              {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
-            </div>
+            {!fetching && (
+              <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
+                {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
+              </div>
+            )}
             {progressError && (
               <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
                 {t('studentProgressError')}
@@ -875,12 +888,6 @@ export default function StudentPage() {
 
         </details>
 
-        {lang === 'zu' && (
-          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-            {t('studentEnglishContentNotice')}
-          </p>
-        )}
         <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
           <summary className={styles.courseHeading}>
             <h2 className="font-display">{t('studentYourCourse')}</h2>

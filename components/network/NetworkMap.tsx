@@ -72,6 +72,7 @@ import ReactMapGL, {
 } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { X, Maximize2, Info } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 import {
   attentionFlags,
   networkBounds,
@@ -86,10 +87,10 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 /* Status palette — lifted verbatim from components/NgoDashboard.tsx so two
  * funder-facing screens never disagree about what "thriving" looks like. */
-const STATUS: Record<GardenStatus, { label: string; color: string }> = {
-  thriving: { label: 'Thriving', color: '#1F4D2B' },
-  establishing: { label: 'Establishing', color: '#9E5C08' },
-  support: { label: 'Needs support', color: '#C0531E' },
+const STATUS: Record<GardenStatus, { color: string }> = {
+  thriving: { color: '#1F4D2B' },
+  establishing: { color: '#9E5C08' },
+  support: { color: '#C0531E' },
 };
 
 /* Below this zoom the map shows one bubble per district municipality; above it,
@@ -134,6 +135,33 @@ export interface NetworkMapProps {
 }
 
 export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapProps) {
+  const { lang } = useLanguage();
+  const isiZulu = lang === 'zu';
+  const copy = isiZulu
+    ? {
+        thriving: 'Iyachuma', establishing: 'Iyasungulwa', support: 'Idinga ukwesekwa',
+        zoomIn: 'Sondeza ngaphakathi', zoomOut: 'Sondeza ngaphandle',
+        districtHint: 'Amasayithi aqoqwe ngezifunda — sondeza ukuze ubone isayithi ngalinye',
+        fitAll: 'Bonisa wonke amasayithi', fitAllAria: 'Bonisa wonke amasayithi emephini',
+        legend: 'Incazelo yezimpawu', colourStatus: 'UMBALA — isimo sesayithi',
+        sizeArea: 'USAYIZI — indawo yesiza', ringAttention: 'IRINGI — idinga ukunakwa',
+        attention: 'Ayisebenzi, ingaphansi kohlelo, noma yenza ukulahlekelwa',
+        pinExplanation: 'Izimpawu zibonisa isimo nosayizi wesiza kuphela. Isivuno, imali engenayo nenqubekelaphambili kuboniswa kuphaneli; uma ingekho idatha, kuyashiwo.',
+        farmer: 'Umlimi', closeFarmer: 'Vala iphaneli yomlimi',
+        sourceLanguageNotice: 'Ezinye izincazelo zemininingwane yomlimi ngezansi zingase zisaboniswe ngesiNgisi. Amagama nobufakazi obufakiwe kuboniswa njengoba kuqoshwe.',
+      }
+    : {
+        thriving: 'Thriving', establishing: 'Establishing', support: 'Needs support',
+        zoomIn: 'Zoom in', zoomOut: 'Zoom out',
+        districtHint: 'Grouped by district — zoom in for individual sites',
+        fitAll: 'Fit all', fitAllAria: 'Zoom out to the whole portfolio',
+        legend: 'Legend', colourStatus: 'COLOUR — site status',
+        sizeArea: 'SIZE — plot area', ringAttention: 'RING — needs attention',
+        attention: 'Dormant, under plan, or loss-making',
+        pinExplanation: 'Pins show status and plot size only — both recorded for every site. Harvest, income and progress are in the panel, where “no data” can be said in words.',
+        farmer: 'Farmer', closeFarmer: 'Close farmer panel',
+        sourceLanguageNotice: 'Some farmer-detail descriptions may remain in English. Submitted names and evidence are shown as recorded.',
+      };
   const mapRef = useRef<MapRef>(null);
   const [zoom, setZoom] = useState(6.2);
   const [hoverId, setHoverId] = useState<string | null>(null);
@@ -144,6 +172,25 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
   const [legendOpen, setLegendOpen] = useState(
     () => typeof window === 'undefined' || window.innerWidth >= 768,
   );
+
+  const localizeNavigationControls = useCallback(() => {
+    const container = mapRef.current?.getMap().getContainer();
+    if (!container) return;
+    const zoomIn = container.querySelector<HTMLButtonElement>('.mapboxgl-ctrl-zoom-in');
+    const zoomOut = container.querySelector<HTMLButtonElement>('.mapboxgl-ctrl-zoom-out');
+    if (zoomIn) {
+      zoomIn.setAttribute('aria-label', copy.zoomIn);
+      zoomIn.title = copy.zoomIn;
+    }
+    if (zoomOut) {
+      zoomOut.setAttribute('aria-label', copy.zoomOut);
+      zoomOut.title = copy.zoomOut;
+    }
+  }, [copy.zoomIn, copy.zoomOut]);
+
+  useEffect(() => {
+    localizeNavigationControls();
+  }, [localizeNavigationControls]);
 
   const selected = useMemo(
     () => rows.find((r) => r.farmer.id === selectedId) ?? null,
@@ -218,7 +265,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
   return (
     <div className="flex-1 flex overflow-hidden relative min-h-0">
       {/* ── Map ── */}
-      <div className="flex-1 relative min-w-0">
+      <div
+        className="flex-1 relative min-w-0"
+        role="region"
+        aria-label={isiZulu ? 'Imephu yamasayithi abalimi' : 'Farmer sites map'}
+      >
         <ReactMapGL
           ref={mapRef}
           mapboxAccessToken={TOKEN}
@@ -236,7 +287,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
            * a deep link, or a click that beat the tiles — frame THEM. Fitting
            * the whole portfolio here would silently undo the selection and
            * drop the funder back to the provincial view mid-demo. */
-          onLoad={() => (selected ? focusSelected(0) : fitAll(0))}
+          onLoad={() => {
+            localizeNavigationControls();
+            if (selected) focusSelected(0);
+            else fitAll(0);
+          }}
           onClick={() => onSelect(null)}
           cursor="default"
         >
@@ -396,7 +451,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           >
             <Info size={14} style={{ color: '#1F4D2B', flexShrink: 0 }} />
             <span className="font-display" style={{ fontSize: 12.5, color: INK }}>
-              Grouped by district — zoom in for individual sites
+              {copy.districtHint}
             </span>
           </div>
         )}
@@ -407,7 +462,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             onSelect(null);
             fitAll();
           }}
-          aria-label="Zoom out to the whole portfolio"
+          aria-label={copy.fitAllAria}
           className="absolute z-10 flex items-center gap-1.5 px-3 py-2 font-display font-semibold"
           style={{
             top: 12,
@@ -422,7 +477,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           }}
         >
           <Maximize2 size={13} style={{ color: INK_SOFT }} />
-          Fit all
+          {copy.fitAll}
         </button>
 
         {/* ── Legend: says exactly what the pins encode ── */}
@@ -442,6 +497,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         >
           <button
             onClick={() => setLegendOpen((v) => !v)}
+            aria-expanded={legendOpen}
+            aria-controls="network-map-legend"
             className="w-full flex items-center justify-between px-3 py-2 font-sans font-bold uppercase"
             style={{
               background: 'none',
@@ -452,14 +509,14 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               color: INK_MUTED,
             }}
           >
-            Legend
+            <span>{copy.legend}</span>
             <span style={{ fontSize: 11, letterSpacing: 0 }}>{legendOpen ? '−' : '+'}</span>
           </button>
 
           {legendOpen && (
-            <div className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
+            <div id="network-map-legend" className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
               <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '8px 0 5px' }}>
-                COLOUR — site status
+                {copy.colourStatus}
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
                 <div key={s} className="flex items-center gap-2" style={{ marginBottom: 4 }}>
@@ -474,13 +531,13 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                     }}
                   />
                   <span className="font-sans" style={{ fontSize: 11.5, color: INK_SOFT }}>
-                    {STATUS[s].label}
+                    {copy[s]}
                   </span>
                 </div>
               ))}
 
               <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
-                SIZE — plot area
+                {copy.sizeArea}
               </div>
               <div className="flex items-center gap-2">
                 <span
@@ -495,7 +552,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               </div>
 
               <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
-                RING — needs attention
+                {copy.ringAttention}
               </div>
               <div className="flex items-center gap-2">
                 <span
@@ -509,7 +566,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                   }}
                 />
                 <span className="font-sans" style={{ fontSize: 11, color: INK_SOFT }}>
-                  Dormant, under plan, or loss-making
+                  {copy.attention}
                 </span>
               </div>
 
@@ -517,9 +574,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 className="font-sans"
                 style={{ fontSize: 10, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
               >
-                Pins show status and plot size only — both recorded for every
-                site. Harvest, income and progress are in the panel, where
-                &ldquo;no data&rdquo; can be said in words.
+                {copy.pinExplanation}
               </p>
             </div>
           )}
@@ -546,11 +601,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               className="font-sans font-bold uppercase"
               style={{ fontSize: 10.5, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
             >
-              Farmer
+              {copy.farmer}
             </span>
             <button
               onClick={() => onSelect(null)}
-              aria-label="Close farmer panel"
+              aria-label={copy.closeFarmer}
               style={{
                 background: 'rgba(32,25,15,0.06)',
                 border: `1px solid ${LINE}`,
@@ -567,6 +622,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           </div>
 
           <div className="flex-1 overflow-y-auto px-3.5 pb-5 pt-1" style={{ minHeight: 0 }}>
+            {isiZulu && (
+              <p className="font-sans text-xs mb-2" lang="zu" role="note">
+                {copy.sourceLanguageNotice}
+              </p>
+            )}
             {/* variant="embedded": this component already supplies the sheet
              * chrome, close button and scroll container. Passing `sources`
              * unlocks the panel's month-by-month strip. */}
