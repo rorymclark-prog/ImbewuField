@@ -17,6 +17,19 @@ export function journalCategoryLabel(key: JournalCategory): string {
 export function formatZuluMonth(monthKey: string): string {
   const match = /^(\d{4})-(\d{2})$/.exec(monthKey);
   if (!match) return 'Usuku alwaziwa';
-  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, 1));
-  return new Intl.DateTimeFormat('zu-ZA', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+  const month = Number(match[2]);
+  if (month < 1 || month > 12) return 'Usuku alwaziwa';
+  // Browser locale packs can fall back to English for zu-ZA, even when Node has Zulu month names.
+  const names = ['Januwari', 'Februwari', 'Mashi', 'Ephreli', 'Meyi', 'Juni', 'Julayi', 'Agasti', 'Septhemba', 'Okthoba', 'Novemba', 'Disemba'];
+  return `${names[month - 1]} ${match[1]}`;
+}
+
+export function formatZuluJournalDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  if (date.toISOString().slice(0, 10) !== value) return value;
+  const days = ['Son', 'Mso', 'Bil', 'Tha', 'Sin', 'Hla', 'Mgq'];
+  const months = ['Jan', 'Feb', 'Mas', 'Eph', 'Mey', 'Jun', 'Jul', 'Aga', 'Sep', 'Okt', 'Nov', 'Dis'];
+  return `${days[date.getUTCDay()]} ${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
 }

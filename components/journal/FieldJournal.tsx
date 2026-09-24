@@ -31,7 +31,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
-import { formatZuluMonth, journalCategoryLabel } from './journal-labels';
+import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 
 type Filter = 'all' | JournalCategory;
@@ -257,7 +257,7 @@ export default function FieldJournal() {
                   background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
                   font: '600 10px/1 system-ui, sans-serif', color: '#fff',
                 }}>
-                  {formatJournalDate(p.date)}
+                  {isZulu ? formatZuluJournalDate(p.date) : formatJournalDate(p.date)}
                 </div>
               </div>
             ))}
@@ -422,7 +422,7 @@ export default function FieldJournal() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
                         <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
-                          {formatJournalDate(entry.date)}
+                          {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -475,7 +475,7 @@ export default function FieldJournal() {
                       type="button"
                       className={motion.editEntry}
                       onClick={() => setSheet({ open: true, entry })}
-                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || formatJournalDate(entry.date)}`}
+                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
                         background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: '#1F4D2B',
