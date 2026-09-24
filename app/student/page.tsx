@@ -827,8 +827,6 @@ export default function StudentPage() {
 
         </section>
 
-        <LimaBar />
-
         {/* What the mentor has actually asked for — only shown when there is something */}
         {assignSummary && assignSummary.total > 0 && (
           <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -869,54 +867,14 @@ export default function StudentPage() {
         </details>
 
 
-        <details className={`${styles.companions} ${styles.collapsible}`}>
-          <summary aria-labelledby="design-pathway-title">
-            <p className={styles.eyebrow}>{t('studentDesignEnglishPreview')}</p>
-            <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2>
-          </summary>
-          <div>
-            <p>{t('studentDesignPreviewIntro')}</p>
-          </div>
-          <OfflinePageLink href="/student/design" className={styles.guideCard}>
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong><span>{t('studentDesignPreviewCardBody')}</span><em>{t('studentDesignPreviewAction')}</em></span>
-          </OfflinePageLink>
-        </details>
-
-        <details className={`${styles.companions} ${styles.collapsible}`}>
-          <summary aria-labelledby="finance-course-title">
-            <p className={styles.eyebrow}>{t('studentFinanceEnglishPreview')}</p>
-            <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2>
-          </summary>
-          <div>
-            <p>{t('studentFinancePreviewIntro')}</p>
-          </div>
-          <OfflinePageLink href="/student/finance" className={styles.guideCard}>
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong><span>{t('studentFinancePreviewCardBody')}</span><em>{t('studentFinancePreviewAction')}</em></span>
-          </OfflinePageLink>
-        </details>
-
-        <details className={`${styles.companions} ${styles.collapsible}`}>
-          <summary aria-labelledby="app-guides-title">
-            <p className={styles.eyebrow}>{t('studentAppGuidesHeading')}</p>
-            <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
-          </summary>
-          <div>
-            <p>{t('studentGuidesDescription')}</p>
-          </div>
-          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
-          </OfflinePageLink>)}
-          <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
-
-        </details>
-
         <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
           <summary className={styles.courseHeading}>
-            <h2 className="font-display">{t('studentYourCourse')}</h2>
-            <p className="font-sans">{TOTAL_MODULES} · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} {t('studentLessons')}</p>
+            <img src="/home-images/sample-farm-landscape.webp" alt="" loading="lazy" width={220} height={124} />
+            <div className={styles.courseHeadingText}>
+              <span className={styles.choiceLabel}>{t('studentYourCourse')}</span>
+              <h2 className="font-display">{t('homeQuickStudyDesc')}</h2>
+              <span className="font-sans">{TOTAL_MODULES} {t('studentModules')} · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} {t('studentLessons')}</span>
+            </div>
           </summary>
 
         {/* Module list */}
@@ -1232,6 +1190,54 @@ export default function StudentPage() {
             </Link>
           )}
         </div>
+        </details>
+
+        <div className={styles.coursePreviews}>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
+            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" width={150} height={100} />
+            <div><span className={styles.choiceLabel}>{t('studentDesignEnglishPreview')}</span>
+              <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2></div>
+          </summary>
+          <div>
+            <p>{t('studentDesignPreviewIntro')}</p>
+          </div>
+          <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong><span>{t('studentDesignPreviewCardBody')}</span><em>{t('studentDesignPreviewAction')}</em></span>
+          </OfflinePageLink>
+        </details>
+
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary className={styles.previewSummary} aria-labelledby="finance-course-title">
+            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" width={150} height={100} />
+            <div><span className={styles.choiceLabel}>{t('studentFinanceEnglishPreview')}</span>
+              <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2></div>
+          </summary>
+          <div>
+            <p>{t('studentFinancePreviewIntro')}</p>
+          </div>
+          <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong><span>{t('studentFinancePreviewCardBody')}</span><em>{t('studentFinancePreviewAction')}</em></span>
+          </OfflinePageLink>
+        </details>
+        </div>
+
+        <LimaBar />
+
+        <details className={`${styles.companions} ${styles.collapsible} ${styles.appGuides}`}>
+          <summary aria-labelledby="app-guides-title">
+            <p className={styles.eyebrow}>{t('studentAppGuidesHeading')}</p>
+            <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
+          </summary>
+          <div>
+            <p>{t('studentGuidesDescription')}</p>
+          </div>
+          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
+            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
+          </OfflinePageLink>)}
+          <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
+
         </details>
 
         {/* Completion banner */}

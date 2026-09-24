@@ -113,6 +113,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [audioFailed, setAudioFailed] = useState(false);
   const [animationFailed, setAnimationFailed] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [landscape, setLandscape] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [imageZoom, setImageZoom] = useState(1);
@@ -128,6 +129,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const updateOrientation = () => setLandscape(window.innerWidth > window.innerHeight);
+    updateOrientation();
+    window.addEventListener('resize', updateOrientation);
+    return () => window.removeEventListener('resize', updateOrientation);
+  }, []);
 
 
   // The separate audio-only playlist can be opened beside this deck. If the
@@ -155,12 +164,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   useEffect(() => {
     setZoom(1);
-    setChromeVisible(true);
     if (slideViewportRef.current) {
       slideViewportRef.current.scrollTop = 0;
       slideViewportRef.current.scrollLeft = 0;
     }
   }, [index]);
+
+  useEffect(() => {
+    // Rory's landscape view lost the picture behind the lesson controls. Start each landscape
+    // slide clean, including after rotation, while portrait keeps its visible exit affordance.
+    setChromeVisible(!expanded || !landscape);
+  }, [expanded, landscape, index]);
 
   useEffect(() => {
     if (!expanded || !slideViewportRef.current) return;
@@ -178,9 +192,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   useEffect(() => {
     if (!expanded || !chromeVisible) return;
-    const timeout = window.setTimeout(() => setChromeVisible(false), 10000);
+    const timeout = window.setTimeout(() => setChromeVisible(false), landscape ? 3500 : 10000);
     return () => window.clearTimeout(timeout);
-  }, [expanded, chromeVisible, index]);
+  }, [expanded, chromeVisible, landscape, index]);
 
   const exitExpanded = useCallback(() => {
     const dialog = playerRef.current;
@@ -198,7 +212,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     else {
       dialog.close();
       dialog.showModal();
-      setChromeVisible(true);
+      setChromeVisible(!landscape);
       setZoom(1);
       setExpanded(true);
     }
@@ -210,12 +224,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     if (!expanded) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    exitButtonRef.current?.focus();
+    (landscape ? playerRef.current : exitButtonRef.current)?.focus();
     return () => {
       document.body.style.overflow = previousOverflow;
       expandButtonRef.current?.focus();
     };
-  }, [expanded]);
+  }, [expanded, landscape]);
 
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
@@ -350,8 +364,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   }, [running, audioForCurrent, onNarrationEnded]);
 
   const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
-    if (expanded) setChromeVisible(true);
     if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
+    if (expanded && e.currentTarget === e.target && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      setChromeVisible((visible) => !visible);
+      return;
+    }
+    if (expanded) setChromeVisible(true);
     // The player used to listen on window, which meant seeking an audio clip or using any other
     // page control also turned the lesson page. Only the deck surface owns these shortcuts.
     if (e.currentTarget !== e.target || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
@@ -406,7 +425,6 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       aria-label={t('courseDeckRegion')}
 
       onKeyDown={onDeckKeyDown}
-      onMouseMove={() => { if (expanded && !chromeVisible) setChromeVisible(true); }}
       onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
       className={`${styles.player} ${expanded ? styles.expanded : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
     >
@@ -460,15 +478,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </div>
       )}
 
+      {anim && <p className={styles.rotationTip}>{t('courseDeckTurnPhoneHint')}</p>}
       <div
         ref={slideViewportRef}
         className={styles.slideStage}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        onClick={() => { if (expanded) setChromeVisible(true); }}
+        onClick={() => { if (expanded) setChromeVisible((visible) => !visible); }}
         style={{ position: 'relative', borderRadius: 10, overflow: expanded ? 'auto' : 'hidden', background: '#1B1710', aspectRatio: expanded ? undefined : slideRatio }}
       >
-        {expanded && anim && <p className={styles.turnPhoneHint}>Turn your phone sideways to see the whole animation larger.</p>}
+        {expanded && anim && <p className={styles.turnPhoneHint}>{t('courseDeckTurnPhoneHint')}</p>}
         {showReflowedSlide && (
           <section className={styles.presentationSlide} aria-label={`${heading} slide`} lang={spokenLang?.lang}>
             <div className={styles.presentationIntro}>
@@ -489,7 +508,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             loop={!(anim.playOnce || running || (timedTour && timedVoiceActive))}
             muted
             playsInline
-            controls={!(timedTour && (running || timedVoiceActive))}
+            controls={!(timedTour && (running || timedVoiceActive)) && (!expanded || chromeVisible)}
             onCanPlay={followNarration}
             onEnded={onAnimationEnded}
             onError={() => {
