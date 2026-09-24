@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '79653b5b', changes: [
+    'Settings, offline map status and the map tool guide follow isiZulu as review drafts.',
+    'Farming advice and technical report content still need source and language review.',
+  ], tour: [
+    { title: 'Check the map guide', where: 'Farmer map', href: '/farmer',
+      detail: 'Choose isiZulu, open map tools, then open Lima’s map guide.' },
+  ] },
   { when: '24 September 2026', sha: 'e282a368', changes: [
     'Map add choices and site progress labels follow isiZulu as review drafts.',
     'Next-step buttons follow isiZulu; farming guidance remains in English.',

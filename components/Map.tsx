@@ -340,7 +340,7 @@ const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (si
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const appConfirm = useAppConfirm();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { user } = useAuth();
   const isPhone = usePhoneViewport();
   const mapRef = useRef<MapRef>(null);
@@ -2110,7 +2110,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   return (
     <div className="relative w-full h-full">
-      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'#f7f2e9',color:'#203127',fontSize:14,pointerEvents:'none'}}>Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.</div>}
+      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'#f7f2e9',color:'#203127',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
       <ReactMapGL
         ref={mapRef}
         mapboxAccessToken={TOKEN}
@@ -3035,7 +3035,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           });
           return (
           <div className="flex gap-1.5 flex-wrap font-sans">
-            <button onClick={()=>setCanvasOnly(!canvasOnly)} className="transition-all" style={chip(offlineCanvas)}>Offline canvas</button>
+            <button onClick={()=>setCanvasOnly(!canvasOnly)} className="transition-all" style={chip(offlineCanvas)}>{t('mapOfflineCanvas')}</button>
             {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
               <button key={s} onClick={() => {setCanvasOnly(false);setStyle(s);}} className="transition-all" style={chip(style === s)}>
                 {style === s && <Check size={13} strokeWidth={2.4} />}{[t('layerToggleSatellite'), t('layerToggleTopo')][i]}
@@ -3045,7 +3045,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 is worse than no toggle. See the Source below for why the key is required. */}
             {ARCGIS_API_KEY && (
               <button onClick={() => setHdImagery(!hdImagery)}
-                title="Switch to Esri high-res imagery — often sharper than the default when zoomed in"
+                title={t('mapLayerHDTitle')}
                 className="transition-all" style={chip(hdImagery)}>
                 {hdImagery && <Check size={13} strokeWidth={2.4} />}{t('layerToggleHD')}
               </button>
@@ -3054,7 +3054,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               {contours && <Check size={13} strokeWidth={2.4} />}{t('layerToggleContours')}
             </button>
             <button onClick={() => setHillshade(!hillshade)}
-              title="Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible"
+              title={t('mapLayerReliefTitle')}
               className="transition-all" style={chip(hillshade)}>
               <Mountain size={13} strokeWidth={1.9} />{t('layerToggleRelief')}
             </button>
@@ -4316,7 +4316,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onClick={() => setGuideOpen(false)} aria-hidden="true" />
           <div className="fixed left-1/2 -translate-x-1/2 z-[73] w-full px-3"
             style={{ top: '50%', transform: 'translate(-50%, -50%)', maxWidth: 'min(420px, calc(100vw - 24px))' }}>
-            <div className="rounded-2xl p-5 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(32,25,15,0.28)' }}>
+            <div className="rounded-2xl p-5 font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 12px 40px rgba(32,25,15,0.28)', maxHeight: 'calc(100dvh - 24px)', overflowY: 'auto' }}>
               {/* Lima header */}
               <div className="flex items-center gap-2.5 mb-1">
                 <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 36, height: 36, background: '#1F4D2B' }}>
@@ -4324,30 +4324,35 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
                 <div>
                   <div className="font-display italic font-semibold" style={{ fontSize: 16, color: '#20190F', lineHeight: 1.1 }}>Lima</div>
-                  <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Your map guide</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{t('mapGuideHeading')}</div>
                 </div>
               </div>
               <p className="font-sans mb-3" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>
-                Here&rsquo;s the map in a few taps — you can reopen this any time with the <strong>?</strong> button.
+                {t('mapGuideIntro')}
               </p>
+              {lang === 'zu' && (
+                <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#765A18', lineHeight: 1.4 }}>
+                  {t('mapGuideZuluDraftNotice')}
+                </p>
+              )}
 
               {/* Tool tips */}
               <div className="space-y-2.5 mb-4">
                 {([
-                  [Search, 'Find your land', 'Search a town, or tap the map — I read its climate, soil and water.'],
-                  [PenTool, 'Draw land boundary', 'Mark each corner of your plot, or tap GPS to walk it. I measure the area.'],
-                  [Droplets, 'Draw harvesting area', 'Outline your roof, swale or earthwork — I calculate how much rain it collects.'],
-                  [Pipette, 'Add water point', 'Drop a pin on a borehole, spring, dam or tank — marks infrastructure on the map.'],
-                  [MapPin, 'Save place', 'Drop a coloured pin and name it — Home, Field or Water.'],
-                  [Layers, 'Map layers', 'Switch satellite / topo and toggle contours & relief.'],
+                  [Search, 'mapGuideSearchTitle', 'mapGuideSearchDescription'],
+                  [PenTool, 'mapGuideBoundaryTitle', 'mapGuideBoundaryDescription'],
+                  [Droplets, 'mapGuideHarvestTitle', 'mapGuideHarvestDescription'],
+                  [Pipette, 'mapGuideWaterPointTitle', 'mapGuideWaterPointDescription'],
+                  [MapPin, 'mapGuidePlaceTitle', 'mapGuidePlaceDescription'],
+                  [Layers, 'mapGuideLayersTitle', 'mapGuideLayersDescription'],
                 ] as const).map(([Icon, title, desc], i) => (
                   <div key={i} className="flex gap-3 items-start">
                     <div className="flex items-center justify-center rounded-lg flex-shrink-0 mt-0.5" style={{ width: 30, height: 30, background: 'rgba(31,77,43,0.08)' }}>
                       <Icon size={16} style={{ color: '#1F4D2B' }} strokeWidth={1.8} />
                     </div>
                     <div className="min-w-0">
-                      <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>{title}</div>
-                      <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>{desc}</div>
+                      <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>{t(title)}</div>
+                      <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>{t(desc)}</div>
                     </div>
                   </div>
                 ))}
@@ -4356,7 +4361,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <button onClick={() => setGuideOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-sans font-semibold"
                 style={{ fontSize: 15, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
-                <Check size={15} />Got it
+                <Check size={15} />{t('mapGuideClose')}
               </button>
             </div>
           </div>
