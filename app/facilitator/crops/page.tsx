@@ -1462,10 +1462,11 @@ function FacilitatorCropsPageInner() {
         </Link>
         <Link
           href={designHref}
+          aria-label={cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
           className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
           style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
         >
-          ‹ {cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
+          ‹ {cropUi(lang, 'Back to design', 'Umklamo')}
         </Link>
         {!canvasSite && myDesignsList && myDesignsList.length > 0 && (
           <button
@@ -1717,7 +1718,7 @@ function FacilitatorCropsPageInner() {
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
                   title="Clear every planting from this plan"
                 >
-                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Clear all', 'Sula konke')}
+                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
                 </button>
               )}
             </div>
@@ -3735,7 +3736,7 @@ function CropPickerModal({
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
               style={{ fontSize: 14, background: crop.timingVerified === false ? '#D8D3C9' : '#1F4D2B', color: crop.timingVerified === false ? '#81796D' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
             >
-              {isEditing ? cropUi(lang, 'Save changes', 'Londoloza izinguquko') : existing ? cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade') : cropUi(lang, 'Add to bed', 'Engeza embhedeni')}
+              {isEditing ? cropUi(lang, 'Save changes', 'Londoloza izinguquko / Save changes') : existing ? cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade') : cropUi(lang, 'Add to bed', 'Engeza embhedeni')}
             </button>
           </div>
         )}
@@ -3832,7 +3833,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
               >
-                {cropUi(lang, 'Remove crop', 'Susa isilimo')}
+                {cropUi(lang, 'Remove crop', 'Susa isilimo / Remove crop')}
               </button>
             </div>
           </div>
@@ -3850,7 +3851,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
               className="flex-1 font-display font-semibold rounded-xl py-2"
               style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
             >
-              {cropUi(lang, 'Remove', 'Susa')}
+              {cropUi(lang, 'Remove', 'Susa / Remove')}
             </button>
           </div>
         )}
@@ -4343,7 +4344,7 @@ function AutoSuggestModal({
                 </button>
               )}
               <button onClick={onClose} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                {cropUi(lang, 'Discard', 'Lahla')}
+                {cropUi(lang, 'Discard', 'Lahla / Discard')}
               </button>
             </div>
           </div>
