@@ -1,0 +1,30 @@
+# Reading the Landscape lesson 4 — learner check, 22 September 2026
+
+## Decision and current media
+
+Rory chose the existing still for slide 17, *Watch: Draw the Land You Already Have*. The rejected Google Flow mapmaking attempt is documented in `flow-x1-attempts-2026-09-22.md`; it is not in the learner player. No new SVG or code-drawn animation is approved. The still is a person-free, labelled concept diagram with a closed boundary and the words “Concept diagram — not to scale.” It is not a surveyed plan. If future images or animations show people, the casting direction is Black Africans in a South African smallholder context; appearance alone cannot establish identity.
+
+## Live mobile player check before the English correction
+
+At a 390 × 844 browser viewport on `https://imbewufield-studies-animation-direction.vercel.app/student`, the English lesson opened as four narrated slides, 16–19. Automatic playback progressed to 4/4. All four slide entries and the 1/4–4/4 navigation were present. Slide 17 displayed `/course-decks/reading-landscape/en/slide-17.jpg` at 1920 pixels natural width, with **zero video elements** in the lesson container. Its `/course-audio/reading-landscape/en/slide-17.mp3` reached `readyState 4` and advanced to 9.47 of 9.67 seconds. Slide 18's mobile player image was visually checked: it clearly depicts a Black woman tending soil, with no obvious broken crop or layout. The full-size link was present for the still. These are technical and visual checks on the preview, not a physical-device, offline, language, learner or practitioner acceptance test. The still is readable at full size; small labels require the provided tap-to-zoom link on a phone.
+
+## Source issue and authorized English correction
+
+The earlier protected lesson text, narration and quiz made two claims that needed correction:
+
+1. The lesson said to pace a boundary and sketch it “to scale.” Pacing without a checked ground distance and a map distance does not establish a scale. The slide 17 image itself correctly says “not to scale.” [Oregon State University Extension's mapping guide](https://extension.oregonstate.edu/catalog/pnw-581-land-surveying-mapping-introduction-woodland-owners) defines scale as a relation between map and ground distance, and distinguishes approximate property lines from a survey. The authorized English correction tells the learner to mark the first sketch “not to scale” until distances have been checked.
+2. The lesson and quiz treated thick khakibos or blackjack as evidence of disturbed **or compacted** soil. [SANBI's khakibos account](https://pza.sanbi.org/tagetes-minuta) describes the plant as common on disturbed sites. A [controlled *Bidens pilosa* compaction experiment](https://www.scielo.br/j/pd/a/QnNZGq3Gs4CsTcDbfkjrVDs/?lang=pt) examined root performance under imposed compaction; it did not validate plant presence as a field diagnostic for compaction. The authorized English correction treats growth as an observation to mark and soil to check. The quiz answer no longer claims plant presence proves compaction. No soil treatment is inferred from plant presence alone.
+
+Rory explicitly authorized the English lesson and narration correction after reviewing this packet. `lib/course-modules.ts`, `docs/narration/reading-landscape.en.md`, and the generated English transcript now agree. Slides 16 and 18 were recorded again with `en-ZA-LukeNeural` at `-12%` from the exact exported slide text. Word-boundary normalization matched both source blocks; both MP3s and the losslessly concatenated 21-slide `full.mp3` decoded fully. Slide 16: 62 words, 26.520 s, SHA-256 `eae883e18debb299186e80bf7d7d1ce664f6ac5d1ad506c80c1063eb785d4dac`. Slide 18: 57 words, 22.608 s, SHA-256 `5e5a06c9fa0e9aaff5f491b14b3bc58a387e3dfc1bf25a5bc2a862a2e9c3adab`. The concatenated duration equals the sum of all 21 clips, 395.064 s. These are machine checks, not human listening approval.
+
+The isiZulu draft in `docs/narration/reading-landscape.zu.md` still contains the old inference and remains unpublished. Rory chose English first this week. Fluent-language and practitioner review remain required before isiZulu release.
+
+## Post-deploy English verification
+
+The stable preview at `https://imbewufield-studies-animation-direction.vercel.app/student` was checked again at 390 × 844 after the corrected content and playback coordination deployed. The lesson body displayed the “not to scale” and soil-check wording. Slide 16 audio loaded with `readyState 4`, played and reported 26.520 s; slide 18 audio loaded, played and reported 22.608 s. The lesson's stills loaded at 1920 pixels natural width, including slide 17 with zero video elements. Starting the audio-only list while the deck played paused the deck; starting the deck while the list played paused the list. Only one speech stream remained active in each direction.
+
+The Reading the Landscape module pack downloaded 48/48 files and reported 12.2 MB saved. The course cache contained corrected slide 16 audio (159,120 bytes), slide 18 audio (135,648 bytes), slide 17 audio (58,032 bytes) and its still (175,441 bytes). With the browser network set offline and the page reloaded, lesson 4 opened and slides 16, 17 and 18 loaded from the saved pack. Their narration returned `readyState 4` and advanced; slide 17 remained a still. The browser was returned online after the check. This is a browser offline simulation, not a physical phone or human listening assessment. The English lesson has completed its technical player check; practitioner and learner acceptance remain open.
+
+## Verification limits
+
+The September 20 `docs/media/reading-landscape/verification.json` records an earlier four-animation production pass, including slide 17. Its hashes and historical offline test remain useful provenance, but they are not current-player proof. The correction retires only the two superseded slide recordings and combined file from an older saved pack; it does not fetch replacements without the learner's choice. No Flow credits were used for this check or correction.

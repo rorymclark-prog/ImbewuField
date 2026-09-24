@@ -294,6 +294,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  const displayError = (message: string) => {
+    if (language !== 'zu') return message;
+    const known: Record<string, string> = {
+      'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
+      'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
+    };
+    return known[message] ?? message;
+  };
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
   // saved drawing as well as the facts. Each is shown ONCE: under its chapter when the report has
@@ -590,7 +598,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setFacts(currentFacts);
       const sampleText = sampleFullSiteReport(currentFacts, d, language);
       setReport(sampleText);
-      setActiveSaved({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: 'en', report: sampleText, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: [] });
+      setActiveSaved({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, report: sampleText, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: [] });
       setSavedVersion(false);
       setGenerated(true);
       setReading('full');
@@ -697,7 +705,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }),
         signal: abortRef.current.signal,
       });
-      if (!res.ok) throw new Error(`${res.status}`);
+      if (!res.ok) throw new Error(language === 'zu' ? `Iseva ibuyise ikhodi engu-${res.status}.` : `${res.status}`);
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -721,9 +729,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         // message shape is matched too.
         const offline = typeof navigator !== 'undefined' && !navigator.onLine;
         const networkShaped = /failed to fetch|load failed|network/i.test(err.message);
-        setError(offline || networkShaped
+        setError(displayError(offline || networkShaped
           ? 'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.'
-          : err.message);
+          : err.message));
       }
     } finally {
       // The page is alive to run this line, which is the entire test. Success, an HTTP error and
@@ -804,7 +812,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } catch (err) {
       // Never fail silently again — that was the whole bug.
       setPdfState('error');
-      setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
+      setError(displayError(err instanceof Error ? `${tr('Could not build the PDF', 'Umbiko we-PDF awukwazanga ukwakhiwa')}: ${err.message}` : 'Could not build the PDF.'));
       setTimeout(() => setPdfState('idle'), 4000);
     }
   }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
@@ -812,9 +820,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function shareReport() {
     if (!d || !report) return;
     const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
-    const text = `ImbewuField Site Analysis\n${siteName} · ${ecology.label} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (imbewufield.vercel.app)`;
+    const text = `${tr('ImbewuField Site Analysis', 'Ukuhlaziywa Kwendawo kwe-ImbewuField')}\n${siteName} · ${ecology.label} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\n${tr('Rainfall', 'Imvula')}: ${d.rainfall.annual}mm/yr | ${tr('Soil pH', 'i-pH yomhlabathi')}: ${d.soil.ph} | ${tr('Mean temperature', 'Izinga lokushisa elimaphakathi')}: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\n${tr('See the full report on ImbewuField', 'Bona umbiko ophelele ku-ImbewuField')} (imbewufield.vercel.app)`;
     if (typeof navigator !== 'undefined' && navigator.share) {
-      try { await navigator.share({ title: `${siteName} · Site report`, text }); return; } catch { /* user cancelled */ }
+      try { await navigator.share({ title: `${siteName} · ${tr('Site report', 'Umbiko wendawo')}`, text }); return; } catch { /* user cancelled */ }
     }
     // Fallback: copy to clipboard
     try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch { /* ignore */ }
@@ -835,7 +843,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       >
         <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-          Back
+          {tr('Back', 'Emuva')}
         </button>
 
         <div className="min-w-0 flex-1">
@@ -879,9 +887,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             >
               {saveFailed
                 ? (saveFailedReason === 'store-full'
-                    ? `You have ${MAX_REPORTS} saved reports — delete one to save this`
-                    : 'Not saved — no space')
-                : justSaved ? 'Saved' : 'Save'}
+                    ? tr(`You have ${MAX_REPORTS} saved reports — delete one to save this`, `Unemibiko egciniwe engu-${MAX_REPORTS} — susa owodwa ukuze ugcine lo mbiko`)
+                    : tr('Not saved — no space', 'Awugcinwanga — asikho isikhala'))
+                : justSaved ? tr('Saved', 'Kulondoloziwe') : tr('Save', 'Londoloza')}
             </button>
           )}
 
@@ -938,17 +946,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   }
             }
           >
-            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Generate new report' : 'Generate report')}
+              {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> {tr('Generating…', 'Kuyakhiwa…')}</> : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
         {!isWide && <button type="button" aria-expanded={viewOptionsOpen} onClick={() => setViewOptionsOpen(open => !open)}>{tr('View and print options', 'Izinketho zokubuka nokuphrinta')} <span aria-hidden="true">{viewOptionsOpen ? '▴' : '▾'}</span></button>}
         <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
-        {reading === 'full' && <label>Cover <select aria-label="Report cover image" value={coverChoice} onChange={e => setCoverChoice(e.target.value as ReportCoverChoice)}>
-          <option value="auto">Automatic</option><option value="map">Site map</option><option value="photo">Site photo</option><option value="none">No picture</option>
+        {reading === 'full' && <label>{tr('Cover', 'Ikhava')} <select aria-label={tr('Report cover image', 'Isithombe sekhava yombiko')} value={coverChoice} onChange={e => setCoverChoice(e.target.value as ReportCoverChoice)}>
+          <option value="auto">{tr('Automatic', 'Okuzenzakalelayo')}</option><option value="map">{tr('Site map', 'Imephu yendawo')}</option><option value="photo">{tr('Site photo', 'Isithombe sendawo')}</option><option value="none">{tr('No picture', 'Asikho isithombe')}</option>
         </select></label>}
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
-      {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>Screen, print and summary controls change the view or export without a new AI call.</p>}
-      {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
+      {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>{tr('Screen, print and summary controls change the view or export without a new AI call.', 'Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.')}</p>}
+      {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>{tr('Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.', 'Ukukhiqiza umbiko omusha kuvuselela izeluleko ezisuselwe kulo mklamo. Imibiko egciniwe izohlala ikhona ngenkathi ubheka; ukuqala kabusha indawo yokusebenza kuyayisusa. Umbiko ophelele olungiselelwe ungowesiNgisi; izifinyezo ezihunyushiwe ziyatholakala.')}</p>}
       {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
@@ -972,7 +980,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
               style={{ background: 'var(--report-button)', color: '#F7F2E9', border: 'none' }}
             >
-              <FileText size={14} />{label('Read the report')}
+              <FileText size={14} />{tr('Read the report', 'Funda umbiko')}
             </button>
           )}
 
@@ -987,10 +995,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                       className="flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
-                      <div className="text-xs">{new Date(r.savedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'medium' })} · Ref {r.id.slice(-5)}</div>
+                      <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
-                    <button onClick={() => deleteReport(r.id)} title="Delete"
-                      className="px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>Delete</button>
+                    <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
+                      className="px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
                   </div>
                 ))}
               </div>
@@ -998,8 +1006,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
 
           <div className={styles.settingsNote}>
-            <strong>{report ? 'Next report settings' : 'Report settings'}</strong>
-            <p>Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.</p>
+            <strong>{report ? tr('Next report settings', 'Izilungiselelo zombiko olandelayo') : tr('Report settings', 'Izilungiselelo zombiko')}</strong>
+            <p>{tr('Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.', 'Indlela yokubhala ishintsha ukufundeka kwezeluleko. Ukujula kushintsha ubude bazo. Khiqiza umbiko omusha ukuze usebenzise lezi zinqumo.')}</p>
           </div>
           <fieldset disabled={loading}>
           {/* Language */}
@@ -1028,13 +1036,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Tone */}
           <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
           <div className="flex gap-1.5 mb-4">
-            {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, label]) => (
+            {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, optionLabel]) => (
               <button key={val} aria-pressed={tone === val} onClick={() => setTone(val)}
                 className="flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
                 style={tone === val
                   ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
-                {language === 'zu' ? REPORT_ZU[label] ?? label : label}
+                {language === 'zu' ? REPORT_ZU[optionLabel] ?? optionLabel : optionLabel}
               </button>
             ))}
           </div>
@@ -1054,7 +1062,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 else setSelected(prev => prev.size <= 1 ? new Set(FARMER_ESSENTIALS) : prev);
               }}
                 className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
-                title={tip}
+                title={language === 'zu' ? ({
+                  'Generate brief advice. Choose At a glance for a 1-page summary PDF.': 'Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.',
+                  'Core sections for the farmer': 'Izigaba ezisemqoka zomlimi.',
+                  'All sections, full detail': 'Zonke izigaba nemininingwane ephelele.',
+                }[tip] ?? tip) : tip}
                 style={length === val
                   ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--report-gold)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
@@ -1069,19 +1081,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-green)', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
-                title="Select the sections most useful to a small-scale farmer">
+                title={tr('Select the sections most useful to a small-scale farmer', 'Khetha izigaba eziwusizo kakhulu kumlimi omncane')}>
                 {tr('Farmer', 'Umlimi')}
               </button>
               <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}
-                title="Select all sections">
+                title={tr('Select all sections', 'Khetha zonke izigaba')}>
                 {tr('All', 'Zonke')}
               </button>
               <button onClick={() => setSelected(new Set())}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-danger)', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
-                title="Deselect all sections">
+                title={tr('Deselect all sections', 'Susa ukukhetha kuzo zonke izigaba')}>
                 {tr('None', 'Azikho')}
               </button>
             </div>
@@ -1141,7 +1153,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             return (
               <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--report-border)' }}>
                 <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
-                  In this report
+                  {tr('In this report', 'Kulo mbiko')}
                 </div>
                 <div className="space-y-0.5">
                   {tocItems.map(({ title, id }) => (
@@ -1243,7 +1255,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
+            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · ${tr('Current site evidence; it may postdate saved report text.', 'Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.')}` : captureCover ? tr('Captured site satellite view', 'Isithombe sesathelayithi esithathwe sendawo') : useCoverMap && coverMap ? `${tr('Saved design', 'Umklamo ogciniwe')}: ${coverMap.label}` : undefined} />}
 
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
@@ -1254,12 +1266,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`data:image/jpeg;base64,${mapCapture}`}
-                  alt="Captured satellite view of the site"
+                  alt={tr('Captured satellite view of the site', 'Isithombe sesathelayithi esithathwe sendawo')}
                   className="w-full rounded-lg"
                   style={{ border: '1px solid var(--report-border)' }}
                 />
                 <div className="text-xs font-mono mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
-                  Maxar satellite imagery · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
+                  {tr('Maxar satellite imagery', 'Imifanekiso yesathelayithi yakwa-Maxar')} · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
                 </div>
               </div>
             )}
@@ -1268,13 +1280,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 this report's advice stopped quoting the masterplan. */}
             {wentLight && (
               <div className="mb-4 px-4 py-3 rounded-xl font-sans" style={{ background: '#FDF4E3', border: '1px solid #E8D5A8', fontSize: 12.5, color: 'var(--report-ink)' }}>
-                The last attempt closed the app, so this report was made without sending your design
-                maps to be read — everything else is complete, and your maps still show below and in
-                the PDF. Generate again any time to retry with them.
+                {tr('The last attempt closed the app, so this report was made without sending your design maps to be read — everything else is complete, and your maps still show below and in the PDF. Generate again any time to retry with them.', 'Ukuzama kokugcina kwavala uhlelo lokusebenza, ngakho lo mbiko wenziwe ngaphandle kokuthumela amamephu omklamo wakho ukuba afundwe — konke okunye kuphelele, futhi amamephu akho asabonakala ngezansi naku-PDF. Khiqiza futhi noma nini ukuze uzame ukuwafaka.')}
               </div>
             )}
 
-            {reading === 'full' && savedMapRecords !== null && <div ref={mapsRef} tabIndex={-1} aria-label="Your saved design maps">
+            {reading === 'full' && savedMapRecords !== null && <div ref={mapsRef} tabIndex={-1} aria-label={tr('Your saved design maps', 'Amamephu akho omklamo agciniwe')}>
               <ReportMapStocktake maps={allMaps} selectedIds={selectedMapIds} siteId={siteKey} scope={reportMapScope}
                 designUrl={`/design?lat=${d.lat}&lon=${d.lon}`} onSelect={chooseMaps} onOpen={map => { void openSheet(map); }} language={language} busy={loading || pdfState === 'working'} />
               {showVisuals && plates.length > 0 && <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
@@ -1297,7 +1307,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                 <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
                   {tr('Your saved site photos', 'Izithombe zakho zendawo ezigciniwe')} · {photoGallery.shown.length}
-                  {photoGallery.total > photoGallery.shown.length ? ` of ${photoGallery.total}` : ''}
+                  {photoGallery.total > photoGallery.shown.length ? ` ${tr('of', 'ku')} ${photoGallery.total}` : ''}
                 </div>
                 <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))' }}>
                   {photoGallery.shown.map((p, i) => (
@@ -1320,7 +1330,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                         style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: 6, display: 'block' }}
                       />
                       <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-ink)', lineHeight: 1.3 }}>
-                        Photo {i + 1} — {p.label}
+                        {tr('Photo', 'Isithombe')} {i + 1} — {p.label}
                       </span>
                       {p.note && (
                         <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.85, lineHeight: 1.3 }}>
@@ -1368,7 +1378,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">
-                  Generated by ImbewuField &mdash; imbewufield.vercel.app
+                  {tr('Generated by ImbewuField', 'Kukhiqizwe yi-ImbewuField')} &mdash; imbewufield.vercel.app
                 </div>
               </div>
             )}
@@ -1378,13 +1388,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Placeholder before generation */}
             {reading === 'full' && !report && !loading && !error && (
               <div className="text-center py-16">
-                <div className="text-base font-display font-semibold mb-4" style={{ color: 'var(--report-muted)' }}>Report</div>
+                <div className="text-base font-display font-semibold mb-4" style={{ color: 'var(--report-muted)' }}>{tr('Report', 'Umbiko')}</div>
                 <p className="font-display text-base mb-2" style={{ color: 'var(--report-ink)' }}>
-                  Select your sections and click Generate
+                  {tr('Select your sections and click Generate', 'Khetha izigaba bese ucindezela u-Khiqiza')}
                 </p>
                 <p className="font-display text-sm" style={{ color: 'var(--report-muted)' }}>
-                  {selected.size} section{selected.size !== 1 ? 's' : ''} selected
-                  {photoAnalysis ? ' · photos included' : ''}
+                  {selected.size} {tr('sections selected', 'izigaba ezikhethiwe')}
+                  {photoAnalysis ? ` · ${tr('photos included', 'izithombe zifakiwe')}` : ''}
                 </p>
               </div>
             )}

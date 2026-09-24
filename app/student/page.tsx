@@ -26,7 +26,7 @@ import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { hasDeck, deckSlideCount } from '@/lib/course-deck';
-import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
+import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
@@ -42,14 +42,14 @@ import {
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
 
-const CATEGORY_LABELS: Record<ModuleCategory, string> = {
-  foundation: 'Foundation',
-  water:      'Water',
-  soil:       'Soil',
-  plants:     'Plants',
-  design:     'Design',
-  business:   'Business',
-  seeds:      'Seeds',
+const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
+  foundation: 'studentCategoryFoundation',
+  water:      'studentCategoryWater',
+  soil:       'studentCategorySoil',
+  plants:     'studentCategoryPlants',
+  design:     'studentCategoryDesign',
+  business:   'studentCategoryBusiness',
+  seeds:      'studentCategorySeeds',
 };
 
 /** Curriculum position, fixed. The list below re-orders to put assigned work first, but
@@ -63,14 +63,39 @@ const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border:
   done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
 
-function formatDuration(mins: number) {
-  if (mins < 60) return `${mins} min`;
-  return `${Math.floor(mins / 60)}h ${mins % 60 > 0 ? `${mins % 60}m` : ''}`.trim();
+function formatDuration(mins: number, t: (key: string) => string) {
+  if (mins < 60) return `${mins} ${t('studentMinutes')}`;
+  const hours = Math.floor(mins / 60);
+  const remaining = mins % 60;
+  return `${hours} ${t(hours === 1 ? 'studentHourOne' : 'studentHours')}${remaining > 0 ? ` ${remaining} ${t('studentMinutes')}` : ''}`;
+}
+
+function localisedDueText(text: string | null, lang: string, t: (key: string) => string) {
+  if (!text || lang !== 'zu') return text;
+  if (text === 'Due today') return t('studentDueToday');
+  if (text === 'Due tomorrow') return t('studentDueTomorrow');
+  const overdue = text.match(/^(\d+) day(?:s)? overdue$/);
+  if (overdue) return t('studentDaysOverdue').replace('{count}', overdue[1]);
+  const dueIn = text.match(/^Due in (\d+) days$/);
+  if (dueIn) return t('studentDueInDays').replace('{count}', dueIn[1]);
+  if (text.startsWith('Due ')) return t('studentDueDate').replace('{date}', text.slice(4));
+  return text;
+}
+
+function localisedUnlockReason(text: string | null, lang: string, t: (key: string) => string) {
+  if (!text || lang !== 'zu') return text;
+  if (text === 'Opened by your mentor') return t('studentOpenedByMentor');
+  const finish = text.match(/^Finish (.+) to open this$/);
+  if (finish) return t('studentFinishToUnlock').replace('{title}', finish[1]);
+  const submit = text.match(/^Submit the (.+) assignment to open this$/);
+  if (submit) return t('studentSubmitToUnlock').replace('{title}', submit[1]);
+  return text;
 }
 
 // ── Quiz question ────────────────────────────────────────────────────────────
 
 function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState<number | null>(null);
   const revealed = selected !== null;
 
@@ -109,11 +134,11 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
               {revealed && isCorrect && (
-                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>Correct</span>
+                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
               {revealed && isSelected && !isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#8B2020' }}>
-                  Incorrect — see {String.fromCharCode(65 + correct)}
+                  {t('studentIncorrectSee').replace('{answer}', String.fromCharCode(65 + correct))}
                 </span>
               )}
             </button>
@@ -140,6 +165,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
   autoOpen?: boolean;
   onJumpToLesson: (lessonId: string) => void;
 }) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   // The slide player is opt-in per lesson and resets when the panel is left. Nothing in the deck
   // downloads until it is opened, and reopening a lesson should not re-spend anyone's data.
@@ -170,7 +196,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
           <span className={`font-display ${styles.lessonTitle}`}>{lesson.title}</span>
-          <span className={`font-sans ${styles.lessonHint}`}>{open ? 'Close lesson' : 'Open lesson'}{hasAudio ? ' · Listen or read' : ' · Read and practise'}</span>
+          <span className={`font-sans ${styles.lessonHint}`}>{open ? t('studentCloseLesson') : t('studentOpenLesson')}{hasAudio ? ` · ${t('studentListenOrRead')}` : ` · ${t('studentReadAndPractise')}`}</span>
         </span>
         {open
           ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
@@ -185,7 +211,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                 moduleId={moduleId}
                 appLang={lang}
                 tracks={lessonTracks}
-                label="Listen to this lesson"
+                label={t('studentListenToLesson')}
               />
             </div>
           )}
@@ -207,10 +233,10 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                   <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
-                      Watch and listen
+                      {t('studentWatchAndListen')}
                     </span>
                     <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
-                      {deckSlideCount(moduleId, lesson.id)} slides, narrated. Nothing downloads until you press play.
+                      {t('studentDeckDescription').replace('{count}', String(deckSlideCount(moduleId, lesson.id)))}
                     </span>
                   </span>
                 </button>
@@ -236,7 +262,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
 
           {/* Key points */}
           <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>Key Points</p>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>{t('studentKeyPoints')}</p>
             <ul className="space-y-1.5">
               {lesson.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
@@ -259,7 +285,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
             >
               <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
               <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
-                Facilitator training video — for in-person sessions, not for streaming here.
+                {t('studentFacilitatorVideo')}
               </span>
               <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
             </a>
@@ -268,7 +294,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           {/* Quiz */}
           <div className="space-y-3">
             <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
-              Check your understanding
+              {t('studentCheckUnderstanding')}
             </p>
             {lesson.quiz.map((q, i) => (
               <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
@@ -280,7 +306,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           {related.length > 0 && (
             <div className="space-y-2">
               <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
-                Related lessons
+                {t('studentRelatedLessons')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {related.map(({ lesson: rl }) => (
@@ -318,6 +344,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
   existing?: CourseSubmission;
   onSubmitted: () => void;
 }) {
+  const { t } = useLanguage();
   const [checked, setChecked] = useState<Set<string>>(new Set(existing?.self_check ?? []));
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -359,7 +386,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       await submitCourseModule({ module: moduleId, self_check: [...checked], photo_path, voice_path });
       onSubmitted();
     } catch {
-      setError('Could not submit — check your connection and try again.');
+      setError(t('studentSubmitError'));
     } finally {
       setSubmitting(false);
     }
@@ -406,7 +433,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
           ? <img src={photoPreview} alt="" className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
           : <Camera size={16} style={{ color, flexShrink: 0 }} />}
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
-          {photoPreview ? 'Photo added — tap to change' : 'Add a photo (required)'}
+          {photoPreview ? t('studentPhotoAdded') : t('studentPhotoRequired')}
         </span>
       </button>
 
@@ -421,7 +448,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       >
         <Mic size={16} style={{ color: voiceFile ? color : '#8C7A62', flexShrink: 0 }} />
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
-          {voiceFile ? `Voice note added — ${voiceFile.name}` : 'Add a voice note (optional)'}
+          {voiceFile ? t('studentVoiceAdded').replace('{name}', voiceFile.name) : t('studentVoiceOptional')}
         </span>
       </button>
 
@@ -439,13 +466,13 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         }}
       >
         {submitting
-          ? <><Loader2 size={14} className="animate-spin" />Submitting...</>
-          : existing ? 'Resubmit' : 'Submit'}
+          ? <><Loader2 size={14} className="animate-spin" />{t('studentSubmitting')}</>
+          : existing ? t('studentResubmit') : t('studentSubmit')}
       </button>
 
       {existing && (
         <p className="font-sans text-xs text-center" style={{ color: '#8C7A62' }}>
-          Already submitted — submitting again replaces the photo and voice note.
+          {t('studentAlreadySubmitted')}
         </p>
       )}
     </div>
@@ -458,7 +485,7 @@ const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'mentor', 'ngo', 'fu
 
 export default function StudentPage() {
   const { user, role, loading } = useAuth();
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
@@ -476,6 +503,7 @@ export default function StudentPage() {
   const [toggling, setToggling] = useState<string | null>(null);
   const [progressError, setProgressError] = useState(false);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  const [courseOpen, setCourseOpen] = useState(false);
   // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
   // not durable UI state — see jumpToLesson() and the effect that consumes it.
   const [jumpToLessonId, setJumpToLessonId] = useState<string | null>(null);
@@ -554,6 +582,7 @@ export default function StudentPage() {
   function jumpToLesson(lessonId: string) {
     const owner = LESSON_INDEX.get(lessonId);
     if (!owner) return;
+    setCourseOpen(true);
     setExpandedModuleId(owner.moduleId);
     setJumpToLessonId(lessonId);
   }
@@ -629,7 +658,7 @@ export default function StudentPage() {
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Learning Portal</span>
+          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{t('studentPortal')}</span>
           <div className="flex-1" />
           <SettingsButton />
         </header>
@@ -638,9 +667,9 @@ export default function StudentPage() {
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
               <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
             </div>
-            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Learning Portal</p>
+            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{t('studentPortalTitle')}</p>
             <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
-              It&apos;s set up for students — not your role. Head back to your own home to keep going.
+              {t('studentPortalBody')}
             </p>
             <button
               onClick={() => router.push('/home')}
@@ -648,7 +677,7 @@ export default function StudentPage() {
               style={{ background: '#1F4D2B', color: '#F7F2E9' }}
             >
               <Home size={15} />
-              Back to my home
+              {t('studentBackHome')}
             </button>
           </div>
         </main>
@@ -677,67 +706,87 @@ export default function StudentPage() {
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>My Studies</span>
+        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>{t('studentMyStudies')}</span>
         <div className="flex-1" />
-        <LessonLink id="student:overview" label="Learn" />
+        <LessonLink id="student:overview" label={t('homeQuickStudy')} />
         <SettingsButton />
       </header>
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
 
-        <div className={styles.pageIntro}>
-          <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> Learn · practise · grow</p>
-          <h1 id="studies-title" className="font-display">My Studies</h1>
-          <p className="font-sans">Choose a course to continue, or open the practical app guides below.</p>
-        </div>
 
-        <section className={styles.courseChoices} aria-labelledby="studies-title">
-          <div className={`${styles.courseChoice} ${styles.primaryCourse}`}>
-            <p className={styles.choiceLabel}>Your main course</p>
-            <h2 className="font-display">Permaculture course</h2>
-            <p className={styles.choiceSummary}>{TOTAL_MODULES} modules · Learn one practical lesson at a time.</p>
-            <div className={styles.courseProgress}>
-              <div className={styles.progressRing}>
-                <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
-                  <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r={R} fill="none"
-                    stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
-                    strokeWidth="8" strokeLinecap="round" strokeDasharray={C}
-                    strokeDashoffset={fetching ? C : dashOffset}
-                    style={{ transition: 'stroke-dashoffset 0.6s ease' }}
-                  />
-                </svg>
-                <span className="font-display">{fetching ? <Loader2 size={20} className="animate-spin" /> : `${pct}%`}</span>
-              </div>
-              <div>
-                <strong>{pct === 100 ? 'Course complete!' : doneCount === 0 ? 'Ready to start' : 'Keep going'}</strong>
-                <span>{doneCount} of {TOTAL_MODULES} modules complete</span>
-                {pct < 100 && totalMins > 0 && <span>~{formatDuration(totalMins)} remaining</span>}
-                {progressError && <span className={styles.progressError}>Progress could not be loaded or saved. Check your connection or account access.</span>}
-              </div>
-            </div>
+        {/* Progress hero */}
+        <section className={styles.intro} aria-labelledby="studies-title">
+          <div>
+            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> {t('studentLearnPracticeGrow')}</p>
+            <h1 id="studies-title" className="font-display">{t('studentMyStudies')}</h1>
+            <p className={`font-sans ${styles.description}`}>{t('studentCourseDescription')}</p>
+
             <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
+              setCourseOpen(true);
               setExpandedModuleId(studyModule.id);
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-            }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'} →</button>
-            <span className={styles.nextLesson}>Next: {studyModule.title}</span>
+
+            }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
+            <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
+          </div>
+          <div className={styles.progress}>
+          {/* Ring */}
+          <div className="flex-shrink-0 relative" style={{ width: 64, height: 64 }}>
+            <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
+              <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
+              <circle cx="50" cy="50" r={R} fill="none"
+                stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
+                strokeWidth="8"
+                strokeLinecap="round"
+                strokeDasharray={C}
+                strokeDashoffset={fetching ? C : dashOffset}
+                style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              {fetching ? (
+                <Loader2 size={20} className="animate-spin" style={{ color: '#1F4D2B' }} />
+              ) : (
+                <>
+                  <span className="font-display font-bold text-xl leading-none" style={{ color: '#20190F' }}>{pct}%</span>
+                </>
+              )}
+            </div>
           </div>
 
-          <OfflinePageLink href="/student/design" className={styles.courseChoice}>
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" className={styles.choiceImage} />
-            <span className={styles.choiceLabel}>English teaching preview · 18 lesson drafts</span>
-            <strong className="font-display">Design a working homestead</strong>
-            <span className={styles.choiceSummary}>Bring the household, site and layout decisions together. This preview does not award course credit.</span>
-            <em>Explore design lessons →</em>
-          </OfflinePageLink>
+          {/* Text */}
+          <div className="flex-1 min-w-0">
+            <div className="font-display font-semibold text-base leading-tight" style={{ color: '#20190F' }}>
+              {pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
+            </div>
+            <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
+              {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
+            </div>
+            {progressError && (
+              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
+                {t('studentProgressError')}
+              </div>
+            )}
+            {pct < 100 && totalMins > 0 && (
+              <div className="flex items-center gap-1.5 mt-2">
+                <Clock size={12} style={{ color: '#8C7A62' }} />
+                <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                  ~{formatDuration(totalMins, t)} {t('studentRemaining')}
+                </span>
+              </div>
+            )}
+            {pct === 100 && (
+              <div className="flex items-center gap-1.5 mt-2">
+                <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
+                <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
+                  {t('studentPractitioner')}
+                </span>
+              </div>
+            )}
+          </div>
+          </div>
 
-          <OfflinePageLink href="/student/finance" className={styles.courseChoice}>
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" className={styles.choiceImage} />
-            <span className={styles.choiceLabel}>Separate English teaching preview · 24 lesson drafts</span>
-            <strong className="font-display">Farm Finance</strong>
-            <span className={styles.choiceSummary}>Work through farm records, costs and business planning. Final assessment is in preparation.</span>
-            <em>Explore finance lessons →</em>
-          </OfflinePageLink>
         </section>
 
         <LimaBar />
@@ -748,26 +797,26 @@ export default function StudentPage() {
             <div className="flex items-center gap-2 mb-2">
               <ClipboardList size={14} style={{ color: '#1F4D2B' }} />
               <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
-                Set by your mentor
+                {t('studentAssignmentSetByMentor')}
               </span>
             </div>
             <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-              {assignSummary.done} of {assignSummary.total} done.
+              {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
               {assignSummary.overdue > 0 && ' '}
               {assignSummary.overdue > 0 && (
                 <span style={{ color: '#B03A2E', fontWeight: 600 }}>
-                  {assignSummary.overdue} {assignSummary.overdue === 1 ? 'is' : 'are'} overdue.
+                  {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
                 </span>
               )}
               {assignSummary.dueSoon > 0 && ' '}
               {assignSummary.dueSoon > 0 && (
                 <span style={{ color: '#C07A1E', fontWeight: 600 }}>
-                  {assignSummary.dueSoon} due this week.
+                  {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
                 </span>
               )}
             </p>
             <p className="font-sans text-xs mt-1.5" style={{ color: '#8C7A62' }}>
-              Assigned modules are listed first. Everything else is still open to you.
+              {t('studentAssignmentsOrder')}
             </p>
           </div>
         )}
@@ -777,30 +826,66 @@ export default function StudentPage() {
             It sits above the module list rather than in a settings screen because it is a thing
             you do on purpose before you leave, not a preference you configure. */}
         <details className={styles.offline}>
-          <summary className="font-sans"><BookOpen size={18} /> Study offline <span className={styles.offlineHint}>Save lessons to this phone before you leave signal</span></summary>
-          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
+          <summary className="font-sans"><BookOpen size={18} /> {t('studentStudyOffline')} <span className={styles.offlineHint}>{t('studentSaveBeforeSignal')}</span></summary>
+          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label={t('studentSaveAvailable')} />
         </details>
 
-        <details className={styles.guides}>
-          <summary>
-            <span><BookOpen size={21} aria-hidden="true" /><strong className="font-display">Practical app guides</strong></span>
-            <span className={styles.guidesHint}>Map, harvest, costs and invoices</span>
-            <ChevronDown size={20} aria-hidden="true" className={styles.guidesChevron} />
+
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="design-pathway-title">
+            <p className={styles.eyebrow}>{t('studentDesignEnglishPreview')}</p>
+            <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2>
           </summary>
-          <div className={styles.guideList}>
-            <p>Practise in the sample farm before using your own records.</p>
-            {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-              <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-              <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
-            </OfflinePageLink>)}
-            <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
+          <div>
+            <p>{t('studentDesignPreviewIntro')}</p>
           </div>
+          <OfflinePageLink href="/student/design" className={styles.guideCard}>
+            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
+            <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong><span>{t('studentDesignPreviewCardBody')}</span><em>{t('studentDesignPreviewAction')}</em></span>
+          </OfflinePageLink>
         </details>
 
-        <div className={styles.courseHeading}>
-          <h2 className="font-display">Your course</h2>
-          <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
-        </div>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="finance-course-title">
+            <p className={styles.eyebrow}>{t('studentFinanceEnglishPreview')}</p>
+            <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2>
+          </summary>
+          <div>
+            <p>{t('studentFinancePreviewIntro')}</p>
+          </div>
+          <OfflinePageLink href="/student/finance" className={styles.guideCard}>
+            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
+            <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong><span>{t('studentFinancePreviewCardBody')}</span><em>{t('studentFinancePreviewAction')}</em></span>
+          </OfflinePageLink>
+        </details>
+
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary aria-labelledby="app-guides-title">
+            <p className={styles.eyebrow}>{t('studentAppGuidesHeading')}</p>
+            <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
+          </summary>
+          <div>
+            <p>{t('studentGuidesDescription')}</p>
+          </div>
+          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
+            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
+          </OfflinePageLink>)}
+          <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
+
+        </details>
+
+        {lang === 'zu' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            {t('studentEnglishContentNotice')}
+          </p>
+        )}
+        <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
+          <summary className={styles.courseHeading}>
+            <h2 className="font-display">{t('studentYourCourse')}</h2>
+            <p className="font-sans">{TOTAL_MODULES} · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} {t('studentLessons')}</p>
+          </summary>
 
         {/* Module list */}
         <div className={styles.modules}>
@@ -811,10 +896,19 @@ export default function StudentPage() {
             const isExpanded = expandedModuleId === mod.id;
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
-            const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
+            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today), lang, t) : null;
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
+            const readiness = readinessLabel(mod.id);
+            const readinessFacts = moduleReadinessDetail(mod.id);
+            const readinessTitle = readiness?.text === 'Fully built'
+              ? t('studentReadinessCompleteDetail')
+                  .replace('{lessons}', String(readinessFacts.totalLessons))
+                  .replace('{languages}', String(readinessFacts.narrationLanguages.length))
+              : readiness?.text === 'Narrated slides'
+                ? t('studentReadinessNarratedDetail').replace('{languages}', String(readinessFacts.narrationLanguages.length))
+                : t('studentReadinessLessonsDetail');
             const unlocked = isModuleUnlocked(mod.id, gatingCtx);
             const isCurrent = currentId === mod.id;
 
@@ -830,7 +924,7 @@ export default function StudentPage() {
                   <div className={styles.moduleHeader}>
                     <div className={styles.moduleArt}>
                       {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                      <span className={`font-sans ${styles.moduleNumber}`}>Module {MODULE_NUMBER.get(mod.id) ?? idx + 1}</span>
+                      <span className={`font-sans ${styles.moduleNumber}`}>{t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-2 flex-wrap">
@@ -839,12 +933,12 @@ export default function StudentPage() {
                         </span>
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
-                          {CATEGORY_LABELS[mod.category]}
+                          {t(CATEGORY_LABEL_KEYS[mod.category])}
                         </span>
                       </div>
                       <p className={`font-sans ${styles.lockedReason}`}>
                         <Lock size={14} style={{ flexShrink: 0, marginTop: 2 }} />
-                        {reason ?? 'Locked'}
+                        {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
                       </p>
                     </div>
                   </div>
@@ -865,7 +959,7 @@ export default function StudentPage() {
                   {/* Number / check */}
                   <div className={styles.moduleArt}>
                     {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? '✓ Complete' : `Module ${MODULE_NUMBER.get(mod.id) ?? idx + 1}`}</span>
+                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? `✓ ${t('studentComplete')}` : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -878,12 +972,12 @@ export default function StudentPage() {
                     <div className="flex items-start gap-2 flex-wrap">
                       <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
-                        {CATEGORY_LABELS[mod.category]}
+                        {t(CATEGORY_LABEL_KEYS[mod.category])}
                       </span>
                       {isCurrent && (
                         <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
-                          Continue here
+                          {t('studentContinueHere')}
                         </span>
                       )}
                       {/* HOW FINISHED THIS MODULE IS, derived from what is on disk rather than a
@@ -894,13 +988,17 @@ export default function StudentPage() {
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
                       <span
-                        title={readinessLabel(mod.id)?.detail}
+                        title={readinessTitle}
                         className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={contentComplete
                           ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
                           : { background: 'rgba(32,25,15,0.05)', color: '#8C7A62', border: '1px solid #E2D8C4' }}
                       >
-                        {readinessLabel(mod.id)?.text}
+                      {readiness?.text === 'Fully built'
+                        ? t('studentReadinessComplete')
+                        : readiness?.text === 'Narrated slides'
+                          ? t('studentReadinessNarrated')
+                          : t('studentReadinessLessons')}
                       </span>
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -910,7 +1008,7 @@ export default function StudentPage() {
                             border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
                           }}>
                           {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
-                          {dueText ?? 'Assigned'}
+                          {dueText ?? t('studentAssigned')}
                         </span>
                       )}
                     </div>
@@ -925,18 +1023,18 @@ export default function StudentPage() {
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: '#8C7A62' }} />
-                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
+                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
-                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>Audio</span>
+                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>{t('studentAudio')}</span>
                         </div>
                       )}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-                            {mod.lessons.length} {mod.lessons.length === 1 ? 'lesson' : 'lessons'}
+                            {mod.lessons.length} {mod.lessons.length === 1 ? t('studentLessonOne') : t('studentLessons')}
                           </span>
                           {isExpanded
                             ? <ChevronUp size={11} style={{ color: '#8C7A62' }} />
@@ -950,7 +1048,7 @@ export default function StudentPage() {
                   <button
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
-                    aria-label={done ? 'Mark as not done' : 'Mark as complete'}
+                    aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
@@ -963,8 +1061,8 @@ export default function StudentPage() {
                     {isToggling
                       ? <Loader2 size={12} className="animate-spin" />
                       : done
-                        ? <><CheckCircle size={12} />Done</>
-                        : <><Circle size={12} />Mark done</>}
+                        ? <><CheckCircle size={12} />{t('studentDone')}</>
+                        : <><Circle size={12} />{t('studentMarkDone')}</>}
                   </button>
                 </div>
 
@@ -979,7 +1077,7 @@ export default function StudentPage() {
                       moduleIds={[mod.id]}
                       lang={lang}
                       compact
-                      label={`Save ${mod.title} to this phone`}
+                      label={t('studentSaveModule').replace('{title}', mod.title)}
                     />
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
                         Rory, on opening a finished module: "i wanted the full slidedeck at the
@@ -1001,12 +1099,12 @@ export default function StudentPage() {
                           moduleId={mod.id}
                           appLang={lang}
                           tracks={allTracks(mod.id)}
-                          label="Listen to the whole module"
+                          label={t('studentListenModule')}
                         />
                       </div>
                     ) : null}
                     <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
-                      Lessons
+                      {t('studentLessonsLabel')}
                     </p>
                     {mod.lessons.map((lesson) => (
                       <LessonPanel
@@ -1035,7 +1133,7 @@ export default function StudentPage() {
                     >
                       <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
                       <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color }}>
-                        {submission ? 'Submitted — tap to resubmit' : 'Submit this module'}
+                        {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
                       {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
                       {submissionOpen
@@ -1073,22 +1171,23 @@ export default function StudentPage() {
               ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
               : <Lock size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
             <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#8C7A62' }}>
-              Capstone: your farm design
+              {t('studentCapstone')}
             </span>
           </div>
           <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
             {capstoneUnlocked
-              ? 'You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.'
-              : `Finish and submit all ${TOTAL_MODULES} modules to unlock your capstone design.`}
+              ? t('studentCapstoneComplete')
+              : t('studentCapstoneLocked').replace('{count}', String(TOTAL_MODULES))}
           </p>
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
               style={{ background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}>
-              Open Design Studio
+              {t('studentOpenDesignStudio')}
             </Link>
           )}
         </div>
+        </details>
 
         {/* Completion banner */}
         {pct === 100 && (
@@ -1096,22 +1195,21 @@ export default function StudentPage() {
             style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
             <Sprout size={28} style={{ color: '#1F4D2B', margin: '0 auto' }} />
             <div className="font-display font-bold text-base" style={{ color: '#1F4D2B' }}>
-              Course complete!
+              {t('studentCourseComplete')}
             </div>
             <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
               {/* No push/SMS/email notification exists anywhere in this app — the mentor
                   dashboard only shows progress when a mentor opens it and looks. The old
                   wording ("Your trainer will be notified") promised an alert the code never
                   sends, which a farmer has no way to check up on. */}
-              You have completed the full ImbewuField permaculture curriculum. If you have a
-              mentor, they will see this progress next time they check in.
+              {t('studentCompletionMessage')}
             </p>
           </div>
         )}
 
         {!isLive && (
           <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            Progress will save to Firebase once the backend is connected
+            {t('studentProgressFirebase')}
           </p>
         )}
       </main>

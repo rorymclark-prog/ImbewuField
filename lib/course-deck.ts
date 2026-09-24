@@ -33,6 +33,8 @@ export interface DeckAnimation {
   aspectRatio?: number;
   /** Authored against this slide's narration word timings; follow its playhead. */
   narrationTimed?: boolean;
+  /** Let a self-contained teaching sequence hold its final state after a manual Watch. */
+  playOnce?: boolean;
   /** Exact text-labelled variants; wordless clips share their base asset. */
   byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
 }
@@ -159,7 +161,7 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
     "bytes": 3900208,
     "seconds": 8.0
   },
-  "44": {
+  "45": {
     byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
     "poster": "Imbewu-Guilds-08-Succession-carry-mulch",
@@ -168,70 +170,57 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
   }
 };
 
-// English-labelled Water clips: two Mzomoyethu extracts and four concept diagrams.
-// isiZulu slides and narration remain in review; the player discloses its English fallback.
+// Keep only the source footage and Flow result. Rory has not cleared the locally drawn concept
+// animations, so their lesson stills carry those teaching steps until reviewed replacements exist.
 const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
+  // The swale and overflow extracts on slides 4/7 imply site outcomes that their lesson cannot
+  // establish. Keep their stills until the teaching and visual review are resolved together.
   14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
-  4: { src: 'watch-04-swale-infiltration', poster: 'watch-04-swale-infiltration', bytes: 881320, aspectRatio: 824 / 720, seconds: 16 },
-  7: { src: 'watch-07-swale-overflow-pond', poster: 'watch-07-swale-overflow-pond', bytes: 2712641, aspectRatio: 824 / 720, seconds: 13 },
-  9: { src: 'watch-09-vetiver-contour', poster: 'watch-09-vetiver-contour', bytes: 176130, aspectRatio: 824 / 720, seconds: 16 },
-  12: { src: 'watch-12-dam-spillway', poster: 'watch-12-dam-spillway', bytes: 185495, aspectRatio: 824 / 720, seconds: 16 },
-  16: { src: 'watch-16-first-flush-tank', poster: 'watch-16-first-flush-tank', bytes: 85731, aspectRatio: 824 / 720, seconds: 17 },
-  21: { src: 'watch-21-greywater-mulch', poster: 'watch-21-greywater-mulch', bytes: 146959, aspectRatio: 824 / 720, seconds: 17 },
 };
 
-// English concept diagrams follow the three authored Introduction Watch passages.
+// The three locally drawn Introduction clips await Rory's visual clearance.
 const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8 },
-  7: { src: 'watch-07-three-ethics', poster: 'watch-07-three-ethics', bytes: 211949, seconds: 23.416667 },
-  13: { src: 'watch-13-diversity', poster: 'watch-13-diversity', bytes: 586357, seconds: 26.625 },
-  19: { src: 'motion-windbreak', poster: 'motion-windbreak', bytes: 4248143, seconds: 30.666667, aspectRatio: 1600 / 1100, narrationTimed: true },
 };
 
-// Reading the Landscape keeps its four authored Watch scenes in teaching order.
+// Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
 const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
   6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6 },
-  5: { src: 'watch-05-water-movement', poster: 'watch-05-water-movement', bytes: 542138, seconds: 14 },
-  9: { src: 'watch-09-sun-shadows', poster: 'watch-09-sun-shadows', bytes: 192487, seconds: 14 },
-  13: { src: 'watch-13-wind-cold-air', poster: 'watch-13-wind-cold-air', bytes: 373296, seconds: 14 },
-  17: { src: 'watch-17-site-map', poster: 'watch-17-site-map', bytes: 116306, seconds: 14 },
 };
 
-// Each Soil Health Watch scene follows its existing narration.
+// Keep the reviewed Flow compost actions; the remaining locally authored soil clips await review.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
+  // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
+  // Moisture, decomposition and finished compost remain in the narration and later slides.
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true },
   11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
-  5: { src: 'tour-soil-observation', poster: 'tour-soil-observation', bytes: 4874969, seconds: 29.833333, aspectRatio: 1600 / 1100, narrationTimed: true },
-  10: { src: 'watch-10-compost-heap', poster: 'watch-10-compost-heap', bytes: 119193, seconds: 14.0 },
-  14: { src: 'watch-14-mulch-protection', poster: 'watch-14-mulch-protection', bytes: 369446, seconds: 14.0 },
 };
 
-// Practical motion shows the root plug and planting action without adding data on arrival.
+// Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
+// footage completes only the transplant action; the choice between methods stays in the
+// narration and still. The locally drawn diagrams remain held for Rory's visual clearance.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-seed-or-seedling', poster: 'flow-seed-or-seedling', bytes: 5423616, seconds: 8 },
+  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true },
 };
 
-// Each Food Forest Watch scene follows its existing narration.
+// Keep the reviewed Flow hand action; the three locally authored scenes await visual clearance.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
-  16: { src: 'flow-sheet-mulching', poster: 'flow-sheet-mulching', bytes: 7483690, seconds: 8 },
-  5: { src: 'tour-seven-layers', poster: 'tour-seven-layers', bytes: 7425984, seconds: 30.375, aspectRatio: 1600 / 1100, narrationTimed: true },
-  10: { src: 'watch-10-climate-match', poster: 'watch-10-climate-match', bytes: 168094, seconds: 14.625 },
-  15: { src: 'tour-young-forest', poster: 'tour-young-forest', bytes: 6436310, seconds: 33.291667, aspectRatio: 1600 / 1100, narrationTimed: true },
+  // The close-up visibly moves mulch onto cardboard and holds the final layer order. The earlier
+  // wide Flow film stopped before this action, and the authored composite awaits Rory's review.
+  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true },
 };
 
-// Each Small Livestock Watch scene follows its existing narration.
+// Keep the real footage and Flow results. The bee close-up shows one continuous move between two
+// blossoms; the lesson still retains the wider hive-to-crops context. The nutrient diagram waits.
 const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
   7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8 },
-  4: { src: 'flow-hens-foraging', poster: 'flow-hens-foraging', bytes: 5064928, seconds: 8 },
-  9: { src: 'watch-09-bee-pollination', poster: 'watch-09-bee-pollination', bytes: 116723, seconds: 14.0 },
-  14: { src: 'watch-14-nutrient-loop', poster: 'watch-14-nutrient-loop', bytes: 161586, seconds: 14.0 },
+  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8 },
+  9: { src: 'flow-bee-between-blossoms', poster: 'flow-bee-between-blossoms', bytes: 2126645, seconds: 8, playOnce: true },
 };
 
-// Each Market Gardening Watch scene follows its existing narration.
+// Keep the Flow seed-sharing film; locally drawn market diagrams await visual clearance.
 const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
   15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8 },
-  4: { src: 'watch-04-farm-record', poster: 'watch-04-farm-record', bytes: 112750, seconds: 14 },
-  9: { src: 'watch-09-surplus-routes', poster: 'watch-09-surplus-routes', bytes: 118388, seconds: 14 },
-  14: { src: 'watch-14-community-network', poster: 'watch-14-community-network', bytes: 170639, seconds: 14 },
 };
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
@@ -345,7 +334,7 @@ export function slideImageFor(
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
-export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean } | null {
+export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean; playOnce?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
   if (!base) return null;
   const a = base.byLang?.[lang] ?? base;
@@ -356,6 +345,7 @@ export function animationUrls(moduleId: string, slide: number, lang = 'en'): { v
     seconds: a.seconds,
     ...(a.aspectRatio ? { aspectRatio: a.aspectRatio } : {}),
     ...(a.narrationTimed ? { narrationTimed: true } : {}),
+    ...(a.playOnce ? { playOnce: true } : {}),
   };
 }
 

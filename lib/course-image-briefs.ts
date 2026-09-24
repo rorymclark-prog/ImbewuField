@@ -80,7 +80,7 @@ export const COURSE_IMAGE_BRIEFS: CourseImageBrief[] = [
 
   { lessonId: 'small-livestock-l1', moduleId: 'small-livestock', subject: 'A moveable chicken pen shown in two positions on a strip of ground, the vacated patch scratched over and enriched, with an arrow showing the move.' },
   { lessonId: 'small-livestock-l2', moduleId: 'small-livestock', subject: 'A hive box in cross-section with stacked frames, and a foraging radius drawn as a wide circle over a simple farm plan.' },
-  { lessonId: 'small-livestock-l3', moduleId: 'small-livestock', subject: 'A closed loop of four icons with arrows between them: animal, manure, compost, growing area, returning to animal feed.' },
+  { lessonId: 'small-livestock-l3', moduleId: 'small-livestock', subject: 'A partial nutrient-flow diagram: bought feed enters, animals produce manure, safely composted manure can return some nutrients to a growing area, and food or other products leave the farm.' },
 
   { lessonId: 'market-community-l1', moduleId: 'market-community', subject: 'A simple ruled record sheet with columns, the handwriting suggested by wavy lines rather than readable words, and a small pile of harvested produce beside it.' },
   { lessonId: 'market-community-l2', moduleId: 'market-community', subject: 'Three selling routes as icons with arrows from one farm: a roadside stall, a group delivery to a shop, and a box going directly to a household.' },

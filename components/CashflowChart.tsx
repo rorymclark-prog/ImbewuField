@@ -30,6 +30,7 @@ import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark } from '@/components/ChartBreakMark';
 import { randLabel, randTick } from '@/lib/format-figures';
+import { useLanguage } from '@/lib/i18n';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
 
@@ -66,6 +67,8 @@ export default function CashflowChart({
    */
   wide?: boolean;
 }) {
+  const { lang } = useLanguage();
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const [windowMonths, setWindowMonths] = useState(12);
   const [picked, setPicked] = useState<string | null>(null);
 
@@ -81,7 +84,7 @@ export default function CashflowChart({
     <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
       <div className="flex items-center justify-between gap-3">
         <p className="text-xl font-display font-semibold flex items-center gap-2" style={{ color: INK }}>
-          <TrendingUp size={13} /> Cash flow
+          <TrendingUp size={13} /> {text('Cash flow', 'Ukuhamba kwemali')}
         </p>
         <div className="flex items-center gap-1 flex-shrink-0">
           {WINDOWS.map((n) => (
@@ -105,7 +108,7 @@ export default function CashflowChart({
         </div>
       </div>
       <p className="text-xs font-sans mt-1" style={{ color: FAINT }}>
-        Money in against money out, month by month, from what you have recorded.
+        {text('Money in against money out, month by month, from what you have recorded.', 'Imali engenayo iqhathaniswa nephumayo, inyanga ngayinye, ngokwalokho okurekhodile.')}
       </p>
     </div>
   );
@@ -114,7 +117,7 @@ export default function CashflowChart({
     return (
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
-        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>Reading your records…</div>
+        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>{text('Reading your records…', 'Kufundwa amarekhodi akho…')}</div>
       </section>
     );
   }
@@ -125,12 +128,12 @@ export default function CashflowChart({
         {header}
         <div className="px-4 py-5">
           <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>
-            {series.earlierRecords ? 'Nothing recorded in these months' : 'No money recorded yet'}
+            {series.earlierRecords ? text('Nothing recorded in these months', 'Akukho okurekhodiwe kulezi zinyanga') : text('No money recorded yet', 'Ayikho imali erekhodiwe okwamanje')}
           </p>
           <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
             {series.earlierRecords
-              ? `Your records start in ${series.firstRecordLabel}. Try a longer window above to reach them.`
-              : 'Log a sale or a cost and this chart draws itself. Two or three months of entries is enough to see a pattern.'}
+              ? `${text('Your records start in', 'Amarekhodi akho aqala ngo')} ${series.firstRecordLabel}. ${text('Try a longer window above to reach them.', 'Khetha isikhathi eside ngenhla ukuze uwabone.')}`
+              : text('Log a sale or a cost and this chart draws itself. Two or three months of entries is enough to see a pattern.', 'Rekhoda ukudayisa noma izindleko ukuze leli shadi livele. Okufakiwe kwezinyanga ezimbili noma ezintathu kwanele ukubona indlela.')}
           </p>
         </div>
       </section>
@@ -146,30 +149,29 @@ export default function CashflowChart({
       {header}
 
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label={`In, ${series.windowMonths} months`} value={randLabel(series.totalInZar)} tone={IN} />
-        <Figure label="Out" value={randLabel(series.totalOutZar)} tone={OUT} />
+        <Figure label={`${text('In', 'Ingenayo')}, ${series.windowMonths} ${text('months', 'izinyanga')}`} value={randLabel(series.totalInZar)} tone={IN} />
+        <Figure label={text('Out', 'Ephumayo')} value={randLabel(series.totalOutZar)} tone={OUT} />
         <Figure
-          label={series.totalNetZar < 0 ? 'Cash shortfall' : 'Cash surplus'}
+          label={series.totalNetZar < 0 ? text('Cash shortfall', 'Imali esilelayo') : text('Cash surplus', 'Imali esele')}
           value={randLabel(series.totalNetZar)}
           tone={series.totalNetZar < 0 ? '#B33A3A' : INK}
         />
       </div>
 
-      <p className="px-4 pb-3 font-sans" style={{ fontSize: 14, color: MUTED }}>Money received minus recorded spending for these months. Unrecorded costs are not included.</p>
+      <p className="px-4 pb-3 font-sans" style={{ fontSize: 14, color: MUTED }}>{text('Money received minus recorded spending for these months. Unrecorded costs are not included.', 'Incazelo enemininingwane ngesiNgisi: Money received minus recorded spending for these months. Unrecorded costs are not included.')}</p>
 
-      <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} wide={wide} />
+      <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} wide={wide} lang={lang} />
 
-      <Readout month={selected} />
+      <Readout month={selected} lang={lang} />
 
-      <ClipNote months={series.months} />
+      <ClipNote months={series.months} lang={lang} />
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
         <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-          The lower band is the running total across these months only, starting from zero — not a bank balance.
+          {text('The lower band is the running total across these months only, starting from zero — not a bank balance.', 'Incazelo enemininingwane ngesiNgisi: The lower band is the running total across these months only, starting from zero — not a bank balance.')}
         </p>
         <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-          Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month
-          you caught up on later will sit in the month you typed it.
+          {text('Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month you caught up on later will sit in the month you typed it.', 'Incazelo enemininingwane ngesiNgisi: Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month you caught up on later will sit in the month you typed it.')}
         </p>
       </div>
     </section>
@@ -199,11 +201,13 @@ function Panels({
   selectedKey,
   onPick,
   wide,
+  lang,
 }: {
   months: FinanceMonthPoint[];
   selectedKey: string;
   onPick: (key: string) => void;
   wide: boolean;
+  lang: string;
 }) {
   const { W, PAD, BARS_H, GAP_H, RUN_H, barCap } = wide ? DESK : PHONE;
   const n = months.length;
@@ -242,7 +246,7 @@ function Panels({
   return (
     <div className="px-2">
       <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block' }} role="img"
-        aria-label={`Money in and money out for each of the last ${n} months, with a running total below.`}>
+        aria-label={lang === 'zu' ? `Imali engenayo nephumayo enyangeni ngayinye kwezingu-${n} ezedlule, nesamba esiqhubekayo ngezansi.` : `Money in and money out for each of the last ${n} months, with a running total below.`}>
         {/* Zero line for the bars, and the two extents of the shared scale. */}
         <line x1={PAD.left} x2={W - PAD.right} y1={zeroY} y2={zeroY} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
         {maxIn > 0 && (
@@ -314,7 +318,7 @@ function Panels({
               fill="transparent" style={{ cursor: 'pointer' }}
               onClick={() => onPick(m.key)}
             >
-              <title>{`${m.longLabel} — in ${randLabel(m.moneyInZar)}, out ${randLabel(m.moneyOutZar)}`}</title>
+              <title>{lang === 'zu' ? `${m.longLabel} — ingenayo ${randLabel(m.moneyInZar)}, ephumayo ${randLabel(m.moneyOutZar)}` : `${m.longLabel} — in ${randLabel(m.moneyInZar)}, out ${randLabel(m.moneyOutZar)}`}</title>
             </rect>
           </g>
         ))}
@@ -327,38 +331,39 @@ function Panels({
  * A capped axis is only honest while the figures it cut are still on the screen.
  * This is that condition, kept: every clipped month is named in full.
  */
-function ClipNote({ months }: { months: FinanceMonthPoint[] }) {
+function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string }) {
   const inScale = cappedScale(months.map((m) => m.moneyInZar));
   const outScale = cappedScale(months.map((m) => m.moneyOutZar));
   const cut: string[] = [];
   for (const m of months) {
-    if (inScale.isClipped(m.moneyInZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyInZar)} in`);
-    if (outScale.isClipped(m.moneyOutZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyOutZar)} out`);
+    if (inScale.isClipped(m.moneyInZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyInZar)} ${lang === 'zu' ? 'ingenayo' : 'in'}`);
+    if (outScale.isClipped(m.moneyOutZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyOutZar)} ${lang === 'zu' ? 'ephumayo' : 'out'}`);
   }
   if (cut.length === 0) return null;
   return (
     <div className="px-4 py-2" style={{ borderTop: '1px solid #F0E9DA' }}>
       <p className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-        Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
+        {lang === 'zu' ? 'Incazelo enemininingwane ngesiNgisi okwamanje: Too tall for this chart, and cut off at the mark so the other months stay readable: ' : 'Too tall for this chart, and cut off at the mark so the other months stay readable: '}
         <b style={{ fontWeight: 600 }}>{cut.join('; ')}</b>.
       </p>
     </div>
   );
 }
 
-function Readout({ month }: { month: FinanceMonthPoint }) {
+function Readout({ month, lang }: { month: FinanceMonthPoint; lang: string }) {
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
   return (
     <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid #F0E9DA` }}>
       <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{month.longLabel}</span>
       {month.hasRecords ? (
         <>
-          <Chip dot={IN} label="in" value={randLabel(month.moneyInZar)} />
-          <Chip dot={OUT} label="out" value={randLabel(month.moneyOutZar)} />
-          <Chip dot={RUN} label="running total" value={randLabel(month.runningZar)} />
+          <Chip dot={IN} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />
+          <Chip dot={OUT} label={text('out', 'ephumayo')} value={randLabel(month.moneyOutZar)} />
+          <Chip dot={RUN} label={text('running total', 'isamba esiqhubekayo')} value={randLabel(month.runningZar)} />
         </>
       ) : (
         // Not "R0 in, R0 out". Nothing was written down, which is a different fact.
-        <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>nothing recorded this month</span>
+          <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{text('nothing recorded this month', 'akukho okurekhodiwe kule nyanga')}</span>
       )}
     </div>
   );

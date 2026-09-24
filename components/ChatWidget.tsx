@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { listenForOverlay } from '@/lib/overlay-signal';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * Lima — the almanac field guide persona. Docked at the bottom of every page
@@ -28,6 +29,7 @@ import ChatPanel from './ChatPanel';
  */
 export default function ChatWidget() {
   const pathname = usePathname() || '';
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   // Hide the FAB while the map is in boundary-draw mode (the draw bar owns the
   // bottom-left corner). The farmer map broadcasts this via a window event.
@@ -143,8 +145,6 @@ export default function ChatWidget() {
         ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
         : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
 
-  const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
-
   return (
     <>
       {/* Launcher FAB — draggable; defaults bottom-left, remembers where you park it */}
@@ -153,8 +153,8 @@ export default function ChatWidget() {
           onPointerDown={onFabPointerDown}
           onPointerMove={onFabPointerMove}
           onPointerUp={onFabPointerUp}
-          aria-label="Open Lima, your field guide — drag to move"
-          title="Tap to ask Lima · drag to move"
+          aria-label={t('limaFabAriaLabel')}
+          title={t('limaFabTitle')}
           className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : FAB_DEFAULT_POS}`}
           style={{
             background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
@@ -210,13 +210,13 @@ export default function ChatWidget() {
                   className="text-xs leading-tight"
                   style={{ color: '#5C5040' }}
                 >
-                  Field Guide · ImbewuField
+                  {t('limaFieldGuideSubtitle')}
                 </span>
               </div>
               <div className="flex-1" />
               <button
                 onClick={() => setOpen(false)}
-                aria-label="Close"
+                aria-label={t('limaClosePhotoDialog')}
                 className="flex items-center justify-center rounded-lg"
                 style={{
                   width: 32,

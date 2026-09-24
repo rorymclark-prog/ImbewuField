@@ -1,6 +1,10 @@
 # Reading the Landscape media — 20 September 2026
 
-The English module now has 21 slides and all four authored Watch animations, with its existing 21 recordings. This branch follows Introduction (#447), which follows Water (#446); merge in that order. It also records Introduction's successful deployed offline follow-up. No narration, lesson, quiz, species, farming figure, saved geometry or PLAN_VERSION changed. isiZulu remains a review draft and is not published here.
+## Current player status — 22 September 2026
+
+This file and `verification.json` preserve the 20 September production record. They do not describe the current learner player. Rory chose to keep lesson 4, slide 17 as a still. The authored `watch-17-site-map.mp4` remains a historical artifact but is not registered for learner playback. The current English player shows the existing `slide-17.jpg` with its original narration; it has no video element on that slide. The live lesson check and outstanding source concerns are recorded in [`../studies-animation-quality/reading-landscape-l4-lesson-check.md`](../studies-animation-quality/reading-landscape-l4-lesson-check.md). The historical offline result below should not be read as a fresh offline check of the current player.
+
+At this 20 September checkpoint, the English module had 21 slides and four authored Watch animations, with its existing 21 recordings. This branch followed Introduction (#447), which followed Water (#446); the required merge order then was Introduction, then Reading the Landscape. It also recorded Introduction's successful deployed offline follow-up. No narration, lesson, quiz, species, farming figure, saved geometry or PLAN_VERSION changed at that checkpoint. isiZulu remained a review draft and was not published there.
 
 ## What the four clips show
 

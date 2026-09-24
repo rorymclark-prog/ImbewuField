@@ -58,7 +58,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
           )}
           <div className="min-w-0">
             <div className="invoice-seller-name font-display font-bold text-xl" style={{ color: '#20190F', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
-              {doc.sellerName || <span style={{ color: '#B8AC97' }}>Your business name</span>}
+              {doc.sellerName || <span style={{ color: '#B8AC97' }}>{doc.labels.sellerPlaceholder}</span>}
             </div>
             {doc.sellerLines.map((line) => (
               <div key={line} className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{line}</div>
@@ -80,24 +80,24 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         className="invoice-meta flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2.5"
         style={{ borderTop: '1px solid #E2D8C4', borderBottom: '1px solid #E2D8C4' }}
       >
-        <span className="text-xs font-sans font-semibold" style={{ color: '#20190F' }}>Invoice {doc.number}</span>
-        <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>Issued {doc.issuedLabel}</span>
+        <span className="text-xs font-sans font-semibold" style={{ color: '#20190F' }}>{doc.labels.invoice} {doc.number}</span>
+        <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.issued} {doc.issuedLabel}</span>
         {doc.dueLabel && (
-          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>Due {doc.dueLabel}</span>
+          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.due} {doc.dueLabel}</span>
         )}
         {doc.referenceLabel && (
-          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>Your ref {doc.referenceLabel}</span>
+          <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{doc.labels.buyerReference} {doc.referenceLabel}</span>
         )}
         {doc.paperReferenceLabel && (
-          <span className="w-full text-xs font-sans" style={{ color: '#5C5040' }}>Original paper invoice: {doc.paperReferenceLabel}</span>
+          <span className="w-full text-xs font-sans" style={{ color: '#5C5040' }}>{doc.labels.originalPaperInvoice}: {doc.paperReferenceLabel}</span>
         )}
       </div>
 
       {/* Bill to */}
       <div className="mt-3.5">
-        <Label>Bill to</Label>
+        <Label>{doc.labels.billTo}</Label>
         <div className="font-display text-sm" style={{ color: doc.buyerName ? '#20190F' : '#B8AC97' }}>
-          {doc.buyerName || 'Buyer name'}
+          {doc.buyerName || doc.labels.buyerPlaceholder}
         </div>
         {doc.buyerLines.map((line) => (
           <div key={line} className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{line}</div>
@@ -110,10 +110,10 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
           className="invoice-rows-head flex items-baseline justify-between pb-1.5 text-xs font-sans uppercase"
           style={{ color: '#8C7A62', letterSpacing: '0.08em', borderBottom: '1px solid #E2D8C4' }}
         >
-          <span>Item</span><span>Amount</span>
+          <span>{doc.labels.item}</span><span>{doc.labels.amount}</span>
         </div>
         {doc.rows.length === 0 ? (
-          <div className="py-3 text-sm font-display" style={{ color: '#B8AC97' }}>No items yet</div>
+          <div className="py-3 text-sm font-display" style={{ color: '#B8AC97' }}>{doc.labels.noItems}</div>
         ) : doc.rows.map((row, index) => (
           <div
             key={`${row.desc}-${index}`}
@@ -159,7 +159,7 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
           empty "How to pay" heading tells a buyer less than no heading at all. */}
       {doc.bankingLines.length > 0 && (
         <div className="invoice-pay mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-          <Label>How to pay</Label>
+          <Label>{doc.labels.howToPay}</Label>
           {doc.bankingLines.map((line) => (
             <div key={line} className="text-xs font-sans" style={{ color: '#20190F' }}>{line}</div>
           ))}

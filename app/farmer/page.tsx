@@ -590,8 +590,8 @@ function HomeInner() {
 
           <button
             onClick={() => setSettingsOpen(true)}
-            aria-label="Appearance settings"
-            title="Appearance"
+            aria-label={lang === 'zu' ? 'Izilungiselelo zokubukeka' : 'Appearance settings'}
+            title={lang === 'zu' ? 'Ukubukeka' : 'Appearance'}
             className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
@@ -606,10 +606,10 @@ function HomeInner() {
         </header>
 
         {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'#f2f7f2',borderBottom:'1px solid #cbd9cc',fontSize:14}}>
-          <strong>{searchParams.get('reportSite') === 'new' ? 'Choose a site for your report' : 'Opening your site report'}</strong>
-          <p style={{margin:'6px 0'}}>{loading ? 'Loading the selected site’s conditions…' : 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.'}</p>
+          <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : 'Choose a site for your report') : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : 'Opening your site report')}</strong>
+          <p style={{margin:'6px 0'}}>{loading ? (lang === 'zu' ? 'Kulayishwa izimo zendawo ekhethiwe…' : 'Loading the selected site’s conditions…') : (lang === 'zu' ? 'Sesha indawo noma thepha kuyo emephini. Umbiko wokuhlaziywa kwendawo uzovuleka uma isilungile.' : 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.')}</p>
           {error && <p role="alert">{error}</p>}
-          <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>Back to saved sites</Link>
+          <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>{lang === 'zu' ? 'Buyela ezindaweni ezilondoloziwe' : 'Back to saved sites'}</Link>
         </div>}
 
         {/* ── Main ──────────────────────────────── */}

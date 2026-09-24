@@ -38,7 +38,16 @@ distinction rather than leaving audio or assessment to contradict the written te
 Coordinated assets: Reading the Landscape English slide-06 recording and full
 track, manifest/size entries, transcript, and the existing linked A-frame clip's
 teaching claims. The slide image itself has no time, area or sufficiency claim.
-The clip has not been newly reviewed here; animation work remains held.
+
+22 September full-motion check: the six-second `flow-a-frame.mp4` shows two
+people holding a coherent A-frame with a suspended plumb line. Full-size and
+390px frames from start through 5.9 seconds show continuous human/tool motion,
+without a visible jump or broken contact. The frame stays planted. It does not
+show reversal calibration, successive level points or contour marking, so it is
+an illustration of looking at the tool, not a field procedure. The video makes
+no construction claim on its own; the overbroad claims are in the current text,
+quiz and audio. Retain the clip only with a coordinated correction that explains
+its limited role. This check is visual/media evidence, not practitioner approval.
 
 ## Acceptance before release
 

@@ -453,75 +453,71 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "What does your land get back from you each season?"
       ],
       "7": [
-        "A borehole is producing more water than your household needs.",
-        "You could keep it closed. You could open it to everyone and watch the level drop.",
-        "Sharing access with your neighbours while you monitor the water table serves all three at once. People Care and Fair Share in the sharing. Earth Care in the monitoring.",
-        "The other choices each serve one ethic and ignore the rest."
+        "A borehole serves your household. Neighbours ask for water too.",
+        "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "Who could help you check the rules and the water supply?"
       ],
       "8": [
         "This is what the ethics are actually for.",
         "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
-        "The ethics let you decide without waiting for permission, and explain the decision afterwards.",
+        "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
         "Build these three into how you think before you build anything on the ground."
       ],
       "9": [
-        "Bill Mollison and David Holmgren distilled permaculture into twelve design principles.",
-        "You do not need all twelve to start. Three of them do most of the work on a South African smallholding.",
-        "Observe and interact. Catch and store energy. Use edges and value the marginal.",
+        "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+        "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
         "We will take those three one at a time."
       ],
       "10": [
         "Watch your land through a full season before you commit to major earthworks.",
         "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
-        "That pattern is what a swale has to match. Dig before you know it and you have moved a great deal of soil into the wrong place.",
+        "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
         "Where does water leave your land? Do you actually know, or are you guessing?"
       ],
       "11": [
         "Harvest rain, sun and biomass before they leave your property.",
         "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
-        "Catching them is almost always cheaper than buying the same thing later.",
+        "Compare the cost and work with the benefit on your own farm.",
         "Name one thing that arrives on your land free and leaves again without being used."
       ],
       "12": [
-        "The edge is where two things meet — a fence line, a stream bank, the strip beside a path.",
-        "Edges are often the most productive ground you have, and they are usually the ground nobody has planned.",
-        "Look at what already grows well along yours. That is the land telling you something.",
+        "The edge is where two things meet — a fence line or the strip beside a path.",
+        "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
         "Which edge on your plot is doing nothing at the moment?"
       ],
       "13": [
-        "A monoculture maize field can be wiped out by one hailstorm. A mixed planting rarely is.",
-        "That is the principle \"use and value diversity\", and it is insurance you plant rather than buy.",
+        "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
         "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
         "What would one bad day cost you right now?"
       ],
       "14": [
         "Put each element where it works for its neighbours.",
-        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. The chickens clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
         "The same three things, fenced apart, do only their own job.",
         "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
       ],
       "15": [
         "Zones run from 0 to 5, and they are about your feet, not your fences.",
-        "Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs and salad greens.",
+        "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
         "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
         "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
       ],
       "16": [
-        "Herbs need daily picking to stay productive.",
-        "Plant them in Zone 3, out in the main field, and the walk is long enough that the daily visit stops happening. The herbs bolt, or they are simply neglected.",
-        "Nothing is wrong with the plant or the soil. The plant was put where your feet do not go.",
-        "What is currently planted further from your door than it deserves?"
+        "Herbs you pick often are easier to tend near the house.",
+        "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "Think about the paths you walk each day.",
+        "What do you visit often that could be closer?"
       ],
       "17": [
         "This is the point of the whole exercise.",
-        "Zones do not organise space. They organise effort — the walking, the carrying and the checking that fills a real day.",
-        "The more often something needs you, the closer it lives. That one rule cuts real hours over a season.",
+        "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+        "The more often something needs you, the closer it lives. That can save walking and work over a season.",
         "Stand at your kitchen door. What can you reach without thinking about it?"
       ],
       "18": [
         "Zones come from inside your land. Sectors come from outside it.",
         "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
-        "A Lowveld farm facing north-west gets hot dry berg winds in August. A KwaZulu-Natal farm has a summer rain sector from the north-east.",
+        "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
         "Which direction does the weather that damages you come from?"
       ],
       "19": [
@@ -571,8 +567,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "4": [
         "Before you harvest water, learn where it already goes.",
-        "Walk your land during and right after heavy rain. Watch for rills, places where water fans out, ponds, and every point where water leaves your property.",
-        "Water that leaves is a resource lost. Water that stays can support soil, trees, crops, and a healthier farm."
+        "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+        "Some excess water needs a safe route away so it does not cause damage."
       ],
       "5": [
         "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
@@ -580,52 +576,51 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "6": [
         "Build an A-frame level from three poles and a weighted string.",
         "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
-        "Two people can trace contour lines across a two-hectare property in a morning. No surveyor is needed. This simple tool is practical for placing swales, dams, and tree rows."
+        "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
       ],
       "7": [
         "Water picks up speed and erosive force as it runs downhill.",
-        "Slow it as high on the slope as possible. Sink it in the middle of the slope. Control it at the bottom.",
-        "This keeps more moisture in the land and prevents damage lower down. The higher you slow water, the earlier you stop erosion from growing."
+        "There is no one placement rule for every slope. Observe where water moves and gathers.",
+        "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water."
       ],
       "8": [
-        "In South Africa, the sun tracks across the northern sky.",
-        "North-facing slopes are warmer and drier. South-facing slopes are cooler and moister. On the Highveld, frost can sit in south-facing hollows long after it clears elsewhere.",
-        "This helps you choose where to place tender crops, trees, buildings, and other parts of your farm."
+        "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+        "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+        "Watch your own site before choosing where to place tender crops, trees, or buildings."
       ],
       "9": [
         "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun."
       ],
       "10": [
-        "Winter sun sits lower and further north than summer sun.",
-        "A wall that casts no shade in summer can shade a bed for hours in winter. A 2m shade cloth on the north side of a garden can block low winter sun for most of the day.",
-        "Check the spot at 8am, midday, and 4pm on a winter's day."
+        "Winter sun is lower and farther north than summer sun.",
+        "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+        "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
       ],
       "11": [
-        "For frost-sensitive plants such as pawpaw and young citrus, use the warmth of a north-facing wall.",
-        "The wall absorbs heat during the day and releases it at night. That night-time warmth can protect a tender plant when frost arrives.",
-        "Do not place vulnerable crops in a cold, south-facing hollow. Choose a position that receives warmth and avoids trapped frost."
+        "Pawpaw and young citrus are sensitive to frost.",
+        "Keep tender plants out of known low frost pockets. Observe local frost before planting."
       ],
       "12": [
-        "Wind can damage a smallholding even when it is hard to see.",
-        "Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies in summer.",
-        "Know your region's pattern before planting. Wind direction affects windbreaks, crop protection, drying, and disease."
+        "Wind can damage crops on a smallholding.",
+        "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+        "Wind, cold air and slope all matter when choosing places for crops and shelter."
       ],
       "13": [
-        "Follow wind across the ridges and gaps. Trace cold air downhill into low ground, and notice where the land creates shelter or exposure."
+        "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately."
       ],
       "14": [
         "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
-        "Frost is ice that forms on a cold surface. Mist alone does not prove there is frost.",
-        "Walk the land after a cold night. Look for frost on plants and compare low ground with slopes. Mark places where frost lasts longest. Keep sensitive plants away from those cold pockets."
+        "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+        "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+        "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
       ],
       "15": [
-        "Put your most frost-sensitive seedling nursery on a gently sloping, north-facing hillside above the frost-pool zone.",
-        "For tomatoes troubled by late blight, move the bed somewhere with good airflow and morning sun. Morning sun dries leaves quickly.",
-        "Air movement and dry leaves make it harder for fungal disease to keep the damp conditions it needs."
+        "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+        "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
       ],
       "16": [
-        "A site map needs paper, a tape measure, a compass, and a morning to walk your land.",
-        "Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, and fences.",
+        "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+        "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
         "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
       ],
       "17": [
@@ -633,8 +628,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "18": [
         "Look for places where frost sits longest and where the ground smells damp during dry months.",
-        "Notice existing vegetation. Thick khakibos or blackjack growing in one corner often signals disturbed or compacted soil.",
-        "These are pioneer weeds. They colonise ground that has been disturbed or compacted. Mark the area on your map so your future design responds to the soil condition."
+        "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+        "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
       ],
       "19": [
         "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
@@ -642,13 +637,13 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
       ],
       "20": [
-        "Walk your land during or right after heavy rain. Mark rills, spreading water, ponds, and every place water leaves your property.",
+        "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
         "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
         "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
       ],
       "21": [
         "Build an A-frame level from three poles and a weighted string.",
-        "Use it to trace contour lines across your land. Mark where you would slow water high, sink it mid-slope, and control it at the bottom.",
+        "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
         "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
       ]
     }
@@ -659,24 +654,22 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
       ],
       "2": [
-        "Explain how a level contour swale holds water for infiltration.",
+        "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
         "Explain why dams need a designed spillway and a site assessment.",
         "Explain what a first-flush diverter does and why tank water still needs a safety check.",
         "Keep greywater away from people, food and drinking-water pipes."
       ],
       "3": [
-        "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.",
-        "The excavated soil forms a berm on the downhill side.",
-        "Trees planted there draw on stored water long after the rain has stopped."
+        "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+        "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
       ],
       "4": [
-        "A swale is a level trench on contour — it sinks water, it doesn't direct it.",
-        "Water fills it evenly and soaks in rather than running off."
+        "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+        "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
       ],
       "5": [
-        "The excavated soil forms a berm on the downhill side.",
-        "The berm, the downhill mound of excavated soil, is where you plant trees.",
-        "Trees planted there draw on stored water long after the rain has stopped."
+        "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+        "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
       ],
       "6": [
         "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
@@ -684,8 +677,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
       ],
       "7": [
-        "Include a safe overflow point so storms don't breach the berm.",
-        "The overflow leads to the next swale or a dam."
+        "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+        "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
       ],
       "8": [
         "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
@@ -707,7 +700,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "12": [
         "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
-        "Size the dam to the catchment area draining toward it."
+        "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
       ],
       "13": [
         "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
@@ -716,6 +709,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "14": [
         "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+        "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
         "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
         "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
       ],
@@ -968,7 +962,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Each staple protects you against something different.",
         "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
         "Beans and cowpeas give a storable protein harvest.",
-        "Sweet potato tolerates dry periods, and its leaves are edible too.",
+        "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
         "Amadumbe handles wetter ground, where other staples struggle.",
         "Notice that they fail in different conditions. That's the whole point."
       ],
@@ -1457,7 +1451,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "3": [
         "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
         "You will know when chickens help a bed, and when their scratching can cause damage.",
-        "You will understand pollination, hive placement, and the value of closing nutrient loops."
+        "You will understand pollination, hive placement, and how livestock move nutrients around a farm."
       ],
       "4": [
         "Watch the hens peck at the ground among dry plant remains.",
@@ -1489,8 +1483,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "There is no single number of chickens that guarantees enough fertility for every plot."
       ],
       "9": [
-        "Watch the bees leave the hive and move among flowering crops.",
-        "Their movement carries pollen between flowers across the site."
+        "Watch one bee move from one blossom to another.",
+        "Bees can carry pollen as they visit flowers."
       ],
       "10": [
         "Honeybees and other insects carry pollen between flowers.",
@@ -1499,7 +1493,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "11": [
         "South Africa has two native honeybee subspecies.",
-        "The Cape bee lives in the southern and south-western Cape. The African honeybee occurs across the north and east.",
+        "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
         "Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas."
       ],
       "12": [
@@ -1515,12 +1509,12 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis."
       ],
       "14": [
-        "Watch nutrients move from plants to animals, then through manure and compost back to the growing bed."
+        "Some nutrients move from plants to animals. Bought feed also brings nutrients into the farm. Some nutrients may return to the growing area through compost made from manure. Food and other products carry nutrients away."
       ],
       "15": [
-        "Animals can return some nutrients to the farm.",
-        "Chickens eat suitable farm produce and insects, and manure can become compost for crops.",
-        "Keep track of feed bought in and food sold or taken home. These nutrients still enter or leave the system.",
+        "Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.",
+        "Chickens eat suitable farm produce and insects.",
+        "Bought feed brings nutrients into the farm. Food sold or taken home and other products carry nutrients away. Keep track of feed bought in and food sold or taken home.",
         "Scraps alone may not meet the animals’ needs."
       ],
       "16": [
@@ -1545,7 +1539,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Walk your smallholding and choose an area where livestock could support another part of the system.",
         "Record what food, scraps, pests, surplus produce, manure, or flowering resources are already present.",
         "Then note what each animal could produce, and what it would need from the farm.",
-        "Identify one loop that could work with the resources you already have."
+        "Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves."
       ],
       "20": [
         "Choose one safe action from this module.",
@@ -1631,7 +1625,8 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "15": [
         "Neighbours can share different varieties and the work of saving seed.",
         "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
-        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed."
+        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+        "Before exchanging seed, check whether the variety is protected and whether permission is needed."
       ],
       "16": [
         "Tool sharing puts expensive equipment within reach of the group.",
@@ -1657,7 +1652,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       "20": [
         "Choose one real decision from your farm record.",
         "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
-        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Record responsibilities and review what happens."
+        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
       ]
     }
   }

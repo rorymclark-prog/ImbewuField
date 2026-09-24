@@ -158,6 +158,7 @@
 
 .expanded .playerHeader,
 .expanded .zoomBar,
+.expanded .zoomLink,
 .expanded .audioControl,
 .expanded .controlStrip {
   position: absolute;
@@ -192,8 +193,19 @@
   background: rgba(255, 254, 250, .96);
   box-shadow: 0 1px 9px #20190f33;
 }
+.expanded .zoomLink {
+  top: calc(max(8px, env(safe-area-inset-top)) + 66px);
+  right: max(8px, env(safe-area-inset-right));
+  max-width: min(50vw, 240px);
+  padding: 4px 9px;
+  border-radius: 10px;
+  background: rgba(255, 254, 250, .96);
+  font-size: 12px;
+  line-height: 1.2;
+}
 .expanded.chromeHidden .playerHeader,
 .expanded.chromeHidden .zoomBar,
+.expanded.chromeHidden .zoomLink,
 .expanded.chromeHidden .audioControl,
 .expanded.chromeHidden .controlStrip { opacity: 0; pointer-events: none; }
 
@@ -242,6 +254,17 @@
 
 .progress {
   min-width: 0;
+}
+
+.zoomLink {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  color: #2f6b3a;
+  font-size: 14px;
+  font-weight: 700;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 480px) {

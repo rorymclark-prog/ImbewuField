@@ -1,6 +1,33 @@
 # Soil Health & Composting media — 20 September 2026
 
-Twenty English slides and the three authored Watch clips are registered with the existing twenty English recordings. This branch follows Reading the Landscape (#448), Introduction (#447) and Water (#446). It also records Reading's successful deployed offline follow-up. No lesson, quiz, narration, species, farming figure, saved geometry or PLAN_VERSION changed. isiZulu remains an unpublished review draft.
+> **Current status — 22 September 2026:** the three locally drawn clips described below were withdrawn from the learner player under Rory’s visual-quality rule. Slide 10 now uses the separately reviewed Flow candidate `flow-build-compost-heap`; slides 5 and 14 use their existing stills. Slide 11 retains `flow-compost-materials`. The production record below is historical, not approval.
+
+> **23 September L1 update:** One x1 Flow clod-inspection shot was generated
+> and held after review because it shows one sample rather than the narrated
+> two-example comparison, and its hands/representation need visual review.
+> It is recoverable only in `../studies-animation-quality/review-candidates/`;
+> slide 5 remains a still. See the
+> [current lesson check](../studies-animation-quality/soil-l1-current-lesson-check.md).
+
+> **23 September L2 update:** Both existing Flow clips on slides 10–11 were
+> retained after full-motion, deployed 390px and offline-pack playback checks.
+> They show compost setup only. One overcertain English quiz rationale is held
+> for an authorised protected correction; see the
+> [current L2 check](../studies-animation-quality/soil-l2-current-lesson-check.md).
+
+> **23 September L3 update:** A distinct one-output x1 Flow ground-level rain
+> shot was generated and held after full-motion and phone-width review:
+> pooling obscures the raindrop-impact contrast. Slide 14 remains a still;
+> slides 16 and 18 already have current photorealistic stills. The current
+> English/offline and source check is
+> [here](../studies-animation-quality/soil-l3-current-lesson-check.md).
+
+The historical production pass registered twenty English slides and three locally
+authored Watch clips with the existing twenty English recordings. The current
+learner registration is described above. This branch follows Reading the Landscape
+(#448), Introduction (#447) and Water (#446). It also records Reading's successful
+deployed offline follow-up. No lesson, quiz, narration, species, farming figure,
+saved geometry or PLAN_VERSION changed. isiZulu remains an unpublished review draft.
 
 ## What the clips show
 

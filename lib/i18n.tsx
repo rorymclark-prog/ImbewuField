@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
 import {
   activeAccountLocalStorageKey,
@@ -8,6 +8,10 @@ import {
 } from '@/lib/account-local-storage';
 
 import { DESIGN_STUDIO_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { Ctx } from '@/lib/i18n-context';
+import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
+
+export { useLanguage } from '@/lib/i18n-context';
 
 const ONBOARD_KEY = 'permamap_onboarded';
 
@@ -33,6 +37,7 @@ export const APP_LANGS = [
 // lib/locales/<code>.ts and are fetched as small async chunks on demand via loadLocale().
 const T_en: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
+  ...LEARNER_UI_ENGLISH,
   tagline: 'Permaculture Intelligence',
   // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
   designStudioLabel: 'Design Studio',
@@ -751,6 +756,140 @@ const T_en: Dict = {
   navMyAccount: 'My Account',
   navCloseMenu: 'Close menu',
   navCommunity: 'Community',
+  navLandmark: 'Main navigation',
+  navAtlas: 'Atlas',
+  navNetwork: 'Network',
+  navExchange: 'Exchange',
+  navBedCropPlan: 'Bed-by-bed crop plan',
+  navAssessments: 'Project assessments',
+  navDesignStudio: 'Design Studio',
+  navOfflineSync: 'Offline and sync',
+  navPracticeViews: 'Practice views',
+  navBrowseGardens: 'Browse gardens',
+  navFeedback: 'Report a problem or suggest a feature',
+  navWhatsNew: "What's new",
+  navTour: 'Take a tour',
+  navTipsHelp: 'Tips and help',
+  navTourControls: 'Tour controls',
+  navTourWorkspace: 'Tour workspace',
+  navTourWorkspaceNote: 'Changes stay in this tour workspace.',
+  navChooseView: 'Choose view',
+  navTourGardensReports: '18 gardens and completed reports',
+  navExitTour: 'Exit tour',
+  navPageHelp: 'Page help',
+  tourOnboardingCta: 'Take the 15-minute tour',
+  studentPortal: 'Learning Portal',
+  studentPortalTitle: 'This is the Learning Portal',
+  studentPortalBody: "It's set up for students — not your role. Head back to your own home to keep going.",
+  studentBackHome: 'Back to my home',
+  studentMyStudies: 'My Studies',
+  studentLearnPracticeGrow: 'Learn · practise · grow',
+  studentCourseDescription: 'Your permaculture course, one practical lesson at a time.',
+  studentRevisit: 'Revisit your studies',
+  studentStart: 'Start studying',
+  studentContinue: 'Continue learning',
+  studentCourseComplete: 'Course complete!',
+  studentReady: 'Ready to start',
+  studentKeepGoing: 'Keep going',
+  studentModulesComplete: '{done} of {total} modules complete',
+  studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.',
+  studentRemaining: 'remaining',
+  studentPractitioner: 'Permaculture practitioner',
+  studentCategoryFoundation: 'Foundation',
+  studentCategoryWater: 'Water',
+  studentCategorySoil: 'Soil',
+  studentCategoryPlants: 'Plants',
+  studentCategoryDesign: 'Design',
+  studentCategoryBusiness: 'Business',
+  studentCategorySeeds: 'Seeds',
+  studentCorrect: 'Correct',
+  studentIncorrectSee: 'Incorrect — see {answer}',
+  studentCloseLesson: 'Close lesson',
+  studentOpenLesson: 'Open lesson',
+  studentListenOrRead: 'Listen or read',
+  studentReadAndPractise: 'Read and practise',
+  studentListenToLesson: 'Listen to this lesson',
+  studentWatchAndListen: 'Watch and listen',
+  studentDeckDescription: '{count} slides, narrated. Nothing downloads until you press play.',
+  studentKeyPoints: 'Key points',
+  studentFacilitatorVideo: 'Facilitator training video — for in-person sessions, not for streaming here.',
+  studentCheckUnderstanding: 'Check your understanding',
+  studentRelatedLessons: 'Related lessons',
+  studentSubmitError: 'Could not submit — check your connection and try again.',
+  studentPhotoAdded: 'Photo added — tap to change',
+  studentPhotoRequired: 'Add a photo (required)',
+  studentVoiceAdded: 'Voice note added — {name}',
+  studentVoiceOptional: 'Add a voice note (optional)',
+  studentSubmitting: 'Submitting…',
+  studentResubmit: 'Resubmit',
+  studentSubmit: 'Submit',
+  studentAlreadySubmitted: 'Already submitted — submitting again replaces the photo and voice note.',
+  studentAssignmentSetByMentor: 'Set by your mentor',
+  studentAssignmentProgress: '{done} of {total} done.',
+  studentAssignmentOverdue: '{count} overdue.',
+  studentAssignmentDueSoon: '{count} due this week.',
+  studentAssignmentsOrder: 'Assigned modules are listed first. Everything else is still open to you.',
+  studentStudyOffline: 'Study offline',
+  studentSaveBeforeSignal: 'Save lessons to this phone before you leave signal',
+  studentSaveAvailable: 'Save available lessons to this phone',
+  studentSaveModule: 'Save {title} to this phone',
+  studentYourCourse: 'Your course',
+  studentModule: 'Module {number}',
+  studentLocked: 'Locked',
+  studentComplete: 'Complete',
+  studentContinueHere: 'Continue here',
+  studentAssigned: 'Assigned',
+  studentAudio: 'Audio',
+  studentLessonOne: 'lesson',
+  studentLessons: 'lessons',
+  studentMarkNotDone: 'Mark as not done',
+  studentMarkComplete: 'Mark as complete',
+  studentDone: 'Done',
+  studentMarkDone: 'Mark done',
+  studentLessonsLabel: 'Lessons',
+  studentListenModule: 'Listen to the whole module',
+  studentSubmitModule: 'Submit this module',
+  studentSubmittedResubmit: 'Submitted — tap to resubmit',
+  studentReadinessComplete: 'Fully built',
+  studentReadinessNarrated: 'Narrated slides',
+  studentReadinessLessons: 'Lessons only',
+  studentReadinessCompleteDetail: 'All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.',
+  studentReadinessNarratedDetail: 'Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.',
+  studentReadinessLessonsDetail: 'Reading and pictures are ready. Narration and slides are still being made.',
+  studentDueToday: 'Due today',
+  studentDueTomorrow: 'Due tomorrow',
+  studentDaysOverdue: '{count} days overdue',
+  studentDueInDays: 'Due in {count} days',
+  studentDueDate: 'Due {date}',
+  studentOpenedByMentor: 'Opened by your mentor',
+  studentFinishToUnlock: 'Finish the lesson “{title}” to open this',
+  studentSubmitToUnlock: 'Submit the “{title}” lesson task to open this',
+  studentHourOne: 'h',
+  studentHours: 'h',
+  studentMinutes: 'min',
+  studentCapstone: 'Capstone: your farm design',
+  studentCapstoneComplete: 'You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.',
+  studentCapstoneLocked: 'Finish and submit all {count} modules to unlock your capstone design.',
+  studentOpenDesignStudio: 'Open Design Studio',
+  studentCompletionMessage: 'You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.',
+  studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',
+  studentEnglishContentNotice: 'Module names and descriptions, lesson titles and text, and quiz questions are shown in English for now. Review of the isiZulu wording and audio is still in progress.',
+  studentDesignEnglishPreview: 'Design course · English teaching preview',
+  studentDesignPreviewTitle: 'Design a working homestead',
+  studentDesignPreviewIntro: 'Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.',
+  studentDesignPreviewCardTitle: 'Bring the decisions together.',
+  studentDesignPreviewCardBody: 'Build a design folder with a facilitator or learning partner. This preview does not award course credit.',
+  studentDesignPreviewAction: 'Explore the design teaching preview · English →',
+  studentFinanceEnglishPreview: 'Separate course · English teaching preview',
+  studentFinancePreviewTitle: 'Farm Finance',
+  studentFinancePreviewIntro: 'Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.',
+  studentFinancePreviewCardTitle: 'Understand the money. Plan the next season.',
+  studentFinancePreviewCardBody: 'Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.',
+  studentFinancePreviewAction: 'Explore the finance teaching preview · English →',
+  studentAppGuidesHeading: 'Practical app guides',
+  studentAppGuidesTitle: 'Using ImbewuField',
+  studentAppGuideAction: 'Read the guide · English →',
+  studentSampleTourAction: 'Explore mapping, planning and records in the sample tour →',
   communityTagline: 'Farmer to farmer',
   communityTabNearby: 'Nearby',
   communityTabBoard: 'Board',
@@ -1145,6 +1284,185 @@ const T_en: Dict = {
   surveyHddsOilsFats: 'Oils & fats',
   surveyHddsSugarsHoney: 'Sugars & honey',
   surveyHddsSpicesBeverages: 'Spices & beverages',
+
+  // Login route and auth feedback.
+  loginRoleFarmer: 'Farmer',
+  loginRoleStudent: 'Student',
+  loginSubtitleSignIn: 'Sign in to your account.',
+  loginSubtitleCreate: 'Create a new account.',
+  loginSubtitleReset: 'Reset your password.',
+  loginContinueToMap: 'Sign in to continue to your map',
+  loginBackendUnavailableNotice: 'Backend not connected yet — auth is unavailable. The app runs in tour mode.',
+  loginSignIn: 'Sign in',
+  loginCreateAccount: 'Create account',
+  loginResetEmailSent: 'Reset email sent to',
+  loginResetCheckInbox: 'Check your inbox and follow the link to set a new password.',
+  loginBackToSignIn: 'Back to sign in',
+  loginFullName: 'Full name',
+  loginEmailAddress: 'Email address',
+  loginPassword: 'Password',
+  loginRole: 'Role',
+  loginSigningIn: 'Signing in...',
+  loginCreatingAccount: 'Creating account...',
+  loginSending: 'Sending...',
+  loginSendResetEmail: 'Send reset email',
+  loginForgotPassword: 'Forgot your password?',
+  loginOr: 'or',
+  loginConnecting: 'Connecting...',
+  loginContinueWithGoogle: 'Continue with Google',
+  loginGoogleEmbeddedHelp: 'Google sign-in doesn’t open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:',
+  loginLinkCopied: 'Link copied',
+  loginCopyAppLink: 'Copy app link',
+  loginBackToApp: 'Back to app',
+  loginTrustFooter: 'Built for South African smallholder farmers',
+  loginErrorInvalidEmail: 'That doesn’t look like a valid email address.',
+  loginErrorAccountDisabled: 'This account has been disabled.',
+  loginErrorAccountNotFound: 'No account found with that email.',
+  loginErrorWrongPassword: 'Incorrect password — try again.',
+  loginErrorInvalidCredentials: 'Email or password is incorrect.',
+  loginErrorEmailInUse: 'An account with that email already exists.',
+  loginErrorWeakPassword: 'Choose a stronger password (at least 6 characters).',
+  loginErrorTooManyAttempts: 'Too many attempts — wait a moment and try again.',
+  loginErrorNetwork: 'Network error — check your connection.',
+  loginErrorCancelled: 'Sign-in was cancelled.',
+  loginErrorDifferentProvider: 'An account already exists with this email using a different sign-in method.',
+  loginErrorEmailDisabled: 'Email and password sign-in is disabled for this app. The app administrator needs to enable it.',
+  loginErrorGoogleDisabled: 'Google sign-in is disabled for this app. The app administrator needs to enable it.',
+  loginErrorPopupBlocked: 'Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.',
+  loginErrorDomainNotAuthorised: 'This web address isn’t authorised for Google sign-in yet. Use email + password for now.',
+  loginErrorStorageBlocked: 'This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.',
+  loginErrorBackendSampleMode: 'Firebase is not configured yet — running in sample mode.',
+  loginErrorBackendUnavailable: 'Firebase is not configured yet.',
+  loginErrorGoogleEmbedded: 'Google sign-in won’t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.',
+  loginErrorUnexpected: 'Something went wrong. Please try again.',
+
+  // Offline preparation and queued fieldwork.
+  offlineTitle: 'Offline & sync',
+  offlineConnected: 'Connected',
+  offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
+  offlineEntriesWaiting: '{count} entries waiting to send',
+  offlineBeforeLeavingSignal: 'Before you leave signal',
+  offlinePrepareDescription: 'Prepare the pages and authorised records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.',
+  offlineWorking: 'Working…',
+  offlinePrepareButton: 'Prepare fieldwork on this device',
+  offlineLessonDownloads: 'Download lesson slides, narration and clips separately under',
+  offlineStudyLink: 'Study offline',
+  offlineOpenToolsOnce: 'Open your saved designs, crop plans and reports online once so their additional tools and images are available.',
+  offlinePageReadiness: 'Page readiness · {ready} of {total}',
+  offlineStartupFilesSaved: 'Startup files saved',
+  offlineNotConfirmed: 'Not confirmed on this device',
+  offlineReadinessLimit: 'These checks cover startup files. They do not promise fresh map imagery, every report image, or every optional tool.',
+  offlineSavedEntriesTitle: 'Saved entries waiting to send',
+  offlineSavedEntriesDescription: 'Completed visits, training registers, signatures, feedback, photographs, garden observations and assessment responses can wait here. Sync runs when the app is open and a connection returns.',
+  offlineSyncNow: 'Sync now',
+  offlineQueueEmpty: 'No entries in this fieldwork queue. The money book uses its own sync system.',
+  offlineNeedsReview: 'Needs review — server save not confirmed',
+  offlineSending: 'Sending / awaiting confirmation',
+  offlineWaitingToSend: 'Saved on this device — waiting to send',
+  offlineDownloadCopy: 'Download a copy',
+  offlineRemoveConfirm: 'Remove this device’s queued change? This cannot be undone here. Download a copy first if you need to keep it. The server record is not deleted.',
+  offlineRemoveQueuedChange: 'Remove queued change',
+  offlineKeepEntry: 'Keep it',
+  offlineReviewRemove: 'Review / remove',
+  offlineConflictHelp: 'For a conflict, keep a downloaded copy, remove this queued change, reconnect and reopen the current record. Compare the versions before saving your corrections. Permission or validation errors must be resolved before resubmitting.',
+  offlineAvailableTitle: 'What stays available',
+  offlineCachedCount: '{count} authorised information requests saved on this device. Their contents reflect the last successful download, plus your unsent changes.',
+  offlineAvailableDescription: 'Local crop planning, journal notes and downloaded lessons can work without signal. AI chat, AI reports, transcription, receipt scanning, new sign-in and fresh online maps still need a connection. The map offers an Offline canvas for saved drawings and pins without satellite or terrain layers. Receipt originals in the money book remain on their original device.',
+  offlineDeviceSafety: 'Use a normal browser window. Clearing site data removes downloads and unsent fieldwork. Keep this device protected, especially where it holds attendance signatures or photographs.',
+  offlinePreparingPages: 'Preparing app pages…',
+  offlinePreparingNamedPage: 'Preparing {page}…',
+  offlineSavingFieldwork: 'Saving authorised fieldwork information…',
+  offlinePreparationGaps: 'Preparation finished with gaps. Read the list below before leaving signal.',
+  offlinePreparationComplete: 'Pages and available fieldwork records are saved on this device. Test reopening without signal before travelling.',
+  offlineSyncComplete: 'Sync attempt finished. Any entries still listed below remain on this device.',
+  offlinePortfolio: 'Portfolio',
+  offlineErrorUnsupportedBrowser: 'This browser cannot prepare the app for offline use.',
+  offlineErrorFirstStart: 'The app is still preparing its first offline start. Keep it open with a connection and try again.',
+  offlineErrorPrepareTimeout: 'Preparation timed out. Keep the app open with a connection and retry.',
+  offlineErrorWorkspaceChanged: 'The workspace changed. Prepare again in the current account.',
+  offlineErrorEntrySending: 'This entry is sending. Wait before removing it.',
+  offlineErrorServiceUnavailable: 'This service is not available for device saving.',
+  offlineErrorSignInRequired: 'Sign in and open your workspace before saving fieldwork on this device.',
+  offlineErrorAccountChanged: 'The account or organisation changed. Reopen your workspace.',
+  offlineErrorConnectionTimeout: 'Connection timed out.',
+  offlineUnknownPage: 'Other page',
+  offlineLabelTrainingRegister: 'Training register',
+  offlineLabelProgrammeIndicator: 'Programme indicator',
+  offlineLabelGardenObservation: 'Garden observation',
+  offlineLabelAssessmentResponse: 'Assessment response',
+  offlineLabelVisit: 'Visit',
+  offlinePageHome: 'Home',
+  offlinePageOffline: 'Offline & sync',
+  offlinePageFarmer: 'Garden & site survey',
+  offlinePageLessons: 'Lessons',
+  offlinePageRecords: 'Money book & harvests',
+  offlinePageInvoices: 'Invoices',
+  offlinePageJournal: 'Field journal',
+  offlinePageCropPlan: 'Crop plan',
+  offlinePageGardenTasks: 'Garden tasks',
+  offlinePageReports: 'Saved reports',
+  offlinePageDesign: 'Design studio',
+  offlinePageCalendar: 'Planting calendar',
+  offlinePageAssessments: 'Assessments',
+  offlinePageMentor: 'Mentor fieldwork',
+  offlinePageOrganisation: 'Organisation',
+  offlinePageFunder: 'Funder reports',
+  offlinePagePortfolio: 'Garden portfolio',
+
+  // Farm-gate price route controls.
+  pricesFarmGateTitle: 'Farm-gate prices',
+  pricesLearn: 'Learn',
+  pricesChooseCrop: 'Tap a crop to see wholesale and retail guide prices per kg — for when you are standing at the gate. Check today’s local price before agreeing.',
+
+  // Saved sites and reports route controls. Report content is localized by its own language flow.
+  reportsViewerLoadError: 'The report viewer could not load. Reconnect and try opening the saved report again.',
+  reportsTitle: 'Saved sites & reports',
+  reportsIntro: 'Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.',
+  reportsFunderNotice: 'Your funder workspace contains the programme reports shared with you.',
+  reportsOpenFunderView: 'Open funder view',
+  reportsLoading: 'Loading your saved sites…',
+  reportsSampleWorkspaceNotice: 'Sample workspace · your real sites and saved reports are kept separate.',
+  reportsChooseSitesOrReports: 'Choose sites or reports',
+  reportsSavedSites: 'Saved sites',
+  reportsSavedReports: 'Saved reports',
+  reportsSelectNewSite: 'Select a new site on the map',
+  reportsSelectNewSiteHelp: 'Search for a place or tap its position, then continue to its report.',
+  reportsSitesDescription: 'Open a site to generate a report and see which photos, test results, survey details and design work would improve it.',
+  reportsNoSitesTitle: 'No sites saved yet',
+  reportsNoSitesHelp: 'Select a site on the map to begin. Name and save it in the report workspace so you can return here.',
+  reportsSavedSiteFallback: 'Saved site',
+  reportsOneSavedReportLatest: '1 saved report · latest {date}',
+  reportsManySavedReportsLatest: '{count} saved reports · latest {date}',
+  reportsReadyForFirstReport: 'Ready for its first report',
+  reportsOpenWorkspaceForSite: 'Open report workspace for {site}',
+  reportsOpenGenerateReport: 'Open site & generate report',
+  reportsReadLatest: 'Read latest saved report',
+  reportsOpening: 'Opening…',
+  reportsEarlierReportsDescription: 'Open an earlier report without generating it again. Each report retains its saved text and site snapshot.',
+  reportsNoSavedReports: 'No saved reports yet. Open a saved site, generate its report and choose Save.',
+  reportsUnlinkedSiteHeading: 'Reports from places not saved as sites',
+  reportsRemovedPinNote: 'These reports remain available even if their saved pin was removed.',
+  priceAllCrops: 'All crops',
+  priceConfidenceSourced: 'Real market price',
+  priceConfidenceEstimate: 'Rough estimate — not confirmed',
+  priceUpdatedCheckToday: 'Priced {date} — always check today’s real price before you agree',
+  priceWholesale: 'Wholesale',
+  pricePerKgTrader: 'per kg — closer to what a trader or market buyer pays',
+  priceRetail: 'Retail',
+  pricePerKgShop: 'per kg — shop shelf price, not a farm-gate price',
+  cropPlanOpenAria: 'Open crop plan for {site}',
+  cropPlanStartAria: 'Start crop plan for {site}',
+  cropPlanTitle: 'Crop plan',
+  cropPlanAddGrowingAreas: 'Add your growing areas',
+  cropPlanLoading: 'Loading your plan…',
+  cropPlanPlannedCount: '{count} crops planned',
+  cropPlanStartAction: 'Start crop plan',
+  cropPlanBedCount: '{count} beds',
+  cropPlanPlotCount: '{count} plots',
+  limaClosePhotoDialog: 'Close',
+  limaFabAriaLabel: 'Open Lima, your field guide — drag to move',
+  limaFabTitle: 'Open Lima',
+  limaFieldGuideSubtitle: 'Field Guide · ImbewuField',
 };
 
 // Locale dictionaries that have finished loading. English is present from module init; every
@@ -1168,33 +1486,30 @@ export function translate(lang: string, key: string): string {
   return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;
 }
 
-interface LangCtx {
-  lang: string;
-  setLang: (code: string) => void;
-  t: (key: string) => string;
-  onboarded: boolean;
-  completeOnboarding: (code: string) => void;
-}
-
-const Ctx = createContext<LangCtx>({
-  lang: 'en', setLang: () => {}, t: (k) => k, onboarded: true, completeOnboarding: () => {},
-});
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState('en');
   const [onboarded, setOnboarded] = useState(true); // assume true until we check, avoids modal flash on SSR
   const [, setLoadTick] = useState(0); // bumped once a lazily-loaded locale lands, so t() re-renders
 
   useEffect(() => {
-    const saved = localStorage.getItem('permamap_lang');
-    const done = localStorage.getItem(activeAccountLocalStorageKey(ONBOARD_KEY)) === '1';
-    if (saved) setLangState(saved);
+    let saved: string | null = null;
+    let done = false;
+    try {
+      saved = localStorage.getItem('permamap_lang');
+      done = localStorage.getItem(activeAccountLocalStorageKey(ONBOARD_KEY)) === '1';
+    } catch { /* Private browsing may deny local storage; keep the in-memory default. */ }
+    if (APP_LANGS.some((locale) => locale.code === saved)) setLangState(saved!);
     setOnboarded(done);
 
     // Keep any deliberately nested preview/example provider in step with the root provider
     // during same-tab language changes.
     return listenForLanguageChanges(window, setLangState);
   }, []);
+
+  // Keep browser language tools and assistive technology aligned with the selected interface.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   // Fetches the active locale's chunk whenever `lang` changes — covering the initial mount
   // (English, already loaded, so this is a no-op), setLang, and the cross-tab listener above —
@@ -1211,19 +1526,20 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang]);
 
   const setLang = (code: string) => {
+    if (!APP_LANGS.some((locale) => locale.code === code)) return;
     setLangState(code);
-    localStorage.setItem('permamap_lang', code);
+    try { localStorage.setItem('permamap_lang', code); } catch { /* The current tab still changes language. */ }
     announceLanguageChange(window, code);
   };
   const completeOnboarding = (code: string) => {
     setLang(code);
-    localStorage.setItem(activeAccountLocalStorageKey(ONBOARD_KEY), '1');
-    removeSignedInLegacyLocalStorageKey(ONBOARD_KEY);
+    try {
+      localStorage.setItem(activeAccountLocalStorageKey(ONBOARD_KEY), '1');
+      removeSignedInLegacyLocalStorageKey(ONBOARD_KEY);
+    } catch { /* Onboarding can finish for this session when storage is unavailable. */ }
     setOnboarded(true);
   };
   const t = (key: string) => LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;
 
   return <Ctx.Provider value={{ lang, setLang, t, onboarded, completeOnboarding }}>{children}</Ctx.Provider>;
 }
-
-export const useLanguage = () => useContext(Ctx);

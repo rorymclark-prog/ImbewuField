@@ -246,3 +246,12 @@ Ngimake okungenani amaphuzu amathathu aphakeme ngokufanayo anqamula umthambeka w
 Umugqa engiwumakile unqamula umthambeka, awehli nawo.
 
 Isikhathi esincane esingokoqobo somsebenzi wangempela: izinsuku ezi-5.
+
+## DRAFT FOR HUMAN REVIEW — not for learner recording
+
+The script above predates the corrected English Water Harvesting lessons and
+does not contain the reconciled greywater guidance. The complete review-only
+proposals for L1–L3 and the L4 source hold are linked from
+`docs/narration-reviews/WATER-HARVESTING-ISIZULU-FULL-DRAFT-HANDOFF.md`.
+Do not record, import or publish this script until its farming meaning,
+local sanitation requirements and isiZulu wording have been reviewed.

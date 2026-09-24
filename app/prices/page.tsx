@@ -13,6 +13,7 @@ import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
 import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { getCropArt } from '@/lib/crop-art';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * A standalone screen a farmer can open DURING a negotiation: pick a crop with a tap (no typing —
@@ -23,6 +24,7 @@ import { getCropArt } from '@/lib/crop-art';
  * the confidence badge that keeps an estimate from reading as a confirmed fact.
  */
 export default function PricesPage() {
+  const { t } = useLanguage();
   const [overrides, setOverrides] = useState<Record<string, CropPrice>>({});
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
@@ -45,9 +47,9 @@ export default function PricesPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>Farm-gate prices</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</span>
         <div className="flex-1" />
-        <LessonLink id="prices:overview" label="Learn" />
+        <LessonLink id="prices:overview" label={t('pricesLearn')} />
         <SettingsButton />
       </header>
 
@@ -72,7 +74,7 @@ export default function PricesPage() {
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
-              Tap a crop to see today&apos;s wholesale and retail price per kg — for when you&apos;re standing at the gate.
+              {t('pricesChooseCrop')}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
               {crops.map((crop) => (

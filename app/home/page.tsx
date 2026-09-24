@@ -60,6 +60,7 @@ const LANG_TO_LOCALE: Record<string, string> = {
   ss: 'ss-ZA',
   nr: 'nr-ZA',
 };
+const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
 function getDayDate(lang: string) {
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
@@ -146,7 +147,7 @@ function visibleBoardTasks(tasks: BoardTask[]): BoardTask[] {
 }
 
 function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id: string) => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const visible = visibleBoardTasks(tasks);
   return (
     <section>
@@ -167,7 +168,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           >
             <button
               onClick={() => onToggle(task.id)}
-              aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              aria-label={localUi(lang, task.completed ? 'Mark not done' : 'Mark done', task.completed ? 'Susa uphawu lokwenziwe' : 'Maka njengokwenziwe')}
               className={task.completed ? 'imf-task-check' : undefined}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
@@ -187,7 +188,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}
-              aria-label="Add to calendar"
+              aria-label={localUi(lang, 'Add to calendar', 'Faka ekhalendeni')}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
               <CalendarPlus size={18} strokeWidth={1.6} />
@@ -242,7 +243,7 @@ const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
 };
 
 function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
 
@@ -261,8 +262,8 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   const label = nextStepCopy
     ? t(nextStepCopy.titleKey)
     : nextStep
-      ? STEP_ACTIONS[nextStep].label
-      : 'Plan complete — print your plan set';
+      ? localUi(lang, STEP_ACTIONS[nextStep].label, ({ located: 'Thepha indawo yakho emephini', boundary: 'Dweba umngcele wakho', survey: 'Gcwalisa inhlolovo yendawo', design: 'Dizayina ipulazi lakho', cropPlan: 'Hlela izitshalo zakho' } as Record<CompletionStepKey, string>)[nextStep])
+      : localUi(lang, 'Plan complete — print your plan set', 'Uhlelo luphelele — phrinta uhlelo lwakho');
 
   return (
     <Link
@@ -280,13 +281,13 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
     >
       <div className="flex-1 min-w-0">
         <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 4 }}>
-          {nextStep ? t('coachOverline') : 'Your farm plan'}
+          {nextStep ? t('coachOverline') : localUi(lang, 'Your farm plan', 'Uhlelo lwepulazi lakho')}
         </div>
         <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
           {label}
         </div>
         <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 4 }}>
-          {pct}% complete
+          {pct}% {localUi(lang, 'complete', 'kuqediwe')}
         </div>
       </div>
       <span
@@ -386,7 +387,7 @@ function HomeLandingInner() {
     // every locale block in lib/i18n.tsx (a large shared file well outside this change's scope) for
     // a single new tile. Falls back to plain English, same as this file's other hardcoded
     // farmer-facing strings (e.g. the "Your farm plan" and sample-farm copy above).
-    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: 'Prices',                  desc: 'Wholesale & retail',          color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo ze-wholesale nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (
@@ -410,10 +411,10 @@ function HomeLandingInner() {
           </span>
         </div>
 
-        <LessonLink id="home:overview" label="Learn" />
+        <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />
         <button
           onClick={() => setSettingsOpen(true)}
-          aria-label="Settings"
+          aria-label={localUi(lang, 'Settings', 'Izilungiselelo')}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
@@ -566,12 +567,11 @@ function HomeLandingInner() {
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>
-              Take a tour
+              {localUi(lang, 'Take a tour', 'Buka uhambo lokuqondisa')}
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
-            A guided look at your maps, crop plans, harvests, sales and invoices.
-            Practise with Ubhejane Crèche Garden, then return to your own work.
+            {localUi(lang, 'A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.', 'Bheka amamephu akho, izinhlelo zezitshalo, izivuno, ukuthengisa nama-invoyisi ngokuqondiswa. Zilolonge e-Ubhejane Crèche Garden, bese ubuyela emsebenzini wakho.')}
           </p>
         </button>}
 

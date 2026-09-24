@@ -1,7 +1,8 @@
 # Studies completion checkpoint
 
-Updated 21 September 2026. This is the current continuation record; older handovers
-and release reports describe their own snapshots, not today's completion status.
+Snapshot from 21 September 2026. The current continuation record is
+[ACTIVE-CONTINUATION.md](ACTIVE-CONTINUATION.md), including the 22 September soil
+release and remaining review gates. The dated evidence below is retained as history.
 
 ## Active direction
 
