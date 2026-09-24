@@ -9,7 +9,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
-import { isCourseTranslationLearnerReady, learnerLessonForLanguage, type CourseTranslationRecord } from '../lib/course-localization.ts';
+import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
+import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
@@ -160,4 +161,49 @@ test('an isiZulu lesson cannot reach learners with missing review or a changed q
   assert.equal(isCourseTranslationLearnerReady(lesson, { ...record, lessonId: 'different-lesson' }), false);
   assert.equal(isCourseTranslationLearnerReady(lesson, record), true);
   assert.equal(learnerLessonForLanguage(lesson, 'zu', record).title, published.title);
+});
+
+test('owner-authorized isiZulu drafts remain labelled drafts and never include source-held lessons', () => {
+  const lessons = COURSE_MODULES.flatMap(module => module.lessons);
+  const draftIds = lessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft').map(lesson => lesson.id);
+  assert.equal(draftIds.length, 24);
+  assert.deepEqual(Object.keys(COURSE_TRANSLATION_DRAFTS).sort(), draftIds.sort());
+  assert.match(COURSE_TRANSLATION_DRAFTS['intro-permaculture-l1'].body, /\n\n/,
+    'long isiZulu body paragraphs must remain separated for low-literacy reading');
+
+  for (const lesson of lessons) {
+    const presentation = resolveLearnerLessonPresentation(lesson, 'zu');
+    if (courseTranslationReviewState(lesson.id).status === 'review-draft') {
+      assert.equal(presentation.status, 'draft', lesson.id);
+      assert.equal(presentation.content.quiz.length, lesson.quiz.length, lesson.id);
+      assert.deepEqual(presentation.content.quiz.map(q => q.correct), lesson.quiz.map(q => q.correct), lesson.id);
+      assert.ok(presentation.content.body.trim().length > 0, lesson.id);
+      const learnerText = [presentation.content.title, presentation.content.body, ...presentation.content.keyPoints,
+        ...presentation.content.quiz.flatMap(q => [q.q, ...q.options, q.rationale])].join('\n');
+      assert.doesNotMatch(learnerText, /\[HELD:|\*\*Explicit source holds:|NOT APPROVED|NOT FOR LEARNER USE/i,
+        `${lesson.id}: editorial review instructions must not appear as learner text`);
+    } else {
+      assert.equal(presentation.status, 'english-fallback', lesson.id);
+      assert.equal(presentation.content.body, lesson.body, lesson.id);
+    }
+  }
+
+  for (const heldId of ['water-harvesting-l4', 'soil-health-l3', 'small-livestock-l2']) {
+    const lesson = lessons.find(item => item.id === heldId)!;
+    assert.equal(resolveLearnerLessonPresentation(lesson, 'zu', {
+      lessonId: heldId, language: 'zu', status: 'review-draft', draft: COURSE_TRANSLATION_DRAFTS[draftIds[0]],
+    }).status, 'english-fallback', `${heldId} must stay held even if draft data is passed`);
+  }
+});
+
+test('an incomplete or answer-shifted isiZulu draft falls back to English', () => {
+  const lesson = COURSE_MODULES.flatMap(module => module.lessons).find(item => item.id === 'intro-permaculture-l1')!;
+  const draft = COURSE_TRANSLATION_DRAFTS[lesson.id];
+  const base: CourseTranslationRecord = { lessonId: lesson.id, language: 'zu', status: 'review-draft', draft };
+  assert.equal(resolveLearnerLessonPresentation(lesson, 'zu', { ...base, draft: { ...draft, keyPoints: [] } }).status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(lesson, 'zu', {
+    ...base, draft: { ...draft, quiz: draft.quiz.map((question, index) => index === 0
+      ? { ...question, correct: (question.correct + 1) % question.options.length } : question) },
+  }).status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(lesson, 'en').content.body, lesson.body);
 });
