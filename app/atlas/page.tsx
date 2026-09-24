@@ -33,7 +33,7 @@ export default function AtlasPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Atlas · global garden explorer</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: '#5C5040' }}>Atlas · global garden explorer</h1>
         <div className="flex-1" />
         <SettingsButton />
       </header>

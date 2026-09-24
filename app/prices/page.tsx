@@ -47,7 +47,7 @@ export default function PricesPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="flex-1" />
         <LessonLink id="prices:overview" label={t('pricesLearn')} />
         <SettingsButton />

@@ -200,9 +200,9 @@ export default function NetworkPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: INK_SOFT }}>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: INK_SOFT }}>
           {tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
-        </span>
+        </h1>
         <div className="flex-1" />
 
         {/* The org picker only appears for a caller entitled to more than one org — a

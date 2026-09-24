@@ -282,7 +282,7 @@ function BoardTab({
   return (
     <div>
       <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
-        <div className="font-display font-bold" style={{ fontSize: 18, color: '#20190F' }}>{tr('communityBoardTitle')}</div>
+        <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 18, color: '#20190F' }}>{tr('communityBoardTitle')}</h1>
         <button
           onClick={onToggleNewPost}
           className="flex items-center gap-1.5 font-display font-semibold rounded-xl"

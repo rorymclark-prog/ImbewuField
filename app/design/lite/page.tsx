@@ -64,9 +64,9 @@ function LiteInner() {
     <main style={{ minHeight: '100dvh', background: '#E4DCC6', padding: '28px 20px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div style={{ padding: '16px 18px', borderRadius: 16, background: '#FDF4E3', border: '1px solid #E8D5A8' }}>
-          <div style={{ fontWeight: 700, fontSize: 17, color: '#20190F', fontFamily: 'var(--font-display)' }}>
+          <h1 style={{ margin: 0, fontWeight: 700, fontSize: 17, color: '#20190F', fontFamily: 'var(--font-display)' }}>
             {title}
-          </div>
+          </h1>
           <div style={{ fontSize: 13.5, color: '#5C5040', marginTop: 6, lineHeight: 1.5 }}>
             {body}
           </div>
