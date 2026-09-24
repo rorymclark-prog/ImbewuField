@@ -261,10 +261,88 @@
   display: inline-flex;
   align-items: center;
   min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #2f6b3a;
   font-size: 14px;
   font-weight: 700;
   text-underline-offset: 3px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.imageViewer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #fffefa;
+  color: #20190f;
+}
+.imageViewer:not([open]) { display: none; }
+.imageViewer::backdrop { background: #20190fdd; }
+.imageViewerHeader {
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 12px;
+  padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+  border-bottom: 1px solid #ece3c9;
+  background: #fffefa;
+}
+.imageViewerTitle {
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.imageViewerClose,
+.imageViewerZoom button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid #9eb59a;
+  border-radius: 10px;
+  background: #eef5ea;
+  color: #214d32;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.imageViewerClose { padding: 6px 14px; }
+.imageViewerZoom {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.imageViewerZoom button:disabled { opacity: .45; cursor: default; }
+.imageViewerStage {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #f8f5ec;
+}
+.imageViewerStage img {
+  display: block;
+  flex: none;
+  max-width: none;
+  height: auto;
+  margin: auto;
+  object-fit: contain;
 }
 
 @media (max-width: 480px) {

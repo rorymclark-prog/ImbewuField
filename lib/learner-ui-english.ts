@@ -24,7 +24,7 @@ export const LEARNER_UI_ENGLISH: Record<string, string> = {
   courseDeckClose: 'Close',
   courseDeckWatch: 'Watch · {seconds}s · {size}',
   courseDeckOpenImageAria: 'Open still image for {title} at full size',
-  courseDeckOpenImage: 'Open still image · tap to zoom ↗',
+  courseDeckOpenImage: 'View slide image · zoom',
   courseDeckNarrationAria: 'Narration for {title}',
   courseDeckNarrationFailed: 'Narration could not play. Check your connection and press Play lesson again, or read this slide below.',
   courseDeckAnimationFailed: 'The animation could not load. You can keep listening, read the slide, or tap Watch to try again.',

@@ -115,8 +115,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [expanded, setExpanded] = useState(false);
   const [chromeVisible, setChromeVisible] = useState(true);
   const [zoom, setZoom] = useState(1);
+  const [imageZoom, setImageZoom] = useState(1);
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const playerRef = useRef<HTMLDialogElement | null>(null);
+  const imageViewerRef = useRef<HTMLDialogElement | null>(null);
+  const imageButtonRef = useRef<HTMLButtonElement | null>(null);
+  const imageCloseRef = useRef<HTMLButtonElement | null>(null);
   const slideViewportRef = useRef<HTMLDivElement | null>(null);
   const expandButtonRef = useRef<HTMLButtonElement | null>(null);
   const exitButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -391,6 +395,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
 
   return (
+    <>
     <dialog
       ref={playerRef}
       open
@@ -528,22 +533,25 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       </div>
 
       {fullSizeImageUrl && (!expanded || !showReflowedSlide) && (
-        <a
-          href={fullSizeImageUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          ref={imageButtonRef}
+          type="button"
           aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
           className={styles.zoomLink}
           onClick={() => {
-            // A separate image tab needs the lesson to wait while the farmer inspects its detail.
+            // A raw image opens without browser controls in the installed phone app. Keep the
+            // learner in this lesson and make the way back visible while the picture is enlarged.
             audioRef.current?.pause();
             videoRef.current?.pause();
             setRunning(false);
             setTimedVoiceActive(false);
+            setImageZoom(1);
+            imageViewerRef.current?.showModal();
+            requestAnimationFrame(() => imageCloseRef.current?.focus());
           }}
         >
           {t('courseDeckOpenImage')}
-        </a>
+        </button>
       )}
 
       {audio && (
@@ -653,5 +661,36 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </details>
       )}
     </dialog>
+      {fullSizeImageUrl && (
+        <dialog
+          ref={imageViewerRef}
+          className={styles.imageViewer}
+          aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
+          onKeyDown={(event) => event.stopPropagation()}
+          onClose={() => { setChromeVisible(true); imageButtonRef.current?.focus(); }}
+        >
+          <div className={styles.imageViewerHeader}>
+            <span className={styles.imageViewerTitle}>{heading}</span>
+            <button
+              ref={imageCloseRef}
+              type="button"
+              className={styles.imageViewerClose}
+              onClick={() => imageViewerRef.current?.close()}
+            >
+              × {t('courseDeckClose')}
+            </button>
+            <div className={styles.imageViewerZoom} role="group" aria-label={t('courseDeckSlideImageSize')}>
+              <button type="button" aria-label={t('courseDeckZoomOut')} disabled={imageZoom === 1} onClick={() => setImageZoom((value) => Math.max(1, value - 1))}>−</button>
+              <span aria-live="polite">{imageZoom}×</span>
+              <button type="button" aria-label={t('courseDeckZoomIn')} disabled={imageZoom === 3} onClick={() => setImageZoom((value) => Math.min(3, value + 1))}>+</button>
+            </div>
+          </div>
+          <div className={styles.imageViewerStage}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={fullSizeImageUrl} alt={heading} style={{ width: `${imageZoom * 100}%`, maxHeight: imageZoom === 1 ? '100%' : undefined }} />
+          </div>
+        </dialog>
+      )}
+    </>
   );
 }
