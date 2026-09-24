@@ -203,6 +203,20 @@ scripts/course-i18n-status.mjs` counts direct keys and real audio files; it
 does not attest meaning, fluency or every rendered state. All new control and
 document translations remain review drafts on this branch.
 
+The 25 September route pass gives the Garden Survey paired isiZulu/English
+drafts for its choices and six-week plan, including its PDF; the Week 5 compost
+tea instruction stays in English pending local farming review. Built-in sample
+surveys have paired questions and choices, while live organisation-authored
+surveys retain their authored language and saved response values. The site
+questionnaire already has a wider draft translation, but consequential save
+and roof-calculation wording remains source-held. The offline screen keeps its
+isiZulu drafts with nearby English sources for sync and removal; report
+preparation headings and actions are drafts while evidence details and report
+output remain English. Calendar and task planner now reuse the site's existing
+isiZulu month abbreviations: a phone browser check found `Intl` fell back to
+English even though Node returned localized months. These are route checks,
+not a whole-app or fluent-language completion claim.
+
 ## Release gate
 
 Rory authorised labelled unreviewed lesson drafts for immediate learner

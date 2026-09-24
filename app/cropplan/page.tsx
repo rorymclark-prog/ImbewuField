@@ -146,13 +146,16 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function CropPlanPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
+  const zuMonths = [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+    t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+    t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')];
   const monthNames = lang === 'zu'
-    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'long' }))
+    ? MONTHS.map((english, month) => `${zuMonths[month]} / ${english}`)
     : MONTHS;
   const monthShortNames = lang === 'zu'
-    ? MONTHS.map((_, month) => new Date(2024, month, 1).toLocaleDateString('zu-ZA', { month: 'short' }))
+    ? zuMonths
     : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
   const [cursorMonth, setCursorMonth] = useState(1);

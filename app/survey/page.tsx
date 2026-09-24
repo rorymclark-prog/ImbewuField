@@ -306,7 +306,7 @@ function SurveyInner() {
 
           {lang === 'zu' && (
             <p role="note" className="mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-              ISIZULU DRAFT — Every isiZulu line below is an unreviewed AI draft paired with its exact English source. Goal descriptions, crop names, measurements, save/PDF status and the Week 5 “Side-dress with compost tea” task remain in English. Check the English before saving or using this plan. / UMBHALO WESIZULU WOKUQALA — Umugqa ngamunye wesiZulu ongezansi uwumbhalo we-AI ongakabuyekezwa, oboniswa kanye nomthombo wawo wesiNgisi. Izincazelo zemigomo, amagama ezitshalo, izilinganiso, isimo sokulondoloza/i-PDF nomsebenzi weviki lesi-5 othi “Side-dress with compost tea” kuhlala ngesiNgisi. Hlola umbhalo wesiNgisi ngaphambi kokulondoloza noma ukusebenzisa lolu hlelo.
+              Unreviewed isiZulu draft. Check the paired English before using this plan. Crop names, figures, save messages and “Side-dress with compost tea” remain English. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esihambisana naso ngaphambi kokusebenzisa lolu hlelo. Amagama ezitshalo, izinombolo, imiyalezo yokugcina nomsebenzi othi “Side-dress with compost tea” kuse ngesiNgisi.
             </p>
           )}
 
@@ -348,7 +348,7 @@ function SurveyInner() {
               )}
               <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Your land', 'Umhlaba wakho', lang)}</h1>
               <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Size and water come straight from your map analysis. The next steps only ask what the map can&rsquo;t see.
+                {surveyDraft('Size and water come straight from your map analysis. The next steps only ask what the map can’t see.', 'Ubukhulu bomhlaba namanzi kuvela ekuhlaziyweni kwemephu yakho. Izinyathelo ezilandelayo zibuza kuphela lokho imephu engakwazi ukukubona.', lang)}
               </p>
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="flex items-center gap-2 mb-3">
