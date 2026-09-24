@@ -144,7 +144,7 @@ export default function FinanceGraphs({
                   cursor: 'pointer',
                 }}
               >
-                {n}m
+                {n} {lang === 'zu' ? 'izinyanga' : 'months'}
               </button>
             ))}
           </span>
@@ -181,9 +181,13 @@ function OrchardToggle({ on, onChange, lang }: { on: boolean; onChange: (next: b
       type="button"
       onClick={() => onChange(!on)}
       aria-pressed={on}
-      title={on
-        ? 'Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.'
-        : 'Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'}
+      title={lang === 'zu'
+        ? on
+          ? 'Izithelo, amantongomane nezinye izivuno zengadi yezithelo zibaliwe kulawa makhilogremu. Thinta ukuze ubone imifino yodwa.'
+          : 'Kubalwa imifino kuphela. Thinta ukuze ufake izithelo, amantongomane nezinye izivuno zengadi yezithelo.'
+        : on
+          ? 'Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.'
+          : 'Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'}
       className="font-sans rounded-full px-2.5 py-1 flex items-center gap-1"
       style={{
         fontSize: 12,

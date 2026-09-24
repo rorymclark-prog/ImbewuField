@@ -1,5 +1,22 @@
 # IsiZulu app readiness — 23 September 2026
 
+## 24 September verification batch
+
+The current preview batch adds isiZulu controls to the Design Studio and
+programme evidence/reports, plus clearer English-content notices in the NGO,
+funder and mentor workspaces. The report composer still preserves authored
+English evidence and PDF body text; the notice says so before export. These
+interface translations are drafts pending fluent review.
+
+`node scripts/course-isizulu-audit.mjs` now emits a read-only, per-lesson
+English-source fingerprint and review-packet inventory. On the 24 September
+source there are 33 core lessons: 25 review drafts, 2 source-held lessons,
+and 6 lessons with published isiZulu audio but no approved lesson/quiz text.
+The audit does not certify meaning, fluency or approval. The older 165 Thando
+review takes predate the English corrections and must be matched against
+accepted scripts before any learner import. The course content gate remains
+in place; this batch does not turn review drafts into learner lessons.
+
 **Status: work in progress, not a whole-app isiZulu release.** Selecting
 isiZulu already loads a shared interface dictionary, but missing keys fall
 back to English. A language switch by itself does not mean a course, form,

@@ -28,7 +28,11 @@ test('the header links to this farm\'s crop plan via the shared canvasSite deep 
     /href=\{`\/facilitator\/crops\?canvasSite=\$\{encodeURIComponent\(canvasState\.siteId\)\}`\}/,
     'header Crop plan link must use the same ?canvasSite format as the picker and the step guide',
   );
-  assert.match(PAGE, /aria-label="Open this farm's crop plan"/);
+  assert.match(
+    PAGE,
+    /aria-label=\{tr\("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi'\)\}/,
+    'the farm-specific crop-plan link must stay named in both interface languages',
+  );
 });
 
 test('the steps-strip Preview map is phone-only — the header owns it on wider screens', () => {
@@ -39,8 +43,8 @@ test('the steps-strip Preview map is phone-only — the header owns it on wider 
   );
 });
 
-test('exactly two Preview map buttons exist in source — one per viewport, never both at once', () => {
-  const buttons = PAGE.match(/<ImageIcon size=\{15\} \/> Preview map/g) ?? [];
+test('exactly two bilingual Preview map buttons exist in source — one per viewport, never both at once', () => {
+  const buttons = PAGE.match(/<ImageIcon size=\{15\} \/> \{tr\('Preview map', 'Buka imephu'\)\}/g) ?? [];
   assert.equal(buttons.length, 2, 'a third copy means a viewport shows duplicates again');
   // The header copy hides on phones; with the strip copy phone-gated above,
   // no viewport can render both.

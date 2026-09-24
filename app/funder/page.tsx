@@ -128,7 +128,9 @@ export default function FunderPage() {
         ] as const).map(({ key, label, icon: Icon }) => (
           <button
             key={key}
+            type="button"
             onClick={() => setView(key)}
+            aria-label={label}
             aria-pressed={view === key}
             className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-sans text-sm font-semibold"
             onFocus={e => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
@@ -148,7 +150,7 @@ export default function FunderPage() {
         ))}
       </DashboardTabs>
 
-      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#5C5040' }}>Ezinye izincazelo nemininingwane yohlelo isaboniswa ngesiNgisi okwamanje.</p>}
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#5C5040' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
         <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
