@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '3b87d7c9', changes: [
+    'Full-screen lesson text now fits your phone; use − and + to change its size.',
+  ], tour: [
+    { title: 'Fit a lesson slide', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Open Learning Outcomes full screen and use the size buttons above the slide.' },
+  ] },
   { when: '24 September 2026', sha: '146257a1', changes: [
     'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
     'Three teaching diagrams show the farm record, sales routes and neighbour network.',
