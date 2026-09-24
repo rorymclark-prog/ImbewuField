@@ -1,5 +1,44 @@
 # Small Livestock L2 English lesson check — 23 September 2026
 
+## Source-backed wording update — 24 September 2026
+
+The learner lesson and English narration now distinguish natural bee ranges
+from the Department's movement controls. The [South African National
+Biodiversity Institute](https://www.sanbi.org/animal-of-the-week/cape-honeybee/)
+describes the Cape honeybee in the Western Cape and parts of the Eastern Cape,
+and the African honeybee as native to central and most of southern Africa.
+These broad ranges do not identify the legal boundary for moving bees. The
+Department's [consolidated honey-bee control measures](https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf)
+define a demarcation line and restrict certain movements across it. The lesson
+therefore tells learners to check current rules before moving bees or hives.
+
+The same control measures define beekeeping activities as keeping managed
+hives for bee products, queen rearing, commercial pollination, and colony
+removal, eradication or relocation. Registration is required for these defined
+activities. The lesson now names this scope instead of implying that every
+person who keeps bees has the same registration duty. See definitions and
+control measure 2(1), (8) in the official document.
+
+The repeated-swarming advice remains conditional: crowding is one possible
+cause, not a diagnosis, and inspection by a trained beekeeper remains the
+recommended next step. The [Agricultural Research Council's pollination
+research](https://www.arc.agric.za/arc-ppri/Pages/Insect%20Ecology/Pollination-Research.aspx)
+describes swarm build-up following high-protein canola pollen as one
+crop-specific example; it does not justify diagnosing an individual colony.
+
+Slides 11 and 13 narration and transcripts were regenerated with
+`en-ZA-LukeNeural` at `-12%`; the module full track was rebuilt from all twenty
+slide clips without re-encoding. Word-boundary text matching and full audio
+decode are recorded in the adjacent verification JSON. No quiz answer or
+rationale required a change. The current slide 9 player continues to use the
+existing one-output Flow close-up (`flow-bee-between-blossoms`); its visible
+action needs no change for these source corrections. The separate historical
+`watch-09-bee-pollination.mp4` is withdrawn and is not learner media.
+
+This update is English source alignment, not human listening or isiZulu
+approval. The isiZulu L2 draft still needs its registration and movement text
+aligned to the corrected English, followed by fluent and local farming review.
+
 ## Matched English correction candidate
 
 The registered silent slide 9 Flow clip shows one bee moving between adjacent
@@ -17,7 +56,8 @@ The body, slide 11 narration/transcript and replacement static card now use
 SANBI's broad regional description: Cape honeybee in the Western Cape and
 parts of the Eastern Cape, African honeybee native to central and most of
 southern Africa. This is broad context, not a field boundary or local bee
-identification. The lesson retains local beekeeper and movement-rule advice.
+identification. The new wording update above adds the separate Department
+movement demarcation guidance.
 The primary agent inspected the prior card, the new 1920 × 1080 JPEG and its
 269 px fit. Large two-panel labels replace the tiny old bullet layout; no
 person appears. Published still SHA-256:
@@ -112,14 +152,13 @@ in the south, and the African honeybee mainly to the north. Their ranges meet
 in a hybrid zone.”** Keep the existing caution to check rules before moving
 hives; do not turn this simplified map into local subspecies identification.
 
-The existing registration statement is supported by the [2019 South African
-honey-bee control measure](https://www.gov.za/sites/default/files/gcis_document/201911/42850rg11007gon1511.pdf):
-people carrying out defined beekeeping activities must register with the
-Department. The lesson appropriately avoids an exact renewal interval. Hive
-placement and pesticide text already put safety first; local siting and
-registered-product details belong with practical beekeeper guidance, not an
-unsourced universal distance or dose.
+The updated registration statement follows the official control-measure
+definition and measure 2. The lesson appropriately avoids an exact renewal
+interval. Hive placement and pesticide text already put safety first; local
+siting and registered-product details belong with practical beekeeper guidance,
+not an unsourced universal distance or dose.
 
-These are proposals only. Rory's broader protected-content decision is
-pending, so the lesson body, slide art, title, narration, transcript, MP3 and
-quiz remain unchanged. isiZulu and practical beekeeper review come later.
+The 23 September paragraphs above are a historical source-review snapshot.
+Their prior proposal status is superseded by the applied 24 September wording
+update at the top of this note. The isiZulu and practical beekeeper reviews
+remain open.
