@@ -131,9 +131,9 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
       {...props}
       className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
       style={{
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
-        color: '#20190F',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
+        color: 'var(--text-primary)',
         ...props.style,
       }}
     />
@@ -164,7 +164,7 @@ function SubmitBtn({
     >
       {loading ? (
         <>
-          <Loader2 size={14} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
           {t('myRecordsSaving')}
         </>
       ) : (
@@ -201,16 +201,16 @@ function SignInPrompt() {
           border: '1px solid rgba(31,77,43,0.25)',
         }}
       >
-        <Sprout size={28} style={{ color: '#1F4D2B' }} />
+        <Sprout size={28} style={{ color: 'var(--color-forest-800)' }} />
       </div>
       <div>
         <p
           className="font-display font-semibold text-base mb-1"
-          style={{ color: '#20190F' }}
+          style={{ color: 'var(--text-primary)' }}
         >
           {t('myRecordsSignInTitle')}
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: '#755942' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsSignInBody')}
         </p>
       </div>
@@ -220,7 +220,7 @@ function SignInPrompt() {
         style={{
           background: 'rgba(31,77,43,0.14)',
           border: '1px solid rgba(31,77,43,0.35)',
-          color: '#1F4D2B',
+          color: 'var(--color-forest-800)',
         }}
       >
         {t('myRecordsSignInButton')} <ArrowRight size={16} />
@@ -372,7 +372,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   if (fileRef.current) fileRef.current.value = '';
                 }}
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
-                style={{ background: 'rgba(31,25,15,0.12)', color: '#20190F' }}
+                style={{ background: 'rgba(31,25,15,0.12)', color: 'var(--text-primary)' }}
               >
                 <X size={14} />
               </button>
@@ -381,12 +381,12 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <label
             className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={{
-              background: '#FFFEFA',
-              border: '1px dashed #E2D8C4',
-              color: '#755942',
+              background: 'var(--bg-1)',
+              border: '1px dashed var(--border)',
+              color: 'var(--text-muted)',
             }}
           >
-            <Camera size={16} style={{ color: '#755942' }} />
+            <Camera size={16} style={{ color: 'var(--text-muted)' }} />
             <span>{form.photoFile ? form.photoFile.name : t('myRecordsChoosePhoto')}</span>
             <input
               ref={fileRef}
@@ -515,11 +515,11 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         {form.crop && (
           <div
             className="rounded-lg px-3 py-2 text-xs font-sans leading-relaxed"
-            style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#5C5040' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
           >
             {guide && guideLow !== null && guideHigh !== null ? (
               <>
-                <strong style={{ color: '#20190F' }}>{t('myRecordsGuidePriceLabel')}</strong>{' '}
+                <strong style={{ color: 'var(--text-primary)' }}>{t('myRecordsGuidePriceLabel')}</strong>{' '}
                 {t('myRecordsGuidePriceRange')
                   .replace('{wholesale}', String(guide.wholesalePerKg))
                   .replace('{retail}', String(guide.retailPerKg))}
@@ -630,7 +630,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}
@@ -642,7 +642,7 @@ function ExampleRowsHeading({ label }: { label: string }) {
   return (
     <div
       className="flex items-center gap-1.5 mb-2 px-0.5"
-      style={{ font: '700 10px/1 system-ui, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9A6018' }}
+      style={{ font: '700 10px/1 system-ui, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold)' }}
     >
       <Sparkles size={11} />
       {label}
@@ -671,7 +671,7 @@ function HarvestCropPicture({ name }: { name: string }) {
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
     ? <CropIcon cropKey={key} icon="🌱" size={32} />
-    : <Leaf size={18} style={{ color: '#1F4D2B' }} />;
+    : <Leaf size={18} style={{ color: 'var(--color-forest-800)' }} />;
 }
 
 /* ── Production list ─────────────────────────────────────────────────────── */
@@ -681,7 +681,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: '#755942' }}>
+        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -691,7 +691,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
         <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
         <div
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
-          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+          style={{ background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4' }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
@@ -700,12 +700,12 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             <HarvestCropPicture name={EXAMPLE_PRODUCTION.crop} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {EXAMPLE_PRODUCTION.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
           </div>
-          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#1F4D2B' }}>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
           </div>
           <ExampleBadge label={t('myRecordsExampleBadge')} />
@@ -720,8 +720,8 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           {item.photo_url ? (
@@ -744,17 +744,17 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {item.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {fmtDate(item.logged_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#1F4D2B' }}
+            style={{ color: 'var(--color-forest-800)' }}
           >
             {item.kg} kg
           </div>
@@ -771,7 +771,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: '#755942' }}>
+        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -781,24 +781,24 @@ function SalesList({ items }: { items: SalesLog[] }) {
         <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
         <div
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
-          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+          style={{ background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4' }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(158,92,8,0.08)', border: '1px dashed rgba(158,92,8,0.25)' }}
           >
-            <Banknote size={18} style={{ color: '#9E5C08' }} />
+            <Banknote size={18} style={{ color: 'var(--gold)' }} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {EXAMPLE_SALE.crop}
-              <span className="font-normal" style={{ color: '#755942' }}> → {EXAMPLE_SALE.buyer}</span>
+              <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {EXAMPLE_SALE.buyer}</span>
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {EXAMPLE_SALE.dateLabel}
             </p>
           </div>
-          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#9E5C08' }}>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--gold)' }}>
             R {EXAMPLE_SALE.amount.toFixed(2)}
           </div>
           <ExampleBadge label={t('myRecordsExampleBadge')} />
@@ -813,29 +813,29 @@ function SalesList({ items }: { items: SalesLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(158,92,8,0.10)', border: '1px solid rgba(158,92,8,0.15)' }}
           >
-            <Banknote size={18} style={{ color: '#9E5C08' }} />
+            <Banknote size={18} style={{ color: 'var(--gold)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {item.crop}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: '#755942' }}>
+                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`View invoice for ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />Invoice #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · View</Link>}
@@ -843,7 +843,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#9E5C08' }}
+            style={{ color: 'var(--gold)' }}
           >
             R {item.amount.toFixed(2)}
           </div>
@@ -859,7 +859,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   const { t } = useLanguage();
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#755942' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -871,24 +871,24 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           key={design.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(47,111,158,0.10)', border: '1px solid rgba(47,111,158,0.15)' }}
           >
-            <Ruler size={18} style={{ color: '#2F6F9E' }} />
+            <Ruler size={18} style={{ color: 'var(--blue)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -898,7 +898,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             style={{
               background: 'rgba(47,111,158,0.08)',
               border: '1px solid rgba(47,111,158,0.2)',
-              color: '#2F6F9E',
+              color: 'var(--blue)',
               textDecoration: 'none',
             }}
           >
@@ -970,7 +970,7 @@ function CreditPackCard({
           className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
           style={{ background: 'rgba(46,107,58,0.10)', border: '1px solid rgba(46,107,58,0.18)' }}
         >
-          <Landmark size={18} style={{ color: '#2E6B3A' }} />
+          <Landmark size={18} style={{ color: 'var(--color-forest-700)' }} />
         </div>
         <div>
           <p className="text-xl font-display font-semibold" style={{ color: 'var(--color-ink)' }}>
@@ -985,7 +985,7 @@ function CreditPackCard({
       </div>
 
       {!ready ? (
-        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#755942', border: '1px solid #E2D8C4' }}>
+        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: 'var(--bg-1)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
           Log at least one harvest, sale or cost first — there is nothing to summarise yet.
         </p>
       ) : (
@@ -1019,7 +1019,7 @@ function CreditPackCard({
         >
           {loading ? (
             <>
-              <Loader2 size={14} className="animate-spin" style={{ color: '#2E6B3A' }} />
+              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
               Building document…
             </>
           ) : (
@@ -1207,7 +1207,7 @@ export default function MyRecords({
           <div
             key={i}
             className="h-24 rounded-xl animate-pulse"
-            style={{ background: '#EDE7DB', animationDelay: `${i * 80}ms` }}
+            style={{ background: 'var(--bg-2)', animationDelay: `${i * 80}ms` }}
           />
         ))}
       </div>
@@ -1237,21 +1237,21 @@ export default function MyRecords({
           <div>
             <h2
               className="font-display font-bold text-base leading-tight"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {t('myRecordsTitle')}
             </h2>
-            <p className="font-display text-xs mt-0.5" style={{ color: '#755942' }}>
+            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('myRecordsSubtitle')}
             </p>
           </div>
           {dataLoading && (
-            <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
+            <Loader2 size={16} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
           )}
         </div>
       ) : dataLoading ? (
         <div className="flex justify-end">
-          <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <Loader2 size={16} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
         </div>
       ) : null}
 
@@ -1261,14 +1261,14 @@ export default function MyRecords({
           className="flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5"
           style={{ background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
         >
-          <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>
+          <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--orange)' }}>
             {t('myRecordsLoadError')}
           </span>
           <button
             type="button"
             onClick={() => { void loadData(); }}
             className="font-sans font-semibold flex-shrink-0"
-            style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+            style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
           >
             {t('myRecordsRetry')}
           </button>
@@ -1308,10 +1308,10 @@ export default function MyRecords({
           <Card>
             <div className="flex items-center justify-between gap-4 mb-3">
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 22, color: '#1F4D2B', lineHeight: 1 }}>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
                   {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#755942' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
                 </div>
                 <OrchardSwitch
@@ -1397,10 +1397,10 @@ export default function MyRecords({
           <Card>
             <div className="flex items-center justify-between gap-4 mb-3">
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 22, color: '#7A4408', lineHeight: 1 }}>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#755942' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   {t('myRecordsTotalRevenue')} · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} {t('myRecordsKgSoldSuffix')}
                 </div>
               </div>

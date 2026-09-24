@@ -523,7 +523,7 @@ function HomeInner() {
         />
       )}
 
-      <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
 
         {/* ── Header ────────────────────────────── */}
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
@@ -532,8 +532,8 @@ function HomeInner() {
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-hidden"
           style={{
             height: 60,
-            background: '#FFFEFA',
-            borderBottom: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            borderBottom: '1px solid var(--border)',
             WebkitOverflowScrolling: 'touch',
           }}
         >
@@ -543,7 +543,7 @@ function HomeInner() {
           <BrandLogo />
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
-          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#755942' }}>{t('tagline')}</span>
+          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
@@ -555,7 +555,7 @@ function HomeInner() {
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
             className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
-            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
             <span aria-hidden>🎨</span> <span>{t('designStudioLabel')}</span>
           </Link>
@@ -567,7 +567,7 @@ function HomeInner() {
                 minHeight: 30,
                 borderColor: 'rgba(31,77,43,0.2)',
                 background: 'rgba(31,77,43,0.04)',
-                color: '#1F4D2B',
+                color: 'var(--color-forest-800)',
                 fontSize: 12,
                 fontWeight: 800,
                 letterSpacing: 0.2,
@@ -596,8 +596,8 @@ function HomeInner() {
             style={{
               width: 40, height: 40,
               background: 'rgba(226,216,196,0.35)',
-              border: '1px solid #E2D8C4',
-              color: '#5C5040',
+              border: '1px solid var(--border)',
+              color: 'var(--text-secondary)',
               cursor: 'pointer',
             }}
           >
@@ -632,11 +632,11 @@ function HomeInner() {
             {mapHeld ? (
               <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
                 style={{ background: '#E9E4D3' }}>
-                <AlertTriangle size={22} style={{ color: '#7A4408' }} />
-                <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                <AlertTriangle size={22} style={{ color: 'var(--gold)' }} />
+                <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
                   {t('mapHeldTitle')}
                 </div>
-                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', maxWidth: 420 }}>
+                <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 420 }}>
                   {t('mapHeldBody')}
                 </div>
                 <button
@@ -694,7 +694,7 @@ function HomeInner() {
             onPointerDown={startPanelResize}
             className="hidden lg:flex items-center justify-center flex-shrink-0 group"
             title="Drag to resize the panel"
-            style={{ width: 8, cursor: 'col-resize', background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: 8, cursor: 'col-resize', background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <div style={{ width: 3, height: 36, borderRadius: 3, background: 'rgba(92,80,64,0.25)' }} className="group-hover:bg-stone-400 transition-colors" />
           </div>
@@ -702,7 +702,7 @@ function HomeInner() {
           {/* ── Desktop side panel (md+) ── */}
           <div
             className="hidden lg:flex flex-shrink-0 overflow-hidden flex-col"
-            style={{ width: panelWidth, background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: panelWidth, background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <DataPanel
               data={data}
@@ -798,8 +798,8 @@ function HomeInner() {
               bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
-              background: '#E4DCC6',
-              borderTop: '1px solid #E2D8C4',
+              background: 'var(--bg-0)',
+              borderTop: '1px solid var(--border)',
               borderRadius: '20px 20px 0 0',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
               // While a finger is on the grabber the sheet tracks it with no transition, so it
@@ -826,7 +826,7 @@ function HomeInner() {
                 className="rounded-full"
                 style={{ width: 40, height: 4, background: '#E2D8C4', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: '#755942', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
                 {t('tapToClose')}
               </span>
             </button>

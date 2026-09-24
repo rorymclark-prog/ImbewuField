@@ -212,20 +212,20 @@ function SurveyInner() {
   const tanksPhrase = resources.includes('rain-tanks') ? `${tanks} tank${tanks > 1 ? 's' : ''}` : 'no tanks yet';
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header */}
-      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Garden Survey', 'Inhlolovo yengadi', lang)}{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Garden Survey', 'Inhlolovo yengadi', lang)}{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
         <div className="flex-1" />
         <LessonLink id="survey:garden" label="Learn" />
         {step === 5 && (
           <button onClick={printPlan} disabled={pdfBusy}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#7A4408', cursor: pdfBusy ? 'default' : 'pointer', opacity: pdfBusy ? 0.6 : 1 }}>
+            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: pdfBusy ? 'default' : 'pointer', opacity: pdfBusy ? 0.6 : 1 }}>
             <Printer size={13} />{pdfBusy ? localUi('Building…', 'Kuyakhiwa…', lang) : localUi('Print', 'Phrinta', lang)}
           </button>
         )}
@@ -240,17 +240,17 @@ function SurveyInner() {
             <div className="no-print mb-5">
               <div className="flex gap-1.5 mb-2">
                 {Array.from({ length: TOTAL }).map((_, i) => (
-                  <div key={i} className="flex-1 rounded-full" style={{ height: 4, background: i <= step ? '#1F4D2B' : 'rgba(32,25,15,0.10)' }} />
+                  <div key={i} className="flex-1 rounded-full" style={{ height: 4, background: i <= step ? 'var(--color-forest-800)' : 'var(--bg-3)' }} />
                 ))}
               </div>
-              <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#7A4408', letterSpacing: '0.1em' }}>
+              <div className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--gold-dim)', letterSpacing: '0.1em' }}>
                 {localUi('Your garden', 'Ingadi yakho', lang)} · {step + 1} {localUi('of', 'ku', lang)} {TOTAL}
               </div>
             </div>
           )}
 
           {lang === 'zu' && (
-            <p role="note" className="no-print mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+            <p role="note" className="no-print mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
               Isiqondiso sokuhlela kanye nemibuzo nezimpendulo zale nhlolovo kuboniswa ngesiNgisi.
             </p>
           )}
@@ -260,8 +260,8 @@ function SurveyInner() {
             <div className="space-y-4">
               {/* Which parcel is this survey for? */}
               {savedPins.length > 0 && (
-                <div className="rounded-2xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('Survey for', 'Inhlolovo yenzelwa', lang)}</div>
+                <div className="rounded-2xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+              <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{localUi('Survey for', 'Inhlolovo yenzelwa', lang)}</div>
                   <div className="flex flex-wrap gap-2">
                     {savedPins.map(p => (
                       <button key={p.id}
@@ -291,31 +291,31 @@ function SurveyInner() {
                   </div>
                 </div>
               )}
-              <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{localUi('Your land', 'Umhlaba wakho', lang)}</h1>
-              <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Your land', 'Umhlaba wakho', lang)}</h1>
+              <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>
                 Size and water come straight from your map analysis. The next steps only ask what the map can&rsquo;t see.
               </p>
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="flex items-center gap-2 mb-3">
-                  <Check size={14} style={{ color: '#1F4D2B' }} />
-                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('Already known from the map', 'Sekuvele kwaziwa emephini', lang)}</span>
+                  <Check size={14} style={{ color: 'var(--color-forest-800)' }} />
+                  <span className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{localUi('Already known from the map', 'Sekuvele kwaziwa emephini', lang)}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(31,77,43,0.06)' }}>
-                    <div className="text-xs font-sans" style={{ color: '#755942' }}>{localUi('Land size', 'Ubukhulu bomhlaba', lang)}</div>
-                    <div className="font-display font-bold text-lg" style={{ color: '#20190F' }}>{known.ha} ha</div>
+                    <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{localUi('Land size', 'Ubukhulu bomhlaba', lang)}</div>
+                    <div className="font-display font-bold text-lg" style={{ color: 'var(--text-primary)' }}>{known.ha} ha</div>
                   </div>
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(35,94,134,0.07)' }}>
-                    <div className="text-xs font-sans" style={{ color: '#755942' }}>{localUi('Rain caught / yr', 'Amanzi emvula aqoqwayo / ngonyaka', lang)}</div>
-                    <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{numberLabel(known.rainL)} L</div>
+                    <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{localUi('Rain caught / yr', 'Amanzi emvula aqoqwayo / ngonyaka', lang)}</div>
+                    <div className="font-display font-bold text-lg" style={{ color: 'var(--blue)' }}>{numberLabel(known.rainL)} L</div>
                   </div>
                 </div>
-                <Link href="/farmer" className="flex items-center gap-1.5 mt-3 text-xs font-display font-semibold" style={{ color: '#1F4D2B', textDecoration: 'none' }}>
+                <Link href="/farmer" className="flex items-center gap-1.5 mt-3 text-xs font-display font-semibold" style={{ color: 'var(--color-forest-800)', textDecoration: 'none' }}>
                   {localUi('View water harvesting', 'Bona ukuqoqwa kwamanzi', lang)}<ChevronRight size={13} />
                 </Link>
               </div>
               {!known.hasSite && (
-                <p className="text-xs font-sans flex items-center gap-1.5" style={{ color: '#755942' }}>
+                <p className="text-xs font-sans flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
                   <MapPin size={12} />{localUi('Showing an example plot — analyse a site on the map for your real numbers.', 'Kuboniswa isibonelo sendawo — hlaziya indawo emephini ukuze ubone izinombolo zangempela.', lang)}
                 </p>
               )}
@@ -325,9 +325,9 @@ function SurveyInner() {
           {/* ── Step 1 · Sun & slope ── */}
           {step === 1 && (
             <div className={workspace.twoColumns}>
-              <h1 className={`${workspace.fullRow} font-display font-bold text-2xl`} style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{localUi('Sun & slope', 'Ilanga nomthambeka', lang)}</h1>
+              <h1 className={`${workspace.fullRow} font-display font-bold text-2xl`} style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Sun & slope', 'Ilanga nomthambeka', lang)}</h1>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>How much sun does it get?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>How much sun does it get?</div>
                 <div className="grid grid-cols-3 gap-2">
                   {SUN_OPTS.map(({ v, label, Icon }) => {
                     const on = sun === v;
@@ -343,7 +343,7 @@ function SurveyInner() {
                 </div>
               </div>
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>What&rsquo;s the slope?</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>What&rsquo;s the slope?</div>
                 <div className="grid grid-cols-3 gap-2">
                   {SLOPE_OPTS.map(({ v, label }) => {
                     const on = slope === v;
@@ -364,8 +364,8 @@ function SurveyInner() {
           {/* ── Step 2 · Resources ── */}
           {step === 2 && (
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{localUi('Resources on site', 'Izinsiza ezikhona endaweni', lang)}</h1>
-              <p className="font-sans text-sm" style={{ color: '#5C5040' }}>What&rsquo;s on the land? Tap all that apply.</p>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{localUi('Resources on site', 'Izinsiza ezikhona endaweni', lang)}</h1>
+              <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>What&rsquo;s on the land? Tap all that apply.</p>
               <div className="flex flex-wrap gap-2">
                 {RESOURCES.map(({ v, label, Icon }) => {
                   const on = resources.includes(v);
@@ -381,11 +381,11 @@ function SurveyInner() {
                 })}
               </div>
               {resources.includes('rain-tanks') && (
-                <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                  <span className="font-display text-sm" style={{ color: '#20190F' }}>{localUi('How many rain tanks?', 'Mangaki amathangi amanzi emvula?', lang)}</span>
+                <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                  <span className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>{localUi('How many rain tanks?', 'Mangaki amathangi amanzi emvula?', lang)}</span>
                   <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                    <button onClick={() => setTanks((t) => Math.max(1, t - 1))} aria-label={localUi('Remove one tank', 'Yehlisa ithangi elilodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={13} /></button>
-                    <span className="font-display font-semibold text-sm tabular-nums" style={{ color: '#20190F', minWidth: 20, textAlign: 'center' }}>{tanks}</span>
+                    <button onClick={() => setTanks((t) => Math.max(1, t - 1))} aria-label={localUi('Remove one tank', 'Yehlisa ithangi elilodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}><Minus size={13} /></button>
+                    <span className="font-display font-semibold text-sm tabular-nums" style={{ color: 'var(--text-primary)', minWidth: 20, textAlign: 'center' }}>{tanks}</span>
                     <button onClick={() => setTanks((t) => Math.min(20, t + 1))} aria-label={localUi('Add one tank', 'Engeza ithangi elilodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 26, height: 26, background: '#1F4D2B', border: 'none', color: '#EAF3E2', cursor: 'pointer' }}><Plus size={13} /></button>
                   </div>
                 </div>
@@ -396,7 +396,7 @@ function SurveyInner() {
           {/* ── Step 3 · Goal ── */}
           {step === 3 && (
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>What do you most want from your land?</h1>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>What do you most want from your land?</h1>
               <div className={workspace.twoColumns}>
                 {GOALS.map(({ v, label, desc }) => {
                   const on = goal === v;
@@ -409,7 +409,7 @@ function SurveyInner() {
                         <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#755942' }}>{desc}</div>
                       </div>
                       <div className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 22, height: 22, background: on ? '#EAF3E2' : 'transparent', border: `1.5px solid ${on ? '#EAF3E2' : '#C9BBA1'}` }}>
-                        {on && <Check size={13} style={{ color: '#1F4D2B' }} />}
+                        {on && <Check size={13} style={{ color: 'var(--color-forest-800)' }} />}
                       </div>
                     </button>
                   );
@@ -421,23 +421,23 @@ function SurveyInner() {
           {/* ── Step 4 · Confirm beds ── */}
           {step === 4 && (
             <div className="space-y-4">
-              <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>Confirm your beds</h1>
+              <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Confirm your beds</h1>
               <div className="rounded-xl px-4 py-3 flex gap-3 items-start" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                <Sprout size={16} style={{ color: '#1F4D2B', flexShrink: 0, marginTop: 1 }} />
-                <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+                <Sprout size={16} style={{ color: 'var(--color-forest-800)', flexShrink: 0, marginTop: 1 }} />
+                <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                   Lima: From {known.ha} ha · {sunLabel} · {tanksPhrase}, I suggest <strong>{beds} beds</strong> at 1.2 m × 8 m. Adjust the count, then save your plan.
                 </p>
               </div>
 
               {/* Bed count stepper */}
-              <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div>
-                  <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{beds} beds</div>
-                  <div className="font-sans text-xs" style={{ color: '#755942' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
+                  <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{beds} beds</div>
+                  <div className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
-                  <button onClick={() => setBeds((b) => Math.max(1, b - 1))} aria-label={localUi('Remove one bed', 'Yehlisa umbhede owodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}><Minus size={14} /></button>
-                  <span className="font-display font-semibold text-sm tabular-nums" style={{ color: '#20190F', minWidth: 22, textAlign: 'center' }}>{beds}</span>
+                  <button onClick={() => setBeds((b) => Math.max(1, b - 1))} aria-label={localUi('Remove one bed', 'Yehlisa umbhede owodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}><Minus size={14} /></button>
+                  <span className="font-display font-semibold text-sm tabular-nums" style={{ color: 'var(--text-primary)', minWidth: 22, textAlign: 'center' }}>{beds}</span>
                   <button onClick={() => setBeds((b) => Math.min(20, b + 1))} aria-label={localUi('Add one bed', 'Engeza umbhede owodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: '#1F4D2B', border: 'none', color: '#EAF3E2', cursor: 'pointer' }}><Plus size={14} /></button>
                 </div>
               </div>
@@ -458,9 +458,9 @@ function SurveyInner() {
           {step === 5 && (
             <div id="plan-doc" className="space-y-5">
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: '#7A4408', letterSpacing: '0.1em' }}>{localUi('Garden plan', 'Uhlelo lwengadi', lang)}</div>
-                <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>{beds} beds · {(beds * BED_M2).toFixed(1)} m²</h1>
-                <p className="font-sans text-sm mt-1" style={{ color: '#5C5040' }}>
+                <div className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--gold)', letterSpacing: '0.1em' }}>{localUi('Garden plan', 'Uhlelo lwengadi', lang)}</div>
+                <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{beds} beds · {(beds * BED_M2).toFixed(1)} m²</h1>
+                <p className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
                   {known.ha} ha · {sunLabel} · {tanksPhrase}{goal ? ` · goal: ${GOALS.find((g) => g.v === goal)?.label.toLowerCase()}` : ''}
                 </p>
               </div>
@@ -468,16 +468,16 @@ function SurveyInner() {
               {/* Beds */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
-                  <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
-                    <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{crop}</div>
+                  <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                    <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
+                    <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--text-primary)' }}>{crop}</div>
                   </div>
                 ))}
               </div>
 
               {/* Week-by-week plan — slide the weeks */}
               <div>
-                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#755942', letterSpacing: '0.1em' }}>{localUi('First six weeks', 'Amaviki okuqala ayisithupha', lang)}</div>
+                <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.1em' }}>{localUi('First six weeks', 'Amaviki okuqala ayisithupha', lang)}</div>
                 <div className="no-print flex gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
                   {WEEK_PLAN.map((w) => {
                     const on = week === w.wk;
@@ -492,12 +492,12 @@ function SurveyInner() {
                 </div>
                 {/* Screen: selected week. Print: all weeks. */}
                 {WEEK_PLAN.filter((w) => w.wk === week).map((w) => (
-                  <div key={w.wk} className="no-print rounded-2xl px-4 py-3.5 mt-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                    <div className="font-display font-semibold text-sm mb-2" style={{ color: '#1F4D2B' }}>Week {w.wk} · {w.title}</div>
+                  <div key={w.wk} className="no-print rounded-2xl px-4 py-3.5 mt-2" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                    <div className="font-display font-semibold text-sm mb-2" style={{ color: 'var(--color-forest-800)' }}>Week {w.wk} · {w.title}</div>
                     {w.tasks.map((t, i) => (
                       <div key={i} className="flex items-start gap-2 py-1">
                         <div className="rounded-full flex-shrink-0 mt-1.5" style={{ width: 5, height: 5, background: '#C07A1E' }} />
-                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{t}</span>
+                        <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{t}</span>
                       </div>
                     ))}
                   </div>
@@ -505,9 +505,9 @@ function SurveyInner() {
                 {/* Print-only: every week stacked */}
                 <div className="print-only space-y-2 mt-2">
                   {WEEK_PLAN.map((w) => (
-                    <div key={w.wk} className="rounded-2xl px-4 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                      <div className="font-display font-semibold text-sm mb-1" style={{ color: '#1F4D2B' }}>Week {w.wk} · {w.title}</div>
-                      {w.tasks.map((t, i) => <div key={i} className="font-sans text-sm" style={{ color: '#20190F' }}>· {t}</div>)}
+                    <div key={w.wk} className="rounded-2xl px-4 py-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                      <div className="font-display font-semibold text-sm mb-1" style={{ color: 'var(--color-forest-800)' }}>Week {w.wk} · {w.title}</div>
+                      {w.tasks.map((t, i) => <div key={i} className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>· {t}</div>)}
                     </div>
                   ))}
                 </div>
@@ -538,12 +538,12 @@ function SurveyInner() {
                 )}
                 <Link href="/plan"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: '#FFFEFA', color: '#1F4D2B', border: '1px solid #E2D8C4', textDecoration: 'none' }}>
+                  style={{ background: 'var(--bg-1)', color: 'var(--color-forest-800)', border: '1px solid var(--border)', textDecoration: 'none' }}>
                   {localUi('Open the Crop Planner', 'Vula uHlelo Lwezitshalo', lang)}<ChevronRight size={15} />
                 </Link>
               </div>
 
-              <div className="print-only text-center text-xs font-sans" style={{ color: '#755942' }}>
+              <div className="print-only text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                 Generated by ImbewuField · imbewufield.vercel.app
               </div>
             </div>
@@ -554,7 +554,7 @@ function SurveyInner() {
             {step > 0 && step <= 5 && (
               <button onClick={() => setStep((s) => Math.max(0, s - 1))}
                 className="flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                 <ChevronLeft size={15} />{localUi('Back', 'Emuva', lang)}
               </button>
             )}
@@ -575,7 +575,7 @@ function SurveyInner() {
             {step === 5 && (
               <button onClick={() => router.push('/home')}
                 className="flex-1 flex items-center justify-center py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+                style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                 {localUi('Done', 'Kwenziwe', lang)}
               </button>
             )}

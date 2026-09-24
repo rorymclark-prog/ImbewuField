@@ -58,7 +58,8 @@ the §0 desktop targets).
 
 - **Type** — Newsreader (display, headings & numerals) + Public Sans (UI & body).
   Scale: Display 32 · Title 24 · Body 16 · Small 14 · Overline 11 (uppercase, 700).
-- **Palette** — Forest `#1F4D2B`, Ochre `#C07A1E`, Water `#235E86`, Paper `#F7F2E9`,
+- **Palette** — Forest `#1F4D2B`, Ochre `#C07A1E`, Water `#235E86`, Paper `#E4DCC6` (the
+  "Option 1b contrast" value this file records below, not the `#F7F2E9` this line used to name),
   Card `#FBF6EC`, Ink `#20190F`, Ink-muted `#5C5040`, Ink-faint `#755942`, Hairline `#E2D8C4`.
   **Ink-faint is `#755942`, not the `#8C7A62` it used to be** — that value measured 3.02:1 on the
   page, 4.10:1 on a card and 3.36:1 on an inset, failing 4.5:1 on every surface it is painted on

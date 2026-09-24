@@ -12,6 +12,21 @@
 
 import type { InvoiceDocument } from '@/lib/invoice-document';
 
+/* ═══ THIS SHEET DOES NOT FOLLOW THE APP'S THEME ═══
+ *
+ * An invoice is a printed artefact. It goes to a buyer on paper or as a PDF, and it has to look
+ * the same whichever theme the farmer happens to have the app set to — so every colour on this
+ * document is a literal, deliberately, and the theme-token codemod that swept the rest of the
+ * farmer screens is excluded from this file.
+ *
+ * Leaving it in was measured: with the document's inks following the theme, dark mode painted
+ * pale type onto the sheet's own fixed white and the buyer name, the amounts, the "each" unit and
+ * every payment-terms option fell to 2.89–3.48:1 on the page a buyer actually reads.
+ *
+ * lib/invoice-document.ts makes the same call for the numbers (see formatInvoiceZar): this
+ * document's job is to be identical everywhere, not to be responsive.
+ * ═══════════════════════════════════════════════════ */
+
 function Sprout() {
   return (
     <svg

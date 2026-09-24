@@ -1135,7 +1135,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   {r.desc}
                   <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
                   {r.duplicateSuspect && (
-                    <span className="block font-sans" style={{ fontSize: 12, color: '#9A6018', marginTop: 2 }}>
+                    <span className="block font-sans" style={{ fontSize: 12, color: 'var(--gold)', marginTop: 2 }}>
                       {recordsText(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
                     </span>
                   )}
@@ -1197,17 +1197,17 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
   const waiting = loading || !planLoaded;
 
   return (
-    <section className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
+    <section className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
         <h2 className="text-xl font-display font-semibold" style={{ color: '#203c2c' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
-        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
       </div>
       {waiting ? (
-        <p className="px-4 py-6 text-xs font-sans" style={{ color: '#5d5143' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>
+        <p className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>
       ) : metrics.crops.length === 0 ? (
-        <p className="px-4 py-6 text-sm font-display" style={{ color: '#5C5040' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
+        <p className="px-4 py-6 text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
       ) : (
-        <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
+        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
@@ -1217,11 +1217,11 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
               </div>
-              <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
+              <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-secondary)' }}>
                 {crop.hasTaggedCost
                   ? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²')}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other costs not attributed', 'Ezinye izindleko azabelwanga')}` : ''}`
                   : metrics.hasUnattributedExpenses ? recordsText(lang, 'Cost per m²: not attributed', 'Izindleko nge-m²: azabelwanga') : recordsText(lang, 'No crop cost logged', 'Azikho izindleko zesitshalo ezirekhodiwe')}
@@ -1238,30 +1238,30 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
            it fetched per kilogram. The app was already computing both and dropping them on the
            floor. There is still deliberately no yield-per-area and no projection here — these are
            achieved numbers off the farmer's own logs, which is why they need no sourcing. */
-        <div className="px-4 py-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <div className="px-4 py-3" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="flex items-baseline justify-between gap-3">
-            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
-            <p className="text-xs font-sans" style={{ color: '#5d5143' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>
+            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
+            <p className="text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>
           </div>
           {metrics.perennialCrops.map((row) => (
             <div key={row.cropName} className="mt-3">
-              <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{row.cropName}</p>
+              <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{row.cropName}</p>
               <div className="grid grid-cols-3 gap-2 mt-1">
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
                     {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>
                     {row.hasSale ? fmtZAR(row.turnoverZar) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Price', 'Inani')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>
                     {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
@@ -1270,28 +1270,28 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 /* Said out loud rather than left for the farmer to subtract. The gap between picked
                    and sold is the eaten-at-home-or-lost share, and on fruit it is usually the
                    larger half — printing only the rand would quietly imply the rest was worthless. */
-                <p className="text-xs font-sans mt-1" style={{ color: '#5C5040' }}>
+                <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>
                   {recordsText(lang, `${metricNumber(row.soldKg, 'kg')} of that was sold · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} eaten at home, given away or lost`, `Kuthengiswe ${metricNumber(row.soldKg, 'kg')} · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile`)}
                 </p>
               )}
             </div>
           ))}
-          <p className="text-xs font-sans mt-3" style={{ color: '#5d5143' }}>
+          <p className="text-xs font-sans mt-3" style={{ color: 'var(--text-secondary)' }}>
             {recordsText(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.', 'Lezi azikho ohlwini olungenhla ngoba izibalo zalo zisebenza ngemitha-skwele yemibhede, kanti izithelo zesihlahla aziveli embhedeni. Imali yokuthengisa lapha isivele ibaliwe emalini engezansi.')}
           </p>
         </div>
       )}
-      <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
-        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
+      <div className="px-4 py-3" style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)' }}>
+        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
         {metrics.gardenMargins.length === 0 ? (
-          <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, `No sales or costs logged for this ${period}.`, `Akukho okudayisiwe noma izindleko ezirekhodiwe zale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
+          <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No sales or costs logged for this ${period}.`, `Akukho okudayisiwe noma izindleko ezirekhodiwe zale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
         ) : metrics.gardenMargins.map((margin) => (
           <div key={margin.gardenId ?? 'this-farm'} className="flex items-baseline justify-between gap-3 mt-2">
-            <p className="text-sm font-display" style={{ color: '#20190F' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>
-            <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{fmtZAR(margin.grossMarginZar)}</p>
+            <p className="text-sm font-display" style={{ color: 'var(--text-primary)' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>
+            <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{fmtZAR(margin.grossMarginZar)}</p>
           </div>
         ))}
-        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
       </div>
     </section>
   );

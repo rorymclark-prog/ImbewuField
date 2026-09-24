@@ -51,10 +51,10 @@ type View = 'month' | 'season';
 // rows are here for type completeness and cannot render today.
 const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprout; color: string; short: string }> = {
   prep:               { Icon: ClipboardList, color: '#5C4F3C', short: 'Prep' },
-  sow:                { Icon: Sprout,        color: '#1F4D2B', short: 'Sow' },
-  transplant:         { Icon: Leaf,          color: '#2E6B3A', short: 'Transplant' },
-  mulch:              { Icon: Layers,        color: '#2E6B3A', short: 'Mulch' },
-  harvest:            { Icon: Leaf,          color: '#7A4408', short: 'Harvest' },
+  sow:                { Icon: Sprout,        color: 'var(--color-forest-800)', short: 'Sow' },
+  transplant:         { Icon: Leaf,          color: 'var(--color-forest-700)', short: 'Transplant' },
+  mulch:              { Icon: Layers,        color: 'var(--color-forest-700)', short: 'Mulch' },
+  harvest:            { Icon: Leaf,          color: 'var(--gold)', short: 'Harvest' },
   'terminate-cover':  { Icon: Scissors,      color: '#5C4F3C', short: 'Cut down' },
   'weed-early':       { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
   'weed-mid':         { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
@@ -105,8 +105,8 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
 }) {
   if (tasks.length === 0) {
     return (
-      <div className="rounded-2xl px-4 py-6 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <p className="font-sans" style={{ fontSize: 14, color: '#755942', lineHeight: 1.5 }}>{emptyMessage}</p>
+      <div className="rounded-2xl px-4 py-6 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+        <p className="font-sans" style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.5 }}>{emptyMessage}</p>
       </div>
     );
   }
@@ -115,12 +115,12 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
       {tasks.map((task) => {
         const m = actionMeta(task);
         return (
-          <div key={task.id} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div key={task.id} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <button
               onClick={() => onToggle(task.id)}
               aria-label={task.completed ? notDoneLabel : doneLabel}
               className="flex-shrink-0"
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#1F4D2B' }}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)' }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
             </button>
@@ -130,11 +130,11 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
             <div className="flex-1 min-w-0">
               <div
                 className="font-display font-semibold"
-                style={{ fontSize: 'clamp(15px, 1.2vw, 16px)', color: '#20190F', textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.55 : 1 }}
+                style={{ fontSize: 'clamp(15px, 1.2vw, 16px)', color: 'var(--text-primary)', textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.55 : 1 }}
               >
                 {task.title}
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 13, color: '#755942' }}>{task.subtitle}</div>
+              <div className="font-sans truncate" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{task.subtitle}</div>
             </div>
           </div>
         );
@@ -203,14 +203,14 @@ export default function CropPlanPage() {
   ];
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 56, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/plan" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{ui('Task Planner', 'Ukuhlela imisebenzi')}</span>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Task Planner', 'Ukuhlela imisebenzi')}</span>
         <div className="flex-1" />
         <LessonLink id="crops:planner" label={ui('Learn', 'Funda')} />
         <SettingsButton />
@@ -234,7 +234,7 @@ export default function CropPlanPage() {
           <Link
             href="/facilitator/crops"
             className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
-            style={{ fontSize: 12, background: '#fff', color: '#7A4408', textDecoration: 'none' }}
+            style={{ fontSize: 12, background: '#fff', color: '#7A4408', textDecoration: 'none' }} /* literal, not var(--gold): this pill is always white, so its label must not follow the theme */
           >
             {ui('Plan my crops', 'Hlela izitshalo zami')}
           </Link>
@@ -247,35 +247,35 @@ export default function CropPlanPage() {
           {/* New: flagship bed-timeline crop planner on the design map */}
           <Link href="/facilitator/crops"
             className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', textDecoration: 'none' }}>
             🌱 {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
           </Link>
 
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#7A4408', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
-              <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--gold-dim)', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
+              <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {mounted && view === 'month' && monthName}
                 {mounted && view === 'season' && seasonLabel}
               </h1>
             </div>
             {view === 'month' && (
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>
 
           {/* Zoom tabs */}
-          <div className="flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+          <div className="flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {TABS.map((t) => {
               const on = view === t.v;
               return (
                 <button key={t.v} onClick={() => setView(t.v)}
                   className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
-                  style={on ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 14 } : { color: '#5C5040', fontSize: 14, border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}>
+                  style={on ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 14 } : { color: 'var(--text-secondary)', fontSize: 14, border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}>
                   {t.label}
                 </button>
               );
@@ -288,16 +288,16 @@ export default function CropPlanPage() {
               deleted, a crop with no verified timings, and an already-growing crop
               whose picking months have all passed. */}
           {planYieldsNothing && (
-            <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: '#FFFEFA', border: '1px solid #C07A1E' }}>
-              <AlertCircle size={18} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
+            <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: 'var(--bg-1)', border: '1px solid #C07A1E' }}>
+              <AlertCircle size={18} style={{ color: 'var(--gold)', flexShrink: 0, marginTop: 2 }} />
               <div>
-                <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
+                <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
                   {ui('Your crop plan is not producing any jobs', 'Uhlelo lwakho lwezitshalo alukhiqizi imisebenzi')}
                 </div>
-                <p className="font-sans" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>
+                <p className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                   {ui(`It has ${savedPlantings} ${savedPlantings === 1 ? 'planting' : 'plantings'} saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.`, `Lunokutshala ${savedPlantings} okulondoloziwe, kodwa akukho okuvela emsebenzini wanoma iyiphi inyanga. Lokhu kwenzeka uma ukutshala kusembhedeni osusuliwe, uma isitshalo singenazo izikhathi eziqinisekisiwe kuhlelo lokusebenza, noma uma kuyisitshalo esivele sikhona futhi izinyanga zaso zokuvuna sezidlulile. Vula uhlelo lwezitshalo uluhlole.`)}
                 </p>
-                <Link href="/facilitator/crops" className="inline-flex items-center gap-1 mt-2 font-sans font-semibold" style={{ fontSize: 13, color: '#1F4D2B' }}>
+                <Link href="/facilitator/crops" className="inline-flex items-center gap-1 mt-2 font-sans font-semibold" style={{ fontSize: 13, color: 'var(--color-forest-800)' }}>
                   {ui('Open crop plan', 'Vula uhlelo lwezitshalo')}<ChevronRight size={14} />
                 </Link>
               </div>
@@ -335,7 +335,7 @@ export default function CropPlanPage() {
               </div>
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
-                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#755942', letterSpacing: '0.12em' }}>
+                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
                   {monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
@@ -343,7 +343,7 @@ export default function CropPlanPage() {
                     next year's August still belongs in the August bucket. "This month"
                     here would read as a claim about the jobs. */}
                 {mounted && (
-                  <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: away === 0 ? 'rgba(31,77,43,0.1)' : 'rgba(226,216,196,0.6)', color: away === 0 ? '#1F4D2B' : '#5C5040' }}>
+                  <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: away === 0 ? 'var(--brand-soft)' : 'var(--bg-2)', color: away === 0 ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
                     {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
                   </span>
                 )}
@@ -373,23 +373,23 @@ export default function CropPlanPage() {
                 </div>
               </div>
               <div className={workspace.cards}>
-              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
+              {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4, margin: '0 0 4px' }}>Izeluleko zokulima ziboniswa ngesiNgisi okwamanje.</p>}
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (
                   <button key={m} onClick={() => { setCursorMonth(m); setView('month'); }}
                     className="w-full text-left rounded-2xl px-4 py-3.5"
-                    style={{ background: '#FFFEFA', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                    style={{ background: 'var(--bg-1)', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{monthNames[m - 1]}</span>
-                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>{ui('Now', 'Manje')}</span>}
-                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(226,216,196,0.6)', color: '#5C5040' }}>
+                      <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
+                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
+                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(226,216,196,0.6)', color: 'var(--text-secondary)' }}>
                         {n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}
                       </span>
                     </div>
                     {/* Generic seasonal guidance, not derived from this farmer's beds —
                         deliberately separate from the sourced job counts above. */}
-                    <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: '#5C5040', lineHeight: 1.5 }}>{MONTH_FOCUS[m - 1]}</p>
+                    <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{MONTH_FOCUS[m - 1]}</p>
                   </button>
                 );
               })}
@@ -398,7 +398,7 @@ export default function CropPlanPage() {
           )}
 
           {/* Footer link */}
-          <Link href="/plan" className="flex items-center justify-center gap-1.5 mt-6 py-3 rounded-xl font-display font-semibold" style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', textDecoration: 'none' }}>
+          <Link href="/plan" className="flex items-center justify-center gap-1.5 mt-6 py-3 rounded-xl font-display font-semibold" style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', textDecoration: 'none' }}>
             {ui('Manage crops & beds', 'Phatha izitshalo nemibhede')}<ChevronRight size={15} />
           </Link>
         </div>

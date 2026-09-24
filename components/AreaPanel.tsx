@@ -24,7 +24,7 @@ function setCached(key: string, text: string) {
 
 function renderMarkdown(text: string) {
   const sections = text.split(/(?=^## )/m).filter((s) => s.trim());
-  if (!sections.length) return <p className="text-xs font-display" style={{ color: '#20190F' }}>{text}</p>;
+  if (!sections.length) return <p className="text-xs font-display" style={{ color: 'var(--text-primary)' }}>{text}</p>;
   return (
     <div className="space-y-4">
       {sections.map((section, i) => {
@@ -34,7 +34,7 @@ function renderMarkdown(text: string) {
         return (
           <div key={i}>
             <h3 className="font-display font-semibold text-sm mb-2 pb-1.5 flex items-center gap-2"
-                style={{ color: '#7A4408', borderBottom: '1px solid #E2D8C4' }}>
+                style={{ color: 'var(--gold)', borderBottom: '1px solid var(--border)' }}>
               {heading}
             </h3>
             <div className="space-y-1.5">
@@ -42,14 +42,14 @@ function renderMarkdown(text: string) {
                 if (!line.trim()) return null;
                 if (line.startsWith('- ') || line.startsWith('• ')) {
                   return (
-                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                      <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: '#1F4D2B' }}>-</span>
+                    <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                      <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-forest-800)' }}>-</span>
                       <span>{line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}</span>
                     </div>
                   );
                 }
                 return (
-                  <p key={j} className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+                  <p key={j} className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     {line.replace(/\*\*/g, '')}
                   </p>
                 );
@@ -117,7 +117,7 @@ export default function AreaPanel({ coords }: Props) {
   if (!coords) {
     return (
       <div className="flex flex-col items-center justify-center h-32 text-center">
-        <p className="text-xs font-display" style={{ color: '#5C5040' }}>Tap a place on the map first</p>
+        <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>Tap a place on the map first</p>
       </div>
     );
   }
@@ -126,11 +126,11 @@ export default function AreaPanel({ coords }: Props) {
     <div>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
+          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
             Area &amp; community
           </div>
           {lastUpdated && !loading && (
-            <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>
+            <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               Cached · refreshes in {Math.max(0, 7 - Math.floor((Date.now() - lastUpdated) / 86400000))}d
             </div>
           )}
@@ -139,8 +139,8 @@ export default function AreaPanel({ coords }: Props) {
           onClick={() => load(coords, true)} disabled={loading}
           className="px-2.5 py-1 rounded-lg text-xs font-display font-semibold flex items-center gap-1.5"
           style={loading
-            ? { background: '#FFFEFA', color: '#5C5040', cursor: 'wait', border: '1px solid #E2D8C4' }
-            : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: '#7A4408' }}>
+            ? { background: 'var(--bg-1)', color: 'var(--text-secondary)', cursor: 'wait', border: '1px solid var(--border)' }
+            : { background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)' }}>
           {loading
             ? <><Loader2 size={14} className="animate-spin" /> Loading...</>
             : <><RefreshCw size={14} /> Refresh</>}
@@ -157,7 +157,7 @@ export default function AreaPanel({ coords }: Props) {
       {loading && !profile && (
         <div className="space-y-2.5 animate-pulse">
           {[60, 95, 80, 100, 70, 90, 55].map((w, i) => (
-            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: '#FFFEFA' }} />
+            <div key={i} className="h-3 rounded" style={{ width: `${w}%`, background: 'var(--bg-1)' }} />
           ))}
         </div>
       )}
@@ -166,7 +166,7 @@ export default function AreaPanel({ coords }: Props) {
         <div>
           {renderMarkdown(profile)}
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#C07A1E' }} />}
-          <p className="text-xs font-mono mt-4 pt-2" style={{ color: '#5C5040', opacity: 0.6, borderTop: '1px solid #E2D8C4' }}>
+          <p className="text-xs font-mono mt-4 pt-2" style={{ color: 'var(--text-secondary)', opacity: 0.6, borderTop: '1px solid var(--border)' }}>
             AI research · OSM + Overpass POI data · verify locally · tap Refresh to update
           </p>
         </div>

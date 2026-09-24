@@ -230,6 +230,9 @@ html[data-theme="earth"] {
   --blue: #1C5A9E;
   --orange: #B83A18;
   --teal: #1A7868;
+  /* the violet a field journal's "visitor / training" entries are inked in. Added when the
+     journal's kind inks moved off fixed light-mode hexes — see lib/field-journal.ts. */
+  --violet: #5C3F86;
 
   --header-bg: rgba(255,254,250,0.97);
   --glass-bg: rgba(255,254,250,0.90);
@@ -276,6 +279,7 @@ html[data-theme="earth"].dark {
 
   --border: #2C2114;
   --border-bright: #483618;
+  --border-strong: #4A3820;   /* one step stronger than --border, see :root */
   --border-glow: rgba(140,192,60,0.3);
 
   --text-primary: #EEE4D0;
@@ -291,10 +295,11 @@ html[data-theme="earth"].dark {
   --emerald: #82C844;
   --emerald-bright: #A8E860;
   --gold: #D8A840;
-  --gold-dim: #8C6C20;
+  --gold-dim: #B49040;   /* was #8C6C20 — 3.79:1 on the card; this is 6.20 / 6.59 / 5.77 */
   --blue: #58A0DC;
   --orange: #E07850;
   --teal: #58B8A0;
+  --violet: #B79CE0;
 
   --header-bg: rgba(13,10,6,0.97);
   --glass-bg: rgba(24,18,8,0.88);
@@ -341,6 +346,7 @@ html[data-theme="slate"] {
 
   --border: #E2E8F2;
   --border-bright: #CBD5E4;
+  --border-strong: #B4C2D6;
   --border-glow: rgba(20,155,115,0.3);
 
   --text-primary: #0C1526;
@@ -357,6 +363,7 @@ html[data-theme="slate"] {
   --blue: #1555AA;
   --orange: #C03C18;
   --teal: #0A6E6A;
+  --violet: #6042A0;
 
   --header-bg: rgba(255,255,255,0.97);
   --glass-bg: rgba(248,250,252,0.9);
@@ -403,6 +410,7 @@ html[data-theme="slate"].dark {
 
   --border: #1A2540;
   --border-bright: #2E3E5C;
+  --border-strong: #3C5075;
   --border-glow: rgba(20,155,115,0.3);
 
   --text-primary: #DCE4F0;
@@ -418,10 +426,11 @@ html[data-theme="slate"].dark {
   --emerald: #18A878;
   --emerald-bright: #50CCA0;
   --gold: #E8A030;
-  --gold-dim: #9A6818;
+  --gold-dim: #B49040;   /* slate dark, same fix as earth dark above */
   --blue: #4890DC;
   --orange: #DC7050;
   --teal: #40A8A4;
+  --violet: #AE9CE8;
 
   --header-bg: rgba(6,10,18,0.97);
   --glass-bg: rgba(12,21,38,0.88);

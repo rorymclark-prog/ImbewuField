@@ -114,8 +114,8 @@ export default function AppConfirmProvider({ children }: { children: React.React
             className="font-sans"
             style={{
               width: '100%', maxWidth: 360, borderRadius: 16, padding: '18px 18px 14px',
-              background: '#FFFEFA', border: '1px solid #E2D8C4',
-              boxShadow: '0 12px 40px rgba(0,0,0,0.28)', color: '#20190F',
+              background: 'var(--bg-1)', border: '1px solid var(--border)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.28)', color: 'var(--text-primary)',
             }}
           >
             {pending.opts.title && (
@@ -123,7 +123,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
                 {pending.opts.title}
               </div>
             )}
-            <div style={{ fontSize: 14, lineHeight: 1.5, whiteSpace: 'pre-line', color: '#20190F' }}>
+            <div style={{ fontSize: 14, lineHeight: 1.5, whiteSpace: 'pre-line', color: 'var(--text-primary)' }}>
               {pending.opts.message}
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 16, flexWrap: 'wrap' }}>
@@ -133,7 +133,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
                 className="font-display font-semibold rounded-xl"
                 style={{
                   minHeight: 44, padding: '8px 16px', fontSize: 13, cursor: 'pointer',
-                  background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040',
+                  background: '#FFFFFF', border: '1px solid var(--border)', color: 'var(--text-secondary)',
                 }}
               >
                 {pending.opts.cancelLabel ?? 'Cancel'}

@@ -146,7 +146,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         aria-label={groupLabel}
         className="w-full max-w-md font-sans overflow-y-auto"
         style={{
-          background: '#FBF8F1', color: '#2D2519', borderRadius: '22px 22px 0 0',
+          background: '#FBF8F1', color: 'var(--text-primary)', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh', paddingBottom: 'calc(20px + env(safe-area-inset-bottom))',
         }}
       >
@@ -160,7 +160,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               <span style={{ fontSize: 18 }}>{EVIDENCE_GROUP_ICON[group.key] ?? '📄'}</span>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>{groupLabel}</div>
+              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
               <div style={{ font: '400 13px/1.4 system-ui, sans-serif', color: '#665A47', marginTop: 1 }}>{groupDesc}</div>
             </div>
             <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#665A47', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
@@ -179,7 +179,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
           <p>Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.</p>
           <p>The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.</p>
-          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'#fff',color:'#2D2519'}}/></label>
+          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'#fff',color:'var(--text-primary)'}}/></label>
           <button disabled={uploading||!resultNote.trim()} onClick={()=>{
             if(getEvidenceItems(siteId,itemKey).length>=4){setFileError('Remove an older entry before adding another.');return;}
             if(!addEvidenceItem(siteId,itemKey,{type:'note',name:'Reported test results',note:resultNote.trim()})){setFileError('The results could not be saved. Keep a copy and try again.');return;}
@@ -220,7 +220,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             onClick={() => { if (fileInputRef.current) { fileInputRef.current.accept = '.pdf,.jpg,.jpeg,.png,image/*'; fileInputRef.current.click(); } }}
             disabled={uploading}
             style={{
-              flex: 1, background: '#FBF8F1', color: '#3C6B3F', border: '1.5px solid #CFC4AC', borderRadius: 11,
+              flex: 1, background: '#FBF8F1', color: 'var(--color-forest-700)', border: '1.5px solid #CFC4AC', borderRadius: 11,
               padding: '12px 10px', font: '600 13px/1 system-ui, sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
@@ -263,7 +263,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Photo grid */}
         {photoItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               Photos · {photoItems.length}
             </div>
             <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
@@ -292,7 +292,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Doc list */}
         {docItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               On file · {docItems.length}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -308,16 +308,16 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                     <FileText size={16} color="#C0392B" />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ font: '600 13px/1 system-ui, sans-serif', color: '#2D2519', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
+                    <div style={{ font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
                     {ev.note&&<p style={{fontSize:13,lineHeight:1.5,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{ev.note}</p>}
                     {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>Download original PDF</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>Filename reference only. Upload the PDF again to retain its contents.</p>}
                     {ev.sizeBytes && (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#755942', marginTop: 3 }}>
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 3 }}>
                         {(ev.sizeBytes / 1024 / 1024).toFixed(1)} MB
                       </div>
                     )}
                   </div>
-                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942', padding: 4 }}>
+                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -329,7 +329,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Quick numbers */}
         {quickFields.length > 0 && (
           <div style={{ padding: '16px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942', marginBottom: 9 }}>
+            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               Quick numbers (optional)
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -346,7 +346,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                         onChange={(e) => setEditValue(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') saveField(f.key); if (e.key === 'Escape') setEditingField(null); }}
                         placeholder={f.unit}
-                        style={{ width: 100, font: '600 13px/1 system-ui, sans-serif', color: '#2D2519', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
+                        style={{ width: 100, font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
                       />
                       <button onClick={() => saveField(f.key)} style={{ font: '600 12px system-ui', color: group.color, background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>Save</button>
                     </div>

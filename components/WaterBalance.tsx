@@ -108,12 +108,12 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
     <div className="space-y-3">
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#235E86' }}>Water balance</span>
-        <span className="text-xs font-mono" style={{ color: '#755942' }}>estimates</span>
+        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--blue)' }}>Water balance</span>
+        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>estimates</span>
       </div>
 
       {/* Main chart */}
-      <div className="rounded-xl overflow-hidden" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-xl overflow-hidden" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
         <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }}>
           {/* Grid lines */}
           {ticks.map(({ y }, i) => (
@@ -179,21 +179,21 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="flex flex-wrap gap-x-4 gap-y-1">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(35,94,134,0.55)' }} />
-          <span className="text-xs font-mono" style={{ color: '#5C5040' }}>Roof catchment</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Roof catchment</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(192,122,30,0.45)' }} />
-          <span className="text-xs font-mono" style={{ color: '#5C5040' }}>Total demand</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Total demand</span>
         </div>
         {capacity > 0 && (
           <div className="flex items-center gap-1.5">
             <div className="w-8 h-0.5 flex-shrink-0" style={{ background: '#1F4D2B' }} />
-            <span className="text-xs font-mono" style={{ color: '#5C5040' }}>Tank level</span>
+            <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Tank level</span>
           </div>
         )}
         <div className="flex items-center gap-1.5">
           <div className="w-8 flex-shrink-0" style={{ borderTop: '1.5px dashed rgba(192,60,30,0.7)' }} />
-          <span className="text-xs font-mono" style={{ color: '#5C5040' }}>Min safe level</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Min safe level</span>
         </div>
       </div>
 
@@ -210,17 +210,17 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
       {/* Guidance messages */}
       {noSurvey && (
-        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(192,122,30,0.08)', color: '#5C5040', border: '1px solid rgba(192,122,30,0.2)' }}>
+        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--text-secondary)', border: '1px solid rgba(192,122,30,0.2)' }}>
           Complete the site survey to see household water demand and irrigation needs.
         </p>
       )}
       {noRoof && survey && (
-        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(35,94,134,0.06)', color: '#5C5040', border: '1px solid rgba(35,94,134,0.2)' }}>
+        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(35,94,134,0.06)', color: 'var(--text-secondary)', border: '1px solid rgba(35,94,134,0.2)' }}>
           Add roof area in the site survey to calculate monthly catchment potential.
         </p>
       )}
       {noStorage && !noSurvey && (
-        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(31,77,43,0.06)', color: '#5C5040', border: '1px solid rgba(31,77,43,0.15)' }}>
+        <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(31,77,43,0.06)', color: 'var(--text-secondary)', border: '1px solid rgba(31,77,43,0.15)' }}>
           Draw a water harvesting area on the map to model how much storage you can build.
         </p>
       )}
@@ -229,7 +229,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       {capacity > 0 && tankLevels.some(v => v <= minSafe) && (
         <div className="p-3 rounded-xl" style={{ background: 'rgba(192,60,30,0.07)', border: '1px solid rgba(192,60,30,0.25)' }}>
           <p className="text-xs font-display font-semibold mb-1" style={{ color: '#C03C1E' }}>Possible dry-season shortfall</p>
-          <p className="text-xs font-display" style={{ color: '#5C5040' }}>
+          <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>
             Tank level dips below the safe minimum in {MONTH_FULL[tankLevels.indexOf(Math.min(...tankLevels))]}.
             Options: increase storage, add a second tank, or reduce irrigation during {rainfall.drySeason}.
           </p>
@@ -241,10 +241,10 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
 function StatBox({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
-    <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <p className="text-xs font-mono" style={{ color: '#755942', marginBottom: 2 }}>{label}</p>
+    <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs font-mono mt-1" style={{ color: '#755942', fontSize: 12 }}>{sub}</p>
+      <p className="text-xs font-mono mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
     </div>
   );
 }

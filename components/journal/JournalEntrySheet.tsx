@@ -124,10 +124,10 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>
+              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#755942', marginTop: 1 }}>
+              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               type="button"
               onClick={onClose}
               aria-label={ui('Close', 'Vala')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#755942' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text-muted)' }}
             >
               <X size={20} />
             </button>
@@ -273,7 +273,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   disabled={busy}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
-                    background: '#FFFEFA', border: '1.5px dashed #CFC4AC', color: '#3C6B3F',
+                    background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
                     font: '600 10px/1 system-ui, sans-serif',
                   }}
@@ -306,7 +306,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               onClick={() => onDelete(entry.id)}
               style={{
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: '#FFFEFA', border: '1.5px solid #E7C9C6', color: '#9B3630',
+                background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
                 font: '600 14px/1 system-ui, sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
@@ -335,12 +335,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 const inputStyle: React.CSSProperties = {
   width: '100%',
   minHeight: 46,
-  background: '#FFFEFA',
-  border: '1px solid #E2D8C4',
+  background: 'var(--bg-1)',
+  border: '1px solid var(--border)',
   borderRadius: 11,
   padding: '11px 12px',
   font: '400 15px/1.2 system-ui, sans-serif',
-  color: '#20190F',
+  color: 'var(--text-primary)',
   outline: 'none',
 };
 
@@ -348,7 +348,7 @@ function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: '#755942', marginBottom: 8,
+      textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}
     </div>

@@ -274,7 +274,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
         fontWeight: 700,
         letterSpacing: '0.10em',
         textTransform: 'uppercase',
-        color: '#755942',
+        color: 'var(--text-muted)',
         marginBottom: 8,
       }}
     >
@@ -296,7 +296,7 @@ function Pill({ color, children }: { color: string; children: React.ReactNode })
         padding: '3px 10px',
         fontSize: 13,
         fontFamily: 'var(--font-sans, sans-serif)',
-        color: '#20190F',
+        color: 'var(--text-primary)',
         marginRight: 6,
         marginBottom: 6,
       }}
@@ -374,15 +374,15 @@ export default function CalendarPage() {
         flexDirection: 'column',
         height: '100dvh',
         overflow: 'hidden',
-        background: '#E4DCC6',
+        background: 'var(--bg-0)',
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: '#5C5040' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
         <div className="flex-1" />
         <LessonLink id="crops:calendar" label="Learn" />
         <SettingsButton />
@@ -393,19 +393,19 @@ export default function CalendarPage() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          background: '#E4DCC6',
+          background: 'var(--bg-0)',
         }}
       >
         {lang === 'zu' && (
-          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', fontSize: 12 }}>
+          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Iseluleko somsebenzi nezikhathi zokutshala nokuvuna kuboniswa ngesiNgisi.
           </p>
         )}
         {/* ---- Month strip ---- */}
         <div
           style={{
-            background: '#FFFEFA',
-            borderBottom: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            borderBottom: '1px solid var(--border)',
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
@@ -434,7 +434,7 @@ export default function CalendarPage() {
                       ? '1px solid #1F4D2B'
                       : idx === currentMonth ? '1px solid #9A6018' : '1px solid #E2D8C4',
                     borderRadius: 8,
-                    color: active ? '#EAF3E2' : idx === currentMonth ? '#7A4408' : '#5C5040',
+                    color: active ? '#EAF3E2' : idx === currentMonth ? 'var(--gold)' : 'var(--text-secondary)',
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 12,
                     fontWeight: active || idx === currentMonth ? 700 : 500,
@@ -463,8 +463,8 @@ export default function CalendarPage() {
           {/* ---- What to do this month ---- */}
           <div
             style={{
-              background: '#FFFEFA',
-              border: '1px solid #E2D8C4',
+              background: 'var(--bg-1)',
+              border: '1px solid var(--border)',
               borderRadius: 14,
               padding: '16px',
               marginBottom: 16,
@@ -485,7 +485,7 @@ export default function CalendarPage() {
                     fontFamily: 'var(--font-display)',
                     fontSize: 20,
                     fontWeight: 600,
-                    color: '#20190F',
+                    color: 'var(--text-primary)',
                     lineHeight: 1.2,
                   }}
                 >
@@ -499,7 +499,7 @@ export default function CalendarPage() {
                     marginTop: 4,
                     fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 11,
-                    color: '#755942',
+                    color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
                   }}
@@ -524,7 +524,7 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#755942', fontStyle: 'italic' }}>
+                  <span style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>
                     No planting recommended this month
                   </span>
                 )}
@@ -545,7 +545,7 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#755942', fontStyle: 'italic' }}>
+                  <span style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>
                     Nothing ready to harvest this month
                   </span>
                 )}
@@ -569,7 +569,7 @@ export default function CalendarPage() {
                       marginBottom: 6,
                       fontSize: 13,
                       fontFamily: 'var(--font-sans, sans-serif)',
-                      color: '#20190F',
+                      color: 'var(--text-primary)',
                       lineHeight: 1.45,
                     }}
                   >
@@ -641,7 +641,7 @@ export default function CalendarPage() {
                   fontWeight: 700,
                   letterSpacing: '0.10em',
                   textTransform: 'uppercase',
-                  color: '#1F4D2B',
+                  color: 'var(--color-forest-800)',
                   marginBottom: 5,
                 }}
               >
@@ -652,7 +652,7 @@ export default function CalendarPage() {
                   margin: 0,
                   fontSize: 13,
                   fontFamily: 'var(--font-sans, sans-serif)',
-                  color: '#20190F',
+                  color: 'var(--text-primary)',
                   lineHeight: 1.55,
                 }}
               >
@@ -664,8 +664,8 @@ export default function CalendarPage() {
           {/* ---- SA Planting Calendar Grid ---- */}
           <div
             style={{
-              background: '#FFFEFA',
-              border: '1px solid #E2D8C4',
+              background: 'var(--bg-1)',
+              border: '1px solid var(--border)',
               borderRadius: 14,
               overflow: 'hidden',
               marginBottom: 8,
@@ -675,7 +675,7 @@ export default function CalendarPage() {
             <div
               style={{
                 padding: '12px 14px 8px',
-                borderBottom: '1px solid #E2D8C4',
+                borderBottom: '1px solid var(--border)',
               }}
             >
               <div
@@ -683,7 +683,7 @@ export default function CalendarPage() {
                   fontFamily: 'var(--font-display)',
                   fontSize: 16,
                   fontWeight: 600,
-                  color: '#20190F',
+                  color: 'var(--text-primary)',
                   marginBottom: 2,
                 }}
               >
@@ -697,7 +697,7 @@ export default function CalendarPage() {
                     style={{
                       fontSize: 11,
                       fontFamily: 'var(--font-mono, monospace)',
-                      color: '#5C5040',
+                      color: 'var(--text-secondary)',
                     }}
                   >
                     {localUi('In catalog sowing window', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
@@ -707,7 +707,7 @@ export default function CalendarPage() {
                   style={{
                     fontSize: 11,
                     fontFamily: 'var(--font-mono, monospace)',
-                    color: '#5C5040',
+                    color: 'var(--text-secondary)',
                   }}
                 >
                   {localUi('Summer-rainfall pattern', 'Iphethini yemvula yasehlobo', lang)}
@@ -717,13 +717,13 @@ export default function CalendarPage() {
 
             {/* Crop planner filter notice */}
             {isFiltered && (
-              <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
                   {visibleCrops.length > 0
                     ? localUi(`Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`, `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}`, lang)
                     : localUi('None of your planned crops are in this calendar yet', 'Azikho izitshalo zakho ezihleliwe kule khalenda okwamanje', lang)}
                 </span>
-                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                   {localUi('Show all', 'Bonisa konke', lang)}
                 </button>
               </div>
@@ -734,7 +734,7 @@ export default function CalendarPage() {
                 otherwise see a table with a header row and nothing under it, with
                 no clue why. Name what this grid covers instead of just going blank. */}
             {isFiltered && visibleCrops.length === 0 ? (
-              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: '#755942', lineHeight: 1.5 }}>
+              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                 This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
@@ -755,7 +755,7 @@ export default function CalendarPage() {
                 aria-label={localUi('South African planting calendar', 'Ikhalenda lokutshala laseNingizimu Afrika', lang)}
               >
                 <thead>
-                  <tr style={{ background: '#E4DCC6' }}>
+                  <tr style={{ background: 'var(--bg-0)' }}>
                     <th
                       style={{
                         padding: '7px 14px',
@@ -765,13 +765,13 @@ export default function CalendarPage() {
                         fontWeight: 700,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#755942',
-                        borderBottom: '1px solid #E2D8C4',
+                        color: 'var(--text-muted)',
+                        borderBottom: '1px solid var(--border)',
                         whiteSpace: 'nowrap',
                         minWidth: 110,
                         position: 'sticky',
                         left: 0,
-                        background: '#E4DCC6',
+                        background: 'var(--bg-0)',
                         zIndex: 1,
                       }}
                     >
@@ -787,11 +787,11 @@ export default function CalendarPage() {
                           fontSize: 10,
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
-                          color: idx === selectedMonth ? '#1F4D2B' : '#755942',
-                          borderBottom: '1px solid #E2D8C4',
-                          borderLeft: '1px solid #E2D8C420',
+                          color: idx === selectedMonth ? 'var(--color-forest-800)' : 'var(--text-muted)',
+                          borderBottom: '1px solid var(--border)',
+                          borderLeft: '1px solid var(--border)20',
                           background:
-                            idx === selectedMonth ? '#1F4D2B12' : '#E4DCC6',
+                            idx === selectedMonth ? 'var(--brand-soft)' : 'var(--bg-0)',
                           minWidth: 36,
                         }}
                       >
@@ -805,7 +805,7 @@ export default function CalendarPage() {
                     <tr
                       key={crop.name}
                       style={{
-                        background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
+                        background: rowIdx % 2 === 0 ? 'var(--bg-1)' : 'var(--bg-0)',
                       }}
                     >
                       {/* Crop name — sticky left */}
@@ -815,12 +815,12 @@ export default function CalendarPage() {
                           fontFamily: 'var(--font-sans, sans-serif)',
                           fontSize: 13,
                           fontWeight: 500,
-                          color: '#20190F',
-                          borderBottom: '1px solid #E2D8C430',
+                          color: 'var(--text-primary)',
+                          borderBottom: '1px solid var(--border)30',
                           whiteSpace: 'nowrap',
                           position: 'sticky',
                           left: 0,
-                          background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
+                          background: rowIdx % 2 === 0 ? 'var(--bg-1)' : 'var(--bg-0)',
                           zIndex: 1,
                         }}
                       >
@@ -832,8 +832,8 @@ export default function CalendarPage() {
                           style={{
                             padding: '9px 4px',
                             textAlign: 'center',
-                            borderBottom: '1px solid #E2D8C430',
-                            borderLeft: '1px solid #E2D8C420',
+                            borderBottom: '1px solid var(--border)30',
+                            borderLeft: '1px solid var(--border)20',
                             background:
                               monthIdx === selectedMonth
                                 ? '#1F4D2B0A'

@@ -73,7 +73,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
         style={{
           background: '#F7F2E4',
           borderRadius: '20px 20px 0 0',
-          borderTop: '1px solid #E2D8C4',
+          borderTop: '1px solid var(--border)',
           boxShadow: '0 -6px 30px rgba(32,25,15,0.22)',
           maxHeight: '86dvh',
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
@@ -117,7 +117,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
             onClick={onClose}
             aria-label={t('addSheetClose')}
             className="flex items-center justify-center flex-shrink-0 rounded-full active:scale-95 transition-all"
-            style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+            style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
           >
             <X size={19} />
           </button>
@@ -149,7 +149,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
                           minHeight: 56,
                           padding: '8px 12px',
                           borderRadius: 14,
-                          background: '#FFFEFA',
+                          background: 'var(--bg-1)',
                           border: '1px solid #E7DECB',
                           cursor: 'pointer',
                         }}

@@ -46,7 +46,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
     return (
       <div
         className="font-sans rounded-2xl px-3.5 py-2.5"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 12, color: '#755942' }}
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', fontSize: 12, color: 'var(--text-muted)' }}
       >
         Weather unavailable right now — showing site climate data below instead.
       </div>
@@ -57,7 +57,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
     return (
       <div
         className="rounded-2xl px-3.5 py-3 animate-pulse"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', height: 88 }}
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', height: 88 }}
       />
     );
   }
@@ -76,7 +76,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
       {/* Hazard banners — the actual value: buried numbers turned into a plain warning */}
       {frostDays.length > 0 && (
         <HazardBanner
-          icon={<Snowflake size={16} style={{ color: '#235E86' }} />}
+          icon={<Snowflake size={16} style={{ color: 'var(--blue)' }} />}
           bg="rgba(35,94,134,0.10)"
           border="rgba(35,94,134,0.3)"
           color="#235E86"
@@ -85,7 +85,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
       )}
       {heatDays.length > 0 && (
         <HazardBanner
-          icon={<Flame size={16} style={{ color: '#B83A18' }} />}
+          icon={<Flame size={16} style={{ color: 'var(--orange)' }} />}
           bg="rgba(184,58,24,0.10)"
           border="rgba(184,58,24,0.3)"
           color="#B83A18"
@@ -94,7 +94,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
       )}
       {rainDays.length > 0 && (
         <HazardBanner
-          icon={<CloudRain size={16} style={{ color: '#235E86' }} />}
+          icon={<CloudRain size={16} style={{ color: 'var(--blue)' }} />}
           bg="rgba(35,94,134,0.10)"
           border="rgba(35,94,134,0.3)"
           color="#235E86"
@@ -103,8 +103,8 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
       )}
 
       {/* Current conditions + today's irrigation hint */}
-      <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <div className="flex items-center gap-2.5 px-3.5 py-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
+      <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+        <div className="flex items-center gap-2.5 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
           {getElementArt2(currentDesc.key) ? (
             <img
               src={getElementArt2(currentDesc.key)}
@@ -116,22 +116,22 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
             <span style={{ fontSize: compact ? 26 : 30, lineHeight: 1 }}>{currentDesc.icon}</span>
           )}
           <div className="flex-1 min-w-0">
-            <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: '#20190F', lineHeight: 1.1 }}>
+            <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: 'var(--text-primary)', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
             </div>
-            <div className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>{currentDesc.label}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{currentDesc.label}</div>
           </div>
-          <div className="flex items-center gap-1 flex-shrink-0" style={{ color: '#755942' }}>
+          <div className="flex items-center gap-1 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
             <Wind size={14} />
             <span className="font-sans" style={{ fontSize: 12 }}>{Math.round(current.windKph)} km/h</span>
           </div>
         </div>
 
         {today.et0Mm !== null && (
-          <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
-            <Droplets size={14} style={{ color: '#235E86', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
-              Crops will lose about <span className="font-semibold" style={{ color: '#20190F' }}>{today.et0Mm.toFixed(1)}mm</span> of water today — water roughly that much if there's no rain
+          <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
+            <Droplets size={14} style={{ color: 'var(--blue)', flexShrink: 0 }} />
+            <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+              Crops will lose about <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{today.et0Mm.toFixed(1)}mm</span> of water today — water roughly that much if there's no rain
             </span>
           </div>
         )}
@@ -146,15 +146,15 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                 className="flex flex-col items-center flex-shrink-0 px-2 py-2"
                 style={{ minWidth: 58, borderRight: i < stripDays.length - 1 ? '1px solid #F0E9D8' : 'none' }}
               >
-                <div className="font-sans font-medium" style={{ fontSize: 12, color: '#755942' }}>{dayLabel(d.date, i)}</div>
+                <div className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{dayLabel(d.date, i)}</div>
                 {getElementArt2(desc.key) ? (
                   <img src={getElementArt2(desc.key)} alt="" aria-hidden style={{ width: 23, height: 23, margin: '1px 0' }} />
                 ) : (
                   <div style={{ fontSize: 23, lineHeight: 1.2 }}>{desc.icon}</div>
                 )}
-                <div className="font-display" style={{ fontSize: 13, color: '#20190F' }}>
+                <div className="font-display" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                   <span className="font-semibold">{Math.round(d.tMaxC)}°</span>
-                  <span style={{ color: '#755942' }}> {Math.round(d.tMinC)}°</span>
+                  <span style={{ color: 'var(--text-muted)' }}> {Math.round(d.tMinC)}°</span>
                 </div>
                 <div className="font-sans" style={{ fontSize: 12, color: d.precipMm > 0 ? '#235E86' : '#C4BAA4', marginTop: 2 }}>
                   {d.precipMm > 0 ? `${d.precipMm.toFixed(0)}mm` : '—'}

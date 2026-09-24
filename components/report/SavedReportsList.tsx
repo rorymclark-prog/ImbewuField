@@ -50,7 +50,7 @@ interface Props {
 }
 
 const LABEL_STYLE: React.CSSProperties = {
-  font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#755942',
+  font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)',
 };
 
 export default function SavedReportsList({
@@ -83,7 +83,7 @@ export default function SavedReportsList({
       {reports.length === 0 && (
         <div
           className="rounded-xl p-3.5 font-sans"
-          style={{ background: '#FFFEFA', border: '1px dashed #E2D8C4', fontSize: 12.5, lineHeight: 1.55, color: '#5C5040' }}
+          style={{ background: 'var(--bg-1)', border: '1px dashed var(--border)', fontSize: 12.5, lineHeight: 1.55, color: 'var(--text-secondary)' }}
         >
           {canGenerate ? (
             <>
@@ -91,12 +91,12 @@ export default function SavedReportsList({
               <button
                 onClick={() => onOpenReport?.()}
                 className="font-semibold"
-                style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', fontWeight: 600, color: '#1F4D2B', textDecoration: 'underline', cursor: 'pointer' }}
+                style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', fontWeight: 600, color: 'var(--color-forest-800)', textDecoration: 'underline', cursor: 'pointer' }}
               >
                 {t('noSavedReportsGenerateLink')}
               </button>
               {t('noSavedReportsSaveTip')}{' '}
-              <span className="font-semibold" style={{ color: '#20190F' }}>{t('noSavedReportsSaveLink')}</span>{' '}
+              <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{t('noSavedReportsSaveLink')}</span>{' '}
               {t('noSavedReportsSuffix')}
             </>
           ) : (
@@ -122,22 +122,22 @@ export default function SavedReportsList({
                   key={g.siteId}
                   onClick={() => setOpenSiteId(g.siteId)}
                   className="w-full rounded-xl p-3 flex items-center gap-2.5 text-left"
-                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', cursor: 'pointer' }}
+                  style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', cursor: 'pointer' }}
                 >
                   <span
                     className="w-2 h-2 rounded-full flex-shrink-0"
                     style={{ background: g.place ? resolveColor(g.place) : '#B7AB90' }}
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
+                    <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                       {g.place ? g.place.name : t('unsavedSiteGroupLabel')}
                     </div>
-                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
+                    <div className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
                       {count} {count === 1 ? t('savedReportCountSingular') : t('savedReportCountPlural')}
                       {' · '}{new Date(g.reports[0].savedAt).toLocaleDateString()}
                     </div>
                   </div>
-                  <ChevronRight size={16} style={{ color: '#755942', flexShrink: 0 }} />
+                  <ChevronRight size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
                 </button>
               );
             })}
@@ -151,7 +151,7 @@ export default function SavedReportsList({
               <button
                 onClick={() => setOpenSiteId(null)}
                 className="flex items-center gap-1 text-xs font-mono"
-                style={{ background: 'none', border: 'none', padding: 0, color: '#5C5040', cursor: 'pointer' }}
+                style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-secondary)', cursor: 'pointer' }}
               >
                 <ChevronLeft size={13} /> {t('savedSitesBackLink')}
               </button>
@@ -166,14 +166,14 @@ export default function SavedReportsList({
               // lean on, so the row keeps its biome+coordinates the way it always has.
               const known = !!activeGroup?.place;
               return (
-                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                   <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
-                    <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
+                    <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                       {known
                         ? new Date(r.savedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })
                         : r.name}
                     </div>
-                    <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
+                    <div className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
                       {known
                         ? new Date(r.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                         : `${new Date(r.savedAt).toLocaleDateString()} · ${Math.abs(r.location.lat).toFixed(3)}°S ${r.location.lon.toFixed(3)}°E`}
@@ -182,7 +182,7 @@ export default function SavedReportsList({
                   <button
                     onClick={() => onViewReport?.(r)}
                     className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
                   >
                     {t('reportOpenButton')}
                   </button>
@@ -190,7 +190,7 @@ export default function SavedReportsList({
                     onClick={() => onDeleted?.(deleteReport(r.id))}
                     title="Delete"
                     className="px-2 py-1.5 flex-shrink-0 flex items-center"
-                    style={{ color: '#5C5040' }}
+                    style={{ color: 'var(--text-secondary)' }}
                   >
                     <Trash2 size={14} />
                   </button>

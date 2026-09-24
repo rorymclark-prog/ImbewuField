@@ -192,7 +192,7 @@ export default function FieldJournal() {
           exactly when this button matters most. */}
       <div className={workspace.journalAction} style={{
         padding: '2px 0 10px',
-        background: 'linear-gradient(#E4DCC6 78%, rgba(228,220,198,0))',
+        background: 'linear-gradient(var(--bg-0) 78%, rgba(228,220,198,0))',
       }}>
         <button
           type="button"
@@ -223,7 +223,7 @@ export default function FieldJournal() {
           margin: '8px 2px 0', font: '500 12px/1.5 system-ui, sans-serif', color: '#6B6152',
         }}>
           {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
-          <Link href="/records" style={{ color: '#274D2C', fontWeight: 700 }}>
+          <Link href="/records" style={{ color: 'var(--color-forest-800)', fontWeight: 700 }}>
             {t('journalOpenRecords')}
           </Link>
         </p>
@@ -292,13 +292,13 @@ export default function FieldJournal() {
         <div>
           <div style={{
             textAlign: 'center', padding: '30px 22px 26px', borderRadius: 16,
-            background: '#FFFEFA', border: '1px dashed #D9CDB4', marginBottom: 20,
+            background: 'var(--bg-1)', border: '1px dashed #D9CDB4', marginBottom: 20,
           }}>
-            <NotebookPen size={26} style={{ color: '#755942', margin: '0 auto 10px' }} />
-            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 6 }}>
+            <NotebookPen size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} />
+            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
               {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
-            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#755942', maxWidth: 320, margin: '0 auto' }}>
+            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: 'var(--text-muted)', maxWidth: 320, margin: '0 auto' }}>
               {ui('Write down the date, what you did and what happened. One season of notes is what makes next season’s decisions better — here’s what that looks like.', 'Bhala usuku, okwenzile nokwenzekile. Amanothi esizini eyodwa angasiza ekuthatheni izinqumo ezingcono ngesizini elandelayo — nasi isibonelo.')}
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function FieldJournal() {
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
               font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: '#9A6018',
+              textTransform: 'uppercase', color: 'var(--gold)',
             }}>
               <Sparkles size={12} />
               {ui('Example — what an entry looks like', 'Isibonelo — indlela okufakwa ngayo')}
@@ -328,7 +328,7 @@ export default function FieldJournal() {
                     aria-label={`${ui('Example entry (not a real record)', 'Isibonelo, akulona irekhodi langempela')}: ${ex.title}`}
                     style={{
                       position: 'relative', marginBottom: 10, borderRadius: 14, opacity: 0.82,
-                      background: '#FFFEFA', border: '1.5px dashed #D9CDB4',
+                      background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4',
                       borderLeft: `3px dashed ${cat.ink}`, padding: '12px 40px 12px 13px',
                     }}
                   >
@@ -342,7 +342,7 @@ export default function FieldJournal() {
                     </span>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#755942' }}>
+                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
                         {ex.dateLabel}
                       </span>
                       <span style={{
@@ -354,10 +354,10 @@ export default function FieldJournal() {
                       </span>
                     </div>
 
-                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: '#20190F', marginBottom: 4 }}>
+                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
                       {ex.title}
                     </div>
-                    <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: '#4A4034' }}>
+                    <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: 'var(--text-secondary)' }}>
                       {ex.notes}
                     </div>
 
@@ -376,7 +376,7 @@ export default function FieldJournal() {
               onClick={() => setSheet({ open: true, entry: null })}
               style={{
                 width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
-                background: '#FFFEFA', border: '1.5px dashed #274D2C', color: '#274D2C',
+                background: 'var(--bg-1)', border: '1.5px dashed var(--color-forest-800)', color: 'var(--color-forest-800)',
                 font: '700 13.5px/1 system-ui, sans-serif',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
               }}
@@ -394,7 +394,7 @@ export default function FieldJournal() {
             // Tucks under the sticky New-entry bar above (50px button + its padding).
             zIndex: 1,
             padding: '6px 2px 8px', margin: '0 0 6px',
-            background: 'linear-gradient(#E4DCC6 72%, rgba(228,220,198,0))',
+            background: 'linear-gradient(var(--bg-0) 72%, rgba(228,220,198,0))',
             font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.1em',
             textTransform: 'uppercase', color: '#7A6B52',
           }}>
@@ -412,7 +412,7 @@ export default function FieldJournal() {
                   className={motion.entry}
                   style={{
                     position: 'relative', marginBottom: 10, borderRadius: 14,
-                    background: '#FFFEFA', border: '1px solid #E2D8C4',
+                    background: 'var(--bg-1)', border: '1px solid var(--border)',
                     borderLeft: `3px solid ${cat.ink}`, padding: '12px 12px 12px 13px',
                   }}
                 >
@@ -421,7 +421,7 @@ export default function FieldJournal() {
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#755942' }}>
+                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
                           {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
@@ -439,12 +439,12 @@ export default function FieldJournal() {
                       </div>
 
                       {entry.title && (
-                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: '#20190F', marginBottom: entry.notes ? 4 : 0 }}>
+                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
                           {entry.title}
                         </div>
                       )}
                       {entry.notes && (
-                        <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: '#4A4034', whiteSpace: 'pre-wrap' }}>
+                        <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: 'var(--text-secondary)', whiteSpace: 'pre-wrap' }}>
                           {entry.notes}
                         </div>
                       )}
@@ -478,7 +478,7 @@ export default function FieldJournal() {
                       aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
-                        background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: '#1F4D2B',
+                        background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: 'var(--color-forest-800)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
@@ -511,9 +511,9 @@ export default function FieldJournal() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
-      <div style={{ font: '600 21px/1 Newsreader, Georgia, serif', color: '#1F4D2B' }}>{value}</div>
-      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: '#755942', marginTop: 4 }}>{label}</div>
+    <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
+      <div style={{ font: '600 21px/1 Newsreader, Georgia, serif', color: 'var(--color-forest-800)' }}>{value}</div>
+      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
     </div>
   );
 }
@@ -534,7 +534,7 @@ function Pill({ children }: { children: React.ReactNode }) {
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 8,
       background: 'rgba(92,80,64,0.07)', border: '1px solid #E7DFCC',
-      font: '500 11.5px/1 system-ui, sans-serif', color: '#5C5040',
+      font: '500 11.5px/1 system-ui, sans-serif', color: 'var(--text-secondary)',
     }}>
       {children}
     </span>

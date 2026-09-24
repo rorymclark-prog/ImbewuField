@@ -49,7 +49,7 @@ export default function TourDiscoveryProvider({ children }: { children: React.Re
         <h2 id="tour-menu-tip-title" style={{ fontSize: 25, fontWeight: 700 }}>Your tour is always here</h2>
         <p style={{ margin: '16px 0', lineHeight: 1.6 }}>The garden photo stays on Home. You can also open <strong>Take a tour</strong> from this menu whenever you need it.</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-          <button autoFocus type="button" onClick={() => dismiss(true)} style={{ minHeight: 44, padding: '10px 18px', borderRadius: 99, background: 'var(--color-harvest)', color: '#20190f', fontWeight: 700 }}>Show me the menu</button>
+          <button autoFocus type="button" onClick={() => dismiss(true)} style={{ minHeight: 44, padding: '10px 18px', borderRadius: 99, background: 'var(--color-harvest)', color: 'var(--text-primary)', fontWeight: 700 }}>Show me the menu</button>
           <button type="button" onClick={() => dismiss()} style={{ minHeight: 44, padding: '10px 18px' }}>Got it</button>
         </div>
       </div>

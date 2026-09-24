@@ -45,7 +45,7 @@ function Avatar({ person }: { person: Profile }) {
           borderRadius: '50%',
           objectFit: 'cover',
           flexShrink: 0,
-          border: '1.5px solid #E2D8C4',
+          border: '1.5px solid var(--border)',
         }}
       />
     );
@@ -106,8 +106,8 @@ function SkeletonCard() {
         gap: 12,
         padding: '12px 14px',
         borderRadius: 12,
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
       }}
     >
       <div
@@ -161,7 +161,7 @@ function PersonCard({
         width: '100%',
         padding: '12px 14px',
         borderRadius: 12,
-        background: '#FFFEFA',
+        background: 'var(--bg-1)',
         border: `1px solid ${isCurrentUser ? 'rgba(31,77,43,0.3)' : '#E2D8C4'}`,
         cursor: isCurrentUser ? 'pointer' : 'default',
         transition: 'border-color 0.15s',
@@ -179,7 +179,7 @@ function PersonCard({
               fontFamily: 'var(--font-display)',
               fontWeight: 700,
               fontSize: 13.5,
-              color: '#20190F',
+              color: 'var(--text-primary)',
               lineHeight: 1.2,
             }}
           >
@@ -209,7 +209,7 @@ function PersonCard({
           {person.showOnMap && (
             <MapPin
               size={12}
-              style={{ color: '#1F4D2B', flexShrink: 0 }}
+              style={{ color: 'var(--color-forest-800)', flexShrink: 0 }}
               aria-label="Visible on map"
             />
           )}
@@ -220,7 +220,7 @@ function PersonCard({
           <p
             style={{
               fontSize: 12,
-              color: '#755942',
+              color: 'var(--text-muted)',
               margin: '4px 0 0',
               lineHeight: 1.4,
               overflow: 'hidden',
@@ -248,8 +248,8 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(192,83,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <MapPin size={22} style={{ color: '#C0531E' }} />
         </div>
-        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: '#20190F' }}>People unavailable</p>
-        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: '#755942' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>People unavailable</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
       </div>
     );
   }
@@ -274,18 +274,18 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             height: 48,
             borderRadius: 14,
             background: 'rgba(92,80,64,0.08)',
-            border: '1px solid #E2D8C4',
+            border: '1px solid var(--border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <User size={24} style={{ color: '#5C5040' }} />
+          <User size={24} style={{ color: 'var(--text-secondary)' }} />
         </div>
         <p
           style={{
             fontSize: 13,
-            color: '#5C5040',
+            color: 'var(--text-secondary)',
             lineHeight: 1.5,
             maxWidth: 260,
             margin: 0,
@@ -342,7 +342,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
               fontFamily: 'var(--font-display)',
               fontWeight: 700,
               fontSize: 13.5,
-              color: '#1F4D2B',
+              color: 'var(--color-forest-800)',
               lineHeight: 1.2,
             }}
           >
@@ -351,7 +351,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
           <div
             style={{
               fontSize: 12,
-              color: '#5C5040',
+              color: 'var(--text-secondary)',
               marginTop: 2,
               fontFamily: 'var(--font-sans)',
             }}
@@ -391,7 +391,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.12em',
-            color: '#5C5040',
+            color: 'var(--text-secondary)',
           }}
         >
           Project team
@@ -401,7 +401,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             style={{
               fontSize: 12,
               fontFamily: 'var(--font-sans)',
-              color: '#755942',
+              color: 'var(--text-muted)',
             }}
           >
             {people.length} {people.length === 1 ? 'member' : 'members'}

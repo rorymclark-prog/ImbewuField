@@ -149,12 +149,12 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
   { label: '30 days', days: 30 },
 ];
 
-const CARD = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
-const FIELD = { background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' };
+const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
+const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>{children}</div>
+    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-secondary)' }}>{children}</div>
   );
 }
 
@@ -172,17 +172,17 @@ function Disclosure({
         className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left"
         style={{ background: 'none', border: 'none', cursor: 'pointer' }}
       >
-        <span style={{ color: '#1F4D2B', display: 'flex' }}>{icon}</span>
+        <span style={{ color: 'var(--color-forest-800)', display: 'flex' }}>{icon}</span>
         <span className="flex-1 min-w-0">
-          <span className="block font-display text-sm font-semibold" style={{ color: '#20190F' }}>{title}</span>
-          <span className="block text-xs font-sans" style={{ color: '#755942' }}>{hint}</span>
+          <span className="block font-display text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{title}</span>
+          <span className="block text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{hint}</span>
         </span>
         <ChevronDown
           size={16}
-          style={{ color: '#755942', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+          style={{ color: 'var(--text-muted)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
         />
       </button>
-      {open && <div className="px-3 pb-3 space-y-2.5" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 12 }}>{children}</div>}
+      {open && <div className="px-3 pb-3 space-y-2.5" style={{ borderTop: '1px solid var(--border)', paddingTop: 12 }}>{children}</div>}
     </div>
   );
 }
@@ -690,19 +690,19 @@ export default function InvoicePage() {
   }
 
   return (
-    <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* overflow-x-auto, like the crop-plan header: seven controls (Back, home,
           title, Learn, Share PDF, Print, Settings) do not fit a 375px phone and
           never did — 90px of this bar, Settings included, was simply off-screen
           and unreachable before the menu button was added here. Scrolling is not
           the prettiest answer, but a control a farmer cannot reach is worse than
           one they have to swipe to. */}
-      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/records?tab=sold" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
         <button
@@ -738,23 +738,23 @@ export default function InvoicePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ ...CARD, color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ ...CARD, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <FilePlus2 size={14} />{ui('New invoice', 'I-invoyisi entsha')}
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
-                <span className="text-xs font-sans" style={{ color: '#755942' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
+                <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
               )}
             </div>
 
             <section className="rounded-2xl p-4 space-y-3" style={CARD} aria-label={ui('Invoice and payment details', 'Imininingwane ye-invoyisi nenkokhelo')}>
               <div>
-                <h1 className="font-display text-xl font-semibold" style={{ color: '#1F4D2B' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
-                <p className="text-sm mt-1" style={{ color: '#5C5040' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
+                <h1 className="font-display text-xl font-semibold" style={{ color: 'var(--color-forest-800)' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
               </div>
               <label className="block">
                 <FieldLabel>{ui('What are you recording?', 'Urekhoda ini?')}</FieldLabel>
@@ -790,7 +790,7 @@ export default function InvoicePage() {
                       ))}
                     </select>
                   </label>
-                  <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
       {salesError && <p role="alert" className="text-sm" style={{ color: '#A02B28' }}>{ui(salesError)}</p>}
                 </div>
               )}
@@ -831,28 +831,28 @@ export default function InvoicePage() {
                   </label>
                 </div>
               )}
-              <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
             </section>
 
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
-                <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: '#5C5040', background: '#F7F2E9', borderBottom: '1px solid #E2D8C4' }}>
+                <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
                   {ui('Marking an invoice paid adds its kg crop lines to My Records automatically.')}
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}
                 </div>
                 {saved.length === 0 ? (
-                  <div className="px-3 py-3 text-xs font-sans" style={{ color: '#755942' }}>
+                  <div className="px-3 py-3 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                     {ui('No saved invoices yet — save your first invoice here.')}
                   </div>
                 ) : saved.map((inv) => (
-                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
+                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div className="flex items-center gap-2">
                       <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
-                        <div className="font-display text-sm" style={{ color: '#20190F' }}>
+                        <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
                           #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                         </div>
-                        <div className="text-xs font-sans" style={{ color: '#755942' }}>
+                        <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                           {new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       </button>
@@ -862,8 +862,8 @@ export default function InvoicePage() {
                         aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
                         className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                         style={inv.status === 'paid'
-                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
-                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#7A4408', cursor: 'pointer' }}>
+                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
+                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
                         {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
                       </button>
                       {/* Two taps to destroy accounting history. The first tap used to be enough. */}
@@ -875,7 +875,7 @@ export default function InvoicePage() {
                         </button>
                       ) : (
                         <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', opacity: 0.5 }}>
                           <X size={15} />
                         </button>
                       ))}
@@ -888,7 +888,7 @@ export default function InvoicePage() {
                             className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                             style={inv.paymentMethod === m
                               ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                              : { background: '#FFFEFA', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                              : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                             {paymentLabel(m)}
                           </button>
                         ))}
@@ -918,13 +918,13 @@ export default function InvoicePage() {
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
-                <div className="text-xs font-sans mt-1" style={{ color: '#755942' }}>
+                <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
                     : ui('Leave empty to invoice under your own name. Add a logo in Account.')}
                 </div>
               </label>
-              <p className="text-xs font-sans leading-relaxed" style={{ color: '#755942' }}>
+              <p className="text-xs font-sans leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                 {ui('Your name and phone come from your account. Everything else here is added to the letterhead on every invoice, and stays on this device.')}
               </p>
               <label className="block">
@@ -1054,7 +1054,7 @@ export default function InvoicePage() {
                     </div>
                     <button onClick={() => removeItem(it.id)} aria-label={ui('Remove item')}
                       className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040' }}>
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)' }}>
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -1075,12 +1075,12 @@ export default function InvoicePage() {
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
                     <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
-                      <span className="text-sm font-display" style={{ color: '#755942' }}>R</span>
+                      <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
                         className="w-full text-sm font-display outline-none tabular-nums"
-                        style={{ background: 'transparent', border: 'none', color: '#20190F' }} />
-                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: '#755942' }}>{ui('each')}</span>
+                        style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }} />
+                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
                   </div>
                   {(() => {
@@ -1094,13 +1094,13 @@ export default function InvoicePage() {
                       ? `direct/farm gate about R${guide.retailPerKg}/kg`
                       : `shops/bulk about R${guide.wholesalePerKg}/kg`;
                     return (
-                      <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: '#F7F2E9', color: '#5C5040' }}>
+                      <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', color: 'var(--text-secondary)' }}>
                         {it.priceFromGuide && (
-                          <div className="font-semibold mb-0.5" style={{ color: '#1F4D2B' }}>
+                          <div className="font-semibold mb-0.5" style={{ color: 'var(--color-forest-800)' }}>
                             {ui('Suggested price filled in — change it if you agreed something else.')}
                           </div>
                         )}
-                        <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
+                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
                         {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide.'}
                       </div>
                     );
@@ -1110,7 +1110,7 @@ export default function InvoicePage() {
 
               <button onClick={addItem}
                 className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-display font-semibold"
-                style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Plus size={14} />{ui('Add line item')}
               </button>
             </fieldset>
@@ -1126,7 +1126,7 @@ export default function InvoicePage() {
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
                         ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                        : { background: '#fff', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                        : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
                   ))}
@@ -1187,7 +1187,7 @@ export default function InvoicePage() {
             )}
 
             {!valid && (
-              <p className="text-center text-xs font-sans" style={{ color: '#755942' }}>
+              <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                 {entryError ? ui(entryError) : (!paymentStatus ? ui('Choose paid or unpaid to continue.') : recordBasis === '' ? ui('Confirm whether this sale is already recorded.') : recordBasis === 'existing' && !sourceSaleId ? ui('Select the existing sale to continue.') : ui('Add a buyer and at least one item to save, print or share.'))}
               </p>
             )}

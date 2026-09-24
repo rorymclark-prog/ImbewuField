@@ -32,7 +32,7 @@ import { BreakMark } from '@/components/ChartBreakMark';
 import { randLabel, randTick } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
 
-const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
+const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
 const INK = '#20190F';
 const MUTED = '#5C5040';
