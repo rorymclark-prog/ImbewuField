@@ -50,7 +50,7 @@ The local delivery pack is `Downloads/imbewu-studies-2026-09-20/intro-production
 
 The 22 isiZulu stills in `public/course-decks/intro-permaculture/zu/` are an
 **unreviewed AI draft**. They were rendered from the source-paired isiZulu script
-at SHA-256 `ce4186135f0e59a2fa5a38e0f1be04cdd8e324f1b4743a7e3d1cee4dfb0c4b5f`.
+at SHA-256 `faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667`.
 The first-language and local farming review gate in
 `docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md` still applies.
 

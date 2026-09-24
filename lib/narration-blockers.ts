@@ -49,7 +49,7 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
   'intro-permaculture.zu': {
     reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
     reviewRecord: 'docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md',
-    scriptSha256: 'ce4186135f0e59a2fa5a38e0f1be04cdd8e324f1b4743a7e3d1cee4dfb0c4b5f',
+    scriptSha256: 'faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667',
   },
 };
 

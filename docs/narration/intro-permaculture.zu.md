@@ -1,7 +1,3 @@
-# Isingeniso Se-Permaculture (Introduction to Permaculture) — Narration Script (isiZulu)
-
-UNREVIEWED isiZulu DRAFT. First-language isiZulu and local farming review are pending. Human listening and pronunciation review of the generated recordings are also pending. Slides 1–22 follow the current source-paired proposals; this status is not spoken.
-
 **Ikhasi 1 — Isingeniso se-Permaculture (Slide 1 — Introduction to Permaculture)**
 
 Ngaphambi kokumba noma yini, kuyasiza ukwazi ukuthi izinqumo zenziwa kanjani. Le module iyisisekelo sakho konke okunye okukulesi sifundo: ama-ethics amathathu, ama-design principles, nendlela elula yokuhlela umhlaba wakho. Akukho kulokhu okudinga imali. Konke kushintsha ukuthi ubeka kuphi izinto nokuthi uhamba ibanga elingakanani nsuku zonke.

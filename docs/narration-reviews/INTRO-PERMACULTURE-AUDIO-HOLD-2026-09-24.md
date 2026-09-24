@@ -12,7 +12,7 @@ The current canonical isiZulu narration was reconciled slide-by-slide with the c
 
 | Input | SHA-256 | Purpose |
 |---|---|---|
-| `docs/narration/intro-permaculture.zu.md` | `ce4186135f0e59a2fa5a38e0f1be04cdd8e324f1b4743a7e3d1cee4dfb0c4b5f` | Exact 22-slide isiZulu narration used for export and audio |
+| `docs/narration/intro-permaculture.zu.md` | `faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667` | Exact 22-slide isiZulu narration; the unspoken review preamble was removed after export so the player script contains only slides |
 | `docs/narration/intro-permaculture.en.md` | `312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d` | Current English narration source |
 | `lib/course-modules.ts` | `c8e5de91706d41d91523e9889b858d7166037008aa8e3ffbbd5a2da41f622eda` | Current source lesson bodies and quiz data |
 | L1 review draft `docs/narration-reviews/intro-l1.zu.full-draft.md` | `1aebe585a2b6f03affedb22521dbce43c06052038d09de2974ba4419295424aa` | Paired source reconciliation, slides 1–8 |
@@ -55,4 +55,4 @@ The AI-only source-alignment audit at `/tmp/imbewufield-intro-zu-agy-source-qa-2
 
 ## Release warning
 
-**Fluent review pending.** This report does not certify translation or pronunciation. It also does not certify local farming suitability or human listening quality. Keep the published batch marked unreviewed until a fluent isiZulu speaker and local farming reviewer provide a named, dated accept/revise/hold decision and the exact script hash they reviewed. Any spoken script edit requires new hashes and rerecording of affected clips before an updated batch is published.
+**fluent review pending.** This report does not certify translation or pronunciation. It also does not certify local farming suitability or human listening quality. Keep the published batch marked unreviewed until a fluent isiZulu speaker and local farming reviewer provide a named, dated accept/revise/hold decision and the exact script hash they reviewed. Any spoken script edit requires new hashes and rerecording of affected clips before an updated batch is published.
