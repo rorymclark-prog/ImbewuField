@@ -1,0 +1,137 @@
+{
+  "seconds": 17.928,
+  "bytes": 107568,
+  "audioSha256": "041d50e56c585f9cd1a9f83723f52d40251c551064e6aea862e4f1a7af7b5b6e",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Isiphambukisi",
+      "offset": 1460410,
+      "duration": 9801250
+    },
+    {
+      "text": "samanzi",
+      "offset": 11687500,
+      "duration": 6818330
+    },
+    {
+      "text": "okuqala",
+      "offset": 18789580,
+      "duration": 6676250
+    },
+    {
+      "text": "sigcina",
+      "offset": 25465830,
+      "duration": 5397910
+    },
+    {
+      "text": "amanye",
+      "offset": 31289580,
+      "duration": 4687500
+    },
+    {
+      "text": "amanzi",
+      "offset": 36403330,
+      "duration": 5681660
+    },
+    {
+      "text": "okuqala",
+      "offset": 42369160,
+      "duration": 6676250
+    },
+    {
+      "text": "ageleza",
+      "offset": 49755830,
+      "duration": 7244160
+    },
+    {
+      "text": "ophahleni",
+      "offset": 57284160,
+      "duration": 7244160
+    },
+    {
+      "text": "engangeni",
+      "offset": 64812500,
+      "duration": 6392080
+    },
+    {
+      "text": "ethangini",
+      "offset": 71488750,
+      "duration": 7670410
+    },
+    {
+      "text": "Silungiselele",
+      "offset": 89454580,
+      "duration": 9801250
+    },
+    {
+      "text": "futhi",
+      "offset": 99681660,
+      "duration": 4261250
+    },
+    {
+      "text": "usinakekele",
+      "offset": 104227080,
+      "duration": 9375000
+    },
+    {
+      "text": "ngokophahla",
+      "offset": 113602080,
+      "duration": 8096660
+    },
+    {
+      "text": "lwakho",
+      "offset": 121698750,
+      "duration": 4971660
+    },
+    {
+      "text": "amanzi",
+      "offset": 128943330,
+      "duration": 6534160
+    },
+    {
+      "text": "alandelayo",
+      "offset": 135761250,
+      "duration": 7670410
+    },
+    {
+      "text": "nawo",
+      "offset": 143431660,
+      "duration": 4261250
+    },
+    {
+      "text": "asadinga",
+      "offset": 148119160,
+      "duration": 7244160
+    },
+    {
+      "text": "ukuhlolwa",
+      "offset": 155647910,
+      "duration": 6391660
+    },
+    {
+      "text": "kokuphepha",
+      "offset": 162039580,
+      "duration": 7244160
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l3",
+  "language": "zu",
+  "slide": 16,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-16.txt",
+  "sourceSha256": "5c603343a454e162ded27035bb6e819456fade3cdf2c4711ea0a50a707433faf",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:48:19.732344+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

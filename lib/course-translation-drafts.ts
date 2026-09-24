@@ -444,6 +444,40 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
       }
     ]
   },
+  "water-harvesting-l4": {
+    "title": "Amanzi Asetshenzisiwe Asekhaya: Hlola Ngaphambi Kokuphinda Uwasebenzise",
+    "body": "Amanzi asetshenzisiwe asekhaya angaqukatha amagciwane, usawoti, imikhiqizo yokuhlanza nezinye izinto. Imihlahlandlela ayichazi yonke imithombo ngendlela efanayo. Imihlahlandlela yaseNingizimu Afrika iyahluka ngamanzi asekhishini nangawelondolo.\n\nUngafaki amanzi asendlini yangasese, amanzi avela kumanabukeni, ekugezeni umuntu ogulayo noma ekugezeni izilwane ohlelweni lokuphinda usebenzise amanzi. Ungawasebenzisi amanzi anamakhemikhali ayingozi.\n\nNgaphambi kokuphinda usebenzise noma yimaphi amanzi, cela umasipala nomeluleki oqeqeshiwe wokukhucululwa kwendle bahlole umthombo oqondile, izinsiza zamanzi nezokukhucululwa kwendle zasekhaya, ukusetshenziswa okuhlosiwe nendawo. Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi.\n\nIsithombe esijwayelekile asiwona umklamo wepulazi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile. Gcina amanzi kude namapayipi amanzi okuphuza futhi uvimbele ukuthintana kwawo nabantu noma izilwane. Ungawafafazi, ungawavumeli aqoqane noma agelezele emgwaqweni, emseleni noma emfuleni.\n\nUma uhlelo lokuphinda lusebenzise amanzi selusebenza kodwa amanzi enuka kabi, eqoqana noma elimaza izitshalo, yeka ukuwasebenzisa bese ucela iseluleko sendawo esiqeqeshiwe.",
+    "keyPoints": [
+      "Imithombo yamanzi nemihlahlandlela yokuphinda iwasebenzise ingahluka.",
+      "Ngaphambi kokuphinda usebenzise amanzi, hlola umthombo, izinsiza zasekhaya, ukusetshenziswa okuhlosiwe nendawo nochwepheshe bendawo.",
+      "Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile.",
+      "Vimbela ukuthintana, ukufafaza, ukuqoqana, ukugeleza kwamanzi angcolile nokuxhuma kumapayipi amanzi okuphuza."
+    ],
+    "quiz": [
+      {
+        "q": "Yini okufanele yenziwe ngaphambi kokuphinda kusetshenziswe noma yimaphi amanzi okugeza asekhaya?",
+        "options": [
+          "Awahambise ngaphansi kwe-mulch azungeze isihlahla",
+          "Cela umasipala nomeluleki oqeqeshiwe bahlole umthombo, izinsiza zasekhaya, ukusetshenziswa okuhlosiwe nendawo",
+          "Asetshenziswe uma ebonakala ecacile",
+          "Asetshenziswe ezitshalweni ezingadliwa ziluhlaza kuphela"
+        ],
+        "correct": 1,
+        "rationale": "Imihlahlandlela iyahluka ngeminye imithombo yamanzi nangezinsiza ezidingekayo ukuze aphinde asetshenziswe. Kudingeka uchwepheshe wendawo ahlole ngaphambi kokunquma ukuthi umthombo othile nokusetshenziswa kwawo kuyafaneleka noma kuvunyelwe yini."
+      },
+      {
+        "q": "Kungani kufanele kuhlolwe umthombo oqondile wamanzi nemikhiqizo yokuhlanza ngaphambi kokucabanga ukuwasebenzisa futhi?",
+        "options": [
+          "Yonke imikhiqizo yokuhlanza iphephile uma amanzi exutshwa namanye",
+          "Ukwakheka kwamanzi nemiphumela yemikhiqizo kuyahlukahluka, ngakho kudingeka kuhlolwe umthombo nemikhiqizo esetshenzisiwe",
+          "Amanzi angaphinda asetshenziswe uma enganuki",
+          "I-mulch isusa zonke izinto eziyingozi"
+        ],
+        "correct": 1,
+        "rationale": "Amanzi asetshenzisiwe angaqukatha izinhlobo ezahlukene zamagciwane, usawoti namakhemikhali. Ukubukeka ecacile, ukungabi nephunga noma i-mulch akufakazeli ukuthi aphephile noma ayafaneleka."
+      }
+    ]
+  },
   "soil-health-l1": {
     "title": "Ukuqonda Umhlabathi Wakho: Isisekelo Sako Konke",
     "body": "Umhlabathi unezinhlobo eziningi zezinto eziphilayo. Amagciwane nesikhunta kusiza ukubolisa izinto eziphilayo nokujikeleza kwezakhamzimba.\n\nEzinye izinhlobo zesikhunta zisiza izimpande zimunce izakhamzimba. Imigudu yezibungu ingasiza amanzi nomoya kungene emhlabathini.\n\nBheka izimpande, ukwakheka komhlabathi nokuhamba kwamanzi, kanye nezinto eziphilayo ozibonayo emhlabathini.\n\nFaka umhlabathi namanzi embizeni yengilazi ecacile, ufake nenani elincane le-detergent efanele yokuhlakaza izinhlayiya zomhlabathi. Yivale uyinyakazise, bese uyishiya inganyakazi.\n\nIsihlabathi sihlala phansi kuqala. I-silt ilandela; ubumba lungahlala luntanta isikhathi eside.\n\nLolu wuvivinyo lokufunda olulinganiselwe. Izigaxa nomhlabathi wobumba ongakahlali phansi kungakudukisa. Uma kudingeka ukwazi ukuthungwa komhlabathi ngokunembile, sebenzisa ilabhorethri yomhlabathi.\n\nUngqimba olujiyile lwesihlabathi ngaphansi kwamanzi afiphele alukakutsheli izilinganiso zokugcina. Ezinye izinhlayiya ezincane kungenzeka zisantanta.\n\nQhathanisa izingqimba esezihlale phansi, futhi uzwe nokuthungwa komhlabathi osensimini.\n\nBhala lokho okubonayo nalokho okungakaqinisekiswa. Ungancomi indlela yokunisela noma yokwelapha umhlabathi ngebhodlela elilodwa kuphela.\n\nUkucinana komhlabathi, ukungaphumi kahle kwamanzi nokuncipha kwezinto eziphilayo kunganciphisa ukukhula kwezimpande nokuphila komhlabathi.\n\nUmbala ophaphathekile noma izibungu ezimbalwa akufakazeli ukuthi amakhemikhali abulale umhlabathi. Umsebenzi wezibungu nawo uyashintsha kuye ngomswakama nenkathi yonyaka.\n\nBheka amaphethini ezindaweni ezahlukene zensimu. Hlola umlando wokunakekela, ukuphuma kwamanzi nokukhula kwezitshalo ngaphambi kokukhetha ikhambi.",

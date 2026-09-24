@@ -166,39 +166,35 @@ A basic filter alone is not a drinking-water guarantee. Water used on food crops
 
 ---
 
-**Slide 19 — Greywater Is Used Washwater**
+**Slide 19 — Used Water Varies by Source**
 
-Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.
+Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.
 
-Do not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.
-
----
-
-**Slide 20 — Keep Greywater Away from People and Food**
-
-Where local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.
-
-Do not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.
-
-Use it promptly. Stored greywater needs specialist advice and appropriate treatment.
+South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.
 
 ---
 
-**Slide 21 — Watch: Greywater Under Mulch**
+**Slide 20 — Get Local Advice Before Any Reuse**
 
-Where permitted, direct suitable greywater below mulch around non-food planting.
+Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.
 
-Mulch does not disinfect water. Keep it away from people and food.
+If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater.
 
 ---
 
-**Slide 22 — Use Greywater Only Where It Is Safe**
+**Slide 21 — A Picture Is Not a Farm Design**
 
-Keep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.
+This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.
 
-Check municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.
+Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater.
 
-If the water smells bad, pools or harms plants, stop using it and seek advice.
+---
+
+**Slide 22 — Prevent Contact and Pollution**
+
+Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.
+
+If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.
 
 ---
 

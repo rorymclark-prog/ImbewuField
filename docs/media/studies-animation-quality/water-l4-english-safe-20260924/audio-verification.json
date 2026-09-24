@@ -1,0 +1,67 @@
+{
+  "generatedAt": "2026-09-24",
+  "slides": [
+    {
+      "slide": 19,
+      "voice": "en-ZA-LukeNeural",
+      "rate": "-12%",
+      "sourceSha256": "dfcf2e51a56dcfa2ab8408a9b832eb8568640e68d42b10a12ff6b63c610648ff",
+      "audioSha256": "148614cc96e25473a7027a4796d9ac210c87cbf3eb3cd71e30ca0c83fc85ae0a",
+      "bytes": 148896,
+      "seconds": 24.816,
+      "wordBoundaryTextMatch": true,
+      "finalWordBoundaryWithinAudio": true,
+      "fullDecode": "pass",
+      "humanListeningReview": false
+    },
+    {
+      "slide": 20,
+      "voice": "en-ZA-LukeNeural",
+      "rate": "-12%",
+      "sourceSha256": "54a40a8a21d33c7cdf603c308bb7708a6c2bcfc955abfb3d2cac7e5e7c0aa592",
+      "audioSha256": "d5340395c47a09c3fc068a7e56f9a50793eaf49d04f8fba903e3af38ad62dc51",
+      "bytes": 122112,
+      "seconds": 20.352,
+      "wordBoundaryTextMatch": true,
+      "finalWordBoundaryWithinAudio": true,
+      "fullDecode": "pass",
+      "humanListeningReview": false
+    },
+    {
+      "slide": 21,
+      "voice": "en-ZA-LukeNeural",
+      "rate": "-12%",
+      "sourceSha256": "5bff22cb734a063620a271c762a5c16d9894a96a2b48fd4750c4187998a712f3",
+      "audioSha256": "79bf4f06100d1b78aed3c22fddd78d409672580aa9ffe66cd1efd8e994ae66e7",
+      "bytes": 98496,
+      "seconds": 16.416,
+      "wordBoundaryTextMatch": true,
+      "finalWordBoundaryWithinAudio": true,
+      "fullDecode": "pass",
+      "humanListeningReview": false
+    },
+    {
+      "slide": 22,
+      "voice": "en-ZA-LukeNeural",
+      "rate": "-12%",
+      "sourceSha256": "76deab9e29ab2fb77833f4904ec9bd7a44f58d1a0ba0c7e8295a2f84290ee57e",
+      "audioSha256": "ede0efb9054542302275db0b3ca8d82adc3a2e5fbd49e9e8d35ec5e9f3fe3c5b",
+      "bytes": 128880,
+      "seconds": 21.48,
+      "wordBoundaryTextMatch": true,
+      "finalWordBoundaryWithinAudio": true,
+      "fullDecode": "pass",
+      "humanListeningReview": false
+    }
+  ],
+  "fullTrack": {
+    "voice": "en-ZA-LukeNeural",
+    "rate": "-12%",
+    "seconds": 465.12,
+    "bytes": 2790956,
+    "sha256": "75687000956b7f68aaa4c2809724181acf2e53deb3c78fa521b7a58bc9deedab",
+    "orderedSlides": 24,
+    "allClipsDecode": "pass",
+    "humanListeningReview": false
+  }
+}

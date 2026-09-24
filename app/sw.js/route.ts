@@ -614,6 +614,50 @@ async function migrateGreywaterTeachingMedia() {
   await cache.put(marker, new Response('Greywater source and planting labels'));
 }
 
+// Greywater L4 now teaches source and exposure decisions instead of a generic reuse route.
+// Retire only the stale English cards and speech so a saved pack cannot show the old recipe.
+async function migrateWaterL4DecisionOnly() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/en/.l4-greywater-safety-20260924';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/water-harvesting/en/slide-19.jpg',
+    '/course-decks/water-harvesting/en/slide-20.jpg',
+    '/course-decks/water-harvesting/en/slide-21.jpg',
+    '/course-decks/water-harvesting/en/slide-22.jpg',
+    '/course-audio/water-harvesting/en/slide-19.mp3',
+    '/course-audio/water-harvesting/en/slide-20.mp3',
+    '/course-audio/water-harvesting/en/slide-21.mp3',
+    '/course-audio/water-harvesting/en/slide-22.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water L4 source and exposure safety lesson'));
+}
+
+// The corrected greywater lesson suppresses an infographic that pictured a direct washwater pipe
+// to tree roots. The owner-authorized isiZulu draft also replaces unpublished ZU media. Clear only
+// those Water Harvesting assets once; learners can download the new labelled draft again.
+async function migrateWaterHarvestingZuluDraft() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.zulu-review-draft-20260924';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set();
+  obsolete.add('/course-images/water-harvesting/water-harvesting-l4.jpg');
+  for (let slide = 1; slide <= 24; slide += 1) {
+    const number = String(slide).padStart(2, '0');
+    obsolete.add('/course-decks/water-harvesting/zu/slide-' + number + '.jpg');
+    obsolete.add('/course-audio/water-harvesting/zu/slide-' + number + '.mp3');
+  }
+  obsolete.add('/course-audio/water-harvesting/zu/full.mp3');
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water Harvesting isiZulu review draft assets'));
+}
+
 // The windbreak now explains through-flow, with matching speech. Keep other
 // saved lessons and never fetch a replacement without the learner choosing it.
 async function migrateWindbreakMedia() {
@@ -1081,7 +1125,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

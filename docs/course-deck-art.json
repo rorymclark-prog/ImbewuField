@@ -139,11 +139,6 @@
       "layout": "scene",
       "purpose": "protected-tank"
     },
-    "19": {
-      "path": "public/course-images/water-harvesting/water-harvesting-l4.jpg",
-      "layout": "diagram",
-      "purpose": "authored lesson illustration"
-    },
     "4": {
       "path": "public/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
       "layout": "scene",
@@ -161,11 +156,6 @@
     },
     "12": {
       "path": "public/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg",
-      "layout": "scene",
-      "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
-    },
-    "21": {
-      "path": "public/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg",
       "layout": "scene",
       "reason": "Complete animation poster already contains its own heading and caption; avoid shrinking it inside duplicate headings."
     },

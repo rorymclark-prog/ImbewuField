@@ -1,19 +1,15 @@
 # Water Harvesting — isiZulu review handoff
 
-**Status: unreviewed AI drafts; no learner publication or recording.**
+**Status: unreviewed isiZulu drafts; owner-authorized for learner display with persistent draft labels. Language, local farming, regulatory and sanitation review remain open.**
 
-The first three lessons have complete proposed isiZulu lesson bodies, key
-points, both quiz questions with every option and rationale, and the narrated
-slides assigned to each lesson. Current English lesson and narration are the
-controlling meanings. The older isiZulu narration contains stale quantities
-and safety claims; it is reference material only.
+All four lessons now have proposed isiZulu learner bodies, key points, both quiz questions with every option and rationale, and aligned narration. Current English lesson and narration are the controlling meanings. The older isiZulu narration contained stale quantities and safety claims; it has been replaced by source-matched draft narration.
 
 | Lesson | Full review draft | Slides | Main meaning and safety check |
 | --- | --- | ---: | --- |
 | L1 — swales | [L1](water-harvesting-l1.zu.full-draft.md) | 4–8 | Level contour and deliberately graded drainage are different; soil suitability, safe overflow and receiver require a site assessment. No fixed slope or soak-test threshold. |
 | L2 — earthworks and dams | [L2](water-harvesting-l2.zu.full-draft.md) | 9–13 | Dam, spillway and downstream risks need qualified design and applicable authorization; trees do not belong on an earth dam. |
 | L3 — roof catchment | [L3](water-harvesting-l3.zu.full-draft.md) | 14–18 | Roof suitability, losses, demand and dry spells govern storage; supplier-sized first flush and clear water do not establish drinking safety. |
-| L4 — greywater | [comparison and hold](water-harvesting-l4.zu.review.md) | 19–21 | No full draft yet. Conflicting national/local guidance, intended food-crop use, and sanitation rules need qualified local reconciliation before a learner script. |
+| L4 — used household water | [full draft](water-harvesting-l4.zu.full-draft.md) and [older comparison](water-harvesting-l4.zu.review.md) | 19–22 | Risk-recognition draft only: source composition and guidance differ; local adviser and municipality must check source, service status, intended use and site. If advice is unclear, do not reuse. No recipe or blanket permission. |
 
 ## Reviewer return
 
