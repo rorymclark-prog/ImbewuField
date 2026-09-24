@@ -545,6 +545,124 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
         "Find one thing planted further away than how often you use it, and write down where it should move to.",
         "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
       ]
+    },
+    "zu": {
+      "1": [
+        "Ngaphambi kokumba noma yini, kuyasiza ukwazi ukuthi izinqumo zenziwa kanjani. Le module iyisisekelo sakho konke okunye okukulesi sifundo: ama-ethics amathathu, ama-design principles, nendlela elula yokuhlela umhlaba wakho. Akukho kulokhu okudinga imali. Konke kushintsha ukuthi ubeka kuphi izinto nokuthi uhamba ibanga elingakanani nsuku zonke.",
+        "Cabanga ngendawo yakho. Iyiphi ingxenye oyivakashela kakhulu?"
+      ],
+      "2": [
+        "Ukuhlela kahle konga umsebenzi ungakathathi ifosholo. Umsebenzi omningi epulazini elincane awukho ekutshaleni nasekuvuneni. Usekuhambeni, ekuthwaleni nasekulungiseni izinto ezibekwe endaweni engafanele. I-Permaculture iyindlela yokunquma ukuthi izinto zibekwa kuphi, ukuze umhlaba usebenze nawe esikhundleni sokukuvimba.",
+        "Cabanga ngomsebenzi owodwa epulazini lakho othatha isikhathi eside kunalokho okufanele. Isikhathi sihambephi ngempela?"
+      ],
+      "3": [
+        "Ekupheleni kwale module uzokwazi ukwenza izinto ezintathu: ukusho ama-ethics amathathu, uwasebenzise ekwenzeni isinqumo esingenayo impendulo esobala; ukusho ama-design principles abaluleke kakhulu emhlabeni wakho uchaze nokuthi kungani ebalulekile; nokudweba ama-zone nama-sector akho ephepheni elilodwa.",
+        "Lowo mdwebo uyisisekelo sawo wonke amapulani ozowenza emva kwalokhu."
+      ],
+      "4": [
+        "I-ethic yokuqala yi-Earth Care. Kusho ukuphatha inhlabathi, amanzi, izitshalo nezilwane njengezinhlelo eziphilayo okufanele zivikelwe, hhayi njengezinsiza okufanele uzisebenzise zize ziphele. Uma usebenzisa uhlelo uluphelelisa, luyayeka ukukusiza. Uma uluvikela, luyaqhubeka lukusiza.",
+        "Bheka indawo eyodwa yomhlabathi ongenalutho emhlabeni wakho. Kukhona yini okuyivikelayo njengamanje?"
+      ],
+      "5": [
+        "I-ethic yesibili yi-People Care. Izidingo zomndeni wakho ziza kuqala, bese kulandela ezomphakathi wakho. Umlimi othengisa wonke amaqanda nayo yonke imifino, angashiyi lutho etafuleni lomndeni, uyeqa i-People Care. Ipulazi kufanele londle umndeni olisebenzayo.",
+        "Yini ephuma emhlabeni wakho kodwa umndeni wakho ungayidli?"
+      ],
+      "6": [
+        "I-ethic yesithathu yi-Fair Share. Thatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi. Umlimi othengisa wonke ama-mielies akhe asele, angashiyi lutho lokwenza i-compost noma lokugcina imbewu, uyephula le-ethic. Akukho okubuyela ohlelweni. Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela nawo uyayiphula le-ethic.",
+        "Umhlaba wakho utholani kuwe ngesizini ngayinye?"
+      ],
+      "7": [
+        "I-borehole inikeza umndeni wakho amanzi. Omakhelwane bacela amanzi nabo. Qala uthole ukuthi ukwabelana ngamanzi kuvumelekile yini. Hlola ukuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngokwabelana ngokulinganayo bese niqhubeka nibheka izinga lamanzi. I-People Care ne-Fair Share kuqondisa isivumelwano. I-Earth Care isho ukuvikela umthombo wamanzi. Ukuqapha izinga lamanzi kukodwa akusho ukuthi ukusebenzisa amanzi engeziwe kuphephile noma kuvumelekile.",
+        "Ubani ongakusiza uhlole imithetho nokuthi amanzi akhona anele yini?"
+      ],
+      "8": [
+        "Yilokho kanye ama-ethics akusiza ngakho. Umakhelwane ucela ukwelusela izinkomo ngemva kwesomiso. Isikhukhula silimaza ama-swale akho. Akekho obhale impendulo phansi. Ama-ethics akusiza ulinganise izinketho bese uchaza isinqumo sakho. Hlola imithetho futhi ucele imvume lapho kudingeka khona.",
+        "Faka la ma-ethics amathathu endleleni ocabanga ngayo ngaphambi kokwakha noma yini emhlabeni."
+      ],
+      "9": [
+        "UDavid Holmgren wabeka izimiso eziyishumi nambili zokuklama encwadini ethi *Essence of Permaculture*. UBill Mollison noDavid Holmgren basungula ndawonye umqondo we-permaculture.",
+        "Awudingi ukuqala ngazo zonke izimiso eziyishumi nambili. Kulesi sifundo sizoqala ngezintathu eziwusizo: bheka futhi ufunde ngokusebenzelana nomhlaba wakho; bamba ugcine amandla; futhi sebenzisa imiphetho, wazise nezindawo eziseceleni.",
+        "Sizoxoxa ngalezi ezintathu, sinye ngesikhathi."
+      ],
+      "10": [
+        "Bheka umhlaba wakho isizini yonke ngaphambi kokunquma ukwenza umsebenzi omkhulu wokumba noma wokushintsha umhlaba.",
+        "Isiphepho esisodwa sikukhombisa isikhathi esisodwa. Isizini yemvula yonke ikukhombisa iphethini — lapho amanzi egeleza khona, lapho ehlala khona, nalapho engafiki khona.",
+        "Lokhu kukusiza uqonde indawo yakho. Kodwa ukubuka kukodwa akusho ukuthi ukumba ama-swale kulungele noma kuphephile kuleyo ndawo. Ngaphambi kokumba, hlola umhlabathi, umthambeka, ukugeleza kwamanzi nendlela ephephile amanzi angaphuma ngayo, engeke ibangele ukuguguleka komhlaba noma ithumele amanzi alimazayo komakhelwane. Cela umeluleki wendawo oqeqeshiwe ahlole indawo.",
+        "Amanzi aphuma ngakuphi emhlabeni wakho? Uyazi ngempela, noma uyaqagela?"
+      ],
+      "11": [
+        "Bamba futhi ugcine imvula, ilanga ne-biomass (njengamaqabunga nezinsalela zezitshalo) ngaphambi kokuba zihambe emhlabeni wakho.",
+        "Konke lokhu kufika mahhala futhi kungahamba kungasetshenziswanga.",
+        "Amanzi ayageleza aphume, amaqabunga aphephuka ahambe, nelanga likhanyise umhlabathi ongenalutho.",
+        "Qhathanisa izindleko nomsebenzi kanye nenzuzo ongayithola epulazini lakho.",
+        "Yisho into eyodwa efika emhlabeni wakho mahhala iphinde ihambe ingasetshenziswanga."
+      ],
+      "12": [
+        "Umngcele yindawo lapho kuhlangana khona izinto ezimbili — njengolayini wocingo noma indawo eseceleni kwendlela.",
+        "Lezi zingaba izindawo eziwusizo zokubuka. Bheka ukuthi yini esivele ikhula kahle ngasemngceleni wakho. Lokhu kungakufundisa okuthile ngomhlaba wakho.",
+        "Imuphi umphetho endaweni yakho ongakasetshenziselwa lutho okwamanje?"
+      ],
+      "13": [
+        "Sebenzisa futhi wazise ukwehlukahlukana kwezinto eziphilayo. Ukulimala kommbila yisichotho kuncike ekutheni isiphepho sinjani nokuthi ummbila ukhule kangakanani. Lesi simiso asithembisi ukuthi isitshalo sizosinda kuzo zonke izenzakalo.",
+        "Ezinye izimiso ezimbili ongazazi: ungachithi lutho — izinsalela ziba umquba, umquba ube umhlabathi. Khetha izixazululo ezincane nezihamba kancane — ibhakede linganisela amanzi embhedeni ngaphandle kukagesi.",
+        "Usuku olulodwa olubi lungakubiza ngani epulazini lakho manje?"
+      ],
+      "14": [
+        "Beka into ngayinye lapho isiza khona izinto eziseduze nayo.",
+        "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
+        "Izinkukhu zingasiza ekudleni ezinye izinambuzane nasekufakeni umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa.",
+        "Lezi zinto ezintathu uma zibiyelwe zahlukaniswa, ngayinye yenza umsebenzi wayo kuphela.",
+        "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka."
+      ],
+      "15": [
+        "Ama-zone asuka ku-0 aye ku-5. Akhuluma ngokuhamba kwakho, hhayi ngezicingo.",
+        "I-Zone 0 yindlu. Kulesi sibonelo, i-Zone 1 iseduze kwendlu futhi inamakhambi\nnemifino yesaladi oyikha kaningi.",
+        "I-Zone 2 yingadi enkulu nendawo yezinkukhu, evakashelwa kanye noma kabili\nngosuku. I-Zone 3 yinsimu enkulu, evakashelwa masonto onke.",
+        "I-Zone 4 i-semi-wild: izihlahla zezithelo nokudla kwezilwane\nokudinga ukunakekelwa ngezikhathi ezithile. I-Zone 5 ishiywa isesimweni\nsemvelo."
+      ],
+      "16": [
+        "Amakhambi owakha kaningi kulula ukuwanakekela uma eseduze kwendlu.",
+        "Uma ukude nawo, ukuhamba ibanga elide kungakwenza uphuthelwe ukuwavakashela.\nAngase anganakekelwa kahle.",
+        "Cabanga ngezindlela ozihamba nsuku zonke.",
+        "Yini oyivakashela kaningi engase isondezwe?"
+      ],
+      "17": [
+        "Yilona iphuzu lalo msebenzi.",
+        "Ama-zone asiza ukuhlela izindawo ngokomsebenzi wakho: ukuhamba, ukuthwala\nnokuhlola okugcwalisa usuku.",
+        "Into ekudinga kaningi ingabekwa eduze. Lokho kunganciphisa ukuhamba\nnomsebenzi phakathi nesizini.",
+        "Yima emnyango wasekhishini. Yini ongayifinyelela kalula?"
+      ],
+      "18": [
+        "Ama-zone aqala ngaphakathi kwendawo yakho. Ama-sector akhombisa amandla\nezivela ngaphandle kwayo.",
+        "Ilanga, umoya, imvula, izikhukhula nomlilo kungafika kunqamule umngcele\nwakho, noma ungakuhlelelanga.",
+        "Bheka ukuthi umoya onamandla uvela ngakuphi epulazini lakho. Amarekhodi\nesiteshi sezulu esiseduze angakusiza uhlole uhlangothi lomoya. Bheka lapho\namanzi emvula engena khona nalapho egeleza khona emhlabeni wakho.",
+        "Isimo sezulu esikulimazayo sivela ngakuphi?"
+      ],
+      "19": [
+        "Bheka lesi sibonelo. Umoya uvela enyakatho-ntshonalanga.",
+        "Izihlahla nezihlahlana zimi phakathi kwalowo moya nezitshalo.",
+        "Omunye umoya udlula phakathi kwe-windbreak. Omunye udlula phezu kwayo noma\nuzungeze iziphetho zayo.",
+        "I-windbreak inganciphisa ijubane lomoya ngemuva kwayo. Indlela eyakhiwe\nfuthi enakekelwa ngayo ibalulekile.",
+        "Endaweni yakho, qala ngokubheka umoya olimazayo ngaphambi kokukhetha lapho\nuzotshala khona. Lesi sithombe asilona uhlelo lokutshala ipulazi lakho."
+      ],
+      "20": [
+        "Dweba umngcele wakho. Maka indlu. Dweba izindawo ezisuka eduze ziye kude\nngokuthi uvakashela kangaki.",
+        "Bese udweba imicibisholo engena ivela ngaphandle, ekhombisa ilanga,\numoya, umlilo namanzi.",
+        "Lelo phepha liyisisekelo sohlelo lwakho. Okunye okulesi sifundo kungakhiwa\nphezu kwalo.",
+        "Akudingeki libe lihle kakhulu. Kudingeka likhombise indawo yakho ngokunembile."
+      ],
+      "21": [
+        "Dweba ama-zone nama-sector akho ephepheni elilodwa.",
+        "Qala ngokumaka i-Zone 0 ne-Zone 1, bese uqhubeka ngaphandle kuze kufike\nemngceleni wendawo yakho.",
+        "Faka umcibisholo wento ngayinye efika ivela ngaphandle, ubhale ukuthi\nivela ngakuphi.",
+        "Thatha isithombe somdwebo."
+      ],
+      "22": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubheke lokho okuse-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ]
     }
   },
   "reading-landscape": {
