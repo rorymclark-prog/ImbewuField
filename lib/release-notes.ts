@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '072257f8', changes: [
+    'Vegetables and Staples now has 18 isiZulu slides and the woman’s narration.',
+    'The isiZulu lesson remains a draft for language and farming review.',
+  ], tour: [
+    { title: 'Hear Vegetables and Staples in isiZulu', where: 'My Studies · Vegetables and Staples', href: '/student',
+      detail: 'Choose isiZulu, open Vegetables and Staples, and play a slide.' },
+  ] },
   { when: '24 September 2026', sha: '9a3326e0', changes: [
     'The Introduction zones slide now shows a walking path with Zones 0–5.',
   ], tour: [

@@ -1,0 +1,230 @@
+{
+  "module": "vegetables-staples",
+  "language": "zu",
+  "status": "clearly labelled learner preview; first-language isiZulu, local farming and human listening review pending",
+  "sourceSha256": {
+    "isiZuluNarration": "9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d",
+    "englishNarration": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+    "courseModulesFile": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786"
+  },
+  "audio": {
+    "voice": "zu-ZA-ThandoNeural",
+    "rate": "-12%",
+    "fullAudioSha256": "ddb63c8ac38c56f9e8cc4e2a66acc9287dad40906d8c2068fef66044cf0e3cd9",
+    "fullAudioBytes": 6571532,
+    "fullAudioSeconds": 1095.216,
+    "humanListeningReview": false,
+    "slideBoundaryAndDecodeProofs": "docs/narration-reviews/vegetables-staples-zu-audio-proof/"
+  },
+  "rendering": {
+    "renderer": "scripts/make-lesson-slides.mjs vegetables-staples zu",
+    "sourceAssets": "existing docs/course-deck-art.json and public/course-images/vegetables-staples",
+    "slide13": "Localized four-card L3 still rendered by docs/media/studies-animation-quality/render-vegetables-l3-slide-13-zu.py from the committed English source still. Sweet potato retains early and root-formation water needs and only some drought tolerance after root formation.",
+    "flowGenerationUsed": false,
+    "animationGenerated": false,
+    "planVersionChanged": false,
+    "visualReview": "All 18 final slides inspected via contact sheet and 390 px samples, including existing farmer depictions. Text-only slides reflow in the expanded player; image/diagram slides use the image zoom control."
+  },
+  "contactSheet": "docs/media/vegetables-staples/zu-preview/contact-sheet.jpg",
+  "mobileSamples390": "docs/media/vegetables-staples/zu-preview/mobile-samples-390.jpg",
+  "slides": [
+    {
+      "slide": 1,
+      "image": "public/course-decks/vegetables-staples/zu/slide-01.jpg",
+      "imageBytes": 93804,
+      "imageSha256": "107c4e2d2c3a46adc2234e30d2e05e2d6cf5e094231df00379edac606b756be4",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-01.mp3",
+      "audioBytes": 249984,
+      "audioSha256": "aa4cea0e5bff86d38aa330389090e4b894342ba631c0396f395e7784bee1374c",
+      "audioSeconds": 41.664
+    },
+    {
+      "slide": 2,
+      "image": "public/course-decks/vegetables-staples/zu/slide-02.jpg",
+      "imageBytes": 93317,
+      "imageSha256": "0066fd8dd45839a8e55bfb863dad8625e307b6f76a3b6ea17b6a64bb1648101f",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-02.mp3",
+      "audioBytes": 287712,
+      "audioSha256": "ebc6a373e87c56841d4dc2b67cd5a188d755b61a6d2ab391c9761f2ea4c680d5",
+      "audioSeconds": 47.952
+    },
+    {
+      "slide": 3,
+      "image": "public/course-decks/vegetables-staples/zu/slide-03.jpg",
+      "imageBytes": 63601,
+      "imageSha256": "bba565891e656257b6cad02f5a0e06425ee9338ebd654708c46fb8bda3e91d4c",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-03.mp3",
+      "audioBytes": 379584,
+      "audioSha256": "b822fb97a227e9548dbe4144562d35cc28d1c472aad364c225a5d093929f1503",
+      "audioSeconds": 63.264
+    },
+    {
+      "slide": 4,
+      "image": "public/course-decks/vegetables-staples/zu/slide-04.jpg",
+      "imageBytes": 593672,
+      "imageSha256": "1c52e3879d3a7481ec9ca70cd0a6b1ed9fd73229faceed2d22ae531c0902fcd7",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-04.mp3",
+      "audioBytes": 339840,
+      "audioSha256": "2d7122bdff1868f2c17c5c693c64c733fc096dbeb9ad96265195349615468d1c",
+      "audioSeconds": 56.64
+    },
+    {
+      "slide": 5,
+      "image": "public/course-decks/vegetables-staples/zu/slide-05.jpg",
+      "imageBytes": 97331,
+      "imageSha256": "473285046e2668faaa35594f4e19148dc3604b5bbd215e5355a5c79fd93a16f9",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-05.mp3",
+      "audioBytes": 423504,
+      "audioSha256": "4064bd3de6f0353abec264f8eac6cc074b932264ddffcad50f26eeaa44dab512",
+      "audioSeconds": 70.584
+    },
+    {
+      "slide": 6,
+      "image": "public/course-decks/vegetables-staples/zu/slide-06.jpg",
+      "imageBytes": 537499,
+      "imageSha256": "30f39adc7709aef39f94921592c7c5c0fee9c3fde9dc05f546ef12520a4a10c8",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-06.mp3",
+      "audioBytes": 297792,
+      "audioSha256": "64443f20c9f6fd42a37b87e49150905d0f1e09f66a235e4f4677eb2add3157d9",
+      "audioSeconds": 49.632
+    },
+    {
+      "slide": 7,
+      "image": "public/course-decks/vegetables-staples/zu/slide-07.jpg",
+      "imageBytes": 617044,
+      "imageSha256": "a9698b857ba236ac52bb5d9b313567364a3e083079e141fdbe6dbac32dd185b4",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-07.mp3",
+      "audioBytes": 318528,
+      "audioSha256": "b4c36398741b2e0d83f65e0c62ae6ba9abbcabd845fa5a0cdbae7131ab9f53ce",
+      "audioSeconds": 53.088
+    },
+    {
+      "slide": 8,
+      "image": "public/course-decks/vegetables-staples/zu/slide-08.jpg",
+      "imageBytes": 161455,
+      "imageSha256": "6ce9f3931ae7099be2e375c972eb30afe93ffcb3e9b89f0bd2c32f59b398cdab",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-08.mp3",
+      "audioBytes": 407376,
+      "audioSha256": "28209a573288df9091e45dc3b273eecdb3abaedd37eaee2aa9c7e036802b0af6",
+      "audioSeconds": 67.896
+    },
+    {
+      "slide": 9,
+      "image": "public/course-decks/vegetables-staples/zu/slide-09.jpg",
+      "imageBytes": 89029,
+      "imageSha256": "8e6399322b5360aabf53891dcda1bca68b559c8ecb11fd2625a069a0552ae750",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-09.mp3",
+      "audioBytes": 363600,
+      "audioSha256": "947b85c8ac6f9d4c87f6473bae4e27ab47042a0d15ac56cb6329d2dc9ef3b146",
+      "audioSeconds": 60.6
+    },
+    {
+      "slide": 10,
+      "image": "public/course-decks/vegetables-staples/zu/slide-10.jpg",
+      "imageBytes": 633799,
+      "imageSha256": "74a47759c0ababaec2051549b691e3c0e63d39ec8820c8527ffb70df63601d51",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-10.mp3",
+      "audioBytes": 431568,
+      "audioSha256": "8d9e5681065fc94261fef383d2cde19d602015f72cda94f56697f8fe166bc15e",
+      "audioSeconds": 71.928
+    },
+    {
+      "slide": 11,
+      "image": "public/course-decks/vegetables-staples/zu/slide-11.jpg",
+      "imageBytes": 111581,
+      "imageSha256": "9307e0f18ab96711890de25e7b786a55199c65cac1a47a4c8a38cc7ec610e3a0",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-11.mp3",
+      "audioBytes": 354960,
+      "audioSha256": "ad7f60599575dcd1fc29e5e4ebfbf7193fcdffc6307dbfb2a6e914db83e09740",
+      "audioSeconds": 59.16
+    },
+    {
+      "slide": 12,
+      "image": "public/course-decks/vegetables-staples/zu/slide-12.jpg",
+      "imageBytes": 301322,
+      "imageSha256": "727ce77fe810e36bbbd9faabf60ca366ef016e82da9bc859d307eafb43c77d7e",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-12.mp3",
+      "audioBytes": 350208,
+      "audioSha256": "09bd968b93b266608a4e06a5fb4e6fbf38b13e0e4b277456d12c3edf98ab11c9",
+      "audioSeconds": 58.368
+    },
+    {
+      "slide": 13,
+      "image": "public/course-decks/vegetables-staples/zu/slide-13.jpg",
+      "imageBytes": 195912,
+      "imageSha256": "1368022830d05d0a7a6f76179c861f5d11bccf8d79029c803b81494e3ee67e50",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-13.mp3",
+      "audioBytes": 431568,
+      "audioSha256": "495d4791ca2445b41a6e22bb17b6083c40b4f14310ca7827c5071a451e2d9313",
+      "audioSeconds": 71.928
+    },
+    {
+      "slide": 14,
+      "image": "public/course-decks/vegetables-staples/zu/slide-14.jpg",
+      "imageBytes": 112988,
+      "imageSha256": "eba73f80acd23f297b56dc7cbdc96216fb5af3b6abf8ccafbaeb8afb432ecf11",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-14.mp3",
+      "audioBytes": 239328,
+      "audioSha256": "5a04a59e354f4a9011e2fe8009e361a37bbd0c3f3a1898a476a3dabc62ee8396",
+      "audioSeconds": 39.888
+    },
+    {
+      "slide": 15,
+      "image": "public/course-decks/vegetables-staples/zu/slide-15.jpg",
+      "imageBytes": 445155,
+      "imageSha256": "1cbd2fe2a69f01ea4c406c7e321a662c175b83e275465322b18036a1e9bd9161",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-15.mp3",
+      "audioBytes": 350496,
+      "audioSha256": "1d0b62ff4ee5d51189a28f1cb98012731536081825102fa93b2c1a5fe1070f84",
+      "audioSeconds": 58.416
+    },
+    {
+      "slide": 16,
+      "image": "public/course-decks/vegetables-staples/zu/slide-16.jpg",
+      "imageBytes": 122857,
+      "imageSha256": "fed229945cc4f826f779d5104ea1162bf36ec6dcfcfbc7f4c1749669ce335cb0",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-16.mp3",
+      "audioBytes": 614304,
+      "audioSha256": "0c98dc0292d82e71dded1e46547c0e56ea598bfe6300b80384209aaafa4dede5",
+      "audioSeconds": 102.384
+    },
+    {
+      "slide": 17,
+      "image": "public/course-decks/vegetables-staples/zu/slide-17.jpg",
+      "imageBytes": 83212,
+      "imageSha256": "8d6c0b86e337a0b6a306fa28ec2a7402a483d49d7d6e50dee80abd473501f762",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-17.mp3",
+      "audioBytes": 411120,
+      "audioSha256": "2d08b917878c10e7a9ce1fde9146900bcf58cd07080a640bd84cf096c904ce18",
+      "audioSeconds": 68.52
+    },
+    {
+      "slide": 18,
+      "image": "public/course-decks/vegetables-staples/zu/slide-18.jpg",
+      "imageBytes": 74156,
+      "imageSha256": "df0445384e7f1733f06bed7e1d0ddd61d6a38c1c61201fe184706e81934dcfbe",
+      "imageDimensions": "1920x1080",
+      "audio": "public/course-audio/vegetables-staples/zu/slide-18.mp3",
+      "audioBytes": 319824,
+      "audioSha256": "1fc801d605e69a3409393105ede021aa6551085e92368f825798b9412bd00ec3",
+      "audioSeconds": 53.304
+    }
+  ]
+}

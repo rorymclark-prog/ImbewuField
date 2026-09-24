@@ -61,6 +61,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/food-forest.zu-audio-2026-09-24.md',
     scriptSha256: '6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e',
   },
+  'vegetables-staples.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/vegetables-staples.zu-audio-2026-09-24.md',
+    scriptSha256: '9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d',
+  },
 };
 
 export function narrationReviewPending(moduleId: string, lang: string): boolean {

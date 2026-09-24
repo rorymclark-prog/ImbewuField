@@ -1,11 +1,10 @@
 # Vegetables and Staple Crops — isiZulu review handoff
 
-**Status: unreviewed AI drafts; no learner publication or recording.**
+**Status: unreviewed isiZulu lesson drafts. A clearly labelled learner preview of the 18-slide deck and narration is authorized; lesson bodies and quizzes remain English-only until review. Fluent isiZulu, local farming and human listening review are pending.**
 
 All four lessons have complete proposed isiZulu lesson bodies, key points,
 both quiz questions with every option and rationale, and narrated slides.
-The current English lesson and narration control meaning. The older isiZulu
-narration is stale and is reference material only.
+The current English lesson and narration control meaning. The older isiZulu lesson draft is reference material; the authorized preview narration slides 12–14 follow the current L3 source, including sweet potato’s qualified drought and water-stress guidance. The learner preview stays visibly labelled as an unreviewed draft.
 
 | Lesson | Full review draft | Slides | Main meaning and safety check |
 | --- | --- | ---: | --- |
