@@ -817,7 +817,7 @@ export const COURSE_MODULES: CourseModule[] = [
           "Dry-method crops (beans, maize, sunflower) simply dry on the plant before collection",
 
           "Tomato fermentation removes gel; other wet seeds need their own processing method",
-          "Tomatoes need little isolation; maize needs real distance between varieties to stay pure",
+          "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
           "Rinse processed tomato seed and dry it thoroughly before storage",
         ],
         quiz: [
@@ -850,7 +850,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
         infographicAlt: "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
         title: "Drying, Storing, and Sharing Seed",
-        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture; get all three low and seed can last for years.\n\nLabel every envelope with crop, variety, and date saved. Store in a cool, dark, dry place — a sealed container with a little rice or dried milk powder as a moisture absorber works well.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
+        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
         keyPoints: [
           "Dry seed in shade with good airflow; never in direct sun or sealed heat",
           "Store labelled seed cool, dark, and dry — heat, light, and moisture are the three enemies of viability",
@@ -867,7 +867,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil contact, pests, and rodents",
             ],
             correct: 1,
-            rationale: "Keeping seed cool, dark, and dry directly counters all three — which is exactly why a sealed container in a shaded cupboard works so well.",
+            rationale: "Keeping thoroughly dry seed cool and dark counters all three. A sealed container helps keep dry seed dry, but can trap moisture if seed is packed while damp.",
           },
           {
             q: "Why test a small batch of stored seed for germination before planting season?",

@@ -42,6 +42,21 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '66f24e47', changes: [
+    'Seeds lessons 2 and 3 now show isiZulu reading and quiz drafts.',
+    'Seed lessons now explain tomato crossing and why stored seed must be dry.',
+  ], tour: [
+    { title: 'Read more Seeds lessons in isiZulu', where: 'My Studies · Seeds', href: '/student',
+      detail: 'Choose isiZulu, open Seeds lessons 2 and 3, and read the language review notice.' },
+  ] },
+  { when: '24 September 2026', sha: '1d40dcc6', changes: [
+    'Introduction now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Seeds lesson 1 now has isiZulu reading and a quiz draft, labelled for review.',
+    'The guided tour follows isiZulu when you choose it in Settings.',
+  ], tour: [
+    { title: 'Hear Introduction in isiZulu', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction to Permaculture, then play a narrated slide.' },
+  ] },
   { when: '24 September 2026', sha: '77b49be9', changes: [
     'Design views on your phone opens any Studio section, including Preview & Export.',
     'Map, Crop plan and Print / Export are under More in the Studio.',

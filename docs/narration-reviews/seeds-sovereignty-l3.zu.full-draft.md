@@ -1,8 +1,8 @@
 # Seeds and Seed Sovereignty L3 — isiZulu comparison draft
 
-**Status: review-only draft. Not registered learner text, not audio copy, and not fluent-reviewed.**
+**Status: unreviewed translation draft. Learners may see the proposed lesson text only with the app's visible draft label. This packet is not audio copy and has not had fluent isiZulu review.**
 
-This packet pairs the current English L3 lesson in `lib/course-modules.ts` (`seeds-sovereignty-l3`) with proposed isiZulu for its body, key points, quiz questions, choices, and rationales. Existing English and isiZulu narration and the isiZulu deck are comparison material only; they do not approve this draft. No protected lesson source was changed.
+This packet originally paired the English L3 lesson in `lib/course-modules.ts` (`seeds-sovereignty-l3`) with proposed isiZulu for its body, key points, quiz questions, choices, and rationales. Existing English and isiZulu narration and the isiZulu deck are comparison material only; they do not approve this draft. The storage body and first quiz rationale were subsequently corrected in both languages; see [the dated source correction](seeds-l2-l3-source-correction-2026-09-24.md). The quoted body and rationale below are a historical comparison, and the learner files are authoritative.
 
 ## Source scope
 
@@ -91,7 +91,8 @@ Hlela ukushintshisana ngembewu nomakhelwane kule sizini. Lokho ikhaya elilodwa e
 - The English key points say test a “small batch”; existing narration specifies exactly ten seeds and shows six of ten germinating. The lesson body, key points and quiz do not set a count or germination threshold. This packet leaves those details out of the proposed lesson text and preserves the count in the existing narration only.
 - The source says seed swaps grow variety diversity. Do not imply that every exchanged packet is viable, correctly identified, or safe to plant without its history; narration slide 22 separately teaches sharing information with seed.
 - Quiz answer indices remain 1 and 1. Check that the legal-requirement distractor remains plainly incorrect in the local context and that neither rationale becomes a guarantee of storage performance.
+- The learner draft is stored in `lib/course-translation-drafts.ts` and is served only through the visibly labelled draft presentation. The lesson fields and answer indexes were compared with the current English source when registered.
 
 ## Exact review dependency
 
-Before learner registration or recording, obtain review from a fluent first-language South African isiZulu reviewer with seed-saving knowledge. Return exact wording changes and their English meanings; identify reviewer, language variety/region and date; check technical terms, quiz clarity, distractors, rationales and audio pronunciation. The English content owner should resolve the drying/sealing sequence, the unsupported “years” lifespan wording, the desiccant wording, and the quiz rationale’s missing drying condition before translation is locked. No review or approval is claimed by this draft.
+The learner draft is registered under Rory's authorization and remains visibly marked unreviewed. For fluent approval, obtain review from a first-language South African isiZulu reviewer with seed-saving knowledge. Return exact wording changes and their English meanings; identify reviewer, language variety/region and date; check technical terms, quiz clarity, distractors, rationales and audio pronunciation. The drying/sealing sequence, lifespan wording, desiccant wording and first quiz rationale were reconciled in the dated source correction. No fluent or farming approval is claimed by this draft.
