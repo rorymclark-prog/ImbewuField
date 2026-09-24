@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '1ce587e1', changes: [
+    'Your course comes first in My Studies; other courses have photos and guides are last.',
+    'Landscape slides open clear; tap the picture to show or hide controls.',
+  ], tour: [
+    { title: 'View a lesson sideways', where: 'My Studies · lesson slides', href: '/student',
+      detail: 'Open a lesson full screen, turn your phone sideways, then tap the slide to show or hide controls.' },
+  ] },
   { when: '24 September 2026', sha: '81a0adf0', changes: [
     'Market Gardening now has 20 isiZulu voice clips marked as unreviewed drafts.',
     'The English voice remains available; lesson text has its own draft status.',
