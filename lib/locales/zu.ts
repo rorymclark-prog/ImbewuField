@@ -1413,7 +1413,7 @@ const dict: Dict = {
   surveySaveReminder: "Answers are saved when you finish and tap Save.",
   surveyUnsaved: "Changes not yet saved",
   surveyReviewTitle: "Buyekeza inhlolovo yakho",
-  surveySaveContinue: "Gcina bese uqhubeka",
+  surveySaveContinue: "Save & continue",
   surveyUnknownHint: "Shiya umbuzo ungaphenduliwe uma ungenasiqiniseko. Okungaziwa kunosizo kakhulu kunokuqagela.",
   surveyFieldGuide: "Endleleni",
   surveyObserveFirst: "Buka, bese uyarekhoda.",

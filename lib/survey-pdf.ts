@@ -35,6 +35,14 @@ export interface SurveyPdfData {
   tanksPhrase: string;
   goalLabel: string | null;
   weeks: SurveyPdfWeek[];
+  titleLabel?: string;
+  bedLabel?: string;
+  bedsSectionLabel?: string;
+  summaryBedLabel?: string;
+  summaryGoalLabel?: string;
+  weekLabel?: string;
+  weeksTitleLabel?: string;
+  reviewNotice?: string;
 }
 
 /** File-system-safe name for the exported survey. */
@@ -61,32 +69,45 @@ export async function buildSurveyPdf(data: SurveyPdfData): Promise<Blob> {
   const need = (h: number) => { if (y + h > BOTTOM) { doc.addPage(); y = M; } };
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(20); setInk(INK.text);
-  doc.text('Garden plan', M, y); y += 26;
+  const titleLines = doc.splitTextToSize(data.titleLabel ?? 'Garden plan', CW) as string[];
+  doc.text(titleLines, M, y); y += titleLines.length * 24 + 2;
+
+  if (data.reviewNotice) {
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setInk(INK.gold);
+    const noticeLines = doc.splitTextToSize(data.reviewNotice, CW) as string[];
+    doc.text(noticeLines, M, y);
+    y += noticeLines.length * 10 + 10;
+  }
 
   doc.setFont('helvetica', 'normal'); doc.setFontSize(11); setInk(INK.muted);
-  const sub = `${data.beds.length} beds · ${(data.beds.length * data.bedAreaM2).toFixed(1)} m² · `
+  const sub = `${data.beds.length} ${data.summaryBedLabel ?? 'beds'} · ${(data.beds.length * data.bedAreaM2).toFixed(1)} m² · `
     + `${data.ha} ha · ${data.sunLabel} · ${data.tanksPhrase}`
-    + (data.goalLabel ? ` · goal: ${data.goalLabel}` : '');
+    + (data.goalLabel ? ` · ${data.summaryGoalLabel ?? 'goal'}: ${data.goalLabel}` : '');
   const subLines = doc.splitTextToSize(sub, CW) as string[];
   doc.text(subLines, M, y); y += subLines.length * 14 + 18;
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(12); setInk(INK.green);
-  doc.text('Beds', M, y); y += 16;
+  const bedsHeadingLines = doc.splitTextToSize(data.bedsSectionLabel ?? 'Beds', CW) as string[];
+  doc.text(bedsHeadingLines, M, y); y += bedsHeadingLines.length * 14 + 2;
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); setInk(INK.text);
   for (const bed of data.beds) {
-    need(14);
-    doc.text(`Bed ${bed.letter} (${data.bedAreaM2} m²) — ${bed.crop}`, M, y);
-    y += 14;
+    const lines = doc.splitTextToSize(`${data.bedLabel ?? 'Bed'} ${bed.letter} (${data.bedAreaM2} m²) — ${bed.crop}`, CW) as string[];
+    need(lines.length * 13);
+    doc.text(lines, M, y);
+    y += lines.length * 13;
   }
   y += 12;
 
   need(16);
   doc.setFont('helvetica', 'bold'); doc.setFontSize(12); setInk(INK.green);
-  doc.text('First six weeks', M, y); y += 16;
+  const weeksLabelLines = doc.splitTextToSize(data.weeksTitleLabel ?? 'First six weeks', CW) as string[];
+  doc.text(weeksLabelLines, M, y); y += weeksLabelLines.length * 14 + 2;
   for (const week of data.weeks) {
-    need(16);
+    const title = `${data.weekLabel ?? 'Week'} ${week.wk} — ${week.title}`;
+    const titleLines = doc.splitTextToSize(title, CW) as string[];
+    need(titleLines.length * 14);
     doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); setInk(INK.gold);
-    doc.text(`Week ${week.wk} — ${week.title}`, M, y); y += 14;
+    doc.text(titleLines, M, y); y += titleLines.length * 14;
     doc.setFont('helvetica', 'normal'); doc.setFontSize(10); setInk(INK.text);
     for (const task of week.tasks) {
       const lines = doc.splitTextToSize(`•  ${task}`, CW - 10) as string[];
