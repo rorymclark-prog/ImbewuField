@@ -171,6 +171,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════════════
+   FORM COLUMN — a field is as wide as what goes in it
+
+   Measured at 1440: the "Log production" form on /records ran the full content width. A crop
+   picker, a four-character kilogram field and the primary "Save harvest" button were each about
+   1,300px across — a target the width of the screen for a number like "8.4", and a line length
+   no one reads. That is the phone layout stretched, not a desktop layout.
+
+   Phones keep the full width, which is correct there: below 768px the viewport IS the column.
+   ═══════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .u-form-column { max-width: 34rem; }
+}
+
+/* ═══════════════════════════════════════════════════════
    THE §0 TYPE SCALE, AS CLASSES
 
    DESIGN.md calls reusing phone pixels on desktop "the #1 recurring mistake" and prints a table

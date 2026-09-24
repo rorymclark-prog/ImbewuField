@@ -152,19 +152,23 @@ function SubmitBtn({
     <button
       type="submit"
       disabled={loading}
-      className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
+      // THE PRIMARY ACTION OF THIS FORM, and it looked like the least important thing on the
+      // page: a 14%-alpha forest tint that read as a disabled control. CLAUDE.md makes ochre the
+      // primary CTA; #9A6018 rather than #C07A1E because white type on #C07A1E is 3.47:1 and on
+      // #9A6018 it is 5.17:1. Public Sans, not the display serif — §0 puts buttons in Public
+      // Sans, and a serif at 13px with -0.02em tracking is the least legible thing in a form.
+      className="w-full py-2.5 rounded-xl font-sans font-bold flex items-center justify-center gap-2 transition-all"
       style={{
-        background: loading
-          ? 'rgba(31,77,43,0.06)'
-          : 'rgba(31,77,43,0.14)',
-        border: '1px solid rgba(31,77,43,0.28)',
-        color: 'var(--color-ink)',
+        fontSize: 15,
+        background: loading ? 'rgba(154,96,24,0.35)' : '#9A6018',
+        border: 'none',
+        color: '#FFFFFF',
         cursor: loading ? 'not-allowed' : 'pointer',
       }}
     >
       {loading ? (
         <>
-          <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
+          <Loader2 size={14} className="animate-spin" style={{ color: '#FFFFFF' }} />
           {t('myRecordsSaving')}
         </>
       ) : (
@@ -331,7 +335,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#1F4D2B">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">AI-generated crop reference · add your own harvest photo below.</figcaption></figure>}
         <div>
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
@@ -490,7 +494,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#9E5C08">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         <div className="grid grid-cols-2 gap-2">
           <div>
             <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
