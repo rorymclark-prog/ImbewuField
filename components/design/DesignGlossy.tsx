@@ -4,6 +4,7 @@
 // the app owns factual geometry, placed features, labels and sheet chrome. Satellite
 // Overlay remains the explicit model-authored comparison/rollback style.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
@@ -7587,16 +7588,16 @@ function roofHarvestFooterLines(
   }, 0);
 
   const lines = [
-    `Roof catchment traced: ${Math.round(roofM2).toLocaleString()} m²`,
-    `Annual rainfall: ${Math.round(rainfallMm as number).toLocaleString()} mm`,
+    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
+    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
     `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${Math.round(harvestL).toLocaleString()} L a year`,
+    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
   ];
   // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
   // size in its name contributes nothing, so a total built from those would understate the storage
   // and make it look inadequate.
   if (storedL > 0) {
-    lines.push(`Storage placed: ${Math.round(storedL).toLocaleString()} L`);
+    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
     lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
   }
   return lines;

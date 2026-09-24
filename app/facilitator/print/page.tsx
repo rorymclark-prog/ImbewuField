@@ -13,6 +13,7 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type {
   ElType, LineKind, SectorKind, LayerId,
@@ -512,7 +513,7 @@ export default function FacilitatorPrintPage() {
         //
         // Summing each tank's own cost also prices a MIXED bank correctly, which an average of the
         // litres could not: one 2 500 and one 10 000 average to two 5 000s and are wrong both ways.
-        qty = `×${t.count} (${Math.round(t.litres).toLocaleString()} L)`;
+        qty = `×${t.count} (${numberLabel(Math.round(t.litres))} L)`;
         const perTank = plannedItemPts
           .filter(({ it }) => it.type === type)
           .map(({ it }) => {

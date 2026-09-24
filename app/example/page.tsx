@@ -10,6 +10,7 @@
 // saved places/reports. No auth guard either: this page must be safely
 // viewable by someone who hasn't signed up yet.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useRouter } from 'next/navigation';
 import { Eye, Sprout, Droplets, Layers, Snowflake, Mountain, AlertTriangle } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/lib/i18n';
@@ -136,14 +137,14 @@ function ExampleInner() {
                   {t('yourLand')}
                 </div>
                 <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                  {site.perimeterM >= 1000 ? `${(site.perimeterM / 1000).toFixed(2)} km` : `${site.perimeterM} m`} {t('perimeterUnit')} · {site.areaM2.toLocaleString()} m²
+                  {site.perimeterM >= 1000 ? `${(site.perimeterM / 1000).toFixed(2)} km` : `${site.perimeterM} m`} {t('perimeterUnit')} · {numberLabel(site.areaM2)} m²
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
                 {site.areaHa < 1
                   ? (
                     <>
-                      <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{site.areaM2.toLocaleString()}</div>
+                      <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(site.areaM2)}</div>
                       <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>m²</div>
                     </>
                   )
@@ -162,7 +163,7 @@ function ExampleInner() {
                     <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
                     <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
                     {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                    <span className="ml-auto" style={{ color: '#755942' }}>{f.areaHa < 1 ? `${Math.round(f.areaHa * 10000).toLocaleString()} m²` : `${f.areaHa} ha`}</span>
+                    <span className="ml-auto" style={{ color: '#755942' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                   </div>
                 ) : null))}
               </div>
@@ -179,11 +180,11 @@ function ExampleInner() {
                   {t('harvestingAreas')}
                 </div>
                 <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                  {water.areaM2.toLocaleString()} m² {t('catchmentAreaLabel')}
+                  {numberLabel(water.areaM2)} m² {t('catchmentAreaLabel')}
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{water.estVolumeKL.toLocaleString()}</div>
+                <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(water.estVolumeKL)}</div>
                 <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>kL est.</div>
               </div>
             </div>
@@ -194,7 +195,7 @@ function ExampleInner() {
                     <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
                     <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
                     {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                    <span className="ml-auto" style={{ color: '#755942' }}>{f.estVolumeKL.toLocaleString()} kL</span>
+                    <span className="ml-auto" style={{ color: '#755942' }}>{numberLabel(f.estVolumeKL)} kL</span>
                   </div>
                 ) : null))}
               </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { useRef, useState, useCallback, useEffect, useMemo, type PointerEvent as ReactPointerEvent } from 'react';
 import ReactMapGL, {
   Source, Layer, Marker, Popup, ScaleControl,
@@ -3418,7 +3419,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
                     {t('waterSectionLabel')}{visibleWaterFeatures.length ? ` · ${visibleWaterFeatures.length}` : ''}
                   </span>
-                  {visibleWaterFeatures.length > 0 && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{visibleWaterKL.toLocaleString()} kL</span>}
+                  {visibleWaterFeatures.length > 0 && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{numberLabel(visibleWaterKL)} kL</span>}
                 </div>
               </button>
               {sectionWater && (
@@ -3438,7 +3439,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                               <PenLine size={13} style={{ color: 'rgba(234,243,226,0.4)', flexShrink: 0 }} />
                             </div>
                             <div className="flex items-center gap-1.5 flex-wrap" style={{ fontSize: 12.5, color: 'rgba(234,243,226,0.55)' }}>
-                              <span>{wf.category ? `${wf.category} · ` : ''}~{wf.estVolumeKL.toLocaleString()} kL</span>
+                              <span>{wf.category ? `${wf.category} · ` : ''}~{numberLabel(wf.estVolumeKL)} kL</span>
                               {wf.placeId && (() => { const pl = savedPins.find(p => p.id === wf.placeId); return pl ? <span style={{ fontSize: 10.5, fontWeight: 700, color: resolveColor(pl), background: `${resolveColor(pl)}22`, borderRadius: 6, padding: '1px 6px', border: `1px solid ${resolveColor(pl)}44` }}>{pl.name}</span> : null; })()}
                             </div>
                           </button>
@@ -3566,7 +3567,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                               <div className="truncate" style={{ fontSize: 15.5, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>{el.label || meta.label}</div>
                               {(() => {
                                 const detail = el.type === 'jojo_tank' && el.litres
-                                  ? `${el.litres.toLocaleString()} L`
+                                  ? `${numberLabel(el.litres)} L`
                                   : el.type === 'tree' && el.species
                                     ? `${el.species}${el.count && el.count > 1 ? ` ×${el.count}` : ''}`
                                     : el.note;
@@ -3884,7 +3885,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           if (sf.centroid) placeChip(sf.centroid, sf.bbox, 'land', sf.id, sf.name || 'Parcel', `${sf.areaHa} ha`);
         }
         for (const wf of waterFeatures) {
-          if (wf.centroid) placeChip(wf.centroid, wf.bbox, 'water', wf.id, wf.name || 'Water', `${wf.estVolumeKL.toLocaleString()} kL`);
+          if (wf.centroid) placeChip(wf.centroid, wf.bbox, 'water', wf.id, wf.name || 'Water', `${numberLabel(wf.estVolumeKL)} kL`);
         }
 
         // Overlap resolution — push colliding chips apart vertically (3 passes)
@@ -4212,7 +4213,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       <button key={l} type="button" onClick={() => { setElLitres(l); setElTankCustomOpen(false); }}
                         className="px-3 py-1.5 rounded-full font-sans font-semibold"
                         style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
-                        {l.toLocaleString()} L
+                        {numberLabel(l)} L
                       </button>
                     ))}
                     <button type="button" onClick={() => setElTankCustomOpen((o) => !o)}

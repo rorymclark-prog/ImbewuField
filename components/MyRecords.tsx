@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -936,7 +937,7 @@ function CreditPackCard({
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
   const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
-  const money = (value: number) => `R ${value.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`;
+  const money = (value: number) => `R ${numberLabel(value, 0)}`;
 
   async function handleExport() {
     setError('');
@@ -990,7 +991,7 @@ function CreditPackCard({
       ) : (
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
-          {[['Income', money(totals.income)], ['Costs', money(totals.spent)], ['Harvested', `${production.reduce((n, p) => n + (p.kg ?? 0), 0).toLocaleString('en-ZA')} kg`]].map(([label, value]) => (
+          {[['Income', money(totals.income)], ['Costs', money(totals.spent)], ['Harvested', `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
             <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>

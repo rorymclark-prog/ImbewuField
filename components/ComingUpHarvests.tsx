@@ -19,6 +19,7 @@
 //    to them instead of showing a number.
 //  - An overbooked bed withholds every kilogram, matching the crop plan.
 
+import { numberLabel } from '@/lib/format-figures';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { CalendarClock, ChevronDown } from 'lucide-react';
@@ -30,7 +31,7 @@ import type { FinancePlanSource } from '@/lib/finance-plan-source';
 import { useLanguage } from '@/lib/i18n';
 
 const rand = (n: number): string =>
-  `R${Math.round(n).toLocaleString('en-ZA').replace(/,/g, ' ')}`;
+  `R${numberLabel(Math.round(n))}`;
 
 const kgLabel = (n: number): string => (n >= 100 ? `${Math.round(n)} kg` : `${n.toFixed(1)} kg`);
 

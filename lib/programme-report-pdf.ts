@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import { trainingEvidenceSummary, trainingFeedbackSummary, type ProgrammeBranding, type VenuePhoto, type TrainingRecord } from './programme-evidence';
 import { pdfSafe } from '@/lib/crop-export-pdf';
 
@@ -79,7 +80,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
       doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(31,51,39);
       const names=doc.splitTextToSize(pdfSafe(r.label),52) as string[];const h=Math.max(12,names.length*4+3);ensure(h);doc.text(names,18,y);
       doc.setFillColor(229,238,232);doc.rect(73,y-3,83,4,'F');doc.setFillColor(46,107,72);doc.rect(73,y-3,83*Math.max(0,r.value)/max,4,'F');
-      doc.text(pdfSafe(r.display??`${r.value.toLocaleString('en-ZA')}${chart.suffix??''}`),192,y,{align:'right'});y+=h;
+      doc.text(pdfSafe(r.display??`${numberLabel(r.value)}${chart.suffix??''}`),192,y,{align:'right'});y+=h;
     }y+=6;
   }
   if(format==='summary')write('Up to five items per section. The full report includes every record.',9);

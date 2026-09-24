@@ -8,6 +8,7 @@
 // own crop-plan store (lib/crop-plan.ts) for what's actually sown where.
 // Zero network, zero new deps.
 
+import { numberLabel } from '@/lib/format-figures';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -355,7 +356,7 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
                       ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
                       : item.count === null
                         ? 'confirm quantity'
-                        : `~${item.count.toLocaleString('en-ZA')} ${item.unit} positions`}
+                        : `~${numberLabel(item.count)} ${item.unit} positions`}
               </span>
             </div>
             <div className="font-sans mt-0.5 flex items-start gap-1" style={{ fontSize: 11, color: '#755942', lineHeight: 1.4 }}>
@@ -2898,7 +2899,7 @@ function FoodAvailabilityChart({
                     <div className="rounded-xl p-3 mb-3" style={{ background: '#1F4D2B' }}>
                       <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#B9CDB4' }}>Production score</div>
                       <div className="font-mono font-bold" style={{ fontSize: 28, color: '#F7F2E9' }}>
-                        R{Math.round((cashIncome + homeValue) / yieldBenchmark.growingAreaM2).toLocaleString()}
+                        R{numberLabel(Math.round((cashIncome + homeValue) / yieldBenchmark.growingAreaM2))}
                         <span style={{ fontSize: 13, fontWeight: 500, color: '#B9CDB4' }}> /m² this plan cycle</span>
                       </div>
                       <div className="font-sans mt-1" style={{ fontSize: 11, color: '#B9CDB4', lineHeight: 1.4 }}>
@@ -2937,7 +2938,7 @@ function FoodAvailabilityChart({
                               <div key={label} className="flex items-baseline justify-between" style={{ gap: 8 }}>
                                 <span className="font-sans" style={{ fontSize: 11, color: '#B9CDB4' }}>{label} · {areaM2.toFixed(1).replace(/\.0$/, '')} m²</span>
                                 <span className="font-mono font-semibold" style={{ fontSize: 14, color: '#F7F2E9' }}>
-                                  R{Math.round((split.cash + split.home) / areaM2).toLocaleString()}<span style={{ fontSize: 10.5, fontWeight: 500, color: '#B9CDB4' }}> /m²</span>
+                                  R{numberLabel(Math.round((split.cash + split.home) / areaM2))}<span style={{ fontSize: 10.5, fontWeight: 500, color: '#B9CDB4' }}> /m²</span>
                                 </span>
                               </div>
                             ))}
@@ -2999,11 +3000,11 @@ function FoodAvailabilityChart({
                     </div>
                   )}
                   <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942' }}>Known benchmark subtotal for this plan cycle</div>
-                  <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{Math.round(cashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#755942' }}>cash scenario</span></div>
+                  <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{numberLabel(Math.round(cashIncome))} <span style={{ fontSize: 12, fontWeight: 500, color: '#755942' }}>cash scenario</span></div>
                   <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.35 }}>{cashflowSettings.sellPercent}% of harvest sold, priced at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} rates (change the price toggle above to switch).</div>
                   {homeValue > 0.5 && (
                     <>
-                      <div className="font-mono mt-1.5" style={{ fontSize: 13, color: '#5C5040' }}>+ R{Math.round(homeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#755942' }}>home-use replacement-value scenario</span></div>
+                      <div className="font-mono mt-1.5" style={{ fontSize: 13, color: '#5C5040' }}>+ R{numberLabel(Math.round(homeValue))} <span style={{ fontSize: 11.5, color: '#755942' }}>home-use replacement-value scenario</span></div>
                       <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.35 }}>The {100 - cashflowSettings.sellPercent}% kept at home — always valued at retail, whichever price toggle is selected above, because retail is the price you'd otherwise pay to replace it.</div>
                     </>
                   )}

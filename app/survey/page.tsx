@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useMemo, Suspense } from 'react';
@@ -306,7 +307,7 @@ function SurveyInner() {
                   </div>
                   <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(35,94,134,0.07)' }}>
                     <div className="text-xs font-sans" style={{ color: '#755942' }}>{localUi('Rain caught / yr', 'Amanzi emvula aqoqwayo / ngonyaka', lang)}</div>
-                    <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{known.rainL.toLocaleString('en-ZA')} L</div>
+                    <div className="font-display font-bold text-lg" style={{ color: '#235E86' }}>{numberLabel(known.rainL)} L</div>
                   </div>
                 </div>
                 <Link href="/farmer" className="flex items-center gap-1.5 mt-3 text-xs font-display font-semibold" style={{ color: '#1F4D2B', textDecoration: 'none' }}>

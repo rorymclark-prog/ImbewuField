@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -918,12 +919,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           {t('yourLand')}{siteMetrics.land.count && siteMetrics.land.count > 1 ? ` · ${siteMetrics.land.count} ${t('parcelsSectionLabel').toLowerCase()}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteMetrics.land.perimeterM >= 1000 ? `${(siteMetrics.land.perimeterM / 1000).toFixed(2)} km` : `${siteMetrics.land.perimeterM} m`} {t('perimeterUnit')} · {siteMetrics.land.areaM2.toLocaleString()} m²
+                          {siteMetrics.land.perimeterM >= 1000 ? `${(siteMetrics.land.perimeterM / 1000).toFixed(2)} km` : `${siteMetrics.land.perimeterM} m`} {t('perimeterUnit')} · {numberLabel(siteMetrics.land.areaM2)} m²
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
                         {siteMetrics.land.areaHa < 1
-                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaM2.toLocaleString()}</div>
+                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(siteMetrics.land.areaM2)}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>m²</div></>
                           : <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaHa}</div>
                               <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>{t('hectaresUnit')}</div></>
@@ -937,7 +938,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
                             {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: '#755942' }}>{f.areaHa < 1 ? `${Math.round(f.areaHa * 10000).toLocaleString()} m²` : `${f.areaHa} ha`}</span>
+                            <span className="ml-auto" style={{ color: '#755942' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                           </div>
                         ) : null)}
                       </div>
@@ -955,11 +956,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                           {t('harvestingAreas')}{siteMetrics.water.count > 1 ? ` · ${siteMetrics.water.count}` : ''}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteMetrics.water.areaM2.toLocaleString()} m² {t('catchmentAreaLabel')}
+                          {numberLabel(siteMetrics.water.areaM2)} m² {t('catchmentAreaLabel')}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.water.estVolumeKL.toLocaleString()}</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(siteMetrics.water.estVolumeKL)}</div>
                         <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>kL est.</div>
                       </div>
                     </div>
@@ -970,7 +971,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
                             {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: '#755942' }}>{f.estVolumeKL.toLocaleString()} kL</span>
+                            <span className="ml-auto" style={{ color: '#755942' }}>{numberLabel(f.estVolumeKL)} kL</span>
                           </div>
                         ) : null)}
                       </div>

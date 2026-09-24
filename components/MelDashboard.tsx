@@ -1,4 +1,5 @@
 'use client';
+import { numberLabel } from '@/lib/format-figures';
 import MelCoverage from './MelCoverage';
 import MelOverview from './MelOverview';
 
@@ -37,7 +38,7 @@ export function MelMetrics({ metrics, zu = false }: { metrics: MelMetric[]; zu?:
     <strong>{zu ? m.zu : m.en}</strong>
     {m.suppressed ? <p className={styles.muted}>{zu ? 'Kugodliwe ukuvikela iqembu elincane.' : 'Withheld to protect a small group.'}</p> : <>
       <p className={styles.muted}>{m.n} {zu ? 'baphendulile' : 'answered'} · {m.missing} {zu ? 'beqile' : 'skipped'}</p>
-      {m.mean !== undefined && <p>{zu ? 'Isilinganiso' : 'Average'}: <strong>{m.mean.toLocaleString('en-ZA', { maximumFractionDigits: 2 })}</strong></p>}
+      {m.mean !== undefined && <p>{zu ? 'Isilinganiso' : 'Average'}: <strong>{numberLabel(m.mean, 2)}</strong></p>}
       {m.choices?.map(o => <div key={o.value}><div className={styles.row}><span>{zu ? o.zu : o.en}</span><strong>{o.count}</strong></div><div className={styles.bar}><span style={{ width: `${m.n ? 100 * o.count / m.n : 0}%` }} /></div></div>)}
     </>}
   </div>)}</div>;

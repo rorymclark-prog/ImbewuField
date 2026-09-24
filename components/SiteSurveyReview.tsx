@@ -1,4 +1,5 @@
 'use client';
+import { numberLabel } from '@/lib/format-figures';
 import { Users, Leaf, Droplets, Sprout, AlertTriangle, Pencil, Check, Circle, ClipboardCheck } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import type { SiteSurvey, ProductionCategory } from '@/lib/site-survey';
@@ -27,7 +28,7 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
   const {t}=useLanguage();
   const unknown=t('surveyNotRecorded');
   const list=(values:string[], overrides:Record<string,string>={})=>values.length?values.map(v=>t(overrides[v]??LABELS[v]??(v==='none'?'surveyNoneReported':v))).join(' · '):unknown;
-  const area=(n:number|null)=>n===null?unknown:`${n.toLocaleString()} m²`;
+  const area=(n:number|null)=>n===null?unknown:`${numberLabel(n)} m²`;
   const entries=s.reportedProduction??[];
   const harvestMonths=new Set(entries.flatMap(row=>row.harvestMonths??[]));
   const sections=[
@@ -72,8 +73,8 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
       <h3>{t('surveyHarvestOverview')}</h3><p>{t('surveyHarvestUnknown')}</p>
       <div className={styles.months}>{months.map((month,i)=><span key={month} data-reported={harvestMonths.has(i+1)} aria-label={`${month}: ${t(harvestMonths.has(i+1)?'surveyHarvestReported':'surveyNotRecorded')}`}>{harvestMonths.has(i+1)?<Check size={15}/>:<Circle size={15}/>} {month}</span>)}</div>
       <div className={styles.reviewProduction}>{entries.length===0?<p className={styles.smallNote}>{t('surveyNoProductionYet')}</p>:entries.map(row=><article key={row.category}>
-        <div><strong>{row.name||productionLabels.find(item=>item.category===row.category)?.label}</strong><span>{row.quantityPerYear===null?unknown:`${row.quantityPerYear.toLocaleString()} ${row.unit} / ${t('surveyPerYear')}`}</span></div>
-        <p>{t('surveyUsedByHouseholdLabel')}: {row.usedByHousehold===null?unknown:`${row.usedByHousehold} ${row.unit}`} · {t('surveySoldLabel')}: {row.sold===null?unknown:`${row.sold} ${row.unit}`}<br/>{t('surveyIncomeEarnedLabel')}: {row.incomeZar===null?unknown:`R ${row.incomeZar.toLocaleString()}`}</p>
+        <div><strong>{row.name||productionLabels.find(item=>item.category===row.category)?.label}</strong><span>{row.quantityPerYear===null?unknown:`${numberLabel(row.quantityPerYear)} ${row.unit} / ${t('surveyPerYear')}`}</span></div>
+        <p>{t('surveyUsedByHouseholdLabel')}: {row.usedByHousehold===null?unknown:`${row.usedByHousehold} ${row.unit}`} · {t('surveySoldLabel')}: {row.sold===null?unknown:`${row.sold} ${row.unit}`}<br/>{t('surveyIncomeEarnedLabel')}: {row.incomeZar===null?unknown:`R ${numberLabel(row.incomeZar)}`}</p>
       </article>)}</div>
       <button className={styles.detailLink} onClick={onEditProduction}><Pencil size={16}/>{t('surveyEditProduction')}</button>
     </section>
