@@ -31,6 +31,7 @@ import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
+import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
@@ -722,6 +723,7 @@ export default function StudentPage() {
   const pct = TOTAL_MODULES === 0 ? 0 : Math.round((doneCount / TOTAL_MODULES) * 100);
   const totalMins = COURSE_MODULES.reduce((s, m) => s + (doneIds.has(m.id) ? 0 : m.durationMins), 0);
   const studyModule = COURSE_MODULES.find((m) => m.id === currentId) ?? COURSE_MODULES[0];
+  const studyModulePresentation = resolveCourseModulePresentation(studyModule, lang);
 
   // Arc SVG for progress ring
   const R = 44;
@@ -760,7 +762,7 @@ export default function StudentPage() {
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
 
             }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
-            <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
+            <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>
           </div>
           <div className={styles.progress}>
           {/* Ring */}
@@ -927,6 +929,7 @@ export default function StudentPage() {
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today), lang, t) : null;
+            const modulePresentation = resolveCourseModulePresentation(mod, lang);
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
@@ -959,8 +962,14 @@ export default function StudentPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-2 flex-wrap">
                         <span className={`font-display ${styles.moduleTitle}`}>
-                          {mod.title}
+                          {modulePresentation.title}
                         </span>
+                        {lang === 'zu' && (
+                          <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                            style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
+                            {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                          </span>
+                        )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
                           {t(CATEGORY_LABEL_KEYS[mod.category])}
@@ -998,7 +1007,13 @@ export default function StudentPage() {
                     onClick={() => toggleExpand(mod.id)}
                     aria-expanded={isExpanded}
                   >
-                    <span className={`font-display ${styles.moduleTitle}`}>{mod.title}</span>
+                    <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
+                    {lang === 'zu' && (
+                      <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                        style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
+                        {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                      </span>
+                    )}
                     <div className="flex items-start gap-2 flex-wrap">
                       <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
@@ -1048,7 +1063,7 @@ export default function StudentPage() {
                       </p>
                     )}
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
-                      {mod.description}
+                      {modulePresentation.description}
                     </p>
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
@@ -1107,7 +1122,7 @@ export default function StudentPage() {
                       moduleIds={[mod.id]}
                       lang={lang}
                       compact
-                      label={t('studentSaveModule').replace('{title}', mod.title)}
+                      label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
                     />
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
                         Rory, on opening a finished module: "i wanted the full slidedeck at the

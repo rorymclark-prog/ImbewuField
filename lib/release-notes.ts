@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: 'e1a0d221', changes: [
+    'All 10 core module cards show labelled isiZulu draft names and descriptions.',
+    'Lesson slides and narration still show their own language status.',
+  ], tour: [
+    { title: 'Check module names', where: 'My Studies · course list', href: '/student',
+      detail: 'Choose isiZulu and look at the ten course cards and their draft labels.' },
+  ] },
   { when: '24 September 2026', sha: '3bcbed40', changes: [
     'Slide images open inside My Studies with a visible Close button and zoom controls.',
   ], tour: [

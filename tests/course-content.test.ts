@@ -11,6 +11,7 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
 import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
+import { COURSE_MODULE_TRANSLATION_DRAFTS, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);
@@ -206,4 +207,32 @@ test('an incomplete or answer-shifted isiZulu draft falls back to English', () =
       ? { ...question, correct: (question.correct + 1) % question.options.length } : question) },
   }).status, 'english-fallback');
   assert.equal(resolveLearnerLessonPresentation(lesson, 'en').content.body, lesson.body);
+});
+
+test('isiZulu core module card drafts stay paired with exact English source and disclose their status', () => {
+  assert.equal(Object.keys(COURSE_MODULE_TRANSLATION_DRAFTS).length, 10);
+  const moduleIds = new Set(COURSE_MODULES.map(module => module.id));
+  assert.deepEqual(Object.keys(COURSE_MODULE_TRANSLATION_DRAFTS).sort(), [...moduleIds].sort());
+
+  for (const module of COURSE_MODULES) {
+    const draft = COURSE_MODULE_TRANSLATION_DRAFTS[module.id as keyof typeof COURSE_MODULE_TRANSLATION_DRAFTS];
+    const presentation = resolveCourseModulePresentation(module, 'zu');
+    assert.ok(draft, `${module.id}: missing core card draft`);
+    assert.equal(module.title, draft.sourceTitle, `${module.id}: source title changed; draft must be rechecked`);
+    assert.equal(module.description, draft.sourceDescription, `${module.id}: source description changed; draft must be rechecked`);
+    assert.equal(presentation.status, 'draft', module.id);
+    assert.equal(presentation.title, draft.title, module.id);
+    assert.equal(presentation.description, draft.description, module.id);
+    assert.ok(presentation.title.trim().length > 0 && presentation.description.trim().length > 0, module.id);
+    assert.equal(resolveCourseModulePresentation(module, 'en').title, module.title, module.id);
+  }
+
+  const changedSource = { ...COURSE_MODULES[0], description: `${COURSE_MODULES[0].description} Changed.` };
+  assert.deepEqual(resolveCourseModulePresentation(changedSource, 'zu'), {
+    title: changedSource.title,
+    description: changedSource.description,
+    status: 'english-fallback',
+  });
+  const reserveCourse = { ...COURSE_MODULES[0], id: 'farm-finance' };
+  assert.equal(resolveCourseModulePresentation(reserveCourse, 'zu').status, 'english-fallback');
 });
