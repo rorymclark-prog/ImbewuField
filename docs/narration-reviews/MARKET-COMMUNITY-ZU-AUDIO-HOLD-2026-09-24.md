@@ -40,8 +40,14 @@ are in the current script. v5 was generated from SHA-256
 `da430cefdedadb574602aa1d3a1fa9373f90d20daffddab4d32a4d0f533ed92b` and staged at
 `~/Downloads/imbewu-record/market-community-zu-20260924-v5/`. The 20 clips have replaced the
 working-tree assets; a concatenated full narration also decodes successfully (607.152 seconds).
-The pending review exception now binds this exact source SHA. No commit or publication deployment
-has been made from this branch yet.
+The pending review exception initially bound this exact recording-source SHA. At that point,
+no commit or publication deployment had been made from the recording branch.
+
+On 24 September, after that audio batch was published, slide 14's display heading was shortened
+to `Buka: Ukubambisana Komakhelwane` to remove a visible malformed word. The spoken slide 14
+paragraphs and all 20 audio clips are unchanged. The current script SHA is
+`31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca`; the hash-bound
+pending review exception follows that title-only edit. This is not a fluent-language sign-off.
 
 The batch uses Microsoft `zu-ZA-ThandoNeural` at `-12%`, matching Rory's voice
 direction. Per-slide proofs report text match, audio hash, word boundaries and

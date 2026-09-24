@@ -713,7 +713,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // Corrected English recorded 2026-09-20, en-ZA-LukeNeural at -12%.
     // Word-boundary/script matching and full decode passed; fluent listening review is separate.
     // IsiZulu generated 2026-09-24 with zu-ZA-ThandoNeural at -12%, against corrected
-    // slide-only script SHA da430cef. Clip text, timing and full decode checks pass; human listening,
+    // slide-only script body recorded at SHA da430cef; its slide 14 display heading was later
+    // shortened without changing spoken text. Clip text and full decode checks pass; human listening,
     // fluent-language and local farming review are still pending. Keep this visible as a draft.
     tracks: [
       { slide: 1,  lesson: null,                  title: 'Market Gardening & Community', titleByLang: { zu: 'Ingadi Yezimakethe Nomphakathi' } },
@@ -729,7 +730,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'market-community-l2', title: 'Count the Work of Direct Selling', titleByLang: { zu: 'Bala Umsebenzi Wokuthengisa Ngqo' } },
       { slide: 12, lesson: 'market-community-l2', title: 'Plan Around Real Orders', titleByLang: { zu: 'Hlela Ngama-oda Angempela' } },
       { slide: 13, lesson: 'market-community-l2', title: 'Match the Channel to Your Supply', titleByLang: { zu: 'Qondanisa Indlela Nokukhiqiza Kwakho' } },
-      { slide: 14, lesson: 'market-community-l3', title: 'Watch: How Neighbours Strengthen a Harvest', titleByLang: { zu: 'Buka: Omakhelwane Basqinisa Kanjani Isivuno' } },
+      { slide: 14, lesson: 'market-community-l3', title: 'Watch: How Neighbours Strengthen a Harvest', titleByLang: { zu: 'Buka: Ukubambisana Komakhelwane' } },
       { slide: 15, lesson: 'market-community-l3', title: 'Save Seed Together', titleByLang: { zu: 'Gcinani Imbewu Ndawonye' } },
       { slide: 16, lesson: 'market-community-l3', title: 'Share Expensive Tools', titleByLang: { zu: 'Yabelanani Ngamathuluzi Abizayo' } },
       { slide: 17, lesson: 'market-community-l3', title: 'Reduce Loss Between Harvest and Sale', titleByLang: { zu: 'Nciphisa Ukulahleka Phakathi Kokuvuna Nokuthengisa' } },

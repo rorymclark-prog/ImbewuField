@@ -1,0 +1,153 @@
+{
+  "module": "market-community",
+  "language": "zu",
+  "status": "unreviewed draft",
+  "sourceFiles": {
+    "docs/narration/market-community.en.md": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
+    "docs/narration/market-community.zu.md": "31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca"
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "file": "public/course-decks/market-community/zu/slide-01.jpg",
+      "bytes": 231014,
+      "sha256": "127f302a34f3ab8ed1101ffb60889fd48134ea512d77507f67cf73b3c00d997b"
+    },
+    {
+      "slide": 2,
+      "file": "public/course-decks/market-community/zu/slide-02.jpg",
+      "bytes": 99870,
+      "sha256": "40f54d5e56ac5d891b9e68cde07ab28a4878c20206e71e16b9bc6ed32d53ba82"
+    },
+    {
+      "slide": 3,
+      "file": "public/course-decks/market-community/zu/slide-03.jpg",
+      "bytes": 110807,
+      "sha256": "c0b1c1cd3d77b386b642353694af09785916d56e6ffe252abd2ce527a8509e0d"
+    },
+    {
+      "slide": 4,
+      "file": "public/course-decks/market-community/zu/slide-04.jpg",
+      "bytes": 113605,
+      "sha256": "3b25e3a0cc9ad2e13ff60ffb775bfca6ae688300aca1f36f8f23fd334b74e0b2"
+    },
+    {
+      "slide": 5,
+      "file": "public/course-decks/market-community/zu/slide-05.jpg",
+      "bytes": 329274,
+      "sha256": "b9ee6b369524f936dce7c6ae06b1201e3a91ebf660958a214092be605fba66d6"
+    },
+    {
+      "slide": 6,
+      "file": "public/course-decks/market-community/zu/slide-06.jpg",
+      "bytes": 106387,
+      "sha256": "c89c172122f292f06f179e26bc7089989764d74260ea69d23c613a41fc42671d"
+    },
+    {
+      "slide": 7,
+      "file": "public/course-decks/market-community/zu/slide-07.jpg",
+      "bytes": 506997,
+      "sha256": "6f3ec3132e49a313f3bfa47175dd9f23b0cd2c88686eea0c1a8646ba4fbad21b"
+    },
+    {
+      "slide": 8,
+      "file": "public/course-decks/market-community/zu/slide-08.jpg",
+      "bytes": 98568,
+      "sha256": "8e020e1b431aa54550c48d2825d0806cea9162c38ee44c96d4df1f58bb7c89c1"
+    },
+    {
+      "slide": 9,
+      "file": "public/course-decks/market-community/zu/slide-09.jpg",
+      "bytes": 129027,
+      "sha256": "eb07a5e3a95687527b6525dc7bea8561ed6aa90268bf9556a6aa6e098a0abc7b"
+    },
+    {
+      "slide": 10,
+      "file": "public/course-decks/market-community/zu/slide-10.jpg",
+      "bytes": 529918,
+      "sha256": "35cf2659ab6811a2c7ff787ea87bf109fe4f7637ba3f7c015a047d5bd68f8cb6"
+    },
+    {
+      "slide": 11,
+      "file": "public/course-decks/market-community/zu/slide-11.jpg",
+      "bytes": 124215,
+      "sha256": "88d3e61844af989d8be3de23f6828f42db88c1dc19ef3b38da8bd463f52ec420"
+    },
+    {
+      "slide": 12,
+      "file": "public/course-decks/market-community/zu/slide-12.jpg",
+      "bytes": 97910,
+      "sha256": "9380a6151f7acd7a246c13434346b11c9b27b9b62ffa286b5177640a8a1fe92c"
+    },
+    {
+      "slide": 13,
+      "file": "public/course-decks/market-community/zu/slide-13.jpg",
+      "bytes": 109717,
+      "sha256": "baf55ac87ad7d10ee5663dcbd32183dbe412f188edc112a9e10cb13a8529f2fa"
+    },
+    {
+      "slide": 14,
+      "file": "public/course-decks/market-community/zu/slide-14.jpg",
+      "bytes": 109943,
+      "sha256": "6a935180a5d86dad2bbe9725107cf1ec795aa2d734934c459f903beb11a918f9"
+    },
+    {
+      "slide": 15,
+      "file": "public/course-decks/market-community/zu/slide-15.jpg",
+      "bytes": 471220,
+      "sha256": "cbe38c2674856845f4df2b95d51729ce0a19cf8ed6ad6fd2d659257fc8048cbd"
+    },
+    {
+      "slide": 16,
+      "file": "public/course-decks/market-community/zu/slide-16.jpg",
+      "bytes": 553093,
+      "sha256": "9c6e1f306da0a5572dbc16a01fac67f6c37e404a488e99189543ddc406f066d1"
+    },
+    {
+      "slide": 17,
+      "file": "public/course-decks/market-community/zu/slide-17.jpg",
+      "bytes": 136297,
+      "sha256": "bab12a4b781411828fcd63e1a32d89c18fad0434ff536499784191ea32b839a4"
+    },
+    {
+      "slide": 18,
+      "file": "public/course-decks/market-community/zu/slide-18.jpg",
+      "bytes": 544791,
+      "sha256": "fbc461537a8039a546078953e3e51bdd3fa3eed3a0be85022e84b04e8271ca30"
+    },
+    {
+      "slide": 19,
+      "file": "public/course-decks/market-community/zu/slide-19.jpg",
+      "bytes": 135405,
+      "sha256": "f0aa079b2b354f0b47e86dd6be4e4689aa7de2cdacfd3287adf2591be746d431"
+    },
+    {
+      "slide": 20,
+      "file": "public/course-decks/market-community/zu/slide-20.jpg",
+      "bytes": 138860,
+      "sha256": "5a5c44847b589b81ec4d2a77f33c22c0238a5f6e73bc08d1703c8666d639b4f6"
+    }
+  ],
+  "diagrams": {
+    "4": {
+      "file": "docs/media/market-community/market-community-zu-diagram-04.jpg",
+      "bytes": 125078,
+      "sha256": "b7ab091b5d109855126d0d814465e14331324721b5867fe29f968b12d4c99c9d"
+    },
+    "9": {
+      "file": "docs/media/market-community/market-community-zu-diagram-09.jpg",
+      "bytes": 141903,
+      "sha256": "e584f33646fa813b104ab2b353fb87adb8cf24dfc5e4f94f3cf2ae3c1628545e"
+    },
+    "14": {
+      "file": "docs/media/market-community/market-community-zu-diagram-14.jpg",
+      "bytes": 121317,
+      "sha256": "a05a42057f809e6b22d1c67621110ec31a74c02695fbf906037f2dc97d0ac91f"
+    }
+  },
+  "review": {
+    "visual": "20 generated stills inspected as contact sheet; representative slides inspected at 390px wide.",
+    "language": "No fluent-speaker or farming-expert review claimed.",
+    "motion": "No animation generated; three Watch slides are static diagrams."
+  }
+}
