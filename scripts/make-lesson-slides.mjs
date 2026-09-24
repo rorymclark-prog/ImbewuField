@@ -154,7 +154,7 @@ const s1Title = s1 && !MARKER_TITLE.test(s1.title.trim()) ? s1.title.trim() : ''
 const s1Sub = s1?.subtitle?.trim() || '';
 
 const deckTitle = h1Local || s1Title || mod?.title || moduleId;
-const deckTagline = h1English || s1Sub || mod?.description || '';
+const deckTagline = lang === 'zu' ? '' : (h1English || s1Sub || mod?.description || '');
 
 // A slide the script marked as carried by a picture: "Watch: Bare Soil and Mulch". The words are
 // deliberately thin on these — the picture is the teaching — so they get their own layout rather
@@ -169,7 +169,10 @@ const payload = slides.map((s) => {
   return {
     n: s.n,
     title: s.n === 1 ? deckTitle : s.title.replace(WATCH, ''),
-    subtitle: s.n === 1 ? deckTagline : s.subtitle,
+    // An English gloss underneath every isiZulu heading made a learner's home-study deck
+    // English-first on the very slides meant to serve isiZulu. Keep the slide copy in its chosen
+    // language; translation review notes live beside the script, not in the learner's frame.
+    subtitle: lang === 'zu' ? '' : (s.n === 1 ? deckTagline : s.subtitle),
     watch,
     // A watch slide gets one line under the picture, not a bullet list competing with it.
     caption: watch ? body[0] || '' : '',
@@ -270,7 +273,7 @@ def wrap(draw, text, fnt, maxw):
 total = len(cfg['slides'])
 MODNUM = cfg.get('moduleNumber') or 0
 LESSON_ART = [p for p in (cfg.get('lessonArt') or []) if os.path.exists(p)]
-EYE = ('ImbewuField · Module %d' % MODNUM) if MODNUM else 'ImbewuField'
+EYE = (('ImbewuField · Imojuli %d' if cfg.get('lang') == 'zu' else 'ImbewuField · Module %d') % MODNUM) if MODNUM else 'ImbewuField'
 
 def find_illustration(n):
     """slide-NN.<ext> in the images dir, if one was supplied. Slides without one are not a
@@ -362,7 +365,7 @@ for s in cfg['slides']:
         y += 30
         for ln in wrap(d, s['subtitle'], F_TAG, tw):
             d.text((x, y), ln, font=F_TAG, fill=RUST); y += 52
-        track(d, (x, H - 98), 'HOME-STUDY LESSON', F_EYE, GREEN)
+        track(d, (x, H - 98), 'ISIFUNDO SOKUFUNDA EKHAYA' if cfg.get('lang') == 'zu' else 'HOME-STUDY LESSON', F_EYE, GREEN)
 
     elif str(s['n']) in cfg.get('artPlan', {}):
         # Guilds alternates complete teaching pictures with quiet text cards. Keep each picture
@@ -382,7 +385,7 @@ for s in cfg['slides']:
             img.paste(im, ((W-im.width)//2, top + (H-top-105-im.height)//2))
 
     elif s.get('watch') and illus:
-        eyebrow(d, x, 64, EYE + ' · Animation')
+        eyebrow(d, x, 64, EYE + (' · Isithombe esinyakazayo' if cfg.get('lang') == 'zu' else ' · Animation'))
         y = 138
         for ln in wrap(d, s['title'], F_TITLE, W - x - 240):
             d.text((x, y), ln, font=F_TITLE, fill=GREEN); y += 74

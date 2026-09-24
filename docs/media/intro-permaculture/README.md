@@ -45,3 +45,49 @@ Pillow, FFmpeg/FFprobe and a supported Arial/DejaVu font are required. Preview r
 Generate the deck using the existing `scripts/make-lesson-slides.mjs intro-permaculture en OUTPUT --images ART` with matching Watch posters named `slide-07.jpg`, `slide-13.jpg` and `slide-19.jpg`; the title uses the module's existing ethics illustration, padded to retain the whole picture. Export JPEG slides at 1920×1080, quality 85. No new voice files are needed.
 
 The local delivery pack is `Downloads/imbewu-studies-2026-09-20/intro-production/`. Its review reel preserves the source speech without speed changes or trimming and pads the scene tails; the reel re-encodes audio to AAC. The app continues to play the original MP3 files. The reel is review material and is not included in the learner's automatic download.
+
+## isiZulu review deck — 24 September 2026
+
+The 22 isiZulu stills in `public/course-decks/intro-permaculture/zu/` are an
+**unreviewed AI draft**. They were rendered from the source-paired isiZulu script
+at SHA-256 `faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667`.
+The first-language and local farming review gate in
+`docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md` still applies.
+
+From a checkout that contains that exact script and its English art plan:
+
+```sh
+node scripts/make-lesson-slides.mjs intro-permaculture zu /tmp/intro-permaculture-zu-base
+python3 docs/media/intro-permaculture/render-zu-deck.py intro-permaculture
+npm run assets:sizes
+```
+
+The first command uses `docs/narration/intro-permaculture.zu.md`, the existing
+module artwork, and `docs/course-deck-art.json`. The Pillow post-processor reads
+the emitted slide JSON and PNGs from the temporary output. It adds isiZulu
+titles and source sentences to scene slides, replaces English labels in the
+three Watch diagrams, and marks all images `OKUSALUNGISWA NGE-AI · AKUKABUYEKEZWA`. It writes
+1920×1080 JPEG stills at quality 88. It makes no animation and uses no paid
+generation credits. The 22 stills total 6,024,458 bytes (about 5.8 MB decimal).
+
+The post-processor is reusable for another module when its isiZulu script and
+English art plan exist: render its `zu` base PNGs with `make-lesson-slides.mjs`,
+then run `render-zu-deck.py <module-id>`. Diagrams with labels baked into source
+art need a module-specific localization pass. Per module, verify the source
+script hash, visible copy and badges on all slides, baked-in diagram labels, a
+contact sheet, and representative 390-pixel samples. This Introduction renderer
+has specific overlays for its existing diagrams on slides 7, 13 and 19.
+Familiar teaching terms such as *Permaculture*, *biomass* (explained with leaves
+and plant remains), *windbreak*, *zones/sectors*, *swale* and *borehole* remain
+where they are paired with isiZulu context. Generic subheads, review badges and
+diagram labels are localized.
+
+Before release, inspect the full contact sheet at
+`docs/media/intro-permaculture/zu-contact-sheet.jpg`, then inspect slides 2, 4,
+7, 13 and 19 at a 390-pixel viewport. Check that each of slides 1–22 visibly
+contains isiZulu text, the source teaching is still represented, no text is
+cropped, and the deck has no horizontal overflow. Slides 7 and 13 deserve a
+source check: slide 7 asks learners to check sharing permission and borehole
+capacity; slide 13 says hail damage depends on the storm and maize growth stage
+and makes no survival promise. No fluent isiZulu or human farming review is
+claimed by the contact sheet or viewport check.
