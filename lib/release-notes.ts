@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 September 2026', sha: '5a9f11af', changes: [
+    'Small Livestock now has twenty isiZulu slides and the woman’s narration.',
+    'Its three isiZulu lessons and quizzes are marked as drafts for review.',
+  ], tour: [
+    { title: 'Hear Small Livestock in isiZulu', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Choose isiZulu, open Small Livestock, and play a narrated slide.' },
+  ] },
   { when: '24 September 2026', sha: '8483e254', changes: [
     'Water Harvesting now has isiZulu slides and the same woman’s voice as Seeds.',
     'The greywater lesson asks for qualified local advice before any reuse.',

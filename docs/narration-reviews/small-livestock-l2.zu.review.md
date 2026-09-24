@@ -1,42 +1,32 @@
-# Small Livestock L2 isiZulu alignment review
+# Small Livestock L2 isiZulu alignment record
 
-**Status:** review packet only. The existing isiZulu narration is an unpublished draft; no first-language, learner or local beekeeper approval is recorded. The learner-facing deck, narration, transcript and audio remain English only. This packet does not authorize changes to isiZulu learner content or audio.
+**Status:** complete unreviewed learner draft. The lesson, all quiz fields, narration, deck, transcript and audio are aligned to the corrected English source. No fluent isiZulu, learner, local beekeeper, legal or human listening approval is claimed.
 
 ## Sources compared
 
-- English lesson body, key points and quiz: `lib/course-modules.ts`, lesson `small-livestock-l2`.
+- Corrected English lesson, key points, quiz and rationales: `lib/course-modules.ts`, `small-livestock-l2`, at source-correction commit `a7049d78`.
 - English slide narration: `docs/narration/small-livestock.en.md`, slides 9–13.
-- IsiZulu draft: `docs/narration/small-livestock.zu.md`, slides 9–13.
-- Published English captions/transcript and track title: `lib/course-transcripts.ts` and `lib/course-audio.ts`.
-- Current registered bee footage and technical observations: `docs/media/studies-animation-quality/small-livestock-l2-lesson-check.md` and `bee-hive-and-blossom.md`.
-- Distribution source: [SANBI, Cape honeybee](https://www.sanbi.org/animal-of-the-week/cape-honeybee/). SANBI describes the Cape honeybee in the Western Cape and parts of the Eastern Cape, and the African honeybee as native to central and most of southern Africa.
-- Existing legal/source review: `docs/media/studies-animation-quality/small-livestock-l1-l2-source-correction-proposal.md`; South African Government, [2019 honey-bee control measures](https://www.gov.za/documents/notices/agricultural-pests-act-control-measures-relating-honey-bees-22-nov-2019).
+- IsiZulu learner text and slide narration: `docs/narration-reviews/small-livestock-l2.zu.full-draft.md` and `docs/narration/small-livestock.zu.md`.
+- Registered bee animation: `public/course-animations/small-livestock/flow-bee-between-blossoms.mp4`, eight seconds. It shows one bee moving between adjacent blossoms. It shows no hive route, confirmed pollen transfer, fertilisation or yield effect.
+- Existing source basis: SANBI's broad natural distribution account and the South African Government's 2019 honey-bee control measures are linked from the source-correction review. The movement demarcation is separate from natural range. Registration wording is limited to activities defined by those measures.
 
-## Exact stale or unresolved claims
+## Alignment decisions
 
-| Location | Current isiZulu draft | Current English / evidence | Review needed |
-|---|---|---|---|
-| Slide 9 title and narration | “Izinyosi Zihamba Phakathi Kwe-Hive Nezitshalo”; “Buka izinyosi ziphuma ku-hive ziye ezitshalweni eziqhakazayo.” The next line says their movement carries pollen across the site. | The current English title is **“Watch: A Bee Moves Between Two Blossoms”** and narration is **“Watch one bee move from one blossom to another. Bees can carry pollen as they visit flowers.”** The registered silent eight-second clip shows one bee moving between adjacent blossoms; it shows no hive departure or route across a farm and does not establish pollen transfer. | A fluent reviewer should revise the isiZulu scene description to one bee moving between blossoms. Keep general pollination teaching distinct from what this clip depicts; do not say this bee carried pollen, fertilised a flower or improved fruit set. The local poster link is also the close-up, so it supplies no hive context. |
-| Slide 11 distribution | “I-Cape bee itholakala eningizimu naseningizimu-ntshonalanga yeKapa. I-African honeybee itholakala enyakatho nasempumalanga.” | Current English matches SANBI: “The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.” | Reconcile the broad compass-only claim with the current English. Treat the regional description as teaching context, not a field boundary or a way to identify a local bee. |
-| Slide 13 registration | “Bonke abafuyi bezinyosi kufanele babhalise eMnyangweni Wezolimo kazwelonke.” | English lesson and key point say all beekeepers must register. The project’s source review points to the 2019 control measures, which set registration requirements for people carrying out beekeeping activities. | Keep the isiZulu on hold until the English legal scope is confirmed against the current official control measure. A local/legal reviewer should confirm whether the wording covers every learner-facing activity and how to refer to the Department; do not add an annual deadline or make legal advice broader than the source. |
-| Slide 13 swarm response | “Uma izinyosi ziphuma ngamaqoqo kaningi, cela umfuyi oqeqeshiwe ahlole i-hive. Ukuminyana kungaba yisizathu esisodwa...” | English says repeated swarming warrants trained inspection and crowding is one possible cause, not a diagnosis. This keeps the cause conditional. | Confirm the isiZulu clearly means repeated swarming and inspection by a trained beekeeper, while preserving “one possible cause.” Do not imply crowding is the diagnosis or advise moving the hive or replacing the queen without inspection. |
+- Slide 9 names one bee moving between two blossoms. The next sentence states a general ability of bees; it does not attribute pollen transfer to the filmed bee.
+- Slide 11 retains the corrected broad Cape and African honeybee subspecies ranges, explicitly says they are not movement boundaries, and directs learners to check current movement rules with the Department and a local beekeeper before moving bees or hives.
+- Slide 13 replaces the former blanket “all beekeepers” claim with the source's defined registration activities: managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. It directs uncertain cases to the Department.
+- The lesson title, four key points, two quiz questions, all four answer options per question, canonical correct answer indexes and rationales are included in the source-paired learner draft.
+- Slides 10–13 retain the crop and variety qualification, no guaranteed yield, weather/water/plant-health and other-pollinator factors, pesticide caution, safe hive siting, and repeated-swarm inspection. Crowding remains a possible cause rather than a diagnosis.
 
-## Meaning already preserved, still needing spoken-language review
+## Reused L1/L3 narration comparison
 
-Slides 10–12 preserve the English safeguards: different crops and varieties have different pollination needs; a hive does not guarantee higher yield; weather, water, plant health and other pollinators matter; safety comes before morning sun; and hives should be kept away from busy paths, homes and children’s play areas. The draft also retains the pesticide-exposure and farm-health caution on slide 13. A first-language reviewer and local beekeeper should check that these meanings are natural and actionable when heard aloud.
+Slides 4–8 were compared with the current English source. Slide 4 was corrected to match the English hens-foraging-after-harvest scene. Slides 5–8 retain the source's limits on feed, water, shelter, care, manure safety, duck supervision and tractor movement. Slides 14–18 were compared with English. Slides 14–15 were aligned to partial nutrient return through fully composted manure, purchased feed entering, farm products leaving, and safe composting around food crops. Slides 16–18 retain tick and goat parasite safeguards. Slides 19–20 now match the current resource assignment and field action.
 
-No isiZulu quiz copy was located. The English quiz asks learners to check insect visits while considering other causes of poor fruit set, and to ask a trained beekeeper to inspect a repeatedly swarming colony. If quiz localization is later authorized, translate each option, answer and rationale together; do not turn low pollinator visits into the sole cause or imply guaranteed yield.
+## Remaining review holds
 
-## Questions for reviewers
+1. First-language isiZulu and local farming review should check spoken wording, borrowed terms and comprehension.
+2. A local beekeeper should check hive siting, movement and swarm language.
+3. A legal/source reviewer should check the listed registration scope against current Department guidance.
+4. Human listening review of all synthetic clips remains pending. Word-boundary matching and full-file decoding prove text coverage and file integrity, not pronunciation or learner comprehension.
 
-- What are the natural, commonly understood isiZulu terms for “one bee,” “blossom,” “honeybee subspecies,” “hybrid zone,” “pollen,” “swarming,” and “colony” in this farming context? Should any English loanwords in the draft remain?
-- Does the revised regional description sound like a broad range, rather than a rule a farmer can use to identify a bee or decide where a colony may be moved?
-- Does the line about pollen describe general pollination, without asserting that the filmed bee transferred pollen?
-- Do the hive siting instructions clearly describe busy public paths and children’s play areas without promising a sting-free site?
-- Is the registration wording understandable and faithful to the current official rule after its English scope is settled?
-- Does the repeated-swarming instruction clearly direct the learner to trained inspection and avoid diagnosing crowding?
-- When read aloud, are the safety steps and conditional claims understandable across the intended local dialect and literacy range?
-
-## Review boundary
-
-This is a text comparison, not approval. The registered clip already exists and was checked in the deployed browser and saved offline pack; its provenance records one earlier x1 Flow output. No new animation or Flow generation is needed for the wording corrections. No isiZulu audio or learner-facing file was created or changed. A fluent isiZulu-speaking farmer and local beekeeper review remain open, and no practitioner approval is claimed.
+The still deck is visually documented in `docs/media/small-livestock/zu-preview/`. Audio provenance, exact word boundaries, source hashes and decode results are in `docs/narration-reviews/small-livestock-zu-audio-proof/`. No additional Flow generation or animation was used.

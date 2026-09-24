@@ -76,6 +76,11 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/vegetables-staples.zu-audio-2026-09-24.md',
     scriptSha256: '9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d',
   },
+  'small-livestock.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/small-livestock.zu-audio-2026-09-24.md',
+    scriptSha256: '4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb',
+  },
 };
 
 export function narrationReviewPending(moduleId: string, lang: string): boolean {

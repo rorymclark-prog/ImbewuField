@@ -688,32 +688,32 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'small-livestock': {
-    languages: ['en'],
-    // Targeted factual corrections re-recorded in September 2026; source review is
-    // docs/studies-review-2026-09-20/FACT-CHECK.md. Same en-ZA-LukeNeural voice.
-    // The "Watch" clip leads each lesson here rather than following its opening slide (4, 9, 14),
-    // which is why every lesson run starts on a Watch.
+    languages: ['zu', 'en'],
+    // English factual corrections are sourced in docs/studies-review-2026-09-20/FACT-CHECK.md.
+    // IsiZulu review draft recorded 2026-09-24 with zu-ZA-ThandoNeural at -12%; text-boundary
+    // and decode proofs live in docs/narration-reviews/small-livestock-zu-audio-proof/.
+    // Fluent isiZulu, local beekeeping and human listening review remain pending.
     tracks: [
-      { slide: 1,  lesson: null,                 title: 'Small Livestock Integration' },
-      { slide: 2,  lesson: null,                 title: 'Why This Matters' },
-      { slide: 3,  lesson: null,                 title: 'Learning Outcomes' },
-      { slide: 4,  lesson: 'small-livestock-l1', title: 'Watch: Hens Foraging After Harvest' },
-      { slide: 5,  lesson: 'small-livestock-l1', title: 'Chickens Turn Scratching Into Useful Work' },
-      { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time' },
-      { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
-      { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
-      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: A Bee Moves Between Two Blossoms' },
-      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops' },
-      { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees' },
-      { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care' },
-      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Care and Flowers' },
-      { slide: 14, lesson: 'small-livestock-l3', title: 'Nutrients Moving Through the Farm' },
-      { slide: 15, lesson: 'small-livestock-l3', title: 'Some Nutrients Return; Others Enter and Leave' },
-      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter' },
-      { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
-      { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control' },
-      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Where Resources Go' },
-      { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
+      { slide: 1,  lesson: null,                 title: 'Small Livestock Integration', titleByLang: { zu: 'Ukuhlanganiswa Kwemfuyo Encane' } },
+      { slide: 2,  lesson: null,                 title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile' } },
+      { slide: 3,  lesson: null,                 title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda' } },
+      { slide: 4,  lesson: 'small-livestock-l1', title: 'Watch: Hens Foraging After Harvest', titleByLang: { zu: 'Buka: Izinkukhu Zicosha Phakathi Kwezinsalela Ngemva Kokuvuna' } },
+      { slide: 5,  lesson: 'small-livestock-l1', title: 'Chickens Turn Scratching Into Useful Work', titleByLang: { zu: 'Ukuklwebha Kwezinkukhu Kungasiza' } },
+      { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time', titleByLang: { zu: 'Sebenzisa Izinkukhu Ngesikhathi Esifanele' } },
+      { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey', titleByLang: { zu: 'Amadada Phakathi Kwezitshalo Esezimile' } },
+      { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot', titleByLang: { zu: 'Hambisa Ihhoko Endaweni' } },
+      { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: A Bee Moves Between Two Blossoms', titleByLang: { zu: 'Buka: Inyosi Isuka Embalini Eyodwa Iya Kwenye' } },
+      { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Help Pollinate Many Crops', titleByLang: { zu: 'Izinyosi Zisiza Ekuthutheni Impova Ezitshalweni Eziningi' } },
+      { slide: 11, lesson: 'small-livestock-l2', title: 'South Africa’s Native Honeybees', titleByLang: { zu: 'Izinyosi Zoju Zomdabu ENingizimu Afrika' } },
+      { slide: 12, lesson: 'small-livestock-l2', title: 'Place the Hive With Care', titleByLang: { zu: 'Beka I-hive Ngokucophelela' } },
+      { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Care and Flowers', titleByLang: { zu: 'Amakoloni Aqinile Adinga Ukunakekelwa Nezimbali' } },
+      { slide: 14, lesson: 'small-livestock-l3', title: 'Nutrients Moving Through the Farm', titleByLang: { zu: 'Izakhamzimba Ezihamba Epulazini' } },
+      { slide: 15, lesson: 'small-livestock-l3', title: 'Some Nutrients Return; Others Enter and Leave', titleByLang: { zu: 'Ezinye Izakhamzimba Ziyabuya; Ezinye Ziyangena Futhi Ziphume' } },
+      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Forage, but Health Checks Still Matter', titleByLang: { zu: 'Ukuzifunela Ukudla Akuthathi Indawo Yokuhlola Impilo' } },
+      { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal', titleByLang: { zu: 'Buza Imibuzo Emithathu Ngesilwane Ngasinye' } },
+      { slide: 18, lesson: 'small-livestock-l3', title: 'Grazing and Goat Worm Control', titleByLang: { zu: 'Amadlelo Nokulawulwa Kwezikelemu Ezimbuzini' } },
+      { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Where Resources Go', titleByLang: { zu: 'Umsebenzi Wensimu: Dweba Ukuthi Izinsiza Ziya Kuphi' } },
+      { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work', titleByLang: { zu: 'Isenzo Esisodwa Epulazini' } },
     ],
   },
   'market-community': {

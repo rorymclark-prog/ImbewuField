@@ -852,6 +852,40 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
       }
     ]
   },
+  "small-livestock-l2": {
+    "title": "Izinyosi: Ukuthutha Impova, Uju Nokuphila Kwepulazi",
+    "body": "Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali. Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova. Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima.\n\nINingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa. Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika. Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.\n\nNgaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi. Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane. Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala. Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.\n\nHlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane. Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo. Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango. Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa.",
+    "keyPoints": [
+      "Izinambuzane ezithutha impova zisiza izitshalo eziningi; usizo luncike esitshalweni nasezimweni",
+      "Funda ukunakekela ama-hive ngokuphepha kumfuyi wezinyosi wendawo onolwazi",
+      "Khetha indawo ephephile yama-hive ekude nezindlela ezihanjwa abantu abaningi nezindawo zezingane",
+      "Bhalisa eMnyangweni uma wenza umsebenzi odinga ukubhaliswa ngaphansi kwemithetho kazwelonke yokulawula izinyosi zoju"
+    ],
+    "quiz": [
+      {
+        "q": "Izihlahla zikakwatapheya ziyaqhakaza kodwa zibopha izithelo ezimbalwa. Yini okufanele umlimi ayihlole ngokuthuthwa kwempova?",
+        "options": [
+          "Cabanga ukuthi ukuthuthwa kwempova kuhlale kwanele, ungahloli lutho",
+          "Cabanga ukuthi uhlobo olulodwa kuphela lwebhungane olungathwala impova",
+          "Hlola ukuthi izinambuzane ziyazivakashela yini izimbali futhi zithwala impova; hlola nezinye izimbangela zokungabophi kwezithelo kahle",
+          "Cabanga ukuthi ukungabophi kwezithelo kahle kuhlale kusho umonakalo wesithwathwa"
+        ],
+        "correct": 2,
+        "rationale": "Izinyosi nezinye izinambuzane zingahambisa impova phakathi kwezimbali zikakwatapheya. Ukuvakashelwa okumbalwa kunganciphisa ukuthuthwa kwempova, kodwa isimo sezulu nempilo yesitshalo nakho kungathinta ukubopha kwezithelo."
+      },
+      {
+        "q": "Ikoloni lezinyosi liphume ngamaqoqo kaningi. Yisiphi isinyathelo esilandelayo esifanele?",
+        "options": [
+          "Cela umfuyi wezinyosi oqeqeshiwe ahlole ikoloni, kuhlanganise nendawo, indlovukazi nempilo yalo",
+          "Shintsha indlovukazi ngaphandle kokuhlola ikoloni",
+          "Cabanga ukuthi akukho okungahlolwa noma kulawulwe",
+          "Phendula i-hive ngaphandle kokuthola imbangela"
+        ],
+        "correct": 0,
+        "rationale": "Ukuminyana kungakhuthaza ukuphuma kweqoqo, kodwa akusona ukuphela kwesizathu. Ukuhlola kuqondisa isinyathelo esilandelayo; ukwengeza indawo akuqinisekisi ukuthi inkinga izoxazululeka."
+      }
+    ]
+  },
   "small-livestock-l3": {
     "title": "Ukuhlanganisa Imijikelezo Yemfuyo: Izakhamzimba Ezihamba Epulazini",
     "body": "Ezinye izakhamzimba zingabuyela endaweni yokutshala nge-compost eyenziwe ngomquba. Umquba omusha ungathwala amagciwane ayingozi. Vumela umquba uvundiswe ngokuphelele ngaphambi kokuwusebenzisa eduze kwezitshalo zokudla. Ukudla kwezilwane okuthengwayo kuletha izakhamzimba epulazini, kuyilapho ukudla neminye imikhiqizo kususa izakhamzimba. Bhala phansi ukudla kwezilwane okuthengwayo nokudla okuthengiswayo noma okuyiswa ekhaya. Izinsalela zokudla kuphela zingase zingazanelisi izidingo zezilwane.\n\nAma-guinea fowl azifunela izinambuzane futhi angadla imikhaza. Ungathembeli kuzo ukuba zivikele abantu noma imfuyo emikhazeni noma ezifweni ezithwalwa imikhaza. Hlola izilwane bese ulandela uhlelo lwezempilo yezilwane olufanele indawo yakini.\n\nNgesilwane ngasinye, buza: singadlani lapha? Sikhiqiza ziphi izinto eziwusizo? Sidingani okunye? Faka amanzi, ukudla okufanele, indawo yokukhosela, uthango nokunakekelwa nsuku zonke.\n\nIzinkukhu ezilandela izimbuzi azikafakazelwa ukuthi zingathatha indawo yokulawula izikelemu ezimbuzini. Ukuphatha amadlelo kungasiza, kodwa izimbuzi zisadinga ukuhlolwa kwezempilo nohlelo lokulawula izimuncagazi kumeluleki wezilwane noma wezempilo yezilwane. Ungakuyeki ukwelapha ngoba izinkukhu zivakashele idlelo lezimbuzi.",

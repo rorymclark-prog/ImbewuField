@@ -66,7 +66,7 @@ const REVIEW_STATE_BY_LESSON: Record<string, ReviewState> = {
   'food-forest-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'food-forest-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/FOOD-FOREST-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'small-livestock-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
-  'small-livestock-l2': { status: 'source-held', reviewDocument: 'docs/narration-reviews/small-livestock-l2.zu.review.md' },
+  'small-livestock-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/small-livestock-l2.zu.full-draft.md' },
   'small-livestock-l3': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/SMALL-LIVESTOCK-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l1': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
   'market-community-l2': { status: 'review-draft', reviewDocument: 'docs/narration-reviews/MARKET-COMMUNITY-ISIZULU-FULL-DRAFT-HANDOFF.md' },
