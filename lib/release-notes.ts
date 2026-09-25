@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'dd9e1562', changes: [
+    'Garden Survey save and PDF errors show draft isiZulu beside English.',
+    'A failed save now says to keep the screen open and retry.',
+  ], tour: [
+    { title: 'Check Garden Survey saving', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu, reach your plan, then check Save and PDF messages.' },
+  ] },
   { when: '25 September 2026', sha: '81ce3442', changes: [
     'Settings now shows Simple or All tools straight under the language choice.',
   ], tour: [
