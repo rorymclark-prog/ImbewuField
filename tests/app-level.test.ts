@@ -28,4 +28,12 @@ test('the choice is kept per account and the switch lives in Settings', () => {
   const settings = readFileSync(new URL('../components/ThemePanel.tsx', import.meta.url), 'utf8');
   assert.match(settings, /role="radiogroup"[\s\S]*onClick=\{\(\) => setAppLevel\(l\.key\)\}/,
     'Settings must offer the two positions as one radio group');
+  // It must be findable: straight after the language picker, before anything else in the panel
+  // (the tour and support links used to sit on top and pushed it below the fold on a phone).
+  const language = settings.indexOf("t('pickLang')");
+  const level = settings.indexOf("How much to show");
+  const tour = settings.indexOf("'Tour and support'");
+  const textSize = settings.indexOf("'Text size'");
+  assert.ok(language > 0 && level > language && textSize > level && tour > textSize,
+    'Settings order must be: language, How much to show, text size … with the tour links further down');
 });

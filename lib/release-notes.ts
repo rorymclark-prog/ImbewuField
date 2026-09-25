@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '81ce3442', changes: [
+    'Settings now shows Simple or All tools straight under the language choice.',
+  ], tour: [
+    { title: 'Find Simple or All tools', where: 'Home → Settings', href: '/home',
+      detail: 'Tap the gear on Home: How much to show is right under the languages.' },
+  ] },
   { when: '25 September 2026', sha: '19ea566f', changes: [
     'Simple mode now tidies Records, Crop plan, the Map, Study, Invoice and Exchange.',
     'In Simple the menu is shorter; All tools in Settings still shows everything.',
