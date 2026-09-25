@@ -37,6 +37,7 @@ const dataPanelSource = readFileSync(new URL('../components/DataPanel.tsx', impo
 const mapSource = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
 const tipsSource = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
 const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
+const studentPageSource = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 
 const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
 
@@ -154,6 +155,70 @@ test('the remaining 29 English UI sources have marked isiZulu drafts and keep th
   assert.match(farmerPageSource, /Unreviewed isiZulu draft\. English source:[\s\S]*openSurveyNoSiteMessage/);
   assert.match(tipsSource, /Unreviewed isiZulu draft for the translated page labels/);
   assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
+});
+
+const SESOTHO_STUDY_DRAFT_KEYS = [
+  'studentPortal', 'studentPortalTitle', 'studentBackHome', 'studentMyStudies',
+  'studentLearnPracticeGrow', 'studentRevisit', 'studentStart', 'studentContinue',
+  'studentReady', 'studentKeepGoing', 'studentModulesComplete', 'studentRemaining',
+  'studentPractitioner', 'studentCategoryFoundation', 'studentCategoryWater',
+  'studentCategorySoil', 'studentCategoryPlants', 'studentCategoryDesign',
+  'studentCategoryBusiness', 'studentCategorySeeds', 'studentCorrect',
+  'studentCloseLesson', 'studentOpenLesson', 'studentListenOrRead',
+  'studentReadAndPractise', 'studentListenToLesson', 'studentWatchAndListen',
+  'studentKeyPoints', 'studentCheckUnderstanding', 'studentRelatedLessons',
+  'studentStudyOffline', 'studentSaveBeforeSignal', 'studentSaveAvailable',
+  'studentYourCourse', 'studentModule', 'studentModules', 'studentLocked',
+  'studentComplete', 'studentContinueHere', 'studentAssigned', 'studentAudio',
+  'studentLessonOne', 'studentLessons', 'studentDone', 'studentMarkDone',
+  'studentLessonsLabel', 'studentSesothoUiDraftNotice',
+] as const;
+
+const SESOTHO_STUDY_HOLD_KEYS = [
+  'studentCourseDescription',
+  'studentCourseComplete',
+  'studentMarkComplete',
+] as const;
+
+function dictionaryString(block: string, key: string): string | undefined {
+  return block.match(new RegExp(`^\\s{2}${key}: '([^']*)',?$`, 'm'))?.[1];
+}
+
+test('a QwaQwa learner sees Latin-script Sesotho drafts and English for held study wording', () => {
+  const enStart = i18nSource.indexOf('const T_en: Dict = {');
+  const enEnd = i18nSource.indexOf('\n};', enStart);
+  const english = i18nSource.slice(enStart, enEnd);
+  const sesotho = readFileSync(new URL('../lib/locales/st.ts', import.meta.url), 'utf8');
+  const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
+
+  for (const key of SESOTHO_STUDY_DRAFT_KEYS) {
+    const source = dictionaryString(english, key);
+    const draft = dictionaryString(sesotho, key);
+    assert.ok(source, `${key} must keep its English source`);
+    assert.ok(draft, `${key} must be present in the Sesotho draft`);
+    assert.doesNotMatch(draft, nonLatin, `${key} must not contain non-Latin script`);
+    assert.deepEqual(
+      draft.match(/\{[^{}]+\}/g) ?? [],
+      source.match(/\{[^{}]+\}/g) ?? [],
+      `${key} must preserve every runtime placeholder`,
+    );
+  }
+
+  for (const key of SESOTHO_STUDY_HOLD_KEYS) {
+    assert.ok(dictionaryString(english, key), `${key} must keep its English source`);
+    assert.equal(dictionaryString(sesotho, key), undefined, `${key} must remain in English until the wording is reviewed`);
+  }
+
+  assert.equal(
+    dictionaryString(sesotho, 'studentSesothoUiDraftNoticeSource'),
+    dictionaryString(english, 'studentSesothoUiDraftNoticeSource'),
+    'the Study page must show the exact English source beside the Sesotho notice',
+  );
+  assert.match(studentPageSource, /lang === 'st'/, 'the Study page must identify the Sesotho draft');
+  assert.match(studentPageSource, /t\('studentSesothoUiDraftNotice'\)/, 'the unreviewed Sesotho notice must be visible');
+  assert.match(studentPageSource, /t\('studentSesothoUiDraftNoticeSource'\)/, 'the notice must show its exact English source');
+  assert.match(studentPageSource, /<span lang="st">\{t\('studentSesothoUiDraftNotice'\)\}<\/span>/, 'the Sesotho notice must expose its language to assistive technology');
+  assert.match(studentPageSource, /<span lang="en"[^>]*>English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}<\/span>/, 'the paired English source must expose its language');
 });
 
 test('the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English', () => {

@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'd0dcc116', changes: [
+    'Study navigation and lesson controls now have a Sesotho draft.',
+    'The unreviewed draft notice keeps its English source visible.',
+  ], tour: [
+    { title: 'Check the Sesotho study screen', where: 'My Studies', href: '/student',
+      detail: 'The study labels are an unreviewed draft; the English source appears beside the notice.' },
+  ] },
   { when: '25 September 2026', sha: '813837fd', changes: [
     'The Water rainfall chart adds unreviewed isiZulu labels.',
   ], tour: [

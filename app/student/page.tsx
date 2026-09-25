@@ -790,6 +790,13 @@ export default function StudentPage() {
             </span>
           </p>
         )}
+        {lang === 'st' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
+            <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
+          </p>
+        )}
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
