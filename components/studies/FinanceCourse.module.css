@@ -39,6 +39,8 @@
 .sourceLinks a { overflow-wrap: anywhere; }
 .dayList { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 @media (max-width: 650px) {
+  /* The shared app header is fixed to 52px on phones; source captions belong in the page body. */
+  .header small { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
   .main { padding: 16px 12px 80px; }
   .heroText, .card, .section { padding: 22px 18px; }
   .hero img { aspect-ratio: 16/10; }

@@ -13,7 +13,7 @@ export default function DesignCasePage() {
   const [, ...sections] = DESIGN_COURSE.case.text.split(/^## /m);
   const introduction = DESIGN_COURSE.case.text.split(/^## /m)[0].replace(/^# .+\n/, '').trim();
   return <div className={styles.page}>
-    <header className={styles.header}><MenuButton /><BackButton fallback="/student/design" /><OfflinePageLink href="/student/design"><DesignDraftCopy en="Design a homestead" zu="Dizayina ikhaya" /></OfflinePageLink><span><DesignDraftCopy en="The busy yard" zu="Igceke elimatasa" /></span></header>
+    <header className={styles.header}><MenuButton /><BackButton fallback="/student/design" /><OfflinePageLink href="/student/design"><DesignDraftCopy en="Design a homestead" zu="Dizayina ikhaya" /></OfflinePageLink><span data-header-secondary><DesignDraftCopy en="The busy yard" zu="Igceke elimatasa" /></span></header>
     <main className={styles.main}>
       <DesignDraftNotice />
       <section className={styles.hero}><div className={styles.heroText}><p className={styles.eyebrow}><DesignDraftCopy en="An invented classroom case" zu="Icala lekilasi eliqanjiwe" /></p><h1><DesignDraftCopy en="A busy yard. A design worth discussing." zu="Igceke elimatasa. Umklamo okufanele kuxoxwe ngawo." /></h1><p>The household wants food, usable access and manageable care. Follow the evidence before adding features to the plan.</p><div className={styles.actions}><a href="#sources"><DesignDraftCopy en="Read the source cards" zu="Funda amakhadi emithombo" /></a><a href="#practice"><DesignDraftCopy en="Try the evidence checks" zu="Zama ukuhlola ubufakazi" /></a></div></div><img src="/studies-guides/sketch-the-site.jpg" alt="Illustrative homestead planning scene; this image is not a measured picture of the practice case" /></section>

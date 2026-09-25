@@ -35,7 +35,7 @@ export default async function DesignLessonPage({ params }: { params: Promise<{ l
     d5: 'Landela ukuncika komsebenzi, izindleko nokunakekela', d6: 'Buyekeza ubufakazi bakamuva noshintsho',
   }[unit.id];
   return <div className={styles.page}>
-    <header className={styles.header}><MenuButton /><BackButton fallback="/student/design" /><OfflinePageLink href="/student/design"><DesignDraftCopy en="Design a homestead" zu="Dizayina ikhaya" /></OfflinePageLink><span>{lesson.code} · {index + 1} / {DESIGN_LESSONS.length}</span></header>
+    <header className={styles.header}><MenuButton /><BackButton fallback="/student/design" /><OfflinePageLink href="/student/design"><DesignDraftCopy en="Design a homestead" zu="Dizayina ikhaya" /></OfflinePageLink><span data-header-secondary>{lesson.code} · {index + 1} / {DESIGN_LESSONS.length}</span></header>
     <main className={styles.main}>
       <DesignDraftNotice />
       <section className={styles.hero}><div className={styles.heroText}><p className={styles.eyebrow}><DesignDraftCopy en={`Stage ${unit.number}`} zu={`Isigaba ${unit.number}`} /> · {unit.title}</p><h1>{lesson.title}</h1><p>{section('Question to show')}</p><div className={styles.actions}><a href="#read"><DesignDraftCopy en="Read the idea" zu="Funda umqondo" /></a><a href="#practice"><DesignDraftCopy en="Try the task" zu="Zama umsebenzi" /></a><a href="#check"><DesignDraftCopy en="Check your understanding" zu="Hlola ukuqonda kwakho" /></a></div></div></section>
