@@ -52,6 +52,19 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-25 (swarm wave 4 — Simple mode for the rest of the app)
+- **Merged (six swarm PRs, one integration PR):** Design Studio Preview & Export (#644: Simple
+  keeps choose-a-sheet and Finish as step 2; underlay, plant labels, style, AI layers, All sheets
+  and the saved-maps rail stay in All tools). Farm map (#641: Simple keeps finding land, boundary
+  tracing, a two-item Add (tree, tank), basemap switch and locate-me; contours, terrain/3D, HD
+  imagery, the edit-engine picker, printing, elevation and Labels are All tools only — Simple
+  always uses the big-handle editor without touching the stored preference). Community board,
+  messages and profiles (#642, with more isiZulu). Crop plan + Prices (#643). Lima Vision + Field
+  Journal (#640). Account + survey answering (#639). Each track added a source-level test.
+- **Checks:** tsc clean; the six new tests plus design-simple, app-level, theme-token and
+  release-notes gates pass locally; no new hex or emoji in the convention scan.
+- **Cost:** about $31 of Sonnet across the six tracks (~20 min each).
+
 ### 2026-09-25 (swarm wave 2b/3 — money charts dark, Exchange/Study polish, staff theme, lighter notes)
 - **Merged (four swarm PRs, one integration PR):** money charts (#619: CashflowChart,
   FinanceGraphs, AreaReturnCards, ComingUpHarvests on theme tokens; sample-mode pending invoice
