@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '3fb3f25a', changes: [
+    'The design learning pathway adds marked isiZulu drafts for navigation and exercises.',
+    'Design lessons, model measurements and narration still identify their English content.',
+  ], tour: [
+    { title: 'Check design pathway language', where: 'My Studies', href: '/student/design',
+      detail: 'Choose isiZulu; draft prompts show English source, while core lessons remain English.' },
+  ] },
   { when: '25 September 2026', sha: '95e30e84', changes: [
     'A failed organisation survey send keeps your answers and lets you retry.',
     'Crop plan controls and chart accessibility labels add isiZulu drafts.',
