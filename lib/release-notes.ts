@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '3b5585e4', changes: [
+    'ACT facilitators can open a two-day Teach the Teachers refresher in My Studies.',
+    'The preview links core lessons and app practice with a paper fallback.',
+  ], tour: [
+    { title: 'Try the facilitator refresher', where: 'My Studies → Teach the Teachers',
+      href: '/student/teach-the-teachers', detail: 'Open the two-day English teaching preview and practise with a demo site.' },
+  ] },
   { when: '25 September 2026', sha: '63b4a500', changes: [
     'Tshivenda Water Harvesting draft ready; safety text and media stay English.',
   ] },
