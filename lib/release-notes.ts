@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '02f4355a', changes: [
+  { when: '25 September 2026', sha: '0dded1e3', changes: [
     'Simple mode now covers Preview & Export in the Design Studio: pick a finish and save.',
     'In Simple, the farm map keeps finding your land, tracing it and adding trees or tanks.',
     'Community, messages and profiles are shorter in Simple.',
@@ -53,6 +53,12 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Pick a sheet, then choose a finish; the extra steps stay in All tools.' },
     { title: 'A calmer farm map', where: 'Farm map', href: '/farmer',
       detail: 'Turn on Simple in Settings: contours, 3D and printing move out of the way.' },
+  ] },
+  { when: '25 September 2026', sha: '02f4355a', changes: [
+    'Water Harvesting has Tshivenda title drafts; guidance and media stay English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Tshivenda', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Tshivenda to see the marked module and lesson title drafts. Safety instructions, slides and narration stay English.' },
   ] },
   { when: '25 September 2026', sha: '830d049f', changes: [
     'Plant Guilds Sesotho review draft is paired with English; it is not in Study.',
