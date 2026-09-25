@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '8df98de0', changes: [
+  { when: '25 September 2026', sha: 'c3954489', changes: [
     'The opening Site Survey choices now show draft isiZulu beside English.',
     'Uncertain descriptions stay in English pending local review.',
   ], tour: [
