@@ -18,7 +18,7 @@ export const SESOTHO_PLANT_GUILDS_DRAFT: SesothoCourseModuleDraft = {
       infographicAlt: pair("Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.", "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.", 'hold'),
       keyPoints: [
         pair("Legumes work with rhizobia in root nodules; fixation depends on suitable conditions.", "Limela tsa dinawa (legumes) di sebetsa le rhizobia ka mafito a metso (root nodules); ho lokisa naetrojene ho itshetlehile ka maemo a loketseng.", 'machine-draft'),
-        pair("Return useful cut material to the soil; nutrient release takes time.", "Khutlisetsa masalla a dimela a pomilweng mobung; dimatlafatsi di lokollwa ha thepa e bola, mme seo se nka nako.", 'machine-draft'),
+        pair("Return useful cut material to the soil; nutrient release takes time.", "Return useful cut material to the soil; nutrient release takes time.", 'hold'),
         pair("Use suitable seasonal cover, support shrubs and temporary trees.", "Use suitable seasonal cover, support shrubs and temporary trees.", 'hold'),
         pair("Manage support density as plants grow; there is no universal count per fruit tree.", "Manage support density as plants grow; there is no universal count per fruit tree.", 'hold'),
       ],
@@ -53,28 +53,28 @@ export const SESOTHO_PLANT_GUILDS_DRAFT: SesothoCourseModuleDraft = {
       body: pair("The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.\n\nMatch cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.\n\nMulch protects the surface, helps conserve moisture and returns organic material.\n\nLeave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition.\n\nObtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.\n\nPlace it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree.\n\nMany ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.\n\nWatch which insects visit and whether damage changes. A flowering plant does not guarantee pest control.\n\nTulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.\n\nObserve visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak.", "The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.\n\nMatch cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.\n\nMulch protects the surface, helps conserve moisture and returns organic material.\n\nLeave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition.\n\nObtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.\n\nPlace it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree.\n\nMany ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.\n\nWatch which insects visit and whether damage changes. A flowering plant does not guarantee pest control.\n\nTulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.\n\nObserve visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak.", 'hold'),
       infographicAlt: pair("Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.", "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.", 'hold'),
       keyPoints: [
-        pair("Pruning cuts branches while keeping the support plant.", "Ho poma ke ho seha makala ha semela sa tshehetso se ntse se eme.", 'machine-draft'),
-        pair("Return suitable cut leaves as mulch while keeping the trunk clear.", "Khutlisetsa makgasi a pomilweng a loketseng e le mulch, mme o tlohele kutu e sa kwahelwa.", 'machine-draft'),
+        pair("Pruning cuts branches while keeping the support plant.", "Pruning cuts branches while keeping the support plant.", 'hold'),
+        pair("Return suitable cut leaves as mulch while keeping the trunk clear.", "Return suitable cut leaves as mulch while keeping the trunk clear.", 'hold'),
         pair("Bocking 14 does not spread by viable seed, but root pieces can regrow.", "Bocking 14 does not spread by viable seed, but root pieces can regrow.", 'hold'),
-        pair("Flowering plants can support useful insects; watch actual visits and crop damage.", "Dimela tse thunyang di ka thusa dikokonyana tse molemo; shebella hore na di a etela le hore na tshenyo ya dijalo e a fetoha.", 'machine-draft'),
+        pair("Flowering plants can support useful insects; watch actual visits and crop damage.", "Flowering plants can support useful insects; watch actual visits and crop damage.", 'hold'),
       ],
       quiz: [
         {
           question: pair("What does the branch-cutting clip show?", "Video ya ho seha lekala e bontsha eng?", 'machine-draft'),
           options: [
             pair("Removing the whole support tree", "Ho tlosa sefate sohle sa tshehetso", 'machine-draft'),
-            pair("Pruning a retained support tree for light and mulch", "Ho poma makala a semela sa tshehetso se bolokilweng, ho bulela lesedi le ho fumana mulch", 'machine-draft'),
+            pair("Pruning a retained support tree for light and mulch", "Pruning a retained support tree for light and mulch", 'hold'),
             pair("Harvesting the fruit tree", "Ho kotula sefate sa ditholo", 'machine-draft'),
             pair("Proof that root competition has stopped", "Bopaki ba hore tlholisano ea motso e emisitse", 'machine-draft'),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair("A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.", "Lekala lea wa, empa semela sa tshehetso se sala se eme. Seo ke ho poma le chop-and-drop (ho beha masalla a pomilweng fatshe).", 'machine-draft'),
+          rationale: pair("A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.", "A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.", 'hold'),
         },
         {
           question: pair("How should you assess flowering plants used to support helpful insects?", "O ka lekola jwang dimela tse thunyang tse sebediswang ho thusa dikokonyana tse molemo?", 'machine-draft'),
           options: [
             pair("Assume they will eliminate pests", "Nka hore di tla fedisa dikokonyana tse senyang dijalo", 'machine-draft'),
-            pair("Observe insect visitors and changes in crop damage", "Shebella dikokonyana tse di etelang le diphetoho tshenyong ya dijalo", 'machine-draft'),
+            pair("Observe insect visitors and changes in crop damage", "Observe insect visitors and changes in crop damage", 'hold'),
             pair("Remove all flowers before they open", "Tlosa dithunya tsohle pele di buleha", 'machine-draft'),
             pair("Count every flowering plant as a nitrogen fixer", "Bala semela se seng le se seng se thunyang e le semela se lokisang nitrogen (nitrogen fixer)", 'machine-draft'),
           ],
@@ -99,7 +99,7 @@ export const SESOTHO_PLANT_GUILDS_DRAFT: SesothoCourseModuleDraft = {
           question: pair("A support plant still crowds the mango after pruning. What can thinning involve?", "Semela sa tshehetso se ntse se pitlaganya mango ka mora ho poma. Ho fokotsa (thinning) ho ka akarelletsa eng?", 'machine-draft'),
           options: [
             pair("Only cutting another small twig", "Ho seha lekala le lenyane feela", 'machine-draft'),
-            pair("Cutting down a selected competing support and managing regrowth", "Ho rema semela se kgethilweng sa tshehetso se qothisanang le mango, le ho laola kgolo e ntjha", 'machine-draft'),
+            pair("Cutting down a selected competing support and managing regrowth", "Cutting down a selected competing support and managing regrowth", 'hold'),
             pair("Removing the mango instead", "Ho tlosa mango", 'machine-draft'),
             pair("Always carrying all cut biomass off the site", "Kamehla tlosa masalla ohle a pomilweng setsheng", 'machine-draft'),
           ],

@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '1cb654ad', changes: [
+    'Plant Guilds now shows a marked Sesotho review draft beside English.',
+    'Pruning, mulch and insect checks stay in English pending review.',
+  ], tour: [
+    { title: 'Review Plant Guilds in Sesotho', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Sesotho to compare the marked title and lesson draft with English. Held guidance stays English.' },
+  ] },
   { when: '25 September 2026', sha: '0dded1e3', changes: [
     'Simple mode now covers Preview & Export in the Design Studio: pick a finish and save.',
     'In Simple, the farm map keeps finding your land, tracing it and adding trees or tanks.',
