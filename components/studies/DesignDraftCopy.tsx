@@ -13,7 +13,7 @@ export default function DesignDraftCopy({ en, zu }: { en: string; zu: string }) 
 export function DesignDraftNotice() {
   const { lang } = useLanguage();
   if (lang !== 'zu') return null;
-  const en = 'Some navigation and heading labels on this pathway are unreviewed isiZulu drafts. Lesson text, activities, model details and narration remain in English.';
-  const zu = 'Amanye amagama okuzulazula nezihloko zale ndlela ayizinhlaka zesiZulu ezingakabuyekezwa. Umbhalo wezifundo, imisebenzi, imininingwane yemodeli nokulandisa kuhlala ngesiNgisi.';
+  const en = 'Some navigation, headings and exercise prompts on this pathway are unreviewed isiZulu drafts. Core lesson text, model measurements and narration remain in English.';
+  const zu = 'Ezinye izinto zokuzulazula, izihloko nemiyalo yemisebenzi kule ndlela yokufunda kuyizinhlaka zesiZulu ezingakabuyekezwa. Umbhalo oyinhloko wezifundo, izilinganiso zemodeli nokulandisa kuhlala kungesiNgisi.';
   return <aside role="note" className={`${courseStyles.notice} ${courseStyles.projectNotice}`}><p><strong>IsiZulu draft · Uhlaka lwesiZulu.</strong> {zu}<small className={styles.source}>English source: {en}</small></p></aside>;
 }
