@@ -42,7 +42,23 @@ export const CATEGORY_LABEL = {
   other: 'Other',
 } as const;
 
+export const ZU_KIND_LABEL = { offer: 'Okunikezwayo', want: 'Okufunwayo' } as const;
+export const ZU_CATEGORY_LABEL = {
+  seed: 'Imbewu', seedlings: 'Izithombo', produce: 'Umkhiqizo', tools: 'Amathuluzi', labour: 'Umsebenzi', other: 'Okunye',
+} as const;
+export const ZU_PRICE_MODE_LABEL = {
+  zar: 'Intengo ngamaRandi', swap: 'Ukushintshisana', free: 'Mahhala', ask: 'Cela isipho sentengo',
+} as const;
+
+export function exchangeText(lang: string, english: string, isiZulu: string): string {
+  return lang === 'zu' ? isiZulu : english;
+}
+
 export const MONTH_LABEL = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
+] as const;
+export const ZU_MONTH_LABEL = [
+  'uJanuwari', 'uFebruwari', 'uMashi', 'u-Ephreli', 'uMeyi', 'uJuni',
+  'uJulayi', 'u-Agasti', 'uSepthemba', 'u-Okthoba', 'uNovemba', 'uDisemba',
 ] as const;

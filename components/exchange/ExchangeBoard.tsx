@@ -57,8 +57,10 @@ import {
   LOCAL_LISTINGS_EVENT,
   setLocalListingStatus,
 } from './listing-store';
-import { CATEGORY_LABEL, EX } from './theme';
+import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
+import { useLanguage } from '@/lib/i18n';
+import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
 const SORT_LABEL: Record<ListingSort, string> = {
   newest: 'Newest first',
@@ -110,6 +112,9 @@ function toggle<T>(list: T[], value: T): T[] {
 }
 
 export default function ExchangeBoard() {
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
+  const tx = (en: string, dz: string) => exchangeText(lang, en, dz);
   // Empty on the server and on the first client render, so hydration matches;
   // the effect below fills it in. The demo listings are a module constant, so
   // the board is never blank — it renders complete in the server HTML.
@@ -153,10 +158,10 @@ export default function ExchangeBoard() {
 
   const viewpoints = useMemo(() => {
     const mine: Viewpoint[] = mySite
-      ? [{ id: 'my-site', label: `My site — ${mySite.name}`, origin: { lat: mySite.lat, lon: mySite.lon } }]
+      ? [{ id: 'my-site', label: `${tx('My site', 'Indawo yami')} — ${mySite.name}`, origin: { lat: mySite.lat, lon: mySite.lon } }]
       : [];
     return [...mine, ...areaViewpoints(allListings)];
-  }, [mySite, allListings]);
+  }, [mySite, allListings, lang]);
 
   const viewpoint = viewpoints.find((v) => v.id === viewpointId) ?? NO_VIEWPOINT;
   const origin = viewpoint.origin;
@@ -205,17 +210,18 @@ export default function ExchangeBoard() {
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
         <p className="font-sans" style={{ fontSize: 11.5, color: '#8A5A15', lineHeight: 1.5, margin: 0 }}>
-          {DEMO_EXCHANGE.notice} Anything you post is saved on this device only.
+          {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
+      <ExchangeDraftNotice />
 
       {/* Counts */}
       <div className="flex items-center gap-4 flex-wrap">
-        <Stat value={summary.total} label={summary.total === 1 ? 'listing' : 'listings'} />
-        <Stat value={summary.offers} label="offering" />
-        <Stat value={summary.wants} label="wanted" />
-        <Stat value={summary.cropCount} label="crops" />
-        <Stat value={summary.farmerCount} label="farmers" icon />
+        <Stat value={summary.total} label={summary.total === 1 ? tx('listing', 'isikhangiso') : tx('listings', 'izikhangiso')} />
+        <Stat value={summary.offers} label={tx('offering', 'ezihlinzekwayo')} />
+        <Stat value={summary.wants} label={tx('wanted', 'ezifunwayo')} />
+        <Stat value={summary.cropCount} label={tx('crops', 'izitshalo')} />
+        <Stat value={summary.farmerCount} label={tx('farmers', 'abalimi')} icon />
       </div>
 
       {/* Search + post */}
@@ -230,8 +236,8 @@ export default function ExchangeBoard() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search crop, town or farmer"
-            aria-label="Search listings"
+            placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
+            aria-label={tx('Search listings', 'Funa izikhangiso')}
             className="rounded-xl font-sans"
             style={{
               width: '100%',
@@ -258,7 +264,7 @@ export default function ExchangeBoard() {
           }}
         >
           {showForm ? <X size={14} /> : <Plus size={14} />}
-          {showForm ? 'Close' : 'Post'}
+          {showForm ? tx('Close', 'Vala') : tx('Post', 'Faka')}
         </button>
       </div>
 
@@ -274,7 +280,7 @@ export default function ExchangeBoard() {
 
       {/* Offering / wanted */}
       <div className="flex gap-1.5">
-        {([['all', 'Everything'], ['offer', 'Offering'], ['want', 'Wanted']] as const).map(([value, label]) => (
+        {([['all', tx('Everything', 'Konke')], ['offer', tx('Offering', 'Okunikezwayo')], ['want', tx('Wanted', 'Okufunwayo')]] as const).map(([value, label]) => (
           <button
             key={value}
             onClick={() => setKind(value)}
@@ -296,13 +302,13 @@ export default function ExchangeBoard() {
       </div>
 
       {/* Category chips */}
-      <ChipRow label="Category">
+      <ChipRow label={tx('Category', 'Umkhakha')}>
         {LISTING_CATEGORIES.map((c) => {
           const count = summary.byCategory[c];
           const on = categories.includes(c);
           return (
             <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
-              {CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
+              {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
             </Chip>
           );
         })}
@@ -310,7 +316,7 @@ export default function ExchangeBoard() {
 
       {/* Crop chips — only crops actually on the board, so no dead filters */}
       {cropOptions.length > 0 && (
-        <ChipRow label="Crop">
+        <ChipRow label={tx('Crop', 'Isitshalo')}>
           {cropOptions.map((c) => (
             <Chip
               key={c.cropKey}
@@ -338,24 +344,24 @@ export default function ExchangeBoard() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as ListingSort)}
-            aria-label="Sort listings"
+            aria-label={tx('Sort listings', 'Hlela izikhangiso')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
             style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
             {(Object.keys(SORT_LABEL) as ListingSort[]).map((s) => (
-              <option key={s} value={s}>{SORT_LABEL[s]}</option>
+              <option key={s} value={s}>{tx(SORT_LABEL[s], ({ newest: 'Ezintsha kuqala', nearest: 'Eziseduze kuqala', price_low: 'Intengo ephansi kuqala', price_high: 'Intengo ephezulu kuqala', crop: 'Ngesitshalo', quantity: 'Inani elikhulu kuqala' } as const)[s])}</option>
             ))}
           </select>
 
-          <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>viewing from</span>
+          <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{tx('viewing from', 'Ngibuka ngisuka')}</span>
           <select
             value={viewpointId}
             onChange={(e) => setViewpointId(e.target.value)}
-            aria-label="Where you are viewing from"
+            aria-label={tx('Where you are viewing from', 'Indawo engibuka ngikuyo')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
             style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
-            <option value="none">nowhere in particular</option>
+            <option value="none">{tx('nowhere in particular', 'Akukho ndawo ethile')}</option>
             {viewpoints.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
           </select>
 
@@ -363,11 +369,11 @@ export default function ExchangeBoard() {
             <select
               value={withinKm}
               onChange={(e) => setWithinKm(e.target.value)}
-              aria-label="Distance limit"
+              aria-label={tx('Distance limit', 'Umkhawulo webanga')}
               className="rounded-lg px-2 py-1.5 font-sans font-semibold"
               style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
             >
-              {WITHIN_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              {WITHIN_OPTIONS.map((o) => <option key={o.value} value={o.value}>{tx(o.label, o.value === '' ? 'Noma yiliphi ibanga' : `Phakathi kuka-${o.value} km`)}</option>)}
             </select>
           )}
         </div>
@@ -381,8 +387,8 @@ export default function ExchangeBoard() {
             style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amber : EX.faint, margin: 0, lineHeight: 1.45 }}
           >
             {sort === 'nearest'
-              ? 'Sorting by distance needs a starting point — choose a town above, or save your site on the map.'
-              : 'Choose where you are viewing from to see how far away each listing is.'}
+              ? tx('Sorting by distance needs a starting point — choose a town above, or save your site on the map.', 'Ukuhlela ngebanga kudinga indawo yokuqala — khetha idolobha ngenhla noma ugcine indawo yakho kumephu.')
+              : tx('Choose where you are viewing from to see how far away each listing is.', 'Khetha indawo obuka ukuyo ukuze ubone ukuthi isikhangiso ngasinye sikude kangakanani.')}
           </p>
         )}
 
@@ -393,7 +399,7 @@ export default function ExchangeBoard() {
             onChange={(e) => setIncludeClosed(e.target.checked)}
             style={{ accentColor: EX.green, width: 14, height: 14 }}
           />
-          <span className="font-sans" style={{ fontSize: 12, color: EX.muted }}>Show listings already done</span>
+          <span className="font-sans" style={{ fontSize: 12, color: EX.muted }}>{tx('Show listings already done', 'Khombisa nezikhangiso eseziqediwe')}</span>
         </label>
       </div>
 
@@ -407,11 +413,10 @@ export default function ExchangeBoard() {
         >
           <Search size={22} strokeWidth={1.6} style={{ color: EX.faint, margin: '0 auto 10px' }} />
           <p className="font-display font-semibold" style={{ fontSize: 14.5, color: EX.ink, margin: '0 0 4px' }}>
-            Nothing matches that
+            {tx('Nothing matches that', 'Akukho okuhambisana nalokho')}
           </p>
           <p className="font-sans" style={{ fontSize: 12.5, color: EX.faint, margin: '0 0 14px', lineHeight: 1.5 }}>
-            {summary.total} {summary.total === 1 ? 'listing is' : 'listings are'} on the board — try a
-            wider distance, or clear the filters.
+            {zu ? `Kunezikhangiso ezingu-${summary.total} ebhodini — zama ibanga elibanzi noma ususe izihlungi.` : `${summary.total} ${summary.total === 1 ? 'listing is' : 'listings are'} on the board — try a wider distance, or clear the filters.`}
           </p>
           {filtersActive && (
             <button
@@ -426,7 +431,7 @@ export default function ExchangeBoard() {
                 cursor: 'pointer',
               }}
             >
-              Clear filters
+              {tx('Clear filters', 'Susa izihlungi')}
             </button>
           )}
         </div>
@@ -434,7 +439,7 @@ export default function ExchangeBoard() {
         <>
           <div className="flex items-center gap-2">
             <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
-              Showing {rows.length} of {summary.total}
+              {zu ? `Kuboniswa ezingu-${rows.length} kwezingu-${summary.total}` : `Showing ${rows.length} of ${summary.total}`}
             </span>
             <div style={{ flex: 1 }} />
             {filtersActive && (
@@ -443,7 +448,7 @@ export default function ExchangeBoard() {
                 className="font-sans font-semibold"
                 style={{ fontSize: 12, background: 'transparent', border: 'none', color: EX.green, cursor: 'pointer', padding: 0 }}
               >
-                Clear filters
+                {tx('Clear filters', 'Susa izihlungi')}
               </button>
             )}
           </div>
@@ -471,18 +476,18 @@ export default function ExchangeBoard() {
         <div className="flex items-center gap-2" style={{ marginBottom: 8 }}>
           <Info size={14} strokeWidth={1.9} style={{ color: EX.faint }} />
           <h2 className="font-display font-semibold" style={{ fontSize: 13.5, color: EX.ink, margin: 0 }}>
-            What this preview does not do
+            {tx('What this preview does not do', 'Lokho lo mbukiso ongakwenzi')}
           </h2>
         </div>
         <ul
           className="font-sans"
           style={{ fontSize: 12, color: EX.faint, lineHeight: 1.65, margin: 0, paddingLeft: 18 }}
         >
-          <li><strong style={{ fontWeight: 600 }}>No messaging.</strong> You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet.</li>
-          <li><strong style={{ fontWeight: 600 }}>No payments, no escrow, no delivery.</strong> Money and collection are arranged between the two farmers, off the app.</li>
-          <li><strong style={{ fontWeight: 600 }}>No ratings or reputation.</strong> There is no score behind any name on this board.</li>
-          <li><strong style={{ fontWeight: 600 }}>Nothing is published.</strong> Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.</li>
-          <li><strong style={{ fontWeight: 600 }}>Locations are approximate.</strong> Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No messaging.', 'Ayikho imiyalezo.')}</strong> {zu ? <ExchangeSourceCopy en="You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet." zu="Awukwazi ukuxhumana nomunye umlimi lapha. Alikho inkinobho yokuxhumana ekhadini ngoba ayikasebenzi." /> : 'You cannot contact another farmer from here. Nothing on a card is a contact button, because there is nothing behind it yet.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No payments, no escrow, no delivery.', 'Azikho izinkokhelo, ukubanjelwa kwemali noma ukulethwa.')}</strong> {zu ? <ExchangeSourceCopy en="Money and collection are arranged between the two farmers, off the app." zu="Imali nokulandwa kwempahla kuhlelwa phakathi kwabalimi, ngaphandle kwalolu hlelo lokusebenza." /> : 'Money and collection are arranged between the two farmers, off the app.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('No ratings or reputation.', 'Azikho izilinganiso noma udumo.')}</strong> {zu ? <ExchangeSourceCopy en="There is no score behind any name on this board." zu="Awekho amaphuzu ahambisana namagama akuleli bhodi." /> : 'There is no score behind any name on this board.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('Nothing is published.', 'Akukho okushicilelwayo.')}</strong> {zu ? <ExchangeSourceCopy en="Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first." zu="Izikhangiso ozifakayo zigcinwa kule divayisi. Ukuze kwabelwane ngazo kudingeka kuvulwe ingxenye yomphakathi bese kwandiswa imithetho yayo yezokuphepha kuqala." /> : 'Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.'}</li>
+          <li><strong style={{ fontWeight: 600 }}>{tx('Locations are approximate.', 'Izindawo zilinganiselwe.')}</strong> {zu ? <ExchangeSourceCopy en="Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead." zu="Indawo yesikhangiso isondezwa cishe kwikhilomitha elilodwa — ibonisa indawo eseduze, hhayi umuzi ngqo." /> : 'Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.'}</li>
         </ul>
       </div>
     </div>

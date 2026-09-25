@@ -19,7 +19,9 @@ import {
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { saveLocalListing } from './listing-store';
 import ShareListingButton from './ShareListingButton';
-import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
+import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL, ZU_PRICE_MODE_LABEL } from './theme';
+import { useLanguage } from '@/lib/i18n';
+import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /** The bases a farmer actually quotes against. `PriceBasis` allows every unit; this is the useful subset. */
 const PRICE_BASES: PriceBasis[] = ['kg', 'each', 'bunches', 'punnets', 'bags', 'days', 'lot'];
@@ -69,6 +71,9 @@ export default function NewListingForm({
   onPosted: (listings: Listing[]) => void;
   onCancel: () => void;
 }) {
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
+  const tx = (en: string, dz: string) => zu ? dz : en;
   const [kind, setKind] = useState<ListingKind>('offer');
   const [category, setCategory] = useState<ListingCategory>('produce');
   const [cropKey, setCropKey] = useState<string>('');
@@ -117,7 +122,7 @@ export default function NewListingForm({
     setCropKey(key);
     const def = CROPS.find((c) => c.key === key);
     if (def && !titleDirty) {
-      setTitle(kind === 'want' ? `Looking for ${def.name}` : `${def.name} available`);
+      setTitle(kind === 'want' ? (zu ? `Ngifuna ${def.name}` : `Looking for ${def.name}`) : (zu ? `${def.name} iyatholakala` : `${def.name} available`));
     }
     if (!priceDirty && priceMode === 'zar' && priceBasis === 'kg') {
       const suggested = suggestedPricePerKg(key);
@@ -201,22 +206,21 @@ export default function NewListingForm({
         <div className="flex items-center gap-2.5">
           <CheckCircle2 size={20} strokeWidth={1.8} style={{ color: EX.green, flexShrink: 0 }} />
           <h2 className="font-display font-bold" style={{ fontSize: 16, color: EX.ink, margin: 0 }}>
-            Listing saved
+            {tx('Listing saved', 'Isikhangiso silondoloziwe')}
           </h2>
         </div>
         <p className="font-sans" style={{ fontSize: 13, color: EX.muted, lineHeight: 1.55, margin: 0 }}>
-          It is saved on this phone only — nobody else can see it until you send it to them yourself.
-          Share it now, or find it on the board any time and share it later.
+          {zu ? <ExchangeSourceCopy en="It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later." zu="Sigcinwe kule foni kuphela — akekho omunye ongakwazi ukusibona uze usithumele wena. Yabelana ngaso manje noma usithole ebhodini kamuva." /> : 'It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.'}
         </p>
         <div className="rounded-xl" style={{ background: 'rgba(226,216,196,0.4)', padding: 12 }}>
           <div className="font-display font-semibold" style={{ fontSize: 14, color: EX.ink, marginBottom: 4 }}>
             {listing.title}
           </div>
           <div className="font-sans" style={{ fontSize: 12.5, color: EX.muted }}>
-            {[qty, priceLabel(listing)].filter(Boolean).join(' · ')}
+            {[qty, zu && listing.price.type === 'free' ? 'Mahhala' : zu && listing.price.type === 'swap' ? `Ukushintshisana: ${listing.price.wants}` : zu && listing.price.type === 'ask' ? 'Cela isipho sentengo' : priceLabel(listing)].filter(Boolean).join(' · ')}
           </div>
         </div>
-        <ShareListingButton listing={listing} label="Share to WhatsApp" />
+        <ShareListingButton listing={listing} label={tx('Share to WhatsApp', 'Yabelana nge-WhatsApp')} />
         <button
           onClick={() => onPosted(justPosted.all)}
           className="font-display font-semibold rounded-xl"
@@ -229,7 +233,7 @@ export default function NewListingForm({
             cursor: 'pointer',
           }}
         >
-          Back to the board
+          {tx('Back to the board', 'Buyela ebhodini')}
         </button>
       </div>
     );
@@ -249,12 +253,12 @@ export default function NewListingForm({
     >
       <div className="flex items-center">
         <h2 className="font-display font-bold" style={{ fontSize: 16, color: EX.ink, margin: 0 }}>
-          Post a listing
+          {tx('Post a listing', 'Faka isikhangiso')}
         </h2>
         <div style={{ flex: 1 }} />
         <button
           onClick={onCancel}
-          aria-label="Close"
+          aria-label={tx('Close', 'Vala')}
           style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: EX.faint, padding: 4 }}
         >
           <X size={16} />
@@ -263,7 +267,7 @@ export default function NewListingForm({
 
       {/* Offer or want */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Are you offering or looking?</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Are you offering or looking?', 'Ingabe kukhona okunikezayo noma okufunayo?')}</div>
         <div className="flex gap-2">
           {(['offer', 'want'] as ListingKind[]).map((k) => (
             <button
@@ -281,7 +285,7 @@ export default function NewListingForm({
                 border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
               }}
             >
-              {KIND_LABEL[k]}
+              {zu ? ZU_KIND_LABEL[k] : KIND_LABEL[k]}
             </button>
           ))}
         </div>
@@ -289,7 +293,7 @@ export default function NewListingForm({
 
       {/* Category */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>What kind of thing?</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('What kind of thing?', 'Uhlobo luni lwento?')}</div>
         <div className="flex gap-1.5 flex-wrap">
           {LISTING_CATEGORIES.map((c) => (
             <button
@@ -306,7 +310,7 @@ export default function NewListingForm({
                 border: `1px solid ${category === c ? EX.green : EX.border}`,
               }}
             >
-              {CATEGORY_LABEL[c]}
+              {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]}
             </button>
           ))}
         </div>
@@ -315,32 +319,31 @@ export default function NewListingForm({
       {/* Crop — from the catalog, never free text. A listing filed under a crop
           key is findable; one filed under a typed name is not. */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Which crop?</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Which crop?', 'Isiphi isitshalo?')}</div>
         <select
           value={cropKey}
           onChange={(e) => applyCrop(e.target.value)}
           className="rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         >
-          <option value="">Not a specific crop (tools, labour, other)</option>
+          <option value="">{tx('Not a specific crop (tools, labour, other)', 'Akusona isitshalo esithile (amathuluzi, umsebenzi, okunye)')}</option>
           {cropOptions.map((c) => (
             <option key={c.key} value={c.key}>{c.icon} {c.name}</option>
           ))}
         </select>
         <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
-          Pick from the list rather than typing a name — that is what lets another farmer filter the
-          board by crop and actually find you.
+          {tx('Pick from the list rather than typing a name — that is what lets another farmer filter the board by crop and actually find you.', 'Khetha ohlwini esikhundleni sokubhala igama ukuze omunye umlimi akuthole ngokuhlunga ngesitshalo.')}
         </p>
       </div>
 
       {/* Title */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Headline</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Headline', 'Isihloko')}</div>
         <input
           type="text"
           value={title}
           onChange={(e) => { setTitle(e.target.value.slice(0, 90)); setTitleDirty(true); }}
-          placeholder="Swiss chard — cutting weekly"
+          placeholder={tx('Swiss chard — cutting weekly', 'I-Swiss chard — ngiyivuna masonto onke')}
           className="rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         />
@@ -348,11 +351,11 @@ export default function NewListingForm({
 
       {/* Description */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Detail (optional)</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Detail (optional)', 'Imininingwane (uma uthanda)')}</div>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value.slice(0, 300))}
-          placeholder="Anything a buyer should know — variety, condition, collection."
+          placeholder={tx('Anything a buyer should know — variety, condition, collection.', 'Okufanele kwaziwe umthengi — uhlobo, isimo nendlela yokulanda.')}
           rows={3}
           className="rounded-xl px-3 py-2.5 font-sans"
           style={{ ...fieldStyle, resize: 'none', lineHeight: 1.5 }}
@@ -361,7 +364,7 @@ export default function NewListingForm({
 
       {/* Quantity */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>How much? (optional)</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('How much? (optional)', 'Kungakanani? (uma uthanda)')}</div>
         <div className="flex gap-2">
           <input
             type="text"
@@ -383,14 +386,14 @@ export default function NewListingForm({
         </div>
         {!qtyValid && (
           <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
-            Quantity must be a number above zero — or leave it blank.
+            {tx('Quantity must be a number above zero — or leave it blank.', 'Inani kumele libe ngaphezu kukaziro — noma ushiye lingenalutho.')}
           </p>
         )}
       </div>
 
       {/* Price */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Price, swap or free</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Price, swap or free', 'Intengo, ukushintshisana noma mahhala')}</div>
         <div className="flex gap-1.5 flex-wrap" style={{ marginBottom: 10 }}>
           {(Object.keys(PRICE_MODE_LABEL) as PriceMode[]).map((m) => (
             <button
@@ -407,7 +410,7 @@ export default function NewListingForm({
                 border: `1px solid ${priceMode === m ? EX.amber : EX.border}`,
               }}
             >
-              {PRICE_MODE_LABEL[m]}
+              {tx(PRICE_MODE_LABEL[m], ZU_PRICE_MODE_LABEL[m])}
             </button>
           ))}
         </div>
@@ -425,7 +428,7 @@ export default function NewListingForm({
                 className="rounded-xl px-3 py-2.5 font-sans"
                 style={{ ...fieldStyle, flex: 1 }}
               />
-              <span className="font-sans" style={{ fontSize: 13, color: EX.faint }}>per</span>
+              <span className="font-sans" style={{ fontSize: 13, color: EX.faint }}>{tx('per', 'nge-')}</span>
               <select
                 value={priceBasis}
                 onChange={(e) => setPriceBasis(e.target.value as PriceBasis)}
@@ -433,19 +436,18 @@ export default function NewListingForm({
                 style={{ ...fieldStyle, flex: 1 }}
               >
                 {PRICE_BASES.map((b) => (
-                  <option key={b} value={b}>{b === 'lot' ? 'the lot' : b}</option>
+                  <option key={b} value={b}>{b === 'lot' ? tx('the lot', 'konke') : b}</option>
                 ))}
               </select>
             </div>
             {cropKey !== '' && suggestedPricePerKg(cropKey) !== null && (
               <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
-                Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale.
-                Farm-gate, not shop shelf — change it to whatever you actually want.
+                {zu ? <ExchangeSourceCopy en={`Suggested from the app’s price book: about R${suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.`} zu={`Intengo ephakanyisiwe isuselwa encwadini yohlelo yokubala amanani: cishe u-R${suggestedPricePerKg(cropKey)}/kg ngenani le-wholesale. Lena intengo yasepulazini, hhayi eyasesitolo — yishintshe ibe yinani olifunayo.`} /> : <>Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.</>}
               </p>
             )}
             {!priceValid && (
               <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
-                Enter an amount above zero, or choose Swap, Free or Make an offer.
+                {tx('Enter an amount above zero, or choose Swap, Free or Make an offer.', 'Faka inani elingaphezu kukaziro, noma ukhethe ukushintshisana, mahhala noma ukubeka inani lakho.')}
               </p>
             )}
           </>
@@ -456,7 +458,7 @@ export default function NewListingForm({
             type="text"
             value={swapWants}
             onChange={(e) => setSwapWants(e.target.value.slice(0, 100))}
-            placeholder="What would you take? e.g. maize seed or pumpkin seed"
+            placeholder={tx('What would you take? e.g. maize seed or pumpkin seed', 'Yini ongayamukela? Isib. imbewu yommbila noma yethanga')}
             className="rounded-xl px-3 py-2.5 font-sans"
             style={fieldStyle}
           />
@@ -466,7 +468,7 @@ export default function NewListingForm({
       {/* Month */}
       <div>
         <div className="font-sans uppercase" style={labelStyle}>
-          {kind === 'want' ? 'Needed by (optional)' : 'Ready in (optional)'}
+          {kind === 'want' ? tx('Needed by (optional)', 'Kudingeka nini? (uma uthanda)') : tx('Ready in (optional)', 'Kuyobe sekulungile nini? (uma uthanda)')}
         </div>
         <select
           value={month}
@@ -474,30 +476,30 @@ export default function NewListingForm({
           className="rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         >
-          <option value="">Any time</option>
-          {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
+          <option value="">{tx('Any time', 'Noma nini')}</option>
+          {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{zu ? ZU_MONTH_LABEL[i] : m}</option>)}
         </select>
       </div>
 
       {/* Who and where */}
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Your name</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Your name', 'Igama lakho')}</div>
         <input
           type="text"
           value={farmerName}
           onChange={(e) => setFarmerName(e.target.value.slice(0, 60))}
-          placeholder="Your name or your group's name"
+          placeholder={tx("Your name or your group's name", 'Igama lakho noma leqembu lakho')}
           className="rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         />
       </div>
       <div>
-        <div className="font-sans uppercase" style={labelStyle}>Nearest town</div>
+        <div className="font-sans uppercase" style={labelStyle}>{tx('Nearest town', 'Idolobha eliseduze')}</div>
         <input
           type="text"
           value={areaText}
           onChange={(e) => setAreaText(e.target.value.slice(0, 60))}
-          placeholder="e.g. Nquthu"
+          placeholder={tx('e.g. Nquthu', 'isib. iNquthu')}
           className="rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         />
@@ -512,10 +514,9 @@ export default function NewListingForm({
             style={{ marginTop: 2, accentColor: EX.green, width: 16, height: 16, flexShrink: 0 }}
           />
           <span className="font-sans" style={{ fontSize: 12.5, color: EX.muted, lineHeight: 1.5 }}>
-            Show roughly where I am, so nearby farmers see the distance.
+            {tx('Show roughly where I am, so nearby farmers see the distance.', 'Khombisa cishe indawo engikuyo ukuze abalimi abaseduze babone ibanga.')}
             <span style={{ color: EX.faint }}>
-              {' '}Your location is rounded to about a kilometre before it is saved — never your exact
-              homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.
+              {' '}{zu ? <ExchangeSourceCopy en={`Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on ${mySite.name}.`} zu={`Indawo yakho isondezwa cishe kwikhilomitha elilodwa ngaphambi kokugcinwa — akuboniswa umuzi wakho ngqo. Kususelwa ku-${mySite.name}.`} /> : <>Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.</>}
             </span>
           </span>
         </label>
@@ -527,8 +528,7 @@ export default function NewListingForm({
       >
         <Info size={13} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
         <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.5 }}>
-          This listing is saved on this phone only. It is not sent to other farmers and nobody else
-          can see it — sharing listings between farmers is not built yet.
+          {zu ? <ExchangeSourceCopy en="This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet." zu="Lesi sikhangiso sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona — ukwabelana ngezikhangiso phakathi kwabalimi akukakhiwa." /> : 'This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet.'}
         </span>
       </div>
 
@@ -546,7 +546,7 @@ export default function NewListingForm({
             cursor: 'pointer',
           }}
         >
-          Cancel
+          {tx('Cancel', 'Khansela')}
         </button>
         <button
           onClick={handlePost}
@@ -562,7 +562,7 @@ export default function NewListingForm({
             cursor: canPost ? 'pointer' : 'default',
           }}
         >
-          Save listing
+          {tx('Save listing', 'Londoloza isikhangiso')}
         </button>
       </div>
     </div>

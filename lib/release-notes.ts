@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'fd12838f', changes: [
+    'Farmer Exchange controls add draft isiZulu beside English.',
+    'Listing details stay as entered; transaction wording keeps its English source.',
+  ], tour: [
+    { title: 'Check Exchange language', where: 'Farmer Exchange', href: '/exchange',
+      detail: 'Choose isiZulu and inspect the board and listing form. User-entered listing details remain unchanged.' },
+  ] },
   { when: '25 September 2026', sha: '4a234130', changes: [
     'Settings has a new choice: Simple or All tools. Farmers start on Simple.',
     'Simple Home names your site once, with your next step on the green card.',
