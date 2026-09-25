@@ -153,7 +153,10 @@ test('the remaining 29 English UI sources have marked isiZulu drafts and keep th
     );
   }
   assert.match(farmerPageSource, /Unreviewed isiZulu draft\. English source:[\s\S]*openSurveyNoSiteMessage/);
-  assert.match(tipsSource, /Unreviewed isiZulu draft for the translated page labels/);
+  assert.match(tipsSource, /Unreviewed isiZulu draft\. Each guide keeps its exact English source below\./,
+    'Tips now drafts the instructions as well as the page labels, so the notice must describe both');
+  assert.match(tipsSource, /English source: \{g\.en\.text\}/,
+    'record and money guides must keep their exact English instructions beside the isiZulu draft');
   assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
 });
 
