@@ -93,6 +93,11 @@ const HDDS_ENGLISH: Record<HddsFoodGroup, string> = {
 
 const MONTH_ENGLISH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const SURVEY_INCOME_GUIDE_ENGLISH = 'Enter the amount earned from sales, before costs. The survey records income; it does not calculate profit.';
+const SURVEY_WATER_GUIDE_ENGLISH = 'Start at the source, then follow the pipe or carrying route. Look for storage and roof gutters. Map-filled areas can be corrected if you measured them on site.';
+const SURVEY_WATER_TIP_ENGLISH = 'Follow the water: where it comes from, how it reaches plants, and where it is stored.';
+const SURVEY_MISSING_HINT_ENGLISH = 'Choose your goals, land preparation and soil condition, water source and delivery, farming approach and challenges. The other details are optional.';
+const SURVEY_MAIN_ROOF_GUIDE_ENGLISH = 'Use a roof outline traced on the map or measured on site. Leave this blank if you do not know.';
+const SURVEY_MAIN_ROOF_HINT_ENGLISH = 'The area covered by the roof when seen from directly above; do not use the sloping roof surface.';
 
 // English-only for now — three-letter month abbreviations, genuinely new keys.
 function monthLabels(t: (key: string) => string): string[] {
@@ -186,12 +191,13 @@ function SoilSwatch({ kind }: { kind: string }) {
   </svg>;
 }
 
-function AutoFillNote({ areaM2 }: { areaM2: number }) {
-  const { t } = useLanguage();
+function AutoFillNote({ areaM2, english }: { areaM2: number; english?: string }) {
+  const { lang, t } = useLanguage();
+  const label = t('surveyAutoFillNote').replace('{area}', String(Math.round(areaM2)));
   return (
     <div className="font-sans flex items-center gap-1.5 mt-1.5" style={{ fontSize: 12, color: 'var(--brand)' }}>
       <Sparkles size={12} />
-      {t('surveyAutoFillNote').replace('{area}', String(Math.round(areaM2)))}
+      {english && lang === 'zu' ? <SurveyZuluDraftPair english={english.replace('{area}', String(Math.round(areaM2)))}>{label}</SurveyZuluDraftPair> : label}
     </div>
   );
 }
@@ -442,8 +448,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   }, []);
 
   const Icon = STEP_ICONS[step];
-  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
-  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
+  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome'), lang === 'zu' ? SURVEY_WATER_GUIDE_ENGLISH : t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
+  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.'), lang === 'zu' ? SURVEY_WATER_TIP_ENGLISH : t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
 
   return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
@@ -458,7 +464,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
             {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
-            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : STEPS[id]}</span>
+            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : STEPS[id]}</span>
           </button>; })}
           <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
@@ -484,11 +490,11 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <main className={styles.main}>
             <div className={styles.stepHeading}><div className={styles.stepIcon}><Icon size={26}/></div><div>
               <span className={styles.eyebrow}>{t('stepOfSteps').replace('{n}', String(routeIndex + 1)).replace('{total}', String(route.length))}</span>
-              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : STEPS[step]}</h2>
+              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : step === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : STEPS[step]}</h2>
             </div></div>
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
-            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
-            {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
+            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
+            {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
             {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
             <div className={styles.questions}>
         {/* ── Step 0: Site & Goals ── */}
@@ -561,19 +567,19 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           </div>
         )}
 
-        {/* ── Step 5: Resources & Inputs — Water ── */}
+        {/* ── Step 6: Resources & Inputs — Water ── */}
         {step === 5 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionWaterSources')}</SectionLabel>
+              <SectionLabel>{paired('sectionWaterSources', 'Water sources available on this site (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'municipal',  label: t('waterSourceMunicipalTap') },
-                  { v: 'borehole',   label: t('waterSourceBorehole') },
-                  { v: 'river',      label: t('waterSourceRiverStream') },
-                  { v: 'rainwater',  label: t('waterSourceRainwater') },
-                  { v: 'grey',       label: t('waterSourceGreyWater') },
-                  { v: 'none',       label: t('waterSourceNoneYet') },
+                  { v: 'municipal',  label: paired('waterSourceMunicipalTap', 'Municipal tap') },
+                  { v: 'borehole',   label: paired('waterSourceBorehole', 'Borehole') },
+                  { v: 'river',      label: paired('waterSourceRiverStream', 'River / stream') },
+                  { v: 'rainwater',  label: paired('waterSourceRainwater', 'Rainwater') },
+                  { v: 'grey',       label: paired('waterSourceGreyWater', 'Grey water') },
+                  { v: 'none',       label: paired('waterSourceNoneYet', 'No water yet') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={waterSource.includes(o.v)} onClick={() => setWaterSource(toggle(waterSource, o.v))} color="var(--brand)" />
                 ))}
@@ -581,16 +587,16 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionHowDoesWaterReachPlants')}</SectionLabel>
+              <SectionLabel>{paired('sectionHowDoesWaterReachPlants', 'How does water reach the plants? (select all that apply)')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'drip',       label: t('waterDeliveryDripLabel'),      desc: t('waterDeliveryDripDesc') },
-                  { v: 'sprinkler',  label: t('waterDeliverySprinklerLabel'), desc: t('waterDeliverySprinklerDesc') },
-                  { v: 'piped',      label: t('waterDeliveryPipedLabel'),     desc: t('waterDeliveryPipedDesc') },
-                  { v: 'gravity',    label: t('waterDeliveryGravityLabel'),   desc: t('waterDeliveryGravityDesc') },
-                  { v: 'bucket',     label: t('waterDeliveryBucketLabel'),    desc: t('waterDeliveryBucketDesc') },
-                  { v: 'flood',      label: t('waterDeliveryFloodLabel'),     desc: t('waterDeliveryFloodDesc') },
-                  { v: 'none',       label: t('waterDeliveryNoneLabel'),      desc: t('waterDeliveryNoneDesc') },
+                  { v: 'drip',       label: paired('waterDeliveryDripLabel', 'Drip irrigation'), desc: paired('waterDeliveryDripDesc', 'Lines / emitters direct to roots') },
+                  { v: 'sprinkler',  label: paired('waterDeliverySprinklerLabel', 'Sprinkler'), desc: paired('waterDeliverySprinklerDesc', 'Overhead spray system') },
+                  { v: 'piped',      label: paired('waterDeliveryPipedLabel', 'Piped to tap / hose'), desc: paired('waterDeliveryPipedDesc', 'Garden hose or standpipe') },
+                  { v: 'gravity',    label: paired('waterDeliveryGravityLabel', 'Gravity-fed'), desc: paired('waterDeliveryGravityDesc', 'Header tank or elevated source') },
+                  { v: 'bucket',     label: paired('waterDeliveryBucketLabel', 'Hand-watered'), desc: paired('waterDeliveryBucketDesc', 'Bucket / watering can') },
+                  { v: 'flood',      label: paired('waterDeliveryFloodLabel', 'Flood / furrow'), desc: paired('waterDeliveryFloodDesc', 'Water runs along channels') },
+                  { v: 'none',       label: paired('waterDeliveryNoneLabel', 'Rain-fed only'), desc: paired('waterDeliveryNoneDesc', 'No supplemental watering') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc}
                     on={waterDelivery.includes(o.v)}
@@ -602,14 +608,14 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionWaterStorage')}</SectionLabel>
+              <SectionLabel>{paired('sectionWaterStorage', 'Water storage on site (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'jojo',    label: t('waterStorageJojoTanks') },
-                  { v: 'dam',     label: t('waterStorageEarthDam') },
-                  { v: 'pond',    label: t('waterStoragePond') },
-                  { v: 'cistern', label: t('waterStorageCistern') },
-                  { v: 'none',    label: t('waterStorageNone') },
+                  { v: 'jojo',    label: paired('waterStorageJojoTanks', 'Jojo / plastic tanks') },
+                  { v: 'dam',     label: paired('waterStorageEarthDam', 'Earth dam') },
+                  { v: 'pond',    label: paired('waterStoragePond', 'Pond / retention pit') },
+                  { v: 'cistern', label: paired('waterStorageCistern', 'Underground cistern') },
+                  { v: 'none',    label: paired('waterStorageNone', 'No storage') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={waterStorage.includes(o.v)} onClick={() => setWaterStorage(toggle(waterStorage, o.v))} color="var(--brand)" />
                 ))}
@@ -618,47 +624,47 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           </div>
         )}
 
-        {/* ── Step 5: Resources & Inputs — Roof catchment ── */}
+        {/* ── Step 6: Resources & Inputs — Roof catchment ── */}
         {step === 5 && (
           <div className="space-y-5">
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-2)', lineHeight: 1.5 }}>
-                <span className="font-semibold" style={{ color: 'var(--blue)' }}>{t('roofCatchmentWhyMattersLabel')}</span>
-                {lang === 'zu' ? <SurveyZuluDraftPair english="Lima uses roof area to calculate how much rainwater you can harvest each year — it directly sizes your tank recommendations, swale design, and irrigation planning.">{t('roofCatchmentWhyMattersText')}</SurveyZuluDraftPair> : t('roofCatchmentWhyMattersText')}
+                <span className="font-semibold" style={{ color: 'var(--blue)' }}>{paired('roofCatchmentWhyMattersLabel', 'Why this matters: ')}</span>
+                {paired('roofCatchmentWhyMattersText', 'Lima uses roof area to calculate how much rainwater you can harvest each year — it directly sizes your tank recommendations, swale design, and irrigation planning.')}
               </p>
             </div>
 
             <div>
-              <SectionLabel>{t('sectionMainBuildingRoofArea')}</SectionLabel>
-              <div className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('roofMainBuildingGuide')}</div>
-              <NumInput label={t('sectionMainBuildingRoofArea')} value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder={t('roofMainPlaceholder')} hint={t('roofMainHint')} />
-              {roofSource === 'auto' && <AutoFillNote areaM2={roofAreaM2} />}
+              <SectionLabel>{paired('sectionMainBuildingRoofArea', 'Main building roof area (m²)')}</SectionLabel>
+              <div className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{lang === 'zu' ? SURVEY_MAIN_ROOF_GUIDE_ENGLISH : t('roofMainBuildingGuide')}</div>
+              <NumInput label={t('sectionMainBuildingRoofArea')} value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder={t('roofMainPlaceholder')} placeholderEnglish="e.g. 100" hint={lang === 'zu' ? SURVEY_MAIN_ROOF_HINT_ENGLISH : t('roofMainHint')} />
+              {roofSource === 'auto' && <AutoFillNote areaM2={roofAreaM2} english="Auto-filled from your traced shapes ({area} m²) — tap to adjust" />}
             </div>
 
             <div>
-              <SectionLabel>{t('sectionSecondaryRoofs')}</SectionLabel>
-              <NumInput label={t('sectionSecondaryRoofs')} value={roofSecondary} onChange={v => { setRoofSecondary(v); setRoofSecondarySource('manual'); }} placeholder={t('roofSecondaryPlaceholder')} hint={t('roofSecondaryHint')} />
-              {roofSecondarySource === 'auto' && <AutoFillNote areaM2={secondaryRoofM2} />}
+              <SectionLabel>{paired('sectionSecondaryRoofs', 'Secondary roofs — barn, shed, workshop (m²) — optional')}</SectionLabel>
+              <NumInput label={t('sectionSecondaryRoofs')} value={roofSecondary} onChange={v => { setRoofSecondary(v); setRoofSecondarySource('manual'); }} placeholder={t('roofSecondaryPlaceholder')} placeholderEnglish="e.g. 60" hint={paired('roofSecondaryHint', 'Add areas of all other harvestable roofs')} />
+              {roofSecondarySource === 'auto' && <AutoFillNote areaM2={secondaryRoofM2} english="Auto-filled from your traced shapes ({area} m²) — tap to adjust" />}
             </div>
 
-            <Toggle label={t('toggleGuttersLabel')} sub={t('toggleGuttersSub')} ariaLabel={t('toggleGuttersLabel')} on={hasGutters} onChange={setHasGutters} />
+            <Toggle label={paired('toggleGuttersLabel', 'Gutters & downpipes in place')} sub={paired('toggleGuttersSub', 'Directs rain to tanks or storage area')} ariaLabel={t('toggleGuttersLabel')} on={hasGutters} onChange={setHasGutters} />
 
             {totalRoof > 0 && <div className={styles.roofVisual}>
-              <h3>{t('surveyRoofEstimateTitle')}</h3>
+              <h3>{paired('surveyRoofEstimateTitle', 'From roof to stored water')}</h3>
               <div className={styles.roofFlow}>
-                <div><Home size={30}/><strong>{numberLabel(totalRoof)} m²</strong><span>{t('liveEstimateTotalRoofArea')}</span></div><span aria-hidden="true">×</span>
-                <div><Droplets size={30}/><strong>{rainfallMm === null ? '—' : `${numberLabel(rainfallMm)} mm`}</strong><span>{t('surveyAnnualRainfall')}</span></div><ArrowRight size={20} aria-hidden="true"/>
-                <div><Droplets size={30}/><strong>{localRoofHarvest === null ? '—' : `~${numberLabel(localRoofHarvest)} kL`}</strong><span>{t('surveyEstimatedCollection')}</span></div>
+                <div><Home size={30}/><strong>{numberLabel(totalRoof)} m²</strong><span>{paired('liveEstimateTotalRoofArea', 'Total roof area:')}</span></div><span aria-hidden="true">×</span>
+                <div><Droplets size={30}/><strong>{rainfallMm === null ? '—' : `${numberLabel(rainfallMm)} mm`}</strong><span>{paired('surveyAnnualRainfall', 'Annual site rainfall')}</span></div><ArrowRight size={20} aria-hidden="true"/>
+                <div><Droplets size={30}/><strong>{localRoofHarvest === null ? '—' : `~${numberLabel(localRoofHarvest)} kL`}</strong><span>{paired('surveyEstimatedCollection', 'Estimated collection / year')}</span></div>
               </div>
-              <p>{localRoofHarvest === null ? t('surveyRainfallMissing') : lang === 'zu' ? <SurveyZuluDraftPair english="Uses your entered or traced roof area and rainfall from the site analysis. Collection efficiency is an assumption: 80% with gutters, 60% without. Actual collection varies.">{t('surveyRoofInputs')}</SurveyZuluDraftPair> : t('surveyRoofInputs')}</p>
+              <p>{localRoofHarvest === null ? paired('surveyRainfallMissing', 'Annual rainfall is not available in this view. The site report can use your location analysis.') : paired('surveyRoofInputs', 'Uses your entered or traced roof area and rainfall from the site analysis. Collection efficiency is an assumption: 80% with gutters, 60% without. Actual collection varies.')}</p>
             </div>}
             {totalRoof > 0 && (
-              <details className={styles.workedExample}><summary>{t('surveyRoofExample')}</summary><div style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(31,77,43,0.2)' }}>
-                <div className="font-sans font-semibold mb-1" style={{ fontSize: 13, color: 'var(--brand)' }}>{t('liveEstimateTitle')} · {t('surveyIllustrativeOnly')}</div>
+              <details className={styles.workedExample}><summary>{paired('surveyRoofExample', 'See a worked example at 600 mm rainfall')}</summary><div style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(31,77,43,0.2)' }}>
+                <div className="font-sans font-semibold mb-1" style={{ fontSize: 13, color: 'var(--brand)' }}>{paired('liveEstimateTitle', 'Live estimate')} · {paired('surveyIllustrativeOnly', 'Worked example, not your site rainfall')}</div>
                 <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-2)', lineHeight: 1.6 }}>
-                  {t('liveEstimateTotalRoofArea')} <strong>{totalRoof} m²</strong><br />
-                  {t('liveEstimateAt600mmRain')} <strong>~{roofHarvest600} {t('liveEstimatePerYear')}</strong> ({hasGutters ? '80%' : '60%'} {lang === 'zu' ? <SurveyZuluDraftPair english="efficiency">{t('surveyEfficiencySuffix')}</SurveyZuluDraftPair> : t('surveyEfficiencySuffix')})<br />
-                  <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('liveEstimateActualRainfallNote')}</span>
+                  {paired('liveEstimateTotalRoofArea', 'Total roof area:')} <strong>{totalRoof} m²</strong><br />
+                  {paired('liveEstimateAt600mmRain', 'At 600 mm rain →')} <strong>~{roofHarvest600} {paired('liveEstimatePerYear', 'kL/year')}</strong> ({hasGutters ? '80%' : '60%'} {paired('surveyEfficiencySuffix', 'efficiency')})<br />
+                  <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('liveEstimateActualRainfallNote', "Lima will recalculate using your site's actual rainfall")}</span>
                 </div>
               </div></details>
             )}
@@ -958,7 +964,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <aside className={styles.companion} aria-label={t('surveyFieldGuide')}>
             <span className={styles.eyebrow}>{t('surveyFieldGuide')}</span>
             <div className={styles.guideDrawing} aria-hidden="true"><Home size={42}/><ArrowRight size={18}/>{step === 5 ? <Droplets size={42}/> : <Sprout size={42}/>}<ArrowRight size={18}/><NotebookPen size={42}/></div>
-            <h3>{t('surveyObserveFirst')}</h3><p>{fieldGuides[step]}</p>
+            <h3>{step === 5 ? paired('surveyObserveFirst', 'Look, then record.') : t('surveyObserveFirst')}</h3><p>{fieldGuides[step]}</p>
             <div className={styles.recordOverview}><strong>{t('surveyRecordOverview')}</strong>
               {[{label:t('surveyGoalsSelected'), value:goals.length}, {label:t('surveyProductionEntries'),value:survey.reportedProduction?.length ?? 0}].map(item => <div key={item.label}><span>{item.label}</span><b>{item.value}</b></div>)}
             </div>

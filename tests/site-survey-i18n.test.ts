@@ -398,18 +398,73 @@ test('Income & Sales choices and help show isiZulu drafts beside exact English s
   assert.ok(surveySource.includes("paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.')"));
 });
 
+test('Resources & Inputs choices show isiZulu drafts beside exact English sources and keep uncertain guidance in English', () => {
+  const pairedSources = [
+    ['surveyStepResourcesInputs', 'Resources & Inputs'],
+    ['surveyFieldGuide', 'Along the way'], ['surveyObserveFirst', 'Look, then record.'],
+    ['sectionWaterSources', 'Water sources available on this site (select all)'],
+    ['waterSourceMunicipalTap', 'Municipal tap'], ['waterSourceBorehole', 'Borehole'],
+    ['waterSourceRiverStream', 'River / stream'], ['waterSourceRainwater', 'Rainwater'],
+    ['waterSourceGreyWater', 'Grey water'], ['waterSourceNoneYet', 'No water yet'],
+    ['sectionHowDoesWaterReachPlants', 'How does water reach the plants? (select all that apply)'],
+    ['waterDeliveryDripLabel', 'Drip irrigation'], ['waterDeliveryDripDesc', 'Lines / emitters direct to roots'],
+    ['waterDeliverySprinklerLabel', 'Sprinkler'], ['waterDeliverySprinklerDesc', 'Overhead spray system'],
+    ['waterDeliveryPipedLabel', 'Piped to tap / hose'], ['waterDeliveryPipedDesc', 'Garden hose or standpipe'],
+    ['waterDeliveryGravityLabel', 'Gravity-fed'], ['waterDeliveryGravityDesc', 'Header tank or elevated source'],
+    ['waterDeliveryBucketLabel', 'Hand-watered'], ['waterDeliveryBucketDesc', 'Bucket / watering can'],
+    ['waterDeliveryFloodLabel', 'Flood / furrow'], ['waterDeliveryFloodDesc', 'Water runs along channels'],
+    ['waterDeliveryNoneLabel', 'Rain-fed only'], ['waterDeliveryNoneDesc', 'No supplemental watering'],
+    ['sectionWaterStorage', 'Water storage on site (select all)'],
+    ['waterStorageJojoTanks', 'Jojo / plastic tanks'], ['waterStorageEarthDam', 'Earth dam'],
+    ['waterStoragePond', 'Pond / retention pit'], ['waterStorageCistern', 'Underground cistern'],
+    ['waterStorageNone', 'No storage'],
+    ['roofCatchmentWhyMattersLabel', 'Why this matters: '],
+    ['roofCatchmentWhyMattersText', 'Lima uses roof area to calculate how much rainwater you can harvest each year — it directly sizes your tank recommendations, swale design, and irrigation planning.'],
+    ['sectionMainBuildingRoofArea', 'Main building roof area (m²)'],
+    ['sectionSecondaryRoofs', 'Secondary roofs — barn, shed, workshop (m²) — optional'],
+    ['roofSecondaryHint', 'Add areas of all other harvestable roofs'],
+    ['toggleGuttersLabel', 'Gutters & downpipes in place'],
+    ['toggleGuttersSub', 'Directs rain to tanks or storage area'],
+    ['surveyRoofEstimateTitle', 'From roof to stored water'],
+    ['liveEstimateTotalRoofArea', 'Total roof area:'],
+    ['surveyAnnualRainfall', 'Annual site rainfall'], ['surveyEstimatedCollection', 'Estimated collection / year'],
+    ['surveyRainfallMissing', 'Annual rainfall is not available in this view. The site report can use your location analysis.'],
+    ['surveyRoofInputs', 'Uses your entered or traced roof area and rainfall from the site analysis. Collection efficiency is an assumption: 80% with gutters, 60% without. Actual collection varies.'],
+    ['surveyRoofExample', 'See a worked example at 600 mm rainfall'],
+    ['liveEstimateTitle', 'Live estimate'], ['surveyIllustrativeOnly', 'Worked example, not your site rainfall'],
+    ['liveEstimateAt600mmRain', 'At 600 mm rain →'], ['liveEstimatePerYear', 'kL/year'],
+    ['surveyEfficiencySuffix', 'efficiency'],
+    ['liveEstimateActualRainfallNote', "Lima will recalculate using your site's actual rainfall"],
+  ] as const;
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`) || surveySource.includes(`paired('${key}', "${english}")`), `${key} must show its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`) || i18nSource.includes(`${key}: "${english}"`), `${key} source must match the English dictionary`);
+  }
+  assert.ok(surveySource.includes("const SURVEY_WATER_GUIDE_ENGLISH = 'Start at the source, then follow the pipe or carrying route. Look for storage and roof gutters. Map-filled areas can be corrected if you measured them on site.'"));
+  assert.ok(surveySource.includes("lang === 'zu' ? SURVEY_WATER_GUIDE_ENGLISH : t('surveyGuideWater')"), 'water-location guidance must stay in English for isiZulu');
+  assert.ok(surveySource.includes("const SURVEY_WATER_TIP_ENGLISH = 'Follow the water: where it comes from, how it reaches plants, and where it is stored.'"));
+  assert.ok(surveySource.includes("lang === 'zu' ? SURVEY_WATER_TIP_ENGLISH : t('surveyTipWater')"), 'water-following guidance must stay in English for isiZulu');
+  assert.ok(surveySource.includes("const SURVEY_MISSING_HINT_ENGLISH = 'Choose your goals, land preparation and soil condition, water source and delivery, farming approach and challenges. The other details are optional.'"));
+  assert.ok(surveySource.includes("lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')"), 'review directions about water must stay in English');
+  assert.ok(surveySource.includes("const SURVEY_MAIN_ROOF_GUIDE_ENGLISH = 'Use a roof outline traced on the map or measured on site. Leave this blank if you do not know.'"));
+  assert.ok(surveySource.includes("lang === 'zu' ? SURVEY_MAIN_ROOF_GUIDE_ENGLISH : t('roofMainBuildingGuide')"), 'unverified roof-size estimates must not be shown');
+  assert.ok(surveySource.includes("const SURVEY_MAIN_ROOF_HINT_ENGLISH = 'The area covered by the roof when seen from directly above; do not use the sloping roof surface.'"));
+  assert.ok(surveySource.includes("hint={lang === 'zu' ? SURVEY_MAIN_ROOF_HINT_ENGLISH : t('roofMainHint')}"), 'roof measurement instructions must use the English source');
+  assert.ok(surveySource.includes('placeholderEnglish="e.g. 100"') && surveySource.includes('placeholderEnglish="e.g. 60"'), 'existing roof area example values must remain unchanged and source-paired');
+});
+
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
   for (const key of NEW_SITE_SURVEY_KEYS) {
-    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '` ) || surveySource.includes(`paired('${key}', "`), `${key} is not referenced by SiteSurveySheet`);
   }
   for (const key of REWIRED_EXISTING_KEYS) {
-    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '` ) || surveySource.includes(`paired('${key}', "`), `${key} is not referenced by SiteSurveySheet`);
   }
 
   // useLanguage must actually be imported and called — a stray literal key string with no t()
   // wiring would otherwise slip past the regex checks above.
   assert.match(surveySource, /import \{ useLanguage \} from '@\/lib\/i18n';/);
-  assert.match(surveySource, /const \{ t \} = useLanguage\(\);/);
+  assert.match(surveySource, /const \{(?: lang, )?t \} = useLanguage\(\);/);
 });
 
 test('SiteSurveySheet no longer hard-codes its former English literals', () => {
@@ -421,7 +476,7 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   assert.doesNotMatch(surveySource, /'Livestock & Poultry'/, 'STEPS regressed to a hard-coded literal');
   const surveyStepSource = surveySource.slice(surveySource.indexOf('function surveySteps'), surveySource.indexOf('const STEP_ICONS'));
   assert.doesNotMatch(surveyStepSource, /'Income & Sales'/, 'STEPS regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /'Resources & Inputs'/, 'STEPS regressed to a hard-coded literal');
+  assert.doesNotMatch(surveyStepSource, /'Resources & Inputs'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /aria-label="Site questionnaire"/, 'dialog aria-label regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /aria-label="Close"/, 'close button aria-label regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /Discard your answers so far\? This questionnaire has not been saved yet\./, 'discard-confirm prompt regressed to a hard-coded literal');
@@ -430,7 +485,8 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   const hddsFunction = surveySource.slice(surveySource.indexOf('function hddsLabels'), surveySource.indexOf('const HDDS_ENGLISH'));
   assert.doesNotMatch(hddsFunction, /Roots & tubers/, 'HDDS labels regressed to hard-coded display values');
   assert.doesNotMatch(surveySource, /function monthLabels[\s\S]*?return \[\s*'Jan', 'Feb', 'Mar'/, 'MONTH_LABELS regressed to English display values');
-  assert.doesNotMatch(surveySource, /Auto-filled from your traced shapes/, 'AutoFillNote regressed to a hard-coded literal');
+  const autoFillHelper = surveySource.slice(surveySource.indexOf('function AutoFillNote'), surveySource.indexOf('function SoilSwatch'));
+  assert.doesNotMatch(autoFillHelper, /Auto-filled from your traced shapes/, 'AutoFillNote regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /placeholder=\{placeholder \?\? 'e\.g\. 120'\}/, 'NumInput default placeholder regressed to a hard-coded literal');
 });
 
