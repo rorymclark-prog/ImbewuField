@@ -327,7 +327,8 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
             {regionalDraft && lessonContent.body === lesson.body ? (
               <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
-                <p className="font-semibold">English source (held for review)</p>
+                <p className="font-semibold">Exact English source</p>
+                <p><span className="font-semibold">Title:</span> {lesson.title}</p>
                 {lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
               </div>
             ) : (

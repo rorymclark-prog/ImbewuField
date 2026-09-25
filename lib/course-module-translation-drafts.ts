@@ -102,7 +102,7 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       module.durationMins === draft.sourceMetadata.durationMins &&
       module.category === draft.sourceMetadata.category) {
       const moduleDraft = draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT |
-typeof SESOTHO_FOOD_FOREST_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
+        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
         typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT;
       const title = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).title.xitsongaDraft :
