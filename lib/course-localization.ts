@@ -1,7 +1,10 @@
 import type { Lesson, QuizQuestion } from './course-modules';
 import { COURSE_TRANSLATION_DRAFTS } from './course-translation-drafts.ts';
+import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-st.ts';
+import { SESOTHO_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-st-reading-landscape.ts';
+import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 
-export type CourseLanguage = 'en' | 'zu';
+export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts';
 export type CourseTranslationStatus =
   | 'unavailable'
   | 'review-draft'
@@ -19,6 +22,7 @@ export interface LocalizedLessonContent {
   body: string;
   keyPoints: string[];
   quiz: LocalizedQuizQuestion[];
+  infographicAlt?: string;
 }
 
 export interface HumanReviewApproval {
@@ -130,6 +134,65 @@ export interface LearnerLessonPresentation {
   status: 'approved' | 'draft' | 'english-fallback';
 }
 
+type RegionalLanguage = 'st' | 'ts';
+type RegionalPair = {
+  sourceEnglish: string;
+  reviewStatus: 'machine-draft' | 'hold';
+  sesothoDraft?: string;
+  xitsongaDraft?: string;
+};
+type RegionalLessonDraft = {
+  id: string;
+  title: RegionalPair;
+  body: RegionalPair;
+  keyPoints: RegionalPair[];
+  quiz: Array<{
+    question: RegionalPair;
+    options: RegionalPair[];
+    sourceCorrectIndex: number;
+    rationale: RegionalPair;
+  }>;
+  infographicAlt?: RegionalPair;
+};
+
+const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: RegionalLessonDraft[] }>> = {
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT],
+  ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
+};
+
+function regionalPair(pair: RegionalPair, source: string, language: RegionalLanguage): string | null {
+  if (pair.sourceEnglish !== source) return null;
+  if (pair.reviewStatus === 'hold') return source;
+  const draft = language === 'st' ? pair.sesothoDraft : pair.xitsongaDraft;
+  return typeof draft === 'string' && draft.trim() ? draft : null;
+}
+
+/** A changed English source invalidates the whole lesson so a quiz never drifts from its answer. */
+function regionalLessonContent(lesson: Lesson, draft: RegionalLessonDraft, language: RegionalLanguage): LocalizedLessonContent | null {
+  if (draft.id !== lesson.id || draft.keyPoints.length !== lesson.keyPoints.length || draft.quiz.length !== lesson.quiz.length) return null;
+  const title = regionalPair(draft.title, lesson.title, language);
+  const body = regionalPair(draft.body, lesson.body, language);
+  const keyPoints = draft.keyPoints.map((point, index) => regionalPair(point, lesson.keyPoints[index], language));
+  const quiz = draft.quiz.map((question, index) => {
+    const source = lesson.quiz[index];
+    if (question.sourceCorrectIndex !== source.correct || question.options.length !== source.options.length) return null;
+    const q = regionalPair(question.question, source.q, language);
+    const rationale = regionalPair(question.rationale, source.rationale, language);
+    const options = question.options.map((option, optionIndex) => regionalPair(option, source.options[optionIndex], language));
+    if (!q || !rationale || options.some(option => !option)) return null;
+    return { q, options: options as string[], correct: source.correct, rationale };
+  });
+  if (!title || !body || keyPoints.some(point => !point) || quiz.some(question => !question)) return null;
+  let infographicAlt: string | undefined;
+  if (draft.infographicAlt) {
+    if (!lesson.infographicAlt) return null;
+    const localizedAlt = regionalPair(draft.infographicAlt, lesson.infographicAlt, language);
+    if (!localizedAlt) return null;
+    infographicAlt = localizedAlt;
+  }
+  return { title, body, keyPoints: keyPoints as string[], quiz: quiz as LocalizedQuizQuestion[], infographicAlt };
+}
+
 /** Rory authorised clearly labelled review drafts in the learner view on 24 September.
  * This path never upgrades a draft to an approved translation, and keeps lessons
  * with unresolved farming claims in English until their sources are checked. */
@@ -144,6 +207,12 @@ export function resolveLearnerLessonPresentation(
     keyPoints: lesson.keyPoints,
     quiz: lesson.quiz,
   };
+  if (language === 'st' || language === 'ts') {
+    const draft = REGIONAL_LESSON_DRAFTS[language].flatMap(module => module.lessons)
+      .find(candidate => candidate.id === lesson.id);
+    const content = draft && regionalLessonContent(lesson, draft, language);
+    return content ? { content, status: 'draft' } : { content: source, status: 'english-fallback' };
+  }
   if (language !== 'zu') return { content: source, status: 'approved' };
 
   if (REVIEW_STATE_BY_LESSON[lesson.id]?.status === 'source-held') {

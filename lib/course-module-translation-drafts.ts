@@ -1,4 +1,7 @@
 import type { CourseModule } from './course-modules';
+import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-st.ts';
+import { SESOTHO_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-st-reading-landscape.ts';
+import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 
 /** Source-paired learner card copy. These isiZulu strings are drafts pending language and local farming review. */
 export const COURSE_MODULE_TRANSLATION_DRAFTS = {
@@ -72,12 +75,32 @@ export interface CourseModulePresentation {
   status: 'draft' | 'english-fallback';
 }
 
+const REGIONAL_MODULE_DRAFTS = {
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT],
+  ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
+};
+
 /** Use a draft only while its English source pair still matches the canonical module record. */
 export function resolveCourseModulePresentation(module: CourseModule, language: string): CourseModulePresentation {
   if (language === 'zu') {
     const draft = COURSE_MODULE_TRANSLATION_DRAFTS[module.id as CourseModuleTranslationDraftId];
     if (draft && module.title === draft.sourceTitle && module.description === draft.sourceDescription) {
       return { title: draft.title, description: draft.description, status: 'draft' };
+    }
+  }
+  if (language === 'st' || language === 'ts') {
+    const draft = REGIONAL_MODULE_DRAFTS[language].find(candidate => candidate.id === module.id);
+    if (draft && module.title === draft.title.sourceEnglish &&
+      module.description === draft.description.sourceEnglish &&
+      module.durationMins === draft.sourceMetadata.durationMins &&
+      module.category === draft.sourceMetadata.category) {
+      return {
+        title: language === 'st' ? (draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
+          (draft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).title.xitsongaDraft,
+        description: language === 'st' ? (draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).description.sesothoDraft :
+          (draft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).description.xitsongaDraft,
+        status: 'draft',
+      };
     }
   }
   return { title: module.title, description: module.description, status: 'english-fallback' };

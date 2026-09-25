@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'ad5787e7', changes: [
+    'Introduction and Landscape lessons now show marked Sesotho and Xitsonga drafts.',
+    'Each draft shows exact English text and answers; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read the first two modules in Sesotho or Xitsonga', where: 'Study', href: '/student',
+      detail: 'Switch language in Settings and open a lesson to compare its draft with English.' },
+  ] },
   { when: '25 September 2026', sha: '6c276e4e', changes: [
     'Palette controls and map prompts now pair draft isiZulu with English.',
     'Climate and frost claims and technical tools stay in English.',
