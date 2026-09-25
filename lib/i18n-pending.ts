@@ -186,6 +186,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designCanvasMeasureAgain: 'Keep tapping to add legs to the path.',
   designCanvasMeasureClear: 'Start over',
   designCanvasMeasureActually: 'Actually',
+  designZuluDraftNotice: 'Unreviewed isiZulu draft. English stays beside translated photo and canvas guidance. Guidance not yet translated remains in English.',
   designPaletteSelect: '↖️ Select',
   designPaletteUndo: '↩️ Undo',
   designPaletteRedo: '↪️ Redo',
