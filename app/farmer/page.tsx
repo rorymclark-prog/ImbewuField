@@ -557,7 +557,15 @@ function HomeInner() {
             className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
-            <span aria-hidden>🎨</span> <span>{t('designStudioLabel')}</span>
+            <span aria-hidden>🎨</span>
+            <span className={lang === 'zu' ? 'flex flex-col leading-tight' : undefined}>
+              <span>{t('designStudioLabel')}</span>
+              {lang === 'zu' && (
+                <small lang="en" style={{ fontSize: 12, fontWeight: 500, opacity: 0.78 }}>
+                  {t('designStudioZuluDraftBadge')} · English: Design Studio
+                </small>
+              )}
+            </span>
           </Link>
           {buildInfo?.sha && (
             <div

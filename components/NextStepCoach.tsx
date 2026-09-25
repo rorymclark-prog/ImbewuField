@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { useLanguage, translate } from '@/lib/i18n';
 import SpeakButton from './SpeakButton';
+import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 import {
   getGuidedState,
   recordCoachDismissal,
@@ -58,6 +59,11 @@ const GOAL_COPY_KEY: Record<Goal, string> = {
   feed: 'coachGoalFeed',
   income: 'coachGoalIncome',
   soil: 'coachGoalSoil',
+};
+const GOAL_ENGLISH_COPY: Record<Goal, string> = {
+  feed: 'Your goal: feed the family — Lima favours year-round food crops.',
+  income: 'Your goal: earn income — Lima favours market crops.',
+  soil: 'Your goal: restore the soil — Lima favours soil builders.',
 };
 /** Goal line only applies once the farmer is past tracing — matches the spec table. */
 const GOAL_STEPS: ReadonlySet<CoachStepKey> = new Set(['survey', 'design', 'cropPlan']);
@@ -260,7 +266,11 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           <div className="flex items-start gap-1.5 mt-2">
             <GoalIcon size={14} strokeWidth={1.8} style={{ color: 'var(--text-muted)', marginTop: 1, flexShrink: 0 }} aria-hidden />
             <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-              {t(GOAL_COPY_KEY[goal as Goal])}
+              {lang === 'zu' ? (
+                <SurveyZuluDraftPair english={GOAL_ENGLISH_COPY[goal as Goal]}>
+                  {t(GOAL_COPY_KEY[goal as Goal])}
+                </SurveyZuluDraftPair>
+              ) : t(GOAL_COPY_KEY[goal as Goal])}
             </span>
           </div>
         )}
