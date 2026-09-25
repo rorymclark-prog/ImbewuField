@@ -59,18 +59,18 @@ const SHORT_STEPS = [0, 1, 2, 5, 6, 7];
 
 // English-only for now (genuinely new — the "Current Production" reporting grid has no prior
 // translated equivalent anywhere in lib/i18n.tsx); t() falls back to English per key.
-function productionRows(t: (key: string) => string): Array<{ category: ProductionCategory; label: string; hint: string }> {
+function productionRows(t: (key: string) => string): Array<{ category: ProductionCategory; label: string; hint: string; englishLabel: string; englishHint: string }> {
   return [
-    { category: 'leafy_greens', label: t('surveyProdLeafyGreensLabel'), hint: t('surveyProdLeafyGreensHint') },
-    { category: 'other_vegetables', label: t('surveyProdOtherVegLabel'), hint: t('surveyProdOtherVegHint') },
-    { category: 'staple_crops', label: t('surveyProdStapleCropsLabel'), hint: t('surveyProdStapleCropsHint') },
-    { category: 'fruit', label: t('surveyProdFruitLabel'), hint: t('surveyProdFruitHint') },
-    { category: 'nuts_berries', label: t('surveyProdNutsBerriesLabel'), hint: t('surveyProdNutsBerriesHint') },
-    { category: 'eggs', label: t('surveyProdEggsLabel'), hint: '' },
-    { category: 'poultry', label: t('surveyProdPoultryLabel'), hint: '' },
-    { category: 'rabbits', label: t('surveyProdRabbitsLabel'), hint: '' },
-    { category: 'honey', label: t('surveyProdHoneyLabel'), hint: '' },
-    { category: 'other', label: t('surveyProdOtherLabel'), hint: t('surveyProdOtherHint') },
+    { category: 'leafy_greens', label: t('surveyProdLeafyGreensLabel'), hint: t('surveyProdLeafyGreensHint'), englishLabel: 'Leafy greens', englishHint: 'Spinach, kale, cabbage, etc.' },
+    { category: 'other_vegetables', label: t('surveyProdOtherVegLabel'), hint: t('surveyProdOtherVegHint'), englishLabel: 'Other vegetables', englishHint: 'Tomatoes, onions, peppers, etc.' },
+    { category: 'staple_crops', label: t('surveyProdStapleCropsLabel'), hint: t('surveyProdStapleCropsHint'), englishLabel: 'Staple crops', englishHint: 'Maize, beans, sweet potato, etc.' },
+    { category: 'fruit', label: t('surveyProdFruitLabel'), hint: t('surveyProdFruitHint'), englishLabel: 'Fruit', englishHint: 'From trees or vines' },
+    { category: 'nuts_berries', label: t('surveyProdNutsBerriesLabel'), hint: t('surveyProdNutsBerriesHint'), englishLabel: 'Nuts & berries', englishHint: 'From trees or shrubs' },
+    { category: 'eggs', label: t('surveyProdEggsLabel'), hint: '', englishLabel: 'Eggs', englishHint: '' },
+    { category: 'poultry', label: t('surveyProdPoultryLabel'), hint: '', englishLabel: 'Poultry meat', englishHint: '' },
+    { category: 'rabbits', label: t('surveyProdRabbitsLabel'), hint: '', englishLabel: 'Rabbits', englishHint: '' },
+    { category: 'honey', label: t('surveyProdHoneyLabel'), hint: '', englishLabel: 'Honey', englishHint: '' },
+    { category: 'other', label: t('surveyProdOtherLabel'), hint: t('surveyProdOtherHint'), englishLabel: 'Other', englishHint: 'Anything not listed above' },
   ];
 }
 
@@ -84,6 +84,14 @@ function hddsLabels(t: (key: string) => string): Record<HddsFoodGroup, string> {
     milk: t('surveyHddsMilk'), oils_fats: t('surveyHddsOilsFats'), sugars_honey: t('surveyHddsSugarsHoney'), spices_beverages: t('surveyHddsSpicesBeverages'),
   };
 }
+
+const HDDS_ENGLISH: Record<HddsFoodGroup, string> = {
+  cereals: 'Cereals', roots_tubers: 'Roots & tubers', vegetables: 'Vegetables', fruit: 'Fruit',
+  meat_poultry: 'Meat & poultry', eggs: 'Eggs', fish: 'Fish', pulses_nuts_seeds: 'Pulses, nuts & seeds',
+  milk: 'Milk & dairy', oils_fats: 'Oils & fats', sugars_honey: 'Sugars & honey', spices_beverages: 'Spices & beverages',
+};
+
+const MONTH_ENGLISH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 // English-only for now — three-letter month abbreviations, genuinely new keys.
 function monthLabels(t: (key: string) => string): string[] {
@@ -153,13 +161,14 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
   );
 }
 
-function NumInput({ value, onChange, placeholder, hint, label }: { value: string; onChange: (v: string) => void; placeholder?: string; hint?: string; label: string }) {
-  const { t } = useLanguage();
+function NumInput({ value, onChange, placeholder, placeholderEnglish, hint, label }: { value: string; onChange: (v: string) => void; placeholder?: string; placeholderEnglish?: string; hint?: ReactNode; label: string }) {
+  const { lang, t } = useLanguage();
   return (
     <>
       <input type="number" min="0" step="any" aria-label={label} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? t('surveyNumInputDefaultPlaceholder')}
         className="w-full font-sans"
         style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
+      {lang === 'zu' && placeholderEnglish && <small>English: {placeholderEnglish}</small>}
       {hint && <div className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-2)' }}>{hint}</div>}
     </>
   );
@@ -447,8 +456,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       <div className={styles.workspace}>
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
-          {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
-            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? t('surveyGrowingResources') : STEPS[id]}</span>
+            {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
+            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : STEPS[id]}</span>
           </button>; })}
           <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
@@ -474,10 +483,10 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <main className={styles.main}>
             <div className={styles.stepHeading}><div className={styles.stepIcon}><Icon size={26}/></div><div>
               <span className={styles.eyebrow}>{t('stepOfSteps').replace('{n}', String(routeIndex + 1)).replace('{total}', String(route.length))}</span>
-              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? t('surveyGrowingResources') : STEPS[step]}</h2>
+              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : STEPS[step]}</h2>
             </div></div>
-            <p className={styles.intro}>{tips[step]}</p>
-            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{t('surveyFieldGuide')}</summary><p>{fieldGuides[step]}</p></details>}
+            <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
+            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
             {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
             {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
             <div className={styles.questions}>
@@ -728,16 +737,16 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {step === 2 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionCropsGrowing')}</SectionLabel>
+              <SectionLabel>{paired('sectionCropsGrowing', 'Crops already growing (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'vegetables',   label: t('cropVegetables') },
-                  { v: 'fruit-trees',  label: t('cropFruitTrees') },
-                  { v: 'herbs',        label: t('cropHerbsMedicinal') },
-                  { v: 'indigenous',   label: t('cropIndigenousPlants') },
-                  { v: 'fodder',       label: t('cropFodder') },
-                  { v: 'grain',        label: t('cropGrainMaize') },
-                  { v: 'nothing',      label: t('cropNothing') },
+                  { v: 'vegetables',   label: paired('cropVegetables', 'Vegetables') },
+                  { v: 'fruit-trees',  label: paired('cropFruitTrees', 'Fruit trees') },
+                  { v: 'herbs',        label: paired('cropHerbsMedicinal', 'Herbs / medicinal') },
+                  { v: 'indigenous',   label: paired('cropIndigenousPlants', 'Indigenous plants') },
+                  { v: 'fodder',       label: paired('cropFodder', 'Fodder / pasture') },
+                  { v: 'grain',        label: paired('cropGrainMaize', 'Grain / maize') },
+                  { v: 'nothing',      label: paired('cropNothing', 'Nothing yet') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={crops.includes(o.v)} onClick={() => setCrops(toggle(crops, o.v))} />
                 ))}
@@ -745,51 +754,53 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('surveyExistingGrowingAreaLabel')}</SectionLabel>
-              <NumInput label={t('surveyExistingGrowingAreaLabel')} value={existingGrowingArea} onChange={v => { setExistingGrowingArea(v); setGrowingAreaSource('manual'); }} placeholder={t('surveyExistingGrowingAreaPlaceholder')} hint={t('surveyExistingGrowingAreaHint')} />
+              <SectionLabel>{paired('surveyExistingGrowingAreaLabel', 'Area currently under cultivation')}</SectionLabel>
+              <NumInput label={t('surveyExistingGrowingAreaLabel')} value={existingGrowingArea} onChange={v => { setExistingGrowingArea(v); setGrowingAreaSource('manual'); }} placeholder={t('surveyExistingGrowingAreaPlaceholder')} placeholderEnglish="e.g. 200" hint={lang === 'zu' ? <SurveyZuluDraftPair english="Rough size in square metres of what you already grow">{t('surveyExistingGrowingAreaHint')}</SurveyZuluDraftPair> : t('surveyExistingGrowingAreaHint')} />
               {growingAreaSource === 'auto' && <AutoFillNote areaM2={tracedAreas.cultivationAreaM2} />}
             </div>
 
             {mode === 'full' ? <div>
-              <SectionLabel>{t('surveyCurrentProductionSurveyLabel')}</SectionLabel>
+              <SectionLabel>{paired('surveyCurrentProductionSurveyLabel', 'Current production survey')}</SectionLabel>
               <div className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.45 }}>
-                {t('surveyReportWhatYouKnow')} {lang === 'zu' ? <SurveyZuluDraftPair english="Use the same year and unit for quantity, household use and sales. Income is for that same year.">{t('surveySameYearUnit')}</SurveyZuluDraftPair> : t('surveySameYearUnit')}
+                {lang === 'zu' ? <SurveyZuluDraftPair english="Report what you know — leave anything blank if you are not sure. This helps us measure progress over time.">{t('surveyReportWhatYouKnow')}</SurveyZuluDraftPair> : t('surveyReportWhatYouKnow')} {lang === 'zu' ? <SurveyZuluDraftPair english="Use the same year and unit for quantity, household use and sales. Income is for that same year.">{t('surveySameYearUnit')}</SurveyZuluDraftPair> : t('surveySameYearUnit')}
               </div>
               <div className="space-y-3">
-                {PRODUCTION_ROWS.map(({ category, label, hint }) => {
+                {PRODUCTION_ROWS.map(({ category, label, hint, englishLabel, englishHint }) => {
                   const row = productionRow(category);
                   const number = (value: number | null) => value === null ? '' : String(value);
                   return (
                     <div key={category} className={styles.productionCard}>
                       <button className={styles.productionSummary} aria-expanded={openProduction === category} aria-controls={`${guideId}-${category}`} onClick={() => setOpenProduction(openProduction === category ? null : category)}>
-                        <Sprout size={22}/><span><strong>{label}</strong><small>{row.quantityPerYear !== null ? `${row.quantityPerYear} ${row.unit} · ${t('surveyPerYear')}` : t('surveyOptionalRecord')}</small></span><ChevronDown size={18}/>
+                        <Sprout size={22}/><span><strong>{lang === 'zu' ? <SurveyZuluDraftPair english={englishLabel}>{label}</SurveyZuluDraftPair> : label}</strong><small>{row.quantityPerYear !== null ? <>{row.quantityPerYear} {row.unit} · {lang === 'zu' ? <SurveyZuluDraftPair english="year">{t('surveyPerYear')}</SurveyZuluDraftPair> : t('surveyPerYear')}</> : lang === 'zu' ? <SurveyZuluDraftPair english="Optional · tap to add or review">{t('surveyOptionalRecord')}</SurveyZuluDraftPair> : t('surveyOptionalRecord')}</small></span><ChevronDown size={18}/>
                       </button>
                       {openProduction === category && <div id={`${guideId}-${category}`} className={styles.productionBody}>
-                      {hint && <p>{hint}</p>}
+                      {hint && <p>{lang === 'zu' ? <SurveyZuluDraftPair english={englishHint}>{hint}</SurveyZuluDraftPair> : hint}</p>}
                       {productionNeedsReview(row) && <p className={styles.warning} role="status">{lang === 'zu' ? <SurveyZuluDraftPair english="Check these figures: quantities need a unit, and household use plus sales cannot exceed the yearly quantity. Name an Other item before saving.">{t('surveyProductionCheck')}</SurveyZuluDraftPair> : t('surveyProductionCheck')}</p>}
                       {category === 'other' && (
-                        <input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} aria-label={t('surveyWhatDoYouProducePlaceholder')} placeholder={t('surveyWhatDoYouProducePlaceholder')}
+                        <><input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} aria-label={t('surveyWhatDoYouProducePlaceholder')} placeholder={t('surveyWhatDoYouProducePlaceholder')}
                           className="w-full font-sans mt-2" style={{ minHeight: 44, padding: '8px 10px', borderRadius: 9, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 13, color: 'var(--text)' }} />
+                          {lang === 'zu' && <small>English: What do you produce?</small>}</>
                       )}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyQtyPerYearLabel')}
+                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyQtyPerYearLabel', 'Quantity / year')}
                           <input type="number" min="0" step="any" value={number(row.quantityPerYear)} onChange={(e) => patchProduction(category, { quantityPerYear: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }} />
                         </label>
-                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyUnitLabel')}
+                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyUnitLabel', 'Unit')}
                           <input value={row.unit} onChange={(e) => patchProduction(category, { unit: e.target.value })} placeholder={t('surveyUnitPlaceholder')} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }} />
+                          {lang === 'zu' && <small>English: e.g. kg, bunches</small>}
                         </label>
-                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyUsedByHouseholdLabel')}
+                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyUsedByHouseholdLabel', 'Used by household')}
                           <input type="number" min="0" step="any" value={number(row.usedByHousehold)} onChange={(e) => patchProduction(category, { usedByHousehold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }} />
                         </label>
-                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveySoldLabel')}
+                        <label className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveySoldLabel', 'Sold')}
                           <input type="number" min="0" step="any" value={number(row.sold)} onChange={(e) => patchProduction(category, { sold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }} />
                         </label>
                       </div>
-                      <label className="font-sans block mt-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyIncomeEarnedLabel')}
+                      <label className="font-sans block mt-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyIncomeEarnedLabel', 'Income earned (ZAR)')}
                         <input type="number" min="0" step="any" value={number(row.incomeZar)} onChange={(e) => patchProduction(category, { incomeZar: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }} />
                       </label>
                       <div className="mt-3">
-                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyHarvestMonthsLabel')}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyHarvestMonthsLabel', 'Harvest months')}</div>
                         <div className="grid grid-cols-4 gap-1 mt-1">
                           {MONTH_LABELS.map((month, index) => {
                             const monthNumber = index + 1;
@@ -798,15 +809,15 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                               harvestMonths: selected
                                 ? (row.harvestMonths ?? []).filter((value) => value !== monthNumber)
                                 : [...(row.harvestMonths ?? []), monthNumber].sort((a, b) => a - b),
-                            })} className="font-sans" style={{ minHeight: 48, borderRadius: 8, border: `1px solid ${selected ? 'var(--brand)' : 'var(--border)'}`, background: selected ? 'var(--brand)' : 'var(--surface)', color: selected ? 'var(--survey-on-brand)' : 'var(--text-2)', fontSize: 12 }}>{month}</button>;
+                            })} className="font-sans" style={{ minHeight: 48, borderRadius: 8, border: `1px solid ${selected ? 'var(--brand)' : 'var(--border)'}`, background: selected ? 'var(--brand)' : 'var(--surface)', color: selected ? 'var(--survey-on-brand)' : 'var(--text-2)', fontSize: 12 }}>{lang === 'zu' ? <SurveyZuluDraftPair english={MONTH_ENGLISH[index]}>{month}</SurveyZuluDraftPair> : month}</button>;
                           })}
                         </div>
                       </div>
                       {AMBIGUOUS_FOOD_GROUP_CATEGORIES.has(category) && (
-                        <label className="font-sans block mt-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{t('surveyFaoFoodGroupLabel')}
+                        <label className="font-sans block mt-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>{paired('surveyFaoFoodGroupLabel', 'FAO food group')}
                           <select value={row.foodGroup ?? ''} onChange={(e) => patchProduction(category, { foodGroup: (e.target.value || undefined) as HddsFoodGroup | undefined })} className="w-full mt-1" style={{ minHeight: 48, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--border)', background: 'var(--surface)' }}>
-                            <option value="">{t('surveyFoodGroupNotSure')}</option>
-                            {Object.entries(HDDS_LABELS).map(([value, group]) => <option key={value} value={value}>{group}</option>)}
+                            <option value="">{lang === 'zu' ? `${t('surveyFoodGroupNotSure')} (English: Not sure)` : t('surveyFoodGroupNotSure')}</option>
+                            {Object.entries(HDDS_LABELS).map(([value, group]) => <option key={value} value={value}>{lang === 'zu' ? `${group} (English: ${HDDS_ENGLISH[value as HddsFoodGroup]})` : group}</option>)}
                           </select>
                         </label>
                       )}
@@ -817,8 +828,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               </div>
               <div className="font-sans mt-3" style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(31,77,43,0.06)', color: 'var(--brand)', fontSize: 12.5, lineHeight: 1.45 }}>
                 {reportedGroups.length > 0
-                  ? <><strong>{t('surveyFoodGroupsReportedCount').replace('{n}', String(reportedGroups.length))}</strong> </>
-                  : <><strong>{t('surveyFoodGroupsNotReported')}</strong> </>}
+                  ? <><strong>{lang === 'zu' ? <SurveyZuluDraftPair english={`${reportedGroups.length} food groups reported.`}>{t('surveyFoodGroupsReportedCount').replace('{n}', String(reportedGroups.length))}</SurveyZuluDraftPair> : t('surveyFoodGroupsReportedCount').replace('{n}', String(reportedGroups.length))}</strong> </>
+                  : <><strong>{lang === 'zu' ? <SurveyZuluDraftPair english="No food groups reported yet.">{t('surveyFoodGroupsNotReported')}</SurveyZuluDraftPair> : t('surveyFoodGroupsNotReported')}</strong> </>}
                 {lang === 'zu' ? <SurveyZuluDraftPair english="These groups describe your production. They do not measure what your household ate or give a nutrition score.">{t('surveyFaoHddsFooter')}</SurveyZuluDraftPair> : t('surveyFaoHddsFooter')}
               </div>
             </div> : <button className={styles.detailLink} onClick={() => setMode('full')}><NotebookPen size={20}/><span><strong>{t('surveyAddProduction')}</strong><small>{t('surveyAddProductionHint')}</small></span><ArrowRight size={18}/></button>}
