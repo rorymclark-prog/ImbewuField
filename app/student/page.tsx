@@ -96,6 +96,21 @@ function localisedUnlockReason(text: string | null, lang: string, t: (key: strin
   return text;
 }
 
+const ZULU_MEDIA_LANGUAGE_NOTICES = {
+  bothEnglish: {
+    zu: 'Amaslayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.',
+    en: 'The slides and audio for this module are still in English. Written lessons may be in isiZulu, but that does not translate this media.',
+  },
+  slidesEnglish: {
+    zu: 'Amaslayidi ale mojuli asesiNgisini; umsindo uyatholakala ngesiZulu.',
+    en: 'The slides for this module are still in English; audio is available in isiZulu.',
+  },
+  audioEnglish: {
+    zu: 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.',
+    en: 'The audio for this module is still in English; slides are available in isiZulu.',
+  },
+} as const;
+
 // ── Quiz question ────────────────────────────────────────────────────────────
 
 function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
@@ -675,7 +690,7 @@ export default function StudentPage() {
         <main className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: '#5C5040' }}>
             <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: '#1F4D2B' }} />
-            <span>{lang === 'zu' ? 'Sicela ulinde…' : 'Loading your account…'}</span>
+            <span>{lang === 'zu' ? 'Sicela ulinde… Please wait while your account loads.' : 'Loading your account…'}</span>
           </div>
         </main>
       </div>
@@ -749,6 +764,10 @@ export default function StudentPage() {
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
             style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
             {t('studentZuluCourseLanguageNote')}
+            {' '}
+            <span className="block mt-1">
+              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
+            </span>
           </p>
         )}
         {/* Progress hero */}
@@ -795,7 +814,7 @@ export default function StudentPage() {
           <div className="flex-1 min-w-0">
             <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: '#20190F' }}>
               {fetching
-                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili…' : 'Loading progress…'
+                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
                 : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
             {!fetching && (
@@ -1094,11 +1113,14 @@ export default function StudentPage() {
                     {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-                        {(!zuluSlidesReady && !zuluAudioReady)
-                          ? 'Izilayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.'
-                          : !zuluSlidesReady
-                            ? 'Izilayidi zale mojuli kusekhona ngesiNgisi; umsindo uyatholakala ngesiZulu.'
-                            : 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.'}
+                        {(() => {
+                          const notice = !zuluSlidesReady && !zuluAudioReady
+                            ? ZULU_MEDIA_LANGUAGE_NOTICES.bothEnglish
+                            : !zuluSlidesReady
+                              ? ZULU_MEDIA_LANGUAGE_NOTICES.slidesEnglish
+                              : ZULU_MEDIA_LANGUAGE_NOTICES.audioEnglish;
+                          return <><span>{notice.zu}</span><span className="block mt-1">{notice.en}</span></>;
+                        })()}
                       </p>
                     )}
                     {narrationReviewPending(mod.id, lang) && (

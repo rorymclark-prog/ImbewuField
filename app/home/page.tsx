@@ -383,11 +383,7 @@ function HomeLandingInner() {
     { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    // Not translated via t() like the rest of this grid — deliberately, to avoid adding keys to
-    // every locale block in lib/i18n.tsx (a large shared file well outside this change's scope) for
-    // a single new tile. Falls back to plain English, same as this file's other hardcoded
-    // farmer-facing strings (e.g. the "Your farm plan" and sample-farm copy above).
-    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo ze-wholesale nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (
@@ -489,6 +485,12 @@ function HomeLandingInner() {
 
       {/* ── Main content ── */}
       <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
+
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+            ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.
+          </p>
+        )}
 
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
