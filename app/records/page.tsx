@@ -472,7 +472,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                       if (!src) return;
                       if (item.kind === 'sale') onEditSale(src as SalesLog); else onEditExpense(src as ExpenseLog);
                     }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     <Pencil size={14} />
                   </button>
@@ -481,8 +481,8 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     aria-label={pendingDelete === item.id ? recordsText(lang, 'Confirm delete', 'Qinisekisa ukususa') : recordsText(lang, 'Delete', 'Susa')}
                     onClick={() => requestDelete(item)}
                     style={pendingDelete === item.id
-                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', padding: '3px 6px', color: '#B23A3A', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }
-                      : { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
+                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3px 6px', color: '#B23A3A', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }
+                      : { background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     {pendingDelete === item.id ? recordsText(lang, 'Sure?', 'Uqinisekile?') : <Trash2 size={14} />}
                   </button>
@@ -1199,7 +1199,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                           if (src) onEditExpense(src);
                         }
                       }}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}>
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}>
                       <Pencil size={14} />
                     </button>
                   )}
@@ -1218,8 +1218,8 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
 
 /* ── Measured farm metrics ──────────────────────────────────────────────── */
 
-function metricNumber(value: number | null, unit: string): string {
-  return value === null || !Number.isFinite(value) ? 'Unknown' : `${value.toFixed(1)} ${unit}`;
+function metricNumber(value: number | null, unit: string, lang: string): string {
+  return value === null || !Number.isFinite(value) ? recordsText(lang, 'Unknown', 'Akwaziwa') : `${value.toFixed(1)} ${unit}`;
 }
 
 /**
@@ -1242,7 +1242,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
   return (
     <section className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
-        <h2 className="text-xl font-display font-semibold" style={{ color: '#203c2c' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
+        <h2 className="text-xl font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
         <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
       </div>
       {waiting ? (
@@ -1254,19 +1254,19 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
-                <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: '#203c2c' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
+                <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
                 <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#9E5C08' : '#5d5143' }}>
                   {crop.areaM2 === null ? recordsText(lang, 'Planted area not recorded', 'Indawo etshaliwe ayirekhodiwe') : `${crop.areaM2.toFixed(1)} m² ${recordsText(lang, 'planned', 'ihleliwe')}`}
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
               </div>
               <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-secondary)' }}>
                 {crop.hasTaggedCost
-                  ? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²')}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other costs not attributed', 'Ezinye izindleko azabelwanga')}` : ''}`
+                  ? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²', lang)}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other costs not attributed', 'Ezinye izindleko azabelwanga')}` : ''}`
                   : metrics.hasUnattributedExpenses ? recordsText(lang, 'Cost per m²: not attributed', 'Izindleko nge-m²: azabelwanga') : recordsText(lang, 'No crop cost logged', 'Azikho izindleko zesitshalo ezirekhodiwe')}
               </p>
             </div>
@@ -1293,7 +1293,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 <div>
                   <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
-                    {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
+                    {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
                   </p>
                 </div>
                 <div>
@@ -1305,7 +1305,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 <div>
                   <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>
-                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
+                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
               </div>
@@ -1314,7 +1314,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                    and sold is the eaten-at-home-or-lost share, and on fruit it is usually the
                    larger half — printing only the rand would quietly imply the rest was worthless. */
                 <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>
-                  {recordsText(lang, `${metricNumber(row.soldKg, 'kg')} of that was sold · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} eaten at home, given away or lost`, `Kuthengiswe ${metricNumber(row.soldKg, 'kg')} · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile`)}
+                  {recordsText(lang, `${metricNumber(row.soldKg, 'kg', lang)} of that was sold · ${metricNumber(row.harvestedKg - row.soldKg, 'kg', lang)} eaten at home, given away or lost`, `Kuthengiswe ${metricNumber(row.soldKg, 'kg', lang)} · ${metricNumber(row.harvestedKg - row.soldKg, 'kg', lang)} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile`)}
                 </p>
               )}
             </div>
@@ -1783,7 +1783,7 @@ export default function RecordsPage() {
                   {!online && (
                     <div
                       className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-sm font-display"
-                      style={{ background: '#FDF3E3', border: '1px solid #E8D6B0', color: '#7A5B18' }}
+                      style={{ background: 'color-mix(in srgb, var(--orange) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 30%, transparent)', color: 'var(--orange)' }}
                     >
                       {recordsInstruction(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovela uma usuthola uxhumano futhi.')}
                     </div>

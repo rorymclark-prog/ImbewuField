@@ -408,7 +408,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
@@ -577,7 +577,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
@@ -966,7 +966,7 @@ function CreditPackCard({
       setError(
         err instanceof CreditPackSampleModeError
           ? err.message
-          : 'Could not build the document. Please try again.',
+          : recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.'),
       );
     } finally {
       setLoading(false);
@@ -1028,11 +1028,11 @@ function CreditPackCard({
           {loading ? (
             <>
               <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
-              Building document…
+              {recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}
             </>
           ) : (
             <>
-              <Landmark size={14} /> Export records for a lender
+              <Landmark size={14} /> {recordsUi(lang, 'Export records for a lender', 'Khipha amarekhodi kumbolekisi')}
             </>
           )}
         </button>
@@ -1040,7 +1040,7 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: '#C0531E' }}>
+        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
           {error}
         </p>
       )}
@@ -1267,7 +1267,7 @@ export default function MyRecords({
       {loadError && !dataLoading && (
         <div
           className="flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5"
-          style={{ background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
+          style={{ background: 'color-mix(in srgb, var(--orange) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 25%, transparent)' }}
         >
           <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--orange)' }}>
             {t('myRecordsLoadError')}
