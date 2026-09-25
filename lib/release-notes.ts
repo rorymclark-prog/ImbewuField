@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '813837fd', changes: [
+    'The Water rainfall chart adds unreviewed isiZulu labels.',
+  ], tour: [
+    { title: 'Check rainfall labels', where: 'Map → Water', href: '/farmer',
+      detail: 'Choose isiZulu and open the Water tab to see the draft rainfall chart labels.' },
+  ] },
   { when: '25 September 2026', sha: 'df031dbb', changes: [
     'Introduction slide 22 audio preserves the full Zone 1 counting instruction.',
     'The draft still awaits fluent isiZulu and local farming review.',
