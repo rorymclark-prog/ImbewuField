@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '1ba10e9b', changes: [
+  { when: '25 September 2026', sha: 'aaf17a56', changes: [
     'Soil Health lessons now show marked Sesotho drafts beside their English source.',
     'Held soil, compost and cover advice stays in English until reviewed.',
   ], tour: [
