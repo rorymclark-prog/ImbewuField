@@ -2,6 +2,7 @@
 
 import type { LocationData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props {
   locationData: LocationData;
@@ -10,8 +11,24 @@ interface Props {
   siteAreaHa?: number;
 }
 
-const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-const MONTH_FULL = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTHS_EN = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+const MONTHS_ZU = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+const MONTH_FULL_KEYS = [
+  'waterBalanceMonthJan', 'waterBalanceMonthFeb', 'waterBalanceMonthMar', 'waterBalanceMonthApr',
+  'waterBalanceMonthMay', 'waterBalanceMonthJun', 'waterBalanceMonthJul', 'waterBalanceMonthAug',
+  'waterBalanceMonthSep', 'waterBalanceMonthOct', 'waterBalanceMonthNov', 'waterBalanceMonthDec',
+] as const;
+
+
+function formatDrySeason(drySeason: string, t: (key: string) => string, lang: string): string {
+  if (lang !== 'zu') return drySeason;
+  const sourceLabels: Record<string, [string, string]> = {
+    'May–Aug': [t('waterBalanceMonthMay'), t('waterBalanceMonthAug')],
+    'Nov–Mar': [t('waterBalanceMonthNov'), t('waterBalanceMonthMar')],
+  };
+  const translated = sourceLabels[drySeason];
+  return translated ? `${translated[0]}–${translated[1]} (${drySeason})` : drySeason;
+}
 
 function peopleFromAdults(adults: string | undefined): number {
   if (!adults) return 4;
@@ -22,6 +39,10 @@ function peopleFromAdults(adults: string | undefined): number {
 }
 
 export default function WaterBalance({ locationData, waterData, survey, siteAreaHa }: Props) {
+  const { t, lang } = useLanguage();
+  // Full isiZulu names do not fit the chart's narrow monthly ticks; numbers avoid English initials.
+  const MONTHS = lang === 'zu' ? MONTHS_ZU : MONTHS_EN;
+  const MONTH_FULL = MONTH_FULL_KEYS.map(key => t(key));
   const { rainfall } = locationData;
   if (!rainfall?.monthly?.length) return null;
 
@@ -108,9 +129,13 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
     <div className="space-y-3">
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--blue)' }}>Water balance</span>
-        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>estimates</span>
+        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
+        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
+
+      {lang === 'zu' && (
+        <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteSummaryZuluDraftNotice')}</p>
+      )}
 
       {/* Main chart */}
       <div className="rounded-xl overflow-hidden" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
@@ -179,59 +204,60 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="flex flex-wrap gap-x-4 gap-y-1">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(35,94,134,0.55)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Roof catchment</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendRoofCatchment')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(192,122,30,0.45)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Total demand</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTotalDemand')}</span>
         </div>
         {capacity > 0 && (
           <div className="flex items-center gap-1.5">
             <div className="w-8 h-0.5 flex-shrink-0" style={{ background: '#1F4D2B' }} />
-            <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Tank level</span>
+            <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTankLevel')}</span>
           </div>
         )}
         <div className="flex items-center gap-1.5">
           <div className="w-8 flex-shrink-0" style={{ borderTop: '1.5px dashed rgba(192,60,30,0.7)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>Min safe level</span>
+          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendMinSafe')}</span>
         </div>
       </div>
 
       {/* Summary stats */}
       <div className="grid grid-cols-2 gap-2">
-        <StatBox label="People estimated" value={String(people)} sub={`${(monthlyHouseKL * 1000).toFixed(0)} L/month household`} color="#235E86" />
+        <StatBox label={t('waterBalancePeopleEstimated')} value={String(people)} sub={t('waterBalanceHouseholdMonthly').replace('{litres}', (monthlyHouseKL * 1000).toFixed(0))} color="#235E86" />
         {capacity > 0
-          ? <StatBox label="Storage capacity" value={`${capacity.toFixed(0)} kL`} sub={`Min safe: ${minSafe.toFixed(0)} kL`} color="#1F4D2B" />
-          : <StatBox label="Storage" value="Not mapped" sub="Draw a water area to calculate" color="#755942" />
+          ? <StatBox label={t('waterBalanceStorageCapacity')} value={`${capacity.toFixed(0)} kL`} sub={t('waterBalanceMinSafe').replace('{amount}', minSafe.toFixed(0))} color="#1F4D2B" />
+          : <StatBox label={t('waterBalanceStorage')} value={t('waterBalanceNotMapped')} sub={t('waterBalanceDrawWaterArea')} color="#755942" />
         }
-        {hasVeg && <StatBox label="Veg irrigation" value={`${(months.find(m => m.isDry)?.irrigVeg ?? 0).toFixed(1)} kL`} sub="per dry month (est.)" color="#C07A1E" />}
-        {hasFruit && <StatBox label="Fruit trees" value={`${fruitTrees}`} sub={`${(months.find(m => m.isDry)?.irrigFruit ?? 0).toFixed(1)} kL/dry month`} color="#C07A1E" />}
+        {hasVeg && <StatBox label={t('waterBalanceVegIrrigation')} value={`${(months.find(m => m.isDry)?.irrigVeg ?? 0).toFixed(1)} kL`} sub={t('waterBalancePerDryMonthEstimate')} color="#C07A1E" />}
+        {hasFruit && <StatBox label={t('waterBalanceFruitTrees')} value={`${fruitTrees}`} sub={`${(months.find(m => m.isDry)?.irrigFruit ?? 0).toFixed(1)} ${t('waterBalancePerDryMonthUnit')}`} color="#C07A1E" />}
       </div>
 
       {/* Guidance messages */}
       {noSurvey && (
         <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--text-secondary)', border: '1px solid rgba(192,122,30,0.2)' }}>
-          Complete the site survey to see household water demand and irrigation needs.
+          {t('waterBalanceCompleteSurvey')}
         </p>
       )}
       {noRoof && survey && (
         <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(35,94,134,0.06)', color: 'var(--text-secondary)', border: '1px solid rgba(35,94,134,0.2)' }}>
-          Add roof area in the site survey to calculate monthly catchment potential.
+          {t('waterBalanceAddRoofArea')}
         </p>
       )}
       {noStorage && !noSurvey && (
         <p className="text-xs font-display p-3 rounded-xl" style={{ background: 'rgba(31,77,43,0.06)', color: 'var(--text-secondary)', border: '1px solid rgba(31,77,43,0.15)' }}>
-          Draw a water harvesting area on the map to model how much storage you can build.
+          {t('waterBalanceDrawHarvestArea')}
         </p>
       )}
 
       {/* Dry season shortfall warning */}
       {capacity > 0 && tankLevels.some(v => v <= minSafe) && (
         <div className="p-3 rounded-xl" style={{ background: 'rgba(192,60,30,0.07)', border: '1px solid rgba(192,60,30,0.25)' }}>
-          <p className="text-xs font-display font-semibold mb-1" style={{ color: '#C03C1E' }}>Possible dry-season shortfall</p>
+          <p className="text-xs font-display font-semibold mb-1" style={{ color: '#C03C1E' }}>{t('waterBalancePossibleShortfall')}</p>
           <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>
-            Tank level dips below the safe minimum in {MONTH_FULL[tankLevels.indexOf(Math.min(...tankLevels))]}.
-            Options: increase storage, add a second tank, or reduce irrigation during {rainfall.drySeason}.
+            {t('waterBalanceShortfallDetail')
+              .replace('{month}', MONTH_FULL[tankLevels.indexOf(Math.min(...tankLevels))])
+              .replace('{season}', formatDrySeason(rainfall.drySeason, t, lang))}
           </p>
         </div>
       )}

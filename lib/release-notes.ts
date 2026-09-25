@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '08a46c34', changes: [
+    'The site report water balance has isiZulu labels and shortfall wording.',
+  ], tour: [
+    { title: 'Check the water balance', where: 'Site report → Water balance', href: '/reports',
+      detail: 'Choose isiZulu; check the chart labels and possible shortfall wording.' },
+  ] },
   { when: '25 September 2026', sha: '9ad29a75', changes: [
     'Design Studio labels and guide actions show draft isiZulu with English sources.',
     'Farming and measurement guidance stays in English pending review.',
