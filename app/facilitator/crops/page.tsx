@@ -1453,8 +1453,8 @@ function FacilitatorCropsPageInner() {
         <MenuButton />
         <Link
           href="/home"
-          aria-label="Home"
-          title="Home"
+          aria-label={cropUi(lang, 'Home', 'Ikhaya')}
+          title={cropUi(lang, 'Home', 'Ikhaya')}
           className="flex-shrink-0 flex items-center justify-center rounded-xl"
           style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', textDecoration: 'none' }}
         >
@@ -1473,7 +1473,7 @@ function FacilitatorCropsPageInner() {
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}
-            title="Switch to a different design's crop plan"
+            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
           >
             ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
           </button>
@@ -1486,7 +1486,7 @@ function FacilitatorCropsPageInner() {
             href="/facilitator/crops?switch=1"
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
-            title="Switch to a different design's crop plan"
+            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
           >
             ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
           </Link>
@@ -1508,7 +1508,7 @@ function FacilitatorCropsPageInner() {
           <div className="flex flex-col min-w-0 flex-shrink-0">
             <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
             <span className="font-sans truncate" style={{ fontSize: 11, color: '#755942', maxWidth: 220 }}>
-              {canvasSite ? 'Beds from your Design Studio map' : designTitle}
+              {canvasSite ? cropUi(lang, 'Beds from your Design Studio map', 'Imibhede esemephini ye-Design Studio') : designTitle}
             </span>
           </div>
         )}
@@ -1517,7 +1517,7 @@ function FacilitatorCropsPageInner() {
           <button
             onClick={() => setShowBedCheck((v) => !v)}
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans font-semibold"
-            title="Check the beds and plots this plan is using — count, sizes and where they came from"
+            title={cropUi(lang, 'Check the beds and plots this plan is using — count, sizes and where they came from', 'Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo')}
             style={{
               fontSize: 12, cursor: 'pointer',
               background: showBedCheck ? '#1F4D2B' : '#F5F0E8',
@@ -1528,7 +1528,7 @@ function FacilitatorCropsPageInner() {
             <Ruler size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {beds.filter((b) => b.kind !== 'plot').length} beds{beds.some((b) => b.kind === 'plot') ? ` · ${beds.filter((b) => b.kind === 'plot').length} plots` : ''}
           </button>
         )}
-        <LessonLink id="crops:planner" label="Learn" />
+        <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />
         {climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
@@ -1599,7 +1599,7 @@ function FacilitatorCropsPageInner() {
               {chosenDesignId !== null && (
                 <button
                   onClick={() => setSwitchingSite(false)}
-                  aria-label="Cancel"
+                  aria-label={cropUi(lang, 'Cancel', 'Khansela')}
                   className="flex-shrink-0 flex items-center justify-center rounded-full"
                   style={{ width: 28, height: 28, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
                 >
@@ -1706,7 +1706,7 @@ function FacilitatorCropsPageInner() {
                   onClick={undoLastChange}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
-                  title="Undo the last change to this plan"
+                  title={cropUi(lang, 'Undo the last change to this plan', 'Buyisela emuva ushintsho lokugcina kulolu hlelo')}
                 >
                   <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
                 </button>
@@ -1716,7 +1716,7 @@ function FacilitatorCropsPageInner() {
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
-                  title="Clear every planting from this plan"
+                  title={cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')}
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
                 </button>
@@ -2132,7 +2132,7 @@ function FacilitatorCropsPageInner() {
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when</div>
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
                 <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.4 }}>
                   {/* The subtitle must not promise which month comes first:
                       buildBuyingSchedule drops months with nothing to buy, so
@@ -2184,7 +2184,7 @@ function FacilitatorCropsPageInner() {
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Year ahead</div>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Year ahead', 'Unyaka ozayo')}</div>
                 {yearReport.length > 0 ? (
                   <div className="space-y-2">
                     {yearReport.map((line, i) => (
@@ -2417,13 +2417,14 @@ function MonthAvailabilityDetail({
   items: FoodAvailabilityItem[];
   onClose: () => void;
 }) {
+  const { lang } = useLanguage();
   const fresh = items.filter((item) => item.status === 'fresh');
   const stored = items.filter((item) => item.status === 'stored');
   return (
     <div className="rounded-xl p-3 mt-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
       <div className="flex items-start justify-between gap-2 mb-1.5">
         <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{monthLabel(month)}</div>
-        <button onClick={onClose} aria-label={`Close ${monthLabel(month)} detail`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942', padding: 0 }}>
+        <button onClick={onClose} aria-label={cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942', padding: 0 }}>
           <X size={14} />
         </button>
       </div>
@@ -2570,9 +2571,10 @@ function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
   registerScroll: (node: HTMLDivElement | null) => void;
   onMonthScroll: (node: HTMLDivElement) => void;
 }) {
+  const { lang } = useLanguage();
   return (
     <div ref={registerScroll} onScroll={(event) => onMonthScroll(event.currentTarget)}
-      role="region" aria-label="Crop chart months, scroll to match the planting calendar" tabIndex={0}
+      role="region" aria-label={cropUi(lang, 'Crop chart months, scroll to match the planting calendar', 'Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala')} tabIndex={0}
       data-crop-chart-scroll style={{ overflowX: 'auto', marginInline: -16 }}>
       {/* Undo the card padding and reserve the same bed-label gutter. The
           plot, labels and calendar then have identical edges and scroll range. */}
