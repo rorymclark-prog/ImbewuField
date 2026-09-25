@@ -448,8 +448,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   }, []);
 
   const Icon = STEP_ICONS[step];
-  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome'), lang === 'zu' ? SURVEY_WATER_GUIDE_ENGLISH : t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
-  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.'), lang === 'zu' ? SURVEY_WATER_TIP_ENGLISH : t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
+  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome'), lang === 'zu' ? SURVEY_WATER_GUIDE_ENGLISH : t('surveyGuideWater'), paired('surveyGuideChallenges', 'Describe where a problem happens and when you notice it. Put the most urgent problem first in your notes.'), lang === 'zu' ? 'Check your observations before saving. Tap a pencil to return to any section.' : t('surveyReviewHint')];
+  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.'), lang === 'zu' ? SURVEY_WATER_TIP_ENGLISH : t('surveyTipWater'), paired('surveyTipChallenges', 'Tell us what gets in your way. Your notes help keep the report focused on your real situation.'), lang === 'zu' ? 'Check your observations before saving. Tap a pencil to return to any section.' : t('surveyReviewHint')];
 
   return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
@@ -464,7 +464,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
             {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
-            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : STEPS[id]}</span>
+            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : id === 6 ? paired('stepChallenges', 'Challenges & Priorities') : STEPS[id]}</span>
           </button>; })}
           <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
@@ -490,10 +490,10 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <main className={styles.main}>
             <div className={styles.stepHeading}><div className={styles.stepIcon}><Icon size={26}/></div><div>
               <span className={styles.eyebrow}>{t('stepOfSteps').replace('{n}', String(routeIndex + 1)).replace('{total}', String(route.length))}</span>
-              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : step === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : STEPS[step]}</h2>
+              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : step === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : step === 6 ? paired('stepChallenges', 'Challenges & Priorities') : step === 7 ? paired('surveyReviewTitle', 'Review your survey') : STEPS[step]}</h2>
             </div></div>
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
-            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
+            {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : step === 6 ? paired('surveyFieldGuide', 'Field guide') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
             {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
             {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
             <div className={styles.questions}>
@@ -909,13 +909,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {step === 6 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionFarmingApproach')}</SectionLabel>
+              <SectionLabel>{paired('sectionFarmingApproach', 'Farming approach')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'organic',        label: t('practiceFullyOrganicLabel'),        desc: t('practiceFullyOrganicDesc') },
-                  { v: 'mostly-organic', label: t('practiceMostlyOrganicLabel'),        desc: t('practiceMostlyOrganicDesc') },
-                  { v: 'conventional',   label: t('practiceConventionalLabel'),         desc: t('practiceConventionalDesc') },
-                  { v: 'experimenting',  label: t('practiceExperimentingLabel'),        desc: t('practiceExperimentingDesc') },
+                  { v: 'organic',        label: paired('practiceFullyOrganicLabel', 'Fully organic'),        desc: paired('practiceFullyOrganicDesc', 'No synthetic inputs, composting-based') },
+                  { v: 'mostly-organic', label: paired('practiceMostlyOrganicLabel', 'Mostly organic'),        desc: paired('practiceMostlyOrganicDesc', 'Organic where possible, occasional exceptions') },
+                  { v: 'conventional',   label: paired('practiceConventionalLabel', 'Conventional'),         desc: paired('practiceConventionalDesc', 'Synthetic fertilisers and pesticides used') },
+                  { v: 'experimenting',  label: paired('practiceExperimentingLabel', 'Experimenting / mixed'),        desc: paired('practiceExperimentingDesc', 'Trying different methods, not set yet') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc} on={practice === o.v} onClick={() => setPractice(o.v)} />
                 ))}
@@ -923,18 +923,18 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionMainChallenges')}</SectionLabel>
+              <SectionLabel>{paired('sectionMainChallenges', 'Main challenges on this site (select at least one)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'drought',    label: t('challengeDrought') },
-                  { v: 'pests',      label: t('challengePests') },
-                  { v: 'soil',       label: t('challengePoorSoil') },
-                  { v: 'water',      label: t('challengeLimitedWater') },
-                  { v: 'funding',    label: t('challengeFunding') },
-                  { v: 'labour',     label: t('challengeLabour') },
-                  { v: 'flooding',   label: t('challengeFlooding') },
-                  { v: 'market',     label: t('challengeMarket') },
-                  { v: 'none',       label: t('challengeNone') },
+                  { v: 'drought',    label: paired('challengeDrought', 'Drought / dry spells') },
+                  { v: 'pests',      label: paired('challengePests', 'Pests & disease') },
+                  { v: 'soil',       label: paired('challengePoorSoil', 'Poor / degraded soil') },
+                  { v: 'water',      label: paired('challengeLimitedWater', 'Limited water access') },
+                  { v: 'funding',    label: paired('challengeFunding', 'Funding / costs') },
+                  { v: 'labour',     label: paired('challengeLabour', 'Not enough labour') },
+                  { v: 'flooding',   label: paired('challengeFlooding', 'Flooding / erosion') },
+                  { v: 'market',     label: paired('challengeMarket', 'Market access') },
+                  { v: 'none',       label: paired('challengeNone', 'No major challenges') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={challenges.includes(o.v)} onClick={() => setChallenges(toggle(challenges, o.v))} color="var(--brand)" />
                 ))}
@@ -942,18 +942,18 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionAnythingElseLimaShouldKnow')}</SectionLabel>
+              <SectionLabel>{paired('sectionAnythingElseLimaShouldKnow', 'Anything else Lima should know?')}</SectionLabel>
               <div className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--text-2)' }}>
-                {t('notesPlaceholderHint')}
+                {paired('notesPlaceholderHint', 'Unique site features, history, things you\'ve tried, specific concerns…')}
               </div>
               <div style={{ background: 'rgba(31,77,43,0.05)', borderRadius: 11, padding: '4px', border: '1px solid rgba(31,77,43,0.15)', marginBottom: 8 }}>
                 <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--brand)', padding: '6px 10px' }}>
                   <Camera size={14} aria-hidden />
-                  {t('photoTip')}
+                  {lang === 'zu' ? 'Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.' : t('photoTip')}
                 </div>
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}
-                placeholder={t('notesPlaceholder')}
+                placeholder={lang === 'zu' ? 'e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…' : t('notesPlaceholder')}
                 rows={4} className="w-full font-sans"
                 style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
             </div>
@@ -968,8 +968,12 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             <div className={styles.recordOverview}><strong>{t('surveyRecordOverview')}</strong>
               {[{label:t('surveyGoalsSelected'), value:goals.length}, {label:t('surveyProductionEntries'),value:survey.reportedProduction?.length ?? 0}].map(item => <div key={item.label}><span>{item.label}</span><b>{item.value}</b></div>)}
             </div>
-            <p className={styles.smallNote}>{t('surveyUnknownHint')}</p>
-            {existing && <p className={styles.smallNote}>{t('surveyEditingExisting')}</p>}
+            <p className={styles.smallNote}>{lang === 'zu'
+              ? <SurveyZuluDraftPair english="Leave a question blank if you are not sure. An unknown is more useful than a guess.">{t('surveyUnknownHint')}</SurveyZuluDraftPair>
+              : t('surveyUnknownHint')}</p>
+            {existing && <p className={styles.smallNote}>{lang === 'zu'
+              ? <SurveyZuluDraftPair english="You are updating your existing survey. Earlier details stay here when you switch routes.">{t('surveyEditingExisting')}</SurveyZuluDraftPair>
+              : t('surveyEditingExisting')}</p>}
           </aside>
         </div>}
         </div>
@@ -983,7 +987,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <button className={styles.back} onClick={() => routeIndex > 0 ? goTo(route[routeIndex - 1]) : setStarted(false)}><ChevronLeft size={17}/>{t('buttonBack')}</button>
           <span className={styles.saveReminder}>{lang === 'zu' ? dirty ? <SurveyZuluDraftPair english="Changes not yet saved">{t('surveyUnsaved')}</SurveyZuluDraftPair> : <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : dirty ? t('surveyUnsaved') : t('surveySaveReminder')}</span>
           <button className={styles.primary} disabled={step === 7 && !canSave} onClick={() => step === 7 ? handleSave() : goTo(route[routeIndex + 1])}>
-            {step === 7 ? <><Check size={18}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Save & continue">{t('surveySaveContinue')}</SurveyZuluDraftPair> : t('surveySaveContinue')}</> : <>{step === 6 ? t('surveyReviewTitle') : t('buttonNext')}<ChevronRight size={18}/></>}
+            {step === 7 ? <><Check size={18}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Save & continue">{t('surveySaveContinue')}</SurveyZuluDraftPair> : t('surveySaveContinue')}</> : <>{step === 6 ? paired('surveyReviewTitle', 'Review your survey') : t('buttonNext')}<ChevronRight size={18}/></>}
           </button>
         </div>}
       </footer>

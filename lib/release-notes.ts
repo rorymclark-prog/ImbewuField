@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '532f3069', changes: [
+    'Challenges & Priorities and Review now show isiZulu drafts beside English sources.',
+    'Advice about saving and required answers stays in English until checked.',
+  ], tour: [
+    { title: 'Review survey challenges and answers', where: 'Site Survey → Challenges & Priorities → Review', href: '/farmer',
+      detail: 'Switch to isiZulu and compare the draft choices with English. Saving still requires your action.' },
+  ] },
   { when: '25 September 2026', sha: '3b5585e4', changes: [
     'ACT facilitators can open a two-day Teach the Teachers refresher in My Studies.',
     'The preview links core lessons and app practice with a paper fallback.',
