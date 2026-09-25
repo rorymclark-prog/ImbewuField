@@ -15,7 +15,6 @@ import {
   ClipboardList,
   Camera,
   MessageCircle,
-  Wheat,
   Circle,
   CheckCircle2,
   CalendarPlus,
@@ -29,7 +28,6 @@ import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
@@ -41,8 +39,6 @@ import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
-import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
-import type { CompletionStepKey } from '@/lib/completion-score';
 import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
@@ -109,30 +105,32 @@ function LastSiteCard({ site }: { site: LastSite }) {
 
 // Weather for the farmer's designated MAIN site — separate from LastSiteCard
 // (which tracks the last-VIEWED map point, not necessarily a saved/main site).
+//
+// NO "Main site · {name}" HEADING. The hero card directly above is headed by the site's name, and
+// this card used to open with the same name again, so a farmer read it three times before
+// reaching anything new. What stays is the switcher, and only when there is a second site to
+// switch to. WeatherWidget draws its own card, so there is no frame around it here either.
 function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void }) {
   const { t } = useLanguage();
   const showPicker = places.length > 1;
   return (
-    <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
-          <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{site.name}</div>
-        </div>
-        {showPicker && (
+    <div className="flex flex-col gap-2">
+      {showPicker && (
+        <div className="flex items-center justify-between gap-3">
+          <span className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>{t('homeMainSite')}</span>
           <select
             value={site.id}
             onChange={(e) => onSetMain(e.target.value)}
             aria-label={t('homeSetAsMain')}
             className="font-sans"
-            style={{ fontSize: 12, border: '1px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', color: 'var(--color-muted-strong)', padding: '4px 6px', maxWidth: 120 }}
+            style={{ fontSize: 14, minHeight: 44, border: '1px solid var(--color-border)', borderRadius: 10, background: 'var(--color-surface)', color: 'var(--color-ink)', padding: '6px 10px', maxWidth: 200 }}
           >
             {places.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
             ))}
           </select>
-        )}
-      </div>
+        </div>
+      )}
       <WeatherWidget lat={site.lat} lon={site.lon} compact />
     </div>
   );
@@ -212,94 +210,6 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   );
 }
 
-// Gamified "Your farm plan" progress card — overall % across the 5-stage
-// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus
-// the single next action, deep-linked. Deliberately mirrors the same source
-// of truth as DataPanel/NextStepCoach/HomeHeroCard (lib/site-progress.ts) so
-// this can never drift into a second scoring path.
-interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
-const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
-  located: { label: 'Tap your land on the map', href: () => '/farmer' },
-  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
-  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
-  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
-  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
-  // site loaded and nothing armed, so the coaching told them to do a thing this link never
-  // actually started — same fix the NextStepCoach in-panel card already gets for free by
-  // dispatching the event directly (it's already sitting on the right site).
-  boundary: {
-    label: 'Trace your boundary',
-    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
-  },
-  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
-  // loads the main site and auto-opens it (the older /survey wizard used a different store
-  // and never moved this score).
-  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
-  design: {
-    label: 'Design your farm',
-    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
-  },
-  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
-};
-
-function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
-  const { t, lang } = useLanguage();
-  const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
-  const progress = useSiteProgress(coords);
-
-  // Hide entirely for a brand-new user — no saved places means nothing to show yet,
-  // and the hero card's welcome variant already owns that moment. `progress` stays
-  // null until useSiteProgress's post-mount effect runs (hydration-safe), so this
-  // also renders nothing on the very first client tick, matching SSR.
-  if (!places || places.length === 0) return null;
-  if (!progress) return null;
-
-  const { pct, nextStep } = progress;
-  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
-
-  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, mainSite?.id) : designHref;
-  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
-  const label = nextStepCopy
-    ? t(nextStepCopy.titleKey)
-    : nextStep
-      ? localUi(lang, STEP_ACTIONS[nextStep].label, ({ located: 'Thepha indawo yakho emephini', boundary: 'Dweba umngcele wakho', survey: 'Gcwalisa inhlolovo yendawo', design: 'Dizayina ipulazi lakho', cropPlan: 'Hlela izitshalo zakho' } as Record<CompletionStepKey, string>)[nextStep])
-      : localUi(lang, 'Plan complete — print your plan set', 'Uhlelo luphelele — phrinta uhlelo lwakho');
-
-  return (
-    <Link
-      href={href}
-      className="home-next-step flex items-center gap-4"
-      style={{
-        minHeight: 92,
-        padding: '16px 18px',
-        textDecoration: 'none',
-        background: 'linear-gradient(135deg, rgba(192,122,30,0.14), rgba(255,254,250,0.96) 62%)',
-        border: '1px solid rgba(192,122,30,0.3)',
-        borderRadius: 20,
-        boxShadow: '0 8px 22px -20px rgba(83,52,18,0.7)',
-      }}
-    >
-      <div className="flex-1 min-w-0">
-        <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 4 }}>
-          {nextStep ? t('coachOverline') : localUi(lang, 'Your farm plan', 'Uhlelo lwepulazi lakho')}
-        </div>
-        <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
-          {label}
-        </div>
-        <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 4 }}>
-          {pct}% {localUi(lang, 'complete', 'kuqediwe')}
-        </div>
-      </div>
-      <span
-        className="home-next-step-arrow flex items-center justify-center flex-shrink-0"
-        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: '#F7F2E9', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
-      >
-        <ChevronRight size={20} strokeWidth={2} />
-      </span>
-    </Link>
-  );
-}
-
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
@@ -360,29 +270,23 @@ function HomeLandingInner() {
     { href: '/funder',  Icon: Building2,     label: t('homeRoleFunderLabel'),  desc: t('homeRoleFunderDesc') },
   ].filter(({ href }) => canSeeNavLink(role, href) && canSeeWorkspaceLink(navigationRole, href));
 
-  // ONE MONEY TILE, NOT TWO.
+  // NO MONEY TILE — THE TAB BAR IS THE ONE DOOR.
   //
   // This grid used to open with "Finance · Income & costs" and carry "My Records · Crops & sales"
   // four rows below it. Two tiles, two screens, and no way to add up what they each held — the
   // Gogo Test audit's finding was that a farmer could not answer "how much did I make this
-  // season?" because the answer was split across them. They are one book now (/records), so
-  // there is one tile.
-  //
-  // ITS SUBTITLE STAYS "Crops & sales", which does not name the third page. Naming all three
-  // would have meant a new English-only key, and homeQuickMyRecordsDesc is already translated in
-  // all ten locales — "Izitshalo nezithengiso" on the tile the isiZulu-speaking farmer this was
-  // audited against actually taps. A partial subtitle in her language beats a complete one in
-  // someone else's; the tab strip inside names all three pages the moment she opens it.
+  // season?" because the answer was split across them. They became one book (/records) with one
+  // tile — and that tile still sat above a tab bar whose third tab is the same book under the
+  // same name, so Home said "My Records" twice. The tab is on every screen; the tile was not.
   const QUICK_ACTIONS = [
     { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
     { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
-    // These four carry real illustrated art (public/home-icons/) instead of a Lucide glyph —
+    // These three carry real illustrated art (public/home-icons/) instead of a Lucide glyph —
     // same "art field with an Icon fallback" pattern as def.art in DesignPalette.tsx and
     // getCropArt() on the Prices/Exchange pages. Icon stays wired as the fallback if the art
     // path is ever wrong, never dead-code.
     { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
@@ -396,7 +300,7 @@ function HomeLandingInner() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
-        <MenuButton /><BackButton fallback="/home" />
+        <MenuButton />
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
@@ -432,35 +336,30 @@ function HomeLandingInner() {
         .home-quick-link:nth-child(3) { animation-delay: 90ms; }
         .home-quick-link:nth-child(4) { animation-delay: 135ms; }
         .home-quick-link:nth-child(5) { animation-delay: 180ms; }
-        .home-quick-link:nth-child(6) { animation-delay: 225ms; }
         .home-quick-link > div:first-child { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
         @media (hover: hover) {
           .home-quick-link:hover { transform: translateY(-4px); box-shadow: 0 9px 22px rgba(31,77,43,0.12); border-color: rgba(31,77,43,0.32) !important; }
           .home-quick-link:hover > div:first-child { transform: scale(1.12) rotate(-3deg); }
         }
         .home-quick-link:active { transform: scale(0.97); }
-        .home-quick-link:focus-visible, .home-next-step:focus-visible, .home-tour-card:focus-visible { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
-        .home-next-step { transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; }
-        .home-next-step-arrow { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+        .home-quick-link:focus-visible, .home-tour-card:focus-visible { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
         .home-tour-card { overflow: hidden; transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease, border-color 220ms ease; }
         .home-tour-card img { transition: transform 350ms cubic-bezier(0.16,1,0.3,1); }
         .home-tour-landscape { width: 100%; height: auto; aspect-ratio: 16 / 9; }
         @media (hover: hover) {
-          .home-next-step:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.6) !important; box-shadow: 0 12px 24px -15px rgba(83,52,18,0.5) !important; }
-          .home-next-step:hover .home-next-step-arrow { transform: translateX(5px); }
           .home-tour-card:hover { transform: translateY(-3px); border-color: rgba(192,122,30,0.8) !important; box-shadow: 0 12px 26px rgba(83,52,18,0.12); }
           .home-tour-card:hover img { transform: scale(1.035); }
         }
         @media (min-width: 900px) {
           .home-tour-landscape { height: clamp(300px, 36vw, 400px); aspect-ratio: auto; }
         }
-        .home-next-step:active, .home-tour-card:active { transform: scale(0.985); }
+        .home-tour-card:active { transform: scale(0.985); }
         @media (prefers-reduced-motion: reduce) {
           .home-quick-link { animation: none; transition: none; }
           .home-quick-link > div:first-child { transition: none; }
           .home-quick-link:hover, .home-quick-link:active, .home-quick-link:hover > div:first-child { transform: none; }
-          .home-next-step, .home-next-step-arrow, .home-tour-card, .home-tour-card img { transition: none; }
-          .home-next-step:hover, .home-next-step:active, .home-next-step:hover .home-next-step-arrow, .home-tour-card:hover, .home-tour-card:active, .home-tour-card:hover img { transform: none; }
+          .home-tour-card, .home-tour-card img { transition: none; }
+          .home-tour-card:hover, .home-tour-card:active, .home-tour-card:hover img { transform: none; }
         }
         .home-priority-grid,
         .home-priority-primary,
@@ -478,7 +377,7 @@ function HomeLandingInner() {
             align-items: start;
           }
           .home-quick-grid {
-            grid-template-columns: repeat(6, minmax(0, 1fr));
+            grid-template-columns: repeat(5, minmax(0, 1fr));
           }
         }
       `}</style>
@@ -498,7 +397,6 @@ function HomeLandingInner() {
         <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
             <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
-            <FarmPlanCard places={places} mainSite={mainSite} />
           </div>
 
           {(mainSite || (lastSite && !lastSiteMatchesMain)) && (

@@ -2,11 +2,14 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Eye } from 'lucide-react';
+import { ArrowRight, MapPin, Eye, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { useSiteProgress } from '@/lib/site-progress';
+import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
+import type { CompletionStepKey } from '@/lib/completion-score';
 import type { SavedPlace } from '@/lib/saved-places';
 import ProgressSprout from '@/components/home/ProgressSprout';
+
+const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
 export interface HomeHeroCardProps {
   /** null until the places effect has run — render the DEFAULT variant (today's
@@ -45,8 +48,73 @@ const PILL_STYLE: CSSProperties = {
   transition: 'transform 150ms var(--ease-out, cubic-bezier(0.16,1,0.3,1)), box-shadow 200ms var(--ease-out, cubic-bezier(0.16,1,0.3,1))',
 };
 
-// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT +
-// CONTINUE variants share it — same brand marker, same overline copy).
+// The single next action for the farmer's MAIN site, deep-linked. This used to be a second card
+// under this one (FarmPlanCard in app/home/page.tsx) that read the same progress hook and printed
+// the same "75% complete" a second time, while this card's own button only reopened the map. It
+// reads lib/site-progress.ts like DataPanel and the NextStepCoach do, so it can never drift into a
+// second scoring path.
+interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
+const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
+  located: { label: 'Tap your land on the map', href: () => '/farmer' },
+  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
+  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
+  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
+  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
+  // site loaded and nothing armed, so the coaching told them to do a thing this link never
+  // actually started — same fix the NextStepCoach in-panel card already gets for free by
+  // dispatching the event directly (it's already sitting on the right site).
+  boundary: {
+    label: 'Trace your boundary',
+    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
+  },
+  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
+  // loads the main site and auto-opens it (the older /survey wizard used a different store
+  // and never moved this score).
+  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
+  design: {
+    label: 'Design your farm',
+    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
+  },
+  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
+};
+
+const STEP_LABEL_ZU: Record<CompletionStepKey, string> = {
+  located: 'Thepha indawo yakho emephini',
+  boundary: 'Dweba umngcele wakho',
+  survey: 'Gcwalisa inhlolovo yendawo',
+  design: 'Dizayina ipulazi lakho',
+  cropPlan: 'Hlela izitshalo zakho',
+};
+
+interface NextAction { href: string; overline: string; label: string }
+
+function nextAction(
+  nextStep: CompletionStepKey | null,
+  coords: Coords | null,
+  siteId: string,
+  t: (key: string) => string,
+  lang: string,
+): NextAction {
+  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
+  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, siteId) : designHref;
+  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
+  const label = nextStepCopy
+    ? t(nextStepCopy.titleKey)
+    : nextStep
+      ? localUi(lang, STEP_ACTIONS[nextStep].label, STEP_LABEL_ZU[nextStep])
+      : localUi(lang, 'Plan complete — print your plan set', 'Uhlelo luphelele — phrinta uhlelo lwakho');
+  const overline = nextStep ? t('coachOverline') : localUi(lang, 'Your farm plan', 'Uhlelo lwepulazi lakho');
+  return { href, overline, label };
+}
+
+// Text links under the next step — present, but quieter than it.
+const SECONDARY_LINK_STYLE: CSSProperties = {
+  display: 'inline-flex', alignItems: 'center', minHeight: 44,
+  fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+};
+
+// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (the DEFAULT variant
+// and its fallback — the CONTINUE card is headed by the site itself, not by Lima).
 function LimaMark() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20, flexShrink: 0 }}>
@@ -104,6 +172,14 @@ function HeroEntranceStyle() {
         .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-hit { height: 96px; }
         .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip { top: 104px; }
       }
+      .imf-hero-next { transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease; }
+      .imf-hero-next-arrow { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+      .imf-hero-next:focus-visible { outline: 3px solid #F7C97E; outline-offset: 3px; }
+      .imf-hero-next:active { transform: scale(0.985); }
+      @media (hover: hover) {
+        .imf-hero-next:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -12px rgba(10,25,13,0.6); }
+        .imf-hero-next:hover .imf-hero-next-arrow { transform: translateX(4px); }
+      }
       .imf-progress-sprout { width: 100%; height: 100%; flex: none; overflow: visible; }
       @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 128px; height: 128px; } }
       .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
@@ -116,6 +192,8 @@ function HeroEntranceStyle() {
         .imf-progress-fill { animation: none; transition: none; }
         .imf-progress-sprout__growth { animation: none; }
         .imf-progress-sprout-help { animation: none; }
+        .imf-hero-next, .imf-hero-next-arrow { transition: none; }
+        .imf-hero-next:hover, .imf-hero-next:active, .imf-hero-next:hover .imf-hero-next-arrow { transform: none; }
         .imf-progress-sprout-art > svg, .imf-progress-sprout-art > span, .imf-progress-sprout-tip { transition: none; }
         .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.2); }
       }
@@ -124,7 +202,7 @@ function HeroEntranceStyle() {
 }
 
 export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCardProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // Hooks run unconditionally, before any early return, so the null-until-mounted
   // pattern stays hydration-safe (progress is null on SSR and on the very first
@@ -213,18 +291,24 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     );
   }
 
-  // ── CONTINUE — returner with at least one saved site. ──
+  // ── CONTINUE — returner with at least one saved site. The one place Home names the site:
+  // which site, how far along it is, and the single next thing to do. ──
   if (mainSite) {
     const pct = progress?.pct;
+    // null for the one render before useSiteProgress has read storage — the bar above it
+    // waits for the same thing, so the two arrive together.
+    const next = progress ? nextAction(progress.nextStep, coords, mainSite.id, t, lang) : null;
 
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
         <HeroEntranceStyle />
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <Overline>{t('homeLimaSuggests')}</Overline>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
-              {t('continueSiteTitle').replace('{site}', mainSite.name)}
+            <div className="uppercase tracking-widest font-sans mb-2" style={{ fontSize: 12, color: 'rgba(234,243,226,0.72)', letterSpacing: '0.12em' }}>
+              {t('homeMainSite')}
+            </div>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12, overflowWrap: 'anywhere' }}>
+              {mainSite.name}
             </h2>
           </div>
           <ProgressSprout key={completedSteps} completedSteps={completedSteps} totalSteps={progress?.score.steps.length} progressPct={pct} interactive />
@@ -241,24 +325,42 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
           </div>
         )}
 
-        <div className="flex items-center gap-4 flex-wrap">
+        {next && (
           <Link
-            href={`/farmer?site=${mainSite.id}`}
-            style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, textDecoration: 'none' }}
-          >
-            <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
-              <span className="flex items-center gap-1.5">{t('continueSiteCta')}<ArrowRight size={14} /></span>
-            </span>
-          </Link>
-
-          <Link
-            href="/farmer?guided=1&new=1"
-            className="font-sans"
+            href={next.href}
+            className="imf-hero-next flex items-center gap-3"
             style={{
-              display: 'inline-flex', alignItems: 'center', minHeight: 44,
-              fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+              minHeight: 72,
+              padding: '12px 14px',
+              marginBottom: 6,
+              borderRadius: 16,
+              background: 'var(--bg-0)',
+              textDecoration: 'none',
+              boxShadow: '0 2px 8px rgba(15,30,18,0.22)',
             }}
           >
+            <div className="flex-1 min-w-0">
+              <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 3 }}>
+                {next.overline}
+              </div>
+              <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
+                {next.label}
+              </div>
+            </div>
+            <span
+              className="imf-hero-next-arrow flex items-center justify-center flex-shrink-0"
+              style={{ width: 40, height: 40, borderRadius: 999, background: '#1F4D2B', color: '#F7F2E9' }}
+            >
+              <ChevronRight size={20} strokeWidth={2} />
+            </span>
+          </Link>
+        )}
+
+        <div className="flex items-center gap-x-5 flex-wrap">
+          <Link href={`/farmer?site=${mainSite.id}`} className="font-sans" style={SECONDARY_LINK_STYLE}>
+            {t('continueSiteCta')}
+          </Link>
+          <Link href="/farmer?guided=1&new=1" className="font-sans" style={SECONDARY_LINK_STYLE}>
             {t('startNewSite')}
           </Link>
         </div>

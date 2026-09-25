@@ -33,10 +33,10 @@ test('Garden Survey opens the survey the progress bar actually reads', () => {
   assert.match(farmerPage, /searchParams\.get\('openSurvey'\)/,
     'app/farmer/page.tsx no longer reads ?openSurvey= — the nav entry would silently land on the plain map');
 
-  // And it must be the same link app/home/page.tsx's own progress-bar nudge uses,
-  // so the two doors into the survey agree with each other.
-  const homePage = read('../app/home/page.tsx');
-  assert.match(homePage, /href: \(\) => '\/farmer\?openSurvey=1'/,
+  // And it must be the same link Home's own next-step nudge uses (on the site card,
+  // components/home/HomeHeroCard.tsx), so the two doors into the survey agree with each other.
+  const homeCard = read('../components/home/HomeHeroCard.tsx');
+  assert.match(homeCard, /href: \(\) => '\/farmer\?openSurvey=1'/,
     "home's own 'do the site survey' nudge must point at the same URL as the drawer entry");
 });
 
