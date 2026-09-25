@@ -733,14 +733,27 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
 
   // Lima contextual read — one-line from actual data
-  const limaRead = (() => {
+  const limaReadParts = (() => {
     const r = data.rainfall.annual;
     const soilMeasured = data.soil.soilSource === 'lab';
-    const waterNote = r < 400 ? `Only ${r}mm of rain so water harvesting is essential.` : `${r}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.`;
-    const frostNote = data.climate.minTemp < 2 ? ' Protect against frost in winter.' : '';
-    const soilNote = soilMeasured ? ' Use your soil test and local crop requirements to plan amendments.' : ' Soil conditions need checking on site; arrange a soil test.';
-    return `${waterNote}${soilNote}${frostNote} Want a full planting plan?`;
+    const englishWater = r < 400
+      ? translate('en', 'siteSummaryRainEssential').replace('{mm}', String(r))
+      : translate('en', 'siteSummaryRainEstimate').replace('{mm}', String(r));
+    const zuluWater = r < 400
+      ? t('siteSummaryRainEssential').replace('{mm}', String(r))
+      : t('siteSummaryRainEstimate').replace('{mm}', String(r));
+    const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
+    const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
+    const englishFrost = data.climate.minTemp < 2 ? ` ${translate('en', 'siteSummaryFrostProtection')}` : '';
+    const zuluFrost = data.climate.minTemp < 2 ? ` ${t('siteSummaryFrostProtection')}` : '';
+    const englishPlan = translate('en', 'siteSummaryPlanPrompt');
+    const zuluPlan = t('siteSummaryPlanPrompt');
+    return {
+      english: `${englishWater} ${englishSoil}${englishFrost} ${englishPlan}`,
+      zulu: `${zuluWater} ${zuluSoil}${zuluFrost} ${zuluPlan}`,
+    };
   })();
+  const limaRead = lang === 'zu' ? limaReadParts.zulu : limaReadParts.english;
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
@@ -1066,9 +1079,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
-                {limaRead}
+                {lang === 'zu' ? (
+                  <>
+                    <span>{limaRead}</span>
+                    <span className="block mt-1 text-xs text-stone-600">{t('siteSummaryZuluDraftNotice')}</span>
+                    <span className="block mt-1 text-xs text-stone-600" lang="en">English source: {limaReadParts.english}</span>
+                  </>
+                ) : limaRead}
               </p>
-              <SpeakButton text={limaRead} size={15} color="#5C5040" />
+              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="#5C5040" />
             </div>
 
             {/* 12-month planting calendar strip */}

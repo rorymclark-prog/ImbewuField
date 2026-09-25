@@ -21,7 +21,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -107,7 +107,9 @@ function HomeInner() {
       import('@/components/ReportView').then(open, async () => {
         const retry = await appConfirm({
           title: t('reportsOfflineTitle'),
-          message: t('reportsOfflineMessage'),
+          message: lang === 'zu'
+            ? `${t('reportsOfflineMessage')}\n${t('reportsOfflineZuluDraftNotice')}\n\nEnglish source: ${translate('en', 'reportsOfflineMessage')}`
+            : t('reportsOfflineMessage'),
           confirmLabel: t('reportsOfflineRetry'),
           cancelLabel: t('reportsOfflineClose'),
         });
