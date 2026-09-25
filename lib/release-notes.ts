@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '046de5d7', changes: [
+    'Garden Survey goal descriptions show marked isiZulu drafts beside English.',
+    'The Garden Survey lesson link follows the selected language.',
+  ], tour: [
+    { title: 'Compare Garden Survey goal drafts', where: 'Garden Survey → Goal', href: '/survey',
+      detail: 'Choose isiZulu to compare each marked goal description with its exact English source.' },
+  ] },
   { when: '25 September 2026', sha: '1cb654ad', changes: [
     'Plant Guilds now shows a marked Sesotho review draft beside English.',
     'Pruning, mulch and insect checks stay in English pending review.',
