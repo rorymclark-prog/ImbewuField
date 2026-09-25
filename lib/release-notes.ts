@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '05636cde', changes: [
+    'Feedback form labels now follow the isiZulu setting.',
+    'Feedback privacy and send consent show isiZulu drafts beside their English source.',
+  ], tour: [
+    { title: 'Check feedback privacy', where: 'Feedback', href: '/feedback',
+      detail: 'Choose isiZulu and read what is sent before ticking the consent box.' },
+  ] },
   { when: '25 September 2026', sha: '439db958', changes: [
     'Home marks its isiZulu interface as an unreviewed draft.',
     'Deleting a saved site shows isiZulu beside the exact English action.',
