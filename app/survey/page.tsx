@@ -306,7 +306,7 @@ function SurveyInner() {
 
           {lang === 'zu' && (
             <p role="note" className="mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-              Unreviewed isiZulu draft. Check the paired English before using this plan. Crop names, figures, save messages and “Side-dress with compost tea” remain English. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esihambisana naso ngaphambi kokusebenzisa lolu hlelo. Amagama ezitshalo, izinombolo, imiyalezo yokugcina nomsebenzi othi “Side-dress with compost tea” kuse ngesiNgisi.
+              Unreviewed isiZulu draft. Check the paired English before using this plan. Crop names, figures and “Side-dress with compost tea” remain English. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esihambisana naso ngaphambi kokusebenzisa lolu hlelo. Amagama ezitshalo, izinombolo nomsebenzi othi “Side-dress with compost tea” kuse ngesiNgisi.
             </p>
           )}
 
@@ -575,20 +575,34 @@ function SurveyInner() {
                   style={saveFailed
                     ? { background: '#9A3412', color: '#FDF3EC', border: 'none', cursor: 'pointer' }
                     : { background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
-                  <Check size={15} />{saveFailed ? localUi('Not saved — no space on this phone', 'Not saved — no space on this phone', lang) : saved ? localUi('Saved!', 'Saved!', lang) : localUi('Save this plan', 'Save this plan', lang)}
+                  <Check size={15} />{saveFailed
+                    ? surveyDraft('Try Save again', 'Phinda uthinte u-Londoloza', lang)
+                    : saved
+                      ? surveyDraft('Saved!', 'Kulondoloziwe!', lang)
+                      : surveyDraft('Save this plan', 'Londoloza lolu hlelo', lang)}
                 </button>
                 {saveFailed && (
-                  // Sticky, and it names the recovery a farmer can actually act on. The answers are
-                  // still on screen, so printing is a real rescue — closing the page is not.
-                  <p style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
-                    Your answers are still on this screen. Free up space and tap Save again, or
-                    print this page before you leave it.
+                  // Storage can fail for more than lack of space. The answers stay on this screen,
+                  // so the PDF is a recovery path; closing the page risks losing them.
+                  <p role="alert" style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
+                    {surveyDraft(
+                      'Not saved. Keep this screen open and try again.',
+                      'Akulondolozwanga. Gcina lesi sikrini sivuliwe bese uzama futhi.',
+                      lang,
+                    )}{' '}{surveyDraft(
+                      'Your answers are still on this screen. Try Save again, or use Print to download a PDF before leaving.',
+                      'Izimpendulo zakho zisekhona kulesi sikrini. Phinda uthinte u-Londoloza, noma sebenzisa u-Print ukuze ulande i-PDF ngaphambi kokuba uphume.',
+                      lang,
+                    )}
                   </p>
                 )}
                 {pdfFailed && (
                   <p style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
-                    Could not build the PDF. Your answers are still on this screen — try Print
-                    again, or Save this plan instead.
+                    {surveyDraft(
+                      'Could not build the PDF. Your answers are still on this screen — try Print again, or Save this plan instead.',
+                      'Ayikwazanga ukwakha i-PDF. Izimpendulo zakho zisekhona kulesi sikrini — phinda uzame u-Print, noma esikhundleni salokho Londoloza lolu hlelo.',
+                      lang,
+                    )}
                   </p>
                 )}
                 <Link href="/plan"
