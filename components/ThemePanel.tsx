@@ -181,13 +181,6 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
-          <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
-            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
-            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
-            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
-            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
-          </section>
-
           {/* LANGUAGE — first, because a panel she cannot read is not a panel.
               This is the only working language control on a phone. The onboarding screen ends
               with "you can change this later" (pickLangSub), and until now that was not true:
@@ -425,6 +418,17 @@ export default function ThemePanel({ open, onClose }: Props) {
               {zu ? 'Okuzenzakalelayo kulandela izilungiselelo zedivayisi yakho.' : 'Auto follows your device setting.'}
             </div>
           </div>
+
+          {/* TOUR AND SUPPORT LINKS LIVE DOWN HERE. They used to open the panel, which pushed "How much
+              to show" (Simple / All tools) below the fold on a phone — Rory went looking for the switch
+              and could not find it. Settings now opens on the two choices that decide whether the app
+              is usable at all: language, then how much to show. */}
+          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
+            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
+            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
+            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
+            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
+          </section>
 
           {/* CLAUDE.md: no data-vendor badges in the UI — this used to name each data provider by
               brand. One unbranded line instead of a vendor list. */}
