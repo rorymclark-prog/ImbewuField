@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '02f4355a', changes: [
+    'Water Harvesting has Tshivenda title drafts; guidance and media stay English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Tshivenda', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Tshivenda to see the marked module and lesson title drafts. Safety instructions, slides and narration stay English.' },
+  ] },
   { when: '25 September 2026', sha: '830d049f', changes: [
     'Plant Guilds Sesotho review draft is paired with English; it is not in Study.',
   ] },
