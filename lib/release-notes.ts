@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '6c276e4e', changes: [
+    'Palette controls and map prompts now pair draft isiZulu with English.',
+    'Climate and frost claims and technical tools stay in English.',
+  ], tour: [
+    { title: 'Review Design Palette labels', where: 'Design Studio → Sector', href: '/design',
+      detail: 'Choose isiZulu to check the wind prompt and palette labels; uncertain climate and technical wording stays in English.' },
+  ] },
   { when: '25 September 2026', sha: '7483ff32', changes: [
     'Print / Export now has draft isiZulu controls with English on key choices.',
     'Plan set count now shows nine maps; inactive controls are gone.',
