@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '746a8dfc', changes: [
+    'Simple mode now covers the Design Studio: fewer tools and one Save my plan button.',
+    'Community, Contact and Feedback are shorter in Simple, with more isiZulu.',
+    'The welcome, privacy and Community screens now follow dark mode.',
+    'Photos you post to Community shrink first, so they use less mobile data.',
+    'The Crop plan now follows dark mode, with larger text on a computer.',
+  ], tour: [
+    { title: 'Design in Simple', where: 'Design Studio', href: '/design',
+      detail: 'A short list of things to place, then Save my plan to keep or share it.' },
+    { title: 'Tell us in one box', where: 'Feedback', href: '/feedback',
+      detail: 'In Simple there is one box: say what went wrong or what you would like.' },
+  ] },
   { when: '25 September 2026', sha: 'c3954489', changes: [
     'The opening Site Survey choices now show draft isiZulu beside English.',
     'Uncertain descriptions stay in English pending local review.',

@@ -29,6 +29,9 @@ import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = '#7A4408';
 const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 
@@ -305,7 +308,7 @@ export default function StepGuide({
                     <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : DARK, textDecoration: done ? 'line-through' : 'none' }}>
                       {ss.title}
                       {ss.optional && !done && (
-                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
+                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: GOLD_DIM, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
                       )}
                       {skipped && (
                         <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'rgba(11,18,11,0.4)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideSkipped)}</span>
@@ -316,7 +319,7 @@ export default function StepGuide({
                       <div style={{ marginTop: 4, display: 'flex', flexDirection: 'column', gap: 8 }}>
                         <div style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>{ss.instruction}</div>
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                          <MapPin size={13} color={OCHRE} style={{ flexShrink: 0, marginTop: 2 }} />
+                          <MapPin size={13} color={GOLD_DIM} style={{ flexShrink: 0, marginTop: 2 }} />
                           <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{ss.where}</div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>

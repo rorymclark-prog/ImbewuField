@@ -81,17 +81,17 @@ export default function PublicCommunityProfilePage() {
 
   if (busy || loading || !communityEnabled()) {
     return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
         <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
+        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
         <BrandLogo />
@@ -101,8 +101,8 @@ export default function PublicCommunityProfilePage() {
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
-          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-            <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{lang === 'zu' ? t('communityProfileUnavailable') : 'This profile is no longer available.'}</p>
+          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{lang === 'zu' ? t('communityProfileUnavailable') : 'This profile is no longer available.'}</p>
           </div>
         ) : (
           <>
@@ -113,18 +113,18 @@ export default function PublicCommunityProfilePage() {
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
-                <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: '#20190F' }}>{profile.display_name}</h1>
+                <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
                 {profile.area_text && (
                   <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
-                    <MapPin size={12} style={{ color: '#755942' }} />
-                    <span className="font-sans" style={{ fontSize: 13, color: '#755942' }}>{profile.area_text}</span>
+                    <MapPin size={12} style={{ color: 'var(--text-muted)' }} />
+                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{profile.area_text}</span>
                   </div>
                 )}
               </div>
             </div>
 
             {profile.bio && (
-              <p className="font-sans max-w-prose" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
+              <p className="font-sans max-w-prose" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
             )}
 
             {profile.crops?.length > 0 && (
@@ -171,20 +171,20 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {reportOpen && (
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', marginTop: 12 }}>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', marginTop: 12 }}>
                 <textarea
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
                   placeholder={t('communityReportReasonPlaceholder')}
                   rows={3}
                   className="w-full rounded-xl px-3 py-2.5 font-sans"
-                  style={{ fontSize: 13.5, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none', resize: 'none', marginBottom: 10 }}
+                  style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 10 }}
                 />
                 <button
                   onClick={handleReport}
                   disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#755942', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>

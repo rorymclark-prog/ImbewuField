@@ -23,8 +23,8 @@ function Card({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        backgroundColor: '#FFFEFA',
-        border: '1px solid #E2D8C4',
+        backgroundColor: 'var(--bg-1)',
+        border: '1px solid var(--border)',
         borderRadius: 12,
         padding: 16,
       }}
@@ -36,7 +36,7 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: '#5C5040' }}>
+    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );
@@ -60,7 +60,7 @@ function ExampleInner() {
   const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F7F2E9' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg-0)' }}>
       {/* This page leads with the demonstration banner, not a title, so the heading that names
           it is for screen readers only — a page with no h1 gives "jump to heading 1" nowhere
           to land. Reuses the banner's own translated string rather than a new English literal. */}
@@ -140,7 +140,7 @@ function ExampleInner() {
                 <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
                   {t('yourLand')}
                 </div>
-                <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                   {site.perimeterM >= 1000 ? `${(site.perimeterM / 1000).toFixed(2)} km` : `${site.perimeterM} m`} {t('perimeterUnit')} · {numberLabel(site.areaM2)} m²
                 </div>
               </div>
@@ -148,14 +148,14 @@ function ExampleInner() {
                 {site.areaHa < 1
                   ? (
                     <>
-                      <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(site.areaM2)}</div>
-                      <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>m²</div>
+                      <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(site.areaM2)}</div>
+                      <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>m²</div>
                     </>
                   )
                   : (
                     <>
-                      <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{site.areaHa}</div>
-                      <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>{t('hectaresUnit')}</div>
+                      <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{site.areaHa}</div>
+                      <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('hectaresUnit')}</div>
                     </>
                   )}
               </div>
@@ -163,11 +163,11 @@ function ExampleInner() {
             {site.features && site.features.some((f) => f.name) && (
               <div className="px-3.5 pb-2.5 space-y-1">
                 {site.features.map((f, i) => (f.name ? (
-                  <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                  <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                     <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
-                    <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
-                    {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                    <span className="ml-auto" style={{ color: '#755942' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                    {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
+                    <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                   </div>
                 ) : null))}
               </div>
@@ -183,23 +183,23 @@ function ExampleInner() {
                 <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
                   {t('harvestingAreas')}
                 </div>
-                <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                   {numberLabel(water.areaM2)} m² {t('catchmentAreaLabel')}
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{numberLabel(water.estVolumeKL)}</div>
-                <div className="font-sans" style={{ fontSize: 11, color: '#755942' }}>kL est.</div>
+                <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(water.estVolumeKL)}</div>
+                <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>kL est.</div>
               </div>
             </div>
             {water.features && water.features.some((f) => f.name) && (
               <div className="px-3.5 pb-2.5 space-y-1">
                 {water.features.map((f, i) => (f.name ? (
-                  <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                  <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                     <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
-                    <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
-                    {f.category && <span style={{ color: '#755942' }}>{f.category}</span>}
-                    <span className="ml-auto" style={{ color: '#755942' }}>{numberLabel(f.estVolumeKL)} kL</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                    {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
+                    <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{numberLabel(f.estVolumeKL)} kL</span>
                   </div>
                 ) : null))}
               </div>
@@ -208,33 +208,33 @@ function ExampleInner() {
         </div>
 
         {/* Stats ledger — mirrors DataPanel Overview */}
-        <div style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
-          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
+        <div style={{ background: 'var(--bg-1)', borderRadius: 16, border: '1px solid var(--border)', overflow: 'hidden' }}>
+          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
             <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
-            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statAnnualRainfall')}</span>
-            <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
-              {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#755942' }}> mm</span>
+            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statAnnualRainfall')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+              {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: 'var(--text-muted)' }}> mm</span>
             </span>
           </div>
-          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-            <Layers size={16} style={{ color: '#7A4408', flexShrink: 0 }} />
-            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statSoilTexture')}</span>
-            <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
+          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
+            <Layers size={16} style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
+            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statSoilTexture')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
               {data.soil.textureClass}
             </span>
           </div>
-          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
+          <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
             <Snowflake size={16} style={{ color: '#235E86', flexShrink: 0 }} />
-            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statFrostRisk')}</span>
-            <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
+            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statFrostRisk')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : 'var(--text-primary)' }}>
               {frostLabel}
             </span>
           </div>
           <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
-            <Mountain size={16} style={{ color: '#5C5040', flexShrink: 0 }} />
-            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statElevation')}</span>
-            <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
-              {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#755942' }}> m</span>
+            <Mountain size={16} style={{ color: 'var(--text-secondary)', flexShrink: 0 }} />
+            <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statElevation')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+              {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: 'var(--text-muted)' }}> m</span>
             </span>
           </div>
         </div>
@@ -260,7 +260,7 @@ function ExampleInner() {
           <Label>{t('cardMainChallenges')}</Label>
           <div className="space-y-1.5">
             {data.biome.challenges.slice(0, 4).map((c, i) => (
-              <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+              <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#9A6018' }}><AlertTriangle size={12} /></span>
                 {c}
               </div>
