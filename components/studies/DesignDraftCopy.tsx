@@ -7,7 +7,7 @@ import courseStyles from './FinanceCourse.module.css';
 /** Draft route chrome always keeps its exact English source visible in isiZulu mode. */
 export default function DesignDraftCopy({ en, zu }: { en: string; zu: string }) {
   const { lang } = useLanguage();
-  return lang === 'zu' ? <>{zu}<small className={styles.source}>English source: {en}</small></> : en;
+  return lang === 'zu' ? <span style={{ display: 'inline-block', minWidth: 0 }}>{zu}<small className={styles.source}>English source: {en}</small></span> : en;
 }
 
 export function DesignDraftNotice() {
