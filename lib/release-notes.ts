@@ -42,9 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '5d0f3e34', changes: [
+  { when: '25 September 2026', sha: 'fbd53ee0', changes: [
     'Vegetables and Staple Crops now shows marked Sesotho lesson drafts.',
     'Held crop and pest advice stays in English beside its exact source.',
+    'Garden Survey opens from a saved site even when its location data is unavailable.',
   ], tour: [
     { title: 'Read Vegetables and Staple Crops in Sesotho', where: 'Study → Vegetables and Staple Crops', href: '/student',
       detail: 'Switch to Sesotho and compare the marked lesson draft with English. Slides and narration remain in English.' },
