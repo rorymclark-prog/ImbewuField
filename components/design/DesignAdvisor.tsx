@@ -42,6 +42,9 @@ interface DesignAdvisorProps {
   } | null;
   houseXY: [number, number] | null;
   lastChangeId: string | null;
+  /** Simple / All tools (lib/app-level.ts). Simple shows only the single top tip — no "N more",
+   *  no Ask Lima AI feed. */
+  simple?: boolean;
 }
 
 interface AiSuggestion {
@@ -121,7 +124,7 @@ function buildDesignSummary(state: DesignCanvasState) {
   };
 }
 
-export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: DesignAdvisorProps) {
+export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simple = false }: DesignAdvisorProps) {
   const { t } = useLanguage();
   const [advice, setAdvice] = useState<Advice[]>([]);
   // The tip card starts CLOSED and only opens when the farmer taps the chip. It used to open
@@ -273,7 +276,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
   const inner: CSSProperties = { pointerEvents: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 };
 
   if (!top) {
-    // No local advice — still offer the AI pill.
+    // No local advice — still offer the AI pill. Simple has no AI suggestion feed: nothing to
+    // show yet means nothing renders.
+    if (simple) return null;
     return (
       <div ref={containerRef} style={shell}>
         <div style={inner}>
@@ -317,9 +322,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
             Lima · {forThisLayer.length}{layerName ? ` ${layerName}` : ''}{' '}
             {t(forThisLayer.length === 1 ? 'designAdvisorTip' : 'designAdvisorTips')}
           </button>
-          <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
-          {aiError && <ErrorPill message={aiError} />}
-          {aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
+          {!simple && <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />}
+          {!simple && aiError && <ErrorPill message={aiError} />}
+          {!simple && aiSuggestions.length > 0 && <AiList suggestions={aiSuggestions} />}
         </div>
       </div>
     );
@@ -373,6 +378,8 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         </button>
       </div>
 
+      {/* Simple shows only the single top tip — no "N more" expansion, no Ask Lima AI feed. */}
+      {!simple && (
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
         {moreCount > 0 && (
           <button
@@ -400,6 +407,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         )}
         <AskAiButton onClick={askAi} loading={aiLoading} label={t('designAdvisorAskLima')} />
       </div>
+      )}
 
       {otherLayerCount > 0 && (
         <div style={{ fontSize: 11, color: '#B9C2C8', paddingLeft: 2 }}>
@@ -410,9 +418,9 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         </div>
       )}
 
-      {aiError && <ErrorPill message={aiError} />}
+      {!simple && aiError && <ErrorPill message={aiError} />}
 
-      {expanded && (rest.length > 0 || aiSuggestions.length > 0) && (
+      {!simple && expanded && (rest.length > 0 || aiSuggestions.length > 0) && (
         <div
           style={{
             background: GLASS,
