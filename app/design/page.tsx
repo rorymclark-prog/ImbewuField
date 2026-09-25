@@ -589,7 +589,7 @@ function EmptyState() {
 }
 
 function DesignStudioInner() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const tr = (en: string, zu: string) => isZulu ? zu : en;
   const appConfirm = useAppConfirm();
@@ -1723,12 +1723,12 @@ function DesignStudioInner() {
         const next = updater(prev);
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
-        setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+        setSaveError(stamped ? null : t('designStorageFull'));
         // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
         return stamped ?? next;
       });
     },
-    [],
+    [t],
   );
 
   // "Import your own photo" (Base step) — apply the farmer's calibrated photo as the base image
@@ -2118,15 +2118,15 @@ function DesignStudioInner() {
   // place (see applyCustomBase), so the farm keeps its size on the satellite exactly as drawn.
   const deleteCustomBase = useCallback(async () => {
     const proceed = await appConfirm({
-      message: 'Remove your photo and go back to the satellite view?\n\nYour design is not affected.',
-      confirmLabel: 'Remove photo',
+      message: t('designPhotoRemoveConfirm'),
+      confirmLabel: t('designPhotoRemove'),
       destructive: true,
     });
     if (!proceed) return;
     customBaseSourceRef.current = null;
     revertToSatellite();
     handleChange((prev) => ({ ...prev, customBase: null }));
-  }, [handleChange, revertToSatellite, appConfirm]);
+  }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -2152,10 +2152,10 @@ function DesignStudioInner() {
       // silently stopped persisting — exactly the lie the CanvasSaveError/saveError plumbing
       // exists to prevent everywhere else.
       setSaved(!!stamped);
-      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+      setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, []);
+  }, [t]);
 
   const handleRedo = useCallback(() => {
     setSaved(false);
@@ -2176,10 +2176,10 @@ function DesignStudioInner() {
       // Mirror of handleUndo's fix above — a redo is a save like any other and must not claim
       // "Saved" when persistCanvasState just reported it couldn't write.
       setSaved(!!stamped);
-      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+      setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, []);
+  }, [t]);
 
   // Delete whatever is selected (one or many items/zones/lines) — palette Delete + keyboard.
   const onDeleteSelected = selectedIds.length
@@ -3799,18 +3799,18 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
                 {designBaseMode(canvasState) === 'photo'
-                  ? 'Adjust photo'
-                  : basePhotoControls(canvasState).hasPhoto ? 'Use a different photo' : 'Use your own aerial photo'}
+                  ? t('designPhotoAdjust')
+                  : basePhotoControls(canvasState).hasPhoto ? t('designPhotoUseDifferent') : t('designPhotoUseAerial')}
               </button>
               {/* Destructive, so it is quiet, last in the row, and asks first. */}
               {basePhotoControls(canvasState).hasPhoto && (
                 <button
                   type="button"
                   onClick={deleteCustomBase}
-                  title="Remove your photo and go back to the satellite. Your design is not affected."
+                  title={t('designPhotoRemoveTitle')}
                   style={{ border: 'none', background: 'transparent', color: '#B53A3A', fontWeight: 600, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
                 >
-                  Remove photo
+                  {t('designPhotoRemove')}
                 </button>
               )}
               {/* Hides the STRIP, not the photo — "Remove photo" beside it is the one that
@@ -4250,6 +4250,7 @@ function ItemEditSheet({
   onDelete: () => void;
   onSave: (patch: ItemEditPatch) => void;
 }) {
+  const { t } = useLanguage();
   const def = ELEMENTS_BY_ID[item.defId];
   const isRect = def?.shape === 'rect';
   const isGate = item.defId === 'gate';
@@ -4354,7 +4355,7 @@ function ItemEditSheet({
         </label>
 
         <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
-          Status
+          {t('designStatus')}
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as ElementStatus)}
@@ -4368,14 +4369,14 @@ function ItemEditSheet({
               color: DARK,
             }}
           >
-            <option value="proposed">Part of my design</option>
-            <option value="existing">Already here</option>
+            <option value="proposed">{t('designStatusProposed')}</option>
+            <option value="existing">{t('designStatusExisting')}</option>
           </select>
         </label>
 
         <div style={{ display: 'flex', gap: 10 }}>
           <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
-            {isGate ? 'Gate length (m)' : isRect ? 'Width (m)' : 'Size (m)'}
+            {isGate ? t('designElementGateLength') : isRect ? t('designElementWidth') : t('designElementSize')}
             <input
               type="number"
               inputMode="decimal"
