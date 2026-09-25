@@ -47,6 +47,7 @@ import {
   type ListingSort,
 } from '@/lib/exchange';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { useAppLevel } from '@/lib/app-level';
 import ExchangeGuide from './ExchangeGuide';
 import ListingCard from './ListingCard';
 import NewListingForm from './NewListingForm';
@@ -114,6 +115,7 @@ function toggle<T>(list: T[], value: T): T[] {
 export default function ExchangeBoard() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
+  const simple = useAppLevel() === 'simple';
   const tx = (en: string, dz: string) => exchangeText(lang, en, dz);
   // Empty on the server and on the first client render, so hydration matches;
   // the effect below fills it in. The demo listings are a module constant, so
@@ -209,7 +211,7 @@ export default function ExchangeBoard() {
         style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.28)', padding: '10px 12px' }}
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
-        <p className="font-sans" style={{ fontSize: 11.5, color: '#8A5A15', lineHeight: 1.5, margin: 0 }}>
+        <p className="font-sans" style={{ fontSize: 11.5, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
@@ -224,36 +226,41 @@ export default function ExchangeBoard() {
         <Stat value={summary.farmerCount} label={tx('farmers', 'abalimi')} icon />
       </div>
 
-      {/* Search + post */}
+      {/* Search + post. Simple drops the search box — one less filter to think about — and
+          keeps Post as the one thing on the row. */}
       <div className="flex gap-2">
-        <div style={{ position: 'relative', flex: 1 }}>
-          <Search
-            size={15}
-            strokeWidth={1.9}
-            style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: EX.faint }}
-          />
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
-            aria-label={tx('Search listings', 'Funa izikhangiso')}
-            className="rounded-xl font-sans"
-            style={{
-              width: '100%',
-              padding: '10px 12px 10px 34px',
-              fontSize: 13.5,
-              background: '#fff',
-              border: `1px solid ${EX.inputBorder}`,
-              color: EX.ink,
-              outline: 'none',
-            }}
-          />
-        </div>
+        {!simple && (
+          <div style={{ position: 'relative', flex: 1 }}>
+            <Search
+              size={15}
+              strokeWidth={1.9}
+              style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: EX.faint }}
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
+              aria-label={tx('Search listings', 'Funa izikhangiso')}
+              className="rounded-xl font-sans"
+              style={{
+                width: '100%',
+                padding: '10px 12px 10px 34px',
+                fontSize: 13.5,
+                background: '#fff',
+                border: `1px solid ${EX.inputBorder}`,
+                color: EX.ink,
+                outline: 'none',
+              }}
+            />
+          </div>
+        )}
         <button
           onClick={() => { setShowForm((v) => !v); setShowGuide(false); }}
           className="flex items-center gap-1.5 font-display font-semibold rounded-xl"
           style={{
+            flex: simple ? 1 : undefined,
+            justifyContent: simple ? 'center' : undefined,
             background: showForm ? 'transparent' : EX.green,
             color: showForm ? EX.muted : '#F7F2E9',
             border: showForm ? `1px solid ${EX.inputBorder}` : 'none',
@@ -301,18 +308,20 @@ export default function ExchangeBoard() {
         ))}
       </div>
 
-      {/* Category chips */}
-      <ChipRow label={tx('Category', 'Umkhakha')}>
-        {LISTING_CATEGORIES.map((c) => {
-          const count = summary.byCategory[c];
-          const on = categories.includes(c);
-          return (
-            <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
-              {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
-            </Chip>
-          );
-        })}
-      </ChipRow>
+      {/* Category chips — one of the filter controls Simple leaves out. */}
+      {!simple && (
+        <ChipRow label={tx('Category', 'Umkhakha')}>
+          {LISTING_CATEGORIES.map((c) => {
+            const count = summary.byCategory[c];
+            const on = categories.includes(c);
+            return (
+              <Chip key={c} on={on} disabled={count === 0} onClick={() => setCategories((v) => toggle(v, c))}>
+                {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]} <span style={{ opacity: 0.65 }}>{count}</span>
+              </Chip>
+            );
+          })}
+        </ChipRow>
+      )}
 
       {/* Crop chips — only crops actually on the board, so no dead filters */}
       {cropOptions.length > 0 && (
@@ -334,7 +343,11 @@ export default function ExchangeBoard() {
         </ChipRow>
       )}
 
-      {/* Sort + vantage point */}
+      {/* Sort + vantage point — distance settings and the closed-listings toggle. Simple's own
+          site (when saved) still drives distance on cards automatically; this is the panel for
+          picking a different vantage point, a distance limit or a sort order, which is a farm-
+          office job rather than a farm-gate one. */}
+      {!simple && (
       <div
         className="rounded-xl"
         style={{ background: EX.card, border: `1px solid ${EX.border}`, padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}
@@ -384,7 +397,7 @@ export default function ExchangeBoard() {
         {!origin && (
           <p
             className="font-sans"
-            style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amber : EX.faint, margin: 0, lineHeight: 1.45 }}
+            style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
           >
             {sort === 'nearest'
               ? tx('Sorting by distance needs a starting point — choose a town above, or save your site on the map.', 'Ukuhlela ngebanga kudinga indawo yokuqala — khetha idolobha ngenhla noma ugcine indawo yakho kumephu.')
@@ -402,6 +415,7 @@ export default function ExchangeBoard() {
           <span className="font-sans" style={{ fontSize: 12, color: EX.muted }}>{tx('Show listings already done', 'Khombisa nezikhangiso eseziqediwe')}</span>
         </label>
       </div>
+      )}
 
       {/* The board */}
       {boardEmpty ? (
@@ -452,6 +466,20 @@ export default function ExchangeBoard() {
               </button>
             )}
           </div>
+          {/* One notice for the whole list, not one per card. Every non-mine card used to repeat
+              this same paragraph — 21 times on the sample board's farmer network — because the
+              explanation lived on ListingCard rather than here. */}
+          {rows.some((row) => !isLocalListing(row.listing)) && (
+            <div
+              className="flex items-start gap-2 rounded-lg"
+              style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
+            >
+              <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
+              <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
+                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umsizi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself.'}
+              </span>
+            </div>
+          )}
           <div className={workspace.cards}>
             {rows.map((row) => (
               <ListingCard
