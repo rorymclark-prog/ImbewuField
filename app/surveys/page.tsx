@@ -710,7 +710,7 @@ function FarmerSurveyCard({
           {submitError && (
             <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: '#7A2E16', border: '1px solid rgba(154,52,18,0.25)' }}>
               {lang === 'zu'
-                ? 'Impendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
+                ? 'Izimpendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
                 : 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.'}
             </p>
           )}
