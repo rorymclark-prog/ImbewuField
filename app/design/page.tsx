@@ -28,6 +28,7 @@ import {
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
 import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
 import { useAuth } from '@/lib/auth';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import {
   computeCanvasFrame,
   contentCountOf,
@@ -1262,10 +1263,12 @@ function DesignStudioInner() {
     const controller = new AbortController();
     setLocationData(readCachedLocationData(lat, lon));
 
-    fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
-      cache: 'no-store',
-      signal: controller.signal,
-    })
+    paidApiHeaders()
+      .then((headers) => fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+        cache: 'no-store',
+        signal: controller.signal,
+        headers,
+      }))
       .then(async (res) => {
         if (!res.ok) throw new Error(`Location analysis failed (${res.status})`);
         return res.json() as Promise<LocationData>;

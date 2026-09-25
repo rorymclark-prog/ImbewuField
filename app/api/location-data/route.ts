@@ -5,8 +5,20 @@ import { fetchElevation } from '@/lib/elevation';
 import { fetchVegetation } from '@/lib/sanbi';
 import { resolveBiomeFromMonthlyClimate } from '@/lib/biome';
 import { lookupBRU } from '@/lib/bru';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 export async function GET(req: NextRequest) {
+  // The Atlas (app/atlas) puts this route behind no sign-in at all — anyone can drop a pin
+  // anywhere on Earth — and it fans out into four third-party calls (NASA POWER, ISRIC, an
+  // elevation API, SANBI) per request. Before this guard, that was an unauthenticated,
+  // unlimited door onto all four. guardPaidApiRequest is soft (log-only auth) until
+  // REQUIRE_API_AUTH=1, so signed-out farm and Atlas visitors keep working exactly as before;
+  // what changes today is that every caller — signed in or not — is now rate-limited per
+  // lib/api-rate-limit.ts's 'data' band (see ROUTE_COST_CLASS), the same band network/farmers
+  // and network/orgs use for their own fan-out reads.
+  const auth = await guardPaidApiRequest(req, '/api/location-data');
+  if (auth.response) return auth.response;
+
   const { searchParams } = new URL(req.url);
   const lat = parseFloat(searchParams.get('lat') ?? '');
   const lon = parseFloat(searchParams.get('lon') ?? '');

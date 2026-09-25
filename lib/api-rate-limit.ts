@@ -124,6 +124,10 @@ const ROUTE_COST_CLASS: Record<string, CostClass> = {
   'ai-render/poll': 'poll',
   'network/farmers': 'data',
   'network/orgs': 'data',
+  // The Atlas's global data layer: one request fans out into NASA POWER, ISRIC, an elevation
+  // API and SANBI — no model spend, but four third-party calls per pin, the same shape of cost
+  // as the network reads above.
+  'location-data': 'data',
 };
 
 /** '/api/ai-render/poll' and 'ai-render/poll' are the same route. Compare one spelling. */
