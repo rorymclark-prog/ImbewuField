@@ -16,7 +16,7 @@ import type { ReactElement } from 'react';
 import { bearingToUnitVector, type SectorModel } from '@/lib/sector';
 import { seasonalSunArcRadii } from '@/lib/sector-cartography';
 import { sunArcApexFraction } from '@/lib/solar';
-import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { formatDesignTranslation, sectorCompassWord } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 
 // Palette lifted verbatim from buildBlueprintSectorMap so the overlay and the printed sheet read
@@ -68,7 +68,7 @@ export interface SectorOverlayProps {
 // centre = boundary centroid (fallback frame centre), radius sized to the plot and capped so the
 // arrows/labels stay inside the frame at fit-zoom. All maths in viewBox px (the group's units).
 export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: SectorOverlayProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const isSH = model.southernHemisphere;
 
   let cx = W / 2;
@@ -390,16 +390,20 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     const v = bearingToUnitVector(model.windSummer.bearingDeg);
     arrow('wind-s-arr', v, SUMMER, windWidth(model.windSummer.speed), '9 5');
     els.push(label('wind-s-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
-      season: t('designSectorSummer'),
-      direction: model.windSummer.fromLabel,
+      season: lang === 'zu' ? t('designSectorSummer').toLowerCase() : t('designSectorSummer'),
+      direction: lang === 'zu'
+        ? `${sectorCompassWord(model.windSummer.bearingDeg, t)} (${model.windSummer.fromLabel})`
+        : model.windSummer.fromLabel,
     }), SUMMER_LBL, v));
   }
   if (model.windWinter) {
     const v = bearingToUnitVector(model.windWinter.bearingDeg);
     arrow('wind-w-arr', v, WINTER, windWidth(model.windWinter.speed), '9 5');
     els.push(label('wind-w-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
-      season: t('designSectorWinter'),
-      direction: model.windWinter.fromLabel,
+      season: lang === 'zu' ? t('designSectorWinter').toLowerCase() : t('designSectorWinter'),
+      direction: lang === 'zu'
+        ? `${sectorCompassWord(model.windWinter.bearingDeg, t)} (${model.windWinter.fromLabel})`
+        : model.windWinter.fromLabel,
     }), WINTER_LBL, v));
   }
 

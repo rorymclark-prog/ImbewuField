@@ -22,6 +22,7 @@ import { STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
 import SectorSummary from './SectorSummary';
+import DesignZuluDraftNotice from './DesignZuluDraftNotice';
 import type { DesignMode } from './DesignPalette';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
@@ -171,7 +172,9 @@ export default function StepGuide({
   // ── Collapsed: one slim line ────────────────────────────────────────────────
   if (collapsed) {
     return (
-      <div style={{ padding: '6px 12px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
+      <div style={{ padding: '6px 12px 0', display: 'flex', flexDirection: 'column', gap: 4 }}>
+        {lang === 'zu' && <DesignZuluDraftNotice />}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <button
           type="button"
           onClick={toggleCollapsed}
@@ -237,6 +240,7 @@ export default function StepGuide({
             <X size={14} />
           </button>
         )}
+        </div>
       </div>
     );
   }
@@ -255,6 +259,7 @@ export default function StepGuide({
           overflow: 'hidden',
         }}
       >
+        {lang === 'zu' && <div style={{ padding: '7px 10px 0' }}><DesignZuluDraftNotice /></div>}
         {/* Header — accent-coloured band naming the current layer */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: accent }}>
           <Compass size={17} color={PAPER} style={{ flexShrink: 0 }} />

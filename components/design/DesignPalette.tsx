@@ -1787,13 +1787,13 @@ export default function DesignPalette({
                               gap: 4, cursor: 'pointer', textAlign: 'left',
                             }}
                           >
-                            <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                            <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
                               {t(lt.labelKey)}
                             </span>
                             {expanded ? <ChevronDown size={16} aria-hidden /> : <ChevronRight size={16} aria-hidden />}
                           </button>
                         ) : (
-                          <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                          <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
                             {t(lt.labelKey)}
                           </span>
                         )}

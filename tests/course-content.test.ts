@@ -12,6 +12,117 @@ import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
 import { courseTranslationReviewState, isCourseTranslationLearnerReady, learnerLessonForLanguage, resolveLearnerLessonPresentation, type CourseTranslationRecord } from '../lib/course-localization.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 import { COURSE_MODULE_TRANSLATION_DRAFTS, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
+import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
+import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
+
+test('Sesotho and Xitsonga Introduction appear as labelled drafts only while their exact source and answers match', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
+  for (const [language, draft] of [
+    ['st', SESOTHO_INTRO_PERMACULTURE_DRAFT],
+    ['ts', XITSONGA_INTRO_PERMACULTURE_DRAFT],
+  ] as const) {
+    const modulePresentation = resolveCourseModulePresentation(sourceModule, language);
+    assert.equal(modulePresentation.status, 'draft', language);
+    assert.notEqual(modulePresentation.title, sourceModule.title, language);
+    assert.equal(draft.lessons.length, sourceModule.lessons.length, language);
+    for (const lesson of sourceModule.lessons) {
+      const translation = draft.lessons.find(candidate => candidate.id === lesson.id)!;
+      const presentation = resolveLearnerLessonPresentation(lesson, language);
+      assert.equal(presentation.status, 'draft', `${language}: ${lesson.id}`);
+      assert.equal(translation.body.sourceEnglish, lesson.body, `${language}: body source drift`);
+      assert.equal(presentation.content.quiz.length, lesson.quiz.length, `${language}: quiz length`);
+      assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+        lesson.quiz.map(question => question.correct), `${language}: answer order`);
+      assert.equal(translation.keyPoints.length, lesson.keyPoints.length, `${language}: key points`);
+      for (const [index, point] of translation.keyPoints.entries()) {
+        assert.equal(point.sourceEnglish, lesson.keyPoints[index], `${language}: key point source drift`);
+        if (point.reviewStatus === 'hold') {
+          assert.equal(presentation.content.keyPoints[index], lesson.keyPoints[index], `${language}: held text remains English`);
+        }
+      }
+      for (const [index, question] of translation.quiz.entries()) {
+        assert.equal(question.question.sourceEnglish, lesson.quiz[index].q, `${language}: question source drift`);
+        assert.equal(question.sourceCorrectIndex, lesson.quiz[index].correct, `${language}: answer source drift`);
+        assert.equal(question.rationale.sourceEnglish, lesson.quiz[index].rationale, `${language}: rationale source drift`);
+        assert.deepEqual(question.options.map(option => option.sourceEnglish), lesson.quiz[index].options,
+          `${language}: option source drift`);
+      }
+      const changedSource = { ...lesson, body: `${lesson.body} Changed.` };
+      assert.equal(resolveLearnerLessonPresentation(changedSource, language).status, 'english-fallback',
+        `${language}: a changed farming source withdraws the whole draft`);
+    }
+    assert.equal(resolveCourseModulePresentation({ ...sourceModule, title: `${sourceModule.title} Changed.` }, language).status,
+      'english-fallback', `${language}: changed module source withdraws its card draft`);
+    const landscape = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
+    assert.equal(resolveLearnerLessonPresentation(landscape.lessons[0], language).status,
+      'draft', `${language}: later modules require their own source-paired draft`);
+    assert.equal(resolveCourseModulePresentation(landscape, language).status,
+      'draft', `${language}: module card follows its source-paired draft`);
+  }
+});
+
+test('each regional Reading the Landscape lesson keeps its exact English source and held claims', () => {
+  const module = COURSE_MODULES.find(item => item.id === 'reading-landscape')!;
+  for (const [language, moduleDraft] of [
+    ['st', SESOTHO_READING_LANDSCAPE_DRAFT],
+    ['ts', XITSONGA_READING_LANDSCAPE_DRAFT],
+  ] as const) {
+    assert.equal(resolveCourseModulePresentation(module, language).status, 'draft', language);
+    for (const lesson of module.lessons) {
+      const draft = moduleDraft.lessons.find(item => item.id === lesson.id)!;
+      const presentation = resolveLearnerLessonPresentation(lesson, language);
+      assert.equal(presentation.status, 'draft', `${language}: ${lesson.id}`);
+      assert.equal(draft.body.sourceEnglish, lesson.body, `${language}: ${lesson.id}`);
+      assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+        lesson.quiz.map(question => question.correct), `${language}: ${lesson.id}`);
+      assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, language).status,
+        'english-fallback', `${language}: ${lesson.id}: source drift withdraws the entire draft`);
+      if (draft.infographicAlt) {
+        assert.equal(resolveLearnerLessonPresentation({ ...lesson, infographicAlt: `${lesson.infographicAlt} Changed.` }, language).status,
+          'english-fallback', `${language}: ${lesson.id}: changed visual teaching also withdraws the draft`);
+      }
+      for (const [index, point] of draft.keyPoints.entries()) {
+        if (point.reviewStatus === 'hold') {
+          assert.equal(presentation.content.keyPoints[index], lesson.keyPoints[index],
+            `${language}: ${lesson.id}: uncertain wording must remain English`);
+        }
+      }
+    }
+  }
+});
+
+test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unresolved water advice in English', () => {
+  const module = COURSE_MODULES.find(item => item.id === 'water-harvesting')!;
+  assert.equal(resolveCourseModulePresentation(module, 'st').status, 'draft');
+  assert.equal(SESOTHO_WATER_HARVESTING_DRAFT.lessons.length, module.lessons.length);
+  for (const lesson of module.lessons) {
+    const draft = SESOTHO_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === lesson.id)!;
+    const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(draft.body.sourceEnglish, lesson.body, lesson.id);
+    assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+      lesson.quiz.map(question => question.correct), lesson.id);
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+      'english-fallback', `${lesson.id}: a changed water source withdraws the whole draft`);
+    if (draft.body.reviewStatus === 'hold') {
+      assert.equal(presentation.content.body, lesson.body, `${lesson.id}: held safety body stays English`);
+    }
+    for (const [index, question] of draft.quiz.entries()) {
+      if (question.question.reviewStatus === 'hold') {
+        assert.equal(presentation.content.quiz[index].q, lesson.quiz[index].q,
+          `${lesson.id}: held safety quiz stays English`);
+      }
+    }
+  }
+  assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} Changed.` }, 'st').status,
+    'english-fallback', 'changed module description withdraws the card draft');
+  assert.equal(resolveCourseModulePresentation(module, 'ts').status,
+    'english-fallback', 'paused Xitsonga Water Harvesting keeps its English card');
+  assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status,
+    'english-fallback', 'paused Xitsonga Water Harvesting stays English');
+});
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);

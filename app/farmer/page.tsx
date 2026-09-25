@@ -409,9 +409,13 @@ function HomeInner() {
         // silently ignores without an activePlaceId, so the "Garden Survey" menu tap did
         // nothing at all. Tell the farmer what to do instead.
         appConfirm({
-          title: t('openSurveyNoSiteTitle'),
-          message: t('openSurveyNoSiteMessage'),
-          confirmLabel: t('openSurveyNoSiteConfirm'),
+          title: lang === 'zu'
+            ? `${t('openSurveyNoSiteTitleZuDraft')} — ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'openSurveyNoSiteTitle')}`
+            : t('openSurveyNoSiteTitle'),
+          message: lang === 'zu'
+            ? `${t('openSurveyNoSiteMessageZuDraft')}\n\nUnreviewed isiZulu draft. English source: ${translate('en', 'openSurveyNoSiteMessage')}`
+            : t('openSurveyNoSiteMessage'),
+          confirmLabel: lang === 'zu' ? t('openSurveyNoSiteConfirmZuDraft') : t('openSurveyNoSiteConfirm'),
         });
         return undefined;
       }

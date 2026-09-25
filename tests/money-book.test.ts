@@ -161,21 +161,24 @@ test('the menu and the tab bar each offer one money door, and it is the book', (
   assert.match(tabBar, /key: 'homeQuickMyRecords'/, 'the money tab must reuse the already-translated door name');
 });
 
-test('the tab label keys exist in English and were not coined in any other language', () => {
-  // The repo rule (see tests/farmer-i18n-gaps.test.ts): new farmer copy goes into the English
-  // block alone, and translate()'s fallback serves English until a first-language reviewer
-  // supplies the real words. A fluent invented isiZulu label is worse than a true English one.
+test('the tab label keys keep English source and use only visibly marked isiZulu drafts', () => {
   const en = read('../lib/i18n.tsx');
   const NEW_KEYS = ['bookTabPicked', 'bookTabSold', 'bookTabSpent', 'bookTabCharts'] as const;
+  const zu = read('../lib/locales/zu.ts');
+  const records = recordsPage;
   for (const key of NEW_KEYS) {
     assert.match(en, new RegExp(`^  ${key}: '`, 'm'), `${key} has no English source text`);
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: '`, 'm'), `${key} has no marked isiZulu draft`);
   }
-  for (const locale of ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']) {
+  for (const locale of ['af', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']) {
     const block = read(`../lib/locales/${locale}.ts`);
     for (const key of NEW_KEYS) {
-      assert.ok(!block.includes(`${key}:`), `${key} was coined in ${locale} without a first-language reviewer`);
+      assert.ok(!block.includes(`${key}ZuDraft:`), `${key} gained an isiZulu draft in ${locale}`);
     }
   }
+  assert.match(records, /Unreviewed isiZulu tab-label drafts/);
+  assert.match(records, /Picked · Sold · Spent · Charts/);
+  assert.match(records, /simple \? 'Picked · Sold · Spent\.' : 'Picked · Sold · Spent · Charts\.'/);
   // The door name itself was NOT renamed, precisely so this list stays short: it is already
   // translated everywhere, and renaming it would have traded ten real words for one English one.
   for (const locale of ['zu', 'af', 'xh']) {

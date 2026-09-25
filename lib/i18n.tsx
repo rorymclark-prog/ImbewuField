@@ -200,6 +200,40 @@ const T_en: Dict = {
   limaAskButton: 'Ask for help',
   limaPhotoButton: 'Photo',
   askLimaSubtitle: 'Sizes, water, what to plant…',
+  waterBalanceTitle: 'Water balance',
+  waterBalanceEstimateLabel: 'estimates',
+  waterBalanceLegendRoofCatchment: 'Roof catchment',
+  waterBalanceLegendTotalDemand: 'Total demand',
+  waterBalanceLegendTankLevel: 'Tank level',
+  waterBalanceLegendMinSafe: 'Min safe level',
+  waterBalancePeopleEstimated: 'People estimated',
+  waterBalanceHouseholdMonthly: '{litres} L/month household',
+  waterBalanceStorageCapacity: 'Storage capacity',
+  waterBalanceMinSafe: 'Min safe: {amount} kL',
+  waterBalanceStorage: 'Storage',
+  waterBalanceNotMapped: 'Not mapped',
+  waterBalanceDrawWaterArea: 'Draw a water area to calculate',
+  waterBalanceVegIrrigation: 'Veg irrigation',
+  waterBalancePerDryMonthEstimate: 'per dry month (est.)',
+  waterBalanceFruitTrees: 'Fruit trees',
+  waterBalancePerDryMonthUnit: 'per dry month',
+  waterBalanceCompleteSurvey: 'Complete the site survey to see household water demand and irrigation needs.',
+  waterBalanceAddRoofArea: 'Add roof area in the site survey to calculate monthly catchment potential.',
+  waterBalanceDrawHarvestArea: 'Draw a water harvesting area on the map to model how much storage you can build.',
+  waterBalancePossibleShortfall: 'Possible dry-season shortfall',
+  waterBalanceShortfallDetail: 'Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.',
+  waterBalanceMonthJan: 'January',
+  waterBalanceMonthFeb: 'February',
+  waterBalanceMonthMar: 'March',
+  waterBalanceMonthApr: 'April',
+  waterBalanceMonthMay: 'May',
+  waterBalanceMonthJun: 'June',
+  waterBalanceMonthJul: 'July',
+  waterBalanceMonthAug: 'August',
+  waterBalanceMonthSep: 'September',
+  waterBalanceMonthOct: 'October',
+  waterBalanceMonthNov: 'November',
+  waterBalanceMonthDec: 'December',
   elevationReadoutLabel: 'elev',
   elevationReadoutUnit: 'asl',
   zoomInTitle: 'Zoom in',
@@ -994,6 +1028,8 @@ const T_en: Dict = {
   studentOpenDesignStudio: 'Open Design Studio',
   studentCompletionMessage: 'You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.',
   studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',
+  studentSesothoUiDraftNotice: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
+  studentSesothoUiDraftNoticeSource: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
   studentEnglishContentNotice: 'Some module names and descriptions are unreviewed isiZulu drafts; module cards mark each one. Some lesson text and quizzes also remain in English. Audio review is separate.',
   studentZuluLessonDraftNotice: 'This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
   studentZuluLessonEnglishFallbackNotice: 'This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.',
@@ -1072,14 +1108,9 @@ const T_en: Dict = {
   communityLoadError: 'Couldn\'t load the community layer right now. Check your connection and try again.',
   communityRetry: 'Retry',
   /*
-   * THE THREE TABS, PLUS THE CHARTS AS A VIEW INSIDE THE BOOK.
-   *
-   * ENGLISH ONLY, ON PURPOSE. The Gogo Test audit gave these words — "one book with three tabs:
-   * Picked · Sold · Spent. That's her mental model already and it needs no translation" — and no
-   * existing key in this dictionary carries any of them as a standalone label. Nothing here may
-   * be coined in isiZulu or any other language without a first-language reviewer (see
-   * tests/farmer-i18n-gaps.test.ts), so the other ten locales fall through to these strings until
-   * one supplies the real words. A true English word beats a fluent invented isiZulu one.
+   * The English tab labels remain the source. IsiZulu has separately named draft keys in
+   * lib/locales/zu.ts; the Records screen labels them as unreviewed and shows the English terms.
+   * Other locales continue to use these English strings until reviewed translations are supplied.
    */
   bookTabPicked: 'Picked',
   bookTabSold: 'Sold',

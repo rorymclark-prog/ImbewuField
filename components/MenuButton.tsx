@@ -55,7 +55,8 @@ export default function MenuButton() {
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
+        {/* "Uhambo" measured wider than the 44px phone button at 12px. */}
+        {sample && <span style={{fontSize:lang === 'zu' ? 10 : 12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
       </button>
       <FieldSyncBadge />
       <ProductTourButton />

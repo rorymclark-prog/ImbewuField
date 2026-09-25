@@ -3,25 +3,61 @@
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine,
 } from 'recharts';
+import { useLanguage } from '@/lib/i18n';
 import type { MonthlyRainfall } from '@/lib/types';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 const MONTH_FULL = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const ZU_MONTH_FULL = [
+  'uMasingana', 'uNhlolanja', 'uNdasa', 'uMbasa', 'uNhlaba', 'uNhlangulana',
+  'uNtulikazi', 'uNcwaba', 'uMandulo', 'uMfumfu', 'uLwezi', 'uZibandlela',
+];
 
 interface Props { rainfall: MonthlyRainfall }
 
 export default function RainfallChart({ rainfall }: Props) {
+  const { lang, t } = useLanguage();
+  const isZulu = lang === 'zu';
+  const text = (en: string, zu: string) => isZulu ? zu : en;
   if (!rainfall?.monthly?.length) return null;
   const maxVal = Math.max(...rainfall.monthly, 10);
-  const data = rainfall.monthly.map((v, i) => ({ month: MONTHS[i], full: MONTH_FULL[i], mm: Math.round(v) }));
+  const data = rainfall.monthly.map((v, i) => ({
+    month: isZulu ? String(i + 1) : MONTHS[i],
+    full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
+    mm: Math.round(v),
+  }));
+  // Source pairs: winter / Winter rainfall; summer / Summer rainfall; year-round / Year-round rain.
+  // lib/nasa-power.ts supplies only Oct–Mar / May–Aug, May–Sep / Nov–Mar, or year-round / none.
+  const pattern = isZulu
+    ? rainfall.pattern === 'winter' ? `${t('climatePatternWinter')} · Winter rainfall`
+      : rainfall.pattern === 'summer' ? `${t('climatePatternSummer')} · Summer rainfall`
+        : `${t('climatePatternYearRound')} · Year-round rain`
+    : rainfall.pattern;
+  const seasonValue = (value: string) => {
+    if (!isZulu) return value;
+    const translated: Record<string, string> = {
+      'Oct–Mar': 'uMfumfu–uNdasa · Oct–Mar',
+      'May–Aug': 'uNhlaba–uNcwaba · May–Aug',
+      'May–Sep': 'uNhlaba–uMandulo · May–Sep',
+      'Nov–Mar': 'uLwezi–uNdasa · Nov–Mar',
+      'year-round': 'unyaka wonke · year-round',
+      none: 'akukho · none',
+    };
+    return translated[value] ?? value;
+  };
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-mono text-text-muted uppercase tracking-wider">Monthly rainfall (mm)</span>
-        <div className="flex gap-3 text-xs font-mono">
-          <span className="text-accent-blue">{rainfall.annual}mm/yr</span>
-          <span className="text-text-muted">{rainfall.pattern}</span>
+      <div className={`mb-3 ${isZulu ? 'flex flex-col items-start gap-1' : 'flex items-center justify-between'}`}>
+        <div>
+          <span className="text-xs font-mono text-text-muted uppercase tracking-wider">
+            {text('Monthly rainfall (mm)', 'Imvula yenyanga (mm) · Monthly rainfall (mm)')}
+          </span>
+          {isZulu && <div className="text-xs font-mono text-text-muted">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
+        </div>
+        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono">
+          <span className="text-accent-blue">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
+          <span className="text-text-muted">{pattern}</span>
         </div>
       </div>
 
@@ -65,9 +101,9 @@ export default function RainfallChart({ rainfall }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="flex justify-between mt-2 text-xs font-mono text-text-muted">
-        <span>Wet: <span className="text-text-secondary">{rainfall.wetSeason}</span></span>
-        <span>Dry: <span className="text-text-secondary">{rainfall.drySeason}</span></span>
+      <div className={`${isZulu ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs font-mono text-text-muted`}>
+        <span>{text('Wet season:', 'Isikhathi semvula · Wet season:')} <span className="text-text-secondary">{seasonValue(rainfall.wetSeason)}</span></span>
+        <span>{text('Dry season:', 'Isikhathi esomile · Dry season:')} <span className="text-text-secondary">{seasonValue(rainfall.drySeason)}</span></span>
       </div>
     </div>
   );

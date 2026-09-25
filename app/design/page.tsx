@@ -14,6 +14,7 @@ import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, mar
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
+import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
@@ -237,12 +238,6 @@ const OCHRE = '#C07A1E';
 // and icon strokes (CLAUDE.md); keep OCHRE itself for fills and borders.
 const GOLD_DIM = '#7A4408';
 const DARK = '#0B120B';
-const ZULU_STEP_LABELS: Record<WizardStep, string> = {
-  base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba',
-  zones: 'Izindawo', planting: 'Ukutshala', structures: 'Izakhiwo', review: 'Buyekeza',
-  glossy: 'Buka kuqala futhi ukhiphe',
-};
-
 const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
 /** How far Snap will reach when its normal, deliberately-short reach finds nothing. Four metres
@@ -3016,7 +3011,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-  const stepName = (step: WizardStep) => isZulu ? ZULU_STEP_LABELS[step] : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
+  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
 
   return (
     <div

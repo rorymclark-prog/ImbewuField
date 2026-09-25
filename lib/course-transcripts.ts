@@ -659,7 +659,7 @@ export const COURSE_TRANSCRIPTS: Readonly<Record<string, Record<string, Record<n
       ],
       "22": [
         "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
-        "Yima emnyango wasekhishini ubheke lokho okuse-Zone 1 namuhla.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
         "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
         "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
       ]

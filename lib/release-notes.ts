@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: 'dd9e1562', changes: [
+  { when: '25 September 2026', sha: '746a8dfc', changes: [
     'Simple mode now covers the Design Studio: fewer tools and one Save my plan button.',
     'Community, Contact and Feedback are shorter in Simple, with more isiZulu.',
     'The welcome, privacy and Community screens now follow dark mode.',
@@ -53,6 +53,106 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'A short list of things to place, then Save my plan to keep or share it.' },
     { title: 'Tell us in one box', where: 'Feedback', href: '/feedback',
       detail: 'In Simple there is one box: say what went wrong or what you would like.' },
+  ] },
+  { when: '25 September 2026', sha: 'c3954489', changes: [
+    'The opening Site Survey choices now show draft isiZulu beside English.',
+    'Uncertain descriptions stay in English pending local review.',
+  ], tour: [
+    { title: 'Review Site Survey choices', where: 'Site Survey → Site and goals', href: '/farmer',
+      detail: 'Choose isiZulu and compare the household, community and goal choices with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '01890303', changes: [
+    'Water Harvesting lessons now show marked Sesotho drafts.',
+    'Uncertain water-safety passages stay in English; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Sesotho', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Switch to Sesotho in Settings, open Water Harvesting, and compare the marked draft with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: '4061ada0', changes: [
+    'Introduction and Landscape lessons now show marked Sesotho and Xitsonga drafts.',
+    'Each draft shows exact English text and answers; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read the first two modules in Sesotho or Xitsonga', where: 'Study', href: '/student',
+      detail: 'Switch language in Settings and open a lesson to compare its draft with English.' },
+  ] },
+  { when: '25 September 2026', sha: '6c276e4e', changes: [
+    'Palette controls and map prompts now pair draft isiZulu with English.',
+    'Climate and frost claims and technical tools stay in English.',
+  ], tour: [
+    { title: 'Review Design Palette labels', where: 'Design Studio → Sector', href: '/design',
+      detail: 'Choose isiZulu to check the wind prompt and palette labels; uncertain climate and technical wording stays in English.' },
+  ] },
+  { when: '25 September 2026', sha: '7483ff32', changes: [
+    'Print / Export now has draft isiZulu controls with English on key choices.',
+    'Plan set count now shows nine maps; inactive controls are gone.',
+  ], tour: [
+    { title: 'Check the print choices', where: 'Design Studio → Print / Export', href: '/design',
+      detail: 'Choose isiZulu and open Print / Export. The nine sheets and working title-block choice are shown on a phone.' },
+  ] },
+  { when: '25 September 2026', sha: '02c9e7e9', changes: [
+    'Sector guidance now pairs marked isiZulu drafts with their English source.',
+  ], tour: [
+    { title: 'Review Sector guidance', where: 'Design Studio → Sector', href: '/design',
+      detail: 'Choose isiZulu to compare the draft sun, wind, fire and water guidance with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: 'a7dd6c3b', changes: [
+    'Study navigation and lesson controls now have a Sesotho draft.',
+    'Study portal and lesson controls now include draft Xitsonga labels.',
+    'The unreviewed draft notice keeps its English source visible.',
+    'Settings marks the Xitsonga interface as an unreviewed draft.',
+    'The Water rainfall chart adds unreviewed isiZulu labels.',
+  ], tour: [
+    { title: 'Check the Sesotho study screen', where: 'My Studies', href: '/student',
+      detail: 'The study labels are an unreviewed draft; the English source appears beside the notice.' },
+    { title: 'Check rainfall labels', where: 'Map → Water', href: '/farmer',
+      detail: 'Choose isiZulu and open the Water tab to see the draft rainfall chart labels.' },
+    { title: 'Check Study in Xitsonga', where: 'Learning Portal', href: '/student',
+      detail: 'Choose Xitsonga; Study and lesson controls are marked as an unreviewed draft.' },
+  ] },
+  { when: '25 September 2026', sha: 'df031dbb', changes: [
+    'Introduction slide 22 audio preserves the full Zone 1 counting instruction.',
+    'The draft still awaits fluent isiZulu and local farming review.',
+  ], tour: [
+    { title: 'Listen to Introduction slide 22', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Open the isiZulu narration. It remains an unreviewed draft.' },
+  ] },
+  { when: '25 September 2026', sha: '0ffa46c7', changes: [
+    'Tips, site survey entry, map controls and Records tabs now have marked isiZulu drafts.',
+    'Soil improvement drafts keep their English source beside each suggestion.',
+  ], tour: [
+    { title: 'Review the isiZulu interface drafts', where: 'Tips and My Records', href: '/tips',
+      detail: 'The new isiZulu wording is marked as a draft; soil advice keeps its English source beside it.' },
+  ] },
+  { when: '25 September 2026', sha: '2bc9987b', changes: [
+    'Assessment questions and averages now show draft isiZulu beside English.',
+    'Design photo, Lima tip, and map measurement controls show draft isiZulu beside English.',
+    'Contour wording keeps its English source beside the isiZulu draft.',
+    'The Design Studio unreviewed-draft notice now shows isiZulu beside English.',
+  ], tour: [
+    { title: 'Check the assessment wording', where: 'Assessments', href: '/assessments',
+      detail: 'Choose isiZulu to read each draft question and average label beside its English source.' },
+    { title: 'Check Design Studio controls', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu and inspect photo import, map measurements, contour wording, and the draft notice.' },
+  ] },
+  { when: '25 September 2026', sha: '08a46c34', changes: [
+    'The site report water balance has isiZulu labels and shortfall wording.',
+  ], tour: [
+    { title: 'Check the water balance', where: 'Site report → Water balance', href: '/reports',
+      detail: 'Choose isiZulu; check the chart labels and possible shortfall wording.' },
+  ] },
+  { when: '25 September 2026', sha: '9ad29a75', changes: [
+    'Design Studio labels and guide actions show draft isiZulu with English sources.',
+    'Farming and measurement guidance stays in English pending review.',
+  ], tour: [
+    { title: 'Check Design Studio language', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu; step names and guide controls show their English source. Farming guidance remains in English.' },
+  ] },
+  { when: '25 September 2026', sha: 'dd9e1562', changes: [
+    'Garden Survey save and PDF errors show draft isiZulu beside English.',
+    'A failed save now says to keep the screen open and retry.',
+  ], tour: [
+    { title: 'Check Garden Survey saving', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu, reach your plan, then check Save and PDF messages.' },
   ] },
   { when: '25 September 2026', sha: '81ce3442', changes: [
     'Settings now shows Simple or All tools straight under the language choice.',
