@@ -2923,8 +2923,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               onClick={() => setGuideOpen(true)}
               aria-label={t('mapGuideButton')}
               title={t('mapGuideTitle')}
-              className="flex items-center justify-center rounded-full transition-all active:scale-95"
-              style={{ width: 26, height: 26, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.3)', color: MAP_COLOR_BOUNDARY_FILL, cursor: 'pointer' }}
+              className="flex items-center justify-center rounded-full transition-all active:scale-95 u-tap-target"
+              style={{ width: 26, height: 26, background: 'rgba(168,216,138,0.14)', border: '1px solid rgba(168,216,138,0.3)', color: MAP_COLOR_BOUNDARY_FILL, cursor: 'pointer', '--tap-inset': '-9px' } as React.CSSProperties}
             >
               <HelpCircle size={15} strokeWidth={1.9} />
             </button>
@@ -4260,12 +4260,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>how many</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
-                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        aria-label={t('elementCountFewer')}
+                        className="flex items-center justify-center rounded-lg u-tap-target"
+                        style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer', '--tap-inset': '-8px' } as React.CSSProperties}>
                         <Minus size={14} />
                       </button>
                       <span className="font-sans font-semibold w-6 text-center" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{elCount}</span>
                       <button type="button" onClick={() => setElCount((c) => c + 1)}
-                        className="flex items-center justify-center rounded-lg" style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        aria-label={t('elementCountMore')}
+                        className="flex items-center justify-center rounded-lg u-tap-target"
+                        style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer', '--tap-inset': '-8px' } as React.CSSProperties}>
                         <Plus size={14} />
                       </button>
                     </div>
