@@ -325,13 +325,22 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
-            {lessonContent.body.split('\n\n').map((para, i) => (
-              <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-                {para}
-              </p>
-            ))}
-            {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+            {regionalDraft && lessonContent.body === lesson.body ? (
+              <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
+                <p className="font-semibold">English source (held for review)</p>
+                {lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
+              </div>
+            ) : (
+              <>
+                {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
+                {lessonContent.body.split('\n\n').map((para, i) => (
+                  <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                    {para}
+                  </p>
+                ))}
+                {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+              </>
+            )}
           </div>
 
           {/* Key points */}
