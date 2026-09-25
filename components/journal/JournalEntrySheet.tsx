@@ -127,7 +127,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
+              <div style={{ font: '400 11.5px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       background: on ? c.tint : '#FFFEFA',
                       border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
                       color: on ? c.ink : '#5C5040',
-                      font: `${on ? 700 : 500} 13px/1 system-ui, sans-serif`,
+                      font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
                     }}
                   >
                     {getElementArt2(`journal_${c.key}`) ? (
@@ -275,7 +275,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
                     background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
-                    font: '600 10px/1 system-ui, sans-serif',
+                    font: '600 10px/1 var(--font-sans), sans-serif',
                   }}
                 >
                   {busy ? <Loader2 size={18} className="animate-spin" /> : <Camera size={18} />}
@@ -284,7 +284,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               )}
             </div>
             {photoError && (
-              <div style={{ marginTop: 6, font: '500 12px/1.4 system-ui, sans-serif', color: '#B91C1C' }}>{photoError}</div>
+              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: '#B91C1C' }}>{photoError}</div>
             )}
             <input
               ref={fileRef}
@@ -307,7 +307,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               style={{
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
                 background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
-                font: '600 14px/1 system-ui, sans-serif', display: 'flex', alignItems: 'center', gap: 7,
+                font: '600 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
               <Trash2 size={16} />
@@ -321,7 +321,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
               background: canSave && !busy ? '#274D2C' : 'rgba(39,77,44,0.25)',
-              color: '#fff', font: '700 15px/1 system-ui, sans-serif',
+              color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >
             {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}
@@ -339,7 +339,7 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid var(--border)',
   borderRadius: 11,
   padding: '11px 12px',
-  font: '400 15px/1.2 system-ui, sans-serif',
+  font: '400 15px/1.2 var(--font-sans), sans-serif',
   color: 'var(--text-primary)',
   outline: 'none',
 };
@@ -347,7 +347,7 @@ const inputStyle: React.CSSProperties = {
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+      font: '700 10.5px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
       textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}

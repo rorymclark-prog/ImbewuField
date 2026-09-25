@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { CommunityProfile } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -16,6 +17,8 @@ interface Props {
 // (a heavily interactive land-design/drawing tool) — lower regression risk,
 // and this view only ever needs coarse pins + a popup.
 export default function NearbyMap({ people, onOpenProfile }: Props) {
+  const { lang } = useLanguage();
+  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const [activeUid, setActiveUid] = useState<string | null>(null);
   const pins = people.filter((p) => typeof p.coarse_lat === 'number' && typeof p.coarse_lon === 'number');
   const active = pins.find((p) => p.uid === activeUid) ?? null;
@@ -75,7 +78,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >
-                View profile
+                {ui('View profile', 'Buka iphrofayela')}
               </button>
             </div>
           </Popup>
