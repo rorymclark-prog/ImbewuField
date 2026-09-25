@@ -54,7 +54,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
             farmer who opens the app twice a season should not have to remember. */}
         <div
           className="flex items-center gap-1.5 font-sans"
-          style={{ fontSize: 12, fontWeight: 600, color: '#7A6B52', marginBottom: 6, paddingLeft: 2 }}
+          style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-muted)', marginBottom: 6, paddingLeft: 2 }}
         >
           <span
             className="inline-flex items-center justify-center flex-shrink-0"
