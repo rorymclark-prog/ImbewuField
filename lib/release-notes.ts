@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'd2250e8e', changes: [
+    'A Tshivenda Landscape draft is ready for review; learners cannot see it yet.',
+  ] },
   { when: '25 September 2026', sha: '7a87483e', changes: [
     'Introduction has a machine Tshivenda draft pending fluent and local farming review.',
     'Held flood and compass wording stays in English pending review.',
