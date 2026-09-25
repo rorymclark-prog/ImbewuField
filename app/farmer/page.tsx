@@ -27,6 +27,7 @@ import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -284,7 +285,9 @@ function HomeInner() {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`);
+      const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+        headers: await paidApiHeaders(),
+      });
       if (!res.ok) throw new Error(`${res.status}`);
       const json = await res.json();
       if (request !== locationRequest.current) return;
