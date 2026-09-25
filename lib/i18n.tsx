@@ -1417,6 +1417,12 @@ const T_en: Dict = {
   loginErrorBackendUnavailable: 'Firebase is not configured yet.',
   loginErrorGoogleEmbedded: 'Google sign-in won’t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.',
   loginErrorUnexpected: 'Something went wrong. Please try again.',
+  gateTitle: 'Access ImbewuField',
+  gateDescription: 'Private prototype — enter the password to continue.',
+  gatePassword: 'Password',
+  gateWrongPassword: 'Wrong password — try again.',
+  gateChecking: 'Checking...',
+  gateEnter: 'Enter',
 
   // Offline preparation and queued fieldwork.
   offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',

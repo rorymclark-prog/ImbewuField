@@ -6,7 +6,7 @@ import { ArrowRight, ChevronLeft, Mail, Check, Copy } from 'lucide-react';
 import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 
 import Illustration from '@/components/Illustration';
 
@@ -74,7 +74,11 @@ export default function LoginPage() {
 }
 
 function LoginPageInner() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const authLabel = (key: string, keepEnglish = false) => {
+    const translated = t(key);
+    return lang === 'zu' && keepEnglish ? `${translated} · ${translate('en', key)}` : translated;
+  };
   const router = useRouter();
   const searchParams = useSearchParams();
   // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
@@ -183,6 +187,12 @@ function LoginPageInner() {
       <div className="w-full max-w-sm p-6 my-auto" style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: 'var(--shadow-panel)' }}>
         <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+            {t('loginZuluDraftNotice')}
+          </p>
+        )}
+
         {/* Logo */}
         <div className="text-center mb-5">
           <div className="flex items-center justify-center mb-3">
@@ -222,7 +232,7 @@ function LoginPageInner() {
                 style={mode === m
                   ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, border: '1px solid transparent' }}>
-                {t(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}
+                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}
               </button>
             ))}
           </div>
@@ -236,8 +246,8 @@ function LoginPageInner() {
                 <Check size={20} style={{ color: 'var(--color-forest-800)' }} />
               </div>
             </div>
-            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{t('loginResetEmailSent')} <strong>{email}</strong>.</p>
-            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{t('loginResetCheckInbox')}</p>
+            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent', true)} <strong>{email}</strong>.</p>
+            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox', true)}</p>
             <button type="button" onClick={() => switchMode('signin')}
               className="font-sans text-sm font-semibold"
               style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
@@ -273,7 +283,7 @@ function LoginPageInner() {
             {mode !== 'reset' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="password">
-                  {t('loginPassword')}
+                  {authLabel('loginPassword', true)}
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
@@ -298,7 +308,7 @@ function LoginPageInner() {
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{displayAuthError(error)}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}
@@ -315,7 +325,7 @@ function LoginPageInner() {
                 <span className="flex items-center justify-center gap-1.5"><Mail size={15} />{t('loginSendResetEmail')}</span>
               ) : (
                 <span className="flex items-center justify-center gap-1.5">
-                  {t(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}<ArrowRight size={15} />
+                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}<ArrowRight size={15} />
                 </span>
               )}
             </button>
@@ -325,7 +335,7 @@ function LoginPageInner() {
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
                 style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
-                {t('loginForgotPassword')}
+                {authLabel('loginForgotPassword', true)}
               </button>
             )}
 
@@ -359,7 +369,7 @@ function LoginPageInner() {
                 opacity: googleLoading || embedded ? 0.55 : 1,
               }}>
               <GoogleIcon />
-              {googleLoading ? t('loginConnecting') : t('loginContinueWithGoogle')}
+              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle', true)}
             </button>
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}

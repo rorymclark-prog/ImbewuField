@@ -1103,6 +1103,7 @@ const dict: Dict = {
   popiaGoalSoilLabel: 'Buyisela umhlaba wami',
   popiaGoalSoilDesc: 'Izitshalo ezisekela umhlaba nezimbumba ukubuyisa umhlaba',
   popiaGetStarted: 'Qala',
+  popiaZuluDraftNotice: 'UHLAKA LWESIZULU — Umbhalo wesiZulu wemvume awukabuyekezwa. Funda umbhalo wesiNgisi oseduze ngaphambi kokukhetha noma ukuvuma.',
 
   // Login route and auth feedback.
   loginRoleFarmer: 'Umlimi',
@@ -1154,6 +1155,14 @@ const dict: Dict = {
   loginErrorBackendUnavailable: 'I-Firebase ayikalungiswa.',
   loginErrorGoogleEmbedded: 'Ukungena nge-Google akuvuleki kulesi siphequluli sohlelo lokusebenza. Vula imbewufield.vercel.app ku-Chrome noma ku-Safari, noma ungene nge-imeyili nephasiwedi lapha.',
   loginErrorUnexpected: 'Kube nephutha. Zama futhi.',
+  loginZuluDraftNotice: 'UHLAKA LWESIZULU — Umbhalo wokungena nokuvula i-akhawunti awukabuyekezwa. Funda isiNgisi esiseduze uma ufaka imininingwane yokungena noma ushintsha iphasiwedi.',
+  gateTitle: 'Finyelela ku-ImbewuField',
+  gateDescription: 'Isibonelo esiyimfihlo — faka iphasiwedi ukuze uqhubeke.',
+  gatePassword: 'Iphasiwedi',
+  gateWrongPassword: 'Iphasiwedi ayilungile — zama futhi.',
+  gateChecking: 'Kuyahlolwa...',
+  gateEnter: 'Ngena',
+  gateZuluDraftNotice: 'UHLAKA LWESIZULU — Umbhalo wokuvikela iphasiwedi awukabuyekezwa. Funda nombhalo wesiNgisi oseduze.',
 
   // Offline preparation and queued fieldwork.
   offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
