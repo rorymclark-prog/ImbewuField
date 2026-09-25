@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '9ad29a75', changes: [
+    'Design Studio labels and guide actions show draft isiZulu with English sources.',
+    'Farming and measurement guidance stays in English pending review.',
+  ], tour: [
+    { title: 'Check Design Studio language', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu; step names and guide controls show their English source. Farming guidance remains in English.' },
+  ] },
   { when: '25 September 2026', sha: 'dd9e1562', changes: [
     'Garden Survey save and PDF errors show draft isiZulu beside English.',
     'A failed save now says to keep the screen open and retry.',
