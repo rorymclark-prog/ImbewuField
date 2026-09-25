@@ -49,7 +49,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check the print choices', where: 'Design Studio → Print / Export', href: '/design',
       detail: 'Choose isiZulu and open Print / Export. The nine sheets and working title-block choice are shown on a phone.' },
   ] },
-  { when: '25 September 2026', sha: '11c9cbf6', changes: [
+  { when: '25 September 2026', sha: '02c9e7e9', changes: [
     'Sector guidance now pairs marked isiZulu drafts with their English source.',
   ], tour: [
     { title: 'Review Sector guidance', where: 'Design Studio → Sector', href: '/design',
