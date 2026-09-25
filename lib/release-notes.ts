@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '02c9e7e9', changes: [
+  { when: '25 September 2026', sha: '7483ff32', changes: [
     'Print / Export now has draft isiZulu controls with English on key choices.',
     'Plan set count now shows nine maps; inactive controls are gone.',
   ], tour: [
