@@ -57,11 +57,20 @@ export type ConsentScope =
 
 export interface ConsentScopeInfo {
   id: ConsentScope;
-  /** Farmer-facing label. Written in the second person, plain language, no jargon. */
+  /** Fixed English source shown beside every isiZulu draft until review. */
   label: string;
   /** What the funder actually sees if this is on. Concrete, not reassuring. */
   detail: string;
+  /** Machine generated proposal; must remain visibly marked as unreviewed. */
+  labelZuDraft: string;
+  detailZuDraft: string;
 }
+
+/** Fixed screen heading and its unreviewed translation proposal. */
+export const CONSENT_PANEL_HEADING = {
+  label: 'What you share',
+  labelZuDraft: 'Lokho owabelana ngakho',
+} as const;
 
 /**
  * The catalogue the consent screen renders. Order is deliberate: the two money
@@ -69,12 +78,12 @@ export interface ConsentScopeInfo {
  * likely to refuse and should not have to hunt for.
  */
 export const CONSENT_SCOPES: readonly ConsentScopeInfo[] = [
-  { id: 'sales',      label: 'What you sold',        detail: 'Your crop sales and the money you earned from them.' },
-  { id: 'expenses',   label: 'What you spent',       detail: 'What you paid for seed, tools and inputs.' },
-  { id: 'production', label: 'What you harvested',   detail: 'Your harvest weights per crop.' },
-  { id: 'training',   label: 'Your training',        detail: 'Which course modules you have finished.' },
-  { id: 'surveys',    label: 'Your survey answers',  detail: 'The answers you gave in programme surveys.' },
-  { id: 'location',   label: 'Where your farm is',   detail: 'Your exact plot location. With this off, only the district is shown.' },
+  { id: 'sales', label: 'What you sold', detail: 'Your crop sales and the money you earned from them.', labelZuDraft: 'Lokho okuthengisile', detailZuDraft: 'Izitshalo ozithengisile nemali oyitholile ngazo.' },
+  { id: 'expenses', label: 'What you spent', detail: 'What you paid for seed, tools and inputs.', labelZuDraft: 'Lokho okusebenzisile', detailZuDraft: 'Imali oyikhokhele imbewu, amathuluzi nezinsiza zokulima.' },
+  { id: 'production', label: 'What you harvested', detail: 'Your harvest weights per crop.', labelZuDraft: 'Lokho okuvunile', detailZuDraft: 'Izisindo zesivuno sakho ngesitshalo ngasinye.' },
+  { id: 'training', label: 'Your training', detail: 'Which course modules you have finished.', labelZuDraft: 'Ukuqeqeshwa kwakho', detailZuDraft: 'Izingxenye zezifundo oziqedile.' },
+  { id: 'surveys', label: 'Your survey answers', detail: 'The answers you gave in programme surveys.', labelZuDraft: 'Izimpendulo zakho zenhlolovo', detailZuDraft: 'Izimpendulo ozinikezile ezinhloloveni zohlelo.' },
+  { id: 'location', label: 'Where your farm is', detail: 'Your exact plot location. With this off, only the district is shown.', labelZuDraft: 'Lapho ipulazi lakho likhona', detailZuDraft: 'Indawo eqondile yensimu yakho. Uma lokhu kuvaliwe, kuboniswa isifunda kuphela.' },
 ] as const;
 
 export interface FarmerConsent {

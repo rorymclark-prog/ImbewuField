@@ -335,7 +335,10 @@ export default function AccountPage() {
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
           {profile?.role === 'farmer' && profile?.org_id && (
             <>
-              {lang === 'zu' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">Imininingwane yokwabelana ngedatha nemvume engezansi ibhalwe ngesiNgisi. Uma ungayiqondi, cela usizo ngaphambi kokuvuma.</p>}
+              <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">
+                <strong>isiZulu machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
+                <span className="block mt-1"><strong>Imibhalo yesiZulu eyisivivinyo yomshini — ayikabuyekezwa.</strong> Umbhalo wesiNgisi uboniswa eduze kwayo kuze kuqedwe ukubuyekezwa ngumuntu okhuluma isiZulu njengolimi lokuqala nokuhlolwa kwencazelo yemvume. <span className="font-semibold">(isiZulu machine draft)</span></span>
+              </p>
               <ConsentPanel orgName={orgName} />
             </>
           )}
