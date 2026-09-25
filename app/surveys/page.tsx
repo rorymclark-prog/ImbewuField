@@ -579,23 +579,32 @@ function FarmerSurveyCard({
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(answered);
+  const [submitError, setSubmitError] = useState(false);
 
   function setAnswer(qid: string, val: string) {
     setAnswers((prev) => ({ ...prev, [qid]: val }));
+    setSubmitError(false);
   }
 
   const allAnswered = survey.questions.every((q) => answers[q.id] !== undefined && answers[q.id] !== '');
 
   async function handleSubmit() {
-    if (!allAnswered) return;
+    if (!allAnswered || submitting) return;
     setSubmitting(true);
-    if (isLive) {
-      await addSurveyResponse(survey.id, answers);
+    setSubmitError(false);
+    try {
+      if (isLive) {
+        await addSurveyResponse(survey.id, answers);
+      }
+      setSubmitted(true);
+      setOpen(false);
+      onAnswered(survey.id);
+    } catch {
+      // Leave the farmer's entered answers in place so they can retry after reconnecting.
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
-    setSubmitted(true);
-    setOpen(false);
-    onAnswered(survey.id);
   }
 
   return (
@@ -697,6 +706,14 @@ function FarmerSurveyCard({
               )}
             </div>
           ))}
+
+          {submitError && (
+            <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: '#7A2E16', border: '1px solid rgba(154,52,18,0.25)' }}>
+              {lang === 'zu'
+                ? 'Izimpendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
+                : 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.'}
+            </p>
+          )}
 
           <button
             onClick={handleSubmit}
