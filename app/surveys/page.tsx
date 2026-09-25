@@ -92,6 +92,15 @@ function showSampleDraft(survey: Survey, source: string, draft: string | undefin
   return lang === 'zu' && survey.id.startsWith('sample-') && draft ? `${draft} / ${source}` : source;
 }
 
+function showSurveyLabel(source: string, zulu: string | undefined, lang: string) {
+  return lang === 'zu' && zulu?.trim() ? `${zulu.trim()} / ${source}` : source;
+}
+
+function showSurveyText(survey: Survey, source: string, sampleDraft: string | undefined, zulu: string | undefined, lang: string) {
+  const sampleText = showSampleDraft(survey, source, sampleDraft, lang);
+  return sampleText === source ? showSurveyLabel(source, zulu, lang) : sampleText;
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeQuestionId(i: number) {
@@ -105,8 +114,10 @@ const STAFF_ROLES = new Set(['ngo', 'admin']);
 interface DraftQuestion {
   _key: string;
   text: string;
+  text_zu: string;
   type: SurveyQType;
   options: string[];
+  options_zu: string[];
 }
 
 function QuestionBuilder({
@@ -120,20 +131,25 @@ function QuestionBuilder({
 }) {
   const { lang } = useLanguage();
   function setType(t: SurveyQType) {
-    onChange({ ...q, type: t, options: t === 'choice' ? ['', ''] : [] });
+    onChange({ ...q, type: t, options: t === 'choice' ? ['', ''] : [], options_zu: t === 'choice' ? ['', ''] : [] });
   }
   function setOption(idx: number, val: string) {
     const opts = [...q.options];
     opts[idx] = val;
     onChange({ ...q, options: opts });
   }
+  function setOptionZu(idx: number, val: string) {
+    const opts = [...q.options_zu];
+    opts[idx] = val;
+    onChange({ ...q, options_zu: opts });
+  }
   function addOption() {
     if (q.options.length >= 4) return;
-    onChange({ ...q, options: [...q.options, ''] });
+    onChange({ ...q, options: [...q.options, ''], options_zu: [...q.options_zu, ''] });
   }
   function removeOption(idx: number) {
     if (q.options.length <= 2) return;
-    onChange({ ...q, options: q.options.filter((_, i) => i !== idx) });
+    onChange({ ...q, options: q.options.filter((_, i) => i !== idx), options_zu: q.options_zu.filter((_, i) => i !== idx) });
   }
 
   const TYPE_OPTS: { v: SurveyQType; label: string }[] = [
@@ -162,6 +178,17 @@ function QuestionBuilder({
           <X size={14} />
         </button>
       </div>
+
+      {lang === 'zu' && (
+        <input
+          value={q.text_zu}
+          onChange={(e) => onChange({ ...q, text_zu: e.target.value })}
+          placeholder="Umbhalo wesiZulu (uyazikhethela)"
+          aria-label="Umbhalo wesiZulu wombuzo (uyazikhethela)"
+          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+        />
+      )}
 
       {/* Type selector */}
       <div className="flex gap-1.5 flex-wrap">
@@ -198,6 +225,16 @@ function QuestionBuilder({
                 className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
                 style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
               />
+              {lang === 'zu' && (
+                <input
+                  value={q.options_zu[i] ?? ''}
+                  onChange={(e) => setOptionZu(i, e.target.value)}
+                  placeholder={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
+                  aria-label={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
+                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+                />
+              )}
               {q.options.length > 2 && (
                 <button onClick={() => removeOption(i)} aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)} style={{ color: '#755942', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                   <X size={12} />
@@ -225,9 +262,10 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
   const { profile } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [titleZu, setTitleZu] = useState('');
   const [orgName, setOrgName] = useState(profile?.full_name ?? '');
   const [questions, setQuestions] = useState<DraftQuestion[]>([
-    { _key: 'init0', text: '', type: 'yesno', options: [] },
+    { _key: 'init0', text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] },
   ]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -235,7 +273,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
   function addQuestion() {
     const idx = questions.length;
-    setQuestions((prev) => [...prev, { _key: makeQuestionId(idx), text: '', type: 'yesno', options: [] }]);
+    setQuestions((prev) => [...prev, { _key: makeQuestionId(idx), text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] }]);
   }
   function updateQuestion(i: number, updated: DraftQuestion) {
     setQuestions((prev) => prev.map((q, j) => (j === i ? updated : q)));
@@ -260,15 +298,20 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
     const finalQs: SurveyQuestion[] = validQs.map((q, i) => ({
       id: makeQuestionId(i),
       text: q.text.trim(),
+      ...(q.text_zu.trim() ? { text_zu: q.text_zu.trim() } : {}),
       type: q.type,
-      options: q.type === 'choice' ? q.options.filter((o) => o.trim()) : [],
+      options: q.type === 'choice' ? q.options.flatMap((o, index) => o.trim() ? [o.trim()] : []) : [],
+      ...(q.type === 'choice' && q.options.some((o) => o.trim())
+        ? { options_zu: q.options.flatMap((o, index) => o.trim() ? [q.options_zu[index]?.trim() ?? ''] : []) }
+        : {}),
     }));
-    await createSurvey({ org_name: orgName.trim(), title: title.trim(), questions: finalQs });
+    await createSurvey({ org_name: orgName.trim(), title: title.trim(), ...(titleZu.trim() ? { title_zu: titleZu.trim() } : {}), questions: finalQs });
     setSaving(false);
     setSaved(true);
     setTitle('');
+    setTitleZu('');
     setOrgName(profile?.full_name ?? '');
-    setQuestions([{ _key: makeQuestionId(0), text: '', type: 'yesno', options: [] }]);
+    setQuestions([{ _key: makeQuestionId(0), text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] }]);
     setTimeout(() => { setSaved(false); setOpen(false); onCreated(); }, 1800);
   }
 
@@ -304,6 +347,16 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
               style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
             />
+            {lang === 'zu' && (
+              <input
+                value={titleZu}
+                onChange={(e) => setTitleZu(e.target.value)}
+                placeholder="Isihloko ngesiZulu (uyazikhethela)"
+                aria-label="Isihloko senhlolovo ngesiZulu (uyazikhethela)"
+                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+                style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+              />
+            )}
             <input
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
@@ -385,7 +438,7 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
     <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSampleDraft(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, lang)}</div>
+          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
             {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
           </div>
@@ -448,7 +501,7 @@ function FarmerSurveyCard({
         style={{ background: 'transparent', border: 'none', cursor: submitted ? 'default' : 'pointer' }}
       >
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSampleDraft(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, lang)}</div>
+          <div className="font-display font-semibold text-sm break-words" style={{ color: '#20190F' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
           </div>
@@ -470,7 +523,7 @@ function FarmerSurveyCard({
         <div className="px-4 pb-4 space-y-4" style={{ borderTop: '1px solid #E2D8C4' }}>
           {survey.questions.map((q) => (
             <div key={q.id} className="pt-3 space-y-2">
-              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{showSampleDraft(survey, q.text, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.questions?.[q.id], lang)}</div>
+              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{showSurveyText(survey, q.text, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.questions?.[q.id], q.text_zu, lang)}</div>
 
               {q.type === 'yesno' && (
                 <div className="flex gap-2">
@@ -491,7 +544,7 @@ function FarmerSurveyCard({
                       >
                         {lang === 'zu' && survey.id.startsWith('sample-')
                           ? showSampleDraft(survey, v, v === 'Yes' ? 'Yebo' : 'Cha', lang)
-                          : localUi(v, v === 'Yes' ? 'Yebo' : 'Cha', lang)}
+                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : v}
                       </button>
                     );
                   })}
@@ -500,7 +553,7 @@ function FarmerSurveyCard({
 
               {q.type === 'choice' && (
                 <div className="space-y-1.5">
-                  {q.options.map((opt) => {
+                  {q.options.map((opt, optionIndex) => {
                     const on = answers[q.id] === opt;
                     return (
                       <button
@@ -518,7 +571,7 @@ function FarmerSurveyCard({
                           style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : '#C9BBA1'}`, background: on ? '#1F4D2B' : 'transparent' }}>
                           {on && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#EAF3E2' }} />}
                         </div>
-                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{showSampleDraft(survey, opt, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.options?.[opt], lang)}</span>
+                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{showSurveyText(survey, opt, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.options?.[opt], q.options_zu?.[optionIndex], lang)}</span>
                       </button>
                     );
                   })}
@@ -621,7 +674,7 @@ export default function SurveysPage() {
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
             {lang === 'zu'
-              ? 'ISIZULU DRAFT — Only built-in demonstration questions and choices include unreviewed AI draft isiZulu beside the exact English source. Live survey questions and choices appear exactly as authored and are not translated. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wesiZulu ezinhlolovweni eziyisibonelo ezakhelwe ngaphakathi uwuhlaka lwe-AI olungabuyekezwanga, oluboniswa eceleni komthombo wesiNgisi. Izinhlolovo ezenziwe yizinhlangano ziboniswa njengoba zibhaliwe ngqo futhi azihunyushwe lapha. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
+              ? 'ISIZULU DRAFT — Built-in demonstration text is an unreviewed AI draft. For live surveys, an organisation may enter isiZulu labels; they appear beside the exact English text and have not been independently reviewed. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wezibonelo owakhelwe ngaphakathi uwuhlaka lwe-AI olungakabuyekezwa. Kuhlolovo olubukhoma, inhlangano ingafaka amagama esiZulu; aboniswa eduze kombhalo wesiNgisi oqondile futhi awabuyekezwanga ngokuzimela. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
               : ''}
           </p>
         )}
