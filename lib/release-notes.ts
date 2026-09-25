@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '63b4a500', changes: [
+    'Tshivenda Water Harvesting draft ready; safety text and media stay English.',
+  ] },
   { when: '25 September 2026', sha: 'dba79477', changes: [
     'Resources & Inputs water and roof entries now pair isiZulu drafts with English sources.',
     'Unverified roof-size estimates and water guidance stay in English.',
