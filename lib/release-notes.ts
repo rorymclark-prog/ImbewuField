@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '8e9bbdf6', changes: [
+    'Garden Atlas search and map labels add draft isiZulu; site data stays as supplied.',
+  ], tour: [
+    { title: 'Check Atlas labels', where: 'Garden Atlas', href: '/atlas',
+      detail: 'Choose isiZulu and open a point; data, sources and farming cautions remain unchanged.' },
+  ] },
   { when: '25 September 2026', sha: 'd39ac418', changes: [
     'Training records add draft isiZulu for attendance, photos and sharing.',
   ], tour: [
