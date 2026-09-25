@@ -16,7 +16,7 @@
 // separate "bake" step: canvas.toBlob() on this same canvas at "Use this photo" IS the final image.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Camera, Loader2, RotateCcw, RotateCw, X } from 'lucide-react';
+import { Camera, Check, GripVertical, Loader2, MapPin, RotateCcw, RotateCw, Undo2, X } from 'lucide-react';
 import { DEFAULT_IMG_W, DEFAULT_IMG_H, BASE_PHOTO_EXPORT_SCALE } from '@/lib/design-canvas';
 import { deviceBakeScale, phoneGradeDevice } from '@/lib/device-grade';
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
@@ -29,6 +29,9 @@ const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = '#7A4408';
 const DARK = '#0B120B';
 
 export interface BasePhotoApplyResult {
@@ -53,6 +56,10 @@ interface Props {
   /** The calibrated scale that photo already carries, so re-applying without re-measuring keeps
    *  it — corrected for any zoom/rotation applied before the re-bake (see carriedMPerPx). */
   initialMPerPx?: number | null;
+  /** Simple / All tools (lib/app-level.ts). Simple hides the fine zoom/opacity sliders and the
+   *  numeric rotation readout — one guided "line it up" flow: drag to pan, the two ±90° buttons,
+   *  and the two-point scale calibration. */
+  simple?: boolean;
 }
 
 // Calibration points are stored in the PHOTO'S OWN pixel grid, not the canvas's. The old
@@ -63,7 +70,7 @@ interface Props {
 // corner it was tapped on, at every zoom. All projection math lives, tested, in
 // lib/base-photo-align.ts.
 
-export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, initialPhotoDataUrl = null, initialMPerPx = null }: Props) {
+export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, initialPhotoDataUrl = null, initialMPerPx = null, simple = false }: Props) {
   const { t } = useLanguage();
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const [rotationDeg, setRotationDeg] = useState(0); // 0-359, 0 = assume already north-up
@@ -432,7 +439,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
         >
           <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>
             {t('designPhotoTitle')}
-            <span style={{ fontWeight: 600, fontSize: 11, color: '#6B6355', marginLeft: 8 }}>⠿ drag to move</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, fontWeight: 600, fontSize: 11, color: '#6B6355', marginLeft: 8 }}>
+              <GripVertical size={12} /> {t('designPhotoDragToMove')}
+            </span>
           </div>
           <button
             type="button"
@@ -537,6 +546,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
               />
               {img && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
+                  {/* Simple keeps one guided "line it up" flow — drag to pan, ±90° rotate, two-point
+                      scale — and drops the fine zoom/opacity sliders. */}
+                  {!simple && (
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
                     <span style={{ minWidth: 76 }}>See through</span>
                     <input
@@ -549,6 +561,8 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                       {Math.round(photoOpacity * 100)}%
                     </span>
                   </label>
+                  )}
+                  {!simple && (
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
                     <span style={{ minWidth: 76 }}>{t('designPhotoZoomSize')}</span>
                     <input
@@ -561,6 +575,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                       {Math.round(zoom * 100)}%
                     </span>
                   </label>
+                  )}
                   <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
                     {pointMode
                       ? `Tap point ${points.length + 1} of 2 on the photo. The photo will not move while you do.`
@@ -584,13 +599,17 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                         opacity: points.length >= 2 ? 0.45 : 1,
                       }}
                     >
-                      {pointMode ? '📍 Tapping…' : `📍 Add scale point (${points.length}/2)`}
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, justifyContent: 'center' }}>
+                        <MapPin size={14} />
+                        {pointMode ? t('designPhotoTapping') : formatDesignTranslation(t('designPhotoAddScalePoint'), { current: points.length, total: 2 })}
+                      </span>
                     </button>
                     <button
                       type="button"
                       onClick={() => { setPoints((prev) => prev.slice(0, -1)); setPointMode(false); }}
                       disabled={points.length === 0}
                       style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 6,
                         minHeight: 44, padding: '0 14px', borderRadius: 10,
                         border: '1px solid rgba(0,0,0,0.2)', background: 'transparent', color: DARK,
                         fontWeight: 700, fontSize: 12.5,
@@ -598,7 +617,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                         opacity: points.length ? 1 : 0.4,
                       }}
                     >
-                      ↩ Undo point
+                      <Undo2 size={14} /> {t('designPhotoUndoPoint')}
                     </button>
                   </div>
                 </div>
@@ -619,6 +638,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                 >
                   <RotateCcw size={16} />
                 </button>
+                {/* Simple's guided flow keeps the two coarse ±90° buttons; the fine 1°-step slider
+                    and its numeric readout are an expert control. */}
+                {!simple && (
                 <input
                   type="range"
                   min={0}
@@ -628,6 +650,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   style={{ flex: 1 }}
                   aria-label={t('designPhotoFineRotation')}
                 />
+                )}
                 <button
                   type="button"
                   aria-label={t('designPhotoRotateRight')}
@@ -637,11 +660,13 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   <RotateCw size={16} />
                 </button>
               </div>
+              {!simple && (
               <div style={{ fontSize: 11, color: '#755942', marginTop: 2 }}>
                 {rotationDeg === 0
                   ? t('designPhotoNotTurned')
                   : formatDesignTranslation(t('designPhotoTurned'), { degrees: rotationDeg })}
               </div>
+              )}
             </div>
 
             {/* Scale calibration */}
@@ -650,8 +675,8 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                 {t('designPhotoSetScale')}
               </div>
               {carried != null && points.length === 0 && (
-                <div style={{ fontSize: 11.5, color: GREEN, fontWeight: 700, marginBottom: 6 }}>
-                  ✓ Keeping your existing scale — re-measure only if it looks wrong.
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: GREEN, fontWeight: 700, marginBottom: 6 }}>
+                  <Check size={14} /> {t('designPhotoScaleKept')}
                 </div>
               )}
               <div style={{ fontSize: 11.5, color: '#5C5040', marginBottom: 6 }}>
@@ -681,7 +706,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   <button
                     type="button"
                     onClick={() => { setPoints([]); setMetres(''); }}
-                    style={{ marginLeft: 'auto', border: 'none', background: 'transparent', color: OCHRE, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+                    style={{ marginLeft: 'auto', border: 'none', background: 'transparent', color: GOLD_DIM, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
                   >
                     {t('designPhotoRetap')}
                   </button>
@@ -689,7 +714,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
               )}
             </div>
 
-            {error && <p style={{ fontSize: 12, color: OCHRE, marginBottom: 8 }}>{error}</p>}
+            {error && <p style={{ fontSize: 12, color: GOLD_DIM, marginBottom: 8 }}>{error}</p>}
 
             <div style={{ display: 'flex', gap: 8 }}>
               <button

@@ -145,6 +145,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import {
   DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
@@ -231,6 +232,9 @@ const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// and icon strokes (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = '#7A4408';
 const DARK = '#0B120B';
 const ZULU_STEP_LABELS: Record<WizardStep, string> = {
   base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba',
@@ -592,6 +596,9 @@ function DesignStudioInner() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const tr = (en: string, zu: string) => isZulu ? zu : en;
+  // Simple / All tools (lib/app-level.ts). Farmers default to Simple: one fixed layout, the
+  // guided wizard steps, and no expert chrome. All tools is this screen exactly as it was.
+  const simple = useAppLevel() === 'simple';
   const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
   const params = useSearchParams();
@@ -1090,14 +1097,18 @@ function DesignStudioInner() {
     try { window.localStorage.removeItem(DISMISSED_KEY); } catch { /* non-fatal */ }
   }, []);
 
-  const topShow = topVisibility(topStop);
-  const rawBottomShow = bottomVisibility(bottomStop);
+  // Simple has no chrome ladder and no per-section dismiss — one fixed layout, everything shown,
+  // so a farmer who never touches the handle or a × still sees the whole toolset every visit.
+  const effectiveTopStop: TopStop = simple ? 'full' : topStop;
+  const effectiveBottomStop: BottomStop = simple ? 'full' : bottomStop;
+  const topShow = topVisibility(effectiveTopStop);
+  const rawBottomShow = bottomVisibility(effectiveBottomStop);
   const bottomShow = {
     ...rawBottomShow,
-    droneTools: rawBottomShow.droneTools && !dismissed.includes('droneTools'),
-    droneEntry: rawBottomShow.droneEntry && !dismissed.includes('droneTools'),
-    shortcuts: rawBottomShow.shortcuts && !dismissed.includes('shortcuts'),
-    stepBar: rawBottomShow.stepBar && !dismissed.includes('stepGuide'),
+    droneTools: rawBottomShow.droneTools && (simple || !dismissed.includes('droneTools')),
+    droneEntry: rawBottomShow.droneEntry && (simple || !dismissed.includes('droneTools')),
+    shortcuts: rawBottomShow.shortcuts && (simple || !dismissed.includes('shortcuts')),
+    stepBar: rawBottomShow.stepBar && (simple || !dismissed.includes('stepGuide')),
   };
   // Kept so the existing phone auto-collapse effect and every other read still work unchanged.
   const chromeCollapsed = !topShow.wizard;
@@ -1130,6 +1141,14 @@ function DesignStudioInner() {
   const isPhone = usePhoneViewport();
   const [desktopPanelLayout, setDesktopPanelLayout] = useState<DesktopPanelLayout>(DEFAULT_DESKTOP_PANEL_LAYOUT);
   const [workspaceMode, setWorkspaceMode] = useState<DesignWorkspaceMode>(DEFAULT_DESIGN_WORKSPACE_MODE);
+  // Simple has no workspace-layout picker and no panel-width drag handles — one fixed layout at
+  // the sensible defaults, whatever a farmer's stored All-tools preference happens to be.
+  const effectiveWorkspaceMode: DesignWorkspaceMode = simple ? DEFAULT_DESIGN_WORKSPACE_MODE : workspaceMode;
+  const effectiveDesktopPanelLayout: DesktopPanelLayout = simple ? DEFAULT_DESKTOP_PANEL_LAYOUT : desktopPanelLayout;
+  // The Layers panel (the full layer-visibility matrix) never renders in Simple, so the canvas
+  // reserves no gutter for it there — only the curated Elements panel still docks.
+  const elementsReservedPx = reservedDesktopPanelSpace(effectiveWorkspaceMode, effectiveDesktopPanelLayout.elements);
+  const layersReservedPx = simple ? 0 : reservedDesktopPanelSpace(effectiveWorkspaceMode, effectiveDesktopPanelLayout.layers);
   useEffect(() => {
     try { setDesktopPanelLayout(restoreDesktopPanelLayout(window.localStorage.getItem(DESIGN_PANEL_LAYOUT_KEY))); }
     catch { /* default panel widths keep the canvas useful when storage is unavailable */ }
@@ -3218,14 +3237,16 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         >
           <span style={{ fontWeight: 600 }}>
             {safeMode.reason === 'requested'
-              ? 'Light mode — your design is here, without the background photo.'
-              : `The app kept closing on this design${(() => {
+              ? tr('Light mode — your design is here, without the background photo.', 'Imodi elula — idizayini yakho ilapha, ngaphandle kwesithombe sangemuva.')
+              : `${tr('The app kept closing on this design', 'Uhlelo beluvala njalo kule dizayini')}${(() => {
                   // The one-word note the dead load left behind (lib/crash-loop.ts). To the
                   // farmer it reads as plain honesty; in a screenshot it tells whoever is
-                  // debugging WHICH step was in flight when iOS killed the page.
+                  // debugging WHICH step was in flight when iOS killed the page. The phase note
+                  // itself stays in English on purpose — it is a debugging breadcrumb, not
+                  // farmer-facing instruction.
                   const phase = lastCrashPhase(window.localStorage, safeMode.key);
-                  return phase ? ` — last time while ${phase}` : '';
-                })()}, so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.`}
+                  return phase ? `${tr(' — last time while ', ' — okokugcina ngenkathi ')}${phase}` : '';
+                })()}${tr(', so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.', ', ngakho luvule ngaphandle kwesithombe sangemuva. Konke okudwebile kulapha, futhi izilinganiso zakho azishintshanga.')}`}
           </span>
           <button
             type="button"
@@ -3242,7 +3263,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               cursor: 'pointer',
             }}
           >
-            Try the photo again
+            {tr('Try the photo again', 'Zama isithombe futhi')}
           </button>
         </div>
       )}
@@ -3259,8 +3280,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             fontWeight: 600,
           }}
         >
-          {saveError} Your cached glossy renders are the usual culprit — they’ve been cleared
-          automatically; if this persists, clear this site’s data.
+          {saveError} {tr(
+            'Your cached glossy renders are the usual culprit — they’ve been cleared automatically; if this persists, clear this site’s data.',
+            'Imifanekiso ye-glossy egciniwe ivamise ukuba yimbangela — isusiwe ngokuzenzakalela; uma lokhu kuqhubeka, sula idatha yale sayithi.',
+          )}
         </div>
       )}
 
@@ -3360,10 +3383,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               </>
             );
           })()}
+          {!simple && (
           <span style={{ marginLeft: 'auto' }}>
             {/* THE TOP HANDLE. Was a two-state "More space" toggle, which could reclaim the wizard
                 and nothing else — there was no way to get to just the map. Now a ladder: full →
-                slim → hidden, one tap at a time, wrapping back. */}
+                slim → hidden, one tap at a time, wrapping back. Simple has no ladder — one fixed
+                layout, so this control does not exist there. */}
             <ChromeHandle
               stop={topStop}
               stops={TOP_STOPS}
@@ -3372,6 +3397,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               label={tr('Show or hide the steps and header', 'Bonisa noma fihla izinyathelo nesihloko')}
             />
           </span>
+          )}
           <button
             type="button"
             onClick={() => setTopStop((c) => (c === 'full' ? 'slim' : 'full'))}
@@ -3391,11 +3417,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           flex: 1,
           position: 'relative',
           minHeight: canvasState?.step === 'glossy' ? 'calc(100dvh - 132px)' : '45dvh',
-          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements),
-          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers),
+          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : elementsReservedPx,
+          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : layersReservedPx,
         }}
       >
-        {!isPhone && canvasState?.step !== 'glossy' && (
+        {!isPhone && !simple && canvasState?.step !== 'glossy' && (
           <div
             role="group"
             aria-label={tr('Workspace layout', 'Ukuhlelwa kwendawo yokusebenza')}
@@ -3550,8 +3576,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               selectedIds={selectedIds}
               onSelect={handleSelect}
               onSelectMany={handleSelectMany}
-              additiveSelect={multiSelectMode}
-              onToggleAdditive={() => setMultiSelectMode((m) => !m)}
+              additiveSelect={!simple && multiSelectMode}
+              onToggleAdditive={simple ? undefined : () => setMultiSelectMode((m) => !m)}
               onCalibrateScale={onCalibrateScale}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
@@ -3624,6 +3650,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             site={site}
             houseXY={houseXY}
             lastChangeId={canvasState.updatedAt}
+            simple={simple}
           />
         )}
       </div>
@@ -3649,7 +3676,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 color: DARK,
               }}
             >
-              <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
+              <ImageIcon size={15} style={{ flexShrink: 0, color: GOLD_DIM }} />
               {/* Three honest grounds for the same plan. Blank is the paper version: it removes
                   only imagery and carries the active m/px with it, so a farmer can compare their
                   working map with the sheet without their areas silently changing. */}
@@ -3796,7 +3823,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               <button
                 type="button"
                 onClick={() => setShowPhotoImport(true)}
-                style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+                style={{ border: 'none', background: 'transparent', color: GOLD_DIM, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
                 {designBaseMode(canvasState) === 'photo'
                   ? t('designPhotoAdjust')
@@ -3815,8 +3842,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               )}
               {/* Hides the STRIP, not the photo — "Remove photo" beside it is the one that
                   touches the design, which is why that one is red and asks first and this one is
-                  a grey ×. */}
-              <SectionClose onClick={() => hideSection('droneTools')} what="the photo controls" />
+                  a grey ×. Simple has no per-section dismiss — one fixed layout. */}
+              {!simple && <SectionClose onClick={() => hideSection('droneTools')} what="the photo controls" />}
             </div>
           ) : (
             /* Was a dashed, small-text row sitting in a stack of similar-looking dashed hint rows,
@@ -3828,7 +3855,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <button
               type="button"
               onClick={() => setShowPhotoImport(true)}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '8px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.12)', color: OCHRE, cursor: 'pointer', textAlign: 'left' }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '8px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.12)', color: GOLD_DIM, cursor: 'pointer', textAlign: 'left' }}
             >
               <ImageIcon size={18} style={{ flexShrink: 0 }} />
               <span style={{ flex: 1, lineHeight: 1.3 }}>
@@ -3865,6 +3892,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               : null)
             : null}
           initialMPerPx={canvasState?.useCustomBase ? canvasState.customBase?.mPerPx ?? null : null}
+          simple={simple}
         />
       )}
 
@@ -3883,7 +3911,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             </span>
             <ChevronRight size={16} style={{ flexShrink: 0 }} />
           </button>
-          <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />
+          {!simple && <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />}
         </div>
       )}
 
@@ -3913,15 +3941,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
         <div style={isPhone ? undefined : {
           position: 'fixed',
-          left: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements) + 8,
-          right: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers) + 8,
+          left: elementsReservedPx + 8,
+          right: layersReservedPx + 8,
           bottom: 10,
           zIndex: 16,
           maxWidth: 560,
           margin: '0 auto',
         }}>
           <StepGuideLazy
-            onHide={() => hideSection('stepGuide')}
+            onHide={simple ? undefined : () => hideSection('stepGuide')}
             step={canvasState.step}
             state={canvasState}
             ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
@@ -4101,7 +4129,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <DesignPalette
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
-          hiddenSections={{ count: dismissed.length, onRestore: showAllSections }}
+          hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
           step={canvasState.step}
           mode={designMode}
           tool={tool}
@@ -4139,9 +4167,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onVisibilityChange: setLayerElementVisibility,
           }}
           desktopAside={!isPhone}
-          desktopPanelLayout={desktopPanelLayout}
-          onDesktopPanelWidthChange={setDesktopPanelWidth}
-          workspaceMode={workspaceMode}
+          desktopPanelLayout={effectiveDesktopPanelLayout}
+          onDesktopPanelWidthChange={simple ? undefined : setDesktopPanelWidth}
+          workspaceMode={effectiveWorkspaceMode}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
@@ -4166,6 +4194,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           // apple/pear/plum/olive chips on a subtropical coast.
           siteBiome={site?.biome}
           siteMinTempC={plantingColdMinimum(locationData?.climate)}
+          simple={simple}
         />
       )}
 
@@ -4174,7 +4203,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {canvasState && frame && previewFilter && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: PAPER, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid #E2D8C4', flexShrink: 0 }}>
-            <ImageIcon size={18} color={OCHRE} />
+            <ImageIcon size={18} color={GOLD_DIM} />
             <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>{tr('Preview map', 'Buka imephu')}</span>
             <button
               type="button"
