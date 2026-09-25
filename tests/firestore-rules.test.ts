@@ -975,6 +975,26 @@ test('cross-org isolation matrix: surveys and survey_responses', async () => {
   // Cross-organisation survey creation is now refused; covered below with the MEL access tests.
 });
 
+test('survey_responses: create is restricted to the roles a survey is meant for', async () => {
+  // Surveys are answered by farmers and students. Verified bug: mentor (and, by the same gap,
+  // ngo/funder/admin) accounts had no role check stopping them from writing a response for
+  // themselves, matching the client-side bug fixed on app/surveys/page.tsx.
+  const farmerADb = env.authenticatedContext(FARMER_A).firestore();
+  await assertSucceeds(setDoc(doc(farmerADb, 'survey_responses', `${FARMER_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: FARMER_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+
+  const mentorADb = env.authenticatedContext(MENTOR_A).firestore();
+  await assertFails(setDoc(doc(mentorADb, 'survey_responses', `${MENTOR_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: MENTOR_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+
+  const staffADb = env.authenticatedContext(STAFF_A).firestore();
+  await assertFails(setDoc(doc(staffADb, 'survey_responses', `${STAFF_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: STAFF_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+});
+
 test('cross-org isolation matrix: course_progress', async () => {
   const staffADb = env.authenticatedContext(STAFF_A).firestore();
   const staffBDb = env.authenticatedContext(STAFF_B).firestore();
