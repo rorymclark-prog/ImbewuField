@@ -1,0 +1,8 @@
+# Vegetables and Staple Crops — Sesotho machine draft
+
+- **Status:** Agy `gemini-3.8-flash-low` draft with independent Agy `gemini-3.1-pro-low` review. No fluent Sesotho speaker has approved the draft.
+- **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `vegetables-staples` (four lessons; 30 minutes; plants).
+- **Paired data:** [`lib/course-translation-drafts-st-vegetables-staples.ts`](../../lib/course-translation-drafts-st-vegetables-staples.ts). Review data only; no learner wiring or audio.
+- **Exact English holds (10):** `l1.body`, `l1.quiz[1].options[1]`, `l2.quiz[0].question`, `l3.body`, `l3.keyPoints[2]`, `l4.infographicAlt`, `l4.body`, `l4.quiz[0].options[1]`, `l4.quiz[0].rationale`, and `l4.quiz[1].question`. Pro Low flagged `kotsanyana` as an incorrect rendering of “insect” in L4, `brassicas` left unresolved in L1, and `lettuce` left unresolved in L2. The L3 sweet potato body and key point use “patata,” which does not safely identify sweet potato. L4 quiz wording also uses `seji` where the source says “pest.”
+- **Critical claims checked:** the English source’s bed widths and sample bed length, wet-clay caution, local spacing guidance, 2–3-week succession rhythm and its conditional caveat, bean residue nutrient timing, sweet potato establishment water, amadumbe's wetter-ground use, and registered-product/label/waiting-period instructions. Unresolved crop and pest wording is held exactly in English.
+- **Preservation checks:** tests pin all four source lesson IDs and order, exact English pairs, body paragraph boundaries, key point and quiz counts/order, unchanged answer indexes, figure tokens, Latin script, and the exact hold list. No new species or figures were added.

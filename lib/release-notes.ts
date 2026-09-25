@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: 'e1041f2a', changes: [
+  { when: '25 September 2026', sha: 'c8d8b84a', changes: [
     'Money charts are readable in dark mode: figures and labels follow the theme.',
     'In Simple, Exchange shows its numbers once and puts listings before the guide.',
     'Mentor, Surveys and Funder screens now follow dark mode too.',
