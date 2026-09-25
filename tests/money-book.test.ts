@@ -137,6 +137,11 @@ test('the home screen offers one money tile, not two', () => {
     !grid.includes('homeQuickFinance'),
     'the Finance tile\'s label is still on the home screen; two names for one book is how the split started',
   );
+  // Simple goes one further: the My Records tab under every screen is the same book under the same
+  // name, so Simple's Home leaves the tile out and "My Records" appears once.
+  assert.match(homePage, /const quickActions = simple \? QUICK_ACTIONS\.filter\(\(q\) => q\.href !== '\/records'\) : QUICK_ACTIONS;/,
+    'Simple Home must leave out the tile that repeats the My Records tab');
+  assert.match(homePage, /\{quickActions\.map\(/, 'the grid must render the filtered list');
 });
 
 test('the menu and the tab bar each offer one money door, and it is the book', () => {

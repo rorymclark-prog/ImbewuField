@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '4a234130', changes: [
+    'Settings has a new choice: Simple or All tools. Farmers start on Simple.',
+    'Simple Home names your site once, with your next step on the green card.',
+  ], tour: [
+    { title: 'Try Simple and All tools', where: 'Home → Settings', href: '/home',
+      detail: 'Tap the gear on Home, then choose under How much to show. All tools is the old Home.' },
+  ] },
   { when: '25 September 2026', sha: '8e9bbdf6', changes: [
     'Garden Atlas search and map labels add draft isiZulu; site data stays as supplied.',
   ], tour: [

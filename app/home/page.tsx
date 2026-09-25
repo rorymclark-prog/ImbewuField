@@ -41,8 +41,9 @@ import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
-import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
-import type { CompletionStepKey } from '@/lib/completion-score';
+import { useSiteProgress, type Coords } from '@/lib/site-progress';
+import { nextAction } from '@/lib/home-next-step';
+import { useAppLevel } from '@/lib/app-level';
 import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
@@ -109,9 +110,37 @@ function LastSiteCard({ site }: { site: LastSite }) {
 
 // Weather for the farmer's designated MAIN site — separate from LastSiteCard
 // (which tracks the last-VIEWED map point, not necessarily a saved/main site).
-function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void }) {
+//
+// SIMPLE drops the "Main site · {name}" heading: the site card directly above is headed by the
+// site's name, and this card opened with the same name again, so a farmer read it three times
+// before reaching anything new. What stays is the switcher, only when there is a second site to
+// switch to; WeatherWidget draws its own card, so there is no frame around it either.
+function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void; simple: boolean }) {
   const { t } = useLanguage();
   const showPicker = places.length > 1;
+  if (simple) {
+    return (
+      <div className="flex flex-col gap-2">
+        {showPicker && (
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>{t('homeMainSite')}</span>
+            <select
+              value={site.id}
+              onChange={(e) => onSetMain(e.target.value)}
+              aria-label={t('homeSetAsMain')}
+              className="font-sans"
+              style={{ fontSize: 14, minHeight: 44, border: '1px solid var(--color-border)', borderRadius: 10, background: 'var(--color-surface)', color: 'var(--color-ink)', padding: '6px 10px', maxWidth: 200 }}
+            >
+              {places.map((p) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        <WeatherWidget lat={site.lat} lon={site.lon} compact />
+      </div>
+    );
+  }
   return (
     <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-3">
@@ -212,36 +241,10 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   );
 }
 
-// Gamified "Your farm plan" progress card — overall % across the 5-stage
-// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus
-// the single next action, deep-linked. Deliberately mirrors the same source
-// of truth as DataPanel/NextStepCoach/HomeHeroCard (lib/site-progress.ts) so
-// this can never drift into a second scoring path.
-interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
-const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
-  located: { label: 'Tap your land on the map', href: () => '/farmer' },
-  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
-  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
-  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
-  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
-  // site loaded and nothing armed, so the coaching told them to do a thing this link never
-  // actually started — same fix the NextStepCoach in-panel card already gets for free by
-  // dispatching the event directly (it's already sitting on the right site).
-  boundary: {
-    label: 'Trace your boundary',
-    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
-  },
-  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
-  // loads the main site and auto-opens it (the older /survey wizard used a different store
-  // and never moved this score).
-  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
-  design: {
-    label: 'Design your farm',
-    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
-  },
-  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
-};
-
+// Gamified "Your farm plan" progress card (All tools) — overall % across the 5-stage
+// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus the single next
+// action, deep-linked. The step table is lib/home-next-step.ts, shared with the Simple layout,
+// which puts the same next step inside the site card instead of under it.
 function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
   const { t, lang } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
@@ -254,16 +257,8 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   if (!places || places.length === 0) return null;
   if (!progress) return null;
 
-  const { pct, nextStep } = progress;
-  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
-
-  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, mainSite?.id) : designHref;
-  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
-  const label = nextStepCopy
-    ? t(nextStepCopy.titleKey)
-    : nextStep
-      ? localUi(lang, STEP_ACTIONS[nextStep].label, ({ located: 'Thepha indawo yakho emephini', boundary: 'Dweba umngcele wakho', survey: 'Gcwalisa inhlolovo yendawo', design: 'Dizayina ipulazi lakho', cropPlan: 'Hlela izitshalo zakho' } as Record<CompletionStepKey, string>)[nextStep])
-      : localUi(lang, 'Plan complete — print your plan set', 'Uhlelo luphelele — phrinta uhlelo lwakho');
+  const { pct } = progress;
+  const { href, overline, label } = nextAction(progress.nextStep, coords, mainSite?.id, t, lang);
 
   return (
     <Link
@@ -281,7 +276,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
     >
       <div className="flex-1 min-w-0">
         <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 4 }}>
-          {nextStep ? t('coachOverline') : localUi(lang, 'Your farm plan', 'Uhlelo lwepulazi lakho')}
+          {overline}
         </div>
         <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
           {label}
@@ -318,6 +313,10 @@ function HomeLandingInner() {
   // "This is the NGO area". See lib/role-access.ts.
   const { user, role } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
+  // Simple / All tools (Settings). All tools is this screen as it has always been; Simple names the
+  // site once, puts the next step on the site card and leaves out the second doors (lib/app-level.ts).
+  const level = useAppLevel();
+  const simple = level === 'simple';
 
   useEffect(() => {
     setLastSite(getLastSite());
@@ -373,6 +372,9 @@ function HomeLandingInner() {
   // all ten locales — "Izitshalo nezithengiso" on the tile the isiZulu-speaking farmer this was
   // audited against actually taps. A partial subtitle in her language beats a complete one in
   // someone else's; the tab strip inside names all three pages the moment she opens it.
+  //
+  // SIMPLE LEAVES THE TILE OUT. The tab bar under every screen already opens the same book under
+  // the same name, so on Simple's Home "My Records" appears once, as the tab.
   const QUICK_ACTIONS = [
     { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
     { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
@@ -385,6 +387,7 @@ function HomeLandingInner() {
     { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
+  const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (
     <div
@@ -396,7 +399,7 @@ function HomeLandingInner() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
-        <MenuButton /><BackButton fallback="/home" />
+        <MenuButton />{!simple && <BackButton fallback="/home" />}
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
@@ -480,6 +483,9 @@ function HomeLandingInner() {
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
+          .home-quick-grid.is-simple {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+          }
         }
       `}</style>
 
@@ -497,14 +503,14 @@ function HomeLandingInner() {
             columns; on a phone they keep this exact reading order. */}
         <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
-            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
-            <FarmPlanCard places={places} mainSite={mainSite} />
+            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} />
+            {!simple && <FarmPlanCard places={places} mainSite={mainSite} />}
           </div>
 
           {(mainSite || (lastSite && !lastSiteMatchesMain)) && (
             <div className="home-priority-secondary">
               {places && mainSite && (
-                <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
+                <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} simple={simple} />
               )}
               {lastSite && !lastSiteMatchesMain && <LastSiteCard site={lastSite} />}
             </div>
@@ -512,8 +518,8 @@ function HomeLandingInner() {
         </section>
 
         {/* ── Quick actions ── */}
-        <div className="home-quick-grid grid grid-cols-3 gap-3">
-          {QUICK_ACTIONS.map((q) => (
+        <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+          {quickActions.map((q) => (
             <Link
               key={q.href}
               href={q.href}

@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-25 (Simple / All tools switch — Home is the first screen to use it)
+- **Why:** Rory: the app "has now become very busy". A 20-screen audit (390 × 844, sample farm)
+  found Home's busyness was mostly repetition: the main site's name three times, "75% complete"
+  twice (`HomeHeroCard` and `FarmPlanCard` both read `useSiteProgress`), Lima named three times,
+  a Back button on the root screen, "My Records" as both a tile and a tab. Shown the tidy Home next
+  to today's, Rory: "there's a lot I like about both ... let's keep it a switch", so both stay.
+- **The switch:** `lib/app-level.ts` (+ pure `lib/app-level-core.ts`) — `useAppLevel()` returns
+  `'simple' | 'full'`, stored per account in localStorage. Defaults: farmers and signed-out
+  visitors → Simple; mentor/student/ngo/funder/admin → All tools; the sample tour → All tools
+  unless previewing the farmer. Settings (`components/ThemePanel.tsx`) → "How much to show".
+- **Home:** All tools = Home exactly as before. Simple = the site card headed "Main site" + name
+  with the next step inside it, no FarmPlanCard, weather card without the repeated name, no Back,
+  no My Records tile. The step table moved to `lib/home-next-step.ts`, shared by both layouts.
+- **Measured (Simple vs old Home):** whole-page tap targets 62 → 60, words 327 → 312, "My Records
+  ×2" gone; first-screen taps 38 → 39 (the page is shorter, so more tiles fit on it).
+- **Next:** app-wide audit (running), then Simple mode screen by screen; an organisation-wide
+  default for its farmers (Step 3) on the org record.
+
 ### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
 designate what users can or cannot do audit and research what we need and they need to be able
