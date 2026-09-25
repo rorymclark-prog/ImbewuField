@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '8df98de0', changes: [
+    'The opening Site Survey choices now show draft isiZulu beside English.',
+    'Uncertain descriptions stay in English pending local review.',
+  ], tour: [
+    { title: 'Review Site Survey choices', where: 'Site Survey → Site and goals', href: '/farmer',
+      detail: 'Choose isiZulu and compare the household, community and goal choices with their English source.' },
+  ] },
   { when: '25 September 2026', sha: '01890303', changes: [
     'Water Harvesting lessons now show marked Sesotho drafts.',
     'Uncertain water-safety passages stay in English; slides and audio remain English.',

@@ -315,10 +315,10 @@ test('the rewired SiteSurveySheet keys were already fully translated in every lo
 
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
   for (const key of NEW_SITE_SURVEY_KEYS) {
-    assert.match(surveySource, new RegExp(`t\\('${key}'\\)`), `${key} is not referenced by SiteSurveySheet`);
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
   }
   for (const key of REWIRED_EXISTING_KEYS) {
-    assert.match(surveySource, new RegExp(`t\\('${key}'\\)`), `${key} is not referenced by SiteSurveySheet`);
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
   }
 
   // useLanguage must actually be imported and called — a stray literal key string with no t()
@@ -356,4 +356,41 @@ test('the accessible modal semantics a11y-modal-semantics.test.ts depends on sur
   assert.match(surveySource, /addEventListener\('keydown', onKey\)/);
   assert.match(surveySource, /role="switch"/);
   assert.match(surveySource, /aria-checked=\{on\}/);
+});
+
+
+test('Site Survey opening choices show exact English sources and hold uncertain phrases in English', () => {
+  const zu = localeBlocks().find((block) => block.locale === 'zu');
+  assert.ok(zu, 'no isiZulu locale block found');
+
+  const pairedSources = [
+    ['sectionWhoIsThisSiteFor', 'Who is this site for?'],
+    ['radioMeMyFamily', 'Me / my family'],
+    ['radioMeMyFamilyDesc', 'Household homestead or smallholding'],
+    ['radioCommunityGroup', 'Community group / cooperative'],
+    ['radioCommunityGroupDesc', 'Shared garden, coop, or NGO site'],
+    ['sectionAdultsWhoWorkThisLand', 'Adults who work this land'],
+    ['sectionApproximateNumberOfMembers', 'Approximate number of members'],
+    ['sectionGoalsSelectAll', 'Goals for this site (select all that apply)'],
+    ['goalFoodSecurityLabel', 'Food security'],
+    ['goalFoodSecurityDesc', 'Feed the household or members year-round'],
+    ['goalGenerateIncomeLabel', 'Generate income'],
+    ['goalGenerateIncomeDesc', 'Sell surplus produce or value-added products'],
+    ['goalRestoreTheLandLabel', 'Restore the land'],
+    ['goalRestoreTheLandDesc', 'Cover crops, composting, rehabilitation'],
+    ['goalDemonstrateTeachLabel', 'Demonstrate / teach'],
+    ['goalDemonstrateTeachDesc', 'Training ground for others'],
+  ] as const;
+
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must display its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`), `${key} source must match the English dictionary`);
+  }
+
+  assert.ok(zu.block.includes("  radioCommunityGroupDesc: 'Shared garden, coop, or NGO site'"),
+    'the uncertain community-site descriptor stays in English');
+  assert.ok(zu.block.includes("  goalGenerateIncomeDesc: 'Sell surplus produce or value-added products'"),
+    'the uncertain value-added wording stays in English');
+  assert.ok(zu.block.includes("  goalRestoreTheLandLabel: 'Ukuvuselela umhlaba'"),
+    'ecological restoration must not use wording that can mean land restitution');
 });
