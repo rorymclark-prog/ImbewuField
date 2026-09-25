@@ -76,6 +76,7 @@ interface Props {
   // Parent raises this via ?openSurvey=1; we consume it once (onSurveyOpened).
   openSurvey?: boolean;
   onSurveyOpened?: () => void;
+  surveyViewport: 'desktop' | 'mobile';
 }
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
@@ -300,7 +301,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened, surveyViewport }: Props) {
   const appConfirm = useAppConfirm();
   const { t, lang } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
@@ -352,7 +353,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // in-panel NextStepCoach button does. Consumed once. The sheet still gates on
   // activePlaceId below, so it appears as soon as the parent's site load lands.
   useEffect(() => {
-    if (openSurvey) { setSurveySheetOpen(true); onSurveyOpened?.(); }
+    // Both desktop and mobile panels stay mounted; only the visible one may consume the deep link.
+    if (openSurvey && window.matchMedia(surveyViewport === 'mobile' ? '(max-width: 1023px)' : '(min-width: 1024px)').matches) {
+      setSurveySheetOpen(true);
+      onSurveyOpened?.();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSurvey]);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)

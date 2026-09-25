@@ -1,6 +1,7 @@
 'use client';
 import { numberLabel } from '@/lib/format-figures';
 import { useState, useCallback, useEffect, useRef, useId } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles, Sprout, NotebookPen, ArrowRight, MapPin, CircleCheck, Circle, Pencil, Info, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
@@ -430,7 +431,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   const fieldGuides = [t('surveyGuidePeople'), t('surveyGuideLand'), t('surveyGuideProduction'), t('surveyGuideLivestock'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
   const tips = [t('surveyTipPeople'), t('surveyTipLand'), t('surveyTipProduction'), t('surveyTipLivestock'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
 
-  return (
+  return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
       <header className={styles.header}>
         <div className={styles.brandMark}><NotebookPen size={23}/></div>
@@ -964,5 +965,5 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         </div>}
       </footer>
     </div>
-  );
+  ), document.body);
 }

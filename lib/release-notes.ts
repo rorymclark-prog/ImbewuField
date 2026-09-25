@@ -42,21 +42,39 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '658185d2', changes: [
+  { when: '25 September 2026', sha: '4a234130', changes: [
     'Settings has a new choice: Simple or All tools. Farmers start on Simple.',
     'Simple Home names your site once, with your next step on the green card.',
   ], tour: [
     { title: 'Try Simple and All tools', where: 'Home → Settings', href: '/home',
       detail: 'Tap the gear on Home, then choose under How much to show. All tools is the old Home.' },
   ] },
-  { when: '25 September 2026', sha: '3fb3f25a', changes: [
+  { when: '25 September 2026', sha: '8e9bbdf6', changes: [
+    'Garden Atlas search and map labels add draft isiZulu; site data stays as supplied.',
+  ], tour: [
+    { title: 'Check Atlas labels', where: 'Garden Atlas', href: '/atlas',
+      detail: 'Choose isiZulu and open a point; data, sources and farming cautions remain unchanged.' },
+  ] },
+  { when: '25 September 2026', sha: 'd39ac418', changes: [
+    'Training records add draft isiZulu for attendance, photos and sharing.',
+  ], tour: [
+    { title: 'Check the training record', where: 'Programme evidence', href: '/ngo',
+      detail: 'Choose isiZulu and open a training session to check attendance and sharing wording.' },
+  ] },
+  { when: '25 September 2026', sha: '658185d2', changes: [
+    'The site survey now opens over the full phone screen from the Farmer map.',
+  ], tour: [
+    { title: 'Open the site survey', where: 'Farmer map', href: '/farmer',
+      detail: 'On a phone, open Site Survey; its introduction and questions should appear above the map.' },
+  ] },
+  { when: '25 September 2026', sha: 'c1e79c39', changes: [
     'The design learning pathway adds marked isiZulu drafts for navigation and exercises.',
     'Design lessons, model measurements and narration still identify their English content.',
   ], tour: [
     { title: 'Check design pathway language', where: 'My Studies', href: '/student/design',
       detail: 'Choose isiZulu; draft prompts show English source, while core lessons remain English.' },
   ] },
-  { when: '25 September 2026', sha: '95e30e84', changes: [
+  { when: '25 September 2026', sha: '5f610aae', changes: [
     'A failed organisation survey send keeps your answers and lets you retry.',
     'Crop plan controls and chart accessibility labels add isiZulu drafts.',
   ], tour: [
