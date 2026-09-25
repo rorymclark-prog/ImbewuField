@@ -377,6 +377,27 @@ test('Livestock & Poultry choices and help show each isiZulu draft beside its ex
   assert.ok(surveySource.includes("paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.')"));
 });
 
+test('Income & Sales choices and help show isiZulu drafts beside exact English sources', () => {
+  const pairedSources = [
+    ['surveyStepIncomeSales', 'Income & Sales'],
+    ['toggleSellProduceLabel', 'We sell or plan to sell produce'],
+    ['surveyToggleSellProduceSub', 'Your production rows can record what was sold and income earned'],
+    ['sectionCurrentOrTargetMarket', 'Current or target market'],
+    ['marketFarmStall', 'On-site farm stall'],
+    ['marketLocalCommunity', 'Local community / informal market'],
+    ['marketWholesale', 'Wholesale / bulk buyers'],
+    ['marketNotSure', 'Not sure yet'],
+    ['surveyIncomeSalesNote', 'You can record what was sold and income earned against each item in the Current Production step.'],
+  ] as const;
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must show its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`), `${key} source must match the English dictionary`);
+  }
+  assert.ok(surveySource.includes("const SURVEY_INCOME_GUIDE_ENGLISH = 'Enter the amount earned from sales, before costs. The survey records income; it does not calculate profit.'"));
+  assert.ok(surveySource.includes("lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome')"), 'the income/profit distinction must stay in English for isiZulu');
+  assert.ok(surveySource.includes("paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.')"));
+});
+
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
   for (const key of NEW_SITE_SURVEY_KEYS) {
     assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
@@ -398,7 +419,8 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   assert.doesNotMatch(surveySource, /'Land & Location'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /function surveySteps[\s\S]*?\[\s*'Current Production'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Livestock & Poultry'/, 'STEPS regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /'Income & Sales'/, 'STEPS regressed to a hard-coded literal');
+  const surveyStepSource = surveySource.slice(surveySource.indexOf('function surveySteps'), surveySource.indexOf('const STEP_ICONS'));
+  assert.doesNotMatch(surveyStepSource, /'Income & Sales'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Resources & Inputs'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /aria-label="Site questionnaire"/, 'dialog aria-label regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /aria-label="Close"/, 'close button aria-label regressed to a hard-coded literal');

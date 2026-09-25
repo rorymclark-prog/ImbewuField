@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'ef69119c', changes: [
+    'Income & Sales choices now pair isiZulu drafts with English sources.',
+    'The income-before-costs guide stays in English.',
+  ], tour: [
+    { title: 'Review income and sales choices', where: 'Site Survey → Income & Sales', href: '/farmer',
+      detail: 'Switch to isiZulu to compare market choices with English; profit wording stays English.' },
+  ] },
   { when: '25 September 2026', sha: 'cc628cd1', changes: [
     'Reading the Landscape now shows a source-paired Tshivenda machine draft in Study.',
     'Held water, A-frame, frost, and soil claims stay in English pending review.',
