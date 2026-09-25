@@ -108,7 +108,7 @@ export default function MessageThreadPage() {
 
   if (busy || loading || !communityEnabled() || !user) {
     return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading messages'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading messages'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
@@ -118,45 +118,45 @@ export default function MessageThreadPage() {
   const otherName = thread?.participant_names?.[otherUid] ?? (lang === 'zu' ? 'Umlimi' : 'Farmer');
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
       {/* The person you are talking to IS this page's subject, but in the header they are a link
           back to the profile, not a heading. Name the page for screen readers separately. */}
       <h1 className="sr-only">{otherName}</h1>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
         <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
+        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="community:messages" label={lang === 'zu' ? 'Funda' : 'Learn'} />
-        <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', textDecoration: 'none' }}>
+        <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)', textDecoration: 'none' }}>
           {otherName}
         </Link>
         <button
           onClick={() => setReportOpen((s) => !s)}
           aria-label={t('communityReportButton')}
-          style={{ marginLeft: 8, background: 'transparent', border: 'none', color: '#755942', cursor: 'pointer', display: 'flex' }}
+          style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
         >
           <Flag size={16} />
         </button>
       </header>
 
       {reportOpen && (
-        <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', margin: '12px 16px 0' }}>
+        <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', margin: '12px 16px 0' }}>
           <textarea
             value={reportReason}
             onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
             placeholder={t('communityReportReasonPlaceholder')}
             rows={2}
             className="w-full rounded-xl px-3 py-2.5 font-sans"
-            style={{ fontSize: 13.5, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none', resize: 'none', marginBottom: 8 }}
+            style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 8 }}
           />
           <button
             onClick={handleReport}
             disabled={!reportReason.trim() || reportBusy}
             className="font-sans font-semibold rounded-xl"
-            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#755942', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
           >
             {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
           </button>
@@ -178,9 +178,9 @@ export default function MessageThreadPage() {
                   className="font-sans"
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
-                    background: mine ? '#1F4D2B' : '#FFFEFA',
-                    color: mine ? '#F7F2E9' : '#20190F',
-                    border: mine ? 'none' : '1px solid #E2D8C4',
+                    background: mine ? '#1F4D2B' : 'var(--bg-1)',
+                    color: mine ? '#F7F2E9' : 'var(--text-primary)',
+                    border: mine ? 'none' : '1px solid var(--border)',
                     borderBottomRightRadius: mine ? 4 : 16,
                     borderBottomLeftRadius: mine ? 16 : 4,
                     whiteSpace: 'pre-wrap',
@@ -188,7 +188,7 @@ export default function MessageThreadPage() {
                 >
                   {m.body}
                 </div>
-                <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
+                <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
                   {timeAgo(m.created_at, lang)}
                 </div>
               </div>
@@ -203,7 +203,7 @@ export default function MessageThreadPage() {
           {t('communitySendError')}
         </p>
       )}
-      <div className={`${workspace.workspace} ${workspace.readingWidth} flex-shrink-0 flex items-center gap-2 px-3 py-3 sm:px-6`} style={{ borderTop: '1px solid #E2D8C4', background: '#FFFEFA', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
+      <div className={`${workspace.workspace} ${workspace.readingWidth} flex-shrink-0 flex items-center gap-2 px-3 py-3 sm:px-6`} style={{ borderTop: '1px solid var(--border)', background: 'var(--bg-1)', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
         <input
           type="text"
           value={body}
@@ -211,7 +211,7 @@ export default function MessageThreadPage() {
           onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
           placeholder={t('communityMessageInputPlaceholder')}
           className="flex-1 min-w-0 rounded-full px-4 py-2.5 font-sans"
-          style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none' }}
+          style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
         />
         <button
           onClick={handleSend}
@@ -220,7 +220,7 @@ export default function MessageThreadPage() {
           className="flex items-center justify-center rounded-full flex-shrink-0"
           style={{ width: 40, height: 40, background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', border: 'none', cursor: body.trim() ? 'pointer' : 'default' }}
         >
-          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? '#F7F2E9' : '#755942' }} />}
+          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? '#F7F2E9' : 'var(--text-muted)' }} />}
         </button>
       </div>
     </div>

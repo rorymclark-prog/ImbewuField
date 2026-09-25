@@ -26,6 +26,9 @@ const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E'; // STEP_ACCENT.sector
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = '#7A4408';
 const DOT_SUN = '#F7C97E';
 const DOT_WIND = '#E08A2C';
 const DOT_FIRE = '#D64A2A';
@@ -202,7 +205,7 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
       <div style={{ borderRadius: 12, border: `1.5px solid ${OCHRE}`, background: PAPER, overflow: 'hidden' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minHeight: 38, padding: '7px 10px', background: 'rgba(192,122,30,0.10)' }}>
           <span style={{ fontSize: 12.5, fontWeight: 800, color: DARK, flex: 1 }}>{t('designSectorTitle')}</span>
-          <span style={{ fontSize: 10.5, fontWeight: 700, color: OCHRE, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t('designSectorSource')}</span>
+          <span style={{ fontSize: 10.5, fontWeight: 700, color: GOLD_DIM, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t('designSectorSource')}</span>
         </div>
 
         <div style={{ padding: '8px 10px 4px', display: 'flex', flexDirection: 'column', gap: 7 }}>
