@@ -1673,6 +1673,8 @@ const dict: Dict = {
   communityNearbyIntro: "Abalimi abakhetha ukubonakala baboniswa lapha njengendawo eseduze kuphela — akuboniswa ikhaya labo eliqondile.",
   communityMessageButton: "Thumela umyalezo",
   communityReportButton: "Bika",
+  communityMoreLabel: "Okwengeziwe",
+  communityLessLabel: "Okuncane",
   communityViewProfile: "Buka iphrofayili",
   communityEditProfileTitle: "Iphrofayili yakho yomphakathi",
   communityEditProfileIntro: "Yabelana ngolwazi oluningi noma oluncane ngokuthanda kwakho. Akukho okubonakala kwabanye uze ukulondoloze.",

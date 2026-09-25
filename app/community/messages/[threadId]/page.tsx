@@ -5,9 +5,10 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Loader2, Send, Flag } from 'lucide-react';
+import { ChevronLeft, Loader2, Send, Flag, MoreHorizontal } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/db/community-queries';
 import type { MessageThread, ThreadMessage } from '@/lib/db/types';
@@ -35,6 +36,7 @@ export default function MessageThreadPage() {
   const router = useRouter();
   const params = useParams<{ threadId: string }>();
   const threadId = params.threadId;
+  const simple = useAppLevel() === 'simple';
 
   const [thread, setThread] = useState<MessageThread | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
@@ -42,6 +44,7 @@ export default function MessageThreadPage() {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
   const [busy, setBusy] = useState(true);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [reportSent, setReportSent] = useState(false);
@@ -133,14 +136,39 @@ export default function MessageThreadPage() {
         <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)', textDecoration: 'none' }}>
           {otherName}
         </Link>
-        <button
-          onClick={() => setReportOpen((s) => !s)}
-          aria-label={t('communityReportButton')}
-          style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
-        >
-          <Flag size={16} />
-        </button>
+        {simple ? (
+          <button
+            onClick={() => setMoreOpen((s) => !s)}
+            aria-label={t('communityMoreLabel')}
+            aria-expanded={moreOpen}
+            style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+          >
+            <MoreHorizontal size={18} />
+          </button>
+        ) : (
+          <button
+            onClick={() => setReportOpen((s) => !s)}
+            aria-label={t('communityReportButton')}
+            style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+          >
+            <Flag size={16} />
+          </button>
+        )}
       </header>
+
+      {/* Simple keeps the report/block flow out of the header but never out of reach — tapping
+          More reveals it, the same safety-critical action All tools shows directly. */}
+      {simple && moreOpen && (
+        <div className="flex justify-end" style={{ padding: '10px 16px 0' }}>
+          <button
+            onClick={() => { setReportOpen((s) => !s); setMoreOpen(false); }}
+            className="flex items-center gap-1.5 font-sans font-semibold"
+            style={{ fontSize: 12.5, color: '#8B2020', background: 'transparent', border: 'none', cursor: 'pointer' }}
+          >
+            <Flag size={13} /> {t('communityReportButton')}
+          </button>
+        </div>
+      )}
 
       {reportOpen && (
         <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', margin: '12px 16px 0' }}>
@@ -188,9 +216,11 @@ export default function MessageThreadPage() {
                 >
                   {m.body}
                 </div>
-                <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
-                  {timeAgo(m.created_at, lang)}
-                </div>
+                {!simple && (
+                  <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
+                    {timeAgo(m.created_at, lang)}
+                  </div>
+                )}
               </div>
             </div>
           );
