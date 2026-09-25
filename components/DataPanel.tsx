@@ -32,7 +32,7 @@ import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/comple
 import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
@@ -302,7 +302,7 @@ function Skeleton() {
 /* ── Main component ───────────────────────────────── */
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
   const appConfirm = useAppConfirm();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
     soil: t('reportGroupSoil'), trees: t('reportGroupTrees'),
@@ -1249,12 +1249,17 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
               const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
               const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
-              const improvements: string[] = [];
-              if (pHScore < 2) improvements.push(ph < 6 ? t('soilImprovementPhAcidic').replace('{ph}', String(ph)) : t('soilImprovementPhAlkaline').replace('{ph}', String(ph)));
-              if (ocScore < 2) improvements.push(t('soilImprovementLowCarbon').replace('{oc}', String(oc)));
-              if (bdScore < 2) improvements.push(t('soilImprovementCompacted').replace('{bd}', String(bd)));
-              if (texScore < 2 && clay > 40) improvements.push(t('soilImprovementHighClay').replace('{clay}', String(clay)));
-              else if (texScore < 2 && sand > 70) improvements.push(t('soilImprovementSandy').replace('{sand}', String(sand)));
+              const improvements: { key: string; source: string; values: Record<string, string> }[] = [];
+              if (pHScore < 2) {
+                improvements.push(ph < 6
+                  ? { key: 'soilImprovementPhAcidic', source: t('soilImprovementPhAcidic'), values: { ph: String(ph) } }
+                  : { key: 'soilImprovementPhAlkaline', source: t('soilImprovementPhAlkaline'), values: { ph: String(ph) } });
+              }
+              if (ocScore < 2) improvements.push({ key: 'soilImprovementLowCarbon', source: t('soilImprovementLowCarbon'), values: { oc: String(oc) } });
+              if (bdScore < 2) improvements.push({ key: 'soilImprovementCompacted', source: t('soilImprovementCompacted'), values: { bd: String(bd) } });
+              if (texScore < 2 && clay > 40) improvements.push({ key: 'soilImprovementHighClay', source: t('soilImprovementHighClay'), values: { clay: String(clay) } });
+              else if (texScore < 2 && sand > 70) improvements.push({ key: 'soilImprovementSandy', source: t('soilImprovementSandy'), values: { sand: String(sand) } });
+              const interpolate = (template: string, values: Record<string, string>) => template.replace(/\{([^}]+)\}/g, (_, key: string) => values[key] ?? `{${key}}`);
               return (
                 <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-between mb-2">
@@ -1271,10 +1276,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {improvements.length > 0 && (
                     <div className="space-y-1.5">
                       <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 9.5 }}>{t('priorityImprovementsHeader')}</p>
+                      {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
                           <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          {imp}
+                          <span>{lang === 'zu' ? <><span>{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
                         </div>
                       ))}
                     </div>

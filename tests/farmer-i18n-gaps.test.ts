@@ -14,10 +14,9 @@
 //     soil values, so a plain key would not do: each fixed phrase gets its own key with a
 //     {placeholder} filled in via .replace(), same pattern as insightSemiArid etc.
 //
-// Per the absolute rule this change worked under: no isiZulu (or any other language) may be
-// coined. New keys go into the English (`en`) block of lib/i18n.tsx ONLY — every other locale is
-// left untouched so the existing missing-key fallback (T[lang]?.[key] ?? T.en[key] ?? key) serves
-// English until a first-language reviewer supplies the real words. This test enforces that split.
+// The original gate held all new translations until first-language review. Rory subsequently
+// authorised clearly marked isiZulu drafts before review. English remains the fixed source for
+// consequential advice, while languages without drafts still use the English fallback.
 //
 // Run with:
 //   node --import ./tests/register-alias.mjs --test tests/farmer-i18n-gaps.test.ts
@@ -53,7 +52,7 @@ function localeBlocks(): Array<{ locale: string; block: string }> {
 }
 
 // Brand new — did not exist anywhere in the dictionary before this change.
-const NEW_ENGLISH_ONLY_KEYS = [
+const ENGLISH_SOURCE_KEYS = [
   'designStudioLabel',
   'soilImprovementPhAcidic',
   'soilImprovementPhAlkaline',
@@ -73,26 +72,38 @@ const REWIRED_EXISTING_KEYS = [
   'closeDetailsPanelAriaLabel',
 ] as const;
 
-test('the new farmer-facing keys exist in English only, and no other locale was touched', () => {
+test('farmer-facing English source stays present while only isiZulu gains marked drafts', () => {
   const blocks = localeBlocks();
   assert.ok(blocks.length >= 11, 'expected all eleven ImbewuField locales to be present');
 
   const en = blocks.find((b) => b.locale === 'en');
   assert.ok(en, 'no `en` locale block found in lib/i18n.tsx');
-  for (const key of NEW_ENGLISH_ONLY_KEYS) {
+  for (const key of ENGLISH_SOURCE_KEYS) {
     assert.match(en!.block, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} has no English source text in the en block`);
   }
 
   for (const { locale, block } of blocks) {
     if (locale === 'en') continue;
-    for (const key of NEW_ENGLISH_ONLY_KEYS) {
+    for (const key of ENGLISH_SOURCE_KEYS) {
+      if (locale === 'zu' && key === 'designStudioLabel') {
+        assert.match(block, /^  designStudioLabel: ['"]/m, 'the isiZulu Design Studio draft is missing');
+        assert.match(block, /^  designStudioZuluDraftBadge: ['"]/m, 'the isiZulu draft marker is missing');
+        continue;
+      }
       assert.doesNotMatch(
         block,
         new RegExp(`^  ${key}:`, 'm'),
-        `${locale} must stay untouched — ${key} is English-only until a first-language reviewer supplies real words`,
+        `${locale} must use the English source for ${key} unless a separately marked draft is displayed`,
       );
     }
   }
+  assert.match(farmerPageSource, /t\('designStudioZuluDraftBadge'\)/, 'the Design Studio draft is not visibly marked');
+  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must retain the English source even if a draft is added');
+  const zu = blocks.find((b) => b.locale === 'zu')!.block;
+  for (const key of ENGLISH_SOURCE_KEYS.filter((key) => key.startsWith('soilImprovement'))) {
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: ['"]`, 'm'), `${key} has no marked isiZulu draft`);
+  }
+  assert.match(zu, /^  soilImprovementZuluDraftNotice: ['"]/m, 'the soil advice draft notice is missing');
 });
 
 test('the rewired keys (Details/Results, tap to close, panel aria-labels) were already fully translated', () => {

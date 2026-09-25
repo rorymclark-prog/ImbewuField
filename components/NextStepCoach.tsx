@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { useLanguage, translate } from '@/lib/i18n';
 import SpeakButton from './SpeakButton';
+import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 import {
   getGuidedState,
   recordCoachDismissal,
@@ -260,7 +261,11 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           <div className="flex items-start gap-1.5 mt-2">
             <GoalIcon size={14} strokeWidth={1.8} style={{ color: 'var(--text-muted)', marginTop: 1, flexShrink: 0 }} aria-hidden />
             <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-              {t(GOAL_COPY_KEY[goal as Goal])}
+              {lang === 'zu' ? (
+                <SurveyZuluDraftPair english={translate('en', GOAL_COPY_KEY[goal as Goal])}>
+                  {t(GOAL_COPY_KEY[goal as Goal])}
+                </SurveyZuluDraftPair>
+              ) : t(GOAL_COPY_KEY[goal as Goal])}
             </span>
           </div>
         )}
