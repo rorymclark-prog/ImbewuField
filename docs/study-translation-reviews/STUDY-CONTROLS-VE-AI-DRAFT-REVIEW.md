@@ -1,7 +1,8 @@
 # Study controls — Tshivenda machine draft
 
 - **Status:** This is an unreviewed Tshivenda UI draft. No fluent Tshivenda speaker has checked or approved these labels.
-- **Scope:** Course heading and description, opening and closing a lesson, module and lesson labels, and the visible draft notice on `/student`.
+- **Draft source:** Agy Gemini (Gemini 3.8 Flash Low), 26 September 2026. A follow-up prompt checked consistency with the existing `Khoso yaṋu` course term; no fluent-speaker review has happened.
+- **Scope:** Course heading and description, starting or opening lessons, offline-study heading, module and lesson labels, and the visible draft notice on `/student`.
 - **Paired data:** [`lib/locales/ve.ts`](../../lib/locales/ve.ts). Each entry below records the English source beside the exact Tshivenda draft shown in the locale.
 - **Held in English:** Completion, progress, submission, permissions, and safety wording remains on the English fallback until review. The draft notice itself is deliberately an exact-English hold; it appears once, without duplicating the source as a second line.
 - **Review needed:** A fluent Tshivenda speaker should check these interface labels before they are treated as approved translations.
@@ -17,4 +18,8 @@
 | `studentLessonOne` | `lesson` | `ngudo` |
 | `studentLessons` | `lessons` | `ngudo` |
 | `studentLessonsLabel` | `Lessons` | `Ngudo` |
+| `studentStart` | `Start studying` | `Thoma u guda` |
+| `studentReady` | `Ready to start` | `No lugela u thoma` |
+| `studentYourCourse` | `Your course` | `Khoso yaṋu` |
+| `studentStudyOffline` | `Study offline` | `Guda u si na inthanethe` |
 | `studentTshivendaUiDraftNotice` | `Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.` | `Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.` |

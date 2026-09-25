@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'b54d433a', changes: [
+    'Study has marked Tshivenda drafts for starting, the course and offline study.',
+    'The English review notice remains visible while these labels await fluent review.',
+  ], tour: [
+    { title: 'Compare more Study label drafts', where: 'Study → My Studies', href: '/student',
+      detail: 'See the marked Tshivenda headings and English review notice.' },
+  ] },
   { when: '25 September 2026', sha: '0a4a67d0', changes: [
     'Sesotho Seeds and Tshivenda Soil Health review data is ready; lessons stay in English.',
     'Existing Xitsonga text only: the Shangani packet adds no learner translation or wiring.',

@@ -74,6 +74,10 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
     ['studentLessonOne', 'lesson', 'ngudo'],
     ['studentLessons', 'lessons', 'ngudo'],
     ['studentLessonsLabel', 'Lessons', 'Ngudo'],
+    ['studentStart', 'Start studying', 'Thoma u guda'],
+    ['studentReady', 'Ready to start', 'No lugela u thoma'],
+    ['studentYourCourse', 'Your course', 'Khoso yaṋu'],
+    ['studentStudyOffline', 'Study offline', 'Guda u si na inthanethe'],
     ['studentTshivendaUiDraftNotice', 'Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.', 'Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.'],
   ] as const;
 
@@ -89,6 +93,8 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
     ['studentSubmit', 'Submit'],
     ['studentProgressError', 'Progress could not be loaded or saved. Check your connection or account access.'],
     ['studentComplete', 'Complete'],
+    ['studentCourseComplete', 'Course complete!'],
+    ['studentSubmitting', 'Submitting…'],
     ['studentLocked', 'Locked'],
   ] as const) {
     assert.ok(!new RegExp(`\\b${key}:`).test(ve), `${key}: do not introduce an unreviewed completion, submission or access translation`);
