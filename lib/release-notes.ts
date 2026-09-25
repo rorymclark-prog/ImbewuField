@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'ae816bff', changes: [
+    'A Tshivenda Soil Health review draft is paired with English; Study remains in English.',
+  ] },
   { when: '25 September 2026', sha: '1cb654ad', changes: [
     'Plant Guilds now shows a marked Sesotho review draft beside English.',
     'Pruning, mulch and insect checks stay in English pending review.',
