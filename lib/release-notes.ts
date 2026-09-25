@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '7f249ba4', changes: [
+    'The login, password gate and sharing consent show marked isiZulu drafts beside English.',
+    'The farmer map explains site data in isiZulu with the English farming source beside it.',
+    'Community location and profile deletion choices show isiZulu drafts beside English.',
+    'Crop prices show draft isiZulu beside English source and estimate labels.',
+  ], tour: [
+    { title: 'Check community privacy', where: 'Community profile', href: '/community/profile',
+      detail: 'Choose isiZulu and read the paired location and deletion descriptions.' },
+    { title: 'Check price explanations', where: 'Prices', href: '/prices',
+      detail: 'Choose isiZulu and open a crop; compare the draft with its English source.' },
+  ] },
   { when: '25 September 2026', sha: '05636cde', changes: [
     'Feedback form labels now follow the isiZulu setting.',
     'Feedback privacy and send consent show isiZulu drafts beside their English source.',

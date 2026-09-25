@@ -13,7 +13,7 @@ import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
 import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { getCropArt } from '@/lib/crop-art';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 
 /**
@@ -25,7 +25,7 @@ import { APP_HEADER_INSET } from '@/lib/app-header';
  * the confidence badge that keeps an estimate from reading as a confirmed fact.
  */
 export default function PricesPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [overrides, setOverrides] = useState<Record<string, CropPrice>>({});
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
@@ -55,6 +55,11 @@ export default function PricesPage() {
       </header>
 
       <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 mb-3 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+            {t('pricesZuluDraftNotice')}
+          </p>
+        )}
         <style jsx global>{`
           .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
           .imf-price-crop img, .imf-price-crop > span:first-child { transition: transform 220ms cubic-bezier(.16,1,.3,1); }
@@ -75,7 +80,7 @@ export default function PricesPage() {
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
-              {t('pricesChooseCrop')}
+              {lang === 'zu' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></> : t('pricesChooseCrop')}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
               {crops.map((crop) => (

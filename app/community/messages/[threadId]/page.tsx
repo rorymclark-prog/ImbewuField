@@ -16,22 +16,22 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 
-function timeAgo(ts: unknown): string {
+function timeAgo(ts: unknown, lang: string): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
   if (!t) return '';
   try {
     const d = typeof t.toDate === 'function' ? t.toDate() : new Date((t.seconds ?? 0) * 1000);
     const diff = Date.now() - d.getTime();
-    if (diff < 60_000) return 'now';
-    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m`;
-    if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h`;
-    return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' });
+    if (diff < 60_000) return lang === 'zu' ? 'Manje' : 'now';
+    if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : `${Math.floor(diff / 60_000)}m`;
+    if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : `${Math.floor(diff / 3_600_000)}h`;
+    return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
   } catch { return ''; }
 }
 
 export default function MessageThreadPage() {
   const { user, loading } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const router = useRouter();
   const params = useParams<{ threadId: string }>();
   const threadId = params.threadId;
@@ -108,14 +108,14 @@ export default function MessageThreadPage() {
 
   if (busy || loading || !communityEnabled() || !user) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading messages'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
   }
 
   const otherUid = thread?.participants.find((p) => p !== user.uid) ?? '';
-  const otherName = thread?.participant_names?.[otherUid] ?? 'Farmer';
+  const otherName = thread?.participant_names?.[otherUid] ?? (lang === 'zu' ? 'Umlimi' : 'Farmer');
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
@@ -129,7 +129,7 @@ export default function MessageThreadPage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
-        <LessonLink id="community:messages" label="Learn" />
+        <LessonLink id="community:messages" label={lang === 'zu' ? 'Funda' : 'Learn'} />
         <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', textDecoration: 'none' }}>
           {otherName}
         </Link>
@@ -189,7 +189,7 @@ export default function MessageThreadPage() {
                   {m.body}
                 </div>
                 <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
-                  {timeAgo(m.created_at)}
+                  {timeAgo(m.created_at, lang)}
                 </div>
               </div>
             </div>
@@ -215,6 +215,7 @@ export default function MessageThreadPage() {
         />
         <button
           onClick={handleSend}
+          aria-label={sending && lang === 'zu' ? t('communitySendingStatus') : t('communitySend')}
           disabled={!body.trim() || sending}
           className="flex items-center justify-center rounded-full flex-shrink-0"
           style={{ width: 40, height: 40, background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', border: 'none', cursor: body.trim() ? 'pointer' : 'default' }}

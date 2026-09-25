@@ -41,7 +41,7 @@ import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, 
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR, CONTOUR_LABEL, CONTOUR_LABEL_HALO } from '@/lib/contour-cartography';
 import SpeakButton from './SpeakButton';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
@@ -3157,7 +3157,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
           {/* Print a clean base map (no hatch) for the farmer to sketch on by hand */}
           <button onClick={printBaseMap}
-            title={t('mapPrintBaseTitle')}
+            title={lang === 'zu'
+              ? `${t('mapPrintBaseTitle')}\nEnglish source: ${translate('en', 'mapPrintBaseTitle')}`
+              : t('mapPrintBaseTitle')}
             className="flex items-center gap-2 transition-all active:scale-95"
             style={{
               background: 'rgba(247,242,233,0.07)', border: '1px solid rgba(234,243,226,0.16)',
