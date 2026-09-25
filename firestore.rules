@@ -419,7 +419,14 @@ service cloud.firestore {
       // docs/AUDIT-NEEDS-RORY-2026-08-15.md #1.
       // Staff feedback is never a raw funder document, even with a grant.
       allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isAdmin() || surveyAnalyst(resource.data));
-      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid
+      // Verified bug: surveys are answered by farmers and students, not mentor/ngo/funder/admin
+      // accounts — the client gate on app/surveys/page.tsx used to let a mentor or funder reach
+      // and submit the farmer answer flow, and this rule had no role check to stop it server-side
+      // either. The role list mirrors app/surveys/page.tsx's ANSWER_ROLES. A profile written before
+      // roles were stored has no role field; prof().role would error (and deny) there, so a missing
+      // role reads as 'farmer' — the account every sign-up path creates — rather than locking an
+      // older farmer out of answering.
+      allow create: if signedIn() && prof().get('role', 'farmer') in ['farmer', 'student'] && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.org_id == myOrg();
     }
 

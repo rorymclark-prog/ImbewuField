@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '19ea566f', changes: [
+    'Simple mode now tidies Records, Crop plan, the Map, Study, Invoice and Exchange.',
+    'In Simple the menu is shorter; All tools in Settings still shows everything.',
+    'The Planting calendar now follows the crops in your own plan.',
+    'Mentor, NGO and funder screens get a Simple view; Assessments has its menu back.',
+  ], tour: [
+    { title: 'Records in Simple', where: 'My Records', href: '/records',
+      detail: 'See how much you kept, in one line; the charts are under All tools.' },
+    { title: 'Crop plan in Simple', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'Your beds by month, with one button to suggest a plan.' },
+    { title: 'Your planting month', where: 'Planting calendar', href: '/calendar',
+      detail: 'This month\'s planting, harvesting and care, for the crops you planned.' },
+  ] },
   { when: '25 September 2026', sha: '403d0444', changes: [
     'Calendar advice and crop tasks show draft isiZulu beside English sources.',
     'Design Studio adds draft isiZulu controls; swale terminology remains held.',

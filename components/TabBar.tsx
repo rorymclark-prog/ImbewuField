@@ -29,11 +29,11 @@ export default function TabBar() {
   const { navigationRole } = useRoleNavigation();
   const tabs = navigationRole === 'funder' ? [
     { href: '/funder', key: 'homeRoleFunderLabel', Icon: BarChart3 },
-    { href: '/network', key: 'navSectionOrganisation', Icon: Users },
+    { href: '/network', key: 'navNetwork', Icon: Users },
     { href: '/account', key: 'tabAccount', Icon: User },
   ] : navigationRole === 'ngo' ? [
     { href: '/ngo', key: 'navNGODashboard', Icon: BarChart3 },
-    { href: '/network', key: 'navSectionOrganisation', Icon: Users },
+    { href: '/network', key: 'navNetwork', Icon: Users },
     { href: '/account', key: 'tabAccount', Icon: User },
   ] : TABS;
   const barRef = useRef<HTMLDivElement>(null);

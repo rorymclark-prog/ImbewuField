@@ -10,6 +10,7 @@ import ExchangeBoard from '@/components/exchange/ExchangeBoard';
 import { getCropArt } from '@/lib/crop-art';
 import ExchangeHeader from '@/components/exchange/ExchangeHeader';
 import ExchangeLede from '@/components/exchange/ExchangeLede';
+import { EX } from '@/components/exchange/theme';
 
 /*
  * /exchange — the farmer-to-farmer trade board.
@@ -55,7 +56,7 @@ const SAMPLE_TOP_CROPS = listingCropOptions(OPEN_SAMPLE_LISTINGS).slice(0, 6);
 
 export default function ExchangePage() {
   return (
-    <div className="h-[100dvh] overflow-y-auto font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+    <div className="h-[100dvh] overflow-y-auto font-sans" style={{ background: EX.bg, color: EX.ink }}>
       <ExchangeHeader />
 
       <main className={`${workspace.workspace} px-4 py-4 sm:px-6 sm:py-6`}>
@@ -63,7 +64,7 @@ export default function ExchangePage() {
             JavaScript runs, and keeps saying it if JavaScript never arrives. */}
         <section
           className="rounded-2xl"
-          style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', padding: 16, marginBottom: 14 }}
+          style={{ background: EX.card, border: `1px solid ${EX.border}`, padding: 16, marginBottom: 14 }}
         >
           <ExchangeLede summary={SAMPLE_SUMMARY} crops={SAMPLE_TOP_CROPS.map((crop) => ({ cropKey: crop.cropKey, name: crop.name, icon: crop.icon, art: getCropArt(crop.cropKey) ?? null }))} />
         </section>

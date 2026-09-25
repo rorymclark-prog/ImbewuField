@@ -40,7 +40,7 @@
   text-decoration: none;
 }
 .actions .primary { background: #1f4d2b; color: #fff; }
-.close { min-width: 44px; padding: 0; background: transparent; font-size: 1.5rem; line-height: 1; }
+.close { min-width: 44px; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; }
 .arrived { font-size: 0.8rem; color: #1f4d2b; }
 .actions button:focus-visible, .close:focus-visible { outline: 3px solid #c07a1e; outline-offset: 2px; }
 .mini {
@@ -63,5 +63,5 @@
   font: 600 0.8rem var(--font-sans), sans-serif;
   cursor: pointer;
 }
-.mini button:last-child { min-width: 44px; font-size: 1.3rem; }
+.mini button:last-child { min-width: 44px; display: flex; align-items: center; justify-content: center; }
 .mini button:focus-visible { outline: 3px solid #c07a1e; outline-offset: 2px; border-radius: 999px; }

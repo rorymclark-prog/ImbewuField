@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { ChevronUp, X } from 'lucide-react';
 import { isDifferentBuild } from '@/lib/pwa-update';
 import { visibleNotes } from '@/lib/release-notes';
 import { cleanUpdateTour, UPDATE_GUIDE_KEY } from '@/lib/update-tour';
 import type { UpdateTourStop } from '@/lib/release-notes';
+import { useLanguage } from '@/lib/i18n';
 
 interface BuildInfo {
   sha?: string | null;
@@ -31,6 +33,7 @@ const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
  */
 export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateNotifierProps) {
   const pathname = usePathname() || '';
+  const { t } = useLanguage();
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   // Null until the server tells us; the local copy is the offline/older-server fallback.
@@ -287,23 +290,23 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           disabled={refreshing}
           style={{ background: 'transparent', border: 'none', color: '#fff', font: 'inherit', fontWeight: 700, cursor: refreshing ? 'wait' : 'pointer', padding: '4px 2px' }}
         >
-          {refreshing ? 'Refreshing…' : `Update ready${nextBuildSha ? ` · ${nextBuildSha}` : ''}`}
+          {refreshing ? t('updateBannerRefreshing') : t('updateBannerReady').replace('{sha}', nextBuildSha ? ` · ${nextBuildSha}` : '')}
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          aria-label="What changed"
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 6px', font: 'inherit' }}
+          aria-label={t('updateBannerWhatChangedAria')}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 6px', font: 'inherit', display: 'flex', alignItems: 'center' }}
         >
-          ⌃
+          <ChevronUp size={16} aria-hidden />
         </button>
         <button
           type="button"
           onClick={() => setDismissed(true)}
-          aria-label="Dismiss until the next build"
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 8px', font: 'inherit' }}
+          aria-label={t('updateBannerDismissAria')}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 8px', font: 'inherit', display: 'flex', alignItems: 'center' }}
         >
-          ✕
+          <X size={14} aria-hidden />
         </button>
       </div>
     );
@@ -333,22 +336,22 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
       }}
     >
       <span style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'stretch' }}>
-        <span style={{ flex: 1 }}>New version{nextBuildSha ? ` ${nextBuildSha}` : ''} available.</span>
+        <span style={{ flex: 1 }}>{t('updateBannerNewVersion').replace('{sha}', nextBuildSha ? ` ${nextBuildSha}` : '')}</span>
         <button
           type="button"
           onClick={() => setExpanded(false)}
-          aria-label="Collapse update notice"
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1 }}
+          aria-label={t('updateBannerCollapseAria')}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
         >
-          ⌃
+          <ChevronUp size={16} aria-hidden />
         </button>
         <button
           type="button"
           onClick={() => setDismissed(true)}
-          aria-label="Dismiss until the next build"
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1 }}
+          aria-label={t('updateBannerDismissAria')}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
         >
-          ✕
+          <X size={14} aria-hidden />
         </button>
       </span>
       <button
@@ -365,7 +368,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           opacity: refreshing ? 0.7 : 1,
         }}
       >
-        {refreshing ? 'Refreshing…' : 'Refresh update'}
+        {refreshing ? t('updateBannerRefreshing') : t('updateBannerRefreshButton')}
       </button>
       {/* WHAT you are refreshing into. "New version available" alone tells the farmer a number
           changed, not whether it is worth interrupting their work for, nor what to go and look at
@@ -411,7 +414,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
                 textDecoration: 'underline',
               }}
             >
-              {showAllNotes ? 'show less' : `and ${remainingNotesCount} more`}
+              {showAllNotes ? t('updateBannerShowLess') : t('updateBannerShowMore').replace('{count}', String(remainingNotesCount))}
             </button>
           )}
         </div>

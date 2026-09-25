@@ -192,14 +192,24 @@ export function isCapstoneUnlocked(ctx: GatingContext): boolean {
  * mentor-opened module, why it's available out of order. Returns null when there's nothing worth
  * saying (module 1, an id outside the curriculum, or — defensively — a module that turns out to
  * already be unlocked).
+ *
+ * `titleFor` resolves the previous module's title — defaults to the raw (English) curriculum
+ * title, exactly as before. The caller passes a localising resolver (e.g. one built on
+ * resolveCourseModulePresentation) so a farmer in isiZulu mode sees the module's isiZulu title
+ * rather than the English one hard-coded into COURSE_MODULES — this module stays pure and knows
+ * nothing about lang/i18n itself.
  */
-export function unlockReason(moduleId: string, ctx: GatingContext): string | null {
+export function unlockReason(
+  moduleId: string,
+  ctx: GatingContext,
+  titleFor: (moduleId: string) => string = (id) => MODULE_TITLE.get(id) ?? 'the previous module',
+): string | null {
   if (canBrowseAllLessons(ctx.role)) return null;
   const idx = ctx.moduleIds.indexOf(moduleId);
   if (mentorOverride(moduleId, ctx)) return 'Opened by your mentor';
   if (idx <= 0) return null;
   const prevId = ctx.moduleIds[idx - 1];
-  const prevTitle = MODULE_TITLE.get(prevId) ?? 'the previous module';
+  const prevTitle = titleFor(prevId);
   if (!ctx.doneIds.has(prevId)) return `Finish ${prevTitle} to open this`;
   if (assignmentFor(prevId) && !ctx.submittedIds.has(prevId)) {
     return `Submit the ${prevTitle} assignment to open this`;

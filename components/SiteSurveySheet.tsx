@@ -2,7 +2,7 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useState, useCallback, useEffect, useRef, useId } from 'react';
 import { createPortal } from 'react-dom';
-import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles, Sprout, NotebookPen, ArrowRight, MapPin, CircleCheck, Circle, Pencil, Info, ChevronDown } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles, Sprout, NotebookPen, ArrowRight, MapPin, CircleCheck, Circle, Pencil, Info, ChevronDown, Camera } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
 import {
@@ -925,8 +925,9 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 {t('notesPlaceholderHint')}
               </div>
               <div style={{ background: 'rgba(31,77,43,0.05)', borderRadius: 11, padding: '4px', border: '1px solid rgba(31,77,43,0.15)', marginBottom: 8 }}>
-                <div className="font-sans" style={{ fontSize: 12, color: 'var(--brand)', padding: '6px 10px' }}>
-                  📷 {t('photoTip')}
+                <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--brand)', padding: '6px 10px' }}>
+                  <Camera size={14} aria-hidden />
+                  {t('photoTip')}
                 </div>
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}

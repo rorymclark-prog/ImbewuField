@@ -4,6 +4,8 @@ import { DESIGN_COURSE, DESIGN_LESSONS } from '@/lib/course-design';
 import PathwayOfflineDownload from '@/components/studies/PathwayOfflineDownload';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import DesignDraftCopy, { DesignDraftNotice } from '@/components/studies/DesignDraftCopy';
+import CourseSyllabus from '@/components/studies/CourseSyllabus';
+import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import styles from '@/components/studies/FinanceCourse.module.css';
 
 export const metadata = { title: 'Design a working homestead — teaching preview', robots: { index: false, follow: false } };
@@ -17,9 +19,15 @@ export default function DesignCoursePage() {
       <DesignDraftNotice />
       <PathwayOfflineDownload pathwayId="design" />
       <section className={styles.section}><h2><DesignDraftCopy en="Build one design folder as you learn" zu="Yakha ifolda eyodwa yokuklama njengoba ufunda" /></h2><p>Keep your brief, observations, existing map, alternatives, chosen plan, work and care arrangements, and revisions together. Use paper, spoken explanations or the app. Each stage adds a reasoned decision, not just another feature on a drawing.</p><p>Use the existing technical modules when checking a water, soil, planting or animal proposal. This pathway teaches how to connect those decisions. A field plan still needs suitable measurements, local evidence and any relevant advice or permissions.</p><div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/design/folder"><DesignDraftCopy en="Open your design learning folder →" zu="Vula ifolda yakho yokufunda ngokuklama →" /></OfflinePageLink></div></section>
-      <div className={styles.grid}>{DESIGN_COURSE.units.map(unit => <section key={unit.id} className={styles.card}><p className={styles.eyebrow}>Stage {unit.number}</p><h2>{unit.title}</h2><p>{unit.output}</p><ol>{unit.lessons.map(lesson => <li key={lesson.id}><OfflinePageLink href={`/student/design/${lesson.id}`}>{lesson.title}</OfflinePageLink></li>)}</ol></section>)}</div>
+      <CourseSyllabus
+        units={DESIGN_COURSE.units.map(unit => ({ id: unit.id, number: unit.number, title: unit.title, blurb: unit.output, lessons: unit.lessons }))}
+        basePath="/student/design"
+        eyebrowPrefix="Stage"
+        continueEyebrow={<DesignDraftCopy en="Continue here" zu="Qhubeka lapha" />}
+        seeAllLabel={<DesignDraftCopy en="See all stages" zu="Bona zonke izigaba" />}
+      />
       <section className={styles.section}><h2><DesignDraftCopy en="Two examples, with their limits visible" zu="Izibonelo ezimbili, kanye nemikhawulo yazo" /></h2><p>The busy-yard example teaches what to observe before drawing. The worked demonstration is a separate fictional model with supplied coordinates, fair alternatives and a revision after later care evidence. Neither is a construction plan or a record of a real household.</p><div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/design/worked"><DesignDraftCopy en="Follow the worked design demonstration →" zu="Landela ukuboniswa komklamo osebenzayo →" /></OfflinePageLink><OfflinePageLink href="/student/design/case"><DesignDraftCopy en="Read the early evidence case →" zu="Funda icala lobufakazi bokuqala →" /></OfflinePageLink><OfflinePageLink href="/student/design/scale"><DesignDraftCopy en="Read the scale and check the space →" zu="Funda ngesikali bese uhlola isikhala →" /></OfflinePageLink><OfflinePageLink href="/student/guides/design"><DesignDraftCopy en="Use the Design Studio guide →" zu="Sebenzisa umhlahlandlela we-Design Studio →" /></OfflinePageLink><OfflinePageLink href="/student/finance">Connect the plan to Farm Finance →</OfflinePageLink></div></section>
-      <section className={styles.section}><h2>Learning takes observation and practice</h2><p>Work at a pace that allows field observation, discussion and another attempt after feedback. Eighteen reading pages do not establish a course duration or replace seasonal evidence. The facilitator reviews what you can explain and demonstrate.</p><details><summary>Sources behind the pathway</summary><p>The teaching sequence draws on Rory’s Imbewu course outlines, Southern African gardening handbook and RVCC training/garden planning material. Historical technical prescriptions have not been copied as universal instructions.</p><ul>{DESIGN_COURSE.sources.map(source => <li key={source.url}><a href={source.url}>{source.label}</a></li>)}</ul></details></section>
+      <section className={styles.section}><h2>Learning takes observation and practice</h2><p>Work at a pace that allows field observation, discussion and another attempt after feedback. Eighteen reading pages do not establish a course duration or replace seasonal evidence. The facilitator reviews what you can explain and demonstrate.</p><FullToolsOnly><details><summary>Sources behind the pathway</summary><p>The teaching sequence draws on Rory’s Imbewu course outlines, Southern African gardening handbook and RVCC training/garden planning material. Historical technical prescriptions have not been copied as universal instructions.</p><ul>{DESIGN_COURSE.sources.map(source => <li key={source.url}><a href={source.url}>{source.label}</a></li>)}</ul></details></FullToolsOnly></section>
     </main>
   </div>;
 }

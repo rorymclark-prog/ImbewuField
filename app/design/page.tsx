@@ -694,7 +694,7 @@ function DesignStudioInner() {
     return () => window.clearTimeout(settled);
   }, [baseHeavyDone, safeMode.key]);
 
-  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; source?: string } | null>(null);
   useEffect(() => {
     let cancelled = false;
     fetch('/api/build-info', { cache: 'no-store' })
@@ -3130,7 +3130,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         )}
         {buildInfo?.sha && !isPhone && (
           <div
-            title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+            title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}`}
             style={{
               display: 'none',
               alignItems: 'center',

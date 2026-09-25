@@ -113,8 +113,17 @@ test('a route guarded on the server but never called from the client is reported
   // wiring — but they are attack surface, so a change in the list should be a deliberate decision.
   assert.deepEqual(orphans, [
     'auto-design',
+    // contours IS called from the client (components/Map.tsx, lib/sheet-contours.ts), but neither
+    // call site matches this scanner's literal-string-argument pattern: Map.tsx builds the URL in
+    // a variable before calling fetch(url), and sheet-contours.ts calls an injected `fetcher(...)`
+    // rather than `fetch(...)` directly. Genuinely reachable, invisible to this particular scan.
+    'contours',
     'design-detect',
     'design-review',
+    // Same shape as contours: OSM Overpass proxy, guarded for cost/quota reasons rather than because
+    // a client call was found. No call site exists yet — added ahead of the map feature that will
+    // use it, same as the other orphans below.
+    'site-features',
     // network/farmers and network/orgs were BOTH listed here while components/network/* still ran
     // on demo data. They are now called by lib/use-network-portfolio.ts from /network, which is
     // the screen the projection was written for, so they have left this list on purpose.

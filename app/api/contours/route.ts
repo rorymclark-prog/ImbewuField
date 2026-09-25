@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PNG } from 'pngjs';
 import { isoLines } from 'marchingsquares';
+import { guardPaidApiRequest } from '@/lib/api-auth';
+import { TILE_ZOOM, TILE_SIZE, contourCacheKey } from '@/lib/contour-cache-key';
 
 // ── Fine-grained (5m) contour lines, generated on the fly from Mapbox's ──
 // terrain-RGB DEM (the same data already used for hillshade/3D terrain).
@@ -13,8 +15,6 @@ import { isoLines } from 'marchingsquares';
 // Scope: intended for site-scale requests (a farm extent at zoom ~14-18),
 // not country-scale rendering — bbox area and tile count are capped below.
 
-const TILE_ZOOM = 14; // native maxzoom of mapbox.mapbox-terrain-dem-v1
-const TILE_SIZE = 256; // un-upscaled (@1x) terrain-RGB tile size
 const MAX_TILE_SPAN = 6; // cap: at most 6x6 tiles (incl. 1-tile padding) per request
 const MAX_BBOX_DEG = 0.08; // ~9km at the equator — generous farm-site ceiling
 const MAX_THRESHOLDS = 400; // guard against pathological min/max elevation ranges
@@ -87,6 +87,9 @@ async function fetchTileElevations(z: number, x: number, y: number, token: strin
 }
 
 export async function GET(req: NextRequest) {
+  const guard = await guardPaidApiRequest(req, 'contours');
+  if (guard.response) return guard.response;
+
   const { searchParams } = new URL(req.url);
   const minLon = parseFloat(searchParams.get('minLon') ?? '');
   const minLat = parseFloat(searchParams.get('minLat') ?? '');
@@ -108,10 +111,7 @@ export async function GET(req: NextRequest) {
   const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   if (!token) return NextResponse.json({ error: 'Mapbox token not configured' }, { status: 500 });
 
-  // A four-decimal key aliases sites roughly 11 m apart — large enough to put a neighbouring
-  // farm's contour through the wrong ground. Keep centimetre-scale coordinate identity while the
-  // bounded cache still prevents duplicate tile work for the exact same sheet frame.
-  const cacheKey = `${minLon.toFixed(7)},${minLat.toFixed(7)},${maxLon.toFixed(7)},${maxLat.toFixed(7)},${interval},${major}`;
+  const cacheKey = contourCacheKey(minLon, minLat, maxLon, maxLat, interval, major);
   const cached = CACHE.get(cacheKey);
   if (cached && cached.expires > Date.now()) {
     return NextResponse.json(cached.body, { headers: { 'Cache-Control': 'public, max-age=300' } });
