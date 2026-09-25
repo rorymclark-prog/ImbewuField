@@ -550,7 +550,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                     </span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
-                    <span style={{ minWidth: 76 }}>Size</span>
+                    <span style={{ minWidth: 76 }}>{t('designPhotoZoomSize')}</span>
                     <input
                       type="range" min={0.25} max={4} step={0.05}
                       value={zoom}

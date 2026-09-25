@@ -1282,7 +1282,7 @@ export default function DesignPalette({
                   common value, or a '—' placeholder when members differ; typing a number sets
                   that dimension on every selected item (a circle takes it as its diameter). */}
               {([
-                ['wM', sizeControl.wM, sizeControl.lengthOnly ? 'Length' : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? 'Gate length in metres' : t('designPaletteSizeWidthTitle')],
+                ['wM', sizeControl.wM, sizeControl.lengthOnly ? t('designPaletteSizeLength') : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? t('designPaletteGateLengthTitle') : t('designPaletteSizeWidthTitle')],
                 ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
               ] as const).filter(([dim]) => !sizeControl.lengthOnly || dim === 'wM').map(([dim, committed, label, title]) => (
                 <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>

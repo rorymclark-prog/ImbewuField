@@ -4,9 +4,14 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
+import { useLanguage } from '@/lib/i18n';
 
 export default function AccountButton() {
   const { user, signOutUser } = useAuth();
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const signOutCopy = 'Signing out ends access to this account on this device. Sign in again to continue.';
+  const signOutZulu = 'Ukuphuma ngemvume kuvala ukufinyelela kule akhawunti kule divayisi. Ngena futhi ukuze uqhubeke.';
 
   // Don't render at all when Firebase is unconfigured — no auth to surface.
   if (!isBackendConfigured()) return null;
@@ -37,9 +42,10 @@ export default function AccountButton() {
           onClick={signOutUser}
           className="font-mono transition-opacity hover:opacity-80"
           style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
-          aria-label="Sign out"
+          aria-label={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
+          title={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
         >
-          Sign out
+          {isZulu ? 'Phuma ngemvume (Sign out)' : 'Sign out'}
         </button>
       </div>
     );
@@ -62,7 +68,7 @@ export default function AccountButton() {
         fontSize: 20,
       }}
     >
-      Sign in
+      {isZulu ? 'Ngena ngemvume (Sign in)' : 'Sign in'}
     </Link>
   );
 }
