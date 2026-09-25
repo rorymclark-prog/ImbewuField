@@ -394,3 +394,41 @@ test('Site Survey opening choices show exact English sources and hold uncertain 
   assert.ok(zu.block.includes("  goalRestoreTheLandLabel: 'Ukuvuselela umhlaba'"),
     'ecological restoration must not use wording that can mean land restitution');
 });
+
+test('Site Survey land choices show their exact English sources beside each isiZulu draft', () => {
+  const pairedSources = [
+    ['sectionHowIsLandPrepared', 'How is the land prepared?'],
+    ['landPrepHandToolsLabel', 'Hand tools (spade, fork, hoe)'],
+    ['landPrepHandToolsDesc', 'Manual soil work — limits depth and area'],
+    ['landPrepTractorLabel', 'Tractor / mechanised'],
+    ['landPrepTractorDesc', 'Deep tillage possible, larger areas'],
+    ['landPrepAnimalLabel', 'Animal draft (ox, donkey)'],
+    ['landPrepAnimalDesc', 'Traditional plough or cultivator'],
+    ['landPrepNoneLabel', 'Not yet prepared / no-till'],
+    ['landPrepNoneDesc', 'Starting from scratch or using no-dig method'],
+    ['sectionSoilCondition', 'Soil condition (as you observe it)'],
+    ['soilConditionHealthy', 'Healthy & loose'],
+    ['soilConditionCompacted', 'Compacted / hard'],
+    ['soilConditionSandy', 'Sandy / drains fast'],
+    ['soilConditionClay', 'Clay / waterlogged'],
+    ['soilConditionUnknown', 'Not sure'],
+    ['sectionSoilInputs', 'Soil inputs already applied (select all)'],
+    ['soilAmendmentCompost', 'Compost'],
+    ['soilAmendmentKraalManure', 'Kraal manure'],
+    ['soilAmendmentMulch', 'Mulch / woodchip'],
+    ['soilAmendmentCommercialFert', 'Commercial fertiliser'],
+    ['soilAmendmentNone', 'None yet'],
+    ['sectionFencing', 'Fencing'],
+    ['fencingFull', 'Fully fenced'],
+    ['fencingPartial', 'Partly fenced'],
+    ['fencingNone', 'No fencing'],
+    ['surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'],
+    ['surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'],
+  ] as const;
+
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must display its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`) || i18nSource.includes(`${key}: "${english}"`),
+      `${key} source must match the English dictionary`);
+  }
+});
