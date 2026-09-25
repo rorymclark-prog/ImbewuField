@@ -18,6 +18,7 @@ const DESIGN_LESSON_SOURCE = readFileSync(new URL('../app/student/design/[lesson
 const FINANCE_SOURCE = readFileSync(new URL('../app/student/finance/page.tsx', import.meta.url), 'utf8');
 const FINANCE_LESSON_SOURCE = readFileSync(new URL('../app/student/finance/[lesson]/page.tsx', import.meta.url), 'utf8');
 const TIPS_SOURCE = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
+const I18N_SOURCE = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 
 test('/student reads the Simple / All tools switch', () => {
   assert.match(STUDENT_SOURCE, /const simple = useAppLevel\(\) === 'simple';/);
@@ -65,6 +66,23 @@ test('Simple shows the Design/Finance companion previews as two plain links', ()
     /simple \? \(\s*\n\s*\/\/ Two plain links[\s\S]*?studentDesignPreviewCardTitle[\s\S]*?studentFinancePreviewCardTitle/,
     'Simple must branch to a plain-link pair naming both companion pathways',
   );
+});
+
+test('Simple labels each companion link clearly, with its one-line description as secondary text', () => {
+  const simpleLinksAt = STUDENT_SOURCE.indexOf('// Two plain links');
+  assert.ok(simpleLinksAt > 0);
+  const simpleLinks = STUDENT_SOURCE.slice(simpleLinksAt, STUDENT_SOURCE.indexOf(') : (', simpleLinksAt));
+  assert.match(simpleLinks, /t\('studentDesignPreviewSimpleLabel'\)/, 'the Design link needs a plain "what this opens" label');
+  assert.match(simpleLinks, /t\('studentFinancePreviewSimpleLabel'\)/, 'the Finance link needs a plain "what this opens" label');
+  // The label sits in <strong>, the description right after in a nested <span>, matching the
+  // .coursePreviewLink strong / span span pattern the All tools cards already use.
+  assert.match(simpleLinks, /<strong className="font-display">\{t\('studentDesignPreviewSimpleLabel'\)\}<\/strong><span>\{t\('studentDesignPreviewCardTitle'\)\}<\/span>/);
+  assert.match(simpleLinks, /<strong className="font-display">\{t\('studentFinancePreviewSimpleLabel'\)\}<\/strong><span>\{t\('studentFinancePreviewCardTitle'\)\}<\/span>/);
+});
+
+test('the companion link labels are real i18n keys, placed next to their related preview strings', () => {
+  assert.match(I18N_SOURCE, /studentDesignPreviewSimpleLabel: 'Design course',/);
+  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm Finance course',/);
 });
 
 test('ochre is never painted as readable text: the due-soon tone and the category text-colour variant', () => {

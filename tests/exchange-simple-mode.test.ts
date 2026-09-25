@@ -16,6 +16,8 @@ const BOARD = source('../components/exchange/ExchangeBoard.tsx');
 const CARD = source('../components/exchange/ListingCard.tsx');
 const FORM = source('../components/exchange/NewListingForm.tsx');
 const THEME = source('../components/exchange/theme.ts');
+const LEDE = source('../components/exchange/ExchangeLede.tsx');
+const GUIDE = source('../components/exchange/ExchangeGuide.tsx');
 
 test('the header hides the "preview · demonstration records" badge in Simple', () => {
   assert.match(HEADER, /import \{ useAppLevel \} from '@\/lib\/app-level';/);
@@ -113,6 +115,42 @@ test('the exchange feature paints with theme tokens, not literal hex, so it foll
     assert.match(THEME, new RegExp(`${key}: '${token.replace(/[()]/g, '\\$&')}'`),
       `EX.${key} must resolve to the same theme token /prices and /records use`);
   }
+});
+
+test('the header has exactly one back control — no duplicate chevron before the title', () => {
+  assert.match(HEADER, /<MenuButton \/><BackButton fallback="\/home" \/>/);
+  assert.doesNotMatch(HEADER, /<Link href="\/home"/,
+    'the duplicate "<" chevron link before "Farmer exchange" must be removed; BackButton is the one back control');
+  assert.doesNotMatch(HEADER, /import Link from 'next\/link';/,
+    'the now-unused Link import must go with the duplicate control');
+});
+
+test('Simple states the listing/farmer/crop counts once — the lede paragraph drops them since the stats row already shows them', () => {
+  assert.match(LEDE, /import \{ useAppLevel \} from '@\/lib\/app-level';/);
+  assert.match(LEDE, /const simple = useAppLevel\(\) === 'simple';/);
+  const branchAt = LEDE.indexOf('{simple');
+  assert.ok(branchAt > 0, 'the lede paragraph must branch on simple');
+  const simpleBranch = LEDE.slice(branchAt, LEDE.indexOf(': (zu ?', branchAt));
+  assert.doesNotMatch(simpleBranch, /summary\.total|summary\.farmerCount|summary\.cropCount|summary\.offers|summary\.wants/,
+    'the Simple sentence must not restate any of the counts the Stat row below already shows');
+  // All tools keeps the fuller sentence with every count.
+  const allToolsBranch = LEDE.slice(LEDE.indexOf(': (zu ?', branchAt));
+  for (const field of ['summary.total', 'summary.farmerCount', 'summary.cropCount', 'summary.offers', 'summary.wants']) {
+    assert.match(allToolsBranch, new RegExp(field.replace('.', '\\.')), `All tools must still state ${field}`);
+  }
+});
+
+test('Simple collapses "What the exchange is for" behind a closed-by-default "How the exchange works" disclosure', () => {
+  assert.match(GUIDE, /const \[expanded, setExpanded\] = useState\(false\);/,
+    'the disclosure must start closed');
+  const simpleBranchAt = GUIDE.indexOf("if (simple && variant === 'intro')");
+  assert.ok(simpleBranchAt > 0, 'the Simple intro branch moved; recheck this guard');
+  const simpleBranch = GUIDE.slice(simpleBranchAt, GUIDE.indexOf('\n  }\n', simpleBranchAt));
+  assert.match(simpleBranch, /How the exchange works/);
+  assert.match(simpleBranch, /aria-expanded=\{expanded\}/);
+  assert.match(simpleBranch, /\{expanded && <div/, 'the explainer body must only render once expanded');
+  // All tools keeps the explainer open and unconditional, as before.
+  assert.match(BOARD, /<ExchangeGuide variant="intro" simple=\{simple\} onPost=\{/);
 });
 
 test('ochre never paints text directly — amberText carries the ochre-safe reading colour', () => {
