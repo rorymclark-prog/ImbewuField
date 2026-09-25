@@ -23,6 +23,7 @@ import ReactMapGL, { Marker, type MapRef, type MapLayerMouseEvent } from 'react-
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Search, X, Loader2, Earth } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import { useLanguage } from '@/lib/i18n';
 import AtlasPanel from './AtlasPanel';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -36,6 +37,8 @@ type FetchState =
   | { status: 'error'; lat: number; lon: number; placeName?: string };
 
 export default function AtlasExplorer() {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
   const mapRef = useRef<MapRef>(null);
   const [state, setState] = useState<FetchState>({ status: 'idle' });
   const [query, setQuery] = useState('');
@@ -141,29 +144,33 @@ export default function AtlasExplorer() {
         {/* Search overlay */}
         <div className="absolute top-3 left-3 right-3 md:right-auto md:w-[340px] z-10">
           <div
-            className="flex items-center gap-2 px-3"
+            className={`flex ${isZulu ? 'flex-col items-stretch justify-center gap-0' : 'items-center gap-2'} px-3`}
             style={{
               background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 12,
-              height: 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
+              height: isZulu ? 56 : 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
             }}
           >
-            <Search size={15} style={{ color: '#755942', flexShrink: 0 }} />
-            <input
-              value={query}
-              onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
-              placeholder="Search anywhere on Earth…"
-              className="flex-1 font-sans bg-transparent outline-none"
-              style={{ fontSize: 13.5, color: '#20190F', border: 'none' }}
-            />
-            {query && (
-              <button
-                onClick={() => { setQuery(''); setSuggestions([]); }}
-                aria-label="Clear search"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#755942', display: 'flex' }}
-              >
-                <X size={14} />
-              </button>
-            )}
+            <div className="flex items-center gap-2 min-w-0">
+              <Search size={15} style={{ color: '#755942', flexShrink: 0 }} />
+              <input
+                value={query}
+                onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
+                placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : 'Search anywhere on Earth…'}
+                aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : 'Search anywhere on Earth…'}
+                className="flex-1 font-sans bg-transparent outline-none"
+                style={{ minWidth: 0, fontSize: 13.5, color: '#20190F', border: 'none' }}
+              />
+              {query && (
+                <button
+                  onClick={() => { setQuery(''); setSuggestions([]); }}
+                  aria-label={isZulu ? 'Sula usesho / Clear search' : 'Clear search'}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: '#755942', display: 'flex' }}
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+            {isZulu && <span className="font-sans pl-6" style={{ fontSize: 9.5, lineHeight: 1.1, color: '#8A7B64' }}>Search anywhere on Earth</span>}
           </div>
           {suggestions.length > 0 && (
             <div
@@ -193,12 +200,18 @@ export default function AtlasExplorer() {
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-4 py-2.5"
             style={{
               background: 'rgba(255,254,250,0.94)', border: '1px solid #E2D8C4',
-              borderRadius: 999, boxShadow: '0 4px 16px rgba(32,25,15,0.14)', whiteSpace: 'nowrap',
+              borderRadius: 14, boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
+              maxWidth: 'calc(100% - 24px)', textAlign: 'center',
             }}
           >
             <Earth size={15} style={{ color: '#1F4D2B' }} />
             <span className="font-display" style={{ fontSize: 13.5, color: '#20190F' }}>
-              Tap anywhere on Earth to read its climate, rain and soil
+              {isZulu ? (
+                <>
+                  <span className="block">Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.</span>
+                  <span className="block mt-0.5 font-sans" style={{ fontSize: 10.5, color: '#755942' }}>Tap anywhere on Earth to read its climate, rain and soil</span>
+                </>
+              ) : 'Tap anywhere on Earth to read its climate, rain and soil'}
             </span>
           </div>
         )}
@@ -218,11 +231,11 @@ export default function AtlasExplorer() {
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div className="md:hidden mx-auto absolute left-1/2 -translate-x-1/2 top-2" style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }} />
             <span className="font-sans font-bold uppercase" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: '#755942', marginTop: 6 }}>
-              This point
+              {isZulu ? 'Le ndawo / This point' : 'This point'}
             </span>
             <button
               onClick={close}
-              aria-label="Close panel"
+              aria-label={isZulu ? 'Vala iphaneli / Close panel' : 'Close panel'}
               style={{
                 background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', borderRadius: 8,
                 padding: 6, cursor: 'pointer', color: '#5C5040', display: 'flex', marginTop: 4,
@@ -237,14 +250,16 @@ export default function AtlasExplorer() {
               <div className="flex flex-col items-center justify-center gap-3 py-14">
                 <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
                 <span className="font-display" style={{ fontSize: 13.5, color: '#5C5040' }}>
-                  Reading climate, rain and soil for this point…
+                  {isZulu
+                    ? 'Kufundwa isimo sezulu, imvula nomhlabathi kule ndawo… / Reading climate, rain and soil for this point…'
+                    : 'Reading climate, rain and soil for this point…'}
                 </span>
               </div>
             )}
             {state.status === 'error' && (
               <div className="flex flex-col items-center gap-3 py-12 text-center px-4">
                 <span className="font-display" style={{ fontSize: 14, color: '#20190F' }}>
-                  Could not fetch data for this point.
+                  {isZulu ? 'Ayikwazanga ukuthola idatha yale ndawo. / Could not fetch data for this point.' : 'Could not fetch data for this point.'}
                 </span>
                 <button
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}
@@ -254,7 +269,7 @@ export default function AtlasExplorer() {
                     padding: '8px 18px', fontSize: 13, cursor: 'pointer',
                   }}
                 >
-                  Try again
+                  {isZulu ? 'Zama futhi / Try again' : 'Try again'}
                 </button>
               </div>
             )}
