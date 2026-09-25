@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -95,6 +96,7 @@ export default function FieldJournal() {
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const simple = useAppLevel() === 'simple';
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
@@ -175,15 +177,18 @@ export default function FieldJournal() {
     // so the oldest entry is never trapped behind them.
     <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px' }}>
       <aside className={workspace.journalSidebar} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
-      {/* Stat row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 14 }}>
-        <Stat value={String(summary.total)} label={ui('entries', 'okufakiwe')} />
-        <Stat value={String(summary.thisMonth)} label={ui('this month', 'kule nyanga')} />
-        <Stat
-          value={summary.daysSinceLast === null ? '—' : summary.daysSinceLast === 0 ? ui('Today', 'Namuhla') : `${summary.daysSinceLast}${ui('d', summary.daysSinceLast === 1 ? ' usuku' : ' izinsuku')}`}
-          label={summary.daysSinceLast === null ? ui('no entries yet', 'akukho okufakiwe') : ui('since last note', 'kusukela kunothi lokugcina')}
-        />
-      </div>
+      {/* Stat row — extra dashboard detail, not the entries or the add-note action Simple
+          leads with. Still one tap away: switch to All tools in Settings. */}
+      {!simple && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 14 }}>
+          <Stat value={String(summary.total)} label={ui('entries', 'okufakiwe')} />
+          <Stat value={String(summary.thisMonth)} label={ui('this month', 'kule nyanga')} />
+          <Stat
+            value={summary.daysSinceLast === null ? '—' : summary.daysSinceLast === 0 ? ui('Today', 'Namuhla') : `${summary.daysSinceLast}${ui('d', summary.daysSinceLast === 1 ? ' usuku' : ' izinsuku')}`}
+            label={summary.daysSinceLast === null ? ui('no entries yet', 'akukho okufakiwe') : ui('since last note', 'kusukela kunothi lokugcina')}
+          />
+        </div>
+      )}
 
       {/* Primary action. Deliberately a STICKY TOP bar, not a floating bottom
           button: components/SampleModeBanner.tsx is fixed at bottom 60px with
@@ -206,7 +211,7 @@ export default function FieldJournal() {
           }}
         >
           <Plus size={20} />
-          {ui('New entry', 'Faka okusha')}
+          {simple ? ui('Add a note', 'Faka inothi') : ui('New entry', 'Faka okusha')}
         </button>
 
         {/* WHERE THIS GOES, said on the screen itself.
@@ -218,15 +223,18 @@ export default function FieldJournal() {
             and pulled precisely the farmer who wanted to record a harvest into the one screen
             that cannot. The label is fixed; this says the rest out loud, and points at the
             screen that DOES keep a weight, so the correction ends somewhere useful rather
-            than just taking a promise away. */}
-        <p style={{
-          margin: '8px 2px 0', font: '500 12px/1.5 var(--font-sans), sans-serif', color: '#6B6152',
-        }}>
-          {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
-          <Link href="/records" style={{ color: 'var(--color-forest-800)', fontWeight: 700 }}>
-            {t('journalOpenRecords')}
-          </Link>
-        </p>
+            than just taking a promise away. Kept out of Simple: it is explanatory detail
+            about storage, not the entries or the add-note action Simple leads with. */}
+        {!simple && (
+          <p style={{
+            margin: '8px 2px 0', font: '500 12px/1.5 var(--font-sans), sans-serif', color: '#6B6152',
+          }}>
+            {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
+            <Link href="/records" style={{ color: 'var(--color-forest-800)', fontWeight: 700 }}>
+              {t('journalOpenRecords')}
+            </Link>
+          </p>
+        )}
       </div>
 
       {notice && (
@@ -270,8 +278,9 @@ export default function FieldJournal() {
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: '#FEF6E7', color: '#7A5B14', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
-      {/* Category filter */}
-      {usedCategories.length > 1 && (
+      {/* Category filter — an All tools refinement, not one of the entries or the single
+          add-note action Simple leads with. */}
+      {!simple && usedCategories.length > 1 && (
         <div style={{ display: 'flex', gap: 7, overflowX: 'auto', paddingBottom: 10, marginBottom: 4 }}>
           <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
           {usedCategories.map((c) => (
