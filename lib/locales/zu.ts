@@ -1242,6 +1242,7 @@ const dict: Dict = {
   pricesFarmGateTitle: 'Amanani asesangweni lepulazi',
   pricesLearn: 'Funda',
   pricesChooseCrop: 'Thepha isitshalo ukuze ubone amanani okuqondisa ngekhilogremu, okuthengisa ngobuningi nokuthengisa ngasinye. Hlola intengo yendawo yanamuhla ngaphambi kokuvuma.',
+  pricesZuluDraftNotice: 'UHLAKA LWESIZULU — Lezi zincazelo azikabuyekezwa. Qhathanisa nesiNgisi esingezansi. Amanani angaba izilinganiso; qinisekisa intengo yanamuhla kumthengi wendawo ngaphambi kokuvuma.',
 
   // Saved sites and reports route controls. Report content is localized by its own language flow.
   reportsViewerLoadError: 'Isibukeli sombiko asikwazanga ukuvuleka. Xhuma ku-inthanethi bese uzama ukuvula umbiko ogciniwe futhi.',

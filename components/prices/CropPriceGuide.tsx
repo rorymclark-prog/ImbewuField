@@ -3,7 +3,7 @@
 import { AlertTriangle, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
 import { getCropArt } from '@/lib/crop-art';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 
 /**
  * The negotiation screen itself: one crop, two numbers, in the biggest type on the page — and,
@@ -67,13 +67,13 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
       >
         {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {lang === 'zu' ? `${sourced ? 'Sourced market price' : 'Unconfirmed estimate'} — ${t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}` : t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
+          {lang === 'zu' ? <><span className="block">{t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span><span className="block mt-1" style={{ fontSize: 11, fontWeight: 500 }}>{translate('en', sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span></> : t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
         </span>
       </div>
       <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
         {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
         {lang === 'zu'
-          ? `Price dated ${pricedDate} — check today's local price before agreeing. / ${t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}`
+          ? <>{t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}<span className="block mt-1">{translate('en', 'priceUpdatedCheckToday').replace('{date}', pricedDate)}</span></>
           : t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
       </div>
 
@@ -83,7 +83,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'rgba(247,242,233,0.78)', letterSpacing: '0.1em' }}
           >
-            {t('priceWholesale')}
+            {lang === 'zu' ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
           </div>
           <div
             className="font-display font-bold"
@@ -92,7 +92,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.wholesalePerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'rgba(247,242,233,0.78)' }}>
-            {lang === 'zu' ? `Per kilogram — close to what a trader or market buyer pays. / ${t('pricePerKgTrader')}` : t('pricePerKgTrader')}
+            {lang === 'zu' ? <>{t('pricePerKgTrader')}<span className="block mt-1">{translate('en', 'pricePerKgTrader')}</span></> : t('pricePerKgTrader')}
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}
           >
-            {t('priceRetail')}
+            {lang === 'zu' ? <>{t('priceRetail')}<span className="block mt-1" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceRetail')}</span></> : t('priceRetail')}
           </div>
           <div
             className="font-display font-bold"
@@ -117,7 +117,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.retailPerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted)' }}>
-            {lang === 'zu' ? `Per kilogram — shop price, not a farm-gate price. / ${t('pricePerKgShop')}` : t('pricePerKgShop')}
+            {lang === 'zu' ? <>{t('pricePerKgShop')}<span className="block mt-1">{translate('en', 'pricePerKgShop')}</span></> : t('pricePerKgShop')}
           </div>
         </div>
       </div>
