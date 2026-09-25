@@ -12,6 +12,7 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { useAuth } from '@/lib/auth';
+import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import {
   createSurvey,
@@ -584,6 +585,11 @@ function FarmerSurveyCard({
   onAnswered: (id: string) => void;
 }) {
   const { lang } = useLanguage();
+  // Simple / All tools (Settings → "How much to show", lib/app-level.ts). The survey BUILDER
+  // above is a staff tool and stays untouched — this only simplifies what a farmer answering a
+  // survey sees: drop the question-count metadata, use bigger answer targets, and one plain
+  // "Send answers" action.
+  const simple = useAppLevel() === 'simple';
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -627,7 +633,9 @@ function FarmerSurveyCard({
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
           <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-            {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
+            {localUi('From', 'Kuvela ku', lang)} {survey.org_name}
+            {/* Simple hides the question-count metadata — a farmer answering does not need it. */}
+            {!simple && <>&middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
           </div>
         </div>
         {submitted ? (
@@ -658,7 +666,7 @@ function FarmerSurveyCard({
                         key={v}
                         onClick={() => setAnswer(q.id, v)}
                         aria-pressed={on}
-                        className="flex-1 py-2.5 rounded-xl font-display font-semibold text-sm"
+                        className={simple ? 'flex-1 py-4 rounded-xl font-display font-semibold text-base' : 'flex-1 py-2.5 rounded-xl font-display font-semibold text-sm'}
                         style={{
                           background: on ? '#1F4D2B' : 'var(--color-surface)',
                           color: on ? '#EAF3E2' : 'var(--text-primary)',
@@ -684,7 +692,7 @@ function FarmerSurveyCard({
                         key={opt}
                         onClick={() => setAnswer(q.id, opt)}
                         aria-pressed={on}
-                        className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left"
+                        className={simple ? 'w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left' : 'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left'}
                         style={{
                           background: on ? 'rgba(31,77,43,0.08)' : 'var(--color-surface)',
                           border: `1px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`,
@@ -736,7 +744,9 @@ function FarmerSurveyCard({
             }}
           >
             {submitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} strokeWidth={1.8} />}
-            {submitting ? localUi('Submitting...', 'Kuyathunyelwa...', lang) : localUi('Submit', 'Thumela', lang)}
+            {submitting
+              ? localUi('Submitting...', 'Kuyathunyelwa...', lang)
+              : simple ? localUi('Send answers', 'Thumela izimpendulo', lang) : localUi('Submit', 'Thumela', lang)}
           </button>
         </div>
       )}
