@@ -36,6 +36,8 @@ import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
 import MyRecords from '@/components/MyRecords';
 import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
+import { buildFinanceSeries, type FinanceSeries } from '@/lib/finance-series';
+import { useAppLevel } from '@/lib/app-level';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
@@ -275,6 +277,41 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
         </p>
       )}
     </>
+  );
+}
+
+/* ── Simple mode: one plain-language answer, above the tabs ─────────────────
+ *
+ * The Charts tab is All tools only in Simple, so this is Simple's one number: the same 12-month
+ * totalInZar / totalOutZar / totalNetZar the Charts tab's cash-flow chart computes (buildFinanceSeries()
+ * in lib/finance-series.ts) — never a second calculation of the same money-in/out arithmetic.
+ */
+function SimpleMoneySummary({ series, lang }: { series: FinanceSeries; lang: string }) {
+  if (!series.hasRecords) return null;
+  const net = series.totalNetZar;
+  const headline = net < 0
+    ? recordsText(lang, `You spent ${fmtZAR(Math.abs(net))} more than you made`, `Usebenzise i-${fmtZAR(Math.abs(net))} ngaphezu kwalokho okutholile`)
+    : recordsText(lang, `You kept ${fmtZAR(net)}`, `Ugcine i-${fmtZAR(net)}`);
+  return (
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        background: net < 0 ? 'rgba(192,122,30,0.08)' : 'rgba(46,107,58,0.08)',
+        border: `1px solid ${net < 0 ? 'rgba(192,122,30,0.18)' : 'rgba(46,107,58,0.18)'}`,
+      }}
+    >
+      <p className="font-display font-bold text-xl" style={{ color: 'var(--color-ink)' }}>{headline}</p>
+      <p className="font-sans text-sm mt-1" style={{ color: 'var(--color-muted-strong)' }}>
+        {recordsText(
+          lang,
+          `Money in ${fmtZAR(series.totalInZar)} · Money out ${fmtZAR(series.totalOutZar)}`,
+          `Imali engenile ${fmtZAR(series.totalInZar)} · Imali ephumile ${fmtZAR(series.totalOutZar)}`,
+        )}
+      </p>
+      <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted)' }}>
+        {recordsText(lang, 'Only what you have written down.', 'Yilokho kuphela osukubhalile.')}
+      </p>
+    </div>
   );
 }
 
@@ -1333,6 +1370,14 @@ export default function RecordsPage() {
     if (isBookTab(wanted)) setTab(wanted);
   }, []);
 
+  // Simple / All tools (lib/app-level.ts). Charts is All tools only: a farmer arriving on
+  // ?tab=charts, or switching to Simple while already on that tab, lands on Picked instead.
+  const level = useAppLevel();
+  const simple = level === 'simple';
+  useEffect(() => {
+    if (simple && tab === 'charts') setTab('picked');
+  }, [simple, tab]);
+
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [sales, setSales] = useState<SalesLog[]>([]);
   const [production, setProduction] = useState<ProductionLog[]>([]);
@@ -1369,6 +1414,13 @@ export default function RecordsPage() {
   // The toggle is right there for anyone who wants the tighter window.
   const [period, setPeriod] = useState<Period>('season');
   const now = useMemo(() => new Date(), []);
+
+  // The same 12-month series the Charts tab's cash-flow chart builds (CashflowChart's default
+  // windowMonths), so Simple's card and Charts can never show two different totals.
+  const simpleMoneySeries = useMemo(
+    () => buildFinanceSeries(production, sales, expenses, invoices, now, 12),
+    [production, sales, expenses, invoices, now],
+  );
 
   // ONE bed authority for this whole screen — see lib/finance-plan-source.ts for
   // the two-authorities bug this closed. Every card that measures land takes its
@@ -1470,11 +1522,12 @@ export default function RecordsPage() {
     if (enterSampleMode()) window.location.href = '/records?tab=charts';
   }
 
+  // Simple leaves Charts off the book's tabs entirely — All tools keeps all four, exactly as today.
   const bookTabs: { id: BookTab; label: string; Icon: typeof Sprout }[] = [
     { id: 'picked', label: recordsText(lang, t('bookTabPicked'), 'Okuvunyiwe'), Icon: Sprout },
     { id: 'sold', label: recordsText(lang, t('bookTabSold'), 'Okudayisiwe'), Icon: TrendingUp },
     { id: 'spent', label: recordsText(lang, t('bookTabSpent'), 'Okusetshenzisiwe'), Icon: Receipt },
-    { id: 'charts', label: recordsText(lang, t('bookTabCharts'), 'Amashadi'), Icon: BarChart3 },
+    ...(simple ? [] : [{ id: 'charts' as const, label: recordsText(lang, t('bookTabCharts'), 'Amashadi'), Icon: BarChart3 }]),
   ];
 
   return (
@@ -1488,7 +1541,8 @@ export default function RecordsPage() {
         style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
-        <BackButton fallback="/home" />
+        {/* Records is a tab-bar root screen; Simple Home already has no Back on its root screen. */}
+        {!simple && <BackButton fallback="/home" />}
         <BrandLogo />
         {/* On a 375px phone the burger, back arrow, logo, Learn, Invoice and Settings leave this
             label about four characters, so it truncated to something that told you less than
@@ -1542,6 +1596,10 @@ export default function RecordsPage() {
                 loading={dataLoading}
               />
             </div>
+
+            {/* Simple's one plain-language answer for the last 12 months — Charts, where this same
+                figure lives in full, is All tools only. */}
+            {simple && !dataLoading && <SimpleMoneySummary series={simpleMoneySeries} lang={lang} />}
 
             {/* ── The three tabs, plus the charts as a view inside the book ──────────────
                 Not a menu: four fixed pages, all visible at once, so she can see what this
