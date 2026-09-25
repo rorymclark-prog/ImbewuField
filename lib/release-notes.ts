@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '98ed6f7e', changes: [
+    'Home marks its isiZulu interface as an unreviewed draft.',
+    'Deleting a saved site shows isiZulu beside the exact English action.',
+    'Study pages explain whether this module’s slides or audio remain in English.',
+  ], tour: [
+    { title: 'Check study media language', where: 'My Studies', href: '/student',
+      detail: 'Choose isiZulu and open a module; any English slides or audio are identified.' },
+  ] },
   { when: '25 September 2026', sha: 'cdae7c95', changes: [
     'Survey creators can add isiZulu labels to new and existing surveys.',
     'Farmers see any supplied isiZulu labels beside the English questions and choices.',

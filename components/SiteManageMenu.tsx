@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MoreVertical, Pencil, Star, Trash2, Check } from 'lucide-react';
 import { savePlace, deletePlace, setMainSiteId, getMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 
 const GOLD = '#C07A1E';
 const FOREST = '#1F4D2B';
@@ -51,9 +51,9 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
   // Keep the English action beside its draft translation because this button permanently
   // removes the selected saved site and its locally stored design data.
-  const deleteLabel = lang === 'zu' ? `${t('deleteSite')} (Delete site)` : t('deleteSite');
+  const deleteLabel = lang === 'zu' ? `${t('deleteSite')} (${translate('en', 'deleteSite')})` : t('deleteSite');
   const deleteConfirm = lang === 'zu'
-    ? `${t('deleteSiteConfirm')} / Susa le ndawo egciniwe?`
+    ? `${t('deleteSiteConfirm')} / ${translate('en', 'deleteSiteConfirm')}`
     : t('deleteSiteConfirm');
 
   const rowStyle: React.CSSProperties = {
