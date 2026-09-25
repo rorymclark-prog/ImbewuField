@@ -17,6 +17,7 @@ import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } f
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
+import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 
 test('Sesotho and Xitsonga Introduction appear as labelled drafts only while their exact source and answers match', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
@@ -148,6 +149,53 @@ test('Sesotho Soil Health lessons retain exact English where the jar, compost or
   }
   assert.equal(resolveCourseModulePresentation({ ...module, title: `${module.title} Changed.` }, 'st').status,
     'english-fallback', 'changed module source withdraws the card draft');
+});
+
+test('Sesotho Vegetables and Staple Crops keeps held crop and pest wording in English', () => {
+  const module = COURSE_MODULES.find(item => item.id === 'vegetables-staples')!;
+  assert.equal(resolveCourseModulePresentation(module, 'st').status, 'draft');
+  assert.equal(SESOTHO_VEGETABLES_STAPLES_DRAFT.title.sourceEnglish, module.title);
+  assert.equal(SESOTHO_VEGETABLES_STAPLES_DRAFT.description.sourceEnglish, module.description);
+  assert.equal(SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.length, module.lessons.length);
+  for (const lesson of module.lessons) {
+    const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(item => item.id === lesson.id)!;
+    const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(draft.body.sourceEnglish, lesson.body, `${lesson.id}: exact body source`);
+    assert.equal(draft.title.sourceEnglish, lesson.title, `${lesson.id}: exact title source`);
+    assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+      lesson.quiz.map(question => question.correct), `${lesson.id}: answer order`);
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+      'english-fallback', `${lesson.id}: changed farming source withdraws the draft`);
+    if (draft.body.reviewStatus === 'hold') {
+      assert.equal(presentation.content.body, lesson.body, `${lesson.id}: held advice stays English`);
+    }
+    for (const [index, point] of draft.keyPoints.entries()) {
+      assert.equal(point.sourceEnglish, lesson.keyPoints[index], `${lesson.id}: exact key point source`);
+      if (point.reviewStatus === 'hold') {
+        assert.equal(presentation.content.keyPoints[index], lesson.keyPoints[index], `${lesson.id}: held key point stays English`);
+      }
+    }
+    for (const [index, question] of draft.quiz.entries()) {
+      const sourceQuestion = lesson.quiz[index];
+      assert.equal(question.question.sourceEnglish, sourceQuestion.q, `${lesson.id}: exact question source`);
+      assert.equal(question.sourceCorrectIndex, sourceQuestion.correct, `${lesson.id}: answer source`);
+      assert.equal(question.rationale.sourceEnglish, sourceQuestion.rationale, `${lesson.id}: exact rationale source`);
+      assert.deepEqual(question.options.map(option => option.sourceEnglish), sourceQuestion.options,
+        `${lesson.id}: exact answer source`);
+      if (question.question.reviewStatus === 'hold') {
+        assert.equal(presentation.content.quiz[index].q, sourceQuestion.q, `${lesson.id}: held question stays English`);
+      }
+      for (const [optionIndex, option] of question.options.entries()) {
+        if (option.reviewStatus === 'hold') {
+          assert.equal(presentation.content.quiz[index].options[optionIndex], sourceQuestion.options[optionIndex],
+            `${lesson.id}: held answer stays English`);
+        }
+      }
+    }
+  }
+  assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'english-fallback',
+    'paused Xitsonga remains English for this module');
 });
 
 test('every module id is unique', () => {
