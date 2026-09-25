@@ -42,7 +42,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   const {user,profile}=useAuth();
   const {lang}=useLanguage();
   const ui=(en:string,zu:string)=>lang==='zu'?zu:en;
-  const statusCopy=(en:string,zu:string)=>lang==='zu'?<>{zu}<small style={{display:'block',fontSize:12,lineHeight:1.45}}>English source: {en}</small></>:en;
+  const statusCopy=(en:string,zu:string)=>lang==='zu'?<span style={{minWidth:0}}>{zu}<small style={{display:'block',fontSize:12,lineHeight:1.45}}>English source: {en}</small></span>:en;
   const requestVersion=useRef(0);
   const [data,setData]=useState<EvidenceData|null>(null),[error,setError]=useState(''),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false);
   const [org,setOrg]=useState(''),[orgs,setOrgs]=useState<{id:string;name:string}[]>([]),[tab,setTab]=useState<Tab>(initialTab),[asOf,setAsOf]=useState(today()),[project,setProject]=useState('');
