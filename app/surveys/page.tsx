@@ -15,6 +15,7 @@ import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import {
   createSurvey,
+  updateSurveyIsiZuluLabels,
   listSurveys,
   addSurveyResponse,
   countSurveyResponses,
@@ -300,7 +301,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
       text: q.text.trim(),
       ...(q.text_zu.trim() ? { text_zu: q.text_zu.trim() } : {}),
       type: q.type,
-      options: q.type === 'choice' ? q.options.flatMap((o, index) => o.trim() ? [o.trim()] : []) : [],
+      options: q.type === 'choice' ? q.options.flatMap((o) => o.trim() ? [o.trim()] : []) : [],
       ...(q.type === 'choice' && q.options.some((o) => o.trim())
         ? { options_zu: q.options.flatMap((o, index) => o.trim() ? [q.options_zu[index]?.trim() ?? ''] : []) }
         : {}),
@@ -422,9 +423,100 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
 // ─── Staff: existing survey card ──────────────────────────────────────────────
 
-function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }) {
+function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () => void }) {
+  const [titleZu, setTitleZu] = useState(survey.title_zu ?? '');
+  const [questionsZu, setQuestionsZu] = useState(() => survey.questions.map((q) => ({
+    id: q.id,
+    text_zu: q.text_zu ?? '',
+    options_zu: q.options.map((_, index) => q.options_zu?.[index] ?? ''),
+  })));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState(false);
+
+  async function saveLabels() {
+    setSaving(true);
+    setError(false);
+    try {
+      await updateSurveyIsiZuluLabels(survey.id, {
+        source_title: survey.title,
+        title_zu: titleZu,
+        questions: questionsZu.map((q, index) => ({
+          ...q,
+          source_text: survey.questions[index].text,
+          source_options: survey.questions[index].options,
+        })),
+      });
+      setSaved(true);
+      onSaved();
+    } catch {
+      setError(true);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="mt-3 pt-3 space-y-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+      <div className="space-y-1">
+        <div className="text-xs font-semibold" style={{ color: '#5C5040' }}>{localUi('English source', 'Umthombo wesiNgisi', 'zu')}: {survey.title}</div>
+        <input
+          value={titleZu}
+          onChange={(e) => setTitleZu(e.target.value)}
+          placeholder="Isihloko senhlolovo ngesiZulu"
+          aria-label={`Isihloko ngesiZulu: ${survey.title}`}
+          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none"
+          style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+        />
+      </div>
+
+      {survey.questions.map((question, questionIndex) => (
+        <div key={question.id} className="space-y-2 rounded-xl p-3" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid #E2D8C4' }}>
+          <div className="text-xs font-semibold" style={{ color: '#5C5040' }}>{localUi('English question', 'Umbuzo wesiNgisi', 'zu')}: {question.text}</div>
+          <input
+            value={questionsZu[questionIndex]?.text_zu ?? ''}
+            onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex ? { ...q, text_zu: e.target.value } : q))}
+            placeholder="Umbuzo ngesiZulu"
+            aria-label={`Umbuzo ngesiZulu: ${question.text}`}
+            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+            style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+          />
+          {question.options.map((option, optionIndex) => (
+            <div key={`${question.id}-option-${optionIndex}`} className="space-y-1">
+              <div className="text-xs" style={{ color: '#5C5040' }}>{localUi('English choice', 'Impendulo yesiNgisi', 'zu')}: {option}</div>
+              <input
+                value={questionsZu[questionIndex]?.options_zu[optionIndex] ?? ''}
+                onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex
+                  ? { ...q, options_zu: q.options_zu.map((value, i) => i === optionIndex ? e.target.value : value) }
+                  : q))}
+                placeholder="Impendulo ngesiZulu"
+                aria-label={`Impendulo ngesiZulu: ${option}`}
+                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+                style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <p className="text-xs" style={{ color: '#5C5040' }}>Izimpendulo esezithunyelwe zihlala zinjalo.</p>
+      {error && <p role="alert" className="text-xs" style={{ color: '#9A3328' }}>Ayikwazanga ukulondoloza. Hlola ukuxhumana kwakho bese uzama futhi.</p>}
+      <button
+        onClick={saveLabels}
+        disabled={saving}
+        className="w-full py-2.5 rounded-xl font-display font-semibold text-sm"
+        style={{ background: '#1F4D2B', color: '#EAF3E2', border: 'none', cursor: saving ? 'wait' : 'pointer' }}
+      >
+        {saving ? 'Iyalondoloza…' : saved ? 'Kulondoloziwe' : 'Londoloza amagama esiZulu'}
+      </button>
+    </div>
+  );
+}
+
+function StaffSurveyCard({ survey, isLive, canEditLabels, onSaved }: { survey: Survey; isLive: boolean; canEditLabels: boolean; onSaved: () => void }) {
   const { lang } = useLanguage();
   const [responseCount, setResponseCount] = useState<number | null>(null);
+  const [editingLabels, setEditingLabels] = useState(false);
 
   useEffect(() => {
     if (!isLive) { setResponseCount(Math.floor(Math.random() * 12)); return; }
@@ -451,6 +543,20 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
           </span>
         </div>
       </div>
+      {lang === 'zu' && isLive && canEditLabels && (
+        <>
+          <button
+            type="button"
+            onClick={() => setEditingLabels((open) => !open)}
+            aria-expanded={editingLabels}
+            className="mt-3 text-xs font-display font-semibold"
+            style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            {editingLabels ? 'Vala ukuhlela' : 'Faka noma ubuyekeze amagama esiZulu'}
+          </button>
+          {editingLabels && <SurveyLabelEditor survey={survey} onSaved={onSaved} />}
+        </>
+      )}
     </div>
   );
 }
@@ -710,7 +816,7 @@ export default function SurveysPage() {
                 </div>
                 <div className="space-y-3">
                   {surveys.map((s) => (
-                    <StaffSurveyCard key={s.id} survey={s} isLive={isLive} />
+                    <StaffSurveyCard key={s.id} survey={s} isLive={isLive} canEditLabels={s.created_by === user?.uid} onSaved={load} />
                   ))}
                 </div>
               </>

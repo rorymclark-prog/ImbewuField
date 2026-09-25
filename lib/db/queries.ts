@@ -559,6 +559,46 @@ export async function createSurvey(s: { org_name: string; title: string; questio
   const me = await getMyProfile();
   await addDoc(collection(f.db, 'surveys'), { ...s, org_id: me?.org_id ?? null, created_by: u, created_at: serverTimestamp() });
 }
+/** Add/update organisation-authored isiZulu labels without replacing the English source or responses. */
+export async function updateSurveyIsiZuluLabels(
+  surveyId: string,
+  labels: { source_title: string; title_zu: string; questions: Array<{ id: string; source_text: string; source_options: string[]; text_zu: string; options_zu: string[] }> },
+): Promise<void> {
+  if (isSampleMode()) return;
+  const f = fb(); const u = uid();
+  if (!f || !u) throw new Error('Sign in again to save survey labels.');
+  const surveyRef = doc(f.db, 'surveys', surveyId);
+  await runTransaction(f.db, async (transaction) => {
+    const snap = await transaction.get(surveyRef);
+    if (!snap.exists()) throw new Error('Survey not found.');
+    const current = snap.data();
+    // Firestore rules permit updates only to the creating NGO/admin. Read current data inside
+    // the transaction so adding labels cannot overwrite a newer English edit from another tab.
+    if (current.created_by !== u || !Array.isArray(current.questions)) {
+      throw new Error('Only the survey creator can update its isiZulu labels.');
+    }
+    if (current.title !== labels.source_title) throw new Error('Survey title changed. Reload and try again.');
+    const questions = current.questions as SurveyQuestion[];
+    if (labels.questions.length !== questions.length) throw new Error('Survey questions changed. Reload and try again.');
+    const translatedQuestions = questions.map((question, index) => {
+      const label = labels.questions[index];
+      if (label.id !== question.id || label.source_text !== question.text
+        || JSON.stringify(label.source_options) !== JSON.stringify(question.options)
+        || label.options_zu.length !== question.options.length) {
+        throw new Error('Survey questions or choices changed. Reload and try again.');
+      }
+      return {
+        ...question,
+        text_zu: label.text_zu.trim(),
+        options_zu: question.options.map((_, optionIndex) => label.options_zu[optionIndex]?.trim() ?? ''),
+      };
+    });
+    transaction.update(surveyRef, {
+      title_zu: labels.title_zu.trim(),
+      questions: translatedQuestions,
+    });
+  });
+}
 export async function listSurveys(): Promise<Survey[]> {
   if (isSampleMode()) return [];
   const f = fb(); const u = uid(); if (!f || !u) return [];
