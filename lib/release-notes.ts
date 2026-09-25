@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'fd4bd6ae', changes: [
+    'Field visit controls and save notices show draft isiZulu beside English.',
+    'Programme progress explains evidence and totals in draft isiZulu beside English.',
+    'Training photo and report sharing choices show both languages before sharing.',
+  ], tour: [
+    { title: 'Check field visit wording', where: 'Mentor visits', href: '/mentor',
+      detail: 'Choose isiZulu and open a visit; check the source beside draft controls.' },
+    { title: 'Check programme sharing', where: 'Programme evidence', href: '/ngo',
+      detail: 'Choose isiZulu and inspect training photo and funder sharing choices.' },
+  ] },
   { when: '25 September 2026', sha: '949e0fd6', changes: [
     'Harvest and money charts now explain their figures in draft isiZulu beside English.',
     'The charts clarify unrecorded costs, harvest gaps and estimates before you act.',
