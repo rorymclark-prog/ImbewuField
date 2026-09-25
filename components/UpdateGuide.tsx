@@ -26,7 +26,7 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
       import('@/lib/release-notes').then(({ visibleUpdateTour }) => {
         if (cancelled) return;
         setGuide({ sha: loadedBuildSha, stops: visibleUpdateTour(), phase: 'offer', index: 0 });
-      });
+      }).catch(() => { /* Offline and the chunk never cached: the guide is optional, stay quiet. */ });
     };
     window.addEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
     return () => {

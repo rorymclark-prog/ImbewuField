@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-25 (swarm wave 2b/3 — money charts dark, Exchange/Study polish, staff theme, lighter notes)
+- **Merged (four swarm PRs, one integration PR):** money charts (#619: CashflowChart,
+  FinanceGraphs, AreaReturnCards, ComingUpHarvests on theme tokens; sample-mode pending invoice
+  links now live in the in-memory sandbox, never real storage). Exchange & Study (#616: numbers
+  shown once, "How the exchange works" collapsed in Simple, one back control, named course links
+  in Study Simple). Staff theme (#618: Mentor / Surveys / Funder + two map-page hairlines on theme
+  tokens). Report + notes (#617: the Köppen/BRU technical footnote hidden in Simple and put
+  through tr() in All tools; PWAUpdateNotifier and UpdateGuide import lib/release-notes lazily, so
+  the 2,500-line changelog leaves the shared layout bundle).
+- **Integrator fix:** UpdateGuide's lazy import gets a quiet catch for an offline tap.
+- **Ops:** the swarm hit the account's five-hour usage limit at ~07:00 and the container restart
+  held work until 11:30; the two stalled tracks were relaunched and all four finished in ~25 min
+  (about $26 of Sonnet in total). A parallel translation stream (isiZulu / Sesotho / Xitsonga
+  drafts) merged ~24 PRs to main meanwhile; integrations merge main in and keep both sides.
+- **Still open:** Design Studio surfaces on theme tokens (design-08) and its emoji element
+  catalogue (design-02); dead routes (/survey, /gate, /design-studio-2); the owner decisions
+  listed under wave 1b (public data routes vs REQUIRE_API_AUTH, mentors' default level).
+
 ### 2026-09-25 (swarm wave 1b — Design Studio + People screens in Simple, dark-mode fixes)
 - **Merged (four swarm PRs, one integration PR):** Design Studio Simple (#585: curated element
   palette with Show all, one top Lima tip, guided base-photo line-up, Print → one "Save my plan" +

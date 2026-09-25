@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'e1041f2a', changes: [
+    'Money charts are readable in dark mode: figures and labels follow the theme.',
+    'In Simple, Exchange shows its numbers once and puts listings before the guide.',
+    'Mentor, Surveys and Funder screens now follow dark mode too.',
+    'Study names the Design and Farm Finance courses clearly in Simple.',
+    'Phones no longer download the full list of updates on every page.',
+  ], tour: [
+    { title: 'Exchange in Simple', where: 'Farmer exchange', href: '/exchange',
+      detail: 'Listings and Post come first; How the exchange works opens when you want it.' },
+    { title: 'Charts in dark mode', where: 'My Records → Charts', href: '/records',
+      detail: 'Switch to dark in Settings: money in, money out and returns stay readable.' },
+  ] },
   { when: '25 September 2026', sha: '746a8dfc', changes: [
     'Simple mode now covers the Design Studio: fewer tools and one Save my plan button.',
     'Community, Contact and Feedback are shorter in Simple, with more isiZulu.',
