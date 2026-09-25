@@ -11,7 +11,7 @@
 // body-text colour — the same shape of test as tests/pre-auth-theme-tokens.test.ts uses for the
 // login/gate screens.
 //
-// A few colours are real exceptions, not oversights: the forest (#1F4D2B) and ochre (#C07A1E)
+// A few colours are real exceptions, not oversights: the forest (#1F4D2B) and ochre (#9A6018)
 // brand fills keep their fixed light-text pairing (white, #F7F2E9, #EAF3E2) per CLAUDE.md — "Brand
 // fills with fixed light text on them … may keep their fixed fill + text pair" — because that pair
 // sits on a permanently dark or ochre panel, not on the themed modal surface. The white toggle
@@ -31,7 +31,7 @@ const FILES = [
 // white toggle thumb — all of them paint a fixed, non-themed panel, never the modal surface.
 const ALLOWED_HEX = new Set([
   '#1F4D2B', // forest brand fill (hero icon chip, primary button, selected goal card)
-  '#C07A1E', // ochre brand fill (step-2 primary button)
+  '#9A6018', // ochre fill for white type (step-2 primary button; the brand #C07A1E is 3.5:1 there)
   '#fff', '#FFF', '#FFFFFF', // fixed light text/thumb on a brand fill or coloured pill
   '#F7F2E9', // fixed light text on the forest primary button
   '#EAF3E2', // fixed light icon/text/check on the forest fill or selected goal card

@@ -321,7 +321,9 @@ export default function PopiaConsent() {
               className="w-full py-3 rounded-xl font-sans font-semibold transition-all"
               style={{
                 fontSize: 15,
-                background: goal ? '#C07A1E' : 'color-mix(in srgb, var(--border) 60%, transparent)',
+                // White 15px type: the brand ochre measured 3.5:1 under it; #9A6018 is the ochre
+                // fill CLAUDE.md sets aside for white text (5.2:1).
+                background: goal ? '#9A6018' : 'color-mix(in srgb, var(--border) 60%, transparent)',
                 color: goal ? '#fff' : 'var(--text-muted)',
                 border: 'none',
                 cursor: goal ? 'pointer' : 'not-allowed',
