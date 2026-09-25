@@ -63,10 +63,10 @@ const RESOURCES: { v: string; label: string; zu: string; Icon: typeof Zap }[] = 
   { v: 'fencing', label: 'Fencing', zu: 'Ucingo', Icon: Fence },
   { v: 'compost', label: 'Compost area', zu: 'Indawo yomquba', Icon: Recycle },
 ];
-const GOALS: { v: Goal; label: string; zu: string; desc: string }[] = [
-  { v: 'feed', label: 'Feed my family', zu: 'Ukondla umndeni wami', desc: 'A steady spread of vegetables through the year' },
-  { v: 'income', label: 'Earn an income', zu: 'Ukuthola imali engenayo', desc: 'Lima leans to market crops you can sell' },
-  { v: 'soil', label: 'Rebuild the soil', zu: 'Ukuvuselela umhlabathi', desc: 'Cover crops and legumes to restore the land' },
+const GOALS: { v: Goal; label: string; zu: string; desc: string; descZu: string }[] = [
+  { v: 'feed', label: 'Feed my family', zu: 'Ukondla umndeni wami', desc: 'A steady spread of vegetables through the year', descZu: 'Ukuqhubeka nokuba nemifino etholakalayo unyaka wonke' },
+  { v: 'income', label: 'Earn an income', zu: 'Ukuthola imali engenayo', desc: 'Lima leans to market crops you can sell', descZu: 'ULima ugxila ezitshalweni zemakethe ongazithengisa' },
+  { v: 'soil', label: 'Rebuild the soil', zu: 'Ukuvuselela umhlabathi', desc: 'Cover crops and legumes to restore the land', descZu: 'Izitshalo zokumboza kanye nemidumba ukuze kubuyiselwe umhlabathi' },
 ];
 
 // Season-appropriate crops to assign to beds (SA southern hemisphere).
@@ -237,7 +237,7 @@ function SurveyInner() {
         weekLabel: lang === 'zu' ? 'Iviki / Week' : undefined,
         weeksTitleLabel: lang === 'zu' ? 'Amaviki ayisithupha okuqala / First six weeks' : undefined,
         reviewNotice: lang === 'zu'
-          ? 'ISIZULU DRAFT — isiZulu text is an unreviewed AI draft paired with its exact English source. Goal descriptions, crop names, measurements and the Week 5 “Side-dress with compost tea” task remain in English. Check the English before using this plan. / UMBHALO WESIZULU WOKUQALA — Umbhalo wesiZulu uwuhlaka lwe-AI olungakabuyekezwa, oluboniswa kanye nomthombo wawo wesiNgisi. Izincazelo zemigomo, amagama ezitshalo, izilinganiso nomsebenzi weviki lesi-5 othi “Side-dress with compost tea” kuhlala ngesiNgisi. Hlola isiNgisi ngaphambi kokusebenzisa lolu hlelo.'
+          ? 'ISIZULU DRAFT — isiZulu text is an unreviewed AI draft paired with its exact English source. Goal descriptions appear as drafts beside English. Crop names, measurements and the Week 5 “Side-dress with compost tea” task remain in English. Check the English before using this plan. / UMBHALO WESIZULU WOKUQALA — Umbhalo wesiZulu uwuhlaka lwe-AI olungakabuyekezwa, oluboniswa kanye nomthombo wawo wesiNgisi. Izincazelo zemigomo ziboniswa njengemibhalo esaluhlaka eceleni kwesiNgisi. Amagama ezitshalo, izilinganiso nomsebenzi weviki lesi-5 othi “Side-dress with compost tea” kuhlala ngesiNgisi. Hlola isiNgisi ngaphambi kokusebenzisa lolu hlelo.'
           : undefined,
         weeks: WEEK_PLAN.map((w) => ({
           ...w,
@@ -276,7 +276,7 @@ function SurveyInner() {
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Garden Survey', 'Inhlolovo yengadi', lang)}{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
         <div className="flex-1" />
-        <LessonLink id="survey:garden" label="Learn" />
+        <LessonLink id="survey:garden" label={localUi('Learn', 'Funda', lang)} />
         {step === 5 && (
           <button onClick={printPlan} disabled={pdfBusy}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
@@ -453,7 +453,7 @@ function SurveyInner() {
             <div className="space-y-4">
               <h1 className="font-display font-bold text-2xl" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{surveyDraft('What do you most want from your land?', 'Yini oyifuna kakhulu emhlabeni wakho?', lang)}</h1>
               <div className={workspace.twoColumns}>
-                {GOALS.map(({ v, label, zu, desc }) => {
+                {GOALS.map(({ v, label, zu, desc, descZu }) => {
                   const on = goal === v;
                   return (
                     <button key={v} onClick={() => setGoal(v)}
@@ -461,7 +461,7 @@ function SurveyInner() {
                       style={{ background: on ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer' }}>
                       <div className="flex-1">
                         <div className="font-display font-semibold text-sm" style={{ color: on ? '#EAF3E2' : '#20190F' }}>{surveyDraft(label, zu, lang)}</div>
-                        <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#755942' }}>{desc}</div>
+                        <div className="font-sans text-xs mt-0.5" style={{ color: on ? 'rgba(234,243,226,0.7)' : '#755942' }}>{surveyDraft(desc, descZu, lang)}</div>
                       </div>
                       <div className="flex items-center justify-center rounded-full flex-shrink-0" style={{ width: 22, height: 22, background: on ? '#EAF3E2' : 'transparent', border: `1.5px solid ${on ? '#EAF3E2' : '#C9BBA1'}` }}>
                         {on && <Check size={13} style={{ color: 'var(--color-forest-800)' }} />}
