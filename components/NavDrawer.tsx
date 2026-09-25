@@ -26,7 +26,9 @@ interface NavDrawerProps {
 
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const ui = (english: string, zulu: string) => isZulu ? `${zulu} (${english})` : english;
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
@@ -103,12 +105,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       ],
     },
     {
-      label: t('tabAccount'),
+      label: isZulu ? 'I-akhawunti (Account)' : t('tabAccount'),
       items: [
-        { href: '/account', Icon: User, label: t('navMyAccount') },
-        { href: '/offline', Icon: ClipboardList, label: t('navOfflineSync') },
-        { href: '/samples', Icon: Sprout, label: t('navPracticeViews') },
-        { href: '/samples/gardens', Icon: Sprout, label: t('navBrowseGardens') },
+        { href: '/account', Icon: User, label: ui('My Account', 'I-akhawunti yami') },
+        { href: '/offline', Icon: ClipboardList, label: ui('Offline and sync', 'Akukho-inthanethi nokuvumelanisa') },
+        { href: '/samples', Icon: Sprout, label: ui('Practice views', 'Izikrini zokuzilolonga') },
+        { href: '/samples/gardens', Icon: Sprout, label: ui('Browse gardens', 'Bheka izingadi') },
         { href: '/feedback', Icon: MessageCircle, label: t('navFeedback') },
         { href: '/updates', Icon: Sparkles, label: t('navWhatsNew') },
       ],
@@ -196,12 +198,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </button>
         </div>
 
-        <nav aria-label={t('navLandmark')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
+        <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
           <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'var(--color-harvest)',color:'var(--text-primary)',fontWeight:700 }}><Footprints size={20}/>{t('navTour')}</Link>
           <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>{t('navTipsHelp')}</Link>
         </nav>
-        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{t('navTourWorkspace')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{t('navTourWorkspaceNote')}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navChooseView')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
-        <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
+        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{ui('Practice workspace', 'Indawo yokuzilolonga')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{ui('You are viewing demonstration records. Your account permissions stay unchanged.', 'Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo.')}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{ui('Choose a view', 'Khetha isikrini')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
+        <section aria-label={ui('Page controls', 'Izilawuli zekhasi')} style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
           <SettingsButton showLabel />
           <LessonLink id={pageLesson} label={t('navPageHelp')} tone="menu" />
           <RoleSwitcher current={navigationRole ?? 'farmer'} inMenu onNavigate={onClose} />
