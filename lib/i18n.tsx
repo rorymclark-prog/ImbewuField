@@ -1028,6 +1028,8 @@ const T_en: Dict = {
   studentOpenDesignStudio: 'Open Design Studio',
   studentCompletionMessage: 'You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.',
   studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',
+  studentSesothoUiDraftNotice: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
+  studentSesothoUiDraftNoticeSource: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
   studentEnglishContentNotice: 'Some module names and descriptions are unreviewed isiZulu drafts; module cards mark each one. Some lesson text and quizzes also remain in English. Audio review is separate.',
   studentZuluLessonDraftNotice: 'This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
   studentZuluLessonEnglishFallbackNotice: 'This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.',
