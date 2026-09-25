@@ -31,6 +31,22 @@ const SIGNUP_ROLES: { value: UserRole; label: string }[] = [
   { value: 'student', label: 'loginRoleStudent' },
 ];
 
+/**
+ * Which field a given error message is actually about, so the right input gets highlighted
+ * instead of the password field taking the blame for every failure (including ones, like an
+ * unrecognised email, that have nothing to do with it). Messages left out — "Email or password is
+ * incorrect" deliberately among them, since naming a field there would leak which one was wrong —
+ * highlight neither field.
+ */
+const AUTH_ERROR_FIELD: Record<string, 'email' | 'password'> = {
+  'That doesn\'t look like a valid email address.': 'email',
+  'No account found with that email.': 'email',
+  'An account with that email already exists.': 'email',
+  'An account already exists with this email using a different sign-in method.': 'email',
+  'Incorrect password — try again.': 'password',
+  'Choose a stronger password (at least 6 characters).': 'password',
+};
+
 const AUTH_ERROR_KEYS: Record<string, string> = {
   'That doesn\'t look like a valid email address.': 'loginErrorInvalidEmail',
   'This account has been disabled.': 'loginErrorAccountDisabled',
@@ -103,6 +119,7 @@ function LoginPageInner() {
   const errorRef = useRef<HTMLParagraphElement | null>(null);
 
   const backendReady = isBackendConfigured();
+  const errorField = error ? AUTH_ERROR_FIELD[error] : undefined;
   const displayAuthError = (message: string) => {
     const key = AUTH_ERROR_KEYS[message];
     if (key) return t(key);
@@ -278,7 +295,7 @@ function LoginPageInner() {
               placeholder={t('loginEmailAddress')} required disabled={!backendReady}
               autoComplete="email" inputMode="email"
               className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
-              style={inputStyle(!!error && mode !== 'create')} />
+              style={inputStyle(errorField === 'email')} />
 
             {mode !== 'reset' && (
               <>
@@ -290,7 +307,7 @@ function LoginPageInner() {
                 placeholder={t('loginPassword')} required disabled={!backendReady}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                 className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
-                style={inputStyle(!!error)} />
+                style={inputStyle(errorField === 'password')} />
               </>
             )}
 
@@ -308,7 +325,7 @@ function LoginPageInner() {
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}

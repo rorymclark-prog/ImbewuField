@@ -190,7 +190,7 @@ function HomeInner() {
   const [showPeople, setShowPeople] = useState(false);
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
-  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; source?: string } | null>(null);
   // Design-on-map overlay: the map now owns its own "My design" toggle (a labels-pill chip
   // inside components/Map.tsx, ON by default when a design exists), so the old page-level
   // showDesign/designPresent pair and the floating "Show design" button are gone.
@@ -571,7 +571,7 @@ function HomeInner() {
           </Link>
           {buildInfo?.sha && (
             <div
-              title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+              title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}`}
               className="hidden items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
               style={{
                 minHeight: 30,
