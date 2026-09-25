@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { uploadPhoto } from '@/lib/db/queries';
 import { resizeFileForUpload } from '@/lib/site-evidence';
@@ -45,6 +46,7 @@ const zuCopy: Record<string, string> = {
   Area: 'Indawo', 'Your area or town': 'Indawo noma idolobha lakho', 'Add photo (optional)': 'Faka isithombe (uma uthanda)',
   Cancel: 'Khansela', Post: 'Shicilela', 'Could not publish your post. Check your connection and try again.': 'Isikhangiso asikwazanga ukushicilelwa. Hlola uxhumano lwakho bese uzama futhi.',
   'No messages yet.': 'Akukabikho miyalezo.', 'Say hello…': 'Bingelela…', 'Learn': 'Funda',
+  'More options': 'Izinketho ezengeziwe',
   'Farmers who choose to be visible show up here as an approximate area — never their exact homestead.': 'Abalimi abakhetha ukubonakala bavela lapha njengendawo elinganiselwe — akuboniswa ikhaya labo eliqondile.',
   'No farmers nearby have opted in yet.': 'Abekho abalimi abaseduze abakhethe ukubonakala okwamanje.', 'Trade board': 'Ibhodi lokuhwebelana',
   'Nothing posted yet — be the first.': 'Akukabikho okuthunyelwe — yiba ngowokuqala.', 'Category': 'Isigaba', 'Type': 'Uhlobo',
@@ -76,8 +78,13 @@ export default function CommunityHubPage() {
   const { t, lang } = useLanguage();
   const tr = (key: string) => copyCommunity(t(key), lang);
   const router = useRouter();
+  const simple = useAppLevel() === 'simple';
+  // Simple leads with the posts, not the people-nearby map, and drops the Messages tab from the
+  // top nav — a farmer reaches a conversation directly via "Send a message" on a post or a
+  // profile, or by switching to All tools to see the full list.
+  const TABS: Tab[] = simple ? ['board', 'nearby'] : ['nearby', 'board', 'messages'];
 
-  const [tab, setTab] = useState<Tab>('nearby');
+  const [tab, setTab] = useState<Tab>(simple ? 'board' : 'nearby');
   const [myProfile, setMyProfile] = useState<CommunityProfile | null>(null);
   const [nearby, setNearby] = useState<CommunityProfile[]>([]);
   const [posts, setPosts] = useState<BoardPost[]>([]);
@@ -114,6 +121,11 @@ export default function CommunityHubPage() {
   }, [user]);
 
   useEffect(() => { if (user && communityEnabled()) refresh(); }, [user, refresh]);
+
+  // Switching to Simple mid-session (e.g. from Settings) drops the Messages tab from the nav —
+  // if it was the active tab, land somewhere still reachable rather than a panel with no
+  // highlighted tab button.
+  useEffect(() => { if (simple && tab === 'messages') setTab('board'); }, [simple, tab]);
 
   // getOrCreateThread() is a Firestore round trip. On a weak signal it can
   // reject, and an uncaught rejection here used to mean tapping "Message" on
@@ -161,7 +173,7 @@ export default function CommunityHubPage() {
       </header>
 
       <div className="flex-shrink-0 flex" role="tablist" aria-label={copyCommunity('Community', lang)} style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        {(['nearby', 'board', 'messages'] as Tab[]).map((tb) => (
+        {TABS.map((tb) => (
           <button
             key={tb}
             role="tab"
@@ -207,6 +219,7 @@ export default function CommunityHubPage() {
           <BoardTab
             posts={posts}
             myUid={user.uid}
+            simple={simple}
             showNewPost={showNewPost}
             onToggleNewPost={() => setShowNewPost((s) => !s)}
             myAreaText={myProfile?.area_text ?? ''}
@@ -275,9 +288,9 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
 }
 
 function BoardTab({
-  posts, myUid, showNewPost, onToggleNewPost, myAreaText, onPosted, onClose, onDelete, onMessage, messagingBusy,
+  posts, myUid, simple, showNewPost, onToggleNewPost, myAreaText, onPosted, onClose, onDelete, onMessage, messagingBusy,
 }: {
-  posts: BoardPost[]; myUid: string; showNewPost: boolean; onToggleNewPost: () => void; myAreaText: string;
+  posts: BoardPost[]; myUid: string; simple: boolean; showNewPost: boolean; onToggleNewPost: () => void; myAreaText: string;
   onPosted: () => void; onClose: (id: string) => void; onDelete: (id: string) => void;
   onMessage: (uid: string, name: string) => void; messagingBusy: boolean;
 }) {
@@ -296,7 +309,7 @@ function BoardTab({
         </button>
       </div>
 
-      {showNewPost && <NewBoardPostForm myAreaText={myAreaText} onPosted={onPosted} onCancel={onToggleNewPost} />}
+      {showNewPost && <NewBoardPostForm myAreaText={myAreaText} simple={simple} onPosted={onPosted} onCancel={onToggleNewPost} />}
 
       {posts.length === 0 ? (
         <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
@@ -352,7 +365,7 @@ function BoardTab({
   );
 }
 
-function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: string; onPosted: () => void; onCancel: () => void }) {
+function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaText: string; simple: boolean; onPosted: () => void; onCancel: () => void }) {
   const { t, lang } = useLanguage();
   const tr = (key: string) => copyCommunity(t(key), lang);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -364,6 +377,10 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
   const [uploading, setUploading] = useState(false);
   const [posting, setPosting] = useState(false);
   const [postError, setPostError] = useState(false);
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
+  // Simple keeps the essentials — what, a photo, send — and tucks Type/Category/Area (each
+  // already has a sensible default: 'have', 'seed', the farmer's own area) behind one disclosure.
+  const optionsExpanded = !simple || showMoreOptions;
 
   async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -396,28 +413,32 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
 
   return (
     <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
-        <div className="flex gap-2">
-          {(['have', 'want', 'free'] as BoardKind[]).map((k) => (
-            <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : 'var(--text-secondary)', border: `1px solid ${kind === k ? KIND_COLOR[k] : 'var(--border)'}` }}>
-              {kindLabel(k, lang)}
-            </button>
-          ))}
+      {optionsExpanded && (
+        <div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
+          <div className="flex gap-2">
+            {(['have', 'want', 'free'] as BoardKind[]).map((k) => (
+              <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : 'var(--text-secondary)', border: `1px solid ${kind === k ? KIND_COLOR[k] : 'var(--border)'}` }}>
+                {kindLabel(k, lang)}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
-        <select
-          value={category}
-          aria-label={tr('communityBoardCategory')}
-          onChange={(e) => setCategory(e.target.value as BoardCategory)}
-          className="w-full rounded-xl px-3 py-2.5 font-sans"
-          style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
-        >
-          {(Object.keys(CATEGORY_LABEL) as BoardCategory[]).map((c) => <option key={c} value={c}>{categoryLabel(c, lang)}</option>)}
-        </select>
-      </div>
+      )}
+      {optionsExpanded && (
+        <div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
+          <select
+            value={category}
+            aria-label={tr('communityBoardCategory')}
+            onChange={(e) => setCategory(e.target.value as BoardCategory)}
+            className="w-full rounded-xl px-3 py-2.5 font-sans"
+            style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+          >
+            {(Object.keys(CATEGORY_LABEL) as BoardCategory[]).map((c) => <option key={c} value={c}>{categoryLabel(c, lang)}</option>)}
+          </select>
+        </div>
+      )}
       <div>
         <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
         <textarea
@@ -430,18 +451,30 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
           style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', lineHeight: 1.5 }}
         />
       </div>
-      <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
-        <input
-          type="text"
-          value={areaText}
-          aria-label={tr('communityAreaLabel')}
-          onChange={(e) => setAreaText(e.target.value)}
-          placeholder={tr('communityAreaPlaceholder')}
-          className="w-full rounded-xl px-3 py-2.5 font-sans"
-          style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
-        />
-      </div>
+      {optionsExpanded && (
+        <div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
+          <input
+            type="text"
+            value={areaText}
+            aria-label={tr('communityAreaLabel')}
+            onChange={(e) => setAreaText(e.target.value)}
+            placeholder={tr('communityAreaPlaceholder')}
+            className="w-full rounded-xl px-3 py-2.5 font-sans"
+            style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
+          />
+        </div>
+      )}
+      {!optionsExpanded && (
+        <button
+          type="button"
+          onClick={() => setShowMoreOptions(true)}
+          className="font-sans font-semibold text-left"
+          style={{ fontSize: 13, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+        >
+          + {copyCommunity('More options', lang)}
+        </button>
+      )}
       <div>
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
