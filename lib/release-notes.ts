@@ -47,6 +47,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Community, Contact and Feedback are shorter in Simple, with more isiZulu.',
     'The welcome, privacy and Community screens now follow dark mode.',
     'Photos you post to Community shrink first, so they use less mobile data.',
+    'The Crop plan now follows dark mode, with larger text on a computer.',
   ], tour: [
     { title: 'Design in Simple', where: 'Design Studio', href: '/design',
       detail: 'A short list of things to place, then Save my plan to keep or share it.' },

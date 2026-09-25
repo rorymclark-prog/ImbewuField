@@ -107,7 +107,9 @@ test('Simple\'s DesignAdvisor shows only the single top tip, no "more" expansion
 
 test('Simple\'s photo importer keeps one guided line-it-up flow and drops the fine sliders', () => {
   assert.match(PHOTO_IMPORT, /simple\?: boolean/, 'BasePhotoImport must accept a simple prop');
-  assert.match(PHOTO_IMPORT, /\{!simple && \(\n\s*<label[\s\S]{0,220}See through<\/span>/, 'the opacity ("See through") slider must not render in Simple');
+  // The label was English ("See through") when this was written; #572 moved it to the translated
+  // designPhotoOpacityLabel key. Either spelling is the same slider.
+  assert.match(PHOTO_IMPORT, /\{!simple && \(\n\s*<label[\s\S]{0,220}(See through<\/span>|designPhotoOpacityLabel)/, 'the opacity ("See through") slider must not render in Simple');
   assert.match(PHOTO_IMPORT, /\{!simple && \(\n\s*<label[\s\S]{0,220}designPhotoZoomSize/, 'the zoom/size slider must not render in Simple');
   assert.match(PHOTO_IMPORT, /\{!simple && \(\n\s*<input\n\s*type="range"\n\s*min=\{0\}\n\s*max=\{359\}/, 'the fine 1°-step rotation slider must not render in Simple');
   assert.match(PHOTO_IMPORT, /<RotateCcw size=\{16\} \/>/, 'the coarse ±90° rotate-left button must still exist in every mode');

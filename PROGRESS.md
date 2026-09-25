@@ -52,7 +52,7 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
-### 2026-09-25 (swarm wave 1b — Design Studio + People screens in Simple, first-run dark mode)
+### 2026-09-25 (swarm wave 1b — Design Studio + People screens in Simple, dark-mode fixes)
 - **Merged (four swarm PRs, one integration PR):** Design Studio Simple (#585: curated element
   palette with Show all, one top Lima tip, guided base-photo line-up, Print → one "Save my plan" +
   Share; Layers / workspace layouts / multi-select / align stay in All tools; live-preview errors
@@ -61,7 +61,9 @@ must provision — not buildable from code alone).
   Community / Contact / Atlas / Example, board and profile photos resized to 1200px before upload,
   Simple for Contact / profile crops / Feedback, `/api/location-data` rate-limited). First-run
   Onboarding + POPIA consent follow the theme (#586). Records polish (#587: 44px edit/delete,
-  isiZulu lender-export strings, theme reds/ambers).
+  isiZulu lender-export strings, theme reds/ambers). Crop planner (#588: `/facilitator/crops`
+  surfaces, text and borders on theme tokens; clamp() type for headings, month labels, beds and
+  the R/m² figure, so desktop is no longer phone-sized).
 - **Integrator fix:** the POPIA step-2 button put white 15px type on #C07A1E (3.5:1); now
   #9A6018 (5.2:1), per the ochre rule.
 - **Open, for the owner:** `/api/contours`, `/api/site-features` and now `/api/location-data`
@@ -70,7 +72,7 @@ must provision — not buildable from code alone).
   Atlas would stop answering. Decide alongside the REQUIRE_API_AUTH switch (a public-data guard
   that stays rate-limited but never requires sign-in is one option).
 - **Still running:** money-chart dark mode (relaunched as `swarm/money-charts-dark-v2`), Exchange
-  & Study polish, crop-planner theme tokens.
+  & Study polish.
 
 ### 2026-09-25 (swarm wave 1 — Simple mode across the farmer screens + 17 verified fixes)
 - **How:** an app-wide code audit (9 Sonnet auditors, one per area, each followed by a Sonnet
