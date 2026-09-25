@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { resolveDeckLang } from '../lib/course-deck.ts';
+import { resolveNarrationLang } from '../lib/course-audio.ts';
 
 test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer mapping intact', () => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');
@@ -72,4 +76,38 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
   for (const criticalClaim of ['safe overflow', 'earth dam wall', 'first-flush diverter', 'not make the remaining water safe to drink', 'qualified local sanitation adviser', 'soil and mulch do not disinfect']) {
     assert.ok(held.toLowerCase().includes(criticalClaim.toLowerCase()), `critical claim stays held in English: ${criticalClaim}`);
   }
+});
+
+test('Tshivenda Water Harvesting presents only its labelled title draft and keeps instruction media English', () => {
+  const source = COURSE_MODULES.find(module => module.id === TSHIVENDA_WATER_HARVESTING_DRAFT.id);
+  assert.ok(source, 'the canonical Water Harvesting module must exist');
+  const modulePresentation = resolveCourseModulePresentation(source, 've');
+  assert.equal(modulePresentation.status, 'draft');
+  assert.equal(modulePresentation.title, TSHIVENDA_WATER_HARVESTING_DRAFT.title.tshivendaDraft);
+  assert.equal(modulePresentation.description, source.description,
+    'the module description stays English while its translation is held');
+
+  assert.equal(source.lessons.length, TSHIVENDA_WATER_HARVESTING_DRAFT.lessons.length);
+  for (const [index, lesson] of source.lessons.entries()) {
+    const draft = TSHIVENDA_WATER_HARVESTING_DRAFT.lessons[index];
+    const presentation = resolveLearnerLessonPresentation(lesson, 've');
+    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(presentation.content.title, draft.title.reviewStatus === 'hold'
+      ? lesson.title : draft.title.tshivendaDraft, `${lesson.id}: only explicitly drafted titles change`);
+    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: safety instruction remains English`);
+    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: safety summary remains English`);
+    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: water-safety quiz remains English`);
+    assert.equal(draft.title.sourceEnglish, lesson.title, `${lesson.id}: title is paired to exact English source`);
+
+    const changedSource = { ...lesson, body: `${lesson.body} Changed.` };
+    assert.equal(resolveLearnerLessonPresentation(changedSource, 've').status, 'english-fallback',
+      `${lesson.id}: changed source withdraws the entire paired draft`);
+  }
+
+  assert.equal(resolveCourseModulePresentation({ ...source, title: `${source.title} Changed.` }, 've').status,
+    'english-fallback', 'changed module source withdraws its card title');
+  assert.deepEqual(resolveDeckLang(source.id, 've'), { lang: 'en', exact: false },
+    'Tshivenda slide deck remains explicitly identified as English');
+  assert.deepEqual(resolveNarrationLang(source.id, 've'), { lang: 'en', exact: false },
+    'Tshivenda narration remains explicitly identified as English');
 });
