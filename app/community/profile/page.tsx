@@ -65,7 +65,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
   const { t, lang } = useLanguage();
-  const privacyText = (english: string, key: string) => lang === 'zu' ? `${english} / ${t(key)}` : english;
+  const privacyText = (english: string, key: string) => lang === 'zu' ? `${t(key)} / ${english}` : english;
   const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -197,7 +197,7 @@ export default function CommunityProfilePage() {
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginBottom: 20 }}>
-          {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: '#755942' }}>isiZulu draft — not reviewed by a fluent speaker / {t('communityDraftReviewNotice')}</span>}
+          {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: '#755942' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
           {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
         </p>
 

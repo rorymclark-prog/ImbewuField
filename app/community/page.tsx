@@ -229,7 +229,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
   const { t, lang } = useLanguage();
   const tr = (key: string) => copyCommunity(t(key), lang);
   const locationPrivacy = lang === 'zu'
-    ? `Farmers who choose to be visible show up here as an approximate area — never their exact homestead. / ${t('communityNearbyIntro')}`
+    ? `${t('communityNearbyIntro')} / Farmers who choose to be visible show up here as an approximate area — never their exact homestead.`
     : t('communityNearbyIntro');
   const pinned = nearby.filter((p) => p.show_on_map);
   return (
