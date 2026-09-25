@@ -9,6 +9,7 @@ import {
   CACHE_CHANGED_EVENT,
 } from '@/lib/offline-cache';
 import { useLanguage } from '@/lib/i18n-context';
+import { useAppLevel } from '@/lib/app-level';
 
 /**
  * Take a module — or the whole course — home.
@@ -37,6 +38,10 @@ interface Props {
 
 export default function OfflineDownload({ moduleIds, lang, label, compact = false }: Props) {
   const { t } = useLanguage();
+  // Simple / All tools (lib/app-level.ts). Farmers get Standard quality silently — the picker
+  // below is a facilitator/funder tool for a projector, not a decision a farmer on metered data
+  // needs to make; `quality` still defaults to 'standard' either way.
+  const simple = useAppLevel() === 'simple';
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -224,7 +229,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           higher option says who it is for — a farmer scanning this should be able to tell in one
           read that it is not the one for them. Hidden entirely when the module has no
           higher-quality files, rather than offering a choice that changes nothing. */}
-      {hasHigher && !busy && phase !== 'done' && (
+      {hasHigher && !busy && phase !== 'done' && !simple && (
         <div role="group" aria-label={t('offlineDownloadQuality')} className="flex flex-wrap items-center gap-1.5">
           {([
             { key: 'standard' as PackQuality, name: t('offlineQualityStandard'), note: t('offlineQualityStandardNote'), size: standardBytes },
