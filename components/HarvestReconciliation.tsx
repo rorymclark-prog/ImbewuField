@@ -53,7 +53,7 @@ function MatchedRow({ row }: { row: CropRow }) {
       {row.keptGap && row.keptKg !== null && (
         <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
           english={`Harvested ${fmtKg(row.harvestedKg)}, sold ${fmtKg(row.soldKg)} — ${fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.`}
-          zulu={`Kuvunyiwe ${fmtKg(row.harvestedKg)}, kwathengiswa ${fmtKg(row.soldKg)} — okusele okungu-${fmtKg(row.keptKg)} kusepulazini: kungenzeka kudliwe ekhaya, kuphiwe abanye, kondliwe izilwane, kugcinelwe imbewu noma konakele.`} />
+          zulu={`Kuvunyiwe ${fmtKg(row.harvestedKg)}, kwathengiswa ${fmtKg(row.soldKg)} — okungadayiswanga okungu-${fmtKg(row.keptKg)}: kungenzeka kudliwe ekhaya, kuphiwe abanye, kondliwe izilwane, kugcinelwe imbewu noma konakele.`} />
       )}
       {/* SAYING "I DO NOT KNOW" IS THE FEATURE. This branch used to be unreachable: the kept figure
           was clamped to zero, so a farmer who had logged only some of her picking was told she kept

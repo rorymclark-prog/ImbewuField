@@ -162,11 +162,9 @@ export default function ComingUpHarvests({
         )}
       </div>
 
-      <p className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
-        <IsiZuluDraftSource className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }} lang={lang}
-          english="Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises."
-          zulu="Isibalo ngasinye siyisivuno sonke sesitshalo esibalwa enyangeni okuqala ukuvunwa ngayo — asisho okuzovunwa kuleyo nyanga kuphela. Lezi izilinganiso zokuhlela, akuzona izithembiso." />
-      </p>
+      <IsiZuluDraftSource className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }} lang={lang}
+        english="Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises."
+        zulu="Isibalo ngasinye siyisivuno sonke sesitshalo esibalwa enyangeni okuqala ukuvunwa ngayo — asisho okuzovunwa kuleyo nyanga kuphela. Lezi izilinganiso zokuhlela, akuzona izithembiso." />
 
       <div style={{ borderTop: '1px solid var(--border)' }}>
         {book.months.map((m) => (
