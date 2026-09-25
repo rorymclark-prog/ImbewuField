@@ -6,8 +6,9 @@ import { SESOTHO_WATER_HARVESTING_DRAFT } from './course-translation-drafts-st-w
 import { SESOTHO_SOIL_HEALTH_DRAFT } from './course-translation-drafts-st-soil-health.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
+import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 
-export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts';
+export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts' | 've';
 export type CourseTranslationStatus =
   | 'unavailable'
   | 'review-draft'
@@ -137,12 +138,13 @@ export interface LearnerLessonPresentation {
   status: 'approved' | 'draft' | 'english-fallback';
 }
 
-type RegionalLanguage = 'st' | 'ts';
+type RegionalLanguage = 'st' | 'ts' | 've';
 type RegionalPair = {
   sourceEnglish: string;
   reviewStatus: 'machine-draft' | 'hold';
   sesothoDraft?: string;
   xitsongaDraft?: string;
+  tshivendaDraft?: string;
 };
 type RegionalLessonDraft = {
   id: string;
@@ -161,12 +163,13 @@ type RegionalLessonDraft = {
 const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: RegionalLessonDraft[] }>> = {
   st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
+  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT],
 };
 
 function regionalPair(pair: RegionalPair, source: string, language: RegionalLanguage): string | null {
   if (pair.sourceEnglish !== source) return null;
   if (pair.reviewStatus === 'hold') return source;
-  const draft = language === 'st' ? pair.sesothoDraft : pair.xitsongaDraft;
+  const draft = language === 'st' ? pair.sesothoDraft : language === 'ts' ? pair.xitsongaDraft : pair.tshivendaDraft;
   return typeof draft === 'string' && draft.trim() ? draft : null;
 }
 
@@ -210,7 +213,7 @@ export function resolveLearnerLessonPresentation(
     keyPoints: lesson.keyPoints,
     quiz: lesson.quiz,
   };
-  if (language === 'st' || language === 'ts') {
+  if (language === 'st' || language === 'ts' || language === 've') {
     const draft = REGIONAL_LESSON_DRAFTS[language].flatMap(module => module.lessons)
       .find(candidate => candidate.id === lesson.id);
     const content = draft && regionalLessonContent(lesson, draft, language);

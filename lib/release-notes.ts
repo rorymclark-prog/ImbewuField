@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '7a87483e', changes: [
+    'Introduction has a machine Tshivenda draft pending fluent and local farming review.',
+    'Held flood and compass wording stays in English pending review.',
+    'Slides and narration stay in English.',
+  ], tour: [
+    { title: 'Read the Introduction draft in Tshivenda', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked lesson draft and answers with their English source.' },
+  ] },
   { when: '25 September 2026', sha: '31a452dd', changes: [
     'Vegetables and Staple Crops now shows marked Sesotho lesson drafts.',
     'Held crop and pest advice stays in English beside its exact source.',
