@@ -21,6 +21,7 @@ import test from 'node:test';
 
 const i18nSource = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 const surveySource = readFileSync(new URL('../components/SiteSurveySheet.tsx', import.meta.url), 'utf8');
+const reviewSource = readFileSync(new URL('../components/SiteSurveyReview.tsx', import.meta.url), 'utf8');
 
 // lib/i18n.tsx used to hold all eleven language dictionaries inline as one ~420KB module,
 // shipped in full on every page load. It's since been split for bundle size: English (the
@@ -465,6 +466,46 @@ test('SiteSurveySheet reads every question, label and button through t(), not ha
   // wiring would otherwise slip past the regex checks above.
   assert.match(surveySource, /import \{ useLanguage \} from '@\/lib\/i18n';/);
   assert.match(surveySource, /const \{(?: lang, )?t \} = useLanguage\(\);/);
+});
+
+test('isiZulu Challenges and Review show exact English sources without changing saved challenge values or save behavior', () => {
+  const pairs = [
+    ["sectionFarmingApproach", "Farming approach"],
+    ["practiceFullyOrganicLabel", "Fully organic"],
+    ["practiceFullyOrganicDesc", "No synthetic inputs, composting-based"],
+    ["practiceMostlyOrganicLabel", "Mostly organic"],
+    ["practiceMostlyOrganicDesc", "Organic where possible, occasional exceptions"],
+    ["practiceConventionalLabel", "Conventional"],
+    ["practiceConventionalDesc", "Synthetic fertilisers and pesticides used"],
+    ["practiceExperimentingLabel", "Experimenting / mixed"],
+    ["practiceExperimentingDesc", "Trying different methods, not set yet"],
+    ["sectionMainChallenges", "Main challenges on this site (select at least one)"],
+    ["challengeDrought", "Drought / dry spells"], ["challengePests", "Pests & disease"],
+    ["challengePoorSoil", "Poor / degraded soil"], ["challengeLimitedWater", "Limited water access"],
+    ["challengeFunding", "Funding / costs"], ["challengeLabour", "Not enough labour"],
+    ["challengeFlooding", "Flooding / erosion"], ["challengeMarket", "Market access"],
+    ["challengeNone", "No major challenges"],
+    ["sectionAnythingElseLimaShouldKnow", "Anything else Lima should know?"],
+    ["notesPlaceholderHint", "Unique site features, history, things you've tried, specific concerns…"],
+    ["surveyGuideChallenges", "Describe where a problem happens and when you notice it. Put the most urgent problem first in your notes."],
+    ["surveyTipChallenges", "Tell us what gets in your way. Your notes help keep the report focused on your real situation."],
+  ];
+  for (const [key, english] of pairs) {
+    const sourceLiteral = english.replaceAll("'", "\\'");
+    assert.ok(surveySource.includes(key) && surveySource.includes(sourceLiteral), `${key} must show its exact English source`);
+    assert.ok(i18nSource.includes(`${key}:`) && i18nSource.includes(english), `${key} source must match the English dictionary`);
+  }
+  assert.ok(surveySource.includes("paired('surveyReviewTitle', 'Review your survey')"), 'the step 8 heading must show the English source');
+  assert.ok(surveySource.includes("'Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.'"), 'camera advice stays exact English until reviewed');
+  assert.ok(surveySource.includes("placeholder={lang === 'zu' ? 'e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…' : t('notesPlaceholder')}"), 'the ZU-only free-text placeholder stays in exact English until reviewed');
+  assert.ok(surveySource.includes('english="Leave a question blank if you are not sure. An unknown is more useful than a guess."'), 'the unknown-answer hint shows its exact English source');
+  assert.ok(surveySource.includes('english="You are updating your existing survey. Earlier details stay here when you switch routes."'), 'the existing-survey hint shows its exact English source');
+  assert.match(reviewSource, /const editSectionName=\(step:number,title:ReactNode\):string=>step===6[\s\S]*?'Izinselelo \(Challenges & Priorities\)'/);
+  assert.match(reviewSource, /aria-label=\{`\$\{t\('surveyEditSection'\)\}: \$\{editSectionName\(step,title\)\}`\}/, 'review edit buttons use a plain string accessible name for paired titles');
+  assert.doesNotMatch(reviewSource, /aria-label=\{`\$\{t\('surveyEditSection'\)\}: \$\{title\}`\}/, 'ReactNode headings must not leak [object Object] into the accessible name');
+  assert.ok(surveySource.includes("'Choose your goals, land preparation and soil condition, water source and delivery, farming approach and challenges. The other details are optional.'"), 'required-field/save prerequisite wording stays English');
+  assert.match(surveySource, /v: 'none',[\s\S]*?setChallenges\(toggle\(challenges, o\.v\)\)/, 'challenge answer keys and toggling remain unchanged');
+  assert.match(surveySource, /step === 7 \? handleSave\(\) : goTo\(route\[routeIndex \+ 1\]\)/, 'the save action remains unchanged');
 });
 
 test('SiteSurveySheet no longer hard-codes its former English literals', () => {
