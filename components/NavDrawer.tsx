@@ -15,6 +15,7 @@ import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
+import { useAppLevel } from '@/lib/app-level';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
@@ -23,6 +24,18 @@ interface NavDrawerProps {
   open: boolean;
   onClose: () => void;
 }
+
+// Simple / All tools (lib/app-level.ts). All tools keeps every row below exactly as it is today;
+// Simple keeps only the core jobs a farmer new to smartphones needs in her first weeks — judged
+// per row, not per section, since Design Studio sits in the same "Organisation" section as
+// Mentor/NGO/Funder dashboards but is one of the core jobs. Role and workspace filtering
+// (canSeeNavLink / canSeeWorkspaceLink) still apply on top of this in both modes. Matched by the
+// exact href string, not the base path — '/farmer' (Farm map) and '/farmer?openSurvey=1' (Garden
+// Survey, hidden in Simple) share a base path but are different rows.
+const SIMPLE_NAV_HREFS = new Set([
+  '/home', '/farmer', '/records', '/facilitator/crops', '/calendar',
+  '/journal', '/student', '/contact', '/design', '/account',
+]);
 
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
@@ -34,6 +47,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // what `role === null` deliberately does NOT do.
   const { role } = useAuth();
   const { navigationRole, sample } = useRoleNavigation();
+  const simple = useAppLevel() === 'simple';
   const pageLesson = ({ '/home': 'home:overview', '/farmer': 'map:overview',
     '/student': 'student:overview', '/mentor': 'mentor:overview', '/ngo': 'ngo:overview',
     '/funder': 'funder:overview', '/records': 'finances:overview', '/invoice': 'finances:overview',
@@ -199,7 +213,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         </div>
 
         <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
-          <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'var(--color-harvest)',color:'var(--text-primary)',fontWeight:700 }}><Footprints size={20}/>{t('navTour')}</Link>
+          {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre
+              token) under var(--text-primary) — that measured ~2.1:1 in light and ~1.7:1 in dark.
+              #9A6018 is CLAUDE.md's ochre fill for white type, constant across themes on purpose. */}
+          <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'#9A6018',color:'#fff',fontWeight:700 }}><Footprints size={20}/>{t('navTour')}</Link>
           <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>{t('navTipsHelp')}</Link>
         </nav>
         {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{ui('Practice workspace', 'Indawo yokuzilolonga')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{ui('You are viewing demonstration records. Your account permissions stay unchanged.', 'Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo.')}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{ui('Choose a view', 'Khetha isikrini')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
@@ -212,7 +229,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({
             ...section,
-            items: section.items.filter(({ href }) => (sample || canSeeNavLink(role, href)) && canSeeWorkspaceLink(navigationRole, href)),
+            items: section.items.filter(({ href }) =>
+              (sample || canSeeNavLink(role, href)) &&
+              canSeeWorkspaceLink(navigationRole, href) &&
+              (!simple || SIMPLE_NAV_HREFS.has(href))),
           }))
             // A section whose every link was filtered out must go too, heading and all —
             // otherwise a farmer gets an "ORGANISATION" label with nothing beneath it, which
