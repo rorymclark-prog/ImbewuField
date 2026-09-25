@@ -28,10 +28,7 @@ import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
-const OCHRE = '#C07A1E';
-// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// (CLAUDE.md); keep OCHRE itself for fills and borders.
-const GOLD_DIM = '#7A4408';
+const OCHRE = '#C07A1E'; // FILL only — text/icon role now routes through var(--gold-dim)
 const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 
@@ -188,8 +185,8 @@ export default function StepGuide({
             padding: '5px 10px 5px 5px',
             borderRadius: 12,
             border: `1.5px solid ${accent}`,
-            background: PAPER,
-            color: DARK,
+            background: 'var(--bg-1)',
+            color: 'var(--text-primary)',
             cursor: 'pointer',
             textAlign: 'left',
           }}
@@ -234,7 +231,7 @@ export default function StepGuide({
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 26, flexShrink: 0,
               border: 'none', background: 'transparent', borderRadius: 8,
-              color: DARK, opacity: 0.4, cursor: 'pointer', padding: 0,
+              color: 'var(--text-primary)', opacity: 0.4, cursor: 'pointer', padding: 0,
             }}
           >
             <X size={14} />
@@ -254,7 +251,7 @@ export default function StepGuide({
         style={{
           borderRadius: 14,
           border: `1.5px solid ${accent}`,
-          background: PAPER,
+          background: 'var(--bg-1)',
           boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
           overflow: 'hidden',
         }}
@@ -279,7 +276,7 @@ export default function StepGuide({
         </div>
 
         {celebrate && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(31,77,43,0.10)', color: GREEN, fontWeight: 700, fontSize: 12.5 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(31,77,43,0.10)', color: 'var(--color-forest-800)', fontWeight: 700, fontSize: 12.5 }}>
             <PartyPopper size={14} /> {t(DESIGN_CHROME_KEYS.guideCelebration)}
           </div>
         )}
@@ -305,10 +302,10 @@ export default function StepGuide({
                     )}
                   </span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : DARK, textDecoration: done ? 'line-through' : 'none' }}>
+                    <div style={{ fontSize: 13, fontWeight: isCurrent ? 800 : 600, color: done ? 'rgba(11,18,11,0.45)' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
                       {ss.title}
                       {ss.optional && !done && (
-                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: GOLD_DIM, textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
+                        <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'var(--gold-dim)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideOptional)}</span>
                       )}
                       {skipped && (
                         <span style={{ marginLeft: 6, fontSize: 10, fontWeight: 700, color: 'rgba(11,18,11,0.4)', textTransform: 'uppercase', letterSpacing: 0.3 }}>{t(DESIGN_CHROME_KEYS.guideSkipped)}</span>
@@ -317,9 +314,9 @@ export default function StepGuide({
 
                     {isCurrent && (
                       <div style={{ marginTop: 4, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>{ss.instruction}</div>
+                        <div style={{ fontSize: 12.5, lineHeight: 1.45, color: 'var(--text-primary)' }}>{ss.instruction}</div>
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                          <MapPin size={13} color={GOLD_DIM} style={{ flexShrink: 0, marginTop: 2 }} />
+                          <MapPin size={13} color="var(--gold-dim)" style={{ flexShrink: 0, marginTop: 2 }} />
                           <div style={{ fontSize: 12, lineHeight: 1.4, color: 'rgba(11,18,11,0.75)' }}>{ss.where}</div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -335,11 +332,11 @@ export default function StepGuide({
                           <button
                             type="button"
                             onClick={() => skip(ss.id)}
-                            style={{ minHeight: 40, padding: '8px 12px', borderRadius: 10, border: '1px solid rgba(11,18,11,0.18)', background: 'transparent', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: 'pointer' }}
+                            style={{ minHeight: 40, padding: '8px 12px', borderRadius: 10, border: '1px solid rgba(11,18,11,0.18)', background: 'transparent', color: 'var(--color-forest-800)', fontWeight: 700, fontSize: 12.5, cursor: 'pointer' }}
                           >
                             {ss.optional ? t(DESIGN_CHROME_KEYS.guideSkip) : t(DESIGN_CHROME_KEYS.guideLater)}
                           </button>
-                          <SpeakButton text={narration} englishText={narration} size={16} color={GREEN} />
+                          <SpeakButton text={narration} englishText={narration} size={16} color="var(--color-forest-800)" />
                         </div>
                       </div>
                     )}
@@ -382,8 +379,8 @@ export default function StepGuide({
         {/* All-resolved banner → advance to next step */}
         {allResolved && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderTop: '1px solid rgba(11,18,11,0.08)', background: 'rgba(31,77,43,0.06)' }}>
-            <Check size={16} color={GREEN} />
-            <span style={{ fontSize: 12.5, color: DARK, flex: 1 }}>
+            <Check size={16} color="var(--color-forest-800)" />
+            <span style={{ fontSize: 12.5, color: 'var(--text-primary)', flex: 1 }}>
               {formatDesignTranslation(t(DESIGN_CHROME_KEYS.guideChecklistWorked), {
                 step: stepLabel.toLocaleLowerCase(lang),
               })}
@@ -407,7 +404,7 @@ export default function StepGuide({
               type="button"
               onClick={() => setLessonOpen((v) => !v)}
               aria-expanded={lessonOpen}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, minHeight: 40, border: 'none', background: 'transparent', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', padding: '0 2px' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, minHeight: 40, border: 'none', background: 'transparent', color: 'var(--color-forest-800)', fontSize: 12.5, fontWeight: 700, cursor: 'pointer', padding: '0 2px' }}
             >
               <HelpCircle size={15} /> {t(DESIGN_CHROME_KEYS.guideWhyMatters)} {lessonOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
             </button>

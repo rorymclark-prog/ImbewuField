@@ -28,10 +28,6 @@ import { useLanguage } from '@/lib/i18n';
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
-const OCHRE = '#C07A1E';
-// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// (CLAUDE.md); keep OCHRE itself for fills and borders.
-const GOLD_DIM = '#7A4408';
 const DARK = '#0B120B';
 
 export interface BasePhotoApplyResult {
@@ -407,7 +403,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
           maxWidth: 480,
           maxHeight: '92dvh',
           overflowY: 'auto',
-          background: PAPER,
+          background: 'var(--bg-1)',
           borderRadius: '20px 20px 0 0',
           padding: '16px 16px 20px',
           boxShadow: '0 -4px 24px rgba(0,0,0,0.3)',
@@ -437,9 +433,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
           onPointerCancel={() => { sheetDragRef.current = null; }}
           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, cursor: 'grab', touchAction: 'none' }}
         >
-          <div style={{ fontWeight: 800, fontSize: 15, color: DARK }}>
+          <div style={{ fontWeight: 800, fontSize: 15, color: 'var(--text-primary)' }}>
             {t('designPhotoTitle')}
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, fontWeight: 600, fontSize: 11, color: '#6B6355', marginLeft: 8 }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, fontWeight: 600, fontSize: 11, color: 'var(--text-muted)', marginLeft: 8 }}>
               <GripVertical size={12} /> {t('designPhotoDragToMove')}
             </span>
           </div>
@@ -448,7 +444,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
             aria-label={t('designClose')}
             onPointerDown={(e) => e.stopPropagation()}
             onClick={onClose}
-            style={{ border: 'none', background: 'transparent', color: '#6B6355', cursor: 'pointer', padding: 4 }}
+            style={{ border: 'none', background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}
           >
             <X size={20} />
           </button>
@@ -456,7 +452,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
 
         {!img && (
           <>
-            <p style={{ fontSize: 12.5, color: '#5C5040', marginBottom: 10 }}>
+            <p style={{ fontSize: 12.5, color: 'var(--text-secondary)', marginBottom: 10 }}>
               {t('designPhotoIntro')}
             </p>
             <input
@@ -481,7 +477,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 6,
-                color: GREEN,
+                color: 'var(--color-forest-800)',
                 cursor: 'pointer',
               }}
             >
@@ -549,13 +545,13 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   {/* Simple keeps one guided "line it up" flow — drag to pan, ±90° rotate, two-point
                       scale — and drops the fine zoom/opacity sliders. */}
                   {!simple && (
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--text-primary)' }}>
                     <span style={{ minWidth: 76 }}>{t('designPhotoOpacityLabel')}</span>
                     <input
                       type="range" min={0.15} max={1} step={0.05}
                       value={photoOpacity}
                       onChange={(e) => setPhotoOpacity(Number(e.target.value))}
-                      style={{ flex: 1, accentColor: GREEN }}
+                      style={{ flex: 1, accentColor: 'var(--color-forest-800)' }}
                     />
                     <span style={{ minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
                       {Math.round(photoOpacity * 100)}%
@@ -563,20 +559,20 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   </label>
                   )}
                   {!simple && (
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--text-primary)' }}>
                     <span style={{ minWidth: 76 }}>{t('designPhotoZoomSize')}</span>
                     <input
                       type="range" min={0.25} max={4} step={0.05}
                       value={zoom}
                       onChange={(e) => setZoom(Number(e.target.value))}
-                      style={{ flex: 1, accentColor: GREEN }}
+                      style={{ flex: 1, accentColor: 'var(--color-forest-800)' }}
                     />
                     <span style={{ minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
                       {Math.round(zoom * 100)}%
                     </span>
                   </label>
                   )}
-                  <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
+                  <div style={{ fontSize: 11.5, color: 'var(--text-primary)', opacity: 0.7 }}>
                     {pointMode
                       ? formatDesignTranslation(t('designPhotoPointInstruction'), { point: points.length + 1 })
                       : t('designPhotoMoveInstruction')}
@@ -592,9 +588,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                       disabled={points.length >= 2}
                       style={{
                         flex: 1, minWidth: 140, minHeight: 44, borderRadius: 10, cursor: points.length >= 2 ? 'default' : 'pointer',
-                        border: pointMode ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
+                        border: pointMode ? `2px solid ${GOLD}` : `1px solid var(--color-forest-800)`,
                         background: pointMode ? GREEN : 'transparent',
-                        color: pointMode ? PAPER : GREEN,
+                        color: pointMode ? PAPER : 'var(--color-forest-800)',
                         fontWeight: 800, fontSize: 12.5,
                         opacity: points.length >= 2 ? 0.45 : 1,
                       }}
@@ -611,7 +607,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: 6,
                         minHeight: 44, padding: '0 14px', borderRadius: 10,
-                        border: '1px solid rgba(0,0,0,0.2)', background: 'transparent', color: DARK,
+                        border: '1px solid rgba(0,0,0,0.2)', background: 'transparent', color: 'var(--text-primary)',
                         fontWeight: 700, fontSize: 12.5,
                         cursor: points.length ? 'pointer' : 'default',
                         opacity: points.length ? 1 : 0.4,
@@ -626,7 +622,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
 
             {/* Rotation */}
             <div style={{ marginBottom: 12 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 4 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
                 {t('designPhotoNorth')}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -661,7 +657,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                 </button>
               </div>
               {!simple && (
-              <div style={{ fontSize: 11, color: '#755942', marginTop: 2 }}>
+              <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
                 {rotationDeg === 0
                   ? t('designPhotoNotTurned')
                   : formatDesignTranslation(t('designPhotoTurned'), { degrees: rotationDeg })}
@@ -671,15 +667,15 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
 
             {/* Scale calibration */}
             <div style={{ marginBottom: 12 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: DARK, marginBottom: 4 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
                 {t('designPhotoSetScale')}
               </div>
               {carried != null && points.length === 0 && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: GREEN, fontWeight: 700, marginBottom: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: 'var(--color-forest-800)', fontWeight: 700, marginBottom: 6 }}>
                   <Check size={14} /> {t('designPhotoScaleKept')}
                 </div>
               )}
-              <div style={{ fontSize: 11.5, color: '#5C5040', marginBottom: 6 }}>
+              <div style={{ fontSize: 11.5, color: 'var(--text-secondary)', marginBottom: 6 }}>
                 {t('designPhotoScaleHelp')} {points.length === 0 && t('designPhotoFirstPoint')}
                 {points.length === 1 && t('designPhotoSecondPoint')}
                 {points.length === 2 && t('designPhotoEnterDistance')}
@@ -698,15 +694,15 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                       width: 90,
                       padding: '8px 10px',
                       borderRadius: 10,
-                      border: '1px solid #E2D8C4',
+                      border: '1px solid var(--border)',
                       fontSize: 14,
                     }}
                   />
-                  <span style={{ fontSize: 13, color: '#5C5040' }}>{t('designPhotoMetresApart')}</span>
+                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('designPhotoMetresApart')}</span>
                   <button
                     type="button"
                     onClick={() => { setPoints([]); setMetres(''); }}
-                    style={{ marginLeft: 'auto', border: 'none', background: 'transparent', color: GOLD_DIM, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+                    style={{ marginLeft: 'auto', border: 'none', background: 'transparent', color: 'var(--gold-dim)', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
                   >
                     {t('designPhotoRetap')}
                   </button>
@@ -714,13 +710,13 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
               )}
             </div>
 
-            {error && <p style={{ fontSize: 12, color: GOLD_DIM, marginBottom: 8 }}>{error}</p>}
+            {error && <p style={{ fontSize: 12, color: 'var(--gold-dim)', marginBottom: 8 }}>{error}</p>}
 
             <div style={{ display: 'flex', gap: 8 }}>
               <button
                 type="button"
                 onClick={() => { setImg(null); setPoints([]); setMetres(''); setRotationDeg(0); setZoom(1); setPan({ x: 0, y: 0 }); }}
-                style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: '1px solid #E2D8C4', background: PAPER, color: '#5C5040', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+                style={{ flex: 1, padding: '10px 12px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-1)', color: 'var(--text-secondary)', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
               >
                 {t('designPhotoChooseDifferent')}
               </button>
@@ -734,7 +730,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   borderRadius: 12,
                   border: 'none',
                   background: calibrationReady && !busy ? GREEN : 'rgba(226,216,196,0.6)',
-                  color: calibrationReady && !busy ? PAPER : '#755942',
+                  color: calibrationReady && !busy ? PAPER : 'var(--text-muted)',
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: calibrationReady && !busy ? 'pointer' : 'default',
@@ -758,9 +754,9 @@ const rotateBtnStyle: React.CSSProperties = {
   width: 36,
   height: 36,
   borderRadius: 18,
-  border: '1px solid #E2D8C4',
-  background: '#FFFEFA',
-  color: '#1F4D2B',
+  border: '1px solid var(--border)',
+  background: 'var(--bg-1)',
+  color: 'var(--color-forest-800)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

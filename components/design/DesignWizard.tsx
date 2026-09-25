@@ -136,7 +136,7 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
           padding: '0 4px',
           border: 'none',
           background: 'transparent',
-          color: GREEN,
+          color: 'var(--color-forest-800)',
           fontSize: 12,
           fontWeight: 700,
           cursor: 'pointer',
@@ -169,9 +169,9 @@ function useProLessonExpander(step: WizardStep) {
         minWidth: 30,
         flexShrink: 0,
         borderRadius: 8,
-        border: `1px solid ${GREEN}`,
+        border: `1px solid var(--color-forest-800)`,
         background: expanded ? GREEN : 'transparent',
-        color: expanded ? PAPER : GREEN,
+        color: expanded ? PAPER : 'var(--color-forest-800)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -209,7 +209,7 @@ function GuidedWizard({
         display: 'flex',
         flexDirection: 'column',
         gap: 5,
-        background: PAPER,
+        background: 'var(--bg-1)',
         border: `2px solid ${GOLD}`,
         borderRadius: 18,
         padding: 8,
@@ -233,20 +233,20 @@ function GuidedWizard({
       </div>
 
       <div>
-        <div style={{ fontSize: 11, lineHeight: 1.2, fontWeight: 700, color: GREEN, letterSpacing: 0.3, textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 11, lineHeight: 1.2, fontWeight: 700, color: 'var(--color-forest-800)', letterSpacing: 0.3, textTransform: 'uppercase' }}>
           {formatDesignTranslation(t(DESIGN_CHROME_KEYS.stepProgress), {
             current: idx + 1,
             total: STEP_ORDER.length,
           })}
         </div>
-        <div style={{ fontSize: 17, lineHeight: 1.15, fontWeight: 800, color: DARK, marginTop: 1 }}>{stepLabel}</div>
+        <div style={{ fontSize: 17, lineHeight: 1.15, fontWeight: 800, color: 'var(--text-primary)', marginTop: 1 }}>{stepLabel}</div>
       </div>
 
       <div
         style={{
           fontSize: 13.5,
           lineHeight: 1.4,
-          color: DARK,
+          color: 'var(--text-primary)',
           background: 'rgba(31,77,43,0.06)',
           borderRadius: 12,
           padding: '8px 12px',
@@ -268,9 +268,9 @@ function GuidedWizard({
             width: 44,
             flexShrink: 0,
             borderRadius: 12,
-            border: `1.5px solid ${GREEN}`,
+            border: `1.5px solid var(--color-forest-800)`,
             background: canBack ? 'transparent' : 'rgba(31,77,43,0.08)',
-            color: canBack ? GREEN : 'rgba(31,77,43,0.4)',
+            color: canBack ? 'var(--color-forest-800)' : 'rgba(31,77,43,0.4)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -336,7 +336,7 @@ function ProWizard({
         display: 'flex',
         flexDirection: 'column',
         gap: 6,
-        background: PAPER,
+        background: 'var(--bg-1)',
         border: `1px solid rgba(31,77,43,0.3)`,
         borderRadius: 10,
         padding: '6px 8px',
@@ -361,9 +361,9 @@ function ProWizard({
                   minHeight: 30,
                   padding: '0 8px',
                   borderRadius: 999,
-                  border: active ? `1.5px solid ${GREEN}` : '1px solid rgba(31,77,43,0.2)',
+                  border: active ? `1.5px solid var(--color-forest-800)` : '1px solid rgba(31,77,43,0.2)',
                   background: active ? GREEN : 'transparent',
-                  color: active ? PAPER : DARK,
+                  color: active ? PAPER : 'var(--text-primary)',
                   fontSize: 11.5,
                   fontWeight: active ? 700 : 500,
                   cursor: 'pointer',
@@ -381,7 +381,7 @@ function ProWizard({
                     fontSize: 9,
                     fontWeight: 700,
                     background: done ? GOLD : active ? PAPER : 'rgba(31,77,43,0.15)',
-                    color: DARK,
+                    color: 'var(--text-primary)',
                     flexShrink: 0,
                   }}
                 >
@@ -402,9 +402,9 @@ function ProWizard({
             minWidth: 30,
             flexShrink: 0,
             borderRadius: 8,
-            border: `1px solid ${GREEN}`,
+            border: `1px solid var(--color-forest-800)`,
             background: 'transparent',
-            color: canBack ? GREEN : 'rgba(31,77,43,0.35)',
+            color: canBack ? 'var(--color-forest-800)' : 'rgba(31,77,43,0.35)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -422,7 +422,7 @@ function ProWizard({
             minWidth: 30,
             flexShrink: 0,
             borderRadius: 8,
-            border: `1px solid ${GREEN}`,
+            border: `1px solid var(--color-forest-800)`,
             background: canNext ? GREEN : 'rgba(31,77,43,0.08)',
             color: canNext ? PAPER : 'rgba(31,77,43,0.35)',
             display: 'flex',

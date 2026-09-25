@@ -196,7 +196,13 @@ test('BasePhotoImport\'s four hardcoded instruction strings are translated', () 
   }
 });
 
-test('ochre as TEXT is the dim variant (#7A4408), never the raw fill colour', () => {
+test('ochre as TEXT is the dim variant, never the raw fill colour', () => {
+  // BasePhotoImport.tsx and StepGuide.tsx no longer keep a local GOLD_DIM = '#7A4408' constant —
+  // the Design Studio dark-mode theme-token fix (tests/design-studio-theme-tokens.test.ts) routed
+  // their text/icon uses straight through the theme-aware var(--gold-dim) instead, which is the
+  // same dim variant this test protects, now adapting per theme rather than staying fixed. The
+  // other three files are untouched by that fix and keep the original literal-constant pattern.
+  const THEMED_GOLD_DIM = new Set(['components/design/BasePhotoImport.tsx', 'components/design/StepGuide.tsx']);
   for (const [name, source] of [
     ['app/design/page.tsx', PAGE],
     ['components/design/BasePhotoImport.tsx', PHOTO_IMPORT],
@@ -204,7 +210,11 @@ test('ochre as TEXT is the dim variant (#7A4408), never the raw fill colour', ()
     ['components/design/StepGuide.tsx', STEP_GUIDE],
     ['components/design/SectorSummary.tsx', SECTOR_SUMMARY],
   ] as const) {
-    assert.match(source, /const GOLD_DIM = '#7A4408'/, `${name} must declare the GOLD_DIM text-colour constant`);
+    if (THEMED_GOLD_DIM.has(name)) {
+      assert.match(source, /color:\s*['"]var\(--gold-dim\)['"]/, `${name} must route ochre-as-text through var(--gold-dim)`);
+    } else {
+      assert.match(source, /const GOLD_DIM = '#7A4408'/, `${name} must declare the GOLD_DIM text-colour constant`);
+    }
     assert.doesNotMatch(source, /color:\s*OCHRE\b/, `${name} must not use the OCHRE fill constant as a text colour`);
     assert.doesNotMatch(source, /color=\{OCHRE\}/, `${name} must not use the OCHRE fill constant as an icon colour`);
   }
