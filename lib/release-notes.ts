@@ -52,6 +52,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '25 September 2026', sha: '1cb654ad', changes: [
     'Plant Guilds now shows a marked Sesotho review draft beside English.',
     'Pruning, mulch and insect checks stay in English pending review.',
+    'Study controls now have marked Tshivenda drafts with an English review notice.',
   ], tour: [
     { title: 'Review Plant Guilds in Sesotho', where: 'Study → Plant Selection & Guilds', href: '/student',
       detail: 'Choose Sesotho to compare the marked title and lesson draft with English. Held guidance stays English.' },
