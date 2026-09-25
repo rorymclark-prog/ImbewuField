@@ -41,6 +41,8 @@ import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, type EvidenceCatalogueGroup, t
 import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useAppLevel } from '@/lib/app-level';
+import { ChevronDown } from 'lucide-react';
 
 // These two are the biggest sub-panels in this file (the farm-records ledger and the full site
 // survey) and each is reachable from only one tab. Statically importing them meant every farmer —
@@ -89,6 +91,9 @@ const wantsSavedReports = (tab: Tab, forcedTab?: string | null): boolean => tab 
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
 const VISIBLE_TABS = TABS.filter((t) => t !== 'Farm');
+// Simple / All tools (lib/app-level.ts). All tools keeps every tab above; Simple shows the five
+// a low-tech-literate farmer actually needs — the rest stay reachable by switching to All tools.
+const SIMPLE_TABS: Tab[] = ['Overview', 'Ask', 'Water', 'Photos', 'Reports'];
 
 const BIOME_COLORS: Record<string, string> = {
   SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
@@ -331,7 +336,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     window.addEventListener('permamap-places-changed', refresh);
     return () => window.removeEventListener('permamap-places-changed', refresh);
   }, []);
+  const simple = useAppLevel() === 'simple';
   const [tab, setTab] = useState<Tab>('Overview');
+  // Simple Overview folds the stats ledger / insights / Lima read / planting calendar behind
+  // one disclosure, collapsed by default. All tools shows them inline, unchanged.
+  const [detailOpen, setDetailOpen] = useState(false);
   // Survey is keyed by the lat/lon-derived siteId (designSiteIdFromLocation), not the
   // SavedPlace id — derive it from the active place's own coordinates so it matches the key
   // the AI design-plan generator reads (lib/design-studio.ts).
@@ -848,7 +857,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           className="flex overflow-x-auto"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {VISIBLE_TABS.map((tabName) => (
+          {(simple ? SIMPLE_TABS : VISIBLE_TABS).map((tabName) => (
             <button
               key={tabName}
               onClick={() => setTab(tabName)}
@@ -999,6 +1008,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
 
+            {(() => {
+              const detailContent = (
+                <>
             {/* Stats ledger — Screen 3 design */}
             <div style={{ background: 'var(--bg-1)', borderRadius: 16, border: '1px solid var(--border)', overflow: 'hidden' }}>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
@@ -1007,21 +1019,6 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                   {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: 'var(--text-muted)' }}> mm</span>
                 </span>
-                {data.rainfall.rainfallSource && (
-                  <span
-                    className="font-sans ml-2"
-                    style={{
-                      fontSize: 9, letterSpacing: '0.04em', padding: '1px 5px', borderRadius: 4,
-                      background: data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.10)' : 'rgba(32,25,15,0.06)',
-                      color: data.rainfall.rainfallSource === 'open-meteo' ? '#235E86' : '#755942',
-                      border: `1px solid ${data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.25)' : '#E2D8C4'}`,
-                      whiteSpace: 'nowrap',
-                    }}
-                    title={data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5-Land 9km grid (Open-Meteo)' : 'NASA POWER 50km grid'}
-                  >
-                    {data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5' : 'NASA'}
-                  </span>
-                )}
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
                 <Layers size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} />
@@ -1126,6 +1123,28 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
               </div>
             )}
+                </>
+              );
+              if (!simple) return detailContent;
+              return (
+                <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                  <button
+                    onClick={() => setDetailOpen((open) => !open)}
+                    aria-expanded={detailOpen}
+                    className="w-full flex items-center justify-between gap-2 font-sans font-medium"
+                    style={{ minHeight: 44, padding: '11px 14px', background: 'var(--bg-1)', border: 'none', cursor: 'pointer', fontSize: 13, color: 'var(--text-secondary)' }}
+                  >
+                    {t('seeMoreDetail')}
+                    <ChevronDown size={16} style={{ transform: detailOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
+                  </button>
+                  {detailOpen && (
+                    <div className="space-y-3" style={{ padding: '0 12px 12px' }}>
+                      {detailContent}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Primary CTA */}
             <button
