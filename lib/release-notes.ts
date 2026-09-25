@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '403d0444', changes: [
+    'Calendar advice and crop tasks show draft isiZulu beside English sources.',
+    'Design Studio adds draft isiZulu controls; swale terminology remains held.',
+  ], tour: [
+    { title: 'Check planting advice', where: 'Planting Calendar', href: '/calendar',
+      detail: 'Choose isiZulu; monthly chores and Lima advice retain their English source.' },
+    { title: 'Check Design controls', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu; swale width and photo controls keep source wording.' },
+  ] },
   { when: '25 September 2026', sha: 'fd12838f', changes: [
     'Farmer Exchange controls add draft isiZulu beside English.',
     'Listing details stay as entered; transaction wording keeps its English source.',

@@ -17,6 +17,8 @@ import TabBar from '@/components/TabBar';
 import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS, CROP_PLAN_MONTH_FOCUS_ZU } from '@/lib/calendar-zu-draft';
 import {
   TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
   loadCompletedTaskIds, setCompletedTaskState,
@@ -62,6 +64,69 @@ const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprou
 const FALLBACK_META = { Icon: ClipboardList, color: '#5C4F3C', short: 'Task' };
 function actionMeta(task: BoardTask) { return (task.action && ACTION_META[task.action]) || FALLBACK_META; }
 
+const ACTION_DRAFT_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
+  prep: 'Lungiselela umbhede we-',
+  sow: 'Hlwanyela',
+  transplant: 'Tshala kabusha',
+  mulch: 'Nisela bese ufaka i-mulch',
+  harvest: 'Vuna',
+  'terminate-cover': 'Sika noma goqa phansi',
+  'weed-early': 'Hlakula eduze kwe-',
+  'weed-mid': 'Hlakula futhi uhlole i-',
+};
+const ACTION_SOURCE_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
+  prep: 'Prep bed for',
+  sow: 'Sow',
+  transplant: 'Transplant',
+  mulch: 'Water in & mulch',
+  harvest: 'Harvest',
+  'terminate-cover': 'Cut or roll down',
+  'weed-early': 'Weed around',
+  'weed-mid': 'Weed & check on',
+};
+
+function taskTitleDraft(task: BoardTask): string | null {
+  if (task.kind !== 'crop' || !task.action) return null;
+  const draftVerb = ACTION_DRAFT_VERB[task.action];
+  const sourceVerb = ACTION_SOURCE_VERB[task.action];
+  if (!draftVerb || !sourceVerb || !task.title.startsWith(sourceVerb)) return null;
+  const cropName = task.title.slice(sourceVerb.length).trim();
+  return `${draftVerb}${draftVerb.endsWith('-') ? '' : ' '}${cropName}`;
+}
+
+function taskSubtitleDraft(task: BoardTask): string | null {
+  if (task.kind !== 'crop') return null;
+  const separator = ' · ';
+  const splitAt = task.subtitle.lastIndexOf(separator);
+  if (splitAt < 0) return null;
+  const bedLabel = task.subtitle.slice(0, splitAt);
+  const dueSource = task.subtitle.slice(splitAt + separator.length);
+  const dueDraft = dueSource === 'Due this month'
+    ? 'Kumele kwenziwe kule nyanga'
+    : dueSource === 'Due next month'
+      ? 'Kumele kwenziwe ngenyanga ezayo'
+      : dueSource.match(/^Due in (\d+) months$/)
+        ? `Kumele kwenziwe ezinyangeni ezingu-${dueSource.match(/^Due in (\d+) months$/)?.[1]}`
+        : null;
+  return dueDraft ? `${bedLabel}${separator}${dueDraft}` : null;
+}
+
+function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, className = '', style }: {
+  lang: string; english: string; zulu: string; heldForReview?: boolean; className?: string; style?: React.CSSProperties;
+}) {
+  if (lang === 'zu' && heldForReview) {
+    return (
+      <div className={className} style={style}>
+        <p style={{ margin: 0 }}>
+          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span lang="en">{english}</span>
+        </p>
+      </div>
+    );
+  }
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} className={className} style={style} />;
+}
+
 // ─── Month helpers ───────────────────────────────────────────────────────────
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -100,8 +165,8 @@ const MONTH_FOCUS: Record<number, string> = {
 
 // ─── Task list ───────────────────────────────────────────────────────────────
 
-function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
-  tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string; doneLabel: string; notDoneLabel: string;
+function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang }: {
+  tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string; doneLabel: string; notDoneLabel: string; lang: string;
 }) {
   if (tasks.length === 0) {
     return (
@@ -132,9 +197,19 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel }: {
                 className="font-display font-semibold"
                 style={{ fontSize: 'clamp(15px, 1.2vw, 16px)', color: 'var(--text-primary)', textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.55 : 1 }}
               >
-                {task.title}
+                <IsiZuluDraftSource
+                  lang={lang}
+                  english={task.title}
+                  zulu={taskTitleDraft(task) ?? task.title}
+                />
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{task.subtitle}</div>
+              <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
+                <IsiZuluDraftSource
+                  lang={lang}
+                  english={task.subtitle}
+                  zulu={taskSubtitleDraft(task) ?? task.subtitle}
+                />
+              </div>
             </div>
           </div>
         );
@@ -221,7 +296,8 @@ export default function CropPlanPage() {
 
       {lang === 'zu' && (
         <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-          Task names and seasonal farming guidance are still shown in English. / Amagama emisebenzi nezeluleko zesizini kusaboniswa ngesiNgisi.
+          Amagama emisebenzi nezifinyezo zesizini abonisa uhlaka lwesiZulu nomthombo wesiNgisi. Eminye imiyalo yokulima isalindele ukubuyekezwa.
+          <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiZulu drafts with English sources; some farming instructions remain in English for review.</span>
         </p>
       )}
 
@@ -363,6 +439,7 @@ export default function CropPlanPage() {
                 emptyMessage={ui(`Nothing due from your crop plan in ${monthName}.`, `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.`)}
                 doneLabel={ui('Mark done', 'Maka njengokwenziwe')}
                 notDoneLabel={ui('Mark not done', 'Susa uphawu lokwenziwe')}
+                lang={lang}
               />
             </div>
           )}
@@ -397,7 +474,14 @@ export default function CropPlanPage() {
                     </div>
                     {/* Generic seasonal guidance, not derived from this farmer's beds —
                         deliberately separate from the sourced job counts above. */}
-                    <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{MONTH_FOCUS[m - 1]}</p>
+                    <CropPlanDraftSource
+                      className="font-sans"
+                      style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: 'var(--text-secondary)', lineHeight: 1.5 }}
+                      lang={lang}
+                      english={MONTH_FOCUS[m - 1]}
+                      zulu={CROP_PLAN_MONTH_FOCUS_ZU[m - 1] ?? MONTH_FOCUS[m - 1]}
+                      heldForReview={CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS.has(m - 1)}
+                    />
                   </button>
                 );
               })}

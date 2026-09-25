@@ -538,7 +538,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
               {img && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
-                    <span style={{ minWidth: 76 }}>See through</span>
+                    <span style={{ minWidth: 76 }}>{t('designPhotoOpacityLabel')}</span>
                     <input
                       type="range" min={0.15} max={1} step={0.05}
                       value={photoOpacity}
@@ -563,8 +563,8 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   </label>
                   <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
                     {pointMode
-                      ? `Tap point ${points.length + 1} of 2 on the photo. The photo will not move while you do.`
-                      : 'Drag the photo to move it. Fade it down to match it against the satellite underneath.'}
+                      ? formatDesignTranslation(t('designPhotoPointInstruction'), { point: points.length + 1 })
+                      : t('designPhotoMoveInstruction')}
                   </div>
                   {/* The scale step gets real buttons instead of an unwritten rule about which
                       gesture means what. Undo is per-point: a farmer who mis-taps the second
