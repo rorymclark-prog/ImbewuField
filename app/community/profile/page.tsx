@@ -64,7 +64,8 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const privacyText = (english: string, key: string) => lang === 'zu' ? `${english} / ${t(key)}` : english;
   const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -113,14 +114,14 @@ export default function CommunityProfilePage() {
   async function handleShowOnMapToggle(next: boolean) {
     setShowOnMap(next);
     if (!next || coarseLat !== null) return;
-    if (!navigator.geolocation) { setError('This device can\'t share a location.'); setShowOnMap(false); return; }
+    if (!navigator.geolocation) { setError(privacyText('This device can\'t share a location.', 'communityLocationUnsupported')); setShowOnMap(false); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { lat, lon } = jitterToNeighbourhood(pos.coords.latitude, pos.coords.longitude);
         setCoarseLat(lat); setCoarseLon(lon); setLocating(false);
       },
-      () => { setError('Could not get your location — map visibility left off.'); setShowOnMap(false); setLocating(false); },
+      () => { setError(privacyText('Could not get your location — map visibility left off.', 'communityLocationDenied')); setShowOnMap(false); setLocating(false); },
       { enableHighAccuracy: false, timeout: 8000 },
     );
   }
@@ -155,7 +156,7 @@ export default function CommunityProfilePage() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch {
-      setError('Could not save — try again.');
+      setError(lang === 'zu' ? t('communityProfileSaveError') : 'Could not save — try again.');
     } finally {
       setSaving(false);
     }
@@ -163,8 +164,8 @@ export default function CommunityProfilePage() {
 
   async function handleDelete() {
     const proceed = await appConfirm({
-      message: t('communityDeleteProfileConfirm'),
-      confirmLabel: t('communityDeleteProfile'),
+      message: privacyText('Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.', 'communityDeleteProfileConfirm'),
+      confirmLabel: privacyText('Delete my community profile', 'communityDeleteProfile'),
       cancelLabel: t('cancelBtn'),
       destructive: true,
     });
@@ -175,7 +176,7 @@ export default function CommunityProfilePage() {
 
   if (!ready) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
@@ -196,7 +197,8 @@ export default function CommunityProfilePage() {
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginBottom: 20 }}>
-          {t('communityEditProfileIntro')}
+          {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: '#755942' }}>isiZulu draft — not reviewed by a fluent speaker / {t('communityDraftReviewNotice')}</span>}
+          {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
         </p>
 
         <div className={workspace.twoColumns}>
@@ -226,7 +228,7 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans"
               style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 4 }}>{t('communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
           </div>
 
           <div>
@@ -284,12 +286,9 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
-              {t('communityShowOnMapLabel')}
-            </div>
             <Toggle
-              label={t('communityShowOnMapLabel')}
-              sub={locating ? 'Getting your approximate area…' : t('communityShowOnMapHint')}
+              label={privacyText('Show me on the community map', 'communityShowOnMapLabel')}
+              sub={locating ? (lang === 'zu' ? t('communityLocationPending') : 'Getting your approximate area…') : privacyText('Your location shows as an approximate ~1km area, never your exact homestead', 'communityShowOnMapHint')}
               on={showOnMap}
               onChange={handleShowOnMapToggle}
             />
@@ -304,7 +303,7 @@ export default function CommunityProfilePage() {
             style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
-            {saved ? 'Saved' : t('communitySaveProfile')}
+            {saved ? (lang === 'zu' ? t('communityProfileSaved') : 'Saved') : t('communitySaveProfile')}
           </button>
 
           <button
@@ -312,7 +311,7 @@ export default function CommunityProfilePage() {
             className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
             style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '11px 20px', fontSize: 13.5 }}
           >
-            <Trash2 size={14} /> {t('communityDeleteProfile')}
+            <Trash2 size={14} /> {privacyText('Delete my community profile', 'communityDeleteProfile')}
           </button>
         </div>
       </main>

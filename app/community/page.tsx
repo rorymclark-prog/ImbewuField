@@ -228,11 +228,14 @@ export default function CommunityHubPage() {
 function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOpenProfile: (uid: string) => void }) {
   const { t, lang } = useLanguage();
   const tr = (key: string) => copyCommunity(t(key), lang);
+  const locationPrivacy = lang === 'zu'
+    ? `Farmers who choose to be visible show up here as an approximate area — never their exact homestead. / ${t('communityNearbyIntro')}`
+    : t('communityNearbyIntro');
   const pinned = nearby.filter((p) => p.show_on_map);
   return (
     <div>
       <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5, marginBottom: 14 }}>
-        {tr('communityNearbyIntro')}
+        {locationPrivacy}
       </p>
       {pinned.length > 0 && (
         <div style={{ height: 'clamp(260px, 35vw, 440px)', marginBottom: 16 }}>
