@@ -17,8 +17,8 @@ import { ArrowRight } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { deriveSectorModel, type SectorModel, type SectorSite } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
-import { formatDesignTranslation, type DesignStudioTranslate } from '@/lib/design-studio-i18n';
-import { useLanguage } from '@/lib/i18n';
+import { formatDesignTranslation, sectorCompassWord, type DesignStudioTranslate } from '@/lib/design-studio-i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 
 // Studio palette + the sector accent (STEP_ACCENT.sector) and the energy dot colours lifted from
 // SectorOverlay so the card and the on-map overlay read as one analysis.
@@ -30,33 +30,7 @@ const DOT_SUN = '#F7C97E';
 const DOT_WIND = '#E08A2C';
 const DOT_FIRE = '#D64A2A';
 const DOT_WATER = '#3A8EC4';
-
-const COMPASS8_KEYS = [
-  'designSectorDirectionNorth',
-  'designSectorDirectionNorthEast',
-  'designSectorDirectionEast',
-  'designSectorDirectionSouthEast',
-  'designSectorDirectionSouth',
-  'designSectorDirectionSouthWest',
-  'designSectorDirectionWest',
-  'designSectorDirectionNorthWest',
-];
-// Bearing (deg clockwise from N) → plain compass WORD (never a number — a gogo farmer reads
-// "south-west", not 214°). 8-point is the plain-words sweet spot; 16-point words get unwieldy.
-function compassWord(bearingDeg: number, t: DesignStudioTranslate): string {
-  const norm = ((bearingDeg % 360) + 360) % 360;
-  return t(COMPASS8_KEYS[Math.round(norm / 45) % 8]);
-}
-// 16-point model label ('NE', 'SSW', …) → plain 8-point word, falling back to the raw label if it
-// is somehow unparseable (honest — never invents a direction).
-const LABEL_BEARING: Record<string, number> = {
-  N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5,
-  S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5,
-};
-function labelWord(label: string, t: DesignStudioTranslate): string {
-  const b = LABEL_BEARING[label.toUpperCase().trim()];
-  return b == null ? label : compassWord(b, t);
-}
+const englishSectorText: DesignStudioTranslate = (key) => translate('en', key);
 
 /** Self-resolve latitude/longitude + SectorSite from the ?lat/?lon URL params and the design
  *  page's cache. */
@@ -114,9 +88,10 @@ interface Row {
   key: string;
   dot: string;
   text: string;
+  sourceText: string;
 }
 
-function buildRows(model: SectorModel, t: DesignStudioTranslate): Row[] {
+function buildRows(model: SectorModel, t: DesignStudioTranslate, sourceT: DesignStudioTranslate): Row[] {
   const rows: Row[] = [];
 
   // ☀️ SUN — never missing. SH (below the tropics) → north; NH → south; 'mixed' inside the
@@ -127,25 +102,40 @@ function buildRows(model: SectorModel, t: DesignStudioTranslate): Row[] {
       : model.sun.middayFrom === 'S'
         ? t('designSectorDirectionSouth')
         : t('designSectorSunMixed');
+  const sourceSunWord =
+    model.sun.middayFrom === 'N'
+      ? sourceT('designSectorDirectionNorth')
+      : model.sun.middayFrom === 'S'
+        ? sourceT('designSectorDirectionSouth')
+        : sourceT('designSectorSunMixed');
   rows.push({
     key: 'sun',
     dot: DOT_SUN,
     text: formatDesignTranslation(t('designSectorSunRow'), { direction: sunWord.toUpperCase() }),
+    sourceText: formatDesignTranslation(sourceT('designSectorSunRow'), { direction: sourceSunWord.toUpperCase() }),
   });
 
   // 💨 WIND — coordinate climate-grid means, not a measured property wind rose.
   if (model.windSummer || model.windWinter) {
     const parts: string[] = [];
     if (model.windSummer) parts.push(formatDesignTranslation(t('designSectorWindSummer'), {
-      direction: labelWord(model.windSummer.fromLabel, t),
+      direction: sectorCompassWord(model.windSummer.bearingDeg, t),
     }));
     if (model.windWinter) parts.push(formatDesignTranslation(t('designSectorWindWinter'), {
-      direction: labelWord(model.windWinter.fromLabel, t),
+      direction: sectorCompassWord(model.windWinter.bearingDeg, t),
+    }));
+    const sourceParts: string[] = [];
+    if (model.windSummer) sourceParts.push(formatDesignTranslation(sourceT('designSectorWindSummer'), {
+      direction: sectorCompassWord(model.windSummer.bearingDeg, sourceT),
+    }));
+    if (model.windWinter) sourceParts.push(formatDesignTranslation(sourceT('designSectorWindWinter'), {
+      direction: sectorCompassWord(model.windWinter.bearingDeg, sourceT),
     }));
     rows.push({
       key: 'wind',
       dot: DOT_WIND,
       text: formatDesignTranslation(t('designSectorWindRow'), { directions: parts.join(', ') }),
+      sourceText: formatDesignTranslation(sourceT('designSectorWindRow'), { directions: sourceParts.join(', ') }),
     });
   }
 
@@ -156,19 +146,26 @@ function buildRows(model: SectorModel, t: DesignStudioTranslate): Row[] {
       dot: DOT_FIRE,
       text: formatDesignTranslation(t('designSectorFireRow'), {
         season: model.fire.seasonNote,
-        direction: labelWord(model.fire.fromLabel, t),
+        direction: sectorCompassWord(model.fire.bearingDeg, t),
+      }),
+      sourceText: formatDesignTranslation(sourceT('designSectorFireRow'), {
+        season: model.fire.seasonNote,
+        direction: sectorCompassWord(model.fire.bearingDeg, sourceT),
       }),
     });
   }
 
   // 💧 WATER (+ frost) — downhill flow direction, and frost pools at the low end on still nights.
   if (model.water) {
-    const downWord = compassWord(model.water.downhillBearingDeg, t);
+    const downWord = sectorCompassWord(model.water.downhillBearingDeg, t);
     const frostBit = model.frost ? t('designSectorFrostNote') : '';
+    const sourceDownWord = sectorCompassWord(model.water.downhillBearingDeg, sourceT);
+    const sourceFrostBit = model.frost ? sourceT('designSectorFrostNote') : '';
     rows.push({
       key: 'water',
       dot: DOT_WATER,
       text: formatDesignTranslation(t('designSectorWaterRow'), { direction: downWord, frost: frostBit }),
+      sourceText: formatDesignTranslation(sourceT('designSectorWaterRow'), { direction: sourceDownWord, frost: sourceFrostBit }),
     });
   }
 
@@ -176,7 +173,7 @@ function buildRows(model: SectorModel, t: DesignStudioTranslate): Row[] {
 }
 
 export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSummaryProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   // Prefer props; otherwise self-resolve on mount (client-only, like TankCalculator).
   const [resolved, setResolved] = useState<{ lat: number; lon: number; site: SectorSite | null } | null>(null);
   useEffect(() => {
@@ -192,7 +189,7 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
     [effSite, effLat, effLon],
   );
 
-  const rows = useMemo(() => (model ? buildRows(model, t) : []), [model, t]);
+  const rows = useMemo(() => (model ? buildRows(model, t, englishSectorText) : []), [model, t]);
   // Honest degradation/provenance: show missing-data caveats first, otherwise disclose the
   // regional profile rather than implying it was measured at this property.
   const note =
@@ -212,7 +209,10 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
           {rows.map((r) => (
             <div key={r.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
               <span style={{ flexShrink: 0, marginTop: 5, width: 9, height: 9, borderRadius: 9, background: r.dot }} />
-              <span style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>{r.text}</span>
+              <span style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>
+                <span lang={lang === 'zu' ? 'zu' : undefined}>{r.text}</span>
+                {lang === 'zu' && <span lang="en" style={{ display: 'block', marginTop: 2, fontSize: 11, lineHeight: 1.35, color: 'rgba(11,18,11,0.66)' }}>{r.sourceText}</span>}
+              </span>
             </div>
           ))}
           {note && (
