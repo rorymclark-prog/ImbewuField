@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '80bd3cfe', changes: [
+    'Food Forest Sesotho draft prepared for review; not in Study.',
+  ] },
   { when: '25 September 2026', sha: 'a459b15c', changes: [
     'Livestock choices and field guidance now pair isiZulu drafts with English.',
   ], tour: [
