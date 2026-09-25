@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '2edb0ef9', changes: [
+    'Assessment questions and averages now show draft isiZulu beside English.',
+  ], tour: [
+    { title: 'Check the assessment wording', where: 'Assessments', href: '/assessments',
+      detail: 'Choose isiZulu to read each draft question and average label beside its English source.' },
+  ] },
   { when: '25 September 2026', sha: '08a46c34', changes: [
     'The site report water balance has isiZulu labels and shortfall wording.',
   ], tour: [
