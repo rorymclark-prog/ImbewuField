@@ -15,9 +15,32 @@ import { useLanguage } from '@/lib/i18n';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCropPlan } from '@/lib/crop-plan';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import {
+  CALENDAR_LIMA_ADVICE_ZU, CALENDAR_LIMA_HOLD_MONTHS,
+  CALENDAR_MAINTAIN_HOLD_KEYS, CALENDAR_MAINTAIN_ZU,
+} from '@/lib/calendar-zu-draft';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
+}
+
+function CalendarDraftSource({
+  lang, english, zulu, heldForReview = false, style,
+}: {
+  lang: string; english: string; zulu: string; heldForReview?: boolean; style?: React.CSSProperties;
+}) {
+  if (lang === 'zu' && heldForReview) {
+    return (
+      <div style={style}>
+        <p style={{ margin: 0 }}>
+          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span lang="en">{english}</span>
+        </p>
+      </div>
+    );
+  }
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} style={style} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -431,7 +454,8 @@ export default function CalendarPage() {
       >
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
-            Iseluleko somsebenzi nezikhathi zokutshala nokuvuna kuboniswa ngesiNgisi.
+            Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
+            <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed isiZulu drafts beside English sources. Some farming instructions remain in English for review.</span>
           </p>
         )}
         {/* ---- Month strip ---- */}
@@ -557,9 +581,12 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                    No planting recommended this month
-                  </span>
+                  <CalendarDraftSource
+                    lang={lang}
+                    english="No planting recommended this month"
+                    zulu="Akukho sitshalo esinconyiwe kule nyanga."
+                    style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}
+                  />
                 )}
               </div>
             </div>
@@ -578,9 +605,12 @@ export default function CalendarPage() {
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                    Nothing ready to harvest this month
-                  </span>
+                  <CalendarDraftSource
+                    lang={lang}
+                    english="Nothing ready to harvest this month"
+                    zulu="Akukho okulungele ukuvunwa kule nyanga."
+                    style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}
+                  />
                 )}
               </div>
             </div>
@@ -592,7 +622,7 @@ export default function CalendarPage() {
                 <SectionLabel>{localUi('Maintain', 'Umsebenzi wokunakekela', lang)}</SectionLabel>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-                {monthData.maintain.map((task) => (
+                {monthData.maintain.map((task, taskIndex) => (
                   <li
                     key={task}
                     style={{
@@ -617,7 +647,12 @@ export default function CalendarPage() {
                         flexShrink: 0,
                       }}
                     />
-                    {task}
+                    <CalendarDraftSource
+                      lang={lang}
+                      english={task}
+                      zulu={CALENDAR_MAINTAIN_ZU[selectedMonth]?.[taskIndex] ?? task}
+                      heldForReview={CALENDAR_MAINTAIN_HOLD_KEYS.has(`${selectedMonth}:${taskIndex}`)}
+                    />
                   </li>
                 ))}
               </ul>
@@ -680,17 +715,13 @@ export default function CalendarPage() {
               >
                 {localUi('Lima — Seasonal advice', 'Lima — Iseluleko sesizini', lang)}
               </div>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: 13,
-                  fontFamily: 'var(--font-sans, sans-serif)',
-                  color: 'var(--text-primary)',
-                  lineHeight: 1.55,
-                }}
-              >
-                {monthData.limaAdvice}
-              </p>
+              <CalendarDraftSource
+                lang={lang}
+                english={monthData.limaAdvice}
+                zulu={CALENDAR_LIMA_ADVICE_ZU[selectedMonth] ?? monthData.limaAdvice}
+                heldForReview={CALENDAR_LIMA_HOLD_MONTHS.has(selectedMonth)}
+                style={{ fontSize: 13, fontFamily: 'var(--font-sans, sans-serif)', color: 'var(--text-primary)', lineHeight: 1.55 }}
+              />
             </div>
           </div>
 

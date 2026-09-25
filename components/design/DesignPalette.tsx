@@ -1354,20 +1354,20 @@ export default function DesignPalette({
               }}
             >
               <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>⌇</span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Swale</span>
-              <span title="Measured along the line you drew" style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
-                {`${swaleControl.lengthM.toFixed(1)} m long`}
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteLineSwale')}</span>
+              <span title={t('designPaletteSwaleLengthTitle')} style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
+                {formatDesignTranslation(t('designPaletteSwaleLength'), { length: swaleControl.lengthM.toFixed(1) })}
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Width</span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteWidth')}</span>
               <input
                 // Uncontrolled + keyed follows the same commit-only rule as Size: no half-typed
                 // value reaches saved state, while undo, reload and another selected swale remount
                 // the field from the actual stated width.
                 key={swaleControl.widthM ?? 'unstated'}
                 defaultValue={swaleControl.widthM != null ? String(swaleControl.widthM) : ''}
-                placeholder="not stated"
-                title="Stated disturbed-ground width; leave blank when it has not been set"
-                aria-label="Stated swale width in metres"
+                placeholder={t('designPaletteSwaleWidthPlaceholder')}
+                title={t('designPaletteSwaleWidthTitle')}
+                aria-label={t('designPaletteSwaleWidthLabel')}
                 type="number"
                 inputMode="decimal"
                 min={0.01}
@@ -1630,11 +1630,11 @@ export default function DesignPalette({
                     fontSize: 8.5, fontWeight: 800, letterSpacing: 0.45, textTransform: 'uppercase',
                   }}
                 >
-                  <span style={{ textAlign: 'center' }}>Show</span>
-                  <span style={{ textAlign: 'center' }}>Select</span>
-                  <span style={{ textAlign: 'center' }}>Move</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteShow')}</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteSelectColumn')}</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteMoveColumn')}</span>
                   <span />
-                  <span>Layer</span>
+                  <span>{t('designPaletteLayerColumn')}</span>
                 </div>
                 {LAYER_TOGGLES.map((lt) => {
                   const on = activeLayers[lt.key];
@@ -2161,7 +2161,7 @@ export default function DesignPalette({
           }}
         >
           <span style={{ fontSize: 12, fontWeight: 700, color: DARK, whiteSpace: 'nowrap' }}>
-            ⠿ Elements
+            ⠿ {t('designPaletteElements')}
           </span>
           <button
             type="button"
@@ -2460,8 +2460,8 @@ export default function DesignPalette({
           <button
             type="button"
             onClick={() => setChipsFloating(true)}
-            title="Float the element palette — drag it anywhere and scroll down through the chips"
-            aria-label="Float the element palette"
+            title={t('designPaletteFloatTitle')}
+            aria-label={t('designPaletteFloatLabel')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
               minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
@@ -2473,7 +2473,7 @@ export default function DesignPalette({
             }}
           >
             <span aria-hidden>⧉</span>
-            <span style={{ whiteSpace: 'nowrap' }}>Float</span>
+            <span style={{ whiteSpace: 'nowrap' }}>{t('designPaletteFloat')}</span>
           </button>
           {climateFilterActive && (
             <span
@@ -3107,7 +3107,7 @@ export default function DesignPalette({
             };
             setElementsFloatPos((position) => ({ ...position }));
           } : undefined}
-          title={workspaceMode === 'floating' ? 'Drag Elements panel' : undefined}
+          title={workspaceMode === 'floating' ? t('designPaletteElementsDragTitle') : undefined}
           style={{
             display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2,
             borderBottom: '1px solid rgba(11,18,11,0.10)',
@@ -3115,7 +3115,7 @@ export default function DesignPalette({
             touchAction: workspaceMode === 'floating' ? 'none' : undefined,
           }}
         >
-          <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ Elements</span>
+          <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ {t('designPaletteElements')}</span>
         </div>
       )}
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
