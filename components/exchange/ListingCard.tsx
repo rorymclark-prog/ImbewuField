@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, CircleSlash, Info, MapPin, Tag, Trash2 } from 'lucide-react';
+import { Calendar, CircleSlash, MapPin, Tag, Trash2 } from 'lucide-react';
 import {
   distanceBucket,
   listingCrop,
@@ -12,7 +12,6 @@ import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
-import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -144,7 +143,7 @@ export default function ListingCard({
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(192,122,30,0.12)',
-              color: EX.amber,
+              color: EX.amberText,
               border: '1px solid rgba(192,122,30,0.28)',
             }}
           >
@@ -181,7 +180,7 @@ export default function ListingCard({
             fontSize: 12.5,
             padding: '4px 10px',
             background: listing.price.type === 'zar' ? 'rgba(31,77,43,0.09)' : 'rgba(192,122,30,0.12)',
-            color: listing.price.type === 'zar' ? EX.green : EX.amber,
+            color: listing.price.type === 'zar' ? EX.green : EX.amberText,
           }}
         >
           <Tag size={11} strokeWidth={2} />
@@ -256,21 +255,15 @@ export default function ListingCard({
         </div>
       ) : (
         <div className="flex flex-col gap-2 items-start">
-          <ShareListingButton listing={listing} />
           {/* NO CONTACT BUTTON, DELIBERATELY. There is no messaging in this
               preview, so a "Message" or "Contact" control would be a dead
-              button promising a feature that does not exist. State the
-              position instead — Share above is a real, working alternative:
-              it hands this listing on to whoever the farmer forwards it to. */}
-          <div
-            className="flex items-start gap-2 rounded-lg"
-            style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
-          >
-            <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
-              {zu ? <ExchangeSourceCopy en="No way to contact this farmer from the app yet. For now, note the name and area and arrange it through your facilitator or group." zu="Okwamanje alikho ithuluzi lokuxhumana nalo mlimi ngalolu hlelo lokusebenza. Bhala igama nendawo, bese uhlela ngokusebenzisa umsizi wakho noma iqembu." /> : 'No way to contact this farmer from the app yet. For now, note the name and area and arrange it through your facilitator or group.'}
-            </span>
-          </div>
+              button promising a feature that does not exist. Share above is
+              a real, working alternative: it hands this listing on to
+              whoever the farmer forwards it to. The "no way to contact"
+              explanation used to repeat here on every non-mine card — 21
+              times on the sample board — and now says it once, above the
+              list (see ExchangeBoard.tsx). */}
+          <ShareListingButton listing={listing} />
         </div>
       )}
     </article>

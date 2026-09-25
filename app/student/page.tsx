@@ -13,7 +13,7 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import LimaBar from '@/components/LimaBar';
 import SettingsButton from '@/components/SettingsButton';
@@ -45,6 +45,7 @@ import {
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -59,10 +60,18 @@ const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
 /** Curriculum position, fixed. The list below re-orders to put assigned work first, but
  *  "module 7" must keep meaning the same module whichever order it is shown in. */
 const MODULE_NUMBER = new Map(COURSE_MODULES.map((m, i) => [m.id, i + 1] as const));
+const COURSE_MODULE_BY_ID = new Map(COURSE_MODULES.map((m) => [m.id, m] as const));
+
+/** unlockReason's title resolver — the localised module title, not the English one baked into
+ *  COURSE_MODULES (lib/course-gating.ts's unlockReason is pure and knows nothing of lang). */
+function localisedModuleTitle(moduleId: string, lang: string): string {
+  const mod = COURSE_MODULE_BY_ID.get(moduleId);
+  return mod ? resolveCourseModulePresentation(mod, lang).title : 'the previous module';
+}
 
 const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border: string }> = {
   overdue:    { fg: '#B03A2E', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
-  'due-soon': { fg: '#C07A1E', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
+  'due-soon': { fg: '#7A4408', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
   open:       { fg: '#235E86', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
   done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
@@ -176,8 +185,13 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }: {
-  lesson: Lesson; color: string; moduleId: string; lang: string;
+function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJumpToLesson }: {
+  lesson: Lesson; color: string;
+  /** Text-safe variant of `color` — ochre (design) reads at 2.54:1 as text (CLAUDE.md), so the
+   *  panel's readable text (Key points heading, related-lesson buttons) uses this instead of
+   *  `color`, which stays for fills/borders/icons. */
+  textColor: string;
+  moduleId: string; lang: string;
   /** True for exactly one render after a "related lessons" jump targets this lesson — see
    *  jumpToLesson() below. A one-way switch: it opens the panel, but going false again never
    *  closes it back up. */
@@ -305,7 +319,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
 
           {/* Key points */}
           <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>{t('studentKeyPoints')}</p>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: textColor }}>{t('studentKeyPoints')}</p>
             <ul className="space-y-1.5">
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
@@ -358,7 +372,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                     type="button"
                     onClick={() => onJumpToLesson(rl.id)}
                     className="px-3 py-1.5 rounded-full text-xs font-sans font-medium text-left transition-colors"
-                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color, cursor: 'pointer' }}
+                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color: textColor, cursor: 'pointer' }}
                   >
                     {rl.title}
                   </button>
@@ -450,6 +464,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
                 key={item}
                 type="button"
                 onClick={() => toggleCheck(item)}
+                aria-pressed={isChecked}
                 className="w-full flex items-center gap-2.5 text-left px-3 py-2 rounded-lg transition-colors"
                 style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : '#E2D8C4'}` }}
               >
@@ -532,6 +547,11 @@ export default function StudentPage() {
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
+  // Simple / All tools (lib/app-level.ts). All tools is this screen exactly as it always was;
+  // Simple hides the production-readiness badges, the offline quality picker, the dual
+  // overdue/due-soon counts, the redundant category chip and shrinks the progress hero — see the
+  // Study — Simple mode track brief.
+  const simple = useAppLevel() === 'simple';
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [assignments, setAssignments] = useState<CourseAssignment[]>([]);
@@ -817,7 +837,7 @@ export default function StudentPage() {
                 ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
                 : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
-            {!fetching && (
+            {!fetching && !simple && (
               <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
                 {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
               </div>
@@ -827,7 +847,9 @@ export default function StudentPage() {
                 {t('studentProgressError')}
               </div>
             )}
-            {pct < 100 && totalMins > 0 && (
+            {/* Simple: the ring plus the one headline above is the whole stat — the remaining-time
+                chip and practitioner badge below are All tools only. */}
+            {!simple && pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <Clock size={12} style={{ color: '#755942' }} />
                 <span className="font-sans text-xs" style={{ color: '#755942' }}>
@@ -835,7 +857,7 @@ export default function StudentPage() {
                 </span>
               </div>
             )}
-            {pct === 100 && (
+            {!simple && pct === 100 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
                 <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
@@ -857,24 +879,44 @@ export default function StudentPage() {
                 {t('studentAssignmentSetByMentor')}
               </span>
             </div>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-              {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
-              {assignSummary.overdue > 0 && ' '}
-              {assignSummary.overdue > 0 && (
-                <span style={{ color: '#B03A2E', fontWeight: 600 }}>
-                  {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
-                </span>
-              )}
-              {assignSummary.dueSoon > 0 && ' '}
-              {assignSummary.dueSoon > 0 && (
-                <span style={{ color: '#7A4408', fontWeight: 600 }}>
-                  {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
-                </span>
-              )}
-            </p>
-            <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
-              {t('studentAssignmentsOrder')}
-            </p>
+            {simple ? (
+              // One urgency line: the done count and whichever is more pressing, overdue beating
+              // due-soon — not the dual overdue-then-due-soon counts stacked in All tools.
+              <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                {(assignSummary.overdue > 0 || assignSummary.dueSoon > 0) && ' '}
+                {assignSummary.overdue > 0 ? (
+                  <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                    {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                  </span>
+                ) : assignSummary.dueSoon > 0 ? (
+                  <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                    {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                  </span>
+                ) : null}
+              </p>
+            ) : (
+              <>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                  {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                  {assignSummary.overdue > 0 && ' '}
+                  {assignSummary.overdue > 0 && (
+                    <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                      {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                    </span>
+                  )}
+                  {assignSummary.dueSoon > 0 && ' '}
+                  {assignSummary.dueSoon > 0 && (
+                    <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                      {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                    </span>
+                  )}
+                </p>
+                <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
+                  {t('studentAssignmentsOrder')}
+                </p>
+              </>
+            )}
           </div>
         )}
 
@@ -904,10 +946,13 @@ export default function StudentPage() {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
             const color = CATEGORY_COLORS[mod.category];
+            // Text-safe variant — ochre (design) is a fill, not a text colour (CLAUDE.md); every
+            // spot below that paints readable text (not a background/border/icon) uses this one.
+            const textColor = CATEGORY_TEXT_COLORS[mod.category];
             const isExpanded = expandedModuleId === mod.id;
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
-            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today), lang, t) : null;
+            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
@@ -931,7 +976,7 @@ export default function StudentPage() {
             // mod.lessons), and there's no expand control to reach it with. No "Mark done"
             // toggle either, so a locked module can't be cheated past by ticking it directly.
             if (!unlocked) {
-              const reason = unlockReason(mod.id, gatingCtx);
+              const reason = unlockReason(mod.id, gatingCtx, (id) => localisedModuleTitle(id, lang));
               return (
                 <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
                   style={{ border: '1px solid #DEDCCE' }}>
@@ -952,7 +997,7 @@ export default function StudentPage() {
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                          style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
+                          style={{ background: `${color}10`, color: textColor, border: `1px solid ${color}20` }}>
                           {t(CATEGORY_LABEL_KEYS[mod.category])}
                         </span>
                       </div>
@@ -996,10 +1041,16 @@ export default function StudentPage() {
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
-                      <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
-                        {t(CATEGORY_LABEL_KEYS[mod.category])}
-                      </span>
+                      {simple ? (
+                        // A colour dot carries the same category cue as the text chip below,
+                        // without repeating a word next to "Continue here" a farmer doesn't need.
+                        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 4 }} />
+                      ) : (
+                        <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: color + '18', color: textColor, border: `1px solid ${color}30` }}>
+                          {t(CATEGORY_LABEL_KEYS[mod.category])}
+                        </span>
+                      )}
                       {isCurrent && (
                         <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
@@ -1013,19 +1064,21 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      <span
-                        title={readinessTitle}
-                        className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={contentComplete
-                          ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
-                          : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
-                      >
-                      {readiness?.text === 'Fully built'
-                        ? t('studentReadinessComplete')
-                        : readiness?.text === 'Narrated slides'
-                          ? t('studentReadinessNarrated')
-                          : t('studentReadinessLessons')}
-                      </span>
+                      {!simple && (
+                        <span
+                          title={readinessTitle}
+                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={contentComplete
+                            ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
+                            : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
+                        >
+                        {readiness?.text === 'Fully built'
+                          ? t('studentReadinessComplete')
+                          : readiness?.text === 'Narrated slides'
+                            ? t('studentReadinessNarrated')
+                            : t('studentReadinessLessons')}
+                        </span>
+                      )}
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{
@@ -1080,6 +1133,7 @@ export default function StudentPage() {
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
                     aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
+                    aria-pressed={done}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
@@ -1161,6 +1215,7 @@ export default function StudentPage() {
                         key={lesson.id}
                         lesson={lesson}
                         color={color}
+                        textColor={textColor}
                         moduleId={mod.id}
                         lang={lang}
                         autoOpen={jumpToLessonId === lesson.id}
@@ -1182,7 +1237,7 @@ export default function StudentPage() {
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
                       <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
-                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color }}>
+                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
                         {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
                       {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
@@ -1239,6 +1294,18 @@ export default function StudentPage() {
         </div>
         </details>
 
+        {simple ? (
+          // Two plain links — the full preview cards below (image, intro paragraph, nested card)
+          // are an All tools companion for a facilitator, not a farmer's next tap.
+          <div className={styles.coursePreviews}>
+            <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong></span>
+            </OfflinePageLink>
+            <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong></span>
+            </OfflinePageLink>
+          </div>
+        ) : (
         <div className={styles.coursePreviews}>
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
@@ -1268,6 +1335,7 @@ export default function StudentPage() {
           </OfflinePageLink>
         </details>
         </div>
+        )}
 
         <LimaBar />
 
@@ -1281,7 +1349,9 @@ export default function StudentPage() {
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
+            {/* Simple: the card itself is the "read the guide" link — the identical "Read the
+                guide · English →" line does not need to repeat once per card (14 times). */}
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
 

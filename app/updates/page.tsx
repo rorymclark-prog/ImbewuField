@@ -6,24 +6,25 @@
 // shows a list of updates and what bugs were solved etc". Content comes straight from
 // RELEASE_NOTES, so this page is always exactly as current as the build serving it.
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import MenuButton from '@/components/MenuButton';
 import { RELEASE_NOTES } from '@/lib/release-notes';
 import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
+
+// A farmer does not need 150+ dated entries or the git short SHA that used to sit beside each
+// one — that is a "should I refresh" note, not a changelog (see lib/release-notes.ts). Simple
+// stops at the recent entries; All tools can still reach the rest through one disclosure.
+const RECENT_COUNT = 10;
 
 export default function UpdatesPage() {
-  // The sha of the build the reader is LOOKING AT — fetched, not imported, so a stale
-  // installed PWA shows its own (old) build id rather than pretending to be current.
-  const [buildSha, setBuildSha] = useState<string | null>(null);
-  useEffect(() => {
-    fetch('/api/build-info')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((info) => { if (info?.sha) setBuildSha(String(info.sha)); })
-      .catch(() => {});
-  }, []);
+  const simple = useAppLevel() === 'simple';
+  const [showAll, setShowAll] = useState(false);
+  const hasOlder = RELEASE_NOTES.length > RECENT_COUNT;
+  const entries = showAll && !simple ? RELEASE_NOTES : RELEASE_NOTES.slice(0, RECENT_COUNT);
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
@@ -39,11 +40,6 @@ export default function UpdatesPage() {
           What&rsquo;s new
         </h1>
         <div className="flex-1" />
-        {buildSha && (
-          <span className="text-[11px] font-mono" style={{ color: '#755942' }}>
-            build {buildSha}
-          </span>
-        )}
       </header>
 
       <main className="flex-1 overflow-y-auto">
@@ -58,17 +54,12 @@ export default function UpdatesPage() {
             Guide me to recent changes
           </button>
 
-          {RELEASE_NOTES.map((entry) => (
+          {entries.map((entry) => (
             <section key={`${entry.when}-${entry.sha ?? ''}`} className="mb-7">
               <div className="flex items-baseline gap-2 mb-2">
                 <h2 className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>
                   {entry.when}
                 </h2>
-                {entry.sha && (
-                  <span className="text-[10px] font-mono" style={{ color: '#755942' }}>
-                    {entry.sha}
-                  </span>
-                )}
               </div>
               <ul className="space-y-1.5">
                 {entry.changes.map((line) => (
@@ -80,6 +71,17 @@ export default function UpdatesPage() {
               </ul>
             </section>
           ))}
+
+          {!simple && hasOlder && (
+            <button
+              type="button"
+              onClick={() => setShowAll((v) => !v)}
+              className="mb-6 px-4 rounded-lg font-semibold"
+              style={{ minHeight: 44, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+            >
+              {showAll ? 'Show fewer updates' : 'Show older updates'}
+            </button>
+          )}
         </div>
       </main>
     </div>

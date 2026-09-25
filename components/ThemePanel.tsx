@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
-import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
+import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
@@ -181,13 +181,6 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
-          <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
-            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
-            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
-            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
-            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
-          </section>
-
           {/* LANGUAGE — first, because a panel she cannot read is not a panel.
               This is the only working language control on a phone. The onboarding screen ends
               with "you can change this later" (pickLangSub), and until now that was not true:
@@ -426,27 +419,21 @@ export default function ThemePanel({ open, onClose }: Props) {
             </div>
           </div>
 
-          {/* Data sources */}
-          <div style={{ marginTop: 28 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Imithombo yedatha' : 'Data sources'}
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              {[
-                { Icon: Satellite, label: zu ? 'Isimo sezulu seNASA seminyaka engu-30' : 'NASA 30yr climate' },
-                { Icon: Sprout,    label: zu ? 'Idatha yenhlabathi yeISRIC' : 'ISRIC soil data' },
-                { Icon: Mountain,  label: zu ? 'Imigqa yokuphakama nendawo engu-3D' : 'Contours + 3D terrain' },
-                { Icon: Sparkles,  label: zu ? 'Imibono yeClaude AI' : 'Claude AI insights' },
-              ].map((s) => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                  <s.Icon size={15} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', lineHeight: 1.2 }}>{s.label}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              {zu ? 'INingizimu Afrika · izindawo zemvelo ezingu-9 · wonke ama-API amahhala.' : 'South Africa · 9 biomes · all free APIs.'}
-            </div>
+          {/* TOUR AND SUPPORT LINKS LIVE DOWN HERE. They used to open the panel, which pushed "How much
+              to show" (Simple / All tools) below the fold on a phone — Rory went looking for the switch
+              and could not find it. Settings now opens on the two choices that decide whether the app
+              is usable at all: language, then how much to show. */}
+          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
+            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
+            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
+            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
+            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
+          </section>
+
+          {/* CLAUDE.md: no data-vendor badges in the UI — this used to name each data provider by
+              brand. One unbranded line instead of a vendor list. */}
+          <div style={{ marginTop: 28, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            {zu ? 'Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.' : 'Farm guidance is built from South African climate, soil and terrain data.'}
           </div>
         </div>
 
