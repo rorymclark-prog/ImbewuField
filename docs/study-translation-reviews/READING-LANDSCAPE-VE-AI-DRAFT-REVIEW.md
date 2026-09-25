@@ -1,0 +1,23 @@
+# Reading the Landscape — Tshivenda machine draft
+
+- **Status:** Machine draft (`machine-draft`); no fluent Tshivenda speaker or local smallholder-farming review has occurred. This is a machine draft and must not be represented as approved.
+- **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `reading-landscape` (four lessons: water flow, sun angles/aspect, wind/frost/topography, and simple site map).
+- **Paired data:** [`lib/course-translation-drafts-ve-reading-landscape.ts`](../../lib/course-translation-drafts-ve-reading-landscape.ts). Follows TypeScript data conventions from `lib/course-translation-drafts-ve.ts`. Unpublished and data-only; no learner wiring, audio, or slides. A release note states that learners cannot see this draft yet.
+- **Held fields (reviewStatus: 'hold'):** exact English is retained for `lessons[0].body`, `lessons[0].keyPoints[1]`, `lessons[0].quiz[0].options[0]`, `lessons[0].quiz[0].options[2]`, and `lessons[0].quiz[0].rationale`; `lessons[1].keyPoints[1]` and `lessons[1].quiz[1].question`; `lessons[2].body`, `lessons[2].keyPoints[1]`, `lessons[2].quiz[0].rationale`, and `lessons[2].quiz[1].rationale`; `lessons[3].keyPoints[2]` and `lessons[3].quiz[1].options[1]`. Each held field has `tshivendaDraft === sourceEnglish`.
+- **Independent Agy Pro Low source audit:** flagged the L1 “same height” phrase as mistranslated, one Sesotho contamination, the L2 shade instruction and garden word, L3 “clear, still night” wording and the late-blight “favoured” wording, and an L4 wind concord. Those fields are exact-English holds. This model audit is a mechanical safeguard, not proof that unflagged translations are fluent or correct.
+- **Safety and agronomic claims preserved:**
+  - **Water flow & rain safety:** observe rain only from a safe place; walk the land only when safe afterward; excess water needs a safe route away to avoid damage.
+  - **A-frame & earthworks:** an A-frame level marks points at the same height along a contour as an observation, but does not design or approve earthworks; full site assessment (soil, slope, drainage, storm flow, safe overflow) and trained local advice are required before digging water structures; no single placement rule fits every slope.
+  - **Sun, aspect & frost:** aspect (north vs south) is observational and one factor, not an absolute guarantee; winter sun is lower and farther north; local shade patterns must be observed before permanent placement; cold air settles in low hollows; pawpaw and young citrus are sensitive to frost.
+  - **Wind & frost indicators:** wind direction and strength change by season and topography; visible frost/ice alone is not required to infer risk (frost damage can happen without visible ice; mist alone does not prove ice); candidate nursery sites must be compared across cold nights with local agricultural guidance; no hillside spot guarantees freedom from frost.
+  - **Late blight on tomatoes:** good airflow and morning sun may assist leaves in drying, but do not alone control late blight; local crop-health guidance is needed.
+  - **Soil compaction indicators:** khakibos and blackjack grow in disturbed ground, but their presence alone does not diagnose or prove soil compaction; soil must be directly inspected.
+  - **Site map conventions:** sketch map distances must be checked before removing the "not to scale" label; seasonal winds (summer and winter) must be mapped separately because shifting directions alter windbreak and crop placement.
+- **Preservation checks:**
+  - All 4 source lesson IDs (`reading-landscape-l1` to `l4`) match exactly.
+  - Field counts, keys, and order match the canonical module.
+  - All paragraph breaks (`\n\n`) in lesson bodies are strictly preserved.
+  - All numerical values, clock times (8am, 4pm), and source quiz correct answer indexes (`[0, 1]`, `[2, 0]`, `[2, 1]`, `[2, 1]`) are preserved unchanged.
+  - Crop, weed, and technical terms (`A-frame`, `pawpaw`, `citrus`, `tomatoes`, `late blight`, `khakibos`, `blackjack`, `KZN`, `Highveld`) are preserved in translated fields where appropriate; the lesson 1 and 3 bodies remain exact English holds after the independent audit.
+- **Reviewer dependency:**
+  - Requires fluent Tshivenda linguistic review and local smallholder-farming review for Limpopo and Mpumalanga contexts before learner publication or instructional use.
