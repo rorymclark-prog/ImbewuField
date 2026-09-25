@@ -92,6 +92,7 @@ const HDDS_ENGLISH: Record<HddsFoodGroup, string> = {
 };
 
 const MONTH_ENGLISH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const SURVEY_INCOME_GUIDE_ENGLISH = 'Enter the amount earned from sales, before costs. The survey records income; it does not calculate profit.';
 
 // English-only for now — three-letter month abbreviations, genuinely new keys.
 function monthLabels(t: (key: string) => string): string[] {
@@ -145,14 +146,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return <div className={`${styles.questionLabel} font-sans font-semibold mb-2`} style={{ fontSize: 13, color: 'var(--text-2)' }}>{children}</div>;
 }
 
-function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ label, sub, ariaLabel, on, onChange }: { label: ReactNode; sub?: ReactNode; ariaLabel: string; on: boolean; onChange: (v: boolean) => void }) {
   return (
     <div className="flex items-center justify-between" style={{ background: 'var(--surface-2)', borderRadius: 12, padding: '12px 14px', border: '1px solid var(--border)' }}>
       <div>
         <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: 'var(--text)' }}>{label}</div>
         {sub && <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)' }}>{sub}</div>}
       </div>
-      <button onClick={() => onChange(!on)} role="switch" aria-checked={on} aria-label={label} className="flex items-center rounded-full transition-all flex-shrink-0"
+      <button onClick={() => onChange(!on)} role="switch" aria-checked={on} aria-label={ariaLabel} className="flex items-center rounded-full transition-all flex-shrink-0"
         style={{ width: 52, height: 44, padding: 7, background: on ? 'var(--brand)' : 'rgba(32,25,15,0.15)',
           justifyContent: on ? 'flex-end' : 'flex-start', border: 'none', cursor: 'pointer' }}>
         <span style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', display: 'block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
@@ -441,8 +442,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   }, []);
 
   const Icon = STEP_ICONS[step];
-  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
-  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
+  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), lang === 'zu' ? SURVEY_INCOME_GUIDE_ENGLISH : t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
+  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), paired('surveyTipIncome', 'Record whether you sell produce and where. Quantities and income belong with each production item.'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
 
   return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
@@ -457,7 +458,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
             {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
-            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : STEPS[id]}</span>
+            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : STEPS[id]}</span>
           </button>; })}
           <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
@@ -483,7 +484,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <main className={styles.main}>
             <div className={styles.stepHeading}><div className={styles.stepIcon}><Icon size={26}/></div><div>
               <span className={styles.eyebrow}>{t('stepOfSteps').replace('{n}', String(routeIndex + 1)).replace('{total}', String(route.length))}</span>
-              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : STEPS[step]}</h2>
+              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : STEPS[step]}</h2>
             </div></div>
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
             {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
@@ -640,7 +641,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               {roofSecondarySource === 'auto' && <AutoFillNote areaM2={secondaryRoofM2} />}
             </div>
 
-            <Toggle label={t('toggleGuttersLabel')} sub={t('toggleGuttersSub')} on={hasGutters} onChange={setHasGutters} />
+            <Toggle label={t('toggleGuttersLabel')} sub={t('toggleGuttersSub')} ariaLabel={t('toggleGuttersLabel')} on={hasGutters} onChange={setHasGutters} />
 
             {totalRoof > 0 && <div className={styles.roofVisual}>
               <h3>{t('surveyRoofEstimateTitle')}</h3>
@@ -876,16 +877,16 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {/* ── Step 4: Income & Sales ── */}
         {(step === 4 || (step === 2 && mode === 'short')) && (
           <div className="space-y-5">
-            <Toggle label={t('toggleSellProduceLabel')} sub={t('surveyToggleSellProduceSub')} on={isCommercial} onChange={setIsCommercial} />
+            <Toggle label={paired('toggleSellProduceLabel', 'We sell or plan to sell produce')} sub={paired('surveyToggleSellProduceSub', 'Your production rows can record what was sold and income earned')} ariaLabel={t('toggleSellProduceLabel')} on={isCommercial} onChange={setIsCommercial} />
             {isCommercial && (
               <div>
-                <SectionLabel>{t('sectionCurrentOrTargetMarket')}</SectionLabel>
+                <SectionLabel>{paired('sectionCurrentOrTargetMarket', 'Current or target market')}</SectionLabel>
                 <div className="space-y-2">
                   {[
-                    { v: 'farm-stall',    label: t('marketFarmStall') },
-                    { v: 'local-market',  label: t('marketLocalCommunity') },
-                    { v: 'wholesale',     label: t('marketWholesale') },
-                    { v: 'not-sure',      label: t('marketNotSure') },
+                    { v: 'farm-stall',    label: paired('marketFarmStall', 'On-site farm stall') },
+                    { v: 'local-market',  label: paired('marketLocalCommunity', 'Local community / informal market') },
+                    { v: 'wholesale',     label: paired('marketWholesale', 'Wholesale / bulk buyers') },
+                    { v: 'not-sure',      label: paired('marketNotSure', 'Not sure yet') },
                   ].map(o => (
                     <Radio key={o.v} label={o.label} on={marketType === o.v} onClick={() => setMarketType(o.v)} />
                   ))}
@@ -893,7 +894,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               </div>
             )}
             <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: 'var(--text-2)', fontSize: 12.5, lineHeight: 1.5 }}>
-              {t('surveyIncomeSalesNote')}
+              {paired('surveyIncomeSalesNote', 'You can record what was sold and income earned against each item in the Current Production step.')}
             </div>
           </div>
         )}
