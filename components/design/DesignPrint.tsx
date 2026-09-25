@@ -14,9 +14,10 @@
 //    title block + legend column + scale bar + north arrow around them, as before.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { X, FileDown, Images, Loader2, Share2 } from 'lucide-react';
+import { X, FileDown, Images, Loader2, RefreshCw, Share2, Square, SquareCheck } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import LessonLink from './LessonLink';
+import { useAppLevel } from '@/lib/app-level';
 
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
@@ -64,7 +65,13 @@ const DARK = '#0B120B';
 type PrintLayer = {
   key: string;
   no: string; // '01'..'09'
+  // FIXED English — painted onto the exported sheet's own title block (see renderPage's
+  // ctx.fillText below). A printed plan set is a document that gets filed and sent on, and must
+  // not change language with whatever the app happens to be set to when it is rendered (see
+  // design-studio-i18n.test.ts's "load-bearing text painted onto exported sheets" guard).
   label: string;
+  // The SAME name, but resolved through t() — used only for the on-screen sheet-picker chip.
+  labelKey: string;
   selfChromed: boolean; // sheet carries its own legend/scale/north (a Blueprint sheet)
   render: (state: DesignCanvasState, frame: CanvasFrame, refLayers: RefLayers, site: SectorSite | null, placeName?: string) => Promise<string>;
   // Only used to draw the PAPER legend on the two non-self-chromed pages.
@@ -83,19 +90,19 @@ const PRINT_LAYERS: PrintLayer[] = [
   //
   // Both now use the same builders the on-screen plan set uses, self-chromed like every other
   // sheet in this list. A defect fixed once is now fixed on screen AND on paper.
-  { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintBaseMap(s, f, r, pn) },
-  { key: 'sector', no: '02', label: 'Sector Analysis', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
-  { key: 'zones', no: '03', label: 'Permaculture Zones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
-  { key: 'water', no: '04', label: 'Water & Irrigation', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
+  { key: 'base', no: '01', label: 'Existing Site & Base', labelKey: 'designPrintSheetBase', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintBaseMap(s, f, r, pn) },
+  { key: 'sector', no: '02', label: 'Sector Analysis', labelKey: 'designPrintSheetSector', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
+  { key: 'zones', no: '03', label: 'Permaculture Zones', labelKey: 'designPrintSheetZones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
+  { key: 'water', no: '04', label: 'Water & Irrigation', labelKey: 'designPrintSheetWater', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
   // Sheet 05, NEW. Earthworks is the land-shaping / contour setting-out sheet split out of Water —
   // swale, contour berm, terrace and half-moon now print here instead (SHEET_OVERRIDE keeps the
   // two basin types on Water). Same pattern as the other filter-based layer sheets: the exact
   // Blueprint builder for the 'earthworks' GlossyLayerFilter, self-chromed like its siblings.
-  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
-  { key: 'planting', no: '06', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
-  { key: 'structures', no: '07', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
-  { key: 'all', no: '08', label: 'Integrated Masterplan', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },
-  { key: 'implementation', no: '09', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
+  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', labelKey: 'designPrintSheetEarthworks', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
+  { key: 'planting', no: '06', label: 'Planting & Agroforestry', labelKey: 'designPrintSheetPlanting', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
+  { key: 'structures', no: '07', label: 'Livestock & Infrastructure', labelKey: 'designPrintSheetStructures', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
+  { key: 'all', no: '08', label: 'Integrated Masterplan', labelKey: 'designPrintSheetAll', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },
+  { key: 'implementation', no: '09', label: 'Implementation & Phasing', labelKey: 'designPrintSheetImplementation', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
 
 // A sheet is exportable only when it has something true to say — mirrors the Glossy generate-all
@@ -348,6 +355,7 @@ async function renderPage(
 
 export default function DesignPrint({ state, frame, refLayers, site, placeName, onClose }: DesignPrintProps) {
   const { t } = useLanguage();
+  const simple = useAppLevel() === 'simple';
   const available = useMemo(
     () => new Set(PRINT_LAYERS.filter((l) => isLayerAvailable(l, state, refLayers, site)).map((l) => l.key)),
     [state, refLayers, site],
@@ -359,27 +367,42 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
   const [busy, setBusy] = useState<null | 'pdf' | 'png' | 'share' | 'preview'>('preview');
   const [exportErr, setExportErr] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewErr, setPreviewErr] = useState<string | null>(null);
+  const [previewAttempt, setPreviewAttempt] = useState(0);
   const previewRef = useRef<HTMLDivElement | null>(null);
 
   const dateStr = new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
-  const chosen = PRINT_LAYERS.filter((l) => selected.has(l.key));
+  // Simple has no per-sheet checklist to drive `selected` from, so it always exports whatever is
+  // currently available, at the sensible defaults `paper`/`landscape`/`furniture` already start at.
+  const chosen = simple
+    ? PRINT_LAYERS.filter((l) => available.has(l.key))
+    : PRINT_LAYERS.filter((l) => selected.has(l.key));
 
   const optsFor = useCallback(
     () => ({ paper, landscape, ...furniture, dateStr }),
     [paper, landscape, furniture, dateStr],
   );
 
-  // Live preview of the first selected page whenever the composition changes.
+  // Live preview of the first chosen page whenever the composition changes.
   useEffect(() => {
     let cancelled = false;
-    const first = PRINT_LAYERS.find((l) => selected.has(l.key));
-    if (!first) { setPreviewUrl(null); return; }
+    const first = chosen[0];
+    if (!first) { setPreviewUrl(null); setPreviewErr(null); return; }
     setBusy('preview');
+    setPreviewErr(null);
     renderPage(state, frame, refLayers, site, placeName ?? 'Your design', first, optsFor())
       .then((cv) => { if (!cancelled) { setPreviewUrl(cv.toDataURL('image/jpeg', 0.85)); setBusy(null); } })
-      .catch(() => { if (!cancelled) setBusy(null); });
+      .catch((e) => {
+        if (cancelled) return;
+        setPreviewUrl(null);
+        setBusy(null);
+        setPreviewErr(formatDesignTranslation(t('designPrintPreviewError'), {
+          error: e instanceof Error ? e.message : String(e),
+        }));
+      });
     return () => { cancelled = true; };
-  }, [state, frame, refLayers, site, placeName, selected, paper, landscape, furniture, optsFor]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, frame, refLayers, site, placeName, selected, simple, available, paper, landscape, furniture, optsFor, previewAttempt]);
 
   const toggle = (key: string) =>
     setSelected((prev) => {
@@ -510,75 +533,98 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
         <div style={{ display: 'flex', flex: 1, minHeight: 0, flexDirection: 'column', overflowY: 'auto' }}>
           {/* Controls */}
           <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintSheets')}</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {PRINT_LAYERS.map((l) => {
-                  const canUse = available.has(l.key);
-                  return (
-                    <button
-                      key={l.key}
-                      onClick={() => canUse && toggle(l.key)}
-                      disabled={!canUse}
-                      aria-pressed={selected.has(l.key)}
-                      title={canUse ? undefined : t('designPrintNothingDrawn')}
-                      style={{ ...chk(selected.has(l.key) && canUse), opacity: canUse ? 1 : 0.4, cursor: canUse ? 'pointer' : 'default' }}
-                    >
-                      <span>{!canUse ? '·' : selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {l.label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+            {!simple && (
               <div>
-                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintPaper')}</div>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  {(['a4', 'a3'] as const).map((p) => (
-                    <button key={p} onClick={() => setPaper(p)} style={chk(paper === p)}>{p.toUpperCase()}</button>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintSheets')}</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {PRINT_LAYERS.map((l) => {
+                    const canUse = available.has(l.key);
+                    return (
+                      <button
+                        key={l.key}
+                        onClick={() => canUse && toggle(l.key)}
+                        disabled={!canUse}
+                        aria-pressed={selected.has(l.key)}
+                        title={canUse ? undefined : t('designPrintNothingDrawn')}
+                        style={{ ...chk(selected.has(l.key) && canUse), opacity: canUse ? 1 : 0.4, cursor: canUse ? 'pointer' : 'default' }}
+                      >
+                        <span style={{ display: 'inline-flex' }}>{!canUse ? <Square size={16} strokeWidth={1.5} /> : selected.has(l.key) ? <SquareCheck size={16} /> : <Square size={16} />}</span> {l.no} · {t(l.labelKey)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {!simple && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintPaper')}</div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    {(['a4', 'a3'] as const).map((p) => (
+                      <button key={p} onClick={() => setPaper(p)} style={chk(paper === p)}>{p.toUpperCase()}</button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintOrientation')}</div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button onClick={() => setLandscape(true)} style={chk(landscape)}>{t('designPrintLandscape')}</button>
+                    <button onClick={() => setLandscape(false)} style={chk(!landscape)}>{t('designPrintPortrait')}</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!simple && (
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintInclude')}</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {([['titleBlock', 'designPrintTitleBlock'], ['legend', 'designPrintLegend'], ['scaleBar', 'designPrintScaleBar'], ['northArrow', 'designPrintNorthArrow']] as const).map(([k, labelKey]) => (
+                    <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
+                      <span style={{ display: 'inline-flex' }}>{furniture[k] ? <SquareCheck size={16} /> : <Square size={16} />}</span> {t(labelKey)}
+                    </button>
                   ))}
                 </div>
               </div>
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintOrientation')}</div>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <button onClick={() => setLandscape(true)} style={chk(landscape)}>{t('designPrintLandscape')}</button>
-                  <button onClick={() => setLandscape(false)} style={chk(!landscape)}>{t('designPrintPortrait')}</button>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintInclude')}</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {([['titleBlock', 'designPrintTitleBlock'], ['legend', 'designPrintLegend'], ['scaleBar', 'designPrintScaleBar'], ['northArrow', 'designPrintNorthArrow']] as const).map(([k, labelKey]) => (
-                  <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
-                    <span>{furniture[k] ? '☑' : '☐'}</span> {t(labelKey)}
-                  </button>
-                ))}
-              </div>
-            </div>
+            )}
 
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button onClick={exportPdf} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'pdf' ? 1 : 0.6 }}>
-                {busy === 'pdf' ? <Loader2 size={18} className="animate-spin" /> : <FileDown size={18} />}
-                {busy === 'pdf'
-                  ? t('designPrintBuildingPdf')
-                  : formatDesignTranslation(t('designPrintExportPdf'), {
-                    count: chosen.length,
-                    pages: t(chosen.length === 1 ? 'designPrintPage' : 'designPrintPages'),
-                  })}
-              </button>
-              <button onClick={exportPngs} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `1px solid ${GREEN}`, background: 'transparent', color: GREEN, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'png' ? 1 : 0.6 }}>
-                {busy === 'png' ? <Loader2 size={18} className="animate-spin" /> : <Images size={18} />}
-                {busy === 'png' ? t('designPrintSavingPngs') : t('designPrintExportPngs')}
-              </button>
-              {canNativeShare && (
-                <button onClick={sharePlanSet} disabled={!chosen.length || busy === 'pdf' || busy === 'png' || busy === 'share'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `2px solid ${GREEN}`, background: '#25D366', color: '#08210F', fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'share' ? 1 : 0.6 }}>
-                  {busy === 'share' ? <Loader2 size={18} className="animate-spin" /> : <Share2 size={18} />}
-                  {busy === 'share' ? t('designPrintPreparing') : t('designPrintShare')}
-                </button>
+              {simple ? (
+                <>
+                  <button onClick={exportPdf} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'pdf' ? 1 : 0.6 }}>
+                    {busy === 'pdf' ? <Loader2 size={18} className="animate-spin" /> : <FileDown size={18} />}
+                    {busy === 'pdf' ? t('designPrintBuildingPdf') : t('designPrintSaveSimple')}
+                  </button>
+                  {canNativeShare && (
+                    <button onClick={sharePlanSet} disabled={!chosen.length || busy === 'pdf' || busy === 'png' || busy === 'share'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `2px solid ${GREEN}`, background: '#25D366', color: '#08210F', fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'share' ? 1 : 0.6 }}>
+                      {busy === 'share' ? <Loader2 size={18} className="animate-spin" /> : <Share2 size={18} />}
+                      {busy === 'share' ? t('designPrintPreparing') : t('designPrintShare')}
+                    </button>
+                  )}
+                </>
+              ) : (
+                <>
+                  <button onClick={exportPdf} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'pdf' ? 1 : 0.6 }}>
+                    {busy === 'pdf' ? <Loader2 size={18} className="animate-spin" /> : <FileDown size={18} />}
+                    {busy === 'pdf'
+                      ? t('designPrintBuildingPdf')
+                      : formatDesignTranslation(t('designPrintExportPdf'), {
+                        count: chosen.length,
+                        pages: t(chosen.length === 1 ? 'designPrintPage' : 'designPrintPages'),
+                      })}
+                  </button>
+                  <button onClick={exportPngs} disabled={!chosen.length || busy === 'pdf' || busy === 'png'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `1px solid ${GREEN}`, background: 'transparent', color: GREEN, fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'png' ? 1 : 0.6 }}>
+                    {busy === 'png' ? <Loader2 size={18} className="animate-spin" /> : <Images size={18} />}
+                    {busy === 'png' ? t('designPrintSavingPngs') : t('designPrintExportPngs')}
+                  </button>
+                  {canNativeShare && (
+                    <button onClick={sharePlanSet} disabled={!chosen.length || busy === 'pdf' || busy === 'png' || busy === 'share'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, padding: '12px 22px', borderRadius: 12, border: `2px solid ${GREEN}`, background: '#25D366', color: '#08210F', fontWeight: 800, fontSize: 15, cursor: chosen.length ? 'pointer' : 'default', opacity: chosen.length && busy !== 'share' ? 1 : 0.6 }}>
+                      {busy === 'share' ? <Loader2 size={18} className="animate-spin" /> : <Share2 size={18} />}
+                      {busy === 'share' ? t('designPrintPreparing') : t('designPrintShare')}
+                    </button>
+                  )}
+                </>
               )}
             </div>
             {exportErr && <div style={{ color: '#B3261E', fontSize: 13, fontWeight: 600 }}>{exportErr}</div>}
@@ -593,6 +639,17 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
             {busy === 'preview' && !previewUrl ? (
               <div style={{ padding: 40, color: '#6B6355', display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Loader2 size={20} className="animate-spin" /> {t('designPrintRendering')}
+              </div>
+            ) : previewErr ? (
+              <div style={{ padding: 40, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, textAlign: 'center' }}>
+                <div style={{ color: '#B3261E', fontSize: 13, fontWeight: 600 }}>{previewErr}</div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewAttempt((n) => n + 1)}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 40, padding: '8px 16px', borderRadius: 10, border: `1px solid ${GREEN}`, background: 'transparent', color: GREEN, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}
+                >
+                  <RefreshCw size={15} /> {t('designPrintRetry')}
+                </button>
               </div>
             ) : previewUrl ? (
               // eslint-disable-next-line @next/next/no-img-element

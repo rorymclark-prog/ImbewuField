@@ -10,10 +10,19 @@ const page = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'u
 test('Glossy owns the whole studio width instead of inheriting the drawing rails', () => {
   assert.match(page, /canvasState && canvasState\.step !== 'glossy'/,
     'the drawing wizard must not stay mounted beside Preview & Export');
-  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : reservedDesktopPanelSpace\(workspaceMode, desktopPanelLayout\.elements\)/,
+  // Simple / All tools (swarm/design-simple) named these two margins after the reserved-space
+  // values instead of inlining the call, so the same numbers could also feed the StepGuide
+  // positioning below and be forced to 0 for a hidden Layers panel in Simple — but for All tools
+  // (simple === false) elementsReservedPx/layersReservedPx are exactly the farmer-adjusted docks
+  // this test always pinned.
+  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : elementsReservedPx/,
     'the drawing map must keep a gutter matching the farmer-adjusted Elements dock');
-  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : reservedDesktopPanelSpace\(workspaceMode, desktopPanelLayout\.layers\)/,
+  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : layersReservedPx/,
     'the drawing map must keep a gutter matching the farmer-adjusted Layers dock');
+  assert.match(page, /const elementsReservedPx = reservedDesktopPanelSpace\(effectiveWorkspaceMode, effectiveDesktopPanelLayout\.elements\)/,
+    'elementsReservedPx must still be the real reserved-space calculation for All tools');
+  assert.match(page, /const layersReservedPx = simple \? 0 : reservedDesktopPanelSpace\(effectiveWorkspaceMode, effectiveDesktopPanelLayout\.layers\)/,
+    'layersReservedPx must still be the real reserved-space calculation for All tools, and 0 only because Simple hides the Layers panel entirely');
 });
 
 test('the live Glossy component, not the prototype route, owns all three preview rails', () => {

@@ -298,12 +298,23 @@ export interface DesignPaletteProps {
   /** Sections the farmer closed one at a time with their ×. The count rides beside the handle so
    *  "where did it go" is answered on screen instead of from memory. */
   hiddenSections?: { count: number; onRestore: () => void };
+  /** Simple / All tools (lib/app-level.ts). Simple hides the Layers panel (the full layer-
+   *  visibility matrix + per-element-type eye toggles), multi-select, Tidy/Snap/Clean up, and
+   *  shows only a curated starter set of the element palette per step (with "Show all"). */
+  simple?: boolean;
 }
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const PAPER = '#FFFEFA';
 const DARK = '#0B120B';
+
+// Simple's starter set — the handful of elements a first-time farmer reaches for most: a tank and
+// a tap (water), a raised bed (earthworks/planting), a veg bed and a tree (planting), a chicken
+// coop (structures). The active-layer filter already scopes these to whichever step is current
+// (tank/tap only appear with the Water layer on, etc.), so one shared list stands in for a
+// per-step one. "Show all" always reaches the complete catalogue this list is drawn from.
+const SIMPLE_STARTER_ELEMENT_IDS = new Set(['jojo_1000', 'tap_point', 'raised_bed', 'veg_bed', 'tree_other', 'chicken_coop']);
 
 const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string }> = [
   { id: 'swale', labelKey: 'designPaletteLineSwale', icon: '〰️' },
@@ -523,6 +534,7 @@ export default function DesignPalette({
   bottomStop,
   hiddenSections,
   onBottomStopChange,
+  simple = false,
 }: DesignPaletteProps) {
   const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -601,6 +613,10 @@ export default function DesignPalette({
     };
   }, [speciesPickerOpen]);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Simple's curated element palette. "Show all" is a per-visit choice, not a saved preference —
+  // it resets on the next step so a farmer never has to remember they widened it three steps ago.
+  const [showAllElements, setShowAllElements] = useState(false);
+  useEffect(() => { setShowAllElements(false); }, [step]);
   // Expanded rows belong to the Layers UI, not the saved design. A parent eye still answers the
   // broad question (show Water at all); opening the row reveals the finer presentation switches
   // without spending permanent panel height on them. Water is the first real child matrix. The
@@ -919,13 +935,18 @@ export default function DesignPalette({
     groupRank(a) - groupRank(b) ||
     Number(elementSuitsClimate(b.id, siteClimates, siteMinTempC)) - Number(elementSuitsClimate(a.id, siteClimates, siteMinTempC));
   const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
+  const simpleStarterCatalog = orderedCatalog.filter((def) => SIMPLE_STARTER_ELEMENT_IDS.has(def.id));
+  // Never leave the palette empty: a layer combination with nothing curated in it falls back to
+  // the full list rather than hiding every element with no way to place one.
+  const showAllElementsEffective = showAllElements || simpleStarterCatalog.length === 0;
+  const displayedCatalog = simple && !showAllElementsEffective ? simpleStarterCatalog : orderedCatalog;
 
   // Re-measure whenever the strip's CONTENTS change (step change, layer toggle) — not just on
   // scroll. A layer toggle can take the row from overflowing to fitting, and a stale fade would
   // then point at nothing. Also re-measure when the phone sheet opens/closes, since the strip is
   // unmounted while the sheet is collapsed (see renderElementCatalog's caller) and remounts with
   // a fresh, unmeasured scrollLeft.
-  useEffect(syncStripEnd, [syncStripEnd, orderedCatalog.length, showElementCatalog, sheetOpen]);
+  useEffect(syncStripEnd, [syncStripEnd, displayedCatalog.length, showElementCatalog, sheetOpen]);
 
   const hintDef = hintDefId ? catalog.find((d) => d.id === hintDefId) : null;
   const armedDef = placeDefId ? ELEMENT_CATALOG.find((d) => d.id === placeDefId) : null;
@@ -1114,7 +1135,9 @@ export default function DesignPalette({
           {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
               has no ring/polyline to simplify, and a multi-selection has no single shape to preview
               — see onTidySelected's doc comment in DesignPaletteProps). Tapping this only OPENS the
-              preview on the canvas; it never itself edits the design. */}
+              preview on the canvas; it never itself edits the design. Simple has no Tidy/Snap/
+              Clean up — expert geometry tools, not part of the guided flow. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteTidy')).full}
@@ -1129,8 +1152,10 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteTidy')).glyph}
           </button>
+          )}
           {/* Snap to neighbour — offered for one or more selected rings, provided at least one can
               move. A selected boundary stays unchanged and is called out in the preview. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteSnap')).full}
@@ -1145,9 +1170,11 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteSnap')).glyph}
           </button>
+          )}
           {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected. See
               onCleanupSelected's doc comment in DesignPaletteProps. Tapping this only OPENS the
               preview on the canvas; it never itself edits the design. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteCleanup')).full}
@@ -1162,6 +1189,7 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteCleanup')).glyph}
           </button>
+          )}
           {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
               polyline deliberately has NO angle control here: a polyline has no single angle, and
               "rotating" one would mean rewriting every saved point, not turning one number. That is
@@ -1512,7 +1540,9 @@ export default function DesignPalette({
 
           {/* Layers — pinned right of the tool row, always on screen. A desktop aside has room
               below the button, so its panel opens down; the phone sheet opens up over the map.
-              Its own cap is scrollable, rather than allowing either edge to leave the viewport. */}
+              Its own cap is scrollable, rather than allowing either edge to leave the viewport.
+              Simple has no layer-visibility matrix at all — one fixed set of layers, all shown. */}
+          {!simple && (
           <div style={{ position: 'relative', flexShrink: 0, display: desktopAside && !isPhone ? 'contents' : undefined }}>
             <button
               ref={layersButtonRef}
@@ -1541,7 +1571,7 @@ export default function DesignPalette({
                 <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
               )}
             </button>
-            {((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
+            {!simple && ((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
               /* TWO layers of box on purpose. The outer carries position, width
                  and chrome and NEVER scrolls; the inner scrolls the rows. The
                  width-resize handle used to live inside a single scrolling box,
@@ -2099,10 +2129,12 @@ export default function DesignPalette({
                   </div>
                 )}
               </div>
-                {desktopAside && !isPhone && workspaceMode !== 'tray' && (
+                {desktopAside && !isPhone && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
                   /* Child of the NON-scrolling outer (see the comment above) so
                      nothing clips it. Straddles the edge — 7px inside, 7px out —
-                     so there's a real target on both sides of the border. */
+                     so there's a real target on both sides of the border. Simple has no
+                     panel-width control — a caller that omits onDesktopPanelWidthChange gets
+                     no drag handle at all, not just a dead one. */
                   <div
                     role="separator"
                     aria-label="Drag to resize the Layers panel"
@@ -2117,6 +2149,7 @@ export default function DesignPalette({
               </div>
             )}
           </div>
+          )}
         </div>
       </>
     );
@@ -2216,7 +2249,7 @@ export default function DesignPalette({
     const cardMetrics = elementCardMetrics(desktopElementColumns);
     return (
       <>
-      {orderedCatalog.map((def) => {
+      {displayedCatalog.map((def) => {
         // …or it IS the thing you have selected on the map (selectedIdentity).
         const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
         const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates, siteMinTempC);
@@ -2408,6 +2441,30 @@ export default function DesignPalette({
           </button>
         );
       })}
+      {/* Simple's escape hatch — the curated set is a starting point, never a ceiling. Resets to
+          curated on the next step (see the showAllElements effect above). */}
+      {simple && !showAllElementsEffective && simpleStarterCatalog.length < orderedCatalog.length && (
+        <button
+          type="button"
+          onClick={() => setShowAllElements(true)}
+          style={{
+            minHeight: guided ? 44 : 34,
+            padding: guided ? '4px 12px' : '3px 10px',
+            borderRadius: 9,
+            border: '1px dashed rgba(31,77,43,0.45)',
+            background: 'transparent',
+            color: GREEN,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            flexShrink: 0,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          <span style={{ fontSize: guided ? 11.5 : 10, whiteSpace: 'nowrap' }}>{t('designPaletteShowAllElements')}</span>
+        </button>
+      )}
       </>
     );
   }
@@ -3140,7 +3197,7 @@ export default function DesignPalette({
       <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
-      {desktopAside && workspaceMode !== 'tray' && (
+      {desktopAside && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
         <div
           role="separator"
           aria-label="Drag to resize the Elements panel"
