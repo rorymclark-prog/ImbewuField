@@ -172,12 +172,12 @@ function QuestionBuilder({
           placeholder={localUi('Question text...', 'Umbhalo wombuzo...', lang)}
           aria-label={localUi('Question text', 'Umbhalo wombuzo', lang)}
           className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none"
-          style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
         <button
           onClick={onRemove}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.05)', border: '1px solid var(--border)', color: '#755942', cursor: 'pointer' }}
+          style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.05)', border: '1px solid var(--border)', color: 'var(--text-muted)', cursor: 'pointer' }}
           aria-label={localUi('Remove question', 'Susa umbuzo', lang)}
         >
           <X size={14} />
@@ -191,7 +191,7 @@ function QuestionBuilder({
           placeholder="Umbhalo wesiZulu (uyazikhethela)"
           aria-label="Umbhalo wesiZulu wombuzo (uyazikhethela)"
           className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
-          style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       )}
 
@@ -206,7 +206,7 @@ function QuestionBuilder({
               className="px-2.5 py-1 rounded-full font-display text-xs font-semibold"
               style={{
                 background: on ? '#1F4D2B' : 'rgba(31,77,43,0.07)',
-                color: on ? '#EAF3E2' : '#1F4D2B',
+                color: on ? '#EAF3E2' : 'var(--color-forest-800)',
                 border: `1px solid ${on ? '#1F4D2B' : 'rgba(31,77,43,0.2)'}`,
                 cursor: 'pointer',
               }}
@@ -228,7 +228,7 @@ function QuestionBuilder({
                 onChange={(e) => setOption(i, e.target.value)}
                 placeholder={`Option ${i + 1}`}
                 className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
-                style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
               {lang === 'zu' && (
                 <input
@@ -237,7 +237,7 @@ function QuestionBuilder({
                   placeholder={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
                   aria-label={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
                   className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                  style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
               {q.options.length > 2 && (
@@ -245,7 +245,7 @@ function QuestionBuilder({
                   onClick={() => removeOption(i)}
                   aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)}
                   className="flex items-center justify-center flex-shrink-0"
-                  style={{ width: 44, height: 44, color: '#755942', background: 'none', border: 'none', cursor: 'pointer' }}
+                  style={{ width: 44, height: 44, color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
                   <X size={12} />
                 </button>
@@ -256,7 +256,7 @@ function QuestionBuilder({
             <button
               onClick={addOption}
               className="flex items-center gap-1.5 text-xs font-display font-semibold"
-              style={{ color: '#7A4408', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
+              style={{ color: 'var(--gold-dim)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
             >
               <Plus size={12} /> {localUi('Add option', 'Engeza impendulo ongakhetha kuyo', lang)}
             </button>
@@ -338,12 +338,12 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
       >
         <div className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 34, height: 34, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.25)' }}>
-          <Plus size={16} style={{ color: '#7A4408' }} strokeWidth={1.8} />
+          <Plus size={16} style={{ color: 'var(--gold-dim)' }} strokeWidth={1.8} />
         </div>
         <span className="flex-1 font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{localUi('New survey', 'Inhlolovo entsha', lang)}</span>
         {open
-          ? <ChevronUp size={15} style={{ color: '#755942' }} />
-          : <ChevronDown size={15} style={{ color: '#755942' }} />}
+          ? <ChevronUp size={15} style={{ color: 'var(--text-muted)' }} />
+          : <ChevronDown size={15} style={{ color: 'var(--text-muted)' }} />}
       </button>
 
       {open && (
@@ -355,7 +355,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               placeholder={localUi('Survey title...', 'Isihloko senhlolovo...', lang)}
               aria-label={localUi('Survey title', 'Isihloko senhlolovo', lang)}
               className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
-              style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+              style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
             {lang === 'zu' && (
               <input
@@ -364,7 +364,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
                 placeholder="Isihloko ngesiZulu (uyazikhethela)"
                 aria-label="Isihloko senhlolovo ngesiZulu (uyazikhethela)"
                 className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
-                style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             )}
             <input
@@ -373,11 +373,11 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               placeholder={localUi('Organisation name...', 'Igama lenhlangano...', lang)}
               aria-label={localUi('Organisation name', 'Igama lenhlangano', lang)}
               className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
-              style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+              style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
           </div>
 
-          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.08em' }}>
+          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
             {localUi('Questions', 'Imibuzo', lang)}
           </div>
 
@@ -395,13 +395,13 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
           <button
             onClick={addQuestion}
             className="flex items-center gap-2 font-display text-sm font-semibold"
-            style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
             <Plus size={14} strokeWidth={1.8} /> {localUi('Add question', 'Engeza umbuzo', lang)}
           </button>
 
           {sampleNote && (
-            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#7A4408', border: '1px solid rgba(192,122,30,0.2)' }}>
+            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.2)' }}>
               {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
             </p>
           )}
@@ -468,31 +468,31 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
   return (
     <div className="mt-3 pt-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
       <div className="space-y-1">
-        <div className="text-xs font-semibold" style={{ color: '#5C5040' }}>{localUi('English source', 'Umthombo wesiNgisi', 'zu')}: {survey.title}</div>
+        <div className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{localUi('English source', 'Umthombo wesiNgisi', 'zu')}: {survey.title}</div>
         <input
           value={titleZu}
           onChange={(e) => setTitleZu(e.target.value)}
           placeholder="Isihloko senhlolovo ngesiZulu"
           aria-label={`Isihloko ngesiZulu: ${survey.title}`}
           className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none"
-          style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       </div>
 
       {survey.questions.map((question, questionIndex) => (
         <div key={question.id} className="space-y-2 rounded-xl p-3" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid var(--border)' }}>
-          <div className="text-xs font-semibold" style={{ color: '#5C5040' }}>{localUi('English question', 'Umbuzo wesiNgisi', 'zu')}: {question.text}</div>
+          <div className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{localUi('English question', 'Umbuzo wesiNgisi', 'zu')}: {question.text}</div>
           <input
             value={questionsZu[questionIndex]?.text_zu ?? ''}
             onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex ? { ...q, text_zu: e.target.value } : q))}
             placeholder="Umbuzo ngesiZulu"
             aria-label={`Umbuzo ngesiZulu: ${question.text}`}
             className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
-            style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+            style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
           />
           {question.options.map((option, optionIndex) => (
             <div key={`${question.id}-option-${optionIndex}`} className="space-y-1">
-              <div className="text-xs" style={{ color: '#5C5040' }}>{localUi('English choice', 'Impendulo yesiNgisi', 'zu')}: {option}</div>
+              <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{localUi('English choice', 'Impendulo yesiNgisi', 'zu')}: {option}</div>
               <input
                 value={questionsZu[questionIndex]?.options_zu[optionIndex] ?? ''}
                 onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex
@@ -501,15 +501,15 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
                 placeholder="Impendulo ngesiZulu"
                 aria-label={`Impendulo ngesiZulu: ${option}`}
                 className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
-                style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             </div>
           ))}
         </div>
       ))}
 
-      <p className="text-xs" style={{ color: '#5C5040' }}>Izimpendulo esezithunyelwe zihlala zinjalo.</p>
-      {error && <p role="alert" className="text-xs" style={{ color: '#9A3328' }}>Ayikwazanga ukulondoloza. Hlola ukuxhumana kwakho bese uzama futhi.</p>}
+      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Izimpendulo esezithunyelwe zihlala zinjalo.</p>
+      {error && <p role="alert" className="text-xs" style={{ color: 'var(--orange)' }}>Ayikwazanga ukulondoloza. Hlola ukuxhumana kwakho bese uzama futhi.</p>}
       <button
         onClick={saveLabels}
         disabled={saving}
@@ -540,14 +540,14 @@ function StaffSurveyCard({ survey, isLive, canEditLabels, onSaved }: { survey: S
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
-          <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
+          <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
           style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.18)' }}>
-          <ClipboardList size={11} style={{ color: '#1F4D2B' }} strokeWidth={1.8} />
-          <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>
+          <ClipboardList size={11} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.8} />
+          <span className="font-display font-semibold text-xs" style={{ color: 'var(--color-forest-800)' }}>
             {responseCount === null ? '—' : responseCount} {localUi('response', 'impendulo', lang)}{responseCount !== 1 && lang !== 'zu' ? 's' : ''}
           </span>
         </div>
@@ -559,7 +559,7 @@ function StaffSurveyCard({ survey, isLive, canEditLabels, onSaved }: { survey: S
             onClick={() => setEditingLabels((open) => !open)}
             aria-expanded={editingLabels}
             className="mt-3 text-xs font-display font-semibold"
-            style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
             {editingLabels ? 'Vala ukuhlela' : 'Faka noma ubuyekeze amagama esiZulu'}
           </button>
@@ -626,20 +626,20 @@ function FarmerSurveyCard({
       >
         <div className="flex-1 min-w-0">
           <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
-          <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
+          <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
           </div>
         </div>
         {submitted ? (
           <div className="flex items-center gap-1.5 flex-shrink-0 px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.25)' }}>
-            <Check size={12} style={{ color: '#1F4D2B' }} strokeWidth={2} />
-            <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
+            <Check size={12} style={{ color: 'var(--color-forest-800)' }} strokeWidth={2} />
+            <span className="font-display font-semibold text-xs" style={{ color: 'var(--color-forest-800)' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
           </div>
         ) : open ? (
-          <ChevronUp size={15} style={{ color: '#755942', flexShrink: 0 }} />
+          <ChevronUp size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
         ) : (
-          <ChevronDown size={15} style={{ color: '#755942', flexShrink: 0 }} />
+          <ChevronDown size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
         )}
       </button>
 
@@ -660,9 +660,9 @@ function FarmerSurveyCard({
                         aria-pressed={on}
                         className="flex-1 py-2.5 rounded-xl font-display font-semibold text-sm"
                         style={{
-                          background: on ? '#1F4D2B' : '#fff',
+                          background: on ? '#1F4D2B' : 'var(--color-surface)',
                           color: on ? '#EAF3E2' : 'var(--text-primary)',
-                          border: `1px solid ${on ? '#1F4D2B' : '#D8CBB2'}`,
+                          border: `1px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`,
                           cursor: 'pointer',
                         }}
                       >
@@ -686,13 +686,13 @@ function FarmerSurveyCard({
                         aria-pressed={on}
                         className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left"
                         style={{
-                          background: on ? 'rgba(31,77,43,0.08)' : '#fff',
-                          border: `1px solid ${on ? '#1F4D2B' : '#D8CBB2'}`,
+                          background: on ? 'rgba(31,77,43,0.08)' : 'var(--color-surface)',
+                          border: `1px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`,
                           cursor: 'pointer',
                         }}
                       >
                         <div className="flex items-center justify-center rounded-full flex-shrink-0"
-                          style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : '#C9BBA1'}`, background: on ? '#1F4D2B' : 'transparent' }}>
+                          style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`, background: on ? '#1F4D2B' : 'transparent' }}>
                           {on && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#EAF3E2' }} />}
                         </div>
                         <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, opt, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.options?.[opt], q.options_zu?.[optionIndex], lang)}</span>
@@ -710,14 +710,14 @@ function FarmerSurveyCard({
                   aria-label={localUi('Your answer', 'Impendulo yakho', lang)}
                   rows={3}
                   className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                  style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
             </div>
           ))}
 
           {submitError && (
-            <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: '#7A2E16', border: '1px solid rgba(154,52,18,0.25)' }}>
+            <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: 'var(--orange)', border: '1px solid rgba(154,52,18,0.25)' }}>
               {lang === 'zu'
                 ? 'Izimpendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
                 : 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.'}
@@ -798,7 +798,7 @@ export default function SurveysPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
         <div className="flex-1" />
         <LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />
         <SettingsButton />
@@ -807,7 +807,7 @@ export default function SurveysPage() {
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
         {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: '#5C5040' }}>
+          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             {lang === 'zu'
               ? 'ISIZULU DRAFT — Built-in demonstration text is an unreviewed AI draft. For live surveys, an organisation may enter isiZulu labels; they appear beside the exact English text and have not been independently reviewed. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wezibonelo owakhelwe ngaphakathi uwuhlaka lwe-AI olungakabuyekezwa. Kuhlolovo olubukhoma, inhlangano ingafaka amagama esiZulu; aboniswa eduze kombhalo wesiNgisi oqondile futhi awabuyekezwanga ngokuzimela. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
               : ''}
@@ -816,7 +816,7 @@ export default function SurveysPage() {
 
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
-          <ClipboardList size={16} style={{ color: '#1F4D2B' }} strokeWidth={1.7} />
+          <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
           <h1 className="font-display font-bold text-lg leading-tight" style={{ color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
             {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
@@ -829,18 +829,18 @@ export default function SurveysPage() {
 
             {fetching ? (
               <div className="flex justify-center py-8">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               </div>
             ) : surveys.length === 0 ? (
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <ClipboardList size={26} style={{ color: '#755942', margin: '0 auto 8px' }} strokeWidth={1.5} />
-                <p className="font-display text-sm" style={{ color: '#5C5040' }}>
+                <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <p className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {localUi('No surveys yet. Build the first one above.', 'Azikho izinhlolovo okwamanje. Yakha eyokuqala ngenhla.', lang)}
                 </p>
               </div>
             ) : (
               <>
-                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#755942', letterSpacing: '0.08em' }}>
+                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                   {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
                 <div className="space-y-3">
@@ -859,12 +859,12 @@ export default function SurveysPage() {
           <>
             {fetching ? (
               <div className="flex justify-center py-8">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               </div>
             ) : surveys.length === 0 ? (
               <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <ClipboardList size={26} style={{ color: '#755942', margin: '0 auto 8px' }} strokeWidth={1.5} />
-                <p className="font-display text-sm" style={{ color: '#5C5040' }}>
+                <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <p className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {localUi('No surveys available right now.', 'Azikho izinhlolovo ezitholakalayo okwamanje.', lang)}
                 </p>
               </div>
@@ -889,18 +889,18 @@ export default function SurveysPage() {
             flow as a farmer, with nothing stopping them submitting a response. */}
         {!isStaff && !canAnswer && (
           <div className="rounded-2xl px-4 py-8 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-            <ClipboardList size={26} style={{ color: '#755942', margin: '0 auto 8px' }} strokeWidth={1.5} />
+            <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
             <p className="font-display text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
               {localUi('Surveys are answered by farmers and students', 'Izinhlolovo ziphendulwa abalimi nabafundi', lang)}
             </p>
-            <p className="font-sans text-xs" style={{ color: '#5C5040' }}>
+            <p className="font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>
               {localUi('Your organisation’s survey builder is available to NGO staff.', 'Ukwakha inhlolovo yenhlangano yakho kutholakala kubasebenzi be-NGO.', lang)}
             </p>
           </div>
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-sans" style={{ color: '#755942' }}>
+          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
             {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
           </p>
         )}

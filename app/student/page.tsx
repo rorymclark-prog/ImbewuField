@@ -1330,10 +1330,10 @@ export default function StudentPage() {
           // are an All tools companion for a facilitator, not a farmer's next tap.
           <div className={styles.coursePreviews}>
             <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong></span>
+              <span><strong className="font-display">{t('studentDesignPreviewSimpleLabel')}</strong><span>{t('studentDesignPreviewCardTitle')}</span></span>
             </OfflinePageLink>
             <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong></span>
+              <span><strong className="font-display">{t('studentFinancePreviewSimpleLabel')}</strong><span>{t('studentFinancePreviewCardTitle')}</span></span>
             </OfflinePageLink>
           </div>
         ) : (

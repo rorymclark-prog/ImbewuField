@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ChevronUp, X } from 'lucide-react';
 import { isDifferentBuild } from '@/lib/pwa-update';
-import { visibleNotes } from '@/lib/release-notes';
 import { cleanUpdateTour, UPDATE_GUIDE_KEY } from '@/lib/update-tour';
 import type { UpdateTourStop } from '@/lib/release-notes';
 import { useLanguage } from '@/lib/i18n';
@@ -39,6 +38,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   // Null until the server tells us; the local copy is the offline/older-server fallback.
   const [nextBuildNotes, setNextBuildNotes] = useState<string[] | null>(null);
   const [nextBuildTour, setNextBuildTour] = useState<UpdateTourStop[]>([]);
+  // The full changelog only ever needs to load once an update actually shows up, so it is fetched
+  // as its own chunk instead of sitting in the shared layout bundle every phone downloads on every
+  // route. Null both before it is needed and while the chunk is in flight — kept apart from "the
+  // server had none" (nextBuildNotes === []) so the notes list can wait for a real answer instead
+  // of flashing empty and then filling in.
+  const [fallbackNotes, setFallbackNotes] = useState<string[] | null>(null);
   // IT WAS SITTING ON TOP OF THE APP'S OWN CONTROLS. Fixed, bottom-centre, 432x254, z-index 9999
   // — exactly where the Design Studio puts its Snap/Tidy confirm panel. Rory reported "snap to
   // neighbour still doesn't work" three times; it worked perfectly, computed the right answer and
@@ -239,6 +244,19 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     setDismissed(false);
   }, [nextBuildSha]);
 
+  // Only fetch the changelog chunk once an update is actually showing and the server didn't
+  // already hand us its notes (or couldn't be reached at all).
+  useEffect(() => {
+    if (!updateAvailable || nextBuildNotes !== null || fallbackNotes !== null) return;
+    let cancelled = false;
+    import('@/lib/release-notes').then(({ visibleNotes }) => {
+      if (!cancelled) setFallbackNotes(visibleNotes());
+    }).catch(() => {
+      if (!cancelled) setFallbackNotes([]);
+    });
+    return () => { cancelled = true; };
+  }, [updateAvailable, nextBuildNotes, fallbackNotes]);
+
   // Only the TOAST stays off the /pitch projector deck — the service-worker registration in
   // the effects above must keep running there like everywhere else. A deploy landing mid-meeting
   // should not put an "Update ready" pill on a projected slide; the presenter refreshes after.
@@ -247,10 +265,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   if (!updateAvailable || dismissed || onPitchDeck) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
-  const notes = nextBuildNotes ?? visibleNotes();
+  // Null (rather than []) until that fallback chunk has actually loaded, so the list below can
+  // wait for it instead of flashing empty.
+  const notes = nextBuildNotes ?? fallbackNotes;
   const VISIBLE_NOTES_CAP = 2;
-  const displayedNotes = showAllNotes ? notes : notes.slice(0, VISIBLE_NOTES_CAP);
-  const remainingNotesCount = notes.length - VISIBLE_NOTES_CAP;
+  const displayedNotes = notes ? (showAllNotes ? notes : notes.slice(0, VISIBLE_NOTES_CAP)) : [];
+  const remainingNotesCount = notes ? notes.length - VISIBLE_NOTES_CAP : 0;
 
   // Spaced clear of the bottom navigation. --bottom-nav-height is published by TabBar.tsx from
   // its own measured height (it is in normal flow, not fixed — see the comment there), so this
@@ -376,7 +396,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           what-you-will-see terms. Capped to VISIBLE_NOTES_CAP lines by default, with an honest
           "and X more" expansion — this whole card is already a step past the collapsed pill
           someone tapped open on purpose, so it earns a couple of lines but not a wall of text. */}
-      {notes.length > 0 && (
+      {notes && notes.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', width: '100%' }}>
           <ul
             style={{

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
-import { visibleUpdateTour } from '@/lib/release-notes';
 import {
   OPEN_UPDATE_GUIDE_EVENT, UPDATE_GUIDE_KEY, readUpdateGuide, type UpdateGuideState,
 } from '@/lib/update-tour';
@@ -20,11 +19,20 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
     try {
       setGuide(readUpdateGuide(window.sessionStorage.getItem(UPDATE_GUIDE_KEY), loadedBuildSha));
     } catch { /* The tour is optional when storage is unavailable. */ }
-    const open = () => setGuide({
-      sha: loadedBuildSha, stops: visibleUpdateTour(), phase: 'offer', index: 0,
-    });
+    let cancelled = false;
+    // Loaded on demand — the guide is opened far less often than every route mounts this
+    // component, so the full changelog stays out of the shared layout bundle until asked for.
+    const open = () => {
+      import('@/lib/release-notes').then(({ visibleUpdateTour }) => {
+        if (cancelled) return;
+        setGuide({ sha: loadedBuildSha, stops: visibleUpdateTour(), phase: 'offer', index: 0 });
+      }).catch(() => { /* Offline and the chunk never cached: the guide is optional, stay quiet. */ });
+    };
     window.addEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
-    return () => window.removeEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
+    return () => {
+      cancelled = true;
+      window.removeEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
+    };
   }, [loadedBuildSha]);
 
   // On arrival, get out of the way so the farmer can actually see and use the page.
