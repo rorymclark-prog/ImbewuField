@@ -357,6 +357,7 @@ const T_en: Dict = {
   soilHealthScoreModerate: 'Moderate',
   soilHealthScoreDegraded: 'Degraded',
   priorityImprovementsHeader: 'Priority improvements',
+  soilImprovementZuluDraftNotice: 'ISIZULU DRAFT — These soil improvement suggestions are machine-translated and have not been checked by a fluent isiZulu speaker or local soil practitioner. Read the English source beside each suggestion; if it is unclear, use the English wording and seek local advice before applying amendments.',
   // Soil "Priority improvements" body (components/DataPanel.tsx) — these sentences are
   // assembled at runtime from live soil values, so each fixed phrase gets its own key with a
   // {placeholder} filled in via .replace(), same pattern as insightSemiArid etc. above.
