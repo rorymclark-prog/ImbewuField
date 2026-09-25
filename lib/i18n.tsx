@@ -840,6 +840,22 @@ const T_en: Dict = {
   navWhatsNew: "What's new",
   navTour: 'Take a tour',
   navTipsHelp: 'Tips and help',
+  // app/tips/page.tsx — English-only for now; t() falls back. Guide card copy (title/body/action
+  // per tip) stays inline in that file; these are the hero, section headings and controls around
+  // it (Study — Simple mode track brief, task 5).
+  tipsEyebrow: 'LEARN AT YOUR OWN PACE',
+  tipsTitle: 'Tips & help',
+  tipsIntro: 'A quick answer when you need it, or a guided look around the app.',
+  tipsChoosePracticeView: 'Choose a practice view',
+  tipsBrowseGardensReports: 'Browse gardens & reports',
+  tipsFindLabel: 'Find a tip',
+  tipsSearchPlaceholder: 'Try invoices, orchard or cash',
+  tipsNoMatch: 'No matching tips. Try another word or',
+  tipsAskForHelp: 'ask for help',
+  tipsVideoGuidesTitle: 'Video guides',
+  tipsVideoGuidesBody: 'For now, follow the interactive tour and the steps above. App video walkthroughs will be added here when published.',
+  tipsYoutubeLink: 'Find gardening how-to videos on YouTube ↗',
+  tipsYoutubeNote: 'External search results cover gardening, rather than using ImbewuField.',
   navTourControls: 'Tour controls',
   navTourWorkspace: 'Tour workspace',
   navTourWorkspaceNote: 'Changes stay in this tour workspace.',

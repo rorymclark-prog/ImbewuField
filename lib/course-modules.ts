@@ -1375,6 +1375,15 @@ export const CATEGORY_COLORS: Record<ModuleCategory, string> = {
   seeds:      "#B8860B",
 };
 
+// Text-safe variant of CATEGORY_COLORS. Ochre (design) is a FILL — as text it is 2.54:1 on paper,
+// below the contrast a farmer can read (CLAUDE.md). Every category chip/label/icon that paints
+// readable TEXT (not a background, border or icon stroke) with the category colour must use this
+// map instead; design is the only entry that actually differs from CATEGORY_COLORS.
+export const CATEGORY_TEXT_COLORS: Record<ModuleCategory, string> = {
+  ...CATEGORY_COLORS,
+  design: "#7A4408",
+};
+
 export const TOTAL_MODULES = COURSE_MODULES.length;
 
 /**
