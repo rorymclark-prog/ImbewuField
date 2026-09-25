@@ -441,8 +441,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   }, []);
 
   const Icon = STEP_ICONS[step];
-  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), t('surveyGuideLivestock'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
-  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), t('surveyTipLivestock'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
+  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
+  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
 
   return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
@@ -842,29 +842,29 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {(step === 3 || (step === 2 && mode === 'short')) && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionLivestock')}</SectionLabel>
+              <SectionLabel>{paired('sectionLivestock', 'Livestock on site (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'chickens', label: t('livestockChickens') },
-                  { v: 'goats',    label: t('livestockGoats') },
-                  { v: 'cattle',   label: t('livestockCattle') },
-                  { v: 'pigs',     label: t('livestockPigs') },
-                  { v: 'bees',     label: t('livestockBees') },
-                  { v: 'none',     label: t('livestockNone') },
+                  { v: 'chickens', label: paired('livestockChickens', 'Chickens / poultry') },
+                  { v: 'goats',    label: paired('livestockGoats', 'Goats') },
+                  { v: 'cattle',   label: paired('livestockCattle', 'Cattle') },
+                  { v: 'pigs',     label: paired('livestockPigs', 'Pigs') },
+                  { v: 'bees',     label: paired('livestockBees', 'Bees') },
+                  { v: 'none',     label: paired('livestockNone', 'No livestock') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={livestock.includes(o.v)} onClick={() => setLivestock(toggle(livestock, o.v))} color="var(--brand)" />
                 ))}
               </div>
             </div>
             <div>
-              <SectionLabel>{t('sectionOtherInfrastructure')}</SectionLabel>
+              <SectionLabel>{paired('sectionOtherInfrastructure', 'Other infrastructure (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'shade-tunnel', label: t('infraShadeTunnel') },
-                  { v: 'greenhouse',   label: t('infraGreenhouse') },
-                  { v: 'compost-bay',  label: t('infraCompostBay') },
-                  { v: 'shed',         label: t('infraStorageShed') },
-                  { v: 'kraal',        label: t('infraLivestockKraal') },
+                  { v: 'shade-tunnel', label: paired('infraShadeTunnel', 'Shade tunnel') },
+                  { v: 'greenhouse',   label: paired('infraGreenhouse', 'Greenhouse / polytunnel') },
+                  { v: 'compost-bay',  label: paired('infraCompostBay', 'Compost bay') },
+                  { v: 'shed',         label: paired('infraStorageShed', 'Storage shed') },
+                  { v: 'kraal',        label: paired('infraLivestockKraal', 'Livestock kraal') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={otherInfra.includes(o.v)} onClick={() => setOtherInfra(toggle(otherInfra, o.v))} />
                 ))}

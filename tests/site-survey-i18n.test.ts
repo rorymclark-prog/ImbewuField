@@ -358,6 +358,25 @@ test('the current production step shows draft choices beside their exact English
   assert.ok(zu.block.includes('surveyProdStapleCropsLabel: "Izitshalo eziyisisekelo"'), 'the existing draft category must remain unchanged');
 });
 
+test('Livestock & Poultry choices and help show each isiZulu draft beside its exact English source', () => {
+  const pairedSources = [
+    ['sectionLivestock', 'Livestock on site (select all)'],
+    ['livestockChickens', 'Chickens / poultry'], ['livestockGoats', 'Goats'],
+    ['livestockCattle', 'Cattle'], ['livestockPigs', 'Pigs'], ['livestockBees', 'Bees'],
+    ['livestockNone', 'No livestock'],
+    ['sectionOtherInfrastructure', 'Other infrastructure (select all)'],
+    ['infraShadeTunnel', 'Shade tunnel'], ['infraGreenhouse', 'Greenhouse / polytunnel'],
+    ['infraCompostBay', 'Compost bay'], ['infraStorageShed', 'Storage shed'],
+    ['infraLivestockKraal', 'Livestock kraal'],
+  ] as const;
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must show its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`), `${key} source must match the English dictionary`);
+  }
+  assert.ok(surveySource.includes("paired('surveyGuideLivestock', 'Walk around the site and record what is there now. Put planned additions in your notes so they are not mistaken for existing resources.')"));
+  assert.ok(surveySource.includes("paired('surveyTipLivestock', 'Choose the animals and structures that are already on the site. Leave unconfirmed details blank.')"));
+});
+
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
   for (const key of NEW_SITE_SURVEY_KEYS) {
     assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
