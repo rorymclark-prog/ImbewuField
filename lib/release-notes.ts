@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '2fe2a6c8', changes: [
+    'Food Forest now has a marked Sesotho lesson draft beside its English source.',
+    'Held planting advice stays in English; slides and narration remain English.',
+  ], tour: [
+    { title: 'Read Food Forest in Sesotho', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Sesotho to compare the marked lesson draft with English. Slides and narration remain in English.' },
+  ] },
   { when: '25 September 2026', sha: 'ef69119c', changes: [
     'Income & Sales choices now pair isiZulu drafts with English sources.',
     'The income-before-costs guide stays in English.',
