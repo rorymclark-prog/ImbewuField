@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '1ba10e9b', changes: [
+    'Soil Health lessons now show marked Sesotho drafts beside their English source.',
+    'Held soil, compost and cover advice stays in English until reviewed.',
+  ], tour: [
+    { title: 'Read Soil Health in Sesotho', where: 'Study → Soil Health', href: '/student',
+      detail: 'Switch to Sesotho in Settings and compare each marked lesson draft with its English source.' },
+  ] },
   { when: '25 September 2026', sha: 'c8d8b84a', changes: [
     'Money charts are readable in dark mode: figures and labels follow the theme.',
     'In Simple, Exchange shows its numbers once and puts listings before the guide.',

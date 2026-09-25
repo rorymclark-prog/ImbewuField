@@ -16,6 +16,7 @@ import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
+import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
 
 test('Sesotho and Xitsonga Introduction appear as labelled drafts only while their exact source and answers match', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
@@ -122,6 +123,31 @@ test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unre
     'english-fallback', 'paused Xitsonga Water Harvesting keeps its English card');
   assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status,
     'english-fallback', 'paused Xitsonga Water Harvesting stays English');
+});
+
+test('Sesotho Soil Health lessons retain exact English where the jar, compost or cover advice is held', () => {
+  const module = COURSE_MODULES.find(item => item.id === 'soil-health')!;
+  assert.equal(resolveCourseModulePresentation(module, 'st').status, 'draft');
+  assert.equal(SESOTHO_SOIL_HEALTH_DRAFT.lessons.length, module.lessons.length);
+  for (const lesson of module.lessons) {
+    const draft = SESOTHO_SOIL_HEALTH_DRAFT.lessons.find(item => item.id === lesson.id)!;
+    const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(draft.body.sourceEnglish, lesson.body, lesson.id);
+    assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+      lesson.quiz.map(question => question.correct), lesson.id);
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+      'english-fallback', `${lesson.id}: changed farming advice withdraws the whole draft`);
+    if (draft.body.reviewStatus === 'hold') {
+      assert.equal(presentation.content.body, lesson.body, `${lesson.id}: held body stays English`);
+    }
+    if (draft.infographicAlt) {
+      assert.equal(resolveLearnerLessonPresentation({ ...lesson, infographicAlt: `${lesson.infographicAlt} Changed.` }, 'st').status,
+        'english-fallback', `${lesson.id}: changed diagram description withdraws the draft`);
+    }
+  }
+  assert.equal(resolveCourseModulePresentation({ ...module, title: `${module.title} Changed.` }, 'st').status,
+    'english-fallback', 'changed module source withdraws the card draft');
 });
 
 test('every module id is unique', () => {
