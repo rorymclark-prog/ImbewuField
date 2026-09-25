@@ -1,6 +1,6 @@
 'use client';
 import { numberLabel } from '@/lib/format-figures';
-import { useState, useCallback, useEffect, useRef, useId } from 'react';
+import { useState, useCallback, useEffect, useRef, useId, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles, Sprout, NotebookPen, ArrowRight, MapPin, CircleCheck, Circle, Pencil, Info, ChevronDown, Camera } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -113,7 +113,7 @@ function Chip({ label, on, onClick, color = 'var(--brand)' }: { label: string; o
   );
 }
 
-function Radio({ label, desc, on, onClick }: { label: string; desc?: string; on: boolean; onClick: () => void }) {
+function Radio({ label, desc, on, onClick }: { label: ReactNode; desc?: ReactNode; on: boolean; onClick: () => void }) {
   return (
     <button type="button" aria-pressed={on} onClick={onClick}
       className={`${styles.choice} w-full flex items-start gap-3 text-left transition-all`}
@@ -188,6 +188,10 @@ function AutoFillNote({ areaM2 }: { areaM2: number }) {
 
 export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onSaved, onClose }: Props) {
   const { lang, t } = useLanguage();
+  const paired = (key: string, english: string): ReactNode => {
+    const zulu = t(key);
+    return lang === 'zu' && zulu !== english ? <SurveyZuluDraftPair english={english}>{zulu}</SurveyZuluDraftPair> : zulu;
+  };
   const appConfirm = useAppConfirm();
   const STEPS = [...surveySteps(t), t('surveyReviewTitle')];
   const PRODUCTION_ROWS = productionRows(t);
@@ -481,16 +485,16 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {step === 0 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionWhoIsThisSiteFor')}</SectionLabel>
+              <SectionLabel>{paired('sectionWhoIsThisSiteFor', 'Who is this site for?')}</SectionLabel>
               <div className="space-y-2">
-                <Radio label={t('radioMeMyFamily')} desc={t('radioMeMyFamilyDesc')} on={siteType === 'homestead'} onClick={() => setSiteType('homestead')} />
-                <Radio label={t('radioCommunityGroup')} desc={t('radioCommunityGroupDesc')} on={siteType === 'community'} onClick={() => setSiteType('community')} />
+                <Radio label={paired('radioMeMyFamily', 'Me / my family')} desc={paired('radioMeMyFamilyDesc', 'Household homestead or smallholding')} on={siteType === 'homestead'} onClick={() => setSiteType('homestead')} />
+                <Radio label={paired('radioCommunityGroup', 'Community group / cooperative')} desc={paired('radioCommunityGroupDesc', 'Shared garden, coop, or NGO site')} on={siteType === 'community'} onClick={() => setSiteType('community')} />
               </div>
             </div>
 
             {siteType === 'homestead' ? (
               <div>
-                <SectionLabel>{t('sectionAdultsWhoWorkThisLand')}</SectionLabel>
+                <SectionLabel>{paired('sectionAdultsWhoWorkThisLand', 'Adults who work this land')}</SectionLabel>
                 <div className="flex flex-wrap gap-2">
                   {[
                     { v: '1', label: t('surveyAdultsChip1') },
@@ -504,7 +508,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               </div>
             ) : (
               <div>
-                <SectionLabel>{t('sectionApproximateNumberOfMembers')}</SectionLabel>
+                <SectionLabel>{paired('sectionApproximateNumberOfMembers', 'Approximate number of members')}</SectionLabel>
                 <div className="flex flex-wrap gap-2">
                   {[
                     { v: 'Under 20', label: t('chipUnder20') },
@@ -518,13 +522,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             )}
 
             <div>
-              <SectionLabel>{t('sectionGoalsSelectAll')}</SectionLabel>
+              <SectionLabel>{paired('sectionGoalsSelectAll', 'Goals for this site (select all that apply)')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'food',      label: t('goalFoodSecurityLabel'),   desc: t('goalFoodSecurityDesc') },
-                  { v: 'income',    label: t('goalGenerateIncomeLabel'), desc: t('goalGenerateIncomeDesc') },
-                  { v: 'soil',      label: t('goalRestoreTheLandLabel'), desc: t('goalRestoreTheLandDesc') },
-                  { v: 'education', label: t('goalDemonstrateTeachLabel'), desc: t('goalDemonstrateTeachDesc') },
+                  { v: 'food',      label: paired('goalFoodSecurityLabel', 'Food security'),   desc: paired('goalFoodSecurityDesc', 'Feed the household or members year-round') },
+                  { v: 'income',    label: paired('goalGenerateIncomeLabel', 'Generate income'), desc: paired('goalGenerateIncomeDesc', 'Sell surplus produce or value-added products') },
+                  { v: 'soil',      label: paired('goalRestoreTheLandLabel', 'Restore the land'), desc: paired('goalRestoreTheLandDesc', 'Cover crops, composting, rehabilitation') },
+                  { v: 'education', label: paired('goalDemonstrateTeachLabel', 'Demonstrate / teach'), desc: paired('goalDemonstrateTeachDesc', 'Training ground for others') },
                 ].map(o => (
                   <button key={o.v} aria-pressed={goals.includes(o.v)} onClick={() => setGoals(toggle(goals, o.v))}
                     className="w-full flex items-start gap-3 text-left transition-all"
