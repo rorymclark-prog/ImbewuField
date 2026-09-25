@@ -49,7 +49,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Compare Garden Survey goal drafts', where: 'Garden Survey → Goal', href: '/survey',
       detail: 'Choose isiZulu to compare each marked goal description with its exact English source.' },
   ] },
-  { when: '25 September 2026', sha: '1cb654ad', changes: [
+  { when: '25 September 2026', sha: 'de674089', changes: [
     'Plant Guilds now shows a marked Sesotho review draft beside English.',
     'Pruning, mulch and insect checks stay in English pending review.',
     'Study controls now have marked Tshivenda drafts with an English review notice.',
