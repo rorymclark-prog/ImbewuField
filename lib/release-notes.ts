@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'cc628cd1', changes: [
+    'Reading the Landscape now shows a source-paired Tshivenda machine draft in Study.',
+    'Held water, A-frame, frost, and soil claims stay in English pending review.',
+    'Slides and narration stay in English.',
+  ], tour: [
+    { title: 'Read Reading the Landscape in Tshivenda', where: 'Study → Reading the Landscape', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked lessons and answers with their English source.' },
+  ] },
   { when: '25 September 2026', sha: '80bd3cfe', changes: [
     'Food Forest Sesotho draft prepared for review; not in Study.',
   ] },
