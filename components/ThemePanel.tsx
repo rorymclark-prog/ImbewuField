@@ -220,6 +220,12 @@ export default function ThemePanel({ open, onClose }: Props) {
                 );
               })}
             </div>
+            {lang === 'ts' && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+                <span lang="en">/ Unreviewed Xitsonga draft.</span>
+              </p>
+            )}
           </div>
 
           {/* HOW MUCH TO SHOW — Simple / All tools (lib/app-level.ts). Straight after language: it is
