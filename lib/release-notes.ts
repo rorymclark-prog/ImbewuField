@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '2b44ee39', changes: [
+    'Teach the Teachers now scrolls with a mouse or trackpad on desktop.',
+  ] },
   { when: '25 September 2026', sha: '532f3069', changes: [
     'Challenges & Priorities and Review now show isiZulu drafts beside English sources.',
     'Advice about saving and required answers stays in English until checked.',
