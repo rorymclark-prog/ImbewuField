@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '02c9e7e9', changes: [
+    'Print / Export now has draft isiZulu controls with English on key choices.',
+    'Plan set count now shows nine maps; inactive controls are gone.',
+  ], tour: [
+    { title: 'Check the print choices', where: 'Design Studio → Print / Export', href: '/design',
+      detail: 'Choose isiZulu and open Print / Export. The nine sheets and working title-block choice are shown on a phone.' },
+  ] },
   { when: '25 September 2026', sha: '11c9cbf6', changes: [
     'Sector guidance now pairs marked isiZulu drafts with their English source.',
   ], tour: [
