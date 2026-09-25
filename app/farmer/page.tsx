@@ -655,7 +655,7 @@ function HomeInner() {
           <div className="flex-1 relative min-w-0">
             {mapHeld ? (
               <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
-                style={{ background: '#E9E4D3' }}>
+                style={{ background: 'var(--bg-2)' }}>
                 <AlertTriangle size={22} style={{ color: 'var(--gold)' }} />
                 <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
                   {t('mapHeldTitle')}
