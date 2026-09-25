@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '01890303', changes: [
+    'Water Harvesting lessons now show marked Sesotho drafts.',
+    'Uncertain water-safety passages stay in English; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Sesotho', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Switch to Sesotho in Settings, open Water Harvesting, and compare the marked draft with its English source.' },
+  ] },
   { when: '25 September 2026', sha: '4061ada0', changes: [
     'Introduction and Landscape lessons now show marked Sesotho and Xitsonga drafts.',
     'Each draft shows exact English text and answers; slides and audio remain English.',

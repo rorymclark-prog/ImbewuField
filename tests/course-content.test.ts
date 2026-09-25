@@ -15,6 +15,7 @@ import { COURSE_MODULE_TRANSLATION_DRAFTS, resolveCourseModulePresentation } fro
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 
 test('Sesotho and Xitsonga Introduction appear as labelled drafts only while their exact source and answers match', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
@@ -90,6 +91,37 @@ test('each regional Reading the Landscape lesson keeps its exact English source 
       }
     }
   }
+});
+
+test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unresolved water advice in English', () => {
+  const module = COURSE_MODULES.find(item => item.id === 'water-harvesting')!;
+  assert.equal(resolveCourseModulePresentation(module, 'st').status, 'draft');
+  assert.equal(SESOTHO_WATER_HARVESTING_DRAFT.lessons.length, module.lessons.length);
+  for (const lesson of module.lessons) {
+    const draft = SESOTHO_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === lesson.id)!;
+    const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(draft.body.sourceEnglish, lesson.body, lesson.id);
+    assert.deepEqual(presentation.content.quiz.map(question => question.correct),
+      lesson.quiz.map(question => question.correct), lesson.id);
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+      'english-fallback', `${lesson.id}: a changed water source withdraws the whole draft`);
+    if (draft.body.reviewStatus === 'hold') {
+      assert.equal(presentation.content.body, lesson.body, `${lesson.id}: held safety body stays English`);
+    }
+    for (const [index, question] of draft.quiz.entries()) {
+      if (question.question.reviewStatus === 'hold') {
+        assert.equal(presentation.content.quiz[index].q, lesson.quiz[index].q,
+          `${lesson.id}: held safety quiz stays English`);
+      }
+    }
+  }
+  assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} Changed.` }, 'st').status,
+    'english-fallback', 'changed module description withdraws the card draft');
+  assert.equal(resolveCourseModulePresentation(module, 'ts').status,
+    'english-fallback', 'paused Xitsonga Water Harvesting keeps its English card');
+  assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status,
+    'english-fallback', 'paused Xitsonga Water Harvesting stays English');
 });
 
 test('every module id is unique', () => {

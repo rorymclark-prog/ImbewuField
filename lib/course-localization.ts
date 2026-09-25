@@ -2,6 +2,7 @@ import type { Lesson, QuizQuestion } from './course-modules';
 import { COURSE_TRANSLATION_DRAFTS } from './course-translation-drafts.ts';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-st.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-st-reading-landscape.ts';
+import { SESOTHO_WATER_HARVESTING_DRAFT } from './course-translation-drafts-st-water-harvesting.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 
 export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts';
@@ -156,7 +157,7 @@ type RegionalLessonDraft = {
 };
 
 const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: RegionalLessonDraft[] }>> = {
-  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT],
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
 };
 
