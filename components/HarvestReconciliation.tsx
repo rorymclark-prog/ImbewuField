@@ -7,6 +7,7 @@ import type { PlanBed, Planting } from '@/lib/crop-plan';
 import { buildReconciliation, type Period, type CropRow, type UnplannedRow } from '@/lib/harvest-reconciliation';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 
 interface Props {
   production: ProductionLog[];
@@ -45,14 +46,14 @@ function MatchedRow({ row }: { row: CropRow }) {
         </p>
       </div>
       {row.intendedKg !== null && (
-        <p className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-muted)' }}>
-          {lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.` : `Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.`}
-        </p>
+        <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-muted)' }} lang={lang}
+          english={`Plan context: ${fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.`}
+          zulu={`Ngokohlelo: ${fmtKg(row.intendedKg)} kuyisilinganiso sesivuno somjikelezo owodwa ophelele wohlelo lwezitshalo; akusona isivuno esilindelekile salo nyaka wekhalenda.`} />
       )}
       {row.keptGap && row.keptKg !== null && (
-        <p className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }}>
-          {lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: Harvested ${fmtKg(row.harvestedKg)}, sold ${fmtKg(row.soldKg)} — ${fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.` : `Harvested ${fmtKg(row.harvestedKg)}, sold ${fmtKg(row.soldKg)} — ${fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.`}
-        </p>
+        <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
+          english={`Harvested ${fmtKg(row.harvestedKg)}, sold ${fmtKg(row.soldKg)} — ${fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.`}
+          zulu={`Kuvunyiwe ${fmtKg(row.harvestedKg)}, kwathengiswa ${fmtKg(row.soldKg)} — okungadayiswanga okungu-${fmtKg(row.keptKg)}: kungenzeka kudliwe ekhaya, kuphiwe abanye, kondliwe izilwane, kugcinelwe imbewu noma konakele.`} />
       )}
       {/* SAYING "I DO NOT KNOW" IS THE FEATURE. This branch used to be unreachable: the kept figure
           was clamped to zero, so a farmer who had logged only some of her picking was told she kept
@@ -60,9 +61,9 @@ function MatchedRow({ row }: { row: CropRow }) {
           causes are named because the app genuinely cannot tell them apart, and naming only the
           farmer's omission would blame her for the app's blind spot. */}
       {row.soldExceedsHarvested && (
-        <p className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }}>
-          {lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: Sold ${fmtKg(row.soldKg)} but only ${fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.` : `Sold ${fmtKg(row.soldKg)} but only ${fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.`}
-        </p>
+        <IsiZuluDraftSource className="text-xs font-sans mt-1.5" style={{ color: 'var(--text-secondary)' }} lang={lang}
+          english={`Sold ${fmtKg(row.soldKg)} but only ${fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.`}
+          zulu={`Kudayiswe ${fmtKg(row.soldKg)}, kodwa kurekhodwe ukuvunwa kuka-${fmtKg(row.harvestedKg)} kuphela. Ngakho asazi ukuthi kungakanani okusele: kungenzeka ukuthi okunye ukuvunwa akubhalwanga, noma lokhu kudayisa kuvela esivunweni sangaphambilini.`} />
       )}
     </div>
   );
@@ -80,10 +81,11 @@ function SoftRow({ row }: { row: CropRow }) {
         )}{' '}
         {row.cropName}
       </p>
-      <p className="text-xs font-sans text-right" style={{ color: 'var(--text-muted)' }}>
-        {lang === 'zu' ? 'Asikho isivuno esirekhodiwe kulo nyaka' : 'No harvest logged this year'}
-        {row.intendedKg !== null && <><br />{fmtKg(row.intendedKg)} {lang === 'zu' ? 'isilinganiso somjikelezo owodwa' : 'one-cycle benchmark'}</>}
-      </p>
+      <div className="text-xs font-sans text-right" style={{ color: 'var(--text-muted)' }}>
+        <IsiZuluDraftSource lang={lang}
+          english={`No harvest logged this year${row.intendedKg !== null ? ` · ${fmtKg(row.intendedKg)} one-cycle benchmark` : ''}`}
+          zulu={`Asikho isivuno esirekhodiwe kulo nyaka${row.intendedKg !== null ? ` · ${fmtKg(row.intendedKg)} kuyisilinganiso somjikelezo owodwa` : ''}`} />
+      </div>
     </div>
   );
 }
@@ -103,7 +105,9 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
       {row.ambiguous && (
         <p className="text-xs font-sans mt-1 flex items-start gap-1.5" style={{ color: 'var(--gold)' }}>
           <AlertTriangle size={12} style={{ flexShrink: 0, marginTop: 2 }} />
-          <span>{lang === 'zu' ? `“${row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele.` : `“${row.label}” could be several crops — log a fuller name to count it against the right one.`}</span>
+          <span>{lang === 'zu'
+            ? <>“{row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele. <small className="block text-xs text-stone-600">Unreviewed isiZulu draft. English source: “{row.label}” could be several crops — log a fuller name to count it against the right one.</small></>
+            : `“${row.label}” could be several crops — log a fuller name to count it against the right one.`}</span>
         </p>
       )}
     </div>
@@ -147,13 +151,15 @@ export default function HarvestReconciliation({ production, sales, period, now, 
       ) : !hasPlan ? (
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
           <Sprout size={20} style={{ color: 'var(--color-forest-800)' }} />
-          <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
-            {lang === 'zu' ? 'Incazelo enemininingwane ngesiNgisi okwamanje: No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records.' : 'No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records.'}
-          </p>
+          <div className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
+            {lang === 'zu' ? <IsiZuluDraftSource lang={lang} zulu="Alukho uhlelo lwezitshalo okwamanje. Dala uhlelo ku-Design & Plan ukuze uqhathanise ukuhlelile namarekhodi okuvunwa kwangempela." english="No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records." /> : 'No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records.'}
+          </div>
         </div>
       ) : !hasAnything ? (
         <div className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-          {lang === 'zu' ? `Akukho okurekhodiwe ${periodLabel}. Incazelo enemininingwane ngesiNgisi okwamanje: Monthly and seasonal targets are not invented from a crop-cycle benchmark.` : `Nothing logged ${periodLabel}. Monthly and seasonal targets are not invented from a crop-cycle benchmark.`}
+          {lang === 'zu'
+            ? <IsiZuluDraftSource lang={lang} zulu={`Akukho okurekhodiwe ${periodLabel}. Asenzi izinhloso zenyanga noma zesizini ngokuthatha isilinganiso somjikelezo wezitshalo njengesisekelo.`} english={`Nothing logged ${periodLabel}. Monthly and seasonal targets are not invented from a crop-cycle benchmark.`} />
+            : `Nothing logged ${periodLabel}. Monthly and seasonal targets are not invented from a crop-cycle benchmark.`}
         </div>
       ) : (
         <div className="divide-y" style={{ borderColor: 'var(--border)' }}>

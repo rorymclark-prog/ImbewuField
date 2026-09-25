@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '949e0fd6', changes: [
+    'Harvest and money charts now explain their figures in draft isiZulu beside English.',
+    'The charts clarify unrecorded costs, harvest gaps and estimates before you act.',
+  ], tour: [
+    { title: 'Check record explanations', where: 'My Records', href: '/records',
+      detail: 'Choose isiZulu and compare the chart notes with their English source.' },
+  ] },
   { when: '25 September 2026', sha: '7f249ba4', changes: [
     'The login, password gate and sharing consent show marked isiZulu drafts beside English.',
     'The farmer map explains site data in isiZulu with the English farming source beside it.',
