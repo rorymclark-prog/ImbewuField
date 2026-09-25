@@ -42,15 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: 'cc88295f', changes: [
-    'Six Tips guides now show draft isiZulu instructions with their exact English source.',
-    'Search finds each guide through either language.',
-    'The isiZulu Tour label now fits inside its phone menu button.',
-  ], tour: [
-    { title: 'Read Tips in isiZulu', where: 'Tips and help', href: '/tips',
-      detail: 'The six guide drafts are marked unreviewed; each retains the English instructions below.' },
-  ] },
-  { when: '25 September 2026', sha: '0ecfb11c', changes: [
+  { when: '25 September 2026', sha: 'a7dd6c3b', changes: [
     'Study navigation and lesson controls now have a Sesotho draft.',
     'Study portal and lesson controls now include draft Xitsonga labels.',
     'The unreviewed draft notice keeps its English source visible.',
