@@ -1134,7 +1134,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     className="w-full flex items-center justify-between gap-2 font-sans font-medium"
                     style={{ minHeight: 44, padding: '11px 14px', background: 'var(--bg-1)', border: 'none', cursor: 'pointer', fontSize: 13, color: 'var(--text-secondary)' }}
                   >
-                    {t('seeMoreDetail')}
+                    {lang === 'zu' ? (
+                      <span className="flex flex-col items-start text-left">
+                        <span lang="zu">{t('seeMoreDetailZuDraft')}</span>
+                        <small className="text-xs font-normal"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — Unreviewed isiZulu draft. English: {translate('en', 'seeMoreDetail')}</small>
+                      </span>
+                    ) : t('seeMoreDetail')}
                     <ChevronDown size={16} style={{ transform: detailOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
                   </button>
                   {detailOpen && (
@@ -1323,7 +1328,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
                           <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          <span>{lang === 'zu' ? <><span>{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
+                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
                         </div>
                       ))}
                     </div>

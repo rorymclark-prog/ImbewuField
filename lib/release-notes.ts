@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '0ffa46c7', changes: [
+    'Tips, site survey entry, map controls and Records tabs now have marked isiZulu drafts.',
+    'Soil improvement drafts keep their English source beside each suggestion.',
+  ], tour: [
+    { title: 'Review the isiZulu interface drafts', where: 'Tips and My Records', href: '/tips',
+      detail: 'The new isiZulu wording is marked as a draft; soil advice keeps its English source beside it.' },
+  ] },
   { when: '25 September 2026', sha: '2bc9987b', changes: [
     'Assessment questions and averages now show draft isiZulu beside English.',
     'Design photo, Lima tip, and map measurement controls show draft isiZulu beside English.',

@@ -52,7 +52,7 @@ import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/f
 import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
   EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
@@ -1524,10 +1524,10 @@ export default function RecordsPage() {
 
   // Simple leaves Charts off the book's tabs entirely — All tools keeps all four, exactly as today.
   const bookTabs: { id: BookTab; label: string; Icon: typeof Sprout }[] = [
-    { id: 'picked', label: recordsText(lang, t('bookTabPicked'), 'Okuvunyiwe'), Icon: Sprout },
-    { id: 'sold', label: recordsText(lang, t('bookTabSold'), 'Okudayisiwe'), Icon: TrendingUp },
-    { id: 'spent', label: recordsText(lang, t('bookTabSpent'), 'Okusetshenzisiwe'), Icon: Receipt },
-    ...(simple ? [] : [{ id: 'charts' as const, label: recordsText(lang, t('bookTabCharts'), 'Amashadi'), Icon: BarChart3 }]),
+    { id: 'picked', label: lang === 'zu' ? translate('zu', 'bookTabPickedZuDraft') : t('bookTabPicked'), Icon: Sprout },
+    { id: 'sold', label: lang === 'zu' ? translate('zu', 'bookTabSoldZuDraft') : t('bookTabSold'), Icon: TrendingUp },
+    { id: 'spent', label: lang === 'zu' ? translate('zu', 'bookTabSpentZuDraft') : t('bookTabSpent'), Icon: Receipt },
+    ...(simple ? [] : [{ id: 'charts' as const, label: lang === 'zu' ? translate('zu', 'bookTabChartsZuDraft') : t('bookTabCharts'), Icon: BarChart3 }]),
   ];
 
   return (
@@ -1638,6 +1638,7 @@ export default function RecordsPage() {
                 );
               })}
             </div>
+            {lang === 'zu' && <p role="note" className="mt-1 text-xs text-stone-600"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu tab-label drafts. English: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</span></p>}
 
             <div data-book-tab={tab} className={`${styles.bookPage} space-y-4`}>
             {/* PICKED and SOLD both take their forms from the same mounted MyRecords, in the same

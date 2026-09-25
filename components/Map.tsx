@@ -4260,14 +4260,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>how many</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
-                        aria-label={t('elementCountFewer')}
+                        aria-label={lang === 'zu'
+                          ? `${t('elementCountFewerZuDraft')}. ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'elementCountFewer')}`
+                          : t('elementCountFewer')}
                         className="flex items-center justify-center rounded-lg u-tap-target"
                         style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer', '--tap-inset': '-8px' } as React.CSSProperties}>
                         <Minus size={14} />
                       </button>
                       <span className="font-sans font-semibold w-6 text-center" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{elCount}</span>
                       <button type="button" onClick={() => setElCount((c) => c + 1)}
-                        aria-label={t('elementCountMore')}
+                        aria-label={lang === 'zu'
+                          ? `${t('elementCountMoreZuDraft')}. ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'elementCountMore')}`
+                          : t('elementCountMore')}
                         className="flex items-center justify-center rounded-lg u-tap-target"
                         style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer', '--tap-inset': '-8px' } as React.CSSProperties}>
                         <Plus size={14} />
