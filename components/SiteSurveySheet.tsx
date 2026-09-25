@@ -100,7 +100,7 @@ function toggle(arr: string[], v: string): string[] {
   return toggleSurveyChoice(arr, v, v === 'nothing' || arr.includes('nothing') ? 'nothing' : 'none');
 }
 
-function Chip({ label, on, onClick, color = 'var(--brand)' }: { label: string; on: boolean; onClick: () => void; color?: string }) {
+function Chip({ label, on, onClick, color = 'var(--brand)' }: { label: ReactNode; on: boolean; onClick: () => void; color?: string }) {
   return (
     <button type="button" aria-pressed={on} onClick={onClick}
       className={`${styles.chip} font-sans font-semibold transition-all`}
@@ -432,8 +432,8 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   }, []);
 
   const Icon = STEP_ICONS[step];
-  const fieldGuides = [t('surveyGuidePeople'), t('surveyGuideLand'), t('surveyGuideProduction'), t('surveyGuideLivestock'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
-  const tips = [t('surveyTipPeople'), t('surveyTipLand'), t('surveyTipProduction'), t('surveyTipLivestock'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
+  const fieldGuides = [t('surveyGuidePeople'), paired('surveyGuideLand', 'Look at several parts of the growing area. If the soil varies, describe the differences in your notes. Choose Not sure when you cannot tell.'), t('surveyGuideProduction'), t('surveyGuideLivestock'), t('surveyGuideIncome'), t('surveyGuideWater'), t('surveyGuideChallenges'), t('surveyReviewHint')];
+  const tips = [t('surveyTipPeople'), paired('surveyTipLand', 'Look at the ground and how you work it. These are your observations, not a laboratory soil result.'), t('surveyTipProduction'), t('surveyTipLivestock'), t('surveyTipIncome'), t('surveyTipWater'), t('surveyTipChallenges'), t('surveyReviewHint')];
 
   return typeof document === 'undefined' ? null : createPortal((
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className={`${styles.survey} fixed inset-0 z-50 flex flex-col u-anim-sheet`}>
@@ -659,13 +659,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {step === 1 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>{t('sectionHowIsLandPrepared')}</SectionLabel>
+              <SectionLabel>{paired('sectionHowIsLandPrepared', 'How is the land prepared?')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'hand',    label: t('landPrepHandToolsLabel'), desc: t('landPrepHandToolsDesc') },
-                  { v: 'tractor', label: t('landPrepTractorLabel'),   desc: t('landPrepTractorDesc') },
-                  { v: 'animal',  label: t('landPrepAnimalLabel'),    desc: t('landPrepAnimalDesc') },
-                  { v: 'none',    label: t('landPrepNoneLabel'),      desc: t('landPrepNoneDesc') },
+                  { v: 'hand',    label: paired('landPrepHandToolsLabel', 'Hand tools (spade, fork, hoe)'), desc: paired('landPrepHandToolsDesc', 'Manual soil work — limits depth and area') },
+                  { v: 'tractor', label: paired('landPrepTractorLabel', 'Tractor / mechanised'), desc: paired('landPrepTractorDesc', 'Deep tillage possible, larger areas') },
+                  { v: 'animal',  label: paired('landPrepAnimalLabel', 'Animal draft (ox, donkey)'), desc: paired('landPrepAnimalDesc', 'Traditional plough or cultivator') },
+                  { v: 'none',    label: paired('landPrepNoneLabel', 'Not yet prepared / no-till'), desc: paired('landPrepNoneDesc', 'Starting from scratch or using no-dig method') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc} on={landPrep === o.v} onClick={() => setLandPrep(o.v)} />
                 ))}
@@ -673,14 +673,14 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionSoilCondition')}</SectionLabel>
+              <SectionLabel>{paired('sectionSoilCondition', 'Soil condition (as you observe it)')}</SectionLabel>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { v: 'healthy',   label: t('soilConditionHealthy') },
-                  { v: 'compacted', label: t('soilConditionCompacted') },
-                  { v: 'sandy',     label: t('soilConditionSandy') },
-                  { v: 'clay',      label: t('soilConditionClay') },
-                  { v: 'unknown',   label: t('soilConditionUnknown') },
+                  { v: 'healthy',   label: paired('soilConditionHealthy', 'Healthy & loose') },
+                  { v: 'compacted', label: paired('soilConditionCompacted', 'Compacted / hard') },
+                  { v: 'sandy',     label: paired('soilConditionSandy', 'Sandy / drains fast') },
+                  { v: 'clay',      label: paired('soilConditionClay', 'Clay / waterlogged') },
+                  { v: 'unknown',   label: paired('soilConditionUnknown', 'Not sure') },
                 ].map(o => (
                   <button key={o.v} aria-pressed={soilCondition === o.v} onClick={() => setSoilCondition(o.v)}
                     className={`${styles.soilChoice} font-sans font-semibold transition-all`}
@@ -695,14 +695,14 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionSoilInputs')}</SectionLabel>
+              <SectionLabel>{paired('sectionSoilInputs', 'Soil inputs already applied (select all)')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'compost',         label: t('soilAmendmentCompost') },
-                  { v: 'kraal-manure',    label: t('soilAmendmentKraalManure') },
-                  { v: 'mulch',           label: t('soilAmendmentMulch') },
-                  { v: 'commercial-fert', label: t('soilAmendmentCommercialFert') },
-                  { v: 'none',            label: t('soilAmendmentNone') },
+                  { v: 'compost',         label: paired('soilAmendmentCompost', 'Compost') },
+                  { v: 'kraal-manure',    label: paired('soilAmendmentKraalManure', 'Kraal manure') },
+                  { v: 'mulch',           label: paired('soilAmendmentMulch', 'Mulch / woodchip') },
+                  { v: 'commercial-fert', label: paired('soilAmendmentCommercialFert', 'Commercial fertiliser') },
+                  { v: 'none',            label: paired('soilAmendmentNone', 'None yet') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={soilAmendments.includes(o.v)} onClick={() => setSoilAmendments(toggle(soilAmendments, o.v))} />
                 ))}
@@ -710,12 +710,12 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
             </div>
 
             <div>
-              <SectionLabel>{t('sectionFencing')}</SectionLabel>
+              <SectionLabel>{paired('sectionFencing', 'Fencing')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'full',    label: t('fencingFull') },
-                  { v: 'partial', label: t('fencingPartial') },
-                  { v: 'none',    label: t('fencingNone') },
+                  { v: 'full',    label: paired('fencingFull', 'Fully fenced') },
+                  { v: 'partial', label: paired('fencingPartial', 'Partly fenced') },
+                  { v: 'none',    label: paired('fencingNone', 'No fencing') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={fencing === o.v} onClick={() => setFencing(o.v)} />
                 ))}
