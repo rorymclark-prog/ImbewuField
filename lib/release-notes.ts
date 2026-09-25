@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '95e30e84', changes: [
+    'A failed organisation survey send keeps your answers and lets you retry.',
+    'Crop plan controls and chart accessibility labels add isiZulu drafts.',
+  ], tour: [
+    { title: 'Check survey retry', where: 'Surveys', href: '/surveys',
+      detail: 'Choose isiZulu; if a send fails, your answers stay available for retry.' },
+    { title: 'Check crop plan labels', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'Choose isiZulu and inspect the plan controls; farming guidance remains in English.' },
+  ] },
   { when: '25 September 2026', sha: 'fd4bd6ae', changes: [
     'Field visit controls and save notices show draft isiZulu beside English.',
     'Programme progress explains evidence and totals in draft isiZulu beside English.',
