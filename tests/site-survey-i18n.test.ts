@@ -313,6 +313,51 @@ test('the rewired SiteSurveySheet keys were already fully translated in every lo
   }
 });
 
+test('the current production step shows draft choices beside their exact English source', () => {
+  const pairedKeys = [
+    ['surveyStepCurrentProduction', 'Current Production'],
+    ['surveyGrowingResources', 'Growing & resources'],
+    ['sectionCropsGrowing', 'Crops already growing (select all)'],
+    ['cropVegetables', 'Vegetables'], ['cropFruitTrees', 'Fruit trees'], ['cropHerbsMedicinal', 'Herbs / medicinal'],
+    ['cropIndigenousPlants', 'Indigenous plants'], ['cropFodder', 'Fodder / pasture'], ['cropGrainMaize', 'Grain / maize'], ['cropNothing', 'Nothing yet'],
+    ['surveyExistingGrowingAreaLabel', 'Area currently under cultivation'],
+    ['surveyCurrentProductionSurveyLabel', 'Current production survey'],
+    ['surveyQtyPerYearLabel', 'Quantity / year'], ['surveyUnitLabel', 'Unit'], ['surveyUsedByHouseholdLabel', 'Used by household'],
+    ['surveySoldLabel', 'Sold'], ['surveyIncomeEarnedLabel', 'Income earned (ZAR)'], ['surveyHarvestMonthsLabel', 'Harvest months'],
+    ['surveyFaoFoodGroupLabel', 'FAO food group'],
+  ] as const;
+  for (const [key, english] of pairedKeys) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must show its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`), `${key} source must match the English dictionary`);
+  }
+  assert.match(surveySource, /SurveyZuluDraftPair english="Rough size in square metres of what you already grow">\{t\('surveyExistingGrowingAreaHint'\)\}/);
+  assert.ok(i18nSource.includes("surveyReportWhatYouKnow: 'Report what you know — leave anything blank if you are not sure. This helps us measure progress over time.'"));
+  assert.match(surveySource, /SurveyZuluDraftPair english="Report what you know — leave anything blank if you are not sure\. This helps us measure progress over time\."\>\{t\('surveyReportWhatYouKnow'\)\}/);
+  assert.match(surveySource, /SurveyZuluDraftPair english="Record what you already grow\. In the comprehensive survey, open only the production categories you want to record\.">\{tips\[step\]\}/);
+  assert.match(surveySource, /SurveyZuluDraftPair english="A notebook, harvest record or sales record can help\. Do not add kilograms to bunches\. Leave figures blank when your records do not cover a full year\.">\{fieldGuides\[step\]\}/);
+
+  const productionSources = [
+    ['Leafy greens', 'Spinach, kale, cabbage, etc.'], ['Other vegetables', 'Tomatoes, onions, peppers, etc.'],
+    ['Staple crops', 'Maize, beans, sweet potato, etc.'], ['Fruit', 'From trees or vines'],
+    ['Nuts & berries', 'From trees or shrubs'], ['Eggs', ''], ['Poultry meat', ''],
+    ['Rabbits', ''], ['Honey', ''], ['Other', 'Anything not listed above'],
+  ] as const;
+  for (const [label, hint] of productionSources) {
+    assert.ok(surveySource.includes(`englishLabel: '${label}'`), `${label} category needs its English source`);
+    if (hint) assert.ok(surveySource.includes(`englishHint: '${hint}'`), `${label} help needs its English source`);
+  }
+  assert.match(surveySource, /SurveyZuluDraftPair english=\{englishLabel\}>\{label\}/);
+  assert.match(surveySource, /SurveyZuluDraftPair english=\{englishHint\}>\{hint\}/);
+  assert.match(surveySource, /MONTH_ENGLISH = \['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'\]/);
+  assert.match(surveySource, /SurveyZuluDraftPair english=\{MONTH_ENGLISH\[index\]\}>\{month\}/);
+  assert.match(surveySource, /\(English: \$\{HDDS_ENGLISH\[value as HddsFoodGroup\]\}\)/);
+
+  const zu = localeBlocks().find((block) => block.locale === 'zu');
+  assert.ok(zu, 'no isiZulu locale block found');
+  assert.ok(zu.block.includes('surveyProdLeafyGreensLabel: "Imifino enamahlamvu"'), 'the existing draft label must remain unchanged');
+  assert.ok(zu.block.includes('surveyProdStapleCropsLabel: "Izitshalo eziyisisekelo"'), 'the existing draft category must remain unchanged');
+});
+
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
   for (const key of NEW_SITE_SURVEY_KEYS) {
     assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
@@ -332,7 +377,7 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   // JSX, with zero t() calls anywhere in the file.
   assert.doesNotMatch(surveySource, /'Household Info'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Land & Location'/, 'STEPS regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /'Current Production'/, 'STEPS regressed to a hard-coded literal');
+  assert.doesNotMatch(surveySource, /function surveySteps[\s\S]*?\[\s*'Current Production'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Livestock & Poultry'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Income & Sales'/, 'STEPS regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Resources & Inputs'/, 'STEPS regressed to a hard-coded literal');
@@ -340,9 +385,10 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   assert.doesNotMatch(surveySource, /aria-label="Close"/, 'close button aria-label regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /Discard your answers so far\? This questionnaire has not been saved yet\./, 'discard-confirm prompt regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /'Under 20', label: 'Under 20'/, 'member-count chip regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /Leafy greens/, 'production-row label regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /Roots & tubers/, 'HDDS food-group label regressed to a hard-coded literal');
-  assert.doesNotMatch(surveySource, /'Jan', 'Feb', 'Mar'/, 'MONTH_LABELS regressed to a hard-coded array of literals');
+  assert.doesNotMatch(surveySource, /label: 'Leafy greens'/, 'production-row label regressed to a hard-coded display value');
+  const hddsFunction = surveySource.slice(surveySource.indexOf('function hddsLabels'), surveySource.indexOf('const HDDS_ENGLISH'));
+  assert.doesNotMatch(hddsFunction, /Roots & tubers/, 'HDDS labels regressed to hard-coded display values');
+  assert.doesNotMatch(surveySource, /function monthLabels[\s\S]*?return \[\s*'Jan', 'Feb', 'Mar'/, 'MONTH_LABELS regressed to English display values');
   assert.doesNotMatch(surveySource, /Auto-filled from your traced shapes/, 'AutoFillNote regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /placeholder=\{placeholder \?\? 'e\.g\. 120'\}/, 'NumInput default placeholder regressed to a hard-coded literal');
 });

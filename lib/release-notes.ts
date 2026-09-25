@@ -42,17 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '545347ba', changes: [
+  { when: '25 September 2026', sha: '31a452dd', changes: [
     'Vegetables and Staple Crops now shows marked Sesotho lesson drafts.',
     'Held crop and pest advice stays in English beside its exact source.',
     'Garden Survey opens from a saved site even when its location data is unavailable.',
-    'Site Survey land and soil choices now show isiZulu drafts beside their English source.',
-    'Uncertain farming descriptions stay in English pending local review.',
+    'Site Survey land and production choices now pair isiZulu drafts with English.',
+    'Uncertain farming text stays English; production units and food groups show English.',
   ], tour: [
     { title: 'Read Vegetables and Staple Crops in Sesotho', where: 'Study → Vegetables and Staple Crops', href: '/student',
       detail: 'Switch to Sesotho and compare the marked lesson draft with English. Slides and narration remain in English.' },
     { title: 'Review Site Survey land choices', where: 'Site Survey → Land & Location', href: '/farmer',
       detail: 'Open a saved site, choose isiZulu, and compare the draft land and soil choices with their English source.' },
+    { title: 'Compare production entries', where: 'Site Survey → Current Production', href: '/farmer',
+      detail: 'Switch to isiZulu and compare crop choices, harvest months and production fields with their English source.' },
   ] },
   { when: '25 September 2026', sha: 'aaf17a56', changes: [
     'Soil Health lessons now show marked Sesotho drafts beside their English source.',
