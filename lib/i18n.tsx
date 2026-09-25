@@ -1065,6 +1065,8 @@ const T_en: Dict = {
   communityNearbyIntro: 'Farmers who choose to be visible show up here as an approximate area — never their exact homestead.',
   communityMessageButton: 'Message',
   communityReportButton: 'Report',
+  communityMoreLabel: 'More',
+  communityLessLabel: 'Less',
   communityViewProfile: 'View profile',
   communityEditProfileTitle: 'Your community profile',
   communityEditProfileIntro: 'Share as much or as little as you like. Nothing here is visible until you save it.',

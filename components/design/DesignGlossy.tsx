@@ -166,6 +166,7 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import styles from './DesignGlossy.module.css';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -11633,6 +11634,7 @@ export default function DesignGlossy({
   onImportPhoto,
 }: DesignGlossyProps) {
   const { t } = useLanguage();
+  const simple = useAppLevel() === 'simple';
   const { user: renderUser } = useAuth();
   const [approvedRenderUid, setApprovedRenderUid] = useState<string | null>(null);
   useEffect(() => {
@@ -15300,6 +15302,7 @@ export default function DesignGlossy({
             <h1>{t('designGlossyPreviewTitle')}</h1>
             <p>{t('designGlossyPreviewHelp')}</p>
           </div>
+          {!simple && (
           <div className={styles.contextStrip} aria-label={t('designGlossyCurrentSettings')}>
             <div className={styles.contextCell}>
               <span className={styles.contextLabel}>{t('designGlossyPlanSetShort')}</span>
@@ -15314,7 +15317,9 @@ export default function DesignGlossy({
               <span className={styles.contextValue}>{selectedStyleLabel}</span>
             </div>
           </div>
+          )}
           <div className={styles.headerActions}>
+            {!simple && (
             <button
               type="button"
               className={styles.iconButton}
@@ -15324,6 +15329,7 @@ export default function DesignGlossy({
             >
               <Images size={17} />
             </button>
+            )}
             <button
               type="button"
               className={styles.primaryButton}
@@ -15414,6 +15420,8 @@ export default function DesignGlossy({
             imported photo, which read as the option having been removed. It is always present now;
             without a photo it OPENS THE IMPORTER instead of selecting, because selecting it would
             render the satellite under a pill that says "Your photo". See lib/sheet-underlay.ts. */}
+        {!simple && (
+        <>
         <WorkflowHeading number={2} title="Underlay" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           {underlayOptions.map((key) => {
@@ -15482,10 +15490,12 @@ export default function DesignGlossy({
                 : 'High redraws your map at 1.5× resolution for printing'}
           </span>
         </div>
+        </>
+        )}
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
             selected sheet actually has coded plants, so it appears on Planting and disappears on
             Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
-        {sheetHasPlantCodes && (
+        {sheetHasPlantCodes && !simple && (
           <>
           <WorkflowHeading number={3} title="Plant labels" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -15513,7 +15523,7 @@ export default function DesignGlossy({
             accurate). Shown in AI mode on a design LAYER (03–07) and now also on Sector (02),
             whose AI render is a restyle with the measured bearings composited on top; Site (01) and
             Phasing (08) render exact-only, so neither needs a Style. */}
-        {aiLayerMode && (
+        {aiLayerMode && !simple && (
         <>
         <WorkflowHeading number={4} title={t('designGlossyStyle')} />
         <div style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
@@ -15602,7 +15612,7 @@ export default function DesignGlossy({
       </div>
 
       <section className={compact ? undefined : styles.mapStage} aria-label={t('designGlossyMapPreview')}>
-      {!compact && (
+      {!compact && !simple && (
         <div className={styles.stageToolbar}>
           <div className={styles.stageTabs} role="group" aria-label={t('designGlossyPreviewScope')}>
             <button
@@ -15624,7 +15634,7 @@ export default function DesignGlossy({
           </div>
         </div>
       )}
-      {stageScope === 'saved' && !compact ? (
+      {stageScope === 'saved' && !compact && !simple ? (
         <div className={styles.savedGalleryStage}>
           <div className={styles.savedGalleryHeader}>
             <div>
@@ -15933,7 +15943,7 @@ export default function DesignGlossy({
 
         {/* More options comes after the finish controls: settings that change cost or the batch
             must never make the farmer scroll past the two primary ways to make this sheet. */}
-        {!compact && (
+        {!compact && !simple && (
         <div style={{ order: 3, borderRadius: 14, border: '1px solid rgba(0,0,0,0.14)' }}>
           <button
             type="button"
@@ -16008,10 +16018,15 @@ export default function DesignGlossy({
         <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
           {/* The engine determines which account is charged, so it sits beside the finish that
               spends money. Quality belongs here too: it changes that same paid render. */}
+          {!simple && (
+          <>
           {aiRenderOn && selectedSheet && <WorkflowHeading number={5} title={`${t('designGlossyEngine')} & ${t('designGlossyQuality')}`} />}
           {aiRenderOn && selectedSheet && enginePicker}
           {aiRenderOn && selectedSheet && qualityPicker}
-          {selectedSheet && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
+          </>
+          )}
+          {selectedSheet && !simple && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
+          {selectedSheet && simple && <WorkflowHeading number={2} title={t('designGlossyFinishHeading')} />}
           {selectedSheet ? (
           // TWO finishes, always: Exact Canvas (free, instant) and AI Polished (one paid render —
           // the model paints the map artwork, the app locks your labels, legend, boundary, title,
@@ -16047,6 +16062,8 @@ export default function DesignGlossy({
                 {t('designGlossyExactCanvasHint')}
               </span>
             </button>
+            {!simple && (
+            <>
             {aiRenderOn && (<button
               type="button"
               onClick={() => runLockedPolishFlow('hybrid')}
@@ -16108,6 +16125,8 @@ export default function DesignGlossy({
               </span>
             </button>
             )}
+            </>
+            )}
           </div>
           ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 10 }}>
@@ -16159,7 +16178,7 @@ export default function DesignGlossy({
           )}
         </div>
 
-        {selectedSheet && (
+        {selectedSheet && !simple && (
           <details style={{ order: 2, border: '1px solid rgba(31,77,43,0.24)', borderRadius: 12, background: 'rgba(31,77,43,0.06)', padding: '0 12px' }}>
             <summary style={{ padding: '10px 0', color: DARK, fontSize: 12.5, fontWeight: 800, cursor: 'pointer' }}>
               {t('designGlossyHowFinishesWork')}
@@ -16171,6 +16190,7 @@ export default function DesignGlossy({
           </details>
         )}
 
+        {!simple && (
         <div style={{ order: 4, fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
@@ -16188,6 +16208,7 @@ export default function DesignGlossy({
             </>
           )}
         </div>
+        )}
         {!visibleResultImage && !lockedPolishStage && gallery.length > 0 && (
           <button
             onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
@@ -16259,6 +16280,7 @@ export default function DesignGlossy({
                 {t('designGlossyManage')}
               </button>
             </div>
+            {!simple && (
             <label className={styles.sitePicker}>
               <span className={styles.sitePickerLabel}>
                 <MapPin size={14} aria-hidden /> {t('designGlossySavedMapsSite')}
@@ -16273,6 +16295,7 @@ export default function DesignGlossy({
                 ))}
               </select>
             </label>
+            )}
             {gallery.length === 0 ? (
               <p className={styles.emptySaved}>
                 {t('designGlossyNoSavedRail')}
@@ -16314,6 +16337,7 @@ export default function DesignGlossy({
               </div>
             )}
           </section>
+          {!simple && (
           <section className={styles.railSection}>
             <div className={styles.railHeader}>
               <h2>{t('designGlossyExportSummary')}</h2>
@@ -16339,6 +16363,7 @@ export default function DesignGlossy({
               <div className={styles.summaryRow}><span>{t('designGlossyThisSheet')}</span><strong>{galleryViewItem?.label ?? (stageResultImage ? selectedSheet?.label : '—')}</strong></div>
             </div>
           </section>
+          )}
         </aside>
       )}
 

@@ -69,6 +69,11 @@ export const ADD_GROUP_LABEL_KEYS: Record<AddActionGroup, string> = {
 // Ordered list of groups (matches the order actions first appear above).
 export const ADD_GROUP_ORDER: AddActionGroup[] = ['land', 'growing', 'water', 'structures'];
 
+// Simple / All tools (lib/app-level.ts): the farmer map's Simple mode reduces this catalog to
+// the few everyday items a smallholder needs — the land boundary, a new bed, a tree and a
+// water tank — picked conservatively; every other row stays reachable in All tools.
+export const SIMPLE_ADD_ACTION_IDS: AddActionId[] = ['boundary', 'veg_bed', 'tree', 'water_tank'];
+
 // ── Execution mappings (single source of truth, consumed by both surfaces) ──
 
 // Studio area (ground feature) drawn as a filled ZoneShape with feature=<kind>.

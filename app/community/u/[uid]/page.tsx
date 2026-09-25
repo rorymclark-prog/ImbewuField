@@ -5,9 +5,10 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Loader2, MapPin, MessageCircle, Flag } from 'lucide-react';
+import { ChevronLeft, Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/community-queries';
 import type { CommunityProfile } from '@/lib/db/types';
@@ -23,9 +24,11 @@ export default function PublicCommunityProfilePage() {
   const router = useRouter();
   const params = useParams<{ uid: string }>();
   const targetUid = params.uid;
+  const simple = useAppLevel() === 'simple';
 
   const [profile, setProfile] = useState<CommunityProfile | null>(null);
   const [busy, setBusy] = useState(true);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [reportSent, setReportSent] = useState(false);
@@ -123,7 +126,22 @@ export default function PublicCommunityProfilePage() {
               </div>
             </div>
 
-            {profile.bio && (
+            {/* Simple shows name, place and crops plainly; bio, photos and Report are secondary
+                detail tucked behind one More disclosure. All tools shows everything, as today. */}
+            {simple && (
+              <button
+                type="button"
+                onClick={() => setMoreOpen((s) => !s)}
+                aria-expanded={moreOpen}
+                className="flex items-center gap-1 font-sans font-semibold"
+                style={{ fontSize: 12.5, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 14 }}
+              >
+                {moreOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                {moreOpen ? t('communityLessLabel') : t('communityMoreLabel')}
+              </button>
+            )}
+
+            {(!simple || moreOpen) && profile.bio && (
               <p className="font-sans max-w-prose" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
             )}
 
@@ -135,7 +153,7 @@ export default function PublicCommunityProfilePage() {
               </div>
             )}
 
-            {profile.photos?.length > 0 && (
+            {(!simple || moreOpen) && profile.photos?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
                 {profile.photos.map((url, i) => (
                   <img key={i} src={url} alt="" style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
@@ -154,13 +172,15 @@ export default function PublicCommunityProfilePage() {
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}
                 </button>
-                <button
-                  onClick={() => setReportOpen((s) => !s)}
-                  className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
-                  style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
-                >
-                  <Flag size={14} /> {t('communityReportButton')}
-                </button>
+                {(!simple || moreOpen) && (
+                  <button
+                    onClick={() => setReportOpen((s) => !s)}
+                    className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
+                    style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
+                  >
+                    <Flag size={14} /> {t('communityReportButton')}
+                  </button>
+                )}
               </div>
             )}
 

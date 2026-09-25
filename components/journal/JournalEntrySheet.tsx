@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { X, Camera, Trash2, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { resizeForStorage } from '@/lib/site-evidence';
 import {
   JOURNAL_CATEGORIES,
@@ -40,6 +41,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const simple = useAppLevel() === 'simple';
   const [date, setDate] = useState(entry?.date ?? todayISODate());
   const [title, setTitle] = useState(entry?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? '');
@@ -143,48 +145,56 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         </div>
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* Category — big tap targets, wraps on a phone */}
-          <div>
-            <Label>{ui('What kind of note?', 'Lolu hlobo luni lwenothi?')}</Label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-              {JOURNAL_CATEGORIES.map((c) => {
-                const on = c.key === category;
-                return (
-                  <button
-                    key={c.key}
-                    type="button"
-                    onClick={() => setCategory(c.key)}
-                    aria-pressed={on}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 6,
-                      minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
-                      background: on ? c.tint : '#FFFEFA',
-                      border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
-                      color: on ? c.ink : '#5C5040',
-                      font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
-                    }}
-                  >
-                    {getElementArt2(`journal_${c.key}`) ? (
-                      <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontSize: 15 }}>{c.icon}</span>
-                    )}
-                    {isZulu ? journalCategoryLabel(c.key) : c.label}
-                  </button>
-                );
-              })}
+          {/* Category — big tap targets, wraps on a phone. Collapsed in Simple: the note still
+              saves with its default category ('planting', or the entry's own on edit) — hiding
+              the picker never changes what gets stored. */}
+          {!simple && (
+            <div>
+              <Label>{ui('What kind of note?', 'Lolu hlobo luni lwenothi?')}</Label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+                {JOURNAL_CATEGORIES.map((c) => {
+                  const on = c.key === category;
+                  return (
+                    <button
+                      key={c.key}
+                      type="button"
+                      onClick={() => setCategory(c.key)}
+                      aria-pressed={on}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 6,
+                        minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
+                        background: on ? c.tint : '#FFFEFA',
+                        border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
+                        color: on ? c.ink : '#5C5040',
+                        font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
+                      }}
+                    >
+                      {getElementArt2(`journal_${c.key}`) ? (
+                        <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
+                      ) : (
+                        <span style={{ fontSize: 15 }}>{c.icon}</span>
+                      )}
+                      {isZulu ? journalCategoryLabel(c.key) : c.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
-          <div>
-            <Label>{ui('Date', 'Usuku')}</Label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              style={inputStyle}
-            />
-          </div>
+          {/* Date defaults to today (or the entry's own date on edit) whether or not this
+              field is shown — Simple keeps that default instead of asking for it. */}
+          {!simple && (
+            <div>
+              <Label>{ui('Date', 'Usuku')}</Label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+          )}
 
           <div>
             <Label>{ui('Title', 'Isihloko')}</Label>
@@ -210,39 +220,43 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             />
           </div>
 
-          <div style={{ display: 'flex', gap: 10 }}>
-            <div style={{ flex: 1 }}>
-              <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
-              {beds.length > 0 ? (
-                <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
-                  <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
-                  {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
-                </select>
-              ) : (
+          {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
+              so collapsing them in Simple never changes what gets saved. */}
+          {!simple && (
+            <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ flex: 1 }}>
+                <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
+                {beds.length > 0 ? (
+                  <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
+                    <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
+                    {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    value={bedLabel}
+                    placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
+                    onChange={(e) => setBedLabel(e.target.value)}
+                    style={inputStyle}
+                  />
+                )}
+              </div>
+              <div style={{ flex: 1 }}>
+                <Label>{ui('Crop', 'Isitshalo')}</Label>
                 <input
                   type="text"
-                  value={bedLabel}
-                  placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
-                  onChange={(e) => setBedLabel(e.target.value)}
+                  list="journal-crop-options"
+                  value={cropName}
+                  placeholder={ui('Optional', 'Akudingeki')}
+                  onChange={(e) => setCropName(e.target.value)}
                   style={inputStyle}
                 />
-              )}
+                <datalist id="journal-crop-options">
+                  {crops.map((c) => <option key={c} value={c} />)}
+                </datalist>
+              </div>
             </div>
-            <div style={{ flex: 1 }}>
-              <Label>{ui('Crop', 'Isitshalo')}</Label>
-              <input
-                type="text"
-                list="journal-crop-options"
-                value={cropName}
-                placeholder={ui('Optional', 'Akudingeki')}
-                onChange={(e) => setCropName(e.target.value)}
-                style={inputStyle}
-              />
-              <datalist id="journal-crop-options">
-                {crops.map((c) => <option key={c} value={c} />)}
-              </datalist>
-            </div>
-          </div>
+          )}
 
           {/* Photos */}
           <div>

@@ -22,6 +22,7 @@ import BackButton from '@/components/BackButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage, translate } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -57,6 +58,10 @@ export default function Home() {
 
 function HomeInner() {
   const { t, lang } = useLanguage();
+  // Simple / All tools (lib/app-level.ts): only used here to reduce the "+ Add" catalog to
+  // its everyday items (lib/add-actions.ts SIMPLE_ADD_ACTION_IDS); the map chrome's own
+  // Simple wiring lives in components/Map.tsx.
+  const simple = useAppLevel() === 'simple';
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -908,6 +913,7 @@ function HomeInner() {
         surface="map"
         onClose={() => setAddOpen(false)}
         onPick={handleAddPick}
+        simple={simple}
       />
     </>
   );
