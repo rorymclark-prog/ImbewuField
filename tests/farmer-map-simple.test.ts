@@ -57,7 +57,7 @@ test('?openSurvey=1 tells a farmer with no saved site to save one first, instead
   const handler = FARMER_PAGE.slice(FARMER_PAGE.indexOf('openSurveyHandled.current = true;'), FARMER_PAGE.indexOf('}, [searchKey]);', FARMER_PAGE.indexOf('openSurveyHandled.current = true;')));
   assert.match(handler, /const main = resolveMainSite\(loadPlaces\(\)\);/);
   assert.match(handler, /\}\s*else\s*\{[\s\S]*appConfirm\(\{/, 'no main site must reach the appConfirm notice');
-  assert.match(handler, /message: t\('openSurveyNoSiteMessage'\)/);
+  assert.match(handler, /message: lang === 'zu'[\s\S]*translate\('en', 'openSurveyNoSiteMessage'\)/);
   // The old bug: setOpenSurvey(true) ran unconditionally, so DataPanel (gated on activePlaceId)
   // silently did nothing. It must not fire on the no-site branch.
   const noSiteBranch = handler.slice(handler.indexOf('} else {'), handler.indexOf('return undefined;'));
@@ -87,8 +87,9 @@ test('the tree-count stepper and the map quick-guide button clear the 44px tap f
   ]) {
     const at = MAP_SOURCE.indexOf(marker as string);
     assert.ok(at > 0, `could not find the ${marker} stepper button`);
-    const chunk = MAP_SOURCE.slice(at, at + 400);
-    assert.match(chunk, new RegExp(`aria-label=\\{t\\('${key}'\\)\\}`));
+    const chunk = MAP_SOURCE.slice(at, at + 750);
+    assert.match(chunk, /aria-label=\{lang === 'zu'/);
+    assert.match(chunk, new RegExp(`translate\\('en', '${key}'\\)`));
     assert.match(chunk, /u-tap-target/);
     assert.match(chunk, /'--tap-inset': '-8px'/);
     assert.match(chunk, /width: 28, height: 28/, `${marker} must keep its painted 28px size`);

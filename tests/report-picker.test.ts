@@ -67,12 +67,15 @@ test('every translated string on these screens actually exists', () => {
   // string. That is the same failure as the untranslated empty state this whole change exists to
   // fix, so it gets a test rather than a promise to be careful.
   const i18n = source('../lib/i18n.tsx');
+  const zulu = source('../lib/locales/zu.ts');
   const keys = new Set<string>();
   for (const file of [PANEL, LIST]) {
     for (const m of stripComments(source(file)).matchAll(/\bt\('([A-Za-z0-9_]+)'\)/g)) keys.add(m[1]);
   }
   assert.ok(keys.size > 5, 'expected these screens to use translated copy');
-  const missing = [...keys].filter((k) => !new RegExp(`^\\s*${k}:`, 'm').test(i18n));
+  const missing = [...keys].filter((k) => k.endsWith('ZuDraft')
+    ? !new RegExp(`^\\s*${k}:`, 'm').test(zulu)
+    : !new RegExp(`^\\s*${k}:`, 'm').test(i18n));
   assert.deepEqual(missing, [], `keys used but never translated: ${missing.join(', ')}`);
 });
 

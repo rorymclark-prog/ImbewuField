@@ -34,6 +34,9 @@ import test from 'node:test';
 const i18nSource = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 const farmerPageSource = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 const dataPanelSource = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
+const mapSource = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
+const tipsSource = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
+const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
 
 const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
 
@@ -70,6 +73,17 @@ const REWIRED_EXISTING_KEYS = [
   'tapToClose',
   'openDetailsPanelAriaLabel',
   'closeDetailsPanelAriaLabel',
+] as const;
+
+const ZULU_UI_DRAFT_SOURCE_KEYS = [
+  'elementCountFewer', 'elementCountMore', 'seeMoreDetail',
+  'soilImprovementPhAcidic', 'soilImprovementPhAlkaline', 'soilImprovementLowCarbon',
+  'soilImprovementCompacted', 'soilImprovementHighClay', 'soilImprovementSandy',
+  'openSurveyNoSiteTitle', 'openSurveyNoSiteMessage', 'openSurveyNoSiteConfirm',
+  'tipsEyebrow', 'tipsTitle', 'tipsIntro', 'tipsChoosePracticeView', 'tipsBrowseGardensReports',
+  'tipsFindLabel', 'tipsSearchPlaceholder', 'tipsNoMatch', 'tipsAskForHelp',
+  'tipsVideoGuidesTitle', 'tipsVideoGuidesBody', 'tipsYoutubeLink', 'tipsYoutubeNote',
+  'bookTabPicked', 'bookTabSold', 'bookTabSpent', 'bookTabCharts',
 ] as const;
 
 test('farmer-facing English source stays present while only isiZulu gains marked drafts', () => {
@@ -115,6 +129,33 @@ test('the rewired keys (Details/Results, tap to close, panel aria-labels) were a
   }
 });
 
+test('the remaining 29 English UI sources have marked isiZulu drafts and keep their source meaning available', () => {
+  const blocks = localeBlocks();
+  const en = blocks.find((b) => b.locale === 'en')!.block;
+  const zu = blocks.find((b) => b.locale === 'zu')!.block;
+  assert.equal(ZULU_UI_DRAFT_SOURCE_KEYS.length, 29, 'keep the reviewed gap-audit batch complete');
+  for (const key of ZULU_UI_DRAFT_SOURCE_KEYS) {
+    assert.match(en, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} lost its exact English source`);
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: ['"]`, 'm'), `${key} has no separately marked isiZulu draft`);
+    for (const { locale, block } of blocks) {
+      if (locale === 'en' || locale === 'zu') continue;
+      assert.doesNotMatch(block, new RegExp(`^  ${key}ZuDraft:`, 'm'), `${locale} must not use an unreviewed isiZulu draft`);
+    }
+  }
+  assert.match(dataPanelSource, /soilImprovementZuluDraftNotice/);
+  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must keep the English wording beside each draft');
+  for (const key of ['elementCountFewer', 'elementCountMore']) {
+    assert.match(
+      mapSource,
+      new RegExp(`aria-label=\\{lang === 'zu'[\\s\\S]*?t\\('${key}ZuDraft'\\)[\\s\\S]*?translate\\('en', '${key}'\\)[\\s\\S]*?: t\\('${key}'\\)`),
+      `${key} must announce its draft and English source to assistive technology`,
+    );
+  }
+  assert.match(farmerPageSource, /Unreviewed isiZulu draft\. English source:[\s\S]*openSurveyNoSiteMessage/);
+  assert.match(tipsSource, /Unreviewed isiZulu draft for the translated page labels/);
+  assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
+});
+
 test('the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English', () => {
   assert.match(farmerPageSource, /t\('designStudioLabel'\)/, 'Design Studio pill is not translated');
   assert.match(farmerPageSource, /t\('detailsButton'\)/, 'floating "Details" label is not translated');
@@ -152,6 +193,17 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
   assert.match(en, /soilImprovementCompacted: '[^']*\{bd\}[^']*'/);
   assert.match(en, /soilImprovementHighClay: '[^']*\{clay\}[^']*'/);
   assert.match(en, /soilImprovementSandy: '[^']*\{sand\}[^']*'/);
+  const zu = localeBlocks().find((b) => b.locale === 'zu')!.block;
+  for (const [key, token] of [
+    ['soilImprovementPhAcidic', '{ph}'], ['soilImprovementPhAlkaline', '{ph}'],
+    ['soilImprovementLowCarbon', '{oc}%'], ['soilImprovementCompacted', '{bd} g/cm³'],
+    ['soilImprovementHighClay', '{clay}%'], ['soilImprovementSandy', '{sand}%'],
+  ] as const) {
+    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: '[^']*${escaped}[^']*'`, 'm'), `${key} draft lost its live value placeholder`);
+  }
+  assert.match(zu, /^  soilImprovementPhAcidicZuDraft: '[^']*1–2 t\/ha[^']*'/m);
+  assert.match(zu, /^  soilImprovementLowCarbonZuDraft: '[^']*5 cm[^']*'/m);
 
   // The defect this guards against: the exact hard-coded template literals that used to sit here,
   // directly under the translated priorityImprovementsHeader — the worst version of this bug,
