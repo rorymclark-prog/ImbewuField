@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '76bdbd57', changes: [
+  { when: '25 September 2026', sha: '4061ada0', changes: [
     'Introduction and Landscape lessons now show marked Sesotho and Xitsonga drafts.',
     'Each draft shows exact English text and answers; slides and audio remain English.',
   ], tour: [
