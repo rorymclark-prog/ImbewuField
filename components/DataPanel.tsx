@@ -32,7 +32,7 @@ import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/comple
 import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
@@ -1280,7 +1280,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
                           <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          <span>{lang === 'zu' ? <><span>{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span className="block text-xs text-stone-600 opacity-80">English source: {interpolate(imp.source, imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
+                          <span>{lang === 'zu' ? <><span>{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
                         </div>
                       ))}
                     </div>

@@ -367,7 +367,7 @@ const dict: Dict = {
   soilHealthScoreModerate: 'Maphakathi',
   soilHealthScoreDegraded: 'Onakele',
   priorityImprovementsHeader: 'Izinto okumele zilungiswe kuqala',
-  soilImprovementZuluDraftNotice: 'ISIZULU DRAFT — These soil improvement suggestions are machine-translated and have not been checked by a fluent isiZulu speaker or local soil practitioner. Read the English source beside each suggestion; if it is unclear, use the English wording and seek local advice before applying amendments.',
+  soilImprovementZuluDraftNotice: 'ISIZULU DRAFT — These soil improvement suggestions are machine-translated and have not been checked by a fluent isiZulu speaker or local soil practitioner. Read the English source beside each suggestion; if it is unclear, use the English wording and seek local advice before applying amendments. / UHLAKA LWESIZULU — Lezi ziphakamiso azikabuyekezwa umuntu okhuluma isiZulu kahle noma uchwepheshe womhlabathi wendawo. Funda umthombo wesiNgisi oseceleni bese ucela iseluleko sendawo ngaphambi kokufaka izilungisi enhlabathini.',
   soilImprovementPhAcidicZuDraft: 'I-pH engu-{ph} ine-asidi — faka umcako wezolimo (1–2 t/ha)',
   soilImprovementPhAlkalineZuDraft: 'I-pH engu-{ph} ine-alkaline — faka i-elemental sulphur noma umbozo wezinaliti zikaphayini',
   soilImprovementLowCarbonZuDraft: 'I-organic carbon engu-{oc}% iphansi — beka umquba ovuthiwe ungqimba olujule ngo-5 cm, bese ufaka umquba wesibaya noma i-biochar',

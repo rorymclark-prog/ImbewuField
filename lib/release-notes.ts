@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'a2200c89', changes: [
+    'The farmer goal and Design Studio link have marked isiZulu drafts.',
+    'Soil suggestions pair isiZulu drafts with exact English source wording.',
+  ], tour: [
+    { title: 'Check soil wording', where: 'Farmer map', href: '/farmer',
+      detail: 'Choose isiZulu and open soil details; read the English source beside each draft suggestion.' },
+  ] },
   { when: '25 September 2026', sha: '315bbfe0', changes: [
     'Account access and consent choices show marked isiZulu drafts beside English.',
     'Design photo and size controls now follow the isiZulu setting.',
