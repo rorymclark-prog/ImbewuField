@@ -14,12 +14,13 @@ import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import ConsentPanel from '@/components/ConsentPanel';
-import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
+import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, ChevronDown, ChevronUp, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
 
 const ROLE_LABELS: Record<UserRole, string> = {
   farmer: 'Farmer', mentor: 'Mentor',
@@ -44,6 +45,14 @@ export default function AccountPage() {
   const { lang, setLang } = useLanguage();
   const copy = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const router = useRouter();
+  // Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools keeps this
+  // page exactly as it always was. Simple shows name, photo, farm/organisation, language and
+  // sign out plainly, and moves the role/admin and staff-tool sections (AccountAccess, the Role
+  // row, change password, the redundant Appearance & language shortcut — the header's own
+  // Settings button already opens the same panel in both modes) into a "More account settings"
+  // disclosure so they stay reachable without switching to All tools.
+  const simple = useAppLevel() === 'simple';
+  const [moreOpen, setMoreOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -322,14 +331,26 @@ export default function AccountPage() {
             <div className="rounded-2xl px-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
               <Row icon={Mail} label={copy('Email', 'I-imeyili')} value={user.email} />
               <Row icon={Phone} label={copy('Phone', 'Ucingo')} value={profile?.phone ?? null} />
+              <Row icon={Sprout} label={copy('Farm / organisation', 'Ipulazi / inhlangano')} value={profile?.farm_name ?? orgName ?? null} />
               <Row icon={Globe} label={copy('Language', 'Ulimi')} value={langLabel} />
-              <Row icon={User} label={copy('Role', 'Isikhundla')} value={roleLabel} />
+              {(!simple || moreOpen) && <Row icon={User} label={copy('Role', 'Isikhundla')} value={roleLabel} />}
             </div>
           )}
 
           </section>
           <section className="min-w-0 space-y-5" aria-label={copy('Account settings', 'Izilungiselelo ze-akhawunti')}>
-          <AccountAccess />
+          {/* Simple: role/admin and staff-tool sections move behind this disclosure instead of
+              showing by default — everything inside it is unchanged from All tools, just
+              collapsed. All tools renders it open with no toggle, exactly as before. */}
+          {simple && (
+            <button onClick={() => setMoreOpen((o) => !o)} aria-expanded={moreOpen}
+              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
+              <span>{copy('More account settings', 'Ezinye izilungiselelo ze-akhawunti')}</span>
+              {moreOpen ? <ChevronUp size={16} style={{ color: 'var(--text-muted)' }} /> : <ChevronDown size={16} style={{ color: 'var(--text-muted)' }} />}
+            </button>
+          )}
+          {(!simple || moreOpen) && <AccountAccess />}
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
@@ -344,7 +365,7 @@ export default function AccountPage() {
           )}
 
           {/* Change password */}
-          {!changingPw ? (
+          {(!simple || moreOpen) && (!changingPw ? (
             <button onClick={() => setChangingPw(true)}
               className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
@@ -397,17 +418,21 @@ export default function AccountPage() {
                 </>
               )}
             </div>
+          ))}
+
+          {/* Settings shortcut. Redundant with the header's own Settings button in Simple (both
+              open the same ThemePanel), so it moves into the disclosure there; All tools keeps
+              it as a second, always-visible entry point exactly as before. */}
+          {(!simple || moreOpen) && (
+            <button onClick={() => setSettingsOpen(true)}
+              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
+              <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
+              <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+            </button>
           )}
 
-          {/* Settings shortcut */}
-          <button onClick={() => setSettingsOpen(true)}
-            className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
-            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
-            <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
-            <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
-          </button>
-
-          {/* Sign out */}
+          {/* Sign out — always plain and reachable in both modes. */}
           <button onClick={handleSignOut} disabled={signingOut}
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
             style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#755942' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
