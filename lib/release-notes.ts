@@ -42,18 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: 'd0dcc116', changes: [
+  { when: '25 September 2026', sha: '0ecfb11c', changes: [
     'Study navigation and lesson controls now have a Sesotho draft.',
+    'Study portal and lesson controls now include draft Xitsonga labels.',
     'The unreviewed draft notice keeps its English source visible.',
+    'Settings marks the Xitsonga interface as an unreviewed draft.',
+    'The Water rainfall chart adds unreviewed isiZulu labels.',
   ], tour: [
     { title: 'Check the Sesotho study screen', where: 'My Studies', href: '/student',
       detail: 'The study labels are an unreviewed draft; the English source appears beside the notice.' },
-  ] },
-  { when: '25 September 2026', sha: '813837fd', changes: [
-    'The Water rainfall chart adds unreviewed isiZulu labels.',
-  ], tour: [
     { title: 'Check rainfall labels', where: 'Map → Water', href: '/farmer',
       detail: 'Choose isiZulu and open the Water tab to see the draft rainfall chart labels.' },
+    { title: 'Check Study in Xitsonga', where: 'Learning Portal', href: '/student',
+      detail: 'Choose Xitsonga; Study and lesson controls are marked as an unreviewed draft.' },
   ] },
   { when: '25 September 2026', sha: 'df031dbb', changes: [
     'Introduction slide 22 audio preserves the full Zone 1 counting instruction.',

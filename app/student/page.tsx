@@ -797,6 +797,13 @@ export default function StudentPage() {
             <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
           </p>
         )}
+        {lang === 'ts' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+            <span lang="en">/ Unreviewed Xitsonga draft.</span>
+          </p>
+        )}
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
