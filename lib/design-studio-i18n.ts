@@ -2,6 +2,23 @@ import type { WizardStep } from '@/lib/design-canvas';
 
 export type DesignStudioTranslate = (key: string) => string;
 
+const SECTOR_COMPASS_KEYS = [
+  'designSectorDirectionNorth',
+  'designSectorDirectionNorthEast',
+  'designSectorDirectionEast',
+  'designSectorDirectionSouthEast',
+  'designSectorDirectionSouth',
+  'designSectorDirectionSouthWest',
+  'designSectorDirectionWest',
+  'designSectorDirectionNorthWest',
+];
+
+/** Bearing (degrees clockwise from north) to the plain eight-point Sector word. */
+export function sectorCompassWord(bearingDeg: number, t: DesignStudioTranslate): string {
+  const norm = ((bearingDeg % 360) + 360) % 360;
+  return t(SECTOR_COMPASS_KEYS[Math.round(norm / 45) % 8]);
+}
+
 export const DESIGN_STEP_LABEL_KEYS: Record<WizardStep, string> = {
   base: 'designStepBase',
   sector: 'designStepSector',
