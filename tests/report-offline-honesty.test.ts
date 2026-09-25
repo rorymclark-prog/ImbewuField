@@ -33,18 +33,19 @@ test('both report doors preflight the lazy chunk before flipping state', () => {
   assert.ok(openFresh.includes('withReportChunk('), 'fresh-report door must preflight the chunk');
 });
 
-test('the chunk-failure path speaks through the app dialog, not a swallowed catch', () => {
-  // Dependency list is [appConfirm] or [appConfirm, t] — the dialog's copy moved behind t() for
-  // i18n readiness (tests/farmer-i18n-gaps.test.ts), which correctly adds `t` alongside
-  // `appConfirm` so the closure cannot go stale after a language change.
-  const preflight = farmer.match(/const withReportChunk = useCallback[\s\S]*?\}, \[appConfirm(?:, t)?\]\);/)?.[0] ?? '';
+test('the chunk-failure dialog explains the offline cause in the selected language and English', () => {
+  // The bilingual branch reads lang as well as t(), so both belong in the callback dependencies.
+  // Otherwise a language switch can leave the offline message in the previous language.
+  const preflight = farmer.match(/const withReportChunk = useCallback[\s\S]*?\}, \[appConfirm, t, lang\]\);/)?.[0] ?? '';
   assert.ok(preflight, 'preflight must depend on appConfirm — a silent failure path is the bug this exists to stop');
   assert.ok(preflight.includes('appConfirm({'), 'failure must surface as a dialog');
   // The copy itself moved behind t() (lib/i18n.tsx) so the dialog is i18n-ready; the source no
   // longer carries the words directly, so read the real English text it resolves to instead.
   assert.match(preflight, /title:\s*t\('(\w+)'\)/, 'the dialog title must come from t(), not a literal string');
-  const messageKey = preflight.match(/message:\s*t\('(\w+)'\)/)?.[1];
-  assert.ok(messageKey, 'the dialog message must come from t(), not a literal string');
+  const messageKey = preflight.match(/t\('(reportsOfflineMessage)'\)/)?.[1];
+  assert.ok(messageKey, 'the offline message must still use the translated source key');
+  assert.match(preflight, /translate\('en', 'reportsOfflineMessage'\)/,
+    'the unreviewed isiZulu draft must keep the English farming source beside it');
   const enBlock = i18n.slice(i18n.indexOf('const T_en: Dict = {'), i18n.indexOf('\n};'));
   const enValue = enBlock.match(new RegExp(`^  ${messageKey}: '([^']*)'`, 'm'))?.[1] ?? '';
   assert.match(enValue, /signal/i, 'the message must name the actual problem in farmer words');

@@ -117,7 +117,7 @@ function HomeInner() {
       });
     };
     attempt();
-  }, [appConfirm, t]);
+  }, [appConfirm, t, lang]);
 
   const handleViewReport = useCallback((r: SavedReport) => {
     withReportChunk(() => {
