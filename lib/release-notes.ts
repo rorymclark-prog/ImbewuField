@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '9b27df9c', changes: [
+  { when: '25 September 2026', sha: '7f249ba4', changes: [
     'The login, password gate and sharing consent show marked isiZulu drafts beside English.',
     'The farmer map explains site data in isiZulu with the English farming source beside it.',
     'Community location and profile deletion choices show isiZulu drafts beside English.',
