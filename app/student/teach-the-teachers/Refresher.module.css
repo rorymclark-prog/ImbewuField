@@ -1,4 +1,4 @@
-.page { min-height: 100vh; background: #f8f5ec; color: #253828; }
+.page { height: 100dvh; overflow-y: auto; background: #f8f5ec; color: #253828; }
 /* The global draggable Lima launcher sits over the left edge of lesson copy on a phone.
    This reading page already links to the app exercises where Lima remains available. */
 .page ~ :global(button[aria-label^="Open Lima"]) { display: none; }
@@ -39,4 +39,4 @@
 .appTask a { display: inline-flex; align-items: center; min-height: 44px; color: #1f4d2b; font-weight: 700; text-underline-offset: 3px; }
 .footer { display: grid; gap: 12px; justify-items: start; margin-top: 20px; color: #655d50; font-size: 13px; line-height: 1.5; }
 @media (max-width: 480px) { .header > span { display: none; } .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; } .moduleList { columns: 1; } }
-@media print { .header, .heroLinks, .appTask a, .footer a { display: none; } .page { background: white; } .main { width: 100%; padding: 0; } .hero, .panel, .day, .notice { box-shadow: none; } .session { break-inside: avoid; } .session > .sessionBody { display: block !important; } }
+@media print { .header, .heroLinks, .appTask a, .footer a { display: none; } .page { height: auto; overflow: visible; background: white; } .main { width: 100%; padding: 0; } .hero, .panel, .day, .notice { box-shadow: none; } .session { break-inside: avoid; } .session > .sessionBody { display: block !important; } }
