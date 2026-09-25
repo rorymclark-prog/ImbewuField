@@ -18,7 +18,7 @@ const BORDER = '#E2D8C4';
 const DANGER = '#C0531E';
 
 export default function SiteManageMenu({ place }: { place: SavedPlace }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<'menu' | 'rename' | 'confirm'>('menu');
   const [name, setName] = useState(place.name);
@@ -48,6 +48,13 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   }
   function doSetMain() { setMainSiteId(place.id); close(); }
   function doDelete() { deletePlace(place.id); close(); }
+
+  // Keep the English action beside its draft translation because this button permanently
+  // removes the selected saved site and its locally stored design data.
+  const deleteLabel = lang === 'zu' ? `${t('deleteSite')} (Delete site)` : t('deleteSite');
+  const deleteConfirm = lang === 'zu'
+    ? `${t('deleteSiteConfirm')} / Susa le ndawo egciniwe?`
+    : t('deleteSiteConfirm');
 
   const rowStyle: React.CSSProperties = {
     display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
@@ -100,7 +107,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
                 {isMain && <Check size={15} style={{ color: GOLD, marginLeft: 'auto' }} />}
               </button>
               <button type="button" style={{ ...rowStyle, color: DANGER }} onClick={() => setMode('confirm')}>
-                <Trash2 size={16} style={{ color: DANGER, flexShrink: 0 }} /> {t('deleteSite')}
+                <Trash2 size={16} style={{ color: DANGER, flexShrink: 0 }} /> {deleteLabel}
               </button>
             </>
           )}
@@ -124,9 +131,9 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
           {mode === 'confirm' && (
             <div style={{ padding: 8 }}>
-              <div style={{ fontSize: 13.5, color: INK, marginBottom: 10, lineHeight: 1.4, fontFamily: 'var(--font-display)' }}>{t('deleteSiteConfirm')}</div>
+              <div style={{ fontSize: 13.5, color: INK, marginBottom: 10, lineHeight: 1.4, fontFamily: 'var(--font-display)' }}>{deleteConfirm}</div>
               <div style={{ display: 'flex', gap: 6 }}>
-                <button type="button" style={{ ...btnPrimary, background: DANGER }} onClick={doDelete}><Trash2 size={14} /> {t('deleteSite')}</button>
+                <button type="button" style={{ ...btnPrimary, background: DANGER }} onClick={doDelete}><Trash2 size={14} /> {deleteLabel}</button>
                 <button type="button" style={btnGhost} onClick={() => setMode('menu')}>{t('cancelBtn')}</button>
               </div>
             </div>
