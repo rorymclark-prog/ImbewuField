@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'a459b15c', changes: [
+    'Livestock choices and field guidance now pair isiZulu drafts with English.',
+  ], tour: [
+    { title: 'Review livestock choices', where: 'Site Survey → Livestock & Poultry', href: '/farmer',
+      detail: 'Switch to isiZulu and compare livestock choices and field guidance with English.' },
+  ] },
   { when: '25 September 2026', sha: 'd2250e8e', changes: [
     'A Tshivenda Landscape draft is ready for review; learners cannot see it yet.',
   ] },
