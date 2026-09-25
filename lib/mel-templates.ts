@@ -1,5 +1,15 @@
 import type { MelQuestion, MelStage, MelTemplate } from './mel';
 
+export const MEL_TIMING_ZU: Record<MelStage, string> = {
+  baseline: 'Ngaphambi kokuthi kuqale usizo lwephrojekthi. Uma sekuqalile, bhala ukuthi izimpendulo zibheka emuva.',
+  course_before: 'Ekuqaleni kwesifundo, ngaphambi kokufundisa.',
+  course_after: 'Ngosuku lokugcina. Lawa amakhono abikwa umfundi; hlola nomsebenzi awenzayo ngokoqobo.',
+  midpoint: 'Maphakathi nephrojekthi, kusenesikhathi sokuthuthukisa usizo.',
+  closeout: 'Ekupheleni kwephrojekthi, kusetshenziswa izikhathi ezifanayo nezasekuqaleni.',
+  app_midpoint: 'Ngesikhathi sokubuyekeza maphakathi, njengefomu elihlukile lokuzithandela.',
+  app_closeout: 'Phinda ekupheleni ukuze ubone ukuthi izinguquko zisizile yini.',
+};
+
 const option = (value: string, en: string, zu: string) => ({ value, en, zu });
 const yes = [option('yes', 'Yes', 'Yebo'), option('no', 'No', 'Cha'), option('unsure', 'Not sure', 'Angiqiniseki')];
 const skill = [option('0', 'Not yet', 'Angikakwazi'), option('1', 'With help', 'Ngosizo'), option('2', 'On my own', 'Ngokwami'), option('na', 'Not tried', 'Angikakuzami')];

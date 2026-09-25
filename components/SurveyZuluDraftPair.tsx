@@ -6,7 +6,7 @@ export const SURVEY_DISCARD_BUTTON_ENGLISH = 'Discard answers';
 /** HOLD translations stay next to their exact English source until fluent field review. */
 export default function SurveyZuluDraftPair({ children, english }: { children: ReactNode; english: string }) {
   return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}>
-    <span>{children}</span>
+    <span lang="zu">{children}</span>
     <small lang="en" style={{ fontSize: '12px', fontWeight: 400, opacity: 0.82 }}>English: {english}</small>
   </span>;
 }
