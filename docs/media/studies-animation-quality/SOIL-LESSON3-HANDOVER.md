@@ -1,5 +1,13 @@
 # Soil Health lesson 3 — closure checklist
 
+> **23 September current-state note:** This 22 September checklist is historical.
+> Slides 16 and 18 now already have photorealistic stills. The comparative
+> review was followed by one distinct x1 ground-level Flow prompt, which is
+> held because visible pooling obscures the taught impact contrast at phone
+> width. Slide 14 remains still-only; see the
+> [current English and media check](soil-l3-current-lesson-check.md). Do not
+> treat the older registered-clip or still descriptions below as current.
+
 Prepared 22 September 2026 from the checked-in lesson, English transcript/audio inventory, the unrecorded isiZulu draft, the registered deck slot, and the soil-rain direction records. This is a handover, not a release claim. Do not change lesson text, quiz, rationale, narration, species, or `PLAN_VERSION` to fit a replacement visual.
 
 ## Decision on the next step

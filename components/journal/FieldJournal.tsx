@@ -4,7 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Pencil, NotebookPen, Sparkles } from 'lucide-react';
+import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
@@ -31,6 +31,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 
 type Filter = 'all' | JournalCategory;
@@ -91,7 +92,9 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 ];
 
 export default function FieldJournal() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
@@ -151,8 +154,8 @@ export default function FieldJournal() {
   function persist(next: JournalEntry[]) {
     const result = saveJournal(next);
     setEntries(result.entries);
-    if (!result.ok) setNotice('Storage is full — this entry could not be saved. Delete an old entry and try again.');
-    else if (result.trimmed) setNotice('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.');
+    if (!result.ok) setNotice(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
+    else if (result.trimmed) setNotice(ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.'));
     else setNotice(null);
   }
 
@@ -171,14 +174,14 @@ export default function FieldJournal() {
     // Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
     // so the oldest entry is never trapped behind them.
     <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px' }}>
-      <aside className={workspace.journalSidebar} aria-label="Journal overview">
+      <aside className={workspace.journalSidebar} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
       {/* Stat row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 14 }}>
-        <Stat value={String(summary.total)} label="entries" />
-        <Stat value={String(summary.thisMonth)} label="this month" />
+        <Stat value={String(summary.total)} label={ui('entries', 'okufakiwe')} />
+        <Stat value={String(summary.thisMonth)} label={ui('this month', 'kule nyanga')} />
         <Stat
-          value={summary.daysSinceLast === null ? '—' : summary.daysSinceLast === 0 ? 'Today' : `${summary.daysSinceLast}d`}
-          label={summary.daysSinceLast === null ? 'no entries yet' : 'since last note'}
+          value={summary.daysSinceLast === null ? '—' : summary.daysSinceLast === 0 ? ui('Today', 'Namuhla') : `${summary.daysSinceLast}${ui('d', summary.daysSinceLast === 1 ? ' usuku' : ' izinsuku')}`}
+          label={summary.daysSinceLast === null ? ui('no entries yet', 'akukho okufakiwe') : ui('since last note', 'kusukela kunothi lokugcina')}
         />
       </div>
 
@@ -189,7 +192,7 @@ export default function FieldJournal() {
           exactly when this button matters most. */}
       <div className={workspace.journalAction} style={{
         padding: '2px 0 10px',
-        background: 'linear-gradient(#E4DCC6 78%, rgba(228,220,198,0))',
+        background: 'linear-gradient(var(--bg-0) 78%, rgba(228,220,198,0))',
       }}>
         <button
           type="button"
@@ -203,7 +206,7 @@ export default function FieldJournal() {
           }}
         >
           <Plus size={20} />
-          New entry
+          {ui('New entry', 'Faka okusha')}
         </button>
 
         {/* WHERE THIS GOES, said on the screen itself.
@@ -220,7 +223,7 @@ export default function FieldJournal() {
           margin: '8px 2px 0', font: '500 12px/1.5 system-ui, sans-serif', color: '#6B6152',
         }}>
           {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
-          <Link href="/records" style={{ color: '#274D2C', fontWeight: 700 }}>
+          <Link href="/records" style={{ color: 'var(--color-forest-800)', fontWeight: 700 }}>
             {t('journalOpenRecords')}
           </Link>
         </p>
@@ -240,7 +243,7 @@ export default function FieldJournal() {
           row of dashed placeholder tiles. */}
       {photos.length > 0 && (
         <div style={{ marginBottom: 14 }}>
-          <Heading>Recent photos</Heading>
+          <Heading>{ui('Recent photos', 'Izithombe zakamuva')}</Heading>
           <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, WebkitOverflowScrolling: 'touch' }}>
             {photos.map((p, i) => (
               <div
@@ -252,9 +255,9 @@ export default function FieldJournal() {
                 <div style={{
                   position: 'absolute', left: 0, right: 0, bottom: 0, padding: '10px 6px 4px',
                   background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
-                  font: '600 10px/1 system-ui, sans-serif', color: '#fff',
+                  font: '600 12px/1 system-ui, sans-serif', color: '#fff',
                 }}>
-                  {formatJournalDate(p.date)}
+                  {isZulu ? formatZuluJournalDate(p.date) : formatJournalDate(p.date)}
                 </div>
               </div>
             ))}
@@ -264,10 +267,13 @@ export default function FieldJournal() {
 
       </aside>
       <div className={workspace.journalTimeline}>
+      {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: '#FEF6E7', color: '#7A5B14', font: '500 12px/1.45 system-ui, sans-serif' }}>
+        Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
+      </div>}
       {/* Category filter */}
       {usedCategories.length > 1 && (
         <div style={{ display: 'flex', gap: 7, overflowX: 'auto', paddingBottom: 10, marginBottom: 4 }}>
-          <Chip on={filter === 'all'} onClick={() => setFilter('all')}>All · {entries.length}</Chip>
+          <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
           {usedCategories.map((c) => (
             <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
               {getElementArt2(`journal_${c.key}`) ? (
@@ -275,7 +281,7 @@ export default function FieldJournal() {
               ) : (
                 c.icon
               )}{' '}
-              {c.label}
+              {isZulu ? journalCategoryLabel(c.key) : c.label}
             </Chip>
           ))}
         </div>
@@ -286,15 +292,14 @@ export default function FieldJournal() {
         <div>
           <div style={{
             textAlign: 'center', padding: '30px 22px 26px', borderRadius: 16,
-            background: '#FFFEFA', border: '1px dashed #D9CDB4', marginBottom: 20,
+            background: 'var(--bg-1)', border: '1px dashed #D9CDB4', marginBottom: 20,
           }}>
-            <NotebookPen size={26} style={{ color: '#9A8268', margin: '0 auto 10px' }} />
-            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 6 }}>
-              Nothing recorded yet
+            <NotebookPen size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} />
+            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
+              {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
-            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#8A7C62', maxWidth: 320, margin: '0 auto' }}>
-              Write down the date, what you did and what happened. One season of notes is
-              what makes next season&apos;s decisions better — here&apos;s what that looks like.
+            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: 'var(--text-muted)', maxWidth: 320, margin: '0 auto' }}>
+              {ui('Write down the date, what you did and what happened. One season of notes is what makes next season’s decisions better — here’s what that looks like.', 'Bhala usuku, okwenzile nokwenzekile. Amanothi esizini eyodwa angasiza ekuthatheni izinqumo ezingcono ngesizini elandelayo — nasi isibonelo.')}
             </div>
           </div>
 
@@ -306,11 +311,11 @@ export default function FieldJournal() {
           <div style={{ marginBottom: 4 }}>
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
-              font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: '#A66A16',
+              font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+              textTransform: 'uppercase', color: 'var(--gold)',
             }}>
               <Sparkles size={12} />
-              Example — what an entry looks like
+              {ui('Example — what an entry looks like', 'Isibonelo — indlela okufakwa ngayo')}
             </div>
 
             <div style={{ position: 'relative', paddingLeft: 16 }}>
@@ -320,45 +325,50 @@ export default function FieldJournal() {
                 return (
                   <article
                     key={ex.id}
-                    aria-label={`Example entry (not a real record): ${ex.title}`}
+                    aria-label={`${ui('Example entry (not a real record)', 'Isibonelo, akulona irekhodi langempela')}: ${ex.title}`}
                     style={{
                       position: 'relative', marginBottom: 10, borderRadius: 14, opacity: 0.82,
-                      background: '#FFFEFA', border: '1.5px dashed #D9CDB4',
+                      background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4',
                       borderLeft: `3px dashed ${cat.ink}`, padding: '12px 40px 12px 13px',
                     }}
                   >
                     <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: '#D9CDB4', border: '2px solid #E4DCC6' }} />
                     <span style={{
                       position: 'absolute', top: 10, right: 10,
-                      padding: '3px 7px', borderRadius: 6, background: '#C07A1E', color: '#fff',
-                      font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
+                      padding: '3px 7px', borderRadius: 6, background: '#9A6018', color: '#fff',
+                      font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
                     }}>
-                      Example
+                      {ui('Example', 'Isibonelo')}
                     </span>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
+                      <span style={{ font: '600 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
                         {ex.dateLabel}
                       </span>
                       <span style={{
                         display: 'inline-flex', alignItems: 'center', gap: 4,
                         padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
-                        font: '700 10px/1 system-ui, sans-serif',
+                        font: '700 12px/1 system-ui, sans-serif',
                       }}>
-                        {cat.icon} {cat.label}
+                        {getElementArt2(`journal_${cat.key}`) ? (
+                          <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                        ) : (
+                          cat.icon
+                        )}{' '}
+                        {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
                     </div>
 
-                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: '#20190F', marginBottom: 4 }}>
+                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
                       {ex.title}
                     </div>
-                    <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: '#4A4034' }}>
+                    <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: 'var(--text-secondary)' }}>
                       {ex.notes}
                     </div>
 
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-                      <Pill>📍 {ex.bedLabel}</Pill>
-                      <Pill>🌿 {ex.cropName}</Pill>
+                      <Pill><MapPin size={12} aria-hidden /> {ex.bedLabel}</Pill>
+                      <Pill><Leaf size={12} aria-hidden /> {ex.cropName}</Pill>
                     </div>
                   </article>
                 );
@@ -371,13 +381,13 @@ export default function FieldJournal() {
               onClick={() => setSheet({ open: true, entry: null })}
               style={{
                 width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
-                background: '#FFFEFA', border: '1.5px dashed #274D2C', color: '#274D2C',
+                background: 'var(--bg-1)', border: '1.5px dashed var(--color-forest-800)', color: 'var(--color-forest-800)',
                 font: '700 13.5px/1 system-ui, sans-serif',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
               }}
             >
               <Plus size={16} />
-              Log your first real entry
+              {ui('Log your first real entry', 'Faka umbhalo wakho wokuqala')}
             </button>
           </div>
         </div>
@@ -389,11 +399,11 @@ export default function FieldJournal() {
             // Tucks under the sticky New-entry bar above (50px button + its padding).
             zIndex: 1,
             padding: '6px 2px 8px', margin: '0 0 6px',
-            background: 'linear-gradient(#E4DCC6 72%, rgba(228,220,198,0))',
-            font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+            background: 'linear-gradient(var(--bg-0) 72%, rgba(228,220,198,0))',
+            font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
             textTransform: 'uppercase', color: '#7A6B52',
           }}>
-            {group.label} · {group.entries.length}
+            {isZulu ? formatZuluMonth(group.key) : group.label} · {group.entries.length}
           </div>
 
           <div style={{ position: 'relative', paddingLeft: 16 }}>
@@ -407,7 +417,7 @@ export default function FieldJournal() {
                   className={motion.entry}
                   style={{
                     position: 'relative', marginBottom: 10, borderRadius: 14,
-                    background: '#FFFEFA', border: '1px solid #E2D8C4',
+                    background: 'var(--bg-1)', border: '1px solid var(--border)',
                     borderLeft: `3px solid ${cat.ink}`, padding: '12px 12px 12px 13px',
                   }}
                 >
@@ -416,38 +426,38 @@ export default function FieldJournal() {
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
-                        <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
-                          {formatJournalDate(entry.date)}
+                        <span style={{ font: '600 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>
+                          {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
                           padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
-                          font: '700 10px/1 system-ui, sans-serif',
+                          font: '700 12px/1 system-ui, sans-serif',
                         }}>
                           {getElementArt2(`journal_${entry.category}`) ? (
                             <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
                             cat.icon
                           )}{' '}
-                          {cat.label}
+                          {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                         </span>
                       </div>
 
                       {entry.title && (
-                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: '#20190F', marginBottom: entry.notes ? 4 : 0 }}>
+                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
                           {entry.title}
                         </div>
                       )}
                       {entry.notes && (
-                        <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: '#4A4034', whiteSpace: 'pre-wrap' }}>
+                        <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: 'var(--text-secondary)', whiteSpace: 'pre-wrap' }}>
                           {entry.notes}
                         </div>
                       )}
 
                       {(entry.bedLabel || entry.cropName) && (
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-                          {entry.bedLabel && <Pill>📍 {entry.bedLabel}</Pill>}
-                          {entry.cropName && <Pill>🌿 {entry.cropName}</Pill>}
+                          {entry.bedLabel && <Pill><MapPin size={12} aria-hidden /> {entry.bedLabel}</Pill>}
+                          {entry.cropName && <Pill><Leaf size={12} aria-hidden /> {entry.cropName}</Pill>}
                         </div>
                       )}
 
@@ -470,10 +480,10 @@ export default function FieldJournal() {
                       type="button"
                       className={motion.editEntry}
                       onClick={() => setSheet({ open: true, entry })}
-                      aria-label={`Edit entry: ${entry.title || formatJournalDate(entry.date)}`}
+                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
-                        background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: '#1F4D2B',
+                        background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: 'var(--color-forest-800)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}
                     >
@@ -506,9 +516,9 @@ export default function FieldJournal() {
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
-      <div style={{ font: '600 21px/1 Newsreader, Georgia, serif', color: '#1F4D2B' }}>{value}</div>
-      <div style={{ font: '500 10.5px/1.2 system-ui, sans-serif', color: '#8A7C62', marginTop: 4 }}>{label}</div>
+    <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
+      <div className="t-hero" style={{ color: 'var(--color-forest-800)' }}>{value}</div>
+      <div style={{ font: '500 12px/1.2 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
     </div>
   );
 }
@@ -516,7 +526,7 @@ function Stat({ value, label }: { value: string; label: string }) {
 function Heading({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+      font: '700 12px/1 system-ui, sans-serif', letterSpacing: '0.1em',
       textTransform: 'uppercase', color: '#7A6B52', marginBottom: 8,
     }}>
       {children}
@@ -529,7 +539,7 @@ function Pill({ children }: { children: React.ReactNode }) {
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 8,
       background: 'rgba(92,80,64,0.07)', border: '1px solid #E7DFCC',
-      font: '500 11.5px/1 system-ui, sans-serif', color: '#5C5040',
+      font: '500 12px/1 system-ui, sans-serif', color: 'var(--text-secondary)',
     }}>
       {children}
     </span>

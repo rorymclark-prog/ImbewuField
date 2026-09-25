@@ -48,6 +48,14 @@ const ROUTES = [
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
   'app/reports/page.tsx',
+  // Added 24 September. The audit measured the rendered pages at 390x844 and found 46 sub-12px
+  // text nodes on /journal (the smallest at 10.5px), 19 on /calendar (every month chip at 10px)
+  // and 15 on /cropplan — none of them covered by this file, because none of these routes was on
+  // the list. They are four of the five things the bottom nav and the home tiles send her to.
+  // All three are now at the floor; these entries are what stops them drifting back.
+  'app/journal/page.tsx',
+  'app/calendar/page.tsx',
+  'app/cropplan/page.tsx',
 ];
 
 // The NGO, funder and public-showcase routes — added 29 August after the same audit found
@@ -71,6 +79,7 @@ const STAFF_ROUTES = [
 const FARMER_SURFACES: Record<string, string> = {
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
+  'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',
   'app/offline/page.tsx': 'device preparation and unsent fieldwork are read on phones',
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
   'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',
@@ -114,6 +123,11 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/SampleLimaConversation.tsx': 'role-specific sample conversation with readable messages',
   'components/MelDashboard.tsx': 'farmer assessment forms and NGO analysis',
   'components/funder/FunderAssessments.tsx': 'approved assessment summaries',
+  'app/journal/page.tsx': 'the journal she writes her own season into',
+  'components/journal/FieldJournal.tsx': 'every entry, its date, its kind and its bed — 46 sub-12px nodes before 24 September',
+  'components/journal/JournalEntrySheet.tsx': 'the sheet she writes an entry in',
+  'app/calendar/page.tsx': 'when to sow and when to pick — every month chip was 10px',
+  'app/cropplan/page.tsx': 'the month grid and the job list the home card links into',
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',
   'app/records/page.tsx': 'the money book — Picked, Sold, Spent, and the charts inside it',
   'app/finances/page.tsx': 'the old money door, now a redirect onto the book — it must stay empty of type',
@@ -122,6 +136,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/NavDrawer.tsx': 'the menu',
   'components/MyRecords.tsx': 'the records list itself',
   'components/FinanceGraphs.tsx': 'picked and sold, in her own numbers',
+  'components/IsiZuluDraftSource.tsx': 'financial isiZulu drafts keep a 12px floor beside their exact English sources',
   'components/CashflowChart.tsx': 'in and out, in her own numbers',
   'components/HarvestReconciliation.tsx': 'picked against sold — the arithmetic she is checking',
   'components/ComingUpHarvests.tsx': 'what is ready soon',
@@ -174,7 +189,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/DataPanel.tsx': {
     reason: 'the site analysis panel — dense climate and soil figures read at a laptop',
-    budget: 33,
+    budget: 32,
   },
 
   'components/ReportView.tsx': {
@@ -183,7 +198,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/report/CompletionScore.tsx': {
     reason: 'the report scorecard, same print scale',
-    budget: 3,
+    budget: 1,
   },
   'components/design/LessonPanel.tsx': { reason: 'design studio, laptop tool', budget: 3 },
   'components/AreaPanel.tsx': { reason: 'the drawing tool\'s measurement readout', budget: 0 },

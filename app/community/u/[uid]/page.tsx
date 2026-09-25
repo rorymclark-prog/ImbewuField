@@ -19,7 +19,7 @@ import BackButton from '@/components/BackButton';
 
 export default function PublicCommunityProfilePage() {
   const { user, loading } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const router = useRouter();
   const params = useParams<{ uid: string }>();
   const targetUid = params.uid;
@@ -81,7 +81,7 @@ export default function PublicCommunityProfilePage() {
 
   if (busy || loading || !communityEnabled()) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
@@ -96,13 +96,13 @@ export default function PublicCommunityProfilePage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
-        <LessonLink id="community:profile" label="Learn" />
+        <LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />
       </header>
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-            <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>This profile is no longer available.</p>
+            <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{lang === 'zu' ? t('communityProfileUnavailable') : 'This profile is no longer available.'}</p>
           </div>
         ) : (
           <>
@@ -113,11 +113,11 @@ export default function PublicCommunityProfilePage() {
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 20, color: '#20190F' }}>{profile.display_name}</div>
+                <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: '#20190F' }}>{profile.display_name}</h1>
                 {profile.area_text && (
                   <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
-                    <MapPin size={12} style={{ color: '#8C7A62' }} />
-                    <span className="font-sans" style={{ fontSize: 13, color: '#8C7A62' }}>{profile.area_text}</span>
+                    <MapPin size={12} style={{ color: '#755942' }} />
+                    <span className="font-sans" style={{ fontSize: 13, color: '#755942' }}>{profile.area_text}</span>
                   </div>
                 )}
               </div>
@@ -184,7 +184,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleReport}
                   disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#755942', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>

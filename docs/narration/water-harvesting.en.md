@@ -6,7 +6,7 @@ Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink eve
 
 **Slide 2 — Learning Outcomes**
 
-Explain how a level contour swale holds water for infiltration.
+Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.
 
 Explain why dams need a designed spillway and a site assessment.
 
@@ -16,33 +16,27 @@ Keep greywater away from people, food and drinking-water pipes.
 
 ---
 
-**Slide 3 — Swales Slow Water on the Slope**
+**Slide 3 — Two Swale Designs**
 
-A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.
+A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.
 
-The excavated soil forms a berm on the downhill side.
-
-Trees planted there draw on stored water long after the rain has stopped.
+Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging.
 
 ---
 
-**Slide 4 — Watch: A Swale Sinks Water**
+**Slide 4 — A Swale May Let Water Soak In**
 
-A swale is a level trench on contour — it sinks water, it doesn't direct it.
+This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.
 
-[pause]
-
-Water fills it evenly and soaks in rather than running off.
+It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building.
 
 ---
 
-**Slide 5 — Plant on the Downhill Berm**
+**Slide 5 — The Downhill Berm**
 
-The excavated soil forms a berm on the downhill side.
+The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.
 
-The berm, the downhill mound of excavated soil, is where you plant trees.
-
-Trees planted there draw on stored water long after the rain has stopped.
+Trees may draw on moisture stored in nearby soil after rain; the result varies by site.
 
 ---
 
@@ -56,13 +50,13 @@ Ask a trained local adviser to assess the soil, slope and storm flow. A picture 
 
 ---
 
-**Slide 7 — Watch: The Overflow Point**
+**Slide 7 — Assess the Overflow Before Digging**
 
-Include a safe overflow point so storms don't breach the berm.
+A swale needs a planned overflow route for heavy rain. Check it before digging.
 
 [pause]
 
-The overflow leads to the next swale or a dam.
+Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage.
 
 ---
 
@@ -102,13 +96,13 @@ An uncontrolled overflow can erode and breach the wall. Plan a safe route for ex
 
 ---
 
-**Slide 12 — Watch: Dam and Spillway**
+**Slide 12 — Dam and Spillway: A Concept**
 
 Design the spillway before the wall — an overtopped wall can breach catastrophically.
 
 [pause]
 
-Size the dam to the catchment area draining toward it.
+Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction.
 
 ---
 
@@ -126,6 +120,8 @@ Animals can damage banks and add manure to the water. Their presence does not ma
 
 Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.
 
+Check whether the roof material is suitable for rainwater collection before connecting a tank.
+
 Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.
 
 An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.
@@ -142,7 +138,7 @@ A diverter does not make the remaining water safe to drink.
 
 ---
 
-**Slide 16 — Watch: First Flush to Tank**
+**Slide 16 — First Flush to Tank: A Concept**
 
 A first-flush diverter keeps early roof runoff out of the tank.
 
@@ -170,39 +166,35 @@ A basic filter alone is not a drinking-water guarantee. Water used on food crops
 
 ---
 
-**Slide 19 — Greywater Is Used Washwater**
+**Slide 19 — Used Water Varies by Source**
 
-Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.
+Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.
 
-Do not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.
-
----
-
-**Slide 20 — Keep Greywater Away from People and Food**
-
-Where local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.
-
-Do not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.
-
-Use it promptly. Stored greywater needs specialist advice and appropriate treatment.
+South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.
 
 ---
 
-**Slide 21 — Watch: Greywater Under Mulch**
+**Slide 20 — Get Local Advice Before Any Reuse**
 
-Where permitted, direct suitable greywater below mulch around non-food planting.
+Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.
 
-Mulch does not disinfect water. Keep it away from people and food.
+If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater.
 
 ---
 
-**Slide 22 — Use Greywater Only Where It Is Safe**
+**Slide 21 — A Picture Is Not a Farm Design**
 
-Keep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.
+This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.
 
-Check municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.
+Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater.
 
-If the water smells bad, pools or harms plants, stop using it and seek advice.
+---
+
+**Slide 22 — Prevent Contact and Pollution**
+
+Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.
+
+If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.
 
 ---
 

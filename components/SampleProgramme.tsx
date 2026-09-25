@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { isSampleMode } from '@/lib/sample-mode';
 import { analyseAssessment, MEL_STAGES, type MelStage } from '@/lib/mel';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
+import { loadLocale, translate, useLanguage } from '@/lib/i18n';
 import { buildSampleAssessments, sampleAssessments, changeSampleAssessment, freshSampleProgramme, samplePublishedAssessments, type SampleProgrammeControls } from '@/lib/sample-programme';
 import { MelMetrics } from '@/components/MelDashboard';
 import MelOverview from './MelOverview';
@@ -18,23 +19,27 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const [selected, setSelected] = useState('sample-baseline');
   const [localZu, setZu] = useState(false);
   const zu = language ?? localZu;
+  const ui = (key: string, english: string) => zu ? translate('zu', key) : english;
+  const [, setLocaleTick] = useState(0);
   const detailRef = useRef<HTMLElement>(null);
   const [notice, setNotice] = useState('');
   const [draft, setDraft] = useState({ title: '', project: "Community garden learning cohort", stage: 'baseline' as MelStage, due: '' });
   const [chosenPeople, setChosenPeople] = useState<string[]>([]);
   const [funderPreview, setFunderPreview] = useState(false);
   useEffect(() => { const saved=readSampleProgramme();setControls(saved);const id=new URLSearchParams(window.location.search).get('assessment');if(id&&sampleAssessments(saved).some(a=>a.assessment.id===id))setSelected(id); }, []);
+  useEffect(() => { if (zu) void loadLocale('zu').then(() => setLocaleTick(n => n + 1)); }, [zu]);
   function update(next: SampleProgrammeControls) {
     if (!isSampleMode()) return;
-    try { window.localStorage.setItem(KEY, JSON.stringify(next)); setControls(next); setNotice('Changes saved.'); }
-    catch { setNotice('Could not save the changes. Try again.'); }
+    try { window.localStorage.setItem(KEY, JSON.stringify(next)); setControls(next); setNotice(ui('sampleProgrammeChangesSaved', 'Changes saved.')); }
+    catch { setNotice(ui('sampleProgrammeSaveFailed', 'Could not save the changes. Try again.')); }
   }
   const data = sampleAssessments(controls);
   const chosen = data.find(x => x.assessment.id === selected)!;
   const assigned = data.reduce((n, x) => n + x.assessment.participantIds.length, 0);
   const completed = data.reduce((n, x) => n + x.rows.length, 0);
-  if (compact) return <div className={styles.compact}><strong>Assessments</strong><span>{assigned} assignments · {completed} completed</span><span>{controls.published.length} summaries shared</span></div>;
+  if (compact) return <div className={styles.compact}><strong>{ui('sampleProgrammeAssessments', 'Assessments')}</strong><span>{assigned} {ui('sampleProgrammeAssignments', 'assignments')} · {completed} {ui('sampleProgrammeCompleted', 'completed')}</span><span>{controls.published.length} {ui('sampleProgrammeSummariesShared', 'summaries shared')}</span></div>;
   if (accessOnly) return <div className={styles.card}>
+    {zu && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}
     <h2>People &amp; access</h2>
     <label className={styles.option}><input type="checkbox" checked={controls.funderAccess} onChange={e => update({ ...controls, funderAccess: e.target.checked })} />Allow linked funders to view our dashboards</label>
     <p>Member roles choose the workspace. Assessment permissions let the organisation delegate specific work. Farmer consent and publication checks still apply.</p>
@@ -43,29 +48,30 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
     </div>)}{notice && <p role="status">{notice}</p>}
   </div>;
   const published = samplePublishedAssessments(controls);
-  if (funder) return <><h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} /></details>)}</>;
+  if (funder) return <>{zu && <p role="note">{ui('sampleProgrammeEnglishAccessNote', 'The permission and data sharing details below remain in English so their meaning stays exact.')}</p>}<h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} /></details>)}</>;
   return <>
     <MelOverview items={data.map(({ assessment, rows }) => ({ ...assessment, published: controls.published.includes(assessment.id), assigned: assessment.participantIds.length, completed: rows.length }))} selectedId={selected} zu={zu} onOpen={id => { setSelected(id); setChosenPeople([]); setFunderPreview(false); requestAnimationFrame(() => detailRef.current?.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })); }} />
-    <details className={styles.about}><summary>About these counts</summary><p>Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.</p></details>
+    {zu && <><p role="note">{ui('sampleProgrammeZuluReviewNote', 'These are sample assessment questions. The isiZulu text has not been reviewed by a fluent isiZulu speaker.')}</p><p role="note">{ui('sampleProgrammeEnglishAccessNote', 'Permission and sharing descriptions remain in English so their meaning stays exact.')}</p></>}
+    <details className={styles.about}><summary>{ui('sampleProgrammeAboutCounts', 'About these counts')}</summary><p>Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.</p></details>
     {language === undefined && <div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button></div>}
-    <details className={styles.card}><summary>Create an assessment</summary>
-      <label>Stage<select value={draft.stage} onChange={e => setDraft({ ...draft, stage: e.target.value as MelStage })}>{MEL_STAGES.map(s => <option key={s} value={s}>{MEL_TEMPLATES[s].en}</option>)}</select></label>
-      <label>Project / course cohort<input value={draft.project} onChange={e => setDraft({ ...draft, project: e.target.value })} /></label>
-      <label>Assessment title<input value={draft.title} onChange={e => setDraft({ ...draft, title: e.target.value })} /></label>
-      <label>Due date<input type="date" value={draft.due} onChange={e => setDraft({ ...draft, due: e.target.value })} /></label>
-      <button disabled={!draft.title.trim() || !draft.project.trim() || !draft.due} onClick={() => { const id = `sample-custom-${Date.now()}`; const base = buildSampleAssessments()[0].assessment; update({ ...controls, assessments: [...data, { assessment: { ...base, ...draft, id, state: 'draft', published: false, participantIds: [] }, rows: [] }] }); setSelected(id); setChosenPeople([]); setDraft({ ...draft, title: '' }); }}>Save draft</button>
+    <details className={styles.card}><summary>{ui('sampleProgrammeCreateAssessment', 'Create an assessment')}</summary>
+      <label>{ui('sampleProgrammeStage', 'Stage')}<select value={draft.stage} onChange={e => setDraft({ ...draft, stage: e.target.value as MelStage })}>{MEL_STAGES.map(s => <option key={s} value={s}>{zu ? MEL_TEMPLATES[s].zu : MEL_TEMPLATES[s].en}</option>)}</select></label>
+      <label>{ui('sampleProgrammeProjectCohort', 'Project / course cohort')}<input value={draft.project} onChange={e => setDraft({ ...draft, project: e.target.value })} /></label>
+      <label>{ui('sampleProgrammeAssessmentTitle', 'Assessment title')}<input value={draft.title} onChange={e => setDraft({ ...draft, title: e.target.value })} /></label>
+      <label>{ui('sampleProgrammeDueDate', 'Due date')}<input type="date" value={draft.due} onChange={e => setDraft({ ...draft, due: e.target.value })} /></label>
+      <button disabled={!draft.title.trim() || !draft.project.trim() || !draft.due} onClick={() => { const id = `sample-custom-${Date.now()}`; const base = buildSampleAssessments()[0].assessment; update({ ...controls, assessments: [...data, { assessment: { ...base, ...draft, id, state: 'draft', published: false, participantIds: [] }, rows: [] }] }); setSelected(id); setChosenPeople([]); setDraft({ ...draft, title: '' }); }}>{ui('sampleProgrammeSaveDraft', 'Save draft')}</button>
     </details>
     <article ref={detailRef} className={styles.card}><h2>{zu ? MEL_TEMPLATES[chosen.assessment.stage].zu : chosen.assessment.title}</h2>
-      {chosen.assessment.state === 'draft' ? <div><p>Choose participants for this assessment.</p>{Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`).map((id, i) => <label key={id} className={styles.option}><input type="checkbox" checked={chosenPeople.includes(id)} onChange={e => setChosenPeople(e.target.checked ? [...chosenPeople, id] : chosenPeople.filter(x => x !== id))} />Participant {i + 1}</label>)}<button disabled={!chosenPeople.length} onClick={() => update(changeSampleAssessment(controls, selected, { state: 'open', participantIds: chosenPeople }))}>Open for {chosenPeople.length} participants</button></div> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows, funderPreview).metrics} zu={zu} />}
-      {chosen.assessment.state !== 'draft' && <div className={styles.row}><button aria-pressed={!funderPreview} onClick={() => setFunderPreview(false)}>Private organisation analysis</button><button aria-pressed={funderPreview} onClick={() => setFunderPreview(true)}>Preview funder summary</button>{chosen.assessment.state === 'open' && <button onClick={() => update(changeSampleAssessment(controls, selected, { state: 'closed' }))}>Close assessment</button>}</div>}
-      <details style={{ marginTop: 20 }}><summary>Learning action · what will we change?</summary>
-        <label>Action<textarea value={chosen.assessment.action ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { action: e.target.value }))} /></label>
-        <label>Responsible person<input value={chosen.assessment.actionOwner ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionOwner: e.target.value }))} /></label>
-        <label>Due<input type="date" value={chosen.assessment.actionDue ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionDue: e.target.value }))} /></label>
-        <label className={styles.option}><input type="checkbox" checked={chosen.assessment.actionDone ?? false} onChange={e => update(changeSampleAssessment(controls, selected, { actionDone: e.target.checked }))} />Completed</label><p className={styles.muted}>Changes save as you go.</p>
+      {chosen.assessment.state === 'draft' ? <div><p>{ui('sampleProgrammeChooseParticipants', 'Choose participants for this assessment.')}</p>{Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`).map((id, i) => <label key={id} className={styles.option}><input type="checkbox" checked={chosenPeople.includes(id)} onChange={e => setChosenPeople(e.target.checked ? [...chosenPeople, id] : chosenPeople.filter(x => x !== id))} />{ui('sampleProgrammeParticipant', 'Participant')} {i + 1}</label>)}<button disabled={!chosenPeople.length} onClick={() => update(changeSampleAssessment(controls, selected, { state: 'open', participantIds: chosenPeople }))}>{ui('sampleProgrammeOpenFor', 'Open for')} {chosenPeople.length} {ui('sampleProgrammeParticipants', 'participants')}</button></div> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows, funderPreview).metrics} zu={zu} />}
+      {chosen.assessment.state !== 'draft' && <div className={styles.row}><button aria-pressed={!funderPreview} onClick={() => setFunderPreview(false)}>Private organisation analysis</button><button aria-pressed={funderPreview} onClick={() => setFunderPreview(true)}>Preview funder summary</button>{chosen.assessment.state === 'open' && <button onClick={() => update(changeSampleAssessment(controls, selected, { state: 'closed' }))}>{ui('sampleProgrammeCloseAssessment', 'Close assessment')}</button>}</div>}
+      <details style={{ marginTop: 20 }}><summary>{ui('sampleProgrammeLearningAction', 'Learning action · what will we change?')}</summary>
+        <label>{ui('sampleProgrammeAction', 'Action')}<textarea value={chosen.assessment.action ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { action: e.target.value }))} /></label>
+        <label>{ui('sampleProgrammeResponsiblePerson', 'Responsible person')}<input value={chosen.assessment.actionOwner ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionOwner: e.target.value }))} /></label>
+        <label>{ui('sampleProgrammeDue', 'Due')}<input type="date" value={chosen.assessment.actionDue ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionDue: e.target.value }))} /></label>
+        <label className={styles.option}><input type="checkbox" checked={chosen.assessment.actionDone ?? false} onChange={e => update(changeSampleAssessment(controls, selected, { actionDone: e.target.checked }))} />{ui('sampleProgrammeCompleted', 'Completed')}</label><p className={styles.muted}>{ui('sampleProgrammeChangesSave', 'Changes save as you go.')}</p>
       </details>
       {chosen.assessment.state === 'closed'  && <label className={styles.option}><input type="checkbox" checked={controls.published.includes(selected)} onChange={e => update({ ...controls, published: e.target.checked ? [...controls.published, selected] : controls.published.filter(id => id !== selected) })} />Share this summary with funders</label>}
-      <details><summary>Review questions</summary>{MEL_TEMPLATES[chosen.assessment.stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}</p>)}</details>
+      <details><summary>{ui('sampleProgrammeReviewQuestions', 'Review questions')}</summary>{MEL_TEMPLATES[chosen.assessment.stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}</p>)}</details>
       {notice && <p role="status">{notice}</p>}
     </article>
   </>;
@@ -74,7 +80,8 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
 /** Mirrors the live organisation sharing gate without contacting its API. */
 export function SampleFunderGate({ children }: { children: React.ReactNode }) {
   const [allowed, setAllowed] = useState<boolean | null>(null);
+  const { lang } = useLanguage();
   useEffect(() => { setAllowed(!isSampleMode() || readSampleProgramme().funderAccess); }, []);
   if (allowed === null) return null;
-  return allowed ? children : <section className={styles.root}><h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
+  return allowed ? children : <section className={styles.root}>{lang === 'zu' && <p role="note">{translate('zu', 'sampleProgrammeEnglishAccessNote')}</p>}<h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
 }

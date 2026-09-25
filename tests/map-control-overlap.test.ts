@@ -59,22 +59,46 @@ test('the pages that hand the corner to something else still opt out entirely', 
   assert.doesNotMatch(skipBlock, /\/farmer/, 'Lima should move on the map, not disappear from it');
 });
 
-test('Lima\'s launcher stays off the crop plan\'s left-aligned content', () => {
-  // Same 12 August complaint, a different page. /facilitator/crops draws every
-  // section heading, the Availability tab, the benchmark kg headline and every
-  // task line flush LEFT, so the shared bottom-left default parked the FAB on
-  // top of them at 375px. That page docks nothing to the bottom-right — its
-  // only fixed elements are full-screen modal overlays — so the fix is a
-  // route-specific corner rather than another exclusion.
+test('Lima\'s launcher stays off the crop plan\'s content — by leaving the overlay, not moving in it', () => {
+  // Same 12 August complaint, a different page. /facilitator/crops draws every section heading,
+  // the Availability tab, the benchmark kg headline and every task line flush LEFT, so the shared
+  // bottom-left default parked the FAB on top of them at 375px. The fix then was a route-specific
+  // corner: dock right, where that page fixes nothing.
+  //
+  // THAT WAS NOT ENOUGH, and this test asserted it was. Measured against the rendered page on
+  // 24 September at 390x844: the right-docked FAB covered a "Green beans (69%)" Gantt bar button
+  // at (199,693)-(373,719). The plan scrolls SIDEWAYS, so bars travel under whichever corner the
+  // FAB parks in — there is no resting position on this page that clears them, which is why a
+  // third offset would have moved the problem rather than ended it.
+  //
+  // So the conclusion flips: Lima leaves the overlay here and mounts in the document flow, the
+  // swap /student and /home already made. The fact this test protects is unchanged — Lima must
+  // not sit on the crop plan's content — only the mechanism that satisfies it.
   const widget = source('../components/ChatWidget.tsx');
-  const cropsDefault = widget.match(/pathname\.startsWith\('\/facilitator\/crops'\)\s*\n?\s*\?\s*'bottom-\[\d+px\] (left|right)-4/);
-  assert.ok(cropsDefault, 'ChatWidget no longer gives /facilitator/crops its own default position');
-  assert.equal(cropsDefault[1], 'right', 'the crop plan\'s content is left-aligned — the FAB must not park on it');
 
-  // It must MOVE, not vanish: the plan page is exactly where a farmer wants to ask.
   const skipAt = widget.indexOf("pathname.startsWith('/gate')");
-  const skipBlock = widget.slice(skipAt, skipAt + 260);
-  assert.doesNotMatch(skipBlock, /facilitator/, 'Lima should move on the crop plan, not disappear from it');
+  assert.ok(skipAt > 0, 'the exclusion block moved; rewrite this test rather than deleting it');
+  const skipBlock = widget.slice(skipAt, widget.indexOf(') return null;', skipAt));
+  assert.match(
+    skipBlock,
+    /pathname\.startsWith\('\/facilitator\/crops'\)/,
+    'the crop plan must be excluded from the floating FAB — a right-dock offset was measured to be not enough',
+  );
+
+  // Excluded is only half of it: leaving the page with no route to help would be worse than the
+  // overlap. tests/chat-widget-fab-overlap.test.ts pairs every exclusion with a LimaBar; this is
+  // the one for this page, asserted here too so neither file can drift alone.
+  const crops = source('../app/facilitator/crops/page.tsx');
+  assert.match(crops, /<LimaBar \/>/, 'the crop plan drops the FAB, so it owes the farmer an in-flow Lima');
+
+  // And the dead offset branch must be gone, or the next person re-tunes a number that no longer
+  // renders.
+  const posAt = widget.indexOf('const FAB_DEFAULT_POS');
+  assert.doesNotMatch(
+    widget.slice(posAt, widget.indexOf(';', posAt)),
+    /facilitator\/crops/,
+    'an offset branch for an excluded route is dead code',
+  );
 });
 
 test('the FAB still gets out of the way while a boundary is being drawn', () => {
@@ -110,7 +134,11 @@ test('the LABELS strip does not sit on top of "Find your land"', () => {
   assert.match(map, /top: isPhone \? \(toolsPillShowing \? 68 : 14\) : 14/, 'the strip is back on the top row on phone');
 
   // 68 must actually clear the button: top-3 (12px) + its 48px height = 60.
-  const btn = map.slice(map.indexOf('aria-label="Show map tools"'), map.indexOf('aria-label="Show map tools"') + 400);
+  // Anchor to the action rather than its displayed language: the clearance protects
+  // the same button when the farmer switches the map controls to isiZulu.
+  const toolsButton = map.indexOf('onClick={openPanel}');
+  assert.ok(toolsButton > 0, 'the map tools button is missing; recheck the strip clearance');
+  const btn = map.slice(toolsButton, toolsButton + 400);
   assert.match(btn, /top-3 left-3/, 'the tools button moved; the 68px clearance needs rechecking');
   assert.match(btn, /height: 48/, 'the tools button changed height; 68px may no longer clear it');
 

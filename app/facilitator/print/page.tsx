@@ -13,7 +13,9 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { ArrowLeft, Pencil, Printer, Droplets, ChevronDown } from 'lucide-react';
 import type {
   ElType, LineKind, SectorKind, LayerId,
   FacItem, FacLine, FacSector, FacilitatorDesignState,
@@ -25,6 +27,7 @@ import {
 import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, isAreaPricedItem, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { loadCachedSiteClimate } from '@/lib/site-climate';
+import { useAppLevel } from '@/lib/app-level';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
 
@@ -323,6 +326,11 @@ const SHEET_STYLE: CSSProperties = {
 type PageKey = 'full' | LayerId;
 
 export default function FacilitatorPrintPage() {
+  const simple = useAppLevel() === 'simple';
+  // Simple: the per-layer page checkboxes and the cost tables are collapsed behind this, leaving
+  // one "Print my plan" action that prints the full design sheet. All tools is unaffected —
+  // showMoreOptions only ever gates rendering when `simple` is true.
+  const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [state, setState] = useState<FacilitatorDesignState | null | undefined>(undefined);
   const [enabledPages, setEnabledPages] = useState<Partial<Record<PageKey, boolean>>>({});
   // This route survives specifically for old bookmarks (see app/facilitator/page.tsx) — and a
@@ -512,7 +520,7 @@ export default function FacilitatorPrintPage() {
         //
         // Summing each tank's own cost also prices a MIXED bank correctly, which an average of the
         // litres could not: one 2 500 and one 10 000 average to two 5 000s and are wrong both ways.
-        qty = `×${t.count} (${Math.round(t.litres).toLocaleString()} L)`;
+        qty = `×${t.count} (${numberLabel(Math.round(t.litres))} L)`;
         const perTank = plannedItemPts
           .filter(({ it }) => it.type === type)
           .map(({ it }) => {
@@ -566,7 +574,7 @@ export default function FacilitatorPrintPage() {
     }
 
     // Prefer the site's own satellite-derived rainfall over the 7-point regional
-    // table when this device has already analysed the site (same imbewu_loc_v4
+    // table when this device has already analysed the site (same imbewu_loc_v6
     // cache the sector card and tank calculator read — synchronous and offline-
     // safe). describeHarvest's sentence states which basis it used either way.
     const siteClimate = state.bgSite
@@ -634,7 +642,12 @@ export default function FacilitatorPrintPage() {
   };
 
   const fullOn = enabledPages.full ?? true;
-  const activeLayerPages = c.layersPresent.filter((lid) => enabledPages[lid] ?? true);
+  // Simple: the per-layer checkboxes are collapsed behind "More options" and never seen, so their
+  // pages are left out of the print job until the facilitator opens that disclosure and chooses
+  // them — "Print my plan" always means the one full-design sheet. All tools is unaffected.
+  const activeLayerPages = simple && !showMoreOptions
+    ? []
+    : c.layersPresent.filter((lid) => enabledPages[lid] ?? true);
   const nothingToPrint = !fullOn && activeLayerPages.length === 0;
 
   return (
@@ -655,20 +668,21 @@ export default function FacilitatorPrintPage() {
       <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
         <button
           onClick={() => history.back()}
-          style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}
         >
-          ‹ Back
+          <ArrowLeft size={14} strokeWidth={1.8} /> Back
         </button>
         {/* history.back() no-ops when this page was opened directly (e.g. a new tab) —
             give a real destination so the facilitator is never stranded here. */}
         <a
           href="/facilitator"
-          style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13, textDecoration: 'none' }}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13, textDecoration: 'none' }}
         >
-          ✎ Back to Design map
+          <Pencil size={14} strokeWidth={1.8} /> Back to Design map
         </a>
         <button
           onClick={() => {
+            if (nothingToPrint) return;
             if (standalone) {
               // Never a silent no-op again. The link itself still works — it is the printing
               // that fails in this shell — so hand the facilitator the one route that does:
@@ -679,12 +693,21 @@ export default function FacilitatorPrintPage() {
             }
             window.print();
           }}
-          style={{ padding: '6px 14px', borderRadius: 6, border: 'none', background: '#fff', color: '#1F4D2B', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+          disabled={nothingToPrint}
+          aria-disabled={nothingToPrint}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '6px 14px', borderRadius: 6, border: 'none',
+            background: nothingToPrint ? 'rgba(255,255,255,0.35)' : '#fff',
+            color: nothingToPrint ? 'rgba(31,77,43,0.55)' : '#1F4D2B',
+            cursor: nothingToPrint ? 'not-allowed' : 'pointer',
+            fontSize: 13, fontWeight: 600,
+          }}
         >
-          🖨 Print / Save as PDF
+          <Printer size={15} strokeWidth={1.8} /> {simple ? 'Print my plan' : 'Print / Save as PDF'}
         </button>
         <span style={{ fontSize: 12, opacity: 0.85, marginLeft: 8 }}>
-          A4 landscape plan pack{nothingToPrint ? ' — select at least one page below' : ''}
+          {nothingToPrint ? 'Select at least one page to print' : 'A4 landscape plan pack'}
         </span>
         {showPrintHint && (
           <span style={{ fontSize: 12, color: '#FFE9B3', marginLeft: 8 }}>
@@ -693,16 +716,30 @@ export default function FacilitatorPrintPage() {
         )}
 
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginLeft: 'auto' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
-            <input type="checkbox" checked={fullOn} onChange={() => togglePage('full')} />
-            Full design
-          </label>
-          {c.layersPresent.map((lid) => (
-            <label key={lid} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
-              <input type="checkbox" checked={enabledPages[lid] ?? true} onChange={() => togglePage(lid)} />
-              {LAYERS[lid].icon} {LAYERS[lid].name}
-            </label>
-          ))}
+          {/* Simple: the per-layer page picker is collapsed behind this — one clear "Print my
+              plan" action above is the primary path, and every checkbox below stays reachable. */}
+          {simple && (
+            <button
+              onClick={() => setShowMoreOptions((v) => !v)}
+              style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '6px 10px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 12 }}
+            >
+              More options <ChevronDown size={14} strokeWidth={1.8} style={{ transform: showMoreOptions ? 'rotate(180deg)' : undefined }} />
+            </button>
+          )}
+          {(!simple || showMoreOptions) && (
+            <>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
+                <input type="checkbox" checked={fullOn} onChange={() => togglePage('full')} />
+                Full design
+              </label>
+              {c.layersPresent.map((lid) => (
+                <label key={lid} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
+                  <input type="checkbox" checked={enabledPages[lid] ?? true} onChange={() => togglePage(lid)} />
+                  {LAYERS[lid].icon} {LAYERS[lid].name}
+                </label>
+              ))}
+            </>
+          )}
         </div>
       </div>
 
@@ -711,7 +748,7 @@ export default function FacilitatorPrintPage() {
           {/* Title block */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
             <div>
-              <div style={{ fontSize: 22, fontWeight: 700 }}>{title}</div>
+              <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700 }}>{title}</h1>
               {state.bgSite && (
                 <div style={{ fontSize: 11, marginTop: 3, color: '#3A352C' }}>
                   {state.bgSite.name} · {state.bgSite.lat.toFixed(4)}, {state.bgSite.lon.toFixed(4)}
@@ -721,7 +758,7 @@ export default function FacilitatorPrintPage() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: 0.5, color: '#1F4D2B' }}>ImbewuField</div>
-              <div style={{ fontSize: 9.5, color: '#9A8268' }}>Permaculture plan sheet</div>
+              <div style={{ fontSize: 9.5, color: '#755942' }}>Permaculture plan sheet</div>
             </div>
           </div>
 
@@ -765,17 +802,21 @@ export default function FacilitatorPrintPage() {
                     );
                   })}
                   {Object.keys(c.itemTally).length === 0 && Object.keys(c.lineTally).length === 0 && (
-                    <div style={{ fontSize: 9, color: '#9A8268' }}>No elements placed yet.</div>
+                    <div style={{ fontSize: 9, color: '#755942' }}>No elements placed yet.</div>
                   )}
                 </div>
               </div>
 
               {c.harvest && (
-                <div style={{ fontSize: 9, background: '#EEF4EC', border: '1px solid #C7D9C0', borderRadius: 4, padding: '3mm', lineHeight: 1.4 }}>
-                  💧 {c.harvest.sentence}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 4, fontSize: 9, background: '#EEF4EC', border: '1px solid #C7D9C0', borderRadius: 4, padding: '3mm', lineHeight: 1.4 }}>
+                  <Droplets size={11} strokeWidth={1.8} style={{ flexShrink: 0, marginTop: 1, color: '#235E86' }} />
+                  <span>{c.harvest.sentence}</span>
                 </div>
               )}
 
+              {/* Simple: costs are collapsed behind "More options" — see showMoreOptions above.
+                  All tools always shows them (simple is false, so this is unconditional there). */}
+              {(!simple || showMoreOptions) && (
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Bill of quantities</div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 9 }}>
@@ -795,7 +836,7 @@ export default function FacilitatorPrintPage() {
                       </tr>
                     ))}
                     {c.boqRows.length === 0 && (
-                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#9A8268' }}>Nothing to cost yet.</td></tr>
+                      <tr><td colSpan={3} style={{ padding: '4px 0', color: '#755942' }}>Nothing to cost yet.</td></tr>
                     )}
                   </tbody>
                   <tfoot>
@@ -823,8 +864,9 @@ export default function FacilitatorPrintPage() {
                     </table>
                   </div>
                 )}
-                <div style={{ fontSize: 7.5, color: '#9A8268', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
+                <div style={{ fontSize: 7.5, color: '#755942', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
               </div>
+              )}
             </div>
           </div>
         </div>

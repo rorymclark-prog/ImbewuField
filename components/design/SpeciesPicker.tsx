@@ -8,6 +8,7 @@ import { speciesPickerArtworkUrl } from '@/lib/species-art';
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
   siteBiome?: string;
+  siteMinTempC?: number | null;
   selectedSpeciesId: string | null;
   onSelect: (id: string) => void;
   onClose: () => void;
@@ -15,6 +16,7 @@ interface SpeciesPickerProps {
 
 export default function SpeciesPicker({
   siteBiome,
+  siteMinTempC,
   selectedSpeciesId,
   onSelect,
   onClose,
@@ -22,8 +24,8 @@ export default function SpeciesPicker({
   const { t } = useLanguage();
 
   const sections = siteBiome
-    ? sectionedPaletteFor(SPECIES, siteBiome)
-    : [{ section: 'Broad-reach species (site climate unknown)', species: broadReachPalette(SPECIES) }];
+    ? sectionedPaletteFor(SPECIES, siteBiome, siteMinTempC)
+    : [{ section: 'Broad-reach species (site climate unknown)', species: broadReachPalette(SPECIES, 4, siteMinTempC) }];
   // The registry key is what filtering needs; the farmer reads its name, not "IOCB".
   const siteBiomeName = siteBiome ? (BIOMES[siteBiome]?.name ?? siteBiome) : undefined;
 
@@ -71,6 +73,7 @@ export default function SpeciesPicker({
       {/* Honesty banner */}
       <div style={{ flexShrink: 0, padding: '6px 12px', background: '#FFF3CD', color: '#856404', fontSize: 11.5, borderBottom: '1px solid #FFEEBA' }}>
         <strong>Note:</strong> Not yet agronomist-reviewed. Use as a starting point.
+        {siteMinTempC != null && siteMinTempC <= 0 && ' Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.'}
       </div>
 
       <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 12 }}>

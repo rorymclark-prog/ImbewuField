@@ -1480,6 +1480,33 @@ export const TREE_CLIMATES: Record<string, ClimateZone[]> = {
   tree_olive: ['mediterranean', 'arid', 'temperate'],
 };
 
+// ARC's subtropical fruit guidance calls these crops frost-sensitive or specifies frost-free
+// conditions; SANBI says the same for marula. The existing species catalog marks Pawpaw and
+// Moringa as frost-tender. A Savanna biome alone cannot recommend their generic cards at an
+// elevated site such as Polokwane, where no sheltered spot or cultivar has been chosen.
+// https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf
+// https://pza.sanbi.org/sclerocarya-birrea
+export const FROST_SENSITIVE_PLANTING_IDS = new Set([
+  'tree_mango', 'tree_litchi', 'tree_macadamia', 'tree_grapefruit', 'tree_marula',
+  'tree_pawpaw', 'tree_moringa',
+  'banana_clump', 'banana_circle',
+]);
+
+// These remain selectable because cultivar, shelter and local frost pocket matter. A visible
+// caution accompanies them in the palette when the gridded minimum reaches freezing.
+export const FROST_CHECK_PLANTING_IDS = new Set([
+  'tree_citrus', 'tree_orange', 'tree_lemon', 'tree_avocado',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry',
+]);
+
+export function plantingColdMinimum(climate?: { minTemp: number; minTempSource?: string } | null): number | null {
+  // /api/location-data also returns a generic 8°C during NASA outages. An absent provenance tag
+  // must never let that constant certify a site as warm enough for frost-sensitive trees.
+  return climate?.minTempSource === 'nasa-power' && Number.isFinite(climate.minTemp)
+    ? climate.minTemp
+    : null;
+}
+
 // SA biome NAME (as stored on site.biome, from lib/biome.ts BIOMES[].name) → the climates that
 // grow there. Returns null when the biome is unknown/outside SA, meaning "show every tree".
 export function biomeClimates(biomeName?: string | null): ClimateZone[] | null {
@@ -1505,16 +1532,20 @@ export function biomeClimates(biomeName?: string | null): ClimateZone[] | null {
 }
 
 // Is this element suited to the site's climate? Non-trees and unmapped trees are always suited.
-export function elementSuitsClimate(defId: string, siteClimates: ClimateZone[] | null): boolean {
+export function elementSuitsClimate(defId: string, siteClimates: ClimateZone[] | null, minTempC?: number | null): boolean {
+  // Zero is the freezing point, not a crop-specific survival threshold. NASA's coarse grid is a
+  // screening signal, so a warmer reading never certifies that an individual field is frost-free.
+  if (minTempC != null && Number.isFinite(minTempC) && minTempC <= 0 && FROST_SENSITIVE_PLANTING_IDS.has(defId)) return false;
   if (!siteClimates) return true; // unknown site climate → show everything
   const treeClimates = TREE_CLIMATES[defId];
   if (!treeClimates) return true; // climate-agnostic (indigenous, support planting, etc.)
-  return treeClimates.some((c) => siteClimates.includes(c));
+  if (!treeClimates.some((c) => siteClimates.includes(c))) return false;
+  return true;
 }
 
-export function elementVisibleInPalette(def: DesignElementDef, siteClimates: ClimateZone[] | null): boolean {
+export function elementVisibleInPalette(def: DesignElementDef, siteClimates: ClimateZone[] | null, minTempC?: number | null): boolean {
   if (def.deprecated) return false;
-  return elementSuitsClimate(def.id, siteClimates);
+  return elementSuitsClimate(def.id, siteClimates, minTempC);
 }
 
 // ── Planting-palette sections ───────────────────────────────────────────────────

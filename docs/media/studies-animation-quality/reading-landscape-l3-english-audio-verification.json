@@ -1,0 +1,205 @@
+{
+  "module": "reading-landscape",
+  "language": "en",
+  "slidesRegenerated": [
+    12,
+    13,
+    14,
+    15
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/reading-landscape.en.md",
+  "sourceScriptSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "textExport": "scripts/course-narration-export.mjs",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 12,
+      "path": "public/course-audio/reading-landscape/en/slide-12.mp3",
+      "seconds": 25.272,
+      "bytes": 151632,
+      "sourceTextSha256": "b8d497ced52311b7594e419f784abf9b0e985676f5287a34e92fc03fbdaa54dd",
+      "audioSha256": "d0f0034e13666ebb4b4557f10c730fbc00f66f6e9343c8f89cca901f5cb911c2",
+      "wordCount": 63,
+      "wordBoundaryCount": 62,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-audio/reading-landscape/en/slide-13.mp3",
+      "seconds": 7.272,
+      "bytes": 43632,
+      "sourceTextSha256": "9b8b3216f3d145bbcaf9a660ae9cc1ca1f769300719fdd09b6734cea20bc9126",
+      "audioSha256": "a43a1d8d8a3854c5a00ec0b30d1b36b4ecba5ea1ce077b78ccc8efb1c2165ce5",
+      "wordCount": 17,
+      "wordBoundaryCount": 17,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-audio/reading-landscape/en/slide-14.mp3",
+      "seconds": 44.376,
+      "bytes": 266256,
+      "sourceTextSha256": "4df78dc76b2391eb7b30d7c466c0512450bea5981f3e83b732ca3fdfb333fb13",
+      "audioSha256": "abf650d2e82be55fc71393fab4649845ea35c24a9f7baefe0151cc03a3e33b93",
+      "wordCount": 110,
+      "wordBoundaryCount": 109,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-audio/reading-landscape/en/slide-15.mp3",
+      "seconds": 39.096,
+      "bytes": 234576,
+      "sourceTextSha256": "8b23819119ff56075462e6cf1a23ba106b53e3835eb2ee8d01b1bea8fd41139c",
+      "audioSha256": "1959a9ea57c99b47d567d52da559d6ec4f725579b8f76791c7208d99e04ac740",
+      "wordCount": 89,
+      "wordBoundaryCount": 86,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    }
+  ],
+  "fullTrack": {
+    "path": "public/course-audio/reading-landscape/en/full.mp3",
+    "seconds": 464.688,
+    "bytes": 2788364,
+    "audioSha256": "2b15d9041016109ca5d0d070d7bbf7f4542610955d8afa53a4a52310d8f3028d",
+    "fullDecode": "pass",
+    "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
+    "slides": [
+      {
+        "slide": 1,
+        "seconds": 19.752,
+        "bytes": 118512,
+        "audioSha256": "e13214784aebafe5a33cc65c549f912b7c6eddb75b042d39bbf3b125b465b54b"
+      },
+      {
+        "slide": 2,
+        "seconds": 21.024,
+        "bytes": 126144,
+        "audioSha256": "181bb91a42efcc45ec9d309ac541c9871e7387da0b5857de4e50e1f0954ff43c"
+      },
+      {
+        "slide": 3,
+        "seconds": 20.808,
+        "bytes": 124848,
+        "audioSha256": "2b65a10af345cf1ef8b88c9ae884e71f37061c56995a68c079bf49893b1ec2a4"
+      },
+      {
+        "slide": 4,
+        "seconds": 21.288,
+        "bytes": 127728,
+        "audioSha256": "eaa71f95ffe52561e94f44c3b8a0f501601dc4932c355fc838419c83e414be8c"
+      },
+      {
+        "slide": 5,
+        "seconds": 7.896,
+        "bytes": 47376,
+        "audioSha256": "526ab298c413d4075c4dd2394c67d4f2c92d98243d87582d74bab52fbd37f149"
+      },
+      {
+        "slide": 6,
+        "seconds": 32.712,
+        "bytes": 196272,
+        "audioSha256": "e52dbd5bf51de9dbe50c7304ea1dec2a74d308747b15ab13c6b07fb3fe2c401b"
+      },
+      {
+        "slide": 7,
+        "seconds": 22.008,
+        "bytes": 132048,
+        "audioSha256": "08b91e215c05890f3260210fa1aec6638385b63ae19b04334d178a1fc799162f"
+      },
+      {
+        "slide": 8,
+        "seconds": 26.376,
+        "bytes": 158256,
+        "audioSha256": "ccfd27e374049cf2cdaae05eb1b39a8e0527574cd761eeb1086c855b5ea8d09e"
+      },
+      {
+        "slide": 9,
+        "seconds": 7.584,
+        "bytes": 45504,
+        "audioSha256": "69a8af59c23f7d7c20c05c72237bc59a49f7f0c2ef43d2e90f5c36b8bac532e6"
+      },
+      {
+        "slide": 10,
+        "seconds": 21.336,
+        "bytes": 128016,
+        "audioSha256": "c78e0bcbdd0c601250f52ed9637861595e86a7a302d9a16b11f2512cf0adf22a"
+      },
+      {
+        "slide": 11,
+        "seconds": 10.272,
+        "bytes": 61632,
+        "audioSha256": "f8e43648fbe1f0c5870e3f0b70f81f2495a28779ccbf9da297b17ea6fe434c5d"
+      },
+      {
+        "slide": 12,
+        "seconds": 25.272,
+        "bytes": 151632,
+        "audioSha256": "d0f0034e13666ebb4b4557f10c730fbc00f66f6e9343c8f89cca901f5cb911c2"
+      },
+      {
+        "slide": 13,
+        "seconds": 7.272,
+        "bytes": 43632,
+        "audioSha256": "a43a1d8d8a3854c5a00ec0b30d1b36b4ecba5ea1ce077b78ccc8efb1c2165ce5"
+      },
+      {
+        "slide": 14,
+        "seconds": 44.376,
+        "bytes": 266256,
+        "audioSha256": "abf650d2e82be55fc71393fab4649845ea35c24a9f7baefe0151cc03a3e33b93"
+      },
+      {
+        "slide": 15,
+        "seconds": 39.096,
+        "bytes": 234576,
+        "audioSha256": "1959a9ea57c99b47d567d52da559d6ec4f725579b8f76791c7208d99e04ac740"
+      },
+      {
+        "slide": 16,
+        "seconds": 26.52,
+        "bytes": 159120,
+        "audioSha256": "eae883e18debb299186e80bf7d7d1ce664f6ac5d1ad506c80c1063eb785d4dac"
+      },
+      {
+        "slide": 17,
+        "seconds": 9.672,
+        "bytes": 58032,
+        "audioSha256": "762049394cb66c910c37106ae89c55b1d87bcc41b3e7cdbcdb403ab15f93c6c0"
+      },
+      {
+        "slide": 18,
+        "seconds": 22.608,
+        "bytes": 135648,
+        "audioSha256": "5e5a06c9fa0e9aaff5f491b14b3bc58a387e3dfc1bf25a5bc2a862a2e9c3adab"
+      },
+      {
+        "slide": 19,
+        "seconds": 18.864,
+        "bytes": 113184,
+        "audioSha256": "4fdbdd207ab372f2e8e2f1559fe1bbcb912fcb7497213d06a0f35dac5eb8685d"
+      },
+      {
+        "slide": 20,
+        "seconds": 30.408,
+        "bytes": 182448,
+        "audioSha256": "1cbf91bbaa8ebf3dba742b9623dad80ab2f313194935fcdefa4992e4fc434a47"
+      },
+      {
+        "slide": 21,
+        "seconds": 29.544,
+        "bytes": 177264,
+        "audioSha256": "8c1c110008e93cb0cb95903161ea2023f9c17f8ef5a4caf115979603dec6c754"
+      }
+    ],
+    "sumOfSlideDurationsSeconds": 464.688,
+    "durationDifferenceSeconds": 0.0
+  },
+  "humanListeningReview": false
+}

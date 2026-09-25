@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { Fragment, useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { startRolePreview } from '@/lib/use-role-navigation';
@@ -22,6 +23,7 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { cropByKey } from '@/lib/crop-catalog';
+import { useLanguage } from '@/lib/i18n';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -253,6 +255,8 @@ function SkeletonRow() {
 function initials(name: string) { return name.split(' ').map((p) => p[0]).join('').slice(0, 2); }
 
 export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder' }) {
+  const { lang } = useLanguage();
+  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const router = useRouter();
   const [sampleView, setSampleView] = useState<'design' | 'aerial' | null>(null);
   const [areaFilter, setAreaFilter] = useState('All areas');
@@ -434,16 +438,16 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {mode === 'funder' ? (
           <>
 
-            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? "in this tour register" : 'in your organisation'} color="#1F4D2B" />
-            <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
-            <Stat label="Food grown" value={`${dashboardTotals.produceT} t`} sub="this season" color="#2F6F9E" />
+            <Stat label={ui('Gardens','Izingadi')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="#1F4D2B" />
+            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('farmers supported','abalimi abasekelwayo')} color="#20190F" />
+            <Stat label={ui('Food grown','Ukudla okukhiqiziwe')} value={`${dashboardTotals.produceT} t`} sub={ui('this season','kule sizini')} color="#2F6F9E" />
           </>
         ) : (
           <>
-            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? "in this tour register" : 'in your organisation'} color="#1F4D2B" />
-            <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
-            <Stat label="Produce, season" value={`${dashboardTotals.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
-            <Stat label="Training done" value={`${dashboardTotals.training}%`} sub="across active gardens" color="#9E5C08" />
+            <Stat label={ui('Active gardens','Izingadi ezisebenzayo')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="#1F4D2B" />
+            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('enrolled this cycle','ababhaliswe kulo mjikelezo')} color="#20190F" />
+            <Stat label={ui('Produce, season','Umkhiqizo, isizini')} value={`${dashboardTotals.produceT} t`} sub={ui('logged by supervisors','oqoshwe abaphathi')} color="#2F6F9E" />
+            <Stat label={ui('Training done','Ukuqeqeshwa okuqediwe')} value={`${dashboardTotals.training}%`} sub={ui('across active gardens','kuzo zonke izingadi ezisebenzayo')} color="#9E5C08" />
           </>
         )}
       </div>
@@ -471,31 +475,32 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           <div className="p-3">
             <div className="flex items-center justify-between mb-2 px-1">
               <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
-                {mode === 'funder' ? 'Funded gardens' : 'Gardens'}
+                {ui(mode === 'funder' ? 'Funded gardens' : 'Gardens', mode === 'funder' ? 'Izingadi ezixhaswayo' : 'Izingadi')}
               </div>
               {isDemo && (
-                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: '#9E5C08', border: '1px solid rgba(158,92,8,0.3)' }}>demo sample</span>
+                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: '#9E5C08', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
               )}
             </div>
-            <label className="block text-sm mb-3" style={{color:'#36553d'}}>Area / village<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'#fff',border:'1px solid #c6cfbf'}}><option>All areas</option>{areaNames.map(a=><option key={a}>{a}</option>)}</select></label>
-            {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?'Close Lima example':'Try Lima for this role'}</button>}
+            {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'#506158'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
+            <label className="block text-sm mb-3" style={{color:'#36553d'}}>{ui('Area / village','Indawo / isigodi')}<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'#fff',border:'1px solid #c6cfbf'}}><option value="All areas">{ui('All areas','Zonke izindawo')}</option>{areaNames.map(a=><option key={a} value={a}>{a === 'Area not recorded' ? ui(a,'Indawo ayirekhodiwe') : a}</option>)}</select></label>
+            {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?ui('Close Lima example','Vala isibonelo saseLima'):ui('Try Lima for this role','Zama isibonelo saseLima sale ndima')}</button>}
             {showSampleLima && isDemo && <SampleLimaConversation role={mode==='funder'?'funder':'ngo'}/>}
             {gardensLoading ? (
-              <div className="space-y-1">
-                <SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
+              <div className="space-y-1" aria-label={ui('Loading gardens','Kulayishwa izingadi')}>
+                <p className="text-xs" style={{color:'#755942'}}>{ui('Loading gardens…','Kulayishwa izingadi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
               </div>
             ) : gardensLoadError ? (
               <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
-                We could not load the gardens for this organisation. Check your account access and try again.
+                {ui('We could not load the gardens for this organisation. Check your account access and try again.','Asikwazanga ukulayisha izingadi zale nhlangano. Hlola ukuthi i-akhawunti yakho inemvume yokuzibona, bese uzama futhi.')}
               </div>
             ) : gardens.length === 0 ? (
               <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#755942' }}>
-                No gardens have been added yet.
+                {ui('No gardens have been added yet.','Azikho izingadi ezifakiwe okwamanje.')}
               </div>
             ) : (
               <div className="space-y-1">
                 {areaGardens.map((g,index) => (
-                  <Fragment key={g.id}>{(index===0 || areaGardens[index-1].town!==g.town) && <h3 className="text-sm font-semibold pt-4 pb-2" style={{color:'#36553d'}}>{g.town || 'Area not recorded'} · {areaGardens.filter(x=>x.town===g.town).length} gardens</h3>}<button
+                  <Fragment key={g.id}>{(index===0 || areaGardens[index-1].town!==g.town) && <h3 className="text-sm font-semibold pt-4 pb-2" style={{color:'#36553d'}}>{g.town || ui('Area not recorded','Indawo ayirekhodiwe')} · {areaGardens.filter(x=>x.town===g.town).length} {ui('gardens','izingadi')}</h3>}<button
                     key={g.id}
                     onClick={() => selectGarden(g)}
                     className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all"
@@ -507,7 +512,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: STATUS[g.status].color }} />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{g.name}</div>
-                      <div className="text-xs font-mono" style={{ color: '#755942' }}>{g.town} · {g.farmers || '—'} farmers</div>{g.kind && <div className="text-xs mt-1" style={{ color: '#36553d' }}>{g.kind} · {Math.round(g.areaM2 ?? 0).toLocaleString()} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
+                      <div className="text-xs font-mono" style={{ color: '#755942' }}>{g.town} · {g.farmers || '—'} {ui('farmers','abalimi')}</div>{g.kind && <div className="text-xs mt-1" style={{ color: '#36553d' }}>{g.kind} · {numberLabel(Math.round(g.areaM2 ?? 0))} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
                     </div>
                     <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2F6F9E' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
                   </button></Fragment>
@@ -522,13 +527,13 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
           {!isDemo && <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}>
-              {gardener
+                {gardener
                 ? <><MapPin size={12} style={{ color: '#755942' }} /> {isDemo ? gardener.name : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : isDemo
                   ? `Showing ${gardens.length} garden examples`
                   : gardensLoadError
-                    ? 'Gardens unavailable'
-                    : `Showing ${gardens.length} gardens`}
+                    ? ui('Gardens unavailable','Izingadi azitholakali')
+                    : ui(`Showing ${gardens.length} gardens`,`Kuboniswa izingadi ezingu-${gardens.length}`)}
             </span>
           </div>}
           {isDemo ? <SampleGardenVisual key={garden?.id ?? 'overview'} kind={garden?.kind} variant={garden?.id} name={garden?.name ?? 'Example garden landscape'} initial="design" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
@@ -548,7 +553,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             {(Object.keys(STATUS) as Status[]).map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: STATUS[s].color }} />
-                <span className="text-xs font-mono" style={{ color: '#755942' }}>{STATUS[s].label}</span>
+                <span className="text-xs font-mono" style={{ color: '#755942' }}>{ui(STATUS[s].label, s === 'thriving' ? 'Kuyachuma' : s === 'establishing' ? 'Kuyasungulwa' : 'Kudinga ukwesekwa')}</span>
               </div>
             ))}
           </div>
@@ -556,7 +561,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           {!garden && (
             <div className="absolute inset-0 flex items-end justify-center pb-16 pointer-events-none z-10">
               <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#755942' }}>
-                Select a garden from the list to drill in
+                {ui('Select a garden from the list to drill in','Khetha ingadi ohlwini ukuze ubone imininingwane yayo')}
               </div>
             </div>
           )}
@@ -588,44 +593,45 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono" style={{ color: '#755942' }}>ID {gardener.idNumber}</div>
                     )}
                     <div className="text-xs font-mono" style={{ color: '#755942' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
+                    {lang === 'zu' && <p className="text-xs" style={{color:'#506158'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
                   </div>
                 </div>
                 <button onClick={() => { if (isDemo) setSampleView('aerial'); else mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 }); }}
                   className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: '#2F6F9E' }}>
-                  <MapPin size={14} /> {isDemo ? 'Open example location' : 'Find this garden on the map'}
+                  <MapPin size={14} /> {ui(isDemo ? 'Open example location' : 'Find this garden on the map', isDemo ? 'Vula indawo yesibonelo' : 'Thola le ngadi kumephu')}
                 </button>
 
                 {gardenerLoading ? (
                   <Spinner />
                 ) : gardenerError ? (
                   <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
-                    We could not load {gardener.name}&apos;s production, sales and training data. Check your account access and try again.
+                    {ui(`We could not load ${gardener.name}'s production, sales and training data. Check your account access and try again.`,`Asikwazanga ukulayisha idatha ka-${gardener.name} yokukhiqiza, ukuthengisa nokuqeqeshwa. Hlola imvume ye-akhawunti yakho bese uzama futhi.`)}
                     <button
                       onClick={() => { void openGardener(gardener); }}
                       className="block mt-2 text-xs font-display font-semibold underline"
                       style={{ color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
                     >
-                      Retry
+                      {ui('Retry','Zama futhi')}
                     </button>
                   </div>
                 ) : (
                   <>
                     {/* Value summary */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>Produced</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>Sold</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>Sales received</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{totals.soldR.toLocaleString()}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
+                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{numberLabel(totals.soldR)}</div></div>
                     </div>
                     <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
                       {totals.kept === null
-                        ? 'Harvest not matched to sales: unknown — sales exceed recorded harvest'
-                        : `Harvest not matched to sales: ${totals.kept} kg`}
+                        ? ui('Harvest not matched to sales: unknown — sales exceed recorded harvest','Inani lesivuno elingahambisani nokuthengisa: alaziwa — okuthengisiwe kudlula isivuno esirekhodiwe')
+                        : ui(`Harvest not matched to sales: ${totals.kept} kg`,`Isivuno esingahambisani nokuthengisa: ${totals.kept} kg`)}
                     </p>
 
                     {/* Courses */}
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>Courses & training</div>
+                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>{ui('Courses & training','Izifundo nokuqeqeshwa')}</div>
                         <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>{gardener.trainingPct}%</span>
                       </div>
                       <div className="grid grid-cols-2 gap-1">
@@ -638,9 +644,10 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       </div>
                     </div>
 
-                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
-                    {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>This register does not include the farmer’s private design.</p>}
-                    <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>Preview & download this garden record</summary>
+                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
+                    {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
+                    {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'#506158'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
+                    <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },
                         { title: 'Production entries', lines: gardener.production.map(p => `${p.date}: ${p.crop.n}, ${p.kg} kg`) },
@@ -651,7 +658,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Produce photos */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>Produce photos</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>{ui('Produce photos','Izithombe zomkhiqizo')}</div>
                       <div className="flex gap-1.5 flex-wrap">
                         {photoCrops.map(({ crop: c, photoUrl: recordedPhoto }, i) => { const photoUrl = isDemo ? sampleProducePhoto(c.n) : recordedPhoto; return (
                           photoUrl ? (
@@ -664,12 +671,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                           )
                         ); })}
                       </div>
-                      {isDemo && <p className="text-xs mt-2" style={{ color: '#506158' }}>AI-generated produce photos; illustrations identify the other crops.</p>}
+                      {isDemo && <p className="text-xs mt-2" style={{ color: '#506158' }}>{ui('AI-generated produce photos; illustrations identify the other crops.','Izithombe zomkhiqizo zenziwe nge-AI; imifanekiso ikhombisa ezinye izitshalo.')}</p>}
                     </div>
 
                     {/* Books — production */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> Books — production</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
                           <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#755942' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
@@ -679,7 +686,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Books — sales */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> Books — sales</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
                           <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
@@ -692,24 +699,26 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ) : (
               /* ── LEVEL 2 — garden + gardeners ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}><ArrowLeft size={14} /> all gardens</button>
+                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}><ArrowLeft size={14} /> {ui('all gardens','zonke izingadi')}</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {Math.round(garden.areaM2 ?? 0).toLocaleString()} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: '#36553d' }}>Group language: {garden.language}</p>}
+                  <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: '#36553d' }}>Group language: {garden.language}</p>}
                 </div>
-                {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'#e9f1e9',color:'#214d35'}}>Open completed garden report (PDF) →</a>}
+                {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'#e9f1e9',color:'#214d35'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
-                  {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], ['Training', garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
+                  {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, '#20190F'], [ui('Produce','Umkhiqizo'), `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
                     <div key={l as string} className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
                   ))}
                 </div>
                 <div>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>Gardeners — tap for full record</div>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
                   {gardenersLoading ? (
-                    <div className="space-y-1">
-                      <SkeletonRow /><SkeletonRow /><SkeletonRow />
+                    <div className="space-y-1" aria-label={ui('Loading gardeners','Kulayishwa abalimi')}>
+                      <p className="text-xs" style={{color:'#755942'}}>{ui('Loading gardeners…','Kulayishwa abalimi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow />
                     </div>
+                  ) : gardeners.length === 0 ? (
+                    <p className="text-xs rounded-lg p-3" style={{background:'#FFFEFA',color:'#755942'}}>{ui('No gardeners are listed for this garden yet.','Abekho abalimi abafakwe kule ngadi okwamanje.')}</p>
                   ) : (
                     <div className="space-y-1">
                       {gardeners.map((gr) => {
@@ -726,8 +735,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   )}
                 </div>
                 <div className="rounded-lg p-2.5" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#755942' }}>Funder report</div>
-                  <p className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.</p>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#755942' }}>{ui('Funder report','Umbiko womxhasi')}</div>
+                  <p className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>{ui('Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.','Sebenzisa Imibiko ukuze ubone iphothifoliyo eyabiwe. Imvume yomlimi, ukwabelana kwenhlangano nemvume yomxhasi kunquma ukuthi yimaphi amarekhodi afakiwe; imininingwane eyimfihlo ehlonza umuntu ayifakwa.')}</p>
                 </div>
               </div>
             )}

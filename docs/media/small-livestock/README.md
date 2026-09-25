@@ -1,10 +1,39 @@
 # Small Livestock Integration media — 20 September 2026
 
+> **Current-state note, 23 September:** The illustrated-release record below
+> describes authored videos that Rory later held for visual quality. The
+> adjacent `verification.json` is a historical snapshot of that release, not a
+> live asset manifest: its slide-9 `watch-09-bee-pollination.mp4` and slide-14
+> `watch-14-nutrient-loop.mp4` entries and hashes record the old authored
+> renders. Neither movie nor its poster is present in the current public
+> payload or learner player. Current source registration is in
+> `lib/course-deck.ts`: slide 9 uses the separate
+> `flow-bee-between-blossoms.mp4`; slide 14 has no registered video. The
+> current static slide-14 diagram still overstates a closed nutrient cycle. See
+> `../studies-animation-quality/small-livestock-l3-lesson-check.md` before
+> reusing any of the older render or verification results.
+
 ## Illustrated-release update
 
 The history below describes the earlier media branch. The current illustrated release supersedes its unchanged-audio and unchanged-content statements: source-backed livestock corrections now update lesson bodies, four quiz claims, English narration and all twenty English recordings. AGY reviewed the narration text; the existing Edge TTS pipeline generated the recordings. Automated word-boundary comparison and full decoding passed; this is not human listening approval.
 
-Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The updated verification JSON is authoritative for bytes, audio hashes, captions and motion checks. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
+Watch 4 now defines a chicken tractor before showing it. Its clip is 14.583333 seconds; the other two remain fourteen seconds. The verification JSON records bytes, audio hashes, captions and motion checks for that historical illustrated release only. A separate eight-second Google Flow duck scene is included in the illustrated-release manifest. All twenty slides were re-rendered at JPEG quality 90. New playback checks are recorded with the illustrated release, not inferred from the earlier preview. isiZulu remains unpublished review material.
+
+## isiZulu learner review draft — 24 September 2026
+
+A clearly labelled, unreviewed isiZulu draft now includes 20 localized still slides, the complete lesson and quiz localization, and 20 Thando narration clips plus a full track. The recordings use `zu-ZA-ThandoNeural` at `-12%`. Fluent isiZulu, local farming/beekeeping, legal-scope and human listening reviews remain pending. No practitioner approval is claimed.
+
+The bee scene reuses the registered eight-second `flow-bee-between-blossoms.mp4`. Its isiZulu narration says only that the scene shows a bee moving between adjacent blossoms; it does not claim confirmed pollen transfer or yield. Broad natural subspecies ranges remain separate from movement controls, and registration wording names only activities defined by the national controls. No new Flow generation or animation was made.
+
+All people shown in the localized deck are Black South African smallholder farmers. The final contact sheet, 390 px samples and per-slide image/audio hashes are in [`zu-preview/`](zu-preview/); complete word-boundary and decode proofs are in [`../../narration-reviews/small-livestock-zu-audio-proof/`](../../narration-reviews/small-livestock-zu-audio-proof/). Slides 14–15 use localized static nutrient diagrams.
+
+Rebuild the stills with:
+
+```sh
+node scripts/make-lesson-slides.mjs small-livestock zu public/course-decks/small-livestock/zu
+```
+
+Run audio recording with `uv run --with edge-tts python scripts/record-small-livestock-zu-draft.py`; the script stages files outside the learner payload until imported. The draft badge, narration notice and pending review state remain active.
 
 ## Earlier branch record
 

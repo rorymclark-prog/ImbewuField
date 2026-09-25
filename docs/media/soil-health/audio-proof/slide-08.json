@@ -1,0 +1,256 @@
+{
+  "seconds": 38.784,
+  "bytes": 232704,
+  "audioSha256": "39b5cb955bbb3ba48d626011ce7395cc646285be35de3d016a4a3d578d6cc03f",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Ukucinana",
+      "offset": 1318330,
+      "duration": 7670410
+    },
+    {
+      "text": "komhlabathi",
+      "offset": 9272910,
+      "duration": 9517080
+    },
+    {
+      "text": "ukungaphumi",
+      "offset": 20210410,
+      "duration": 9090830
+    },
+    {
+      "text": "kahle",
+      "offset": 29301250,
+      "duration": 3692910
+    },
+    {
+      "text": "kwamanzi",
+      "offset": 32994160,
+      "duration": 6818330
+    },
+    {
+      "text": "nokuncipha",
+      "offset": 39812500,
+      "duration": 7528330
+    },
+    {
+      "text": "kwezinto",
+      "offset": 47340830,
+      "duration": 5823750
+    },
+    {
+      "text": "eziphilayo",
+      "offset": 53306660,
+      "duration": 8522910
+    },
+    {
+      "text": "kunganciphisa",
+      "offset": 63107910,
+      "duration": 10227080
+    },
+    {
+      "text": "ukukhula",
+      "offset": 73761250,
+      "duration": 6107910
+    },
+    {
+      "text": "kwezimpande",
+      "offset": 79869160,
+      "duration": 8096660
+    },
+    {
+      "text": "nokuphila",
+      "offset": 88250000,
+      "duration": 6676250
+    },
+    {
+      "text": "komhlabathi",
+      "offset": 94926250,
+      "duration": 9659160
+    },
+    {
+      "text": "Umbala",
+      "offset": 114738750,
+      "duration": 5397910
+    },
+    {
+      "text": "ophaphathekile",
+      "offset": 121130830,
+      "duration": 10937500
+    },
+    {
+      "text": "noma",
+      "offset": 132068330,
+      "duration": 3551250
+    },
+    {
+      "text": "izibungu",
+      "offset": 136045410,
+      "duration": 6818330
+    },
+    {
+      "text": "ezimbalwa",
+      "offset": 143147910,
+      "duration": 7528330
+    },
+    {
+      "text": "akufakazeli",
+      "offset": 151244160,
+      "duration": 9232910
+    },
+    {
+      "text": "ukuthi",
+      "offset": 160761250,
+      "duration": 3977080
+    },
+    {
+      "text": "amakhemikhali",
+      "offset": 164880830,
+      "duration": 10653330
+    },
+    {
+      "text": "abulale",
+      "offset": 176244160,
+      "duration": 5965830
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 182494160,
+      "duration": 8806660
+    },
+    {
+      "text": "Umsebenzi",
+      "offset": 201528330,
+      "duration": 7244160
+    },
+    {
+      "text": "wezibungu",
+      "offset": 209198750,
+      "duration": 6818330
+    },
+    {
+      "text": "nawo",
+      "offset": 216017080,
+      "duration": 4687500
+    },
+    {
+      "text": "uyashintsha",
+      "offset": 220846660,
+      "duration": 7670410
+    },
+    {
+      "text": "kuye",
+      "offset": 228517080,
+      "duration": 3267080
+    },
+    {
+      "text": "ngomswakama",
+      "offset": 231784160,
+      "duration": 8096660
+    },
+    {
+      "text": "nenkathi",
+      "offset": 239880830,
+      "duration": 5681660
+    },
+    {
+      "text": "yonyaka",
+      "offset": 245562500,
+      "duration": 6392080
+    },
+    {
+      "text": "Bheka",
+      "offset": 262323750,
+      "duration": 2982910
+    },
+    {
+      "text": "amaphethini",
+      "offset": 265732910,
+      "duration": 8096660
+    },
+    {
+      "text": "ezindaweni",
+      "offset": 274113750,
+      "duration": 7528330
+    },
+    {
+      "text": "ezahlukene",
+      "offset": 281784160,
+      "duration": 7812500
+    },
+    {
+      "text": "zensimu",
+      "offset": 289738750,
+      "duration": 6534160
+    },
+    {
+      "text": "Hlola",
+      "offset": 306784160,
+      "duration": 3693330
+    },
+    {
+      "text": "umlando",
+      "offset": 311187500,
+      "duration": 6392080
+    },
+    {
+      "text": "wokunakekela",
+      "offset": 317579580,
+      "duration": 10369160
+    },
+    {
+      "text": "ukuphuma",
+      "offset": 329653330,
+      "duration": 7244160
+    },
+    {
+      "text": "kwamanzi",
+      "offset": 336897910,
+      "duration": 6960000
+    },
+    {
+      "text": "nokukhula",
+      "offset": 343857910,
+      "duration": 6960410
+    },
+    {
+      "text": "kwezitshalo",
+      "offset": 350818330,
+      "duration": 8096660
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 359198750,
+      "duration": 5113750
+    },
+    {
+      "text": "kokukhetha",
+      "offset": 364312500,
+      "duration": 6534160
+    },
+    {
+      "text": "ikhambi",
+      "offset": 371130830,
+      "duration": 6818330
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "soil-health",
+  "language": "zu",
+  "slide": 8,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-08.txt",
+  "sourceSha256": "e9fb067702eeed01ba007dba5777c9523d5196b0eabf38255ffc6678e00f180d",
+  "scriptFile": "docs/narration/soil-health.zu.md",
+  "scriptSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+  "englishSourceFile": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "363d6d84d2ed56731b22fa482c0c1037346455b4283e58680bad5d51076dc0c3",
+  "generatedAt": "2026-09-24T18:21:40.841230+00:00",
+  "reviewStatus": "unreviewed-draft; fluent isiZulu and local farming review pending"
+}

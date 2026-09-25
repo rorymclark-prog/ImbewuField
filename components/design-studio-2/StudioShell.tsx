@@ -300,6 +300,9 @@ export default function StudioShell() {
       className={`studio-shell-root flex h-dvh w-full flex-col overflow-hidden ${sampleBannerActive ? 'reserve-sample-banner' : ''}`}
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
+      {/* The studio leads with its canvas and toolbars, so nothing here was a heading and the
+          route had no h1 at all. Screen-reader only: naming the tool costs no pixels. */}
+      <h1 className="sr-only">Design Studio</h1>
       <style jsx>{`
         /* Matches the banner's own breakpoint exactly (SampleModeBanner.tsx: "bottom-
            [calc(60px+safe-area)] lg:bottom-0") so the reserve appears and disappears at the

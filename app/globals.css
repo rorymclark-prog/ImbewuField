@@ -9,7 +9,12 @@
   --color-leaf-500: #5FA66A;
   --color-border: #DDE3DC;
   --color-muted-strong: #4B554D;
-  --color-muted: #667168;
+    /* #556352, not #667168: measured against the three surfaces this token is actually painted on in
+     this column (card #FFFEFA, page #E4DCC6, inset #F7F3E6) it read 5.04 / 3.72 / 4.58 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #556352;
   --color-surface: #FFFFFF;
   /* #7A4408, not the paler #D18A1F this used to carry: at #D18A1F this token read 2.82:1 against
      the card and 2.08:1 against the page — both well under the 4.5:1 body-text floor. It renders
@@ -35,7 +40,14 @@
   --color-card: #FFFEFA;
   --color-ink: #1F2420;
   --color-ink-muted: #5C5040;
-  --color-ink-faint: #8C7A62;
+  /* #755942, not #8C7A62. As a body-text colour this token measured 3.02:1 against the page
+     (#E4DCC6), 4.10:1 against the card (#FFFEFA) and 3.36:1 against an inset (#EDE7DB) — under the
+     4.5:1 floor on all three surfaces it is ever painted on, and it carried 453 declarations of
+     real copy: overlines, captions, entry dates and the whole /calendar month strip. #755942 is
+     the value --text-muted already settled on for exactly this reason (4.70 page / 6.38 card /
+     5.22 inset) and stays visibly lighter than --color-ink-muted. Guarded by
+     tests/component-text-contrast.test.ts, which scans components for literal text hexes. */
+  --color-ink-faint: #755942;
   --color-hairline: #ECE3C9;
   --font-display: 'Newsreader', Georgia, serif;
   --font-sans: 'Public Sans', system-ui, sans-serif;
@@ -87,7 +99,7 @@
 
   --text: #20190F;
   --text-2: #5C5040;
-  --text-3: #8C7A62;
+  --text-3: #755942;      /* was #8C7A62 — see --color-ink-faint above */
 
   /* status — separate from the accent; soft-filled + a solid dot */
   --ok: #3A7518;     --ok-soft: rgba(58,117,24,0.12);
@@ -159,6 +171,62 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ═══════════════════════════════════════════════════════
+   FORM COLUMN — a field is as wide as what goes in it
+
+   Measured at 1440: the "Log production" form on /records ran the full content width. A crop
+   picker, a four-character kilogram field and the primary "Save harvest" button were each about
+   1,300px across — a target the width of the screen for a number like "8.4", and a line length
+   no one reads. That is the phone layout stretched, not a desktop layout.
+
+   Phones keep the full width, which is correct there: below 768px the viewport IS the column.
+   ═══════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .u-form-column { max-width: 34rem; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   THE §0 TYPE SCALE, AS CLASSES
+
+   DESIGN.md calls reusing phone pixels on desktop "the #1 recurring mistake" and prints a table
+   of what each role should be at each width. It kept recurring because it is not a discipline
+   problem: this app sets type in 1,717 inline `fontSize` declarations, and an inline style cannot
+   carry a media query. There were 23 `clamp()` uses and exactly ONE responsive text utility in
+   the whole app, so a breakpoint had almost nothing to act on. Measured at 390 and 1440: every
+   hero number on /home, /records, /journal, /calendar, /survey and /invoice renders at the same
+   26px on both, against a 40px desktop target; section titles sit at 16px against 22.
+
+   /cropplan is the exception — it uses `sm:` classes — which is the proof the mechanism works
+   when something reaches for it.
+
+   These are that table, once, so a role can be named instead of a pixel. Applying one means
+   DELETING the element's inline fontSize: inline wins over a class, so a leftover px silently
+   keeps the old behaviour.
+
+   Sizes are the §0 values with one deliberate change: the overline is 12px, not the table's 11.
+   tests/type-floor.test.ts holds a hard 12px floor on every farmer surface, that floor came out
+   of watching someone read this app on a hand-me-down Android, and it is the stricter rule.
+   ═══════════════════════════════════════════════════════ */
+.t-hero  { font-family: var(--font-display); font-size: 25px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+.t-h1    { font-family: var(--font-display); font-size: 24px; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+.t-h2    { font-family: var(--font-display); font-size: 17px; font-weight: 600; line-height: 1.25; }
+.t-body  { font-family: var(--font-sans); font-size: 15px; line-height: 1.55; }
+.t-small { font-family: var(--font-sans); font-size: 13px; line-height: 1.45; }
+.t-label { font-family: var(--font-sans); font-size: 12px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; }
+
+@media (min-width: 768px) {
+  .t-hero  { font-size: 34px; }
+  .t-h1    { font-size: 26px; }
+  .t-h2    { font-size: 20px; }
+  .t-body  { font-size: 16px; }
+}
+
+@media (min-width: 1024px) {
+  .t-hero  { font-size: 40px; }
+  .t-h1    { font-size: 30px; }
+  .t-h2    { font-size: 22px; }
+}
+
+/* ═══════════════════════════════════════════════════════
    LEGIBILITY — nudge the smallest text utilities up a touch for readability,
    but NOT oversized (the previous values ~doubled every class app-wide, which
    made the report sidebar and everything else far too big). These come after
@@ -218,6 +286,9 @@ html[data-theme="earth"] {
   --blue: #1C5A9E;
   --orange: #B83A18;
   --teal: #1A7868;
+  /* the violet a field journal's "visitor / training" entries are inked in. Added when the
+     journal's kind inks moved off fixed light-mode hexes — see lib/field-journal.ts. */
+  --violet: #5C3F86;
 
   --header-bg: rgba(255,254,250,0.97);
   --glass-bg: rgba(255,254,250,0.90);
@@ -241,7 +312,12 @@ html[data-theme="earth"].dark {
   --color-leaf-500: #B6F078;
   --color-border: #2C2114;
   --color-muted-strong: #A8906C;
-  --color-muted: #685040;
+    /* #9C8160, not #685040: measured against the three surfaces this token is actually painted on in
+     this column (card #181208, page #0D0A06, inset #22190E) it read 2.49 / 2.64 / 2.32 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #9C8160;
   --color-surface: #181208;
   --color-harvest: #D8A840;
   --color-canvas: #0D0A06;
@@ -259,6 +335,7 @@ html[data-theme="earth"].dark {
 
   --border: #2C2114;
   --border-bright: #483618;
+  --border-strong: #4A3820;   /* one step stronger than --border, see :root */
   --border-glow: rgba(140,192,60,0.3);
 
   --text-primary: #EEE4D0;
@@ -266,15 +343,19 @@ html[data-theme="earth"].dark {
   /* #957A58, not the previous #685040: that value read 2.49:1 against the card, under the 4.5:1
      floor for the same ThemePanel copy the light-mode fix above addresses. #957A58 clears 4.5:1
      against both the card (4.61:1) and the page (4.89:1). */
-  --text-muted: #957A58;
+    /* #A08564, not #957A58: the previous value cleared the card and the page but read 4.29:1 against
+     --bg-2 (#22190E) — the ThemePanel row surface its own descriptions sit on, a surface the
+     earlier fix did not model. #A08564 clears 4.5:1 on all three (5.34 / 5.68 / 4.97). */
+  --text-muted: #A08564;
 
   --emerald: #82C844;
   --emerald-bright: #A8E860;
   --gold: #D8A840;
-  --gold-dim: #8C6C20;
+  --gold-dim: #B49040;   /* was #8C6C20 — 3.79:1 on the card; this is 6.20 / 6.59 / 5.77 */
   --blue: #58A0DC;
   --orange: #E07850;
   --teal: #58B8A0;
+  --violet: #B79CE0;
 
   --header-bg: rgba(13,10,6,0.97);
   --glass-bg: rgba(24,18,8,0.88);
@@ -298,7 +379,12 @@ html[data-theme="slate"] {
   --color-leaf-500: #35A879;
   --color-border: #E2E8F2;
   --color-muted-strong: #445266;
-  --color-muted: #8898AA;
+    /* #5F6E80, not #8898AA: measured against the three surfaces this token is actually painted on in
+     this column (card #F8FAFC, page #FFFFFF, inset #F1F5F9) it read 2.82 / 2.95 / 2.69 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #5F6E80;
   --color-surface: #F8FAFC;
   --color-harvest: #AA5C08;
   --color-canvas: #FFFFFF;
@@ -316,6 +402,7 @@ html[data-theme="slate"] {
 
   --border: #E2E8F2;
   --border-bright: #CBD5E4;
+  --border-strong: #B4C2D6;
   --border-glow: rgba(20,155,115,0.3);
 
   --text-primary: #0C1526;
@@ -332,6 +419,7 @@ html[data-theme="slate"] {
   --blue: #1555AA;
   --orange: #C03C18;
   --teal: #0A6E6A;
+  --violet: #6042A0;
 
   --header-bg: rgba(255,255,255,0.97);
   --glass-bg: rgba(248,250,252,0.9);
@@ -355,7 +443,12 @@ html[data-theme="slate"].dark {
   --color-leaf-500: #60D0A2;
   --color-border: #1A2540;
   --color-muted-strong: #8898AA;
-  --color-muted: #4A5A6E;
+    /* #8090AC, not #4A5A6E: measured against the three surfaces this token is actually painted on in
+     this column (card #0C1526, page #060A12, inset #1A2540) it read 2.59 / 2.81 / 2.15 — under the 4.5:1 body-text floor on all three, and
+     it carries real copy (the /home tile captions and the /records field hints both read
+     var(--color-muted)). Guarded by tests/theme-text-contrast.test.ts, which now covers
+     --color-muted, and the inset surface as well as the card and the page. */
+  --color-muted: #8090AC;
   --color-surface: #0C1526;
   --color-harvest: #E8A030;
   --color-canvas: #060A12;
@@ -373,6 +466,7 @@ html[data-theme="slate"].dark {
 
   --border: #1A2540;
   --border-bright: #2E3E5C;
+  --border-strong: #3C5075;
   --border-glow: rgba(20,155,115,0.3);
 
   --text-primary: #DCE4F0;
@@ -380,15 +474,19 @@ html[data-theme="slate"].dark {
   /* #7284A0, not the previous #4A5A6E: that value read 2.59:1 against the card, under the 4.5:1
      floor for the same ThemePanel copy the earth-theme fixes above address. #7284A0 clears 4.5:1
      against both the card (4.80:1) and the page (5.21:1). */
-  --text-muted: #7284A0;
+    /* #8090AC, not #7284A0: the previous value cleared the card and the page but read 4.00:1 against
+     --bg-2 (#1A2540) — the ThemePanel row surface its own descriptions sit on, a surface the
+     earlier fix did not model. #8090AC clears 4.5:1 on all three (5.65 / 6.14 / 4.70). */
+  --text-muted: #8090AC;
 
   --emerald: #18A878;
   --emerald-bright: #50CCA0;
   --gold: #E8A030;
-  --gold-dim: #9A6818;
+  --gold-dim: #B49040;   /* slate dark, same fix as earth dark above */
   --blue: #4890DC;
   --orange: #DC7050;
   --teal: #40A8A4;
+  --violet: #AE9CE8;
 
   --header-bg: rgba(6,10,18,0.97);
   --glass-bg: rgba(12,21,38,0.88);
@@ -638,7 +736,11 @@ body.is-sample-mode .pwa-update-notifier {
 /* Display scale — Newsreader-tuned (gentler negative tracking than a grotesk). */
 .u-display-lg { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.08; letter-spacing: -0.02em; font-weight: 700; }
 .u-display-md { font-family: var(--font-display); font-size: 2.1rem;  line-height: 1.1;  letter-spacing: -0.015em; font-weight: 700; }
-.u-display-sm { font-family: var(--font-display); font-size: 1.5rem;  line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+.u-display-sm { font-family: var(--font-display); font-size: 24px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 700; }
+/* The home hero's heading followed the §0 hero row the moment this stopped being a flat
+   1.5rem: it rendered at 24px on a 1440 screen, against a 40px target. */
+@media (min-width: 768px) { .u-display-sm { font-size: 30px; } }
+@media (min-width: 1024px) { .u-display-sm { font-size: 34px; } }
 .u-tabular { font-variant-numeric: tabular-nums; }
 .u-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
 
@@ -730,12 +832,51 @@ body.is-sample-mode .pwa-update-notifier {
 .produce-art-fallback { display:inline-block; line-height:1.1; vertical-align:middle; }
 @media print { .produce-art { min-width:0; min-height:0; } }
 
+/* ═══════════════════════════════════════════════════════
+   KEYBOARD FOCUS — visible on every control, in every theme
+
+   There were two :focus-visible rules in this file (the Design Studio edge grips and the photo
+   previews below), focus was mentioned in 15 of 239 component files, and 22 components set
+   `outline: 'none'` INLINE on a text input — so for anyone navigating by keyboard, most of this
+   app gave no indication of where they were. A farmer on a borrowed laptop, a mentor tabbing
+   through a survey, anyone using a switch or a screen magnifier: no caret, no ring, nothing.
+
+   `!important` is deliberate and is the only thing that works here. An inline `outline: 'none'`
+   beats any ordinary stylesheet rule on specificity, and those 22 declarations are spread across
+   community, contact, survey and profile forms — the rule has to win from the stylesheet or it
+   would have to be deleted from every one of them by hand, and the next hand-written input would
+   reintroduce it. :where() keeps the selector at zero specificity so nothing ELSE about these
+   controls is affected.
+
+   `currentColor` rather than a token: the ring then inherits whatever colour the control's own
+   text already uses, which is a colour already checked against that control's own background —
+   white on the forest CTA, ink on a card, paper on the dark map panels. One rule, correct in
+   every theme and on every surface, with no per-theme override to keep in step.
+
+   :focus-visible, not :focus — a mouse click on a button does not draw a ring; a Tab to it does.
+   ═══════════════════════════════════════════════════════ */
+:where(a[href], button, [role="button"], input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+/* Inputs sit inside their own border, so an offset ring reads as a double border. Tuck it in. */
+:where(input, select, textarea):focus-visible {
+  outline-offset: 1px !important;
+}
+
 /* Photo previews are keyboard controls as well as tap targets. */
 img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }
 
 /* Keep the same compact navigation on every phone; secondary tools live in the drawer. */
 @media (max-width: 650px) {
-  header:has(> [data-app-menu]) { height:52px !important; min-height:52px; padding:4px 8px !important; gap:6px !important; flex-wrap:nowrap; }
+  /* The top status-bar inset, the other half of the viewport-fit=cover bargain that
+     .workspace-main below already pays at the bottom. Without it the clock and signal icons
+     land on the Back button and the page title. Border-box is global, so the height grows by
+     the inset and the content is pushed down by the same amount: the content box stays 52px,
+     and with no inset both calc()s collapse to the original values. Mirrors APP_HEADER_STYLE
+     in lib/app-header.ts — change both together. */
+  header:has(> [data-app-menu]) { height:calc(52px + env(safe-area-inset-top, 0px)) !important; min-height:52px; padding:4px 8px !important; padding-top:calc(4px + env(safe-area-inset-top, 0px)) !important; gap:6px !important; flex-wrap:nowrap; }
   header:has(> [data-app-menu]) > [data-header-secondary] { display:none !important; }
   header:has(> [data-app-menu]) > span:has(> [data-header-secondary]) { display:none !important; }
   header:has(> [data-app-menu]) > a[aria-label="ImbewuField home"] { min-height:44px; }

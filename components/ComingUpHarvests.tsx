@@ -19,6 +19,7 @@
 //    to them instead of showing a number.
 //  - An overbooked bed withholds every kilogram, matching the crop plan.
 
+import { numberLabel } from '@/lib/format-figures';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { CalendarClock, ChevronDown } from 'lucide-react';
@@ -27,13 +28,15 @@ import type { CropPrice } from '@/lib/crop-prices';
 import { buildForwardHarvests, forwardValueRows, type ForwardHarvestMonth } from '@/lib/forward-harvests';
 import { planValue, type ValueChannel } from '@/lib/plan-value';
 import type { FinancePlanSource } from '@/lib/finance-plan-source';
+import { useLanguage } from '@/lib/i18n';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 
 const rand = (n: number): string =>
-  `R${Math.round(n).toLocaleString('en-ZA').replace(/,/g, ' ')}`;
+  `R${numberLabel(Math.round(n))}`;
 
 const kgLabel = (n: number): string => (n >= 100 ? `${Math.round(n)} kg` : `${n.toFixed(1)} kg`);
 
-const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
+const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
 export default function ComingUpHarvests({
   source,
@@ -48,6 +51,8 @@ export default function ComingUpHarvests({
   channel?: ValueChannel;
   horizonMonths?: number;
 }) {
+  const { lang } = useLanguage();
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const [openMonth, setOpenMonth] = useState<string | null>(null);
 
   // A fresh Date on every render would rebuild the book on every keystroke
@@ -63,14 +68,15 @@ export default function ComingUpHarvests({
   );
 
   const header = (
-    <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: '#5C5040' }}>
-        <CalendarClock size={13} /> Coming up
+    <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
+      <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
+        <CalendarClock size={13} /> {text('Coming up', 'Okuzayo')}
       </p>
-      <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
-        What your crop plan says is due to be picked over the next{' '}
-        {book.horizonMonths === 1 ? 'month' : `${book.horizonMonths} months`}.
-      </p>
+      <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
+        <IsiZuluDraftSource lang={lang}
+          english={`What your crop plan says is due to be picked over the next ${book.horizonMonths} ${book.horizonMonths === 1 ? 'month' : 'months'}.`}
+          zulu={`Uhlelo lwakho lwezitshalo lubonisa okulindeleke ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
+      </div>
     </div>
   );
 
@@ -78,7 +84,7 @@ export default function ComingUpHarvests({
     return (
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
-        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: '#8C7A62' }}>Reading your crop plan…</div>
+        <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{text('Reading your crop plan…', 'Kufundwa uhlelo lwezitshalo…')}</div>
       </section>
     );
   }
@@ -90,10 +96,10 @@ export default function ComingUpHarvests({
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
         <Empty
-          title="No growing area mapped yet"
-          body="Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth."
+          title={text('No growing area mapped yet', 'Akukho ndawo yokulima ebaliwe okwamanje')}
+          body={<IsiZuluDraftSource lang={lang} english="Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth." zulu="Dweba imibhede yakho e-Design Studio; leli khadi lizobonisa okulindeleke ukuvunwa nenani laso elilinganisiwe." />}
           href="/design"
-          cta="Open the Design Studio"
+          cta={text('Open the Design Studio', 'Vula i-Design Studio')}
         />
       </section>
     );
@@ -104,10 +110,12 @@ export default function ComingUpHarvests({
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
         <Empty
-          title="Two crops are booked into the same ground"
-          body={`${book.areaConflictBedLabels.join(', ')} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.`}
+          title={text('Two crops are booked into the same ground', 'Izitshalo ezimbili zihlelelwe indawo efanayo')}
+          body={<IsiZuluDraftSource lang={lang}
+            english={`${book.areaConflictBedLabels.join(', ')} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.`}
+            zulu={`${book.areaConflictBedLabels.join(', ')} — kuze kulungiswe lokhu, noma yisiphi isibalo sesivuno lapha singaba ukuqagela ukuthi yisiphi isitshalo esizolahlekelwa yileyo ndawo.`} />}
           href="/facilitator/crops"
-          cta="Fix it in the crop plan"
+          cta={text('Fix it in the crop plan', 'Lungisa ohlelweni lwezitshalo')}
         />
       </section>
     );
@@ -118,16 +126,16 @@ export default function ComingUpHarvests({
       <section className="rounded-2xl overflow-hidden" style={CARD}>
         {header}
         <Empty
-          title="Nothing due to be picked yet"
+          title={text('Nothing due to be picked yet', 'Akukho okulindeleke ukuba kuvunwe okwamanje')}
           body={
             source.plantings.length === 0
-              ? 'Your crop plan is empty. Plan a season and this card fills itself in.'
-              : `Nothing in the plan starts picking in the next ${book.horizonMonths} months.`
+              ? <IsiZuluDraftSource lang={lang} english="Your crop plan is empty. Plan a season and this card fills itself in." zulu="Uhlelo lwakho lwezitshalo alunalutho. Hlela isizini ukuze leli khadi libonise okulindelekile." />
+              : <IsiZuluDraftSource lang={lang} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
           }
           href="/facilitator/crops"
-          cta={source.plantings.length === 0 ? 'Plan your crops' : 'Open the crop plan'}
+          cta={source.plantings.length === 0 ? text('Plan your crops', 'Hlela izitshalo zakho') : text('Open the crop plan', 'Vula uhlelo lwezitshalo')}
         />
-        <Exclusions book={book} />
+        <Exclusions book={book} lang={lang} />
       </section>
     );
   }
@@ -137,40 +145,40 @@ export default function ComingUpHarvests({
       {header}
 
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label="Expected to pick" value={kgLabel(book.totalKg)} />
+        <Figure label={text('Expected to pick', 'Isivuno esilinganisiwe')} value={kgLabel(book.totalKg)} />
         {value.confirmed ? (
           <>
-            <Figure label="If sold" value={rand(value.cash)} tone="#1F4D2B" />
-            {value.home > 0 && <Figure label="Kept at home, at shop prices" value={rand(value.home)} tone="#5C5040" />}
+            <Figure label={text('If sold', 'Uma sithengisiwe')} value={rand(value.cash)} tone="#1F4D2B" />
+            {value.home > 0 && <Figure label={text('Kept at home, at shop prices', 'Okugcinelwe ekhaya, ngenani lesitolo')} value={rand(value.home)} tone="#5C5040" />}
           </>
         ) : (
           <Link
             href="/facilitator/crops"
             className="font-sans"
-            style={{ fontSize: 12, color: '#1F4D2B', textDecoration: 'underline', alignSelf: 'center' }}
+            style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'underline', alignSelf: 'center' }}
           >
-            Set your loss and sale assumptions to see what it is worth
+            <IsiZuluDraftSource lang={lang} english="Set your loss and sale assumptions to see what it is worth" zulu="Faka izilinganiso zakho zokulahleka nokudayisa ukuze ubone inani elilinganisiwe." />
           </Link>
         )}
       </div>
 
-      <p className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
-        Each figure is a whole crop&apos;s harvest counted in the month its picking{' '}
-        <em>starts</em> — not what you pick during that month. Planning estimates, not promises.
-      </p>
+      <IsiZuluDraftSource className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }} lang={lang}
+        english="Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises."
+        zulu="Isibalo ngasinye siyisivuno sonke sesitshalo esibalwa enyangeni okuqala ukuvunwa ngayo — asisho okuzovunwa kuleyo nyanga kuphela. Lezi izilinganiso zokuhlela, akuzona izithembiso." />
 
-      <div style={{ borderTop: '1px solid #E2D8C4' }}>
+      <div style={{ borderTop: '1px solid var(--border)' }}>
         {book.months.map((m) => (
           <MonthRow
             key={`${m.year}-${m.month}`}
             month={m}
+            lang={lang}
             open={openMonth === `${m.year}-${m.month}`}
             onToggle={() => setOpenMonth(openMonth === `${m.year}-${m.month}` ? null : `${m.year}-${m.month}`)}
           />
         ))}
       </div>
 
-      <Exclusions book={book} unpriced={value.confirmed ? value.unpricedCropNames : []} />
+      <Exclusions book={book} unpriced={value.confirmed ? value.unpricedCropNames : []} lang={lang} />
     </section>
   );
 }
@@ -179,12 +187,12 @@ function Figure({ label, value, tone = '#20190F' }: { label: string; value: stri
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{label}</span>
     </span>
   );
 }
 
-function MonthRow({ month, open, onToggle }: { month: ForwardHarvestMonth; open: boolean; onToggle: () => void }) {
+function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth; open: boolean; onToggle: () => void; lang: string }) {
   const empty = month.harvests.length === 0;
   return (
     <div style={{ borderBottom: '1px solid #F0E9DA' }}>
@@ -196,10 +204,10 @@ function MonthRow({ month, open, onToggle }: { month: ForwardHarvestMonth; open:
         style={{ background: 'transparent', border: 'none', cursor: empty ? 'default' : 'pointer' }}
       >
         <span className="flex items-center gap-2 min-w-0">
-          <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{month.label}</span>
+          <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : month.label}</span>
           {!empty && (
-            <span className="font-sans truncate" style={{ fontSize: 12, color: '#8C7A62' }}>
-              {month.harvests.length === 1 ? month.harvests[0].name : `${month.harvests.length} crops`}
+            <span className="font-sans truncate" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              {month.harvests.length === 1 ? month.harvests[0].name : lang === 'zu' ? `${month.harvests.length} izitshalo` : `${month.harvests.length} crops`}
             </span>
           )}
         </span>
@@ -209,7 +217,7 @@ function MonthRow({ month, open, onToggle }: { month: ForwardHarvestMonth; open:
             {empty ? '—' : kgLabel(month.kg)}
           </span>
           {!empty && (
-            <ChevronDown size={13} style={{ color: '#9A8268', transform: open ? 'rotate(180deg)' : undefined, transition: 'transform 120ms' }} />
+            <ChevronDown size={13} style={{ color: 'var(--text-muted)', transform: open ? 'rotate(180deg)' : undefined, transition: 'transform 120ms' }} />
           )}
         </span>
       </button>
@@ -217,14 +225,14 @@ function MonthRow({ month, open, onToggle }: { month: ForwardHarvestMonth; open:
         <ul className="px-4 pb-3 pt-0.5 flex flex-col gap-1.5" style={{ listStyle: 'none', margin: 0 }}>
           {month.harvests.map((h) => (
             <li key={h.plantingId} className="flex items-baseline justify-between gap-3">
-              <span className="font-sans min-w-0" style={{ fontSize: 12, color: '#5C5040' }}>
+              <span className="font-sans min-w-0" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                 <span aria-hidden="true">{h.icon}</span> {h.name}
-                <span style={{ color: '#9A8268' }}> · {h.bedLabel}</span>
+                <span style={{ color: 'var(--text-muted)' }}> · {h.bedLabel}</span>
                 {h.endMonth !== h.startMonth && (
-                  <span style={{ color: '#9A8268' }}> · picking runs into {MONTH_NAME[h.endMonth]}</span>
+                  <span style={{ color: 'var(--text-muted)' }}> · {lang === 'zu' ? `ukukha kuqhubeka kuze kube u-${MONTH_ZU[h.endMonth]}` : `picking runs into ${MONTH_NAME[h.endMonth]}`}</span>
                 )}
               </span>
-              <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: '#20190F' }}>{kgLabel(h.kg)}</span>
+              <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{kgLabel(h.kg)}</span>
             </li>
           ))}
         </ul>
@@ -238,6 +246,11 @@ const MONTH_NAME: Record<number, string> = {
   7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December',
 };
 
+const MONTH_ZU: Record<number, string> = {
+  1: 'Januwari', 2: 'Februwari', 3: 'Mashi', 4: 'Ephreli', 5: 'Meyi', 6: 'Juni',
+  7: 'Julayi', 8: 'Agasti', 9: 'Septhemba', 10: 'Okthoba', 11: 'Novemba', 12: 'Disemba',
+};
+
 /**
  * What the numbers above leave out. This is not a footnote — it is the
  * difference between a farmer trusting the figure and quietly deciding the app
@@ -246,39 +259,45 @@ const MONTH_NAME: Record<number, string> = {
 function Exclusions({
   book,
   unpriced = [],
+  lang,
 }: {
   book: ReturnType<typeof buildForwardHarvests>;
   unpriced?: string[];
+  lang: string;
 }) {
-  const lines: string[] = [];
+  const lines: { english: string; zulu: string }[] = [];
   if (book.excludedCropNames.length > 0) {
-    lines.push(`Left out of the kilograms — no verified yield figure yet: ${book.excludedCropNames.join(', ')}.`);
+    const names = book.excludedCropNames.join(', ');
+    lines.push({ english: `Left out of the kilograms — no verified yield figure yet: ${names}.`, zulu: `Akufakwanga enanini lamakhilogremu — alikho inani lesivuno eliqinisekisiwe okwamanje: ${names}.` });
   }
   if (unpriced.length > 0) {
-    lines.push(`Counted in kilograms but not in the Rand figure — no price on file: ${unpriced.join(', ')}.`);
+    const names = unpriced.join(', ');
+    lines.push({ english: `Counted in kilograms but not in the Rand figure — no price on file: ${names}.`, zulu: `Kubaliwe ngamakhilogremu kodwa akufakwanga enanini lamaRandi — alikho inani lentengo eligciniwe: ${names}.` });
   }
   if (book.nonFoodCropNames.length > 0) {
-    lines.push(`Not counted as food — soil cover: ${book.nonFoodCropNames.join(', ')}.`);
+    const names = book.nonFoodCropNames.join(', ');
+    lines.push({ english: `Not counted as food — soil cover: ${names}.`, zulu: `Akubalwanga njengokudla — izitshalo zokumboza inhlabathi: ${names}.` });
   }
   if (lines.length === 0) return null;
   return (
-    <div className="px-4 py-2.5" style={{ borderTop: '1px solid #E2D8C4', background: '#FBF7EF' }}>
-      {lines.map((l) => (
-        <p key={l} className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>{l}</p>
+    <div className="px-4 py-2.5" style={{ borderTop: '1px solid var(--border)', background: '#FBF7EF' }}>
+      {lines.map((line) => (
+        <IsiZuluDraftSource key={line.english} className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }} lang={lang}
+          english={line.english} zulu={line.zulu} />
       ))}
     </div>
   );
 }
 
-function Empty({ title, body, href, cta }: { title: string; body: string; href: string; cta: string }) {
+function Empty({ title, body, href, cta }: { title: string; body: React.ReactNode; href: string; cta: string }) {
   return (
     <div className="px-4 py-5">
-      <p className="font-display font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{title}</p>
-      <p className="font-sans mt-1" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5 }}>{body}</p>
+      <p className="font-display font-semibold" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>{title}</p>
+      <div className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{body}</div>
       <Link
         href={href}
         className="inline-block mt-2.5 font-sans font-semibold"
-        style={{ fontSize: 12, color: '#1F4D2B', textDecoration: 'underline' }}
+        style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'underline' }}
       >
         {cta}
       </Link>

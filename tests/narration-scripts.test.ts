@@ -17,14 +17,10 @@ import { NARRATION_BLOCKER_MARKERS, NARRATION_RELEASE_EXCEPTIONS } from '@/lib/n
 //    HLOLA labels, "participants", "the group". 48 clips were nearly recorded telling a farmer
 //    alone on a homestead to turn to the person next to them.
 //
-// 2. vegetables-staples.zu.md carries an appendix its own author wrote as a BLOCKER: a table of 22
-//    agronomic terms marked "uncertain isiZulu terminology, coined or adapted for this draft",
-//    with the note that it "needs a human reviewer ... before this script goes anywhere near a
-//    learner". The module production pack meanwhile calls Vegetables "the fastest route to a
-//    second complete module ... it needs only the deck and the recording". Following that would
-//    have put 22 invented farming terms into a farmer's ears in the voice of an authority — and
-//    the appendix sits after the last slide heading, so a parser that reads to end-of-file would
-//    also have recorded the glossary itself as a nine-minute clip.
+// 2. vegetables-staples.zu.md has an explicit terminology-review appendix. Older drafts used
+//    unsupported farming claims. A pending owner-authorized release may retain that warning and
+//    publish only when its exact script hash and review record are registered. The appendix must
+//    never enter the transcript.
 //
 // These tests do not judge translation quality; no automated check can. They make it impossible to
 // promote a script that has declared itself unfinished.
@@ -50,13 +46,19 @@ function hasBlocker(s: Script): boolean {
   return BLOCKER_MARKERS.some((re) => re.test(s.text));
 }
 
-test('a script that declares itself unreviewed is never wired up as available narration', () => {
-  // The gate. COURSE_NARRATION.languages is what makes the app offer audio in a language and what
-  // tells a recorder the script is releasable. A script carrying its own blocker must not appear
-  // there — reviewing it is a human's job, and deleting the appendix is not the same as doing it.
+test('an unreviewed narration is available only through an exact owner-authorized pending release', () => {
+  // Pending release is explicit and tied to the exact narration text. The separate hash-and-record
+  // test below verifies authorization; other scripts still cannot be wired while blocked.
   for (const s of PARSED) {
     if (!hasBlocker(s)) continue;
     const languages = COURSE_NARRATION[s.moduleId]?.languages ?? [];
+    const authorization = NARRATION_RELEASE_EXCEPTIONS[`${s.moduleId}.${s.lang}`];
+    if (authorization) {
+      assert.ok(languages.includes(s.lang), `${s.file}: authorized pending release is not in the manifest`);
+      assert.equal(createHash('sha256').update(s.text).digest('hex'), authorization.scriptSha256,
+        `${s.file}: changed since its pending release was authorized`);
+      continue;
+    }
     assert.ok(
       !languages.includes(s.lang),
       `${s.file} says it needs human review, but COURSE_NARRATION lists '${s.lang}' as available for ${s.moduleId}. Get the review done, then remove the appendix — do not remove the appendix to pass this test.`,
@@ -64,7 +66,7 @@ test('a script that declares itself unreviewed is never wired up as available na
   }
 });
 
-test('every script the app DOES offer contains nothing but slides', () => {
+test('offered narration contains only slides, except the appendix on an authorized pending draft', () => {
   // Anything outside a slide block is at risk of being read aloud: vegetables-staples.en.md opens
   // with seventeen lines of instructions to the operator, and the isiZulu file ends with a
   // glossary. Neither is narration. A released script must be slides and nothing else, so no
@@ -79,6 +81,7 @@ test('every script the app DOES offer contains nothing but slides', () => {
     assert.equal(preamble, '', `${s.file}: ${preamble.split('\n').length} lines before slide 1 would be read aloud`);
 
     for (const re of BLOCKER_MARKERS) {
+      if (NARRATION_RELEASE_EXCEPTIONS[`${s.moduleId}.${s.lang}`]) continue;
       assert.doesNotMatch(s.text, re, `${s.file}: released script still carries a reviewer appendix`);
     }
   }
@@ -121,15 +124,13 @@ test('both languages of a released module have the same number of blocks', () =>
   }
 });
 
-test('the vegetables isiZulu script is still recognised as blocked', () => {
-  // Named explicitly, because this is the one that a plan document actively recommends recording.
-  // If the appendix is ever removed, this fails and someone has to say out loud whether the
-  // agronomist review actually happened.
+test('the vegetables isiZulu script keeps its human-review warning', () => {
+  // Pending audio release does not waive the requirement to keep this label until review occurs.
   const zu = PARSED.find((s) => s.file === 'vegetables-staples.zu.md');
   assert.ok(zu, 'vegetables-staples.zu.md is missing — if it moved, update this test');
   assert.ok(
     hasBlocker(zu!),
-    'vegetables-staples.zu.md no longer declares itself a draft. If an isiZulu-speaking agronomist has reviewed its 22 coined terms, say so in the commit and delete this test. If not, restore the appendix.',
+    'vegetables-staples.zu.md no longer declares itself a draft; record human review before removing this warning.',
   );
 });
 

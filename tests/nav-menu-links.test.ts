@@ -33,10 +33,10 @@ test('Garden Survey opens the survey the progress bar actually reads', () => {
   assert.match(farmerPage, /searchParams\.get\('openSurvey'\)/,
     'app/farmer/page.tsx no longer reads ?openSurvey= — the nav entry would silently land on the plain map');
 
-  // And it must be the same link app/home/page.tsx's own progress-bar nudge uses,
-  // so the two doors into the survey agree with each other.
-  const homePage = read('../app/home/page.tsx');
-  assert.match(homePage, /href: \(\) => '\/farmer\?openSurvey=1'/,
+  // And it must be the same link Home's own next-step nudge uses (lib/home-next-step.ts, shared
+  // by both Home layouts), so the two doors into the survey agree with each other.
+  const homeNextStep = read('../lib/home-next-step.ts');
+  assert.match(homeNextStep, /href: \(\) => '\/farmer\?openSurvey=1'/,
     "home's own 'do the site survey' nudge must point at the same URL as the drawer entry");
 });
 
@@ -47,11 +47,8 @@ test('the Planting Calendar has a door in Farm Tools', () => {
   assert.match(nav, /import \{[\s\S]*?\bCalendar\b[\s\S]*?\} from 'lucide-react'/,
     'Lucide only — no emoji as UI icons');
 
-  // English-only key: this repo never invents non-English strings. Every other
-  // locale falls back to T_en at lookup time (see translate()/loadLocale() in
-  // lib/i18n.tsx), so a single English entry is enough for the label to render
-  // everywhere. English now lives inline in lib/i18n.tsx's T_en block; the other
-  // ten locales are lazy-loaded from lib/locales/<code>.ts.
+  // Rory asked for an isiZulu app pass. Both the English fallback and the isiZulu
+  // calendar label must now exist; the remaining languages still fall back.
   const i18n = read('../lib/i18n.tsx');
   const enBlockStart = i18n.indexOf('const T_en: Dict = {');
   const enBlockEnd = i18n.indexOf('\n};', enBlockStart);
@@ -59,15 +56,17 @@ test('the Planting Calendar has a door in Farm Tools', () => {
   assert.match(enBlock, /navPlantingCalendar: 'Planting Calendar'/,
     'navPlantingCalendar must exist in the en block for the fallback to have something to fall back to');
 
-  // Guard against someone "helpfully" adding translated copies later without review —
-  // that would violate the no-invented-language rule this fix was built under.
+  const zu = read('../lib/locales/zu.ts');
+  assert.match(zu, /navPlantingCalendar: '[^']+'/,
+    'isiZulu navigation needs its own calendar label when that language is selected');
+
   const localeFiles = [
     i18n,
     ...['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']
       .map((code) => read(`../lib/locales/${code}.ts`)),
   ];
   const allOccurrences = localeFiles.flatMap((src) => src.match(/^\s*navPlantingCalendar:/gm) ?? []);
-  assert.equal(allOccurrences.length, 1, 'navPlantingCalendar should exist only in the en block');
+  assert.equal(allOccurrences.length, 2, 'the label should exist once in each of English and isiZulu');
 });
 
 test('the calendar page it links to renders real content on its own', () => {

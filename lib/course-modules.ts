@@ -83,15 +83,15 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle.",
           },
           {
-            q: "You have a borehole producing more water than your household needs. Which action reflects all three ethics?",
+            q: "Your borehole serves your household. Neighbours ask for water too. Which action best reflects all three ethics?",
             options: [
               "Sell access to the highest bidder",
-              "Keep the surplus for irrigation expansion only",
-              "Share access with neighbours while monitoring the water table",
+              "Keep all the borehole water for a larger irrigation area",
+              "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
               "Cap the borehole to preserve groundwater only",
             ],
             correct: 2,
-            rationale: "Sharing serves People Care and Fair Share, while monitoring the water table protects the resource for Earth Care — the other options serve only one ethic each.",
+            rationale: "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
           },
         ],
       },
@@ -100,12 +100,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
         infographicAlt: "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
         title: "Twelve Principles: Designing with Nature",
-        body: "Bill Mollison and David Holmgren distilled permaculture into twelve design principles. Three matter most for South African smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — a monoculture maize field can be wiped out by one hailstorm; a mixed planting rarely is.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        body: "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
         keyPoints: [
           "Observe your land for a full season before major earthworks",
           "Catch and store rain, sun, and biomass before they leave your property",
-          "Edges and margins are often your most productive zones",
-          "Diversity protects against a single event — hail, drought, or pest outbreak",
+          "Edges and margins can be useful places to observe what grows well",
+          "Hail injury to maize depends on the storm and the crop’s growth stage",
         ],
         quiz: [
           {
@@ -114,21 +114,21 @@ export const COURSE_MODULES: CourseModule[] = [
               "Dig immediately after the first good rain",
               "Watch where water flows and pools across at least one wet season",
               "Copy a neighbour's swale layout",
-              "Hire a civil engineer to survey the contours",
+              "Assume the same swale design fits every site",
             ],
             correct: 1,
-            rationale: "One storm shows you one moment. A full season shows you the pattern — which is what your swale design actually needs to match.",
+            rationale: "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
           },
           {
             q: "Which layout best applies 'integrate rather than segregate'?",
             options: [
               "Chickens penned far from the garden",
-              "Garden, fruit trees and chicken run arranged so chickens rotate through beds after harvest",
+              "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
               "Separate paddocks for each crop",
               "All animals kept off the cultivated zone",
             ],
             correct: 1,
-            rationale: "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            rationale: "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
           },
         ],
       },
@@ -137,11 +137,11 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
         infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
-        body: "Zones and sectors are permaculture's main tool for cutting wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. A Lowveld farm facing north-west gets hot dry berg winds in August — that tells you where to plant a windbreak. A KZN farm has a summer rain sector from the north-east.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        body: "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [
-          "Zone 1, nearest the house, holds daily-harvest crops like herbs",
+          "In this example, Zone 1 near the house holds often-picked herbs",
           "Zones organise labour by how often you need to visit",
-          "Sectors map incoming energies: sun, wind, frost, flood, fire",
+          "Sectors map incoming sun, wind, rainwater, flood and fire",
           "A simple sketch of zones and sectors is enough to start designing",
         ],
         quiz: [
@@ -149,15 +149,15 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
             options: [
               "Herbs grow too large",
-              "You harvest rarely because the walk is long, so herbs bolt or get neglected",
+              "The extra walk may mean you pick or check them less often",
               "Herbs cross-pollinate with main crops",
               "Zone 3 gets too much sun for herbs",
             ],
             correct: 1,
-            rationale: "Herbs need daily picking to stay productive. Placed far from the house, that daily visit stops happening — and the plants suffer for it.",
+            rationale: "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
           },
           {
-            q: "A Highveld farm gets hot, dry north-westerly winds in August. Where should a windbreak go?",
+            q: "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
             options: [
               "South-east boundary",
               "North-west boundary, between the wind and the crops",
@@ -183,35 +183,35 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l1.jpg",
         infographicAlt: "A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow, and where it soaks in as the ground flattens.",
         title: "Understanding Water Flow: Where Rain Goes on Your Land",
-        body: "Before you harvest water, learn where it already goes. Walk your land during and right after heavy rain — this is the single most useful observation you can make. Watch for rills, places where water fans out, where it ponds, and where it leaves your property. Every exit point is a resource lost.\n\nBuild an A-frame level from three poles and a weighted string. Two people can trace contour lines — points at the same height — across a two-hectare property in a morning. No surveyor needed. These lines guide where you place swales, dams, and tree rows.\n\nThe rule is: slow it high, sink it mid, control it low. The higher up the slope you slow water, the moister your land stays, and the less it erodes lower down.",
+        body: "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
         keyPoints: [
-          "Walk your land during and after heavy rain to see where water actually goes",
-          "An A-frame level traces contour lines with no expensive equipment",
-          "Slow water high on the slope, sink it mid-slope, control it at the bottom",
-          "Every point water exits your land is a resource you've lost",
+          "Watch from a safe place during rain, then walk the land when it is safe",
+          "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+          "Water works and safe overflow routes need a site assessment",
+          "Some excess water needs a safe route away to prevent damage",
         ],
         quiz: [
           {
-            q: "You want to trace contours on a 1.5-hectare slope with no survey budget. What's most practical?",
+            q: "What can an A-frame level help you find?",
             options: [
-              "Hire a civil engineer",
-              "Estimate contours by eye",
-              "Build an A-frame level and walk it yourself",
-              "Use a spirit level on a board every 5 metres",
+              "Points at the same height along a contour",
+              "Whether a swale is safe to build on this slope",
+              "How much stormwater the soil can absorb",
+              "Where a dam spillway should be built",
             ],
-            correct: 2,
-            rationale: "An A-frame level is nearly free to build and accurate enough for farm earthworks — you don't need survey-grade precision to place a swale correctly.",
+            correct: 0,
+            rationale: "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
           },
           {
-            q: "On a sloped KZN site, where is the top priority to slow and sink water?",
+            q: "You observe fast runoff on a sloped KZN site. What should you do before digging a water structure?",
             options: [
-              "At the bottom where it collects",
-              "In the middle in a large dam",
-              "As high up the slope as possible",
-              "At the boundary",
+              "Put it as high on the slope as possible",
+              "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
+              "Put it wherever water first appears",
+              "Follow the same high, middle and bottom rule used on other farms",
             ],
-            correct: 2,
-            rationale: "Water picks up speed and erosive force as it runs downhill. Slowing it near the top prevents that damage before it starts.",
+            correct: 1,
+            rationale: "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
           },
         ],
       },
@@ -220,72 +220,72 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l2.jpg",
         infographicAlt: "A slope with the sun in the north. Shadows from the building and the tree fall south, down the slope.",
         title: "Sun Angles, Shade, and Aspect: Getting the Most from Sunlight",
-        body: "In South Africa the sun tracks across the northern sky, so north-facing slopes run warmer and drier, and south-facing slopes stay cooler and moister — frost can sit in south-facing hollows long after it clears elsewhere. This decides where you plant tender crops and site buildings.\n\nWinter sun sits lower and further north than summer sun. A wall that casts no shade in summer can shade a bed for hours in winter. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nFor frost-sensitive plants — pawpaw, young citrus — a north-facing wall that radiates heat at night can be the difference between life and death.",
+        body: "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
         keyPoints: [
-          "North-facing slopes are warmer and drier; south-facing slopes are cooler and moister",
-          "Winter sun sits lower and further north — shade patterns shift a lot between seasons",
-          "Frost pools in south-facing hollows on the Highveld",
-          "Check shadow patterns at 8am, midday, and 4pm in winter before placing permanent structures",
+          "North-facing slopes often get more direct sun; south-facing slopes are often cooler and moister",
+          "Winter sun is lower and farther north; check local shade before building",
+          "Cold air can collect in low hollows; aspect is only one site factor",
+          "Check local frost before placing tender pawpaw or young citrus",
         ],
         quiz: [
           {
-            q: "Where's the best position for a frost-tender young pawpaw on a Highveld smallholding?",
+            q: "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
             options: [
-              "Lowest point where cold air drains to",
-              "South-facing slope",
-              "Against a north-facing wall that radiates heat at night",
-              "Under an existing large tree",
+              "The lowest point where cold air collects",
+              "A cold, shaded hollow",
+              "A sunny spot outside a known frost hollow, after checking the site's frost pattern",
+              "A position chosen without checking the site",
             ],
             correct: 2,
-            rationale: "A north-facing wall absorbs heat by day and releases it at night — exactly when frost damage happens.",
+            rationale: "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
           },
           {
-            q: "A farmer builds 2m shade cloth on the north side of her garden in autumn. What happens in winter?",
+            q: "A farmer plans shade cloth on the north side of her garden. What should she check before fixing it in place?",
             options: [
-              "It blocks low winter sun and shades the garden most of the day",
-              "It redirects frost away",
-              "No effect, since the sun is overhead at noon",
-              "It reduces evaporation and helps the crops",
+              "Where its shadow falls on the bed in winter",
+              "Whether it redirects frost away",
+              "Whether the sun is always overhead at noon",
+              "Only whether it reduces summer evaporation",
             ],
             correct: 0,
-            rationale: "Winter sun sits much lower in the sky. A structure that only shaded briefly in summer can block the low winter sun for most of the day.",
+            rationale: "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
           },
         ],
       },
       {
         id: "reading-landscape-l3",
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l3.jpg",
-        infographicAlt: "A farm from above with three sets of arrows: the direction the wind usually comes from, cold air draining downhill into a frost hollow, and the direction the land slopes.",
+        infographicAlt: "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
         title: "Wind, Frost, and Topography: Reading the Invisible Forces",
-        body: "Wind is one of the most damaging, most ignored forces on a smallholding. Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies that bring fungal disease in summer. Know your region's pattern before you plant.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.\n\nFrost is ice that forms on a cold surface. Mist alone does not prove there is frost. Walk the land after a cold night. Look for frost on plants and compare low ground with slopes. Mark places where frost lasts longest. Keep sensitive plants away from those cold pockets.",
+        body: "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
         keyPoints: [
-          "Know your region's dominant wind — Highveld north-westerlies, KZN easterlies",
-          "Frost flows downhill and pools in low ground — valleys frost first and last",
-          "Ridgelines deflect wind; hills cast rain shadows on their leeward side",
-          "A cold winter dawn walk shows you exactly where frost pools",
+          "Observe damaging wind direction on your site before placing shelter",
+          "Cold air can drain downhill on clear, still nights and collect in low ground",
+          "Compare cold-night plant damage and temperatures across your site; visible frost is not the only sign",
+          "Airflow and drying may help reduce wet leaves, but do not alone control late blight",
         ],
         quiz: [
           {
-            q: "Where should you site your most frost-sensitive seedling nursery on a Highveld farm?",
+            q: "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
             options: [
-              "In a valley bottom",
-              "On an exposed ridgeline",
-              "A gently sloping north-facing hillside above the frost-pool zone",
-              "Under large shade trees",
+              "A known frost hollow at the valley bottom",
+              "An exposed ridgeline without checking the wind",
+              "A sunny, sheltered place outside an observed frost hollow, after checking the site's cold-night pattern",
+              "The place with the most shade, without checking frost",
             ],
             correct: 2,
-            rationale: "This position stays above where cold air settles at night, while the north-facing aspect adds daytime warmth.",
+            rationale: "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
           },
           {
-            q: "A KZN farmer's tomatoes get late blight every summer. Fungal disease needs humidity and still air. Where should she move the bed?",
+            q: "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
             options: [
               "A sealed, unventilated tunnel",
-              "Somewhere with good airflow and morning sun that dries leaves quickly",
+              "A place with good airflow and morning sun",
               "A low spot near a dam",
               "A shaded south wall",
             ],
             correct: 1,
-            rationale: "Airflow and morning sun dry the leaf surface fast, which is exactly what starves fungal disease of the damp conditions it needs.",
+            rationale: "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
           },
         ],
       },
@@ -294,24 +294,24 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l4.jpg",
         infographicAlt: "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
         title: "Making a Simple Site Map: Your Design Starts on Paper",
-        body: "A site map needs paper, a tape measure, a compass, and a morning to walk your land. Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick — both are pioneer weeds that mean disturbed or compacted soil.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+        body: "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
         keyPoints: [
           "A site map needs only paper, a tape measure, a compass, and observation",
           "Mark water flow, wind direction, frost pockets, and existing vegetation",
-          "Thick khakibos or blackjack growth signals disturbed or compacted soil",
+          "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
           "Overlay zones and sectors on your base map to complete the design skeleton",
         ],
         quiz: [
           {
-            q: "You notice thick blackjack growing in one corner every year. What does this most likely tell you?",
+            q: "You notice thick blackjack growing in one corner every year. What should you do next?",
             options: [
               "The soil there is exceptionally fertile",
               "That area has a higher water table",
-              "The soil has been disturbed or compacted and pioneers are colonising it",
+              "Mark the patch and check the soil; the plant alone cannot show compaction",
               "Blackjack only grows in shade, so there's a hidden seep",
             ],
             correct: 2,
-            rationale: "Blackjack and khakibos are classic pioneer species — they move into ground that's been disturbed or compacted, and their presence is a useful diagnostic.",
+            rationale: "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
           },
           {
             q: "Why mark summer and winter wind separately on your site map?",
@@ -338,27 +338,27 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "water-harvesting-l1",
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l1.jpg",
-        infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
+        infographicAlt: "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
-        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+        body: "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
         keyPoints: [
-          "A contour swale holds water for infiltration",
+          "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
           "Keep good ground cover and plan a safe overflow",
           "Assess soil, drainage, slope and storm flow before digging",
           "A concept picture is not a construction design",
         ],
         quiz: [
           {
-            q: "After heavy rain, one end of your swale fills fast while the other stays dry. What went wrong?",
+            q: "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
             options: [
-              "The swale is too wide",
-              "It's not level — dug at a slight angle instead of true contour",
-              "The downhill berm is too high",
-              "The soil is too sandy to hold water at all",
+              "Whether the trench can be made deeper without a site check",
+              "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+              "Whether a new dam at the lowest point will catch every overflow",
+              "Whether the soil should be compacted to stop all infiltration",
             ],
             correct: 1,
-            rationale: "A swale only works if every point sits at the same height. Even a slight angle sends water to the low end instead of spreading evenly.",
+            rationale: "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
           },
           {
             q: "A farmer wants to control erosion on steep land. What should she do before digging?",
@@ -415,7 +415,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l3.jpg",
         infographicAlt: "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
         title: "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        body: "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+        body: "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
         keyPoints: [
           "Roof area, rain, demand and losses determine useful storage",
           "Size and maintain the first-flush diverter for the roof",
@@ -449,38 +449,36 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "water-harvesting-l4",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
-        infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
-        title: "Greywater: Reuse with Care",
-        body: "Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.\n\nDo not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.\n\nWhere local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.\n\nDo not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.\n\nUse it promptly. Stored greywater needs specialist advice and appropriate treatment.\n\nKeep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.\n\nCheck municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.\n\nIf the water smells bad, pools or harms plants, stop using it and seek advice.",
+        title: "Greywater: Check Before Reuse",
+        body: "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
         keyPoints: [
-          "Greywater can contain germs, salts and chemicals",
-          "Keep untreated greywater away from food and people",
-          "Mulch does not disinfect water",
-          "Check municipal rules and avoid spraying, pooling and runoff",
+          "Water sources and greywater guidance can differ",
+          "Check the source, service status, intended use and site locally before any reuse",
+          "Soil and mulch do not disinfect wastewater",
+          "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
         ],
         quiz: [
           {
-            q: "Where may suitable greywater be directed if local rules allow it?",
+            q: "What should happen before any household washwater is reused?",
             options: [
-              "Watering lettuce that will be eaten raw",
-              "Below mulch around non-food planting, away from people and animals",
-              "Watering seedlings in a nursery tray",
-              "Filling a fishpond",
+              "Direct it below mulch around a tree",
+              "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+              "Use it if it looks clear",
+              "Use it only on plants that are not eaten raw",
             ],
             correct: 1,
-            rationale: "Keep greywater away from edible crops and contact with people or animals. Mulch is not disinfection; local rules and site conditions still apply.",
+            rationale: "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
           },
           {
-            q: "Why avoid bleach or strong disinfectant in water destined for greywater reuse?",
+            q: "Why check the exact water source and cleaning products before considering reuse?",
             options: [
-              "They make the water too alkaline for any plant",
-              "They can kill the soil organisms and harm plant roots that greywater is meant to feed",
-              "They cause tanks to corrode faster",
-              "They attract more mosquitoes",
+              "All cleaning products are safe if the water is diluted",
+              "Water composition and product effects vary, so the actual source and products need assessment",
+              "The water can be reused when it has no smell",
+              "Mulch removes every harmful substance",
             ],
             correct: 1,
-            rationale: "Some cleaning chemicals and salts can harm soil organisms and plants. Water sources and products must be assessed before reuse.",
+            rationale: "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
           },
         ],
       },
@@ -552,7 +550,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Add more water — the smell means it's too dry"
             ],
             "correct": 1,
-            "rationale": "Ammonia and sliminess are the signature of too much nitrogen-rich green material relative to carbon — more browns rebalance the mix and let air back in."
+            "rationale": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy."
           },
           {
             "q": "Why keep wattle seed pods out of an ordinary compost heap?",
@@ -572,7 +570,7 @@ export const COURSE_MODULES: CourseModule[] = [
         "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
         "infographicAlt": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         "title": "Mulching and Cover Crops: Protecting and Building Soil",
-        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.",
+        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
         "keyPoints": [
           "Protect exposed soil with suitable cover",
           "Keep mulch away from trunks and stems",
@@ -589,7 +587,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil pH drops and nitrogen builds up"
             ],
             "correct": 2,
-            "rationale": "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly."
+            "rationale": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away."
           },
           {
             "q": "What should you remember about liquid draining from a worm bin?",
@@ -600,7 +598,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "A fixed dilution makes every liquid safe"
             ],
             "correct": 1,
-            "rationale": "Leachate is drainage from unfinished material. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
+            "rationale": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
           }
         ]
       }
@@ -692,11 +690,11 @@ export const COURSE_MODULES: CourseModule[] = [
         "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
         "infographicAlt": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
         "title": "Staple Crops: Maize, Beans, and Root Vegetables",
-        "body": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato tolerates dry periods, and its leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+        "body": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
         "keyPoints": [
           "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
           "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
-          "Sweet potato is drought-tolerant and gives both a root harvest and edible leaves",
+          "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
           "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground"
         ],
         "quiz": [
@@ -779,7 +777,7 @@ export const COURSE_MODULES: CourseModule[] = [
         keyPoints: [
           "Stable open-pollinated varieties need suitable pollination management",
           "Seed sovereignty means freedom from depending on a seed company every season",
-          "Genetic diversity across many saved varieties is real protection against climate unpredictability",
+          "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
           "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
         ],
         quiz: [
@@ -817,7 +815,7 @@ export const COURSE_MODULES: CourseModule[] = [
           "Dry-method crops (beans, maize, sunflower) simply dry on the plant before collection",
 
           "Tomato fermentation removes gel; other wet seeds need their own processing method",
-          "Tomatoes need little isolation; maize needs real distance between varieties to stay pure",
+          "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
           "Rinse processed tomato seed and dry it thoroughly before storage",
         ],
         quiz: [
@@ -850,7 +848,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
         infographicAlt: "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
         title: "Drying, Storing, and Sharing Seed",
-        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture; get all three low and seed can last for years.\n\nLabel every envelope with crop, variety, and date saved. Store in a cool, dark, dry place — a sealed container with a little rice or dried milk powder as a moisture absorber works well.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
+        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
         keyPoints: [
           "Dry seed in shade with good airflow; never in direct sun or sealed heat",
           "Store labelled seed cool, dark, and dry — heat, light, and moisture are the three enemies of viability",
@@ -867,7 +865,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil contact, pests, and rodents",
             ],
             correct: 1,
-            rationale: "Keeping seed cool, dark, and dry directly counters all three — which is exactly why a sealed container in a shaded cupboard works so well.",
+            rationale: "Keeping thoroughly dry seed cool and dark counters all three. A sealed container helps keep dry seed dry, but can trap moisture if seed is packed while damp.",
           },
           {
             q: "Why test a small batch of stored seed for germination before planting season?",
@@ -1087,8 +1085,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         "id": "food-forest-l3",
-        "infographicUrl": "/course-images/food-forest/food-forest-l3.jpg",
-        "infographicAlt": "The same patch of ground at four stages, left to right: cardboard and mulch going down on bare soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+        "infographicUrl": "/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg",
+        "infographicAlt": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
         "title": "Establishing a Food Forest: Observe and Adjust",
         "body": "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nCheck young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
         "keyPoints": [
@@ -1099,15 +1097,15 @@ export const COURSE_MODULES: CourseModule[] = [
         ],
         "quiz": [
           {
-            "q": "A farmer sheet-mulches a 500m² plot with cardboard and wood chips in September, before the rains. What's the cardboard's main job?",
+            "q": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
             "options": [
               "Creating a moisture barrier that blocks water from the soil",
-              "Smothering existing grass while it decomposes and feeds soil organisms over following months",
+              "Block light and help suppress grass while it breaks down; check for regrowth",
               "Providing a stable base so wood chips don't shift",
               "Reflecting heat upward to warm the soil"
             ],
             "correct": 1,
-            "rationale": "Cardboard cuts off light to existing grass, killing it, and then breaks down itself — feeding the soil rather than blocking it long-term."
+            "rationale": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks."
           },
           {
             "q": "When should a grower consider pruning or thinning temporary support plants?",
@@ -1174,12 +1172,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/small-livestock/small-livestock-l2.jpg",
         infographicAlt: "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
         title: "Bees: Pollination, Honey, and System Ecology",
-        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies: the Cape bee in the southern and south-western Cape, and the African honeybee across the north and east. Learn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first.\n\nProvide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. All beekeepers must register with the national Department of Agriculture. Check the current rules before moving bees or hives. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
         keyPoints: [
           "Pollinators help many crops; the benefit depends on the crop and conditions",
           "Learn safe hive care from an experienced local beekeeper",
           "Choose a safe hive site away from busy paths and children",
-          "All beekeepers must register with the national Department of Agriculture",
+          "Register with the Department for activities covered by the national honey-bee control measures",
         ],
         quiz: [
           {
@@ -1209,9 +1207,9 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "small-livestock-l3",
         infographicUrl: "/course-images/small-livestock/small-livestock-l3.jpg",
-        infographicAlt: "A closed loop of four steps: animals produce manure, manure becomes compost, compost feeds the growing area, and the growing area feeds the animals.",
-        title: "Integrating Livestock Cycles: Closing the Loop",
-        body: "Animals can return some nutrients to the farm. Chickens eat suitable farm produce and insects, and manure can become compost for crops. Keep track of feed bought in and food sold or taken home. These nutrients still enter or leave the system. Scraps alone may not meet the animals' needs.\n\nGuinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or livestock from ticks or tick-borne disease. Check animals and follow a local animal-health plan.\n\nFor each animal, ask: what can it eat here? What useful things does it produce? What else does it need? Include water, suitable feed, shelter, fencing and daily care.\n\nChickens following goats are not a proven replacement for goat worm control. Grazing management can help, but goats still need health checks and a parasite plan from a veterinary or animal-health adviser. Do not stop treatment because chickens have visited the grazing camp.",
+        infographicAlt: "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+        title: "Integrating Livestock Cycles: Nutrients Moving Through the Farm",
+        body: "Some nutrients can return to the growing area in compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops. Bought feed brings nutrients into the farm, while food and other products carry nutrients away. Keep track of feed bought in and food sold or taken home. Scraps alone may not meet the animals' needs.\n\nGuinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or livestock from ticks or tick-borne disease. Check animals and follow a local animal-health plan.\n\nFor each animal, ask: what can it eat here? What useful things does it produce? What else does it need? Include water, suitable feed, shelter, fencing and daily care.\n\nChickens following goats are not a proven replacement for goat worm control. Grazing management can help, but goats still need health checks and a parasite plan from a veterinary or animal-health adviser. Do not stop treatment because chickens have visited the grazing camp.",
         keyPoints: [
           "Use suitable farm resources while meeting the full needs of each animal",
           "Guinea fowl foraging does not replace tick checks or an animal-health plan",
@@ -1329,11 +1327,11 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "market-community-l3",
         "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
-        "infographicAlt": "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
+        "infographicAlt": "Five small farms linked to a shared collection point for their separate harvests.",
         "title": "Building Community Food Networks: Strength in Numbers",
-        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
         "keyPoints": [
-          "Record seed identity, source and quality when sharing",
+          "Record seed identity, source and quality, and check if permission is needed before sharing",
           "Agree care, booking and repair responsibilities for shared tools",
           "Measure losses and net returns for each selling route",
           "Combine shared experience with qualified help when needed"
@@ -1343,12 +1341,12 @@ export const COURSE_MODULES: CourseModule[] = [
             "q": "Neighbours want to share saved seed. What helps make the shared seed useful?",
             "options": [
               "Mix all varieties without labels",
-              "Agree isolation, selection, labelling, storage and germination checks",
+              "Agree seed-quality checks and check whether permission is needed to share the variety",
               "Assume sharing automatically improves every seed lot",
               "Rely only on the size of the group"
             ],
             "correct": 1,
-            "rationale": "Sharing access is useful, but quality still depends on crop-specific seed-saving practices and reliable records."
+            "rationale": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing."
           },
           {
             "q": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
@@ -1375,6 +1373,15 @@ export const CATEGORY_COLORS: Record<ModuleCategory, string> = {
   design:     "#C07A1E",
   business:   "#5C5040",
   seeds:      "#B8860B",
+};
+
+// Text-safe variant of CATEGORY_COLORS. Ochre (design) is a FILL — as text it is 2.54:1 on paper,
+// below the contrast a farmer can read (CLAUDE.md). Every category chip/label/icon that paints
+// readable TEXT (not a background, border or icon stroke) with the category colour must use this
+// map instead; design is the only entry that actually differs from CATEGORY_COLORS.
+export const CATEGORY_TEXT_COLORS: Record<ModuleCategory, string> = {
+  ...CATEGORY_COLORS,
+  design: "#7A4408",
 };
 
 export const TOTAL_MODULES = COURSE_MODULES.length;

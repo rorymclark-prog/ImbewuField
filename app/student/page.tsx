@@ -13,7 +13,7 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import LimaBar from '@/components/LimaBar';
 import SettingsButton from '@/components/SettingsButton';
@@ -25,11 +25,14 @@ import DeckPlayer from '@/components/course/DeckPlayer';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
-import { hasDeck, deckSlideCount } from '@/lib/course-deck';
-import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
+import { hasDeck, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
+import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
-import { allTracks, hasNarration, tracksForLesson } from '@/lib/course-audio';
+import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
+import { narrationReviewPending } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
+import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
+import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
@@ -41,42 +44,96 @@ import {
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
 
-const CATEGORY_LABELS: Record<ModuleCategory, string> = {
-  foundation: 'Foundation',
-  water:      'Water',
-  soil:       'Soil',
-  plants:     'Plants',
-  design:     'Design',
-  business:   'Business',
-  seeds:      'Seeds',
+const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
+  foundation: 'studentCategoryFoundation',
+  water:      'studentCategoryWater',
+  soil:       'studentCategorySoil',
+  plants:     'studentCategoryPlants',
+  design:     'studentCategoryDesign',
+  business:   'studentCategoryBusiness',
+  seeds:      'studentCategorySeeds',
 };
 
 /** Curriculum position, fixed. The list below re-orders to put assigned work first, but
  *  "module 7" must keep meaning the same module whichever order it is shown in. */
 const MODULE_NUMBER = new Map(COURSE_MODULES.map((m, i) => [m.id, i + 1] as const));
+const COURSE_MODULE_BY_ID = new Map(COURSE_MODULES.map((m) => [m.id, m] as const));
+
+/** unlockReason's title resolver — the localised module title, not the English one baked into
+ *  COURSE_MODULES (lib/course-gating.ts's unlockReason is pure and knows nothing of lang). */
+function localisedModuleTitle(moduleId: string, lang: string): string {
+  const mod = COURSE_MODULE_BY_ID.get(moduleId);
+  return mod ? resolveCourseModulePresentation(mod, lang).title : 'the previous module';
+}
 
 const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border: string }> = {
   overdue:    { fg: '#B03A2E', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
-  'due-soon': { fg: '#C07A1E', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
+  'due-soon': { fg: '#7A4408', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
   open:       { fg: '#235E86', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
   done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
 
-function formatDuration(mins: number) {
-  if (mins < 60) return `${mins} min`;
-  return `${Math.floor(mins / 60)}h ${mins % 60 > 0 ? `${mins % 60}m` : ''}`.trim();
+function formatDuration(mins: number, t: (key: string) => string) {
+  if (mins < 60) return `${mins} ${t('studentMinutes')}`;
+  const hours = Math.floor(mins / 60);
+  const remaining = mins % 60;
+  return `${hours} ${t(hours === 1 ? 'studentHourOne' : 'studentHours')}${remaining > 0 ? ` ${remaining} ${t('studentMinutes')}` : ''}`;
 }
+
+function localisedDueText(text: string | null, lang: string, t: (key: string) => string) {
+  if (!text || lang !== 'zu') return text;
+  if (text === 'Due today') return t('studentDueToday');
+  if (text === 'Due tomorrow') return t('studentDueTomorrow');
+  const overdue = text.match(/^(\d+) day(?:s)? overdue$/);
+  if (overdue) return t('studentDaysOverdue').replace('{count}', overdue[1]);
+  const dueIn = text.match(/^Due in (\d+) days$/);
+  if (dueIn) return t('studentDueInDays').replace('{count}', dueIn[1]);
+  if (text.startsWith('Due ')) return t('studentDueDate').replace('{date}', text.slice(4));
+  return text;
+}
+
+function localisedUnlockReason(text: string | null, lang: string, t: (key: string) => string) {
+  if (!text || lang !== 'zu') return text;
+  if (text === 'Opened by your mentor') return t('studentOpenedByMentor');
+  const finish = text.match(/^Finish (.+) to open this$/);
+  if (finish) return t('studentFinishToUnlock').replace('{title}', finish[1]);
+  const submit = text.match(/^Submit the (.+) assignment to open this$/);
+  if (submit) return t('studentSubmitToUnlock').replace('{title}', submit[1]);
+  return text;
+}
+
+const ZULU_MEDIA_LANGUAGE_NOTICES = {
+  bothEnglish: {
+    zu: 'Amaslayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.',
+    en: 'The slides and audio for this module are still in English. Written lessons may be in isiZulu, but that does not translate this media.',
+  },
+  slidesEnglish: {
+    zu: 'Amaslayidi ale mojuli asesiNgisini; umsindo uyatholakala ngesiZulu.',
+    en: 'The slides for this module are still in English; audio is available in isiZulu.',
+  },
+  audioEnglish: {
+    zu: 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.',
+    en: 'The audio for this module is still in English; slides are available in isiZulu.',
+  },
+} as const;
 
 // ── Quiz question ────────────────────────────────────────────────────────────
 
-function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
+function QuizQuestion({ q, options, correct, rationale, englishSource }: {
+  q: string; options: string[]; correct: number; rationale?: string;
+  englishSource?: { q: string; options: string[]; rationale?: string };
+}) {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState<number | null>(null);
   const revealed = selected !== null;
 
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
       <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
+      {englishSource && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -108,12 +165,13 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
             >
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
+              {englishSource && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
-                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>Correct</span>
+                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
               {revealed && isSelected && !isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#8B2020' }}>
-                  Incorrect — see {String.fromCharCode(65 + correct)}
+                  {t('studentIncorrectSee').replace('{answer}', String.fromCharCode(65 + correct))}
                 </span>
               )}
             </button>
@@ -122,8 +180,11 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
       </div>
       {revealed && rationale && (
         <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
-          <Lightbulb size={13} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
-          <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>{rationale}</p>
+          <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
+          <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+            <p>{rationale}</p>
+            {englishSource?.rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
+          </div>
         </div>
       )}
     </div>
@@ -132,20 +193,30 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }: {
-  lesson: Lesson; color: string; moduleId: string; lang: string;
+function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJumpToLesson }: {
+  lesson: Lesson; color: string;
+  /** Text-safe variant of `color` — ochre (design) reads at 2.54:1 as text (CLAUDE.md), so the
+   *  panel's readable text (Key points heading, related-lesson buttons) uses this instead of
+   *  `color`, which stays for fills/borders/icons. */
+  textColor: string;
+  moduleId: string; lang: string;
   /** True for exactly one render after a "related lessons" jump targets this lesson — see
    *  jumpToLesson() below. A one-way switch: it opens the panel, but going false again never
    *  closes it back up. */
   autoOpen?: boolean;
   onJumpToLesson: (lessonId: string) => void;
 }) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   // The slide player is opt-in per lesson and resets when the panel is left. Nothing in the deck
   // downloads until it is opened, and reopening a lesson should not re-spend anyone's data.
   const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
+  const presentation = resolveLearnerLessonPresentation(lesson, lang);
+  const lessonContent = presentation.content;
+  const regionalDraft = (lang === 'st' || lang === 'ts') && presentation.status === 'draft';
+  const regionalFallback = (lang === 'st' || lang === 'ts') && presentation.status === 'english-fallback';
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -169,23 +240,49 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
           : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
-          <span className={`font-display ${styles.lessonTitle}`}>{lesson.title}</span>
-          <span className={`font-sans ${styles.lessonHint}`}>{open ? 'Close lesson' : 'Open lesson'}{hasAudio ? ' · Listen or read' : ' · Read and practise'}</span>
+          <span className={`font-display ${styles.lessonTitle}`}>{lessonContent.title}</span>
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className={`font-sans ${styles.lessonHint}`}>{open ? t('studentCloseLesson') : t('studentOpenLesson')}{hasAudio ? ` · ${t('studentListenOrRead')}` : ` · ${t('studentReadAndPractise')}`}</span>
+            {lang === 'zu' && presentation.status === 'draft' && (
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>
+                {t('studentZuluLessonDraftBadge')}
+              </span>
+            )}
+            {lang === 'zu' && presentation.status === 'english-fallback' && (
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
+                {t('studentZuluLessonEnglishBadge')}
+              </span>
+            )}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>AI draft · review pending</span>}
+            {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>English lesson</span>}
+          </span>
         </span>
         {open
-          ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
-          : <ChevronDown size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+          ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0 }} />
+          : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0 }} />}
       </button>
 
       {open && (
         <div className={`px-4 pb-5 space-y-5 ${styles.lessonContent}`} style={{ borderTop: `1px solid ${color}18` }}>
+          {lang === 'zu' && presentation.status === 'draft' && (
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>
+              {t('studentZuluLessonDraftNotice')}
+            </div>
+          )}
+          {lang === 'zu' && presentation.status === 'english-fallback' && (
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
+              {t('studentZuluLessonEnglishFallbackNotice')}
+            </div>
+          )}
+          {regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
                 moduleId={moduleId}
                 appLang={lang}
                 tracks={lessonTracks}
-                label="Listen to this lesson"
+                label={t('studentListenToLesson')}
               />
             </div>
           )}
@@ -207,10 +304,10 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                   <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
-                      Watch and listen
+                      {t('studentWatchAndListen')}
                     </span>
                     <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
-                      {deckSlideCount(moduleId, lesson.id)} slides, narrated. Nothing downloads until you press play.
+                      {t('studentDeckDescription').replace('{count}', String(deckSlideCount(moduleId, lesson.id)))}
                     </span>
                   </span>
                 </button>
@@ -221,27 +318,28 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           {/* Infographic — a diagram frames the reading, so it sits after audio, before body */}
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
-              <LessonInfographic url={lesson.infographicUrl!} alt={lesson.infographicAlt!} />
+              <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
             </div>
           )}
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {lesson.body.split('\n\n').map((para, i) => (
+            {lessonContent.body.split('\n\n').map((para, i) => (
               <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
                 {para}
               </p>
             ))}
+            {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
           </div>
 
           {/* Key points */}
           <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>Key Points</p>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: textColor }}>{t('studentKeyPoints')}</p>
             <ul className="space-y-1.5">
-              {lesson.keyPoints.map((kp, i) => (
+              {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -257,21 +355,21 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
               style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
             >
-              <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <Video size={14} style={{ color: '#755942', flexShrink: 0 }} />
               <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
-                Facilitator training video — for in-person sessions, not for streaming here.
+                {t('studentFacilitatorVideo')}
               </span>
-              <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <ExternalLink size={12} style={{ color: '#755942', flexShrink: 0 }} />
             </a>
           )}
 
           {/* Quiz */}
           <div className="space-y-3">
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
-              Check your understanding
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
+              {t('studentCheckUnderstanding')}
             </p>
-            {lesson.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
+            {lessonContent.quiz.map((q, i) => (
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={regionalDraft ? lesson.quiz[i] : undefined} />
             ))}
           </div>
 
@@ -279,8 +377,8 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               above rather than rendered as a dead button. */}
           {related.length > 0 && (
             <div className="space-y-2">
-              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
-                Related lessons
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
+                {t('studentRelatedLessons')}
               </p>
               <div className="flex flex-wrap gap-2">
                 {related.map(({ lesson: rl }) => (
@@ -289,7 +387,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                     type="button"
                     onClick={() => onJumpToLesson(rl.id)}
                     className="px-3 py-1.5 rounded-full text-xs font-sans font-medium text-left transition-colors"
-                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color, cursor: 'pointer' }}
+                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color: textColor, cursor: 'pointer' }}
                   >
                     {rl.title}
                   </button>
@@ -318,6 +416,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
   existing?: CourseSubmission;
   onSubmitted: () => void;
 }) {
+  const { t } = useLanguage();
   const [checked, setChecked] = useState<Set<string>>(new Set(existing?.self_check ?? []));
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -359,7 +458,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       await submitCourseModule({ module: moduleId, self_check: [...checked], photo_path, voice_path });
       onSubmitted();
     } catch {
-      setError('Could not submit — check your connection and try again.');
+      setError(t('studentSubmitError'));
     } finally {
       setSubmitting(false);
     }
@@ -380,12 +479,13 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
                 key={item}
                 type="button"
                 onClick={() => toggleCheck(item)}
+                aria-pressed={isChecked}
                 className="w-full flex items-center gap-2.5 text-left px-3 py-2 rounded-lg transition-colors"
                 style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : '#E2D8C4'}` }}
               >
                 {isChecked
                   ? <CheckCircle size={15} style={{ color, flexShrink: 0 }} />
-                  : <Circle size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+                  : <Circle size={15} style={{ color: '#755942', flexShrink: 0 }} />}
                 <span className="font-sans text-sm" style={{ color: '#3A3020' }}>{item}</span>
               </button>
             );
@@ -406,7 +506,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
           ? <img src={photoPreview} alt="" className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
           : <Camera size={16} style={{ color, flexShrink: 0 }} />}
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
-          {photoPreview ? 'Photo added — tap to change' : 'Add a photo (required)'}
+          {photoPreview ? t('studentPhotoAdded') : t('studentPhotoRequired')}
         </span>
       </button>
 
@@ -419,9 +519,9 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
         style={{ background: '#FFFEFA', border: `1px dashed ${voiceFile ? color : '#E2D8C4'}` }}
       >
-        <Mic size={16} style={{ color: voiceFile ? color : '#8C7A62', flexShrink: 0 }} />
+        <Mic size={16} style={{ color: voiceFile ? color : '#755942', flexShrink: 0 }} />
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
-          {voiceFile ? `Voice note added — ${voiceFile.name}` : 'Add a voice note (optional)'}
+          {voiceFile ? t('studentVoiceAdded').replace('{name}', voiceFile.name) : t('studentVoiceOptional')}
         </span>
       </button>
 
@@ -434,18 +534,18 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
         style={{
           background: canSubmit ? color : 'rgba(226,216,196,0.6)',
-          color: canSubmit ? '#FFFEFA' : '#8C7A62',
+          color: canSubmit ? '#FFFEFA' : '#755942',
           cursor: canSubmit ? 'pointer' : 'not-allowed',
         }}
       >
         {submitting
-          ? <><Loader2 size={14} className="animate-spin" />Submitting...</>
-          : existing ? 'Resubmit' : 'Submit'}
+          ? <><Loader2 size={14} className="animate-spin" />{t('studentSubmitting')}</>
+          : existing ? t('studentResubmit') : t('studentSubmit')}
       </button>
 
       {existing && (
-        <p className="font-sans text-xs text-center" style={{ color: '#8C7A62' }}>
-          Already submitted — submitting again replaces the photo and voice note.
+        <p className="font-sans text-xs text-center" style={{ color: '#755942' }}>
+          {t('studentAlreadySubmitted')}
         </p>
       )}
     </div>
@@ -458,10 +558,15 @@ const STUDENT_ALLOWED_ROLES = new Set(['student', 'farmer', 'mentor', 'ngo', 'fu
 
 export default function StudentPage() {
   const { user, role, loading } = useAuth();
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
+  // Simple / All tools (lib/app-level.ts). All tools is this screen exactly as it always was;
+  // Simple hides the production-readiness badges, the offline quality picker, the dual
+  // overdue/due-soon counts, the redundant category chip and shrinks the progress hero — see the
+  // Study — Simple mode track brief.
+  const simple = useAppLevel() === 'simple';
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [assignments, setAssignments] = useState<CourseAssignment[]>([]);
@@ -476,6 +581,7 @@ export default function StudentPage() {
   const [toggling, setToggling] = useState<string | null>(null);
   const [progressError, setProgressError] = useState(false);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+  const [courseOpen, setCourseOpen] = useState(false);
   // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
   // not durable UI state — see jumpToLesson() and the effect that consumes it.
   const [jumpToLessonId, setJumpToLessonId] = useState<string | null>(null);
@@ -554,6 +660,7 @@ export default function StudentPage() {
   function jumpToLesson(lessonId: string) {
     const owner = LESSON_INDEX.get(lessonId);
     if (!owner) return;
+    setCourseOpen(true);
     setExpandedModuleId(owner.moduleId);
     setJumpToLessonId(lessonId);
   }
@@ -611,12 +718,15 @@ export default function StudentPage() {
   if (isLive && (loading || !user) && !isSampleMode()) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
         </header>
         <main className="flex-1 flex items-center justify-center">
-          <Loader2 size={28} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: '#5C5040' }}>
+            <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: '#1F4D2B' }} />
+            <span>{lang === 'zu' ? 'Sicela ulinde… Please wait while your account loads.' : 'Loading your account…'}</span>
+          </div>
         </main>
       </div>
     );
@@ -625,11 +735,11 @@ export default function StudentPage() {
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Learning Portal</span>
+          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{t('studentPortal')}</span>
           <div className="flex-1" />
           <SettingsButton />
         </header>
@@ -638,9 +748,9 @@ export default function StudentPage() {
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
               <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
             </div>
-            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Learning Portal</p>
-            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
-              It&apos;s set up for students — not your role. Head back to your own home to keep going.
+            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{t('studentPortalTitle')}</p>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
+              {t('studentPortalBody')}
             </p>
             <button
               onClick={() => router.push('/home')}
@@ -648,7 +758,7 @@ export default function StudentPage() {
               style={{ background: '#1F4D2B', color: '#F7F2E9' }}
             >
               <Home size={15} />
-              Back to my home
+              {t('studentBackHome')}
             </button>
           </div>
         </main>
@@ -665,6 +775,7 @@ export default function StudentPage() {
   const pct = TOTAL_MODULES === 0 ? 0 : Math.round((doneCount / TOTAL_MODULES) * 100);
   const totalMins = COURSE_MODULES.reduce((s, m) => s + (doneIds.has(m.id) ? 0 : m.durationMins), 0);
   const studyModule = COURSE_MODULES.find((m) => m.id === currentId) ?? COURSE_MODULES[0];
+  const studyModulePresentation = resolveCourseModulePresentation(studyModule, lang);
 
   // Arc SVG for progress ring
   const R = 44;
@@ -673,29 +784,55 @@ export default function StudentPage() {
 
   return (
     <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: '#EEEBDD' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>My Studies</span>
+        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>{t('studentMyStudies')}</span>
         <div className="flex-1" />
-        <LessonLink id="student:overview" label="Learn" />
+        <LessonLink id="student:overview" label={t('homeQuickStudy')} />
         <SettingsButton />
       </header>
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
-
+        {lang === 'zu' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            {t('studentZuluCourseLanguageNote')}
+            {' '}
+            <span className="block mt-1">
+              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
+            </span>
+          </p>
+        )}
+        {lang === 'st' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
+            <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
+          </p>
+        )}
+        {lang === 'ts' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+            <span lang="en">/ Unreviewed Xitsonga draft.</span>
+          </p>
+        )}
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
-            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> Learn · practise · grow</p>
-            <h1 id="studies-title" className="font-display">My Studies</h1>
-            <p className={`font-sans ${styles.description}`}>Your permaculture course, one practical lesson at a time.</p>
+            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> {t('studentLearnPracticeGrow')}</p>
+            <h1 id="studies-title" className="font-display">{t('studentMyStudies')}</h1>
+            <p className={`font-sans ${styles.description}`}>{t('studentCourseDescription')}</p>
+
             <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
+              setCourseOpen(true);
               setExpandedModuleId(studyModule.id);
               requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-            }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'}</button>
-            <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
+
+            }}><PlayCircle size={18} />{pct === 100 ? t('studentRevisit') : doneCount === 0 ? t('studentStart') : t('studentContinue')}</button>
+            <span className={`font-sans ${styles.nextLesson}`}>{studyModulePresentation.title}</span>
           </div>
           <div className={styles.progress}>
           {/* Ring */}
@@ -724,38 +861,43 @@ export default function StudentPage() {
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <div className="font-display font-semibold text-base leading-tight" style={{ color: '#20190F' }}>
-              {pct === 100 ? 'Course complete!' : doneCount === 0 ? 'Ready to start' : 'Keep going'}
+            <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: '#20190F' }}>
+              {fetching
+                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
+                : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
-            <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
-              {doneCount} of {TOTAL_MODULES} modules complete
-            </div>
-            {progressError && (
-              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
-                Progress could not be loaded or saved. Check your connection or account access.
+            {!fetching && !simple && (
+              <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
+                {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
               </div>
             )}
-            {pct < 100 && totalMins > 0 && (
+            {progressError && (
+              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
+                {t('studentProgressError')}
+              </div>
+            )}
+            {/* Simple: the ring plus the one headline above is the whole stat — the remaining-time
+                chip and practitioner badge below are All tools only. */}
+            {!simple && pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
-                <Clock size={12} style={{ color: '#8C7A62' }} />
-                <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-                  ~{formatDuration(totalMins)} remaining
+                <Clock size={12} style={{ color: '#755942' }} />
+                <span className="font-sans text-xs" style={{ color: '#755942' }}>
+                  ~{formatDuration(totalMins, t)} {t('studentRemaining')}
                 </span>
               </div>
             )}
-            {pct === 100 && (
+            {!simple && pct === 100 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
                 <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
-                  Permaculture practitioner
+                  {t('studentPractitioner')}
                 </span>
               </div>
             )}
           </div>
           </div>
-        </section>
 
-        <LimaBar />
+        </section>
 
         {/* What the mentor has actually asked for — only shown when there is something */}
         {assignSummary && assignSummary.total > 0 && (
@@ -763,27 +905,47 @@ export default function StudentPage() {
             <div className="flex items-center gap-2 mb-2">
               <ClipboardList size={14} style={{ color: '#1F4D2B' }} />
               <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
-                Set by your mentor
+                {t('studentAssignmentSetByMentor')}
               </span>
             </div>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-              {assignSummary.done} of {assignSummary.total} done.
-              {assignSummary.overdue > 0 && ' '}
-              {assignSummary.overdue > 0 && (
-                <span style={{ color: '#B03A2E', fontWeight: 600 }}>
-                  {assignSummary.overdue} {assignSummary.overdue === 1 ? 'is' : 'are'} overdue.
-                </span>
-              )}
-              {assignSummary.dueSoon > 0 && ' '}
-              {assignSummary.dueSoon > 0 && (
-                <span style={{ color: '#C07A1E', fontWeight: 600 }}>
-                  {assignSummary.dueSoon} due this week.
-                </span>
-              )}
-            </p>
-            <p className="font-sans text-xs mt-1.5" style={{ color: '#8C7A62' }}>
-              Assigned modules are listed first. Everything else is still open to you.
-            </p>
+            {simple ? (
+              // One urgency line: the done count and whichever is more pressing, overdue beating
+              // due-soon — not the dual overdue-then-due-soon counts stacked in All tools.
+              <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                {(assignSummary.overdue > 0 || assignSummary.dueSoon > 0) && ' '}
+                {assignSummary.overdue > 0 ? (
+                  <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                    {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                  </span>
+                ) : assignSummary.dueSoon > 0 ? (
+                  <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                    {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                  </span>
+                ) : null}
+              </p>
+            ) : (
+              <>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                  {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                  {assignSummary.overdue > 0 && ' '}
+                  {assignSummary.overdue > 0 && (
+                    <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                      {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                    </span>
+                  )}
+                  {assignSummary.dueSoon > 0 && ' '}
+                  {assignSummary.dueSoon > 0 && (
+                    <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                      {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                    </span>
+                  )}
+                </p>
+                <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
+                  {t('studentAssignmentsOrder')}
+                </p>
+              </>
+            )}
           </div>
         )}
 
@@ -792,51 +954,20 @@ export default function StudentPage() {
             It sits above the module list rather than in a settings screen because it is a thing
             you do on purpose before you leave, not a preference you configure. */}
         <details className={styles.offline}>
-          <summary className="font-sans"><BookOpen size={18} /> Study offline <span className={styles.offlineHint}>Save lessons to this phone before you leave signal</span></summary>
-          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label="Save available lessons to this phone" />
+          <summary className="font-sans"><BookOpen size={18} /> {t('studentStudyOffline')} <span className={styles.offlineHint}>{t('studentSaveBeforeSignal')}</span></summary>
+          <OfflineDownload moduleIds={orderedModules.filter((m) => isModuleUnlocked(m.id, gatingCtx)).map((m) => m.id)} lang={lang} label={t('studentSaveAvailable')} />
         </details>
 
-        <section className={styles.companions} aria-labelledby="design-pathway-title">
-          <div>
-            <p className={styles.eyebrow}>Connect the whole plan · English teaching preview</p>
-            <h2 id="design-pathway-title" className="font-display">Design a working homestead</h2>
-            <p>Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.</p>
-          </div>
-          <OfflinePageLink href="/student/design" className={styles.guideCard}>
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">Bring the decisions together.</strong><span>Build a design folder with a facilitator or learning partner. This preview does not award course credit.</span><em>Explore the design teaching preview →</em></span>
-          </OfflinePageLink>
-        </section>
 
-        <section className={styles.companions} aria-labelledby="finance-course-title">
-          <div>
-            <p className={styles.eyebrow}>Separate course · English teaching preview</p>
-            <h2 id="finance-course-title" className="font-display">Farm Finance</h2>
-            <p>Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.</p>
-          </div>
-          <OfflinePageLink href="/student/finance" className={styles.guideCard}>
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" />
-            <span><strong className="font-display">Understand the money. Plan the next season.</strong><span>Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.</span><em>Explore the finance teaching preview →</em></span>
-          </OfflinePageLink>
-        </section>
-
-        <section className={styles.companions} aria-labelledby="app-guides-title">
-          <div>
-            <p className={styles.eyebrow}>Practical app guides</p>
-            <h2 id="app-guides-title" className="font-display">Using ImbewuField</h2>
-            <p>Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.</p>
-          </div>
-          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>Read the guide · English →</em></span>
-          </OfflinePageLink>)}
-          <Link href="/tour" className={styles.guideTour}>Explore mapping, planning and records in the sample tour →</Link>
-        </section>
-
-        <div className={styles.courseHeading}>
-          <h2 className="font-display">Your course</h2>
-          <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
-        </div>
+        <details className={styles.courseDisclosure} open={courseOpen} onToggle={(event) => setCourseOpen(event.currentTarget.open)}>
+          <summary className={styles.courseHeading}>
+            <img src="/home-images/sample-farm-landscape.webp" alt="" loading="lazy" width={220} height={124} />
+            <div className={styles.courseHeadingText}>
+              <span className={styles.choiceLabel}>{t('studentYourCourse')}</span>
+              <h2 className="font-display">{t('homeQuickStudyDesc')}</h2>
+              <span className="font-sans">{TOTAL_MODULES} {t('studentModules')} · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} {t('studentLessons')}</span>
+            </div>
+          </summary>
 
         {/* Module list */}
         <div className={styles.modules}>
@@ -844,13 +975,28 @@ export default function StudentPage() {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
             const color = CATEGORY_COLORS[mod.category];
+            // Text-safe variant — ochre (design) is a fill, not a text colour (CLAUDE.md); every
+            // spot below that paints readable text (not a background/border/icon) uses this one.
+            const textColor = CATEGORY_TEXT_COLORS[mod.category];
             const isExpanded = expandedModuleId === mod.id;
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
-            const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
+            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
+            const modulePresentation = resolveCourseModulePresentation(mod, lang);
+            const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
+            const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
+            const readiness = readinessLabel(mod.id);
+            const readinessFacts = moduleReadinessDetail(mod.id);
+            const readinessTitle = readiness?.text === 'Fully built'
+              ? t('studentReadinessCompleteDetail')
+                  .replace('{lessons}', String(readinessFacts.totalLessons))
+                  .replace('{languages}', String(readinessFacts.narrationLanguages.length))
+              : readiness?.text === 'Narrated slides'
+                ? t('studentReadinessNarratedDetail').replace('{languages}', String(readinessFacts.narrationLanguages.length))
+                : t('studentReadinessLessonsDetail');
             const unlocked = isModuleUnlocked(mod.id, gatingCtx);
             const isCurrent = currentId === mod.id;
 
@@ -859,28 +1005,34 @@ export default function StudentPage() {
             // mod.lessons), and there's no expand control to reach it with. No "Mark done"
             // toggle either, so a locked module can't be cheated past by ticking it directly.
             if (!unlocked) {
-              const reason = unlockReason(mod.id, gatingCtx);
+              const reason = unlockReason(mod.id, gatingCtx, (id) => localisedModuleTitle(id, lang));
               return (
                 <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
                   style={{ border: '1px solid #DEDCCE' }}>
                   <div className={styles.moduleHeader}>
                     <div className={styles.moduleArt}>
                       {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                      <span className={`font-sans ${styles.moduleNumber}`}>Module {MODULE_NUMBER.get(mod.id) ?? idx + 1}</span>
+                      <span className={`font-sans ${styles.moduleNumber}`}>{t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-2 flex-wrap">
                         <span className={`font-display ${styles.moduleTitle}`}>
-                          {mod.title}
+                          {modulePresentation.title}
                         </span>
+                        {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
+                          <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                            style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
+                          </span>
+                        )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                          style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
-                          {CATEGORY_LABELS[mod.category]}
+                          style={{ background: `${color}10`, color: textColor, border: `1px solid ${color}20` }}>
+                          {t(CATEGORY_LABEL_KEYS[mod.category])}
                         </span>
                       </div>
                       <p className={`font-sans ${styles.lockedReason}`}>
                         <Lock size={14} style={{ flexShrink: 0, marginTop: 2 }} />
-                        {reason ?? 'Locked'}
+                        {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
                       </p>
                     </div>
                   </div>
@@ -901,7 +1053,7 @@ export default function StudentPage() {
                   {/* Number / check */}
                   <div className={styles.moduleArt}>
                     {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? '✓ Complete' : `Module ${MODULE_NUMBER.get(mod.id) ?? idx + 1}`}</span>
+                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? `✓ ${t('studentComplete')}` : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -910,16 +1062,28 @@ export default function StudentPage() {
                     onClick={() => toggleExpand(mod.id)}
                     aria-expanded={isExpanded}
                   >
-                    <span className={`font-display ${styles.moduleTitle}`}>{mod.title}</span>
-                    <div className="flex items-start gap-2 flex-wrap">
-                      <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
-                        {CATEGORY_LABELS[mod.category]}
+                    <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
+                    {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
+                      <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                        style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
                       </span>
+                    )}
+                    <div className="flex items-start gap-2 flex-wrap">
+                      {simple ? (
+                        // A colour dot carries the same category cue as the text chip below,
+                        // without repeating a word next to "Continue here" a farmer doesn't need.
+                        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 4 }} />
+                      ) : (
+                        <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: color + '18', color: textColor, border: `1px solid ${color}30` }}>
+                          {t(CATEGORY_LABEL_KEYS[mod.category])}
+                        </span>
+                      )}
                       {isCurrent && (
                         <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
-                          Continue here
+                          {t('studentContinueHere')}
                         </span>
                       )}
                       {/* HOW FINISHED THIS MODULE IS, derived from what is on disk rather than a
@@ -929,15 +1093,21 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      <span
-                        title={readinessLabel(mod.id)?.detail}
-                        className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={contentComplete
-                          ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
-                          : { background: 'rgba(32,25,15,0.05)', color: '#8C7A62', border: '1px solid #E2D8C4' }}
-                      >
-                        {readinessLabel(mod.id)?.text}
-                      </span>
+                      {!simple && (
+                        <span
+                          title={readinessTitle}
+                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={contentComplete
+                            ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
+                            : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
+                        >
+                        {readiness?.text === 'Fully built'
+                          ? t('studentReadinessComplete')
+                          : readiness?.text === 'Narrated slides'
+                            ? t('studentReadinessNarrated')
+                            : t('studentReadinessLessons')}
+                        </span>
+                      )}
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{
@@ -946,7 +1116,7 @@ export default function StudentPage() {
                             border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
                           }}>
                           {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
-                          {dueText ?? 'Assigned'}
+                          {dueText ?? t('studentAssigned')}
                         </span>
                       )}
                     </div>
@@ -956,27 +1126,34 @@ export default function StudentPage() {
                       </p>
                     )}
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
-                      {mod.description}
+                      {modulePresentation.description}
                     </p>
+                    {(lang === 'st' || lang === 'ts') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
-                        <Clock size={11} style={{ color: '#8C7A62' }} />
-                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
+                        <Clock size={11} style={{ color: '#755942' }} />
+                        <span className="font-mono text-xs" style={{ color: '#755942' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
-                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>Audio</span>
+                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts') ? 'Audio: English' : t('studentAudio')}
+                          </span>
                         </div>
                       )}
+                      {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
+                        <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
+                      )}
+                      {(lang === 'st' || lang === 'ts') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Slides: English</span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
-                            {mod.lessons.length} {mod.lessons.length === 1 ? 'lesson' : 'lessons'}
+                          <span className="font-sans text-xs" style={{ color: '#755942' }}>
+                            {mod.lessons.length} {mod.lessons.length === 1 ? t('studentLessonOne') : t('studentLessons')}
                           </span>
                           {isExpanded
-                            ? <ChevronUp size={11} style={{ color: '#8C7A62' }} />
-                            : <ChevronDown size={11} style={{ color: '#8C7A62' }} />}
+                            ? <ChevronUp size={11} style={{ color: '#755942' }} />
+                            : <ChevronDown size={11} style={{ color: '#755942' }} />}
                         </div>
                       )}
                     </div>
@@ -986,7 +1163,8 @@ export default function StudentPage() {
                   <button
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
-                    aria-label={done ? 'Mark as not done' : 'Mark as complete'}
+                    aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
+                    aria-pressed={done}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
@@ -999,8 +1177,8 @@ export default function StudentPage() {
                     {isToggling
                       ? <Loader2 size={12} className="animate-spin" />
                       : done
-                        ? <><CheckCircle size={12} />Done</>
-                        : <><Circle size={12} />Mark done</>}
+                        ? <><CheckCircle size={12} />{t('studentDone')}</>
+                        : <><Circle size={12} />{t('studentMarkDone')}</>}
                   </button>
                 </div>
 
@@ -1015,8 +1193,27 @@ export default function StudentPage() {
                       moduleIds={[mod.id]}
                       lang={lang}
                       compact
-                      label={`Save ${mod.title} to this phone`}
+                      label={t('studentSaveModule').replace('{title}', modulePresentation.title)}
                     />
+                    {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
+                      <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+                        {(() => {
+                          const notice = !zuluSlidesReady && !zuluAudioReady
+                            ? ZULU_MEDIA_LANGUAGE_NOTICES.bothEnglish
+                            : !zuluSlidesReady
+                              ? ZULU_MEDIA_LANGUAGE_NOTICES.slidesEnglish
+                              : ZULU_MEDIA_LANGUAGE_NOTICES.audioEnglish;
+                          return <><span>{notice.zu}</span><span className="block mt-1">{notice.en}</span></>;
+                        })()}
+                      </p>
+                    )}
+                    {narrationReviewPending(mod.id, lang) && (
+                      <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+                        {t('studentZuluAudioDraftNotice')}
+                      </p>
+                    )}
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
                         Rory, on opening a finished module: "i wanted the full slidedeck at the
                         beginning of the lesson, in a window so you can immediately see it — press
@@ -1037,18 +1234,19 @@ export default function StudentPage() {
                           moduleId={mod.id}
                           appLang={lang}
                           tracks={allTracks(mod.id)}
-                          label="Listen to the whole module"
+                          label={t('studentListenModule')}
                         />
                       </div>
                     ) : null}
-                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
-                      Lessons
+                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#755942' }}>
+                      {t('studentLessonsLabel')}
                     </p>
                     {mod.lessons.map((lesson) => (
                       <LessonPanel
                         key={lesson.id}
                         lesson={lesson}
                         color={color}
+                        textColor={textColor}
                         moduleId={mod.id}
                         lang={lang}
                         autoOpen={jumpToLessonId === lesson.id}
@@ -1070,8 +1268,8 @@ export default function StudentPage() {
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
                       <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
-                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color }}>
-                        {submission ? 'Submitted — tap to resubmit' : 'Submit this module'}
+                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
+                        {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
                       {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
                       {submissionOpen
@@ -1107,24 +1305,88 @@ export default function StudentPage() {
           <div className="flex items-center gap-2 mb-2">
             {capstoneUnlocked
               ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
-              : <Lock size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
-            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#8C7A62' }}>
-              Capstone: your farm design
+              : <Lock size={14} style={{ color: '#755942', flexShrink: 0 }} />}
+            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#755942' }}>
+              {t('studentCapstone')}
             </span>
           </div>
-          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
+          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#755942' }}>
             {capstoneUnlocked
-              ? 'You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.'
-              : `Finish and submit all ${TOTAL_MODULES} modules to unlock your capstone design.`}
+              ? t('studentCapstoneComplete')
+              : t('studentCapstoneLocked').replace('{count}', String(TOTAL_MODULES))}
           </p>
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
               style={{ background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}>
-              Open Design Studio
+              {t('studentOpenDesignStudio')}
             </Link>
           )}
         </div>
+        </details>
+
+        {simple ? (
+          // Two plain links — the full preview cards below (image, intro paragraph, nested card)
+          // are an All tools companion for a facilitator, not a farmer's next tap.
+          <div className={styles.coursePreviews}>
+            <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong></span>
+            </OfflinePageLink>
+            <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong></span>
+            </OfflinePageLink>
+          </div>
+        ) : (
+        <div className={styles.coursePreviews}>
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
+            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" width={150} height={100} />
+            <div><span className={styles.choiceLabel}>{t('studentDesignEnglishPreview')}</span>
+              <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2></div>
+          </summary>
+          <div>
+            <p>{t('studentDesignPreviewIntro')}</p>
+          </div>
+          <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong><span>{t('studentDesignPreviewCardBody')}</span><em>{t('studentDesignPreviewAction')}</em></span>
+          </OfflinePageLink>
+        </details>
+
+        <details className={`${styles.companions} ${styles.collapsible}`}>
+          <summary className={styles.previewSummary} aria-labelledby="finance-course-title">
+            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" width={150} height={100} />
+            <div><span className={styles.choiceLabel}>{t('studentFinanceEnglishPreview')}</span>
+              <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2></div>
+          </summary>
+          <div>
+            <p>{t('studentFinancePreviewIntro')}</p>
+          </div>
+          <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong><span>{t('studentFinancePreviewCardBody')}</span><em>{t('studentFinancePreviewAction')}</em></span>
+          </OfflinePageLink>
+        </details>
+        </div>
+        )}
+
+        <LimaBar />
+
+        <details className={`${styles.companions} ${styles.collapsible} ${styles.appGuides}`}>
+          <summary aria-labelledby="app-guides-title">
+            <p className={styles.eyebrow}>{t('studentAppGuidesHeading')}</p>
+            <h2 id="app-guides-title" className="font-display">{t('studentAppGuidesTitle')}</h2>
+          </summary>
+          <div>
+            <p>{t('studentGuidesDescription')}</p>
+          </div>
+          {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
+            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+            {/* Simple: the card itself is the "read the guide" link — the identical "Read the
+                guide · English →" line does not need to repeat once per card (14 times). */}
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
+          </OfflinePageLink>)}
+          <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
+
+        </details>
 
         {/* Completion banner */}
         {pct === 100 && (
@@ -1132,22 +1394,21 @@ export default function StudentPage() {
             style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
             <Sprout size={28} style={{ color: '#1F4D2B', margin: '0 auto' }} />
             <div className="font-display font-bold text-base" style={{ color: '#1F4D2B' }}>
-              Course complete!
+              {t('studentCourseComplete')}
             </div>
             <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
               {/* No push/SMS/email notification exists anywhere in this app — the mentor
                   dashboard only shows progress when a mentor opens it and looks. The old
                   wording ("Your trainer will be notified") promised an alert the code never
                   sends, which a farmer has no way to check up on. */}
-              You have completed the full ImbewuField permaculture curriculum. If you have a
-              mentor, they will see this progress next time they check in.
+              {t('studentCompletionMessage')}
             </p>
           </div>
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            Progress will save to Firebase once the backend is connected
+          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
+            {t('studentProgressFirebase')}
           </p>
         )}
       </main>

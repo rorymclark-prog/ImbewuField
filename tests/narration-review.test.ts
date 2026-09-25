@@ -163,3 +163,50 @@ test('a slide with no isiZulu says so in the body, not just the findings', () =>
   const zu = '**Ikhasi 1 — X**\n\nA.\n';
   assert.match(renderReviewPacket(reviewModule('m', en, zu)), /nothing at all/);
 });
+
+
+test('the corrected Market isiZulu narration stays paired to its source drafts', () => {
+  const englishBlocks = new Map(parseScriptBlocks(SCRIPT('market-community', 'en')).map((block) => [block.slide, block.text]));
+  const zuluBlocks = new Map(parseScriptBlocks(SCRIPT('market-community', 'zu')).map((block) => [block.slide, block.text]));
+  const packet = (name: string) => readFileSync(join(process.cwd(), 'docs/narration-reviews', name), 'utf8');
+  const targets = [
+    [2, 'market-community-l1.zu.full-draft.md', 'body'],
+    [7, 'market-community-l1.zu.full-draft.md', 'slide'],
+    [8, 'market-community-l1.zu.full-draft.md', 'slide'],
+    [10, 'market-community-l2.zu.full-draft.md', 'slide'],
+    [11, 'market-community-l2.zu.full-draft.md', 'slide'],
+    [12, 'market-community-l2.zu.full-draft.md', 'slide'],
+    [13, 'market-community-l2.zu.full-draft.md', 'slide'],
+    [15, 'market-community-l3.zu.full-draft.md', 'slide'],
+    [17, 'market-community-l3.zu.full-draft.md', 'slide'],
+    [18, 'market-community-l3.zu.full-draft.md', 'slide'],
+    [20, 'market-community-l3.zu.full-draft.md', 'slide'],
+  ] as const;
+  const paragraphs = (value: string) => splitParagraphs(value).map((part) => part.trim());
+
+  for (const [slide, packetName, kind] of targets) {
+    const draft = packet(packetName);
+    let source: string;
+    let proposal: string;
+    if (kind === 'body') {
+      const body = draft.match(/^## Lesson body\n\n### English meaning \(current source wording\)\n\n([\s\S]*?)\n\n### Proposed isiZulu\n\n([\s\S]*?)\n\n## Key points/m);
+      assert.ok(body, 'L1 body source pair should remain machine-readable');
+      source = paragraphs(body[1]).slice(0, 3).join('\n\n');
+      proposal = paragraphs(body[2]).slice(0, 3).join('\n\n');
+    } else {
+      const heading = draft.indexOf(`### Slide ${slide} —`);
+      assert.ok(heading >= 0, `draft source should include slide ${slide}`);
+      const bodyStart = draft.indexOf('\n', heading) + 1;
+      const nextSlide = draft.indexOf('\n### Slide ', bodyStart);
+      const reviewer = draft.indexOf('\n## Reviewer questions', bodyStart);
+      const ends = [nextSlide, reviewer].filter((index) => index >= 0);
+      const section = draft.slice(bodyStart, ends.length ? Math.min(...ends) : undefined).trim();
+      const pair = section.match(/^\*\*English source:\*\*\n\n([\s\S]*?)\n\n\*\*Proposed isiZulu:\*\*\n\n([\s\S]*)$/);
+      assert.ok(pair, `slide ${slide} should have paired source and proposal`);
+      source = pair[1];
+      proposal = pair[2];
+    }
+    assert.deepEqual(paragraphs(englishBlocks.get(slide) ?? ''), paragraphs(source), `English slide ${slide} must match the paired source`);
+    assert.deepEqual(paragraphs(zuluBlocks.get(slide) ?? ''), paragraphs(proposal), `isiZulu slide ${slide} must match the paired draft`);
+  }
+});

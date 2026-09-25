@@ -26,6 +26,7 @@ import {
 } from '@/lib/design-studio-i18n';
 import { translate, useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
+import DesignZuluDraftNotice from './DesignZuluDraftNotice';
 import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
@@ -196,7 +197,7 @@ function GuidedWizard({
   step: WizardStep;
   setStep: (s: WizardStep) => void;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
@@ -251,6 +252,7 @@ function GuidedWizard({
           padding: '8px 12px',
         }}
       >
+        {lang === 'zu' && <DesignZuluDraftNotice />}
         {translatedDesignStepGuidance(t, step)}
       </div>
 
@@ -322,7 +324,7 @@ function ProWizard({
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const idx = STEP_ORDER.indexOf(step);
   const canBack = idx > 0;
   const canNext = idx < STEP_ORDER.length - 1;
@@ -435,6 +437,7 @@ function ProWizard({
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <div style={{ flex: 1, fontSize: 11.5, lineHeight: 1.3, color: 'rgba(11,18,11,0.75)' }}>
+          {lang === 'zu' && <DesignZuluDraftNotice />}
           {translatedDesignStepGuidance(t, step)}
         </div>
         {lessonButton}

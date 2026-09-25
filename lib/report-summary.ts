@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import { buildBillOfQuantities } from './report-boq';
@@ -8,8 +9,8 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   const zu = language === 'zu';
   const t = (en: string, zulu: string) => zu ? zulu : en;
   const unknown = t('Not recorded', 'Akubhaliwe');
-  const area = (value?: number) => value === undefined ? unknown : `${value.toLocaleString('en-ZA', { maximumFractionDigits: 1 })} m²`;
-  const amount = (value: number) => `R ${value.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`;
+  const area = (value?: number) => value === undefined ? unknown : `${numberLabel(value, 1)} m²`;
+  const amount = (value: number) => `R ${numberLabel(value, 0)}`;
   const boq = buildBillOfQuantities(facts);
   const soilKnown = location.soil.soilSource === 'lab' || location.soil.soilSource === 'soilgrids';
   const title = facts?.farmName ?? t('Site summary', 'Isifinyezo sendawo');
@@ -22,7 +23,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     t('Mapped space is not confirmation that all of it is currently in production.', 'Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.'),
     `${t('Annual rainfall estimate', 'Isilinganiso semvula yonyaka')}: ${location.rainfall.annual} mm`,
     `${t('Soil', 'Umhlabathi')}: ${soilKnown ? `pH ${location.soil.ph} · ${location.soil.soilSource === 'lab' ? t('lab result', 'umphumela wokuhlolwa') : t('SoilGrids model; confirm on site', 'imodeli ye-SoilGrids; qinisekisa endaweni')}` : t('Not measured. Arrange a soil test.', 'Awukahlolwa. Hlela ukuhlolwa komhlabathi.')}`,
-    `${t('Stated tank capacity in the design', 'Umthamo wamathangi obhalwe emklamweni')}: ${facts?.water ? `${facts.water.statedStorageLitres.toLocaleString()} L` : unknown}`,
+    `${t('Stated tank capacity in the design', 'Umthamo wamathangi obhalwe emklamweni')}: ${facts?.water ? `${numberLabel(facts.water.statedStorageLitres)} L` : unknown}`,
     t('Capacity is not water currently available; check which tanks are already installed.', 'Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.'),
   ];
   const cropLines = facts?.crop?.crops.length ? facts.crop.crops.map(c => `${c.name} · ${c.bedLabels.join(', ')} · ${t('sow', 'hlwanyela')}: ${c.sowMonths.join(', ')}${c.firstSeasonOnlyMonths.length ? ` · ${t('once only', 'kanye kuphela')}: ${c.firstSeasonOnlyMonths.join(', ')}` : ''}${c.alreadyGrowing ? ` · ${t('includes an existing crop', 'kufaka isitshalo esesikhona')}` : ''}`) : [t('No crop rows linked to this site were saved with this report.', 'Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko.')];
@@ -36,7 +37,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   return [
     { title, lines: factsLines },
     { title: t('Crop plan', 'Uhlelo lwezitshalo'), lines: [...cropNotes, ...cropLines] },
-    { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${tank.name} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${r.label}: ${r.totalLengthM.toLocaleString()} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
+    { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${tank.name} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${r.label}: ${numberLabel(r.totalLengthM)} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
     { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${l.description} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
     { title: t('Next actions and checks', 'Izinyathelo ezilandelayo nokuhlola'), lines: [
       t('Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.', 'Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.'),
@@ -78,15 +79,20 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
 /** A complete, no-network demo record assembled from this site's saved design.
  * This is deliberately not presented as a freshly generated AI assessment. */
 export function sampleFullSiteReport(facts: ReportSiteFacts | null, location: LocationData, language = 'en'): string {
+  const zu = language === 'zu';
+  const t = (en: string, zulu: string) => zu ? zulu : en;
   const pages = reportSummaryPages(facts, location, 5, language);
   const sections = pages.map(page => `## ${page.title}\n\n${page.lines.map(line => `- ${line}`).join('\n')}`);
-  const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${item.status}`) ?? [];
-  const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${bed.areaM2.toLocaleString('en-ZA')} m² · ${bed.kind}`) ?? [];
+  const status = (value: 'existing' | 'proposed' | 'mixed') => zu
+    ? value === 'existing' ? 'okukhona' : value === 'proposed' ? 'okuhleliwe' : 'isimo esixubile'
+    : value;
+  const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${status(item.status)}`) ?? [];
+  const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${numberLabel(bed.areaM2)} m² · ${t(bed.kind, bed.kind === 'bed' ? 'umbhede' : 'isiza')}`) ?? [];
   return [
-    "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.",
+    `## ${t('report basis', 'Isisekelo sombiko')}\n\n${t('This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.', 'Lesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.')}`,
     ...sections,
-    `## Full design inventory\n\n${inventory.length ? inventory.join('\n') : 'No placed elements recorded.'}`,
-    `## Production spaces\n\n${beds.length ? beds.join('\n') : 'No production spaces recorded.'}`,
-    '## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.',
+    `## ${t('Full design inventory', 'Uhlu oluphelele lomklamo')}\n\n${inventory.length ? inventory.join('\n') : t('No placed elements recorded.', 'Akukho zinto ezibekiwe ezirekhodiwe.')}`,
+    `## ${t('Production spaces', 'Izindawo zokukhiqiza')}\n\n${beds.length ? beds.join('\n') : t('No production spaces recorded.', 'Azikho izindawo zokukhiqiza ezirekhodiwe.')}`,
+    `## ${t('Evidence and limitations', 'Ubufakazi nemikhawulo')}\n\n${t('Site photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.', 'Izithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali.')}`,
   ].join('\n\n');
 }

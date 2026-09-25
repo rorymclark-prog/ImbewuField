@@ -1,0 +1,233 @@
+{
+  "module": "intro-permaculture",
+  "language": "zu",
+  "source_script_sha256": "faf469fe46668140369f1054f9ef52558b1af94e4d09d7f10641735948ed4667",
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/intro-permaculture/zu/slide-01.jpg",
+      "bytes": 115360,
+      "sha256": "3b2a53c79e058fad6ce2e3f4324854794c29d9f7e4e0e06b1b7b094e77a3024a",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/intro-permaculture/zu/slide-02.jpg",
+      "bytes": 90648,
+      "sha256": "b6e40a20da7c498b4ee081631143748507ac0b286a2a14dfcdaaf2280f4060d4",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/intro-permaculture/zu/slide-03.jpg",
+      "bytes": 145072,
+      "sha256": "19305071271778fb20cd5009394cf91ff695b4b81ad50b4880b9dfea28d26be8",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/intro-permaculture/zu/slide-04.jpg",
+      "bytes": 570352,
+      "sha256": "c10a35e6dbe8f9364dea4ddf2005cd991172198e98cb342b9cee51dca3a6f27e",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/intro-permaculture/zu/slide-05.jpg",
+      "bytes": 510585,
+      "sha256": "9ba3e9b07750477ba62738d16cbfe15b94de708b374c3823a4a20ae00cd60d67",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/intro-permaculture/zu/slide-06.jpg",
+      "bytes": 523606,
+      "sha256": "137c00d576570a6beab3df072ed60edd8d7a3d1b3eedf3dfe060192968272535",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/intro-permaculture/zu/slide-07.jpg",
+      "bytes": 166808,
+      "sha256": "0524978e63be0e533ae45ba94802bbf1f52edec78766b532a41ff87c738ee0d6",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/intro-permaculture/zu/slide-08.jpg",
+      "bytes": 87857,
+      "sha256": "d6e4061fbf9905f2ce62c925a27f010881bcfa59327f6378183d312fdbdf26d9",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/intro-permaculture/zu/slide-09.jpg",
+      "bytes": 145747,
+      "sha256": "f7cd56351a00ab8dad2eba62fb061f12d2d6fb1941fa64f0219144aebb819440",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/intro-permaculture/zu/slide-10.jpg",
+      "bytes": 612227,
+      "sha256": "4ba8ce2ca760fa1457d864d72dbc400eb7bb526ffe5606a180a4190f33ee795c",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/intro-permaculture/zu/slide-11.jpg",
+      "bytes": 141788,
+      "sha256": "e7e47aa66346b54876e304cf9e8c0b88e87b031b0c7106ad37c136eccb16c808",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/intro-permaculture/zu/slide-12.jpg",
+      "bytes": 121669,
+      "sha256": "e9ac919c864ed5525cf9ee1ec999cc05031d801f35c81a114d0f6df79ffe0b6c",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/intro-permaculture/zu/slide-13.jpg",
+      "bytes": 136217,
+      "sha256": "ae049fb97441baa8d676ef39239918feebf8406997377b5bf2ac1689158435d4",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/intro-permaculture/zu/slide-14.jpg",
+      "bytes": 148615,
+      "sha256": "001d5cd83dd878f354edfa60a0b59a9a269826256383ebc84c2d69d145f6f66a",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/intro-permaculture/zu/slide-15.jpg",
+      "bytes": 659781,
+      "sha256": "6f57d9be42e56ff501d9f0cdd477eaddf6b9cd00fd2ecc58d2508f386ba61f75",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/intro-permaculture/zu/slide-16.jpg",
+      "bytes": 654069,
+      "sha256": "c0c372608bd62f3a9da86450d27e98ab19b912e41f895442e7824efa744bd269",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/intro-permaculture/zu/slide-17.jpg",
+      "bytes": 101820,
+      "sha256": "d122cc346850181bf587f9ebbdcc76dd9b9b987a0ffd253f2c0d19b53fd8c674",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/intro-permaculture/zu/slide-18.jpg",
+      "bytes": 109219,
+      "sha256": "c95a9f1bf820adfb6126cb1f5ad9a31535ebdb6d16880f2c58fa894d82df3ed2",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 19,
+      "path": "public/course-decks/intro-permaculture/zu/slide-19.jpg",
+      "bytes": 706242,
+      "sha256": "dff3ac76d4e5a24771af7f677c2f5db90abe329f1a2f46ddb79f335dc7023595",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 20,
+      "path": "public/course-decks/intro-permaculture/zu/slide-20.jpg",
+      "bytes": 507760,
+      "sha256": "4e39c78c7ecf9c5d39ff6b81bd8d0351b46c67416785fc6a4db86a829b83bf83",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 21,
+      "path": "public/course-decks/intro-permaculture/zu/slide-21.jpg",
+      "bytes": 107958,
+      "sha256": "198240d37fd85dbc060a3fbce3657c36ae75d3f632119aba01cdf41388849c8e",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "slide": 22,
+      "path": "public/course-decks/intro-permaculture/zu/slide-22.jpg",
+      "bytes": 102138,
+      "sha256": "594d43839fbd23119dd1fe976bf596d3f852b377f83045365deef8b62498b067",
+      "dimensions": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "contact_sheet": {
+    "path": "docs/media/intro-permaculture/zu-contact-sheet.jpg",
+    "bytes": 781525,
+    "sha256": "645f7c2f37b24967e665a53a8b233f5bda0f330a8ec2328bf8ed20cea89000d0"
+  },
+  "visual_review": "22/22 slides viewed as contact sheet; revised slide 15 inspected at 390x219 with all six markers, title, caption and AI-draft disclosure visible. No physical device or fluent isiZulu review claimed."
+}

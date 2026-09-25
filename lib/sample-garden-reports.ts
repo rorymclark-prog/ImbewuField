@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import { SAMPLE_ORCHARD } from './sample-orchard';
 import { SAMPLE_GARDENS, type SampleGarden } from './sample-gardens';
 import type { ReportSection } from './programme-report-pdf';
@@ -16,7 +17,7 @@ const contexts: Record<string, { purpose: string; layout: string; assessment: st
 export function sampleGardenReportSections(garden: SampleGarden): ReportSection[] {
   const c = contexts[garden.kind ?? 'Community garden'] ?? contexts['Community garden'];
   const planted = garden.production.vegetableM2 + garden.production.stapleM2;
-  const n = (v: number) => v.toLocaleString('en-ZA', { maximumFractionDigits: 1 });
+  const n = (v: number) => numberLabel(v, 1);
   return [
     { title: 'Executive summary', lines: [c.purpose, `${garden.name} is the ${garden.town} example. Its register contains ${garden.farmers} adult participants, ${n(garden.produceKg)} kg of logged produce and ${garden.training}% training progress.`, `Status: ${garden.status === 'support' ? 'Needs support' : garden.status === 'establishing' ? 'Establishing' : 'Thriving'}. Coordinator: ${garden.facilitator}.`, `Prepared ${SAMPLE_REPORT_DATE}. Tour edition · Prepared records and schematic layouts.`] },
     { title: 'Site and production area', lines: [`Garden type: ${garden.kind}. Group language: ${garden.language}.`, `Site boundary area: ${n(garden.areaM2 ?? 0)} m².`, `Vegetable beds: ${n(garden.production.vegetableM2)} m². Staple plots: ${n(garden.production.stapleM2)} m². Total planted area: ${n(planted)} m².`, "The remaining site area includes schematic buildings, access, tree areas and other space. It is not automatically available for planting. Areas come from the tour register, not measurements inferred from the photograph.", `The map point refers to the ${garden.town} area; it is not a surveyed property or a navigation instruction.`] },

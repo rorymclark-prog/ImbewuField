@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, CircleSlash, Info, MapPin, Tag, Trash2 } from 'lucide-react';
+import { Calendar, CircleSlash, MapPin, Tag, Trash2 } from 'lucide-react';
 import {
   distanceBucket,
   listingCrop,
@@ -9,8 +9,9 @@ import {
   type ListingWithDistance,
 } from '@/lib/exchange';
 import ShareListingButton from './ShareListingButton';
-import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
+import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL } from './theme';
 import { getCropArt } from '@/lib/crop-art';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -32,16 +33,16 @@ const BUCKET_COLOR: Record<ReturnType<typeof distanceBucket>, string> = {
  * client's and trip a hydration mismatch. Null until mounted, and the line is
  * simply absent from the server HTML.
  */
-function postedLabel(postedAt: string, nowMs: number | null): string | null {
+function postedLabel(postedAt: string, nowMs: number | null, zu: boolean): string | null {
   if (nowMs === null) return null;
   const then = Date.parse(postedAt);
   if (!Number.isFinite(then)) return null;
   const diff = nowMs - then;
-  if (diff < 3_600_000) return 'Just now';
-  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+  if (diff < 3_600_000) return zu ? 'Manje nje' : 'Just now';
+  if (diff < 86_400_000) return zu ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} adlule` : `${Math.floor(diff / 3_600_000)}h ago`;
   const days = Math.floor(diff / 86_400_000);
-  if (days < 30) return `${days}d ago`;
-  return `${Math.floor(days / 30)}mo ago`;
+  if (days < 30) return zu ? `Ezinsukwini ezingu-${days} ezedlule` : `${days}d ago`;
+  return zu ? `Ezinyangeni ezingu-${Math.floor(days / 30)} ezedlule` : `${Math.floor(days / 30)}mo ago`;
 }
 
 export default function ListingCard({
@@ -67,10 +68,17 @@ export default function ListingCard({
   onClose: (id: string) => void;
   onDelete: (id: string) => void;
 }) {
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
+  const tx = (en: string, dz: string) => zu ? dz : en;
   const { listing, km, distanceLabel } = row;
   const crop = listingCrop(listing);
   const qty = quantityLabel(listing);
-  const posted = postedLabel(listing.postedAt, nowMs);
+  const posted = postedLabel(listing.postedAt, nowMs, zu);
+  const price = zu && listing.price.type === 'free' ? 'Mahhala'
+    : zu && listing.price.type === 'swap' ? `Ukushintshisana: ${listing.price.wants}`
+      : zu && listing.price.type === 'ask' ? 'Beka intengo yakho'
+        : priceLabel(listing);
   const closed = listing.status === 'closed';
 
   return (
@@ -96,10 +104,10 @@ export default function ListingCard({
             letterSpacing: '0.05em',
           }}
         >
-          {KIND_LABEL[listing.kind]}
+          {zu ? ZU_KIND_LABEL[listing.kind] : KIND_LABEL[listing.kind]}
         </span>
         <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint }}>
-          {CATEGORY_LABEL[listing.category]}
+          {zu ? ZU_CATEGORY_LABEL[listing.category] : CATEGORY_LABEL[listing.category]}
         </span>
         {crop && (
           <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
@@ -124,7 +132,7 @@ export default function ListingCard({
               border: '1px solid rgba(31,77,43,0.2)',
             }}
           >
-            Yours · this device only
+            {tx('Yours · this device only', 'Okungokwakho · kule divayisi kuphela')}
           </span>
         )}
         {listing.isDemo && (
@@ -135,15 +143,15 @@ export default function ListingCard({
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(192,122,30,0.12)',
-              color: EX.amber,
+              color: EX.amberText,
               border: '1px solid rgba(192,122,30,0.28)',
             }}
           >
-            Sample
+            {tx('Sample', 'Isibonelo')}
           </span>
         )}
         {posted && (
-          <span className="font-sans" style={{ fontSize: 11, color: EX.faint }}>{posted}</span>
+        <span className="font-sans" style={{ fontSize: 11, color: EX.faint }}>{posted}</span>
         )}
       </div>
 
@@ -172,21 +180,21 @@ export default function ListingCard({
             fontSize: 12.5,
             padding: '4px 10px',
             background: listing.price.type === 'zar' ? 'rgba(31,77,43,0.09)' : 'rgba(192,122,30,0.12)',
-            color: listing.price.type === 'zar' ? EX.green : EX.amber,
+            color: listing.price.type === 'zar' ? EX.green : EX.amberText,
           }}
         >
           <Tag size={11} strokeWidth={2} />
-          {priceLabel(listing)}
+          {price}
         </span>
         {listing.availableMonth !== null && (
           <span className="flex items-center gap-1.5 font-sans" style={{ fontSize: 12, color: EX.faint }}>
             <Calendar size={11} strokeWidth={1.8} />
-            {listing.kind === 'want' ? 'Needed by' : 'Ready'} {MONTH_LABEL[listing.availableMonth - 1]}
+            {zu ? (listing.kind === 'want' ? 'Kudingeka ngaphambi kuka' : 'Kulungile ngo') + ZU_MONTH_LABEL[listing.availableMonth - 1].slice(1) : (listing.kind === 'want' ? 'Needed by' : 'Ready') + ' ' + MONTH_LABEL[listing.availableMonth - 1]}
           </span>
         )}
         {closed && (
           <span className="flex items-center gap-1.5 font-sans font-semibold" style={{ fontSize: 12, color: EX.faint }}>
-            <CircleSlash size={11} strokeWidth={1.8} /> Closed
+            <CircleSlash size={11} strokeWidth={1.8} /> {tx('Closed', 'Kuvaliwe')}
           </span>
         )}
       </div>
@@ -199,7 +207,7 @@ export default function ListingCard({
           {listing.farmerName}
         </span>
         <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
-          · {listing.areaText || 'Area not given'}
+          · {listing.areaText || tx('Area not given', 'Indawo ayichazwanga')}
         </span>
         {hasOrigin && (
           <span
@@ -227,7 +235,7 @@ export default function ListingCard({
                 cursor: 'pointer',
               }}
             >
-              Mark as done
+              {tx('Mark as done', 'Phawula njengokuqediwe')}
             </button>
           )}
           <button
@@ -242,27 +250,20 @@ export default function ListingCard({
               cursor: 'pointer',
             }}
           >
-            <Trash2 size={11.5} strokeWidth={1.9} /> Delete
+            <Trash2 size={11.5} strokeWidth={1.9} /> {tx('Delete', 'Susa')}
           </button>
         </div>
       ) : (
         <div className="flex flex-col gap-2 items-start">
-          <ShareListingButton listing={listing} />
           {/* NO CONTACT BUTTON, DELIBERATELY. There is no messaging in this
               preview, so a "Message" or "Contact" control would be a dead
-              button promising a feature that does not exist. State the
-              position instead — Share above is a real, working alternative:
-              it hands this listing on to whoever the farmer forwards it to. */}
-          <div
-            className="flex items-start gap-2 rounded-lg"
-            style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
-          >
-            <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
-              No way to contact this farmer from the app yet. For now, note the name and area and
-              arrange it through your facilitator or group.
-            </span>
-          </div>
+              button promising a feature that does not exist. Share above is
+              a real, working alternative: it hands this listing on to
+              whoever the farmer forwards it to. The "no way to contact"
+              explanation used to repeat here on every non-mine card — 21
+              times on the sample board — and now says it once, above the
+              list (see ExchangeBoard.tsx). */}
+          <ShareListingButton listing={listing} />
         </div>
       )}
     </article>

@@ -72,7 +72,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerKey, type DesignLayerState } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, FROST_CHECK_PLANTING_IDS, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerKey, type DesignLayerState } from '@/lib/design-elements';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever opened the species picker.
 // The one read below (in the picker's onSelect, already only running on a tap) loads it via a
@@ -289,6 +289,8 @@ export interface DesignPaletteProps {
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
+  /** NASA POWER cold minimum, only when the API confirms all monthly minima are present. */
+  siteMinTempC?: number | null;
   /** The bottom chrome ladder, owned by the page so the drone bar and Lima (which live there) shed
    *  in the same order as this palette's own rows. */
   bottomStop: BottomStop;
@@ -517,6 +519,7 @@ export default function DesignPalette({
   swaleControl,
   windControl,
   siteBiome,
+  siteMinTempC,
   bottomStop,
   hiddenSections,
   onBottomStopChange,
@@ -885,17 +888,19 @@ export default function DesignPalette({
   const showElementCatalog = true;
   const showFullCatalogNote = false;
   const siteClimates = biomeClimates(siteBiome);
+  const frostScreenActive = siteMinTempC != null && Number.isFinite(siteMinTempC) && siteMinTempC <= 0;
   const stepCatalog = ELEMENT_CATALOG;
-  const visibleStepCatalog = stepCatalog.filter((def) => (step === 'planting' ? elementVisibleInPalette(def, siteClimates) : !def.deprecated));
+  // The full toolbox is reachable from every step, so climate screening must follow the tree
+  // card everywhere; otherwise a frosty site's Mango disappears only on the Planting step.
+  const visibleStepCatalog = stepCatalog.filter((def) => elementVisibleInPalette(def, siteClimates, siteMinTempC));
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
   // show"). Category → layer mapping lives in CATEGORY_LAYER above.
   const catalog = visibleStepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]);
 
-  // Climate-appropriate trees: on the planting step, hide trees that do not crop in this site's
-  // climate. Unknown site climate still shows all non-deprecated trees.
-  const climateFilterActive = step === 'planting' && !!siteClimates;
+  // Unknown site climate still shows all non-deprecated trees, with uncertainty shown below.
+  const climateFilterActive = !!siteClimates || frostScreenActive;
   // SECTIONS on the planting step. This strip is a single horizontal scroller, and the catalog's
   // own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions 20–22 of 22 —
   // behind seven fruit trees, off the right edge, effectively unreachable (Rory: "why is it not
@@ -912,7 +917,7 @@ export default function DesignPalette({
   const groupRank = (def: DesignElementDef) => PLANTING_GROUP_ORDER.indexOf(plantingGroupFor(def));
   const plantingOrder = (a: DesignElementDef, b: DesignElementDef) =>
     groupRank(a) - groupRank(b) ||
-    Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates));
+    Number(elementSuitsClimate(b.id, siteClimates, siteMinTempC)) - Number(elementSuitsClimate(a.id, siteClimates, siteMinTempC));
   const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
 
   // Re-measure whenever the strip's CONTENTS change (step change, layer toggle) — not just on
@@ -1277,7 +1282,7 @@ export default function DesignPalette({
                   common value, or a '—' placeholder when members differ; typing a number sets
                   that dimension on every selected item (a circle takes it as its diameter). */}
               {([
-                ['wM', sizeControl.wM, sizeControl.lengthOnly ? 'Length' : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? 'Gate length in metres' : t('designPaletteSizeWidthTitle')],
+                ['wM', sizeControl.wM, sizeControl.lengthOnly ? t('designPaletteSizeLength') : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? t('designPaletteGateLengthTitle') : t('designPaletteSizeWidthTitle')],
                 ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
               ] as const).filter(([dim]) => !sizeControl.lengthOnly || dim === 'wM').map(([dim, committed, label, title]) => (
                 <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
@@ -1349,20 +1354,20 @@ export default function DesignPalette({
               }}
             >
               <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>⌇</span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Swale</span>
-              <span title="Measured along the line you drew" style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
-                {`${swaleControl.lengthM.toFixed(1)} m long`}
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteLineSwale')}</span>
+              <span title={t('designPaletteSwaleLengthTitle')} style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
+                {formatDesignTranslation(t('designPaletteSwaleLength'), { length: swaleControl.lengthM.toFixed(1) })}
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Width</span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteWidth')}</span>
               <input
                 // Uncontrolled + keyed follows the same commit-only rule as Size: no half-typed
                 // value reaches saved state, while undo, reload and another selected swale remount
                 // the field from the actual stated width.
                 key={swaleControl.widthM ?? 'unstated'}
                 defaultValue={swaleControl.widthM != null ? String(swaleControl.widthM) : ''}
-                placeholder="not stated"
-                title="Stated disturbed-ground width; leave blank when it has not been set"
-                aria-label="Stated swale width in metres"
+                placeholder={t('designPaletteSwaleWidthPlaceholder')}
+                title={t('designPaletteSwaleWidthTitle')}
+                aria-label={t('designPaletteSwaleWidthLabel')}
                 type="number"
                 inputMode="decimal"
                 min={0.01}
@@ -1467,6 +1472,7 @@ export default function DesignPalette({
                     // BIOMES registry key. Convert at this single boundary; converting upstream
                     // silently disabled the climate filter for the whole palette.
                     siteBiome={biomeKeyForName(siteBiome)}
+                    siteMinTempC={siteMinTempC}
                     selectedSpeciesId={placeSpeciesId}
                     onSelect={async (id) => {
                       setPlaceSpeciesId(id);
@@ -1624,11 +1630,11 @@ export default function DesignPalette({
                     fontSize: 8.5, fontWeight: 800, letterSpacing: 0.45, textTransform: 'uppercase',
                   }}
                 >
-                  <span style={{ textAlign: 'center' }}>Show</span>
-                  <span style={{ textAlign: 'center' }}>Select</span>
-                  <span style={{ textAlign: 'center' }}>Move</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteShow')}</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteSelectColumn')}</span>
+                  <span style={{ textAlign: 'center' }}>{t('designPaletteMoveColumn')}</span>
                   <span />
-                  <span>Layer</span>
+                  <span>{t('designPaletteLayerColumn')}</span>
                 </div>
                 {LAYER_TOGGLES.map((lt) => {
                   const on = activeLayers[lt.key];
@@ -1751,13 +1757,13 @@ export default function DesignPalette({
                               gap: 4, cursor: 'pointer', textAlign: 'left',
                             }}
                           >
-                            <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                            <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
                               {t(lt.labelKey)}
                             </span>
                             {expanded ? <ChevronDown size={16} aria-hidden /> : <ChevronRight size={16} aria-hidden />}
                           </button>
                         ) : (
-                          <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                          <span style={{ minWidth: 0, whiteSpace: 'normal', overflowWrap: 'break-word', lineHeight: 1.15, fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
                             {t(lt.labelKey)}
                           </span>
                         )}
@@ -2155,7 +2161,7 @@ export default function DesignPalette({
           }}
         >
           <span style={{ fontSize: 12, fontWeight: 700, color: DARK, whiteSpace: 'nowrap' }}>
-            ⠿ Elements
+            ⠿ {t('designPaletteElements')}
           </span>
           <button
             type="button"
@@ -2213,7 +2219,8 @@ export default function DesignPalette({
       {orderedCatalog.map((def) => {
         // …or it IS the thing you have selected on the map (selectedIdentity).
         const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
-        const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
+        const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates, siteMinTempC);
+        const checkFrost = frostScreenActive && FROST_CHECK_PLANTING_IDS.has(def.id);
         const group = step === 'planting' ? plantingGroupFor(def) : null;
         const heading = group && group !== lastGroup ? group : null;
         if (group) lastGroup = group;
@@ -2228,7 +2235,7 @@ export default function DesignPalette({
             key={def.id}
             type="button"
             onClick={() => pickElement(def)}
-            title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+            title={checkFrost ? t('designPaletteFrostCheckTitle') : suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
             // The photograph seam stays optional. Until an illustrator supplies a real asset the
             // farmer sees the exact emoji she saw before; fake generated symbols would make a
             // tool look more finished while saying less clearly what it places.
@@ -2308,6 +2315,7 @@ export default function DesignPalette({
               <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                 {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
+              {checkFrost && <span style={{ fontSize: 9, fontWeight: 700, color: active ? GOLD : '#9A5E12' }}>{t('designPaletteFrostCheck')}</span>}
             </span>
           </button>
         );
@@ -2422,6 +2430,16 @@ export default function DesignPalette({
               : t('designPaletteProLayers')}
           </div>
         )}
+        {!climateFilterActive && (
+          <div role="status" style={{ fontSize: 11.5, color: '#6B6355' }}>
+            {t('designPaletteClimateUnavailable')}
+          </div>
+        )}
+        {siteClimates && siteMinTempC == null && (
+          <div role="status" style={{ fontSize: 11.5, color: '#6B6355' }}>
+            {t('designPaletteFrostUnavailable')}
+          </div>
+        )}
         {/* The climate note used to own a whole LINE of this panel to explain a filter the farmer
             never asked for — a sentence you read once, charged against the map forever. It is now
             the ⓘ chip at the head of the strip below: same words on hover/long-press, zero rows. */}
@@ -2442,8 +2460,8 @@ export default function DesignPalette({
           <button
             type="button"
             onClick={() => setChipsFloating(true)}
-            title="Float the element palette — drag it anywhere and scroll down through the chips"
-            aria-label="Float the element palette"
+            title={t('designPaletteFloatTitle')}
+            aria-label={t('designPaletteFloatLabel')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
               minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
@@ -2455,11 +2473,11 @@ export default function DesignPalette({
             }}
           >
             <span aria-hidden>⧉</span>
-            <span style={{ whiteSpace: 'nowrap' }}>Float</span>
+            <span style={{ whiteSpace: 'nowrap' }}>{t('designPaletteFloat')}</span>
           </button>
           {climateFilterActive && (
             <span
-              title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
+              title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}${frostScreenActive ? ` ${t('designPaletteFrostHidden')}` : ''}`}
               style={{
                 display: 'inline-flex', alignItems: 'center', flexShrink: 0,
                 minHeight: guided ? 44 : 34, padding: '0 8px', borderRadius: 9,
@@ -2467,7 +2485,7 @@ export default function DesignPalette({
                 fontSize: guided ? 12 : 11, cursor: 'help',
               }}
             >
-              ⓘ
+              {frostScreenActive ? t('designPaletteFrostRisk') : 'ⓘ'}
             </span>
           )}
           {chipNodes}
@@ -2836,7 +2854,11 @@ export default function DesignPalette({
     // armed so the Cancel is never stranded. Choosing a bed chip is a clear statement that beds
     // are what you are doing.
     const bedArmed = !!placeDefId && (BED_DEF_IDS as readonly string[]).includes(placeDefId);
-    if (!bedArmed && !bedBlockControl.armed) return null;
+    // A selected bed lights the same card without arming a new placement. That is useful for
+    // identifying it, but made the old block control vanish exactly when Rory tapped an existing
+    // bed and then looked for the dimensions. Selection should expose the control too.
+    const bedSelected = !!selectedIdentity?.defId && (BED_DEF_IDS as readonly string[]).includes(selectedIdentity.defId);
+    if (!bedArmed && !bedSelected && !bedBlockControl.armed) return null;
     const { spec, armed, onSpecChange, onArm, onCancel } = bedBlockControl;
     // Label BESIDE the input, not above it. Stacked, this row stood taller than every other chip
     // strip and the parent clipped its bottom edge — the number boxes were cut in half and the
@@ -2883,7 +2905,7 @@ export default function DesignPalette({
       </label>
     );
     return (
-      <div style={{ ...scrollStripStyle(guided ? 10 : 6), alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, padding: '8px 0', borderBottom: '1px solid rgba(11,18,11,0.14)', flexShrink: 0 }}>
         <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
           🛏️ {t('designPaletteBedBlock')}
         </span>
@@ -2917,7 +2939,6 @@ export default function DesignPalette({
   function renderBodyRows() {
     return (
       <>
-        {renderBedBlock()}
         {renderElementCatalog()}
         {renderAreaChips()}
         {renderSectorWind()}
@@ -2989,6 +3010,7 @@ export default function DesignPalette({
         <div style={{ padding: '0 12px', display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, flexShrink: 0 }}>
           {renderToolRow()}
         </div>
+        {sheetOpen && <div style={{ padding: '0 12px', flexShrink: 0 }}>{renderBedBlock()}</div>}
         {sheetOpen && (
           <div
             style={{
@@ -3085,7 +3107,7 @@ export default function DesignPalette({
             };
             setElementsFloatPos((position) => ({ ...position }));
           } : undefined}
-          title={workspaceMode === 'floating' ? 'Drag Elements panel' : undefined}
+          title={workspaceMode === 'floating' ? t('designPaletteElementsDragTitle') : undefined}
           style={{
             display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2,
             borderBottom: '1px solid rgba(11,18,11,0.10)',
@@ -3093,7 +3115,7 @@ export default function DesignPalette({
             touchAction: workspaceMode === 'floating' ? 'none' : undefined,
           }}
         >
-          <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ Elements</span>
+          <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ {t('designPaletteElements')}</span>
         </div>
       )}
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
@@ -3101,6 +3123,7 @@ export default function DesignPalette({
           where the owner was looking for it. One component, one behaviour, both layouts. */}
       {renderHandleRow()}
       {renderToolRow()}
+      {renderBedBlock()}
 
       {/* Below the tool row, everything is unbounded in height: the element catalog can carry a
           note line, the hint/lesson block can run to two lines, and which chip row shows at all

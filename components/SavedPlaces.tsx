@@ -108,7 +108,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
 
   return (
     <div className="space-y-3">
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
+      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
         Saved Places
       </div>
 
@@ -123,7 +123,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               onChange={e => setName(e.target.value)}
               placeholder="Place name..."
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
-              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             />
             <textarea
               value={notes}
@@ -131,21 +131,21 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               placeholder="Notes (optional)..."
               rows={2}
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
-              style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             />
             <div className="flex gap-2">
               <button
                 onClick={handleSave}
                 disabled={!name.trim()}
                 className="flex-1 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.28)', color: '#2D6B3C' }}
+                style={{ background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.28)', color: 'var(--color-forest-700)' }}
               >
                 Save
               </button>
               <button
                 onClick={() => setSaving(false)}
                 className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all"
-                style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid #E2D8C4', color: '#5C5040' }}
+                style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
               >
                 Cancel
               </button>
@@ -156,15 +156,15 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
             onClick={() => { setSaving(true); setSaved(false); }}
             className="w-full py-2 rounded-xl text-xs font-display font-medium flex items-center justify-center gap-2 transition-all"
             style={saved
-              ? { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.14)', color: '#5C5040' }
-              : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: '#2D6B3C' }
+              ? { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.14)', color: 'var(--text-secondary)' }
+              : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: 'var(--color-forest-700)' }
             }
           >
             {saved ? 'Saved' : 'Save this location'}
           </button>
         )
       ) : (
-        <p className="text-xs font-display text-center" style={{ color: '#5C5040' }}>
+        <p className="text-xs font-display text-center" style={{ color: 'var(--text-secondary)' }}>
           Select a location on the map first
         </p>
       )}
@@ -178,24 +178,24 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               <div
                 key={place.id}
                 className="rounded-xl p-3 transition-all group"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+                style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
               >
                 <div className="flex items-start gap-2.5">
                   <span className="w-2 h-2 rounded-full flex-shrink-0 mt-1" style={{ background: dotColor }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 justify-between">
-                      <span className="text-xs font-display font-semibold truncate" style={{ color: '#20190F' }}>
+                      <span className="text-xs font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                         {place.name}
                       </span>
-                      <span className="text-xs font-mono flex-shrink-0" style={{ color: '#5C5040', opacity: 0.7 }}>
+                      <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
                         {timeAgo(place.savedAt)}
                       </span>
                     </div>
-                    <div className="text-xs font-mono mt-0.5" style={{ color: '#5C5040' }}>
+                    <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                       {place.biome} · {place.elevation}m · {place.rainfall}mm
                     </div>
                     {place.notes && (
-                      <div className="text-xs font-display mt-1 leading-relaxed" style={{ color: '#5C5040', opacity: 0.8 }}>
+                      <div className="text-xs font-display mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)', opacity: 0.8 }}>
                         {place.notes}
                       </div>
                     )}
@@ -203,14 +203,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       <button
                         onClick={() => onJumpTo(place.lat, place.lon)}
                         className="flex-1 py-1 rounded-lg text-xs font-display font-medium transition-all"
-                        style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: '#2D6B3C' }}
+                        style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: 'var(--color-forest-700)' }}
                       >
                         Go to
                       </button>
                       <button
                         onClick={() => handleDelete(place.id)}
                         className="px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
-                        style={{ background: 'transparent', border: '1px solid #E2D8C4', color: '#5C5040' }}
+                        style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
                       >
                         Remove
                       </button>
@@ -223,8 +223,8 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
         </div>
       ) : (
         <div className="text-center py-6">
-          <p className="text-xs font-display" style={{ color: '#5C5040' }}>No saved places yet</p>
-          <p className="text-xs font-mono mt-0.5" style={{ color: '#5C5040', opacity: 0.6 }}>
+          <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>No saved places yet</p>
+          <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
             Analyse a location then save it here
           </p>
         </div>

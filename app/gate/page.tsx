@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import BackButton from '@/components/BackButton';
 import { ArrowRight } from 'lucide-react';
+import { translate, useLanguage } from '@/lib/i18n';
 
 export default function GatePage() {
+  const { t, lang } = useLanguage();
+  const gateText = (key: string) => lang === 'zu' ? `${t(key)} · ${translate('en', key)}` : t(key);
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,25 +38,27 @@ export default function GatePage() {
               </svg>
             </div>
           </div>
-          <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-ink)', letterSpacing: '-0.02em', marginBottom: 4 }}>ImbewuField</div>
-          <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>Private prototype — enter the password to continue.</div>
+          <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 22, color: 'var(--color-ink)', letterSpacing: '-0.02em', marginBottom: 4 }}>ImbewuField</h1>
+          <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>{t('gateDescription')}</div>
         </div>
+        {lang === 'zu' && <p role="note" className="rounded-xl px-3 py-2 mb-3 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>{t('gateZuluDraftNotice')}</p>}
         <input
           type="password"
           autoFocus
           value={password}
           onChange={(e) => { setPassword(e.target.value); setError(false); }}
-          placeholder="Password"
+          placeholder={gateText('gatePassword')}
+          aria-label={gateText('gatePassword')}
           className="w-full font-sans rounded-lg px-3 py-2.5 outline-none mb-2"
           style={{ background: 'var(--color-surface)', border: `1px solid ${error ? 'var(--color-ochre-light)' : 'var(--border)'}`, color: 'var(--color-ink)', fontSize: 16 }}
         />
-        {error && <p className="font-sans mb-2" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>Wrong password — try again.</p>}
+        {error && <p className="font-sans mb-2" role="alert" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{gateText('gateWrongPassword')}</p>}
         <button type="submit" disabled={loading || !password}
           className="w-full py-2.5 rounded-xl font-sans font-semibold transition-all"
           style={loading
             ? { background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--color-ink-faint)', fontSize: 15 }
             : { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 15, opacity: !password ? 0.5 : 1 }}>
-          {loading ? 'Checking...' : <span className="flex items-center justify-center gap-1.5">Enter<ArrowRight size={15} /></span>}
+          {loading ? gateText('gateChecking') : <span className="flex items-center justify-center gap-1.5">{gateText('gateEnter')}<ArrowRight size={15} /></span>}
         </button>
       </form>
     </div>

@@ -526,7 +526,7 @@ export const SPECIES: Species[] = [
     ],
     "why": "The classic chicken-and-pig forage tree plus a heavy human fruit crop, and the legal distinction is the whole point: white mulberry may not be planted, propagated, moved or given away in South Africa, while black mulberry is entirely unlisted.",
     "source": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
-    "nemba": "3",
+    "nemba": "none",
     "reviewed": false
   },
   {
@@ -1800,7 +1800,7 @@ export const SPECIES: Species[] = [
     ],
     "why": "Plant this ONLY on the watercourse, spruit or donga — it is the indigenous replacement for exotic weeping willow, hardy to frost and drought but preferring damp feet, and in a biome where 'the high erodibility of soils poses a major problem' it is the single best woody bank-binder you can strike from truncheons.",
     "source": "https://pza.sanbi.org/salix-mucronata and https://treesa.org/salix-mucronata/ (indigenous riverine willow, up to ~10–15 m, hardy to frost and drought, prefers damp, riverbank stabilisation; recorded in the Ceres Karoo)",
-    "nemba": "2",
+    "nemba": "none",
     "reviewed": false
   },
   {
@@ -3926,7 +3926,7 @@ export const SPECIES: Species[] = [
     ],
     "why": "The staple carbohydrate of this exact strip of coast — taro is 'mainly produced in the subtropical coastal belt, stretching from Bizana in the Eastern Cape to the KwaZulu-Natal north coast' — and it turns the biome's waterlogged humic-gleysol depressions into the most productive ground on the farm, while being far less blight-prone than potato in these humid conditions.",
     "source": "https://researchspace.ukzn.ac.za/items/c7065b4f-68db-4269-87e8-fd25c8a44d32 (UKZN: small-scale taro production in KwaZulu-Natal, wetland and dryland propagule performance) and https://www.sciencedirect.com/science/article/pii/S0254629924007622 (SAJB: taro global invasion history and prognosis for South Africa)",
-    "nemba": "2",
+    "nemba": "none",
     "reviewed": false
   },
   {
@@ -4828,7 +4828,7 @@ export const SPECIES: Species[] = [
     ],
     "why": "SANBI places it directly in Zone 4, 'Summer rainfall Karoo and Highveld, Frost in winter'; it 'attracts many insects such as bees, butterflies and birds', makes an excellent clipped hedge, roots from cuttings in 3–4 weeks and the leaves give a herbal tea — the cheapest pollinator hedge you can propagate yourself.",
     "source": "https://pza.sanbi.org/buddleja-salviifolia",
-    "nemba": "3",
+    "nemba": "none",
     "reviewed": false
   },
   {
@@ -5203,7 +5203,7 @@ export const SPECIES: Species[] = [
     ],
     "why": "Far more heat- and drought-tolerant than maize and it goes dormant rather than dying when water runs out, which suits an intermittent flood-irrigation regime; grain, stover for fodder and stalks for mulch. Pair it with cowpea in the same bed for the nitrogen.",
     "source": "GN 1003, GG 43726 (2020) List 1 item 342 (S. halepense only), verified in parsed gazette text",
-    "nemba": "2",
+    "nemba": "none",
     "reviewed": false
   },
   {

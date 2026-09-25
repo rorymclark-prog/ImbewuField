@@ -1,0 +1,457 @@
+{
+  "seconds": 67.896,
+  "bytes": 407376,
+  "audioSha256": "28209a573288df9091e45dc3b273eecdb3abaedd37eaee2aa9c7e036802b0af6",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Ukuhlwanyela",
+      "offset": 1460410,
+      "duration": 7954580
+    },
+    {
+      "text": "ngokulandelana",
+      "offset": 9840830,
+      "duration": 10085410
+    },
+    {
+      "text": "kuwumkhuba",
+      "offset": 20068330,
+      "duration": 8238330
+    },
+    {
+      "text": "wokuhlela",
+      "offset": 28306660,
+      "duration": 6676250
+    },
+    {
+      "text": "ikhalenda",
+      "offset": 35267080,
+      "duration": 7528330
+    },
+    {
+      "text": "akusona",
+      "offset": 44500000,
+      "duration": 7386250
+    },
+    {
+      "text": "isitshalo",
+      "offset": 52170410,
+      "duration": 6676250
+    },
+    {
+      "text": "esikhethekile",
+      "offset": 58988750,
+      "duration": 10937500
+    },
+    {
+      "text": "Khetha",
+      "offset": 79511250,
+      "duration": 3977080
+    },
+    {
+      "text": "into",
+      "offset": 83914580,
+      "duration": 3267080
+    },
+    {
+      "text": "umuzi",
+      "offset": 87465830,
+      "duration": 4687500
+    },
+    {
+      "text": "wakho",
+      "offset": 92295410,
+      "duration": 4261250
+    },
+    {
+      "text": "oyidla",
+      "offset": 96840830,
+      "duration": 5113750
+    },
+    {
+      "text": "njalo",
+      "offset": 101954580,
+      "duration": 4403330
+    },
+    {
+      "text": "ngempela",
+      "offset": 106357910,
+      "duration": 6534160
+    },
+    {
+      "text": "Bese",
+      "offset": 123119160,
+      "duration": 3693330
+    },
+    {
+      "text": "uhlwanyela",
+      "offset": 127522910,
+      "duration": 6676250
+    },
+    {
+      "text": "isilinganiso",
+      "offset": 134482910,
+      "duration": 9232910
+    },
+    {
+      "text": "esincane",
+      "offset": 143857910,
+      "duration": 6107910
+    },
+    {
+      "text": "sayo",
+      "offset": 149965830,
+      "duration": 4971660
+    },
+    {
+      "text": "uphinde",
+      "offset": 155789580,
+      "duration": 5681660
+    },
+    {
+      "text": "wenze",
+      "offset": 161613750,
+      "duration": 3835000
+    },
+    {
+      "text": "njalo",
+      "offset": 165448750,
+      "duration": 5539580
+    },
+    {
+      "text": "Tshala",
+      "offset": 180789580,
+      "duration": 3409160
+    },
+    {
+      "text": "umugqa",
+      "offset": 184909160,
+      "duration": 5255830
+    },
+    {
+      "text": "omfushane",
+      "offset": 190590830,
+      "duration": 7386250
+    },
+    {
+      "text": "njalo",
+      "offset": 197977080,
+      "duration": 4687500
+    },
+    {
+      "text": "ngemva",
+      "offset": 202664580,
+      "duration": 4403330
+    },
+    {
+      "text": "kwamaviki",
+      "offset": 207068330,
+      "duration": 7102080
+    },
+    {
+      "text": "amabili",
+      "offset": 214454580,
+      "duration": 6676250
+    },
+    {
+      "text": "kuya",
+      "offset": 221272910,
+      "duration": 3125000
+    },
+    {
+      "text": "kwamathathu",
+      "offset": 224397910,
+      "duration": 8948750
+    },
+    {
+      "text": "Lokhu",
+      "offset": 243289580,
+      "duration": 4261250
+    },
+    {
+      "text": "kunganciphisa",
+      "offset": 247835410,
+      "duration": 9801250
+    },
+    {
+      "text": "ukumoshakala",
+      "offset": 257920410,
+      "duration": 8806660
+    },
+    {
+      "text": "ngesikhathi",
+      "offset": 266727500,
+      "duration": 6534160
+    },
+    {
+      "text": "isivuno",
+      "offset": 273403330,
+      "duration": 6534160
+    },
+    {
+      "text": "sisiningi",
+      "offset": 280079580,
+      "duration": 6676250
+    },
+    {
+      "text": "kakhulu",
+      "offset": 286755830,
+      "duration": 6392080
+    },
+    {
+      "text": "Kungaletha",
+      "offset": 303659160,
+      "duration": 7102080
+    },
+    {
+      "text": "ukudla",
+      "offset": 311329580,
+      "duration": 5539580
+    },
+    {
+      "text": "okusha",
+      "offset": 317295410,
+      "duration": 5397910
+    },
+    {
+      "text": "isikhathi",
+      "offset": 322977500,
+      "duration": 6250000
+    },
+    {
+      "text": "eside",
+      "offset": 329369160,
+      "duration": 5823750
+    },
+    {
+      "text": "futhi",
+      "offset": 335335410,
+      "duration": 4403330
+    },
+    {
+      "text": "kusabalalise",
+      "offset": 339880830,
+      "duration": 9659160
+    },
+    {
+      "text": "umsebenzi",
+      "offset": 349823750,
+      "duration": 7244160
+    },
+    {
+      "text": "kuyo",
+      "offset": 357210410,
+      "duration": 3408750
+    },
+    {
+      "text": "yonke",
+      "offset": 360619160,
+      "duration": 4261250
+    },
+    {
+      "text": "inkathi",
+      "offset": 365165000,
+      "duration": 6392080
+    },
+    {
+      "text": "esikhundleni",
+      "offset": 374113750,
+      "duration": 9232910
+    },
+    {
+      "text": "sokuwenza",
+      "offset": 383346660,
+      "duration": 7244160
+    },
+    {
+      "text": "wonke",
+      "offset": 390590830,
+      "duration": 4545410
+    },
+    {
+      "text": "ngesikhathi",
+      "offset": 395278330,
+      "duration": 6676250
+    },
+    {
+      "text": "esisodwa",
+      "offset": 402096660,
+      "duration": 8238750
+    },
+    {
+      "text": "Ukuhlwanyela",
+      "offset": 420562500,
+      "duration": 7954580
+    },
+    {
+      "text": "ngezikhathi",
+      "offset": 428943330,
+      "duration": 7386250
+    },
+    {
+      "text": "ezihlukene",
+      "offset": 436471660,
+      "duration": 8664580
+    },
+    {
+      "text": "kunganciphisa",
+      "offset": 446130830,
+      "duration": 9801250
+    },
+    {
+      "text": "ingozi",
+      "offset": 456357910,
+      "duration": 6107910
+    },
+    {
+      "text": "yokulahlekelwa",
+      "offset": 462465830,
+      "duration": 9659160
+    },
+    {
+      "text": "yikho",
+      "offset": 472125000,
+      "duration": 4403330
+    },
+    {
+      "text": "konke",
+      "offset": 476528330,
+      "duration": 4545410
+    },
+    {
+      "text": "ngesikhathi",
+      "offset": 481215830,
+      "duration": 6676250
+    },
+    {
+      "text": "esisodwa",
+      "offset": 488034160,
+      "duration": 8380830
+    },
+    {
+      "text": "Kodwa",
+      "offset": 506500000,
+      "duration": 3693330
+    },
+    {
+      "text": "akukuqinisekisi",
+      "offset": 510477500,
+      "duration": 12500000
+    },
+    {
+      "text": "ukuvuna",
+      "offset": 523261250,
+      "duration": 6392080
+    },
+    {
+      "text": "uma",
+      "offset": 530079580,
+      "duration": 2698750
+    },
+    {
+      "text": "izimo",
+      "offset": 533204580,
+      "duration": 4687500
+    },
+    {
+      "text": "ezinzima",
+      "offset": 538176250,
+      "duration": 6676250
+    },
+    {
+      "text": "ziqhubeka",
+      "offset": 544852500,
+      "duration": 8096660
+    },
+    {
+      "text": "Yisiphi",
+      "offset": 563318330,
+      "duration": 5255830
+    },
+    {
+      "text": "isitshalo",
+      "offset": 569000000,
+      "duration": 6676250
+    },
+    {
+      "text": "esikhula",
+      "offset": 575960410,
+      "duration": 6392080
+    },
+    {
+      "text": "ngokushesha",
+      "offset": 582352500,
+      "duration": 7812500
+    },
+    {
+      "text": "ongasihlwanyela",
+      "offset": 590875000,
+      "duration": 9943330
+    },
+    {
+      "text": "ngamaqoqo",
+      "offset": 600818330,
+      "duration": 7102080
+    },
+    {
+      "text": "amancane",
+      "offset": 608062500,
+      "duration": 7386250
+    },
+    {
+      "text": "Khetha",
+      "offset": 625392080,
+      "duration": 3693330
+    },
+    {
+      "text": "esisodwa",
+      "offset": 629511250,
+      "duration": 8238750
+    },
+    {
+      "text": "bese",
+      "offset": 638886250,
+      "duration": 4545410
+    },
+    {
+      "text": "uqala",
+      "offset": 643857910,
+      "duration": 5255830
+    },
+    {
+      "text": "ukusihlwanyela",
+      "offset": 649397910,
+      "duration": 9517080
+    },
+    {
+      "text": "kuleli",
+      "offset": 658915000,
+      "duration": 4261250
+    },
+    {
+      "text": "sonto",
+      "offset": 663176250,
+      "duration": 5823750
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "vegetables-staples",
+  "lesson": "vegetables-staples-l2",
+  "language": "zu",
+  "slide": 8,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-08.txt",
+  "sourceSha256": "b335d647cf9f98de17927a68df3a06f4860b1a295af053e5fdff36fd1d89ef42",
+  "scriptFile": "docs/narration/vegetables-staples.zu.md",
+  "scriptSha256": "9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d",
+  "englishSourceFile": "docs/narration/vegetables-staples.en.md",
+  "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T17:35:46.475691+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

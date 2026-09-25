@@ -2,6 +2,8 @@
 
 import { Handshake, Leaf, Package, ShoppingBasket, Sprout, Wrench } from 'lucide-react';
 import { EX } from './theme';
+import { useLanguage } from '@/lib/i18n';
+import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /**
  * The teaching panel. Two entry points, one body:
@@ -22,18 +24,21 @@ export default function ExchangeGuide({
   variant: 'board-empty' | 'intro';
   onPost: () => void;
 }) {
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
+  const tx = (en: string, dz: string) => zu ? dz : en;
   const examples: Array<{ icon: typeof Leaf; label: string; example: string }> = [
-    { icon: Leaf, label: 'Seed', example: 'Two kilos of sugar bean seed off last season' },
-    { icon: Sprout, label: 'Seedlings', example: 'A tray of tomato seedlings hardened off and ready' },
-    { icon: ShoppingBasket, label: 'Surplus produce', example: 'The chard you are cutting faster than you can sell' },
-    { icon: Wrench, label: 'Tools and labour', example: 'A planter to hire by the day, or two days of work-share' },
+    { icon: Leaf, label: tx('Seed', 'Imbewu'), example: tx('Two kilos of sugar bean seed off last season', 'Amakhilogremu amabili embewu kabhontshisi kashukela wesizini edlule') },
+    { icon: Sprout, label: tx('Seedlings', 'Izithombo'), example: tx('A tray of tomato seedlings hardened off and ready', 'Ithileyi lezithombo zikatamatisi eseziqinile futhi sezilungele ukutshalwa') },
+    { icon: ShoppingBasket, label: tx('Surplus produce', 'Umkhiqizo osele'), example: tx('The chard you are cutting faster than you can sell', 'I-Swiss chard oyivunayo ngokushesha kunalokho okwazi ukuyithengisa') },
+    { icon: Wrench, label: tx('Tools and labour', 'Amathuluzi nomsebenzi'), example: tx('A planter to hire by the day, or two days of work-share', 'Umtshali oqashwa ngosuku, noma izinsuku ezimbili zomsebenzi wokubambisana') },
   ];
 
   const steps = [
-    'Tap "Post a listing" and choose whether you are offering something or looking for it.',
-    'Pick the crop from the list so other farmers searching for it actually find you.',
-    'Say how much you have, and whether you want Rand, a swap, or nothing at all.',
-    'Add your nearest town so people can see roughly how far away you are.',
+    tx('Tap "Post a listing" and choose whether you are offering something or looking for it.', 'Cindezela u-“Faka isikhangiso” bese ukhetha ukuthi kukhona okunikezayo noma okufunayo.'),
+    tx('Pick the crop from the list so other farmers searching for it actually find you.', 'Khetha isitshalo ohlwini ukuze abalimi abasifunayo bakuthole.'),
+    tx('Say how much you have, and whether you want Rand, a swap, or nothing at all.', 'Sho ukuthi unakanani nokuthi ufuna amaRandi, ukushintshisana noma ukupha mahhala.'),
+    tx('Add your nearest town so people can see roughly how far away you are.', 'Faka idolobha eliseduze nawe ukuze abantu babone ibanga elilinganiselwe.'),
   ];
 
   return (
@@ -48,16 +53,12 @@ export default function ExchangeGuide({
       <div className="flex items-center gap-2.5" style={{ marginBottom: 10 }}>
         <Handshake size={20} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />
         <h2 className="font-display font-bold" style={{ fontSize: 17, color: EX.ink, margin: 0 }}>
-          {variant === 'board-empty' ? 'Nothing on the board yet' : 'What the exchange is for'}
+          {variant === 'board-empty' ? tx('Nothing on the board yet', 'Akukho lutho ebhodini okwamanje') : tx('What the exchange is for', 'Ukuhwebelana kusebenzelani')}
         </h2>
       </div>
 
       <p className="font-sans" style={{ fontSize: 13.5, lineHeight: 1.6, color: EX.muted, margin: '0 0 16px' }}>
-        The exchange is where farmers find each other. Seed that would otherwise sit in a bucket,
-        seedlings from someone who over-sowed, a surplus you cannot sell in your own village, a tool
-        that stands idle six days a week — all of it is worth more to a farmer twenty kilometres away
-        than it is to you. List what you have, or say what you are looking for, and sort the board by
-        who is nearest.
+        {tx('The exchange is where farmers find each other. Seed that would otherwise sit in a bucket, seedlings from someone who over-sowed, a surplus you cannot sell in your own village, a tool that stands idle six days a week — all of it is worth more to a farmer twenty kilometres away than it is to you. List what you have, or say what you are looking for, and sort the board by who is nearest.', 'Indawo yokuhwebelana isiza abalimi batholane. Imbewu ebingahlala ebhakedeni, izithombo eziningi kunesidingo, umkhiqizo ongakwazi ukuwuthengisa endaweni yakini, noma ithuluzi elihlala lingasetshenziswa izinsuku eziyisithupha ngesonto — konke kungaba wusizo komunye umlimi oqhele ngo-20 km kunakuwe. Faka lokho onakho noma usho okufunayo, bese uhlela ibhodi ngokusondelana.')}
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
@@ -85,7 +86,7 @@ export default function ExchangeGuide({
           className="font-sans uppercase"
           style={{ fontSize: 10, letterSpacing: '0.12em', color: EX.faint, marginBottom: 8 }}
         >
-          Posting your first listing
+          {tx('Posting your first listing', 'Ukufaka isikhangiso sakho sokuqala')}
         </div>
         <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }}>
           {steps.map((step, i) => (
@@ -115,14 +116,13 @@ export default function ExchangeGuide({
           cursor: 'pointer',
         }}
       >
-        Post a listing
+        {tx('Post a listing', 'Faka isikhangiso')}
       </button>
 
       <div className="flex items-start gap-2" style={{ marginTop: 14 }}>
         <Package size={13} strokeWidth={1.8} style={{ color: EX.faint, marginTop: 2, flexShrink: 0 }} />
         <p className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.5, color: EX.faint, margin: 0 }}>
-          A listing you post is saved on this phone only. It is not sent to other farmers, and nobody
-          else can see it yet — see &ldquo;What this preview does not do&rdquo; at the bottom of the board.
+          {zu ? <ExchangeSourceCopy en="A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet." zu="Isikhangiso osifakayo sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona okwamanje." /> : 'A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet — see “What this preview does not do” at the bottom of the board.'}
         </p>
       </div>
     </div>

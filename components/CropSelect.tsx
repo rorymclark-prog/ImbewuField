@@ -14,9 +14,10 @@ interface CropSelectProps {
   onChange: (crop: string, cropKey: string | null) => void;
   ariaLabel?: string;
   rememberedCrops?: string[];
+  language?: 'en' | 'zu';
 }
 
-export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememberedCrops = [] }: CropSelectProps) {
+export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememberedCrops = [], language = 'en' }: CropSelectProps) {
   const [customNames, setCustomNames] = useState<string[]>([]);
   const [adding, setAdding] = useState(false);
   const [newName, setNewName] = useState('');
@@ -76,6 +77,8 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     onChange(catalogue?.label ?? saved, catalogue?.key ?? null);
   }
 
+  const label = (english: string, isiZulu: string) => language === 'zu' ? isiZulu : english;
+
   return (
     <div className="space-y-2">
       <select
@@ -83,10 +86,10 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         value={adding ? '__add__' : selected}
         onChange={(event) => choose(event.target.value)}
         className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
       >
-        <option value="">Choose a crop</option>
-        <optgroup label="Crop list">
+        <option value="">{label('Choose a crop', 'Khetha isilimo')}</option>
+        <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
           {CROP_ENTRY_OPTIONS.map((crop) => (
             <option key={crop.key} value={`catalogue:${crop.key}`}>{crop.label}</option>
           ))}
@@ -96,27 +99,31 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             name, which spelt it differently every time. These sit under the annual crops because
             that is the order of a working day, not because they matter less. */}
         {PERENNIAL_ENTRY_GROUPS.map((entry) => (
-          <optgroup key={entry.group} label={entry.label}>
+          <optgroup key={entry.group} label={label(entry.label, {
+            'Fruit & nuts': 'Izithelo namantongomane',
+            'Indigenous fruit': 'Izithelo zomdabu',
+            'Other food-forest plants': 'Ezinye izitshalo zehlathi lokudla',
+          }[entry.label] ?? entry.label)}>
             {entry.options.map((produce) => (
               <option key={produce.key} value={`catalogue:${produce.key}`}>{produce.label}</option>
             ))}
           </optgroup>
         ))}
         {savedNames.length > 0 && (
-          <optgroup label="Crops you added">
+          <optgroup label={label('Crops you added', 'Izitshalo ozifakile')}>
             {savedNames.map((name, index) => (
               <option key={name.toLocaleLowerCase('en-ZA')} value={`custom:${index}`}>{name}</option>
             ))}
           </optgroup>
         )}
-        <option value="__add__">＋ Add another crop…</option>
+        <option value="__add__">{label('＋ Add another crop…', '＋ Engeza esinye isilimo…')}</option>
       </select>
 
       {adding && (
         <div className="flex gap-2">
           <input
             autoFocus
-            aria-label="New crop name"
+            aria-label={label('New crop name', 'Igama lesilimo esisha')}
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
             onKeyDown={(event) => {
@@ -125,9 +132,9 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
                 addCrop();
               }
             }}
-            placeholder="Type the crop name"
+            placeholder={label('Type the crop name', 'Thayipha igama lesilimo')}
             className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
           />
           <button
             type="button"
@@ -136,11 +143,11 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             className="rounded-lg px-3 py-2 text-xs font-display font-semibold"
             style={{
               background: newName.trim() ? '#1F4D2B' : '#E2D8C4',
-              border: 'none', color: newName.trim() ? '#fff' : '#8C7A62',
+              border: 'none', color: newName.trim() ? '#fff' : '#755942',
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >
-            Save crop
+            {label('Save crop', 'Londoloza isilimo')}
           </button>
         </div>
       )}

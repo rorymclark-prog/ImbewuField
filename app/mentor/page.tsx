@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useLanguage } from '@/lib/i18n-context';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
@@ -37,9 +38,29 @@ import {
   type CourseEnrollment, type EnrollmentStatus,
 } from '@/lib/course-enrollment';
 import {
-  assignmentDocId, assignmentState, formatDue, toDateKey,
+  assignmentDocId, assignmentState, daysBetween, formatDue, toDateKey,
   type CourseAssignment,
 } from '@/lib/course-assignments';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
+
+const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
+const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
+  invited: 'Umenyiwe', active: 'Usayaqhubeka', paused: 'Kumisiwe', completed: 'Kuqediwe', withdrawn: 'Uhoxile',
+};
+
+function localizedDueDate(dueAt: string | null, today: string, lang: string): string | null {
+  if (lang !== 'zu') return formatDue(dueAt, today);
+  if (!dueAt) return null;
+  const days = daysBetween(today, dueAt);
+  if (days === null) return null;
+  if (days === 0) return 'Namuhla';
+  if (days === 1) return 'Kusasa';
+  if (days === -1) return 'Sekudlule usuku olu-1';
+  if (days < 0) return `Sekudlule izinsuku ezingu-${Math.abs(days)}`;
+  if (days <= 7) return `Kusele izinsuku ezingu-${days}`;
+  return new Date(`${dueAt}T00:00:00`).toLocaleDateString('zu-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
@@ -81,16 +102,36 @@ const STATUS_TONE: Record<EnrollmentStatus, { fg: string; bg: string }> = {
   withdrawn: { fg: '#755942', bg: 'rgba(140,122,98,0.12)' },
 };
 
+// Simple shortens the five enrolment states to the two things a mentor scanning a full roster
+// actually needs: is this learner fine, or do they need a check-in. Paused and withdrawn are the
+// only states a mentor caused by hand rather than the learner's own progress — see the comment on
+// `status` in TraineeCard below.
+const SIMPLE_NEEDS_ATTENTION = new Set<EnrollmentStatus>(['paused', 'withdrawn']);
+const SIMPLE_STATUS_TONE = {
+  onTrack: { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.12)' },
+  needsAttention: { fg: '#B03A2E', bg: 'rgba(176,58,46,0.12)' },
+};
+function simpleStatusLabel(status: EnrollmentStatus, lang: string): string {
+  return SIMPLE_NEEDS_ATTENTION.has(status)
+    ? tr(lang, 'Needs attention', 'Kudinga ukunakwa')
+    : tr(lang, 'On track', 'Kuhamba kahle');
+}
+
 function initials(name: string | null) {
   return (name ?? '?').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 }
 
-function ProgressBar({ value, max }: { value: number; max: number }) {
+function ProgressBar({ value, max, lang }: { value: number; max: number; lang: string }) {
   const pct = max === 0 ? 0 : (value / max) * 100;
   const col = pct >= 100 ? '#1F4D2B' : pct >= 50 ? '#805416' : '#235E86';
   return (
     <div className="flex items-center gap-2 mt-0.5">
-      <div className="flex-1 rounded-full overflow-hidden" style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}>
+      <div
+        className="flex-1 rounded-full overflow-hidden"
+        role="img"
+        aria-label={tr(lang, `${value} of ${max} modules complete`, `Kuqediwe amamojula angu-${value} kwangu-${max}`)}
+        style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}
+      >
         <div style={{ width: `${pct}%`, height: '100%', background: col, borderRadius: 999, transition: 'width 0.4s' }} />
       </div>
       <span className="text-xs font-mono flex-shrink-0" style={{ color: '#755942' }}>{value}/{max}</span>
@@ -99,6 +140,7 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
 }
 
 interface TraineeCardProps {
+  lang: string;
   trainee: Profile;
   doneIds: Set<string>;
   onVisit?: (profileId:string)=>void;
@@ -111,14 +153,19 @@ interface TraineeCardProps {
   onSetStatus: (profileId: string, status: 'paused' | 'active') => void;
   onAssign: (profileId: string, module: string, due: string | null) => void;
   onUnassign: (profileId: string, module: string) => void;
+  /** Simple hides per-module duration tags and due-date grids, and shortens the status pill to
+   *  two states — see lib/app-level.ts. All tools (the default below) is this card unchanged. */
+  simple?: boolean;
 }
 
 function TraineeCard({
-  trainee, doneIds, onVisit, enrollment, assignments, today, busy,
-  onEnrol, onSetStatus, onAssign, onUnassign,
+  trainee, doneIds, onVisit, enrollment, assignments, today, busy, lang,
+  onEnrol, onSetStatus, onAssign, onUnassign, simple = false,
 }: TraineeCardProps) {
   const [open, setOpen] = useState(false);
+  const [pickerModule, setPickerModule] = useState('');
   const assignmentByModule = new Map(assignments.map((a) => [a.module, a] as const));
+  const unassignedModules = COURSE_MODULES.filter((m) => !assignmentByModule.has(m.id));
   // Stored status is only ever 'paused'/'withdrawn' by hand; everything else is derived from
   // what the learner has actually ticked, so the badge can never drift from the progress bar.
   const status: EnrollmentStatus | null = enrollment
@@ -130,25 +177,31 @@ function TraineeCard({
     : null;
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <button onClick={() => setOpen((o) => !o)} aria-expanded={open}
+    <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={tr(lang, `${trainee.full_name ?? 'Learner'} — ${open ? 'hide' : 'show'} learning details`, `${trainee.full_name ?? 'Umfundi'} — ${open ? 'fihla' : 'bonisa'} imininingwane yokufunda`)}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-        <ProfileAvatar id={trainee.id} name={trainee.full_name || 'Unnamed'} photoUrl={trainee.photo_url} sample={isSampleMode()} size={44}/>
+        <ProfileAvatar id={trainee.id} name={trainee.full_name || tr(lang, 'Unnamed', 'Akanagama')} photoUrl={trainee.photo_url} sample={isSampleMode()} size={44}/>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
-              {trainee.full_name ?? 'Unnamed'}
+            <span className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+              {trainee.full_name ?? tr(lang, 'Unnamed', 'Akanagama')}
             </span>
             {status ? (
               <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                style={{ background: STATUS_TONE[status].bg, color: STATUS_TONE[status].fg }}>
-                {STATUS_LABEL[status]}
+                style={simple
+                  ? { background: SIMPLE_STATUS_TONE[SIMPLE_NEEDS_ATTENTION.has(status) ? 'needsAttention' : 'onTrack'].bg, color: SIMPLE_STATUS_TONE[SIMPLE_NEEDS_ATTENTION.has(status) ? 'needsAttention' : 'onTrack'].fg }
+                  : { background: STATUS_TONE[status].bg, color: STATUS_TONE[status].fg }}>
+                {simple ? simpleStatusLabel(status, lang) : lang === 'zu' ? MENTOR_STATUS_ZU[status] : STATUS_LABEL[status]}
               </span>
             ) : (
               <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                 style={{ background: 'rgba(32,25,15,0.06)', color: '#755942' }}>
-                Not enrolled
+                {tr(lang, 'Not enrolled', 'Akabhaliswanga')}
               </span>
             )}
           </div>
@@ -157,61 +210,107 @@ function TraineeCard({
               "11/10" — the exact drift enrollmentProgress in lib/course-enrollment.ts already
               guards against for the status badge above; this bar was reading doneIds.size
               directly and skipping that guard. */}
-          <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} />
+          <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} lang={lang} />
         </div>
         {open ? <ChevronUp size={15} style={{ color: '#755942' }} /> : <ChevronDown size={15} style={{ color: '#755942' }} />}
       </button>
 
       {open && (
-        <div className="px-4 pb-4" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <div className="px-4 pb-4" style={{ borderTop: '1px solid var(--border)' }}>
 
           {/* Enrolment */}
           {!enrollment ? (
             <div className="pt-3">
               <p className="text-xs font-sans leading-relaxed mb-2" style={{ color: '#5C5040' }}>
-                Not on the course yet. Enrolling lets you set modules and due dates for them.
+                {tr(lang, 'Not on the course yet. Enrolling lets you set modules and due dates for them.', 'Akakabhaliswa esifundweni. Ukumbhalisa kukuvumela ukuba umnike amamojula nezinsuku zokuwaqeda.')}
               </p>
               <button onClick={() => onEnrol(trainee.id)} disabled={busy}
                 className="flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
                 style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
                 {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
-                Enrol on the course
+                {tr(lang, 'Enrol on the course', 'Mbhalise esifundweni')}
               </button>
             </div>
           ) : (
             <div className="flex items-center gap-2 pt-3 flex-wrap">
               <span className="text-xs font-sans" style={{ color: '#755942' }}>
-                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}enrolled {new Date(enrollment.enrolled_at).toLocaleDateString()}
+                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {lang === 'zu' ? new Date(enrollment.enrolled_at).toLocaleDateString('zu-ZA') : new Date(enrollment.enrolled_at).toLocaleDateString()}
               </span>
               <div className="flex-1" />
               <button
                 onClick={() => onSetStatus(trainee.id, enrollment.status === 'paused' ? 'active' : 'paused')}
                 disabled={busy}
                 className="flex items-center gap-1.5 text-xs font-display font-semibold px-2.5 py-1.5 rounded-xl"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: busy ? 'wait' : 'pointer' }}>
+                style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: '#5C5040', cursor: busy ? 'wait' : 'pointer' }}>
                 {enrollment.status === 'paused' ? <PlayCircle size={12} /> : <PauseCircle size={12} />}
-                {enrollment.status === 'paused' ? 'Resume' : 'Pause'}
+                {enrollment.status === 'paused' ? tr(lang, 'Resume', 'Qhubeka') : tr(lang, 'Pause', 'Misa')}
               </button>
             </div>
           )}
 
           <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#755942' }}>
-            {enrollment ? 'Modules — tick is theirs, due date is yours' : 'Module sign-off'}
+            {enrollment ? tr(lang, 'Modules — tick is theirs, due date is yours', 'Amamojula — umfundi uyazimaka, wena ubeka usuku lokuqeda') : tr(lang, 'Module sign-off', 'Ukuqinisekisa imojula')}
           </div>
 
-          {COURSE_MODULES.map((mod) => {
+          {simple ? (
+            <>
+              {COURSE_MODULES.map((mod) => {
+                const done = doneIds.has(mod.id);
+                const assigned = assignmentByModule.has(mod.id);
+                return (
+                  <div key={mod.id} className="flex items-center gap-2.5 py-1.5" style={{ borderBottom: '1px solid rgba(226,216,196,0.5)' }}>
+                    <div className="flex-shrink-0 flex items-center justify-center rounded-full"
+                      style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : 'var(--border)'}` }}>
+                      {done && <CheckCircle size={12} style={{ color: '#EAF3E2' }} />}
+                    </div>
+                    <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#755942' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
+                      {mod.title}
+                    </span>
+                    {assigned && !done && (
+                      <span className="text-xs font-sans flex-shrink-0" style={{ color: '#805416' }}>{tr(lang, 'assigned', 'kwabelwe')}</span>
+                    )}
+                  </div>
+                );
+              })}
+              {/* Simple replaces the per-module Assign / due-date grid with one action: pick a
+                  module from what is left, assign it, done. Due dates and unassigning stay in
+                  All tools. */}
+              {enrollment && unassignedModules.length > 0 && (
+                <div className="flex items-center gap-2 pt-2.5 flex-wrap">
+                  <select
+                    value={pickerModule}
+                    onChange={(e) => setPickerModule(e.target.value)}
+                    aria-label={tr(lang, 'Choose a module to assign', 'Khetha imojula ozoyabela')}
+                    className="flex-1 text-xs font-sans rounded-lg px-2 outline-none"
+                    style={{ minHeight: 44, minWidth: 0, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
+                  >
+                    <option value="">{tr(lang, 'Choose a module…', 'Khetha imojula…')}</option>
+                    {unassignedModules.map((m) => <option key={m.id} value={m.id}>{m.title}</option>)}
+                  </select>
+                  <button
+                    onClick={() => { if (pickerModule) { onAssign(trainee.id, pickerModule, null); setPickerModule(''); } }}
+                    disabled={busy || !pickerModule}
+                    className="flex-shrink-0 text-xs font-display font-semibold px-3 rounded-lg"
+                    style={{ minHeight: 44, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B', cursor: busy || !pickerModule ? 'not-allowed' : 'pointer', opacity: busy || !pickerModule ? 0.6 : 1 }}
+                  >
+                    {tr(lang, 'Assign', 'Yabela')}
+                  </button>
+                </div>
+              )}
+            </>
+          ) : COURSE_MODULES.map((mod) => {
             const done = doneIds.has(mod.id);
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
-            const dueText = assignment && today ? formatDue(assignment.due_at, today) : null;
+            const dueText = assignment && today ? localizedDueDate(assignment.due_at, today, lang) : null;
             return (
               <div key={mod.id} className="py-1.5" style={{ borderBottom: '1px solid rgba(226,216,196,0.5)' }}>
                 <div className="flex items-center gap-2.5">
                   <div className="flex-shrink-0 flex items-center justify-center rounded-full"
-                    style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : '#E2D8C4'}` }}>
+                    style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : 'var(--border)'}` }}>
                     {done && <CheckCircle size={12} style={{ color: '#EAF3E2' }} />}
                   </div>
-                  <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#755942' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
+                  <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#755942' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
                     {mod.title}
                   </span>
                   <span className="text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0"
@@ -220,16 +319,16 @@ function TraineeCard({
                   </span>
                   {enrollment && (assignment ? (
                     <button onClick={() => onUnassign(trainee.id, mod.id)} disabled={busy}
-                      aria-label={`Remove the ${mod.title} assignment`}
+                      aria-label={tr(lang, `Remove the ${mod.title} assignment`, `Susa isabelo se-${mod.title}`)}
                       className="flex-shrink-0 flex items-center justify-center rounded-lg"
-                      style={{ width: 26, height: 26, background: 'transparent', border: '1px solid #E2D8C4', color: '#755942', cursor: busy ? 'wait' : 'pointer' }}>
+                      style={{ width: 44, height: 44, background: 'transparent', border: '1px solid var(--border)', color: '#755942', cursor: busy ? 'wait' : 'pointer' }}>
                       <X size={12} />
                     </button>
                   ) : (
                     <button onClick={() => onAssign(trainee.id, mod.id, null)} disabled={busy}
                       className="flex-shrink-0 text-xs font-display font-semibold px-2 py-1 rounded-lg"
                       style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B', cursor: busy ? 'wait' : 'pointer' }}>
-                      Assign
+                      {tr(lang, 'Assign', 'Yabela')}
                     </button>
                   ))}
                 </div>
@@ -237,7 +336,7 @@ function TraineeCard({
                 {enrollment && assignment && (
                   <div className="flex items-center gap-2 pl-7 pt-1.5 flex-wrap">
                     <label className="text-xs font-sans" style={{ color: '#755942' }} htmlFor={`due-${trainee.id}-${mod.id}`}>
-                      Due
+                      {tr(lang, 'Due', 'Usuku lokuqeda')}
                     </label>
                     <input
                       id={`due-${trainee.id}-${mod.id}`}
@@ -245,7 +344,7 @@ function TraineeCard({
                       value={assignment.due_at ?? ''}
                       onChange={(e) => onAssign(trainee.id, mod.id, e.target.value || null)}
                       className="text-xs font-sans rounded-lg px-2 py-1 outline-none"
-                      style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+                      style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}
                     />
                     {state && state !== 'done' && dueText && (
                       <span className="flex items-center gap-1 text-xs font-sans"
@@ -255,7 +354,7 @@ function TraineeCard({
                       </span>
                     )}
                     {state === 'done' && (
-                      <span className="text-xs font-sans" style={{ color: '#1F4D2B' }}>Finished</span>
+                      <span className="text-xs font-sans" style={{ color: '#1F4D2B' }}>{tr(lang, 'Finished', 'Kuqediwe')}</span>
                     )}
                   </div>
                 )}
@@ -267,7 +366,7 @@ function TraineeCard({
             <div className="mt-3 text-xs font-sans" style={{ color: '#5C5040' }}>{trainee.phone}</div>
           )}
 
-          {onVisit&&<button onClick={()=>onVisit(trainee.id)} className="mt-3 flex items-center gap-2 text-sm font-display font-semibold px-3 py-3 rounded-xl" style={{background:'#e9f1e9',color:'#1F4D2B',minHeight:44}}><BookOpen size={15}/>Record field visit</button>}
+          {onVisit&&<button onClick={()=>onVisit(trainee.id)} className="mt-3 flex items-center gap-2 text-sm font-display font-semibold px-3 py-3 rounded-xl" style={{background:'#e9f1e9',color:'#1F4D2B',minHeight:44}}><BookOpen size={15}/>{tr(lang, 'Record field visit', 'Rekhoda ukuvakashela epulazini')}</button>}
         </div>
       )}
     </div>
@@ -279,12 +378,17 @@ function TraineeCard({
 const MENTOR_ALLOWED_ROLES = new Set<UserRole>(['mentor', 'ngo', 'admin']);
 
 export default function MentorPage() {
+  const { lang } = useLanguage();
   const { user, profile, role, loading } = useAuth();
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
+  // Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools is this
+  // screen unchanged; Simple declutters the trainee list — see TraineeCard's own `simple` prop
+  // and the cohort/search/curriculum changes below.
+  const simple = useAppLevel() === 'simple';
 
   const [view, setView] = useState<'field' | 'trainees' | 'messages' | 'evidence'>('field');
   const [visitPerson,setVisitPerson]=useState('');
@@ -446,24 +550,24 @@ export default function MentorPage() {
 
   if (!loading && user && isLive && !sample && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton />
           <BackButton />
           <BrandLogo />
-          <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Mentor</span>
+          <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{tr(lang, 'Mentor', 'Umeluleki')}</span>
           <div className="flex-1" />
           <SettingsButton />
         </header>
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
               <Users size={22} style={{ color: '#1F4D2B' }} />
             </div>
-            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Mentor area</p>
+            <p className="text-sm font-display font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{tr(lang, 'This is the Mentor area', 'Le ndawo eyabeluleki')}</p>
             <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
-              {role==='funder'?'Open your funder workspace for the organisation’s published reports and evidence.':'Your organisation can link mentor access to your account.'}
+              {role==='funder' ? tr(lang, 'Open your funder workspace for the organisation’s published reports and evidence.', 'Vula indawo yabaxhasi ukuze ubone imibiko nobufakazi obushicilelwe benhlangano.') : tr(lang, 'Your organisation can link mentor access to your account.', 'Inhlangano yakho ingaxhumanisa i-akhawunti yakho nokufinyelela komeluleki.')}
             </p>
             <button
               onClick={() => router.push(role==='funder'?'/funder':'/home')}
@@ -471,7 +575,7 @@ export default function MentorPage() {
               style={{ background: '#1F4D2B', color: '#F7F2E9' }}
             >
               <Home size={15} />
-              {role==='funder'?'Open funder workspace':'Back to my home'}
+              {role==='funder' ? tr(lang, 'Open funder workspace', 'Vula indawo yabaxhasi') : tr(lang, 'Back to my home', 'Buyela ekhasini lami lasekhaya')}
             </button>
           </div>
         </main>
@@ -500,15 +604,15 @@ export default function MentorPage() {
   );
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
         <MenuButton />
           <BackButton />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Mentor</span>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{tr(lang, 'Mentor', 'Umeluleki')}</span>
         <div className="flex-1" />
-        <LessonLink id="mentor:overview" label="Learn" />
+        <LessonLink id="mentor:overview" label={tr(lang, 'Learn', 'Funda')} />
         <RoleSwitcher current="mentor" />
         <SettingsButton />
       </header>
@@ -516,14 +620,17 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
-          { key: 'field', label: 'Fieldwork', icon: Users, badge: 0 },
-          { key: 'evidence', label: 'Training', icon: BookOpen, badge: 0 },
-          { key: 'trainees', label: 'Learning', icon: Users,  badge: 0 },
-          { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
+          { key: 'field', label: tr(lang, 'Fieldwork', 'Umsebenzi wasensimini'), icon: Users, badge: 0 },
+          { key: 'evidence', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BookOpen, badge: 0 },
+          { key: 'trainees', label: tr(lang, 'Learning', 'Ukufunda'), icon: Users,  badge: 0 },
+          { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
+            type="button"
             onClick={() => { setView(key); setVisitPerson(''); if (key === 'trainees') void load(); }}
+            aria-label={label}
+            aria-pressed={view === key}
             className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
             style={{
               background: 'transparent',
@@ -546,75 +653,91 @@ export default function MentorPage() {
         ))}
       </DashboardTabs>
 
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#755942' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
+
       <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 
-        <div><h1 className="text-2xl font-display font-semibold" style={{color:'#1F4D2B'}}>Participant learning</h1><p className="text-sm mt-2" style={{color:'#5C5040'}}>Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.</p></div>
-        {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'#fff0ed',color:'#8c2e1f'}}><p>Learning records could not be loaded. Progress is unavailable until the connection succeeds.</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'white'}}>Retry learning records</button></div>}
+        <div><h1 className="text-2xl font-display font-semibold" style={{color:'#1F4D2B'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'#5C5040'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
+        {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'#fff0ed',color:'#8c2e1f'}}><p>{tr(lang, 'Learning records could not be loaded. Progress is unavailable until the connection succeeds.', 'Amarekhodi okufunda awakwazanga ukulayishwa. Inqubekelaphambili ayitholakali kuze kuxhumeke inethiwekhi.')}</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'white'}}>{tr(lang, 'Retry learning records', 'Phinda ulayishe amarekhodi okufunda')}</button></div>}
         {!loadError&&!fetching&&<>
-        {/* Cohort at a glance */}
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { label: 'Enrolled',    value: cohort.enrolled,   color: '#235E86' },
-            { label: 'In progress', value: cohort.inProgress, color: '#805416' },
-            { label: 'Complete',    value: cohort.completed,  color: '#1F4D2B' },
-          ].map(({ label, value, color }) => (
-            <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
-              <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Keep the large curriculum list available without burying participants. */}
-        <details className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <summary className="flex items-center gap-2 mb-2.5 cursor-pointer" style={{minHeight:44}}>
-            <GraduationCap size={14} style={{ color: '#1F4D2B' }} />
-            <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
-              View curriculum · {TOTAL_MODULES} modules
-            </span>
-          </summary>
-          <div className="flex flex-wrap gap-1.5">
-            {COURSE_MODULES.map((m) => (
-              <span key={m.id} className="text-xs font-sans px-2 py-0.5 rounded-full"
-                style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
-                {m.title}
-              </span>
+        {/* Cohort at a glance — Simple collapses the three cards into one line. */}
+        {simple ? (
+          <div className="rounded-2xl px-4 py-3 flex items-center justify-center gap-4 flex-wrap text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <span className="text-xs font-sans" style={{ color: '#5C5040' }}><strong className="font-display" style={{ color: '#235E86' }}>{cohort.enrolled}</strong> {tr(lang, 'enrolled', 'ababhalisile')}</span>
+            <span className="text-xs font-sans" style={{ color: '#5C5040' }}><strong className="font-display" style={{ color: '#805416' }}>{cohort.inProgress}</strong> {tr(lang, 'in progress', 'kuyaqhubeka')}</span>
+            <span className="text-xs font-sans" style={{ color: '#5C5040' }}><strong className="font-display" style={{ color: '#1F4D2B' }}>{cohort.completed}</strong> {tr(lang, 'complete', 'kuqediwe')}</span>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-3">
+            {[
+              { label: tr(lang, 'Enrolled', 'Ababhalisile'),    value: cohort.enrolled,   color: '#235E86' },
+              { label: tr(lang, 'In progress', 'Kuyaqhubeka'), value: cohort.inProgress, color: '#805416' },
+              { label: tr(lang, 'Complete', 'Kuqediwe'),    value: cohort.completed,  color: '#1F4D2B' },
+            ].map(({ label, value, color }) => (
+              <div key={label} className="rounded-2xl p-3 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
+                <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{label}</div>
+              </div>
             ))}
           </div>
-        </details>
+        )}
+
+        {/* Keep the large curriculum list available without burying participants — All tools
+            only; Simple leaves it out entirely (still reachable by switching to All tools). */}
+        {!simple && (
+          <details className="rounded-2xl px-4 py-3.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <summary className="flex items-center gap-2 mb-2.5 cursor-pointer" style={{minHeight:44}}>
+              <GraduationCap size={14} style={{ color: '#1F4D2B' }} />
+              <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
+                {tr(lang, 'View curriculum', 'Buka ikharikhulamu')} · {TOTAL_MODULES} {tr(lang, 'modules', 'amamojula')}
+              </span>
+            </summary>
+            <div className="flex flex-wrap gap-1.5">
+              {COURSE_MODULES.map((m) => (
+                <span key={m.id} className="text-xs font-sans px-2 py-0.5 rounded-full"
+                  style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
+                  {m.title}
+                </span>
+              ))}
+            </div>
+          </details>
+        )}
 
         {syncError && (
           <div className="rounded-2xl px-4 py-3" style={{ background: 'rgba(176,58,46,0.08)', border: '1px solid rgba(176,58,46,0.28)' }}>
             <p className="text-xs font-sans leading-relaxed" style={{ color: '#B03A2E' }}>
-              That change was not confirmed. Check the reloaded learning records before trying again.
+              {tr(lang, 'That change was not confirmed. Check the reloaded learning records before trying again.', 'Lolo shintsho aluqinisekiswanga. Hlola amarekhodi okufunda aphinde alayishwa ngaphambi kokuzama futhi.')}
             </p>
           </div>
         )}
 
         </>}
-        {/* Search */}
-        <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#755942' }} />
-          <input value={search} onChange={(e) => setSearch(e.target.value)}
-            aria-label="Search participants" placeholder="Search participants..."
-            className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }} />
-        </div>
+        {/* Search — Simple hides it while the roster is short enough to scan by eye. */}
+        {(!simple || trainees.length >= 8) && (
+          <div className="relative">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#755942' }} />
+            <input value={search} onChange={(e) => setSearch(e.target.value)}
+              aria-label={tr(lang, 'Search participants', 'Sesha abahlanganyeli')} placeholder={tr(lang, 'Search participants...', 'Sesha abahlanganyeli...')}
+              className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
+          </div>
+        )}
 
         {/* List */}
         {fetching ? (
-          <div className="flex justify-center py-10">
+          <div role="status" aria-live="polite" className="flex flex-col items-center gap-2 justify-center py-10">
             <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+            <span className="text-xs" style={{ color: '#5C5040' }}>{tr(lang, 'Loading learning records…', 'Kulayishwa amarekhodi okufunda…')}</span>
           </div>
         ) : loadError ? null : filtered.length === 0 ? (
-          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <Users size={28} style={{ color: '#755942', margin: '0 auto 8px' }} />
             <p className="text-sm font-display" style={{ color: '#5C5040' }}>
-              {search ? 'No learners match that search.' : 'Learners will appear here once they enrol.'}
+              {search ? tr(lang, 'No learners match that search.', 'Akukho bafundi abahambisana nalokho oseshile.') : tr(lang, 'Learners will appear here once they enrol.', 'Abafundi bazovela lapha uma sebebhalisile.')}
             </p>
           </div>
         ) : (
@@ -623,6 +746,7 @@ export default function MentorPage() {
               <TraineeCard
                 key={t.id}
                 trainee={t}
+                lang={lang}
                 doneIds={doneIdsFor(t.id)}
                 onVisit={!isLive||role==='mentor'?id=>{setVisitPerson(id);setView('field');}:undefined}
                 enrollment={enrollBy[t.id] ?? null}
@@ -633,6 +757,7 @@ export default function MentorPage() {
                 onSetStatus={handleSetStatus}
                 onAssign={handleAssign}
                 onUnassign={handleUnassign}
+                simple={simple}
               />
             ))}
           </div>
@@ -640,7 +765,7 @@ export default function MentorPage() {
 
         {!isLive && !sample && (
           <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
-            Tour records · Sign in to open your own learners
+            {tr(lang, 'Tour records · Sign in to open your own learners', 'Amarekhodi okuvakasha · Ngena ngemvume ukuze ubone abafundi bakho')}
           </p>
         )}
         </>)}

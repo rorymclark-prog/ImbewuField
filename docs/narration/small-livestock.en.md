@@ -26,7 +26,7 @@ By the end of this module, you will understand how chickens, ducks, bees, and gu
 
 You will know when chickens help a bed, and when their scratching can cause damage.
 
-You will understand pollination, hive placement, and the value of closing nutrient loops.
+You will understand pollination, hive placement, and how livestock move nutrients around a farm.
 
 ---
 
@@ -88,11 +88,11 @@ There is no single number of chickens that guarantees enough fertility for every
 
 ---
 
-**Slide 9 — Watch: Bees Moving Between Hive and Crops**
+**Slide 9 — Watch: A Bee Moves Between Two Blossoms**
 
-Watch the bees leave the hive and move among flowering crops.
+Watch one bee move from one blossom to another.
 
-Their movement carries pollen between flowers across the site.
+Bees can carry pollen as they visit flowers.
 
 ---
 
@@ -110,9 +110,9 @@ A hive does not guarantee higher yields everywhere. Weather, water, plant health
 
 South Africa has two native honeybee subspecies.
 
-The Cape bee lives in the southern and south-western Cape. The African honeybee occurs across the north and east.
+The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.
 
-Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas.
+These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives.
 
 ---
 
@@ -134,25 +134,25 @@ Provide flowering plants through the seasons and avoid exposing bees to pesticid
 
 Active bees do not prove that the farm is free of chemicals or disease.
 
-All beekeepers must register with the national Department of Agriculture.
+Registration is required for activities defined by the national honey-bee control measures. These include keeping managed hives for bee products, queen rearing, commercial pollination, and removing, eradicating or relocating colonies. Check with the Department if you are unsure whether your activity is covered.
 
 If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.
 
 ---
 
-**Slide 14 — Watch: Nutrients Moving in a Closed Livestock Loop**
+**Slide 14 — Nutrients Moving Through the Farm**
 
-Watch nutrients move from plants to animals, then through manure and compost back to the growing bed.
+Some nutrients move from plants to animals. Bought feed also brings nutrients into the farm. Some nutrients may return to the growing area through compost made from manure. Food and other products carry nutrients away.
 
 ---
 
-**Slide 15 — Close the Nutrient Loop**
+**Slide 15 — Some Nutrients Return; Others Enter and Leave**
 
-Animals can return some nutrients to the farm.
+Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.
 
-Chickens eat suitable farm produce and insects, and manure can become compost for crops.
+Chickens eat suitable farm produce and insects.
 
-Keep track of feed bought in and food sold or taken home. These nutrients still enter or leave the system.
+Bought feed brings nutrients into the farm. Food sold or taken home and other products carry nutrients away. Keep track of feed bought in and food sold or taken home.
 
 Scraps alone may not meet the animals’ needs.
 
@@ -194,7 +194,7 @@ Do not stop treatment because chickens have visited the grazing camp.
 
 ---
 
-**Slide 19 — Field Assignment: Draw Your Farm Loop**
+**Slide 19 — Field Assignment: Draw Where Resources Go**
 
 Walk your smallholding and choose an area where livestock could support another part of the system.
 
@@ -202,7 +202,7 @@ Record what food, scraps, pests, surplus produce, manure, or flowering resources
 
 Then note what each animal could produce, and what it would need from the farm.
 
-Identify one loop that could work with the resources you already have.
+Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves.
 
 ---
 

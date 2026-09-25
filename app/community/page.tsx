@@ -32,22 +32,48 @@ const CATEGORY_LABEL: Record<BoardCategory, string> = {
 const KIND_LABEL: Record<BoardKind, string> = { have: 'Have', want: 'Want', free: 'Free' };
 const KIND_COLOR: Record<BoardKind, string> = { have: '#1F4D2B', want: '#235E86', free: '#C07A1E' };
 
-function timeAgo(ts: unknown): string {
+const zuCopy: Record<string, string> = {
+  Nearby: 'Eduze nawe', Board: 'Ibhodi', Messages: 'Imiyalezo', Community: 'Umphakathi', 'Loading community': 'Kulayishwa umphakathi', 'My profile': 'Iphrofayela yami', 'Set up profile': 'Setha iphrofayela',
+  "Couldn't load the community layer right now. Check your connection and try again.": 'Umphakathi awukwazanga ukulayishwa. Hlola uxhumano lwakho bese uzama futhi.',
+  Retry: 'Zama futhi', 'Could not open this conversation. Check your connection and try again.': 'Ingxoxo ayikwazanga ukuvulwa. Hlola uxhumano lwakho bese uzama futhi.',
+  'People and listings near you': 'Abantu nezikhangiso eziseduze nawe', 'No community profiles nearby yet.': 'Akukabikho amaphrofayela omphakathi aseduze.',
+  'Community board': 'Ibhodi lomphakathi', 'New post': 'Isikhangiso esisha', 'Nothing on the board yet.': 'Akukabikho lutho ebhodini.',
+  Close: 'Vala', Delete: 'Susa', Message: 'Thumela umlayezo', Have: 'Nginakho', Want: 'Ngifuna', Free: 'Mahhala',
+  Seed: 'Imbewu', Seedlings: 'Izithombo', Produce: 'Umkhiqizo', Tools: 'Amathuluzi', Other: 'Okunye',
+  'What are you offering or looking for?': 'Yini oyinikezayo noma oyifunayo?', 'Describe the item or request': 'Chaza into noma isicelo',
+  Area: 'Indawo', 'Your area or town': 'Indawo noma idolobha lakho', 'Add photo (optional)': 'Faka isithombe (uma uthanda)',
+  Cancel: 'Khansela', Post: 'Shicilela', 'Could not publish your post. Check your connection and try again.': 'Isikhangiso asikwazanga ukushicilelwa. Hlola uxhumano lwakho bese uzama futhi.',
+  'No messages yet.': 'Akukabikho miyalezo.', 'Say hello…': 'Bingelela…', 'Learn': 'Funda',
+  'Farmers who choose to be visible show up here as an approximate area — never their exact homestead.': 'Abalimi abakhetha ukubonakala bavela lapha njengendawo elinganiselwe — akuboniswa ikhaya labo eliqondile.',
+  'No farmers nearby have opted in yet.': 'Abekho abalimi abaseduze abakhethe ukubonakala okwamanje.', 'Trade board': 'Ibhodi lokuhwebelana',
+  'Nothing posted yet — be the first.': 'Akukabikho okuthunyelwe — yiba ngowokuqala.', 'Category': 'Isigaba', 'Type': 'Uhlobo',
+  'Description': 'Incazelo', 'e.g. Heirloom tomato seedlings, 20 available': 'isib. Izithombo zikatamatisi wendabuko, ezingama-20 ziyatholakala',
+  'e.g. Bergville, KZN': 'isib. Bergville, KZN', 'Mark as done': 'Maka njengokuqediwe',
+  'No conversations yet.': 'Akukabikho zingxoxo.', 'Couldn\'t post — check your connection and try again.': 'Akukwazanga ukuthunyelwa. Hlola uxhumano lwakho bese uzama futhi.',
+  'Remove photo': 'Susa isithombe', 'Uploading photo…': 'Kulayishwa isithombe…', 'Posting…': 'Kuyathunyelwa…',
+};
+const copyCommunity = (en: string, lang: string) => lang === 'zu' ? (zuCopy[en] ?? en) : en;
+
+const categoryLabel = (value: BoardCategory, lang: string) => lang === 'zu' ? ({ seed: 'Imbewu', seedlings: 'Izithombo', produce: 'Umkhiqizo', tools: 'Amathuluzi', other: 'Okunye' } as Record<BoardCategory, string>)[value] : CATEGORY_LABEL[value];
+const kindLabel = (value: BoardKind, lang: string) => lang === 'zu' ? ({ have: 'Nginakho', want: 'Ngifuna', free: 'Mahhala' } as Record<BoardKind, string>)[value] : KIND_LABEL[value];
+
+function timeAgo(ts: unknown, lang: string): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
   if (!t) return '';
   try {
     const d = typeof t.toDate === 'function' ? t.toDate() : new Date((t.seconds ?? 0) * 1000);
     const diff = Date.now() - d.getTime();
-    if (diff < 60_000) return 'Just now';
-    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
-    if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
-    return d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' });
+    if (diff < 60_000) return lang === 'zu' ? 'Manje' : 'Just now';
+    if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : `${Math.floor(diff / 60_000)}m ago`;
+    if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : `${Math.floor(diff / 3_600_000)}h ago`;
+    return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
   } catch { return ''; }
 }
 
 export default function CommunityHubPage() {
   const { user, loading } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const tr = (key: string) => copyCommunity(t(key), lang);
   const router = useRouter();
 
   const [tab, setTab] = useState<Tab>('nearby');
@@ -124,52 +150,56 @@ export default function CommunityHubPage() {
         </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
-        <LessonLink id="community:overview" label="Learn" />
+        <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
         <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#1F4D2B', textDecoration: 'none' }}>
           <User size={16} strokeWidth={1.8} />
           <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
-            {myProfile ? 'My profile' : 'Set up profile'}
+            {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
           </span>
         </Link>
       </header>
 
-      <div className="flex-shrink-0 flex" style={{ borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+      <div className="flex-shrink-0 flex" role="tablist" aria-label={copyCommunity('Community', lang)} style={{ borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
         {(['nearby', 'board', 'messages'] as Tab[]).map((tb) => (
           <button
             key={tb}
+            role="tab"
+            aria-selected={tab === tb}
+            aria-controls="community-tab-panel"
+            id={`community-tab-${tb}`}
             onClick={() => setTab(tb)}
             className="flex-1 font-sans font-semibold"
             style={{
               padding: '12px 8px', fontSize: 13.5, background: 'transparent', border: 'none', cursor: 'pointer',
-              color: tab === tb ? '#1F4D2B' : '#8C7A62',
+              color: tab === tb ? '#1F4D2B' : '#755942',
               borderBottom: tab === tb ? '2.5px solid #1F4D2B' : '2.5px solid transparent',
             }}
           >
-            {tb === 'nearby' ? t('communityTabNearby') : tb === 'board' ? t('communityTabBoard') : t('communityTabMessages')}
+            {tr(tb === 'nearby' ? 'communityTabNearby' : tb === 'board' ? 'communityTabBoard' : 'communityTabMessages')}
           </button>
         ))}
       </div>
 
-      <main className={`${workspace.workspace} flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6`}>
+      <main id="community-tab-panel" role="tabpanel" aria-labelledby={`community-tab-${tab}`} className={`${workspace.workspace} flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6`}>
         {loadError && !busy && (
           <div className="flex items-center justify-between gap-3 rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
-            <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{t('communityLoadError')}</span>
+            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{tr('communityLoadError')}</span>
             <button
               onClick={() => refresh()}
               className="font-sans font-semibold"
               style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline', flexShrink: 0 }}
             >
-              {t('communityRetry')}
+              {tr('communityRetry')}
             </button>
           </div>
         )}
         {threadError && (
           <div className="rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
-            <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{t('communityContactError')}</span>
+            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{tr('communityContactError')}</span>
           </div>
         )}
         {busy ? (
-          <div className="flex justify-center py-16"><Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} /></div>
+          <div role="status" aria-label={copyCommunity('Loading community', lang)} className="flex justify-center py-16"><Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} /></div>
         ) : tab === 'nearby' ? (
           <NearbyTab nearby={nearby} onOpenProfile={(uid) => router.push(`/community/u/${uid}`)} />
         ) : tab === 'board' ? (
@@ -196,12 +226,16 @@ export default function CommunityHubPage() {
 }
 
 function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOpenProfile: (uid: string) => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const tr = (key: string) => copyCommunity(t(key), lang);
+  const locationPrivacy = lang === 'zu'
+    ? `${t('communityNearbyIntro')} / Farmers who choose to be visible show up here as an approximate area — never their exact homestead.`
+    : t('communityNearbyIntro');
   const pinned = nearby.filter((p) => p.show_on_map);
   return (
     <div>
       <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5, marginBottom: 14 }}>
-        {t('communityNearbyIntro')}
+        {locationPrivacy}
       </p>
       {pinned.length > 0 && (
         <div style={{ height: 'clamp(260px, 35vw, 440px)', marginBottom: 16 }}>
@@ -210,8 +244,8 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
       )}
       {nearby.length === 0 ? (
         <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <MapPin size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
-          <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityNearbyEmpty')}</p>
+          <MapPin size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
+          <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{tr('communityNearbyEmpty')}</p>
         </div>
       ) : (
         <div className={workspace.cards}>
@@ -229,7 +263,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{p.display_name}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{p.area_text || '—'}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{p.area_text || '—'}</div>
               </div>
             </button>
           ))}
@@ -246,17 +280,18 @@ function BoardTab({
   onPosted: () => void; onClose: (id: string) => void; onDelete: (id: string) => void;
   onMessage: (uid: string, name: string) => void; messagingBusy: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const tr = (key: string) => copyCommunity(t(key), lang);
   return (
     <div>
       <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
-        <div className="font-display font-bold" style={{ fontSize: 18, color: '#20190F' }}>{t('communityBoardTitle')}</div>
+        <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 18, color: '#20190F' }}>{tr('communityBoardTitle')}</h1>
         <button
           onClick={onToggleNewPost}
           className="flex items-center gap-1.5 font-display font-semibold rounded-xl"
           style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '8px 14px', fontSize: 13 }}
         >
-          <Plus size={14} /> {t('communityBoardNewPost')}
+          <Plus size={14} /> {tr('communityBoardNewPost')}
         </button>
       </div>
 
@@ -264,7 +299,7 @@ function BoardTab({
 
       {posts.length === 0 ? (
         <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityBoardEmpty')}</p>
+          <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{tr('communityBoardEmpty')}</p>
         </div>
       ) : (
         <div className={workspace.cards}>
@@ -272,28 +307,28 @@ function BoardTab({
             <div key={p.id} className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
                 <span className="font-sans font-bold" style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  {KIND_LABEL[p.kind]}
+                  {kindLabel(p.kind, lang)}
                 </span>
-                <span className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62' }}>{CATEGORY_LABEL[p.category]}</span>
+                <span className="font-sans" style={{ fontSize: 11.5, color: '#755942' }}>{categoryLabel(p.category, lang)}</span>
                 <div style={{ flex: 1 }} />
-                <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{timeAgo(p.created_at)}</span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#755942' }}>{timeAgo(p.created_at, lang)}</span>
               </div>
               {p.photo_url && (
                 <img data-photo-preview src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
               )}
               <p className="font-sans" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.5, marginBottom: 6 }}>{p.description}</p>
               <div className="flex items-center gap-1.5" style={{ marginBottom: 10 }}>
-                <MapPin size={11} style={{ color: '#8C7A62' }} />
-                <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{p.area_text} · {p.owner_name}</span>
+                <MapPin size={11} style={{ color: '#755942' }} />
+                <span className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{p.area_text} · {p.owner_name}</span>
               </div>
               <div className="flex items-center gap-2">
                 {p.owner_id === myUid ? (
                   <>
                     <button onClick={() => onClose(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)', cursor: 'pointer' }}>
-                      {t('communityBoardClose')}
+                      {tr('communityBoardClose')}
                     </button>
                     <button onClick={() => onDelete(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.25)', cursor: 'pointer' }}>
-                      {t('communityBoardDelete')}
+                      {tr('communityBoardDelete')}
                     </button>
                   </>
                 ) : (
@@ -304,7 +339,7 @@ function BoardTab({
                     style={{ fontSize: 12, padding: '6px 12px', background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messagingBusy ? 'default' : 'pointer', opacity: messagingBusy ? 0.7 : 1 }}
                   >
                     {messagingBusy ? <Loader2 size={12} className="animate-spin" /> : <MessageCircle size={12} />}
-                    {t('communityMessageButton')}
+                    {tr('communityMessageButton')}
                   </button>
                 )}
               </div>
@@ -317,7 +352,8 @@ function BoardTab({
 }
 
 function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: string; onPosted: () => void; onCancel: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const tr = (key: string) => copyCommunity(t(key), lang);
   const fileRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState<BoardCategory>('seed');
   const [kind, setKind] = useState<BoardKind>('have');
@@ -360,44 +396,47 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
   return (
     <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{t('communityBoardKind')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
         <div className="flex gap-2">
           {(['have', 'want', 'free'] as BoardKind[]).map((k) => (
-            <button key={k} onClick={() => setKind(k)} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : '#5C5040', border: `1px solid ${kind === k ? KIND_COLOR[k] : '#E2D8C4'}` }}>
-              {KIND_LABEL[k]}
+            <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : '#5C5040', border: `1px solid ${kind === k ? KIND_COLOR[k] : '#E2D8C4'}` }}>
+              {kindLabel(k, lang)}
             </button>
           ))}
         </div>
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{t('communityBoardCategory')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
         <select
           value={category}
+          aria-label={tr('communityBoardCategory')}
           onChange={(e) => setCategory(e.target.value as BoardCategory)}
           className="w-full rounded-xl px-3 py-2.5 font-sans"
           style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
         >
-          {(Object.keys(CATEGORY_LABEL) as BoardCategory[]).map((c) => <option key={c} value={c}>{CATEGORY_LABEL[c]}</option>)}
+          {(Object.keys(CATEGORY_LABEL) as BoardCategory[]).map((c) => <option key={c} value={c}>{categoryLabel(c, lang)}</option>)}
         </select>
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{t('communityBoardDescription')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
         <textarea
           value={description}
+          aria-label={tr('communityBoardDescription')}
           onChange={(e) => setDescription(e.target.value.slice(0, 300))}
-          placeholder={t('communityBoardDescriptionPlaceholder')}
+          placeholder={tr('communityBoardDescriptionPlaceholder')}
           rows={3}
           className="w-full rounded-xl px-3 py-2.5 font-sans"
           style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }}
         />
       </div>
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>{t('communityAreaLabel')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
         <input
           type="text"
           value={areaText}
+          aria-label={tr('communityAreaLabel')}
           onChange={(e) => setAreaText(e.target.value)}
-          placeholder={t('communityAreaPlaceholder')}
+          placeholder={tr('communityAreaPlaceholder')}
           className="w-full rounded-xl px-3 py-2.5 font-sans"
           style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none' }}
         />
@@ -406,28 +445,28 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
             <img data-photo-preview src={photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
-            <button onClick={() => setPhotoUrl(null)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <button onClick={() => setPhotoUrl(null)} aria-label={copyCommunity('Remove photo', lang)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={12} color="#fff" />
             </button>
           </div>
         ) : (
           <button onClick={() => fileRef.current?.click()} disabled={uploading} className="flex items-center gap-2 font-sans font-semibold rounded-xl" style={{ fontSize: 12.5, padding: '8px 12px', background: '#fff', border: '1px dashed #C8BCA8', color: '#5C5040', cursor: 'pointer' }}>
-            {uploading ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />} Add photo (optional)
+            {uploading ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />} {uploading ? copyCommunity('Uploading photo…', lang) : copyCommunity('Add photo (optional)', lang)}
           </button>
         )}
         <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{ display: 'none' }} />
       </div>
       {postError && (
-        <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: 0 }}>
-          {t('communityPostError')}
+        <p role="alert" className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: 0 }}>
+          {tr('communityPostError')}
         </p>
       )}
       <div className="flex gap-2">
         <button onClick={onCancel} className="font-sans font-semibold rounded-xl" style={{ flex: 1, padding: '10px', fontSize: 13.5, background: 'transparent', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
-          Cancel
+          {copyCommunity('Cancel', lang)}
         </button>
-        <button onClick={handlePost} disabled={posting || !description.trim()} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', color: description.trim() ? '#F7F2E9' : '#94876F', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
-          {posting ? <Loader2 size={14} className="animate-spin" style={{ margin: '0 auto' }} /> : t('communityBoardPost')}
+          <button onClick={handlePost} disabled={posting || !description.trim()} aria-busy={posting} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', color: description.trim() ? '#F7F2E9' : '#755942', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
+          {posting ? <span className="flex items-center justify-center gap-2"><Loader2 size={14} className="animate-spin" />{copyCommunity('Posting…', lang)}</span> : tr('communityBoardPost')}
         </button>
       </div>
     </div>
@@ -435,12 +474,12 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
 }
 
 function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myUid: string; onOpen: (id: string) => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   if (threads.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityMessagesEmpty')}</p>
+        <MessageCircle size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{copyCommunity(t('communityMessagesEmpty'), lang)}</p>
       </div>
     );
   }
@@ -462,9 +501,9 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="flex items-baseline justify-between gap-2">
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{otherName}</span>
-                <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', flexShrink: 0 }}>{timeAgo(th.last_message_at)}</span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#755942', flexShrink: 0 }}>{timeAgo(th.last_message_at, lang)}</span>
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040' }}>{th.last_message || 'Say hello…'}</div>
+              <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040' }}>{th.last_message || copyCommunity('Say hello…', lang)}</div>
             </div>
           </button>
         );

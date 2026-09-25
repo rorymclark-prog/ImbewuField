@@ -15,7 +15,10 @@ test('the money book puts harvest logging one tap from the harvested-kilogram fi
   const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
   const homeSource = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
 
-  assert.match(recordsSource, /<Sprout size=\{15\} \/>Log harvest/, 'the desktop action must say what it records');
+  // A literal JSX text check failed once the same action acquired an isiZulu label. The rule is
+  // that the one-tap control still names the harvest action in either app language.
+  assert.match(recordsSource, /<button type="button" onClick=\{onLogHarvest\}[\s\S]*?<Sprout size=\{15\} \/>\{recordsText\(lang, 'Log harvest', '[^']+'\)\}/,
+    'the desktop action must still say what it records in both app languages');
   assert.match(recordsSource, /onLogHarvest=\{\(\) => setTab\('picked'\)\}/,
     'the desktop sheet\'s Log harvest control must open the Picked page of the same book');
   assert.match(homeSource, /href: '\/records'.*homeQuickMyRecords/, 'the home My Records action must use the same records screen');

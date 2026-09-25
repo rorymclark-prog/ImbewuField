@@ -122,9 +122,19 @@ export default function ContactPage() {
       if (isLive && user && !isSampleMode()) {
         const fb = getFirebase();
         if (!fb) throw new Error('Firebase not initialised');
+        // The profile may still be loading on a fast send — resolve it now rather than stamping
+        // org_id null and having the rules (org_id must equal the sender's own org) refuse it.
+        const prof = profile ?? (await getMyProfile());
+        if (!prof?.org_id && recipient !== 'support') {
+          setError('Messaging your mentor or organisation needs a programme link on your account. You can still contact ImbewuField Support.');
+          return;
+        }
         await addDoc(collection(fb.db, 'contact_messages'), {
           from_uid: user.uid,
-          from_name: profile?.full_name ?? user.displayName ?? user.email,
+          from_name: prof?.full_name ?? user.displayName ?? user.email,
+          // The org whose inbox this message belongs in — firestore.rules scopes the mentor and
+          // organisation buckets by this field, and requires it to equal the sender's own org.
+          org_id: prof?.org_id ?? null,
           recipient,
           subject: subject.trim() || '(no subject)',
           body: body.trim(),
@@ -166,7 +176,7 @@ export default function ContactPage() {
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="contact:overview" label="Learn" />
-        <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>Contact</span>
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: '#20190F' }}>Contact</h1>
       </header>
 
       {/* Content */}
@@ -246,7 +256,7 @@ export default function ContactPage() {
                             <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
                               {r.replied_by_name ?? 'Your mentor'}
                             </span>
-                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#8C7A62' }}>
+                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#755942' }}>
                               {timeAgo(r.replied_at)}
                             </span>
                           </div>
@@ -257,15 +267,15 @@ export default function ContactPage() {
                           )}
                         </div>
                         {expandedReply === r.id
-                          ? <ChevronUp size={13} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />
-                          : <ChevronDown size={13} style={{ color: '#8C7A62', flexShrink: 0, marginTop: 2 }} />}
+                          ? <ChevronUp size={13} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />
+                          : <ChevronDown size={13} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />}
                       </button>
                       {expandedReply === r.id && (
                         <div className={`px-4 pb-4 pt-1 ${motion.replyBody}`} style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
                           <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: '#20190F' }}>
                             {r.reply_body}
                           </p>
-                          <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', marginTop: 10, textTransform: 'capitalize' }}>
+                          <div className="font-sans" style={{ fontSize: 11, color: '#755942', marginTop: 10, textTransform: 'capitalize' }}>
                             Via {r.recipient_label}
                           </div>
                         </div>
@@ -280,7 +290,7 @@ export default function ContactPage() {
             <div style={{ marginBottom: 24 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 10, color: '#C07A1E', letterSpacing: '0.12em', marginBottom: 4 }}
+                style={{ fontSize: 10, color: '#7A4408', letterSpacing: '0.12em', marginBottom: 4 }}
               >
                 Get in touch
               </div>
@@ -347,21 +357,29 @@ export default function ContactPage() {
 
               {/* Recipient selector */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
                   Send to
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {RECIPIENT_OPTIONS.map(({ value, label, sub, Icon }) => (
+                  {RECIPIENT_OPTIONS.map(({ value, label, sub, Icon }) => {
+                    // An account with no programme link has no mentor and no organisation to
+                    // deliver to — lock those two honestly instead of accepting a message that
+                    // no inbox on the platform would ever show. (profile === null means still
+                    // loading; only lock once we know the org is genuinely absent.)
+                    const orgLocked = value !== 'support' && isLive && !isSampleMode()
+                      && profile !== null && !profile.org_id;
+                    return (
                     <button
                       key={value}
                       type="button"
-                      onClick={() => setRecipient(value)}
+                      onClick={() => { if (!orgLocked) setRecipient(value); }}
                       aria-pressed={recipient === value}
                       className={`flex items-center gap-3 rounded-xl p-3 text-left ${motion.recipient}`}
                       style={{
                         background: recipient === value ? 'rgba(31,77,43,0.08)' : '#FFFEFA',
                         border: `1px solid ${recipient === value ? 'rgba(31,77,43,0.35)' : '#E2D8C4'}`,
-                        cursor: 'pointer',
+                        cursor: orgLocked ? 'default' : 'pointer',
+                        opacity: orgLocked ? 0.55 : 1,
                       }}
                     >
                       <div className={motion.recipientIcon} style={{
@@ -387,14 +405,15 @@ export default function ContactPage() {
                         )}
                       </div>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
               <div className={workspace.contactCompose}>
               {/* Subject */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
                   Subject (optional)
                 </div>
                 <input
@@ -412,7 +431,7 @@ export default function ContactPage() {
 
               {/* Message body */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
                   Message
                 </div>
                 <textarea
@@ -434,7 +453,7 @@ export default function ContactPage() {
               )}
 
               {!isLive && (
-                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: '#8C7A62', background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: '#755942', background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                   Backend not connected — messages will be logged locally only. Connect Firebase to enable delivery.
                 </p>
               )}
@@ -445,7 +464,7 @@ export default function ContactPage() {
                 className={`flex items-center justify-center gap-2 font-display font-semibold rounded-xl ${motion.send}`}
                 style={{
                   background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)',
-                  color: body.trim() ? '#F7F2E9' : '#94876F',
+                  color: body.trim() ? '#F7F2E9' : '#755942',
                   border: 'none', cursor: body.trim() ? 'pointer' : 'default',
                   padding: '13px 20px', fontSize: 15,
                   transition: 'background 0.15s',

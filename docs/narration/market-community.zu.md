@@ -1,5 +1,3 @@
-REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 7, 8, 10, 11, 12, 13, 15, 17, 18, 20. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
-
 **Ikhasi 1 — Ingadi Yezimakethe Nomphakathi (Slide 1 — Market Gardening & Community)**
 
 
@@ -13,13 +11,11 @@ Inhloso yipulazi elondla umuzi futhi lisebenze njengomnotho omncane ocacile.
 
 **Ikhasi 2 — Kungani Lokhu Kubalulekile (Slide 2 — Why This Matters)**
 
-Iningi labalimi abancane lithengisa ngaphansi kwenani lalokho okukhiqizwa amapulazi abo ngoba abakubhali phansi.
+Isivuno singondla umuzi, sithengiswe, sabelwane ngaso noma silahleke.
 
-Utamatisi, iqanda, noma inyanda ye-morogo ingaya emndenini, kumthengi, kumakhelwane, noma ku-compost.
+Ukubhala lezi zindlela esisetshenziswe ngazo kukusiza ubone ukuthi ipulazi likhiqiza ini nokuthi yini efinyelela kubathengi.
 
-Uma ubhala phansi konke, uyabona ukuthi umhlaba nomsebenzi wakho kwenzani ngempela.
-
-Lesi sithombe esicacile sikusiza ukuvikela ukudla komuzi nokwenza izinqumo ezingcono zebhizinisi.
+Sebenzisa lolo lwazi ukuze uvikele ukudla komuzi futhi wenze izinqumo ezingcono zebhizinisi.
 
 ---
 
@@ -69,25 +65,21 @@ Irekhodi libuye libonise izinyanga lapho umuzi ugcina uthenga khona ukudla.
 
 **Ikhasi 7 — Thola Izindleko Zangempela (Slide 7 — Find the True Cost)**
 
-Ngaphambi kokubeka inani lokuthengisa, hlanganisa zonke izindleko zangempela.
+Ngaphambi kokubeka inani lokuthengisa, qopha izindleko zokukhiqiza, ukupakisha nokuthengisa, kuhlanganise nomsebenzi nezokuthutha.
 
-Faka imbewu, amanzi, i-compost, kanye nenani elifanele ngehora lomsebenzi wakho.
+Nasi isibonelo sokufundisa, asiyona inani lentengo yamanje emakethe: utamatisi ubiza u-R18 ngekhilogremu ukuwukhiqiza, kodwa uthengiswa ngo-R15 ngekhilogremu. Lelo nani alizikhokhi izindleko ezishiwo.
 
-Uma utamatisi ubiza u-R18/kg ukuwukhiqiza, ukuwuthengisa ngo-R15/kg kulahlekelwa imali kuwo wonke amakhilogremu.
-
-Nyusa inani libe okungenani u-R18/kg, yehlisa izindleko, noma uhambise umsebenzi ezitshalweni ezingcono.
+Buyekeza inani lokuthengisa, izindleko nokuthi uzotshala ini ngokulandelayo. Hlola ukuthi abathengi bazothengani ngempela; inani eliphakeme elicelwayo aliqinisekisi ukuthi umkhiqizo uzothengiswa.
 
 ---
 
-**Ikhasi 8 — Tshala Ukuvala Igebe Lokudla (Slide 8 — Plant for the Food Gap)**
+**Ikhasi 8 — Hlela Ngesikhathi Sokushoda Kokudla (Slide 8 — Plan for the Food Gap)**
 
-Irekhodi lingakhombisa igebe lokudla ngaphambi kokuba kuqale isizini elandelayo.
+Sebenzisa irekhodi lakho ukuthola ukuthi ukudla komuzi kushoda nini.
 
-Uma imifino ishoda ngoJuni noJulayi, hlela izitshalo zasebusika ezimelana namakhaza ngoMashi kuya ku-Ephreli.
+Khetha izitshalo ezifanele indawo yangakini, uhlele uhlehle usuka esikhathini sokuvuna osidingayo. Hlola izimo zokutshala nesikhathi esilindelekile kuze kuvunwe.
 
-Lokhu akukhona ukuqagela. Izinsuku zivela kwirekhodi lepulazi lakho.
-
-Ukutshala ukuvala leli gebe kusiza umuzi udle okuningi kokudla kwawo.
+Usuku olusebenza kwelinye ipulazi lungase lungasebenzi lapha. Yiba nohlelo lwesibili uma imvula, amanzi noma izitshalo kungahambi kahle.
 
 ---
 
@@ -101,57 +93,49 @@ Imicibisholo ikhombisa indlela ngayinye.
 
 **Ikhasi 10 — Yazi Umthengi Wakho (Slide 10 — Know Your Customer)**
 
-Yazi umthengi wakho ngaphambi kokuthengisa.
+Buza ukuthi umthengi udingani: umkhiqizo, inani, ikhwalithi, ukulethwa nosuku lokukhokha.
 
-Imakethe esemthethweni yabalimi ingakhokha inani eliphezulu, kodwa idinga ukubhalisa nokuhlinzeka njalo ngeviki.
+Qhathanisa izimali zemakethe, ezokuthutha, ukupakisha nomkhiqizo ongathengiswanga kanye nenani lokuthengisa.
 
-Imakethe engakahleleki noma isitolo erenki yamatekisi ikhokha kancane, kodwa ayifuni lutho kuwe ngokubuyisela.
-
-Isikole noma umtholampilo ungakhokha ngaphansi kwenani lasesitolo, kodwa unikeze i-oda elizinzile.
+Hlola imithetho yemakethe nezimfuneko zendawo zokuhweba nokudla. Ukuthi itafula lokuthengisa alihlelekile akusho ngokuzenzakalelayo ukuthi alinayo imithetho noma izindleko.
 
 ---
 
-**Ikhasi 11 — Gcina Okuningi Ngokuthengisa Ngqo (Slide 11 — Keep More Through Direct Selling)**
+**Ikhasi 11 — Bala Umsebenzi Wokuthengisa Ngqo (Slide 11 — Count the Work of Direct Selling)**
 
-Ukuthengisa ngqo kungagcina inani eligcwele likuwe.
+Ukuthengisa ngqo kungagcina ingxenye enkulu yenani lokuthengisa kumlimi, kodwa kudinga nesikhathi, ukupakisha, ukuthutha nokunakekela amakhasimende.
 
-Ukuthengisa umuzi nomuzi, i-WhatsApp order group, nokuletha njalo ngeviki kususa umuntu ophakathi.
+I-box scheme iletha izinhlobo ezivamile zemikhiqizo kumakhasimende okuvunyelwene nawo.
 
-I-box scheme isebenza ngendlela ehlukile: amakhasimende abhalisela ibhokisi lemifino elijwayelekile.
-
-Lokhu kuzibophezela kukunikeza imali engenayo ebikezelwayo futhi kukusize uhlele ukukhiqiza ngokwesidingo sangempela.
+Vumelanani ngokuqukethwe kwebhokisi, inani, ukukhokha nokuthi kuzokwenzekani uma isivuno sishoda. Ama-oda avamile asiza ukuhlela kuphela uma amakhasimende nabalimi bekwazi ukugcina isivumelwano.
 
 ---
 
-**Ikhasi 12 — Hlela Ngamakhasimende E-Box Scheme (Slide 12 — Plan Around Box Customers)**
+**Ikhasi 12 — Hlela Ngama-oda Angempela (Slide 12 — Plan Around Real Orders)**
 
-I-box scheme ingasebenzela ingadi engama-200 kuya kuma-500m².
+Qala ngalokho ongakuhlinzeka ngokwethembeka kanye nalokho okufunwa amakhasimende.
 
-Amakhasimende e-box scheme ayishumi avamile anganikeza imali engenayo enomthelela njalo ngenyanga.
+Hlola izindleko nezidingo zokudla komuzi ngaphambi kokuthembisa amabhokisi avamile.
 
-Okubalulekile akuyona kuphela inani ngekhilogremu.
-
-Uyazi kusengaphambili lokho amakhasimende akulindele, ngakho utshala ngokwesidingo sangempela, hhayi ngokuthemba ukuthi kuzothengeka.
+Ubukhulu bengadi noma inani lamakhasimende kukodwa akubikezeli imali engenayo. Zama indlela ongakwazi ukuyiphatha bese uqopha imiphumela.
 
 ---
 
 **Ikhasi 13 — Qondanisa Indlela Nokukhiqiza Kwakho (Slide 13 — Match the Channel to Your Supply)**
 
-Uma ukukhiqiza kushintsha isonto nesonto, ungathembisi ibhokisi elinenani elingaguquki.
+Uma ukukhiqiza kushintsha isonto nesonto, gwema ukuthembisa ukulethwa okungaguquki ongeke ukwazi ukukufeza.
 
-Thengisa lokho onakho ngemakethe engakahleleki noma komakhelwane abangafuni ukuzibophezela okungaguquki.
+Nikeza ngomkhiqizo osele onawo bese nivumelana ngemigomo ecacile namakhasimende.
 
-Khetha inani elikhokhela izindleko zangempela zokukhiqiza.
-
-Ukwethembana okwakhiwa ukuvakashelwa epulazini nedumela eliqotho kubaluleke kakhulu kubalimi abaningi kunesitifiketi se-organic esibizayo.
+Chaza ngokwethembeka izindlela okhulisa ngazo izitshalo. Ngaphambi kokufaka ilebula, hlola isitifiketi noma isimangalo esidingwa umthengi.
 
 ---
 
-**Ikhasi 14 — Buka: Omakhelwane Basqinisa Kanjani Isivuno (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**
+**Ikhasi 14 — Buka: Ukubambisana Komakhelwane (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**
 
 Ipulazi elilodwa lingakhiqiza ukudla.
 
-Iqembu lingabelana ngembewu, amathuluzi, amakhono, nezindleko zokuthutha.
+Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.
 
 Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla.
 
@@ -159,13 +143,13 @@ Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla.
 
 **Ikhasi 15 — Gcinani Imbewu Ndawonye (Slide 15 — Save Seed Together)**
 
-Ukushintshisana imbewu phakathi komakhelwane abahlanu kungaguqula ukuhlukahluka kwembewu yemizi emihlanu kube okwemizi engamashumi amabili nanhlanu.
+Omakhelwane bangabelana ngezinhlobo ezahlukene zezitshalo nangomsebenzi wokugcina imbewu.
 
-Uma abalimi abahlanu begcina izinhlobo ezintathu zikatamatisi bodwa, noma ngamunye agcine izinhlobo ezimbili zeqembu, ukugcina ndawonye kunikeza imbewu engcono.
+Bhala isitshalo, uhlobo lwaso, lapho imbewu ivela khona nosuku eyabuthwa ngalo. Hlela ukuhlukanisa impova, ukukhetha izitshalo zembewu, ukomisa nokugcina ngokwendlela efanele isitshalo ngasinye.
 
-Ukugxila ezinhlotsheni ezimbalwa kunikeza isikhathi esengeziwe sokuzihlukanisa, ukukhetha, nokugcina imbewu.
+Ukwabelana akukhulisi ukuhlukahluka ngokuzenzakalelayo futhi akuqinisekisi ikhwalithi engcono. Hlola ukuthi imbewu ingeyaluphi uhlobo nokuthi iyahluma yini ngaphambi kokuthembela kuyo.
 
-Iqembu lonke lithola imbewu enamandla ngaphandle kokuba wonke umuntu enze yonke imisebenzi yedwa.
+Ngaphambi kokushintshisana ngembewu, hlola ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini.
 
 ---
 
@@ -179,27 +163,23 @@ Ukusetshenziswa ngokuhlanganyela kusabalalisa inzuzo yethuluzi futhi kusize ipul
 
 ---
 
-**Ikhasi 17 — Thengisa Eduze Ukuze Unciphise Ukulahleka (Slide 17 — Sell Locally to Reduce Loss)**
+**Ikhasi 17 — Nciphisa Ukulahleka Phakathi Kokuvuna Nokuthengisa (Slide 17 — Reduce Loss Between Harvest and Sale)**
 
-Cishe ingxenye yesithathu yezithelo nemifino emisha ekhiqizwa abalimi abancane iyalahleka phakathi kokuvuna nokuthengisa.
+Phatha umkhiqizo ngobumnene futhi uwugcine emthunzini ofanele, upakishwe futhi ugcinwe kahle ngesikhathi sokulethwa.
 
-Ukuthutha okubi, ukupakisha, nokubambezeleka ekugcineni kubangela okuningi kwalokhu kulahleka.
+Umthengi oseduze anganciphisa uhambo, kodwa ukulahleka komkhiqizo nezindleko zokuthengisa kusadinga ukubalwa.
 
-Ukuthengisa endaweni yokuhamba ngezinyawo kususa okuningi kwakho. Uma imakethe esemthethweni ikude ngamakhilomitha angama-60, ukuthutha amakhilogremu angama-50 kabhontshisi othengiswa ngo-R8/kg kungabiza u-R150.
-
-I-WhatsApp group noma imakethe yomphakathi isusa lezo zindleko futhi ingafinyelela ku-R10/kg.
+Qhathanisa imali engenile ngemva kwezimali ezikhokhiwe, ezokuthutha nokonakala komkhiqizo endleleni ngayinye. Ungacabangi ukuthi umthengi oseduze uhlala enikeza inzuzo engcono.
 
 ---
 
-**Ikhasi 18 — Yabelanani Ngamakhono Kanye Nezinto (Slide 18 — Share Skills as Well as Things)**
+**Ikhasi 18 — Yabelanani Ngamakhono Niphinde Nihlole Imiphumela (Slide 18 — Share Skills and Check Results)**
 
-Umlimi owazi kahle i-grafting noma olawule isifo se-fungal ehlobo elinomswakama eKZN angafundisa omakhelwane abayishumi.
+Omakhelwane bangakhombisa amakhono awusizo futhi baqhathanise okwenzeke emapulazini abo.
 
-Leso sifundo singashintsha amapulazi ayishumi, hhayi elilodwa kuphela.
+Qopha indlela esetshenzisiwe, izimo nomphumela ukuze abanye bakwazi ukwahlulela ukuthi leyo ndlela ingase iwafanele yini umhlaba wabo.
 
-Ukushintshisana ngamakhono njalo ngenyanga kwakha ulwazi oluhlala isikhathi eside kunokubonana nochwepheshe kanye kuphela.
-
-Bhala lokho okufundayo, bese ukudlulisela kwabanye ukuze ulwazi luhlale emphakathini.
+Funa iseluleko sochwepheshe abafanele ngezifo ezingajwayelekile noma izinkinga zobuchwepheshe. Ulwazi lomphakathi lungasebenza kanye nosizo lochwepheshe.
 
 ---
 
@@ -217,45 +197,8 @@ Ekupheleni kwesizini eyodwa, thola isivuno esibuyisa kahle kanye nenyanga lapho 
 
 **Ikhasi 20 — Isenzo Sasepulazini: Sebenzisa Irekhodi (Slide 20 — Field Action: Use the Record)**
 
-Khetha isinqumo esisodwa sangempela sokuthengisa epulazini lakho.
+Khetha isinqumo esisodwa sangempela esivela kurekhodi lepulazi lakho.
 
-Uma umkhiqizo ubiza kakhulu ukuwukhiqiza kunenani othengiswa ngalo, nyusa inani, yehlisa izindleko, noma uhambise umsebenzi esitshalweni esingcono.
+Qhathanisa izindleko nembuyiselo yesitshalo noma yendlela yokuthengisa, noma uhlelele isikhathi sokushoda kokudla komuzi usebenzisa izimo zokutshala zendawo.
 
-Uma kuvela igebe lokudla ngoJuni noJulayi, hlela izitshalo zasebusika ezimelana namakhaza ngoMashi kuya ku-Ephreli.
-
-Bese ukhuluma nomakhelwane ngesivuno esisodwa esithengiswa endaweni, ukushintshisana imbewu, ukwabelana ithuluzi, noma ukushintshisana ikhono.
-
-## Notes for the Human Reviewer
-
-**This is a draft translation only. It must be read by a first-language isiZulu speaker who
-farms before this script goes anywhere near a learner.** Nothing here has been reviewed by a
-person.
-
-It was written to match `docs/narration/market-community.en.md` slide for slide — 20 isiZulu blocks
-against 20 English ones — so the deck and the narration cannot drift apart.
-
-**The instruction was to BORROW, never to coin.** An earlier isiZulu draft in this course invented
-22 agronomic terms and is still blocked from recording because of it, so where no everyday isiZulu
-word exists the English word was kept and carried on an isiZulu noun-class prefix instead. Those
-borrowings are listed below — they are the first thing to check, because a borrowing that a farmer
-would not actually say out loud is the same failure as a coined term:
-
-- `ama-dozen`
-- `i-compost`
-- `i-grafting`
-- `i-grain`
-- `i-oda`
-- `i-WhatsApp`
-- `ku-compost`
-- `ku-Ephreli`
-
-Please also confirm:
-
-- The register is ordinary spoken farming isiZulu — the words a KwaZulu-Natal farmer uses aloud,
-  not written or academic isiZulu.
-- Every number and every plant or animal name matches the English script. Nothing was to be added,
-  and no species may be named that the English does not name.
-- Nothing addresses a room. The learner is alone on a phone; there is no group and no facilitator.
-
-When the review is done, correct the script and delete this appendix. Deleting the appendix without
-doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
+Bese nivumelana nomakhelwane ngesinyathelo esisodwa esisebenzayo: ukushintshisana ngembewu, ukwabelana ngethuluzi, ukuletha umkhiqizo ndawonye noma ukufunda ikhono. Ngaphambi kokushintshisana ngembewu, hlolani ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini. Qophani izibopho zomuntu ngamunye bese nibuyekeza okwenzekile.

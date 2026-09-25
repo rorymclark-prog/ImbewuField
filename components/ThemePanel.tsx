@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
-import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
+import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
 import Link from 'next/link';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
@@ -60,7 +61,13 @@ interface Props {
 export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
   const { lang, setLang, t } = useLanguage();
+  const zu = lang === 'zu';
   const panelRef = useRef<HTMLDivElement>(null);
+  const level = useAppLevel();
+  const LEVELS: { key: AppLevel; label: string; desc: string }[] = [
+    { key: 'simple', label: zu ? 'Okulula' : 'Simple', desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : 'The main jobs only. Best when you are starting out.' },
+    { key: 'full', label: zu ? 'Wonke amathuluzi' : 'All tools', desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : 'Everything, including every planning and money tool.' },
+  ];
 
   // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
   const [guidedOn, setGuidedOn] = useState(true);
@@ -129,7 +136,7 @@ export default function ThemePanel({ open, onClose }: Props) {
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Appearance settings"
+        aria-label={zu ? 'Izilungiselelo zokubukeka' : 'Appearance settings'}
         style={{
           position: 'fixed', top: 0, right: 0, bottom: 0,
           width: 'min(340px, 90vw)',
@@ -152,13 +159,13 @@ export default function ThemePanel({ open, onClose }: Props) {
         }}>
           <div>
             <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
-              Settings
+              {zu ? 'Izilungiselelo' : 'Settings'}
             </div>
-            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Language, text size &amp; theme</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{zu ? 'Ulimi, usayizi wombhalo nombala wohlelo' : 'Language, text size & theme'}</div>
           </div>
           <button
             onClick={onClose}
-            aria-label="Close settings"
+            aria-label={zu ? 'Vala izilungiselelo' : 'Close settings'}
             style={{
               /* 44x44: the touch-target floor a fingertip needs. Was 28x28 — small enough to
                  mistap on the panel that exists to help someone with exactly that problem. */
@@ -174,13 +181,6 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
-          <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label="Tour and support">
-            <Link href="/tour" onClick={onClose}>Tour &amp; samples · 15 minutes</Link>
-            <Link href="/samples" onClick={onClose}>Choose a workspace</Link>
-            <Link href="/samples/gardens" onClick={onClose}>Browse 18 gardens</Link>
-            <Link href="/feedback" onClick={onClose}>Report a bug / request a feature</Link>
-          </section>
-
           {/* LANGUAGE — first, because a panel she cannot read is not a panel.
               This is the only working language control on a phone. The onboarding screen ends
               with "you can change this later" (pickLangSub), and until now that was not true:
@@ -220,12 +220,57 @@ export default function ThemePanel({ open, onClose }: Props) {
                 );
               })}
             </div>
+            {lang === 'ts' && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+                <span lang="en">/ Unreviewed Xitsonga draft.</span>
+              </p>
+            )}
+          </div>
+
+          {/* HOW MUCH TO SHOW — Simple / All tools (lib/app-level.ts). Straight after language: it is
+              the other thing that decides whether the app is usable for someone new to phones.
+              Farmers start on Simple; this is where they, or a mentor at training, change it. */}
+          <div style={{ marginBottom: 28 }}>
+            <div id="app-level-heading" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              {zu ? 'Kuboniswe okungakanani' : 'How much to show'}
+            </div>
+            <div role="radiogroup" aria-labelledby="app-level-heading" style={{ display: 'grid', gap: 8 }}>
+              {LEVELS.map((l) => {
+                const active = level === l.key;
+                return (
+                  <button
+                    key={l.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => setAppLevel(l.key)}
+                    style={{
+                      minHeight: 64, padding: '12px 14px', borderRadius: 10, textAlign: 'left',
+                      border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
+                      background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
+                      cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 3,
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, width: '100%' }}>
+                      <span style={{ fontSize: 15, fontWeight: 600, fontFamily: 'var(--font-display)', color: active ? 'var(--emerald)' : 'var(--text-primary)' }}>{l.label}</span>
+                      {active && <Check size={15} style={{ flexShrink: 0, color: 'var(--emerald)' }} />}
+                    </span>
+                    <span style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.4 }}>{l.desc}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
+              {zu ? 'Ungakushintsha noma nini.' : 'You can change this any time.'}
+            </div>
           </div>
 
           {/* Text size section — first, since it's the accessibility lever */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              Text size
+              {zu ? 'Usayizi wombhalo' : 'Text size'}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
               {TEXT_SIZES.map((s) => {
@@ -244,14 +289,14 @@ export default function ThemePanel({ open, onClose }: Props) {
                   >
                     <span style={{ fontSize: 12 + (s.value - 1) * 30, fontWeight: 700, color: active ? 'var(--emerald)' : 'var(--text-secondary)', lineHeight: 1 }}>A</span>
                     <span style={{ fontSize: 12, fontWeight: 500, color: active ? 'var(--emerald)' : 'var(--text-secondary)', fontFamily: 'var(--font-display)' }}>
-                      {s.label}
+                      {zu ? (s.value === 1 ? 'Ovamile' : s.value === 1.15 ? 'Omkhulu' : 'Omkhudlwana') : s.label}
                     </span>
                   </button>
                 );
               })}
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              Makes the whole app bigger — text, buttons and menus.
+              {zu ? 'Kukhulisa umbhalo, izinkinobho namamenyu kulo lonke uhlelo.' : 'Makes the whole app bigger — text, buttons and menus.'}
             </div>
           </div>
 
@@ -259,19 +304,19 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Guidance (Lima) section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              Guidance
+              {zu ? 'Ukuholwa' : 'Guidance'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {/* Guide me */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
                 <Footprints size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>Guide me</div>
-                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>Show the next-step guide on your site report.</div>
+                  <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'Ngihole' : 'Guide me'}</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Bonisa izinyathelo ezilandelayo embikweni wendawo yakho.' : 'Show the next-step guide on your site report.'}</div>
                 </div>
                 <PillToggle
                   on={guidedOn}
-                  label="Guide me"
+                  label={zu ? 'Ngihole' : 'Guide me'}
                   onClick={() => {
                     if (guidedOn) setGuidedState({ enabled: false });
                     else setGuidedState({ enabled: true, retired: false, dismissals: 0 });
@@ -283,10 +328,10 @@ export default function ThemePanel({ open, onClose }: Props) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
                   <Volume2 size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>Lima reads aloud</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>Speak tips out loud when a voice is available.</div>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'ULima ufunda ngezwi' : 'Lima reads aloud'}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Funda amathiphu ngezwi uma izwi litholakala.' : 'Speak tips out loud when a voice is available.'}</div>
                   </div>
-                  <PillToggle on={voiceOn} label="Lima reads aloud" onClick={() => setTtsMuted(voiceOn)} />
+                  <PillToggle on={voiceOn} label={zu ? 'ULima ufunda ngezwi' : 'Lima reads aloud'} onClick={() => setTtsMuted(voiceOn)} />
                 </div>
               )}
             </div>
@@ -295,7 +340,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Theme section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              Colour theme
+              {zu ? 'Umbala wohlelo' : 'Colour theme'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {THEMES.map((t) => {
@@ -326,9 +371,9 @@ export default function ThemePanel({ open, onClose }: Props) {
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
-                        {t.label}
+                        {zu ? (t.key === 'earth' ? 'Umhlaba' : 'I-Slate') : t.label}
                       </div>
-                      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1 }}>{t.desc}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1 }}>{zu ? (t.key === 'earth' ? 'Imibala efudumele yezolimo' : 'Imibala ehlanzekile yesimanje') : t.desc}</div>
                     </div>
                     {active && (
                       <div style={{
@@ -346,7 +391,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Mode section */}
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              Display mode
+              {zu ? 'Indlela yokubonisa' : 'Display mode'}
             </div>
             <div style={{
               display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8,
@@ -369,38 +414,32 @@ export default function ThemePanel({ open, onClose }: Props) {
                   >
                     <m.Icon size={20} style={{ color: active ? 'var(--emerald)' : 'var(--text-muted)' }} />
                     <span style={{ fontSize: 13, fontWeight: 500, color: active ? 'var(--emerald)' : 'var(--text-secondary)', fontFamily: 'var(--font-display)' }}>
-                      {m.label}
+                      {zu ? (m.key === 'light' ? 'Ukukhanya' : m.key === 'dark' ? 'Ubumnyama' : 'Okuzenzakalelayo') : m.label}
                     </span>
                   </button>
                 );
               })}
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              Auto follows your device setting.
+              {zu ? 'Okuzenzakalelayo kulandela izilungiselelo zedivayisi yakho.' : 'Auto follows your device setting.'}
             </div>
           </div>
 
-          {/* Data sources */}
-          <div style={{ marginTop: 28 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              Data sources
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              {[
-                { Icon: Satellite, label: 'NASA 30yr climate' },
-                { Icon: Sprout,    label: 'ISRIC soil data' },
-                { Icon: Mountain,  label: 'Contours + 3D terrain' },
-                { Icon: Sparkles,  label: 'Claude AI insights' },
-              ].map((s) => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                  <s.Icon size={15} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', lineHeight: 1.2 }}>{s.label}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              South Africa · 9 biomes · all free APIs.
-            </div>
+          {/* TOUR AND SUPPORT LINKS LIVE DOWN HERE. They used to open the panel, which pushed "How much
+              to show" (Simple / All tools) below the fold on a phone — Rory went looking for the switch
+              and could not find it. Settings now opens on the two choices that decide whether the app
+              is usable at all: language, then how much to show. */}
+          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
+            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
+            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
+            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
+            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
+          </section>
+
+          {/* CLAUDE.md: no data-vendor badges in the UI — this used to name each data provider by
+              brand. One unbranded line instead of a vendor list. */}
+          <div style={{ marginTop: 28, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            {zu ? 'Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.' : 'Farm guidance is built from South African climate, soil and terrain data.'}
           </div>
         </div>
 
@@ -413,7 +452,7 @@ export default function ThemePanel({ open, onClose }: Props) {
         }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', flexShrink: 0 }} />
           <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-            ImbewuField · saved automatically
+            {zu ? 'ImbewuField · kulondolozwa ngokuzenzakalelayo' : 'ImbewuField · saved automatically'}
           </span>
         </div>
       </div>

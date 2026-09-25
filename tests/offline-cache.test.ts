@@ -115,6 +115,42 @@ test('the paid-for course cache is stable across deploys and explicitly spared f
   assert.doesNotMatch(source, /COURSE_CACHE\s*=\s*['"][^'"]*['"]\s*\+\s*(?:CACHE_VERSION|BUILD_ID)/);
 });
 
+test('corrected landscape speech retires only stale saved recordings and never refetches them', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const functionSource = source.match(/async function migrateLandscapeSiteMapNarration\(\) \{[\s\S]*?\n\}/)?.[0];
+  assert.ok(functionSource, 'the deployed worker must run the site-map narration migration');
+  assert.match(source, /\.then\(migrateLandscapeSiteMapNarration\)/);
+
+  const old = [
+    '/course-audio/reading-landscape/en/slide-16.mp3',
+    '/course-audio/reading-landscape/en/slide-18.mp3',
+    '/course-audio/reading-landscape/en/full.mp3',
+  ];
+  const kept = [
+    '/course-audio/reading-landscape/en/slide-17.mp3',
+    '/course-decks/reading-landscape/en/slide-17.jpg',
+    '/course-audio/soil-health/en/slide-16.mp3',
+  ];
+  const rows = new Map([...old, ...kept].map(path => [`https://example.test${path}`, new Response(path)]));
+  const deleted: string[] = [];
+  const cache = {
+    match: async (path: string) => rows.get(`https://example.test${path}`),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => { deleted.push(new URL(request.url).pathname); return rows.delete(request.url); },
+    put: async (path: string, response: Response) => { rows.set(`https://example.test${path}`, response); },
+  };
+  const migrate = new Function('caches', 'COURSE_CACHE', 'Response', `${functionSource}; return migrateLandscapeSiteMapNarration;`)(
+    { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return cache; } }, COURSE_CACHE, Response,
+  ) as () => Promise<void>;
+
+  await migrate();
+  assert.deepEqual(deleted.sort(), old.sort());
+  for (const path of old) assert.equal(rows.has(`https://example.test${path}`), false);
+  for (const path of kept) assert.equal(rows.has(`https://example.test${path}`), true);
+  await migrate();
+  assert.equal(deleted.length, old.length, 'an old client must not repeatedly lose its other downloads');
+});
+
 test('the app shell a farmer opens with no signal is actually precached', () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const list = source.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)?.[1] ?? '';
@@ -427,4 +463,92 @@ test('the soil-cover still upgrade removes only its replaced images, including c
 
   await run(caches, COURSE_CACHE, Response);
   assert.equal(deleteCalls, 4, 'the durable marker makes a later deploy leave a new chosen download alone');
+});
+
+test('the Soil L3 comparison still migration clears only its old English slide 14, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilL3ComparisonStill\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'the comparison still migration must run before the new worker claims clients');
+  assert.match(source, /then\(migrateSoilL3ComparisonStill\)\.then/);
+  const marker = '/course-decks/soil-health/en/.l3-slide14-comparison-20260923';
+  const old = [
+    '/course-decks/soil-health/en/slide-14.jpg',
+    '/course-decks/soil-health/en/slide-14.jpg?revision=old',
+  ];
+  const kept = [
+    '/course-decks/soil-health/en/slide-13.jpg',
+    '/course-decks/soil-health/en/slide-15.jpg',
+    '/course-decks/soil-health/zu/slide-14.jpg',
+    '/course-audio/soil-health/en/slide-14.mp3',
+  ];
+  const rows = new Map<string, Response>([...old, ...kept].map(path => [path, new Response(path)]));
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return fakeCache; } };
+  await run(caches, COURSE_CACHE, Response);
+  for (const path of old) assert.equal(rows.has(path), false, `${path} must be replaced only on a learner-chosen download`);
+  for (const path of kept) assert.equal(rows.has(path), true, `${path} must remain saved offline`);
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, old.length);
+
+  rows.set('/course-decks/soil-health/en/slide-14.jpg', new Response('new chosen still'));
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(await rows.get('/course-decks/soil-health/en/slide-14.jpg')!.text(), 'new chosen still');
+  assert.equal(deleteCalls, old.length, 'the migration marker must protect a newly downloaded still on later deploys');
+});
+
+test('the Vegetables L2 still migration clears only English slides 9 and 11, once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateVegetablesL2ReadableStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body, 'the L2 still migration must run before the new worker claims clients');
+  assert.match(source, /then\(migrateVegetablesL2ReadableStills\)\.then/);
+  const marker = '/course-decks/vegetables-staples/en/.l2-readable-stills-20260923';
+  const replaced = [
+    '/course-decks/vegetables-staples/en/slide-09.jpg',
+    '/course-decks/vegetables-staples/en/slide-09.jpg?revision=old',
+    '/course-decks/vegetables-staples/en/slide-11.jpg',
+    '/course-decks/vegetables-staples/en/slide-11.jpg?revision=old',
+  ];
+  const kept = [
+    '/course-decks/vegetables-staples/en/slide-08.jpg',
+    '/course-decks/vegetables-staples/en/slide-10.jpg',
+    '/course-decks/vegetables-staples/en/slide-12.jpg',
+    '/course-decks/vegetables-staples/zu/slide-09.jpg',
+    '/course-audio/vegetables-staples/en/slide-09.mp3',
+    '/course-audio/vegetables-staples/en/slide-11.mp3',
+  ];
+  const rows = new Map<string, Response>([...replaced, ...kept].map(path => [path, new Response(path)]));
+  let deleteCalls = 0;
+  const fakeCache = {
+    match: async (key: string) => rows.get(key),
+    keys: async () => [...rows.keys()].map(path => new Request('https://example.com' + path)),
+    delete: async (request: Request) => {
+      deleteCalls += 1;
+      const url = new URL(request.url);
+      return rows.delete(url.pathname + url.search);
+    },
+    put: async (key: string, response: Response) => { rows.set(key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  const caches = { open: async (name: string) => { assert.equal(name, COURSE_CACHE); return fakeCache; } };
+  await run(caches, COURSE_CACHE, Response);
+  for (const path of replaced) assert.equal(rows.has(path), false, `${path} must be cleared for an optional learner-chosen replacement`);
+  for (const path of kept) assert.equal(rows.has(path), true, `${path} must remain saved offline`);
+  assert.equal(rows.has(marker), true);
+  assert.equal(deleteCalls, replaced.length);
+
+  rows.set('/course-decks/vegetables-staples/en/slide-09.jpg', new Response('new chosen slide 9'));
+  await run(caches, COURSE_CACHE, Response);
+  assert.equal(await rows.get('/course-decks/vegetables-staples/en/slide-09.jpg')!.text(), 'new chosen slide 9');
+  assert.equal(deleteCalls, replaced.length, 'the marker must leave a later chosen download intact');
 });

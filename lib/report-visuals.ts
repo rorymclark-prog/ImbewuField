@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
@@ -17,7 +18,7 @@ export type ReportChart = {
 export type ReportVisuals = { title: string; subtitle: string; basis: string; overviewTitle?: string; overviewNote?: string; slideHint?: string; metrics: ReportMetric[]; charts: ReportChart[] };
 export const REPORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 export const REPORT_COLOURS = ['#245738', '#24738a', '#af6b24', '#766395', '#52656a'];
-const n = (value: number) => value.toLocaleString('en-ZA', { maximumFractionDigits: 1 }).replace(/\s/g, ' ');
+const n = (value: number) => numberLabel(value, 1).replace(/\s/g, ' ');
 const valid = (value: number) => Number.isFinite(value) && value >= 0;
 
 /** Charts use typed saved quantities, never numbers extracted from generated prose.

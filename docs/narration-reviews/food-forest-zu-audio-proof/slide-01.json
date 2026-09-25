@@ -1,0 +1,173 @@
+{
+  "seconds": 22.752,
+  "bytes": 136512,
+  "audioSha256": "76c8d2369deaec5dae44c8536ee003a218350e8c05bfb56c1df3bbb9cb809656",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Yakha",
+      "offset": 1318330,
+      "duration": 4261250
+    },
+    {
+      "text": "uhlelo",
+      "offset": 6147910,
+      "duration": 5113330
+    },
+    {
+      "text": "lokudla",
+      "offset": 11261250,
+      "duration": 5965830
+    },
+    {
+      "text": "oluphilayo",
+      "offset": 17653330,
+      "duration": 8096660
+    },
+    {
+      "text": "olunezingqimba",
+      "offset": 26034160,
+      "duration": 10511250
+    },
+    {
+      "text": "Khulisa",
+      "offset": 46698750,
+      "duration": 5681660
+    },
+    {
+      "text": "ukudla",
+      "offset": 52806660,
+      "duration": 5255830
+    },
+    {
+      "text": "kusukela",
+      "offset": 58062500,
+      "duration": 6107910
+    },
+    {
+      "text": "ku-canopy",
+      "offset": 64170410,
+      "duration": 6960410
+    },
+    {
+      "text": "ende",
+      "offset": 71556660,
+      "duration": 3267080
+    },
+    {
+      "text": "kuye",
+      "offset": 74965830,
+      "duration": 3267080
+    },
+    {
+      "text": "ezitshalweni",
+      "offset": 78659160,
+      "duration": 7528330
+    },
+    {
+      "text": "zezimpande",
+      "offset": 86187500,
+      "duration": 8806660
+    },
+    {
+      "text": "Sebenzisa",
+      "offset": 105079580,
+      "duration": 6960410
+    },
+    {
+      "text": "indawo",
+      "offset": 112750000,
+      "duration": 5113750
+    },
+    {
+      "text": "eya",
+      "offset": 118147910,
+      "duration": 2698750
+    },
+    {
+      "text": "phezulu",
+      "offset": 120846660,
+      "duration": 6818330
+    },
+    {
+      "text": "ukuphila",
+      "offset": 128517080,
+      "duration": 7244160
+    },
+    {
+      "text": "komhlabathi",
+      "offset": 135761250,
+      "duration": 9232910
+    },
+    {
+      "text": "umthunzi",
+      "offset": 146130830,
+      "duration": 7528330
+    },
+    {
+      "text": "nomswakama",
+      "offset": 153659160,
+      "duration": 7528330
+    },
+    {
+      "text": "ndawonye",
+      "offset": 161187500,
+      "duration": 6818330
+    },
+    {
+      "text": "Funda",
+      "offset": 177948750,
+      "duration": 3835410
+    },
+    {
+      "text": "ukuklama",
+      "offset": 182494160,
+      "duration": 6534160
+    },
+    {
+      "text": "nokusungula",
+      "offset": 189028330,
+      "duration": 8380830
+    },
+    {
+      "text": "i-food",
+      "offset": 197693330,
+      "duration": 3835410
+    },
+    {
+      "text": "forest",
+      "offset": 201670410,
+      "duration": 4971660
+    },
+    {
+      "text": "yepulazi",
+      "offset": 207068330,
+      "duration": 6392080
+    },
+    {
+      "text": "lakho",
+      "offset": 213460410,
+      "duration": 4687500
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "food-forest",
+  "lesson": null,
+  "language": "zu",
+  "slide": 1,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-01.txt",
+  "sourceSha256": "ba3f6727cad24b333b1c99529e78a311c1c604c688a5dfe70481175e3869cd30",
+  "scriptFile": "docs/narration/food-forest.zu.md",
+  "scriptSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "englishSourceFile": "docs/narration/food-forest.en.md",
+  "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T14:09:01.529015+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "revalidatedAt": "2026-09-24T14:09:01.528896+00:00"
+}

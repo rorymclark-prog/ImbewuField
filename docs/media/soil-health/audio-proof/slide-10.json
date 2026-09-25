@@ -1,0 +1,121 @@
+{
+  "seconds": 13.872,
+  "bytes": 83232,
+  "audioSha256": "3f26005a949a897965aa22bd125555a552fab76f5e80c9af9e696a92be362ce6",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Yakha",
+      "offset": 1318330,
+      "duration": 4119160
+    },
+    {
+      "text": "inqwaba",
+      "offset": 6005830,
+      "duration": 5681660
+    },
+    {
+      "text": "ngama-browns",
+      "offset": 11687500,
+      "duration": 7386250
+    },
+    {
+      "text": "omile",
+      "offset": 19642080,
+      "duration": 4971660
+    },
+    {
+      "text": "nama-greens",
+      "offset": 24613750,
+      "duration": 6960410
+    },
+    {
+      "text": "amasha",
+      "offset": 32000000,
+      "duration": 5965830
+    },
+    {
+      "text": "Gcina",
+      "offset": 48261250,
+      "duration": 3409160
+    },
+    {
+      "text": "izingqimba",
+      "offset": 52380830,
+      "duration": 6817910
+    },
+    {
+      "text": "zimanzi",
+      "offset": 59198750,
+      "duration": 6676250
+    },
+    {
+      "text": "kodwa",
+      "offset": 65875000,
+      "duration": 3835410
+    },
+    {
+      "text": "zingacwili",
+      "offset": 69710410,
+      "duration": 8664580
+    },
+    {
+      "text": "ukuze",
+      "offset": 80505830,
+      "duration": 5539580
+    },
+    {
+      "text": "kungene",
+      "offset": 86187500,
+      "duration": 5255830
+    },
+    {
+      "text": "umoya",
+      "offset": 92011250,
+      "duration": 5255830
+    },
+    {
+      "text": "futhi",
+      "offset": 97409160,
+      "duration": 4119160
+    },
+    {
+      "text": "izinto",
+      "offset": 101670410,
+      "duration": 4829580
+    },
+    {
+      "text": "ezibolisa",
+      "offset": 106642080,
+      "duration": 8096660
+    },
+    {
+      "text": "inqwaba",
+      "offset": 115022910,
+      "duration": 5539580
+    },
+    {
+      "text": "zisebenze",
+      "offset": 120562500,
+      "duration": 8522910
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "soil-health",
+  "language": "zu",
+  "slide": 10,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-10.txt",
+  "sourceSha256": "3e380ce7dd66dc28cb8f025408049e9b175b4eb40313dcb91fd18f999410a2c1",
+  "scriptFile": "docs/narration/soil-health.zu.md",
+  "scriptSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+  "englishSourceFile": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "363d6d84d2ed56731b22fa482c0c1037346455b4283e58680bad5d51076dc0c3",
+  "generatedAt": "2026-09-24T18:21:48.465681+00:00",
+  "reviewStatus": "unreviewed-draft; fluent isiZulu and local farming review pending"
+}

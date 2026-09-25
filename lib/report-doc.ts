@@ -2,6 +2,7 @@
 // The 11-section, map-linked report is the product differentiator. This is the
 // durable, typed source of truth for the instant local skeleton built from data
 // already available in the farmer's design.
+import { numberLabel } from '@/lib/format-figures';
 import type { LocationData, SoilData } from '@/lib/types';
 import type {
   DesignLayer,
@@ -303,7 +304,7 @@ export function buildSkeletonReportDoc(args: {
 
   // ── Executive ──
   const opportunities: string[] = [];
-  if (harvestKL) opportunities.push(`Harvest ~${harvestKL.toLocaleString()} kL/year of rainwater off the roof — connect gutters to a tank.`);
+  if (harvestKL) opportunities.push(`Harvest ~${numberLabel(harvestKL)} kL/year of rainwater off the roof — connect gutters to a tank.`);
   if (gardenAreaM2) opportunities.push(`Intensify the existing ${Math.round(gardenAreaM2)} m² vegetable garden with beds, compost and drip irrigation.`);
   opportunities.push('Establish a north-facing orchard / food forest on the open sunny ground.');
   if (hasTreeBelt) opportunities.push('Keep the existing tree belt as a windbreak and biodiversity buffer.');
@@ -351,7 +352,7 @@ export function buildSkeletonReportDoc(args: {
     erosionRisk: (finiteNonNegative(location.elevation?.slopeDeg) ?? 0) > 10 ? 'Watch bare slopes — keep them covered.' : 'Low if ground stays covered.',
     floodRisk: 'Observe the low corner after heavy rain (no detailed survey).',
     harvestingOpportunities: [
-      harvestKL ? `Roof catchment ~${harvestKL.toLocaleString()} kL/yr to tanks.` : 'Connect roof gutters to a tank.',
+      harvestKL ? `Roof catchment ~${numberLabel(harvestKL)} kL/yr to tanks.` : 'Connect roof gutters to a tank.',
       'Swales on contour to slow, spread and sink runoff.',
     ],
     recommendedEarthworks: [
@@ -466,7 +467,7 @@ export function buildSkeletonReportDoc(args: {
         name: area.name,
         layerIds: [],
         purpose: 'Traced ground area from your Design Studio plan.',
-        dimensions: `${area.areaM2.toLocaleString()} m² traced area`,
+        dimensions: `${numberLabel(area.areaM2)} m² traced area`,
         construction: [],
         maintenance: [],
       })),

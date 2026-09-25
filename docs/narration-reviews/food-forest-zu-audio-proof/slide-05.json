@@ -1,0 +1,203 @@
+{
+  "seconds": 31.608,
+  "bytes": 189648,
+  "audioSha256": "5b4c8607ba9cd34d389c7fcda8e729036e4d075808d49640b50689267d20b1c2",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Isithombe",
+      "offset": 1460410,
+      "duration": 6392080
+    },
+    {
+      "text": "esimile",
+      "offset": 8704580,
+      "duration": 6676250
+    },
+    {
+      "text": "nokulandisa",
+      "offset": 15380830,
+      "duration": 9090830
+    },
+    {
+      "text": "kuveza",
+      "offset": 24471660,
+      "duration": 5965830
+    },
+    {
+      "text": "izingxenye",
+      "offset": 30863750,
+      "duration": 7244160
+    },
+    {
+      "text": "eziyisikhombisa",
+      "offset": 38676250,
+      "duration": 12073750
+    },
+    {
+      "text": "zokuhlela",
+      "offset": 50750000,
+      "duration": 7812500
+    },
+    {
+      "text": "Uphahla",
+      "offset": 60551250,
+      "duration": 7244160
+    },
+    {
+      "text": "lwezihlahla",
+      "offset": 67795410,
+      "duration": 7528330
+    },
+    {
+      "text": "ezinde",
+      "offset": 75750000,
+      "duration": 6392080
+    },
+    {
+      "text": "Izihlahla",
+      "offset": 84840830,
+      "duration": 7812500
+    },
+    {
+      "text": "ezincane",
+      "offset": 92937500,
+      "duration": 7102080
+    },
+    {
+      "text": "Izihlahlana",
+      "offset": 102454580,
+      "duration": 9801250
+    },
+    {
+      "text": "ezinamagatsha",
+      "offset": 112681660,
+      "duration": 10369160
+    },
+    {
+      "text": "aqinile",
+      "offset": 123477080,
+      "duration": 7670410
+    },
+    {
+      "text": "Izitshalo",
+      "offset": 133846660,
+      "duration": 7812500
+    },
+    {
+      "text": "ezineziqu",
+      "offset": 142227080,
+      "duration": 8948750
+    },
+    {
+      "text": "ezithambile",
+      "offset": 151602080,
+      "duration": 9232910
+    },
+    {
+      "text": "Izitshalo",
+      "offset": 163107910,
+      "duration": 7528330
+    },
+    {
+      "text": "ezimboza",
+      "offset": 171062500,
+      "duration": 7386250
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 178590830,
+      "duration": 8522910
+    },
+    {
+      "text": "Izitshalo",
+      "offset": 189454580,
+      "duration": 6534160
+    },
+    {
+      "text": "zezimpande",
+      "offset": 196414580,
+      "duration": 7812500
+    },
+    {
+      "text": "nezitshalo",
+      "offset": 204227080,
+      "duration": 7386250
+    },
+    {
+      "text": "ezikhuphukayo",
+      "offset": 211897910,
+      "duration": 10653330
+    },
+    {
+      "text": "Lezi",
+      "offset": 232636250,
+      "duration": 4119160
+    },
+    {
+      "text": "akuzona",
+      "offset": 237465830,
+      "duration": 6818330
+    },
+    {
+      "text": "izilinganiso",
+      "offset": 244710410,
+      "duration": 9516660
+    },
+    {
+      "text": "zokuphakama",
+      "offset": 254227080,
+      "duration": 8238750
+    },
+    {
+      "text": "ezimisiwe",
+      "offset": 262892080,
+      "duration": 9090830
+    },
+    {
+      "text": "khetha",
+      "offset": 273971660,
+      "duration": 4971660
+    },
+    {
+      "text": "izitshalo",
+      "offset": 279227500,
+      "duration": 7386250
+    },
+    {
+      "text": "nezikhala",
+      "offset": 286755830,
+      "duration": 7528330
+    },
+    {
+      "text": "ngokwendawo",
+      "offset": 294284160,
+      "duration": 6960000
+    },
+    {
+      "text": "yakho",
+      "offset": 301244160,
+      "duration": 5255830
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "food-forest",
+  "lesson": "food-forest-l1",
+  "language": "zu",
+  "slide": 5,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-05.txt",
+  "sourceSha256": "d64747a4b89d9e21303e5300c1653462f4cbad2aaee59a25b64b320b7e36cf53",
+  "scriptFile": "docs/narration/food-forest.zu.md",
+  "scriptSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "englishSourceFile": "docs/narration/food-forest.en.md",
+  "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T14:09:01.532415+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "revalidatedAt": "2026-09-24T14:09:01.532355+00:00"
+}

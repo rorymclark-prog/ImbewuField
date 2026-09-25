@@ -48,7 +48,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
     <div className="flex items-center justify-between" style={{ background: 'rgba(226,216,196,0.3)', borderRadius: 12, padding: '12px 14px', border: '1px solid #E2D8C4' }}>
       <div className="flex-1 min-w-0 pr-3">
         <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{label}</div>
-        {sub && <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{sub}</div>}
+        {sub && <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{sub}</div>}
       </div>
       <button
         type="button"
@@ -64,7 +64,8 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const privacyText = (english: string, key: string) => lang === 'zu' ? `${t(key)} / ${english}` : english;
   const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -113,14 +114,14 @@ export default function CommunityProfilePage() {
   async function handleShowOnMapToggle(next: boolean) {
     setShowOnMap(next);
     if (!next || coarseLat !== null) return;
-    if (!navigator.geolocation) { setError('This device can\'t share a location.'); setShowOnMap(false); return; }
+    if (!navigator.geolocation) { setError(privacyText('This device can\'t share a location.', 'communityLocationUnsupported')); setShowOnMap(false); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { lat, lon } = jitterToNeighbourhood(pos.coords.latitude, pos.coords.longitude);
         setCoarseLat(lat); setCoarseLon(lon); setLocating(false);
       },
-      () => { setError('Could not get your location — map visibility left off.'); setShowOnMap(false); setLocating(false); },
+      () => { setError(privacyText('Could not get your location — map visibility left off.', 'communityLocationDenied')); setShowOnMap(false); setLocating(false); },
       { enableHighAccuracy: false, timeout: 8000 },
     );
   }
@@ -155,7 +156,7 @@ export default function CommunityProfilePage() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch {
-      setError('Could not save — try again.');
+      setError(lang === 'zu' ? t('communityProfileSaveError') : 'Could not save — try again.');
     } finally {
       setSaving(false);
     }
@@ -163,8 +164,8 @@ export default function CommunityProfilePage() {
 
   async function handleDelete() {
     const proceed = await appConfirm({
-      message: t('communityDeleteProfileConfirm'),
-      confirmLabel: t('communityDeleteProfile'),
+      message: privacyText('Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.', 'communityDeleteProfileConfirm'),
+      confirmLabel: privacyText('Delete my community profile', 'communityDeleteProfile'),
       cancelLabel: t('cancelBtn'),
       destructive: true,
     });
@@ -175,7 +176,7 @@ export default function CommunityProfilePage() {
 
   if (!ready) {
     return (
-      <div className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: '#E4DCC6' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
       </div>
     );
@@ -191,17 +192,18 @@ export default function CommunityProfilePage() {
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="community:profile" label="Learn" />
-        <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</span>
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</h1>
       </header>
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginBottom: 20 }}>
-          {t('communityEditProfileIntro')}
+          {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: '#755942' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
+          {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
         </p>
 
         <div className={workspace.twoColumns}>
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityDisplayNameLabel')}
             </div>
             <input
@@ -215,7 +217,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityAreaLabel')}
             </div>
             <input
@@ -226,11 +228,11 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans"
               style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 4 }}>{t('communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 11.5, color: '#755942', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityBioLabel')}
             </div>
             <textarea
@@ -244,7 +246,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityCropsLabel')}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -255,7 +257,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityPhotosLabel')} <span style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('communityPhotosHint')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -276,7 +278,7 @@ export default function CommunityProfilePage() {
                   disabled={uploading}
                   style={{ width: 72, height: 72, borderRadius: 10, background: '#FFFEFA', border: '1px dashed #C8BCA8', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                 >
-                  {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: '#8C7A62' }} /> : <Camera size={20} style={{ color: '#8C7A62' }} strokeWidth={1.6} />}
+                  {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: '#755942' }} /> : <Camera size={20} style={{ color: '#755942' }} strokeWidth={1.6} />}
                 </button>
               )}
               <input ref={fileRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
@@ -284,12 +286,9 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 8 }}>
-              {t('communityShowOnMapLabel')}
-            </div>
             <Toggle
-              label={t('communityShowOnMapLabel')}
-              sub={locating ? 'Getting your approximate area…' : t('communityShowOnMapHint')}
+              label={privacyText('Show me on the community map', 'communityShowOnMapLabel')}
+              sub={locating ? (lang === 'zu' ? t('communityLocationPending') : 'Getting your approximate area…') : privacyText('Your location shows as an approximate ~1km area, never your exact homestead', 'communityShowOnMapHint')}
               on={showOnMap}
               onChange={handleShowOnMapToggle}
             />
@@ -304,7 +303,7 @@ export default function CommunityProfilePage() {
             style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
-            {saved ? 'Saved' : t('communitySaveProfile')}
+            {saved ? (lang === 'zu' ? t('communityProfileSaved') : 'Saved') : t('communitySaveProfile')}
           </button>
 
           <button
@@ -312,7 +311,7 @@ export default function CommunityProfilePage() {
             className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
             style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '11px 20px', fontSize: 13.5 }}
           >
-            <Trash2 size={14} /> {t('communityDeleteProfile')}
+            <Trash2 size={14} /> {privacyText('Delete my community profile', 'communityDeleteProfile')}
           </button>
         </div>
       </main>

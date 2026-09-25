@@ -52,6 +52,47 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-25 (swarm wave 1 — Simple mode across the farmer screens + 17 verified fixes)
+- **How:** an app-wide code audit (9 Sonnet auditors, one per area, each followed by a Sonnet
+  verifier told to refute every bug/security claim) found 92 issues; all 17 bug/security claims
+  were confirmed. Twelve Sonnet cloud sessions then took one track each (branch `swarm/<track>`,
+  draft PR, own CI); the integrator merged the nine green ones into `claude/wave-1`, re-ran the
+  full suite, hardened one rule, and shipped them as one PR with one release note.
+- **Simple mode (All tools unchanged):** Records (Picked/Sold/Spent + "You kept R…" for 12
+  months; Charts in All tools), Crop planner (grid kept; % labels, task chips, Clear all and the
+  long panels hidden; one Auto-suggest), Farm map (5 site-panel tabs; Overview folded), menu,
+  Study, Invoice & Exchange, Planting calendar (this month's card), Print, Mentor / NGO / Funder
+  (NGO 4 tabs, funder Cohort + Progress, mentor declutter), Assessments, Surveys, Offline.
+- **Fixes:** tour button contrast (dark text on dim ochre), NGO/funder tab label, Garden Survey
+  dead tap, calendar "your crops" filter (read the real plan), Assessments navigation, survey
+  answers limited to farmer/student (rules too; a profile with no role counts as farmer), print
+  blank job, contours/site-features/build-info API guards, baseline security headers (no CSP
+  yet), sign-up error field, ochre error text, vendor badges removed, emoji icons → Lucide,
+  isiZulu for Tour discovery / update toast / Tips / unlock reason / due dates.
+- **Still open (wave 2):** Design Studio, People screens + Atlas API guard, money-chart dark mode
+  (sessions still running); Exchange Simple still wordy (explainer, stats twice, two back
+  buttons); Study companion links read as bare headlines; theme tokens on the crop planner.
+- **Owner decisions pending:** REQUIRE_API_AUTH (paid AI routes are log-only), mentors' default
+  level, partly translated languages (9 of 11 under half).
+
+### 2026-09-25 (Simple / All tools switch — Home is the first screen to use it)
+- **Why:** Rory: the app "has now become very busy". A 20-screen audit (390 × 844, sample farm)
+  found Home's busyness was mostly repetition: the main site's name three times, "75% complete"
+  twice (`HomeHeroCard` and `FarmPlanCard` both read `useSiteProgress`), Lima named three times,
+  a Back button on the root screen, "My Records" as both a tile and a tab. Shown the tidy Home next
+  to today's, Rory: "there's a lot I like about both ... let's keep it a switch", so both stay.
+- **The switch:** `lib/app-level.ts` (+ pure `lib/app-level-core.ts`) — `useAppLevel()` returns
+  `'simple' | 'full'`, stored per account in localStorage. Defaults: farmers and signed-out
+  visitors → Simple; mentor/student/ngo/funder/admin → All tools; the sample tour → All tools
+  unless previewing the farmer. Settings (`components/ThemePanel.tsx`) → "How much to show".
+- **Home:** All tools = Home exactly as before. Simple = the site card headed "Main site" + name
+  with the next step inside it, no FarmPlanCard, weather card without the repeated name, no Back,
+  no My Records tile. The step table moved to `lib/home-next-step.ts`, shared by both layouts.
+- **Measured (Simple vs old Home):** whole-page tap targets 62 → 60, words 327 → 312, "My Records
+  ×2" gone; first-screen taps 38 → 39 (the page is shorter, so more tiles fit on it).
+- **Next:** app-wide audit (running), then Simple mode screen by screen; an organisation-wide
+  default for its farmers (Step 3) on the org record.
+
 ### 2026-09-23 (Training pathway: five facilitator courses — PR #509, draft)
 Rory asked for a 5-day farmer course for ACT·SEF-type beneficiaries (09:00–16:00, taught from posters
 and a phone, optional slides), a mentor course (in person or online, a visit schedule with group visits,

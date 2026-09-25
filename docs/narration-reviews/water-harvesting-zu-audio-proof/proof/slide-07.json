@@ -1,0 +1,187 @@
+{
+  "seconds": 23.664,
+  "bytes": 141984,
+  "audioSha256": "cfb3e973d2595a4d8aafe3f4dcf3bb58fba20ebbe4afe2346ac274f1444b476f",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "I-swale",
+      "offset": 1460410,
+      "duration": 5255830
+    },
+    {
+      "text": "idinga",
+      "offset": 7568330,
+      "duration": 4829580
+    },
+    {
+      "text": "indlela",
+      "offset": 12823750,
+      "duration": 5113750
+    },
+    {
+      "text": "yokuchichima",
+      "offset": 17937500,
+      "duration": 8948750
+    },
+    {
+      "text": "ehleliwe",
+      "offset": 27170410,
+      "duration": 7102080
+    },
+    {
+      "text": "uma",
+      "offset": 35125000,
+      "duration": 2840830
+    },
+    {
+      "text": "kunemvula",
+      "offset": 37965830,
+      "duration": 7244160
+    },
+    {
+      "text": "enkulu",
+      "offset": 45494160,
+      "duration": 6250000
+    },
+    {
+      "text": "Yihlole",
+      "offset": 62181660,
+      "duration": 5397910
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 67863750,
+      "duration": 5539580
+    },
+    {
+      "text": "kokumba",
+      "offset": 73403330,
+      "duration": 6250000
+    },
+    {
+      "text": "Amanzi",
+      "offset": 90306660,
+      "duration": 5539580
+    },
+    {
+      "text": "angaya",
+      "offset": 96556660,
+      "duration": 4829580
+    },
+    {
+      "text": "kwenye",
+      "offset": 101386250,
+      "duration": 3693330
+    },
+    {
+      "text": "i-swale",
+      "offset": 105505830,
+      "duration": 5965830
+    },
+    {
+      "text": "noma",
+      "offset": 111471660,
+      "duration": 3409160
+    },
+    {
+      "text": "edamini",
+      "offset": 115306660,
+      "duration": 6676250
+    },
+    {
+      "text": "kuphela",
+      "offset": 121982910,
+      "duration": 5965830
+    },
+    {
+      "text": "uma",
+      "offset": 128659160,
+      "duration": 2840830
+    },
+    {
+      "text": "ukuhlolwa",
+      "offset": 131926250,
+      "duration": 6817910
+    },
+    {
+      "text": "kwendawo",
+      "offset": 138744160,
+      "duration": 6250000
+    },
+    {
+      "text": "kukhombisa",
+      "offset": 145136250,
+      "duration": 7812500
+    },
+    {
+      "text": "ukuthi",
+      "offset": 153232910,
+      "duration": 4261250
+    },
+    {
+      "text": "indlela",
+      "offset": 157636250,
+      "duration": 6250000
+    },
+    {
+      "text": "indawo",
+      "offset": 166585410,
+      "duration": 5681660
+    },
+    {
+      "text": "yokuphuma",
+      "offset": 172267080,
+      "duration": 6534160
+    },
+    {
+      "text": "nendawo",
+      "offset": 178801250,
+      "duration": 5965830
+    },
+    {
+      "text": "ezowamukela",
+      "offset": 185477080,
+      "duration": 9943330
+    },
+    {
+      "text": "kungawamukela",
+      "offset": 196840830,
+      "duration": 9517080
+    },
+    {
+      "text": "amanzi",
+      "offset": 206784160,
+      "duration": 5539580
+    },
+    {
+      "text": "ngaphandle",
+      "offset": 212323750,
+      "duration": 5965830
+    },
+    {
+      "text": "komonakalo",
+      "offset": 218289580,
+      "duration": 9090830
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l1",
+  "language": "zu",
+  "slide": 7,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-07.txt",
+  "sourceSha256": "196daf2ce5d46c89d882d2d31b144493a9e20250524e704300b076454c15060b",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:47:40.808699+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

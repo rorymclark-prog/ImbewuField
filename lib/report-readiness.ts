@@ -1,3 +1,4 @@
+import { numberLabel } from '@/lib/format-figures';
 import type { CompletionScoreInputs } from './completion-score';
 import type { EvidenceItem } from './site-evidence';
 import { hasDrawnDesign, type ReportSiteFacts } from './report-site-facts';
@@ -14,7 +15,7 @@ function designPreparation(inputs: CompletionScoreInputs, records: ReportDesignR
   const perimeter = boundary?.perimeterM;
   const fenceM = records.facts?.design?.routes.filter(route => route.kind === 'fence')
     .reduce((sum, route) => sum + route.totalLengthM, 0) ?? 0;
-  const number = (value: number) => value.toLocaleString('en-ZA', { maximumFractionDigits: 1 });
+  const number = (value: number) => numberLabel(value, 1);
   const dimensions = [
     boundary && boundary.areaM2 > 0 ? `Area ${number(boundary.areaM2)} m²` : '',
     perimeter && perimeter > 0 ? `perimeter ${number(perimeter)} m` : '',

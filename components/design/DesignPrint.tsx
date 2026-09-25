@@ -347,7 +347,7 @@ async function renderPage(
 }
 
 export default function DesignPrint({ state, frame, refLayers, site, placeName, onClose }: DesignPrintProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const available = useMemo(
     () => new Set(PRINT_LAYERS.filter((l) => isLayerAvailable(l, state, refLayers, site)).map((l) => l.key)),
     [state, refLayers, site],
@@ -497,15 +497,23 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
     <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(15,12,8,0.5)', display: 'flex', justifyContent: 'center', padding: 0 }}>
       <div style={{ width: '100%', maxWidth: 1180, background: PAPER, display: 'flex', flexDirection: 'column', height: '100%' }}>
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 12, padding: '12px 16px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
           <FileDown size={20} color={GREEN} />
-          <div style={{ fontWeight: 800, fontSize: 16, color: DARK }}>{t('designPrintTitle')}</div>
-          <div style={{ fontSize: 12, color: '#6B6355' }}>{t('designPrintSubtitle')}</div>
+          <div style={{ flex: '1 1 220px', minWidth: 0 }}>
+            <div style={{ fontWeight: 800, fontSize: 16, color: DARK }}>{t('designPrintTitle')}</div>
+            <div style={{ fontSize: 12, color: '#6B6355', overflowWrap: 'anywhere' }}>{t('designPrintSubtitle')}</div>
+          </div>
           <span style={{ marginLeft: 'auto' }}><LessonLink id="print:planset" label={t('designLearn')} /></span>
-          <button onClick={onClose} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+          <button onClick={onClose} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'transparent', border: 'none', color: DARK, fontWeight: 700, fontSize: 14, cursor: 'pointer', minHeight: 44 }}>
             <X size={18} /> {t('designClose')}
           </button>
         </div>
+
+        {lang === 'zu' && (
+          <p lang="en" role="note" style={{ margin: 0, padding: '7px 16px', background: 'rgba(192,122,30,0.10)', color: '#5C3B0D', fontSize: 12, lineHeight: 1.4 }}>
+            Unreviewed isiZulu draft. The exact English source appears on key export controls; labels printed on the maps remain English.
+          </p>
+        )}
 
         <div style={{ display: 'flex', flex: 1, minHeight: 0, flexDirection: 'column', overflowY: 'auto' }}>
           {/* Controls */}
@@ -552,7 +560,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
             <div>
               <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.55, marginBottom: 8 }}>{t('designPrintInclude')}</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                {([['titleBlock', 'designPrintTitleBlock'], ['legend', 'designPrintLegend'], ['scaleBar', 'designPrintScaleBar'], ['northArrow', 'designPrintNorthArrow']] as const).map(([k, labelKey]) => (
+                {([['titleBlock', 'designPrintTitleBlock']] as const).map(([k, labelKey]) => (
                   <button key={k} onClick={() => setFurniture((f) => ({ ...f, [k]: !f[k] }))} aria-pressed={furniture[k]} style={chk(furniture[k])}>
                     <span>{furniture[k] ? '☑' : '☐'}</span> {t(labelKey)}
                   </button>

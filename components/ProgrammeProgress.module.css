@@ -5,6 +5,7 @@
 .coverage .area { display:flex; flex-direction:column; align-items:flex-start; gap:12px; padding:20px; border-radius:14px; text-align:left; min-width:0; background:#f9fcf8; }
 .area strong { font-size:16px; line-height:1.4; }
 .area span { font-size:12px; line-height:1.5; color:#536257; }
+.source { display:block; margin-top:3px; font-size:12px; line-height:1.45; color:#536257; font-weight:400; }
 .area svg { color:#285c3e; }
 .section { padding-top:30px; margin-top:24px; border-top:1px solid #cddccd; }
 .section h3 { margin-top:20px; }

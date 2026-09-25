@@ -1,0 +1,174 @@
+{
+  "module": "market-community",
+  "lesson": "market-community-l3",
+  "language": "en",
+  "slidesRegenerated": [
+    15,
+    20
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/market-community.en.md",
+  "sourceScriptSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
+  "transcriptSource": "lib/course-transcripts.ts",
+  "textExport": "scripts/course-narration-export.mjs (transcript blocks exported directly for exact alignment)",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 15,
+      "path": "public/course-audio/market-community/en/slide-15.mp3",
+      "seconds": 29.4,
+      "bytes": 176400,
+      "sourceTextSha256": "f9d4d886f97e85e0413239ea646f964863c7dc7013b7531a4e93d4cdf73b3e05",
+      "audioSha256": "bf65157ae8e76da3d1e3e9982774213e28f7ac5afd41cbbf67f55878c495692d",
+      "wordCount": 61,
+      "wordBoundaryCount": 61,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    },
+    {
+      "slide": 20,
+      "path": "public/course-audio/market-community/en/slide-20.mp3",
+      "seconds": 26.76,
+      "bytes": 160560,
+      "sourceTextSha256": "63697497ca65d953a785683d54c5dbbb0ceb67677cc42330c863c813931b1c7b",
+      "audioSha256": "37e2838d023df57dd17e0c2b3e83e903ebbea3f234f8022a7a7ee0aa9e94b91f",
+      "wordCount": 66,
+      "wordBoundaryCount": 66,
+      "wordBoundaryTextMatch": true,
+      "fullDecode": "pass"
+    }
+  ],
+  "fullTrack": {
+    "path": "public/course-audio/market-community/en/full.mp3",
+    "seconds": 387.12,
+    "bytes": 2322956,
+    "audioSha256": "7dbe32a755f2ae7f372258c97169a06f84aa1cf494a7f8c176d1eba1fabb133c",
+    "fullDecode": "pass",
+    "composition": "ffmpeg concat demuxer with -c copy; no re-encoding",
+    "slides": [
+      {
+        "slide": 1,
+        "seconds": 15.696,
+        "bytes": 94176,
+        "audioSha256": "6b381e97cfaa9f1b60c16a8dd419b93056f065a22e845756681bccebfddcb2f9"
+      },
+      {
+        "slide": 2,
+        "seconds": 16.344,
+        "bytes": 98064,
+        "audioSha256": "083d8f074a3b44fc113aa9f633b7bc6cbc158f07af817e601b21527a943e5be6"
+      },
+      {
+        "slide": 3,
+        "seconds": 17.928,
+        "bytes": 107568,
+        "audioSha256": "82112c31c705e31eb771408ec0a55ca5090c121a1f38d4919dc32339e4082aca"
+      },
+      {
+        "slide": 4,
+        "seconds": 11.04,
+        "bytes": 66240,
+        "audioSha256": "e5e6c47587a4d02279283b8996796c1d9861bcb71f43e512f3176b990be4bc7e"
+      },
+      {
+        "slide": 5,
+        "seconds": 21.36,
+        "bytes": 128160,
+        "audioSha256": "8bc31cd79cbaa599e17ac9f51ba17268719bd6be29987b1a2eb393e9bd46ced5"
+      },
+      {
+        "slide": 6,
+        "seconds": 19.464,
+        "bytes": 116784,
+        "audioSha256": "f1fd2f05c8f8d65cd2b41e0e873807a2055138c5919cc5543354063ddc6d8f03"
+      },
+      {
+        "slide": 7,
+        "seconds": 27.6,
+        "bytes": 165600,
+        "audioSha256": "382fac9c2630a42884dda7003569c849218f28b41e884aacba126ab3e5b58d3d"
+      },
+      {
+        "slide": 8,
+        "seconds": 20.04,
+        "bytes": 120240,
+        "audioSha256": "34b0ce7eb5d812c1ca48e63cb6b12ebb3a1cb0e32d400c40e53354d9ed7b2c1c"
+      },
+      {
+        "slide": 9,
+        "seconds": 9.816,
+        "bytes": 58896,
+        "audioSha256": "25fca3c8d45cb45245d7b1eb16dfe02bedaa36953466c9da34cb54802b27b93a"
+      },
+      {
+        "slide": 10,
+        "seconds": 21.96,
+        "bytes": 131760,
+        "audioSha256": "4bae6744d32d4803cedb167029945dd5e2cf4d3d755b9ba9afe99cec7ce5dcb4"
+      },
+      {
+        "slide": 11,
+        "seconds": 22.608,
+        "bytes": 135648,
+        "audioSha256": "2c5a652b81611ac1e41f0d6a740373f88db90e74bbfcd8e76bcd74a64f797fd0"
+      },
+      {
+        "slide": 12,
+        "seconds": 17.16,
+        "bytes": 102960,
+        "audioSha256": "a06a59c4bea89ca240f8412485fa4c5f771a925ce4eb6f3ced10e1b702af2b91"
+      },
+      {
+        "slide": 13,
+        "seconds": 17.856,
+        "bytes": 107136,
+        "audioSha256": "346b70f0e72e4f76035ac707f8214f5953dd32894c7368d9c41601d51168b548"
+      },
+      {
+        "slide": 14,
+        "seconds": 13.608,
+        "bytes": 81648,
+        "audioSha256": "34cb2dfe153abd2c38a67d660fc7ee57d9bc56f57abcbb2fa36eac5d1508d6f8"
+      },
+      {
+        "slide": 15,
+        "seconds": 29.4,
+        "bytes": 176400,
+        "audioSha256": "bf65157ae8e76da3d1e3e9982774213e28f7ac5afd41cbbf67f55878c495692d"
+      },
+      {
+        "slide": 16,
+        "seconds": 14.4,
+        "bytes": 86400,
+        "audioSha256": "8b23c6b1a0b237b39934e02ebcace25f48975527732b14b64034f3d9f621eced"
+      },
+      {
+        "slide": 17,
+        "seconds": 21.264,
+        "bytes": 127584,
+        "audioSha256": "a4d97a6e7225ece49b9641f4d024cb19973551e816dd891997cb1cb32fb94e37"
+      },
+      {
+        "slide": 18,
+        "seconds": 19.872,
+        "bytes": 119232,
+        "audioSha256": "d04f33d503182b878863948e0c9b8aee37555f879f870309a61ba5670a9f08bc"
+      },
+      {
+        "slide": 19,
+        "seconds": 22.944,
+        "bytes": 137664,
+        "audioSha256": "8e3c7fc0d221dd843a06aec8f956e24889fb3ba54604ac7c1663bde3f2195b0b"
+      },
+      {
+        "slide": 20,
+        "seconds": 26.76,
+        "bytes": 160560,
+        "audioSha256": "37e2838d023df57dd17e0c2b3e83e903ebbea3f234f8022a7a7ee0aa9e94b91f"
+      }
+    ],
+    "sumOfSlideSeconds": 387.12,
+    "durationEqualsSlideSum": true
+  }
+}

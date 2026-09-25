@@ -1,0 +1,2456 @@
+{
+  "module": "intro-permaculture",
+  "language": "en",
+  "slidesRegenerated": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "voice": "en-ZA-LukeNeural",
+  "rate": "-12%",
+  "sourceScript": "docs/narration/intro-permaculture.en.md",
+  "sourceScriptSha256": "f51edfdd161eb5be3bd88ed3e396952a6e3a320d93765945f1ae5a73093e815b",
+  "textExport": "scripts/course-narration-export.mjs",
+  "wordNormalization": "Unicode alphanumeric casefold, HTML-unescaped; exact sequence match",
+  "clips": [
+    {
+      "slide": 9,
+      "path": "public/course-audio/intro-permaculture/en/slide-09.mp3",
+      "seconds": 24.192,
+      "bytes": 145152,
+      "sourceSha256": "9bc43ea01232fe95b59071bfc53da68eaac02b4d528388ef786d1372751c57d8",
+      "audioSha256": "3f6f91f97319fe54dbf2d781c6f393ea334c000bcf10520161bd7b63b2d878f6",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 59,
+      "lastWordEndSeconds": 23.167624,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "David",
+          "offset": 1068330,
+          "duration": 3408750
+        },
+        {
+          "text": "Holmgren",
+          "offset": 4477080,
+          "duration": 4687500
+        },
+        {
+          "text": "set",
+          "offset": 9306660,
+          "duration": 2698750
+        },
+        {
+          "text": "out",
+          "offset": 12289580,
+          "duration": 1704580
+        },
+        {
+          "text": "twelve",
+          "offset": 14562500,
+          "duration": 2556660
+        },
+        {
+          "text": "design",
+          "offset": 17403330,
+          "duration": 3693330
+        },
+        {
+          "text": "principles",
+          "offset": 21522910,
+          "duration": 5539580
+        },
+        {
+          "text": "in",
+          "offset": 27062500,
+          "duration": 1136250
+        },
+        {
+          "text": "Essence",
+          "offset": 28625000,
+          "duration": 3125000
+        },
+        {
+          "text": "of",
+          "offset": 32034160,
+          "duration": 994160
+        },
+        {
+          "text": "Permaculture",
+          "offset": 33880830,
+          "duration": 7244160
+        },
+        {
+          "text": "Bill",
+          "offset": 51562500,
+          "duration": 1704580
+        },
+        {
+          "text": "Mollison",
+          "offset": 53551250,
+          "duration": 4545410
+        },
+        {
+          "text": "and",
+          "offset": 58096660,
+          "duration": 1136250
+        },
+        {
+          "text": "David",
+          "offset": 59801250,
+          "duration": 3267080
+        },
+        {
+          "text": "Holmgren",
+          "offset": 63068330,
+          "duration": 4971660
+        },
+        {
+          "text": "co-originated",
+          "offset": 68750000,
+          "duration": 6960410
+        },
+        {
+          "text": "the",
+          "offset": 75710410,
+          "duration": 852080
+        },
+        {
+          "text": "permaculture",
+          "offset": 77698750,
+          "duration": 5539580
+        },
+        {
+          "text": "concept",
+          "offset": 83948750,
+          "duration": 4971660
+        },
+        {
+          "text": "You",
+          "offset": 99289580,
+          "duration": 1278330
+        },
+        {
+          "text": "do",
+          "offset": 101136250,
+          "duration": 710410
+        },
+        {
+          "text": "not",
+          "offset": 102130830,
+          "duration": 1704580
+        },
+        {
+          "text": "need",
+          "offset": 104403330,
+          "duration": 1846660
+        },
+        {
+          "text": "all",
+          "offset": 107102080,
+          "duration": 1562500
+        },
+        {
+          "text": "twelve",
+          "offset": 109517080,
+          "duration": 2414580
+        },
+        {
+          "text": "to",
+          "offset": 112642080,
+          "duration": 710410
+        },
+        {
+          "text": "start",
+          "offset": 113636250,
+          "duration": 4119160
+        },
+        {
+          "text": "Three",
+          "offset": 128551250,
+          "duration": 2272910
+        },
+        {
+          "text": "useful",
+          "offset": 130965830,
+          "duration": 3977080
+        },
+        {
+          "text": "starting",
+          "offset": 134943330,
+          "duration": 4119160
+        },
+        {
+          "text": "points",
+          "offset": 140056660,
+          "duration": 2698750
+        },
+        {
+          "text": "for",
+          "offset": 143039580,
+          "duration": 1278330
+        },
+        {
+          "text": "this",
+          "offset": 144602080,
+          "duration": 2130830
+        },
+        {
+          "text": "lesson",
+          "offset": 147443330,
+          "duration": 3409160
+        },
+        {
+          "text": "are",
+          "offset": 151704580,
+          "duration": 1704580
+        },
+        {
+          "text": "observe",
+          "offset": 154971660,
+          "duration": 4119160
+        },
+        {
+          "text": "and",
+          "offset": 159232910,
+          "duration": 1136250
+        },
+        {
+          "text": "interact",
+          "offset": 160511250,
+          "duration": 5397910
+        },
+        {
+          "text": "catch",
+          "offset": 168892080,
+          "duration": 2272910
+        },
+        {
+          "text": "and",
+          "offset": 172159160,
+          "duration": 1136250
+        },
+        {
+          "text": "store",
+          "offset": 173437500,
+          "duration": 2556660
+        },
+        {
+          "text": "energy",
+          "offset": 176846660,
+          "duration": 4403330
+        },
+        {
+          "text": "and",
+          "offset": 185085410,
+          "duration": 1278330
+        },
+        {
+          "text": "use",
+          "offset": 186647910,
+          "duration": 1846660
+        },
+        {
+          "text": "edges",
+          "offset": 189346660,
+          "duration": 3125000
+        },
+        {
+          "text": "and",
+          "offset": 192471660,
+          "duration": 1136250
+        },
+        {
+          "text": "value",
+          "offset": 194034160,
+          "duration": 2698750
+        },
+        {
+          "text": "the",
+          "offset": 197159160,
+          "duration": 710410
+        },
+        {
+          "text": "marginal",
+          "offset": 198295410,
+          "duration": 4403330
+        },
+        {
+          "text": "We",
+          "offset": 213068330,
+          "duration": 1420410
+        },
+        {
+          "text": "will",
+          "offset": 214772910,
+          "duration": 1420410
+        },
+        {
+          "text": "take",
+          "offset": 216903330,
+          "duration": 1562500
+        },
+        {
+          "text": "those",
+          "offset": 218892080,
+          "duration": 2272910
+        },
+        {
+          "text": "three",
+          "offset": 222017080,
+          "duration": 1562500
+        },
+        {
+          "text": "one",
+          "offset": 223863750,
+          "duration": 2130410
+        },
+        {
+          "text": "at",
+          "offset": 225994160,
+          "duration": 1278330
+        },
+        {
+          "text": "a",
+          "offset": 227414580,
+          "duration": 568330
+        },
+        {
+          "text": "time",
+          "offset": 228835410,
+          "duration": 2840830
+        }
+      ]
+    },
+    {
+      "slide": 10,
+      "path": "public/course-audio/intro-permaculture/en/slide-10.mp3",
+      "seconds": 38.736,
+      "bytes": 232416,
+      "sourceSha256": "0e2774060989cd0a45efbeb215b725da6fed1f8c7e186160df7e45589e7b310a",
+      "audioSha256": "f6441d294295b34869121bcfc27350f52a9f4c39e3a527a864cde2b480cc0164",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 104,
+      "lastWordEndSeconds": 37.684666,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "Watch",
+          "offset": 1068330,
+          "duration": 2556660
+        },
+        {
+          "text": "your",
+          "offset": 3909160,
+          "duration": 1136250
+        },
+        {
+          "text": "land",
+          "offset": 5187500,
+          "duration": 2130830
+        },
+        {
+          "text": "through",
+          "offset": 7460410,
+          "duration": 1562500
+        },
+        {
+          "text": "a",
+          "offset": 9590830,
+          "duration": 568330
+        },
+        {
+          "text": "full",
+          "offset": 10585410,
+          "duration": 2556660
+        },
+        {
+          "text": "season",
+          "offset": 13426250,
+          "duration": 3551250
+        },
+        {
+          "text": "before",
+          "offset": 17403330,
+          "duration": 3267080
+        },
+        {
+          "text": "you",
+          "offset": 20954580,
+          "duration": 568330
+        },
+        {
+          "text": "commit",
+          "offset": 22232910,
+          "duration": 2840830
+        },
+        {
+          "text": "to",
+          "offset": 25642080,
+          "duration": 426250
+        },
+        {
+          "text": "major",
+          "offset": 26494160,
+          "duration": 2698750
+        },
+        {
+          "text": "earthworks",
+          "offset": 30045410,
+          "duration": 5539580
+        },
+        {
+          "text": "One",
+          "offset": 46875000,
+          "duration": 2272910
+        },
+        {
+          "text": "storm",
+          "offset": 49573750,
+          "duration": 2840830
+        },
+        {
+          "text": "shows",
+          "offset": 52840830,
+          "duration": 2982910
+        },
+        {
+          "text": "you",
+          "offset": 56107910,
+          "duration": 568330
+        },
+        {
+          "text": "one",
+          "offset": 57102080,
+          "duration": 1846660
+        },
+        {
+          "text": "moment",
+          "offset": 59232910,
+          "duration": 4403330
+        },
+        {
+          "text": "A",
+          "offset": 74289580,
+          "duration": 994160
+        },
+        {
+          "text": "full",
+          "offset": 75568330,
+          "duration": 2556660
+        },
+        {
+          "text": "wet",
+          "offset": 78125000,
+          "duration": 1704580
+        },
+        {
+          "text": "season",
+          "offset": 80113750,
+          "duration": 3551250
+        },
+        {
+          "text": "shows",
+          "offset": 83948750,
+          "duration": 2982910
+        },
+        {
+          "text": "you",
+          "offset": 87073750,
+          "duration": 568330
+        },
+        {
+          "text": "the",
+          "offset": 88068330,
+          "duration": 710410
+        },
+        {
+          "text": "pattern",
+          "offset": 89772910,
+          "duration": 3693330
+        },
+        {
+          "text": "where",
+          "offset": 94744160,
+          "duration": 1136250
+        },
+        {
+          "text": "water",
+          "offset": 96448750,
+          "duration": 2840830
+        },
+        {
+          "text": "runs",
+          "offset": 99715830,
+          "duration": 3125000
+        },
+        {
+          "text": "where",
+          "offset": 106107910,
+          "duration": 1278330
+        },
+        {
+          "text": "it",
+          "offset": 107528330,
+          "duration": 710410
+        },
+        {
+          "text": "pools",
+          "offset": 109232910,
+          "duration": 2982910
+        },
+        {
+          "text": "where",
+          "offset": 115198750,
+          "duration": 1136250
+        },
+        {
+          "text": "it",
+          "offset": 116335410,
+          "duration": 852080
+        },
+        {
+          "text": "never",
+          "offset": 117755830,
+          "duration": 2414580
+        },
+        {
+          "text": "reaches",
+          "offset": 120454580,
+          "duration": 3835410
+        },
+        {
+          "text": "This",
+          "offset": 135795410,
+          "duration": 1846660
+        },
+        {
+          "text": "helps",
+          "offset": 138068330,
+          "duration": 2698750
+        },
+        {
+          "text": "you",
+          "offset": 140909160,
+          "duration": 426250
+        },
+        {
+          "text": "understand",
+          "offset": 141761250,
+          "duration": 4545410
+        },
+        {
+          "text": "the",
+          "offset": 146590830,
+          "duration": 710410
+        },
+        {
+          "text": "site",
+          "offset": 147585410,
+          "duration": 3267080
+        },
+        {
+          "text": "It",
+          "offset": 161647910,
+          "duration": 1420410
+        },
+        {
+          "text": "does",
+          "offset": 163636250,
+          "duration": 1562500
+        },
+        {
+          "text": "not",
+          "offset": 165625000,
+          "duration": 1562500
+        },
+        {
+          "text": "by",
+          "offset": 168039580,
+          "duration": 1136250
+        },
+        {
+          "text": "itself",
+          "offset": 169318330,
+          "duration": 3977080
+        },
+        {
+          "text": "show",
+          "offset": 173295410,
+          "duration": 1846660
+        },
+        {
+          "text": "that",
+          "offset": 175852080,
+          "duration": 1704580
+        },
+        {
+          "text": "a",
+          "offset": 177698750,
+          "duration": 568330
+        },
+        {
+          "text": "swale",
+          "offset": 178693330,
+          "duration": 3125000
+        },
+        {
+          "text": "is",
+          "offset": 181818330,
+          "duration": 852080
+        },
+        {
+          "text": "suitable",
+          "offset": 182670410,
+          "duration": 4829580
+        },
+        {
+          "text": "or",
+          "offset": 187784160,
+          "duration": 1278330
+        },
+        {
+          "text": "safe",
+          "offset": 189346660,
+          "duration": 2272910
+        },
+        {
+          "text": "to",
+          "offset": 192329580,
+          "duration": 426250
+        },
+        {
+          "text": "build",
+          "offset": 193607910,
+          "duration": 2840830
+        },
+        {
+          "text": "Before",
+          "offset": 206960410,
+          "duration": 3267080
+        },
+        {
+          "text": "digging",
+          "offset": 211079580,
+          "duration": 3693330
+        },
+        {
+          "text": "check",
+          "offset": 217187500,
+          "duration": 1846660
+        },
+        {
+          "text": "the",
+          "offset": 219602080,
+          "duration": 994160
+        },
+        {
+          "text": "soil",
+          "offset": 220880830,
+          "duration": 3693330
+        },
+        {
+          "text": "slope",
+          "offset": 226846660,
+          "duration": 4119160
+        },
+        {
+          "text": "drainage",
+          "offset": 233948750,
+          "duration": 3977080
+        },
+        {
+          "text": "and",
+          "offset": 239062500,
+          "duration": 1278330
+        },
+        {
+          "text": "a",
+          "offset": 240340830,
+          "duration": 568330
+        },
+        {
+          "text": "safe",
+          "offset": 241335410,
+          "duration": 2982910
+        },
+        {
+          "text": "overflow",
+          "offset": 245028330,
+          "duration": 4403330
+        },
+        {
+          "text": "route",
+          "offset": 250142080,
+          "duration": 2414580
+        },
+        {
+          "text": "that",
+          "offset": 252840830,
+          "duration": 1278330
+        },
+        {
+          "text": "will",
+          "offset": 254545410,
+          "duration": 1278330
+        },
+        {
+          "text": "not",
+          "offset": 255965830,
+          "duration": 1562500
+        },
+        {
+          "text": "cause",
+          "offset": 258522910,
+          "duration": 2130830
+        },
+        {
+          "text": "erosion",
+          "offset": 260795410,
+          "duration": 4687500
+        },
+        {
+          "text": "or",
+          "offset": 265625000,
+          "duration": 994160
+        },
+        {
+          "text": "send",
+          "offset": 266903330,
+          "duration": 2130830
+        },
+        {
+          "text": "damaging",
+          "offset": 269744160,
+          "duration": 3977080
+        },
+        {
+          "text": "water",
+          "offset": 274005830,
+          "duration": 3267080
+        },
+        {
+          "text": "to",
+          "offset": 277556660,
+          "duration": 710410
+        },
+        {
+          "text": "neighbours",
+          "offset": 278835410,
+          "duration": 3551250
+        },
+        {
+          "text": "Ask",
+          "offset": 293750000,
+          "duration": 2982910
+        },
+        {
+          "text": "a",
+          "offset": 296875000,
+          "duration": 568330
+        },
+        {
+          "text": "trained",
+          "offset": 298437500,
+          "duration": 2414580
+        },
+        {
+          "text": "local",
+          "offset": 301278330,
+          "duration": 3409160
+        },
+        {
+          "text": "adviser",
+          "offset": 304687500,
+          "duration": 4545410
+        },
+        {
+          "text": "to",
+          "offset": 309943330,
+          "duration": 568330
+        },
+        {
+          "text": "assess",
+          "offset": 311079580,
+          "duration": 3551250
+        },
+        {
+          "text": "the",
+          "offset": 315340830,
+          "duration": 710410
+        },
+        {
+          "text": "site",
+          "offset": 316477500,
+          "duration": 3409160
+        },
+        {
+          "text": "Where",
+          "offset": 330823750,
+          "duration": 1988750
+        },
+        {
+          "text": "does",
+          "offset": 333522910,
+          "duration": 1846660
+        },
+        {
+          "text": "water",
+          "offset": 335795410,
+          "duration": 3267080
+        },
+        {
+          "text": "leave",
+          "offset": 339346660,
+          "duration": 2272910
+        },
+        {
+          "text": "your",
+          "offset": 341761250,
+          "duration": 1278330
+        },
+        {
+          "text": "land",
+          "offset": 343181660,
+          "duration": 2982910
+        },
+        {
+          "text": "Do",
+          "offset": 356818330,
+          "duration": 852080
+        },
+        {
+          "text": "you",
+          "offset": 358096660,
+          "duration": 426250
+        },
+        {
+          "text": "actually",
+          "offset": 359375000,
+          "duration": 3835410
+        },
+        {
+          "text": "know",
+          "offset": 363636250,
+          "duration": 2130830
+        },
+        {
+          "text": "or",
+          "offset": 368750000,
+          "duration": 994160
+        },
+        {
+          "text": "are",
+          "offset": 370312500,
+          "duration": 568330
+        },
+        {
+          "text": "you",
+          "offset": 371306660,
+          "duration": 852080
+        },
+        {
+          "text": "guessing",
+          "offset": 373011250,
+          "duration": 3835410
+        }
+      ]
+    },
+    {
+      "slide": 11,
+      "path": "public/course-audio/intro-permaculture/en/slide-11.mp3",
+      "seconds": 21.576,
+      "bytes": 129456,
+      "sourceSha256": "76c812cff82637f4ab7cee229c0d4f1cad6588151bb535116be0402c4d15eaf6",
+      "audioSha256": "4180cd6be6711fbb6298ee66ef26c8c7d145578160d57d930e7c6a6a1b1f7733",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 57,
+      "lastWordEndSeconds": 20.539791,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "Harvest",
+          "offset": 1068330,
+          "duration": 4829580
+        },
+        {
+          "text": "rain",
+          "offset": 6039580,
+          "duration": 2840830
+        },
+        {
+          "text": "sun",
+          "offset": 11153330,
+          "duration": 3125000
+        },
+        {
+          "text": "and",
+          "offset": 15272910,
+          "duration": 1278330
+        },
+        {
+          "text": "biomass",
+          "offset": 17119160,
+          "duration": 5113750
+        },
+        {
+          "text": "before",
+          "offset": 23085410,
+          "duration": 2840830
+        },
+        {
+          "text": "they",
+          "offset": 26352080,
+          "duration": 852080
+        },
+        {
+          "text": "leave",
+          "offset": 27914580,
+          "duration": 2130830
+        },
+        {
+          "text": "your",
+          "offset": 30187500,
+          "duration": 994160
+        },
+        {
+          "text": "property",
+          "offset": 32034160,
+          "duration": 4261250
+        },
+        {
+          "text": "Every",
+          "offset": 46732910,
+          "duration": 2982910
+        },
+        {
+          "text": "one",
+          "offset": 50000000,
+          "duration": 1704580
+        },
+        {
+          "text": "of",
+          "offset": 51704580,
+          "duration": 852080
+        },
+        {
+          "text": "those",
+          "offset": 52840830,
+          "duration": 2414580
+        },
+        {
+          "text": "arrives",
+          "offset": 55397910,
+          "duration": 3977080
+        },
+        {
+          "text": "free",
+          "offset": 59659160,
+          "duration": 2698750
+        },
+        {
+          "text": "and",
+          "offset": 62500000,
+          "duration": 1136250
+        },
+        {
+          "text": "leaves",
+          "offset": 64204580,
+          "duration": 2982910
+        },
+        {
+          "text": "free",
+          "offset": 67471660,
+          "duration": 2414580
+        },
+        {
+          "text": "Water",
+          "offset": 80539580,
+          "duration": 2982910
+        },
+        {
+          "text": "runs",
+          "offset": 83806660,
+          "duration": 2414580
+        },
+        {
+          "text": "off",
+          "offset": 86931660,
+          "duration": 1562500
+        },
+        {
+          "text": "leaves",
+          "offset": 91761250,
+          "duration": 2698750
+        },
+        {
+          "text": "blow",
+          "offset": 95312500,
+          "duration": 1562500
+        },
+        {
+          "text": "away",
+          "offset": 97301250,
+          "duration": 2982910
+        },
+        {
+          "text": "sun",
+          "offset": 103125000,
+          "duration": 2272910
+        },
+        {
+          "text": "falls",
+          "offset": 105965830,
+          "duration": 3409160
+        },
+        {
+          "text": "on",
+          "offset": 109517080,
+          "duration": 994160
+        },
+        {
+          "text": "bare",
+          "offset": 111221660,
+          "duration": 1278330
+        },
+        {
+          "text": "ground",
+          "offset": 113494160,
+          "duration": 3125000
+        },
+        {
+          "text": "Compare",
+          "offset": 127130830,
+          "duration": 3551250
+        },
+        {
+          "text": "the",
+          "offset": 131107910,
+          "duration": 710410
+        },
+        {
+          "text": "cost",
+          "offset": 132812500,
+          "duration": 2698750
+        },
+        {
+          "text": "and",
+          "offset": 135511250,
+          "duration": 994160
+        },
+        {
+          "text": "work",
+          "offset": 136931660,
+          "duration": 2982910
+        },
+        {
+          "text": "with",
+          "offset": 140198750,
+          "duration": 852080
+        },
+        {
+          "text": "the",
+          "offset": 141193330,
+          "duration": 710410
+        },
+        {
+          "text": "benefit",
+          "offset": 142755830,
+          "duration": 3977080
+        },
+        {
+          "text": "on",
+          "offset": 147301250,
+          "duration": 1136250
+        },
+        {
+          "text": "your",
+          "offset": 148579580,
+          "duration": 710410
+        },
+        {
+          "text": "own",
+          "offset": 149857910,
+          "duration": 1704580
+        },
+        {
+          "text": "farm",
+          "offset": 151988750,
+          "duration": 3835410
+        },
+        {
+          "text": "Name",
+          "offset": 165625000,
+          "duration": 2698750
+        },
+        {
+          "text": "one",
+          "offset": 168607910,
+          "duration": 1846660
+        },
+        {
+          "text": "thing",
+          "offset": 171022910,
+          "duration": 1420410
+        },
+        {
+          "text": "that",
+          "offset": 173011250,
+          "duration": 1562500
+        },
+        {
+          "text": "arrives",
+          "offset": 174715830,
+          "duration": 3977080
+        },
+        {
+          "text": "on",
+          "offset": 178693330,
+          "duration": 1136250
+        },
+        {
+          "text": "your",
+          "offset": 179971660,
+          "duration": 852080
+        },
+        {
+          "text": "land",
+          "offset": 181107910,
+          "duration": 2272910
+        },
+        {
+          "text": "free",
+          "offset": 183664580,
+          "duration": 3693330
+        },
+        {
+          "text": "and",
+          "offset": 187642080,
+          "duration": 1278330
+        },
+        {
+          "text": "leaves",
+          "offset": 189488750,
+          "duration": 2982910
+        },
+        {
+          "text": "again",
+          "offset": 192471660,
+          "duration": 2556660
+        },
+        {
+          "text": "without",
+          "offset": 195312500,
+          "duration": 3409160
+        },
+        {
+          "text": "being",
+          "offset": 199289580,
+          "duration": 1846660
+        },
+        {
+          "text": "used",
+          "offset": 201562500,
+          "duration": 3835410
+        }
+      ]
+    },
+    {
+      "slide": 12,
+      "path": "public/course-audio/intro-permaculture/en/slide-12.mp3",
+      "seconds": 17.4,
+      "bytes": 104400,
+      "sourceSha256": "a4f4d0741b648f6c5d43d6fc4cb40c349fa9b7f9055302c01075ac90f1719b23",
+      "audioSha256": "71df88fc183a41a7ab589773a1ea630f23ac24244e5123824a0bbce3076bc239",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 49,
+      "lastWordEndSeconds": 16.363624,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "The",
+          "offset": 1068330,
+          "duration": 852080
+        },
+        {
+          "text": "edge",
+          "offset": 2914580,
+          "duration": 1988750
+        },
+        {
+          "text": "is",
+          "offset": 4903330,
+          "duration": 1278330
+        },
+        {
+          "text": "where",
+          "offset": 6607910,
+          "duration": 1420410
+        },
+        {
+          "text": "two",
+          "offset": 8880830,
+          "duration": 852080
+        },
+        {
+          "text": "things",
+          "offset": 10443330,
+          "duration": 2698750
+        },
+        {
+          "text": "meet",
+          "offset": 13710410,
+          "duration": 2840830
+        },
+        {
+          "text": "a",
+          "offset": 18539580,
+          "duration": 568330
+        },
+        {
+          "text": "fence",
+          "offset": 19534160,
+          "duration": 2982910
+        },
+        {
+          "text": "line",
+          "offset": 23227080,
+          "duration": 2556660
+        },
+        {
+          "text": "or",
+          "offset": 26494160,
+          "duration": 852080
+        },
+        {
+          "text": "the",
+          "offset": 27772910,
+          "duration": 710410
+        },
+        {
+          "text": "strip",
+          "offset": 28767080,
+          "duration": 2698750
+        },
+        {
+          "text": "beside",
+          "offset": 32318330,
+          "duration": 3125000
+        },
+        {
+          "text": "a",
+          "offset": 35443330,
+          "duration": 426250
+        },
+        {
+          "text": "path",
+          "offset": 36863750,
+          "duration": 2698750
+        },
+        {
+          "text": "These",
+          "offset": 50284160,
+          "duration": 2556660
+        },
+        {
+          "text": "can",
+          "offset": 53409160,
+          "duration": 1136250
+        },
+        {
+          "text": "be",
+          "offset": 54971660,
+          "duration": 710410
+        },
+        {
+          "text": "useful",
+          "offset": 56107910,
+          "duration": 3551250
+        },
+        {
+          "text": "places",
+          "offset": 60653330,
+          "duration": 3551250
+        },
+        {
+          "text": "to",
+          "offset": 64914580,
+          "duration": 568330
+        },
+        {
+          "text": "observe",
+          "offset": 65909160,
+          "duration": 4261250
+        },
+        {
+          "text": "Look",
+          "offset": 80823750,
+          "duration": 2414580
+        },
+        {
+          "text": "at",
+          "offset": 83380830,
+          "duration": 1136250
+        },
+        {
+          "text": "what",
+          "offset": 84943330,
+          "duration": 1562500
+        },
+        {
+          "text": "already",
+          "offset": 86647910,
+          "duration": 3125000
+        },
+        {
+          "text": "grows",
+          "offset": 90482910,
+          "duration": 2840830
+        },
+        {
+          "text": "well",
+          "offset": 93750000,
+          "duration": 2130830
+        },
+        {
+          "text": "along",
+          "offset": 96022910,
+          "duration": 2698750
+        },
+        {
+          "text": "yours",
+          "offset": 98863750,
+          "duration": 2414580
+        },
+        {
+          "text": "That",
+          "offset": 112642080,
+          "duration": 1988750
+        },
+        {
+          "text": "is",
+          "offset": 114914580,
+          "duration": 994160
+        },
+        {
+          "text": "the",
+          "offset": 116477080,
+          "duration": 852080
+        },
+        {
+          "text": "land",
+          "offset": 117613750,
+          "duration": 2556660
+        },
+        {
+          "text": "telling",
+          "offset": 121022910,
+          "duration": 2556660
+        },
+        {
+          "text": "you",
+          "offset": 123721660,
+          "duration": 852080
+        },
+        {
+          "text": "something",
+          "offset": 124857910,
+          "duration": 4687500
+        },
+        {
+          "text": "Which",
+          "offset": 139630830,
+          "duration": 2272910
+        },
+        {
+          "text": "edge",
+          "offset": 142471660,
+          "duration": 1562500
+        },
+        {
+          "text": "on",
+          "offset": 144034160,
+          "duration": 994160
+        },
+        {
+          "text": "your",
+          "offset": 145312500,
+          "duration": 710410
+        },
+        {
+          "text": "plot",
+          "offset": 147017080,
+          "duration": 1846660
+        },
+        {
+          "text": "is",
+          "offset": 149005830,
+          "duration": 1136250
+        },
+        {
+          "text": "doing",
+          "offset": 150852080,
+          "duration": 1988750
+        },
+        {
+          "text": "nothing",
+          "offset": 153267080,
+          "duration": 3409160
+        },
+        {
+          "text": "at",
+          "offset": 156960410,
+          "duration": 994160
+        },
+        {
+          "text": "the",
+          "offset": 158380830,
+          "duration": 568330
+        },
+        {
+          "text": "moment",
+          "offset": 159232910,
+          "duration": 4403330
+        }
+      ]
+    },
+    {
+      "slide": 13,
+      "path": "public/course-audio/intro-permaculture/en/slide-13.mp3",
+      "seconds": 27.24,
+      "bytes": 163440,
+      "sourceSha256": "b9088d191d9b07eb1b3fbd2fb1bde1cf49b24923505eaae767a7aaf1b34d6ee1",
+      "audioSha256": "75daebf9901c9703e2236a56e343c3cd3c4064f928bf12ff4755ce7bae7ebaae",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 70,
+      "lastWordEndSeconds": 26.122166,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "Use",
+          "offset": 1068330,
+          "duration": 2840830
+        },
+        {
+          "text": "and",
+          "offset": 3909160,
+          "duration": 1278330
+        },
+        {
+          "text": "value",
+          "offset": 5613750,
+          "duration": 2414580
+        },
+        {
+          "text": "diversity",
+          "offset": 8596660,
+          "duration": 6676250
+        },
+        {
+          "text": "Hail",
+          "offset": 25710410,
+          "duration": 2698750
+        },
+        {
+          "text": "injury",
+          "offset": 28693330,
+          "duration": 3551250
+        },
+        {
+          "text": "to",
+          "offset": 33096660,
+          "duration": 568330
+        },
+        {
+          "text": "maize",
+          "offset": 33948750,
+          "duration": 1988750
+        },
+        {
+          "text": "depends",
+          "offset": 36221660,
+          "duration": 3977080
+        },
+        {
+          "text": "on",
+          "offset": 40625000,
+          "duration": 710410
+        },
+        {
+          "text": "the",
+          "offset": 41761250,
+          "duration": 568330
+        },
+        {
+          "text": "storm",
+          "offset": 42755830,
+          "duration": 3409160
+        },
+        {
+          "text": "and",
+          "offset": 46448750,
+          "duration": 710410
+        },
+        {
+          "text": "the",
+          "offset": 47443330,
+          "duration": 710410
+        },
+        {
+          "text": "crop\u2019s",
+          "offset": 49147910,
+          "duration": 2414580
+        },
+        {
+          "text": "growth",
+          "offset": 52698750,
+          "duration": 2414580
+        },
+        {
+          "text": "stage",
+          "offset": 55255830,
+          "duration": 3977080
+        },
+        {
+          "text": "This",
+          "offset": 70454580,
+          "duration": 2130830
+        },
+        {
+          "text": "principle",
+          "offset": 73437500,
+          "duration": 4403330
+        },
+        {
+          "text": "does",
+          "offset": 78409160,
+          "duration": 1562500
+        },
+        {
+          "text": "not",
+          "offset": 80539580,
+          "duration": 1562500
+        },
+        {
+          "text": "promise",
+          "offset": 83096660,
+          "duration": 3125000
+        },
+        {
+          "text": "that",
+          "offset": 86931660,
+          "duration": 1420410
+        },
+        {
+          "text": "a",
+          "offset": 88494160,
+          "duration": 426250
+        },
+        {
+          "text": "crop",
+          "offset": 89914580,
+          "duration": 2272910
+        },
+        {
+          "text": "will",
+          "offset": 92329580,
+          "duration": 994160
+        },
+        {
+          "text": "survive",
+          "offset": 93607910,
+          "duration": 3835410
+        },
+        {
+          "text": "every",
+          "offset": 98011250,
+          "duration": 2698750
+        },
+        {
+          "text": "event",
+          "offset": 100852080,
+          "duration": 3551250
+        },
+        {
+          "text": "Two",
+          "offset": 115056660,
+          "duration": 1420410
+        },
+        {
+          "text": "others",
+          "offset": 117329580,
+          "duration": 3125000
+        },
+        {
+          "text": "worth",
+          "offset": 120880830,
+          "duration": 2272910
+        },
+        {
+          "text": "knowing",
+          "offset": 123863750,
+          "duration": 3551250
+        },
+        {
+          "text": "produce",
+          "offset": 130255830,
+          "duration": 3977080
+        },
+        {
+          "text": "no",
+          "offset": 134943330,
+          "duration": 1420410
+        },
+        {
+          "text": "waste",
+          "offset": 137073750,
+          "duration": 4119160
+        },
+        {
+          "text": "so",
+          "offset": 142897910,
+          "duration": 1420410
+        },
+        {
+          "text": "scraps",
+          "offset": 144886250,
+          "duration": 3835410
+        },
+        {
+          "text": "become",
+          "offset": 149715830,
+          "duration": 2556660
+        },
+        {
+          "text": "compost",
+          "offset": 152840830,
+          "duration": 4829580
+        },
+        {
+          "text": "and",
+          "offset": 157812500,
+          "duration": 852080
+        },
+        {
+          "text": "compost",
+          "offset": 159517080,
+          "duration": 3551250
+        },
+        {
+          "text": "becomes",
+          "offset": 164062500,
+          "duration": 3125000
+        },
+        {
+          "text": "soil",
+          "offset": 167187500,
+          "duration": 3551250
+        },
+        {
+          "text": "And",
+          "offset": 181250000,
+          "duration": 1704580
+        },
+        {
+          "text": "use",
+          "offset": 183238750,
+          "duration": 1988750
+        },
+        {
+          "text": "small",
+          "offset": 185369160,
+          "duration": 3409160
+        },
+        {
+          "text": "and",
+          "offset": 188778330,
+          "duration": 994160
+        },
+        {
+          "text": "slow",
+          "offset": 190198750,
+          "duration": 1988750
+        },
+        {
+          "text": "solutions",
+          "offset": 192897910,
+          "duration": 5681660
+        },
+        {
+          "text": "a",
+          "offset": 200284160,
+          "duration": 426250
+        },
+        {
+          "text": "bucket",
+          "offset": 201562500,
+          "duration": 2982910
+        },
+        {
+          "text": "can",
+          "offset": 205255830,
+          "duration": 1420410
+        },
+        {
+          "text": "irrigate",
+          "offset": 206960410,
+          "duration": 4545410
+        },
+        {
+          "text": "a",
+          "offset": 211505830,
+          "duration": 568330
+        },
+        {
+          "text": "bed",
+          "offset": 213068330,
+          "duration": 1704580
+        },
+        {
+          "text": "with",
+          "offset": 215056660,
+          "duration": 1562500
+        },
+        {
+          "text": "no",
+          "offset": 217187500,
+          "duration": 1278330
+        },
+        {
+          "text": "electricity",
+          "offset": 218892080,
+          "duration": 7102080
+        },
+        {
+          "text": "at",
+          "offset": 226278330,
+          "duration": 1278330
+        },
+        {
+          "text": "all",
+          "offset": 228267080,
+          "duration": 1846660
+        },
+        {
+          "text": "What",
+          "offset": 240767080,
+          "duration": 2130830
+        },
+        {
+          "text": "would",
+          "offset": 243323750,
+          "duration": 994160
+        },
+        {
+          "text": "one",
+          "offset": 244602080,
+          "duration": 1988750
+        },
+        {
+          "text": "bad",
+          "offset": 247585410,
+          "duration": 1846660
+        },
+        {
+          "text": "day",
+          "offset": 250000000,
+          "duration": 1278330
+        },
+        {
+          "text": "cost",
+          "offset": 252414580,
+          "duration": 2698750
+        },
+        {
+          "text": "you",
+          "offset": 255397910,
+          "duration": 710410
+        },
+        {
+          "text": "right",
+          "offset": 256534160,
+          "duration": 2414580
+        },
+        {
+          "text": "now",
+          "offset": 259375000,
+          "duration": 1846660
+        }
+      ]
+    },
+    {
+      "slide": 14,
+      "path": "public/course-audio/intro-permaculture/en/slide-14.mp3",
+      "seconds": 40.344,
+      "bytes": 242064,
+      "sourceSha256": "59740e3f792c8cb88f6c571e655c6f5069e30d8a3fe3562eaab239674befc39e",
+      "audioSha256": "dba0d44a74e689f14df63783358d46a4d896cb8ba776e3df3b14a17f1752c817",
+      "wordBoundaryTextMatch": true,
+      "wordBoundaries": 107,
+      "lastWordEndSeconds": 39.261374,
+      "fullDecode": "pass",
+      "words": [
+        {
+          "text": "Put",
+          "offset": 1068330,
+          "duration": 1988750
+        },
+        {
+          "text": "each",
+          "offset": 3340830,
+          "duration": 1846660
+        },
+        {
+          "text": "element",
+          "offset": 5613750,
+          "duration": 3409160
+        },
+        {
+          "text": "where",
+          "offset": 9590830,
+          "duration": 1278330
+        },
+        {
+          "text": "it",
+          "offset": 10869160,
+          "duration": 852080
+        },
+        {
+          "text": "works",
+          "offset": 12147910,
+          "duration": 2698750
+        },
+        {
+          "text": "for",
+          "offset": 15272910,
+          "duration": 1278330
+        },
+        {
+          "text": "its",
+          "offset": 17119160,
+          "duration": 1278330
+        },
+        {
+          "text": "neighbours",
+          "offset": 19107910,
+          "duration": 3835410
+        },
+        {
+          "text": "A",
+          "offset": 34659160,
+          "duration": 1136250
+        },
+        {
+          "text": "garden",
+          "offset": 36505830,
+          "duration": 3693330
+        },
+        {
+          "text": "fruit",
+          "offset": 44034160,
+          "duration": 2840830
+        },
+        {
+          "text": "trees",
+          "offset": 47585410,
+          "duration": 3267080
+        },
+        {
+          "text": "and",
+          "offset": 51704580,
+          "duration": 1278330
+        },
+        {
+          "text": "a",
+          "offset": 52982910,
+          "duration": 710410
+        },
+        {
+          "text": "chicken",
+          "offset": 54261250,
+          "duration": 2982910
+        },
+        {
+          "text": "run",
+          "offset": 57528330,
+          "duration": 2130830
+        },
+        {
+          "text": "arranged",
+          "offset": 59659160,
+          "duration": 3692910
+        },
+        {
+          "text": "so",
+          "offset": 63352080,
+          "duration": 1420410
+        },
+        {
+          "text": "the",
+          "offset": 65198750,
+          "duration": 852080
+        },
+        {
+          "text": "chickens",
+          "offset": 66761250,
+          "duration": 3409160
+        },
+        {
+          "text": "rotate",
+          "offset": 70596660,
+          "duration": 3835410
+        },
+        {
+          "text": "through",
+          "offset": 74857910,
+          "duration": 1562500
+        },
+        {
+          "text": "the",
+          "offset": 76988750,
+          "duration": 568330
+        },
+        {
+          "text": "beds",
+          "offset": 78551250,
+          "duration": 2272910
+        },
+        {
+          "text": "after",
+          "offset": 81960410,
+          "duration": 2414580
+        },
+        {
+          "text": "harvest",
+          "offset": 84801250,
+          "duration": 4545410
+        },
+        {
+          "text": "is",
+          "offset": 89488750,
+          "duration": 1136250
+        },
+        {
+          "text": "integration",
+          "offset": 90625000,
+          "duration": 7244160
+        },
+        {
+          "text": "Keep",
+          "offset": 107954580,
+          "duration": 1846660
+        },
+        {
+          "text": "chickens",
+          "offset": 110369160,
+          "duration": 3409160
+        },
+        {
+          "text": "away",
+          "offset": 113778330,
+          "duration": 2272910
+        },
+        {
+          "text": "from",
+          "offset": 116477080,
+          "duration": 1846660
+        },
+        {
+          "text": "crops",
+          "offset": 119176250,
+          "duration": 2840830
+        },
+        {
+          "text": "being",
+          "offset": 122727080,
+          "duration": 1704580
+        },
+        {
+          "text": "harvested",
+          "offset": 124573750,
+          "duration": 5255830
+        },
+        {
+          "text": "for",
+          "offset": 130113750,
+          "duration": 1420410
+        },
+        {
+          "text": "food",
+          "offset": 131960410,
+          "duration": 2982910
+        },
+        {
+          "text": "Fresh",
+          "offset": 145454580,
+          "duration": 3409160
+        },
+        {
+          "text": "manure",
+          "offset": 149147910,
+          "duration": 2840830
+        },
+        {
+          "text": "can",
+          "offset": 152840830,
+          "duration": 1278330
+        },
+        {
+          "text": "carry",
+          "offset": 154971660,
+          "duration": 2414580
+        },
+        {
+          "text": "germs",
+          "offset": 157954580,
+          "duration": 3409160
+        },
+        {
+          "text": "Ask",
+          "offset": 172017080,
+          "duration": 2982910
+        },
+        {
+          "text": "an",
+          "offset": 175142080,
+          "duration": 994160
+        },
+        {
+          "text": "extension",
+          "offset": 176136250,
+          "duration": 5539580
+        },
+        {
+          "text": "adviser",
+          "offset": 181676250,
+          "duration": 4687500
+        },
+        {
+          "text": "how",
+          "offset": 186789580,
+          "duration": 1562500
+        },
+        {
+          "text": "to",
+          "offset": 189204580,
+          "duration": 568330
+        },
+        {
+          "text": "manage",
+          "offset": 190056660,
+          "duration": 2982910
+        },
+        {
+          "text": "the",
+          "offset": 193750000,
+          "duration": 710410
+        },
+        {
+          "text": "bed",
+          "offset": 195454580,
+          "duration": 1704580
+        },
+        {
+          "text": "safely",
+          "offset": 197585410,
+          "duration": 3835410
+        },
+        {
+          "text": "before",
+          "offset": 201846660,
+          "duration": 3267080
+        },
+        {
+          "text": "edible",
+          "offset": 206107910,
+          "duration": 2840830
+        },
+        {
+          "text": "crops",
+          "offset": 209943330,
+          "duration": 2414580
+        },
+        {
+          "text": "return",
+          "offset": 212784160,
+          "duration": 4261250
+        },
+        {
+          "text": "The",
+          "offset": 227272910,
+          "duration": 1278330
+        },
+        {
+          "text": "chickens",
+          "offset": 229119160,
+          "duration": 3551250
+        },
+        {
+          "text": "can",
+          "offset": 233380830,
+          "duration": 1136250
+        },
+        {
+          "text": "clean",
+          "offset": 235369160,
+          "duration": 1988750
+        },
+        {
+          "text": "up",
+          "offset": 237500000,
+          "duration": 1278330
+        },
+        {
+          "text": "pests",
+          "offset": 239772910,
+          "duration": 2414580
+        },
+        {
+          "text": "and",
+          "offset": 243323750,
+          "duration": 1278330
+        },
+        {
+          "text": "add",
+          "offset": 245312500,
+          "duration": 1136250
+        },
+        {
+          "text": "fertility",
+          "offset": 246590830,
+          "duration": 5681660
+        },
+        {
+          "text": "instead",
+          "offset": 252414580,
+          "duration": 3267080
+        },
+        {
+          "text": "of",
+          "offset": 255681660,
+          "duration": 1136250
+        },
+        {
+          "text": "sitting",
+          "offset": 256818330,
+          "duration": 3551250
+        },
+        {
+          "text": "idle",
+          "offset": 260937500,
+          "duration": 2982910
+        },
+        {
+          "text": "in",
+          "offset": 264346660,
+          "duration": 994160
+        },
+        {
+          "text": "a",
+          "offset": 265340830,
+          "duration": 568330
+        },
+        {
+          "text": "fixed",
+          "offset": 266193330,
+          "duration": 2698750
+        },
+        {
+          "text": "pen",
+          "offset": 269886250,
+          "duration": 1988750
+        },
+        {
+          "text": "The",
+          "offset": 282102500,
+          "duration": 1136250
+        },
+        {
+          "text": "same",
+          "offset": 283522910,
+          "duration": 2556660
+        },
+        {
+          "text": "three",
+          "offset": 286647910,
+          "duration": 1846660
+        },
+        {
+          "text": "things",
+          "offset": 289204580,
+          "duration": 3693330
+        },
+        {
+          "text": "fenced",
+          "offset": 296022910,
+          "duration": 3550830
+        },
+        {
+          "text": "apart",
+          "offset": 299573750,
+          "duration": 4261250
+        },
+        {
+          "text": "do",
+          "offset": 306818330,
+          "duration": 710410
+        },
+        {
+          "text": "only",
+          "offset": 308522910,
+          "duration": 1988750
+        },
+        {
+          "text": "their",
+          "offset": 311221660,
+          "duration": 1136250
+        },
+        {
+          "text": "own",
+          "offset": 313210410,
+          "duration": 1704580
+        },
+        {
+          "text": "job",
+          "offset": 315482910,
+          "duration": 2840830
+        },
+        {
+          "text": "Pick",
+          "offset": 327982910,
+          "duration": 1704580
+        },
+        {
+          "text": "two",
+          "offset": 330681660,
+          "duration": 994160
+        },
+        {
+          "text": "or",
+          "offset": 332102500,
+          "duration": 1278330
+        },
+        {
+          "text": "three",
+          "offset": 333806660,
+          "duration": 2130830
+        },
+        {
+          "text": "principles",
+          "offset": 336931660,
+          "duration": 5113750
+        },
+        {
+          "text": "that",
+          "offset": 342329580,
+          "duration": 1562500
+        },
+        {
+          "text": "speak",
+          "offset": 344176250,
+          "duration": 2698750
+        },
+        {
+          "text": "to",
+          "offset": 347443330,
+          "duration": 426250
+        },
+        {
+          "text": "your",
+          "offset": 348295410,
+          "duration": 852080
+        },
+        {
+          "text": "biggest",
+          "offset": 349857910,
+          "duration": 2840830
+        },
+        {
+          "text": "problem",
+          "offset": 353551250,
+          "duration": 3551250
+        },
+        {
+          "text": "and",
+          "offset": 357244160,
+          "duration": 1136250
+        },
+        {
+          "text": "apply",
+          "offset": 358380830,
+          "duration": 3125000
+        },
+        {
+          "text": "them",
+          "offset": 362073750,
+          "duration": 1420410
+        },
+        {
+          "text": "hard",
+          "offset": 363494160,
+          "duration": 3409160
+        },
+        {
+          "text": "The",
+          "offset": 377415000,
+          "duration": 852080
+        },
+        {
+          "text": "rest",
+          "offset": 378409160,
+          "duration": 2130830
+        },
+        {
+          "text": "become",
+          "offset": 381250000,
+          "duration": 2556660
+        },
+        {
+          "text": "obvious",
+          "offset": 384517080,
+          "duration": 3267080
+        },
+        {
+          "text": "as",
+          "offset": 387926250,
+          "duration": 1420410
+        },
+        {
+          "text": "you",
+          "offset": 389488750,
+          "duration": 710410
+        },
+        {
+          "text": "go",
+          "offset": 390909160,
+          "duration": 1704580
+        }
+      ]
+    }
+  ],
+  "full": {
+    "path": "public/course-audio/intro-permaculture/en/full.mp3",
+    "seconds": 530.256,
+    "sumOfSlideDurationsSeconds": 530.256,
+    "durationDifferenceSeconds": 0.0,
+    "audioSha256": "2c89d4c8daf80a392b085900be549f8a679d804820c12c2f0fbcc6bb3c3eedcd",
+    "bytes": 3181580,
+    "fullDecode": "pass",
+    "inputs": [
+      {
+        "slide": 1,
+        "seconds": 23.808,
+        "audioSha256": "a0e826184bc0a525b3ce1b15787b18dec81bc96d3bd34dc05d167fbae4dea568"
+      },
+      {
+        "slide": 2,
+        "seconds": 22.296,
+        "audioSha256": "967efc3bf9bc67ec8f51226f84fee88af6261dac0ab2098d6ac2b2505a41cbb3"
+      },
+      {
+        "slide": 3,
+        "seconds": 19.632,
+        "audioSha256": "32691195bec83b4d805d44c5d049404fdb027d6aebc2c77b075add433004999f"
+      },
+      {
+        "slide": 4,
+        "seconds": 19.632,
+        "audioSha256": "99a88c21eab80e8f07e60f2e0c2f67a78f02e25766c030e2daeab12d6013f654"
+      },
+      {
+        "slide": 5,
+        "seconds": 18.768,
+        "audioSha256": "df29f7e9082fdcbb9821ec89257021ab683ebcab95a8e6da880f498f45e83e67"
+      },
+      {
+        "slide": 6,
+        "seconds": 22.44,
+        "audioSha256": "92bbe194042946b95891e4b733f7b594ad28332b9b2bd831b5072e77cfdb1bb9"
+      },
+      {
+        "slide": 7,
+        "seconds": 33.264,
+        "audioSha256": "c29326f42f16f572e511a82adbb7b477a03413cc561d6010bcdf96338375f766"
+      },
+      {
+        "slide": 8,
+        "seconds": 23.496,
+        "audioSha256": "37ac3ffd512af05705ee60756ac4a2af9d63935d343819aa57f326eb66f0fe88"
+      },
+      {
+        "slide": 9,
+        "seconds": 24.192,
+        "audioSha256": "3f6f91f97319fe54dbf2d781c6f393ea334c000bcf10520161bd7b63b2d878f6"
+      },
+      {
+        "slide": 10,
+        "seconds": 38.736,
+        "audioSha256": "f6441d294295b34869121bcfc27350f52a9f4c39e3a527a864cde2b480cc0164"
+      },
+      {
+        "slide": 11,
+        "seconds": 21.576,
+        "audioSha256": "4180cd6be6711fbb6298ee66ef26c8c7d145578160d57d930e7c6a6a1b1f7733"
+      },
+      {
+        "slide": 12,
+        "seconds": 17.4,
+        "audioSha256": "71df88fc183a41a7ab589773a1ea630f23ac24244e5123824a0bbce3076bc239"
+      },
+      {
+        "slide": 13,
+        "seconds": 27.24,
+        "audioSha256": "75daebf9901c9703e2236a56e343c3cd3c4064f928bf12ff4755ce7bae7ebaae"
+      },
+      {
+        "slide": 14,
+        "seconds": 40.344,
+        "audioSha256": "dba0d44a74e689f14df63783358d46a4d896cb8ba776e3df3b14a17f1752c817"
+      },
+      {
+        "slide": 15,
+        "seconds": 27.936,
+        "audioSha256": "2d9531a31000402873b6681067ecb59b63b43b9430a09b329707bf7c17469ab2"
+      },
+      {
+        "slide": 16,
+        "seconds": 21.504,
+        "audioSha256": "87639ca89f087b3ae5a081ecb6acb2ed1e00c978820143289c5460b71be539f6"
+      },
+      {
+        "slide": 17,
+        "seconds": 21.672,
+        "audioSha256": "ce03ad5b22fc252b92164ec17e3eabe01bde5d95c0729bbdd49547dd44e44c29"
+      },
+      {
+        "slide": 18,
+        "seconds": 22.416,
+        "audioSha256": "71d0deda07c469e5bbcdb409e374539d2c461856b20aaed744b1a8beddd8cf1b"
+      },
+      {
+        "slide": 19,
+        "seconds": 29.376,
+        "audioSha256": "455bdf3b8fbfb0a6437b7309894117680f13557144a77654e754f297b28ef24e"
+      },
+      {
+        "slide": 20,
+        "seconds": 21.12,
+        "audioSha256": "fc68a2ad4764da258934ba0c95051aba5f229ebc1abedc4bf64d1a2488b60830"
+      },
+      {
+        "slide": 21,
+        "seconds": 15.624,
+        "audioSha256": "570b9f81b982616666b392356804982fd736b1d166a18aa590a01a42dfcee76d"
+      },
+      {
+        "slide": 22,
+        "seconds": 17.784,
+        "audioSha256": "1d799fa44a215d72fe996a73ac70054dcc43941022e33709d40545d7a3e53e43"
+      }
+    ]
+  },
+  "humanListeningReview": false
+}

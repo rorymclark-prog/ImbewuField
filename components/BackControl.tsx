@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { usePathname, useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { floatingBackAllowed } from '@/lib/back-routes';
+import { useLanguage } from '@/lib/i18n';
 
 /**
  * ONE WAY BACK, ON EVERY PAGE (Rory: "we need a simple go back to the last page button for
@@ -40,6 +41,7 @@ export function useRegisterBackControl(): void {
 
 export default function BackControlProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const { lang, t } = useLanguage();
   const pathname = usePathname();
   // A count, not a boolean: two in-flow controls unmounting in either order must not leave the
   // registry claiming one is still present.
@@ -67,8 +69,8 @@ export default function BackControlProvider({ children }: { children: React.Reac
       {show && (
         <button
           onClick={goBack}
-          aria-label="Go back"
-          title="Back"
+          aria-label={lang === 'zu' ? 'Buyela emuva' : 'Go back'}
+          title={t('buttonBack')}
           style={{
             position: 'fixed',
             top: 'calc(env(safe-area-inset-top, 0px) + 10px)',
@@ -98,7 +100,7 @@ export default function BackControlProvider({ children }: { children: React.Reac
           }}
         >
           <ChevronLeft size={16} strokeWidth={2.2} />
-          <span>Back</span>
+          <span>{t('buttonBack')}</span>
         </button>
       )}
     </BackContext.Provider>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { X, Camera, Trash2, Loader2 } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 import { resizeForStorage } from '@/lib/site-evidence';
 import {
   JOURNAL_CATEGORIES,
@@ -15,6 +16,7 @@ import {
 } from '@/lib/field-journal';
 import { getElementArt2 } from '@/lib/element-art-2';
 import motion from './JournalMotion.module.css';
+import { journalCategoryLabel } from './journal-labels';
 
 export interface BedOption {
   id: string;
@@ -35,6 +37,9 @@ interface Props {
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
 export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose }: Props) {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const [date, setDate] = useState(entry?.date ?? todayISODate());
   const [title, setTitle] = useState(entry?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? '');
@@ -66,7 +71,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         // localStorage quota on the first entry and silently lose the farmer's notes.
         next.push(await resizeForStorage(file, 400));
       } catch {
-        setPhotoError('That photo could not be read. Try again.');
+        setPhotoError(ui('That photo could not be read. Try again.', 'Leso sithombe asikwazanga ukufundwa. Zama futhi.'));
       }
     }
     setPhotos(next);
@@ -119,18 +124,18 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>
-                {entry ? 'Edit journal entry' : 'New journal entry'}
+              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
+                {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#8A7C62', marginTop: 1 }}>
-                Date, weather, action and result — those four make a note useful later.
+              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
+                {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#8A7C62' }}
+              aria-label={ui('Close', 'Vala')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text-muted)' }}
             >
               <X size={20} />
             </button>
@@ -140,7 +145,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Category — big tap targets, wraps on a phone */}
           <div>
-            <Label>What kind of note?</Label>
+            <Label>{ui('What kind of note?', 'Lolu hlobo luni lwenothi?')}</Label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
               {JOURNAL_CATEGORIES.map((c) => {
                 const on = c.key === category;
@@ -164,7 +169,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                     ) : (
                       <span style={{ fontSize: 15 }}>{c.icon}</span>
                     )}
-                    {c.label}
+                    {isZulu ? journalCategoryLabel(c.key) : c.label}
                   </button>
                 );
               })}
@@ -172,7 +177,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
 
           <div>
-            <Label>Date</Label>
+            <Label>{ui('Date', 'Usuku')}</Label>
             <input
               type="date"
               value={date}
@@ -182,24 +187,24 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
 
           <div>
-            <Label>Title</Label>
+            <Label>{ui('Title', 'Isihloko')}</Label>
             <input
               type="text"
               value={title}
               maxLength={MAX_TITLE_LEN}
-              placeholder="e.g. First chard cut from Bed 1"
+              placeholder={ui('e.g. First chard cut from Bed 1', 'isib. Ukuvunwa kokuqala kwe-chard embhedeni 1')}
               onChange={(e) => setTitle(e.target.value)}
               style={inputStyle}
             />
           </div>
 
           <div>
-            <Label>Notes</Label>
+            <Label>{ui('Notes', 'Amanothi')}</Label>
             <textarea
               value={notes}
               rows={5}
               maxLength={MAX_NOTES_LEN}
-              placeholder="What did you see, what did you do, what happened after?"
+              placeholder={ui('What did you see, what did you do, what happened after?', 'Uboneni, wenzeni, kwenzekeni ngemva kwalokho?')}
               onChange={(e) => setNotes(e.target.value)}
               style={{ ...inputStyle, minHeight: 110, resize: 'vertical', lineHeight: 1.5 }}
             />
@@ -207,29 +212,29 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           <div style={{ display: 'flex', gap: 10 }}>
             <div style={{ flex: 1 }}>
-              <Label>Bed / plot</Label>
+              <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
               {beds.length > 0 ? (
                 <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
-                  <option value="">Not linked</option>
+                  <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
                   {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
                 </select>
               ) : (
                 <input
                   type="text"
                   value={bedLabel}
-                  placeholder="e.g. Bed 4"
+                  placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
                   onChange={(e) => setBedLabel(e.target.value)}
                   style={inputStyle}
                 />
               )}
             </div>
             <div style={{ flex: 1 }}>
-              <Label>Crop</Label>
+              <Label>{ui('Crop', 'Isitshalo')}</Label>
               <input
                 type="text"
                 list="journal-crop-options"
                 value={cropName}
-                placeholder="Optional"
+                placeholder={ui('Optional', 'Akudingeki')}
                 onChange={(e) => setCropName(e.target.value)}
                 style={inputStyle}
               />
@@ -241,7 +246,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           {/* Photos */}
           <div>
-            <Label>Photos {photos.length > 0 ? `· ${photos.length}/${MAX_PHOTOS_PER_ENTRY}` : ''}</Label>
+            <Label>{ui('Photos', 'Izithombe')} {photos.length > 0 ? `· ${photos.length}/${MAX_PHOTOS_PER_ENTRY}` : ''}</Label>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
               {photos.map((src, i) => (
                 <div key={`${i}-${src.slice(-12)}`} style={{ position: 'relative', width: 68, height: 68, borderRadius: 10, overflow: 'hidden', background: '#E0D6C2' }}>
@@ -249,7 +254,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
                     type="button"
-                    aria-label="Remove photo"
+                    aria-label={ui('Remove photo', 'Susa isithombe')}
                     onClick={() => setPhotos(photos.filter((_, idx) => idx !== i))}
                     style={{
                       position: 'absolute', top: 2, right: 2, width: 22, height: 22, borderRadius: 11,
@@ -268,13 +273,13 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   disabled={busy}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
-                    background: '#FFFEFA', border: '1.5px dashed #CFC4AC', color: '#3C6B3F',
+                    background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
                     font: '600 10px/1 system-ui, sans-serif',
                   }}
                 >
                   {busy ? <Loader2 size={18} className="animate-spin" /> : <Camera size={18} />}
-                  {busy ? '' : 'Add'}
+                  {busy ? '' : ui('Add', 'Engeza')}
                 </button>
               )}
             </div>
@@ -301,12 +306,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               onClick={() => onDelete(entry.id)}
               style={{
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: '#FFFEFA', border: '1.5px solid #E7C9C6', color: '#9B3630',
+                background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
                 font: '600 14px/1 system-ui, sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
               <Trash2 size={16} />
-              Delete
+              {ui('Delete', 'Susa')}
             </button>
           )}
           <button
@@ -319,7 +324,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               color: '#fff', font: '700 15px/1 system-ui, sans-serif',
             }}
           >
-            {entry ? 'Save changes' : 'Save entry'}
+            {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}
           </button>
         </div>
       </form>
@@ -330,12 +335,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 const inputStyle: React.CSSProperties = {
   width: '100%',
   minHeight: 46,
-  background: '#FFFEFA',
-  border: '1px solid #E2D8C4',
+  background: 'var(--bg-1)',
+  border: '1px solid var(--border)',
   borderRadius: 11,
   padding: '11px 12px',
   font: '400 15px/1.2 system-ui, sans-serif',
-  color: '#20190F',
+  color: 'var(--text-primary)',
   outline: 'none',
 };
 
@@ -343,7 +348,7 @@ function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: '#8A7C62', marginBottom: 8,
+      textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}
     </div>

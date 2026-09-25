@@ -1,14 +1,9 @@
 #!/usr/bin/env node
 // How much of the course a farmer can READ in their own language — as opposed to hear.
 //
-// WHY THIS EXISTS: the app's UI dictionary is in good shape (lib/i18n.tsx carries eleven
-// languages and 95-98% of each locale's keys are genuinely translated). That healthy number hides
-// the actual gap, because the course does not go through the dictionary at all: every module
-// title, lesson title, lesson body, key point, quiz question, option and rationale is a plain
-// English string in lib/course-modules.ts.
+// WHY THIS EXISTS: a translated UI dictionary can hide English lesson bodies and quizzes.
 //
-// The asymmetry is the point. What a farmer HEARS is translated — docs/narration/<module>.zu.md
-// exists for all ten modules. What a farmer READS on the same screen is English.
+// A .zu.md draft is not a recording. Count actual audio files separately from scripts.
 //
 // This measures it rather than asserting it, and it re-measures as the course grows, because the
 // untranslated surface grows with the curriculum.
@@ -16,7 +11,7 @@
 // USAGE
 //   npm run course:i18n-status
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -53,23 +48,25 @@ for (const m of COURSE_MODULES) {
   }
 }
 
-// Locale coverage in the UI dictionary, read from the source rather than imported: i18n.tsx is a
-// client component and importing it here would drag React in for no reason.
+// Count direct literal keys from the English and isiZulu source chunks. Both also spread
+// English-pending groups, which are deliberately omitted from this direct-key measure.
+// Importing i18n.tsx here would drag a client component and React into a CLI report.
 function dictionaryCoverage() {
-  const src = readFileSync(join(ROOT, 'lib/i18n.tsx'), 'utf8');
-  const body = src.slice(src.indexOf('const T: Record<string, Dict> = {'));
-  const heads = [...body.matchAll(/^ {2}([a-z]{2,3}): \{/gm)].map((m) => ({ code: m[1], at: m.index }));
-  const out = {};
-  for (let i = 0; i < heads.length; i++) {
-    const end = i + 1 < heads.length ? heads[i + 1].at : body.length;
-    const chunk = body.slice(heads[i].at, end);
+  function directKeys(path, marker) {
+    const src = readFileSync(join(ROOT, path), 'utf8');
+    const start = src.indexOf(marker);
+    if (start < 0) throw new Error(`Locale source marker missing: ${path}`);
+    const chunk = src.slice(start + marker.length).split('\n};', 1)[0];
     const d = {};
-    for (const m of chunk.matchAll(/^ {4}([A-Za-z0-9_]+): ('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/gm)) {
+    for (const m of chunk.matchAll(/^ {2}([A-Za-z0-9_]+): ('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/gm)) {
       d[m[1]] = m[2].slice(1, -1);
     }
-    out[heads[i].code] = d;
+    return d;
   }
-  return out;
+  return {
+    en: directKeys('lib/i18n.tsx', 'const T_en: Dict = {'),
+    zu: directKeys('lib/locales/zu.ts', 'const dict: Dict = {'),
+  };
 }
 
 console.log('');
@@ -88,24 +85,36 @@ for (const [name, list] of Object.entries(buckets)) {
 }
 console.log(`   ${'TOTAL'.padEnd(18)} ${String(totalStrings).padStart(4)} strings  ${String(totalWords).padStart(6)} words`);
 console.log('');
-console.log('  Every one of those is English only. There is no per-language field on a module,');
-console.log('  a lesson or a quiz, so no translation of them can be stored even if one existed.');
+console.log('  These are the English source strings. Learner-visible localized data and');
+console.log('  its review status must be measured separately from the UI dictionary.');
 
 const dict = dictionaryCoverage();
 const en = dict.en ?? {};
 console.log('');
-console.log('  UI DICTIONARY — lib/i18n.tsx, for comparison');
+console.log('  UI DICTIONARY — direct literal keys, excluding English-pending spreads');
 console.log('');
 console.log(`   en    ${String(Object.keys(en).length).padStart(4)} keys`);
 for (const [code, d] of Object.entries(dict)) {
   if (code === 'en') continue;
   const keys = Object.keys(d);
-  const same = keys.filter((k) => en[k] !== undefined && en[k] === d[k]).length;
-  const pct = keys.length ? Math.round(((keys.length - same) / keys.length) * 100) : 0;
-  console.log(`   ${code.padEnd(5)} ${String(keys.length).padStart(4)} keys  ${String(pct).padStart(3)}% carry a value different from English`);
+  const englishKeys = Object.keys(en);
+  const covered = englishKeys.filter((key) => Object.hasOwn(d, key));
+  const missing = englishKeys.filter((key) => !Object.hasOwn(d, key));
+  const localeOnly = keys.filter((key) => !Object.hasOwn(en, key));
+  const same = covered.filter((key) => en[key] === d[key]).length;
+  console.log(`   ${code.padEnd(5)} ${String(keys.length).padStart(4)} direct keys`);
+  console.log(`         English keys present: ${covered.length}/${englishKeys.length}; missing: ${missing.length}; locale-only: ${localeOnly.length}`);
+  console.log(`         Values identical to English: ${same}/${covered.length} (not a fluency or route-coverage measure)`);
 }
 
+const zuAudio = COURSE_MODULES.map((m) => {
+  const dir = join(ROOT, 'public/course-audio', m.id, 'zu');
+  const clips = existsSync(dir) ? readdirSync(dir).filter((f) => /^slide-\d+\.mp3$/.test(f)).length : 0;
+  return { id: m.id, clips };
+});
+const recorded = zuAudio.filter((r) => r.clips > 0);
 console.log('');
-console.log('  THE ASYMMETRY: docs/narration/<module>.zu.md exists for all ten modules, so what a');
-console.log('  farmer HEARS is translated. What they READ on the same screen is not.');
+console.log(`  ISIZULU AUDIO — ${recorded.length}/${COURSE_MODULES.length} modules have recorded slide clips`);
+for (const row of recorded) console.log(`   ${row.id}: ${row.clips} clips`);
+console.log('  A narration draft alone is neither a reviewed translation nor learner audio.');
 console.log('');

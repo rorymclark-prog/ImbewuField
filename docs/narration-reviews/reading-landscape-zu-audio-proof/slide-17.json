@@ -1,0 +1,112 @@
+{
+  "seconds": 16.08,
+  "bytes": 96480,
+  "audioSha256": "8ea251d2093e3bce4ae25def8551b837ebb92f00e77e77350bc872df574ac27b",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Sebenzisa",
+      "offset": 1318330,
+      "duration": 7244160
+    },
+    {
+      "text": "isithombe",
+      "offset": 9130830,
+      "duration": 6818330
+    },
+    {
+      "text": "njengesiqondiso",
+      "offset": 16090830,
+      "duration": 12215830
+    },
+    {
+      "text": "umngcele",
+      "offset": 29585410,
+      "duration": 7528330
+    },
+    {
+      "text": "izakhiwo",
+      "offset": 38676250,
+      "duration": 8664580
+    },
+    {
+      "text": "imigwaqo",
+      "offset": 49045410,
+      "duration": 8664580
+    },
+    {
+      "text": "amanzi",
+      "offset": 59130830,
+      "duration": 7954580
+    },
+    {
+      "text": "imithambeka",
+      "offset": 69215830,
+      "duration": 9090830
+    },
+    {
+      "text": "nemicibisholo",
+      "offset": 78306660,
+      "duration": 9943330
+    },
+    {
+      "text": "ekhombisa",
+      "offset": 88534160,
+      "duration": 7102080
+    },
+    {
+      "text": "izinkomba",
+      "offset": 95920410,
+      "duration": 7812500
+    },
+    {
+      "text": "Dweba",
+      "offset": 114170410,
+      "duration": 3693330
+    },
+    {
+      "text": "okukhona",
+      "offset": 118573750,
+      "duration": 6676250
+    },
+    {
+      "text": "kakade",
+      "offset": 125250000,
+      "duration": 5113750
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 130363750,
+      "duration": 4971660
+    },
+    {
+      "text": "kokuhlela",
+      "offset": 135335410,
+      "duration": 6392080
+    },
+    {
+      "text": "izinguquko",
+      "offset": 142011250,
+      "duration": 9090830
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "reading-landscape",
+  "lesson": "reading-landscape-l4",
+  "language": "zu",
+  "slide": 17,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-17.txt",
+  "sourceSha256": "8f724ed25551ae5b0a0ab8be451e792b7b645e4bd8b5974ad1a21a5aaa570846",
+  "scriptFile": "docs/narration/reading-landscape.zu.md",
+  "scriptSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+  "englishSourceFile": "docs/narration/reading-landscape.en.md",
+  "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "70d193ffe2fe07f05039b5f445b21fb38634150990fe04867eafd57c1cc44c76",
+  "generatedAt": "2026-09-24T13:48:10.028806+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

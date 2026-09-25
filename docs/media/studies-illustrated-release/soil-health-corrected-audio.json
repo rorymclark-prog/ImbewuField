@@ -3,8 +3,8 @@
   "voice": "en-ZA-LukeNeural",
   "rate": "-12%",
   "human_review": false,
-  "publication_status": "CORRECTED ENGLISH \u2014 automated verification; listening review pending",
-  "source_script_sha256": "333d9251a64a8ac7e80abebcc27cfb4cf6fc9cdbcbba466c5867328d6cf0b838",
+  "publication_status": "UPDATED ENGLISH CORRECTIONS — automated verification; listening review pending",
+  "source_script_sha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
   "clips": [
     {
       "slide": 1,
@@ -125,10 +125,10 @@
     },
     {
       "slide": 14,
-      "source_sha256": "b67b14cfd45ade47dde91b4a71621b8955813d5dd5a2bdc516792a60928a51b3",
-      "audio_sha256": "d19c7c60bf552f82422020f4164242893a455a1050411adbbe4931b5f3d17e8e",
-      "seconds": 8.448,
-      "last_word_end": 7.443207,
+      "source_sha256": "f4d904df2baa0f0669ce58889f26545d8666ef79c86aa7fd6c80e2465bb1b659",
+      "audio_sha256": "c3dd4ac92812406fff51100253d5c79f6dcb44d3e09cdde0f4a509faeeb677f6",
+      "seconds": 15.888,
+      "last_word_end": 14.815333,
       "text_match": true,
       "full_decode": "pass"
     },
@@ -152,19 +152,19 @@
     },
     {
       "slide": 17,
-      "source_sha256": "0f95fcfcf16125ef11a5724f683f1181bf259d38d01844d82c574e4331d5acd0",
-      "audio_sha256": "73d059a0b69a68175f73a0b95de8b61434a7f51fdd633b9cf302df1dc203f79d",
-      "seconds": 24.576,
-      "last_word_end": 23.536916,
+      "source_sha256": "5249d52cdf2ff55a3d6e82e30e015bb443dae202b9bc191be5fcafcb492962d6",
+      "audio_sha256": "d15c179c4f4175f8512e64d63469b6063f2165ba835722e087efa25285150351",
+      "seconds": 25.344,
+      "last_word_end": 24.289791,
       "text_match": true,
       "full_decode": "pass"
     },
     {
       "slide": 18,
-      "source_sha256": "39c8cf9a81dc05f5353d003dda886c879badc27c2a9ebd0a5c90de463b5c43dd",
-      "audio_sha256": "c0e636ac0af71fe31295788f5918cbd68f2d5ab938d6ffdf3ccf1b786e3bc866",
-      "seconds": 18.864,
-      "last_word_end": 17.826708,
+      "source_sha256": "d046cf028dc5fa30cac8069d1c3bab4c501b6e31993ee58c413cdb9c704dbaa5",
+      "audio_sha256": "a5be0990f48c5be81dca8c6f17557b5a0375b49c0dc03630dc7a44760b517f20",
+      "seconds": 24.0,
+      "last_word_end": 22.940332,
       "text_match": true,
       "full_decode": "pass"
     },
@@ -186,5 +186,11 @@
       "text_match": true,
       "full_decode": "pass"
     }
-  ]
+  ],
+  "full_audio": {
+    "path": "public/course-audio/soil-health/en/full.mp3",
+    "audio_sha256": "1b8ed0ff516d0296272575914303db94f720ceb3f3382684011d28a92fa926c9",
+    "seconds": 413.808,
+    "full_decode": "pass"
+  }
 }

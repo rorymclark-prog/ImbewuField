@@ -8,7 +8,7 @@ export type PlaceLabel = 'home' | 'field' | 'water' | 'other';
 
 // The label sets the pin colour on the map.
 export const PLACE_LABELS: { v: PlaceLabel; name: string; color: string }[] = [
-  { v: 'home',  name: 'Home',  color: '#C07A1E' },
+  { v: 'home',  name: 'Home',  color: '#7A4408' },
   { v: 'field', name: 'Field', color: '#1F4D2B' },
   { v: 'water', name: 'Water', color: '#235E86' },
   { v: 'other', name: 'Other', color: '#5C5040' },

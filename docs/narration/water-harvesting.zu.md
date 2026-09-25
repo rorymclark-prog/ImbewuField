@@ -1,227 +1,202 @@
-REVIEW UPDATE — 20 September 2026: the English water-safety and sizing claims have been corrected. This draft and its old audio are stale and must not be published. Reconcile slides 2, 6, 8–11, 13–22 with the English source before fluent review or recording.
-
 **Ikhasi 1 — Ukuvunwa Kwamanzi (Slide 1 — Water Harvesting)**
 
-
-Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye ne-greywater — bambezela, sakaza futhi shonisa wonke amaconsi.
+Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye namanzi asetshenzisiwe asekhaya — nciphisa ukugeleza, usakaze amanzi, futhi uwavumele angene lapho umhlabathi nendawo kukufanele.
 
 ---
 
 **Ikhasi 2 — Imiphumela Yokufunda (Slide 2 — Learning Outcomes)**
 
-I-swale ingumsele oyisicaba osemgqeni wekhontolo — ishonisa amanzi, ayiwahambisi eceleni.
+Chaza ukuthi i-swale elandela umugqa olinganayo ingabambezela futhi isabalalise kanjani amanzi agelezayo ukuze angene emhlabathini ofanele.
 
-Dweba i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.
+Chaza ukuthi kungani idamu lidinga i-spillway eklanyiwe nokuhlolwa kwendawo.
 
-Isiphambukisi samanzi okuqala sisusa amanzi okuqala angcolile njalo uma lina.
+Chaza umsebenzi wesiphambukisi samanzi okuqala nokuthi kungani amanzi ethangi esadinga ukuhlolwa kokuphepha.
 
-Hambisa i-greywater emigodini egcwele i-mulch ezungeze izihlahla zezithelo, ungalokothi uyihambise emifinweni edliwa iluhlaza.
-
----
-
-**Ikhasi 3 — Ama-Swale Abambezela Amanzi Emthambekeni (Slide 3 — Swales Slow Water on the Slope)**
-
-I-swale ingumsele oyisicaba ombiwa emgqeni wekhontolo — awutshekile, uyalingana ngokuphelele kusukela ekuqaleni kuye ekugcineni — ukuze amanzi awugcwalise ngokulingana futhi angene emhlabathini kunokuba ageleze ahambe.
-
-Umhlabathi ombiwe wenza i-berm ohlangothini olungezansi komthambeka.
-
-Izihlahla ezitshalwe lapho zisebenzisa amanzi agcinwe emhlabathini isikhathi eside ngemva kokuba imvula imile.
+Gcina amanzi asetshenzisiwe kude nabantu, nokudla, namapayipi amanzi okuphuza.
 
 ---
 
-**Ikhasi 4 — Buka: I-Swale Ishonisa Amanzi (Slide 4 — Watch: A Swale Sinks Water)**
+**Ikhasi 3 — Izinhlobo Ezimbili Zama-Swale (Slide 3 — Two Swale Designs)**
 
-I-swale ingumsele oyisicaba osemgqeni wekhontolo — ishonisa amanzi, ayiwahambisi eceleni.
+I-swale elandela umugqa olinganayo we-contour ingenye indlela yokubambezela amanzi agelezayo. Umsele wayo ulandela umugqa olinganayo ukuze amanzi asabalale futhi angene emhlabathini ofanele.
+
+Amanye ama-swale aklanywa abe nomthambeka omncane olawulwayo, nendawo yokuphuma ephephile eklanyiwe. Umhlabathi, umthambeka, ukugeleza kwamanzi nokugeleza kwamanzi eziphepho kunquma ukuthi iyiphi indlela efanele. Cela umeluleki wendawo oqeqeshiwe ahlole indawo ngaphambi kokumba.
+
+---
+
+**Ikhasi 4 — I-Swale Ingavumela Amanzi Angene Emhlabathini (Slide 4 — A Swale May Let Water Soak In)**
+
+Lesi sithombe sibonisa i-swale elinganayo ku-contour njengomqondo. Amanzi angasabalala emseleni futhi angene emhlabathini lapho umhlabathi ukuvumela khona.
+
+Isithombe asibonisi ukuthi umswakama uzofika ujule kangakanani emhlabeni wakho. Hlola umhlabathi, umthambeka nendlela yokuchichima ngaphambi kokwakha.
+
+---
+
+**Ikhasi 5 — I-Berm Esehlangothini Eliphansi (Slide 5 — The Downhill Berm)**
+
+Umhlabathi ombiwe wakha i-berm ohlangothini olungaphansi komthambeka. Izihlahla zingatshalwa lapho uma uhlelo lwendawo lufanele.
+
+Izihlahla zingasebenzisa umswakama ogcinwe emhlabathini oseduze ngemva kwemvula; umphumela uyashiyana kuye ngendawo.
+
+---
+
+**Ikhasi 6 — Iziphepho Zidinga Indlela Ephephile Yokuchichima (Slide 6 — Storms Need a Safe Overflow)**
+
+Imvula enkulu ingagcwalisa i-swale ngokushesha kunokuba amanzi angene emhlabathini. Hlela indlela ephephile yokuchichima ngaphambi kokumba.
+
+Indlela akufanele igugule umthambeka noma ithumele amanzi alimazayo komakhelwane. I-swale noma idamu elingezansi kufanele likwazi ukwamukela la manzi ngokuphepha.
+
+Cela umeluleki wendawo oqeqeshiwe ahlole umhlabathi, umthambeka nokugeleza kwamanzi eziphepho. Isithombe asiwona umklamo wokwakha.
+
+---
+
+**Ikhasi 7 — Hlola Indlela Yokuchichima Ngaphambi Kokumba (Slide 7 — Assess the Overflow Before Digging)**
+
+I-swale idinga indlela yokuchichima ehleliwe uma kunemvula enkulu. Yihlole ngaphambi kokumba.
 
 [pause]
 
-Amanzi awugcwalisa ngokulingana futhi angene emhlabathini kunokuba ageleze ahambe.
+Amanzi angaya kwenye i-swale noma edamini kuphela uma ukuhlolwa kwendawo kukhombisa ukuthi indlela, indawo yokuphuma nendawo ezowamukela kungawamukela amanzi ngaphandle komonakalo.
 
 ---
 
-**Ikhasi 5 — Tshala E-Berm Engasezansi (Slide 5 — Plant on the Downhill Berm)**
+**Ikhasi 8 — Hlola Indawo Ngaphambi Kokumba (Slide 8 — Check the Site Before Digging)**
 
-Umhlabathi ombiwe wenza i-berm ohlangothini olungezansi komthambeka.
+Umthambeka wodwa awusho ukuthi i-swale iyayifanelekela yini indawo. Umhlabathi, ukugeleza kwamanzi, umhlaba ongazinzile namanzi afika evela phezulu komthambeka kubalulekile.
 
-I-berm, indunduma yomhlabathi ombiwe engasezansi komthambeka, yilapho utshala khona izihlahla.
-
-Izihlahla ezitshalwe lapho zisebenzisa amanzi agcinwe emhlabathini isikhathi eside ngemva kokuba imvula imile.
+Gcina umhlabathi umbozekile. Thola ukuhlolwa kwendawo ngaphambi kokumba endaweni ewummango, emanzi noma engazinzile. Imigoqo yotshani nama-terrace nakho kudinga ukwakhelwa indawo efanele.
 
 ---
 
-**Ikhasi 6 — Iziphepho Zidinga Indawo Ephephile Yokuchichima (Slide 6 — Storms Need a Safe Overflow)**
+**Ikhasi 9 — Buka: Izimpande Zisiza Ukubamba Umhlabathi (Slide 9 — Watch: Roots Help Hold Soil)**
 
-E-Highveld, iziphepho zingaletha imvula engu-50 kuya ku-80mm ngehora, ngakho yakha i-swale yakho ibe nendawo ephephile yokuchichima ekugcineni, eholela ku-swale elandelayo noma edamini.
+Izimpande zisiza ukubamba umhlabathi emgqeni otshaliwe we-contour.
 
-Indawo yokuchichima engenandawo yokuhambisa amanzi ingabhodloza i-berm futhi idale wona umhosha owawuzama ukuwuvimbela.
+Khetha izindlela zokulawula ukuguguleka komhlabathi ngosizo lwendawo; umhlaba omqansa udinga ukuhlolwa kwendawo.
 
 ---
 
-**Ikhasi 7 — Buka: Indawo Yokuchichima (Slide 7 — Watch: The Overflow Point)**
+**Ikhasi 10 — Gcina Amanzi Emvula Esikhathi Esomile (Slide 10 — Store Rain for the Dry Season)**
 
-Faka indawo ephephile yokuchichima ukuze iziphepho zingabhodlozi i-berm.
+Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.
+
+Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.
+
+Ngaphambi kokushintsha umfula noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo.
+
+---
+
+**Ikhasi 11 — Klama I-Spillway Ngaphambi Kodonga (Slide 11 — Design the Spillway Before the Wall)**
+
+Idamu lidinga ukuhlolwa kwendawo nokuklanywa ngumuntu oneziqu nolwazi olufanele. Amanzi agelezayo aya edamini, umhlabathi, izisekelo, ingozi engase yehlele ezindaweni ezingezansi, kanye ne-spillway ephephile konke kubalulekile.
+
+Ungacabangi ukuthi imvula yonyaka ikutshela ubukhulu besikhukhula noma inani lamanzi ozowagcina.
+
+Amanzi aphuma ngaphandle kokulawulwa angagugula futhi abhidlize udonga. Hlela indlela ephephile yokuphuma kwamanzi amaningi ngaphambi kokwakha.
+
+---
+
+**Ikhasi 12 — Idamu Ne-Spillway: Umqondo (Slide 12 — Dam and Spillway: A Concept)**
+
+Klama i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.
 
 [pause]
 
-Amanzi achichimayo aya ku-swale elandelayo noma edamini.
+Ukugeleza kwamanzi avela endaweni eqoqela amanzi kuyisici esisodwa. Umuntu oneziqu nolwazi olufanele kufanele ahlole indawo, idamu nomklamo we-spillway ngaphambi kokwakha.
 
 ---
 
-**Ikhasi 8 — Yazi Lapho Ama-Swale Efaneleka Khona (Slide 8 — Know When Swales Fit the Slope)**
+**Ikhasi 13 — Nakekela Idamu Namabhange Alo (Slide 13 — Care for the Dam and Its Banks)**
 
-Ama-swale asebenza kahle emithambekeni engu-1 kuya ku-15%.
+Amanzi angalahleka ngokuhwamuka noma ngokungena emhlabathini. Hlola izinga lamanzi, ubheke ukuvuza nokuguguleka.
 
-Ngaphezu kuka-15 kuya ku-20%, sebenzisa imigqa yotshani i-vetiver emgqeni wekhontolo noma ama-terrace esikhundleni sawo.
+Gcina i-spillway ingenamfucumfucu futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.
 
-Qala ngokuhlola umgodi ongu-60cm ngamanzi.
-
-Uma amanzi esephelile kungakapheli ihora, hlela izimo ezomile kakhulu.
+Izilwane zingalimaza amabhange zifake nobulongwe emanzini. Ukuba khona kwazo akusho ukuthi amanzi ahlanzekile noma aphephile.
 
 ---
 
-**Ikhasi 9 — Buka: I-Vetiver Iyangena Esikhundleni (Slide 9 — Watch: Vetiver Takes Over)**
+**Ikhasi 14 — Uphahla Lwakho Lungavuna Amanzi (Slide 14 — Your Roof Is a Harvesting Surface)**
 
-Ngaphezu komthambeka ongu-15-20%, sebenzisa imigqa yotshani i-vetiver noma ama-terrace esikhundleni sama-swale.
+Uphahla lwakho lungaqoqa amanzi emvula. Inani lincike endaweni yophahla, emvuleni nasekulahlekeni kwamanzi.
 
-[pause]
+Hlola ukuthi uphahla lwakho lufanele yini ukuqoqa amanzi emvula ngaphambi kokuxhuma ithangi.
 
-Ama-swale asebenza kahle emithambekeni engu-1 kuya ku-15%.
+Sebenzisa indawo yophahla oyibona uma ulubuka phezulu kanye namarekhodi emvula endawo. Bese ubala amanzi angangeni emseleni wamanzi, aphambukiswayo noma achichima ethangini eligcwele.
 
----
-
-**Ikhasi 10 — Gcina Imvula Yesikhathi Esomile (Slide 10 — Store Rain for the Dry Season)**
-
-Idamu elibekwe kahle ligcina imvula yesizini ukuze likusekele ezinyangeni ezomile.
-
-Ezingxenyeni zaseNingizimu Afrika ezinemvula yasehlobo, imvula ina kusukela ngo-Okthoba kuya kuNdasa, bese icishe ime.
-
-Idamu likwenza uncike kancane kakhulu emigodini yamanzi noma emanzini kamasipala ebusika.
-
----
-
-**Ikhasi 11 — Dweba I-Spillway Ngaphambi Kodonga (Slide 11 — Design the Spillway Before the Wall)**
-
-Beka idamu lakho ngemithetho emibili: khulisa indawo eqoqela amanzi ageleza eya kulo, futhi dweba i-spillway ngaphambi kokwakha udonga.
-
-Indawo eqoqela amanzi engama-hectare angu-2, enemvula yonyaka engu-700mm, ingagcwalisa amalitha angu-200,000 kuya ku-400,000 ngesizini enhle.
-
-Uma weqa i-spillway, isiphepho esisodwa esikhulu singachichimisa futhi sibhodloze udonga — inhlekelele ebiza kakhulu ukuyilungisa kunokwakha idamu ngokwalo.
-
----
-
-**Ikhasi 12 — Buka: Idamu Ne-Spillway (Slide 12 — Watch: Dam and Spillway)**
-
-Dweba i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.
-
-[pause]
-
-Fanisa usayizi wedamu nendawo eqoqela amanzi ageleza eya kulo.
-
----
-
-**Ikhasi 13 — Yenza Idamu Libe Uhlelo Olusebenzayo (Slide 13 — Turn a Dam into a Working Ecosystem)**
-
-ELimpopo nasezingxenyeni ezishisayo zaseKZN, ukuhwamuka kungasusa ukujula okungamamitha angu-2 ngonyaka.
-
-Izihlahla zomthunzi emabhange asentshonalanga nasenyakatho kunciphisa lokhu kakhulu.
-
-Amadada afaka umoya emanzini.
-
-Ama-bulrush endabuko aqinisa amabhange.
-
-Amadada nama-bulrush endabuko enza idamu libe uhlelo olusebenzayo, hhayi indawo yokugcina amanzi kuphela.
-
----
-
-**Ikhasi 14 — Uphahla Lwakho Luyindawo Yokuvuna (Slide 14 — Your Roof Is a Harvesting Surface)**
-
-Uphahla lwakho luyindawo yokuvuna amanzi.
-
-Imitha-skwele ngayinye iqoqa cishe amalitha angu-0.9 ngemilimitha ngayinye yemvula, ngemva kokubala ukulahleka ngenxa yokuchaphazeka nokuhwamuka.
-
-Uphahla lukathayela olungamamitha-skwele angu-100 ePietermaritzburg, lapho kuna khona u-800mm ngonyaka, lukhiqiza cishe amalitha angu-72,000 — anele ingadi yomndeni nezidingo eziningi ezingezona zokuphuza.
+Ingqikithi yonyaka ayisho ukuthi uzoba namanzi angakanani ngesikhathi esomile. Qhathanisa amanzi ongawaqoqa nalokho ohlela ukuwasebenzisa.
 
 ---
 
 **Ikhasi 15 — Phambukisa Amanzi Okuqala Angcolile (Slide 15 — Divert the Dirty First Flush)**
 
-Faka isiphambukisi samanzi okuqala.
+Amanzi ageleza ophahleni angathwala uthuli, ubulongwe bezinyoni nokunye ukungcola. Isiphambukisi samanzi okuqala sigcina amanye ala manzi okuqala engangeni ethangini.
 
-Amalitha okuqala angu-20 kuya ku-30 aphuma ophahleni athwala indle yezinyoni, uthuli kanye namahlamvu, futhi kufanele aphambukiswe ngaphambi kokuba amanzi ahlanzekile afinyelele ethangini.
+Inani okufanele liphambukiswe lincike ophahleni nasohlelweni lwakho. Landela imiyalelo yomthengisi yokulinganisa nokunakekela; alikho inani elilodwa elifanele lonke uphahla.
 
-Emanzini okuphuza, faka isihlungi ngemva kwalokho.
-
-Ekuniseleni, amanzi ethangi angalashwanga alungile.
+Isiphambukisi asiqinisekisi ukuthi amanzi asele aphephile ukuphuzwa.
 
 ---
 
-**Ikhasi 16 — Buka: Amanzi Okuqala Aya Ethangini (Slide 16 — Watch: First Flush to Tank)**
+**Ikhasi 16 — Amanzi Okuqala Aya Ethangini: Umqondo (Slide 16 — First Flush to Tank: A Concept)**
 
-Isiphambukisi samanzi okuqala sisusa amanzi okuqala angcolile njalo uma lina.
+Isiphambukisi samanzi okuqala sigcina amanye amanzi okuqala ageleza ophahleni engangeni ethangini.
 
 [pause]
 
-Amalitha okuqala angu-20 kuya ku-30 kufanele aphambukiswe ngaphambi kokuba amanzi ahlanzekile afinyelele ethangini.
+Silungiselele futhi usinakekele ngokophahla lwakho; amanzi alandelayo nawo asadinga ukuhlolwa kokuphepha.
 
 ---
 
-**Ikhasi 17 — Fanisa Usayizi Wethangi Nesikhathi Esomile (Slide 17 — Match Tank Size to the Dry Season)**
+**Ikhasi 17 — Qhathanisa Usayizi Wethangi Nesidingo Samanzi (Slide 17 — Match Tank Size to Water Demand)**
 
-Fanisa usayizi wethangi nesikhathi sakho esomile, hhayi isikhathi esisodwa esifushane sokoma.
+Usayizi wethangi uncike esidingweni samanzi, emvuleni, endaweni yophahla nasekutheni izikhathi ezomile zinde kangakanani.
 
-EKZN, amalitha angu-5,000 angase akusize udlule esikhaleni samasonto amabili kuya kwamathathu.
+Bhala ukuthi uzowasebenzisela ini amanzi, bese ulinganisela isidingo ngerekhodi lakho. Qhathanisa nalokho ongakuqoqa ngezinkathi zonyaka.
 
-Esikhathini esomile eside saseHighveld, amalitha angu-20,000 kuya ku-30,000 ayiqiniso kakhulu.
+Hlela ozokwenza uma amanzi agciniwe esephela. Igama lesifundazwe lodwa alikwazi ukukutshela usayizi wethangi oludingayo.
 
 ---
 
 **Ikhasi 18 — Vikela Amanzi Agciniwe (Slide 18 — Keep Stored Water Protected)**
 
-Gcina amathangi evalekile ukuze kungangeni ukukhanya nomiyane.
+Gcina ithangi limboziwe, faka izisefo ezivimbela izinambuzane emigodini, futhi unakekele uphahla, imisele yesiphepho nesiphambukisi. Gcina la manzi ehlukile emapayipini amanzi okuphuza.
 
-Hlunga amanzi ngaphambi kokuwaphuza.
+Amanzi abonakala ecacile asengaba namagciwane noma amakhemikhali. Buza abezempilo bendawo ngokuhlolwa nokwelashwa okufanele ukusetshenziswa okuhlosiwe.
 
-[pause]
-
-Emanzini okuphuza, faka isihlungi ngemva kwalokho.
-
-Ekuniseleni, amanzi ethangi angalashwanga alungile.
+Isihlungi esilula sodwa asiqinisekisi ukuthi amanzi aphephile ukuphuzwa. Amanzi asetshenziswa ezitshalweni zokudla nawo adinga ukuhlolwa kokuphepha.
 
 ---
 
-**Ikhasi 19 — I-Greywater Ngamanzi Okugeza, Hhayi Amanzi Endlu Yangasese (Slide 19 — Greywater Is Washwater, Not Toilet Water)**
+**Ikhasi 19 — Amanzi Asetshenzisiwe Ayahluka Ngomthombo (Slide 19 — Used Water Varies by Source)**
 
-I-greywater ngamanzi asetshenzisiwe okugeza aphuma kubhavu, kusinki naselondolo — hhayi amanzi endlu yangasese, okuyi-blackwater futhi adinga ukuphathwa ngokwehlukile nangokucophelela.
+Amanzi asetshenzisiwe asekhaya angaqukatha amagciwane, usawoti, imikhiqizo yokuhlanza nezinye izinto. Imihlahlandlela ayichazi yonke imithombo ngendlela efanayo.
 
-Uma ingenawo amakhemikhali aqinile, i-greywater iwumthombo wansuku zonke wamahhala wamanzi okunisela, obungachithwa.
-
----
-
-**Ikhasi 20 — Gcina I-Greywater Iphephile Emhlabathini (Slide 20 — Keep Greywater Safe for Soil)**
-
-Sebenzisa insipho elula futhi ugweme i-bleach, izibulali-magciwane ezinamandla, noma amanzi okugeza amanabukeni — lokhu kungalimaza impilo yomhlabathi nezimpande zezitshalo.
-
-Hambisa i-greywater emgodini ogcwele i-mulch ozungeze izihlahla zezithelo kunokuba uyithele emhlabathini ongenalutho, ukuze ihlungwe yizinto eziphilayo ngaphambi kokufinyelela ezimpandeni.
+Imihlahlandlela yaseNingizimu Afrika iyahluka ngamanzi asekhishini nangawelondolo. Ungafaki emgomweni wokuphinda usebenzise amanzi asendlini yangasese, avela kumanabukeni, ekugezeni umuntu ogulayo noma ukugeza izilwane. Ungawasebenzisi amanzi anamakhemikhali ayingozi.
 
 ---
 
-**Ikhasi 21 — Buka: I-Greywater Ngaphansi Kwe-Mulch (Slide 21 — Watch: Greywater Under Mulch)**
+**Ikhasi 20 — Thola Iseluleko Sendawo Ngaphambi Kokuphinda Usebenzise Amanzi (Slide 20 — Get Local Advice Before Any Reuse)**
 
-Hambisa i-greywater emgodini ogcwele i-mulch ozungeze izihlahla zezithelo kunokuba uyithele emhlabathini ongenalutho.
+Ngaphambi kokuphinda usebenzise noma yimaphi amanzi, cela umasipala nomeluleki oqeqeshiwe wokukhucululwa kwendle bahlole umthombo oqondile, izinsiza zamanzi nezokukhucululwa kwendle zasekhaya, ukusetshenziswa okuhlosiwe nendawo.
 
-[pause]
-
-Ihlungwa yizinto eziphilayo ngaphambi kokufinyelela ezimpandeni.
+Uma lesi seluleko singatholakali noma singacacile, ungawasebenzisi kabusha amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile.
 
 ---
 
-**Ikhasi 22 — Sebenzisa I-Greywater Lapho Iphephile Khona Kuphela (Slide 22 — Use Greywater Only Where It Is Safe)**
+**Ikhasi 21 — Isithombe Asiwona Umklamo Wepulazi (Slide 21 — A Picture Is Not a Farm Design)**
 
-Ungalokothi usebenzise i-greywater emifinweni enamahlamvu, emifinweni yezimpande edliwa iluhlaza, noma ezithombweni — ingozi yokuthintana namagciwane iphezulu kakhulu.
+Lesi sithombe esijwayelekile asiwona umklamo wepulazi ohloliwe noma ogunyaziwe. Asifakazeli ukuthi umthombo, indlela noma indawo yokugcina amanzi iphephile.
 
-Izihlahla zezithelo, izihlahlana esezimile kanye nezitshalo zokuhlobisa ezingadliwa yizona ezifanele.
+Thola iseluleko kubeluleki bendawo abaqeqeshiwe ngaphambi kokuphinda usebenzise amanzi. Umhlabathi ne-mulch akuwabulali amagciwane asemanzini angcolile.
 
-Hlola imithetho kamasipala wakho ngaphambi kokufaka uhlelo lwe-greywater oluhlala njalo.
+---
+
+**Ikhasi 22 — Vimbela Ukuthintana Nokungcolisa (Slide 22 — Prevent Contact and Pollution)**
+
+Vimbela abantu nezilwane ukuthi zingathintani namanzi. Ungawaxhumi emapayipini amanzi okuphuza, ungawafafazi, ungawavumeli ukuthi aqoqane abe yichibi, futhi ungawavumeli agelezele emgwaqweni, emseleni noma emfuleni ngaphandle kwendawo yakho.
+
+Uma uhlelo lokuphinda lusebenzise amanzi selusebenza kodwa amanzi enuka kabi, eqoqana noma elimaza izitshalo, yeka ukuwasebenzisa bese ucela iseluleko sendawo esiqeqeshiwe.
 
 ---
 
@@ -229,7 +204,7 @@ Hlola imithetho kamasipala wakho ngaphambi kokufaka uhlelo lwe-greywater oluhlal
 
 Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo.
 
-Yisebenzise ukuthola umugqa owodwa oyisicaba onqamula umthambeka wakho.
+Yisebenzise ukuthola umugqa owodwa olinganayo onqamula umthambeka wakho.
 
 Thatha isithombe se-A-frame kanye nomugqa owumakile.
 
@@ -239,10 +214,18 @@ Thatha isithombe se-A-frame kanye nomugqa owumakile.
 
 I-A-frame yami yakhiwe futhi ngiyihlolile.
 
-Yiguqulele ngakolunye uhlangothi — kufanele ikhombise okufanayo.
+Yiphendule ngakolunye uhlangothi — kufanele ikhombise okufanayo.
 
-Ngimake okungenani amaphuzu amathathu aphakeme ngokufanayo anqamula umthambeka wami.
+Ngimake okungenani amaphuzu amathathu asezingeni elifanayo anqamula umthambeka wami.
 
 Umugqa engiwumakile unqamula umthambeka, awehli nawo.
 
 Isikhathi esincane esingokoqobo somsebenzi wangempela: izinsuku ezi-5.
+
+## Isimo sokubuyekezwa
+
+IsiZulu salo mbhalo asikabuyekezwa ngumuntu okhuluma isiZulu kusukela ebuntwaneni noma umlimi wendawo. Iziqondiso zokwakha, imvume yamanzi nokuphepha kwamanzi angcolile kudinga ukubuyekezwa okufanele kwendawo. Akukho mvume kamasipala, yezomthetho, yezolimo noma yezempilo eshiwo. Ikhasi 21 liyisithombe esinganyakazi kuphela.
+
+## DRAFT FOR HUMAN REVIEW
+
+IsiZulu salo mbhalo asikabuyekezwa ngumuntu okhuluma isiZulu kusukela ebuntwaneni noma umlimi wendawo. Iziqondiso zokwakha, imvume yamanzi nokuphepha kwamanzi angcolile kudinga ukubuyekezwa okufanele kwendawo. Akukho mvume kamasipala, yezomthetho, yezolimo noma yezempilo eshiwo. Ikhasi 21 liyisithombe esinganyakazi kuphela.

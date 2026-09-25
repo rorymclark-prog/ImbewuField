@@ -1,0 +1,173 @@
+{
+  "seconds": 24.048,
+  "bytes": 144288,
+  "audioSha256": "45c347e97cc0fd287a73acacd80ba03726a4e9eb1a33830ebf9f1120f9840158",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Isimo",
+      "offset": 1460410,
+      "duration": 4545410
+    },
+    {
+      "text": "sezulu",
+      "offset": 6431660,
+      "duration": 6250000
+    },
+    {
+      "text": "siyasiza",
+      "offset": 12681660,
+      "duration": 7954580
+    },
+    {
+      "text": "ekunqumeni",
+      "offset": 20920410,
+      "duration": 8096660
+    },
+    {
+      "text": "ukuthi",
+      "offset": 29301250,
+      "duration": 4261250
+    },
+    {
+      "text": "yiziphi",
+      "offset": 33562500,
+      "duration": 5397910
+    },
+    {
+      "text": "izitshalo",
+      "offset": 39102080,
+      "duration": 6818330
+    },
+    {
+      "text": "ezingase",
+      "offset": 46346660,
+      "duration": 6960000
+    },
+    {
+      "text": "ziyifanele",
+      "offset": 53306660,
+      "duration": 7954580
+    },
+    {
+      "text": "indawo",
+      "offset": 61687500,
+      "duration": 5823750
+    },
+    {
+      "text": "E-Highveld",
+      "offset": 77664580,
+      "duration": 7528330
+    },
+    {
+      "text": "khetha",
+      "offset": 87607910,
+      "duration": 4971660
+    },
+    {
+      "text": "izihlahla",
+      "offset": 92863750,
+      "duration": 7812500
+    },
+    {
+      "text": "nezihlahlana",
+      "offset": 100676250,
+      "duration": 9659160
+    },
+    {
+      "text": "ezimelana",
+      "offset": 110761250,
+      "duration": 7386250
+    },
+    {
+      "text": "namakhaza",
+      "offset": 118147910,
+      "duration": 8238750
+    },
+    {
+      "text": "ogwini",
+      "offset": 128517080,
+      "duration": 6534160
+    },
+    {
+      "text": "lwase-KZN",
+      "offset": 135193330,
+      "duration": 7812500
+    },
+    {
+      "text": "nase-Lowveld",
+      "offset": 144000000,
+      "duration": 9375000
+    },
+    {
+      "text": "khetha",
+      "offset": 153659160,
+      "duration": 4119160
+    },
+    {
+      "text": "izitshalo",
+      "offset": 158204580,
+      "duration": 6818330
+    },
+    {
+      "text": "ezithanda",
+      "offset": 165590830,
+      "duration": 7102080
+    },
+    {
+      "text": "izindawo",
+      "offset": 172977080,
+      "duration": 6676250
+    },
+    {
+      "text": "ezifudumele",
+      "offset": 179937500,
+      "duration": 10937500
+    },
+    {
+      "text": "Qondanisa",
+      "offset": 200250000,
+      "duration": 6960410
+    },
+    {
+      "text": "isitshalo",
+      "offset": 207636250,
+      "duration": 7102080
+    },
+    {
+      "text": "ngasinye",
+      "offset": 214738750,
+      "duration": 5681660
+    },
+    {
+      "text": "nendawo",
+      "offset": 220420410,
+      "duration": 5255830
+    },
+    {
+      "text": "yakho",
+      "offset": 225676250,
+      "duration": 4971660
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "food-forest",
+  "lesson": "food-forest-l2",
+  "language": "zu",
+  "slide": 10,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-10.txt",
+  "sourceSha256": "a044d84d57dffcdee6e4dff335d092ebe1036394b2abf2e855551304f4de08a5",
+  "scriptFile": "docs/narration/food-forest.zu.md",
+  "scriptSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "englishSourceFile": "docs/narration/food-forest.en.md",
+  "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T14:09:01.537439+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "revalidatedAt": "2026-09-24T14:09:01.537368+00:00"
+}

@@ -41,6 +41,46 @@ export const NARRATION_RELEASE_EXCEPTIONS: Readonly<Record<string, {
     reviewRecord: 'docs/narration-reviews/plant-guilds.zu.md',
     scriptSha256: '63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa',
   },
+  'market-community.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/MARKET-COMMUNITY-ZU-AUDIO-HOLD-2026-09-24.md',
+    scriptSha256: '31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca',
+  },
+  'intro-permaculture.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/INTRO-PERMACULTURE-AUDIO-HOLD-2026-09-24.md',
+    scriptSha256: 'b31f633b6e307cf400be55343d433eb847016b089aae589f75439d38c6af6555',
+  },
+  'reading-landscape.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/reading-landscape.zu-audio-2026-09-24.md',
+    scriptSha256: 'a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b',
+  },
+  'water-harvesting.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/water-harvesting-zu-audio-2026-09-24.md',
+    scriptSha256: 'f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255',
+  },
+  'soil-health.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/soil-health.zu.review.md',
+    scriptSha256: 'edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51',
+  },
+  'food-forest.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/food-forest.zu-audio-2026-09-24.md',
+    scriptSha256: '6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e',
+  },
+  'vegetables-staples.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/vegetables-staples.zu-audio-2026-09-24.md',
+    scriptSha256: '9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d',
+  },
+  'small-livestock.zu': {
+    reviewStatus: 'pending', authorizedBy: 'Rory Clark', authorizedOn: '2026-09-24',
+    reviewRecord: 'docs/narration-reviews/small-livestock.zu-audio-2026-09-24.md',
+    scriptSha256: '4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb',
+  },
 };
 
 export function narrationReviewPending(moduleId: string, lang: string): boolean {

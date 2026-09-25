@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import {
   activeAccountLocalStorageKey,
   removeSignedInLegacyLocalStorageKey,
@@ -28,12 +28,13 @@ const GOAL_DEFS: GoalDef[] = [
 ];
 
 /** Pill toggle — 34 × 20 px, green when on, muted when off */
-function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button
       type="button"
       role="switch"
       aria-checked={on}
+      aria-label={label}
       onClick={() => onChange(!on)}
       style={{
         display: 'inline-flex',
@@ -66,7 +67,9 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
 }
 
 export default function PopiaConsent() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const copy = (key: string) => <>{t(key)}{lang === 'zu' && <small className="block mt-1" style={{ fontSize: 11, fontWeight: 400, lineHeight: 1.4 }}>{translate('en', key)}</small>}</>;
+  const copyString = (key: string) => lang === 'zu' ? `${t(key)} · ${translate('en', key)}` : t(key);
   const [ready, setReady] = useState(false);
   const [done, setDone] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
@@ -122,13 +125,18 @@ export default function PopiaConsent() {
       style={{ background: 'rgba(32,25,15,0.40)', backdropFilter: 'blur(6px)' }}
     >
       <div
-        className="w-full max-w-sm rounded-2xl p-6"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="popia-dialog-heading"
+        className="w-full max-w-sm rounded-2xl p-6 overflow-y-auto"
         style={{
           background: '#FFFEFA',
           border: '1px solid #E2D8C4',
           boxShadow: '0 4px 24px rgba(32,25,15,0.12)',
+          maxHeight: 'calc(100dvh - 2rem)',
         }}
       >
+        {lang === 'zu' && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#755942' }}>{t('popiaZuluDraftNotice')}</p>}
         {/* ── Step indicator ── */}
         <div className="flex gap-1.5 mb-6">
           {([1, 2] as const).map((s) => (
@@ -152,16 +160,17 @@ export default function PopiaConsent() {
                 <ShieldCheck size={22} stroke="#EAF3E2" strokeWidth={1.7} />
               </div>
               <h2
+                id="popia-dialog-heading"
                 className="font-display font-bold"
                 style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.15 }}
               >
-                {t('popiaTitle')}
+                {copy('popiaTitle')}
               </h2>
             </div>
 
             {/* Body copy */}
             <p className="font-sans mb-5" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.6 }}>
-              {t('popiaBody')}
+              {copy('popiaBody')}
             </p>
 
             {/* Toggle rows */}
@@ -176,26 +185,26 @@ export default function PopiaConsent() {
               >
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
-                    {t('popiaStoreLabel')}
+                    {copy('popiaStoreLabel')}
                   </div>
-                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-                    {t('popiaStoreDesc')}
+                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
+                    {copy('popiaStoreDesc')}
                   </div>
                 </div>
-                <Toggle on={storeData} onChange={setStoreData} />
+                <Toggle on={storeData} onChange={setStoreData} label={copyString('popiaStoreLabel')} />
               </div>
 
               {/* Optional toggle */}
               <div className="flex items-center gap-3 px-4 py-3.5" style={{ background: '#FFFEFA' }}>
                 <div className="flex-1 min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.2 }}>
-                    {t('popiaShareLabel')}
+                    {copy('popiaShareLabel')}
                   </div>
-                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-                    {t('popiaShareDesc')}
+                  <div className="font-sans mt-0.5" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
+                    {copy('popiaShareDesc')}
                   </div>
                 </div>
-                <Toggle on={shareNgo} onChange={setShareNgo} />
+                <Toggle on={shareNgo} onChange={setShareNgo} label={copyString('popiaShareLabel')} />
               </div>
             </div>
 
@@ -208,21 +217,21 @@ export default function PopiaConsent() {
               style={{
                 fontSize: 15,
                 background: storeData ? '#1F4D2B' : 'rgba(226,216,196,0.6)',
-                color: storeData ? '#F7F2E9' : '#8C7A62',
+                color: storeData ? '#F7F2E9' : '#755942',
                 border: 'none',
                 cursor: storeData ? 'pointer' : 'not-allowed',
                 boxShadow: storeData ? '0 4px 12px rgba(31,77,43,0.18)' : 'none',
               }}
             >
               <span className="flex items-center justify-center gap-1.5">
-                {t('popiaAgreeButton')}
+                {copy('popiaAgreeButton')}
                 <ArrowRight size={15} />
               </span>
             </button>
 
             {!storeData && (
-              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                {t('popiaStorageRequired')}
+              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#755942' }}>
+                {copy('popiaStorageRequired')}
               </p>
             )}
           </>
@@ -233,13 +242,14 @@ export default function PopiaConsent() {
           <>
             {/* Heading */}
             <h2
+              id="popia-dialog-heading"
               className="font-display font-bold mb-1"
               style={{ fontSize: 20, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.2 }}
             >
-              {t('popiaGoalTitle')}
+              {copy('popiaGoalTitle')}
             </h2>
-            <p className="font-sans mb-5" style={{ fontSize: 13, color: '#8C7A62', lineHeight: 1.5 }}>
-              {t('popiaGoalBody')}
+            <p className="font-sans mb-5" style={{ fontSize: 13, color: '#755942', lineHeight: 1.5 }}>
+              {copy('popiaGoalBody')}
             </p>
 
             {/* Goal cards — same selection style as app/survey/page.tsx */}
@@ -276,13 +286,13 @@ export default function PopiaConsent() {
                         className="font-display font-semibold"
                         style={{ fontSize: 14, color: on ? '#EAF3E2' : '#20190F', lineHeight: 1.2 }}
                       >
-                        {t(labelKey)}
+                        {copy(labelKey)}
                       </div>
                       <div
                         className="font-sans mt-0.5"
-                        style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : '#8C7A62', lineHeight: 1.4 }}
+                        style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : '#755942', lineHeight: 1.4 }}
                       >
-                        {t(descKey)}
+                        {copy(descKey)}
                       </div>
                     </div>
 
@@ -312,21 +322,21 @@ export default function PopiaConsent() {
               style={{
                 fontSize: 15,
                 background: goal ? '#C07A1E' : 'rgba(226,216,196,0.6)',
-                color: goal ? '#fff' : '#8C7A62',
+                color: goal ? '#fff' : '#755942',
                 border: 'none',
                 cursor: goal ? 'pointer' : 'not-allowed',
                 boxShadow: goal ? '0 4px 12px rgba(192,122,30,0.22)' : 'none',
               }}
             >
               <span className="flex items-center justify-center gap-1.5">
-                {t('popiaGetStarted')}
+                {copy('popiaGetStarted')}
                 <ArrowRight size={15} />
               </span>
             </button>
 
             {!goal && (
-              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                {t('popiaGoalPickOne')}
+              <p className="font-sans text-center mt-2" style={{ fontSize: 12, color: '#755942' }}>
+                {copy('popiaGoalPickOne')}
               </p>
             )}
           </>

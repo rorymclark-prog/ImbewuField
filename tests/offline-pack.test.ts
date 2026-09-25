@@ -108,6 +108,19 @@ test('a pack names no file that does not exist', () => {
   }
 });
 
+test('Soil isiZulu offline packs use localized compost stills and Thando voice clips', () => {
+  const zu = offlinePack('soil-health', 'zu');
+  const english = offlinePack('soil-health', 'en');
+  assert.deepEqual(zu.missing, []);
+  assert.equal(zu.entries.filter((e) => e.kind === 'slide').length, 20);
+  assert.equal(zu.entries.filter((e) => e.kind === 'audio').length, 20);
+  assert.ok(zu.entries.some((e) => e.url === '/course-audio/soil-health/zu/slide-17.mp3'));
+  assert.equal(zu.entries.some((e) => e.kind === 'animation'), false,
+    'the mismatched English compost clips are not charged to the isiZulu pack');
+  assert.ok(english.entries.some((e) => e.url === '/course-animations/soil-health/flow-build-compost-heap.mp4'));
+  assert.ok(english.entries.some((e) => e.url === '/course-animations/soil-health/flow-compost-materials.mp4'));
+});
+
 test('every module a language claims narration for actually packs that narration', () => {
   // The complement of the test above: `missing` only catches a file the manifest forgot.
   // It cannot catch a pack that never ASKED for the audio, which is the other half of how

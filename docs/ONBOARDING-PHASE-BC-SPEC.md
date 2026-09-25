@@ -173,7 +173,7 @@ Read `localStorage['imbewu_popia']` → `PopiaRecord.goal` (`'feed'|'income'|'so
 components/PopiaConsent.tsx:7-17; parse defensively, absent → no line). For steps
 `survey|design|cropPlan` append ONE goal line under the body:
 `coachGoalFeed` / `coachGoalIncome` / `coachGoalSoil`. Style: 12px Public Sans,
-`#8C7A62`, prefixed with a 14px Lucide icon matching PopiaConsent's GOAL_DEFS
+`#755942`, prefixed with a 14px Lucide icon matching PopiaConsent's GOAL_DEFS
 (`Utensils`/`TrendingUp`/`Recycle`).
 
 ### Dismissal + auto-graduation

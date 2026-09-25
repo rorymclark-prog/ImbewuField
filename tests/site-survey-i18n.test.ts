@@ -8,13 +8,9 @@
 //     fully translated in all eleven locales, but were never referenced by any t() call anywhere
 //     in the codebase. Wiring SiteSurveySheet.tsx up to them unlocks real, already-written
 //     translations for free.
-//  2. NEW_ENGLISH_ONLY_KEYS — ~75 keys genuinely new to the dictionary (step-tab labels, the
-//     Current Production reporting grid, FAO HDDS food-group names, month abbreviations, the
-//     discard-confirm prompt, etc.), added to the English (`en`) block ONLY. Per the absolute
-//     rule this change worked under, no isiZulu (or any other language) may be coined here — the
-//     other ten locale blocks are left untouched so the existing missing-key fallback
-//     (T[lang]?.[key] ?? T.en[key] ?? key) serves English until a first-language reviewer
-//     supplies the real words.
+//  2. NEW_SITE_SURVEY_KEYS — keys that began English-only. IsiZulu is now an explicitly marked
+//     draft on the survey route; the other ten locale blocks keep their English fallback until
+//     their own translation is prepared and reviewed.
 //
 // Run with:
 //   node --import ./tests/register-alias.mjs --test tests/site-survey-i18n.test.ts
@@ -46,10 +42,11 @@ function localeBlocks(): Array<{ locale: string; block: string }> {
   ];
 }
 
-// Brand new — did not exist anywhere in the dictionary before this change. (`stepChallenges` is
-// reused as-is for the 7th step tab and is covered by the rewired list below, not here.)
-const NEW_ENGLISH_ONLY_KEYS = [
-  // Saving now returns to the caller; it does not itself generate a report.
+// These keys were English-only when the survey launched. The current isiZulu work is explicitly
+// a review draft, so it must be present only in ZU and carry a persistent notice in the survey.
+// Other locales remain on their English fallback until their own reviewed translation exists.
+const NEW_SITE_SURVEY_KEYS = [
+  'surveyZuluDraftNotice',
   'surveySaveContinue',
   'surveyStepHouseholdInfo',
   'surveyStepLandLocation',
@@ -279,19 +276,25 @@ const REWIRED_EXISTING_KEYS = [
   // The former Save & generate report promise is replaced by surveySaveContinue above.
 ] as const;
 
-test('the new SiteSurveySheet keys exist in English only, and no other locale was touched', () => {
+test('new SiteSurveySheet copy is available as an isiZulu draft while other locales keep fallback', () => {
   const blocks = localeBlocks();
   assert.ok(blocks.length >= 11, 'expected all eleven ImbewuField locales to be present');
 
   const en = blocks.find((b) => b.locale === 'en');
   assert.ok(en, 'no `en` locale block found in lib/i18n.tsx');
-  for (const key of NEW_ENGLISH_ONLY_KEYS) {
+  const zu = blocks.find((b) => b.locale === 'zu');
+  assert.ok(zu, 'no isiZulu locale block found');
+  for (const key of NEW_SITE_SURVEY_KEYS) {
     assert.match(en!.block, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} has no English source text in the en block`);
   }
 
   for (const { locale, block } of blocks) {
     if (locale === 'en') continue;
-    for (const key of NEW_ENGLISH_ONLY_KEYS) {
+    for (const key of NEW_SITE_SURVEY_KEYS) {
+      if (locale === 'zu') {
+        assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `isiZulu draft is missing ${key}`);
+        continue;
+      }
       assert.doesNotMatch(
         block,
         new RegExp(`^  ${key}:`, 'm'),
@@ -311,11 +314,11 @@ test('the rewired SiteSurveySheet keys were already fully translated in every lo
 });
 
 test('SiteSurveySheet reads every question, label and button through t(), not hard-coded English', () => {
-  for (const key of NEW_ENGLISH_ONLY_KEYS) {
-    assert.match(surveySource, new RegExp(`t\\('${key}'\\)`), `${key} is not referenced by SiteSurveySheet`);
+  for (const key of NEW_SITE_SURVEY_KEYS) {
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
   }
   for (const key of REWIRED_EXISTING_KEYS) {
-    assert.match(surveySource, new RegExp(`t\\('${key}'\\)`), `${key} is not referenced by SiteSurveySheet`);
+    assert.ok(surveySource.includes(`t('${key}')`) || surveySource.includes(`paired('${key}', '`), `${key} is not referenced by SiteSurveySheet`);
   }
 
   // useLanguage must actually be imported and called — a stray literal key string with no t()
@@ -353,4 +356,41 @@ test('the accessible modal semantics a11y-modal-semantics.test.ts depends on sur
   assert.match(surveySource, /addEventListener\('keydown', onKey\)/);
   assert.match(surveySource, /role="switch"/);
   assert.match(surveySource, /aria-checked=\{on\}/);
+});
+
+
+test('Site Survey opening choices show exact English sources and hold uncertain phrases in English', () => {
+  const zu = localeBlocks().find((block) => block.locale === 'zu');
+  assert.ok(zu, 'no isiZulu locale block found');
+
+  const pairedSources = [
+    ['sectionWhoIsThisSiteFor', 'Who is this site for?'],
+    ['radioMeMyFamily', 'Me / my family'],
+    ['radioMeMyFamilyDesc', 'Household homestead or smallholding'],
+    ['radioCommunityGroup', 'Community group / cooperative'],
+    ['radioCommunityGroupDesc', 'Shared garden, coop, or NGO site'],
+    ['sectionAdultsWhoWorkThisLand', 'Adults who work this land'],
+    ['sectionApproximateNumberOfMembers', 'Approximate number of members'],
+    ['sectionGoalsSelectAll', 'Goals for this site (select all that apply)'],
+    ['goalFoodSecurityLabel', 'Food security'],
+    ['goalFoodSecurityDesc', 'Feed the household or members year-round'],
+    ['goalGenerateIncomeLabel', 'Generate income'],
+    ['goalGenerateIncomeDesc', 'Sell surplus produce or value-added products'],
+    ['goalRestoreTheLandLabel', 'Restore the land'],
+    ['goalRestoreTheLandDesc', 'Cover crops, composting, rehabilitation'],
+    ['goalDemonstrateTeachLabel', 'Demonstrate / teach'],
+    ['goalDemonstrateTeachDesc', 'Training ground for others'],
+  ] as const;
+
+  for (const [key, english] of pairedSources) {
+    assert.ok(surveySource.includes(`paired('${key}', '${english}')`), `${key} must display its exact English source`);
+    assert.ok(i18nSource.includes(`${key}: '${english}'`), `${key} source must match the English dictionary`);
+  }
+
+  assert.ok(zu.block.includes("  radioCommunityGroupDesc: 'Shared garden, coop, or NGO site'"),
+    'the uncertain community-site descriptor stays in English');
+  assert.ok(zu.block.includes("  goalGenerateIncomeDesc: 'Sell surplus produce or value-added products'"),
+    'the uncertain value-added wording stays in English');
+  assert.ok(zu.block.includes("  goalRestoreTheLandLabel: 'Ukuvuselela umhlaba'"),
+    'ecological restoration must not use wording that can mean land restitution');
 });

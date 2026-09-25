@@ -32,6 +32,8 @@ export interface ClimateData {
   meanTemp: number;
   maxTemp: number;
   minTemp: number;
+  /** Present only when all twelve NASA POWER T2M_MIN values were available. */
+  minTempSource?: 'nasa-power';
   monthlyTemp: number[];
   solarRadiation: number;
   koppen: string;

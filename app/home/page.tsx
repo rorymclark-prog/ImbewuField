@@ -41,8 +41,9 @@ import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
-import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
-import type { CompletionStepKey } from '@/lib/completion-score';
+import { useSiteProgress, type Coords } from '@/lib/site-progress';
+import { nextAction } from '@/lib/home-next-step';
+import { useAppLevel } from '@/lib/app-level';
 import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
@@ -60,6 +61,7 @@ const LANG_TO_LOCALE: Record<string, string> = {
   ss: 'ss-ZA',
   nr: 'nr-ZA',
 };
+const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
 function getDayDate(lang: string) {
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
@@ -108,9 +110,37 @@ function LastSiteCard({ site }: { site: LastSite }) {
 
 // Weather for the farmer's designated MAIN site — separate from LastSiteCard
 // (which tracks the last-VIEWED map point, not necessarily a saved/main site).
-function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void }) {
+//
+// SIMPLE drops the "Main site · {name}" heading: the site card directly above is headed by the
+// site's name, and this card opened with the same name again, so a farmer read it three times
+// before reaching anything new. What stays is the switcher, only when there is a second site to
+// switch to; WeatherWidget draws its own card, so there is no frame around it either.
+function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedPlace; places: SavedPlace[]; onSetMain: (id: string) => void; simple: boolean }) {
   const { t } = useLanguage();
   const showPicker = places.length > 1;
+  if (simple) {
+    return (
+      <div className="flex flex-col gap-2">
+        {showPicker && (
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>{t('homeMainSite')}</span>
+            <select
+              value={site.id}
+              onChange={(e) => onSetMain(e.target.value)}
+              aria-label={t('homeSetAsMain')}
+              className="font-sans"
+              style={{ fontSize: 14, minHeight: 44, border: '1px solid var(--color-border)', borderRadius: 10, background: 'var(--color-surface)', color: 'var(--color-ink)', padding: '6px 10px', maxWidth: 200 }}
+            >
+              {places.map((p) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        <WeatherWidget lat={site.lat} lon={site.lon} compact />
+      </div>
+    );
+  }
   return (
     <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-3">
@@ -146,7 +176,7 @@ function visibleBoardTasks(tasks: BoardTask[]): BoardTask[] {
 }
 
 function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id: string) => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const visible = visibleBoardTasks(tasks);
   return (
     <section>
@@ -167,7 +197,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           >
             <button
               onClick={() => onToggle(task.id)}
-              aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              aria-label={localUi(lang, task.completed ? 'Mark not done' : 'Mark done', task.completed ? 'Susa uphawu lokwenziwe' : 'Maka njengokwenziwe')}
               className={task.completed ? 'imf-task-check' : undefined}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
@@ -187,7 +217,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}
-              aria-label="Add to calendar"
+              aria-label={localUi(lang, 'Add to calendar', 'Faka ekhalendeni')}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
               <CalendarPlus size={18} strokeWidth={1.6} />
@@ -211,38 +241,12 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   );
 }
 
-// Gamified "Your farm plan" progress card — overall % across the 5-stage
-// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus
-// the single next action, deep-linked. Deliberately mirrors the same source
-// of truth as DataPanel/NextStepCoach/HomeHeroCard (lib/site-progress.ts) so
-// this can never drift into a second scoring path.
-interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
-const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
-  located: { label: 'Tap your land on the map', href: () => '/farmer' },
-  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
-  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
-  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
-  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
-  // site loaded and nothing armed, so the coaching told them to do a thing this link never
-  // actually started — same fix the NextStepCoach in-panel card already gets for free by
-  // dispatching the event directly (it's already sitting on the right site).
-  boundary: {
-    label: 'Trace your boundary',
-    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
-  },
-  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
-  // loads the main site and auto-opens it (the older /survey wizard used a different store
-  // and never moved this score).
-  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
-  design: {
-    label: 'Design your farm',
-    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
-  },
-  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
-};
-
+// Gamified "Your farm plan" progress card (All tools) — overall % across the 5-stage
+// completion score (lib/completion-score.ts) for the farmer's MAIN site, plus the single next
+// action, deep-linked. The step table is lib/home-next-step.ts, shared with the Simple layout,
+// which puts the same next step inside the site card instead of under it.
 function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
 
@@ -253,16 +257,8 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   if (!places || places.length === 0) return null;
   if (!progress) return null;
 
-  const { pct, nextStep } = progress;
-  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
-
-  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, mainSite?.id) : designHref;
-  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
-  const label = nextStepCopy
-    ? t(nextStepCopy.titleKey)
-    : nextStep
-      ? STEP_ACTIONS[nextStep].label
-      : 'Plan complete — print your plan set';
+  const { pct } = progress;
+  const { href, overline, label } = nextAction(progress.nextStep, coords, mainSite?.id, t, lang);
 
   return (
     <Link
@@ -280,13 +276,13 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
     >
       <div className="flex-1 min-w-0">
         <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 4 }}>
-          {nextStep ? t('coachOverline') : 'Your farm plan'}
+          {overline}
         </div>
         <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
           {label}
         </div>
         <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 4 }}>
-          {pct}% complete
+          {pct}% {localUi(lang, 'complete', 'kuqediwe')}
         </div>
       </div>
       <span
@@ -317,6 +313,10 @@ function HomeLandingInner() {
   // "This is the NGO area". See lib/role-access.ts.
   const { user, role } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
+  // Simple / All tools (Settings). All tools is this screen as it has always been; Simple names the
+  // site once, puts the next step on the site card and leaves out the second doors (lib/app-level.ts).
+  const level = useAppLevel();
+  const simple = level === 'simple';
 
   useEffect(() => {
     setLastSite(getLastSite());
@@ -372,6 +372,9 @@ function HomeLandingInner() {
   // all ten locales — "Izitshalo nezithengiso" on the tile the isiZulu-speaking farmer this was
   // audited against actually taps. A partial subtitle in her language beats a complete one in
   // someone else's; the tab strip inside names all three pages the moment she opens it.
+  //
+  // SIMPLE LEAVES THE TILE OUT. The tab bar under every screen already opens the same book under
+  // the same name, so on Simple's Home "My Records" appears once, as the tab.
   const QUICK_ACTIONS = [
     { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
     { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
@@ -382,12 +385,9 @@ function HomeLandingInner() {
     { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    // Not translated via t() like the rest of this grid — deliberately, to avoid adding keys to
-    // every locale block in lib/i18n.tsx (a large shared file well outside this change's scope) for
-    // a single new tile. Falls back to plain English, same as this file's other hardcoded
-    // farmer-facing strings (e.g. the "Your farm plan" and sample-farm copy above).
-    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: 'Prices',                  desc: 'Wholesale & retail',          color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
+  const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (
     <div
@@ -399,21 +399,25 @@ function HomeLandingInner() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
-        <MenuButton /><BackButton fallback="/home" />
+        <MenuButton />{!simple && <BackButton fallback="/home" />}
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
-          <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
+          {/* The app's own name, or the farmer's greeting — the first screen's title, and until now
+              a <span>, so /home rendered no <h1> and an outline view or a screen reader had no page
+              title to land on. Heading sizes are reset by Tailwind preflight and globals.css styles
+              headings for family and tracking only, so the tag change is not a look change. */}
+          <h1 className="font-display font-bold m-0" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
             {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}
-          </span>
+          </h1>
         </div>
 
-        <LessonLink id="home:overview" label="Learn" />
+        <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />
         <button
           onClick={() => setSettingsOpen(true)}
-          aria-label="Settings"
+          aria-label={localUi(lang, 'Settings', 'Izilungiselelo')}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
@@ -479,25 +483,34 @@ function HomeLandingInner() {
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
+          .home-quick-grid.is-simple {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+          }
         }
       `}</style>
 
       {/* ── Main content ── */}
       <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
 
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+            ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.
+          </p>
+        )}
+
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
             columns; on a phone they keep this exact reading order. */}
         <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
-            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
-            <FarmPlanCard places={places} mainSite={mainSite} />
+            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} />
+            {!simple && <FarmPlanCard places={places} mainSite={mainSite} />}
           </div>
 
           {(mainSite || (lastSite && !lastSiteMatchesMain)) && (
             <div className="home-priority-secondary">
               {places && mainSite && (
-                <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
+                <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} simple={simple} />
               )}
               {lastSite && !lastSiteMatchesMain && <LastSiteCard site={lastSite} />}
             </div>
@@ -505,8 +518,8 @@ function HomeLandingInner() {
         </section>
 
         {/* ── Quick actions ── */}
-        <div className="home-quick-grid grid grid-cols-3 gap-3">
-          {QUICK_ACTIONS.map((q) => (
+        <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+          {quickActions.map((q) => (
             <Link
               key={q.href}
               href={q.href}
@@ -566,12 +579,11 @@ function HomeLandingInner() {
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>
-              Take a tour
+              {localUi(lang, 'Take a tour', 'Buka uhambo lokuqondisa')}
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
-            A guided look at your maps, crop plans, harvests, sales and invoices.
-            Practise with Ubhejane Crèche Garden, then return to your own work.
+            {localUi(lang, 'A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.', 'Bheka amamephu akho, izinhlelo zezitshalo, izivuno, ukuthengisa nama-invoyisi ngokuqondiswa. Zilolonge e-Ubhejane Crèche Garden, bese ubuyela emsebenzini wakho.')}
           </p>
         </button>}
 

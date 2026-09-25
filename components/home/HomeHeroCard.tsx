@@ -2,9 +2,11 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Eye } from 'lucide-react';
+import { ArrowRight, MapPin, Eye, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useSiteProgress } from '@/lib/site-progress';
+import { nextAction } from '@/lib/home-next-step';
+import type { AppLevel } from '@/lib/app-level';
 import type { SavedPlace } from '@/lib/saved-places';
 import ProgressSprout from '@/components/home/ProgressSprout';
 
@@ -15,6 +17,9 @@ export interface HomeHeroCardProps {
   places: SavedPlace[] | null;
   mainSite: SavedPlace | null; // resolveMainSite(places) — parent already computes it
   firstName: string | null;    // user?.displayName?.split(' ')[0] — parent has it
+  /** Simple puts the next step inside this card and heads it with the site; All tools keeps the
+   *  original Lima-suggests card, with the next step as a separate card below (lib/app-level.ts). */
+  level?: AppLevel;
 }
 
 // Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
@@ -35,8 +40,8 @@ const SHELL_STYLE: CSSProperties = {
 };
 
 const PILL_STYLE: CSSProperties = {
-  background: '#E4DCC6',
-  color: '#1F4D2B',
+  background: 'var(--bg-0)',
+  color: 'var(--color-forest-800)',
   borderRadius: 100,
   padding: '8px 16px',
   fontSize: 13,
@@ -45,8 +50,14 @@ const PILL_STYLE: CSSProperties = {
   transition: 'transform 150ms var(--ease-out, cubic-bezier(0.16,1,0.3,1)), box-shadow 200ms var(--ease-out, cubic-bezier(0.16,1,0.3,1))',
 };
 
-// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT +
-// CONTINUE variants share it — same brand marker, same overline copy).
+// Text links under the next step — present, but quieter than it.
+const SECONDARY_LINK_STYLE: CSSProperties = {
+  display: 'inline-flex', alignItems: 'center', minHeight: 44,
+  fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+};
+
+// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT, the All tools
+// CONTINUE card and the fallback — the Simple CONTINUE card is headed by the site itself).
 function LimaMark() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20, flexShrink: 0 }}>
@@ -104,6 +115,14 @@ function HeroEntranceStyle() {
         .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-hit { height: 96px; }
         .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip { top: 104px; }
       }
+      .imf-hero-next { transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms ease; }
+      .imf-hero-next-arrow { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+      .imf-hero-next:focus-visible { outline: 3px solid #F7C97E; outline-offset: 3px; }
+      .imf-hero-next:active { transform: scale(0.985); }
+      @media (hover: hover) {
+        .imf-hero-next:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -12px rgba(10,25,13,0.6); }
+        .imf-hero-next:hover .imf-hero-next-arrow { transform: translateX(4px); }
+      }
       .imf-progress-sprout { width: 100%; height: 100%; flex: none; overflow: visible; }
       @media (min-width: 900px) { .imf-progress-sprout-wrap { width: 128px; height: 128px; } }
       .imf-progress-sprout__growth { transform-origin: 40px 60px; animation: imfGrowIn 650ms cubic-bezier(0.16,1,0.3,1) both; }
@@ -116,6 +135,8 @@ function HeroEntranceStyle() {
         .imf-progress-fill { animation: none; transition: none; }
         .imf-progress-sprout__growth { animation: none; }
         .imf-progress-sprout-help { animation: none; }
+        .imf-hero-next, .imf-hero-next-arrow { transition: none; }
+        .imf-hero-next:hover, .imf-hero-next:active, .imf-hero-next:hover .imf-hero-next-arrow { transform: none; }
         .imf-progress-sprout-art > svg, .imf-progress-sprout-art > span, .imf-progress-sprout-tip { transition: none; }
         .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.2); }
       }
@@ -123,8 +144,8 @@ function HeroEntranceStyle() {
   );
 }
 
-export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCardProps) {
-  const { t } = useLanguage();
+export default function HomeHeroCard({ places, mainSite, firstName, level = 'full' }: HomeHeroCardProps) {
+  const { t, lang } = useLanguage();
 
   // Hooks run unconditionally, before any early return, so the null-until-mounted
   // pattern stays hydration-safe (progress is null on SSR and on the very first
@@ -188,7 +209,7 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             width: '100%', minHeight: 52,
-            background: '#E4DCC6', color: '#1F4D2B',
+            background: 'var(--bg-0)', color: 'var(--color-forest-800)',
             borderRadius: 100, fontSize: 15, letterSpacing: '-0.01em',
             textDecoration: 'none', marginBottom: 12,
             boxShadow: '0 2px 8px rgba(15,30,18,0.22)',
@@ -213,8 +234,10 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     );
   }
 
-  // ── CONTINUE — returner with at least one saved site. ──
-  if (mainSite) {
+  // ── CONTINUE (All tools) — returner with at least one saved site: the original card. Lima's
+  // suggestion to carry on with the site, how far along it is, and a button onto the map. The next
+  // step is FarmPlanCard, below this card, in app/home/page.tsx. ──
+  if (mainSite && level === 'full') {
     const pct = progress?.pct;
 
     return (
@@ -251,14 +274,85 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
             </span>
           </Link>
 
+          <Link href="/farmer?guided=1&new=1" className="font-sans" style={SECONDARY_LINK_STYLE}>
+            {t('startNewSite')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ── CONTINUE (Simple) — the one place Home names the site: which site, how far along it is,
+  // and the single next thing to do. The next step used to be a second card under this one that
+  // read the same progress and printed the same "75% complete" a second time. ──
+  if (mainSite) {
+    const pct = progress?.pct;
+    // null for the one render before useSiteProgress has read storage — the bar above it
+    // waits for the same thing, so the two arrive together.
+    const next = progress ? nextAction(progress.nextStep, coords, mainSite.id, t, lang) : null;
+
+    return (
+      <div className="imf-hero-settle" style={SHELL_STYLE}>
+        <HeroEntranceStyle />
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <div className="uppercase tracking-widest font-sans mb-2" style={{ fontSize: 12, color: 'rgba(234,243,226,0.72)', letterSpacing: '0.12em' }}>
+              {t('homeMainSite')}
+            </div>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12, overflowWrap: 'anywhere' }}>
+              {mainSite.name}
+            </h2>
+          </div>
+          <ProgressSprout key={completedSteps} completedSteps={completedSteps} totalSteps={progress?.score.steps.length} progressPct={pct} interactive />
+        </div>
+
+        {pct != null && (
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ height: 4, borderRadius: 2, background: 'rgba(234,243,226,0.25)', overflow: 'hidden' }}>
+              <div className="imf-progress-fill" style={{ height: '100%', width: `${pct}%`, background: '#F7C97E', borderRadius: 2 }} />
+            </div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.78)', marginTop: 6 }}>
+              {t('continueSitePct').replace('{pct}', String(pct))}
+            </div>
+          </div>
+        )}
+
+        {next && (
           <Link
-            href="/farmer?guided=1&new=1"
-            className="font-sans"
+            href={next.href}
+            className="imf-hero-next flex items-center gap-3"
             style={{
-              display: 'inline-flex', alignItems: 'center', minHeight: 44,
-              fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
+              minHeight: 72,
+              padding: '12px 14px',
+              marginBottom: 6,
+              borderRadius: 16,
+              background: 'var(--bg-0)',
+              textDecoration: 'none',
+              boxShadow: '0 2px 8px rgba(15,30,18,0.22)',
             }}
           >
+            <div className="flex-1 min-w-0">
+              <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 3 }}>
+                {next.overline}
+              </div>
+              <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
+                {next.label}
+              </div>
+            </div>
+            <span
+              className="imf-hero-next-arrow flex items-center justify-center flex-shrink-0"
+              style={{ width: 40, height: 40, borderRadius: 999, background: '#1F4D2B', color: '#F7F2E9' }}
+            >
+              <ChevronRight size={20} strokeWidth={2} />
+            </span>
+          </Link>
+        )}
+
+        <div className="flex items-center gap-x-5 flex-wrap">
+          <Link href={`/farmer?site=${mainSite.id}`} className="font-sans" style={SECONDARY_LINK_STYLE}>
+            {t('continueSiteCta')}
+          </Link>
+          <Link href="/farmer?guided=1&new=1" className="font-sans" style={SECONDARY_LINK_STYLE}>
             {t('startNewSite')}
           </Link>
         </div>

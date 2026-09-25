@@ -48,11 +48,11 @@ test('every reader and writer of the location cache is on the same version', () 
   );
 });
 
-test('the version is at least v4 — the SANBI biome change required it', () => {
+test('the version is at least v6 — frost screening must not reuse a cache without minimum provenance', () => {
   // A floor rather than an exact match, so a future bump does not fail this file. What it stops is
   // someone reverting to a version that predates a correction farmers have already been promised.
   const [version] = [...source(FILES[0]).matchAll(/imbewu_loc_v(\d+)_/g)].map((m) => Number(m[1]));
-  assert.ok(version >= 4, `location cache is at v${version}; the SANBI biome fix needs v4 or later`);
+  assert.ok(version >= 6, `location cache is at v${version}; minimum provenance needs v6 or later`);
 });
 
 test('the reason to bump is written down where the bump happens', () => {

@@ -538,7 +538,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
               {img && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
-                    <span style={{ minWidth: 76 }}>See through</span>
+                    <span style={{ minWidth: 76 }}>{t('designPhotoOpacityLabel')}</span>
                     <input
                       type="range" min={0.15} max={1} step={0.05}
                       value={photoOpacity}
@@ -550,7 +550,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                     </span>
                   </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: DARK }}>
-                    <span style={{ minWidth: 76 }}>Size</span>
+                    <span style={{ minWidth: 76 }}>{t('designPhotoZoomSize')}</span>
                     <input
                       type="range" min={0.25} max={4} step={0.05}
                       value={zoom}
@@ -563,8 +563,8 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   </label>
                   <div style={{ fontSize: 11.5, color: DARK, opacity: 0.7 }}>
                     {pointMode
-                      ? `Tap point ${points.length + 1} of 2 on the photo. The photo will not move while you do.`
-                      : 'Drag the photo to move it. Fade it down to match it against the satellite underneath.'}
+                      ? formatDesignTranslation(t('designPhotoPointInstruction'), { point: points.length + 1 })
+                      : t('designPhotoMoveInstruction')}
                   </div>
                   {/* The scale step gets real buttons instead of an unwritten rule about which
                       gesture means what. Undo is per-point: a farmer who mis-taps the second
@@ -637,7 +637,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   <RotateCw size={16} />
                 </button>
               </div>
-              <div style={{ fontSize: 11, color: '#8C7A62', marginTop: 2 }}>
+              <div style={{ fontSize: 11, color: '#755942', marginTop: 2 }}>
                 {rotationDeg === 0
                   ? t('designPhotoNotTurned')
                   : formatDesignTranslation(t('designPhotoTurned'), { degrees: rotationDeg })}
@@ -709,7 +709,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
                   borderRadius: 12,
                   border: 'none',
                   background: calibrationReady && !busy ? GREEN : 'rgba(226,216,196,0.6)',
-                  color: calibrationReady && !busy ? PAPER : '#8C7A62',
+                  color: calibrationReady && !busy ? PAPER : '#755942',
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: calibrationReady && !busy ? 'pointer' : 'default',

@@ -6,6 +6,7 @@ import { ArrowRight, ChevronLeft, Mail, Check, Copy } from 'lucide-react';
 import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
+import { translate, useLanguage } from '@/lib/i18n';
 
 import Illustration from '@/components/Illustration';
 
@@ -26,9 +27,47 @@ type Mode = 'signin' | 'create' | 'reset';
  * signup after the auth account was already created.
  */
 const SIGNUP_ROLES: { value: UserRole; label: string }[] = [
-  { value: 'farmer',  label: 'Farmer' },
-  { value: 'student', label: 'Student' },
+  { value: 'farmer',  label: 'loginRoleFarmer' },
+  { value: 'student', label: 'loginRoleStudent' },
 ];
+
+/**
+ * Which field a given error message is actually about, so the right input gets highlighted
+ * instead of the password field taking the blame for every failure (including ones, like an
+ * unrecognised email, that have nothing to do with it). Messages left out — "Email or password is
+ * incorrect" deliberately among them, since naming a field there would leak which one was wrong —
+ * highlight neither field.
+ */
+const AUTH_ERROR_FIELD: Record<string, 'email' | 'password'> = {
+  'That doesn\'t look like a valid email address.': 'email',
+  'No account found with that email.': 'email',
+  'An account with that email already exists.': 'email',
+  'An account already exists with this email using a different sign-in method.': 'email',
+  'Incorrect password — try again.': 'password',
+  'Choose a stronger password (at least 6 characters).': 'password',
+};
+
+const AUTH_ERROR_KEYS: Record<string, string> = {
+  'That doesn\'t look like a valid email address.': 'loginErrorInvalidEmail',
+  'This account has been disabled.': 'loginErrorAccountDisabled',
+  'No account found with that email.': 'loginErrorAccountNotFound',
+  'Incorrect password — try again.': 'loginErrorWrongPassword',
+  'Email or password is incorrect.': 'loginErrorInvalidCredentials',
+  'An account with that email already exists.': 'loginErrorEmailInUse',
+  'Choose a stronger password (at least 6 characters).': 'loginErrorWeakPassword',
+  'Too many attempts — wait a moment and try again.': 'loginErrorTooManyAttempts',
+  'Network error — check your connection.': 'loginErrorNetwork',
+  'Sign-in was cancelled.': 'loginErrorCancelled',
+  'An account already exists with this email using a different sign-in method.': 'loginErrorDifferentProvider',
+  'Email and password sign-in is disabled for this app. The app administrator needs to enable it.': 'loginErrorEmailDisabled',
+  'Google sign-in is disabled for this app. The app administrator needs to enable it.': 'loginErrorGoogleDisabled',
+  'Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.': 'loginErrorPopupBlocked',
+  'This web address isn\'t authorised for Google sign-in yet. Use email + password for now.': 'loginErrorDomainNotAuthorised',
+  'This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.': 'loginErrorStorageBlocked',
+  'Firebase is not configured yet — running in sample mode.': 'loginErrorBackendSampleMode',
+  'Firebase is not configured yet.': 'loginErrorBackendUnavailable',
+  'Google sign-in won\'t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.': 'loginErrorGoogleEmbedded',
+};
 
 // Google icon (verbatim SVG — no Lucide equivalent)
 function GoogleIcon() {
@@ -51,6 +90,11 @@ export default function LoginPage() {
 }
 
 function LoginPageInner() {
+  const { t, lang } = useLanguage();
+  const authLabel = (key: string, keepEnglish = false) => {
+    const translated = t(key);
+    return lang === 'zu' && keepEnglish ? `${translated} · ${translate('en', key)}` : translated;
+  };
   const router = useRouter();
   const searchParams = useSearchParams();
   // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
@@ -75,6 +119,12 @@ function LoginPageInner() {
   const errorRef = useRef<HTMLParagraphElement | null>(null);
 
   const backendReady = isBackendConfigured();
+  const errorField = error ? AUTH_ERROR_FIELD[error] : undefined;
+  const displayAuthError = (message: string) => {
+    const key = AUTH_ERROR_KEYS[message];
+    if (key) return t(key);
+    return message.startsWith('Something went wrong (') ? t('loginErrorUnexpected') : message;
+  };
 
   // Google OAuth is blocked in in-app browsers — detect on the client so we can
   // steer the user to a real browser instead of a popup that never opens.
@@ -154,6 +204,12 @@ function LoginPageInner() {
       <div className="w-full max-w-sm p-6 my-auto" style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: 'var(--shadow-panel)' }}>
         <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+            {t('loginZuluDraftNotice')}
+          </p>
+        )}
+
         {/* Logo */}
         <div className="text-center mb-5">
           <div className="flex items-center justify-center mb-3">
@@ -164,15 +220,15 @@ function LoginPageInner() {
               </svg>
             </div>
           </div>
-          <div className="u-display-md" style={{ color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</div>
+          <h1 className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</h1>
           <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>
-            {mode === 'signin' && 'Sign in to your account.'}
-            {mode === 'create' && 'Create a new account.'}
-            {mode === 'reset' && 'Reset your password.'}
+            {mode === 'signin' && t('loginSubtitleSignIn')}
+            {mode === 'create' && t('loginSubtitleCreate')}
+            {mode === 'reset' && t('loginSubtitleReset')}
           </div>
           {from && (
             <div className="font-sans text-xs mt-1" style={{ color: 'var(--color-ink-faint)' }}>
-              Sign in to continue to your map
+              {t('loginContinueToMap')}
             </div>
           )}
         </div>
@@ -180,7 +236,7 @@ function LoginPageInner() {
         {/* Backend not configured notice */}
         {!backendReady && (
           <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
-            Backend not connected yet — auth is unavailable. The app runs in tour mode.
+            {t('loginBackendUnavailableNotice')}
           </div>
         )}
 
@@ -193,7 +249,7 @@ function LoginPageInner() {
                 style={mode === m
                   ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, border: '1px solid transparent' }}>
-                {m === 'signin' ? 'Sign in' : 'Create account'}
+                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}
               </button>
             ))}
           </div>
@@ -207,12 +263,12 @@ function LoginPageInner() {
                 <Check size={20} style={{ color: 'var(--color-forest-800)' }} />
               </div>
             </div>
-            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>Reset email sent to <strong>{email}</strong>.</p>
-            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>Check your inbox and follow the link to set a new password.</p>
+            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent', true)} <strong>{email}</strong>.</p>
+            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox', true)}</p>
             <button type="button" onClick={() => switchMode('signin')}
               className="font-sans text-sm font-semibold"
               style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-              Back to sign in
+              {t('loginBackToSignIn')}
             </button>
           </div>
         ) : (
@@ -221,55 +277,55 @@ function LoginPageInner() {
             {mode === 'create' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="full-name">
-                  Full name
+                  {t('loginFullName')}
                 </label>
                 <input id="full-name" ref={fullNameRef} type="text" value={fullName}
                   onChange={(e) => { setFullName(e.target.value); setError(null); }}
-                  placeholder="Full name" autoComplete="name" required disabled={!backendReady}
+                  placeholder={t('loginFullName')} autoComplete="name" required disabled={!backendReady}
                   className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={inputStyle()} />
               </>
             )}
 
             <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="email">
-              Email address
+              {t('loginEmailAddress')}
             </label>
             <input id="email" ref={emailRef} type="email" value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
-              placeholder="Email address" required disabled={!backendReady}
+              placeholder={t('loginEmailAddress')} required disabled={!backendReady}
               autoComplete="email" inputMode="email"
               className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
-              style={inputStyle(!!error && mode !== 'create')} />
+              style={inputStyle(errorField === 'email')} />
 
             {mode !== 'reset' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="password">
-                  Password
+                  {authLabel('loginPassword', true)}
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
-                placeholder="Password" required disabled={!backendReady}
+                placeholder={t('loginPassword')} required disabled={!backendReady}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                 className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
-                style={inputStyle(!!error)} />
+                style={inputStyle(errorField === 'password')} />
               </>
             )}
 
             {mode === 'create' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="role">
-                  Role
+                  {t('loginRole')}
                 </label>
                 <select id="role" value={role} onChange={(e) => setRole(e.target.value as UserRole)}
                 disabled={!backendReady}
                 className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={inputStyle()}>
-                {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
+                {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{t(r.label)}</option>)}
                 </select>
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{error}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}
@@ -280,13 +336,13 @@ function LoginPageInner() {
                 ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--color-ink-faint)', cursor: 'not-allowed', fontSize: 15 }
                 : undefined}>
               {loading ? (
-                mode === 'signin' ? 'Signing in...' :
-                mode === 'create' ? 'Creating account...' : 'Sending...'
+                mode === 'signin' ? t('loginSigningIn') :
+                mode === 'create' ? t('loginCreatingAccount') : t('loginSending')
               ) : mode === 'reset' ? (
-                <span className="flex items-center justify-center gap-1.5"><Mail size={15} />Send reset email</span>
+                <span className="flex items-center justify-center gap-1.5"><Mail size={15} />{t('loginSendResetEmail')}</span>
               ) : (
                 <span className="flex items-center justify-center gap-1.5">
-                  {mode === 'signin' ? 'Sign in' : 'Create account'}<ArrowRight size={15} />
+                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}<ArrowRight size={15} />
                 </span>
               )}
             </button>
@@ -296,7 +352,7 @@ function LoginPageInner() {
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
                 style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
-                Forgot your password?
+                {authLabel('loginForgotPassword', true)}
               </button>
             )}
 
@@ -304,7 +360,7 @@ function LoginPageInner() {
               <button type="button" onClick={() => switchMode('signin')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
                 style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
-                <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />Back to sign in</span>
+                <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToSignIn')}</span>
               </button>
             )}
           </form>
@@ -315,7 +371,7 @@ function LoginPageInner() {
           <>
             <div className="flex items-center gap-3 my-4">
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-              <span className="font-sans text-xs" style={{ color: 'var(--color-ink-faint)' }}>or</span>
+              <span className="font-sans text-xs" style={{ color: 'var(--color-ink-faint)' }}>{t('loginOr')}</span>
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
             </div>
             <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
@@ -330,17 +386,17 @@ function LoginPageInner() {
                 opacity: googleLoading || embedded ? 0.55 : 1,
               }}>
               <GoogleIcon />
-              {googleLoading ? 'Connecting...' : 'Continue with Google'}
+              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle', true)}
             </button>
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
             {embedded && (
               <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#8C6A2E' }}>
-                Google sign-in doesn&apos;t open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:
+                {t('loginGoogleEmbeddedHelp')}
                 <button type="button" onClick={copyAppLink}
                   className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"
                   style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', color: 'var(--color-ink)', fontSize: 12.5, cursor: 'pointer' }}>
-                  {copied ? <><Check size={13} /> Link copied</> : <><Copy size={13} /> Copy app link</>}
+                  {copied ? <><Check size={13} /> {t('loginLinkCopied')}</> : <><Copy size={13} /> {t('loginCopyAppLink')}</>}
                 </button>
               </div>
             )}
@@ -350,14 +406,14 @@ function LoginPageInner() {
         {/* Back link */}
         <div className="text-center mt-4">
           <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>
-            <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />Back to app</span>
+            <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToApp')}</span>
           </a>
         </div>
 
         {/* Trust footer */}
         <div className="text-center mt-3">
           <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
-            Built for South African smallholder farmers
+            {t('loginTrustFooter')}
           </p>
         </div>
       </div>

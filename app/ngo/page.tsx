@@ -19,6 +19,27 @@ import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n-context';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
+const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
+
+// Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools is this tab
+// strip exactly as it has always been. Simple reduces it to the four tabs an NGO programme
+// officer opens every week, plus one merged "Training" tab standing in for the two tabs whose
+// content overlaps for someone who isn't managing the programme's M&E design — Training &
+// progress (attendance, progress reports, targets) and Assessments (baseline/midpoint/closeout
+// surveys). Control centre, Production area and the Funder summary preview move to All tools.
+type NgoView = 'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access' | 'reports' | 'evidence' | 'training';
+const NGO_SIMPLE_VIEWS = new Set<NgoView>(['cohort', 'gardens', 'messages', 'reports', 'training']);
+const NGO_ALL_VIEWS = new Set<NgoView>(['access', 'evidence', 'reports', 'cohort', 'gardens', 'messages', 'assessments', 'area', 'funder-preview']);
+
+function DashboardLoading({ cohort = false }: { cohort?: boolean }) {
+  const { lang } = useLanguage();
+  return <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+    <span className="text-sm font-display">{tr(lang, cohort ? 'Loading the cohort...' : 'Loading dashboard...', cohort ? 'Kusalayishwa iqembu...' : 'Kusalayishwa ideshibhodi...')}</span>
+  </div>;
+}
 const OrganisationControlCentre = dynamic(() => import('@/components/OrganisationControlCentre'), { ssr: false });
 const ProgrammeEvidence = dynamic(() => import('@/components/ProgrammeEvidence'), { ssr: false });
 const ProgrammeReports = dynamic(() => import('@/components/ProgrammeReports'), { ssr: false });
@@ -28,11 +49,7 @@ const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssess
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
-  loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-      <span className="text-sm font-display">Loading dashboard...</span>
-    </div>
-  ),
+  loading: () => <DashboardLoading />,
 });
 
 /*
@@ -43,16 +60,13 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
  */
 const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboard'), {
   ssr: false,
-  loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-      <span className="text-sm font-display">Loading the cohort...</span>
-    </div>
-  ),
+  loading: () => <DashboardLoading cohort />,
 });
 
 const NGO_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'admin']);
 
 export default function NgoPage() {
+  const { lang } = useLanguage();
   const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
@@ -60,8 +74,9 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access' | 'reports' | 'evidence'>('cohort');
+  const [view, setView] = useState<NgoView>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
+  const simple = useAppLevel() === 'simple';
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -69,12 +84,19 @@ export default function NgoPage() {
     if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
+  // A tab hidden by the level just switched to is no longer reachable — land back on Cohort
+  // rather than leaving the view stuck on a tab strip that no longer shows it as selected.
+  useEffect(() => {
+    const allowed = simple ? NGO_SIMPLE_VIEWS : NGO_ALL_VIEWS;
+    setView((current) => (allowed.has(current) ? current : 'cohort'));
+  }, [simple]);
+
   if (!loading && user && isLive && !sample && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the organisation area</p>
-          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>This dashboard is for Organisation programme teams and administrators.</p>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{tr(lang, 'This is the organisation area', 'Le yindawo yenhlangano')}</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>{tr(lang, 'This dashboard is for Organisation programme teams and administrators.', 'Le deshibhodi ingeyamaqembu ohlelo nabaphathi benhlangano.')}</p>
         </div>
       </div>
     );
@@ -83,48 +105,58 @@ export default function NgoPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        style={APP_HEADER_STYLE}>
         <MenuButton />
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Organisation · programme overview</span>
+        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: '#5C5040' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</h1>
         {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
             gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
             (see the matching comment on app/funder/page.tsx). */}
         {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>demonstration records</span>
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
         )}
         <div className="flex-1" />
-        <a
-          href="/network"
-          className="text-xs font-display hidden sm:block"
-          style={{ color: '#1F4D2B', textDecoration: 'none', marginRight: 4 }}
-        >
-          Portfolio map →
-        </a>
-        <LessonLink id="ngo:overview" label="Learn" />
-        <Link href="/tour" className="shrink-0 text-sm font-semibold">Take a tour</Link>
+        {!simple && (
+          <Link
+            href="/network"
+            className="text-xs font-display hidden sm:block"
+            style={{ color: '#1F4D2B', textDecoration: 'none', marginRight: 4 }}
+          >
+            {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
+          </Link>
+        )}
+        <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
+        <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>
         <SettingsButton />
         <RoleSwitcher current="ngo" />
       </header>
 
       <DashboardTabs>
-        {([
-          { key: 'access', label: 'Control centre', icon: BarChart3, badge: 0 },
-          { key: 'evidence', label: 'Training & progress', icon: BarChart3, badge: 0 },
-          { key: 'reports', label: 'Reports', icon: BarChart3, badge: 0 },
-          { key: 'cohort',   label: 'Cohort',   icon: BarChart3, badge: 0 },
-          { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
-          { key: 'messages', label: 'Messages', icon: Inbox,     badge: msgUnread },
-          { key: 'assessments', label: 'Assessments', icon: BarChart3, badge: 0 },
-          { key: 'area', label: 'Production area', icon: BarChart3, badge: 0 },
-          { key: 'funder-preview', label: 'Funder summary preview', icon: BarChart3, badge: 0 },
+        {(simple ? [
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
+          { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
+          { key: 'training', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BarChart3, badge: 0 },
+        ] as const : [
+          { key: 'access', label: tr(lang, 'Control centre', 'Isikhungo sokulawula'), icon: BarChart3, badge: 0 },
+          { key: 'evidence', label: tr(lang, 'Training & progress', 'Ukuqeqeshwa nenqubekelaphambili'), icon: BarChart3, badge: 0 },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
+          { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
+          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: BarChart3, badge: 0 },
+          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: BarChart3, badge: 0 },
+          { key: 'funder-preview', label: tr(lang, 'Funder summary preview', 'Ukubuka kafushane kwabaxhasi'), icon: BarChart3, badge: 0 },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
+            type="button"
             onClick={() => setView(key)}
+            aria-label={label}
             aria-pressed={view === key}
             className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-sans text-sm font-semibold"
             onFocus={e => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
@@ -153,7 +185,13 @@ export default function NgoPage() {
         ))}
       </DashboardTabs>
 
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#5C5040' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
+
       {view === 'evidence' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /></div>}
+      {/* Simple only — stands in for the All-tools Training & progress and Assessments tabs,
+          whose content (attendance/progress vs. M&E surveys) overlaps enough for a Simple reader
+          that one combined tab beats two. */}
+      {view === 'training' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /><MelDashboard /></div>}
       {view === 'cohort' && (
         <div className="flex-1 flex flex-col overflow-hidden">
           <MelDashboard compact />

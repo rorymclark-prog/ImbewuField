@@ -15,6 +15,7 @@ import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
+import { useAppLevel } from '@/lib/app-level';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
@@ -24,14 +25,29 @@ interface NavDrawerProps {
   onClose: () => void;
 }
 
+// Simple / All tools (lib/app-level.ts). All tools keeps every row below exactly as it is today;
+// Simple keeps only the core jobs a farmer new to smartphones needs in her first weeks — judged
+// per row, not per section, since Design Studio sits in the same "Organisation" section as
+// Mentor/NGO/Funder dashboards but is one of the core jobs. Role and workspace filtering
+// (canSeeNavLink / canSeeWorkspaceLink) still apply on top of this in both modes. Matched by the
+// exact href string, not the base path — '/farmer' (Farm map) and '/farmer?openSurvey=1' (Garden
+// Survey, hidden in Simple) share a base path but are different rows.
+const SIMPLE_NAV_HREFS = new Set([
+  '/home', '/farmer', '/records', '/facilitator/crops', '/calendar',
+  '/journal', '/student', '/contact', '/design', '/account',
+]);
+
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const isZulu = lang === 'zu';
+  const ui = (english: string, zulu: string) => isZulu ? `${zulu} (${english})` : english;
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
   const { role } = useAuth();
   const { navigationRole, sample } = useRoleNavigation();
+  const simple = useAppLevel() === 'simple';
   const pageLesson = ({ '/home': 'home:overview', '/farmer': 'map:overview',
     '/student': 'student:overview', '/mentor': 'mentor:overview', '/ngo': 'ngo:overview',
     '/funder': 'funder:overview', '/records': 'finances:overview', '/invoice': 'finances:overview',
@@ -44,7 +60,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     // most farmers never scrolled to. It is the thing they came for, so it gets a door.
     // Choose a saved site first, including sites that do not have a report yet.
     { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
-    { href: '/atlas',   Icon: Earth,         label: 'Atlas' },
+    { href: '/atlas',   Icon: Earth,         label: t('navAtlas') },
     // ONE money door. This row used to be the only way into /finances from the menu, and
     // there was no row for /records at all — so the menu offered half her money and the home
     // screen offered the other half under a different name. Both are the same book now.
@@ -54,8 +70,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     // /network was ungated when it ran on lib/network-demo.ts. It now reads real farmers'
     // production and income through /api/network/farmers and is gated to ngo/funder/admin, so
     // this link is filtered like the other staff routes rather than opening onto a refusal.
-    { href: '/network',  Icon: Users,     label: 'Network' },
-    { href: '/exchange', Icon: Sprout,    label: 'Exchange' },
+    { href: '/network',  Icon: Users,     label: t('navNetwork') },
+    { href: '/exchange', Icon: Sprout,    label: t('navExchange') },
     // Invisible when the master kill switch is off — no entry point, no reads.
     ...(communityEnabled() ? [{ href: '/community', Icon: Handshake, label: t('navCommunity') }] : []),
   ];
@@ -73,7 +89,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // "one crop-planning authority"). A separate menu row for a redirect just duplicated
         // this one under a different label, so it's gone rather than sending a farmer to the
         // same screen twice wondering which one they meant.
-        { href: '/facilitator/crops', Icon: FileText, label: 'Bed-by-Bed Crop Plan' },
+        { href: '/facilitator/crops', Icon: FileText, label: t('navBedCropPlan') },
         { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
         // Repointed from /survey: that wizard writes imbewu_garden_survey, but
         // lib/site-progress.ts (the Home progress bar and its next-step nudge) reads
@@ -95,22 +111,22 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('navSectionOrganisation'),
       items: [
         { href: '/surveys',     Icon: ClipboardList, label: t('homeSurveysLabel') },
-        { href: '/assessments', Icon: ClipboardList, label: 'Project assessments' },
+        { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
         { href: '/mentor',      Icon: Users,         label: t('homeRoleMentorLabel') },
         { href: '/ngo',         Icon: BarChart3,     label: t('navNGODashboard') },
         { href: '/funder',      Icon: Building2,     label: t('homeRoleFunderLabel') },
-        { href: '/design',      Icon: Palette,       label: 'Design Studio' },
+        { href: '/design',      Icon: Palette,       label: t('navDesignStudio') },
       ],
     },
     {
-      label: t('tabAccount'),
+      label: isZulu ? 'I-akhawunti (Account)' : t('tabAccount'),
       items: [
-        { href: '/account', Icon: User, label: t('navMyAccount') },
-        { href: '/offline', Icon: ClipboardList, label: 'Offline & sync' },
-        { href: '/samples', Icon: Sprout, label: 'Practice views' },
-        { href: '/samples/gardens', Icon: Sprout, label: "Browse gardens" },
-        { href: '/feedback', Icon: MessageCircle, label: 'Report a bug / suggest a feature' },
-        { href: '/updates', Icon: Sparkles, label: "What's new" },
+        { href: '/account', Icon: User, label: ui('My Account', 'I-akhawunti yami') },
+        { href: '/offline', Icon: ClipboardList, label: ui('Offline and sync', 'Akukho-inthanethi nokuvumelanisa') },
+        { href: '/samples', Icon: Sprout, label: ui('Practice views', 'Izikrini zokuzilolonga') },
+        { href: '/samples/gardens', Icon: Sprout, label: ui('Browse gardens', 'Bheka izingadi') },
+        { href: '/feedback', Icon: MessageCircle, label: t('navFeedback') },
+        { href: '/updates', Icon: Sparkles, label: t('navWhatsNew') },
       ],
     },
   ];
@@ -196,21 +212,27 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </button>
         </div>
 
-        <nav aria-label="Getting started" style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
-          <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'var(--color-harvest)',color:'#20190f',fontWeight:700 }}><Footprints size={20}/>Take a tour</Link>
-          <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>Tips &amp; help</Link>
+        <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
+          {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre
+              token) under var(--text-primary) — that measured ~2.1:1 in light and ~1.7:1 in dark.
+              #9A6018 is CLAUDE.md's ochre fill for white type, constant across themes on purpose. */}
+          <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'#9A6018',color:'#fff',fontWeight:700 }}><Footprints size={20}/>{t('navTour')}</Link>
+          <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>{t('navTipsHelp')}</Link>
         </nav>
-        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Tour controls"><strong>Tour workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Changes stay in this tour workspace.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Take a tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit tour</button></div></section>}
-        <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
+        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{ui('Practice workspace', 'Indawo yokuzilolonga')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{ui('You are viewing demonstration records. Your account permissions stay unchanged.', 'Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo.')}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{ui('Choose a view', 'Khetha isikrini')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
+        <section aria-label={ui('Page controls', 'Izilawuli zekhasi')} style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
           <SettingsButton showLabel />
-          <LessonLink id={pageLesson} label="Page help" tone="menu" />
+          <LessonLink id={pageLesson} label={t('navPageHelp')} tone="menu" />
           <RoleSwitcher current={navigationRole ?? 'farmer'} inMenu onNavigate={onClose} />
         </section>
         {/* Nav sections */}
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({
             ...section,
-            items: section.items.filter(({ href }) => (sample || canSeeNavLink(role, href)) && canSeeWorkspaceLink(navigationRole, href)),
+            items: section.items.filter(({ href }) =>
+              (sample || canSeeNavLink(role, href)) &&
+              canSeeWorkspaceLink(navigationRole, href) &&
+              (!simple || SIMPLE_NAV_HREFS.has(href))),
           }))
             // A section whose every link was filtered out must go too, heading and all —
             // otherwise a farmer gets an "ORGANISATION" label with nothing beneath it, which
