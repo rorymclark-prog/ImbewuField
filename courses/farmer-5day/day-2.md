@@ -168,7 +168,7 @@ or mattock, 1 rake or hoe, 1 bucket; gloves if available. Class: 2 ℓ bottles o
 in one storm and in a year, and explain a first-flush.
 
 **Poster:** F-P08 How much rain from your roof? · **Slides:** F-D2-11 → 14
-**Clips:** F-ANI-10 (REUSE first-flush tank)
+**Clips:** F-ANI-10 (NEW first-flush tank)
 **Materials:** 2 tape measures (or a 1 m string with knots every metre per group), a 1 ℓ
 bottle, a 20 ℓ bucket, bottle tops as counters (100 per group), flipchart, one calculator
 or phone per group (optional)
@@ -241,7 +241,7 @@ or phone per group (optional)
 use greywater safely.
 
 **Poster:** F-P07 (the lower part: mulch, greywater, banana circle) · **Slides:** F-D2-15 → 18
-**Clips:** F-ANI-11 (REUSE greywater & mulch), F-ANI-12 (REUSE mulch protection)
+**Clips:** F-ANI-11 (NEW greywater & mulch), F-ANI-12 (REUSE mulch protection)
 **Materials (per group):** 5 empty 2 ℓ bottles, a candle + matches + a nail and pliers (or
 a hot nail from a fire), dry grass/leaves (a wheelbarrow), 1 spade. Class: a basin of soapy
 water (washing water).

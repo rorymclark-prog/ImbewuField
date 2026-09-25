@@ -81,7 +81,7 @@ week will give them.
 explain the three ethics with an example from home.
 
 **Posters:** F-P01 Our class agreement · F-P02 Earth care · People care · Fair share
-**Slides:** F-D1-04 → 06 · **Clip:** F-ANI-01 (REUSE three ethics, optional)
+**Slides:** F-D1-04 → 06 · **Clip:** F-ANI-01 (NEW three ethics, optional)
 **Materials:** flipchart, markers, A4 paper + crayons (1 per learner), prestik
 
 | Time | Step | Teacher talk |
@@ -158,7 +158,7 @@ and an agroecological garden, and choose a picture that shows each of the six ga
 principles.
 
 **Posters:** F-P03 Two gardens · F-P04 Six garden principles
-**Slides:** F-D1-07 → 11 · **Clips:** F-ANI-02 (REUSE diversity), F-ANI-03 (NEW two gardens
+**Slides:** F-D1-07 → 11 · **Clips:** F-ANI-02 (NEW diversity), F-ANI-03 (NEW two gardens
 in a drought)
 **Materials:** per group — 1 envelope with 10 magazine pictures, 1 flipchart sheet, markers,
 prestik, glue stick. Class — 2 buckets, 2 bricks of soil (1 bare & compacted, 1 mulched &
@@ -246,8 +246,8 @@ over lunch.
 **By the end, learners can:** find north, show where the sun, cold wind and water come from on
 the venue land, and name the 5 zones of a homestead.
 
-**Poster:** F-P05 Read your land · **Slides:** F-D1-12 → 14 · **Clips:** F-ANI-04 (REUSE
-sun and shadows), F-ANI-05 (REUSE water movement)
+**Poster:** F-P05 Read your land · **Slides:** F-D1-12 → 14 · **Clips:** F-ANI-04 (NEW
+sun and shadows), F-ANI-05 (NEW water movement)
 **Materials:** cardboard house + torch, compass or phone compass (optional), 5 clipboards
 with A3 paper, pencils, 20 pegs, ribbon in 3 colours (yellow = sun, blue = water, red = wind)
 **Room:** outside, walking the whole venue land

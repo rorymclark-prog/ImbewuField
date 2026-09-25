@@ -36,7 +36,7 @@ type (browns / greens / manure) at the compost corner. Teacher talk: 5 min.
 count worms; and say what their soil needs.
 
 **Poster:** F-P10 Soil is alive — hand tests · **Slides:** F-D3-02 → 05
-**Clips:** F-ANI-13 (REUSE living soil), F-ANI-14 (REUSE soil observation)
+**Clips:** F-ANI-13 (NEW living soil), F-ANI-14 (NEW soil observation)
 **Materials (per group):** 1 spade, 1 clear 1 ℓ jar with lid, a 2 ℓ bottle of water, a
 teaspoon of salt or dish soap (helps the jar settle), a tin with both ends cut off, a
 30 cm ruler or marked stick. Class: the jar set up on Day 0 (already settled), a hand lens

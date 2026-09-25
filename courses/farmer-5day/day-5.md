@@ -99,7 +99,7 @@ season; weigh and record a harvest (eaten, shared, sold); and agree who cares fo
 garden.
 
 **Poster:** F-P19 Eat the rainbow — the family plate · **Slides:** F-D5-07 → 10
-**Clip:** F-ANI-28 (REUSE surplus routes)
+**Clip:** F-ANI-28 (NEW surplus routes)
 **Materials:** food picture cards (F-IMG-50 → 65: 16 local foods), 5 paper plates, a crate of
 fresh vegetables (bought, or from learners' gardens), 1 hanging or kitchen scale per group (or
 one for the class), learners' record books (the harvest page), pencils. Garden care roster
@@ -164,7 +164,7 @@ sheet (flipchart).
 money separate, and work out a simple price for a bunch of spinach.
 
 **Poster:** F-P20 Money in, money out · **Slides:** F-D5-11 → 14
-**Clip:** F-ANI-29 (REUSE farm record)
+**Clip:** F-ANI-29 (NEW farm record)
 **Materials:** play money (per group: 10 × R10, 5 × R20, 2 × R50, R5 and R2 coins), 3 tins
 per group labelled with pictures (house · garden · savings), learners' record books (money
 page), 5 "market day" scenario cards (below).

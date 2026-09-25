@@ -32,3 +32,59 @@ No dialogue, no voice-over, no music (silent clip; ambient sound will be removed
 Subject: Spacing string along a bed. 0–7 s: the mentor plants two seedlings at the knots while the farmer watches. 7–15 s: the farmer plants with the mentor's hand guiding hers. 15–22 s: the farmer plants three alone; the mentor steps back, hands in pockets. 22–24 s: they sit and talk (no speech bubbles); loop. --- **Animations (REUSE)**
 ```
 
+## M-ANI-04 · Farmers linked in a network
+Save as: `public/course-media/mentor-3day/M-ANI-04.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow
+depth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.
+Real, unposed moments between a mentor and farmers. No text on screen, no logos.
+No dialogue, no voice-over, no music (silent clip; ambient sound will be removed).
+
+16:9, 8-second shot, silent.
+
+Subject: Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)
+```
+
+## M-ANI-05 · Keeping a farm record
+Save as: `public/course-media/mentor-3day/M-ANI-05.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow
+depth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.
+Real, unposed moments between a mentor and farmers. No text on screen, no logos.
+No dialogue, no voice-over, no music (silent clip; ambient sound will be removed).
+
+16:9, 8-second shot, silent.
+
+Subject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
+```
+
+## M-ANI-06 · Where surplus goes
+Save as: `public/course-media/mentor-3day/M-ANI-06.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow
+depth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.
+Real, unposed moments between a mentor and farmers. No text on screen, no logos.
+No dialogue, no voice-over, no music (silent clip; ambient sound will be removed).
+
+16:9, 8-second shot, silent.
+
+Subject: A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)
+```
+
+## M-ANI-07 · Looking at soil
+Save as: `public/course-media/mentor-3day/M-ANI-07.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow
+depth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.
+Real, unposed moments between a mentor and farmers. No text on screen, no logos.
+No dialogue, no voice-over, no music (silent clip; ambient sound will be removed).
+
+16:9, 8-second shot, silent.
+
+Subject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
+```
+

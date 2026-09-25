@@ -339,32 +339,27 @@ smiles and plants the row. Loop.
 
 ## A-ANI-05 · The sun is in the north (for "does it make sense here?")
 - Type: animation
-- Status: REUSE public/course-animations/reading-landscape/watch-09-sun-shadows.mp4
+- Status: NEW
 - Used in: A-D2-03
-- Length: use the full clip, silent
+- Length: 8–16 s, silent
 
-**Brief:** Optional, for rung ① of the Check Ladder: "AI often answers with northern seasons.
-Here the sun is in the north, and winter is June–July." Play once, no narration over it.
+**Brief:** A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)
 
 ## A-ANI-06 · Look at the soil
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/tour-soil-observation.mp4
+- Status: NEW
 - Used in: A-D2-20
-- Length: use the first 15 s, silent
+- Length: 8–16 s, silent
 
-**Brief:** Optional clip for "AI can't see your soil" — people observe soil with their own eyes
-and hands. Show on a tablet to groups while they discuss what only people can do.
+**Brief:** Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
 
 ## A-ANI-07 · What the farm record shows
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-04-farm-record.mp4
+- Status: NEW
 - Used in: A-D2-19
-- Length: use the full clip, silent
+- Length: 8–16 s, silent
 
-**Brief:** Optional, before reading an AI-written report: "A report is only as true as your
-records. If the record says 12 bunches, the report can't say 50."
-
----
+**Brief:** A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
 
 ## A-PHO-01 · Screen: the Lima help strip
 - Type: photo

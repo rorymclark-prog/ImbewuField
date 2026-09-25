@@ -64,3 +64,48 @@ No readable text or letters on screen. No dialogue, no voice-over, no music (sil
 Subject: A farmer with a phone climbs the five-rung ladder from A-P07-ART. As she reaches each rung (every 2.5 s), its small picture lights up: own garden with sun in the north → circular arrow → seed packet and label → two people talking → one small row planted. At the top she smiles and plants the row. Loop.
 ```
 
+## A-ANI-05 · The sun is in the north (for "does it make sense here?")
+Save as: `public/course-media/ai-literacy/A-ANI-05.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and
+yellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping
+in EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a
+small glowing cyan speech shape with three dots, never a robot or person.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)
+```
+
+## A-ANI-06 · Look at the soil
+Save as: `public/course-media/ai-literacy/A-ANI-06.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and
+yellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping
+in EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a
+small glowing cyan speech shape with three dots, never a robot or person.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
+```
+
+## A-ANI-07 · What the farm record shows
+Save as: `public/course-media/ai-literacy/A-ANI-07.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and
+yellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping
+in EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a
+small glowing cyan speech shape with three dots, never a robot or person.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
+```
+

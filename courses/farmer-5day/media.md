@@ -12,19 +12,19 @@ listed in the manifest automatically.
 
 ## F-ANI-01 · Three ethics
 - Type: animation
-- Status: REUSE public/course-animations/intro-permaculture/watch-07-three-ethics.mp4
+- Status: NEW
 - Used in: F-D1-06
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Use the whole clip; facilitator narrates live.
+**Brief:** Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)
 
 ## F-ANI-02 · Diversity
 - Type: animation
-- Status: REUSE public/course-animations/intro-permaculture/watch-13-diversity.mp4
+- Status: NEW
 - Used in: F-D1-09
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Play after the two-gardens discussion.
+**Brief:** A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)
 
 ## F-ANI-03 · Two gardens through a dry season
 - Type: animation
@@ -36,19 +36,19 @@ listed in the manifest automatically.
 
 ## F-ANI-04 · Sun and shadows
 - Type: animation
-- Status: REUSE public/course-animations/reading-landscape/watch-09-sun-shadows.mp4
+- Status: NEW
 - Used in: F-D1-12
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Confirm the clip shows the sun in the north before use.
+**Brief:** A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)
 
 ## F-ANI-05 · Water movement
 - Type: animation
-- Status: REUSE public/course-animations/reading-landscape/watch-05-water-movement.mp4
+- Status: NEW
 - Used in: F-D1-13
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Show before the site walk.
+**Brief:** A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)
 
 ## F-ANI-06 · A-frame: find the level
 - Type: animation
@@ -84,23 +84,23 @@ listed in the manifest automatically.
 
 ## F-ANI-10 · First-flush tank
 - Type: animation
-- Status: REUSE public/course-animations/water-harvesting/watch-16-first-flush-tank.mp4
+- Status: NEW
 - Used in: F-D2-14
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** Rain on a corrugated-iron roof. The first dirty water (leaves, dust) fills a vertical side pipe until it is full; then clean water flows past it into a covered round tank; the tank fills and the overflow pipe sends water to a planted swale. (Replaces the withdrawn clip `water-harvesting/watch-16-first-flush-tank.mp4`.)
 
 ## F-ANI-11 · Greywater to mulch
 - Type: animation
-- Status: REUSE public/course-animations/water-harvesting/watch-21-greywater-mulch.mp4
+- Status: NEW
 - Used in: F-D2-18
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** A person carries a basin of used washing water and pours it slowly onto a thick mulch ring around a broad-leaved banana-like plant and a fruit tree (never onto leafy vegetables); in cut-away the water soaks through the mulch down to the roots. (Replaces the withdrawn clip `water-harvesting/watch-21-greywater-mulch.mp4`.)
 
 ## F-ANI-12 · Mulch protection
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/watch-14-mulch-protection.mp4
+- Status: REUSE public/course-animations/food-forest/flow-sheet-mulching.mp4
 - Used in: F-D2-17
 - Length: as is
 
@@ -108,19 +108,19 @@ listed in the manifest automatically.
 
 ## F-ANI-13 · Living soil
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/watch-05-living-soil.mp4
+- Status: NEW
 - Used in: F-D3-02
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)
 
 ## F-ANI-14 · Soil observation
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/tour-soil-observation.mp4
+- Status: NEW
 - Used in: F-D3-04
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
 
 ## F-ANI-15 · Compost materials
 - Type: animation
@@ -132,7 +132,7 @@ listed in the manifest automatically.
 
 ## F-ANI-16 · Compost heap
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/watch-10-compost-heap.mp4
+- Status: REUSE public/course-animations/soil-health/flow-build-compost-heap.mp4
 - Used in: F-D3-11
 - Length: as is
 
@@ -188,11 +188,11 @@ listed in the manifest automatically.
 
 ## F-ANI-23 · Seven layers
 - Type: animation
-- Status: REUSE public/course-animations/food-forest/watch-05-seven-layers.mp4
+- Status: NEW
 - Used in: F-D4-16
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)
 
 ## F-ANI-24 · Selecting parent plants
 - Type: animation
@@ -228,19 +228,19 @@ listed in the manifest automatically.
 
 ## F-ANI-28 · Surplus routes
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-09-surplus-routes.mp4
+- Status: NEW
 - Used in: F-D5-10
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)
 
 ## F-ANI-29 · Farm record
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-04-farm-record.mp4
+- Status: NEW
 - Used in: F-D5-13
-- Length: as is
+- Length: 8–16 s, silent
 
-**Brief:** Reuse as is.
+**Brief:** A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
 
 ## Slide images
 

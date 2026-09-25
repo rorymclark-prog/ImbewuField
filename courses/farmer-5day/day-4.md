@@ -239,7 +239,7 @@ pest walk
 plant a fruit tree correctly, and plan their own first beds.
 
 **Posters:** F-P15 (bottom: rotation wheel) · F-P17 Food-forest layers & planting a fruit tree
-**Slides:** F-D4-15 → 18 · **Clips:** F-ANI-22 (NEW rotation wheel), F-ANI-23 (REUSE seven
+**Slides:** F-D4-15 → 18 · **Clips:** F-ANI-22 (NEW rotation wheel), F-ANI-23 (NEW seven
 layers)
 **Materials:** 1 fruit tree seedling (suited to the area — ask the local nursery), the pit
 dug on Day 0 (60 × 60 × 60 cm), compost/old manure (1 bucket), a stake + soft tie, mulch,

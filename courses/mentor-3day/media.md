@@ -368,35 +368,35 @@ farmer plants three alone; the mentor steps back, hands in pockets. 22–24 s: t
 
 ## M-ANI-04 · Farmers linked in a network
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-14-community-network.mp4
+- Status: NEW
 - Used in: M-D2-10, M-D3-06
-- Length: loop as supplied, silent
+- Length: 8–16 s, silent
 
-**Brief:** Farmers learning from farmers — plays behind the cluster-visit slide.
+**Brief:** Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)
 
 ## M-ANI-05 · Keeping a farm record
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-04-farm-record.mp4
+- Status: NEW
 - Used in: M-D3-12, M-ON-11
-- Length: loop as supplied, silent
+- Length: 8–16 s, silent
 
-**Brief:** Records and money coaching introduction (both tracks).
+**Brief:** A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
 
 ## M-ANI-06 · Where surplus goes
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-09-surplus-routes.mp4
+- Status: NEW
 - Used in: M-D2-05
-- Length: loop as supplied, silent
+- Length: 8–16 s, silent
 
-**Brief:** Stage 5 (selling surplus) on the stage-by-stage slide; optional.
+**Brief:** A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)
 
 ## M-ANI-07 · Looking at soil
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/tour-soil-observation.mp4
+- Status: NEW
 - Used in: M-D2-04
-- Length: loop as supplied, silent
+- Length: 8–16 s, silent
 
-**Brief:** "Walk & look" — the pointing finger: looking closely at the garden together.
+**Brief:** Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
 
 ## M-ANI-08 · Choosing seed parents
 - Type: animation

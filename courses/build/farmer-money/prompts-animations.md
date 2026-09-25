@@ -94,3 +94,48 @@ No dialogue, no voice-over, no music (silent clip).
 Subject: A full basket of greens (0–2 s). Bunches lift out and travel along four paths: to a family pot on a fire (4 bunches), over a fence to a neighbour (1), to a buyer at a gate who hands back coins (4), and one wilts and falls to a goat (1) (2–10 s). Beside the family pot, a coin stays in a purse (money saved) (10–12 s). Poster frame: the four paths.
 ```
 
+## R-ANI-07 · The farm record
+Save as: `public/course-media/farmer-money/R-ANI-07.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with
+fingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,
+mustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are
+Black South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.
+No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
+```
+
+## R-ANI-08 · Surplus routes
+Save as: `public/course-media/farmer-money/R-ANI-08.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with
+fingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,
+mustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are
+Black South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.
+No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)
+```
+
+## R-ANI-09 · The community network
+Save as: `public/course-media/farmer-money/R-ANI-09.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with
+fingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,
+mustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are
+Black South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.
+No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)
+```
+

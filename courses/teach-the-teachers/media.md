@@ -280,35 +280,35 @@ back. Loop by fading back. Poster frame: the final busy state.
 
 ## T-ANI-11 · Three ethics
 - Type: animation
-- Status: REUSE public/course-animations/intro-permaculture/watch-07-three-ethics.mp4
+- Status: NEW
 - Used in: T-D1-S2, T-D1-09, MT-01
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Optional in the model lesson; play once after groups find the ethics in the good garden.
+**Brief:** Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)
 
 ## T-ANI-12 · Diversity
 - Type: animation
-- Status: REUSE public/course-animations/intro-permaculture/watch-13-diversity.mp4
+- Status: NEW
 - Used in: T-D1-09
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Background to the two-gardens question; mute, loop.
+**Brief:** A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)
 
 ## T-ANI-13 · Sun and shadows
 - Type: animation
-- Status: REUSE public/course-animations/reading-landscape/watch-09-sun-shadows.mp4
+- Status: NEW
 - Used in: T-D2-09, MT-02, MT-20
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Slide mode only, after the cardboard-house task — confirms winter vs summer shade.
+**Brief:** A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)
 
 ## T-ANI-14 · Water movement
 - Type: animation
-- Status: REUSE public/course-animations/reading-landscape/watch-05-water-movement.mp4
+- Status: NEW
 - Used in: T-D2-10, MT-03, MT-20, MT-21
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Show after the bottle runoff test.
+**Brief:** A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)
 
 ## T-ANI-15 · Roof rain
 - Type: animation
@@ -328,15 +328,15 @@ back. Loop by fading back. Poster frame: the final busy state.
 
 ## T-ANI-17 · Living soil
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/watch-05-living-soil.mp4
+- Status: NEW
 - Used in: T-D2-05, T-D3-07, T-D3-S3 (tablet station)
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** The tablet-station clip in T-D3-S3: watch once, then teach it in 2 minutes.
+**Brief:** Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)
 
 ## T-ANI-18 · Compost heap
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/watch-10-compost-heap.mp4
+- Status: REUSE public/course-animations/soil-health/flow-build-compost-heap.mp4
 - Used in: T-D3-12, MT-06
 - Length: loop, silent
 
@@ -344,11 +344,11 @@ back. Loop by fading back. Poster frame: the final busy state.
 
 ## T-ANI-19 · Soil observation
 - Type: animation
-- Status: REUSE public/course-animations/soil-health/tour-soil-observation.mp4
+- Status: NEW
 - Used in: T-D3-08, MT-05
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Slide mode only during the four tests.
+**Brief:** Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
 
 ## T-ANI-20 · Helpful insects
 - Type: animation
@@ -376,19 +376,19 @@ back. Loop by fading back. Poster frame: the final busy state.
 
 ## T-ANI-23 · The farm record
 - Type: animation
-- Status: REUSE public/course-animations/market-community/watch-04-farm-record.mp4
+- Status: NEW
 - Used in: T-D5-04, MT-10, MT-24
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** After the beans-and-tins task.
+**Brief:** A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
 
 ## T-ANI-24 · Seven layers
 - Type: animation
-- Status: REUSE public/course-animations/food-forest/watch-05-seven-layers.mp4
+- Status: NEW
 - Used in: T-D4-S2, MT-22
-- Length: loop, silent
+- Length: 8–16 s, silent
 
-**Brief:** Station 5 content refresh; Round 5 food-forest session.
+**Brief:** A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)
 
 ## T-ANI-25 · Seed or seedling
 - Type: animation

@@ -74,42 +74,48 @@
       "course": "ai-literacy",
       "kind": "animation",
       "title": "The sun is in the north (for \"does it make sense here?\")",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-05.mp4",
       "used_in": [
         "A-D2-03"
       ],
-      "length": "use the full clip, silent",
-      "brief": "Optional, for rung ① of the Check Ladder: \"AI often answers with northern seasons.\nHere the sun is in the north, and winter is June–July.\" Play once, no narration over it."
+      "length": "8–16 s, silent",
+      "brief": "A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "prompt": "Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and\nyellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping\nin EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a\nsmall glowing cyan speech shape with three dots, never a robot or person.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "shots": 2
     },
     {
       "id": "A-ANI-06",
       "course": "ai-literacy",
       "kind": "animation",
       "title": "Look at the soil",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-06.mp4",
       "used_in": [
         "A-D2-20"
       ],
-      "length": "use the first 15 s, silent",
-      "brief": "Optional clip for \"AI can't see your soil\" — people observe soil with their own eyes\nand hands. Show on a tablet to groups while they discuss what only people can do."
+      "length": "8–16 s, silent",
+      "brief": "Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "prompt": "Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and\nyellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping\nin EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a\nsmall glowing cyan speech shape with three dots, never a robot or person.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "shots": 2
     },
     {
       "id": "A-ANI-07",
       "course": "ai-literacy",
       "kind": "animation",
       "title": "What the farm record shows",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/ai-literacy/A-ANI-07.mp4",
       "used_in": [
         "A-D2-19"
       ],
-      "length": "use the full clip, silent",
-      "brief": "Optional, before reading an AI-written report: \"A report is only as true as your\nrecords. If the record says 12 bunches, the report can't say 50.\""
+      "length": "8–16 s, silent",
+      "brief": "A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "prompt": "Motion-comic animation: bold comic panels with thick black ink lines, flat cyan, magenta and\nyellow colours and halftone shading; subtle parallax, panels sliding in, speech bubbles popping\nin EMPTY, phone screens glowing. Characters are Black South Africans. The AI appears only as a\nsmall glowing cyan speech shape with three dots, never a robot or person.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "shots": 2
     },
     {
       "id": "A-IMG-01",
@@ -1040,28 +1046,32 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Three ethics",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/intro-permaculture/watch-07-three-ethics.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-01.mp4",
       "used_in": [
         "F-D1-06"
       ],
-      "length": "as is",
-      "brief": "Use the whole clip; facilitator narrates live."
+      "length": "8–16 s, silent",
+      "brief": "Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-02",
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Diversity",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/intro-permaculture/watch-13-diversity.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-02.mp4",
       "used_in": [
         "F-D1-09"
       ],
-      "length": "as is",
-      "brief": "Play after the two-gardens discussion."
+      "length": "8–16 s, silent",
+      "brief": "A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-03",
@@ -1084,28 +1094,32 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Sun and shadows",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-04.mp4",
       "used_in": [
         "F-D1-12"
       ],
-      "length": "as is",
-      "brief": "Confirm the clip shows the sun in the north before use."
+      "length": "8–16 s, silent",
+      "brief": "A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-05",
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Water movement",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/reading-landscape/watch-05-water-movement.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-05.mp4",
       "used_in": [
         "F-D1-13"
       ],
-      "length": "as is",
-      "brief": "Show before the site walk."
+      "length": "8–16 s, silent",
+      "brief": "A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-06",
@@ -1171,28 +1185,32 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "First-flush tank",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/water-harvesting/watch-16-first-flush-tank.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-10.mp4",
       "used_in": [
         "F-D2-14"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "Rain on a corrugated-iron roof. The first dirty water (leaves, dust) fills a vertical side pipe until it is full; then clean water flows past it into a covered round tank; the tank fills and the overflow pipe sends water to a planted swale. (Replaces the withdrawn clip `water-harvesting/watch-16-first-flush-tank.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Rain on a corrugated-iron roof. The first dirty water (leaves, dust) fills a vertical side pipe until it is full; then clean water flows past it into a covered round tank; the tank fills and the overflow pipe sends water to a planted swale. (Replaces the withdrawn clip `water-harvesting/watch-16-first-flush-tank.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-11",
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Greywater to mulch",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/water-harvesting/watch-21-greywater-mulch.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-11.mp4",
       "used_in": [
         "F-D2-18"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "A person carries a basin of used washing water and pours it slowly onto a thick mulch ring around a broad-leaved banana-like plant and a fruit tree (never onto leafy vegetables); in cut-away the water soaks through the mulch down to the roots. (Replaces the withdrawn clip `water-harvesting/watch-21-greywater-mulch.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A person carries a basin of used washing water and pours it slowly onto a thick mulch ring around a broad-leaved banana-like plant and a fruit tree (never onto leafy vegetables); in cut-away the water soaks through the mulch down to the roots. (Replaces the withdrawn clip `water-harvesting/watch-21-greywater-mulch.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-12",
@@ -1200,7 +1218,7 @@
       "kind": "animation",
       "title": "Mulch protection",
       "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/watch-14-mulch-protection.mp4",
+      "reuse_path": "public/course-animations/food-forest/flow-sheet-mulching.mp4",
       "target": null,
       "used_in": [
         "F-D2-17"
@@ -1213,28 +1231,32 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Living soil",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/watch-05-living-soil.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-13.mp4",
       "used_in": [
         "F-D3-02"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-14",
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Soil observation",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-14.mp4",
       "used_in": [
         "F-D3-04"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-15",
@@ -1256,7 +1278,7 @@
       "kind": "animation",
       "title": "Compost heap",
       "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
+      "reuse_path": "public/course-animations/soil-health/flow-build-compost-heap.mp4",
       "target": null,
       "used_in": [
         "F-D3-11"
@@ -1361,14 +1383,16 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Seven layers",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/food-forest/watch-05-seven-layers.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-23.mp4",
       "used_in": [
         "F-D4-16"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-24",
@@ -1433,28 +1457,32 @@
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Surplus routes",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-28.mp4",
       "used_in": [
         "F-D5-10"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-ANI-29",
       "course": "farmer-5day",
       "kind": "animation",
       "title": "Farm record",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-5day/F-ANI-29.mp4",
       "used_in": [
         "F-D5-13"
       ],
-      "length": "as is",
-      "brief": "Reuse as is."
+      "length": "8–16 s, silent",
+      "brief": "A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "prompt": "Animated linocut print: every frame looks like a hand-carved 3-colour relief print on warm\noff-white paper, with black carved outlines, visible gouge texture, flat green, terracotta and\nmaize-yellow fills, water in indigo. Motion is simple and readable, like printed paper cut-outs\nmoving: slow, clear, one action at a time. Fixed camera unless stated. Rural KwaZulu-Natal,\nSouth Africa; sun in the north, shadows to the south. No text, no letters, no numbers on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "shots": 2
     },
     {
       "id": "F-IMG-01",
@@ -3760,42 +3788,48 @@
       "course": "farmer-money",
       "kind": "animation",
       "title": "The farm record",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-07.mp4",
       "used_in": [
         "R-D2-03"
       ],
-      "length": "use full clip, silent",
-      "brief": "Existing clip about keeping a farm record. Use as the backdrop while explaining the\nmoney book columns."
+      "length": "8–16 s, silent",
+      "brief": "A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "prompt": "Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with\nfingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,\nmustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are\nBlack South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "shots": 2
     },
     {
       "id": "R-ANI-08",
       "course": "farmer-money",
       "kind": "animation",
       "title": "Surplus routes",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-08.mp4",
       "used_in": [
         "R-D3-02"
       ],
-      "length": "use full clip, silent",
-      "brief": "Existing clip of surplus going to different buyers. Show before the buyer-card ranking."
+      "length": "8–16 s, silent",
+      "brief": "A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "prompt": "Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with\nfingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,\nmustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are\nBlack South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "shots": 2
     },
     {
       "id": "R-ANI-09",
       "course": "farmer-money",
       "kind": "animation",
       "title": "The community network",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-14-community-network.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/farmer-money/R-ANI-09.mp4",
       "used_in": [
         "R-D3-05"
       ],
-      "length": "use full clip, silent",
-      "brief": "Existing clip of growers connected in a network. Use for \"selling together\"."
+      "length": "8–16 s, silent",
+      "brief": "Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)",
+      "prompt": "Stop-motion claymation, slightly stepped motion like 12 frames per second, matte plasticine with\nfingerprints, soft warm studio light, miniature set, cheerful colours (cream, teal, coral,\nmustard, green). Generic clay coins and plain clay notes, never real currency. Clay people are\nBlack South Africans. Fixed camera or a slow push-in. No text, numbers or symbols on screen.\nNo dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)",
+      "shots": 2
     },
     {
       "id": "R-IMG-01",
@@ -5042,58 +5076,66 @@
       "course": "mentor-3day",
       "kind": "animation",
       "title": "Farmers linked in a network",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-14-community-network.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-04.mp4",
       "used_in": [
         "M-D2-10",
         "M-D3-06"
       ],
-      "length": "loop as supplied, silent",
-      "brief": "Farmers learning from farmers — plays behind the cluster-visit slide."
+      "length": "8–16 s, silent",
+      "brief": "Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)",
+      "prompt": "Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow\ndepth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.\nReal, unposed moments between a mentor and farmers. No text on screen, no logos.\nNo dialogue, no voice-over, no music (silent clip; ambient sound will be removed).\n\n16:9, 8-second shot, silent.\n\nSubject: Several homestead gardens on a hillside light up one by one and are joined by footpaths; people walk between them carrying seed packets, seedlings and tools; a group gathers in a circle at one host garden. (Replaces the withdrawn clip `market-community/watch-14-community-network.mp4`.)",
+      "shots": 2
     },
     {
       "id": "M-ANI-05",
       "course": "mentor-3day",
       "kind": "animation",
       "title": "Keeping a farm record",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-05.mp4",
       "used_in": [
         "M-D3-12",
         "M-ON-11"
       ],
-      "length": "loop as supplied, silent",
-      "brief": "Records and money coaching introduction (both tracks)."
+      "length": "8–16 s, silent",
+      "brief": "A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "prompt": "Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow\ndepth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.\nReal, unposed moments between a mentor and farmers. No text on screen, no logos.\nNo dialogue, no voice-over, no music (silent clip; ambient sound will be removed).\n\n16:9, 8-second shot, silent.\n\nSubject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "shots": 2
     },
     {
       "id": "M-ANI-06",
       "course": "mentor-3day",
       "kind": "animation",
       "title": "Where surplus goes",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-09-surplus-routes.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-06.mp4",
       "used_in": [
         "M-D2-05"
       ],
-      "length": "loop as supplied, silent",
-      "brief": "Stage 5 (selling surplus) on the stage-by-stage slide; optional."
+      "length": "8–16 s, silent",
+      "brief": "A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "prompt": "Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow\ndepth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.\nReal, unposed moments between a mentor and farmers. No text on screen, no logos.\nNo dialogue, no voice-over, no music (silent clip; ambient sound will be removed).\n\n16:9, 8-second shot, silent.\n\nSubject: A basket of harvested vegetables at a homestead; paths lead to three destinations one by one: the family table, a neighbour at the fence, and a small roadside table where a buyer hands over plain generic money (no real currency). (Replaces the withdrawn clip `market-community/watch-09-surplus-routes.mp4`.)",
+      "shots": 2
     },
     {
       "id": "M-ANI-07",
       "course": "mentor-3day",
       "kind": "animation",
       "title": "Looking at soil",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/mentor-3day/M-ANI-07.mp4",
       "used_in": [
         "M-D2-04"
       ],
-      "length": "loop as supplied, silent",
-      "brief": "\"Walk & look\" — the pointing finger: looking closely at the garden together."
+      "length": "8–16 s, silent",
+      "brief": "Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "prompt": "Documentary film look, 35 mm, natural light, gentle handheld camera with slow movement, shallow\ndepth of field. Rural KwaZulu-Natal homestead garden, sun in the north, shadows to the south.\nReal, unposed moments between a mentor and farmers. No text on screen, no logos.\nNo dialogue, no voice-over, no music (silent clip; ambient sound will be removed).\n\n16:9, 8-second shot, silent.\n\nSubject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "shots": 2
     },
     {
       "id": "M-ANI-08",
@@ -6177,63 +6219,71 @@
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Three ethics",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/intro-permaculture/watch-07-three-ethics.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-11.mp4",
       "used_in": [
         "T-D1-S2",
         "T-D1-09",
         "MT-01"
       ],
-      "length": "loop, silent",
-      "brief": "Optional in the model lesson; play once after groups find the ethics in the good garden."
+      "length": "8–16 s, silent",
+      "brief": "Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-12",
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Diversity",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/intro-permaculture/watch-13-diversity.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-12.mp4",
       "used_in": [
         "T-D1-09"
       ],
-      "length": "loop, silent",
-      "brief": "Background to the two-gardens question; mute, loop."
+      "length": "8–16 s, silent",
+      "brief": "A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-13",
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Sun and shadows",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/reading-landscape/watch-09-sun-shadows.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-13.mp4",
       "used_in": [
         "T-D2-09",
         "MT-02",
         "MT-20"
       ],
-      "length": "loop, silent",
-      "brief": "Slide mode only, after the cardboard-house task — confirms winter vs summer shade."
+      "length": "8–16 s, silent",
+      "brief": "A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-14",
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Water movement",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/reading-landscape/watch-05-water-movement.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-14.mp4",
       "used_in": [
         "T-D2-10",
         "MT-03",
         "MT-20",
         "MT-21"
       ],
-      "length": "loop, silent",
-      "brief": "Show after the bottle runoff test."
+      "length": "8–16 s, silent",
+      "brief": "A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-15",
@@ -6270,16 +6320,18 @@
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Living soil",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/watch-05-living-soil.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-17.mp4",
       "used_in": [
         "T-D2-05",
         "T-D3-07",
         "T-D3-S3 (tablet station)"
       ],
-      "length": "loop, silent",
-      "brief": "The tablet-station clip in T-D3-S3: watch once, then teach it in 2 minutes."
+      "length": "8–16 s, silent",
+      "brief": "Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-18",
@@ -6287,7 +6339,7 @@
       "kind": "animation",
       "title": "Compost heap",
       "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/watch-10-compost-heap.mp4",
+      "reuse_path": "public/course-animations/soil-health/flow-build-compost-heap.mp4",
       "target": null,
       "used_in": [
         "T-D3-12",
@@ -6301,15 +6353,17 @@
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Soil observation",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/soil-health/tour-soil-observation.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-19.mp4",
       "used_in": [
         "T-D3-08",
         "MT-05"
       ],
-      "length": "loop, silent",
-      "brief": "Slide mode only during the four tests."
+      "length": "8–16 s, silent",
+      "brief": "Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-20",
@@ -6361,31 +6415,35 @@
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "The farm record",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/market-community/watch-04-farm-record.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-23.mp4",
       "used_in": [
         "T-D5-04",
         "MT-10",
         "MT-24"
       ],
-      "length": "loop, silent",
-      "brief": "After the beans-and-tins task."
+      "length": "8–16 s, silent",
+      "brief": "A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-24",
       "course": "teach-the-teachers",
       "kind": "animation",
       "title": "Seven layers",
-      "status": "REUSE",
-      "reuse_path": "public/course-animations/food-forest/watch-05-seven-layers.mp4",
-      "target": null,
+      "status": "NEW",
+      "reuse_path": null,
+      "target": "public/course-media/teach-the-teachers/T-ANI-24.mp4",
       "used_in": [
         "T-D4-S2",
         "MT-22"
       ],
-      "length": "loop, silent",
-      "brief": "Station 5 content refresh; Round 5 food-forest session."
+      "length": "8–16 s, silent",
+      "brief": "A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)",
+      "prompt": "Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves\non, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may\nappear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.\nNo readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).\n\n16:9, 8-second shot, silent.\n\nSubject: A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)",
+      "shots": 2
     },
     {
       "id": "T-ANI-25",

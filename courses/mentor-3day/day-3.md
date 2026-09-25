@@ -142,7 +142,7 @@ first step with your own list?
 **By the end, learners can:** plan a cluster visit, plan a farmer field day, and make a 10-minute
 phone check-in.
 
-**Posters:** M-P11, M-P12, M-P13 · **Slides:** M-D3-06 → M-D3-11 · **Clip:** M-ANI-04 (REUSE community network)
+**Posters:** M-P11, M-P12, M-P13 · **Slides:** M-D3-06 → M-D3-11 · **Clip:** M-ANI-04 (NEW community network)
 **Materials (per group of 5):** cluster-visit planner (visit-playbook.md §3), field-day planner
 (§4), 2 phones (for the phone role-play, calls not needed — sit back to back), the season map M-P13.
 

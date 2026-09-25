@@ -32,3 +32,115 @@ No readable text or letters on screen. No dialogue, no voice-over, no music (sil
 Subject: Top view of a practical site. 0–4 s: one facilitator digging, 25 small figures standing around her in a crowd, still. 4–8 s: the crowd splits into five groups of five that walk to five stations 3 m apart, each with its own small pile of tools. 8–12 s: every figure is moving — digging, carrying, mixing; the facilitator walks between stations with hands behind her back. Loop by fading back. Poster frame: the final busy state.
 ```
 
+## T-ANI-11 · Three ethics
+Save as: `public/course-media/teach-the-teachers/T-ANI-11.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: Three circles form one after another and overlap: hands holding soil with a seedling; a family eating from one pot; a basket passing between two hands while peels return to the soil. The shared centre fills with a small green garden. (Replaces the withdrawn clip `intro-permaculture/watch-07-three-ethics.mp4`.)
+```
+
+## T-ANI-12 · Diversity
+Save as: `public/course-media/teach-the-teachers/T-ANI-12.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A bare row of a single crop wilts as pests arrive; beside it a mixed bed (tall grain, climbing bean, spreading pumpkin-like leaves, flowers) stays green while ladybirds and birds visit. Seasons pass and the mixed bed keeps producing. (Replaces the withdrawn clip `intro-permaculture/watch-13-diversity.mp4`.)
+```
+
+## T-ANI-13 · Sun and shadows
+Save as: `public/course-media/teach-the-teachers/T-ANI-13.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A small house on open ground seen from the side at an angle. The sun travels in a low arc across the NORTH side of the sky from east (right) to west (left); the house's shadow sweeps across the ground on the SOUTH side. Then winter: the arc drops lower and the shadow grows longer. Loops. (Replaces the withdrawn clip `reading-landscape/watch-09-sun-shadows.mp4`.)
+```
+
+## T-ANI-14 · Water movement
+Save as: `public/course-media/teach-the-teachers/T-ANI-14.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A homestead on a gentle slope in a summer storm: rain falls on roof, road and yard; blue flow lines gather into channels and run downhill carrying soil. Then the same slope with stone lines and grass strips, where the water spreads and sinks in. (Replaces the withdrawn clip `reading-landscape/watch-05-water-movement.mp4`.)
+```
+
+## T-ANI-17 · Living soil
+Save as: `public/course-media/teach-the-teachers/T-ANI-17.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: Cut-away of dark garden soil under mulch, magnified: earthworms tunnel, fungus threads link roots, tiny specks of life move, crumbs hold air and water droplets; a fallen leaf above is slowly broken down and pulled into the soil. (Replaces the withdrawn clip `soil-health/watch-05-living-soil.mp4`.)
+```
+
+## T-ANI-19 · Soil observation
+Save as: `public/course-media/teach-the-teachers/T-ANI-19.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: Hands dig a spade-deep square of garden soil, lift it and crumble it: dark crumbs, fine roots, an earthworm, fungus threads. Beside it a pale hard lump from a path cracks apart with nothing living in it. Slow side-by-side comparison. (Replaces the withdrawn clip `soil-health/tour-soil-observation.mp4`.)
+```
+
+## T-ANI-23 · The farm record
+Save as: `public/course-media/teach-the-teachers/T-ANI-23.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A hand makes tally marks in two columns of a simple exercise book beside a basket of harvested greens and a hanging scale; bunches move from the basket into three piles (eat, share, sell) as marks appear. Marks are simple strokes, never readable writing. (Replaces the withdrawn clip `market-community/watch-04-farm-record.mp4`.)
+```
+
+## T-ANI-24 · Seven layers
+Save as: `public/course-media/teach-the-teachers/T-ANI-24.mp4` (+ `.jpg` still)  ·  shots: 2  ·  length: 8–16 s, silent
+
+```
+Hand-drawn whiteboard / chalk-talk animation on brown kraft paper: marker lines draw themselves
+on, icons pop in, arrows sweep, sticky notes slap onto the page. A hand holding a marker may
+appear. Flat, top-down, fixed camera. Colours: black marker, red, blue (water only), yellow.
+No readable text or letters on screen. No dialogue, no voice-over, no music (silent clip).
+
+16:9, 8-second shot, silent.
+
+Subject: A young food forest grows its layers one after another: tall canopy tree, small fruit tree, bush, herbs, spreading ground cover, a root crop shown in cut-away, and a climber twining up; fallen leaves become mulch. Generic plant shapes. (Replaces the withdrawn clip `food-forest/watch-05-seven-layers.mp4`.)
+```
+
