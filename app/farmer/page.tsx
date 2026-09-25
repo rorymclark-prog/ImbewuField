@@ -715,6 +715,7 @@ function HomeInner() {
             style={{ width: panelWidth, background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <DataPanel
+              surveyViewport="desktop"
               data={data}
               loading={loading}
               coords={selected}
@@ -844,6 +845,7 @@ function HomeInner() {
             {/* Panel content — scrolls inside the sheet */}
             <div className="flex-1 overflow-hidden flex flex-col min-h-0">
               <DataPanel
+                surveyViewport="mobile"
                 data={data}
                 loading={loading}
                 coords={selected}
