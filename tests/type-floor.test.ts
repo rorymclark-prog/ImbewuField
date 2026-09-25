@@ -136,6 +136,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/NavDrawer.tsx': 'the menu',
   'components/MyRecords.tsx': 'the records list itself',
   'components/FinanceGraphs.tsx': 'picked and sold, in her own numbers',
+  'components/IsiZuluDraftSource.tsx': 'financial isiZulu drafts keep a 12px floor beside their exact English sources',
   'components/CashflowChart.tsx': 'in and out, in her own numbers',
   'components/HarvestReconciliation.tsx': 'picked against sold — the arithmetic she is checking',
   'components/ComingUpHarvests.tsx': 'what is ready soon',
