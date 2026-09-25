@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '5a269771', changes: [
+    'Study controls now have marked Tshivenda drafts with an English review notice.',
+  ], tour: [
+    { title: 'Compare Study control drafts', where: 'Study → My Studies', href: '/student',
+      detail: 'Choose Tshivenda to see marked Study controls and their English review notice.' },
+  ] },
   { when: '25 September 2026', sha: '046de5d7', changes: [
     'Garden Survey goal descriptions show marked isiZulu drafts beside English.',
     'The Garden Survey lesson link follows the selected language.',
