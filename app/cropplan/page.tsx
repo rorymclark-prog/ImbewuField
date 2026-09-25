@@ -4,6 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import Link from 'next/link';
 import {
   Layers, Sprout, Scissors, Leaf, ClipboardList,
@@ -222,6 +223,11 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
 
 export default function CropPlanPage() {
   const { lang, t } = useLanguage();
+  // Simple / All tools (lib/app-level.ts): Simple leads with the current month's jobs — the
+  // farmer's own "what to plant/do now or next" — and drops the Season tab, the month-count grid
+  // and the map-planner promo. The task list itself (what actually needs doing) is never gated,
+  // same reasoning as the bed×month grid in app/facilitator/crops/page.tsx.
+  const simple = useAppLevel() === 'simple';
   const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
   const zuMonths = [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
     t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
@@ -233,6 +239,9 @@ export default function CropPlanPage() {
     ? zuMonths
     : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
+  // Simple has no Season tab to switch into, so it always reads as Month regardless of a view
+  // choice made earlier in All tools (e.g. switching level mid-session).
+  const effectiveView: View = simple ? 'month' : view;
   const [cursorMonth, setCursorMonth] = useState(1);
   const [todayMonth, setTodayMonth] = useState(1);
   const [year, setYear] = useState<CropBoardYear | null>(null);
@@ -290,7 +299,7 @@ export default function CropPlanPage() {
         <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Task Planner', 'Ukuhlela imisebenzi')}</span>
         <div className="flex-1" />
-        <LessonLink id="crops:planner" label={ui('Learn', 'Funda')} />
+        {!simple && <LessonLink id="crops:planner" label={ui('Learn', 'Funda')} />}
         <SettingsButton />
       </header>
 
@@ -329,23 +338,26 @@ export default function CropPlanPage() {
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
 
-          {/* New: flagship bed-timeline crop planner on the design map */}
-          <Link href="/facilitator/crops"
-            className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
-            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', textDecoration: 'none' }}>
-            <Sprout size={14} aria-hidden style={{ display: "inline", verticalAlign: "-2px" }} /> {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
-          </Link>
+          {/* New: flagship bed-timeline crop planner on the design map — a discovery promo for
+              a second tool, not part of the day-to-day task list, so it stays in All tools. */}
+          {!simple && (
+            <Link href="/facilitator/crops"
+              className="block px-4 py-2.5 rounded-xl text-sm font-display font-semibold text-center transition-all mb-4"
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', textDecoration: 'none' }}>
+              <Sprout size={14} aria-hidden style={{ display: "inline", verticalAlign: "-2px" }} /> {ui('New: plan crops bed-by-bed on your design map →', 'Okusha: hlela izitshalo umbhede ngombhede emephini yakho yokuklama →')}
+            </Link>
+          )}
 
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
               <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.12em' }}>{ui('Task planner', 'Ukuhlela imisebenzi')}</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                {mounted && view === 'month' && monthName}
-                {mounted && view === 'season' && seasonLabel}
+                {mounted && effectiveView === 'month' && monthName}
+                {mounted && effectiveView === 'season' && seasonLabel}
               </h1>
             </div>
-            {view === 'month' && (
+            {effectiveView === 'month' && (
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button onClick={() => stepMonth(-1)} aria-label={ui('Previous month', 'Inyanga edlule')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
                 <button onClick={() => stepMonth(1)} aria-label={ui('Next month', 'Inyanga elandelayo')} className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}><ChevronRight size={16} /></button>
@@ -353,19 +365,22 @@ export default function CropPlanPage() {
             )}
           </div>
 
-          {/* Zoom tabs */}
-          <div className="flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-            {TABS.map((t) => {
-              const on = view === t.v;
-              return (
-                <button key={t.v} onClick={() => setView(t.v)}
-                  className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
-                  style={on ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 14 } : { color: 'var(--text-secondary)', fontSize: 14, border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}>
-                  {t.label}
-                </button>
-              );
-            })}
-          </div>
+          {/* Zoom tabs — Simple always reads as Month (see effectiveView), so the switcher itself,
+              a secondary control, is All-tools only rather than shown disabled or pointless. */}
+          {!simple && (
+            <div className="flex rounded-xl p-0.5 gap-0.5 mt-3 mb-5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+              {TABS.map((t) => {
+                const on = view === t.v;
+                return (
+                  <button key={t.v} onClick={() => setView(t.v)}
+                    className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
+                    style={on ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 14 } : { color: 'var(--text-secondary)', fontSize: 14, border: '1px solid transparent', background: 'transparent', cursor: 'pointer' }}>
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           {/* A saved plan that produces no job in any month — say why rather than
               leaving twelve empty months with no explanation. Every clause here has
@@ -390,7 +405,7 @@ export default function CropPlanPage() {
           )}
 
           {/* ── MONTH ── */}
-          {view === 'month' && (
+          {effectiveView === 'month' && (
             <div>
               {/* Twelve-month strip: the plan's own annual cycle, with each month's
                   real job count. Replaces the old day-grid calendar, which showed no
@@ -445,7 +460,7 @@ export default function CropPlanPage() {
           )}
 
           {/* ── SEASON ── */}
-          {view === 'season' && (
+          {effectiveView === 'season' && (
             <div className="space-y-4">
               <div className="rounded-2xl p-4 flex items-center gap-4" style={{ background: '#1F4D2B', boxShadow: '0 4px 16px rgba(31,77,43,0.28)' }}>
                 <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(234,243,226,0.15)' }}>
