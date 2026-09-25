@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { CheckCircle2, Info, X } from 'lucide-react';
+import { CheckCircle2, ChevronDown, Info, X } from 'lucide-react';
+import { useAppLevel } from '@/lib/app-level';
 import { CROPS } from '@/lib/crop-catalog';
 import { loadCropPriceOverrides, priceFor } from '@/lib/crop-prices';
 import {
@@ -74,6 +75,11 @@ export default function NewListingForm({
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const tx = (en: string, dz: string) => zu ? dz : en;
+  const simple = useAppLevel() === 'simple';
+  // Simple starts the extra fields (offer/want, category, headline, detail, month, name, town,
+  // share-location) collapsed behind "More options" — a farmer posting a quick "cabbages for
+  // sale" listing only ever needs the crop, how much and the price.
+  const [showMore, setShowMore] = useState(false);
   const [kind, setKind] = useState<ListingKind>('offer');
   const [category, setCategory] = useState<ListingCategory>('produce');
   const [cropKey, setCropKey] = useState<string>('');
@@ -239,6 +245,282 @@ export default function NewListingForm({
     );
   }
 
+  // Simple shows crop + quantity + price up front and tucks everything else — offer/want,
+  // category, headline, detail, month, name, town, share-location — behind "More options".
+  // Each section below is written once and placed by the two layouts further down, so Simple
+  // and All tools render the exact same fields rather than two independently maintained forms.
+  const priceModes = (simple ? ['zar', 'swap', 'free'] : Object.keys(PRICE_MODE_LABEL)) as PriceMode[];
+
+  const kindSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Are you offering or looking?', 'Ingabe kukhona okunikezayo noma okufunayo?')}</div>
+      <div className="flex gap-2">
+        {(['offer', 'want'] as ListingKind[]).map((k) => (
+          <button
+            key={k}
+            onClick={() => setKind(k)}
+            className="font-sans font-semibold"
+            style={{
+              flex: 1,
+              padding: 9,
+              borderRadius: 10,
+              fontSize: 13,
+              cursor: 'pointer',
+              background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)',
+              color: kind === k ? '#fff' : EX.muted,
+              border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
+            }}
+          >
+            {zu ? ZU_KIND_LABEL[k] : KIND_LABEL[k]}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const categorySection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('What kind of thing?', 'Uhlobo luni lwento?')}</div>
+      <div className="flex gap-1.5 flex-wrap">
+        {LISTING_CATEGORIES.map((c) => (
+          <button
+            key={c}
+            onClick={() => applyCategory(c)}
+            className="font-sans font-semibold"
+            style={{
+              padding: '7px 12px',
+              borderRadius: 100,
+              fontSize: 12.5,
+              cursor: 'pointer',
+              background: category === c ? EX.green : 'rgba(226,216,196,0.5)',
+              color: category === c ? '#fff' : EX.muted,
+              border: `1px solid ${category === c ? EX.green : EX.border}`,
+            }}
+          >
+            {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const cropSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Which crop?', 'Isiphi isitshalo?')}</div>
+      <select
+        value={cropKey}
+        onChange={(e) => applyCrop(e.target.value)}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={fieldStyle}
+      >
+        <option value="">{tx('Not a specific crop (tools, labour, other)', 'Akusona isitshalo esithile (amathuluzi, umsebenzi, okunye)')}</option>
+        {cropOptions.map((c) => (
+          <option key={c.key} value={c.key}>{c.icon} {c.name}</option>
+        ))}
+      </select>
+      <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
+        {tx('Pick from the list rather than typing a name — that is what lets another farmer filter the board by crop and actually find you.', 'Khetha ohlwini esikhundleni sokubhala igama ukuze omunye umlimi akuthole ngokuhlunga ngesitshalo.')}
+      </p>
+    </div>
+  );
+
+  const titleSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Headline', 'Isihloko')}</div>
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => { setTitle(e.target.value.slice(0, 90)); setTitleDirty(true); }}
+        placeholder={tx('Swiss chard — cutting weekly', 'I-Swiss chard — ngiyivuna masonto onke')}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={fieldStyle}
+      />
+    </div>
+  );
+
+  const descriptionSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Detail (optional)', 'Imininingwane (uma uthanda)')}</div>
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value.slice(0, 300))}
+        placeholder={tx('Anything a buyer should know — variety, condition, collection.', 'Okufanele kwaziwe umthengi — uhlobo, isimo nendlela yokulanda.')}
+        rows={3}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={{ ...fieldStyle, resize: 'none', lineHeight: 1.5 }}
+      />
+    </div>
+  );
+
+  const quantitySection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('How much? (optional)', 'Kungakanani? (uma uthanda)')}</div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          inputMode="decimal"
+          value={qty}
+          onChange={(e) => setQty(e.target.value)}
+          placeholder="12"
+          className="rounded-xl px-3 py-2.5 font-sans"
+          style={{ ...fieldStyle, flex: 1 }}
+        />
+        <select
+          value={unit}
+          onChange={(e) => setUnit(e.target.value as ListingUnit)}
+          className="rounded-xl px-3 py-2.5 font-sans"
+          style={{ ...fieldStyle, flex: 1 }}
+        >
+          {LISTING_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+        </select>
+      </div>
+      {!qtyValid && (
+        <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
+          {tx('Quantity must be a number above zero — or leave it blank.', 'Inani kumele libe ngaphezu kukaziro — noma ushiye lingenalutho.')}
+        </p>
+      )}
+    </div>
+  );
+
+  const priceSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Price, swap or free', 'Intengo, ukushintshisana noma mahhala')}</div>
+      <div className="flex gap-1.5 flex-wrap" style={{ marginBottom: 10 }}>
+        {priceModes.map((m) => (
+          <button
+            key={m}
+            onClick={() => { setPriceMode(m); setPriceDirty(true); }}
+            className="font-sans font-semibold"
+            style={{
+              padding: '7px 12px',
+              borderRadius: 100,
+              fontSize: 12.5,
+              cursor: 'pointer',
+              background: priceMode === m ? EX.amber : 'rgba(226,216,196,0.5)',
+              color: priceMode === m ? '#fff' : EX.muted,
+              border: `1px solid ${priceMode === m ? EX.amber : EX.border}`,
+            }}
+          >
+            {tx(PRICE_MODE_LABEL[m], ZU_PRICE_MODE_LABEL[m])}
+          </button>
+        ))}
+      </div>
+
+      {priceMode === 'zar' && (
+        <>
+          <div className="flex gap-2 items-center">
+            <span className="font-display font-semibold" style={{ fontSize: 15, color: EX.muted }}>R</span>
+            <input
+              type="text"
+              inputMode="decimal"
+              value={priceAmount}
+              onChange={(e) => { setPriceAmount(e.target.value); setPriceDirty(true); }}
+              placeholder="6"
+              className="rounded-xl px-3 py-2.5 font-sans"
+              style={{ ...fieldStyle, flex: 1 }}
+            />
+            <span className="font-sans" style={{ fontSize: 13, color: EX.faint }}>{tx('per', 'nge-')}</span>
+            <select
+              value={priceBasis}
+              onChange={(e) => setPriceBasis(e.target.value as PriceBasis)}
+              className="rounded-xl px-3 py-2.5 font-sans"
+              style={{ ...fieldStyle, flex: 1 }}
+            >
+              {PRICE_BASES.map((b) => (
+                <option key={b} value={b}>{b === 'lot' ? tx('the lot', 'konke') : b}</option>
+              ))}
+            </select>
+          </div>
+          {cropKey !== '' && suggestedPricePerKg(cropKey) !== null && (
+            <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
+              {zu ? <ExchangeSourceCopy en={`Suggested from the app’s price book: about R${suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.`} zu={`Intengo ephakanyisiwe isuselwa encwadini yohlelo yokubala amanani: cishe u-R${suggestedPricePerKg(cropKey)}/kg ngenani le-wholesale. Lena intengo yasepulazini, hhayi eyasesitolo — yishintshe ibe yinani olifunayo.`} /> : <>Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.</>}
+            </p>
+          )}
+          {!priceValid && (
+            <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
+              {simple
+                ? tx('Enter an amount above zero, or choose Swap or Free.', 'Faka inani elingaphezu kukaziro, noma ukhethe ukushintshisana noma mahhala.')
+                : tx('Enter an amount above zero, or choose Swap, Free or Make an offer.', 'Faka inani elingaphezu kukaziro, noma ukhethe ukushintshisana, mahhala noma ukubeka inani lakho.')}
+            </p>
+          )}
+        </>
+      )}
+
+      {priceMode === 'swap' && (
+        <input
+          type="text"
+          value={swapWants}
+          onChange={(e) => setSwapWants(e.target.value.slice(0, 100))}
+          placeholder={tx('What would you take? e.g. maize seed or pumpkin seed', 'Yini ongayamukela? Isib. imbewu yommbila noma yethanga')}
+          className="rounded-xl px-3 py-2.5 font-sans"
+          style={fieldStyle}
+        />
+      )}
+    </div>
+  );
+
+  const monthSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>
+        {kind === 'want' ? tx('Needed by (optional)', 'Kudingeka nini? (uma uthanda)') : tx('Ready in (optional)', 'Kuyobe sekulungile nini? (uma uthanda)')}
+      </div>
+      <select
+        value={month}
+        onChange={(e) => setMonth(e.target.value)}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={fieldStyle}
+      >
+        <option value="">{tx('Any time', 'Noma nini')}</option>
+        {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{zu ? ZU_MONTH_LABEL[i] : m}</option>)}
+      </select>
+    </div>
+  );
+
+  const nameSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Your name', 'Igama lakho')}</div>
+      <input
+        type="text"
+        value={farmerName}
+        onChange={(e) => setFarmerName(e.target.value.slice(0, 60))}
+        placeholder={tx("Your name or your group's name", 'Igama lakho noma leqembu lakho')}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={fieldStyle}
+      />
+    </div>
+  );
+
+  const townSection = (
+    <div>
+      <div className="font-sans uppercase" style={labelStyle}>{tx('Nearest town', 'Idolobha eliseduze')}</div>
+      <input
+        type="text"
+        value={areaText}
+        onChange={(e) => setAreaText(e.target.value.slice(0, 60))}
+        placeholder={tx('e.g. Nquthu', 'isib. iNquthu')}
+        className="rounded-xl px-3 py-2.5 font-sans"
+        style={fieldStyle}
+      />
+    </div>
+  );
+
+  const shareAreaSection = mySite && (
+    <label className="flex items-start gap-2.5" style={{ cursor: 'pointer' }}>
+      <input
+        type="checkbox"
+        checked={shareArea}
+        onChange={(e) => setShareArea(e.target.checked)}
+        style={{ marginTop: 2, accentColor: EX.green, width: 16, height: 16, flexShrink: 0 }}
+      />
+      <span className="font-sans" style={{ fontSize: 12.5, color: EX.muted, lineHeight: 1.5 }}>
+        {tx('Show roughly where I am, so nearby farmers see the distance.', 'Khombisa cishe indawo engikuyo ukuze abalimi abaseduze babone ibanga.')}
+        <span style={{ color: EX.faint }}>
+          {' '}{zu ? <ExchangeSourceCopy en={`Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on ${mySite.name}.`} zu={`Indawo yakho isondezwa cishe kwikhilomitha elilodwa ngaphambi kokugcinwa — akuboniswa umuzi wakho ngqo. Kususelwa ku-${mySite.name}.`} /> : <>Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.</>}
+        </span>
+      </span>
+    </label>
+  );
+
   return (
     <div
       className="rounded-2xl"
@@ -265,261 +547,48 @@ export default function NewListingForm({
         </button>
       </div>
 
-      {/* Offer or want */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Are you offering or looking?', 'Ingabe kukhona okunikezayo noma okufunayo?')}</div>
-        <div className="flex gap-2">
-          {(['offer', 'want'] as ListingKind[]).map((k) => (
-            <button
-              key={k}
-              onClick={() => setKind(k)}
-              className="font-sans font-semibold"
-              style={{
-                flex: 1,
-                padding: 9,
-                borderRadius: 10,
-                fontSize: 13,
-                cursor: 'pointer',
-                background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)',
-                color: kind === k ? '#fff' : EX.muted,
-                border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
-              }}
-            >
-              {zu ? ZU_KIND_LABEL[k] : KIND_LABEL[k]}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Category */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('What kind of thing?', 'Uhlobo luni lwento?')}</div>
-        <div className="flex gap-1.5 flex-wrap">
-          {LISTING_CATEGORIES.map((c) => (
-            <button
-              key={c}
-              onClick={() => applyCategory(c)}
-              className="font-sans font-semibold"
-              style={{
-                padding: '7px 12px',
-                borderRadius: 100,
-                fontSize: 12.5,
-                cursor: 'pointer',
-                background: category === c ? EX.green : 'rgba(226,216,196,0.5)',
-                color: category === c ? '#fff' : EX.muted,
-                border: `1px solid ${category === c ? EX.green : EX.border}`,
-              }}
-            >
-              {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Crop — from the catalog, never free text. A listing filed under a crop
-          key is findable; one filed under a typed name is not. */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Which crop?', 'Isiphi isitshalo?')}</div>
-        <select
-          value={cropKey}
-          onChange={(e) => applyCrop(e.target.value)}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={fieldStyle}
-        >
-          <option value="">{tx('Not a specific crop (tools, labour, other)', 'Akusona isitshalo esithile (amathuluzi, umsebenzi, okunye)')}</option>
-          {cropOptions.map((c) => (
-            <option key={c.key} value={c.key}>{c.icon} {c.name}</option>
-          ))}
-        </select>
-        <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
-          {tx('Pick from the list rather than typing a name — that is what lets another farmer filter the board by crop and actually find you.', 'Khetha ohlwini esikhundleni sokubhala igama ukuze omunye umlimi akuthole ngokuhlunga ngesitshalo.')}
-        </p>
-      </div>
-
-      {/* Title */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Headline', 'Isihloko')}</div>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => { setTitle(e.target.value.slice(0, 90)); setTitleDirty(true); }}
-          placeholder={tx('Swiss chard — cutting weekly', 'I-Swiss chard — ngiyivuna masonto onke')}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={fieldStyle}
-        />
-      </div>
-
-      {/* Description */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Detail (optional)', 'Imininingwane (uma uthanda)')}</div>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value.slice(0, 300))}
-          placeholder={tx('Anything a buyer should know — variety, condition, collection.', 'Okufanele kwaziwe umthengi — uhlobo, isimo nendlela yokulanda.')}
-          rows={3}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={{ ...fieldStyle, resize: 'none', lineHeight: 1.5 }}
-        />
-      </div>
-
-      {/* Quantity */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('How much? (optional)', 'Kungakanani? (uma uthanda)')}</div>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            inputMode="decimal"
-            value={qty}
-            onChange={(e) => setQty(e.target.value)}
-            placeholder="12"
-            className="rounded-xl px-3 py-2.5 font-sans"
-            style={{ ...fieldStyle, flex: 1 }}
-          />
-          <select
-            value={unit}
-            onChange={(e) => setUnit(e.target.value as ListingUnit)}
-            className="rounded-xl px-3 py-2.5 font-sans"
-            style={{ ...fieldStyle, flex: 1 }}
+      {simple ? (
+        <>
+          {cropSection}
+          {quantitySection}
+          {priceSection}
+          <button
+            type="button"
+            onClick={() => setShowMore((v) => !v)}
+            aria-expanded={showMore}
+            className="flex items-center gap-1.5 font-sans font-semibold"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: EX.green, fontSize: 13, alignSelf: 'flex-start' }}
           >
-            {LISTING_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
-          </select>
-        </div>
-        {!qtyValid && (
-          <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
-            {tx('Quantity must be a number above zero — or leave it blank.', 'Inani kumele libe ngaphezu kukaziro — noma ushiye lingenalutho.')}
-          </p>
-        )}
-      </div>
-
-      {/* Price */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Price, swap or free', 'Intengo, ukushintshisana noma mahhala')}</div>
-        <div className="flex gap-1.5 flex-wrap" style={{ marginBottom: 10 }}>
-          {(Object.keys(PRICE_MODE_LABEL) as PriceMode[]).map((m) => (
-            <button
-              key={m}
-              onClick={() => { setPriceMode(m); setPriceDirty(true); }}
-              className="font-sans font-semibold"
-              style={{
-                padding: '7px 12px',
-                borderRadius: 100,
-                fontSize: 12.5,
-                cursor: 'pointer',
-                background: priceMode === m ? EX.amber : 'rgba(226,216,196,0.5)',
-                color: priceMode === m ? '#fff' : EX.muted,
-                border: `1px solid ${priceMode === m ? EX.amber : EX.border}`,
-              }}
-            >
-              {tx(PRICE_MODE_LABEL[m], ZU_PRICE_MODE_LABEL[m])}
-            </button>
-          ))}
-        </div>
-
-        {priceMode === 'zar' && (
-          <>
-            <div className="flex gap-2 items-center">
-              <span className="font-display font-semibold" style={{ fontSize: 15, color: EX.muted }}>R</span>
-              <input
-                type="text"
-                inputMode="decimal"
-                value={priceAmount}
-                onChange={(e) => { setPriceAmount(e.target.value); setPriceDirty(true); }}
-                placeholder="6"
-                className="rounded-xl px-3 py-2.5 font-sans"
-                style={{ ...fieldStyle, flex: 1 }}
-              />
-              <span className="font-sans" style={{ fontSize: 13, color: EX.faint }}>{tx('per', 'nge-')}</span>
-              <select
-                value={priceBasis}
-                onChange={(e) => setPriceBasis(e.target.value as PriceBasis)}
-                className="rounded-xl px-3 py-2.5 font-sans"
-                style={{ ...fieldStyle, flex: 1 }}
-              >
-                {PRICE_BASES.map((b) => (
-                  <option key={b} value={b}>{b === 'lot' ? tx('the lot', 'konke') : b}</option>
-                ))}
-              </select>
+            <ChevronDown size={15} style={{ transform: showMore ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
+            {tx('More options', 'Okunye ongakukhetha')}
+          </button>
+          {showMore && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              {kindSection}
+              {categorySection}
+              {titleSection}
+              {descriptionSection}
+              {monthSection}
+              {nameSection}
+              {townSection}
+              {shareAreaSection}
             </div>
-            {cropKey !== '' && suggestedPricePerKg(cropKey) !== null && (
-              <p className="font-sans" style={{ fontSize: 11, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
-                {zu ? <ExchangeSourceCopy en={`Suggested from the app’s price book: about R${suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.`} zu={`Intengo ephakanyisiwe isuselwa encwadini yohlelo yokubala amanani: cishe u-R${suggestedPricePerKg(cropKey)}/kg ngenani le-wholesale. Lena intengo yasepulazini, hhayi eyasesitolo — yishintshe ibe yinani olifunayo.`} /> : <>Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.</>}
-              </p>
-            )}
-            {!priceValid && (
-              <p className="font-sans" style={{ fontSize: 11.5, color: EX.red, margin: '6px 0 0' }}>
-                {tx('Enter an amount above zero, or choose Swap, Free or Make an offer.', 'Faka inani elingaphezu kukaziro, noma ukhethe ukushintshisana, mahhala noma ukubeka inani lakho.')}
-              </p>
-            )}
-          </>
-        )}
-
-        {priceMode === 'swap' && (
-          <input
-            type="text"
-            value={swapWants}
-            onChange={(e) => setSwapWants(e.target.value.slice(0, 100))}
-            placeholder={tx('What would you take? e.g. maize seed or pumpkin seed', 'Yini ongayamukela? Isib. imbewu yommbila noma yethanga')}
-            className="rounded-xl px-3 py-2.5 font-sans"
-            style={fieldStyle}
-          />
-        )}
-      </div>
-
-      {/* Month */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>
-          {kind === 'want' ? tx('Needed by (optional)', 'Kudingeka nini? (uma uthanda)') : tx('Ready in (optional)', 'Kuyobe sekulungile nini? (uma uthanda)')}
-        </div>
-        <select
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={fieldStyle}
-        >
-          <option value="">{tx('Any time', 'Noma nini')}</option>
-          {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{zu ? ZU_MONTH_LABEL[i] : m}</option>)}
-        </select>
-      </div>
-
-      {/* Who and where */}
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Your name', 'Igama lakho')}</div>
-        <input
-          type="text"
-          value={farmerName}
-          onChange={(e) => setFarmerName(e.target.value.slice(0, 60))}
-          placeholder={tx("Your name or your group's name", 'Igama lakho noma leqembu lakho')}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={fieldStyle}
-        />
-      </div>
-      <div>
-        <div className="font-sans uppercase" style={labelStyle}>{tx('Nearest town', 'Idolobha eliseduze')}</div>
-        <input
-          type="text"
-          value={areaText}
-          onChange={(e) => setAreaText(e.target.value.slice(0, 60))}
-          placeholder={tx('e.g. Nquthu', 'isib. iNquthu')}
-          className="rounded-xl px-3 py-2.5 font-sans"
-          style={fieldStyle}
-        />
-      </div>
-
-      {mySite && (
-        <label className="flex items-start gap-2.5" style={{ cursor: 'pointer' }}>
-          <input
-            type="checkbox"
-            checked={shareArea}
-            onChange={(e) => setShareArea(e.target.checked)}
-            style={{ marginTop: 2, accentColor: EX.green, width: 16, height: 16, flexShrink: 0 }}
-          />
-          <span className="font-sans" style={{ fontSize: 12.5, color: EX.muted, lineHeight: 1.5 }}>
-            {tx('Show roughly where I am, so nearby farmers see the distance.', 'Khombisa cishe indawo engikuyo ukuze abalimi abaseduze babone ibanga.')}
-            <span style={{ color: EX.faint }}>
-              {' '}{zu ? <ExchangeSourceCopy en={`Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on ${mySite.name}.`} zu={`Indawo yakho isondezwa cishe kwikhilomitha elilodwa ngaphambi kokugcinwa — akuboniswa umuzi wakho ngqo. Kususelwa ku-${mySite.name}.`} /> : <>Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.</>}
-            </span>
-          </span>
-        </label>
+          )}
+        </>
+      ) : (
+        <>
+          {kindSection}
+          {categorySection}
+          {cropSection}
+          {titleSection}
+          {descriptionSection}
+          {quantitySection}
+          {priceSection}
+          {monthSection}
+          {nameSection}
+          {townSection}
+          {shareAreaSection}
+        </>
       )}
 
       <div

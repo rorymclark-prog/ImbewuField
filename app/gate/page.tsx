@@ -52,7 +52,7 @@ export default function GatePage() {
           className="w-full font-sans rounded-lg px-3 py-2.5 outline-none mb-2"
           style={{ background: 'var(--color-surface)', border: `1px solid ${error ? 'var(--color-ochre-light)' : 'var(--border)'}`, color: 'var(--color-ink)', fontSize: 16 }}
         />
-        {error && <p className="font-sans mb-2" role="alert" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{gateText('gateWrongPassword')}</p>}
+        {error && <p className="font-sans mb-2" role="alert" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{gateText('gateWrongPassword')}</p>}
         <button type="submit" disabled={loading || !password}
           className="w-full py-2.5 rounded-xl font-sans font-semibold transition-all"
           style={loading

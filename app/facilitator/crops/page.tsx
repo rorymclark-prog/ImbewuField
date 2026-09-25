@@ -10,11 +10,12 @@
 
 import { numberLabel } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2 } from 'lucide-react';
+import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
@@ -606,6 +607,13 @@ const PATTERN_META: Record<RainPattern, { Icon: LucideIcon; label: string }> = {
 
 function FacilitatorCropsPageInner() {
   const { lang } = useLanguage();
+  // Simple / All tools (lib/app-level.ts). The bed×month grid itself is the
+  // same in both — Rory: "the actual crop plan in the calendar months I am
+  // not sure should be simplified further" — Simple strips everything layered
+  // on and around it: percentage labels, task chips over the bars, unlabelled
+  // food-group icons, the destructive Clear-all button, and the long expert
+  // sections below the grid.
+  const simple = useAppLevel() === 'simple';
   // Deep-link entry from the Design Studio Simple Path: ?canvasSite=<siteId> feeds
   // beds straight from the DesignCanvasState (via the bridge) instead of the
   // facilitator/Firestore design picker; &auto=1 opens the auto-suggest
@@ -1460,14 +1468,16 @@ function FacilitatorCropsPageInner() {
         >
           <Home size={16} strokeWidth={1.7} />
         </Link>
-        <Link
-          href={designHref}
-          aria-label={cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
-          className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-          style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
-        >
-          ‹ {cropUi(lang, 'Back to design', 'Umklamo')}
-        </Link>
+        {!simple && (
+          <Link
+            href={designHref}
+            aria-label={cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
+            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
+          >
+            ‹ {cropUi(lang, 'Back to design', 'Umklamo')}
+          </Link>
+        )}
         {!canvasSite && myDesignsList && myDesignsList.length > 0 && (
           <button
             onClick={() => setSwitchingSite(true)}
@@ -1513,7 +1523,7 @@ function FacilitatorCropsPageInner() {
           </div>
         )}
         <div className="flex-1" />
-        {beds.length > 0 && (
+        {!simple && beds.length > 0 && (
           <button
             onClick={() => setShowBedCheck((v) => !v)}
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans font-semibold"
@@ -1528,8 +1538,8 @@ function FacilitatorCropsPageInner() {
             <Ruler size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {beds.filter((b) => b.kind !== 'plot').length} beds{beds.some((b) => b.kind === 'plot') ? ` · ${beds.filter((b) => b.kind === 'plot').length} plots` : ''}
           </button>
         )}
-        <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />
-        {climateSource === 'site' ? (
+        {!simple && <LessonLink id="crops:planner" label={cropUi(lang, 'Learn', 'Funda')} />}
+        {!simple && (climateSource === 'site' ? (
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
@@ -1549,7 +1559,7 @@ function FacilitatorCropsPageInner() {
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: '#F5F0E8', color: '#755942', border: '1px solid #E2D8C4' }}>
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {patternMeta.label.toLowerCase()}
           </span>
-        )}
+        ))}
       </header>
 
       {lang === 'zu' && (
@@ -1669,7 +1679,7 @@ function FacilitatorCropsPageInner() {
               </div>
             )}
 
-            {confirmingClear && plantings.length > 0 ? (
+            {!simple && confirmingClear && plantings.length > 0 ? (
               <div
                 className="flex items-center gap-2 mb-3 px-3 py-2 rounded-xl"
                 style={{ background: 'rgba(179,58,58,0.06)', border: '1px solid rgba(179,58,58,0.3)' }}
@@ -1701,7 +1711,7 @@ function FacilitatorCropsPageInner() {
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
               </button>
-              {planHistory.length > 0 && (
+              {!simple && planHistory.length > 0 && (
                 <button
                   onClick={undoLastChange}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
@@ -1711,7 +1721,7 @@ function FacilitatorCropsPageInner() {
                   <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
                 </button>
               )}
-              {plantings.length > 0 && (
+              {!simple && plantings.length > 0 && (
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
@@ -1841,11 +1851,32 @@ function FacilitatorCropsPageInner() {
                       currentMonth={currentMonth}
                       onAddCrop={() => openPicker(bed.id)}
                       onTapPlanting={(p) => setActivePlanting(p)}
+                      simple={simple}
                     />
                   ))}
                 </div>
               </div>
             </div>
+
+            {/* Simple mode: the grid is the screen. One add action below it —
+                the same picker each bed's own "+ crop" button opens, reused
+                rather than a second planner — and none of the expert layers
+                below (explanations, charts, nutrition, exports). All tools
+                keeps every one of those layers exactly as it was. */}
+            {simple && beds.length > 0 && (
+              <div className="mb-5">
+                <button
+                  onClick={() => openPicker(beds[0].id)}
+                  className="w-full py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
+                  style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}
+                >
+                  <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
+                </button>
+              </div>
+            )}
+
+            {!simple && (
+            <>
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
@@ -2247,6 +2278,8 @@ function FacilitatorCropsPageInner() {
             <div className="font-sans mt-4 text-center mx-auto" style={{ fontSize: 11, color: '#755942', lineHeight: 1.5, maxWidth: 820 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
+            </>
+            )}
           </div>
         </div>
       )}
@@ -3177,12 +3210,13 @@ function OrganicGuideCard() {
 
 // ── Bed row + planting bars ─────────────────────────────────────────────
 
-function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
+function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple }: {
   bed: PlanBed;
   plantings: Planting[];
   currentMonth: number;
   onAddCrop: () => void;
   onTapPlanting: (p: Planting) => void;
+  simple: boolean;
 }) {
   // Which food group(s) are currently in this bed — usually just one, but an
   // intercropped/split bed or a rolling window spanning a succession swap can
@@ -3208,7 +3242,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
           )}
         </div>
         <div className="font-mono" style={{ fontSize: 11, color: '#755942' }}>{bed.areaM2.toFixed(1)} m²</div>
-        {bedGroups.length > 0 && (
+        {bedGroups.length > 0 && (!simple || bedGroups.length === 1) && (
           <div
             className="font-sans"
             style={{ fontSize: 10, color: '#5C5040', marginTop: 3, lineHeight: 1.3 }}
@@ -3243,7 +3277,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
         </div>
         <div style={{ position: 'relative', padding: '6px 0' }}>
           {plantings.map((p) => (
-            <PlantingBar key={p.id} planting={p} currentMonth={currentMonth} onTap={() => onTapPlanting(p)} />
+            <PlantingBar key={p.id} planting={p} currentMonth={currentMonth} onTap={() => onTapPlanting(p)} simple={simple} />
           ))}
           <div style={{ padding: '2px 8px' }}>
             <button
@@ -3260,7 +3294,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
   );
 }
 
-function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; currentMonth: number; onTap: () => void }) {
+function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Planting; currentMonth: number; onTap: () => void; simple: boolean }) {
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const readinessStart = bedEntryMonth(planting.sowMonth, crop);
@@ -3374,7 +3408,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
               there without panning back a year to find out. */}
           <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 4, height: '100%', minWidth: 0, lineHeight: 1 }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{fLabel ? ` (${fLabel})` : ''}</span>
+            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{!simple && fLabel ? ` (${fLabel})` : ''}</span>
           </span>
         </button>
       ))}
@@ -3385,7 +3419,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           "raised in a tray first", and is TAPPABLE (opening the same planting
           popover the bar itself opens) so the meaning is reachable rather than
           guessable. The timeline legend below the grid spells it out too. */}
-      {crop.transplant && (!planting.existing || planting.inNursery) && instances.map((seg, i) => {
+      {!simple && crop.transplant && (!planting.existing || planting.inNursery) && instances.map((seg, i) => {
         // Anchored to THIS copy's own unclipped sow offset (not re-derived
         // independently, and not shared across copies) so it always lands
         // right after that copy's sow month and never contradicts the bar

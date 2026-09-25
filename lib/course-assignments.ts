@@ -80,8 +80,16 @@ export function assignmentState(
   return 'open';
 }
 
-/** Plain-language deadline for the learner. Null when there is no due date. */
-export function formatDue(due_at: string | null, today: string): string | null {
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+// Short transliterated isiZulu month names — the "Due {d} {month}" tail was hard-coded to
+// MONTHS_EN regardless of app language (the caller's isiZulu wrapper could only ever localise the
+// "Due"/"Ngomhla" part around it, never the month itself).
+const MONTHS_ZU = ['Jan','Feb','Mas','Eph','Mey','Jun','Jul','Ago','Sep','Okt','Nov','Dis'];
+
+/** Plain-language deadline for the learner. Null when there is no due date. `lang` only affects
+ *  the month abbreviation in the far-future case below — the near-term phrasing ("Due today" etc)
+ *  is localised by the caller (e.g. app/student/page.tsx's localisedDueText). */
+export function formatDue(due_at: string | null, today: string, lang: string = 'en'): string | null {
   if (!due_at) return null;
   const days = daysBetween(today, due_at);
   if (days === null) return null;
@@ -91,7 +99,7 @@ export function formatDue(due_at: string | null, today: string): string | null {
   if (days < 0) return `${Math.abs(days)} days overdue`;
   if (days <= DUE_SOON_DAYS) return `Due in ${days} days`;
   const [y, m, d] = due_at.split('-').map(Number);
-  const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1] ?? '';
+  const month = (lang === 'zu' ? MONTHS_ZU : MONTHS_EN)[m - 1] ?? '';
   return `Due ${d} ${month}${y === new Date().getFullYear() ? '' : ` ${y}`}`;
 }
 

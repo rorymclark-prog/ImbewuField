@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 export const maxDuration = 30;
 
@@ -120,6 +121,9 @@ function parseOverpassElements(elements: OverpassElement[]): SiteFeature[] {
 }
 
 export async function POST(req: NextRequest) {
+  const guard = await guardPaidApiRequest(req, 'site-features');
+  if (guard.response) return guard.response;
+
   let body: RequestBody;
   try {
     body = await req.json();

@@ -3,7 +3,7 @@ import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { f1Positions, type F1Practice } from '../lib/finance-f1-timeline.ts';
 
-const practice: F1Practice = JSON.parse(readFileSync(new URL('../docs/studies-review-2026-09-20/reserve/finance/f1-practice.json', import.meta.url), 'utf8'));
+const practice: F1Practice = JSON.parse(readFileSync(new URL('../lib/finance-f1-practice.json', import.meta.url), 'utf8'));
 
 test('a later buyer receipt clears the earlier debt without counting the same sale twice', () => {
   const positions = f1Positions(practice);

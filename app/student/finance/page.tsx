@@ -4,6 +4,8 @@ import { FINANCE_UNITS, FINANCE_LESSONS } from '@/lib/course-finance';
 import FinanceReadingChecklist from '@/components/studies/FinanceReadingChecklist';
 import PathwayOfflineDownload from '@/components/studies/PathwayOfflineDownload';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
+import CourseSyllabus from '@/components/studies/CourseSyllabus';
+import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import styles from '@/components/studies/FinanceCourse.module.css';
 
 export const metadata = { title: 'Farm Finance — ImbewuField teaching preview', robots: { index: false, follow: false } };
@@ -30,20 +32,26 @@ export default function FarmFinancePage() {
         <p>Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.</p>
         <p>The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances.</p>
       </section>
-      <div id="syllabus" className={styles.grid}>{FINANCE_UNITS.map(unit => <section key={unit.id} className={styles.card}>
-        <p className={styles.eyebrow}>Unit {unit.number}</p><h2>{unit.title}</h2><p>{unit.summary}</p>
-        <ol start={(unit.number - 1) * 3 + 1}>{unit.lessons.map(lesson => <li key={lesson.id}><OfflinePageLink href={`/student/finance/${lesson.id}`}>{lesson.title}</OfflinePageLink></li>)}</ol>
-      </section>)}</div>
-      <section className={styles.section}>
-        <h2>A proposed ten-day course</h2>
-        <div className={styles.dayList}>
-          <div><h3>Days 1–8</h3><p>One unit each day, mixing explanation, guided practice and an independent attempt.</p></div>
-          <div><h3>Days 9–10</h3><p>A supported project, then practical assessment, feedback and another attempt where needed.</p></div>
-        </div>
-        <p>Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.</p>
-        <p>Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification.</p>
-        <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided">Open the practical project →</OfflinePageLink></div>
-      </section>
+      <CourseSyllabus
+        id="syllabus"
+        units={FINANCE_UNITS.map(unit => ({ id: unit.id, number: unit.number, title: unit.title, blurb: unit.summary, lessons: unit.lessons, start: (unit.number - 1) * 3 + 1 }))}
+        basePath="/student/finance"
+        eyebrowPrefix="Unit"
+        continueEyebrow="Continue here"
+        seeAllLabel="See all units"
+      />
+      <FullToolsOnly>
+        <section className={styles.section}>
+          <h2>A proposed ten-day course</h2>
+          <div className={styles.dayList}>
+            <div><h3>Days 1–8</h3><p>One unit each day, mixing explanation, guided practice and an independent attempt.</p></div>
+            <div><h3>Days 9–10</h3><p>A supported project, then practical assessment, feedback and another attempt where needed.</p></div>
+          </div>
+          <p>Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.</p>
+          <p>Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification.</p>
+          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided">Open the practical project →</OfflinePageLink></div>
+        </section>
+      </FullToolsOnly>
     </main>
   </div>;
 }

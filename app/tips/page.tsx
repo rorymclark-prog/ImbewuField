@@ -4,6 +4,7 @@ import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
+import { useLanguage } from '@/lib/i18n';
 import styles from '@/components/ProductTour.module.css';
 
 const guides = [
@@ -15,13 +16,14 @@ const guides = [
   { title: 'Practise without changing your work', text: 'Take the tour or choose a practice view. Use the menu to switch views or leave the practice workspace and return to your own records.', href: '/samples', action: 'Choose a practice view' },
 ];
 export default function TipsPage() {
+  const { t } = useLanguage();
   const [search, setSearch] = useState('');
   const shown = guides.filter(g => `${g.title} ${g.text}`.toLowerCase().includes(search.toLowerCase()));
   return <main className={styles.page}><div className={styles.wrap}>
     <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><SettingsButton/></header>
-    <section className={styles.hero}><div><span className={styles.eyebrow}>LEARN AT YOUR OWN PACE</span><h1>Tips &amp; help</h1><p>A quick answer when you need it, or a guided look around the app.</p><div className={styles.controls}><Link className={styles.primary} href="/tour">Take a tour</Link><Link href="/samples">Choose a practice view</Link><Link href="/samples/gardens">Browse gardens &amp; reports</Link></div></div><figure><img src="/demo/harvest.webp" alt="Illustrated garden harvest"/></figure></section>
-    <label style={{ display: 'block', margin: '24px 0' }}>Find a tip<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Try invoices, orchard or cash" style={{ display:'block', width:'100%', minHeight:48, marginTop:8, padding:12, borderRadius:12, background:'var(--bg-1)', border:'1px solid var(--border)', color:'var(--text-primary)' }}/></label>
-    <div style={{ display:'grid', gap:16 }}>{shown.map(g=><article key={g.title} style={{ padding:24, borderRadius:18, background:'var(--bg-1)', border:'1px solid var(--border)' }}><h2 style={{fontSize:22,fontWeight:700}}>{g.title}</h2><p style={{lineHeight:1.65,margin:'12px 0'}}>{g.text}</p><Link href={g.href} style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>{g.action} →</Link></article>)}{!shown.length&&<p>No matching tips. Try another word or <Link href="/feedback">ask for help</Link>.</p>}</div>
-    <section style={{marginTop:24,padding:24,borderRadius:18,border:'1px solid var(--border)'}}><h2 style={{fontSize:22,fontWeight:700}}>Video guides</h2><p style={{margin:'12px 0',lineHeight:1.65}}>For now, follow the interactive tour and the steps above. App video walkthroughs will be added here when published.</p><a href="https://www.youtube.com/results?search_query=permaculture+vegetable+garden+South+Africa" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>Find gardening how-to videos on YouTube ↗</a><p style={{fontSize:13,marginTop:8}}>External search results cover gardening, rather than using ImbewuField.</p></section>
+    <section className={styles.hero}><div><span className={styles.eyebrow}>{t('tipsEyebrow')}</span><h1>{t('tipsTitle')}</h1><p>{t('tipsIntro')}</p><div className={styles.controls}><Link className={styles.primary} href="/tour">{t('navTour')}</Link><Link href="/samples">{t('tipsChoosePracticeView')}</Link><Link href="/samples/gardens">{t('tipsBrowseGardensReports')}</Link></div></div><figure><img src="/demo/harvest.webp" alt="Illustrated garden harvest"/></figure></section>
+    <label style={{ display: 'block', margin: '24px 0' }}>{t('tipsFindLabel')}<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder={t('tipsSearchPlaceholder')} style={{ display:'block', width:'100%', minHeight:48, marginTop:8, padding:12, borderRadius:12, background:'var(--bg-1)', border:'1px solid var(--border)', color:'var(--text-primary)' }}/></label>
+    <div style={{ display:'grid', gap:16 }}>{shown.map(g=><article key={g.title} style={{ padding:24, borderRadius:18, background:'var(--bg-1)', border:'1px solid var(--border)' }}><h2 style={{fontSize:22,fontWeight:700}}>{g.title}</h2><p style={{lineHeight:1.65,margin:'12px 0'}}>{g.text}</p><Link href={g.href} style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>{g.action} →</Link></article>)}{!shown.length&&<p>{t('tipsNoMatch')} <Link href="/feedback">{t('tipsAskForHelp')}</Link>.</p>}</div>
+    <section style={{marginTop:24,padding:24,borderRadius:18,border:'1px solid var(--border)'}}><h2 style={{fontSize:22,fontWeight:700}}>{t('tipsVideoGuidesTitle')}</h2><p style={{margin:'12px 0',lineHeight:1.65}}>{t('tipsVideoGuidesBody')}</p><a href="https://www.youtube.com/results?search_query=permaculture+vegetable+garden+South+Africa" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>{t('tipsYoutubeLink')}</a><p style={{fontSize:13,marginTop:8}}>{t('tipsYoutubeNote')}</p></section>
   </div></main>;
 }

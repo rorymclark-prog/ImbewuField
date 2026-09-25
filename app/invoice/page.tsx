@@ -3,9 +3,10 @@
 import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save } from 'lucide-react';
+import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -96,6 +97,7 @@ const INVOICE_ZU: Record<string, string> = {
   'Optional — printed under the buyer name': 'Akuphoqelekile — kuboniswa ngaphansi kwegama lomthengi',
   'Address': 'Ikheli', 'Phone': 'Ucingo', 'Line items': 'Imigqa yezinto ezithengisiwe', 'Remove item': 'Susa into',
   'Quantity': 'Inani', 'Unit': 'Iyunithi', 'Price each': 'Intengo ngeyunithi', 'Add line item': 'Engeza umugqa wento',
+  'Add another item': 'Engeza enye into',
   'Suggested price filled in — change it if you agreed something else.': 'Kufakwe intengo eyisiphakamiso — yishintshe uma nivumelene ngenye.',
   'Payment due': 'Usuku lokukhokha', 'No due date': 'Alukho usuku lokukhokha', 'On receipt': 'Uma yamukelwe',
   "Buyer's reference": 'Ireferensi yomthengi', 'Their order number — optional': 'Inombolo ye-oda labo — akuphoqelekile',
@@ -220,6 +222,7 @@ function Disclosure({
 
 export default function InvoicePage() {
   const { lang } = useLanguage();
+  const simple = useAppLevel() === 'simple';
   const ui = (english: string, isiZulu?: string) => {
     if (lang !== 'zu') return english;
     const zulu = isiZulu ?? INVOICE_ZU[english] ?? english;
@@ -275,7 +278,7 @@ export default function InvoicePage() {
   const [products, setProducts] = useState<{ desc: string; unit: string; price: number }[]>([]);
   const [saved, setSaved] = useState<SavedInvoice[]>([]);
   const [showSaved, setShowSaved] = useState(false);
-  const [openPanel, setOpenPanel] = useState<'seller' | 'buyer' | null>(null);
+  const [openPanel, setOpenPanel] = useState<'seller' | 'buyer' | 'enterprise' | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   /** Set when persist() could not store the invoice. Shown next to the actions, because an error
    *  the farmer never sees is the same defect as no error at all. */
@@ -791,6 +794,12 @@ export default function InvoicePage() {
                 <h1 className="font-display text-xl font-semibold" style={{ color: 'var(--color-forest-800)' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
                 <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
               </div>
+              {/* Simple defaults straight to a new sale — a quick farm-gate sale is the common
+                  case, and the picker below is how the other two entry kinds stayed reachable:
+                  a farmer arriving here from a "record this sale" or "paper copy" link still
+                  gets the right follow-up questions, it is just not offered as a choice up
+                  front. */}
+              {!simple && (
               <label className="block">
                 <FieldLabel>{ui('What are you recording?', 'Urekhoda ini?')}</FieldLabel>
                 <select aria-label={ui('Invoice type')} value={entryKind} disabled={Boolean(currentId) || saving}
@@ -801,6 +810,7 @@ export default function InvoicePage() {
                   <option value="paper-copy">{ui('An invoice already written on paper', 'I-invoyisi esibhalwe ephepheni')}</option>
                 </select>
               </label>
+              )}
               {entryKind !== 'new' && (
                 <label className="block">
                   <FieldLabel>{ui('Is this sale already in My Records?')}</FieldLabel>
@@ -910,12 +920,16 @@ export default function InvoicePage() {
                         </button>
                       ) : (
                         <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', opacity: 0.5 }}>
+                          style={{
+                            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
+                          }}>
                           <X size={15} />
                         </button>
                       ))}
                     </div>
-                    {inv.status === 'paid' && (
+                    {inv.status === 'paid' && !simple && (
                       <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
                         {PAYMENT_METHODS.map((m) => (
                           <button key={m} onClick={() => void changeInvoiceStatus(inv, 'paid', m)}
@@ -1118,7 +1132,7 @@ export default function InvoicePage() {
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
                   </div>
-                  {(() => {
+                  {!simple && (() => {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;
                     if (!guide || it.unit !== 'kg') return null;
@@ -1146,12 +1160,16 @@ export default function InvoicePage() {
               <button onClick={addItem}
                 className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-display font-semibold"
                 style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
-                <Plus size={14} />{ui('Add line item')}
+                <Plus size={14} />{simple ? ui('Add another item') : ui('Add line item')}
               </button>
             </fieldset>
 
             {/* ── Terms, reference, note ──────────────────────────────── */}
             <div className="rounded-xl p-3 space-y-2.5" style={CARD}>
+              {/* Simple uses the letterhead's existing default term rather than asking — a
+                  quick farm-gate sale is usually paid on the spot or on the buyer's usual
+                  terms, not something worth a decision on every invoice. */}
+              {!simple && (
               <div>
                 <FieldLabel>{ui('Payment due')}</FieldLabel>
                 <div className="flex flex-wrap gap-1.5">
@@ -1167,19 +1185,43 @@ export default function InvoicePage() {
                   ))}
                 </div>
               </div>
+              )}
               <label className="block">
                 <FieldLabel>{ui("Buyer's reference")}</FieldLabel>
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder={ui('Their order number — optional')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
               </label>
-              <label className="block">
-                <FieldLabel>{ui('Growing area for these sales')}</FieldLabel>
-                <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
-                  <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
-                </select>
-                <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
-              </label>
+              {/* Growing area stays reachable — a farmer may still want this sale on their
+                  R/m² records — but Simple keeps it closed until asked for, the same as the
+                  banking disclosure above. */}
+              {simple ? (
+                <Disclosure
+                  open={openPanel === 'enterprise'}
+                  onToggle={() => setOpenPanel((p) => (p === 'enterprise' ? null : 'enterprise'))}
+                  icon={<Sprout size={16} />}
+                  title={ui('Growing area for these sales')}
+                  hint={
+                    enterprise === 'vegetables' ? ui('Vegetable beds')
+                    : enterprise === 'staples' ? ui('Staple plots')
+                    : enterprise === 'other' ? ui('Orchard / other')
+                    : ui('Unassigned / mixed invoice')
+                  }
+                >
+                  <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                    <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
+                  </select>
+                  <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
+                </Disclosure>
+              ) : (
+                <label className="block">
+                  <FieldLabel>{ui('Growing area for these sales')}</FieldLabel>
+                  <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                    <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
+                  </select>
+                  <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
+                </label>
+              )}
               <label className="block">
                 <FieldLabel>{ui('Note on the invoice')}</FieldLabel>
                 <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)}

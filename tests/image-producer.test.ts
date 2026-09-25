@@ -448,7 +448,9 @@ test('update notifier detects a newly deployed build without false first-load pr
 
 test('the collapsed update button names the build waiting to be installed', () => {
   const source = readFileSync(new URL('../components/PWAUpdateNotifier.tsx', import.meta.url), 'utf8');
-  assert.match(source, /Update ready\$\{nextBuildSha \? ` · \$\{nextBuildSha\}` : ''\}/,
+  // Routed through t('updateBannerReady') (translated 'Update ready{sha}') for the [swarm]
+  // nav-simple i18n pass — the fetched build number is still substituted into the {sha} slot.
+  assert.match(source, /t\('updateBannerReady'\)\.replace\('\{sha\}', nextBuildSha \? ` · \$\{nextBuildSha\}` : ''\)/,
     'the small update control must keep the fetched build number visible after the notice collapses');
 });
 
