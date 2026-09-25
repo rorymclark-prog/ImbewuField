@@ -553,7 +553,7 @@ export async function myMentorVisits(traineeId: string): Promise<MentorVisit[]> 
 }
 
 // ---- surveys (NGO asks, farmers answer) ----
-export async function createSurvey(s: { org_name: string; title: string; questions: SurveyQuestion[] }): Promise<void> {
+export async function createSurvey(s: { org_name: string; title: string; title_zu?: string; questions: SurveyQuestion[] }): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
   const me = await getMyProfile();

@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'cdae7c95', changes: [
+    'Survey creators can add isiZulu labels to new and existing surveys.',
+    'Farmers see any supplied isiZulu labels beside the English questions and choices.',
+  ], tour: [
+    { title: 'Check survey labels', where: 'Surveys', href: '/surveys',
+      detail: 'Choose isiZulu. Organisation surveys show supplied labels beside their English source.' },
+  ] },
   { when: '25 September 2026', sha: 'a2200c89', changes: [
     'The farmer goal and Design Studio link have marked isiZulu drafts.',
     'Soil suggestions pair isiZulu drafts with exact English source wording.',
