@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
+import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
@@ -110,4 +111,76 @@ test('Tshivenda Water Harvesting presents only its labelled title draft and keep
     'Tshivenda slide deck remains explicitly identified as English');
   assert.deepEqual(resolveNarrationLang(source.id, 've'), { lang: 'en', exact: false },
     'Tshivenda narration remains explicitly identified as English');
+});
+
+test('Soil Health Tshivenda review data stays source-paired and holds every instruction in English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'soil-health');
+  assert.ok(source, 'Soil Health draft must remain paired to its canonical English module');
+  const draft = TSHIVENDA_SOIL_HEALTH_DRAFT;
+  assert.equal(draft.language, 've');
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
+  assert.equal(draft.sourceMetadata.category, source.category);
+  assert.equal(source.lessons.length, 3);
+  assert.equal(draft.lessons.length, 3);
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
+
+  const translated = new Map([
+    ['module.title', 'Mutakalo wa Mavu na Muvhundo (Composting)'],
+    ['module.description', 'Fhatani mavu a re na vhutshilo nga manyoro (compost), mulitshi (mulch), zwimela zwa u thivhela (cover crops) na mabodo a mahuvhane (worm farms).'],
+    ['lessons[0].title', 'U Pfesesa Mavu A Vhoiwe: Mutheo wa Zwoṱhe'],
+    ['lessons[1].title', 'U Ita na U Shumisa Manyoro (Compost)'],
+    ['lessons[2].title', 'Mulitshi (Mulching) na Zwimela zwa u Thivhela (Cover Crops): U Tsireledza na U Fhaṱa Mavu'],
+  ]);
+  const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
+  let heldFields = 0;
+  const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string, shouldTranslate = false) => {
+    assert.equal(pair.sourceEnglish, english, `${path}: preserve the exact English source`);
+    assert.ok(pair.tshivendaDraft.trim(), `${path}: include translated wording or an exact-English hold`);
+    assert.deepEqual(numberTokens(pair.tshivendaDraft), numberTokens(english), `${path}: preserve numeric tokens`);
+    if (shouldTranslate) {
+      assert.equal(pair.reviewStatus, 'machine-draft', `${path}: label AI text as an unreviewed draft`);
+      assert.equal(pair.tshivendaDraft, translated.get(path), `${path}: keep the Agy output unchanged`);
+    } else {
+      heldFields++;
+      assert.equal(pair.reviewStatus, 'hold', `${path}: farming content must remain held for fluent local review`);
+      assert.equal(pair.tshivendaDraft, english, `${path}: held wording must stay exact English`);
+    }
+  };
+
+  checkPair(draft.title, source.title, 'module.title', true);
+  checkPair(draft.description, source.description, 'module.description', true);
+  for (const [index, lesson] of source.lessons.entries()) {
+    const paired = draft.lessons[index];
+    const path = `lessons[${index}]`;
+    assert.equal(paired.id, lesson.id);
+    if (lesson.infographicAlt) checkPair(paired.infographicAlt!, lesson.infographicAlt, `${path}.infographicAlt`);
+    else assert.equal(paired.infographicAlt, undefined);
+    checkPair(paired.title, lesson.title, `${path}.title`, true);
+    checkPair(paired.body, lesson.body, `${path}.body`);
+    assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
+    assert.equal(paired.keyPoints.length, lesson.keyPoints.length);
+    for (const [pointIndex, point] of lesson.keyPoints.entries()) {
+      checkPair(paired.keyPoints[pointIndex], point, `${path}.keyPoints[${pointIndex}]`);
+    }
+    assert.equal(paired.quiz.length, lesson.quiz.length);
+    assert.equal(lesson.quiz.length, 2, `${path}: preserve both source quiz items`);
+    for (const [questionIndex, question] of lesson.quiz.entries()) {
+      const pairedQuestion = paired.quiz[questionIndex];
+      const questionPath = `${path}.quiz[${questionIndex}]`;
+      checkPair(pairedQuestion.question, question.q, `${questionPath}.question`);
+      assert.equal(pairedQuestion.options.length, question.options.length);
+      for (const [optionIndex, option] of question.options.entries()) {
+        checkPair(pairedQuestion.options[optionIndex], option, `${questionPath}.options[${optionIndex}]`);
+      }
+      assert.equal(pairedQuestion.sourceCorrectIndex, question.correct, `${questionPath}: preserve answer index`);
+      assert.equal(pairedQuestion.options[pairedQuestion.sourceCorrectIndex]?.sourceEnglish, question.options[question.correct],
+        `${questionPath}: keep the correct answer paired to its source option`);
+      checkPair(pairedQuestion.rationale, question.rationale, `${questionPath}.rationale`);
+    }
+  }
+
+  assert.equal(heldFields, 54, 'hold every illustration description, body, key point and quiz field');
+  assert.equal(resolveCourseModulePresentation(source, 've').status, 'english-fallback',
+    'review data alone must not expose this module in Study before explicit wiring');
 });

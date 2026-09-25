@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
+import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-st-seeds-sovereignty.ts';
 
 test('the Sesotho Foundation draft retains exact paired source and complete course content shape', () => {
   const source = COURSE_MODULES.find(module => module.id === SESOTHO_INTRO_PERMACULTURE_DRAFT.id);
@@ -70,5 +71,55 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
         `${questionPath}: correct answer must still point to the exact English correct option`);
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
     }
+  }
+});
+
+test('Sesotho seed labels cannot change seed-saving instructions or quiz answers before review', () => {
+  const draft = SESOTHO_SEEDS_SOVEREIGNTY_DRAFT;
+  const source = COURSE_MODULES.find(module => module.id === draft.id);
+  assert.ok(source);
+  assert.equal(draft.language, 'st');
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.deepEqual(draft.sourceMetadata, { durationMins: source.durationMins, category: source.category });
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
+
+  for (const [pair, english] of [
+    [draft.title, source.title],
+    [draft.description, source.description],
+  ] as const) {
+    assert.equal(pair.sourceEnglish, english);
+    assert.equal(pair.reviewStatus, 'machine-draft');
+    assert.ok(pair.sesothoDraft.trim());
+  }
+
+  const checkHold = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string) => {
+    assert.equal(pair.sourceEnglish, english);
+    assert.equal(pair.sesothoDraft, english);
+    assert.equal(pair.reviewStatus, 'hold');
+  };
+
+  for (const [lessonIndex, lesson] of draft.lessons.entries()) {
+    const original: (typeof source.lessons)[number] = source.lessons[lessonIndex];
+    assert.equal(lesson.title.sourceEnglish, original.title);
+    assert.equal(lesson.title.reviewStatus, 'machine-draft');
+    assert.ok(lesson.title.sesothoDraft.trim());
+    if (original.infographicAlt) {
+      assert.ok(lesson.infographicAlt);
+      checkHold(lesson.infographicAlt, original.infographicAlt);
+    } else {
+      assert.equal(lesson.infographicAlt, undefined);
+    }
+    checkHold(lesson.body, original.body);
+    assert.equal(lesson.keyPoints.length, original.keyPoints.length);
+    lesson.keyPoints.forEach((point, index) => checkHold(point, original.keyPoints[index]));
+    assert.equal(lesson.quiz.length, original.quiz.length);
+    lesson.quiz.forEach((question, index) => {
+      const originalQuestion = original.quiz[index];
+      checkHold(question.question, originalQuestion.q);
+      assert.equal(question.options.length, originalQuestion.options.length);
+      question.options.forEach((option, optionIndex) => checkHold(option, originalQuestion.options[optionIndex]));
+      assert.equal(question.sourceCorrectIndex, originalQuestion.correct);
+      checkHold(question.rationale, originalQuestion.rationale);
+    });
   }
 });
