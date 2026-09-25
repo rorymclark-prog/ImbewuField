@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '98ed6f7e', changes: [
+  { when: '25 September 2026', sha: '439db958', changes: [
     'Home marks its isiZulu interface as an unreviewed draft.',
     'Deleting a saved site shows isiZulu beside the exact English action.',
     'Study pages explain whether this module’s slides or audio remain in English.',
