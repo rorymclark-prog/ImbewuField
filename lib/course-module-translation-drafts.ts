@@ -6,6 +6,7 @@ import { SESOTHO_SOIL_HEALTH_DRAFT } from './course-translation-drafts-st-soil-h
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
+import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
 
 /** Source-paired learner card copy. These isiZulu strings are drafts pending language and local farming review. */
 export const COURSE_MODULE_TRANSLATION_DRAFTS = {
@@ -82,7 +83,7 @@ export interface CourseModulePresentation {
 const REGIONAL_MODULE_DRAFTS = {
   st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
-  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT],
+  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT],
 };
 
 /** Use a draft only while its English source pair still matches the canonical module record. */
@@ -100,13 +101,14 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       module.durationMins === draft.sourceMetadata.durationMins &&
       module.category === draft.sourceMetadata.category) {
       const moduleDraft = draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT |
-        typeof XITSONGA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT;
+        typeof XITSONGA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT |
+        typeof TSHIVENDA_READING_LANDSCAPE_DRAFT;
       const title = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).title.xitsongaDraft :
-          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT).title.tshivendaDraft;
+          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT).title.tshivendaDraft;
       const description = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).description.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).description.xitsongaDraft :
-          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT).description.tshivendaDraft;
+          (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT).description.tshivendaDraft;
       return { title, description, status: 'draft' };
     }
   }
