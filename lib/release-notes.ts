@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '315bbfe0', changes: [
+    'Account access and consent choices show marked isiZulu drafts beside English.',
+    'Design photo and size controls now follow the isiZulu setting.',
+  ], tour: [
+    { title: 'Check sharing choices', where: 'Account', href: '/account',
+      detail: 'Choose isiZulu; each sharing choice keeps its English source beside the draft.' },
+    { title: 'Check design controls', where: 'Design Studio', href: '/design',
+      detail: 'Photo, status and dimension controls follow your language setting.' },
+  ] },
   { when: '25 September 2026', sha: '98ce2fe1', changes: [
     'The site survey pairs isiZulu and English for saving and roof water checks.',
     'The crop planner has isiZulu controls; farming guidance remains in English.',
