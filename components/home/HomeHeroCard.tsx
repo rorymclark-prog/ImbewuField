@@ -4,12 +4,11 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Eye, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
-import type { CompletionStepKey } from '@/lib/completion-score';
+import { useSiteProgress } from '@/lib/site-progress';
+import { nextAction } from '@/lib/home-next-step';
+import type { AppLevel } from '@/lib/app-level';
 import type { SavedPlace } from '@/lib/saved-places';
 import ProgressSprout from '@/components/home/ProgressSprout';
-
-const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
 export interface HomeHeroCardProps {
   /** null until the places effect has run — render the DEFAULT variant (today's
@@ -18,6 +17,9 @@ export interface HomeHeroCardProps {
   places: SavedPlace[] | null;
   mainSite: SavedPlace | null; // resolveMainSite(places) — parent already computes it
   firstName: string | null;    // user?.displayName?.split(' ')[0] — parent has it
+  /** Simple puts the next step inside this card and heads it with the site; All tools keeps the
+   *  original Lima-suggests card, with the next step as a separate card below (lib/app-level.ts). */
+  level?: AppLevel;
 }
 
 // Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
@@ -48,73 +50,14 @@ const PILL_STYLE: CSSProperties = {
   transition: 'transform 150ms var(--ease-out, cubic-bezier(0.16,1,0.3,1)), box-shadow 200ms var(--ease-out, cubic-bezier(0.16,1,0.3,1))',
 };
 
-// The single next action for the farmer's MAIN site, deep-linked. This used to be a second card
-// under this one (FarmPlanCard in app/home/page.tsx) that read the same progress hook and printed
-// the same "75% complete" a second time, while this card's own button only reopened the map. It
-// reads lib/site-progress.ts like DataPanel and the NextStepCoach do, so it can never drift into a
-// second scoring path.
-interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
-const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
-  located: { label: 'Tap your land on the map', href: () => '/farmer' },
-  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
-  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
-  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
-  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
-  // site loaded and nothing armed, so the coaching told them to do a thing this link never
-  // actually started — same fix the NextStepCoach in-panel card already gets for free by
-  // dispatching the event directly (it's already sitting on the right site).
-  boundary: {
-    label: 'Trace your boundary',
-    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
-  },
-  // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
-  // loads the main site and auto-opens it (the older /survey wizard used a different store
-  // and never moved this score).
-  survey: { label: 'Do the site survey', href: () => '/farmer?openSurvey=1' },
-  design: {
-    label: 'Design your farm',
-    href: (c) => (c ? `/design?lat=${c.lat.toFixed(5)}&lon=${c.lon.toFixed(5)}` : '/design'),
-  },
-  cropPlan: { label: 'Plan your crops', href: () => '/facilitator/crops' },
-};
-
-const STEP_LABEL_ZU: Record<CompletionStepKey, string> = {
-  located: 'Thepha indawo yakho emephini',
-  boundary: 'Dweba umngcele wakho',
-  survey: 'Gcwalisa inhlolovo yendawo',
-  design: 'Dizayina ipulazi lakho',
-  cropPlan: 'Hlela izitshalo zakho',
-};
-
-interface NextAction { href: string; overline: string; label: string }
-
-function nextAction(
-  nextStep: CompletionStepKey | null,
-  coords: Coords | null,
-  siteId: string,
-  t: (key: string) => string,
-  lang: string,
-): NextAction {
-  const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
-  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, siteId) : designHref;
-  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
-  const label = nextStepCopy
-    ? t(nextStepCopy.titleKey)
-    : nextStep
-      ? localUi(lang, STEP_ACTIONS[nextStep].label, STEP_LABEL_ZU[nextStep])
-      : localUi(lang, 'Plan complete — print your plan set', 'Uhlelo luphelele — phrinta uhlelo lwakho');
-  const overline = nextStep ? t('coachOverline') : localUi(lang, 'Your farm plan', 'Uhlelo lwepulazi lakho');
-  return { href, overline, label };
-}
-
 // Text links under the next step — present, but quieter than it.
 const SECONDARY_LINK_STYLE: CSSProperties = {
   display: 'inline-flex', alignItems: 'center', minHeight: 44,
   fontSize: 14, color: 'rgba(234,243,226,0.78)', textDecoration: 'none',
 };
 
-// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (the DEFAULT variant
-// and its fallback — the CONTINUE card is headed by the site itself, not by Lima).
+// The Lima "sprouting leaf" mark used next to the Lima-suggests overline (DEFAULT, the All tools
+// CONTINUE card and the fallback — the Simple CONTINUE card is headed by the site itself).
 function LimaMark() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20, flexShrink: 0 }}>
@@ -201,7 +144,7 @@ function HeroEntranceStyle() {
   );
 }
 
-export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCardProps) {
+export default function HomeHeroCard({ places, mainSite, firstName, level = 'full' }: HomeHeroCardProps) {
   const { t, lang } = useLanguage();
 
   // Hooks run unconditionally, before any early return, so the null-until-mounted
@@ -291,8 +234,57 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
     );
   }
 
-  // ── CONTINUE — returner with at least one saved site. The one place Home names the site:
-  // which site, how far along it is, and the single next thing to do. ──
+  // ── CONTINUE (All tools) — returner with at least one saved site: the original card. Lima's
+  // suggestion to carry on with the site, how far along it is, and a button onto the map. The next
+  // step is FarmPlanCard, below this card, in app/home/page.tsx. ──
+  if (mainSite && level === 'full') {
+    const pct = progress?.pct;
+
+    return (
+      <div className="imf-hero-settle" style={SHELL_STYLE}>
+        <HeroEntranceStyle />
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <Overline>{t('homeLimaSuggests')}</Overline>
+            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
+              {t('continueSiteTitle').replace('{site}', mainSite.name)}
+            </h2>
+          </div>
+          <ProgressSprout key={completedSteps} completedSteps={completedSteps} totalSteps={progress?.score.steps.length} progressPct={pct} interactive />
+        </div>
+
+        {pct != null && (
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ height: 4, borderRadius: 2, background: 'rgba(234,243,226,0.25)', overflow: 'hidden' }}>
+              <div className="imf-progress-fill" style={{ height: '100%', width: `${pct}%`, background: '#F7C97E', borderRadius: 2 }} />
+            </div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.78)', marginTop: 6 }}>
+              {t('continueSitePct').replace('{pct}', String(pct))}
+            </div>
+          </div>
+        )}
+
+        <div className="flex items-center gap-4 flex-wrap">
+          <Link
+            href={`/farmer?site=${mainSite.id}`}
+            style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, textDecoration: 'none' }}
+          >
+            <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
+              <span className="flex items-center gap-1.5">{t('continueSiteCta')}<ArrowRight size={14} /></span>
+            </span>
+          </Link>
+
+          <Link href="/farmer?guided=1&new=1" className="font-sans" style={SECONDARY_LINK_STYLE}>
+            {t('startNewSite')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ── CONTINUE (Simple) — the one place Home names the site: which site, how far along it is,
+  // and the single next thing to do. The next step used to be a second card under this one that
+  // read the same progress and printed the same "75% complete" a second time. ──
   if (mainSite) {
     const pct = progress?.pct;
     // null for the one render before useSiteProgress has read storage — the bar above it

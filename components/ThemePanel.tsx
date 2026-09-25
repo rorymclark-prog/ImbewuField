@@ -7,6 +7,7 @@ import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
 import Link from 'next/link';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
@@ -62,6 +63,11 @@ export default function ThemePanel({ open, onClose }: Props) {
   const { lang, setLang, t } = useLanguage();
   const zu = lang === 'zu';
   const panelRef = useRef<HTMLDivElement>(null);
+  const level = useAppLevel();
+  const LEVELS: { key: AppLevel; label: string; desc: string }[] = [
+    { key: 'simple', label: zu ? 'Okulula' : 'Simple', desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : 'The main jobs only. Best when you are starting out.' },
+    { key: 'full', label: zu ? 'Wonke amathuluzi' : 'All tools', desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : 'Everything, including every planning and money tool.' },
+  ];
 
   // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
   const [guidedOn, setGuidedOn] = useState(true);
@@ -220,6 +226,45 @@ export default function ThemePanel({ open, onClose }: Props) {
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          {/* HOW MUCH TO SHOW — Simple / All tools (lib/app-level.ts). Straight after language: it is
+              the other thing that decides whether the app is usable for someone new to phones.
+              Farmers start on Simple; this is where they, or a mentor at training, change it. */}
+          <div style={{ marginBottom: 28 }}>
+            <div id="app-level-heading" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              {zu ? 'Kuboniswe okungakanani' : 'How much to show'}
+            </div>
+            <div role="radiogroup" aria-labelledby="app-level-heading" style={{ display: 'grid', gap: 8 }}>
+              {LEVELS.map((l) => {
+                const active = level === l.key;
+                return (
+                  <button
+                    key={l.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => setAppLevel(l.key)}
+                    style={{
+                      minHeight: 64, padding: '12px 14px', borderRadius: 10, textAlign: 'left',
+                      border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
+                      background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
+                      cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 3,
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, width: '100%' }}>
+                      <span style={{ fontSize: 15, fontWeight: 600, fontFamily: 'var(--font-display)', color: active ? 'var(--emerald)' : 'var(--text-primary)' }}>{l.label}</span>
+                      {active && <Check size={15} style={{ flexShrink: 0, color: 'var(--emerald)' }} />}
+                    </span>
+                    <span style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.4 }}>{l.desc}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
+              {zu ? 'Ungakushintsha noma nini.' : 'You can change this any time.'}
             </div>
           </div>
 

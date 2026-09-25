@@ -122,25 +122,26 @@ test('the harvest form kept its shape: crop, kilograms, optional photo, save', (
 
 /* ── 3. One money tile, one money row ────────────────────────────────────────── */
 
-test('the home screen offers one money door, not two', () => {
+test('the home screen offers one money tile, not two', () => {
   const quickStart = homePage.indexOf('const QUICK_ACTIONS = [');
   assert.ok(quickStart > 0, 'the home quick-action grid is gone');
   const grid = homePage.slice(quickStart, homePage.indexOf('];', quickStart));
 
-  // The door is the My Records tab, which Home renders like every other screen. A tile in the grid
-  // above it is a second door to the same book on the same screen — the audit counted "My Records"
-  // twice on Home until the tile went.
-  assert.match(homePage, /<TabBar \/>/, 'Home must keep the tab bar — it carries the one money door');
   const moneyTiles = [...grid.matchAll(/href: '(\/records|\/finances)'/g)].map((m) => m[1]);
   assert.deepEqual(
     moneyTiles,
-    [],
+    ['/records'],
     'the home screen must offer exactly one money door — the split between "Finance" and "My Records" is the whole finding',
   );
   assert.ok(
     !grid.includes('homeQuickFinance'),
     'the Finance tile\'s label is still on the home screen; two names for one book is how the split started',
   );
+  // Simple goes one further: the My Records tab under every screen is the same book under the same
+  // name, so Simple's Home leaves the tile out and "My Records" appears once.
+  assert.match(homePage, /const quickActions = simple \? QUICK_ACTIONS\.filter\(\(q\) => q\.href !== '\/records'\) : QUICK_ACTIONS;/,
+    'Simple Home must leave out the tile that repeats the My Records tab');
+  assert.match(homePage, /\{quickActions\.map\(/, 'the grid must render the filtered list');
 });
 
 test('the menu and the tab bar each offer one money door, and it is the book', () => {

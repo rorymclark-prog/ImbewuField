@@ -52,22 +52,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
-### 2026-09-25 (Home declutter — step 1 of the simple-mode plan)
+### 2026-09-25 (Simple / All tools switch — Home is the first screen to use it)
 - **Why:** Rory: the app "has now become very busy". A 20-screen audit (390 × 844, sample farm)
   found Home's busyness was mostly repetition: the main site's name three times, "75% complete"
-  twice (`HomeHeroCard` and a second card, `FarmPlanCard`, both called `useSiteProgress`), Lima
-  named three times, a Back button on the root screen, and "My Records" as both a tile and a tab.
-- **What changed (for everyone, no mode needed):** the green site card is headed "Main site" +
-  the site name and now carries the next step itself (the step table moved from
-  `app/home/page.tsx` into `components/home/HomeHeroCard.tsx`); `FarmPlanCard` is gone; the
-  weather card no longer repeats the site name (switcher only with 2+ sites); no Back on Home;
-  the My Records tile is gone (the tab bar is the one money door); desktop tile row is 5 wide.
-- **Measured:** whole-page tap targets 62 → 60, words 327 → 312, "My Records ×2" gone. First-screen
-  tap targets 38 → 39 — the page got shorter, so more tiles now sit on the first screen.
-- **Next (agreed with Rory):** step 2 = simple mode, ON by default for farmers, built additively
-  (simple is the base, "All tools" adds to it), with a guard keeping simple Home at ~12 tap
-  targets; step 3 = the level control — organisation default, farmer can switch to All tools in
-  Account. Mockups: the "Simple mode" design canvas (Home, Crop plan, Records, Account switch).
+  twice (`HomeHeroCard` and `FarmPlanCard` both read `useSiteProgress`), Lima named three times,
+  a Back button on the root screen, "My Records" as both a tile and a tab. Shown the tidy Home next
+  to today's, Rory: "there's a lot I like about both ... let's keep it a switch", so both stay.
+- **The switch:** `lib/app-level.ts` (+ pure `lib/app-level-core.ts`) — `useAppLevel()` returns
+  `'simple' | 'full'`, stored per account in localStorage. Defaults: farmers and signed-out
+  visitors → Simple; mentor/student/ngo/funder/admin → All tools; the sample tour → All tools
+  unless previewing the farmer. Settings (`components/ThemePanel.tsx`) → "How much to show".
+- **Home:** All tools = Home exactly as before. Simple = the site card headed "Main site" + name
+  with the next step inside it, no FarmPlanCard, weather card without the repeated name, no Back,
+  no My Records tile. The step table moved to `lib/home-next-step.ts`, shared by both layouts.
+- **Measured (Simple vs old Home):** whole-page tap targets 62 → 60, words 327 → 312, "My Records
+  ×2" gone; first-screen taps 38 → 39 (the page is shorter, so more tiles fit on it).
+- **Next:** app-wide audit (running), then Simple mode screen by screen; an organisation-wide
+  default for its farmers (Step 3) on the org record.
 
 ### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
