@@ -42,11 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 September 2026', sha: '2edb0ef9', changes: [
+  { when: '25 September 2026', sha: '2bc9987b', changes: [
     'Assessment questions and averages now show draft isiZulu beside English.',
+    'Design photo, Lima tip, and map measurement controls show draft isiZulu beside English.',
+    'Contour wording keeps its English source beside the isiZulu draft.',
+    'The Design Studio unreviewed-draft notice now shows isiZulu beside English.',
   ], tour: [
     { title: 'Check the assessment wording', where: 'Assessments', href: '/assessments',
       detail: 'Choose isiZulu to read each draft question and average label beside its English source.' },
+    { title: 'Check Design Studio controls', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu and inspect photo import, map measurements, contour wording, and the draft notice.' },
   ] },
   { when: '25 September 2026', sha: '08a46c34', changes: [
     'The site report water balance has isiZulu labels and shortfall wording.',
