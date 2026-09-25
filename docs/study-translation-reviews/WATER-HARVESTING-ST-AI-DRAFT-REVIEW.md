@@ -1,0 +1,9 @@
+# Water Harvesting — Sesotho machine draft
+
+- **Status:** Agy `gemini-3.8-flash-low` draft; independent Agy `gemini-3.1-pro-low` review. No fluent Sesotho speaker or local water/sanitation adviser has approved it.
+- **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `water-harvesting` (four lessons).
+- **Paired data:** [`lib/course-translation-drafts-st-water-harvesting.ts`](../../lib/course-translation-drafts-st-water-harvesting.ts). No learner wiring or audio is included.
+- **Exact holds:** `water-harvesting-l1.body`, `water-harvesting-l1.quiz[1].question`, and `water-harvesting-l4.body` remain exact English with status `hold`. Pro Low found “steep” rendered as rough terrain in L1; Flash also rendered it as “friend” in the paired quiz question. The exclusion for water from nappies confused with “fish” in L4. Do not expose translated versions of these passages until reviewed.
+- **Repair:** Pro Low found “food crops” garbled in L3. Flash Low regenerated that exact sentence; Pro Low accepted the safety-assessment meaning.
+- **Critical claims checked:** swales need site-specific assessment, safe outlets and overflow; dams need qualified design and authorisation checks; do not plant trees on earth dam walls; a first-flush diverter does not ensure drinking safety; clear water may contain germs or chemicals; water on food crops needs a safety assessment; greywater sources differ and need local checks; if required advice is unavailable or unclear, do not reuse; soil/mulch do not disinfect wastewater; prevent contact, spray, pooling, runoff and cross-connections.
+- **Preservation checks:** exact English pairs, all four lesson IDs, paragraph boundaries, quiz option order and answer indexes are tested. No figures or plant names were added.
