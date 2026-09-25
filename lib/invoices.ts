@@ -7,6 +7,7 @@ import {
   getSandboxCustomers, setSandboxCustomers,
   getSandboxProducts, setSandboxProducts,
   getSandboxInvoices, setSandboxInvoices,
+  getSandboxPendingInvoiceLinks, setSandboxPendingInvoiceLinks,
 } from './sample-mode';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 
@@ -298,6 +299,16 @@ function writeInvoices(v: SavedInvoice[]): boolean {
   }
   return write(I_KEY, v);
 }
+function readPendingLinksRaw(): SavedInvoice[] {
+  return cleanInvoices(isSampleMode() ? getSandboxPendingInvoiceLinks() : read<unknown>(PENDING_LINK_KEY));
+}
+function writePendingLinks(v: SavedInvoice[]): boolean {
+  if (isSampleMode()) {
+    setSandboxPendingInvoiceLinks(v);
+    return true;
+  }
+  return write(PENDING_LINK_KEY, v);
+}
 
 /* ── Customers ──────────────────────────────── */
 export function loadCustomers(): Customer[] { return readCustomers(); }
@@ -345,17 +356,17 @@ export function loadInvoices(): SavedInvoice[] { return readInvoicesRaw(); }
 /** A link must survive a reload even when the final ledger write runs out of device space.
  * Pending documents live in the same owner's private storage, outside every cash total. */
 export function loadPendingInvoiceLinks(): SavedInvoice[] {
-  return cleanInvoices(read<unknown>(PENDING_LINK_KEY)).filter(invoice => Boolean(invoice.sourceSaleId));
+  return readPendingLinksRaw().filter(invoice => Boolean(invoice.sourceSaleId));
 }
 export function stageInvoiceSaleLink(invoice: SavedInvoice): boolean {
   const clean = cleanInvoice(invoice);
   if (!clean?.sourceSaleId) return false;
   const pending = loadPendingInvoiceLinks();
   if (pending.some(row => row.sourceSaleId === clean.sourceSaleId && row.id !== clean.id)) return false;
-  return write(PENDING_LINK_KEY, [clean, ...pending.filter(row => row.id !== clean.id)]);
+  return writePendingLinks([clean, ...pending.filter(row => row.id !== clean.id)]);
 }
 export function clearPendingInvoiceLink(id: string): boolean {
-  return write(PENDING_LINK_KEY, loadPendingInvoiceLinks().filter(row => row.id !== id));
+  return writePendingLinks(loadPendingInvoiceLinks().filter(row => row.id !== id));
 }
 export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
   const before = loadInvoices();
