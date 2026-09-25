@@ -122,7 +122,10 @@ const ZULU_MEDIA_LANGUAGE_NOTICES = {
 
 // ── Quiz question ────────────────────────────────────────────────────────────
 
-function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
+function QuizQuestion({ q, options, correct, rationale, englishSource }: {
+  q: string; options: string[]; correct: number; rationale?: string;
+  englishSource?: { q: string; options: string[]; rationale?: string };
+}) {
   const { t } = useLanguage();
   const [selected, setSelected] = useState<number | null>(null);
   const revealed = selected !== null;
@@ -130,6 +133,7 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
       <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
+      {englishSource && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -161,6 +165,7 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
             >
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
+              {englishSource && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
@@ -176,7 +181,10 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
       {revealed && rationale && (
         <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
           <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
-          <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>{rationale}</p>
+          <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+            <p>{rationale}</p>
+            {englishSource?.rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
+          </div>
         </div>
       )}
     </div>
@@ -205,8 +213,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
-  const presentation = resolveLearnerLessonPresentation(lesson, lang === 'zu' ? 'zu' : 'en');
+  const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
+  const regionalDraft = (lang === 'st' || lang === 'ts') && presentation.status === 'draft';
+  const regionalFallback = (lang === 'st' || lang === 'ts') && presentation.status === 'english-fallback';
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -243,6 +253,8 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                 {t('studentZuluLessonEnglishBadge')}
               </span>
             )}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>AI draft · review pending</span>}
+            {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>English lesson</span>}
           </span>
         </span>
         {open
@@ -262,6 +274,8 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
+          {regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -304,7 +318,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           {/* Infographic — a diagram frames the reading, so it sits after audio, before body */}
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
-              <LessonInfographic url={lesson.infographicUrl!} alt={lesson.infographicAlt!} />
+              <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
             </div>
           )}
 
@@ -315,6 +329,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                 {para}
               </p>
             ))}
+            {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
           </div>
 
           {/* Key points */}
@@ -324,7 +339,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -354,7 +369,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentCheckUnderstanding')}
             </p>
             {lessonContent.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={regionalDraft ? lesson.quiz[i] : undefined} />
             ))}
           </div>
 
@@ -1004,10 +1019,10 @@ export default function StudentPage() {
                         <span className={`font-display ${styles.moduleTitle}`}>
                           {modulePresentation.title}
                         </span>
-                        {lang === 'zu' && (
+                        {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
                           <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1048,10 +1063,10 @@ export default function StudentPage() {
                     aria-expanded={isExpanded}
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
-                    {lang === 'zu' && (
+                    {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
                       <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
@@ -1113,6 +1128,7 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {modulePresentation.description}
                     </p>
+                    {(lang === 'st' || lang === 'ts') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: '#755942' }} />
@@ -1122,13 +1138,14 @@ export default function StudentPage() {
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
                           <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
-                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : t('studentAudio')}
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts') ? 'Audio: English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
                       {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
                         <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
+                      {(lang === 'st' || lang === 'ts') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Slides: English</span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#755942' }}>
