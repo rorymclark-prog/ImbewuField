@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '40ee1e48', changes: [
+    'Sesotho Garden Survey shell drafts show English sources; farming text stays English.',
+    'The Garden Survey Back control has space beside the floating Lima button on phones.',
+  ], tour: [
+    { title: 'Compare survey shell drafts', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose Sesotho to see marked shell labels beside English and the review notice.' },
+  ] },
   { when: '26 September 2026', sha: 'b54d433a', changes: [
     'Study has marked Tshivenda drafts for starting, the course and offline study.',
     'The English review notice remains visible while these labels await fluent review.',
