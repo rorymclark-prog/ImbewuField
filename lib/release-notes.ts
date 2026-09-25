@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '97048cac', changes: [
+    'The site survey now opens over the full phone screen from the Farmer map.',
+  ], tour: [
+    { title: 'Open the site survey', where: 'Farmer map', href: '/farmer',
+      detail: 'On a phone, open Site Survey; its introduction and questions should appear above the map.' },
+  ] },
   { when: '25 September 2026', sha: '3fb3f25a', changes: [
     'The design learning pathway adds marked isiZulu drafts for navigation and exercises.',
     'Design lessons, model measurements and narration still identify their English content.',
