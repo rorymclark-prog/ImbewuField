@@ -295,7 +295,7 @@ Thatha isithombe somdwebo.
 
 Hamba uyohlola umdwebo wakho emhlabeni wangempela.
 
-Yima emnyango wasekhishini ubheke lokho okuse-Zone 1 namuhla.
+Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.
 
 Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa
 kaningi kangakanani. Bhala ukuthi ingabekwa kuphi.

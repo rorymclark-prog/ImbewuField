@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: 'df031dbb', changes: [
+    'Introduction slide 22 audio preserves the full Zone 1 counting instruction.',
+    'The draft still awaits fluent isiZulu and local farming review.',
+  ], tour: [
+    { title: 'Listen to Introduction slide 22', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Open the isiZulu narration. It remains an unreviewed draft.' },
+  ] },
   { when: '25 September 2026', sha: '0ffa46c7', changes: [
     'Tips, site survey entry, map controls and Records tabs now have marked isiZulu drafts.',
     'Soil improvement drafts keep their English source beside each suggestion.',

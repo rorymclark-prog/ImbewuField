@@ -90,6 +90,9 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     languages: ['en', 'zu'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
+    // The isiZulu draft uses zu-ZA-ThandoNeural at -12%. Slide 22 was rerecorded on 2026-09-25
+    // with the exact English source sentence so its Zone 1 counting instruction is preserved.
+    // Fluent isiZulu, local farming, and listening review remain pending; see the review record.
     // Slide 19 re-recorded 2026-09-21 with the same Luke voice at -12%, verified against
     // returned word boundaries for the authored windbreak motion; full.mp3 rebuilt with it.
     // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
