@@ -115,6 +115,11 @@ function recordsText(lang: string, english: string, isiZulu: string): string {
   return lang === 'zu' ? isiZulu : english;
 }
 
+/** Keep the English beside isiZulu when a farmer may act on money or saved records. */
+function recordsInstruction(lang: string, english: string, isiZulu: string): string {
+  return lang === 'zu' ? `${english} — ${isiZulu}` : english;
+}
+
 function recordsMessage(lang: string, message: string): string {
   if (lang !== 'zu') return message;
   const translations: Record<string, string> = {
@@ -689,8 +694,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         setForm(() => ({
           ...emptyForm(),
           error: online
-            ? recordsText(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
-            : recordsText(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'),
+            ? recordsInstruction(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
+            : recordsInstruction(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'),
         }));
         setScanNote('');
         onSaved();
@@ -761,7 +766,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
             <option value="">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsText(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option>{!isIn && <option value="shared">{recordsText(lang, 'Shared by beds and staple plots', 'Kwabiwe phakathi kwemibhede namasimu ezitshalo eziyisisekelo')}</option>}<option value="other">{recordsText(lang, 'Orchard / other', 'Ingadi yezithelo / okunye')}</option>
           </select>
-          <span className="block text-xs mt-1">{recordsText(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</span>
+          <span className="block text-xs mt-1">{recordsInstruction(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</span>
         </label>
         {/* The original belongs to the cost, regardless of whether Lima reads it. */}
         {!isIn && (
@@ -773,7 +778,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             </div>
             <input ref={slipInputRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} capture="environment" className="hidden" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Take a receipt photo', 'Thatha isithombe serisidi')} />
             <input ref={slipUploadRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} className="hidden" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Choose a receipt photo', 'Khetha isithombe serisidi')} />
-            <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.', 'Isebenza ungaxhunyiwe. Isithombe sokuqala sigcinwa nalezi zindleko kule divayisi kuphela. JPG, PNG noma WebP, kufika ku-10 MB.')}</p>
+            <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsInstruction(lang, 'Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.', 'Isebenza ungaxhunyiwe. Isithombe sokuqala sigcinwa nalezi zindleko kule divayisi kuphela. JPG, PNG noma WebP, kufika ku-10 MB.')}</p>
             {readingPhoto && <p role="status" className="text-sm">{recordsText(lang, 'Checking photo…', 'Kuhlolwa isithombe…')}</p>}
             {receiptPhoto && receiptUrl && <div className="rounded-lg p-2" style={{ background: 'var(--color-canvas)' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -814,7 +819,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
-            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsText(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
+            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
           </div>
         )}
 
@@ -1127,7 +1132,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <tbody>
             {rows.length === 0 ? (
               <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
-                {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsText(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
+          {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsInstruction(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
               </td></tr>
             ) : rows.map((r, i) => (
               <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
@@ -1137,7 +1142,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
                   {r.duplicateSuspect && (
                     <span className="block font-sans" style={{ fontSize: 12, color: 'var(--gold)', marginTop: 2 }}>
-                      {recordsText(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
+                      {recordsInstruction(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
                     </span>
                   )}
                 </td>
@@ -1168,7 +1173,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         </table>
       </div>
       <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
-        {recordsText(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsText(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
+        {recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsInstruction(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
       </p>
     </div>
   );
@@ -1278,7 +1283,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
             </div>
           ))}
           <p className="text-xs font-sans mt-3" style={{ color: 'var(--text-secondary)' }}>
-            {recordsText(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.', 'Lezi azikho ohlwini olungenhla ngoba izibalo zalo zisebenza ngemitha-skwele yemibhede, kanti izithelo zesihlahla aziveli embhedeni. Imali yokuthengisa lapha isivele ibaliwe emalini engezansi.')}
+            {recordsInstruction(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.', 'Lezi azikho ohlwini olungenhla ngoba izibalo zalo zisebenza ngemitha-skwele yemibhede, kanti izithelo zesihlahla aziveli embhedeni. Imali yokuthengisa lapha isivele ibaliwe emalini engezansi.')}
           </p>
         </div>
       )}
@@ -1292,7 +1297,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
             <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{fmtZAR(margin.grossMarginZar)}</p>
           </div>
         ))}
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
       </div>
     </section>
   );
@@ -1722,7 +1727,7 @@ export default function RecordsPage() {
                       className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-sm font-display"
                       style={{ background: '#FDF3E3', border: '1px solid #E8D6B0', color: '#7A5B18' }}
                     >
-                      {recordsText(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovela uma usuthola uxhumano futhi.')}
+                      {recordsInstruction(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovela uma usuthola uxhumano futhi.')}
                     </div>
                   )}
                   {/* Offered whether or not the ledger has rows — a farmer with one entry still

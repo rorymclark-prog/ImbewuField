@@ -12,6 +12,7 @@
 // opening the crop plan does not pay for a document nobody asked for.
 
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/lib/i18n';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
@@ -36,8 +37,10 @@ export interface CropPlanExportCardProps {
 }
 
 type Busy = 'ics' | 'pdf' | null;
+const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
 export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt }: CropPlanExportCardProps) {
+  const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [quickPrintFormat, setQuickPrintFormat] = useState<CropPlanPageFormat>('a4');
@@ -153,12 +156,17 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
 
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
-        <Share2 size={14} aria-hidden style={{ flexShrink: 0 }} /> Take this plan with you
+        <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
+        <Share2 size={14} aria-hidden style={{ flexShrink: 0 }} /> {cropUi(lang, 'Take this plan with you', 'Hamba nalolu hlelo')}
       </div>
       <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
         Both files are made on this phone — nothing is uploaded, and they work with no signal.
       </p>
+      {lang === 'zu' && (
+        <p role="note" className="font-sans mb-3" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.5 }}>
+          Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review. Isaziso: amagama emisebenzi, izikhathi zokutshala nemiyalelo kumafayela athunyelwayo kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
+        </p>
+      )}
 
       <div className="flex flex-wrap gap-2">
         <button
@@ -169,8 +177,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           title={empty ? 'Add some crops first — there are no tasks to export yet' : 'Every task of the year as a calendar file'}
         >
           {busy === 'ics'
-            ? <><Hourglass size={14} aria-hidden /> Building…</>
-            : <><CalendarPlus size={14} aria-hidden /> {empty ? 'Add tasks to calendar' : `Add ${tasks.length} tasks to calendar`}</>}
+            ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
+            : <><CalendarPlus size={14} aria-hidden /> {empty ? cropUi(lang, 'Add tasks to calendar', 'Engeza imisebenzi ekhalendeni') : `${cropUi(lang, 'Add', 'Engeza')} ${tasks.length} ${lang === 'zu' ? (tasks.length === 1 ? 'umsebenzi ekhalendeni' : 'imisebenzi ekhalendeni') : 'tasks to calendar'}`}</>}
         </button>
         <button
           onClick={exportPdf}
@@ -182,8 +190,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           {busy === 'pdf'
             ? <><Hourglass size={14} aria-hidden /> Building…</>
             : shareFirst
-              ? <><Share2 size={14} aria-hidden /> Share the plan (PDF)</>
-              : <><Download size={14} aria-hidden /> Download the plan (PDF)</>}
+            ? <><Share2 size={14} aria-hidden /> {cropUi(lang, 'Share the plan (PDF)', 'Yabelana ngohlelo (PDF)')}</>
+              : <><Download size={14} aria-hidden /> {cropUi(lang, 'Download the plan (PDF)', 'Landa uhlelo (PDF)')}</>}
         </button>
       </div>
 
@@ -196,8 +204,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           title="Two pages only: the bed calendar and a month-by-month task list — made for pinning on a wall"
         >
           {busy === 'pdf'
-            ? <><Hourglass size={14} aria-hidden /> Building…</>
-            : <><ClipboardList size={14} aria-hidden /> Quick print (2 pages)</>}
+            ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
+            : <><ClipboardList size={14} aria-hidden /> {cropUi(lang, 'Quick print (2 pages)', 'Phrinta ngokushesha (amakhasi ama-2)')}</>}
         </button>
         <select
           value={quickPrintFormat}
@@ -216,13 +224,13 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       <div className="font-sans mt-2" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.6 }}>
         Or:{' '}
         <button onClick={printPdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
-          open it to print
+          {cropUi(lang, 'open it to print', 'yivule ukuze uphrinte')}
         </button>
         {shareFirst && (
           <>
             {' · '}
             <button onClick={downloadPdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
-              save it to this device
+              {cropUi(lang, 'save it to this device', 'yigcine kule divayisi')}
             </button>
           </>
         )}
@@ -230,7 +238,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           <>
             {' · '}
             <button onClick={sharePdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
-              send it somewhere
+              {cropUi(lang, 'send it somewhere', 'yithumele kwenye indawo')}
             </button>
           </>
         )}

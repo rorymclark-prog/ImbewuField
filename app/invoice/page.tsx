@@ -61,6 +61,12 @@ const BUYER_TYPES = [
 const WHOLESALE_BUYERS = ['spaza shop', 'bakkie trader', 'market stall', 'hawker', 'school', 'crèche', 'restaurant or lodge', 'co-op'];
 const INVOICE_ZU: Record<string, string> = {
   'Share PDF': 'Yabelana nge-PDF', 'Print': 'Phrinta',
+  'Invoice': 'I-invoyisi', 'Learn': 'Funda', 'Share PDF (WhatsApp, email…)': 'Yabelana nge-PDF (WhatsApp, i-imeyili…)',
+  'New invoice': 'I-invoyisi entsha', 'Saved': 'Okulondoloziwe', 'Editing': 'Kuyahlelwa',
+  'Invoice and payment details': 'Imininingwane ye-invoyisi nenkokhelo', 'Record the sale once': 'Rekhoda ukuthengisa kanye kuphela',
+  'Keep the invoice, payment and kilograms together.': 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.',
+  'A new invoice': 'I-invoyisi entsha', 'Produce already sold': 'Umkhiqizo osudayisiwe', 'An invoice already written on paper': 'I-invoyisi esivele ibhalwe ephepheni',
+  'VAT / tax no.': 'Inombolo ye-VAT / yentela', 'Qty': 'Inani',
   'What are you recording?': 'Urekhoda ini?', 'Invoice type': 'Uhlobo lwe-invoyisi',
   'Is this sale already in My Records?': 'Ingabe lokhu kuthengisa sekukhona kokuthi Okurekhodiwe Kwami?',
   'Existing sale record': 'Irekhodi lokuthengisa elikhona', 'Choose before saving': 'Khetha ngaphambi kokulondoloza',
@@ -141,6 +147,30 @@ const INVOICE_ZU: Record<string, string> = {
   'Keep the recorded payment date and paid status for this sale.': 'Gcina usuku lwenkokhelo nesimo sokukhokha okurekhodiwe kwalokhu kuthengisa.',
   'Keep the recorded crop, kilograms and total when documenting this sale.': 'Gcina isilimo, amakhilogremu nesamba okurekhodiwe lapho ubhala lokhu kuthengisa.',
 };
+
+// These instructions affect payment status, duplicate counting, sync, or deletion. Keep the
+// English visible beside the draft so a farmer can check the meaning before acting.
+const INVOICE_PAIRED_COPY = new Set([
+  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.',
+  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.',
+  'For your R/m² records. Choose only if every line belongs to this area.',
+  'Marking an invoice paid adds its kg crop lines to My Records automatically.',
+  'Bags, crates and bunches are not converted because their weight is unknown.',
+  'Invoice saved on this device. The shared sales records have not confirmed yet.',
+  'Retry sales sync',
+  'Choose paid or unpaid to continue.',
+  'Invoice saved on this device. Reconnect and save it again to update the crop sale book.',
+  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.',
+  'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.',
+  'Connect to the internet to load a sale you have already recorded.',
+  'Load the recorded sale before saving this invoice.',
+  'Connect to the internet to link this existing sale safely.',
+  'Free some device storage before linking this sale. Its existing record has not been changed.',
+  'Your account changed. Open the invoice again in the correct workspace.',
+  'This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.',
+  'Delete?',
+  'Delete invoice',
+]);
 /** Offered as terms. Absent from the list on purpose: a preselected default. */
 const TERM_CHOICES: { label: string; days: number | null }[] = [
   { label: 'No due date', days: null },
@@ -190,7 +220,11 @@ function Disclosure({
 
 export default function InvoicePage() {
   const { lang } = useLanguage();
-  const ui = (english: string, isiZulu?: string) => lang === 'zu' ? (isiZulu ?? INVOICE_ZU[english] ?? english) : english;
+  const ui = (english: string, isiZulu?: string) => {
+    if (lang !== 'zu') return english;
+    const zulu = isiZulu ?? INVOICE_ZU[english] ?? english;
+    return INVOICE_PAIRED_COPY.has(english) ? `${english} — ${zulu}` : zulu;
+  };
   const paymentLabel = (method: PaymentMethod) => lang === 'zu'
     ? ({ cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' } as const)[method]
     : paymentMethodLabel(method);

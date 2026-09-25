@@ -79,6 +79,7 @@ const STAFF_ROUTES = [
 const FARMER_SURFACES: Record<string, string> = {
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
+  'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',
   'app/offline/page.tsx': 'device preparation and unsent fieldwork are read on phones',
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
   'components/FieldDraft.tsx': 'draft preservation and restore controls are used in the field',

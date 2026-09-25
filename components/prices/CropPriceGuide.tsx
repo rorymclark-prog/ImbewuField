@@ -67,12 +67,14 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
       >
         {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
+          {lang === 'zu' ? `${sourced ? 'Sourced market price' : 'Unconfirmed estimate'} — ${t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}` : t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
         </span>
       </div>
       <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
         {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
-        {t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
+        {lang === 'zu'
+          ? `Price dated ${pricedDate} — check today's local price before agreeing. / ${t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}`
+          : t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
       </div>
 
       <div style={{ width: '100%', marginTop: 22, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -90,7 +92,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.wholesalePerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'rgba(247,242,233,0.78)' }}>
-            {t('pricePerKgTrader')}
+            {lang === 'zu' ? `Per kilogram — close to what a trader or market buyer pays. / ${t('pricePerKgTrader')}` : t('pricePerKgTrader')}
           </div>
         </div>
 
@@ -115,7 +117,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
             R{formatPrice(price.retailPerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted)' }}>
-            {t('pricePerKgShop')}
+            {lang === 'zu' ? `Per kilogram — shop price, not a farm-gate price. / ${t('pricePerKgShop')}` : t('pricePerKgShop')}
           </div>
         </div>
       </div>

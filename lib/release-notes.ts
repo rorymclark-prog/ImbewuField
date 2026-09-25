@@ -42,6 +42,20 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 September 2026', sha: '98ce2fe1', changes: [
+    'The site survey pairs isiZulu and English for saving and roof water checks.',
+    'The crop planner has isiZulu controls; farming guidance remains in English.',
+    'Records and invoices pair sensitive money guidance with isiZulu drafts.',
+    'Programme report controls and PDF labels now follow the isiZulu setting.',
+    'Back and menu controls now follow your isiZulu setting.',
+  ], tour: [
+    { title: 'Open the site survey', where: 'Sample farm', href: '/samples/farm',
+      detail: 'Choose isiZulu and open Edit site survey. Roof water and save instructions show their English source.' },
+    { title: 'Check your records', where: 'My Records', href: '/records',
+      detail: 'Money and sync guidance keeps the English wording beside the isiZulu draft.' },
+    { title: 'See the crop planner', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'The note explains which crop instructions are still in English.' },
+  ] },
   { when: '25 September 2026', sha: '95be15e8', changes: [
     'Calendar month labels now appear in isiZulu.',
     'Task Planner labels its English farming guidance.',
