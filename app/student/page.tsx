@@ -1380,6 +1380,14 @@ export default function StudentPage() {
         </div>
         )}
 
+        <div className={styles.coursePreviews}>
+          <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
+              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
+              <em>Open the two-day course →</em></span>
+          </Link>
+        </div>
+
         <LimaBar />
 
         <details className={`${styles.companions} ${styles.collapsible} ${styles.appGuides}`}>
