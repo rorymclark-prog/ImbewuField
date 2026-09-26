@@ -681,3 +681,104 @@ These are the strings a reviewer should read first. **(check)** all of them.
 - "dipokotho tsa serame (frost pockets)" in drafts-st-reading-landscape was kept; this glossary
   prefers *sekoti sa serame* for frost hollow. **(check)**
 - `navManual` ("Buka ya Permaculture") was kept as it is.
+
+## Kept in English (26 Sep 2026)
+
+Rory's decision (see `research/manual/KEEP-ENGLISH.md`): the words below stay in **English** in
+the Sesotho manual, and `content/manual/st/12-glossary.md` explains them all. This section
+**overrides** the Sesotho column of the tables above for these words. In chapters 00 to 11 the
+first use in each chapter is written in bold with a short Sesotho explanation in brackets, e.g.
+"**di-swale** (mekero e tshwarang metsi)"; later uses are plain English.
+
+**Grammar used.** An English noun is treated as a class 9/10 loan noun: singular with no prefix
+and concord *e* ("swale e", "compost e ngata", "food forest ya hao", "windbreak e ntle"); plural
+with the hyphenated prefix *di-* and concord *di/tse* ("di-swale tse", "di-legume", "di-predator",
+"di-ecosystem"). Locatives use *ho* ("ho swale", "ho food forest", "ho worm farm") instead of
+*-ng*. Concords of the old Sesotho noun were changed to match (e.g. *mokero o* → *swale e*,
+*lerako la mobu le* → *berm e*, *metsi a ditshila a* → *greywater e*, *moru wa dijo o* →
+*food forest e*). The English root is never changed ("compost", not *kompose*).
+
+| English (kept) | Sesotho phrase(s) replaced in chapters 00 to 11 |
+|---|---|
+| Animal tractor | diterekere tsa diphoofolo; lesaka le tsamaiswang (la dikgoho); masaka a dikgoho a tsamaiswang; diphoofolo tse sebetsang jwaloka terekere; terekere ya diphoofolo (*chicken tractor* kept as the English alias) |
+| Annual | (semela) sa selemo se le seng; sa sehla se le seng; dijalo tsa selemo se le seng; "Sa (hlabula/mariha) sa selemo se le seng" in the ch. 05 and ch. 06 tables |
+| Appropriate technology | theknoloji e loketseng (ch. 11, including the chapter title) |
+| Berm | lerako la mobu (only where it means the bank below a swale; "lerako la mobu" for a dam wall kept) |
+| Biodiversity | mefutafuta ya dintho tse phelang (plain *mefutafuta* = "diversity" kept) |
+| Biogas digester | tanka ya biogas; ditanka tsa biogas |
+| Biomass | was already English; only bolded/explained where first used |
+| Biosecurity | tshireletso kgahlanong le mafu |
+| Blackwater | metsi a ntlwana |
+| Canopy | makala a sefate (canopy width); boholo ba makala a tsona; makala a maholo |
+| Carbon to nitrogen ratio | not replaced: ch. 08 describes the ratio in words ("dikarolo tse 25 ho isa ho tse 30 tsa khabone ho karolo e 1 ya naetrojene") and never names it |
+| Catchment | sebaka se bokellang metsi; dibaka tse bokellang metsi |
+| Chop and drop | ho poma le ho siya fatshe |
+| Climate change | phetoho ya boemo ba lehodimo (also the ch. 03 section heading) |
+| Companion planting | ho lema dimela tse thusanang |
+| Compost | kompose (every occurrence, incl. "qubu ya kompose" → "qubu ya compost", "tee ya kompose" → "tee ya compost") |
+| Contour | was already English ("mola wa contour") |
+| Coppicing | ho poma sefate haufi le fatshe; difate tse pomilweng haufi le fatshe (coppiced); se mela hape ha se kutilwe |
+| Crop rotation | phetolo ya dijalo (plain *phetolo* = "rotation" kept) |
+| Double-reach bed | dibethe tsa serapa tse fihlelwang ho tswa mahlakoreng a mabedi (ch. 07 heading) |
+| Drip irrigation | nosetso ya marothodi; mela/dikhiti tsa marothodi; "Marothodi" in the ch. 07 table |
+| Ecosystem | tikoloho ya tlhaho; ditikoloho tsa tlhaho (the ch. 09 title "tikoloho ya tlhaho" = ecology, kept) |
+| Edge | mathoko (only in the permaculture sense, ch. 01 and ch. 06) |
+| Erosion | kgoholeho ya mobu |
+| Firebreak | lebanta le thibelang mollo; mabanta a thibelang mollo |
+| First-flush diverter | sekgelo sa metsi a pele |
+| Fodder | **kept local**: *furu* (see note below) |
+| Food forest | moru wa dijo; meru ya dijo |
+| Frost pocket | dikoti tsa serame; sekoti sa serame |
+| Grafting | ho hlomathisa; se hlomathisitsweng; lefito la ho hlomathisa |
+| Green manure | manyolo a matala |
+| Greywater | metsi a ditshila a malapeng |
+| Groundcover | dimela tse kwahelang mobu; se kwahela mobu |
+| Guild | dihlopha tsa dimela |
+| Habitat | bodulo (ba diphoofolo le dimela); mahae (habitats) — *bodulo* meaning shelter or worm bedding kept |
+| Humus | was already English |
+| Indigenous | **kept local**: *(sa/tsa) tlhaho* (see note below) |
+| Infiltration | ho kenya metsi mobung, in "dikotlolo tsa ho kenya metsi mobung" → "dikotlolo tsa infiltration" |
+| Invasive species | dimela tse (tswang kantle tse) hlaselang naha; semela se hlaselang naha; mefuta e hlaselang naha; (tlhapi) e hlaselang naha. The adjective in "mefoka e hlaselang haholo" (very invasive weeds) and "disenyi tse ntjha tse hlaselang" kept |
+| Keyhole bed | lesoba la senotlolo (keyhole) in the ch. 07 mandala/keyhole section |
+| Legume | dimela/dijalo tsa dinawa; semela sa dinawa; "Semela sa dinawa" in the ch. 05, 06 and 08 tables |
+| Microclimate | boemo ba lehodimo ba sebaka se senyane; maemo a lehodimo a dibaka tse nyane |
+| Mulch | was already English (sekwahelo sa mobu used as the explanation) |
+| Nitrogen fixer | dimela tse lokisang naetrojene, where the English has the noun "nitrogen fixer(s)". The adjective "nitrogen-fixing" stays "se lokisang naetrojene" |
+| Organic matter | dintho tsa tlhaho tse bolang (ch. 07 to 10); "organic material" (dintho tsa tlhaho) kept |
+| Perennial | dimela tse phelang dilemo tse ngata; se phela dilemo tse ngata (tables) |
+| Permaculture | was already English |
+| pH | was already English |
+| Pollinator | ditsamaisi tsa phofo; dikokonyana tse tsamaisang phofo ya dipalesa |
+| Predator | dibatana (tse jang disenyi); diphoofolo tse jang dikgoho; diphoofolo tse di tsomang; diphoofolo tse a jang |
+| Rocket stove | setofo sa rokete; ditofo tsa rokete |
+| Rootstock | metso ya motheo; motso wa motheo |
+| Runoff | metsi a phallang; phallo (where it means runoff). "Palo ya phallo (runoff coefficient)" kept as a term, and ordinary "flowing water" kept |
+| Sector | lekala; makala (ch. 02 and ch. 03, including the ch. 03 title "Moralo wa makala" → "Moralo wa di-sector") |
+| Slurry | was already English |
+| Solar dryer | seomisi sa letsatsi; diomisi tsa letsatsi |
+| Succession | tatellano ya tlhaho ("ho jala ka tatellano" = succession planting is a different term, not touched) |
+| Swale | mokero; mekero; mekerong |
+| Thermal mass | dintho tse bolokang mocheso |
+| Topsoil | mobu wa kahodimo |
+| Trap crop | dijalo tsa leraba; sejalo sa leraba; semela sa leraba (trap plant) |
+| Understorey | not used in chapters 00 to 11 (ch. 06 layer 2 is "low-tree layer" in the English) |
+| Windbreak | sesireletsi sa moya; disireletsi tsa moya |
+| Wonder bag | was already English |
+| Worm farm | polasi ya diboko; polasing ya diboko |
+| Worm tea | "tee ya diboko"; "worm tea" in quotes |
+| Zone | was already English ("Zone 1", "di-Zone") |
+
+**Left local, and why (for the reviewer):**
+
+- **Fodder → *furu*.** *Furu* is the ordinary Sesotho farm word (app: `st.ts` `cropFodder`), not a
+  coined phrase, so it was left in chapters 00 to 11. The glossary chapter explains *Fodder* and
+  gives *furu* in brackets. Switch to "fodder" if the reviewer prefers strict consistency.
+- **Indigenous → *(sa/tsa) tlhaho*.** Everyday Sesotho ("dimela tsa tlhaho", "sa tlhaho" in the
+  tree tables), and "indigenous" is an adjective that does not take a noun prefix cleanly.
+- **Edge** in its everyday sense (edges of fields, beds, a bed's border) stays *mathoko*; the
+  principle name "Sebedisa mathoko mme o ananele tse ka thoko" was kept as in the principles table.
+- **Canopy** in ch. 03 ("moriti o mosesane wa difate tsa pele", a light canopy of pioneer trees)
+  kept, because *moriti* (shade) reads naturally there.
+- **Climate** without "change" (boemo ba lehodimo), "a changing climate" (boemo ba lehodimo bo
+  fetohang) and "As the climate gets hotter" were left, since the term is "climate change".
+- **Carbon to nitrogen ratio** and **Understorey** do not appear as terms in chapters 00 to 11.
