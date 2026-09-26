@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
+import { SESOTHO_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-st-small-livestock.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { resolveDeckLang } from '../lib/course-deck.ts';
+import { resolveNarrationLang } from '../lib/course-audio.ts';
 
 test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz answer', () => {
   const source = COURSE_MODULES.find(module => module.id === 'food-forest');
@@ -97,4 +102,66 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
   ];
   const heldEnglish = draft.lessons.map(lesson => lesson.body.sesothoDraft).join('\n');
   for (const name of namesAndClaims) assert.ok(heldEnglish.includes(name), `held source must preserve ${name}`);
+});
+
+test('Sesotho chicken lesson preserves animal-care and manure guidance beside a narrow draft', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'small-livestock');
+  assert.ok(source);
+  const lesson = source.lessons.find(item => item.id === 'small-livestock-l1');
+  assert.ok(lesson);
+  const draft = SESOTHO_SMALL_LIVESTOCK_DRAFT.lessons[0];
+
+  assert.equal(SESOTHO_SMALL_LIVESTOCK_DRAFT.reviewStatus, 'machine-draft');
+  assert.equal(SESOTHO_SMALL_LIVESTOCK_DRAFT.title.sourceEnglish, source.title);
+  assert.equal(SESOTHO_SMALL_LIVESTOCK_DRAFT.description.sourceEnglish, source.description);
+  assert.equal(draft.infographicAlt?.sourceEnglish, lesson.infographicAlt);
+  assert.equal(draft.infographicAlt?.reviewStatus, 'hold');
+  assert.match(lesson.infographicAlt ?? '', /darker scratched patch/);
+  assert.doesNotMatch(lesson.infographicAlt ?? '', /enriched|fertilized|root crop/i,
+    'the image description must not claim a soil result the picture cannot show');
+  assert.equal(draft.title.sourceEnglish, lesson.title);
+  assert.equal(draft.body.sourceEnglish, lesson.body);
+  assert.equal(draft.body.sesothoDraft.split('\n\n').length, lesson.body.split('\n\n').length);
+  assert.match(draft.body.sesothoDraft, /Di fata hara masala a dimela/);
+  for (const held of [
+    'Chickens can help an empty bed after harvest.',
+    'Their manure and bedding can be composted and returned to the soil.',
+    'Foraging does not replace a balanced diet, clean water, shelter or daily care.',
+    'Move it before the ground becomes bare, muddy or heavily covered with manure.',
+    'Fresh manure can carry germs.',
+    'Ask an extension adviser how to manage manure safely before the next crop.',
+  ]) {
+    assert.ok(draft.body.sesothoDraft.includes(held), `keep exact English until safe Sesotho is checked: ${held}`);
+  }
+  assert.equal(draft.keyPoints.length, lesson.keyPoints.length);
+  draft.keyPoints.forEach((point, index) => {
+    assert.equal(point.reviewStatus, 'hold');
+    assert.equal(point.sourceEnglish, lesson.keyPoints[index]);
+    assert.equal(point.sesothoDraft, lesson.keyPoints[index]);
+  });
+  assert.equal(draft.quiz.length, lesson.quiz.length);
+  draft.quiz.forEach((question, index) => {
+    const original = lesson.quiz[index];
+    assert.equal(question.sourceCorrectIndex, original.correct);
+    assert.deepEqual(
+      [question.question, ...question.options, question.rationale].map(pair => pair.sesothoDraft),
+      [original.q, ...original.options, original.rationale],
+      'animal-care and food-safety questions remain exact English',
+    );
+  });
+
+  const card = resolveCourseModulePresentation(source, 'st');
+  assert.equal(card.status, 'draft');
+  assert.equal(card.title, SESOTHO_SMALL_LIVESTOCK_DRAFT.title.sesothoDraft);
+  const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.title, draft.title.sesothoDraft);
+  assert.equal(presentation.content.body, draft.body.sesothoDraft);
+  assert.deepEqual(presentation.content.quiz, lesson.quiz);
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+    'english-fallback', 'source drift must withdraw the complete paired draft');
+  assert.equal(resolveCourseModulePresentation({ ...source, title: `${source.title} Changed.` }, 'st').status,
+    'english-fallback');
+  assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'en', exact: false });
+  assert.deepEqual(resolveNarrationLang(source.id, 'st'), { lang: 'en', exact: false });
 });
