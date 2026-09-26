@@ -32,7 +32,7 @@ const CATEGORY_LABEL: Record<BoardCategory, string> = {
   seed: 'Seed', seedlings: 'Seedlings', produce: 'Produce', tools: 'Tools', other: 'Other',
 };
 const KIND_LABEL: Record<BoardKind, string> = { have: 'Have', want: 'Want', free: 'Free' };
-const KIND_COLOR: Record<BoardKind, string> = { have: '#1F4D2B', want: '#235E86', free: '#C07A1E' };
+const KIND_COLOR: Record<BoardKind, string> = { have: 'var(--color-forest-800)', want: '#235E86', free: '#C07A1E' };
 
 const zuCopy: Record<string, string> = {
   Nearby: 'Eduze nawe', Board: 'Ibhodi', Messages: 'Imiyalezo', Community: 'Umphakathi', 'Loading community': 'Kulayishwa umphakathi', 'My profile': 'Iphrofayela yami', 'Set up profile': 'Setha iphrofayela',
@@ -149,7 +149,7 @@ export default function CommunityHubPage() {
   if (!communityEnabled() || loading || !user) {
     return (
       <div className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
   }
@@ -164,7 +164,7 @@ export default function CommunityHubPage() {
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
-        <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#1F4D2B', textDecoration: 'none' }}>
+        <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
           <User size={16} strokeWidth={1.8} />
           <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
             {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
@@ -184,8 +184,8 @@ export default function CommunityHubPage() {
             className="flex-1 font-sans font-semibold"
             style={{
               padding: '12px 8px', fontSize: 13.5, background: 'transparent', border: 'none', cursor: 'pointer',
-              color: tab === tb ? '#1F4D2B' : 'var(--text-muted)',
-              borderBottom: tab === tb ? '2.5px solid #1F4D2B' : '2.5px solid transparent',
+              color: tab === tb ? 'var(--color-forest-800)' : 'var(--text-muted)',
+              borderBottom: tab === tb ? '2.5px solid var(--color-forest-800)' : '2.5px solid transparent',
             }}
           >
             {tr(tb === 'nearby' ? 'communityTabNearby' : tb === 'board' ? 'communityTabBoard' : 'communityTabMessages')}
@@ -195,24 +195,24 @@ export default function CommunityHubPage() {
 
       <main id="community-tab-panel" role="tabpanel" aria-labelledby={`community-tab-${tab}`} className={`${workspace.workspace} flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6`}>
         {loadError && !busy && (
-          <div className="flex items-center justify-between gap-3 rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
-            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{tr('communityLoadError')}</span>
+          <div className="flex items-center justify-between gap-3 rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'color-mix(in srgb, var(--danger) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)' }}>
+            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: 'var(--danger)' }}>{tr('communityLoadError')}</span>
             <button
               onClick={() => refresh()}
               className="font-sans font-semibold"
-              style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline', flexShrink: 0 }}
+              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline', flexShrink: 0 }}
             >
               {tr('communityRetry')}
             </button>
           </div>
         )}
         {threadError && (
-          <div className="rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
-            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{tr('communityContactError')}</span>
+          <div className="rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'color-mix(in srgb, var(--danger) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)' }}>
+            <span role="alert" className="font-sans" style={{ fontSize: 12.5, color: 'var(--danger)' }}>{tr('communityContactError')}</span>
           </div>
         )}
         {busy ? (
-          <div role="status" aria-label={copyCommunity('Loading community', lang)} className="flex justify-center py-16"><Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} /></div>
+          <div role="status" aria-label={copyCommunity('Loading community', lang)} className="flex justify-center py-16"><Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} /></div>
         ) : tab === 'nearby' ? (
           <NearbyTab nearby={nearby} onOpenProfile={(uid) => router.push(`/community/u/${uid}`)} />
         ) : tab === 'board' ? (
@@ -270,10 +270,10 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
               className="flex items-center gap-3 rounded-xl p-3 text-left w-full"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', cursor: 'pointer' }}
             >
-              <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {p.photos?.[0]
                   ? <img data-photo-preview src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 15 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--color-canvas)', fontWeight: 700, fontSize: 15 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{p.display_name}</div>
@@ -303,7 +303,7 @@ function BoardTab({
         <button
           onClick={onToggleNewPost}
           className="flex items-center gap-1.5 font-display font-semibold rounded-xl"
-          style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '8px 14px', fontSize: 13 }}
+          style={{ background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: 'pointer', padding: '8px 14px', fontSize: 13 }}
         >
           <Plus size={14} /> {tr('communityBoardNewPost')}
         </button>
@@ -338,10 +338,10 @@ function BoardTab({
               <div className="flex items-center gap-2">
                 {p.owner_id === myUid ? (
                   <>
-                    <button onClick={() => onClose(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)', cursor: 'pointer' }}>
+                    <button onClick={() => onClose(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)', color: 'var(--color-forest-800)', border: '1px solid color-mix(in srgb, var(--color-forest-800) 20%, transparent)', cursor: 'pointer' }}>
                       {tr('communityBoardClose')}
                     </button>
-                    <button onClick={() => onDelete(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.25)', cursor: 'pointer' }}>
+                    <button onClick={() => onDelete(p.id)} className="font-sans font-semibold rounded-lg" style={{ fontSize: 12, padding: '6px 12px', background: 'transparent', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)', cursor: 'pointer' }}>
                       {tr('communityBoardDelete')}
                     </button>
                   </>
@@ -350,7 +350,7 @@ function BoardTab({
                     onClick={() => onMessage(p.owner_id, p.owner_name)}
                     disabled={messagingBusy}
                     className="flex items-center gap-1.5 font-sans font-semibold rounded-lg"
-                    style={{ fontSize: 12, padding: '6px 12px', background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messagingBusy ? 'default' : 'pointer', opacity: messagingBusy ? 0.7 : 1 }}
+                    style={{ fontSize: 12, padding: '6px 12px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: messagingBusy ? 'default' : 'pointer', opacity: messagingBusy ? 0.7 : 1 }}
                   >
                     {messagingBusy ? <Loader2 size={12} className="animate-spin" /> : <MessageCircle size={12} />}
                     {tr('communityMessageButton')}
@@ -470,7 +470,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
           type="button"
           onClick={() => setShowMoreOptions(true)}
           className="font-sans font-semibold text-left"
-          style={{ fontSize: 13, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+          style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
         >
           + {copyCommunity('More options', lang)}
         </button>
@@ -491,7 +491,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
         <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{ display: 'none' }} />
       </div>
       {postError && (
-        <p role="alert" className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: 0 }}>
+        <p role="alert" className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: 0 }}>
           {tr('communityPostError')}
         </p>
       )}
@@ -499,7 +499,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
         <button onClick={onCancel} className="font-sans font-semibold rounded-xl" style={{ flex: 1, padding: '10px', fontSize: 13.5, background: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
           {copyCommunity('Cancel', lang)}
         </button>
-          <button onClick={handlePost} disabled={posting || !description.trim()} aria-busy={posting} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', color: description.trim() ? '#F7F2E9' : 'var(--text-muted)', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
+          <button onClick={handlePost} disabled={posting || !description.trim()} aria-busy={posting} className="font-display font-semibold rounded-xl" style={{ flex: 2, padding: '10px', fontSize: 14, background: description.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.1)', color: description.trim() ? 'var(--color-canvas)' : 'var(--text-muted)', border: 'none', cursor: description.trim() ? 'pointer' : 'default' }}>
           {posting ? <span className="flex items-center justify-center gap-2"><Loader2 size={14} className="animate-spin" />{copyCommunity('Posting…', lang)}</span> : tr('communityBoardPost')}
         </button>
       </div>
@@ -529,8 +529,8 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             className="flex items-center gap-3 rounded-xl p-3 text-left w-full"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', cursor: 'pointer' }}
           >
-            <div style={{ width: 40, height: 40, borderRadius: '50%', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 15 }}>{(otherName?.[0] ?? '?').toUpperCase()}</span>
+            <div style={{ width: 40, height: 40, borderRadius: '50%', flexShrink: 0, background: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ color: 'var(--color-canvas)', fontWeight: 700, fontSize: 15 }}>{(otherName?.[0] ?? '?').toUpperCase()}</span>
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="flex items-baseline justify-between gap-2">

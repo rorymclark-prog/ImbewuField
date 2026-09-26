@@ -40,8 +40,8 @@ export default function Onboarding() {
         <div className="text-center mb-6">
           <div className="mb-2 flex justify-center">
             <div className="flex items-center justify-center rounded-lg"
-              style={{ width: 48, height: 48, background: '#1F4D2B', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+              style={{ width: 48, height: 48, background: 'var(--color-forest-800)', boxShadow: '0 4px 16px color-mix(in srgb, var(--color-forest-800) 20%, transparent)' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-canvas)" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 20s4-6 4-11a5 5 0 0 1 10 0c0 5-4 11-4 11"/>
                 <path d="M7 20c-2-2-4-4-4-7a7 7 0 0 1 7-7"/>
               </svg>
@@ -80,7 +80,7 @@ export default function Onboarding() {
         <button onClick={() => completeOnboarding(picked)}
           aria-label={`${tp('start')} — ${tp('welcomeTitle')}`}
           className="w-full py-3 rounded-xl text-base font-display font-semibold transition-all mb-4"
-          style={{ background: '#1F4D2B', color: '#fff', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
+          style={{ background: 'var(--color-forest-800)', color: 'var(--color-canvas)', boxShadow: '0 4px 16px color-mix(in srgb, var(--color-forest-800) 20%, transparent)' }}>
           <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>
         </button>
 
