@@ -44,6 +44,21 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     assert.equal(presentation.content.body, resolved(translation.body, lesson.body, `${prefix}.body`));
     assert.equal(presentation.content.body.split('\n\n').length, lesson.body.split('\n\n').length,
       `${prefix}: keep the source's paragraph breaks`);
+    if (lesson.id === 'food-forest-l1') {
+      const sourceParagraphs = lesson.body.split('\n\n');
+      const shownParagraphs = presentation.content.body.split('\n\n');
+      const translatedParagraphs = new Map([
+        [0, 'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.'],
+        [1, 'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.'],
+        [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
+        [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
+        [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],
+      ]);
+      for (const [index, expected] of translatedParagraphs) assert.equal(shownParagraphs[index], expected);
+      sourceParagraphs.forEach((paragraph, index) => {
+        if (!translatedParagraphs.has(index)) assert.equal(shownParagraphs[index], paragraph, `Food Forest L1 paragraph ${index + 1} stays English`);
+      });
+    }
     assert.equal(translation.keyPoints.length, lesson.keyPoints.length, `${prefix}: key-point count/order`);
     for (const [pointIndex, point] of translation.keyPoints.entries()) {
       assert.equal(presentation.content.keyPoints[pointIndex],
@@ -72,7 +87,6 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
 
   assert.deepEqual(holds, [
     'lessons[0] food-forest-l1.title',
-    'lessons[0] food-forest-l1.body',
     'lessons[0] food-forest-l1.quiz[0].rationale',
     'lessons[0] food-forest-l1.quiz[1].rationale',
     'lessons[0] food-forest-l1.infographicAlt',

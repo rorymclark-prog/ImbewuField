@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '6849c3f2', changes: [
+    'Food Forest L1 pairs five Sesotho draft sentences with the English source.',
+  ], tour: [
+    { title: 'Check the Sesotho Food Forest lesson', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1. Compare the five marked draft paragraphs with the full English source; the species caution, quizzes, slides and narration stay English.' },
+  ] },
   { when: '26 September 2026', sha: 'd3ccaece', changes: [
     'Food Forest L1 and Seeds L1 show short Xitsonga and Tshivenda drafts.',
   ], tour: [
