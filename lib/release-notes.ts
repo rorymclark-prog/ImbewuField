@@ -42,6 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '8580f9dd', changes: [
+    'A Tshivenda concept draft for Vegetables and Staple Crops is prepared for source review.',
+    'It is not in Study; crop names and farming guidance remain in English.',
+  ] },
   { when: '26 September 2026', sha: '7180296e', changes: [
     'Soil Health keeps compost guidance in English for Sesotho review.',
   ], tour: [
