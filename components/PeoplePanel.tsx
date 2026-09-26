@@ -2,14 +2,15 @@
 
 import { MapPin, User } from 'lucide-react';
 import type { Profile } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n-context';
 
-const ROLE_LABEL: Record<string, string> = {
-  farmer: 'Farmer',
-  mentor: 'Mentor',
-  student: 'Student',
-  ngo: 'NGO Staff',
-  funder: 'Funder',
-  admin: 'Admin',
+const ROLE_LABEL_KEYS: Record<string, string> = {
+  farmer: 'mentorRoleFarmer',
+  mentor: 'mentorRoleMentor',
+  student: 'mentorRoleStudent',
+  ngo: 'mentorRoleNgo',
+  funder: 'mentorRoleFunder',
+  admin: 'mentorRoleAdmin',
 };
 
 const ROLE_COLOR: Record<string, string> = {
@@ -31,6 +32,7 @@ interface Props {
 
 /* ── Avatar: photo or coloured-circle initials ─────────────────────────── */
 function Avatar({ person }: { person: Profile }) {
+  const { t } = useLanguage();
   const initial = (person.full_name ?? '?')[0]?.toUpperCase() ?? '?';
   const bg = ROLE_COLOR[person.role] ?? '#5C5040';
 
@@ -38,7 +40,7 @@ function Avatar({ person }: { person: Profile }) {
     return (
       <img data-photo-preview
         src={person.photo_url}
-        alt={person.full_name ?? 'Profile photo'}
+        alt={person.full_name ?? t('mentorProfilePhotoAlt')}
         style={{
           width: 48,
           height: 48,
@@ -74,7 +76,9 @@ function Avatar({ person }: { person: Profile }) {
 
 /* ── Role chip ──────────────────────────────────────────────────────────── */
 function RoleChip({ role }: { role: string }) {
+  const { t } = useLanguage();
   const color = ROLE_COLOR[role] ?? '#5C5040';
+  const label = ROLE_LABEL_KEYS[role] ? t(ROLE_LABEL_KEYS[role]) : role;
   return (
     <span
       style={{
@@ -91,7 +95,7 @@ function RoleChip({ role }: { role: string }) {
         whiteSpace: 'nowrap',
       }}
     >
-      {ROLE_LABEL[role] ?? role}
+      {label}
     </span>
   );
 }
@@ -142,6 +146,7 @@ function PersonCard({
   isCurrentUser: boolean;
   onOpenProfile?: () => void;
 }) {
+  const { t } = useLanguage();
   const bio = person.bio?.trim();
 
   // Only the current user's own card opens anything — render it as a real
@@ -183,7 +188,7 @@ function PersonCard({
               lineHeight: 1.2,
             }}
           >
-            {person.full_name ?? 'Unknown'}
+            {person.full_name ?? t('mentorUnknownName')}
           </span>
           {isCurrentUser && (
             <span
@@ -198,7 +203,7 @@ function PersonCard({
                 letterSpacing: '0.02em',
               }}
             >
-              You
+              {t('mentorYouBadge')}
             </span>
           )}
         </div>
@@ -210,7 +215,7 @@ function PersonCard({
             <MapPin
               size={12}
               style={{ color: 'var(--color-forest-800)', flexShrink: 0 }}
-              aria-label="Visible on map"
+              aria-label={t('mentorVisibleOnMapAria')}
             />
           )}
         </div>
@@ -238,6 +243,7 @@ function PersonCard({
 
 /* ── Main component ─────────────────────────────────────────────────────── */
 export default function PeoplePanel({ people, loading, error = false, currentUserId, onOpenProfile }: Props) {
+  const { t } = useLanguage();
   const currentUser = currentUserId ? people.find((p) => p.id === currentUserId) ?? null : null;
   const otherPeople = people.filter((p) => p.id !== currentUserId);
 
@@ -248,8 +254,8 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(192,83,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <MapPin size={22} style={{ color: '#C0531E' }} />
         </div>
-        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>People unavailable</p>
-        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: 'var(--text-primary)' }}>{t('mentorPeopleUnavailableHeading')}</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>{t('mentorPeopleUnavailableBody')}</p>
       </div>
     );
   }
@@ -292,7 +298,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             fontFamily: 'var(--font-sans)',
           }}
         >
-          No team members found. Invite colleagues to join your organisation.
+          {t('mentorNoTeamMembersFound')}
         </p>
       </div>
     );
@@ -346,7 +352,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
               lineHeight: 1.2,
             }}
           >
-            {currentUser?.full_name ?? 'Your profile'}
+            {currentUser?.full_name ?? t('mentorYourProfileFallback')}
           </div>
           <div
             style={{
@@ -356,7 +362,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
               fontFamily: 'var(--font-sans)',
             }}
           >
-            {currentUser ? ROLE_LABEL[currentUser.role] ?? currentUser.role : 'Tap to view and edit'}
+            {currentUser ? (ROLE_LABEL_KEYS[currentUser.role] ? t(ROLE_LABEL_KEYS[currentUser.role]) : currentUser.role) : t('mentorTapToViewEdit')}
           </div>
         </div>
         <span
@@ -371,7 +377,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             flexShrink: 0,
           }}
         >
-          Edit profile
+          {t('mentorEditProfileButton')}
         </span>
       </button>
 
@@ -394,7 +400,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
             color: 'var(--text-secondary)',
           }}
         >
-          Project team
+          {t('mentorProjectTeamLabel')}
         </span>
         {!loading && (
           <span
@@ -404,7 +410,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
               color: 'var(--text-muted)',
             }}
           >
-            {people.length} {people.length === 1 ? 'member' : 'members'}
+            {people.length} {people.length === 1 ? t('mentorMemberSingular') : t('mentorMemberPlural')}
           </span>
         )}
       </div>
