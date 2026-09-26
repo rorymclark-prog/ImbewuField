@@ -1,6 +1,36 @@
 import type { WizardStep } from '@/lib/design-canvas';
+import type { SpeciesSection, SpeciesUse } from '@/lib/species-palette';
 
 export type DesignStudioTranslate = (key: string) => string;
+
+/** SPECIES_SECTIONS (lib/species-palette.ts) is a closed set — same shape as WizardStep above. */
+export const DESIGN_SPECIES_SECTION_KEYS: Record<SpeciesSection, string> = {
+  'Indigenous fruit': 'designSpeciesSectionIndigenousFruit',
+  'Exotic fruit & nuts': 'designSpeciesSectionExoticFruitNuts',
+  'Large trees': 'designSpeciesSectionLargeTrees',
+  'Medium trees': 'designSpeciesSectionMediumTrees',
+  'Small trees & large shrubs': 'designSpeciesSectionSmallTreesShrubs',
+  Shrubs: 'designSpeciesSectionShrubs',
+  'Groundcovers & herbaceous': 'designSpeciesSectionGroundcovers',
+  Climbers: 'designSpeciesSectionClimbers',
+};
+
+/** SPECIES_USES (lib/species-palette.ts) is a closed set of permaculture functions, not free text. */
+export const DESIGN_SPECIES_USE_KEYS: Record<SpeciesUse, string> = {
+  food: 'designSpeciesUseFood',
+  'nitrogen fixer': 'designSpeciesUseNitrogenFixer',
+  pollinator: 'designSpeciesUsePollinator',
+  habitat: 'designSpeciesUseHabitat',
+  shade: 'designSpeciesUseShade',
+  windbreak: 'designSpeciesUseWindbreak',
+  fodder: 'designSpeciesUseFodder',
+  mulch: 'designSpeciesUseMulch',
+  'living fence': 'designSpeciesUseLivingFence',
+  'erosion control': 'designSpeciesUseErosionControl',
+  medicinal: 'designSpeciesUseMedicinal',
+  timber: 'designSpeciesUseTimber',
+  groundcover: 'designSpeciesUseGroundcover',
+};
 
 const SECTOR_COMPASS_KEYS = [
   'designSectorDirectionNorth',
@@ -265,6 +295,17 @@ export const DESIGN_STUDIO_REST_KEYS = {
   printShareError: 'designPrintShareError',
   printPngError: 'designPrintPngError',
   printPdfError: 'designPrintPdfError',
+  // On-screen sheet-picker names only — never used for the title painted onto the exported
+  // PDF/PNG (see the labelKey comment on PrintLayer in DesignPrint.tsx).
+  printSheetBase: 'designPrintSheetBase',
+  printSheetSector: 'designPrintSheetSector',
+  printSheetZones: 'designPrintSheetZones',
+  printSheetWater: 'designPrintSheetWater',
+  printSheetEarthworks: 'designPrintSheetEarthworks',
+  printSheetPlanting: 'designPrintSheetPlanting',
+  printSheetStructures: 'designPrintSheetStructures',
+  printSheetAll: 'designPrintSheetAll',
+  printSheetImplementation: 'designPrintSheetImplementation',
 
   lessonHeading: 'designLessonHeading',
   lessonClose: 'designLessonClose',
@@ -393,6 +434,8 @@ export const DESIGN_STUDIO_REST_KEYS = {
   glossyAssembleError: 'designGlossyAssembleError',
   glossyRenderIncomplete: 'designGlossyRenderIncomplete',
   glossyReconnecting: 'designGlossyReconnecting',
+
+  speciesSize: 'designSpeciesSize',
 } as const;
 
 export const DESIGN_STUDIO_I18N_KEYS = [
@@ -400,6 +443,8 @@ export const DESIGN_STUDIO_I18N_KEYS = [
   ...Object.values(DESIGN_STEP_GUIDANCE_KEYS),
   ...Object.values(DESIGN_CHROME_KEYS),
   ...Object.values(DESIGN_STUDIO_REST_KEYS),
+  ...Object.values(DESIGN_SPECIES_SECTION_KEYS),
+  ...Object.values(DESIGN_SPECIES_USE_KEYS),
 ] as const;
 
 export function translatedDesignStepLabel(t: DesignStudioTranslate, step: WizardStep): string {
@@ -408,6 +453,14 @@ export function translatedDesignStepLabel(t: DesignStudioTranslate, step: Wizard
 
 export function translatedDesignStepGuidance(t: DesignStudioTranslate, step: WizardStep): string {
   return t(DESIGN_STEP_GUIDANCE_KEYS[step]);
+}
+
+export function translatedSpeciesSection(t: DesignStudioTranslate, section: SpeciesSection): string {
+  return t(DESIGN_SPECIES_SECTION_KEYS[section]);
+}
+
+export function translatedSpeciesUse(t: DesignStudioTranslate, use: SpeciesUse): string {
+  return t(DESIGN_SPECIES_USE_KEYS[use]);
 }
 
 export function formatDesignTranslation(

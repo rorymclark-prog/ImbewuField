@@ -42,6 +42,22 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '491704b2', changes: [
+    'The Xitsonga manual is unavailable while publication is paused.',
+  ] },
+  { when: '26 September 2026', sha: '5933a4ef', changes: [
+    'Produce photos in Records now upload at a smaller size, so they send faster on slow data.',
+    'The old Garden Survey wizard and two unused test pages are gone.',
+  ], tour: [
+    { title: 'Add a produce photo', where: 'Records', href: '/records',
+      detail: 'Add a harvest with a photo; it is made smaller before it uploads.' },
+  ] },
+  { when: '26 September 2026', sha: '0432721e', changes: [
+    'Tshivenda learners can read a marked Small Livestock module description.',
+  ], tour: [
+    { title: 'Check the livestock module card', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked module description with its English source. Lesson titles and guidance remain English.' },
+  ] },
   { when: '26 September 2026', sha: 'c48e3971', changes: [
     'Farm Finance lessons and worksheets now have isiZulu drafts; due dates use your language.',
   ], tour: [

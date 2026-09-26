@@ -4,7 +4,7 @@
 //   npm run dev            (or any running build of the app)
 //   node scripts/build-manual-pdfs.mjs [baseUrl] [lang ...]
 //
-// baseUrl defaults to http://localhost:3000; langs default to all five. Output goes to
+// baseUrl defaults to http://localhost:3000; langs default to the public ones. Output goes to
 // output/manual/permaculture-manual-<lang>.pdf (git-ignored — the PDFs are large and are shared
 // through Drive, not the repo). Rebuild after changing chapter text, figures or cover art.
 //
@@ -16,7 +16,8 @@ import { mkdirSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-const LANGS = ['en', 'zu', 'st', 've', 'ts'];
+// The public languages (lib/manual.ts MANUAL_LANGS; Xitsonga is paused, see #697).
+const LANGS = ['en', 'zu', 'st', 've'];
 const [base = 'http://localhost:3000', ...picked] = process.argv.slice(2);
 const langs = picked.length ? picked : LANGS;
 

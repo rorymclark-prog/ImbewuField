@@ -100,9 +100,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // the DataPanel survey via lib/site-survey.ts — the two stores never meet.
         // /farmer?openSurvey=1 is the same deep link app/home/page.tsx already uses
         // for its "Do the site survey" nudge, so the menu now lands where the score
-        // actually reads. /survey (app/survey/page.tsx) is untouched and now orphaned
-        // from the menu — it may still be bookmarked; merging the two survey stores
-        // is a product decision, not made here.
+        // actually reads. The orphaned /survey wizard was deleted on 2026-09-26.
         { href: '/farmer?openSurvey=1', Icon: LayoutGrid, label: t('navGardenSurvey') },
         // Otherwise unreachable: no tab, no card on /home, no link from /plan
         // or /cropplan pointed here — the 12-month SA planting grid existed
@@ -110,7 +108,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
         // The fact-checked Permaculture Manual (app/manual) in English, isiZulu, Sesotho,
-        // Tshivenḓa and Xitsonga — reading, not a tool, but it is where a farmer looks things up.
+        // and Tshivenḓa — reading, not a tool, but it is where a farmer looks things up.
         { href: '/manual',   Icon: BookOpen,     label: t('navManual') },
       ],
     },

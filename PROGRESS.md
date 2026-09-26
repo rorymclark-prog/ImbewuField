@@ -39,7 +39,7 @@ must provision — not buildable from code alone).
 - **Lima Vision** (`/vision`) — photo → Claude estimates crop + yield + weeks, or weighs a harvest.
 - **Crop Planner** (`/plan`) — crops with bed quantities → projected plants/kg.
 - **Crop Plan** (`/cropplan`) — Day/Week/Month/Season task scheduler.
-- **Garden Survey** (`/survey`) — 5-step wizard → Lima-sized beds → 6-week plan + print.
+- ~~**Garden Survey** (`/survey`)~~ deleted 2026-09-26 (orphaned) — was a 5-step wizard → Lima-sized beds → 6-week plan + print.
 - **Calendar** (`/calendar`) — SA planting calendar, filtered to your crops.
 - **Field Journal** (`/journal`) · **Report** (ReportView, AI, print/share).
 - **Finances** (`/finances`) — Money in/out logging (+ **scan a till slip** OCR);
@@ -67,12 +67,26 @@ must provision — not buildable from code alone).
   `node scripts/build-manual-pdfs.mjs [baseUrl] [lang…]` prints the PDFs to `output/manual/`.
 - **English terms:** the 67 technical words (swale, berm, compost, mulch, food forest …) stay in
   English in zu/st/ve/ts with the language's prefix and a short gloss on first use per chapter;
-  new chapter 12 Glossary in all five languages. Record per language in `glossary-<lang>.md`.
+  new chapter 12 Glossary in all five languages. (Xitsonga stays on disk but is off the public
+  routes since #697 paused it; the PDF script defaults to the four public languages.) Record per language in `glossary-<lang>.md`.
 - **Fix:** the manual routes check `public/` at build time, which made file tracing pack all of
   `public/` into their serverless function (540 MB). `outputFileTracingExcludes` in
   `next.config.mjs` keeps it out.
 - **Still to check before publishing:** sources of 5 images and consent for 4 (listed in
   FIGURES.md); all non-English text is a machine draft for fluent-speaker review.
+
+### 2026-09-26 (swarm wave 7 — last audit leftovers; three unused pages deleted)
+- **Deleted (owner-approved):** the orphaned `/survey` Garden Survey wizard (+ `lib/survey-pdf.ts`),
+  `components/ReportDocView.tsx`, and the unlinked `/design-studio-2` scaffold (+ `components/design-studio-2/`,
+  `lib/design-studio-2-storage.ts`, `lib/preview-export.ts`) with their tests. `lib/design-studio-shell.ts`
+  and `lib/report-doc.ts` stay (still read by live modules/tests). ~4,600 lines removed.
+- **Dead code (#693):** duplicate `app/student/guides/{invoices,sales}` pages removed (`[guide]` serves them);
+  the `'pro'` DesignMode and ~86 always-true `guided ?` ternaries in `DesignPalette.tsx` folded (output unchanged).
+- **Photos + labels (#694):** `MyRecords.tsx` produce photos go through `resizeFileForUpload`; SpeciesPicker
+  section names, size line and use tags go through `t()` (English pending, no isiZulu coined); DesignPrint's
+  on-screen sheet picker uses `labelKey` while the printed title stays English by design (existing test).
+  `FieldTeams.tsx` left English — the whole mentor screen has no i18n yet; full localisation is a separate job.
+- **Tests:** `species-picker-i18n`, `design-print-sheet-labels`; `profile-photo-resize` covers MyRecords.
 
 ### 2026-09-26 (Permaculture Manual — fact-checked edition in five languages; locale clean-up)
 - **What:** Rory's *RVCC Permaculture Gardening Handbook* (UNDP / Government of Lesotho project,

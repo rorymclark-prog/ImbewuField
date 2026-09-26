@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
+import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ve-small-livestock.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 
 test('Reading the Landscape Tshivenda draft stays paired to every exact Study source field', () => {
@@ -78,6 +80,43 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'lessons[3] reading-landscape-l4.keyPoints[2]',
     'lessons[3] reading-landscape-l4.quiz[1].options[1]',
   ], 'uncertain wording stays held until checked by a fluent Tshivenda speaker');
+});
+
+test('Tshivenda Small Livestock shows only the checked module description draft and keeps lesson copy English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'small-livestock');
+  assert.ok(source, 'the canonical Small Livestock module must exist');
+  const draft = TSHIVENDA_SMALL_LIVESTOCK_DRAFT;
+
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
+  assert.equal(draft.sourceMetadata.category, source.category);
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.tshivendaDraft, source.title);
+  assert.equal(draft.description.sourceEnglish, source.description);
+  assert.equal(draft.description.reviewStatus, 'machine-draft');
+  assert.equal(draft.description.tshivendaDraft,
+    'Chickens, ducks and bees sa system components — hu si zwithu zwo humbulwaho nga murahu.');
+  assert.deepEqual(draft.lessons, [], 'back-checked lesson title candidates with terminology mismatches are not wired');
+
+  const card = resolveCourseModulePresentation(source, 've');
+  assert.equal(card.status, 'draft', 'the module description is visibly marked as unreviewed');
+  assert.equal(card.title, source.title, 'the uncertain module title remains English');
+  assert.equal(card.description, draft.description.tshivendaDraft);
+
+  for (const lesson of source.lessons) {
+    const presentation = resolveLearnerLessonPresentation(lesson, 've');
+    assert.equal(presentation.status, 'english-fallback', `${lesson.id} has no approved lesson title draft`);
+    assert.equal(presentation.content.title, lesson.title, `${lesson.id}: title stays English`);
+    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: animal-care and manure guidance stays English`);
+    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: safety key points stay English`);
+    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: quiz and answer choices stay English`);
+  }
+
+  assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} Changed.` }, 've').status,
+    'english-fallback', 'a changed module description withdraws the paired draft');
+  assert.equal(resolveCourseModulePresentation({ ...source, durationMins: source.durationMins + 1 }, 've').status,
+    'english-fallback', 'changed module metadata withdraws the paired draft');
 });
 
 test('Tshivenda Market L2 shows only the checked cost comparison draft and falls back if its source changes', () => {
