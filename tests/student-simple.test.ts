@@ -137,7 +137,13 @@ test('the mark-done toggle and the submission self-check items expose aria-press
 });
 
 test('assignment due dates localise the month abbreviation itself, not just the surrounding wrapper text', () => {
-  assert.match(COURSE_ASSIGNMENTS_SOURCE, /const MONTHS_ZU = \[/);
+  // Was a two-entry MONTHS_EN/MONTHS_ZU table, so isiZulu got real month names and the other nine
+  // app languages (Afrikaans, Sesotho, Xitsonga, ...) silently fell back to English. Now every
+  // language goes through Intl.DateTimeFormat(lang, ...), so this must not regress to a
+  // hard-coded per-language table again.
+  assert.match(COURSE_ASSIGNMENTS_SOURCE, /function monthAbbrev\(monthIndex: number, lang: string\)/);
+  assert.match(COURSE_ASSIGNMENTS_SOURCE, /new Intl\.DateTimeFormat\(lang, \{ month: 'short' \}\)/);
+  assert.doesNotMatch(COURSE_ASSIGNMENTS_SOURCE, /const MONTHS_ZU/, 'a per-language hard-coded month table should not come back');
   assert.match(COURSE_ASSIGNMENTS_SOURCE, /export function formatDue\(due_at: string \| null, today: string, lang: string = 'en'\)/);
   assert.match(STUDENT_SOURCE, /formatDue\(assignment\.due_at, today, lang\)/);
 });
