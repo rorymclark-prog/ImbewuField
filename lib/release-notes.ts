@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '719f440b', changes: [
+    'Sesotho Study shows a marked Bees heading and pollen sentence beside English.',
+    'Bee rules, hive care and both quizzes stay in English for review.',
+    'The bee lesson slides and narration remain in English.',
+  ], tour: [
+    { title: 'Compare the Bees heading', where: 'Study', href: '/student',
+      detail: 'Choose Sesotho, then open Small Livestock lesson 2 to compare the heading and pollen sentence with English.' },
+  ] },
   { when: '26 September 2026', sha: '89d44f5f', changes: [
     'Settings marks languages that are still partly shown in English.',
     'Design Studio buttons and the element list use clear icons instead of emoji.',
