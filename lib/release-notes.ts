@@ -42,9 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '89859bf2', changes: [
+  { when: '26 September 2026', sha: '64c8257c', changes: [
     'The update guide pairs Sesotho and Tshivenda draft controls with English.',
     'Vegetables lesson 3 pairs two Tshivenda drafts with English.',
+    'Sesotho and Tshivenda map and offline Reports recovery show marked drafts beside English.',
   ], tour: [
     { title: 'Check the staple crops lesson', where: 'Study → Vegetables and Staple Crops', href: '/student',
       detail: 'Choose Tshivenda and open lesson 3; only two concept paragraphs are draft text, with the complete English source shown below.' },

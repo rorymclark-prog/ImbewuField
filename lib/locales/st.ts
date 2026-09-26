@@ -23,6 +23,14 @@ const dict: Dict = {
   tabMap: "Mmapa",
   tabFinance: 'Ditjhelete',
   tabAccount: 'Akhaonto',
+  // Farmer recovery copy is an unreviewed machine draft; the screen keeps the English source visible.
+  mapHeldTitle: 'Mmapa o eme nakwana',
+  mapHeldBody: 'Leqephe lena le kwetse ka tshohanyetso makgetlo a mmalwa ka tatellano, kahoo mmapa o emisitswe nakwana hore o kgone ho kgutlela ka hara app. Ditlaleho, dinepe le dibaka tsa hao di ntse di sebetsa ka tlase.',
+  mapHeldLoad: 'Kenya mmapa',
+  reportsOfflineTitle: 'Ditlaleho di hloka marang-rang lekgetlo la pele',
+  reportsOfflineMessage: 'Karolo ena ya app ha e so bolokwe fonong ena, mme ha ho marang-rang hona jwale. E bule hang ha marang-rang a le teng; ka mora moo e tla sebetsa ntle le marang-rang.',
+  reportsOfflineRetry: 'Leka hape',
+  reportsOfflineClose: 'Kwala',
   // Rory's first learner UI slice; keep the page notice until a first-language reviewer checks it.
   studentPortal: 'Setsi sa Thuto',
   studentPortalTitle: 'Sena ke Setsi sa Thuto',

@@ -58,6 +58,8 @@ export default function Home() {
 
 function HomeInner() {
   const { t, lang } = useLanguage();
+  const recoveryDraft = lang === 'st' || lang === 've';
+  const recoveryDraftNotice = `Unreviewed ${lang === 'st' ? 'Sesotho' : 'Tshivenda'} machine draft. English source is shown beside the draft wording.`;
   // Simple / All tools (lib/app-level.ts): only used here to reduce the "+ Add" catalog to
   // its everyday items (lib/add-actions.ts SIMPLE_ADD_ACTION_IDS); the map chrome's own
   // Simple wiring lives in components/Map.tsx.
@@ -113,11 +115,13 @@ function HomeInner() {
       import('@/components/ReportView').then(open, async () => {
         const retry = await appConfirm({
           title: t('reportsOfflineTitle'),
-          message: lang === 'zu'
+          message: recoveryDraft
+            ? `${t('reportsOfflineMessage')}\n\n${recoveryDraftNotice}\n\nEnglish source: ${translate('en', 'reportsOfflineTitle')}\n${translate('en', 'reportsOfflineMessage')}`
+            : lang === 'zu'
             ? `${t('reportsOfflineMessage')}\n${t('reportsOfflineZuluDraftNotice')}\n\nEnglish source: ${translate('en', 'reportsOfflineMessage')}`
             : t('reportsOfflineMessage'),
-          confirmLabel: t('reportsOfflineRetry'),
-          cancelLabel: t('reportsOfflineClose'),
+          confirmLabel: recoveryDraft ? `${t('reportsOfflineRetry')} · ${translate('en', 'reportsOfflineRetry')}` : t('reportsOfflineRetry'),
+          cancelLabel: recoveryDraft ? `${t('reportsOfflineClose')} · ${translate('en', 'reportsOfflineClose')}` : t('reportsOfflineClose'),
         });
         if (retry) attempt();
       });
@@ -662,21 +666,32 @@ function HomeInner() {
               and the first client paint agree. */}
           <div className="flex-1 relative min-w-0">
             {mapHeld ? (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
+              <div className="w-full h-full overflow-y-auto" role="region" aria-label={translate('en', 'mapHeldTitle')} tabIndex={0}
                 style={{ background: 'var(--bg-2)' }}>
-                <AlertTriangle size={22} style={{ color: 'var(--gold)' }} />
-                <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
-                  {t('mapHeldTitle')}
+                <div className="min-h-full flex flex-col items-center justify-center gap-3 px-8 pt-6 pb-28 text-center">
+                  <AlertTriangle size={22} style={{ color: 'var(--gold)' }} />
+                  <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
+                    {t('mapHeldTitle')}
+                  </div>
+                  {recoveryDraft && <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                    {translate('en', 'mapHeldTitle')}
+                  </div>}
+                  {recoveryDraft && <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', maxWidth: 420 }}>
+                    {recoveryDraftNotice}
+                  </div>}
+                  <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 420 }}>
+                    {t('mapHeldBody')}
+                  </div>
+                  {recoveryDraft && <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', maxWidth: 420 }}>
+                    English source: {translate('en', 'mapHeldBody')}
+                  </div>}
+                  <button
+                    onClick={() => exitPageCrashGuard(mapGuard.key)}
+                    className="mt-1 px-4 py-2.5 rounded-full font-display font-semibold active:scale-95 transition-all"
+                    style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#fff', fontSize: 14, border: 'none', cursor: 'pointer' }}>
+                    {t('mapHeldLoad')}{recoveryDraft && <> · {translate('en', 'mapHeldLoad')}</>}
+                  </button>
                 </div>
-                <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 420 }}>
-                  {t('mapHeldBody')}
-                </div>
-                <button
-                  onClick={() => exitPageCrashGuard(mapGuard.key)}
-                  className="mt-1 px-4 py-2.5 rounded-full font-display font-semibold active:scale-95 transition-all"
-                  style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#fff', fontSize: 14, border: 'none', cursor: 'pointer' }}>
-                  {t('mapHeldLoad')}
-                </button>
               </div>
             ) : (
             <PermaMap
