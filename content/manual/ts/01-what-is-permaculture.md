@@ -8,7 +8,7 @@ Rito leri ri vumbiwile exikarhi ka malembe ya 1970 hi vanhu vambirhi va le Austr
 
 ## Tinhlamuselo
 
-Bill Mollison u hlamusele permaculture tanihi "ku dizayina hi vuxiyaxiya na ku hlayisa ntumbuluko lowu hanyaka swin'we (ecosystems) lowu humelerisaka swakudya, lowu nga na ku hambana-hambana, ku tiya na matimba yo pfuka ku fana na ntumbuluko lowu nga khumbiwangiki hi munhu".
+Bill Mollison u hlamusele permaculture tanihi "ku dizayina hi vuxiyaxiya na ku hlayisa **ti-ecosystem** (ntumbuluko lowu hanyaka swin'we) leti humelerisaka swakudya, leti nga na ku hambana-hambana, ku tiya na matimba yo pfuka ku fana na ti-ecosystem ta ntumbuluko leti nga khumbiwangiki hi munhu".
 
 Hi marito yo olova: permaculture i ndlela yo hlela na ku fambisa purasi kumbe ntanga leswaku ri tirha ku fana na ntumbuluko. Khwati kumbe nhova ya byanyi (grassland) ya ntumbuluko swi na mixaka yo tala ya swimilana na swiharhi (**ku hambana-hambana**), swi ya emahlweni lembe na lembe (**ku tiya**), naswona swi tlhela swi pfuka endzhaku ka dyandza, ndzilo kumbe ku onhiwa (**matimba yo pfuka**). Purasi ra permaculture ri kongomisa ku endla leswi fanaka, ri ri karhi ri tlhela ri phamela vanhu swakudya.
 
@@ -18,8 +18,8 @@ Permaculture yi hlanganisa misava, mati, swimilana, swiharhi na vanhu leswaku xi
 
 Mindyangu yo tala eDzongeni ra Afrika yi titshege hi misava ku kuma swakudya na mali. Hi vona nakambe vanhu lava nga ekhombyeni ngopfu ra swiphiqo swimbirhi leswikulu.
 
-- **Ku cinca ka maxelo (climate change).** Varimi se va vona masiku yo hisa ngopfu, mpfula leyi swi tikaka ku vona leswaku yi ta na rini, madyandza yo leha, na swidzedze swo tala swa matimba na tindhambi. Vo tala va varimi va mapurasi lamatsongo va titshege hi mpfula ku ri na ku cheleta, hikwalaho ku cinca loku ku va vavisa ngopfu.
-- **Ku onhaka ka misava.** Loko misava yi tshikiwa yi nga funengetiwanga, yi risiwa ku tlula mpimo, kumbe yi rimiwa eka tindhawu to rhelela ngopfu, mpfula ya yi kukula naswona moya wu yi rhwala wu famba na yona. Vulavisisi byi kombisa leswaku ku kukuriwa ka misava ku khumbe ku tlula 70% wa misava ya Afrika Dzonga. Lesotho, laha buku leyi yi tsariweke kona ro sungula, na yona yi na ku kukuriwa ka misava lokukulu na migero leyi kukuriweke hi mati (gullies).
+- **Climate change (ku cinca ka maxelo).** Varimi se va vona masiku yo hisa ngopfu, mpfula leyi swi tikaka ku vona leswaku yi ta na rini, madyandza yo leha, na swidzedze swo tala swa matimba na tindhambi. Vo tala va varimi va mapurasi lamatsongo va titshege hi mpfula ku ri na ku cheleta, hikwalaho ku cinca loku ku va vavisa ngopfu.
+- **Ku onhaka ka misava.** Loko misava yi tshikiwa yi nga funengetiwanga, yi risiwa ku tlula mpimo, kumbe yi rimiwa eka tindhawu to rhelela ngopfu, mpfula ya yi kukula naswona moya wu yi rhwala wu famba na yona. Vulavisisi byi kombisa leswaku **erosion** (ku kukuriwa ka misava) yi khumbe ku tlula 70% wa misava ya Afrika Dzonga. Lesotho, laha buku leyi yi tsariweke kona ro sungula, na yona yi na erosion leyikulu na migero leyi kukuriweke hi mati (gullies).
 
 Afrika Dzonga nakambe i tiko ro oma. Hi mpimanyeto ri kuma mpfula ya kwalomu ka 450 mm hi lembe, kwalomu ka hafu ya mpimanyeto wa misava hinkwayo wa kwalomu ka 860 mm. Thonsi rin'wana na rin'wana ra nkoka.
 
@@ -33,7 +33,7 @@ Permaculture yi tlula ku va tindlela to rima ntsena. Loko hi tirha kusuhi na mis
 
 Muti na purasi ra permaculture swi nga nyika swakudya lembe hinkwaro, tithanki na swidziva leswi teleke hi mati ya mpfula, na tintanga leti teleke hi vutomi. Swi pfuna ndyangu ku suka eka ku hanya hi ku tikeriwa ku ya eka ku hanya kahle, na ku avelana leswi na van'wana.
 
-- **Rihanyu na swakudya swo antswa.** U nga byala mixaka yo tala ya matsavu lamantshwa, mihandzu, swimilana swa muxaka wa tinyawa (legumes) na swibyariwa swa timbewu (grains) handle ka swidlayi swa swivungu na swidlayi swa nhova swa khemikhali leswi vavisaka. Swakudya swo hambana-hambana i swakudya swa rihanyu.
+- **Rihanyu na swakudya swo antswa.** U nga byala mixaka yo tala ya matsavu lamantshwa, mihandzu, **ti-legume** (swimilana swa muxaka wa tinyawa) na swibyariwa swa timbewu (grains) handle ka swidlayi swa swivungu na swidlayi swa nhova swa khemikhali leswi vavisaka. Swakudya swo hambana-hambana i swakudya swa rihanyu.
 - **Mianakanyo leyintshwa na ku khutazeka.** Permaculture yi ku pfuna ku vona vuxaka exikarhi ka swiphemu swo hambana swa purasi ra wena, na ndlela yo swi tirhisa leswaku swi ku pfuna.
 - **Ntirho lowu nga na xikongomelo.** Vanhu vo tala va kuma xikongomelo xa ntiyiso eka ku hlayisa misava.
 - **Mali na ku hlayisa mali.** Ku byala swilo swo tala swo hambana swi hunguta khombo eka mali leyi ndyangu wu yi kumaka: loko xibyariwa xin'we xi tsandzeka, swin'wana swa ha humelela. U tirhisa mali yitsongo eka swilo leswi u swi xavaka ku rima, naswona u nga xavisa leswi tlulaka kumbe u engetela nkoka eka swona (xikombiso, hi ku swi omisa, ku swi hlayisa etibodlheleni kumbe ku swi endla swilo swin'wana).
@@ -54,7 +54,7 @@ Ku hlayisa vanhu swi vula ku fikelela swilaveko swa vanhu — swakudya, mati, vu
 
 Misava yi na rifuwo leri nga na mpimo. Ku avelana hi ku ringana (hakanyingi ku vitaniwa **fair share**) swi vula ku veka mpimo eka leswi hi swi tirhisaka, na ku avelana leswi tlulaka — swakudya, mbewu, nkarhi, vutshila na mali — leswaku swi tlhelela eka ku hlayisa Misava na vanhu.
 
-Loko hi hlayisa Misava na vanhu va yona naswona hi avelana hi ku ringana, hi tlhela hi sungula ku lulamisa swiphiqo leswikulu ku fana na vusweti, ndlala na ku kukuriwa ka misava. Tinxaka hinkwato ta vutomi ti na mfanelo yo hanya, hikwalaho tanihi vadizayini va permaculture hi tirha ku sirhelela na ku seketela vutomi hi tinxaka ta byona hinkwato.
+Loko hi hlayisa Misava na vanhu va yona naswona hi avelana hi ku ringana, hi tlhela hi sungula ku lulamisa swiphiqo leswikulu ku fana na vusweti, ndlala na erosion. Tinxaka hinkwato ta vutomi ti na mfanelo yo hanya, hikwalaho tanihi vadizayini va permaculture hi tirha ku sirhelela na ku seketela vutomi hi tinxaka ta byona hinkwato.
 
 > **Xitsundzuxo:** "Ntumbuluko a wu endli nchumu handle ka xikongomelo." — Aristotle, mutivi wa filosofi wa le Grikiya. Eka permaculture hi lavisisa xikongomelo na ntirho wa xiphemu xin'wana na xin'wana xa maendlelo.
 
@@ -87,15 +87,15 @@ Eka permaculture hi khoma no hlayisa matimba na rifuwo loko swi tele, leswaku hi
 
 Swikombiso:
 
-- Hi nguva yo kula, loko dyambu ri ri na matimba ngopfu, hi khoma matimba ya dyambu hi ku ma hundzula swibyariwa — matsavu, mihandzu, timanga, tihunyi, swakudya swa swifuwo na nyama.
-- Loko mpfula yi na, khoma u hlayisa mati etithankini, eswidziveni na le misaveni hi yoxe (xikombiso hi xifunengeto (mulch) na swisele (swales)).
+- Hi nguva yo kula, loko dyambu ri ri na matimba ngopfu, hi khoma matimba ya dyambu hi ku ma hundzula swibyariwa — matsavu, mihandzu, timanga, tihunyi, **fodder** (swakudya swa swifuwo) na nyama.
+- Loko mpfula yi na, khoma u hlayisa mati etithankini, eswidziveni na le misaveni hi yoxe (xikombiso hi **mulch**, xifunengeto xa byanyi byo oma kumbe matluka, na **ti-swale**, migodi leyi khomaka mpfula).
 - Omisa, hlayisa etibodlheleni kumbe u hlayisa hi tindlela tin'wana matsavu na mihandzu leyi tlulaka, ya nguva leyi swakudya leswintshwa swi pfumalekaka.
 
 ### 3. Kuma vuyelo
 
 Xivuriso: *A wu nge tirhi u ri na khwiri leri nga riki na nchumu.*
 
-Tiyisisa leswaku nkarhi na ntirho wa wena swi vuyerisa. **Vuyelo** (yield) i nchumu wun'wana na wun'wana lowu pfunaka lowu maendlelo ya wena ma wu humelerisaka, leswi u swi tshovelaka kumbe u swi kumaka: swakudya, swakudya swa swifuwo, tihunyi, vutumbelo, ku kufumela, mirhi ya vutshunguri, mbewu kumbe mali.
+Tiyisisa leswaku nkarhi na ntirho wa wena swi vuyerisa. **Vuyelo** (yield) i nchumu wun'wana na wun'wana lowu pfunaka lowu maendlelo ya wena ma wu humelerisaka, leswi u swi tshovelaka kumbe u swi kumaka: swakudya, fodder, tihunyi, vutumbelo, ku kufumela, mirhi ya vutshunguri, mbewu kumbe mali.
 
 Vuyelo byin'wana byi teka malembe. Murhi wa mihandzu wu nga teka malembe yo hlayanyana wu nga si veka mihandzu. Hikwalaho hlela nhlanganelo wa vuyelo lebyi hatlisaka na lebyi nonokaka, leswaku minkarhi hinkwayo u va na swo kombisa eka ntirho na rifuwo leri u ri vekaka sweswi. Hi dizayina hi vomu leswaku ku va na leswi tlulaka — swo ringanela ndyangu wa hina, swimilana na swiharhi, swo avelana na vaakelani na swo xavisa.
 
@@ -103,13 +103,13 @@ Swikombiso:
 
 - Timbewu leti mileke (sprouts) ta mung beans, lentils kumbe timbewu tin'wana ti lunghekela ku dyiwa endzhaku ka masiku ya kwalomu ka 2 ku ya eka 5, naswona ti na swakudya leswi akaka miri.
 - Mirhi ya mihandzu i vuvekisi bya nkarhi wo leha, kambe yi nyika ntshovelo malembe yo tala loko yi sungurile ku veka mihandzu.
-- Byala swimilana leswi nga na swiluva leswi nyikaka swakudya swa swiluva (nectar na pollen) eka tinyoxi na swivungwana swin'wana leswi pfunaka. Xikombiso, swimilana swo tala swa aloe swa ndhavuko swi va na swiluva hi vuxika, loko swimilana swin'wana swi nga ri na swona. Kutani tinyoxi ti pfuna swibyariwa swa wena ku veka mihandzu (pollinate), naswona ti nga nyika vulombe.
+- Byala swimilana leswi nga na swiluva leswi nyikaka swakudya swa swiluva (nectar na pollen) eka tinyoxi na swivungwana swin'wana leswi pfunaka. Xikombiso, swimilana swo tala swa aloe swa **indigenous** (swa ndhavuko) swi va na swiluva hi vuxika, loko swimilana swin'wana swi nga ri na swona. Kutani tinyoxi ti pfuna swibyariwa swa wena ku veka mihandzu (pollinate), naswona ti nga nyika vulombe.
 
 > **Vuhlayiseki:** Timbewu leti mileke ti kula eka swiyimo swo kufumela ni ku tsakama leswi tlhelaka swi tsakeriwa hi switsongwatsongwana leswi vangaka mavabyi. Tirhisa mati yo basa, hlantswa timbewu leti mileke kambirhi hi siku kumbe ku tlula, naswona u lahla leti nun'hwelaka ku biha kumbe leti tsetselelaka (slimy). Sweka timbewu leti mileke u nga si ti nyika vana lavatsongo, vavasati lava tikeke, vanhu lavakulu kumbe munhu wihi na wihi loyi a vabyaka.
 
 ### 4. Tilawule u tlhela u amukela leswi ntumbuluko wu ku byelaka swona
 
-Maendlelo ya ntumbuluko ma tilawula leswaku ma tshama ma ringanile. Ekhwatini kumbe enhoveni ya byanyi leyi hanyeke kahle, a ku na ximilana kumbe xiharhi xin'we lexi fumaka nkarhi wo leha. Kambe vanhu hakanyingi va teka swo tala ku tlula leswi va swi lavaka. Ku tirhisa ka hina rifuwo ku tlula mpimo i xivangelo lexikulu xa ku cinca ka maxelo na ku lahleka ka swimilana na swiharhi.
+Maendlelo ya ntumbuluko ma tilawula leswaku ma tshama ma ringanile. Ekhwatini kumbe enhoveni ya byanyi leyi hanyeke kahle, a ku na ximilana kumbe xiharhi xin'we lexi fumaka nkarhi wo leha. Kambe vanhu hakanyingi va teka swo tala ku tlula leswi va swi lavaka. Ku tirhisa ka hina rifuwo ku tlula mpimo i xivangelo lexikulu xa climate change na ku lahleka ka swimilana na swiharhi.
 
 Nsinya lowu wa nawu wu hi kombela ku **veka mimpimo** — ku hanya hi ndlela yo olova hi nga teki swo tala ku tlula leswi hi swi lavaka — leswaku vana va hina va ta kuma ndzhaka ya misava leyi hanyeke kahle.
 
@@ -126,19 +126,19 @@ Swikombiso:
 
 ### 5. Tirhisa u tlhela u teka swi ri swa nkoka swilo leswi tipfuxetaka
 
-Languta eka ntumbuluko ku kuma swilo leswi hi swi lavaka. Swimilana, swiharhi, ku voninga ka dyambu, moya na mpfula swa tipfuxeta. Rifuwo leri nga tipfuxetiki, ku fana na petirolo, dizili na monyolo wa khemikhali, ri tirhisiwa kan'we kutani ri hela, ri durha mali, naswona ku hisa mafurha ya le hansi ka misava (fossil fuels) swi engetela ku cinca ka maxelo.
+Languta eka ntumbuluko ku kuma swilo leswi hi swi lavaka. Swimilana, swiharhi, ku voninga ka dyambu, moya na mpfula swa tipfuxeta. Rifuwo leri nga tipfuxetiki, ku fana na petirolo, dizili na monyolo wa khemikhali, ri tirhisiwa kan'we kutani ri hela, ri durha mali, naswona ku hisa mafurha ya le hansi ka misava (fossil fuels) swi engetela climate change.
 
-Swimilana na swiharhi swi nga hi nyika mafurha na monyolo, swi tlhela swi pfuna ku lawula swivungwana, ku lawula nhova, ku lawula ndzilo, ku sivela ku kukuriwa ka misava, ku tlherisela swakudya swa swimilana (nutrients) emisaveni na ku olovisa misava. Swi nga siva tithirakitara, michini yo tsema swihlahla na michini yo tsema byanyi leyi hisaka mafurha.
+Swimilana na swiharhi swi nga hi nyika mafurha na monyolo, swi tlhela swi pfuna ku lawula swivungwana, ku lawula nhova, ku lawula ndzilo, ku sivela erosion, ku tlherisela swakudya swa swimilana (nutrients) emisaveni na ku olovisa misava. Swi nga siva tithirakitara, michini yo tsema swihlahla na michini yo tsema byanyi leyi hisaka mafurha.
 
 Swi teka nkarhi ku aka rifuwo leri hanyaka, hikwalaho ri teke tanihi vuvekisi bya nkarhi wo leha. Hi ku famba ka nkarhi, ri ta tipfuxeta naswona ri ta tihlayisa.
 
 Swikombiso:
 
-- **Swiharhi tanihi tithirakitara (animal tractors).** Tihuku na tinguluve hi ntumbuluko wa tona ti handza na ku cela ti lava swivungu, timitsu na swivungwana. Ti hlayise masiku ma nga ri mangani endhawini leyi biyeriweke hi lufenisi leyi teleke hi nhova, kutani ti ta basisa nhova ti tlhela ti nonisa misava, yi lunghekela ku byariwa.
+- **Ti-animal tractor (swiharhi leswi tirhaka tanihi tithirakitara).** Tihuku na tinguluve hi ntumbuluko wa tona ti handza na ku cela ti lava swivungu, timitsu na swivungwana. Ti hlayise masiku ma nga ri mangani endhawini leyi biyeriweke hi lufenisi leyi teleke hi nhova, kutani ti ta basisa nhova ti tlhela ti nonisa misava, yi lunghekela ku byariwa.
 - **Monyolo lowu humaka eka swiharhi.** Swiharhi swi dya swimilana kutani swi tlherisela swakudya swa swimilana emisaveni hi vulongo bya swona. Vulongo na manyoro ya mati (manure tea) swi phamela swimilana swa ntanga.
-- **Malufenisi lama hanyaka na swisivela-moya.** Malufenisi ya swimilana leswi pfunaka, leswi nga hangalakiki, ma nyika vutumbelo, swakudya swa swifuwo na tihunyi handle ka mafurha kumbe waya.
+- **Malufenisi lama hanyaka na ti-windbreak (tilayini ta mirhi leti sivelaka moya).** Malufenisi ya swimilana leswi pfunaka, leswi nga riki **invasive species** (swimilana leswi hangalakaka ku tlula mpimo), ma nyika vutumbelo, fodder na tihunyi handle ka mafurha kumbe waya.
 
-> **Vuhlayiseki:** Vulongo lebyintshwa bya swifuwo byi nga va na switsongwatsongwana leswi vangaka mavabyi lamakulu. Byi endle monyolo wa khompositi (compost) kahle u nga si byi tirhisa eka swibyariwa leswi dyiwaka swi nga swekiwanga, ku fana na letisi, xipinichi na mirhi yo nun'hwela. Loko u tirhisa vulongo lebyi nga bolangiki, byi cele u byi nghenisa emisaveni, kutani u rindza tin'hweti ta 4 (masiku ya 120) kumbe ku tlula u nga si tshovela swibyariwa leswi khumbaka misava. Hlamba mavoko endzhaku ko khoma vulongo. Hlayisa tinguluve endzeni ka lufenisi leyi tiyeke leswaku ti nga balekeli eka swibyariwa swa vaakelani.
+> **Vuhlayiseki:** Vulongo lebyintshwa bya swifuwo byi nga va na switsongwatsongwana leswi vangaka mavabyi lamakulu. Byi endle **compost** (thyaka ra swimilana na swiharhi leri boleke) kahle u nga si byi tirhisa eka swibyariwa leswi dyiwaka swi nga swekiwanga, ku fana na letisi, xipinichi na mirhi yo nun'hwela. Loko u tirhisa vulongo lebyi nga bolangiki, byi cele u byi nghenisa emisaveni, kutani u rindza tin'hweti ta 4 (masiku ya 120) kumbe ku tlula u nga si tshovela swibyariwa leswi khumbaka misava. Hlamba mavoko endzhaku ko khoma vulongo. Hlayisa tinguluve endzeni ka lufenisi leyi tiyeke leswaku ti nga balekeli eka swibyariwa swa vaakelani.
 
 ### 6. U nga humesi thyaka
 
@@ -150,23 +150,23 @@ Nawu lowunene i lowu: **anakanya nakambe, hunguta, lunghisa, tirhisa nakambe, tl
 
 Swikombiso:
 
-- **Masalela ya swakudya ya le khixini.** Matlalo ya matsavu na mihandzu na masalela ya matsavu i swakudya leswinene swa swivungu swa misava, naswona i xiphemu xa nkoka xa "rihlaza" (lexi nga na naytirojini yo tala) enhulwini wa khompositi.
-- **Byanyi lebyi tsemiweke.** Byi tirhise tanihi xifunengeto eku rhendzeleni ka swimilana leswintshwa leswaku misava yi tshama yi titimela ni ku tsakama, ku sivela nhova na ku engetela swakudya swa swimilana hi ku nonoka loko byi bola. Byi hangalasa hi swiyenge leswi ondzeke, kumbe u byi tshika byi oma ku sungula, hikuva xiyenge xo tota xa byanyi lebyintshwa xi namarhelana kutani xi hisa. U nga tirhisi byanyi lebyi tsemiweke emalawini lama fafazeriweke hi swidlayi swa nhova.
-- **Mati lama tirhisiweke (greywater).** Ematshan'weni yo cukumeta mati ya ku hlantswa na ya ku hlamba, ma tirhise ku cheleta mirhi ya mihandzu na swimilana swo saseka. Tirhisa tisipa na mapowuda yo hlantswa lama olovaka, lama bolaka, naswona lama nga riki na munyu wo tala.
+- **Masalela ya swakudya ya le khixini.** Matlalo ya matsavu na mihandzu na masalela ya matsavu i swakudya leswinene swa swivungu swa misava, naswona i xiphemu xa nkoka xa "rihlaza" (lexi nga na naytirojini yo tala) enhulwini wa compost.
+- **Byanyi lebyi tsemiweke.** Byi tirhise tanihi mulch eku rhendzeleni ka swimilana leswintshwa leswaku misava yi tshama yi titimela ni ku tsakama, ku sivela nhova na ku engetela swakudya swa swimilana hi ku nonoka loko byi bola. Byi hangalasa hi swiyenge leswi ondzeke, kumbe u byi tshika byi oma ku sungula, hikuva xiyenge xo tota xa byanyi lebyintshwa xi namarhelana kutani xi hisa. U nga tirhisi byanyi lebyi tsemiweke emalawini lama fafazeriweke hi swidlayi swa nhova.
+- **Greywater (mati lama tirhisiweke ku hlamba).** Ematshan'weni yo cukumeta mati ya ku hlantswa na ya ku hlamba, ma tirhise ku cheleta mirhi ya mihandzu na swimilana swo saseka. Tirhisa tisipa na mapowuda yo hlantswa lama olovaka, lama bolaka, naswona lama nga riki na munyu wo tala.
 
-> **Vuhlayiseki:** Mati lama tirhisiweke ma nga va na switsongwatsongwana. Tirhisa mati ya bafu, ya xawara na ya xibya xo hlamba mavoko ematshan'weni ya mati ya le khixini, lama nga na mafurha naswona ma teleke hi switsongwatsongwana. U nga tshuki u tirhisa mati yo hlantswa manapi. Chela mati lama tirhisiweke emisaveni kumbe exifunengetweni eku rhendzeleni ka mirhi, ku nga ri ematlukeni, naswona u nga tshuki u ma chela eka matsavu lama dyiwaka ma nga swekiwanga, ku fana na letisi na xipinichi. U nga ma tshiki ma yima eswidzivanini, naswona u nga ma tirhisi loko munhu un'wana endyangwini a vabya khwiri. Cheleta hi mati yo basa nkarhi na nkarhi ku hlantswa munyu.
+> **Vuhlayiseki:** Greywater yi nga va na switsongwatsongwana. Tirhisa mati ya bafu, ya xawara na ya xibya xo hlamba mavoko ematshan'weni ya mati ya le khixini, lama nga na mafurha naswona ma teleke hi switsongwatsongwana. U nga tshuki u tirhisa mati yo hlantswa manapi. Chela greywater emisaveni kumbe eka mulch eku rhendzeleni ka mirhi, ku nga ri ematlukeni, naswona u nga tshuki u yi chela eka matsavu lama dyiwaka ma nga swekiwanga, ku fana na letisi na xipinichi. U nga yi tshiki yi yima eswidzivanini, naswona u nga yi tirhisi loko munhu un'wana endyangwini a vabya khwiri. Cheleta hi mati yo basa nkarhi na nkarhi ku hlantswa munyu.
 
 ### 7. Dizayina ku sukela eka mavumbeko lamakulu ku ya eka vuxokoxoko
 
 Ntumbuluko wu tele hi mavumbeko (patterns) — ku avana ka nambu kumbe ka marhavi ya murhi, xirhendzevutana (spiral) lexi vonakaka exikhwatsini xa hunyi (snail), ndlela leyi mati minkarhi hinkwayo ma khulukelaka ehansi ha yona. Eka permaculture hi ringeta ku kuma xivumbeko lexinene ngopfu xa ndhawu ya hina ku sungula, kutani hi ta hetisisa vuxokoxoko endzhaku.
 
-Sungula hi xifaniso lexikulu: xivumbeko xa misava (ku rhelela na tikhanthura ta yona), laha mati ma humaka kona na laha ma yaka kona (**ndhawu yo hlengeleta mati**, catchment), na maxelo. Dirowa xivumbeko lexikulu xa dizayini ya wena hi ku ya hi swilo leswi. Kutani u kunguhata vuxokoxoko, ku fana na swibyariwa leswi yaka eka mubhedhi wihi. Bill Mollison a a vona xivumbeko xi ri xa nkoka swinene lerova a xi nyike ndzima hinkwayo ebukwini ya yena *Permaculture: A Designers' Manual* (1988).
+Sungula hi xifaniso lexikulu: xivumbeko xa misava (ku rhelela na ti-contour ta yona), laha mati ma humaka kona na laha ma yaka kona (**catchment**, ndhawu yo hlengeleta mati), na maxelo. Dirowa xivumbeko lexikulu xa dizayini ya wena hi ku ya hi swilo leswi. Kutani u kunguhata vuxokoxoko, ku fana na swibyariwa leswi yaka eka mubhedhi wihi. Bill Mollison a a vona xivumbeko xi ri xa nkoka swinene lerova a xi nyike ndzima hinkwayo ebukwini ya yena *Permaculture: A Designers' Manual* (1988).
 
 U nga tlhela u lomba mavumbeko ya ntumbuluko hi ku kongoma: tindlela leti govekaka hi ku olova ku fana na nambu, kumbe mibhedhi ya ntanga leyi vumbiweke ku fana na xirhendzevutana (spiral) kumbe keyhole. Languta swivumbeko leswi ku rhendzeleke leswaku u kuma mianakanyo.
 
 Swikombiso:
 
-- Tirhisa **tikhanthura** ta misava ya wena (tilayini leti tindhawu hinkwato ta tona ti nga eka ku leha loku fanaka) ku aka mintirho ya misava, ku fana na **xisele (swale)** — mugero lowu ceriweke hi ku landza khanthura ku khoma mati lama khulukaka ni ku ma nghenisa emisaveni. Khanthura i xivumbeko; xisele i vuxokoxoko.
+- Tirhisa **ti-contour** ta misava ya wena (tilayini leti tindhawu hinkwato ta tona ti nga eka ku leha loku fanaka) ku aka mintirho ya misava, ku fana na **swale** — mugero lowu ceriweke hi ku landza contour ku khoma **runoff** (mati ya mpfula lama khulukaka ehenhla ka misava) ni ku yi nghenisa emisaveni. Contour i xivumbeko; swale i vuxokoxoko.
 - Landzelela ndlela ya dyambu lembe hinkwaro. EDzongeni ra Afrika dyambu ri le n'walungu, naswona ri le hansi hi vuxika. Veka swibyariwa, mirhi na miako laha swi nga ta kuma dyambu leri swi ri lavaka.
 - Xiya swirhendzevutana leswi ku rhendzeleke, ku fana na minguva na timpfula. Xiya ndlela leyi swi khumbaka swimilana na swiharhi ha yona, kutani u hlela ku byala na ku hlayisa swiharhi hi ku ya hi swona.
 
@@ -183,8 +183,8 @@ Swi tano na hi vanhu. Vaaki va tiya loko un'wana na un'wana a teka xiave. Vana n
 Swikombiso:
 
 - Endla tindhawu leti hlayisekeke laha vana na vanhu lavakulu va nga pfunaka ni ku dyondza entangeni.
-- Hlanganisa mirhi, swibyariwa na swiharhi (**ku rima mirhi, swibyariwa na swifuwo swin'we**, agroforestry) leswaku xin'wana na xin'wana xi nyika swin'wana leswi xi swi humelerisaka na ntirho wa xona. Xikombiso, mirhi yi nyika ndzhuti na swakudya swa swifuwo, swiharhi swi nyika vulongo, naswona swibyariwa swi nyika swakudya na masalela ya swibyariwa eka swiharhi.
-- Endla **mintlawa ya swimilana** (guilds) — mintlawa ya swimilana leswi kulaka kahle swin'we naswona swi pfunanaka eku lawuleni ka swivungu, eku noniseni ka misava, hi ndzhuti kumbe hi ku seketelana.
+- Hlanganisa mirhi, swibyariwa na swiharhi (**ku rima mirhi, swibyariwa na swifuwo swin'we**, agroforestry) leswaku xin'wana na xin'wana xi nyika swin'wana leswi xi swi humelerisaka na ntirho wa xona. Xikombiso, mirhi yi nyika ndzhuti na fodder, swiharhi swi nyika vulongo, naswona swibyariwa swi nyika swakudya na masalela ya swibyariwa eka swiharhi.
+- Endla **ti-guild** (mintlawa ya swimilana) — mintlawa ya swimilana leswi kulaka kahle swin'we naswona swi pfunanaka eku lawuleni ka swivungu, eku noniseni ka misava, hi ndzhuti kumbe hi ku seketelana.
 
 ### 9. Tirhisa swintlhantlho leswitsongo naswona swo nonoka
 
@@ -199,8 +199,8 @@ Ku teka nkarhi wa wena swi ku pfumelela ku xiyisisa misava, minguva na ndlela le
 Swikombiso:
 
 - Sungula hi ntanga lowutsongo wa le kusuhi na yindlu (kitchen garden), ngopfu-ngopfu loko u nga si tshama u byala matsavu. Engetela misava leyi u yi rimaka lembe na lembe.
-- Tirhisa switirhisiwa na michini leyi fambelanaka na vukulu bya misava ya wena. Thirakitara leyikulu ensin'wini lowutsongo ya durha, yi sindzisa misava naswona swa tika ku yi hundzuluxa. Tihuku leti nga exivaleni lexi fambaka (**xivala lexi fambaka**, chicken tractor) ti tirha hi ku nonoka, kambe ti basisa ti tlhela ti nonisa misava hi ntsengo wa le hansi.
-- Aka misava hi ku nonoka, nguva na nguva, hi khompositi, xifunengeto na swimilana swo funengeta misava (cover crops).
+- Tirhisa switirhisiwa na michini leyi fambelanaka na vukulu bya misava ya wena. Thirakitara leyikulu ensin'wini lowutsongo ya durha, yi sindzisa misava naswona swa tika ku yi hundzuluxa. Tihuku leti nga exivaleni lexi fambaka (**chicken tractor**) ti tirha hi ku nonoka, kambe ti basisa ti tlhela ti nonisa misava hi ntsengo wa le hansi.
+- Aka misava hi ku nonoka, nguva na nguva, hi compost, mulch na swimilana swo funengeta misava (cover crops).
 
 ### 10. Tirhisa u tlhela u teka ku hambana-hambana ku ri ka nkoka
 
@@ -216,24 +216,24 @@ Mapurasi lamakulu lama byalaka xibyariwa xin'we ntsena endhawini leyikulu (**ku 
 
 Swikombiso:
 
-- Byala nhlanganelo wa swibyariwa — matsavu, swibyariwa swa timbewu, swimilana swa muxaka wa tinyawa (tinyawa, tiphiza na timanga), mirhi ya mihandzu na ya timanga — leswi nyikaka swakudya hi minkarhi yo hambana ya lembe. Leswi swi aka vusirhelelo bya swakudya naswona swi ku pfuna ku tiyisela dyandza na maxelo lama cincaka.
+- Byala nhlanganelo wa swibyariwa — matsavu, swibyariwa swa timbewu, ti-legume (tinyawa, tiphiza na timanga), mirhi ya mihandzu na ya timanga — leswi nyikaka swakudya hi minkarhi yo hambana ya lembe. Leswi swi aka vusirhelelo bya swakudya naswona swi ku pfuna ku tiyisela dyandza na maxelo lama cincaka.
 - Hlayisa mbewu ya swimilana swa wena leswinene ni leswi hanyeke kahle nguva na nguva. Hi ku famba ka malembe mbewu ya wena yi tolovela swiyimo swa ndhawu ya ka n'wina, naswona ku hlayisa mbewu eka swimilana swo tala swi yi tshamisa yi hambana-hambana.
 - Fuya swiharhi leswi pfunanaka. Xikombiso, tihuku leti landzelaka tihomu ti handza vulongo bya tona, ti byi hangalasa naswona ti dya swivungu swa tinhongana (fly larvae).
 
-### 11. Tirhisa mindzilakano u tlhela u teka swa le matlhelweni swi ri swa nkoka
+### 11. Tirhisa ti-edge u tlhela u teka swa le matlhelweni swi ri swa nkoka
 
-**Ndzilakano** (edge) i ndhawu laha tindhawu timbirhi to hambana ta ntumbuluko ti hlanganaka kona — xikombiso, laha xidziva xi hlanganaka na misava leyi omeke, kumbe laha khwati ri hlanganaka na nhova ya byanyi. Mindzilakano hakanyingi yi na ntirho wo tala, yi humelerisa swo tala naswona yi na mixaka yo tala ya swimilana na swiharhi ku tlula ndhawu yin'we yi ri yoxe. Yi kuma swipfuno swa matlhelo hamambirhi naswona yi endzeriwa hi swivumbiwa swa matlhelo hamambirhi.
+**Edge** (ndzilakano) i ndhawu laha tindhawu timbirhi to hambana ta ntumbuluko ti hlanganaka kona — xikombiso, laha xidziva xi hlanganaka na misava leyi omeke, kumbe laha khwati ri hlanganaka na nhova ya byanyi. Ti-edge hakanyingi ti na ntirho wo tala, ti humelerisa swo tala naswona ti na mixaka yo tala ya swimilana na swiharhi ku tlula ndhawu yin'we yi ri yoxe. Ti kuma swipfuno swa matlhelo hamambirhi naswona ti endzeriwa hi swivumbiwa swa matlhelo hamambirhi.
 
 > **Xitsundzuxo:** "Laha swilo swi hlanganaka kona hi kona laha swiendlo leswi tsakisaka ngopfu swi humelelaka kona. Hakanyingi leswi i swiphemu swa nkoka ngopfu, leswi hambanaka-hambanaka ngopfu naswona leswi humelerisaka ngopfu eka maendlelo." — David Holmgren
 
-Tindhawu **ta le matlhelweni** — tikhona, malufenisi, marhangu, maribuwa yo rhelela ngopfu na tindhawu leti tsakamaka leti hakanyingi ti honisiwaka — na tona ti nga humelerisa. Hi tirhisa nsinya lowu wa nawu hi ku engetela swimilana leswi pfunaka na tindhawu to tshama ta swiharhi (habitats) ekusuhi na mindzilakano na matlhelo.
+Tindhawu **ta le matlhelweni** — tikhona, malufenisi, marhangu, maribuwa yo rhelela ngopfu na tindhawu leti tsakamaka leti hakanyingi ti honisiwaka — na tona ti nga humelerisa. Hi tirhisa nsinya lowu wa nawu hi ku engetela swimilana leswi pfunaka na **ti-habitat** (tindhawu to tshama ta swiharhi) ekusuhi na ti-edge na matlhelo.
 
 Swikombiso:
 
-- Byala malufenisi lama hanyaka ya swimilana swa ndhavuko ekusuhi na mindzilakano ya masimu ya swibyariwa. Xikombiso, Kei apple (*Dovyalis caffra*) yi endla lufenisi leri nga na mitwa naswona ri vekaka mihandzu, naswona Cape honeysuckle (*Tecoma capensis*) na plumbago (*Plumbago auriculata*) swi koka swinyenyani na swivungwana leswi pfunaka.
-- Endla tindlela leti fambaka exikarhi ka tindhawu timbirhi leti byariweke, ku fana na khwati ra swakudya (food forest: mirhi, swihlahla na swimilana swa swakudya leswi byariweke swin'we ku fana na khwati) na ntanga wa matsavu, leswaku u ta kota ku hlayisa hinkwaswo hi nkarhi wun'we.
+- Byala malufenisi lama hanyaka ya swimilana swa indigenous ekusuhi na ti-edge ta masimu ya swibyariwa. Xikombiso, Kei apple (*Dovyalis caffra*) yi endla lufenisi leri nga na mitwa naswona ri vekaka mihandzu, naswona Cape honeysuckle (*Tecoma capensis*) na plumbago (*Plumbago auriculata*) swi koka swinyenyani na swivungwana leswi pfunaka.
+- Endla tindlela leti fambaka exikarhi ka tindhawu timbirhi leti byariweke, ku fana na **food forest** (mirhi, swihlahla na swimilana swa swakudya leswi byariweke swin'we ku fana na khwati) na ntanga wa matsavu, leswaku u ta kota ku hlayisa hinkwaswo hi nkarhi wun'we.
 - Veka swivala swa swiharhi ekusuhi na tindhawu ta swibyariwa leswaku swimbirhi swi avelana leswi swi swi humelerisaka. Xikombiso, nhova na swimilana leswi onhakeke swa le ntangeni swi nga dyisiwa tihuku, kutani vulongo bya tona byi tlhelela entangeni.
-- Byala swakudya ehenhla ka marhangu na malufenisi (**ku rima hi ku tlakukela ehenhla**, vertical gardening). Tinyawa leti khandziyaka, makhukhamba na swikutsu (gourds) swi hundzula ndzilakano lowu nga tirhisiwiki wu va ndhawu leyi humelerisaka.
+- Byala swakudya ehenhla ka marhangu na malufenisi (**ku rima hi ku tlakukela ehenhla**, vertical gardening). Tinyawa leti khandziyaka, makhukhamba na swikutsu (gourds) swi hundzula edge leyi nga tirhisiwiki yi va ndhawu leyi humelerisaka.
 
 ### 12. Tirhisa ku cinca hi vutlhari u tlhela u angula eka kona
 
@@ -245,7 +245,7 @@ Purasi ra hina ra permaculture na rona ri ta tshama ri cinca, naswona hi fanele 
 
 Swikombiso:
 
-- Khwati ra swakudya ri cinca hi malembe yo tala, ku suka eka mirhi leyitsongo leyintshwa na swimilana leswi kulaka hi ku hatlisa ku ya eka khwati leri kuleke leri nga na ndzhuti. Leswi u swi byalaka na ndlela leyi u ri hlayisaka ha yona swi fanele ku cinca na rona.
+- Food forest yi cinca hi malembe yo tala, ku suka eka mirhi leyitsongo leyintshwa na swimilana leswi kulaka hi ku hatlisa ku ya eka khwati leri kuleke leri nga na ndzhuti. Leswi u swi byalaka na ndlela leyi u yi hlayisaka ha yona swi fanele ku cinca na yona.
 - Swifuwo swa le purasini swi lava ku hlayisiwa hi ndlela yo hambana eka swiyimo swo hambana swa vutomi, ku suka eka vuntshwa ku ya eka vukulu ni ku dyuhala.
 - Minguva, na ku cinca ka mpfula na mahiselo lembe na lembe, swi khumba swibyariwa leswi u nga swi byalaka na leswi swi swi humelerisaka. Hlela ku hlawula ka swibyariwa swa wena hi ku ya hi swona.
 
@@ -255,8 +255,8 @@ Swikombiso:
 
 - Permaculture yi vula "vurimi lebyi tshamaka" (permanent agriculture) na "ndhavuko lowu tshamaka" (permanent culture): ku rima na ku hanya hi tindlela leti tshamaka nkarhi wo leha.
 - Rito leri ri vumbiwile exikarhi ka malembe ya 1970 hi Bill Mollison na David Holmgren; buku ya vona *Permaculture One* yi humile hi 1978.
-- Permaculture yi dizayina mapurasi lama tirhaka ku fana na ntumbuluko lowu hanyaka swin'we: ma hambana-hambana, ma tiyile naswona ma na matimba yo pfuka.
-- Yi pfuna varimi va Dzonga ra Afrika ku tiyisela dyandza, ku cinca ka maxelo na ku kukuriwa ka misava, yi ri karhi yi antswisa swakudya, rihanyu na mali.
+- Permaculture yi dizayina mapurasi lama tirhaka ku fana na ti-ecosystem ta ntumbuluko: ma hambana-hambana, ma tiyile naswona ma na matimba yo pfuka.
+- Yi pfuna varimi va Dzonga ra Afrika ku tiyisela dyandza, climate change na erosion, yi ri karhi yi antswisa swakudya, rihanyu na mali.
 - Mahanyelo manharhu hi lawa: ku hlayisa Misava, ku hlayisa vanhu, na ku avelana hi ku ringana.
-- Misinya ya milawu ya khume-mbirhi ya David Holmgren hi leyi: xiyisisa u tlhela u tirhisana; khoma u tlhela u hlayisa matimba; kuma vuyelo; tilawule u tlhela u amukela leswi ntumbuluko wu ku byelaka swona; tirhisa u tlhela u teka swi ri swa nkoka swilo leswi tipfuxetaka; u nga humesi thyaka; dizayina ku sukela eka mavumbeko lamakulu ku ya eka vuxokoxoko; hlanganisa ku ri na ku hambanisa; tirhisa swintlhantlho leswitsongo naswona swo nonoka; tirhisa u tlhela u teka ku hambana-hambana ku ri ka nkoka; tirhisa mindzilakano u tlhela u teka swa le matlhelweni swi ri swa nkoka; tirhisa ku cinca hi vutlhari u tlhela u angula eka kona.
+- Misinya ya milawu ya khume-mbirhi ya David Holmgren hi leyi: xiyisisa u tlhela u tirhisana; khoma u tlhela u hlayisa matimba; kuma vuyelo; tilawule u tlhela u amukela leswi ntumbuluko wu ku byelaka swona; tirhisa u tlhela u teka swi ri swa nkoka swilo leswi tipfuxetaka; u nga humesi thyaka; dizayina ku sukela eka mavumbeko lamakulu ku ya eka vuxokoxoko; hlanganisa ku ri na ku hambanisa; tirhisa swintlhantlho leswitsongo naswona swo nonoka; tirhisa u tlhela u teka ku hambana-hambana ku ri ka nkoka; tirhisa ti-edge u tlhela u teka swa le matlhelweni swi ri swa nkoka; tirhisa ku cinca hi vutlhari u tlhela u angula eka kona.
 - Sungula hi leswitsongo, xiyisisa hi vuxiyaxiya, kutani u tshika misava yi ku dyondzisa.

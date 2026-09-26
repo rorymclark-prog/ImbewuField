@@ -1,4 +1,4 @@
-# Muti lowu Tshamaka wu Tirha: Zone 0 na Thekinoloji leyi Faneleke
+# Muti lowu Tshamaka wu Tirha: Zone 0 na Appropriate Technology
 
 ## Yindlu i Zone 0
 
@@ -9,15 +9,15 @@ Ehleketa hi yindlu leyi:
 - leyi akiweke hi swilo swa laha kaya, ku fana na vumba bya kusuhi kumbe mapulanka ya xirhapa xa mirhi xa laha kaya, leswi nga siviwaka hi swin'wana loko swi onhakile
 - leyi dizayiniweke hi ku ya hi maxelo ya ndhawu ya wena, leswaku yi kufumela hi vuxika naswona yi titimela hi ximumu, handle ko lava ku yi kufumeta kumbe ku yi titimeta ngopfu
 - leyi tiendlelaka gezi ro basa hi tiphaneli ta dyambu, leswaku mavoni ma tshama ma vonaka loko gezi ra le ntambhwini (grid) ri timeka
-- leyi endlaka gasi yo sweka hi vulongo bya swifuwo exiendlini xa gasi ya vulongo (biogas digester)
+- leyi endlaka gasi yo sweka hi vulongo bya swifuwo eka **biogas digester** (thanki leyi pfalekeke leyi endlaka gasi hi vulongo)
 - leyi hlengeletaka mati ya mpfula etithankini na le swidzivanini, ku ri na mati yo ringanela ku hundza nguva yo oma loko ma tirhisiwa hi vukheta
-- leyi tirhisaka tithekinoloji tin'wana to tala to olova ku hunguta tihakelo, ku khoma matimba ya mahala na ku tiyisa muti leswaku wu tiyisela minkarhi yo tika na ku cinca ka maxelo (climate change)
+- leyi tirhisaka tithekinoloji tin'wana to tala to olova ku hunguta tihakelo, ku khoma matimba ya mahala na ku tiyisa muti leswaku wu tiyisela minkarhi yo tika na **climate change** (ku cinca ka maxelo)
 
 A wu lavi ku endla leswi hinkwaswo hi nkarhi wun'we. Goza rin'wana na rin'wana ritsongo ri ponisa mali naswona ri endla leswaku ndyangu wu hlayiseka ku tlula.
 
-## Thekinoloji leyi faneleke
+## Appropriate technology
 
-Thekinoloji leyi faneleke (appropriate technology) i switirhisiwa na michini swo olova, swa ntsengo wa le hansi naswona leswitsongo, leswi:
+**Appropriate technology** (thekinoloji leyi faneleke) i switirhisiwa na michini swo olova, swa ntsengo wa le hansi naswona leswitsongo, leswi:
 
 - fambelanaka na vanhu lava swi tirhisaka na ndhavuko wa vona
 - nga akiwaka, swi tirhisiwa naswona swi lunghisiwa hi vutshila na swilo swa laha kaya
@@ -32,7 +32,7 @@ EDzongeni ra Afrika dyambu ri le **n'walungu**. Ri le henhla etilweni hi ximumu 
 - Veka tikamara letikulu leti vanhu va tshamaka eka tona na mafasitere yo tala etlhelweni ra n'walungu, leswaku dyambu ro kufumela ra vuxika ri nghena.
 - Aka lwangu leri humelaka ehandle ka rirhangu (eaves) kumbe xiavelo xa swimilana leswi khandziyaka (pergola) ehenhla ka mafasitere ya n'walungu. Swi endla ndzhuti eka dyambu ra ximumu leri nga ehenhla, kambe swi pfumelela dyambu ra vuxika leri nga ehansi ku nghena.
 - Endla leswaku mafasitere ya le tlhelweni ra vupeladyambu ma va matsongo, hikuva dyambu ra nindzhenga hi ximumu ri hisisa yindlu ngopfu.
-- Swilo swo tika swo fana na maribye, switina, vumba na mavala ya khonkhiri swi hlayisa ku hisa ka nhlikanhi kutani swi ku humesa nivusiku. Leswi swi vitaniwa thermal mass (swilo leswi hlayisaka ku hisa).
+- Swilo swo tika swo fana na maribye, switina, vumba na mavala ya khonkhiri swi hlayisa ku hisa ka nhlikanhi kutani swi ku humesa nivusiku. Leswi swi vitaniwa **thermal mass** (swilo leswi hlayisaka ku hisa).
 - Siligi (ceiling) leyi nga na xisirheleri xa ku hisa (insulation) yi hlayisa ku hisa endzeni hi vuxika naswona yi ku sivela ku nghena hi ximumu.
 - Byala mirhi leyi wisaka matluka hi vuxika (deciduous) kumbe swimilana leswi khandziyaka etlhelweni ra n'walungu na ra vupeladyambu, leswaku swi endla ndzhuti hi ximumu kutani swi pfumelela dyambu ku hundza hi vuxika.
 
@@ -40,14 +40,14 @@ EDzongeni ra Afrika dyambu ri le **n'walungu**. Ri le henhla etilweni hi ximumu 
 
 Matimba lama tipfuxetaka (renewable energy), kumbe matimba yo basa, ma huma eka swilo swa ntumbuluko leswi tshamaka swi pfuxetiwa, ku fana na ku vonakala ka dyambu, moya na mati lama khulukaka.
 
-Malahla ma hambanile. I rifuwo leri nga tipfuxetiki: loko ma hisiwile, ma herile, naswona siku rin'wana ma ta hela. Gezi ro tala ra Afrika Dzonga ri ha huma eswitichini swa gezi leswi hisaka malahla. Ku hisa malahla swi thyakisa moya, swi pfuna ku vanga mpfula ya asidi (acid rain) naswona swi humesa khaboni dayokisayidi (carbon dioxide) yo tala ngopfu, leyi vangaka ku cinca ka maxelo.
+Malahla ma hambanile. I rifuwo leri nga tipfuxetiki: loko ma hisiwile, ma herile, naswona siku rin'wana ma ta hela. Gezi ro tala ra Afrika Dzonga ri ha huma eswitichini swa gezi leswi hisaka malahla. Ku hisa malahla swi thyakisa moya, swi pfuna ku vanga mpfula ya asidi (acid rain) naswona swi humesa khaboni dayokisayidi (carbon dioxide) yo tala ngopfu, leyi vangaka climate change.
 
 Mixaka leyikulu ya matimba lama tipfuxetaka hi leyi:
 
 - matimba ya dyambu (lama humaka edyambyini)
 - matimba ya mati (hydropower, lama humaka eka mati lama khulukaka)
 - matimba ya moya
-- matimba ya swimilana na thyaka ra swifuwo (biomass), ku fana na tihunyi na gasi ya vulongo (biogas)
+- **biomass** (matimba ya swimilana na thyaka ra swifuwo), ku fana na tihunyi na gasi ya vulongo (biogas)
 
 ## Matimba ya dyambu
 
@@ -72,7 +72,7 @@ Gezi ri nga hlayisiwa eka tibetri leswaku ri tirhisiwa nivusiku.
 
 **Tisisiteme letikulu** ti nga tirhisa firiji, TV kumbe khompyuta. Tiphaneli ta dyambu ti endla gezi ra DC (direct current), kambe swilo swo tala swa gezi swa le kaya swi tirhisa gezi ra AC (alternating current), hikwalaho sisiteme leyikulu yi lava inverter (xitirhisiwa lexi hundzulaka DC ku va AC).
 
-Tirhisa gezi ra dyambu hi vutlhari. Tigiza ta gezi, tiketlele, swikufumeti na switofu swa gezi swi tirhisa gezi ro tala, hikwalaho ku swi tirhisa hi dyambu swi lava sisiteme leyikulu naswona leyi durhaka. Swa chipa ku tirhisa gezi ra dyambu eka mavoni, tifiriji, tifoni, tikhompyuta na tiTV, kutani u kufumeta mati na ku sweka hi tithekinoloji tin'wana to basa: tigiza ta dyambu, tiphampu ta ku hisa (heat pumps), gasi ya vulongo, switofu swa dyambu, masaka yo hlayisa ku hisa na switofu swa rocket.
+Tirhisa gezi ra dyambu hi vutlhari. Tigiza ta gezi, tiketlele, swikufumeti na switofu swa gezi swi tirhisa gezi ro tala, hikwalaho ku swi tirhisa hi dyambu swi lava sisiteme leyikulu naswona leyi durhaka. Swa chipa ku tirhisa gezi ra dyambu eka mavoni, tifiriji, tifoni, tikhompyuta na tiTV, kutani u kufumeta mati na ku sweka hi tithekinoloji tin'wana to basa: tigiza ta dyambu, tiphampu ta ku hisa (heat pumps), gasi ya vulongo, switofu swa dyambu, masaka yo hlayisa ku hisa na **ti-rocket stove** (switofu leswi tirhisaka tihunyi titsongo).
 
 > **Vuhlayiseki:** Sisiteme yin'wana na yin'wana leyikulu ku tlula sete leyitsongo ya mavoni leyi pfaleriwaka eplagini yi fanele ku vekiwa hi mutirhi wa gezi loyi a leteriweke no tsarisiwa (electrician), loyi a faneleke ku ku nyika Certificate of Compliance (xitifikheti lexi tiyisisaka leswaku ntirho wu landzela nawu). Sisiteme leyi hlanganisiweke na gezi ra masipala kumbe ra Eskom yi fanele ku pfumeleriwa hi masipala wa wena kumbe hi Eskom no tsarisiwa eka vona yi nga si pfuriwa. Tibetri ti hlayisa matimba yo tala: ti hlayise endhawini leyi omeke, laha moya lowuntshwa wu nghenaka kona, ekule na vana. Tibetri ta lead-acid ti humesa gasi leyi pfurhaka loko ti ri karhi ti chajiwa, hikwalaho u nga tshuki u dzaha kumbe ku endla swirhuthu (sparks) ekusuhi na tona. Xava tibetri ta lithium ntsena leti nga na sisiteme leyi faneleke yo lawula betri (battery management system) leyi akiweke endzeni ka yona.
 
@@ -134,11 +134,11 @@ Hikwalaho hakanyingi swakudya leswi a swi na khwalithi leyinene, naswona swi nga
 5. Swi nghenise endlwini nivusiku kumbe u swi funengeta kahle, leswaku ku tsakama ka nivusiku ku nga swi tsakamisi.
 6. Hundzuluxa swiphemu kan'we kumbe kambirhi hi siku.
 
-### Xiomisi xa dyambu (solar dryer)
+### Solar dryer
 
-Xiomisi xa dyambu xi hatlisa naswona xi basile ku tlula ku omisa edyambyini ehandle. Xi nga endliwa ekaya hi swilo swo olova kumbe xi xaviwa hi nxavo lowu ringaneleke. Xi nga va xo olova, ku fana na bokisi ra mapulanka leri funengetiweke hi pulasitiki leyi vonakaka, kumbe xi tiya ku tlula, ku fana na rimba ra nsimbi leri nga ni pulasitiki leyi vonakaka kumbe ngilazi, na titreyi ta lapi ra ndzhuti (shade cloth) kumbe ta nete.
+**Solar dryer** (xiomisi xa dyambu) yi hatlisa naswona yi basile ku tlula ku omisa edyambyini ehandle. Yi nga endliwa ekaya hi swilo swo olova kumbe yi xaviwa hi nxavo lowu ringaneleke. Yi nga va yo olova, ku fana na bokisi ra mapulanka leri funengetiweke hi pulasitiki leyi vonakaka, kumbe yi tiya ku tlula, ku fana na rimba ra nsimbi leri nga ni pulasitiki leyi vonakaka kumbe ngilazi, na titreyi ta lapi ra ndzhuti (shade cloth) kumbe ta nete.
 
-Swiomisi swin'wana swa dyambu swi hundzisa moya wo kufumela exikarhi ka titreyi. Swin'wana i bokisi ro hisa leri moya wu nga fambiki ngopfu eka rona. Ku famba ka moya ka pfuna: ku rhwala ku tsakama ku ku yisa ekule.
+Ti-solar dryer tin'wana ti hundzisa moya wo kufumela exikarhi ka titreyi. Tin'wana i bokisi ro hisa leri moya wu nga fambiki ngopfu eka rona. Ku famba ka moya ka pfuna: ku rhwala ku tsakama ku ku yisa ekule.
 
 Swakudya swi omile hi ku ringanela rini?
 
@@ -152,9 +152,9 @@ Hlayisa swakudya leswi omisiweke eka swibya leswi basaka, leswi pfalaka kahle le
 
 > **Xiletelo:** Ku hoxa swiphemu swa mihandzu eka mati lama hlanganisiweke na jusi ya lamula (lemon) u nga si swi omisa swi pfuna ku hlayisa muvala wa swona. Ku hoxa matsavu eka mati lama vilaka ku ringana xinkarhana (blanching) u nga si ma omisa swi ma pfuna ku tshama nkarhi wo leha ma nga onhaki. Nyama na hlampfi swi lava munyu na tindlela to hlawuleka; landzela ndlela leyi kambisisiweke.
 
-## Ku sweka hi ku hlayisa ku hisa: saka ro sweka (wonder bag)
+## Ku sweka hi ku hlayisa ku hisa: wonder bag
 
-Xitofu xo hlayisa ku hisa (heat-retention cooker) i saka kumbe bokisi leri sirheleriweke leswaku ku hisa ku nga humi, leri hlayisaka poto yo hisa yi tshama yi hisa ku ringana tiawara. Lexi tivekaka ngopfu i Wonderbag, leri endliweke eAfrika Dzonga. U nga tlhela u tiendlela "bokisi ra byanyi" (hay box) hi bokisi kumbe xirhundzu lexi teleke hi byanyi byo oma, tingubo ta khale kumbe mintsamelo.
+Xitofu xo hlayisa ku hisa (heat-retention cooker) i saka kumbe bokisi leri sirheleriweke leswaku ku hisa ku nga humi, leri hlayisaka poto yo hisa yi tshama yi hisa ku ringana tiawara. Lexi tivekaka ngopfu i **wonder bag** (saka ro sweka) ya Wonderbag, leyi endliweke eAfrika Dzonga. U nga tlhela u tiendlela "bokisi ra byanyi" (hay box) hi bokisi kumbe xirhundzu lexi teleke hi byanyi byo oma, tingubo ta khale kumbe mintsamelo.
 
 Ndlela leyi ri tirhaka ha yona: u virisa swakudya exitofini, kutani u nghenisa poto, yi ri ni xipfalo, hi ku kongoma esakeni u ri pfala. Ku hisa loku khomiweke ku ya emahlweni ku sweka swakudya hi ku nonoka ku ringana tiawara to hlayanyana, handle ka mafurha yo engetela. Swi nga ponisa tihunyi, gasi, palafini kumbe gezi swo tala, naswona loko mafurha lama hisiwaka ma hungutekile, musi endlwini na wona wa hunguteka.
 
@@ -170,60 +170,60 @@ Ndlela yo ri tirhisa:
 
 > **Vuhlayiseki:** Tinyawa to tshwuka (red kidney beans) na tinyawa tin'wana to oma ti na chefu ya ntumbuluko leyi herisiwaka ntsena hi ku virisa kahle. Veketa tinyawa to oma ematini, kutani u ti virisa hi matimba ku ringana timinete ta 10 kumbe ku tlula u nga si ti nghenisa esakeni. Ku hisa loku olovaka handle ka ku virisa ko sungula hi matimba ku nga endla leswaku chefu yi tiya ku tlula.
 
-## Switofu swa rocket
+## Ti-rocket stove
 
-Xitofu xa rocket (xitofu lexi tirhisaka tihunyi titsongo naswona xi humesaka musi wutsongo) xi hisa swirhavana swa tihunyi hi ndlela leyi tirhaka kahle swinene. Ndzilo wu tshwa endzeni ka chimini leyi sirheleriweke leswaku ku hisa ku nga humi, leyi vumbekeke ku fana na letere ra L. Leswi swi endla leswaku wu tshwa hi matimba naswona hi ku basa, kutani wu rhumela ku hisa hi ku kongoma ehenhla eka poto.
+Rocket stove yi hisa swirhavana swa tihunyi hi ndlela leyi tirhaka kahle swinene. Ndzilo wu tshwa endzeni ka chimini leyi sirheleriweke leswaku ku hisa ku nga humi, leyi vumbekeke ku fana na letere ra L. Leswi swi endla leswaku wu tshwa hi matimba naswona hi ku basa, kutani wu rhumela ku hisa hi ku kongoma ehenhla eka poto.
 
-Mikambelo leyi endliweke emakaya ya vanhu yi kumile leswaku switofu swa rocket swi tirhisa tihunyi titsongo hi kwalomu ka 30 ku ya eka 50% ku tlula ku sweka eka ndzilo lowu pfulekeke wa maribye manharhu, naswona swi humesa musi wutsongo swinene na khaboni monokisayidi (carbon monoxide) yitsongo.
+Mikambelo leyi endliweke emakaya ya vanhu yi kumile leswaku ti-rocket stove ti tirhisa tihunyi titsongo hi kwalomu ka 30 ku ya eka 50% ku tlula ku sweka eka ndzilo lowu pfulekeke wa maribye manharhu, naswona ti humesa musi wutsongo swinene na khaboni monokisayidi (carbon monoxide) yitsongo.
 
 Leswi swa nkoka eka rihanyu. Nhlangano wa Rihanyu wa Misava (World Health Organization) wu ringanyeta leswaku vanhu va kwalomu ka tibiliyoni ta 2.1, ku nga kwalomu ka kota ya vanhu va misava hinkwayo, va sweka eka mindzilo leyi pfulekeke kumbe eka switofu swo olova leswi hisaka tihunyi, vulongo, masalela ya swibyariwa, malahla kumbe palafini. Musi lowu nga emakaya ya vona wu vangile ku fa ka vanhu va kwalomu ka timiliyoni ta 2.9 hi 2021. Vavasati na vana lavatsongo, lava tshamaka nkarhi wo tala ekusuhi na ndzilo, hi vona va xanisekaka ngopfu.
 
-Switofu swa rocket swi kona hi masayizi yo tala. Swo tala swa rhwaleka. Swin'wana swi akiwa endzeni ka khixi, ku fana na xitofu xa ntolovelo, swi ri na chimini leyi humesaka musi ehandle.
+Ti-rocket stove ti kona hi masayizi yo tala. To tala ta rhwaleka. Tin'wana ti akiwa endzeni ka khixi, ku fana na xitofu xa ntolovelo, ti ri na chimini leyi humesaka musi ehandle.
 
-Ndlela yo tirhisa xitofu xa rocket kahle:
+Ndlela yo tirhisa rocket stove kahle:
 
 1. Tirhisa tihunyi to oma. Tihunyi to tsakama ti endla musi naswona ti nyika ku hisa kutsongo.
 2. Nghenisa swirhavana swo ondza swi nga ri swingani hi nkarhi wun'we, kutani u swi susumeta endzeni loko swi ri karhi swi tshwa.
 3. Hlayisa mbhovo wa moya lowu nga ehansi ka swirhavana wu nga pfaleki.
 4. Veka poto yi tshama kahle ehenhla ka xitofu, yi ri na xivandlanyana lexitsongo leswaku moya wo hisa wu famba wu yi rhendzela.
 
-> **Vuhlayiseki:** Xitofu xa rocket xi basile ku tlula ndzilo lowu pfulekeke, kambe xi ha humesa musi na khaboni monokisayidi, gasi leyi u nga yi voniki kumbe ku yi nun'hwela naswona yi dlayaka. Sweka ehandle kumbe ekhixini leri moya lowuntshwa wu nghenaka kahle, leri nga na chimini. U nga tshuki u nghenisa xitofu lexi tshwaka, mbawula (imbawula) kumbe ndzilo wa malahla endlwini leyi pfaleke leswaku u yi kufumeta, ngopfu-ngopfu nivusiku. Vuxika byin'wana na byin'wana eAfrika Dzonga vanhu va fa va ri evurhongweni hi ndlela leyi.
+> **Vuhlayiseki:** Rocket stove yi basile ku tlula ndzilo lowu pfulekeke, kambe yi ha humesa musi na khaboni monokisayidi, gasi leyi u nga yi voniki kumbe ku yi nun'hwela naswona yi dlayaka. Sweka ehandle kumbe ekhixini leri moya lowuntshwa wu nghenaka kahle, leri nga na chimini. U nga tshuki u nghenisa xitofu lexi tshwaka, mbawula (imbawula) kumbe ndzilo wa malahla endlwini leyi pfaleke leswaku u yi kufumeta, ngopfu-ngopfu nivusiku. Vuxika byin'wana na byin'wana eAfrika Dzonga vanhu va fa va ri evurhongweni hi ndlela leyi.
 
 > **Vuhlayiseki:** Veka xitofu ehenhla ka xiseketelo lexi tiyeke naswona xi ringanaka, ekule na vana, byanyi na xin'wana na xin'wana lexi nga pfurhaka. U nga tshuki u tirhisa petirolo ku lumeka ndzilo. Hlayisa palafini exibyeni lexi tsariweke vito ra yona hi ku kongoma, lexi nga ni xipfalo lexi vana va nga koti ku xi pfula; u nga tshuki u yi hlayisa ebodlheleni ra swinwiwa (cooldrink) kumbe ra masi. Ku mita palafini i xivangelo lexikulu ngopfu xa leswaku vana lavatsongo va nwa chefu hi xihoxo eAfrika Dzonga.
 
-## Swiendli swa gasi ya vulongo (biogas digesters)
+## Ti-biogas digester
 
-Gasi ya vulongo (biogas) i gasi yo sweka leyi humaka eka vulongo na thyaka ra swakudya. Yi endliwa loko tibakteriya ti bolisa thyaka ra ntumbuluko, ku fana na vulongo bya swifuwo, thyaka ra vanhu kumbe masalela ya swakudya, endzeni ka thanki leyi pfaleke laha ku nga riki na moya. Endlelo leri nga riki na oxijini ri vitaniwa anaerobic. Thanki yi vitaniwa xiendli (digester).
+Gasi ya vulongo (biogas) i gasi yo sweka leyi humaka eka vulongo na thyaka ra swakudya. Yi endliwa loko tibakteriya ti bolisa thyaka ra ntumbuluko, ku fana na vulongo bya swifuwo, thyaka ra vanhu kumbe masalela ya swakudya, endzeni ka thanki leyi pfaleke laha ku nga riki na moya. Endlelo leri nga riki na oxijini ri vitaniwa anaerobic. Thanki yi vitaniwa biogas digester, kumbe digester ntsena.
 
 Gasi ya vulongo hi ntolovelo yi na kwalomu ka 50 ku ya eka 70% ya methane, ku nga gasi leyi pfurhaka. Yo tala leyi seleke i khaboni dayokisayidi, na tigasi tin'wana titsongo, ku katsa na hydrogen sulphide, leyi nun'hwaka ku fana na mandza lama boleke.
 
-Xiendli xi hundzula thyaka ri va matimba. Gasi yi nga tirhisiwa ku sweka, ku vonisa, kumbe, eka tisisiteme letikulu, ku endla gezi. Eka muti, ku sweka hi yona ndlela leyi pfunaka ngopfu yo yi tirhisa. Xin'wana lexi khulukaka lexi humaka exiendlini, lexi vitaniwaka slurry kumbe digestate, i monyolo lowunene.
+Digester yi hundzula thyaka ri va matimba. Gasi yi nga tirhisiwa ku sweka, ku vonisa, kumbe, eka tisisiteme letikulu, ku endla gezi. Eka muti, ku sweka hi yona ndlela leyi pfunaka ngopfu yo yi tirhisa. Xin'wana lexi khulukaka lexi humaka eka digester, lexi vitaniwaka **slurry** kumbe digestate, i monyolo lowunene.
 
-Swiendli swi nga xaviwa swi lulamile, kumbe swi akiwa hi swilo leswi kumekaka evhengeleni ra switirhisiwa swa ku aka (hardware), ku fana na tithanki ta pulasitiki, tiphayiphi na swihlanganisi swa tona. Swi fanele ku pfaleka hi ku helela lerova moya wu nga ngheni.
+Ti-digester ti nga xaviwa ti lulamile, kumbe ti akiwa hi swilo leswi kumekaka evhengeleni ra switirhisiwa swa ku aka (hardware), ku fana na tithanki ta pulasitiki, tiphayiphi na swihlanganisi swa tona. Ti fanele ku pfaleka hi ku helela lerova moya wu nga ngheni.
 
-### Leswi u faneleke ku phamela xiendli
+### Leswi u faneleke ku phamela digester
 
-- **Swinene:** vulongo lebyintshwa bya tihomu, tinguluve kumbe tihuku, lebyi hlanganisiweke na mati lama ringanaka na byona; masalela ya matsavu na ya swakudya lama tsemiweke ma va swiphemu leswitsongo; thyaka ra xihambukelo eka xiendli lexi dizayiniweke ku ri amukela.
+- **Swinene:** vulongo lebyintshwa bya tihomu, tinguluve kumbe tihuku, lebyi hlanganisiweke na mati lama ringanaka na byona; masalela ya matsavu na ya swakudya lama tsemiweke ma va swiphemu leswitsongo; thyaka ra xihambukelo eka digester leyi dizayiniweke ku ri amukela.
 - **Papalata:** swilo swa mapulanka, byanyi byo oma (straw), marhambu, pulasitiki, xisibi, bleach, swidlayi swa switsongwatsongwana (disinfectants) na tikhemikhali tin'wana. Tikhemikhali ti dlaya tibakteriya leti endlaka gasi.
 
-Phamela xiendli katsongo siku na siku, ku ri na ku phamela swo tala hi nkarhi wun'we. Tanihi xikombiso xo ringanyeta, vulongo bya homu yin'we bya siku rin'we byi nyika gasi yo ringanela ku sweka kwalomu ka awara yin'we eka xipfurhelo xin'we (burner). Ndyangu hi ntolovelo wu lava vulongo bya tihomu kumbe tinguluve to hlayanyana, lebyi hlengeletiwaka siku na siku.
+Phamela digester katsongo siku na siku, ku ri na ku phamela swo tala hi nkarhi wun'we. Tanihi xikombiso xo ringanyeta, vulongo bya homu yin'we bya siku rin'we byi nyika gasi yo ringanela ku sweka kwalomu ka awara yin'we eka xipfurhelo xin'we (burner). Ndyangu hi ntolovelo wu lava vulongo bya tihomu kumbe tinguluve to hlayanyana, lebyi hlengeletiwaka siku na siku.
 
-Tibakteriya ti tirha kahle ngopfu loko xiendli xi kufumela, kwalomu ka 30 ku ya eka 38 °C. Ehansi ka kwalomu ka 15 °C ti humesa gasi yitsongo swinene. Eka tindhawu leti nga na vuxika byo titimela, ku fana na Highveld na Lesotho, cela u nghenisa xiendli emisaveni kumbe u xi sirhelela eka ku titimela, kumbe u xi funengeta hi yindlu leyitsongo ya pulasitiki ya swimilana (greenhouse), leswaku xi tshama xi kufumela.
+Tibakteriya ti tirha kahle ngopfu loko digester yi kufumela, kwalomu ka 30 ku ya eka 38 °C. Ehansi ka kwalomu ka 15 °C ti humesa gasi yitsongo swinene. Eka tindhawu leti nga na vuxika byo titimela, ku fana na Highveld na Lesotho, cela u nghenisa digester emisaveni kumbe u yi sirhelela eka ku titimela, kumbe u yi funengeta hi yindlu leyitsongo ya pulasitiki ya swimilana (greenhouse), leswaku yi tshama yi kufumela.
 
-> **Vuhlayiseki:** Gasi ya vulongo ya pfurha naswona yi nga buluka. Methane leyi hlanganeke na moya yi buluka loko gasi yi ri exikarhi ka 5 na 15% ya moya. U nga tshuki u dzaha kumbe ku lumeka ndzilo ekusuhi na xiendli, saka ra gasi kumbe tiphayiphi. Kambela loko gasi yi huma hi mati ya xisibi (tibubulu ti komba laha yi humaka kona), u nga tshuki u kambela hi ndzilo. Methane yi tlakuka yi hlengeletana ehansi ka malwangu, hikwalaho tirhisa switirhisiwa swa gasi ya vulongo ntsena ekhixini leri moya lowuntshwa wu nghenaka kahle, naswona u pfala gasi ethepini endzhaku ko sweka.
+> **Vuhlayiseki:** Gasi ya vulongo ya pfurha naswona yi nga buluka. Methane leyi hlanganeke na moya yi buluka loko gasi yi ri exikarhi ka 5 na 15% ya moya. U nga tshuki u dzaha kumbe ku lumeka ndzilo ekusuhi na digester, saka ra gasi kumbe tiphayiphi. Kambela loko gasi yi huma hi mati ya xisibi (tibubulu ti komba laha yi humaka kona), u nga tshuki u kambela hi ndzilo. Methane yi tlakuka yi hlengeletana ehansi ka malwangu, hikwalaho tirhisa switirhisiwa swa gasi ya vulongo ntsena ekhixini leri moya lowuntshwa wu nghenaka kahle, naswona u pfala gasi ethepini endzhaku ko sweka.
 
-> **Vuhlayiseki:** U nga tshuki u nghena exiendlini, emugodini kumbe ethankini, hambi ku ri leyi nga riki na nchumu. Swi nga va na hydrogen sulphide, gasi ya chefu, na khaboni dayokisayidi, leyi nga siyiki moya wo hefemula. Vanhu va file va ri karhi va ringeta ku ponisa van'wana. Funengeta migodi yo nghenisa na yo humesa, u hlayisa vana ekule na yona.
+> **Vuhlayiseki:** U nga tshuki u nghena eka digester, emugodini kumbe ethankini, hambi ku ri leyi nga riki na nchumu. Swi nga va na hydrogen sulphide, gasi ya chefu, na khaboni dayokisayidi, leyi nga siyiki moya wo hefemula. Vanhu va file va ri karhi va ringeta ku ponisa van'wana. Funengeta migodi yo nghenisa na yo humesa, u hlayisa vana ekule na yona.
 
-> **Vuhlayiseki:** Slurry ya ha ri na switsongwatsongwana, ngopfu-ngopfu leswi humaka eka thyaka ra vanhu kumbe ra tinguluve. Yi endle khompositi kumbe u yi tshika yi yima mavhiki yo hlayanyana u nga si yi tirhisa. Yi tirhise eka mirhi ya mihandzu, mavele na swibyariwa leswi swekiwaka. U nga yi cheli eka matsavu ya matluka kumbe swibyariwa swin'wana leswi dyiwaka swi nga swekiwanga. Ambala tiglavu naswona u hlamba mavoko endzhaku ko yi khoma.
+> **Vuhlayiseki:** Slurry ya ha ri na switsongwatsongwana, ngopfu-ngopfu leswi humaka eka thyaka ra vanhu kumbe ra tinguluve. Yi endle **compost** (yi bolisa na thyaka ra swimilana) kumbe u yi tshika yi yima mavhiki yo hlayanyana u nga si yi tirhisa. Yi tirhise eka mirhi ya mihandzu, mavele na swibyariwa leswi swekiwaka. U nga yi cheli eka matsavu ya matluka kumbe swibyariwa swin'wana leswi dyiwaka swi nga swekiwanga. Ambala tiglavu naswona u hlamba mavoko endzhaku ko yi khoma.
 
 ## Tinhla ta nkoka
 
 - Yindlu i Zone 0, xikarhi xa dizayini ya permaculture.
-- Thekinoloji leyi faneleke yi olova, a yi durhi naswona yi nga akiwa no lunghisiwa hi vutshila bya laha kaya.
+- Appropriate technology yi olova, a yi durhi naswona yi nga akiwa no lunghisiwa hi vutshila bya laha kaya.
 - Dizayina yindlu hi ku ya hi dyambu: eDzongeni ra Afrika, mafasitere lamakulu na tiphaneli ta dyambu swi languta en'walungu.
-- Tirhisa gezi ra dyambu eka mavoni, tifoni na tifiriji. Kufumeta mati u tlhela u sweka hi tigiza ta dyambu, gasi ya vulongo, switofu swa dyambu, masaka yo hlayisa ku hisa na switofu swa rocket.
+- Tirhisa gezi ra dyambu eka mavoni, tifoni na tifiriji. Kufumeta mati u tlhela u sweka hi tigiza ta dyambu, gasi ya vulongo, switofu swa dyambu, masaka yo hlayisa ku hisa na ti-rocket stove.
 - Tiphaneli ta dyambu na tisisiteme leti hlanganisiweke na gezi ra le ntambhwini ti fanele ku vekiwa hi mutirhi wa gezi loyi a leteriweke, ti tlhela ti tsarisiwa laha swi lavekaka kona. Eka tindhawu ta xirhami, tirhisa giza ya dyambu leyi nga kongomangiki (indirect).
 - Omisa swakudya hi ku hatlisa, hi ku basa naswona swi nga ri ehansi. Omisa mavele na timanga hi ku hatlisa naswona u lahla timbewu leti nga ni mikowa.
 - Esakeni ro hlayisa ku hisa, virisa swakudya ku sungula naswona u swi hlayisa ehenhla ka 60 °C. Virisa tinyawa to oma hi matimba ku ringana timinete ta 10 ku sungula.
-- Switofu swa rocket swi ponisa tihunyi naswona swi hunguta musi, kambe u nga tshuki u hisa ndzilo wihi na wihi endlwini leyi pfaleke.
-- Gasi ya vulongo yi nga buluka naswona migodi ya yona yi nga dlaya: ku nga vi na ndzilo, kambela loko gasi yi huma hi xisibi, u nga tshuki u nghena exiendlini, naswona u nga cheli slurry eka matsavu lama dyiwaka ma nga swekiwanga.
+- Ti-rocket stove ti ponisa tihunyi naswona ti hunguta musi, kambe u nga tshuki u hisa ndzilo wihi na wihi endlwini leyi pfaleke.
+- Gasi ya vulongo yi nga buluka naswona migodi ya yona yi nga dlaya: ku nga vi na ndzilo, kambela loko gasi yi huma hi xisibi, u nga tshuki u nghena eka digester, naswona u nga cheli slurry eka matsavu lama dyiwaka ma nga swekiwanga.
