@@ -45,7 +45,7 @@ import {
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
-import { useAppLevel } from '@/lib/app-level';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -717,6 +717,10 @@ export default function StudentPage() {
 
   const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
   const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
+  // Content-QA info, not a farmer or student decision — truly staff-only (mentor/ngo/funder/
+  // admin), unlike the Simple/All tools items above. Gated on both: staff still lose it if they
+  // themselves choose Simple, but a student's own default of All tools must never surface it.
+  const isStaff = isStaffRole(gatingCtx.role);
 
   const submissionByModule = useMemo(() => {
     const m = new Map<string, CourseSubmission>();
@@ -1111,7 +1115,7 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      {!simple && (
+                      {!simple && isStaff && (
                         <span
                           title={readinessTitle}
                           className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
