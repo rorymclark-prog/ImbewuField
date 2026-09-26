@@ -67,6 +67,17 @@ function recordsUi(lang: string, english: string, isiZulu: string, paired = fals
   return paired ? `${english} — ${isiZulu}` : isiZulu;
 }
 
+/** Keep the English control label visible until this transactional copy has fluent review. */
+function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: string; isiZulu: string }) {
+  if (lang !== 'zu') return <>{english}</>;
+  return (
+    <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
+      <span lang="zu">{isiZulu}</span>
+      <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
+    </span>
+  );
+}
+
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
 // WriteTimeoutError comment there. Deliberately NOT run through t(): this repo never invents
 // isiZulu (or any other) translation, and translate()'s fallback would silently show the same
@@ -1360,15 +1371,16 @@ export default function MyRecords({
              same page, below this component. ── */}
       {showSold && (
         <Card accent="#315939">
-          <SectionLabel>{recordsUi(lang, 'Record a sale', 'Rekhoda ukuthengisa')}</SectionLabel>
-          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Create an invoice to keep the buyer, produce, quantity and payment together.', 'Dala i-invoyisi ukuze ugcine umthengi, umkhiqizo, inani nenkokhelo ndawonye.', true)}</p>
+          {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
+          <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
+          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>
           <div className="flex flex-wrap gap-2">
-            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />{recordsUi(lang, 'New sale & invoice', 'Ukuthengisa okusha ne-invoyisi')}</Link>
-            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>{recordsUi(lang, 'Past sale / paper invoice', 'Ukuthengisa kwangaphambilini / i-invoyisi yephepha')}<ArrowRight size={16} /></Link>
+            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} /><RecordZuluDraft lang={lang} english="New sale & invoice" isiZulu="Ukuthengisa okusha ne-invoyisi" /></Link>
+            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Past sale / paper invoice" isiZulu="Ukuthengisa kwangaphambilini / i-invoyisi yephepha" /><ArrowRight size={16} /></Link>
           </div>
-          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>{recordsUi(lang, 'Already logged this sale? Use Create invoice on its row below to keep one record.', 'Usuvele ukuqophile lokhu kuthengisa? Sebenzisa okuthi Dala i-invoyisi emgqeni wako ngezansi ukuze kuhlale kuyirekhodi elilodwa.', true)}</p>
+          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}><RecordZuluDraft lang={lang} english="Already logged this sale? Use Create invoice on its row below to keep one record." isiZulu="Usuvele ukuqophile lokhu kuthengisa? Sebenzisa u-Dala i-invoyisi emgqeni wako ongezansi ukuze ugcine irekhodi elilodwa." /></p>
           <details className="mt-3">
-            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Quick sale entry', 'Faka ukuthengisa ngokushesha')}</summary>
+            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Quick sale entry" isiZulu="Ukufaka ukuthengisa okusheshayo" /></summary>
             <LogSaleForm onSaved={handleSaved} />
           </details>
         </Card>

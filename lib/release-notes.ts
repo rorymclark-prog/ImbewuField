@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '1fd3f582', changes: [
+    'Sale labels now show draft isiZulu beside the exact English source.',
+  ], tour: [
+    { title: 'Check the draft sale labels', where: 'Records → Sold', href: '/records',
+      detail: 'Choose isiZulu, open Sold and compare each proposed label with its English source.' },
+  ] },
   { when: '26 September 2026', sha: '7425ed0f', changes: [
     'Sesotho learners can read a marked draft about comparing selling costs and losses.',
   ], tour: [
