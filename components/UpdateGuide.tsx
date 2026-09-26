@@ -6,12 +6,12 @@ import { X } from 'lucide-react';
 import {
   OPEN_UPDATE_GUIDE_EVENT, UPDATE_GUIDE_KEY, readUpdateGuide, type UpdateGuideState,
 } from '@/lib/update-tour';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import styles from './UpdateGuide.module.css';
 
 export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string | null }) {
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const [guide, setGuide] = useState<UpdateGuideState | null>(null);
   const [minimized, setMinimized] = useState(false);
 
@@ -52,11 +52,22 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   if (!guide || !guide.stops.length) return null;
   const stop = guide.stops[guide.index];
   const onPage = pathname === stop.href.split('#')[0];
+  const draftLocale = lang === 'st' || lang === 've';
+  const source = (key: string) => translate('en', key);
+  const withCount = (value: string) => value.replace('{index}', String(guide.index + 1))
+    .replace('{total}', String(guide.stops.length));
+  // These control drafts need the source at the point where the farmer decides what to tap.
+  const paired = (key: string, count = false) => {
+    const local = count ? withCount(t(key)) : t(key);
+    const english = count ? withCount(source(key)) : source(key);
+    return <><span lang={draftLocale ? lang : undefined}>{local}</span>
+      {draftLocale && local !== english && <small className={styles.source} lang="en">English: {english}</small>}</>;
+  };
 
   if (minimized && guide.phase === 'tour') {
     return <section className={styles.mini} role="region" aria-label={t('updateGuideRegionAria')}>
       <button type="button" onClick={() => setMinimized(false)}>
-        {t('updateGuideContinue').replace('{index}', String(guide.index + 1)).replace('{total}', String(guide.stops.length))}
+        {paired('updateGuideContinue', true)}
       </button>
       <button type="button" onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={16} aria-hidden /></button>
     </section>;
@@ -65,16 +76,17 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   return (
     <section className={styles.guide} role="region" aria-label={t('updateGuideRegionAria')}>
       <div className={styles.head}>
-        <span>{guide.phase === 'offer' ? t('updateGuideOfferBadge') : t('updateGuideTourBadge').replace('{index}', String(guide.index + 1)).replace('{total}', String(guide.stops.length))}</span>
+        <span>{guide.phase === 'offer' ? t('updateGuideOfferBadge') : withCount(t('updateGuideTourBadge'))}</span>
         <button type="button" className={styles.close} onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={18} aria-hidden /></button>
       </div>
+      {draftLocale && <p className={styles.draftNotice} role="note">Unreviewed {lang === 'st' ? 'Sesotho' : 'Tshivenda'} machine draft. English is shown with drafted controls.</p>}
       {guide.phase === 'offer' ? (
         <>
-          <h2>{t('updateGuideOfferTitle')}</h2>
+          <h2>{paired('updateGuideOfferTitle')}</h2>
           <p>{t('updateGuideOfferBody')}</p>
           <div className={styles.actions}>
             <button type="button" className={styles.primary} onClick={() => save({ ...guide, phase: 'tour' })}>{t('settingsGuideMe')}</button>
-            <button type="button" onClick={() => save(null)}>{t('updateGuideNotNow')}</button>
+            <button type="button" onClick={() => save(null)}>{paired('updateGuideNotNow')}</button>
           </div>
         </>
       ) : (
@@ -83,16 +95,16 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
           <p className={styles.where}>{stop.where}</p>
           <p>{stop.detail}</p>
           <div className={styles.actions}>
-            {!onPage && <a className={styles.primary} href={stop.href}>{t('updateGuideOpenPage')}</a>}
+            {!onPage && <a className={styles.primary} href={stop.href}>{paired('updateGuideOpenPage')}</a>}
             {onPage && <span className={styles.arrived}>{t('updateGuideArrived')}</span>}
           </div>
           <div className={styles.actions}>
-            {guide.index > 0 && <button type="button" onClick={() => save({ ...guide, index: guide.index - 1 })}>{t('updateGuidePrevious')}</button>}
+            {guide.index > 0 && <button type="button" onClick={() => save({ ...guide, index: guide.index - 1 })}>{paired('updateGuidePrevious')}</button>}
             <button type="button" onClick={() => guide.index + 1 < guide.stops.length
               ? save({ ...guide, index: guide.index + 1 }) : save(null)}>
-              {guide.index + 1 < guide.stops.length ? t('updateGuideNext') : t('updateGuideFinish')}
+              {guide.index + 1 < guide.stops.length ? paired('updateGuideNext') : paired('updateGuideFinish')}
             </button>
-            <button type="button" onClick={() => save(null)}>{t('updateGuideStop')}</button>
+            <button type="button" onClick={() => save(null)}>{paired('updateGuideStop')}</button>
           </div>
         </>
       )}

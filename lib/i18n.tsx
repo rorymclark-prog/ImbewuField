@@ -932,7 +932,7 @@ export const T_en: Dict = {
   updateGuideOpenPage: 'Open this page',
   updateGuideArrived: 'You’re on this page. Take a look around.',
   updateGuidePrevious: 'Previous',
-  updateGuideNext: 'Next update',
+  updateGuideNext: 'Next step',
   updateGuideFinish: 'Finish guide',
   updateGuideStop: 'Stop',
   tourOnboardingCta: 'Take the 15-minute tour',
