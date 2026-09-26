@@ -337,6 +337,8 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPrintSaveSimple: 'Save my plan',
   designPrintPreviewError: 'Could not render the preview ({error}).',
   designPrintRetry: 'Try again',
+  // On-screen sheet-picker names — kept separate from PrintLayer.label, the English text painted
+  // onto the exported PDF/PNG title block, which must stay fixed regardless of app language.
   designPrintSheetBase: 'Existing Site & Base',
   designPrintSheetSector: 'Sector Analysis',
   designPrintSheetZones: 'Permaculture Zones',
@@ -537,4 +539,33 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   // app repeatedly, so the app stopped retrying rather than stay stuck in a crash loop. Honest
   // about the state — the render happened server-side; this phone could not open it.
   designGlossyResumeGaveUp: 'Your AI render finished, but opening it kept crashing the app, so the app has stopped reopening it automatically. You can keep designing. To collect it, set Render quality to Standard and generate again, or open this design on a computer.',
+
+  // SpeciesPicker.tsx (Planting step, "Plant Catalog") — the chrome (title, biome/broad-reach
+  // note, honesty banner) is translated above via speciesPicker* keys. Its section names, the
+  // "m h × m w" size line and the use-tag chips were still hard-coded English on top of that; the
+  // keys below cover those. Plant common/botanical names stay untranslated (see
+  // lib/species-palette.ts): those are per-species data, not app chrome, and inventing a botanical
+  // translation would be worse than showing the English name.
+  designSpeciesSize: '{height}m h × {width}m w',
+  designSpeciesSectionIndigenousFruit: 'Indigenous fruit',
+  designSpeciesSectionExoticFruitNuts: 'Exotic fruit & nuts',
+  designSpeciesSectionLargeTrees: 'Large trees',
+  designSpeciesSectionMediumTrees: 'Medium trees',
+  designSpeciesSectionSmallTreesShrubs: 'Small trees & large shrubs',
+  designSpeciesSectionShrubs: 'Shrubs',
+  designSpeciesSectionGroundcovers: 'Groundcovers & herbaceous',
+  designSpeciesSectionClimbers: 'Climbers',
+  designSpeciesUseFood: 'food',
+  designSpeciesUseNitrogenFixer: 'nitrogen fixer',
+  designSpeciesUsePollinator: 'pollinator',
+  designSpeciesUseHabitat: 'habitat',
+  designSpeciesUseShade: 'shade',
+  designSpeciesUseWindbreak: 'windbreak',
+  designSpeciesUseFodder: 'fodder',
+  designSpeciesUseMulch: 'mulch',
+  designSpeciesUseLivingFence: 'living fence',
+  designSpeciesUseErosionControl: 'erosion control',
+  designSpeciesUseMedicinal: 'medicinal',
+  designSpeciesUseTimber: 'timber',
+  designSpeciesUseGroundcover: 'groundcover',
 };

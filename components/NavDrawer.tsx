@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, Calendar, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints, BookOpen,
 } from 'lucide-react';
 import { exitSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
@@ -38,7 +38,7 @@ interface NavDrawerProps {
 // direct link (app/calendar/page.tsx itself is untouched).
 const SIMPLE_NAV_HREFS = new Set([
   '/home', '/farmer', '/records', '/facilitator/crops',
-  '/journal', '/student', '/contact', '/design', '/account',
+  '/journal', '/student', '/manual', '/contact', '/design', '/account',
 ]);
 
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
@@ -107,6 +107,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // but no farmer could ever tap their way to it.
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
+        // The fact-checked Permaculture Manual (app/manual) in English, isiZulu, Sesotho,
+        // Tshivenḓa and Xitsonga — reading, not a tool, but it is where a farmer looks things up.
+        { href: '/manual',   Icon: BookOpen,     label: t('navManual') },
       ],
     },
     {

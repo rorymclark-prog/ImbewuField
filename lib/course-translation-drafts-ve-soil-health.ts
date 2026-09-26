@@ -11,12 +11,12 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Soil Health & Composting",
-    "tshivendaDraft": "Mutakalo wa Mavu na Muvhundo (Composting)",
+    "tshivendaDraft": "Mutakalo wa Mavu na U Ita Khomposo (Composting)",
     "reviewStatus": "machine-draft"
   },
   "description": {
     "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
-    "tshivendaDraft": "Fhatani mavu a re na vhutshilo nga manyoro (compost), mulitshi (mulch), zwimela zwa u thivhela (cover crops) na mabodo a mahuvhane (worm farms).",
+    "tshivendaDraft": "Fhaṱani mavu a re na vhutshilo nga khomposo (compost), tshifukedzi (mulch), zwiliṅwa zwa u fukedza (cover crops) na mabodo a zwivhungu (worm farms).",
     "reviewStatus": "machine-draft"
   },
   "lessons": [
@@ -29,7 +29,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
-        "tshivendaDraft": "U Pfesesa Mavu A Vhoiwe: Mutheo wa Zwoṱhe",
+        "tshivendaDraft": "U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -141,7 +141,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Making and Using Compost",
-        "tshivendaDraft": "U Ita na U Shumisa Manyoro (Compost)",
+        "tshivendaDraft": "U Ita na U Shumisa Khomposo (Compost)",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -253,7 +253,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
-        "tshivendaDraft": "Mulitshi (Mulching) na Zwimela zwa u Thivhela (Cover Crops): U Tsireledza na U Fhaṱa Mavu",
+        "tshivendaDraft": "Tshifukedzi (Mulching) na Zwiliṅwa zwa u Fukedza (Cover Crops): U Tsireledza na U Fhaṱa Mavu",
         "reviewStatus": "machine-draft"
       },
       "body": {
