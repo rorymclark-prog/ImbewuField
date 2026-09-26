@@ -126,6 +126,11 @@
 | erosion | ukuguguleka (komhlabathi) | In app: zu.ts, course. |
 | infiltration | ukungena kwamanzi emhlabathini | In app: course (descriptive). |
 | evaporation | ukuhwamuka | In app: course. |
+| thermal belt | ibhande elifudumele (thermal belt) | Ch 3. (check) |
+| white frost / black frost | isithwathwa esimhlophe / isithwathwa esimnyama (black frost) | Ch 3. (check) |
+| nurse trees | izihlahla ezinakekelayo (nurse trees) | Ch 3. (check) |
+| heatwave | igagasi lokushisa (pl. amagagasi okushisa) (heatwaves) | Ch 3. (check) |
+| flood plain | izindawo ezikhukhulwa yizikhukhula (flood plains) | Ch 3. (check) |
 
 ## 4. Water harvesting, earthworks and irrigation
 
@@ -422,6 +427,20 @@
 | mole | ivukuzi | (check) |
 | ticks | imikhaza | In app: course. |
 | blight | i-blight | Loan word. In app: course (*i-late blight*). |
+| mole-rat | ivukuzi (pl. amavukuzi) (mole-rats) | Ch 10. Golden moles kept as loan *ama-golden mole*. (check) |
+| hoverfly | i-hoverfly (pl. ama-hoverfly) | Loan word. Ch 10. |
+| ground beetle | ibhungane lomhlabathi (pl. amabhungane omhlabathi) | Ch 10. (check) |
+| moth | ibhu (pl. amabhu) (moths) | Ch 10. (check) |
+| chameleon | unwabu (pl. izinwabu) | Ch 10. (check) |
+| toad | iselesele (pl. amaselesele) | Ch 10 follows ch 9. (check) |
+| stinging nettle | imbabazane (stinging nettle) | Ch 10. (check) |
+| moonflower / thorn apple (*Datura*) | iloyi | Ch 10. (check) |
+| amaranth (imifino, morogo) | imbuya | Ch 10. (check) |
+| okra | i-okra (idelele) | Ch 10. (check *idelele*) |
+| bush beans / climbing beans | ubhontshisi omfushane / ubhontshisi okhuphukayo | Ch 10. (check) |
+| heavy / light feeders (crops) | izitshalo ezidla kakhulu / izitshalo ezidla kancane | Ch 10. (check) |
+| sawdust | imvuthuluka yokhuni (sawdust) | Ch 10. (check) |
+| mortar and pestle | isigxobo nesigqa (mortar and pestle) | Ch 10. (check) |
 
 ## 10. Animal systems
 
