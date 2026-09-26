@@ -10,6 +10,7 @@ import { memberAccessSummary } from '@/lib/mel';
 import { readSampleProgramme } from './SampleProgramme';
 import { melRequest } from './MelDashboard';
 import styles from './MelDashboard.module.css';
+import { useLanguage } from '@/lib/i18n-context';
 
 type Person = { id: string; name: string; role: string };
 type Preview = Person & { capabilities: ReturnType<typeof memberAccessSummary>; location: string; people: { id: string; name: string }[]; checkedAt: string; sample: boolean };
@@ -20,6 +21,7 @@ export default function MemberAccessPreview() {
 }
 
 function AccessBody() {
+  const { t } = useLanguage();
   const { user, role, loading } = useAuth();
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]);
   const [org, setOrg] = useState('');
@@ -82,16 +84,16 @@ function AccessBody() {
   }, [id, org]);
 
   return <div className={styles.card} style={{ marginTop: 20 }}>
-    <h2>Check a member’s saved access</h2>
-    <p>Select a member to see their effective programme permissions and assigned farmer group. Save changes in People & permissions first, then refresh here.</p>
-    {orgs.length > 0 && <label>Organisation<select value={org} onChange={e => { setPreview(null); setId(''); setOrg(e.target.value); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
-    <div className={styles.row}><label>Member<select disabled={busy} value={id} onChange={e => { setPreview(null); setId(e.target.value); }}><option value="">Choose a member</option>{people.map(p => <option key={p.id} value={p.id}>{p.name} · {p.role === 'ngo' ? 'Organisation' : p.role}</option>)}</select></label><button type="button" disabled={busy} onClick={() => setRevision(n => n + 1)}>Refresh saved access</button></div>
-    {busy && <p role="status">Checking saved access…</p>}
+    <h2>{t('mentorAccessCheckHeading')}</h2>
+    <p>{t('mentorAccessCheckIntro')}</p>
+    {orgs.length > 0 && <label>{t('mentorAccessOrgLabel')}<select value={org} onChange={e => { setPreview(null); setId(''); setOrg(e.target.value); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
+    <div className={styles.row}><label>{t('mentorAccessMemberLabel')}<select disabled={busy} value={id} onChange={e => { setPreview(null); setId(e.target.value); }}><option value="">{t('mentorAccessChooseMember')}</option>{people.map(p => <option key={p.id} value={p.id}>{p.name} · {p.role === 'ngo' ? t('mentorAccessRoleOrganisation') : p.role}</option>)}</select></label><button type="button" disabled={busy} onClick={() => setRevision(n => n + 1)}>{t('mentorAccessRefreshButton')}</button></div>
+    {busy && <p role="status">{t('mentorAccessChecking')}</p>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
-    {preview && <><h3>{preview.name} · {preview.role === 'ngo' ? 'Organisation' : preview.role}</h3><p className={styles.muted}>{preview.sample ? "Access settings" : 'Current server settings'} · checked {new Date(preview.checkedAt).toLocaleTimeString()}</p>
-      <div className={styles.grid}>{preview.capabilities.map(c => <div className={styles.metric} key={c.id}><strong>{c.label}</strong><p>{c.allowed ? '✓ Allowed' : '— Not allowed'}</p></div>)}</div>
-      {preview.role === 'mentor' && <><h3>Assigned field group</h3><p>{preview.location || 'No location assigned.'}</p>{preview.people.length ? <ul>{preview.people.map(p => <li key={p.id}>{p.name}</li>)}</ul> : <p>No current farmers or students assigned.</p>}<p>Training records are limited to this mentor’s own sessions. Private assessment analysis, when enabled above, covers the organisation’s assessments.</p></>}
+    {preview && <><h3>{preview.name} · {preview.role === 'ngo' ? t('mentorAccessRoleOrganisation') : preview.role}</h3><p className={styles.muted}>{preview.sample ? t('mentorAccessSettingsLabel') : t('mentorAccessCurrentServerSettings')} · {t('mentorAccessCheckedAtPrefix')} {new Date(preview.checkedAt).toLocaleTimeString()}</p>
+      <div className={styles.grid}>{preview.capabilities.map(c => <div className={styles.metric} key={c.id}><strong>{c.label}</strong><p>{c.allowed ? t('mentorAccessAllowed') : t('mentorAccessNotAllowed')}</p></div>)}</div>
+      {preview.role === 'mentor' && <><h3>{t('mentorAccessAssignedFieldGroup')}</h3><p>{preview.location || t('mentorAccessNoLocationAssigned')}</p>{preview.people.length ? <ul>{preview.people.map(p => <li key={p.id}>{p.name}</li>)}</ul> : <p>{t('mentorAccessNoFarmersAssigned')}</p>}<p>{t('mentorAccessTrainingRecordsNote')}</p></>}
     </>}
-    <p className={styles.notice}>This is a read-only access check for programme tools, not a sign-in as this member. It does not reveal their private responses or change their role. Other app features do not yet have individual switches here.</p>
+    <p className={styles.notice}>{t('mentorAccessReadOnlyNotice')}</p>
   </div>;
 }
