@@ -1,10 +1,19 @@
 # Soil Health & Composting — Tshivenda machine draft
 
-- **Status:** Unreviewed Agy `gemini-3.8-flash-low` label draft. No fluent Tshivenda speaker or local farming adviser has reviewed or approved it.
+- **Status:** unreviewed machine draft. No fluent Tshivenda speaker or local soil adviser has reviewed or approved the new body wording.
 - **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `soil-health` (three lessons).
-- **Paired data:** [`lib/course-translation-drafts-ve-soil-health.ts`](../../lib/course-translation-drafts-ve-soil-health.ts). Review data only; this draft is not registered in learner Study and adds no translated media or audio.
-- **Machine-draft fields (5):** module title and description, and the titles of L1 Understanding Your Soil, L2 Making and Using Compost, and L3 Mulching and Cover Crops. These are draft labels only, not fluent-approved Tshivenda.
-- **Exact-English holds (54):** all three infographic descriptions, all three lesson bodies, all 12 key points, and every quiz field across the six questions (six questions, 24 options, six rationales). Correct-answer indexes are copied unchanged.
-- **Why the instructional fields stay held:** L1's jar exercise is only a rough texture check; unsettled clay can mislead, a lab is needed for accurate texture, and the lesson forbids diagnosis or treatment from a jar alone. L2 warns that heat or elapsed time does not prove sanitation; contaminated inputs and wattle seed pods must be excluded, and home compost does not guarantee weed-seed or pathogen destruction. L3 warns that mulch must stay clear of stems, cover crops depend on local weather, water and the next crop, and worm-bin leachate may be harmful and is not made safe for edible plants by dilution. Named crops and all source numbers remain in exact-English held fields.
-- **Agy request:** signed-in CLI, one non-interactive `--mode plan` turn with `gemini-3.8-flash-low`; no tool calls or file edits. The five returned labels were copied into the paired data unchanged. This is machine output, not a fluency check.
-- **Review needed:** fluent Tshivenda review plus a local soil/compost adviser should check terminology and every actionable claim before any learner exposure. The Sesotho Soil Health review found actual draft errors in the jar detergent quantity and the direction to cover bare soil, which is why all instruction remains held here.
+- **Paired data:** [`lib/course-translation-drafts-ve-soil-health.ts`](../../lib/course-translation-drafts-ve-soil-health.ts). The module is already registered in learner Study; the newly selected L1 sentences therefore appear as a visibly marked draft with their exact English source. This is not fluent approval.
+- **New L1 body scope:** six descriptive sentences in paragraphs 1, 2, 10 and 11 have source-paired Tshivenda drafts. The drafts retain English technical terms where a precise local term is uncertain:
+
+| Paragraph / sentence | Exact English source | Unreviewed Tshivenda draft |
+|---|---|---|
+| 1.1 | Soil contains many kinds of living organisms. | Mavu a na mifuda minzhi ya living organisms. |
+| 1.2 | Bacteria and fungi help break down organic matter and cycle nutrients. | Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients. |
+| 2.1 | Some fungi help roots take up nutrients. | Dziṅwe fungi dzi thusa midzi u dzhia nutrients. |
+| 2.2 | Worm channels can help water and air enter soil. | Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni. |
+| 10.1 | Compaction, poor drainage and loss of organic matter can limit roots and soil life. | Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life. |
+| 11.2 | Worm activity also changes with moisture and season. | U shuma ha worms na hone hu a shanduka u ya nga moisture na season. |
+
+- **Exact-English holds:** the L1 sentence “Pale colour or few worms do not prove that chemicals killed the soil” remains English because its negation and causal scope need fluent review. All other L1 body text remains exact English, including observation advice, the detergent jar procedure and interpretation, and management recommendations. All L1 image description, key points and quiz fields remain exact-English holds. L2 and L3 bodies and all other instructional fields remain exact English; existing titles and module title retain their pre-existing drafts unchanged.
+- **Meaning checks for review:** retain *help* in the bacteria/fungi and fungi/root claims; retain *some* for fungi; retain *can help* for worm channels; retain *can limit* for the three soil conditions; and verify that “worm activity changes with moisture and season” does not become a stronger causal claim. English technical terms are intentional placeholders, not approved glossary choices.
+- **Review needed:** fluent Tshivenda review should check grammar and terminology. A local soil adviser should check the scientific terms. This draft provides no new soil-test, treatment, compost, sanitation, watering or crop instructions.

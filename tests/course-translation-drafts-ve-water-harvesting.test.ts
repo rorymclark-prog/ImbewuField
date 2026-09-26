@@ -115,7 +115,7 @@ test('Tshivenda Water Harvesting presents only its labelled title draft and keep
     'Tshivenda narration remains explicitly identified as English');
 });
 
-test('Soil Health Tshivenda review data stays source-paired and holds every instruction in English', () => {
+test('Soil Health Tshivenda L1 pairs selected concepts and holds every procedure and recommendation', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
   assert.ok(source, 'Soil Health draft must remain paired to its canonical English module');
   const draft = TSHIVENDA_SOIL_HEALTH_DRAFT;
@@ -131,6 +131,14 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     ['module.title', 'Mutakalo wa Mavu na U Ita Khomposo (Composting)'],
     ['lessons[0].title', 'U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
+  ]);
+  const soilConceptSentences = new Map([
+    ['Soil contains many kinds of living organisms.', 'Mavu a na mifuda minzhi ya living organisms.'],
+    ['Bacteria and fungi help break down organic matter and cycle nutrients.', 'Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.'],
+    ['Some fungi help roots take up nutrients.', 'Dziṅwe fungi dzi thusa midzi u dzhia nutrients.'],
+    ['Worm channels can help water and air enter soil.', 'Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.'],
+    ['Compaction, poor drainage and loss of organic matter can limit roots and soil life.', 'Compaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.'],
+    ['Worm activity also changes with moisture and season.', 'U shuma ha worms na hone hu a shanduka u ya nga moisture na season.'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -157,8 +165,28 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     if (lesson.infographicAlt) checkPair(paired.infographicAlt!, lesson.infographicAlt, `${path}.infographicAlt`);
     else assert.equal(paired.infographicAlt, undefined);
     checkPair(paired.title, lesson.title, `${path}.title`, index < 2);
-    checkPair(paired.body, lesson.body, `${path}.body`);
-    assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
+    if (index === 0) {
+      assert.equal(paired.body.sourceEnglish, lesson.body, `${path}.body: pair the complete canonical lesson exactly`);
+      assert.equal(paired.body.reviewStatus, 'machine-draft', `${path}.body: identify the unreviewed learner draft`);
+      let expectedBody = lesson.body;
+      for (const [english, tshivenda] of soilConceptSentences) {
+        assert.equal(lesson.body.split(english).length - 1, 1, `${path}.body: selected English sentence occurs once`);
+        expectedBody = expectedBody.replace(english, tshivenda);
+      }
+      assert.equal(paired.body.tshivendaDraft, expectedBody,
+        `${path}.body: only six selected concept sentences change; procedures, advice and the complex negation stay exact English`);
+      assert.deepEqual(numberTokens(paired.body.tshivendaDraft), numberTokens(lesson.body),
+        `${path}.body: preserve every numeric source token`);
+      assert.equal(paired.body.tshivendaDraft.split('\n\n').length, lesson.body.split('\n\n').length,
+        `${path}.body: preserve every paragraph boundary`);
+      assert.ok(paired.body.tshivendaDraft.includes('Pale colour or few worms do not prove that chemicals killed the soil.'),
+        `${path}.body: retain the uncertain negation in exact English`);
+      assert.ok(paired.body.tshivendaDraft.includes('Put soil and water in a clear jar, with a little suitable dispersing detergent.'),
+        `${path}.body: retain the full jar procedure in exact English`);
+    } else {
+      checkPair(paired.body, lesson.body, `${path}.body`);
+      assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
+    }
     assert.equal(paired.keyPoints.length, lesson.keyPoints.length);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
       checkPair(paired.keyPoints[pointIndex], point, `${path}.keyPoints[${pointIndex}]`);
@@ -180,7 +208,7 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     }
   }
 
-  assert.equal(heldFields, 56, 'hold the module summary, L3 title and every illustration description, body, key point and quiz field');
+  assert.equal(heldFields, 55, 'hold the module summary, L3 title and every illustration description, other body, key point and quiz field');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
@@ -193,7 +221,8 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     assert.equal(presentation.status, index < 2 ? 'draft' : 'english-fallback',
       `${lesson.id}: status only claims a draft when at least one field is translated`);
     assert.equal(presentation.content.title, paired.title.tshivendaDraft, `${lesson.id}: show the paired title draft`);
-    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: hold farming instructions in exact English`);
+    assert.equal(presentation.content.body, paired.body.tshivendaDraft,
+      `${lesson.id}: show only its exact-source-paired body draft or exact-English hold`);
     assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: hold safety summaries in exact English`);
     assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: keep questions and answers in exact English`);
     assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,

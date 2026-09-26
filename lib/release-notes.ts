@@ -42,7 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'dc434017', changes: [
+  { when: '27 September 2026', sha: 'f746e30c', changes: [
+    'Soil Health lesson 1 shows six Tshivenda soil-concept drafts beside English.',
+  ], tour: [
+    { title: 'Check the Tshivenda Soil Health concepts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 1. The jar exercise, diagnosis advice, key points and quizzes remain in English beside the six marked concept drafts.' },
+  ] },
+  { when: '27 September 2026', sha: 'd21b20fe', changes: [
     'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
     'Vegetables & Staple Crops lesson 3 shows a short Xitsonga concept draft.',
   ], tour: [
