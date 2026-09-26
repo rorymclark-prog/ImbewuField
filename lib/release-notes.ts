@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '75c5905a', changes: [
+    'Sesotho and Tshivenda survey welcome drafts now show their English sources.',
+  ] },
   { when: '26 September 2026', sha: '8d909f55', changes: [
     'The Tshivenda sample chooser pairs marked draft labels with their English source.',
   ], tour: [
