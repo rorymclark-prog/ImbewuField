@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '2e24930b', changes: [
+    'Sesotho and Tshivenda Study show more course and offline save labels.',
+  ], tour: [
+    { title: 'Check your studies', where: 'Student', href: '/student',
+      detail: 'Choose Sesotho or Tshivenda and check the course progress, lesson and offline save labels.' },
+  ] },
   { when: '26 September 2026', sha: '75c5905a', changes: [
     'Sesotho and Tshivenda survey welcome drafts now show their English sources.',
   ] },
