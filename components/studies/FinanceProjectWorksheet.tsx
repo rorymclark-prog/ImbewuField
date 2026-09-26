@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import { canSaveProjectDraft, checkProjectAnswers, deriveProject, projectDraftText, PROJECT_NUMBER_QUESTIONS, PROJECT_REASONING, projectMoney, readProjectDraft, type FinanceProjectCase, type ProjectAnswers } from '@/lib/finance-project';
+import { financeZu, FINANCE_ZU_PROJECT_NUMBER_LABEL, FINANCE_ZU_PROJECT_REASONING_LABEL, FINANCE_ZU_PROJECT_REASONING_PROMPT } from '@/lib/course-finance-i18n';
+import { FinanceZuText, FinanceZuCourseNotice } from './FinanceZu';
 import styles from './FinanceCourse.module.css';
 
 export default function FinanceProjectWorksheet({ exercise }: { exercise: FinanceProjectCase }) {
@@ -68,14 +70,16 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
     <p className={styles.eyebrow}>Your worksheet</p><h2>Follow the records. Explain the decisions.</h2>
     <p>Use a notebook and calculator, or type here. Enter rand in the money boxes and kilograms in the stock box. Use a minus sign for a cash gap. A comma or point can separate decimals.</p>
     <p>Try every calculation before checking. You can read out or point to your reasoning while a facilitator writes it down. These self-checks do not award course credit.</p>
+    <FinanceZuCourseNotice />
     {!ready && <p role="status">Opening your practice worksheet…</p>}
     <div className={styles.answerGrid}>{PROJECT_NUMBER_QUESTIONS.map(question => <label className={styles.answerField} key={question.id} htmlFor={`answer-${question.id}`}>
-      <span>{question.label} ({question.unit})</span>
+      <span><FinanceZuText en={question.label} zu={financeZu(FINANCE_ZU_PROJECT_NUMBER_LABEL, question.id, question.label)} /> ({question.unit})</span>
       <input id={`answer-${question.id}`} type="text" inputMode={question.id === 'plannedMinimum' || question.id === 'cashDifference' ? 'text' : 'decimal'} disabled={!ready} maxLength={30} value={answers[question.id] ?? ''} onChange={event => change(question.id, event.target.value)} />
     </label>)}</div>
     <h3>Explain with source references</h3>
     {PROJECT_REASONING.map(question => <label className={styles.answerField} key={question.id} htmlFor={`answer-${question.id}`}>
-      <strong>{question.label}</strong><span>{question.prompt}</span>
+      <strong><FinanceZuText en={question.label} zu={financeZu(FINANCE_ZU_PROJECT_REASONING_LABEL, question.id, question.label)} /></strong>
+      <span><FinanceZuText en={question.prompt} zu={financeZu(FINANCE_ZU_PROJECT_REASONING_PROMPT, question.id, question.prompt)} /></span>
       <textarea id={`answer-${question.id}`} disabled={!ready} rows={4} maxLength={3000} value={answers[question.id] ?? ''} onChange={event => change(question.id, event.target.value)} />
     </label>)}
     <div className={styles.actions}>
@@ -100,6 +104,6 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
       <p>These changes add to {projectMoney(derived.cashDifference)}. They explain the change in closing cash, not profit. In these cases the price per kilogram stays the same; the sales difference comes from quantity.</p>
       <h4>Discuss and try a fresh case</h4><p>For every correction, point to the source and explain what went wrong. Use the next case after feedback. Repeating the same remembered totals does not demonstrate the method.</p>
     </div>}
-    <div className={styles.printAnswers}><h3>Written answers</h3>{PROJECT_REASONING.map(q => <div key={q.id}><h4>{q.label}</h4><p>{answers[q.id] || 'Not yet written'}</p></div>)}</div>
+    <div className={styles.printAnswers}><h3>Written answers</h3>{PROJECT_REASONING.map(q => <div key={q.id}><h4><FinanceZuText en={q.label} zu={financeZu(FINANCE_ZU_PROJECT_REASONING_LABEL, q.id, q.label)} /></h4><p>{answers[q.id] || 'Not yet written'}</p></div>)}</div>
   </section>;
 }

@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'c48e3971', changes: [
+    'Farm Finance lessons and worksheets now have isiZulu drafts; due dates use your language.',
+  ], tour: [
+    { title: 'Read Farm Finance in isiZulu', where: 'Study → Farm Finance', href: '/student/finance',
+      detail: 'Switch the app to isiZulu and open a lesson; draft translations are marked.' },
+  ] },
   { when: '26 September 2026', sha: 'a46473ba', changes: [
     'Sesotho Study keeps seed terms in English and marks two general lesson headings as drafts.',
   ], tour: [
