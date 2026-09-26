@@ -124,7 +124,7 @@ test('Sesotho Introduction L2 holds unclear bed scale and slope wording in Engli
   assert.notEqual(presentation.content.title, source.title);
 });
 
-test('Sesotho seed labels cannot change seed-saving instructions or quiz answers before review', () => {
+test('Sesotho seed terms stay held while only generic lesson headings are draft', () => {
   const draft = SESOTHO_SEEDS_SOVEREIGNTY_DRAFT;
   const source = COURSE_MODULES.find(module => module.id === draft.id);
   assert.ok(source);
@@ -133,14 +133,10 @@ test('Sesotho seed labels cannot change seed-saving instructions or quiz answers
   assert.deepEqual(draft.sourceMetadata, { durationMins: source.durationMins, category: source.category });
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
 
-  for (const [pair, english] of [
-    [draft.title, source.title],
-    [draft.description, source.description],
-  ] as const) {
-    assert.equal(pair.sourceEnglish, english);
-    assert.equal(pair.reviewStatus, 'machine-draft');
-    assert.ok(pair.sesothoDraft.trim());
-  }
+  assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.reviewStatus, 'hold');
+  assert.equal(draft.title.sesothoDraft, source.title, 'the technical Seed Sovereignty term remains exact English');
+  assert.equal(draft.description.sourceEnglish, source.description);
 
   const checkHold = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string) => {
     assert.equal(pair.sourceEnglish, english);
@@ -148,11 +144,18 @@ test('Sesotho seed labels cannot change seed-saving instructions or quiz answers
     assert.equal(pair.reviewStatus, 'hold');
   };
 
+  checkHold(draft.description, source.description);
+  checkHold(draft.title, source.title);
+
   for (const [lessonIndex, lesson] of draft.lessons.entries()) {
     const original: (typeof source.lessons)[number] = source.lessons[lessonIndex];
     assert.equal(lesson.title.sourceEnglish, original.title);
-    assert.equal(lesson.title.reviewStatus, 'machine-draft');
-    assert.ok(lesson.title.sesothoDraft.trim());
+    if (lesson.id === 'seeds-sovereignty-l2') {
+      checkHold(lesson.title, original.title);
+    } else {
+      assert.equal(lesson.title.reviewStatus, 'machine-draft');
+      assert.ok(lesson.title.sesothoDraft.trim());
+    }
     if (original.infographicAlt) {
       assert.ok(lesson.infographicAlt);
       checkHold(lesson.infographicAlt, original.infographicAlt);
