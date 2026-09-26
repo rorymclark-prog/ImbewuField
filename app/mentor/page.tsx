@@ -50,7 +50,7 @@ const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
 };
 
 function localizedDueDate(dueAt: string | null, today: string, lang: string): string | null {
-  if (lang !== 'zu') return formatDue(dueAt, today);
+  if (lang !== 'zu') return formatDue(dueAt, today, lang);
   if (!dueAt) return null;
   const days = daysBetween(today, dueAt);
   if (days === null) return null;
