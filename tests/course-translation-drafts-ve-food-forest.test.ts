@@ -5,7 +5,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 
-test('Tshivenda Food Forest L2 pairs one marked heading with exact English farming holds', () => {
+test('Tshivenda Food Forest L2 holds ambiguous habitat wording in English', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'food-forest');
   assert.ok(sourceModule, 'Food Forest must remain in the canonical Study source');
   const source = sourceModule.lessons.find(lesson => lesson.id === 'food-forest-l2');
@@ -30,14 +30,12 @@ test('Tshivenda Food Forest L2 pairs one marked heading with exact English farmi
   assert.ok(draft.infographicAlt);
   checkHeld(draft.infographicAlt, source.infographicAlt, 'infographicAlt');
   assert.equal(draft.body.sourceEnglish, source.body, 'body: keep the complete canonical lesson beside its draft');
-  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  checkHeld(draft.body, source.body, 'body');
   const sourceParagraphs = source.body.split('\n\n');
   const draftParagraphs = draft.body.tshivendaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length, 'body: preserve every paragraph boundary');
-  const habitatParagraph = 'Zwimela zwa mupo zwo teaho vhupo hazwo zwi nga tikedza vhupo sa tshipiḓa tsha nzudzanyo.';
-  assert.equal(draftParagraphs[9], habitatParagraph, 'body: include only the independently checked habitat sentence');
   draftParagraphs.forEach((paragraph, index) => {
-    if (index !== 9) assert.equal(paragraph, sourceParagraphs[index], `body paragraph ${index + 1}: keep exact English`);
+    assert.equal(paragraph, sourceParagraphs[index], `body paragraph ${index + 1}: keep exact English`);
   });
   assert.equal(draft.keyPoints.length, source.keyPoints.length);
   draft.keyPoints.forEach((point, index) => checkHeld(point, source.keyPoints[index], `keyPoints[${index}]`));
