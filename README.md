@@ -15,7 +15,6 @@ All keys the app needs are listed in [`.env.example`](./.env.example). Copy it t
 | `NEXT_PUBLIC_MAPBOX_TOKEN` | **The map** | [Mapbox tokens](https://account.mapbox.com/access-tokens) (starts `pk.`) |
 | `ANTHROPIC_API_KEY` | AI features (reports, photo analysis, insights) | [Anthropic console](https://console.anthropic.com/) (starts `sk-ant-`) |
 | `NEXT_PUBLIC_FIREBASE_*` (6 keys) | Login, data, photo storage | Firebase console → Project settings → SDK config |
-| `SITE_PASSWORD` | The password gate on the whole site | You choose it |
 
 Real secret values are **never** committed — they live in `.env.local` (gitignored) and in Vercel.
 

@@ -9,7 +9,7 @@
 // specific regression — a hardcoded light hex, or one of the :root-only constants from
 // tests/theme-token-coverage.test.ts, creeping back into these two files as a surface, border or
 // body-text colour — the same shape of test as tests/pre-auth-theme-tokens.test.ts uses for the
-// login/gate screens.
+// login screen.
 //
 // A few colours are real exceptions, not oversights: the forest (#1F4D2B) and ochre (#9A6018)
 // brand fills keep their fixed light-text pairing (white, #F7F2E9, #EAF3E2) per CLAUDE.md — "Brand
