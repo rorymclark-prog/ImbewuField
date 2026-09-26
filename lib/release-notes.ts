@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '719f440b', changes: [
+    'Food Forest lesson 2 shows a marked Tshivenda heading draft beside English.',
+    'Farming advice, plant lists and quizzes remain in English for review.',
+  ], tour: [
+    { title: 'Compare the Food Forest heading draft', where: 'Study', href: '/student',
+      detail: 'Choose Tshivenda, then open Food Forest lesson 2 to compare its heading with English.' },
+  ] },
   { when: '26 September 2026', sha: '89d44f5f', changes: [
     'Settings marks languages that are still partly shown in English.',
     'Design Studio buttons and the element list use clear icons instead of emoji.',
