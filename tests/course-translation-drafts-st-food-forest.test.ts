@@ -67,6 +67,7 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
   }
 
   assert.deepEqual(holds, [
+    'lessons[0] food-forest-l1.infographicAlt',
     'lessons[0] food-forest-l1.title',
     'lessons[0] food-forest-l1.body',
     'lessons[0] food-forest-l1.quiz[0].rationale',
@@ -84,7 +85,9 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
     'lessons[2] food-forest-l3.body',
     'lessons[2] food-forest-l3.quiz[0].rationale',
     'lessons[2] food-forest-l3.quiz[1].rationale',
-  ], 'uncertain planting, legal, and source-sensitive fields stay exact English');
+  ], 'uncertain planting, legal, and visually corrected image wording stay exact English');
+  assert.doesNotMatch(source.lessons[0].infographicAlt ?? '', /root crops|seven layers/i,
+    'the pictured woody roots and overlapping plant heights cannot support an exact crop or layer count');
 
   const namesAndClaims = [
     'Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry', 'Cape gooseberry', 'Wild Medlar',

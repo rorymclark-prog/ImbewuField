@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '909246b1', changes: [
+    'Tshivenda Study shows a marked Food Forest layer draft beside English.',
+    'Species, care guidance and quiz answers stay in English for review.',
+    'The Food Forest picture description now matches the visible plants and roots.',
+  ], tour: [
+    { title: 'Compare the Food Forest layer draft', where: 'Study', href: '/student',
+      detail: 'Choose Tshivenda, then open Food Forest lesson 1 to compare the draft and English.' },
+  ] },
   { when: '26 September 2026', sha: 'b081886c', changes: [
     'Sesotho Study shows a marked Record-Keeping draft beside its English source.',
     'The price example, crop advice and quiz remain in English for review.',

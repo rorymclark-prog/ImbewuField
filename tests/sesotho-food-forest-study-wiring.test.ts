@@ -75,6 +75,7 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     'lessons[0] food-forest-l1.body',
     'lessons[0] food-forest-l1.quiz[0].rationale',
     'lessons[0] food-forest-l1.quiz[1].rationale',
+    'lessons[0] food-forest-l1.infographicAlt',
     'lessons[1] food-forest-l2.body',
     'lessons[1] food-forest-l2.keyPoints[0]',
     'lessons[1] food-forest-l2.keyPoints[1]',
