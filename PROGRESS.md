@@ -89,6 +89,19 @@ must provision — not buildable from code alone).
   - Confirm that the ACT (2014) "used with permission" and the UNDP/RVCC origin cover an app
     edition.
   - Check the "not found as listed" NEMBA rows against the gazette PDF (the proxy blocked it).
+### 2026-09-26 (swarm wave 6b — Farm Finance in isiZulu)
+- **Finance track retry (PR #689).** New `lib/course-finance-i18n.ts` holds source-paired isiZulu
+  drafts for the Farm Finance course: `financeZu(map, id, liveEnglish)` only returns the draft while
+  its stored English still equals the live English, so an edited lesson falls back to English
+  instead of showing a stale translation. `components/studies/FinanceZu.tsx` renders the drafts plus
+  a "draft translation" badge/notice; wired into the course page, lesson reader, project worksheet,
+  CourseSyllabus (title/blurb widened to ReactNode) and the mentor course list.
+- **Due-date months via Intl.** `lib/course-assignments.ts` `monthAbbrev` now formats with
+  `Intl.DateTimeFormat`, checking `supportedLocalesOf` first — an unsupported tag (ss/nr/ve/ts)
+  would otherwise fall back to the *browser's* locale (German months in Vienna), so it pins English.
+- Tests: new `tests/course-finance-zu.test.ts`; `tests/student-simple.test.ts` pins the
+  supported-locale check.
+
 ### 2026-09-26 (gate deleted)
 - **Rory: "yes delete the gate".** Removed `app/gate/page.tsx`, `app/api/gate/route.ts` and
   `tests/gate-guard.test.ts`; dropped `/gate` from ChatWidget's exclusions and `NO_FLOATING_BACK`,
