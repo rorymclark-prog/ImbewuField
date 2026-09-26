@@ -125,6 +125,29 @@ How to use it:
 | South Africa (country) | Afrika Tshipembe | App: `ve.ts` spells "Afrika Tshipembe". (check) |
 | Southern Africa (region) | Tshipembe tsha Afrika | Descriptive, to keep it apart from the country name. (check) |
 | Western Cape | Kapa Vhukovhela | Explain on first use (Western Cape). (check) |
+| sector map | mmapa wa sekithara | Built from glossary terms. Explain on first use (sector map). |
+| true north / magnetic north | devhula ya vhukuma / devhula ya maginethe | Descriptive + loan. Explain on first use. (check) |
+| degrees (angle) | khona | e.g. "khona dza 20"; as in chapter 02. Temperature degrees: "digirii dza Celsius (°C)". (check) |
+| June | Fulwi | Venda month (Jul = Fulwana, Aug = Ṱhangule). (check) |
+| snow | gwamba | Explain on first use (snow). (check) |
+| fog / mist | gomo | Same word as "mist" above. (check) |
+| cold front | tshipiḓa tsha muya u rothaho | Descriptive. Explain on first use (cold front). (check) |
+| berg wind | muya wa berg | Loan. Explain on first use (berg wind). |
+| thunderstorm | mvula ya maḓumo | Descriptive ("maḓumo" = thunder). Explain on first use (thunderstorms). (check) |
+| escarpment | mitsheto ya thavha | Descriptive. Explain on first use (escarpment). (check) |
+| Equator | Ikweitha | Loan. Explain on first use (Equator). (check) |
+| valley floor | fhethu ha fhasi vhukati ha thavha | Descriptive. Explain on first use (valley floors). (check) |
+| micro-climate | mutsho wa fhethu huṱuku | Same as "microclimate" above; plural "mitsho ya fhethu huṱuku". |
+| thermal belt | lutenga lu dudelaho | Descriptive: warm band part-way up a slope. Explain on first use (thermal belt). (check) |
+| thermal mass | zwithu zwi vhulungaho mufhiso | Descriptive. Explain on first use (thermal mass). (check) |
+| sun trap | fhethu ha u fara ḓuvha | Descriptive. Explain on first use (sun traps). (check) |
+| white frost / black frost | tshando tshitshena / tshando tshitswu | Explain on first use. (check) |
+| nurse trees | miri ya u ṱhogomela | Descriptive. Explain on first use (nurse trees). (check) |
+| rain gauge | tshikalo tsha mvula | Descriptive. Explain on first use (rain gauge). (check) |
+| Fire Protection Association | Dzangano ḽa u Thivhela Mulilo | Descriptive; English in brackets on first use. (check) |
+| fire beaters | zwirwa zwa u dzima mulilo | Descriptive. Explain on first use (fire beaters). (check) |
+| pearl millet | mhuṱa | (check) |
+| electricity | mudagasi | As in `ve.ts` and chapter 11 (chapters 02 and 07 spell "muḓagasi"). (check) |
 
 ## 3. Water and earthworks
 
@@ -168,6 +191,13 @@ How to use it:
 | catchment | fhethu ha u kuvhanganya maḓi | Descriptive: where the water comes from. Explain on first use (catchment). (check) |
 | gully | mugero muhulwane wo siwaho nga maḓi | Descriptive, built from "mugero". Explain on first use (gullies). (check) |
 | drop (of water) | ḓontsi / maḓontsi | (check) |
+| blackwater (toilet water) | maḓi a thoilethe | Descriptive. Explain on first use (blackwater). (check) |
+| grease trap | tshifari tsha mafuṱa | Descriptive. Explain on first use (grease trap). (check) |
+| dripper (drip emitter) | tshibvisa-matonsi / zwibvisa-matonsi | Built from "u sheledza nga matonsi". Explain on first use (drippers). (check) |
+| filter | tshisefi | Loan from "u sefa". Explain on first use (filter). (check) |
+| water pressure | tsikeledzo (ya maḓi) | Explain on first use (pressure); unit "bar" kept. (check) |
+| micro-sprinkler | tshipfafadzi tshiṱuku / zwipfafadzi zwiṱuku | Built from app "tshipfafadzi". Explain on first use (micro-sprinklers). (check) |
+| impact sprinkler | tshipfafadzi tsha u rwa | Descriptive. Explain on first use (impact sprinklers). (check) |
 
 ## 4. Beds, gardens and crops
 
@@ -250,6 +280,20 @@ How to use it:
 | lettuce | letisi | Loan word. (check) |
 | gourd | mukumbu / mikumbu | Explain on first use (gourds). (check) |
 | vertical gardening | u lima u ya nṱha | Descriptive. Explain on first use (vertical gardening). (check) |
+| cowpeas (when listed next to beans) | nawa dza sialala (cowpeas) | Used in ch. 10 to keep cowpeas apart from "nawa" (beans). (check) |
+| garlic | galiki | Loan word. (check) |
+| broccoli / cauliflower | brokholi / kholifulawa | Loan words. (check) |
+| cucumber | khukhamba | Loan word. (check) |
+| celery / beetroot | seleri / bitiruthu | Loan words. (check) |
+| radish / turnip | radishi / thanipi | Loan words. (check) |
+| butternut / okra | bathanathi / okhura | Loan words. (check) |
+| sunflower | sonobolomo | Loan (Afrikaans "sonneblom"). (check) |
+| strawberry | sitiroberi | Loan word. (check) |
+| melon(s) | mamelone | Loan word. (check) |
+| guava / peach | gwavha (magwavha) / phitshi (mapitshi) | Loan words. (check) |
+| mint | minti | Loan word. Other herbs (basil, parsley, dill, coriander, rosemary, sage) kept in English. (check) |
+| plant family (botanical) | lushaka lwa zwimela | e.g. "lushaka lwa khabishi" (cabbage family). (check) |
+| stem | thanda (dza zwimela) | (check) |
 
 ## 5. Trees, food forest and windbreaks
 
@@ -366,6 +410,22 @@ How to use it:
 | honey | ṋotshi | Same word as "bee" in everyday speech; say "ṋotshi dza u ḽiwa" if unclear. (check) |
 | pollination | u phaḓaladza mupfumbu wa maluvha | Descriptive. Explain on first use (pollination). (check) |
 | nectar | nekhitha | Loan word. Explain on first use (nectar). (check) |
+| feathers | vhoya ha zwiṋoni | Descriptive ("vhoya" = hair/fur). Replaces "nḓevhe" (= ears) in ch. 5. A reviewer may know the proper word. (check) |
+| pollen | mupfumbu | As in "pollination" row. Explain on first use (pollen). (check) |
+| beeswax / comb | wekisi / zwiṱaṱo zwa wekisi | Loan + descriptive. Explain on first use (wax, combs). (check) |
+| bee sting (the barb) / to sting | tshiluma / u luma | "u lumiwa nga ṋotshi" = to be stung. (check) |
+| bee smoker | tshibvisi tsha vhutsi | Descriptive. Explain on first use (smoker). (check) |
+| vaccinate / vaccine | u ṱhavhela / ṱhavhelo | Explain on first use (vaccines). (check) |
+| state veterinarian | dokotela wa zwifuwo wa muvhuso | Descriptive. (check) |
+| electric fence | lufhenḓe lwa muḓagasi | Built from "lufhenḓe". (check) |
+| castrated (male animal) | wo ṱhenwaho / dzo ṱhenwaho | Explain on first use (castrated). (check) |
+| swill (kitchen food waste for pigs) | swill (malaṱwa a zwiḽiwa a khishini) | Loan kept in bold, explained in the sentence. (check) |
+| hay / silage | hatsi ho omiswaho / silitshi | Descriptive / loan. Explain on first use (hay, silage). (check) |
+| pods (seed pods) | zwikhwama zwa mbeu | Descriptive. Explain on first use (pods). (check) |
+| browse (tree leaves eaten by stock) | maṱari a miri ane zwifuwo zwa a ḽa | Descriptive. Explain on first use (browse). (check) |
+| poultry | zwiṋoni zwa hayani | Descriptive. (check) |
+| emergency | shishi | "thuso ya shishi" = emergency help. (check) |
+| Department of Agriculture | Muhasho wa Vhulimi | Give the English name in brackets. (check) |
 
 ## 8. Ecology, pests and natural pest control
 
@@ -397,6 +457,57 @@ How to use it:
 | germs | zwitshili zwi ḓisaho malwadze | Descriptive ("zwitshili" alone = living things). Explain on first use (germs). (check) |
 | fly / fly larvae | nzhinzhi / zwivhungu zwa nzhinzhi | Explain on first use (fly larvae). (check) |
 | butterfly | bataflai | Loan word. Explain on first use (butterfly). (check) |
+| pest (crop-damaging) | tshikukumi tshi tshinyadzaho / zwikukumi zwi tshinyadzaho | Used in ch. 10 to separate pests from insects in general. Explain on first use (pests). (check) |
+| predator(s) | zwipuka zwi ḽaho zwiṅwe | Plural of "predator" (tshipuka tshi ḽaho zwiṅwe); ch. 05, 09, 10. |
+| spider(s) | ṱhavhavhi | Ch. 09, 10. Explain on first use (spiders). (check) |
+| mites | zwiṱhavhavhi zwiṱuku-zwiṱuku (mites) | Descriptive; English kept in brackets. (check) |
+| beetle(s) / ground beetles | tshikhokhonono / zwikhokhonono; zwikhokhonono zwa fhasi | Ch. 08, 10. Explain on first use (beetles, ground beetles). (check) |
+| ladybird | ladybird | Loan word, as in ch. 09. (check) |
+| hoverfly | hoverflies (nzhinzhi dza maluvha) | Loan + descriptive gloss. (check) |
+| lacewing | lacewings | Loan word. (check) |
+| wasp / parasitic wasp | wasepe / wasepe ṱhukhu dzi ikhelaho makumba kha zwiṅwe zwikukumi | Loan "wasepe"; short form "wasepe ṱhukhu" after first use. Explain on first use (parasitic wasps). (check) |
+| praying mantis | mantisi | Loan word. Explain on first use (praying mantises). (check) |
+| chameleon | khameleoni | Loan word. Explain on first use (chameleons). (check) |
+| toad(s) | maḓula mahulwane a mavuni | Descriptive, from "maḓula" (frogs). Explain on first use (toads). (check) |
+| snake(s) / mole snake | ṋowa / ṋowa dzi ḽaho mbevha dza fhasi ha mavu | Ch. 05, 10. Explain on first use (mole snakes). (check) |
+| owl(s) / eagle(s) | tshikhovha / zwikhovha; gondo / magondo | Ch. 09, 10. (check) |
+| mole-rat(s) | mbevha dza fhasi ha mavu | Descriptive. Explain on first use (mole-rats). Golden moles kept in English. (check) |
+| porcupine | nungu | Explain on first use (porcupines). (check) |
+| moth(s) | tshipfufu / zwipfufu | Explain on first use (moths). "Diamond-back moth" kept in English. (check) |
+| cutworm(s) | zwivhungu zwi remaho zwimela | Descriptive. Explain on first use (cutworms). (check) |
+| African bollworm | tshivhungu tsha mitshelo tsha Afrika | Descriptive. Explain on first use (African bollworm). (check) |
+| fall armyworm | zwivhungu zwa mmbi | "mmbi" = army. Explain on first use (fall armyworm). (check) |
+| fruit fly / whitefly | nzhinzhi dza mitshelo / nzhinzhi ṱhukhu tshena | Descriptive. Explain on first use (fruit flies, whiteflies). (check) |
+| slugs and snails | khumba (slugs na snails) | Slugs = "khumba dzi si na goko"; shell = "goko". (check) |
+| honeydew | maḓi a swigiri | Descriptive. Explain on first use (honeydew). (check) |
+| fungus / sooty mould | khowa / khowa ntswu (sooty mould) | Ch. 09, 10. (check) |
+| netting / shade cloth | neṱe / neṱe ya murunzi | Loan word. Explain on first use (shade cloth). (check) |
+| resistant (to poison) | u konḓelela tshivhulahi | Descriptive. Explain on first use (resistant). (check) |
+| poison (general) | tshivhulahi / zwivhulahi | From "zwivhulahi zwa zwikukumi" (pesticide). (check) |
+| tobacco / nicotine | fola / nikhotini | Loan "nikhotini". (check) |
+| soap | tshisibe | (check) |
+| mortar and pestle | mutuli na mutsi | (check) |
+| ecology | ekholodzhi | Loan word. Ch. 9. Explain on first use (ecology). (check) |
+| ecological pyramid | phiramidi ya mupo | Loan "phiramidi". Ch. 9. (check) |
+| producers / consumers / decomposers | vhabveledzi / vhaḽi / vhapwashi | Ch. 9. Explain on first use (producers, consumers, decomposers). (check) |
+| ecosystem services | tshumelo dza mupo | Ch. 9. Explain on first use (ecosystem services). (check) |
+| bush encroachment | u dzhena ha zwiṱaka | Descriptive. Ch. 9. Explain on first use (bush encroachment). (check) |
+| niche | niche (tshikhala tsha mushumo kha mupo) | Loan + gloss. Ch. 9. (check) |
+| hedgerow | mutalo wa zwiṱaka / mitalo ya zwiṱaka | As in ch. 6. Explain on first use (hedgerows). (check) |
+| owl / barn owl | tshikhovha / zwikhovha; zwikhovha zwa barn owl | Ch. 9. (check) |
+| eagle(s) | gondo / magondo | Ch. 9. (check) |
+| jackal | phungubwe | Ch. 9. (check) |
+| rat / mouse / rodents | mbevha khulwane / mbevha | Ch. 9. "mbevha" covers rats and mice. (check) |
+| rat poison | mushonga wa mbevha | Ch. 9. (check) |
+| snake | ṋowa | Ch. 9. (check) |
+| scorpion | zwikukumi zwi lumaho nga mutsila (scorpions) | Descriptive; a reviewer may know the proper word. Ch. 9. (check) |
+| mosquito | mosikhito | Loan word; a reviewer may know the proper word. Ch. 9. (check) |
+| tadpoles | vhana vha maḓula | Descriptive. Explain on first use (tadpoles). Ch. 9. (check) |
+| toads | maḓula a mavuni | Descriptive ("frogs and toads" = maḓula a maḓini na a mavuni). Ch. 9. (check) |
+| polyculture | zwiliṅwa zwinzhi khathihi | As in ch. 4. Explain on first use (polycultures). (check) |
+| sweet thorn (*Vachellia karroo*) | muunga | Ch. 9. (check) |
+| pigeon pea | pigeon pea (nawa dza muri) | Loan + descriptive gloss. Ch. 9. (check) |
+| plantation (pine) | fhethu ho ṱavhiwaho miri ya phaini | Descriptive. Ch. 9. (check) |
 
 ## 9. Home and appropriate technology
 
@@ -422,8 +533,23 @@ How to use it:
 | tip (callout) | Tsevhedzo | App: `ve.ts` (photoTip). Use for "> **Tip:**" callouts. |
 | key points | Zwithu zwa ndeme | App: `ve.ts` ("Zwithu zwa Ndeme", allSectionYear1Priorities). |
 | note (callout) | Ḓivhani | Imperative "know / take note". Use for "> **Note:**" callouts. (check) |
+| warning (callout) | Ṱhogomelani | Imperative "take care"; as already used in ch. 4, 5, 8, 9. Use for "> **Warning:**" callouts. (check) |
 | saying / proverb ("Saying:") | Murero | Used to introduce each principle's saying. (check) |
 | fossil fuels | mafura a bvaho fhasi ha mavu | Descriptive. Explain on first use (fossil fuels). (check) |
+| heat-retention cooker / bag | tshibikisi tshi vhulungaho mufhiso / mukhwama wa u vhulunga mufhiso | Descriptive; "mukhwama wa u fhedzisa u bika" for the wonder bag itself. (check) |
+| solar geyser | giza ḽa ḓuvha / magiza a ḓuvha | Loan "giza" + ḓuvha. Explain on first use (solar geyser). (check) |
+| carbon monoxide | khaboni monokisaidi | Loan word. Explain on first use (carbon monoxide). (check) |
+| methane | metheni | Loan word. Explain on first use (methane). (check) |
+| hydrogen sulphide | haiḓirodzheni salfaidi | Loan word. Explain on first use. (check) |
+| slurry / digestate | slurry (maḓi a manyaga) | English kept + gloss. (check) |
+| brazier (imbawula) | mbawula | Loan. Give "(brazier, imbawula)" on first use. (check) |
+| paraffin / petrol | parafini / phethiroli | Loan words. (check) |
+| to explode | u thuthuba | Add "(explode)" on first use. (check) |
+| gas leak | u bva ha gesi | Descriptive; "(leak)" on first use. (check) |
+| bubbles | mavhuvhu | (check) |
+| to soak (beans) | u nwedza maḓini | "(soak)" on first use. (check) |
+| three-stone fire | mulilo wo vuleaho wa matombo mararu | Descriptive. (check) |
+| World Health Organization | Dzangano ḽa Mutakalo ḽa Ḽifhasi | Give English in brackets. (check) |
 
 ## 10. Tools and people
 
