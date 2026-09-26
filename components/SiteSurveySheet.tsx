@@ -24,6 +24,7 @@ import Illustration from '@/components/Illustration';
 import styles from './SiteSurveySheet.module.css';
 import SiteSurveyReview from './SiteSurveyReview';
 import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
+import { resolveSiteSurveyWelcomeDraft, type SiteSurveyWelcomeField } from '@/lib/site-survey-welcome-drafts';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -35,6 +36,20 @@ interface Props {
   annualRainfallMm?: number;
   onSaved: (survey: SiteSurvey) => void;
   onClose: () => void;
+}
+
+function RegionalWelcomeCopy({ language, field, children }: {
+  language: string;
+  field: SiteSurveyWelcomeField;
+  children: ReactNode;
+}) {
+  const pair = resolveSiteSurveyWelcomeDraft(field, language);
+  if (!pair) return <>{children}</>;
+  if (pair.reviewStatus === 'hold') return <>{pair.sourceEnglish}</>;
+  return <span className={styles.regionalDraftCopy}>
+    <span lang={language}>{pair.draft}</span>
+    <small lang="en">English: {pair.sourceEnglish}</small>
+  </span>;
 }
 
 // Step tab labels. 'Challenges' reuses the already-fully-translated `stepChallenges` key from
@@ -456,13 +471,14 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       <header className={styles.header}>
         <div className={styles.brandMark}><NotebookPen size={23}/></div>
         <div className={styles.siteHeading}><strong>{t('siteQuestionnaireTitle')}</strong><span><MapPin size={12}/>{place?.name ?? t('surveyYourSite')}</span></div>
-        {started && <button className={styles.modeButton} onClick={() => setStarted(false)}>{mode === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}<ChevronDown size={14}/></button>}
+        {started && <button className={styles.modeButton} onClick={() => setStarted(false)}><RegionalWelcomeCopy language={lang} field={mode === 'short' ? 'shortTitle' : 'fullTitle'}>{mode === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}</RegionalWelcomeCopy><ChevronDown size={14}/></button>}
         <button onClick={closeWithConfirm} aria-label={t('surveyCloseAriaLabel')} className={styles.close}><X size={20}/></button>
       </header>
       {lang === 'zu' && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
+      {(lang === 'st' || lang === 've') && <p className={styles.regionalDraftNotice} role="note">{lang === 'st' ? 'Sesotho' : 'Tshivenda'} welcome labels are unreviewed drafts. English appears beside each machine draft; held labels remain in English.</p>}
       <div className={styles.workspace}>
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
-          <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
+          <span className={styles.eyebrow}><RegionalWelcomeCopy language={lang} field="fieldNotebook">{t('surveyFieldNotebook')}</RegionalWelcomeCopy></span>
             {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
             <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : id === 6 ? paired('stepChallenges', 'Challenges & Priorities') : STEPS[id]}</span>
           </button>; })}
@@ -471,15 +487,15 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         <div ref={scrollRef} className={styles.scroll}>
         {!started ? <div className={styles.welcome}>
           <div className={styles.welcomeIntro}>
-            <span className={styles.eyebrow}>{t('surveyFieldNotebook')}</span>
-            <h1 ref={headingRef} tabIndex={-1}>{t('surveyWelcomeTitle')}</h1>
+            <span className={styles.eyebrow}><RegionalWelcomeCopy language={lang} field="fieldNotebook">{t('surveyFieldNotebook')}</RegionalWelcomeCopy></span>
+            <h1 ref={headingRef} tabIndex={-1}><RegionalWelcomeCopy language={lang} field="welcomeTitle">{t('surveyWelcomeTitle')}</RegionalWelcomeCopy></h1>
             <p>{t('surveyWelcomeIntro')}</p>
             <div className={styles.illustration}><Illustration name="example-hero"/><span>{t('surveyIllustrationCaption')}</span></div>
           </div>
           <div className={styles.modeCards}>
             {(['short','full'] as const).map(value => <button key={value} className={styles.modeCard} aria-pressed={mode === value} onClick={() => setMode(value)}>
-              <div className={styles.modeCardTop}>{value === 'short' ? <Sprout size={26}/> : <NotebookPen size={26}/>}<span>{value === 'short' ? t('surveyFiveSections') : t('surveySevenSections')}</span>{mode === value ? <CircleCheck size={23}/> : <Circle size={23}/>}</div>
-              <h2>{value === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}</h2>
+              <div className={styles.modeCardTop}>{value === 'short' ? <Sprout size={26}/> : <NotebookPen size={26}/>}<span><RegionalWelcomeCopy language={lang} field={value === 'short' ? 'fiveSections' : 'sevenSections'}>{value === 'short' ? t('surveyFiveSections') : t('surveySevenSections')}</RegionalWelcomeCopy></span>{mode === value ? <CircleCheck size={23}/> : <Circle size={23}/>}</div>
+              <h2><RegionalWelcomeCopy language={lang} field={value === 'short' ? 'shortTitle' : 'fullTitle'}>{value === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}</RegionalWelcomeCopy></h2>
               <p>{value === 'short' ? t('surveyShortDescription') : t('surveyFullDescription')}</p>
               <span className={styles.modeIncludes}>{value === 'short' ? t('surveyShortIncludes') : t('surveyFullIncludes')}</span>
             </button>)}
@@ -949,7 +965,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               <div style={{ background: 'rgba(31,77,43,0.05)', borderRadius: 11, padding: '4px', border: '1px solid rgba(31,77,43,0.15)', marginBottom: 8 }}>
                 <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--brand)', padding: '6px 10px' }}>
                   <Camera size={14} aria-hidden />
-                  {lang === 'zu' ? 'Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.' : t('photoTip')}
+                  {lang === 'zu' ? <SurveyZuluDraftPair english="Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.">{t('photoTip')}</SurveyZuluDraftPair> : t('photoTip')}
                 </div>
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}
@@ -980,7 +996,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       </div>
 
       <footer className={styles.footer}>
-        {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}<ArrowRight size={18}/></button></div>}
+        {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}><RegionalWelcomeCopy language={lang} field={dirty || existing ? 'continue' : 'begin'}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}</RegionalWelcomeCopy><ArrowRight size={18}/></button></div>}
         {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
         {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.">{t('surveyFixBeforeSave')}</SurveyZuluDraftPair> : t('surveyFixBeforeSave')}</p>}
         {started && <div className={styles.footerInner}>

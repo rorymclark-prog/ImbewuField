@@ -9,7 +9,8 @@ import {
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints, BookOpen,
 } from 'lucide-react';
 import { exitSampleMode } from '@/lib/sample-mode';
-import { useLanguage } from '@/lib/i18n';
+import { accessibleSourceLabel } from '@/lib/accessible-label';
+import { translate, useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
@@ -206,7 +207,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </div>
           <button
             onClick={onClose}
-            aria-label={t('navCloseMenu')}
+            aria-label={accessibleSourceLabel(lang, t('navCloseMenu'), translate('en', 'navCloseMenu'))}
             style={{
               background: 'var(--bg-2)', border: '1px solid var(--border)',
               borderRadius: 8, padding: 7, cursor: 'pointer', color: 'var(--text-secondary)',
@@ -216,6 +217,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             <X size={18} strokeWidth={1.8} />
           </button>
         </div>
+
+        {isZulu && (
+          <p role="note" lang="en" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
+            <strong>ISIZULU MACHINE DRAFT.</strong> Navigation wording has not been reviewed by a fluent isiZulu speaker.
+          </p>
+        )}
 
         <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
           {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre

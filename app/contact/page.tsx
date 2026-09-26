@@ -196,10 +196,10 @@ export default function ContactPage() {
           /* Success state */
           <div
             className={`rounded-2xl p-8 text-center ${motion.sentCard}`}
-            style={{ background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.2)', marginTop: 32 }}
+            style={{ background: 'color-mix(in srgb, var(--color-forest-800) 7%, transparent)', border: '1px solid color-mix(in srgb, var(--color-forest-800) 20%, transparent)', marginTop: 32 }}
           >
-            <CheckCircle className={motion.sentIcon} size={40} style={{ color: '#1F4D2B', margin: '0 auto 16px' }} strokeWidth={1.5} />
-            <div className="font-display font-bold" style={{ fontSize: 20, color: '#1F4D2B', marginBottom: 8 }}>
+            <CheckCircle className={motion.sentIcon} size={40} style={{ color: 'var(--color-forest-800)', margin: '0 auto 16px' }} strokeWidth={1.5} />
+            <div className="font-display font-bold" style={{ fontSize: 20, color: 'var(--color-forest-800)', marginBottom: 8 }}>
               {ui('Message sent', 'Umlayezo uthunyelwe')}
             </div>
             <p className="font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 24 }}>
@@ -209,7 +209,7 @@ export default function ContactPage() {
               onClick={() => { setSent(false); setBody(''); setSubject(''); setShowSubject(false); }}
               className="font-sans font-semibold"
               style={{
-                background: '#1F4D2B', color: '#F7F2E9', border: 'none',
+                background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none',
                 borderRadius: 100, padding: '10px 20px', fontSize: 14, cursor: 'pointer',
               }}
             >
@@ -222,15 +222,15 @@ export default function ContactPage() {
             {repliesError && (
               <div
                 className="flex items-center justify-between gap-3 rounded-2xl px-4 py-3"
-                style={{ marginBottom: 28, background: 'var(--bg-1)', border: '1px solid #D8B7A8' }}
+                style={{ marginBottom: 28, background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}
               >
-                <span className="font-sans" style={{ fontSize: 12.5, color: '#8C4938' }}>
+                <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--danger)' }}>
                   {ui("Couldn't check for replies from your team. Check your connection and try again.", 'Ayikwazanga ukuhlola izimpendulo eziphuma kwithimba lakho. Hlola uxhumano lwakho bese uzama futhi.')}
                 </span>
                 <button
                   onClick={loadReplies}
                   className="font-sans font-semibold flex-shrink-0"
-                  style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                  style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   {ui('Retry', 'Zama futhi')}
                 </button>
@@ -239,25 +239,25 @@ export default function ContactPage() {
             {replies.length > 0 && (
               <div style={{ marginBottom: 28 }}>
                 <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
-                  <MailOpen size={14} style={{ color: '#1F4D2B' }} />
+                  <MailOpen size={14} style={{ color: 'var(--color-forest-800)' }} />
                   <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     {ui('Replies from your team', 'Izimpendulo eziphuma kwithimba lakho')}
                   </span>
-                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                     {replies.length}
                   </span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                   {replies.map((r) => (
                     <div key={r.id} className="rounded-2xl overflow-hidden"
-                      style={{ background: 'var(--bg-1)', border: '1px solid rgba(31,77,43,0.2)' }}>
+                      style={{ background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--color-forest-800) 20%, transparent)' }}>
                       <button
                         onClick={() => setExpandedReply(expandedReply === r.id ? null : r.id)}
                         className="w-full flex items-start gap-3 px-4 py-3 text-left"
                         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                       >
                         <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
-                          style={{ width: 32, height: 32, fontSize: 12, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
+                          style={{ width: 32, height: 32, fontSize: 12, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--color-canvas)' }}>
                           {(r.replied_by_name ?? 'M').slice(0, 1).toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -315,15 +315,15 @@ export default function ContactPage() {
             {profileError && (
               <div
                 className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 mb-3"
-                style={{ background: 'var(--bg-1)', border: '1px solid #D8B7A8' }}
+                style={{ background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}
               >
-                <span className="font-sans" style={{ fontSize: 12, color: '#8C4938' }}>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--danger)' }}>
                   {ui("Couldn't load your phone number.", 'Inombolo yakho yocingo ayikwazanga ukulayishwa.')}
                 </span>
                 <button
                   onClick={loadProfile}
                   className="font-sans font-semibold flex-shrink-0"
-                  style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                  style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   {ui('Retry', 'Zama futhi')}
                 </button>
@@ -335,8 +335,8 @@ export default function ContactPage() {
                 className="flex items-center gap-3 rounded-xl p-4 mb-3"
                 style={{ textDecoration: 'none', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
               >
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Phone size={17} style={{ color: '#1F4D2B' }} strokeWidth={1.6} />
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Phone size={17} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.6} />
                 </div>
                 <div>
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{ui('Call', 'Shayela')}</div>
@@ -351,8 +351,8 @@ export default function ContactPage() {
                 className="flex items-center gap-3 rounded-xl p-4 mb-5"
                 style={{ textDecoration: 'none', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
               >
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Mail size={17} style={{ color: '#1F4D2B' }} strokeWidth={1.6} />
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Mail size={17} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.6} />
                 </div>
                 <div>
                   <div className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{ui('Email', 'I-imeyili')}</div>
@@ -385,28 +385,28 @@ export default function ContactPage() {
                       aria-pressed={recipient === value}
                       className={`flex items-center gap-3 rounded-xl p-3 text-left ${motion.recipient}`}
                       style={{
-                        background: recipient === value ? 'rgba(31,77,43,0.08)' : 'var(--bg-1)',
-                        border: `1px solid ${recipient === value ? 'rgba(31,77,43,0.35)' : 'var(--border)'}`,
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)' : 'var(--bg-1)',
+                        border: `1px solid ${recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 35%, transparent)' : 'var(--border)'}`,
                         cursor: orgLocked ? 'default' : 'pointer',
                         opacity: orgLocked ? 0.55 : 1,
                       }}
                     >
                       <div className={motion.recipientIcon} style={{
                         width: 34, height: 34, borderRadius: 9, flexShrink: 0,
-                        background: recipient === value ? 'rgba(31,77,43,0.12)' : 'rgba(32,25,15,0.05)',
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 12%, transparent)' : 'rgba(32,25,15,0.05)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
-                        <Icon size={16} style={{ color: recipient === value ? '#1F4D2B' : 'var(--text-secondary)' }} strokeWidth={1.6} />
+                        <Icon size={16} style={{ color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-secondary)' }} strokeWidth={1.6} />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: recipient === value ? '#1F4D2B' : 'var(--text-primary)' }}>
+                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
                           {label}
                         </div>
                         <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
                       </div>
                       <div style={{
-                        width: 16, height: 16, borderRadius: 8, border: `2px solid ${recipient === value ? '#1F4D2B' : 'var(--border-strong)'}`,
-                        background: recipient === value ? '#1F4D2B' : 'transparent', flexShrink: 0,
+                        width: 16, height: 16, borderRadius: 8, border: `2px solid ${recipient === value ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,
+                        background: recipient === value ? 'var(--color-forest-800)' : 'transparent', flexShrink: 0,
                         boxSizing: 'border-box', position: 'relative',
                       }}>
                         {recipient === value && (
@@ -444,7 +444,7 @@ export default function ContactPage() {
                   type="button"
                   onClick={() => setShowSubject(true)}
                   className="font-sans font-semibold text-left"
-                  style={{ fontSize: 13, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
                 >
                   + {ui('Add a subject', 'Engeza isihloko')}
                 </button>
@@ -470,7 +470,7 @@ export default function ContactPage() {
               </div>
 
               {error && (
-                <p className="font-sans" style={{ fontSize: 13, color: '#8B2020' }}>{error}</p>
+                <p className="font-sans" style={{ fontSize: 13, color: 'var(--danger)' }}>{error}</p>
               )}
 
               {!isLive && (
@@ -484,8 +484,8 @@ export default function ContactPage() {
                 disabled={sending || !body.trim()}
                 className={`flex items-center justify-center gap-2 font-display font-semibold rounded-xl ${motion.send}`}
                 style={{
-                  background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)',
-                  color: body.trim() ? '#F7F2E9' : 'var(--text-muted)',
+                  background: body.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.1)',
+                  color: body.trim() ? 'var(--color-canvas)' : 'var(--text-muted)',
                   border: 'none', cursor: body.trim() ? 'pointer' : 'default',
                   padding: '13px 20px', fontSize: 15,
                   transition: 'background 0.15s',

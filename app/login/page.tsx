@@ -391,7 +391,7 @@ function LoginPageInner() {
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
             {embedded && (
-              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#8C6A2E' }}>
+              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
                 {t('loginGoogleEmbeddedHelp')}
                 <button type="button" onClick={copyAppLink}
                   className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"

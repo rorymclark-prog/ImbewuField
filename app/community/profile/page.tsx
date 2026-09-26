@@ -39,9 +39,9 @@ function Chip({ label, on, onClick }: { label: string; on: boolean; onClick: () 
       className="font-sans font-semibold transition-all"
       style={{
         padding: '7px 14px', borderRadius: 999, fontSize: 13, cursor: 'pointer',
-        background: on ? '#1F4D2B' : 'rgba(226,216,196,0.5)',
-        color: on ? '#fff' : 'var(--text-secondary)',
-        border: `1px solid ${on ? '#1F4D2B' : 'var(--border)'}`,
+        background: on ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.5)',
+        color: on ? 'var(--color-canvas)' : 'var(--text-secondary)',
+        border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border)'}`,
       }}
     >
       {label}
@@ -60,7 +60,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
         type="button"
         onClick={() => onChange(!on)}
         className="flex items-center rounded-full transition-all flex-shrink-0"
-        style={{ width: 44, height: 26, padding: 3, background: on ? '#1F4D2B' : 'rgba(32,25,15,0.15)', justifyContent: on ? 'flex-end' : 'flex-start', border: 'none', cursor: 'pointer' }}
+        style={{ width: 44, height: 26, padding: 3, background: on ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.15)', justifyContent: on ? 'flex-end' : 'flex-start', border: 'none', cursor: 'pointer' }}
       >
         <span style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', display: 'block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
       </button>
@@ -185,7 +185,7 @@ export default function CommunityProfilePage() {
   if (!ready) {
     return (
       <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
   }
@@ -276,7 +276,7 @@ export default function CommunityProfilePage() {
                       className="font-sans font-semibold transition-all"
                       style={{
                         padding: '7px 14px', borderRadius: 999, fontSize: 13, cursor: 'pointer',
-                        background: 'transparent', color: '#1F4D2B', border: '1px dashed #1F4D2B',
+                        background: 'transparent', color: 'var(--color-forest-800)', border: '1px dashed var(--color-forest-800)',
                       }}
                     >
                       + More crops
@@ -325,13 +325,13 @@ export default function CommunityProfilePage() {
             />
           </div>
 
-          {error && <p className={`${workspace.fullRow} font-sans`} style={{ fontSize: 13, color: '#8B2020' }}>{error}</p>}
+          {error && <p className={`${workspace.fullRow} font-sans`} style={{ fontSize: 13, color: 'var(--danger)' }}>{error}</p>}
 
           <button
             onClick={handleSave}
             disabled={saving}
             className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-            style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
+            style={{ background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
             {saved ? (lang === 'zu' ? t('communityProfileSaved') : 'Saved') : t('communitySaveProfile')}
@@ -340,7 +340,7 @@ export default function CommunityProfilePage() {
           <button
             onClick={handleDelete}
             className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
-            style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '11px 20px', fontSize: 13.5 }}
+            style={{ background: 'transparent', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 30%, transparent)', cursor: 'pointer', padding: '11px 20px', fontSize: 13.5 }}
           >
             <Trash2 size={14} /> {privacyText('Delete my community profile', 'communityDeleteProfile')}
           </button>

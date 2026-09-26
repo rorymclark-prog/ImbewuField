@@ -3,7 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { useRegisterBackControl } from '@/components/BackControl';
-import { useLanguage } from '@/lib/i18n';
+import { accessibleSourceLabel } from '@/lib/accessible-label';
+import { translate, useLanguage } from '@/lib/i18n';
 
 /**
  * A consistent "← Back" control for every sub-page header.
@@ -23,7 +24,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
     <button
       type="button"
       onClick={goBack}
-      aria-label={lang === 'zu' ? 'Buyela emuva' : 'Go back'}
+      aria-label={accessibleSourceLabel(lang, t('buttonBack'), translate('en', 'buttonBack'))}
       title={t('buttonBack')}
       className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
       style={{

@@ -5,7 +5,8 @@
 - Language: Sesotho (`st`), intended for the Free State audience.
 - Scope: the learner Study lesson `market-community-l3`, “Building Community Food Networks: Strength in Numbers”.
 - This packet makes no translation claim and changes no learner content. The L3 title, infographic description, body, key points and quiz remain exact English holds.
-- A text-only Agy CLI attempt from `/tmp` with model `gemini-3.8-flash-low` failed before generation with `IneligibleTierError` (`UNSUPPORTED_CLIENT`; Gemini Code Assist for individuals is no longer supported). No candidate or back-check output was produced. No machine-draft label is warranted without a candidate.
+- A text-only Agy CLI attempt to assess the lesson title from `/tmp` with model `gemini-3.8-flash-low` failed before generation with `IneligibleTierError` (`UNSUPPORTED_CLIENT`; Gemini Code Assist for individuals is no longer supported). No title candidate or back-check output was produced. No machine-draft label is warranted without a candidate.
+- Any Sesotho candidate based on the former infographic description is invalidated: that English source described a collection point for separate harvests, which the image does not show. Reassess the infographic from the corrected source below; this does not affect the separate lesson-title review.
 - No fluent Sesotho speaker or local farming adviser has reviewed L3. Do not treat the isiZulu lesson or its wording as a Sesotho translation source.
 
 ## Source fields and holds
@@ -22,9 +23,9 @@ This is the smallest low-risk Study gap to assess next. “Strength in Numbers�
 
 **English source:**
 
-> Five small farms linked to a shared collection point for their separate harvests.
+> Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.
 
-Keep this exact English until a candidate can preserve that the farms bring separate harvests to one collection point. Do not imply pooled ownership or shared production.
+Keep this exact English as the source for any future Sesotho candidate. Describe only the visible beds, arrows, produce crate, trowel and seed jar; do not add claims about farm ownership or how harvests are organized.
 
 ### Lesson body and key points
 

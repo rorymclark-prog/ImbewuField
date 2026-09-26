@@ -42,14 +42,61 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '2016eaa5', changes: [
+  { when: '26 September 2026', sha: '2e24930b', changes: [
+    'Sesotho and Tshivenda Study show more course and offline save labels.',
+  ], tour: [
+    { title: 'Check your studies', where: 'Student', href: '/student',
+      detail: 'Choose Sesotho or Tshivenda and check the course progress, lesson and offline save labels.' },
+  ] },
+  { when: '26 September 2026', sha: '75c5905a', changes: [
+    'Sesotho and Tshivenda survey welcome drafts now show their English sources.',
+  ] },
+  { when: '26 September 2026', sha: '8d909f55', changes: [
+    'The Tshivenda sample chooser pairs marked draft labels with their English source.',
+  ], tour: [
+    { title: 'Choose a practice view', where: 'Samples', href: '/samples',
+      detail: 'The Tshivenda chooser marks its draft labels and keeps the English source beside them.' },
+  ] },
+  { when: '26 September 2026', sha: '5f0e75e6', changes: [
+    'The Sesotho sample chooser pairs its marked draft copy with English.',
+    'Community, Contact and the first-run welcome now follow dark mode.',
+    'The privacy consent screen reads clearly in every theme.',
+    'Consent choices show English beside unreviewed isiZulu, Sesotho and Tshivenda.',
+  ], tour: [
+    { title: 'Visit the community', where: 'Community', href: '/community',
+      detail: 'Posts, buttons and errors now use your theme colours.' },
+    { title: 'Send us a message', where: 'Contact', href: '/contact',
+      detail: 'The contact form now reads clearly in dark mode.' },
+  ] },
+  { when: '26 September 2026', sha: 'd4029ab6', changes: [
+    'The Garden Survey camera tip shows its isiZulu draft beside the English source.',
+  ] },
+  { when: '26 September 2026', sha: '6ad54fdb', changes: [
+    'The tank calculator pairs its isiZulu draft labels with the English source.',
+    'The Water guide can scroll its calculator above the mobile element palette.',
+  ], tour: [
+    { title: 'Choose isiZulu', where: 'Account', href: '/account',
+      detail: 'Set isiZulu as your app language before opening the Water guide.' },
+    { title: 'Check the tank calculator labels', where: 'Design Studio → Water', href: '/design',
+      detail: 'Choose isiZulu and compare the marked title, labels and prompts with their English source. The sizing method remains in English.' },
+  ] },
+  { when: '26 September 2026', sha: '0c9b356f', changes: [
+    'Navigation buttons keep their English names for screen readers in isiZulu.',
+    'The menu marks its isiZulu wording as an unreviewed machine draft.',
+    'The community lesson picture description now matches the image for screen readers.',
+  ] },
+  { when: '26 September 2026', sha: '55c357c8', changes: [
     'Mentor team and people screens now follow your chosen language.',
     'New words waiting for isiZulu are listed in one sheet for a translator.',
+    'Tshivenda Soil Study marks the module and first two lesson titles as drafts.',
+    'Lesson guidance, slides and narration remain in English.',
   ], tour: [
     { title: 'Open your field teams', where: 'Mentor', href: '/mentor',
       detail: 'Team headings, buttons and empty messages now use the app language.' },
     { title: 'Switch the app language', where: 'Account', href: '/account',
       detail: 'Pick isiZulu; words still waiting for a translator show in English.' },
+    { title: 'Check the Tshivenda soil headings', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked module and first two lesson headings with their exact English source. Lesson guidance, slides and narration remain in English.' },
   ] },
   { when: '26 September 2026', sha: '491704b2', changes: [
     'The Xitsonga manual is unavailable while publication is paused.',

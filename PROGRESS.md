@@ -52,6 +52,11 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Sep 2026 — Wave 9 (final): last theme leftovers (#706)
+- Community, community profile, Contact, PopiaConsent, Onboarding and login now paint with theme
+  tokens instead of hardcoded forest/paper/error hexes (Google logo colours kept).
+- New guard `tests/theme-leftovers.test.ts` stops these files regressing. Closes the audit backlog.
+
 ### 26 Sep 2026 — Wave 8: mentor screens i18n + translator hand-off (#699)
 - FieldTeams, MemberAccessPreview and PeoplePanel route visible text through t() (new MENTOR_ENGLISH_PENDING; FieldTeams' inline isiZulu drafts moved to lib/locales/zu.ts). Exported funder report text stays English on purpose.
 - `npm run i18n:pending` writes docs/translation/pending-isizulu.csv (group,key,english,isizulu) for a translator; README explains how to bring it back into zu.ts. Test fails if the CSV is stale.

@@ -11,11 +11,13 @@
 // body-text colour — the same shape of test as tests/pre-auth-theme-tokens.test.ts uses for the
 // login screen.
 //
-// A few colours are real exceptions, not oversights: the forest (#1F4D2B) and ochre (#9A6018)
-// brand fills keep their fixed light-text pairing (white, #F7F2E9, #EAF3E2) per CLAUDE.md — "Brand
-// fills with fixed light text on them … may keep their fixed fill + text pair" — because that pair
-// sits on a permanently dark or ochre panel, not on the themed modal surface. The white toggle
-// thumb (#fff) is the same story: it always sits on a coloured pill, never on the modal surface.
+// The forest fill (was #1F4D2B) and its text-on-forest pairing (was #F7F2E9/#EAF3E2) are now
+// var(--color-forest-800) / var(--color-canvas) — swarm/w9 converted these two modals' last
+// hardcoded brand colours so the fill itself follows the theme (it goes bright lime in dark mode
+// rather than staying a dark green that used to sit invisibly on an equally dark modal). Only the
+// ochre CTA fill (#9A6018, white type) stays literal, per CLAUDE.md — "an ochre fill under white
+// type is #9A6018" — because it is a fixed, non-themed colour pairing by design. The white toggle
+// thumb (#fff) stays literal too: it always sits on a coloured pill, never on the modal surface.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -27,14 +29,12 @@ const FILES = [
   '../components/PopiaConsent.tsx',
 ].map((p) => fileURLToPath(new URL(p, import.meta.url)));
 
-// The forest/ochre brand-fill + fixed-light-text pairs CLAUDE.md allows to stay literal, plus the
-// white toggle thumb — all of them paint a fixed, non-themed panel, never the modal surface.
+// Only the ochre CTA fill CLAUDE.md keeps literal, plus the white toggle thumb — both paint a
+// fixed, non-themed pairing, never the modal surface. Forest fill and its text now route through
+// var(--color-forest-800) / var(--color-canvas): see the file comment above.
 const ALLOWED_HEX = new Set([
-  '#1F4D2B', // forest brand fill (hero icon chip, primary button, selected goal card)
   '#9A6018', // ochre fill for white type (step-2 primary button; the brand #C07A1E is 3.5:1 there)
   '#fff', '#FFF', '#FFFFFF', // fixed light text/thumb on a brand fill or coloured pill
-  '#F7F2E9', // fixed light text on the forest primary button
-  '#EAF3E2', // fixed light icon/text/check on the forest fill or selected goal card
 ]);
 
 // The :root-only constants from tests/theme-token-coverage.test.ts. They look identical to the
