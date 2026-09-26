@@ -27,3 +27,7 @@ ui-debug.log
 # `npm run course:review-packet` — a committed copy would drift from the scripts it summarises,
 # and the reviewer's answers belong in the .zu.md source, not in a generated file.
 docs/narration/review/
+
+# Raw extraction of the RVCC handbook (Drive file 1C_KhxUhz5SVTEn3WeXr_6ZQ-cGd2VndG) — working copy only;
+# source documents are not published with the repo (see docs/studies-review-2026-09-20).
+research/manual/rvcc-handbook-source.txt

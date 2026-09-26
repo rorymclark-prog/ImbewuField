@@ -17,7 +17,7 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
   },
   title: {
     sourceEnglish: "Water Harvesting",
-    tshivendaDraft: "U Kuvhanganedza Maḓi",
+    tshivendaDraft: "U Kuvhanganya Maḓi",
     reviewStatus: "machine-draft"
   },
   description: {
@@ -35,7 +35,7 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
       },
       title: {
         sourceEnglish: "Swales and Berms: Slowing Water on the Slope",
-        tshivendaDraft: "Swales na Berms: U Fhungudza Luvhilo lwa Maḓi kha Mudzengamo",
+        tshivendaDraft: "Mikubo (Swales) na Ṱhanga dza Mavu (Berms): U Fhungudza Luvhilo lwa Maḓi kha U Sendama ha Mavu",
         reviewStatus: "machine-draft"
       },
       body: {
@@ -147,7 +147,7 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
       },
       title: {
         sourceEnglish: "Farm Dams and Ponds: Storing Water for the Dry Season",
-        tshivendaDraft: "Madamu na Madzivha a Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo",
+        tshivendaDraft: "Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo",
         reviewStatus: "machine-draft"
       },
       body: {
@@ -259,7 +259,7 @@ export const TSHIVENDA_WATER_HARVESTING_DRAFT: TshivendaCourseModuleDraft = {
       },
       title: {
         sourceEnglish: "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        tshivendaDraft: "Matangi a Maḓi a Mvula na U Kuvhanganya Ṱhangani: U Kuvhanganedza na U Tsireledza Maḓi",
+        tshivendaDraft: "Dzithanngi dza Maḓi a Mvula na U Kuvhanganya Maḓi kha Mutombo: U Kuvhanganya na U Tsireledza Maḓi",
         reviewStatus: "machine-draft"
       },
       body: {

@@ -11,12 +11,12 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Food Forest Design",
-    "sesothoDraft": "Moalo oa Moru oa Lijo",
+    "sesothoDraft": "Moralo wa Moru wa Dijo",
     "reviewStatus": "machine-draft"
   },
   "description": {
     "sourceEnglish": "Layer a multi-storey food system from tall canopy right down to root crops.",
-    "sesothoDraft": "Arola mekhahlelo ea tsamaiso ea lijo ho tloha holimo lifateng tse telele ho ea tlaase lijalong tsa metso.",
+    "sesothoDraft": "Arola mekgahlelo ya tsamaiso ya dijo ho tloha hodimo difateng tse telele ho ya tlase dijalong tsa metso.",
     "reviewStatus": "machine-draft"
   },
   "lessons": [
@@ -40,22 +40,22 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Seven planning layers can combine useful plants at different heights",
-          "sesothoDraft": "Mekhahlelo e supileng ea moralo e ka kopanya limela tse nang le molemo bophahamong bo fapaneng",
+          "sesothoDraft": "Mekgahlelo e supileng ya moralo e ka kopanya dimela tse nang le molemo bophahamong bo fapaneng",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Plants can compete for light, water and nutrients",
-          "sesothoDraft": "Limela li ka qothisana lehlokoa bakeng sa khanya, metsi le limatlafatsi",
+          "sesothoDraft": "Dimela di ka qothisana lehlokwa bakeng sa kganya, metsi le dimatlafatsi",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Establishment and ongoing care depend on observed conditions",
-          "sesothoDraft": "Ho hlongoa le tlhokomelo e tsoelang pele li itšetlehile ka maemo a hlokometsoeng",
+          "sesothoDraft": "Ho hlongwa le tlhokomelo e tswelang pele di itshetlehile ka maemo a hlokometsweng",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Confirm local suitability before copying any example planting",
-          "sesothoDraft": "Netefatsa ho tšoaneleha ha sebaka pele o kopitsa mohlala ofe kapa ofe oa ho lema",
+          "sesothoDraft": "Netefatsa ho tshwaneleha ha sebaka pele o kopitsa mohlala ofe kapa ofe wa ho lema",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -63,7 +63,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Weeds are competing strongly with young lower-layer plants. What should guide the next action?",
-            "sesothoDraft": "Mofoka o qothisana lehlokoa haholo le limela tse nyane tsa mekhahlelo e ka tlaase. Ke eng e lokelang ho tataisa ketso e latelang?",
+            "sesothoDraft": "Mofoka o qothisana lehlokwa haholo le dimela tse nyane tsa mekgahlelo e ka tlase. Ke eng e lokelang ho tataisa ketso e latelang?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -74,17 +74,17 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Add more plants regardless of water",
-              "sesothoDraft": "Kenya limela tse ling ho sa tsotellehe metsi",
+              "sesothoDraft": "Kenya dimela tse ding ho sa tsotellehe metsi",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Check the affected plants and manage competition",
-              "sesothoDraft": "Hlahloba limela tse amehileng 'me u laole tlholisano",
+              "sesothoDraft": "Hlahloba dimela tse amehileng mme o laole tlhodisano",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume all seven layers take care of themselves",
-              "sesothoDraft": "Nka hore mekhahlelo eohle e supileng e itlhokomela ka boyona",
+              "sesothoDraft": "Nka hore mekgahlelo yohle e supileng e itlhokomela ka boyona",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -98,28 +98,28 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "How can leaf litter and shade help protect soil moisture?",
-            "sesothoDraft": "Makhasi a oeleng le moriti li ka thusa joang ho sireletsa mongobo oa mobu?",
+            "sesothoDraft": "Makgasi a weleng le moriti di ka thusa jwang ho sireletsa mongobo wa mobu?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "They guarantee access to groundwater",
-              "sesothoDraft": "Li tiisa phihlello ea metsi a ka tlas'a lefatše",
+              "sesothoDraft": "Di tiisa phihlello ya metsi a ka tlasa lefatshe",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They can reduce water loss from the soil surface",
-              "sesothoDraft": "Li ka fokotsa tahlehelo ea metsi holim'a mobu",
+              "sesothoDraft": "Di ka fokotsa tahlehelo ya metsi hodima mobu",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They guarantee higher yield per litre in every system",
-              "sesothoDraft": "Li tiisa chai e ngata ka litha tsamaisong e 'ngoe le e 'ngoe",
+              "sesothoDraft": "Di tiisa kotulo e kgolo ka lithara ka nngwe ya metsi tsamaisong efe kapa efe",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They remove the need to check watering",
-              "sesothoDraft": "Li tlosa tlhoko ea ho hlahloba nosetso",
+              "sesothoDraft": "Di tlosa tlhoko ya ho hlahloba nosetso",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -136,12 +136,12 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "id": "food-forest-l2",
       "infographicAlt": {
         "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
-        "sesothoDraft": "Sebopeho se bonolo sa Afrika Boroa se arotsoeng libaka tse tharo tsa ho lema ka 'mala oa mobu le sebaka feela: sehlabeng se phahameng se bobebe se nang le maralla, lebopo le letala le mongobo, le sebaka se chesang se bofubelu bo bosootho se tlaase. Libopeho tse fapaneng tsa lifate li eme sebakeng ka seng.",
+        "sesothoDraft": "Sebopeho se bonolo sa Afrika Borwa se arotsweng dibaka tse tharo tsa ho lema ka mmala wa mobu le sebaka feela: sehlabeng se phahameng se bobebe se nang le maralla, lebopo le letala le mongobo, le sebaka se tjhesang se bofubedu bo bosootho se tlase. Dibopeho tse fapaneng tsa difate di eme sebakeng ka seng.",
         "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Species Selection for South African Food Forests",
-        "sesothoDraft": "Khetho ea Mefuta ea Limela bakeng sa Meru ea Lijo ea Afrika Boroa",
+        "sesothoDraft": "Kgetho ya Mefuta ya Dimela bakeng sa Meru ya Dijo ya Afrika Borwa",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -181,22 +181,22 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "It thrives — the position offsets frost",
-              "sesothoDraft": "E ea atleha — sebaka se fokotsa serame",
+              "sesothoDraft": "E ya atleha — sebaka se fokotsa serame",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It fruits early from the temperature swings",
-              "sesothoDraft": "E beha litholoana kapele ka lebaka la ho fetoha ha mocheso",
+              "sesothoDraft": "E beha ditholwana kapele ka lebaka la ho fetoha ha motjheso",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It's likely killed or badly damaged by frost, especially as a young tree",
-              "sesothoDraft": "Ho ka etsahala hore e bolaoe kapa e senngoe hampe ke serame, haholoholo e le sefate se senyane",
+              "sesothoDraft": "Ho ka etsahala hore e bolawe kapa e senngwe hampe ke serame, haholoholo e le sefate se senyane",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It survives with heavy mulch but needs annual replacement",
-              "sesothoDraft": "E pholoha ka mulch e ngata empa e hloka ho nkeloa sebaka selemo le selemo",
+              "sesothoDraft": "E pholoha ka mulch e ngata empa e hloka ho nkelwa sebaka selemo le selemo",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -210,28 +210,28 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Why include locally appropriate indigenous plants in a design?",
-            "sesothoDraft": "Hobaneng ho kenyeletsoa limela tsa tlhaho tse loketseng sebaka moalong?",
+            "sesothoDraft": "Hobaneng ho kenyeletswa dimela tsa tlhaho tse loketseng sebaka moralong?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "They always yield more food per square metre",
-              "sesothoDraft": "Kamehla li hlahisa lijo tse ngata ka mithara e le 'ngoe ea sekwere",
+              "sesothoDraft": "Kamehla di hlahisa dijo tse ngata ka mithara e le nngwe ya sekwere",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They can support local habitat, pollinators and other wildlife",
-              "sesothoDraft": "Li ka tšehetsa tikoloho ea lehae, litsitsiri tse tsamaisang peo e phofo le liphoofolo tse ling tsa naha",
+              "sesothoDraft": "Di ka tshehetsa tikoloho ya lehae, dikokonyana tse tsamaisang phofo ya dipalesa (pollinators) le diphoofolo tse ding tsa naha",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Every introduced species is illegal",
-              "sesothoDraft": "Mofuta o mong le o mong o tsoang kantle ha o lumelloe ke molao",
+              "sesothoDraft": "Mofuta o mong le o mong o tswang kantle ha o dumellwe ke molao",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "They never need establishment care",
-              "sesothoDraft": "Ha li hloke tlhokomelo ea ho hlongoa le ka mohla",
+              "sesothoDraft": "Ha di hloke tlhokomelo ya ho hlongwa le ka mohla",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -264,7 +264,7 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Protect exposed soil early",
-          "sesothoDraft": "Sireletsa mobu o pepesiloeng esale pele",
+          "sesothoDraft": "Sireletsa mobu o pepesilweng esale pele",
           "reviewStatus": "machine-draft"
         },
         {
@@ -274,12 +274,12 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check root-zone moisture even during the rainy season",
-          "sesothoDraft": "Hlahloba mongobo sebakeng sa metso le nakong ea pula",
+          "sesothoDraft": "Hlahloba mongobo sebakeng sa metso le nakong ya pula",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Manage competition as it develops; harvest dates are not guaranteed",
-          "sesothoDraft": "Laola tlholisano ha e ntse e hlaha; matsatsi a kotulo ha a tiisoe",
+          "sesothoDraft": "Laola tlhodisano ha e ntse e hlaha; matsatsi a kotulo ha a tiiswe",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -287,28 +287,28 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?",
-            "sesothoDraft": "Molemi o beha khateboto e tloaelehileng tlas'a mulch e loketseng moo joang bo melang teng. E ka thusa ho etsa eng?",
+            "sesothoDraft": "Molemi o beha khateboto e tlwaelehileng tlasa mulch e loketseng moo jwang bo melang teng. E ka thusa ho etsa eng?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Creating a moisture barrier that blocks water from the soil",
-              "sesothoDraft": "Ho etsa tšitiso ea mongobo e thibelang metsi ho kena mobung",
+              "sesothoDraft": "Ho etsa tshitiso ya mongobo e thibelang metsi ho kena mobung",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Block light and help suppress grass while it breaks down; check for regrowth",
-              "sesothoDraft": "Ho thibela khanya le ho thusa ho hatella joang ha e ntse e bola; hlahloba hore na ha bo mele hape",
+              "sesothoDraft": "Ho thibela kganya le ho thusa ho hatella jwang ha e ntse e bola; hlahloba hore na ha bo mele hape",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Providing a stable base so wood chips don't shift",
-              "sesothoDraft": "Ho fana ka motheo o tsitsitseng e le hore likotwana tsa patsi li se ke tsa sutha",
+              "sesothoDraft": "Ho fana ka motheo o tsitsitseng e le hore dikotwana tsa patsi di se ke tsa sutha",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Reflecting heat upward to warm the soil",
-              "sesothoDraft": "Ho khutlisetsa mocheso holimo ho futhumatsa mobu",
+              "sesothoDraft": "Ho kgutlisetsa motjheso hodimo ho futhumatsa mobu",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -322,28 +322,28 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "When should a grower consider pruning or thinning temporary support plants?",
-            "sesothoDraft": "Molemi o lokela ho nahana neng ka ho faola kapa ho fokotsa limela tsa nakoana tsa tšehetso?",
+            "sesothoDraft": "Molemi o lokela ho nahana neng ka ho faola kapa ho fokotsa dimela tsa nakwana tsa tshehetso?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Only on a fixed anniversary",
-              "sesothoDraft": "Feela ka letsatsi le behiloeng la selemo le selemo",
+              "sesothoDraft": "Feela ka letsatsi le behilweng la selemo le selemo",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "When observed competition requires it, using methods suited to the species",
-              "sesothoDraft": "Ha tlholisano e hlokometsoeng e hloka joalo, ho sebelisoa mekhoa e loketseng mefuta eo ea limela",
+              "sesothoDraft": "Ha tlhodisano e hlokometsweng e hloka jwalo, ho sebediswa mekgwa e loketseng mefuta eo ya dimela",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "As soon as any leaf falls",
-              "sesothoDraft": "Hang ha lekhasi leha e le lefe le oa",
+              "sesothoDraft": "Hang ha lekgasi leha e le lefe le wa",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Never, because support plants cannot compete",
-              "sesothoDraft": "Le ka mohla, hobane limela tsa tšehetso li ke ke tsa qothisana lehlokoa",
+              "sesothoDraft": "Le ka mohla, hobane dimela tsa tshehetso di ke ke tsa qothisana lehlokwa",
               "reviewStatus": "machine-draft"
             }
           ],

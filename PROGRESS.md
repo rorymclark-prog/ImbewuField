@@ -52,6 +52,43 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-26 (Permaculture Manual — fact-checked edition in five languages; locale clean-up)
+- **What:** Rory's *RVCC Permaculture Gardening Handbook* (UNDP / Government of Lesotho project,
+  2020–21) is now the in-app **Permaculture Manual** at `/manual`, listed under Farm tools and in
+  Simple mode. It has 12 chapters (~53,500 English words) plus machine-draft isiZulu, Sesotho,
+  Tshivenḓa and Xitsonga for every chapter.
+- **English edition:** every chapter is fact-checked and rewritten for SA smallholders. The
+  per-chapter change logs with sources are in `research/manual/factcheck/`. The main corrections:
+  - NEMBA invasives removed (beefwood, American elder, guava, granadilla, *Tithonia*…).
+  - Law added or corrected: National Water Act, Veld and Forest Fire Act, CARA slope limits
+    (replacing the source's 18%), beekeeper registration and AFB, Newcastle disease, swill feeding.
+  - The roof-harvest arithmetic is fixed.
+  - Safety boxes added: tobacco spray, biogas, CO, wonder bag, manure, greywater.
+  - Succession no longer implies grassland or fynbos "should" become forest.
+  - Figures are not yet in the reader; their captions are logged per chapter so they can be added.
+- **Reader:** `content/manual/<lang>/<slug>.md` is read at build time, so every chapter is a static
+  page (`app/manual/[lang]/[slug]`).
+  - `lib/manual.ts` is a strict Markdown-subset parser with no HTML passthrough.
+  - A machine-translation notice and English fallback appear per chapter, with a language switch.
+  - `tests/manual.test.ts` checks that every translation keeps the English structure (headings,
+    list items, Safety boxes, table rows).
+- **Translations:** the brief and fixed rules are in `research/manual/STYLE.md` and `TRANSLATE.md`.
+  The glossaries are `research/manual/glossary-{zu,st,ve,ts}.md`, with uncertain terms marked
+  "(check)". Callout labels are one per meaning in each language.
+- **Locale clean-up** (glossary-driven; each glossary ends with an "App clean-up log"):
+  - Xitsonga: ~180 strings in `ts.ts` were siSwati/isiZulu/Sepedi.
+  - Tshivenḓa: ~185 strings in `ve.ts` were not Tshivenḓa, and roles were mistranslated.
+  - Sesotho: Lesotho → SA orthography, and compost said "dung" / "manure that kills".
+  - isiZulu: compost, frost, sector and contour terms made consistent.
+  - All four: menu label for the manual.
+- **Checks:** tsc clean and `next build` green. The full `npm test` has 9 failures that are
+  identical on `main` (auth transition/guest migration, course-deck playback, product-tour,
+  public-route-ssr, venue-location, saved-reports relabel).
+- **Needs Rory / people:**
+  - Fluent-speaker review of all four languages.
+  - Confirm that the ACT (2014) "used with permission" and the UNDP/RVCC origin cover an app
+    edition.
+  - Check the "not found as listed" NEMBA rows against the gazette PDF (the proxy blocked it).
 ### 2026-09-26 (swarm wave 6b — Farm Finance in isiZulu)
 - **Finance track retry (PR #689).** New `lib/course-finance-i18n.ts` holds source-paired isiZulu
   drafts for the Farm Finance course: `financeZu(map, id, liveEnglish)` only returns the draft while
