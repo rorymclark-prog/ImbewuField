@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '594c44df', changes: [
+    'Soil Health lesson 1 and Small Livestock lesson 2 show short Xitsonga concept drafts.',
+  ], tour: [
+    { title: 'Check the Soil Health and Small Livestock drafts', where: 'Study → Soil Health & Composting; Small Livestock Integration', href: '/student',
+      detail: 'Choose Xitsonga and open Soil Health lesson 1 or Small Livestock lesson 2. The full English source is below the lesson text; soil-test and bee-management advice, key points, quizzes, slides and narration remain English.' },
+  ] },
   { when: '27 September 2026', sha: '08b8052d', changes: [
     'Plant Guilds lessons 2 and 3 show short Xitsonga concept drafts beside English.',
   ], tour: [
