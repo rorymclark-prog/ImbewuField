@@ -155,9 +155,9 @@ export default function PopiaConsent() {
             <div className="flex items-center gap-3 mb-4">
               <div
                 className="flex items-center justify-center rounded-xl flex-shrink-0"
-                style={{ width: 44, height: 44, background: '#1F4D2B', boxShadow: '0 4px 12px rgba(31,77,43,0.22)' }}
+                style={{ width: 44, height: 44, background: 'var(--color-forest-800)', boxShadow: '0 4px 12px color-mix(in srgb, var(--color-forest-800) 22%, transparent)' }}
               >
-                <ShieldCheck size={22} stroke="#EAF3E2" strokeWidth={1.7} />
+                <ShieldCheck size={22} stroke="var(--color-canvas)" strokeWidth={1.7} />
               </div>
               <h2
                 id="popia-dialog-heading"
@@ -216,11 +216,11 @@ export default function PopiaConsent() {
               className="w-full py-3 rounded-xl font-sans font-semibold transition-all"
               style={{
                 fontSize: 15,
-                background: storeData ? '#1F4D2B' : 'color-mix(in srgb, var(--border) 60%, transparent)',
-                color: storeData ? '#F7F2E9' : 'var(--text-muted)',
+                background: storeData ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--border) 60%, transparent)',
+                color: storeData ? 'var(--color-canvas)' : 'var(--text-muted)',
                 border: 'none',
                 cursor: storeData ? 'pointer' : 'not-allowed',
-                boxShadow: storeData ? '0 4px 12px rgba(31,77,43,0.18)' : 'none',
+                boxShadow: storeData ? '0 4px 12px color-mix(in srgb, var(--color-forest-800) 18%, transparent)' : 'none',
               }}
             >
               <span className="flex items-center justify-center gap-1.5">
@@ -263,8 +263,8 @@ export default function PopiaConsent() {
                     onClick={() => setGoal(v)}
                     className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all"
                     style={{
-                      background: on ? '#1F4D2B' : 'var(--bg-1)',
-                      border: `1px solid ${on ? '#1F4D2B' : 'var(--border)'}`,
+                      background: on ? 'var(--color-forest-800)' : 'var(--bg-1)',
+                      border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border)'}`,
                       cursor: 'pointer',
                     }}
                   >
@@ -274,23 +274,23 @@ export default function PopiaConsent() {
                       style={{
                         width: 36,
                         height: 36,
-                        background: on ? 'rgba(234,243,226,0.18)' : 'color-mix(in srgb, var(--emerald) 8%, transparent)',
+                        background: on ? 'color-mix(in srgb, var(--color-canvas) 18%, transparent)' : 'color-mix(in srgb, var(--emerald) 8%, transparent)',
                       }}
                     >
-                      <Icon size={18} stroke={on ? '#EAF3E2' : 'var(--emerald)'} strokeWidth={1.7} />
+                      <Icon size={18} stroke={on ? 'var(--color-canvas)' : 'var(--emerald)'} strokeWidth={1.7} />
                     </div>
 
                     {/* Text */}
                     <div className="flex-1 min-w-0">
                       <div
                         className="font-display font-semibold"
-                        style={{ fontSize: 14, color: on ? '#EAF3E2' : 'var(--text-primary)', lineHeight: 1.2 }}
+                        style={{ fontSize: 14, color: on ? 'var(--color-canvas)' : 'var(--text-primary)', lineHeight: 1.2 }}
                       >
                         {copy(labelKey)}
                       </div>
                       <div
                         className="font-sans mt-0.5"
-                        style={{ fontSize: 12, color: on ? 'rgba(234,243,226,0.70)' : 'var(--text-muted)', lineHeight: 1.4 }}
+                        style={{ fontSize: 12, color: on ? 'color-mix(in srgb, var(--color-canvas) 70%, transparent)' : 'var(--text-muted)', lineHeight: 1.4 }}
                       >
                         {copy(descKey)}
                       </div>
@@ -302,11 +302,11 @@ export default function PopiaConsent() {
                       style={{
                         width: 22,
                         height: 22,
-                        background: on ? '#EAF3E2' : 'transparent',
-                        border: `1.5px solid ${on ? '#EAF3E2' : 'var(--border-strong)'}`,
+                        background: on ? 'var(--color-canvas)' : 'transparent',
+                        border: `1.5px solid ${on ? 'var(--color-canvas)' : 'var(--border-strong)'}`,
                       }}
                     >
-                      {on && <Check size={13} style={{ color: '#1F4D2B' }} />}
+                      {on && <Check size={13} style={{ color: 'var(--color-forest-800)' }} />}
                     </div>
                   </button>
                 );
