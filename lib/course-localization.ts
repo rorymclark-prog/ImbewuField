@@ -9,6 +9,7 @@ import { SESOTHO_FOOD_FOREST_DRAFT } from './course-translation-drafts-st-food-f
 import { SESOTHO_PLANT_GUILDS_DRAFT } from './course-translation-drafts-st-plant-guilds.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-st-market-community.ts';
 import { SESOTHO_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-st-small-livestock.ts';
+import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-st-seeds-sovereignty.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
@@ -169,7 +170,7 @@ type RegionalLessonDraft = {
 };
 
 const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: RegionalLessonDraft[] }>> = {
-  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT],
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT, SESOTHO_SEEDS_SOVEREIGNTY_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
   ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT],
 };
@@ -179,6 +180,14 @@ function regionalPair(pair: RegionalPair, source: string, language: RegionalLang
   if (pair.reviewStatus === 'hold') return source;
   const draft = language === 'st' ? pair.sesothoDraft : language === 'ts' ? pair.xitsongaDraft : pair.tshivendaDraft;
   return typeof draft === 'string' && draft.trim() ? draft : null;
+}
+
+function hasRegionalMachineDraft(draft: RegionalLessonDraft): boolean {
+  return draft.title.reviewStatus === 'machine-draft' || draft.body.reviewStatus === 'machine-draft' ||
+    draft.infographicAlt?.reviewStatus === 'machine-draft' ||
+    draft.keyPoints.some(point => point.reviewStatus === 'machine-draft') ||
+    draft.quiz.some(question => question.question.reviewStatus === 'machine-draft' ||
+      question.rationale.reviewStatus === 'machine-draft' || question.options.some(option => option.reviewStatus === 'machine-draft'));
 }
 
 /** A changed English source invalidates the whole lesson so a quiz never drifts from its answer. */
@@ -226,7 +235,9 @@ export function resolveLearnerLessonPresentation(
     const draft = REGIONAL_LESSON_DRAFTS[language].flatMap(module => module.lessons)
       .find(candidate => candidate.id === lesson.id);
     const content = draft && regionalLessonContent(lesson, draft, language);
-    return content ? { content, status: 'draft' } : { content: source, status: 'english-fallback' };
+    if (!draft || !content) return { content: source, status: 'english-fallback' };
+    const heldSesothoSeedsLesson = language === 'st' && lesson.id === 'seeds-sovereignty-l2' && !hasRegionalMachineDraft(draft);
+    return { content, status: heldSesothoSeedsLesson ? 'english-fallback' : 'draft' };
   }
   if (language !== 'zu') return { content: source, status: 'approved' };
 
