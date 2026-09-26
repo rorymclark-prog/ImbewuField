@@ -447,6 +447,20 @@
 | fly (insect) | nhongana / tinhongana | (check) |
 | mole | mfuku / timfuku | (check) |
 | dragonfly / toad | ti-dragonfly / ti-toad | Loan words (check) |
+| fruit fly | tinhongana ta mihandzu | Coined in ch. 10. Explain with "(fruit flies)" (check) |
+| maggots | swivungu swa tinhongana | Ch. 10; explain with "(maggots)" (check) |
+| parasitic wasps | ti-wasp leti tshamaka eka swin'wana | Coined in ch. 10. Explain with "(parasitic wasps)" (check) |
+| ground beetles | ti-beetle ta le misaveni | Ch. 10 (check) |
+| praying mantis | ti-mantis | Loan word, ch. 10. A Xitsonga name is needed (check) |
+| chameleon | lovwa / tilovwa | Ch. 10 (check) |
+| porcupine | nungu / tinungu | Ch. 10 (check) |
+| snail shell | xikhetla | Ch. 10, with "(shell)" (check) |
+| honeydew | honeydew (mati yo nyanganyela) | Ch. 10, loan kept (check) |
+| larvae | swivungu (larvae) | Ch. 10, e.g. "swivungu swa ti-ladybird" (check) |
+| tobacco / snuff | fole / fole ro nusa | Ch. 10 (check) |
+| gloves | tiglavu | Loan word, ch. 10 (check) |
+| skin (human) | nhlonge | Ch. 10 safety callouts; not the same as *dzovo* (fruit skin, bark) (check) |
+| mortar and pestle | tshuri na musi | Ch. 10 (check) |
 | honeybee(s) | tinyoxi ta vulombe | Coined in ch. 5 (check) |
 | beekeeper | mufuyi wa tinyoxi / vafuyi va tinyoxi | Follows *ku fuya tinyoxi* (check) |
 | comb (honeycomb) | tikhomu (combs) | Loan word. Explain on first use: "swiphemu swa wakisi leswi tinyoxi ti swi akaka". Used in ch. 5 (check) |
