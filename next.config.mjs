@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The /manual pages are all pre-rendered at build time, but they check for picture and cover
+  // files under public/ (lib/manual-content.ts, app/manual/[lang]/book). File tracing follows those
+  // paths and would pack the whole public/ folder (~1 GB) into the pages' serverless function,
+  // which Vercel rejects (> 250 MB). Nothing in public/ is needed at runtime — Vercel serves it
+  // statically — so leave it out of those functions.
+  experimental: {
+    outputFileTracingExcludes: {
+      '/manual/**/*': ['./public/**/*'],
+    },
+  },
   webpack: (config) => {
     // mapbox-gl web worker needs this
     config.resolve.alias['mapbox-gl'] = 'mapbox-gl';

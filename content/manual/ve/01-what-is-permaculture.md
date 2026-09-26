@@ -8,18 +8,18 @@ Ipfi iḽi ḽo vhumbiwa vhukati ha miṅwaha ya vho-1970 nga Vhaaustralia vhavh
 
 ## Ṱhalutshedzo
 
-Bill Mollison o ṱalutshedza permaculture sa "u pulana na u ṱhogomela nga vhuḓivhi sisiteme dza mupo (ecosystems) dzi bveledzaho zwiḽiwa, dzi re na u fhambana, u dzikama na u konḓelela zwa sisiteme dza mupo".
+Bill Mollison o ṱalutshedza permaculture sa "u pulana na u ṱhogomela nga vhuḓivhi **dzi-ecosystem** (sisiteme dza mupo) dzi bveledzaho zwiḽiwa, dzi re na u fhambana, u dzikama na u konḓelela zwa dzi-ecosystem dza mupo".
 
 Nga maipfi a leluwaho: permaculture ndi nḓila ya u pulana na u tshimbidza bulasi kana ngade uri i shume sa mupo. Ḓaka ḽa mupo kana madambaya zwi na tshaka nnzhi dza zwimela na zwipuka (**u fhambana** — diversity), zwi bvela phanḓa ṅwaha nga ṅwaha (**u dzikama** — stability), nahone zwi a vusulusea nga murahu ha gomelelo, mulilo kana tshinyalo (**u konḓelela** — resilience). Bulasi ya permaculture i lwela u ita zwi fanaho, i tshi khou dovha ya ḽisa vhathu.
 
-Permaculture i ṱanganya mavu, maḓi, zwimela, zwipuka na vhathu uri tshipiḓa tshiṅwe na tshiṅwe tshi thuse zwiṅwe. U fana na sisiteme ya mupo, i lingedza u sa laṱa tshithu: zwine tshipiḓa tshiṅwe tsha zwi bvisa, tshiṅwe tshipiḓa tshi a zwi shumisa.
+Permaculture i ṱanganya mavu, maḓi, zwimela, zwipuka na vhathu uri tshipiḓa tshiṅwe na tshiṅwe tshi thuse zwiṅwe. U fana na ecosystem, i lingedza u sa laṱa tshithu: zwine tshipiḓa tshiṅwe tsha zwi bvisa, tshiṅwe tshipiḓa tshi a zwi shumisa.
 
 ## Ndi ngani permaculture i ya ndeme kha Tshipembe tsha Afrika
 
 Miṱa minzhi kha Tshipembe tsha Afrika i ḓitika nga mavu u wana zwiḽiwa na mbuelo yayo. Ndi yone hafhu i re khomboni vhukuma ya thaidzo mbili khulwane.
 
-- **Tshanduko ya kilima (climate change).** Vhalimi vho no vhona maḓuvha a fhisaho vhukuma, mvula ine zwa konḓa u i humbulela, gomelelo ḽi dzulaho tshifhinga tshilapfu, na maḓumbu mahulwane na mandindi manzhi. Vhunzhi ha vhalimi vhaṱuku vhu ḓitika nga mvula, hu si nga u sheledza, ngauralo idzi tshanduko dzi vha kwama nga maanḓa u fhira vhaṅwe vhoṱhe.
-- **U tshinyala ha mavu.** Musi mavu o siwa a sa fukedzwi nga tshithu, o fuliswa u fhira tshikalo, kana o limiwa fhethu ho sendamaho vhukuma, mvula i a a kukula nahone muya u a a hwala u a isa kule. Ṱhoḓisiso dzi sumbedza uri u khukhulwa ha mavu (erosion) ho kwama u fhira 70% ya mavu a Afrika Tshipembe. Lesotho, hune bugu ino ya thoma u ṅwalelwa hone, na yone i na u khukhulwa ha mavu hu vhavhaho na migero mihulwane ye ya siwa nga maḓi (gullies).
+- **Climate change** (tshanduko ya mutsho nga tshifhinga tshilapfu). Vhalimi vho no vhona maḓuvha a fhisaho vhukuma, mvula ine zwa konḓa u i humbulela, gomelelo ḽi dzulaho tshifhinga tshilapfu, na maḓumbu mahulwane na mandindi manzhi. Vhunzhi ha vhalimi vhaṱuku vhu ḓitika nga mvula, hu si nga u sheledza, ngauralo idzi tshanduko dzi vha kwama nga maanḓa u fhira vhaṅwe vhoṱhe.
+- **U tshinyala ha mavu.** Musi mavu o siwa a sa fukedzwi nga tshithu, o fuliswa u fhira tshikalo, kana o limiwa fhethu ho sendamaho vhukuma, mvula i a a kukula nahone muya u a a hwala u a isa kule. Ṱhoḓisiso dzi sumbedza uri **erosion** (u khukhulwa ha mavu nga maḓi kana muya) yo kwama u fhira 70% ya mavu a Afrika Tshipembe. Lesotho, hune bugu ino ya thoma u ṅwalelwa hone, na yone i na erosion i vhavhaho na migero mihulwane ye ya siwa nga maḓi (gullies).
 
 Afrika Tshipembe ndi shango ḽo omaho. Nga vhukati ḽi wana mvula i ṱoḓaho u vha 450 mm nga ṅwaha. Hezwi ndi hafu ya vhukati ha ḽifhasi ḽoṱhe, vhu ṱoḓaho u vha 860 mm. Ḓontsi ḽiṅwe na ḽiṅwe ḽi ya ndeme.
 
@@ -33,7 +33,7 @@ Permaculture i fhira u vha nḓila dza u lima fhedzi. Nga u shuma ri tsini na ma
 
 Hayani na bulasi ya permaculture zwi nga ṋea zwiḽiwa ṅwaha woṱhe, dzithanngi na zwidziva zwo ḓalaho maḓi a mvula, na ngade dzo ḓalaho vhutshilo. Zwi thusa muṱa u bva kha u pona fhedzi u ya kha u tshila zwavhuḓi, na u kovhela vhaṅwe zwenezwo.
 
-- **Mutakalo na u ḽa zwavhuḓi.** Ni nga lima tshaka nnzhi dza miroho miswa, mitshelo, zwimela zwa lushaka lwa nawa (legumes) na zwiliṅwa zwa thoro hu si na zwivhulahi zwa zwikukumi na zwivhulahi zwa zwimela zwi sa ṱoḓei zwa khemikhali zwi vhaisaho. U ḽa zwiḽiwa zwo fhambanaho ndi u ḽa zwiḽiwa zwi re na mutakalo.
+- **Mutakalo na u ḽa zwavhuḓi.** Ni nga lima tshaka nnzhi dza miroho miswa, mitshelo, **dzi-legume** (zwimela zwa lushaka lwa nawa) na zwiliṅwa zwa thoro hu si na zwivhulahi zwa zwikukumi na zwivhulahi zwa zwimela zwi sa ṱoḓei zwa khemikhali zwi vhaisaho. U ḽa zwiḽiwa zwo fhambanaho ndi u ḽa zwiḽiwa zwi re na mutakalo.
 - **Mihumbulo miswa na u ṱuṱuwedzea.** Permaculture i ni thusa u vhona u ṱumana ha zwipiḓa zwo fhambanaho zwa bulasi yaṋu, na nḓila ya u zwi shumisa uri zwi ni vhuyedze.
 - **Mushumo u re na ndeme.** Vhathu vhanzhi vha wana ndivho ya vhukuma kha u ṱhogomela mavu.
 - **Mbuelo na u vhulunga tshelede.** U lima zwibveledzwa zwinzhi zwo fhambanaho zwi fhungudza khombo kha mbuelo ya muṱa: arali tshiliṅwa tshiṅwe tsha kundelwa, zwiṅwe zwi kha ḓi ṋea khaṋo. Ni shumisa tshelede ṱhukhu kha zwithu zwine na zwi renga u lima, nahone ni nga rengisa zwo salaho kana na zwi engedzela ndeme (sa tsumbo, nga u zwi omisa, u zwi vhulunga mabodeloni kana u zwi shumisa u ita zwiṅwe zwibveledzwa).
@@ -54,7 +54,7 @@ U ṱhogomela vhathu (People Care) zwi amba u fusha ṱhoḓea dza vhathu — zw
 
 Ḽifhasi ḽi na zwiko zwo pimiwaho. U kovhelana ho fanelaho (zwine zwa anzela u pfi **fair share**) zwi amba u pima zwine ra zwi shumisa, na u kovhela zwo salaho (surplus) — zwiḽiwa, mbeu, tshifhinga, zwikili na tshelede — uri zwi vhuyelele kha u ṱhogomela Ḽifhasi na vhathu.
 
-Musi ri tshi ṱhogomela Ḽifhasi na vhathu vhaḽo, ra dovha ra kovhelana ho fanelaho, ri thoma na u tandulula thaidzo khulwane sa vhushai, nḓala na u khukhulwa ha mavu. Tshaka dzoṱhe dza vhutshilo dzi na pfanelo ya u vha hone, ngauralo sa vhapulani vha permaculture ri shuma u tsireledza na u tikedza vhutshilo kha tshaka dzaho dzoṱhe.
+Musi ri tshi ṱhogomela Ḽifhasi na vhathu vhaḽo, ra dovha ra kovhelana ho fanelaho, ri thoma na u tandulula thaidzo khulwane sa vhushai, nḓala na erosion. Tshaka dzoṱhe dza vhutshilo dzi na pfanelo ya u vha hone, ngauralo sa vhapulani vha permaculture ri shuma u tsireledza na u tikedza vhutshilo kha tshaka dzaho dzoṱhe.
 
 > **Ḓivhani:** "Mupo a u iti tshithu tshi si na ndivho." — Aristotle, muṱalukanyi wa Mugerika. Kha permaculture ri ṱoḓa ndivho na mushumo wa tshipiḓa tshiṅwe na tshiṅwe tsha sisiteme.
 
@@ -87,15 +87,15 @@ Kha permaculture ri fara na u vhulunga maanḓa na zwiko musi zwi zwinzhi, uri r
 
 Tsumbo:
 
-- Nga tshifhinga tsha u aluwa, musi ḓuvha ḽi na maanḓa vhukuma, ri fara maanḓa a ḓuvha sa zwiliṅwa — miroho, mitshelo, nḓuhu dza miri (nuts), khuni, zwiḽiwa zwa zwifuwo na nama.
-- Musi mvula i tshi na, farani ni vhulunge maḓi kha dzithanngi, zwidziva na mavuni ngoṱhe (sa tsumbo nga tshifukedzi (mulch) na mikubo (swales)).
+- Nga tshifhinga tsha u aluwa, musi ḓuvha ḽi na maanḓa vhukuma, ri fara maanḓa a ḓuvha sa zwiliṅwa — miroho, mitshelo, nḓuhu dza miri (nuts), khuni, **fodder** (zwiḽiwa zwa zwifuwo) na nama.
+- Musi mvula i tshi na, farani ni vhulunge maḓi kha dzithanngi, zwidziva na mavuni ngoṱhe (sa tsumbo nga **mulch** (tshifukedzi tsha mahatsi o omaho kana maṱari) na **dzi-swale** (migero ya u fara maḓi a mvula)).
 - Omisani, vhulungani mabodeloni kana ni vhulunge nga iṅwe nḓila miroho na mitshelo yo salaho, u itela khalaṅwaha ine zwiḽiwa zwiswa zwa vha zwiṱuku.
 
 ### 3. Wanani khaṋo (obtain a yield)
 
 Murero: *Thumbu i si na tshithu a i shumi.*
 
-Itani uri tshifhinga na mushumo waṋu zwi vhe na ndeme. **Khaṋo** (yield) ndi tshithu tshiṅwe na tshiṅwe tshi re na mushumo tshine sisiteme yaṋu ya tshi bveledza: zwiḽiwa, zwiḽiwa zwa zwifuwo, khuni, fhethu ha u tshavhela, u dudelwa, mushonga, mbeu kana mbuelo.
+Itani uri tshifhinga na mushumo waṋu zwi vhe na ndeme. **Khaṋo** (yield) ndi tshithu tshiṅwe na tshiṅwe tshi re na mushumo tshine sisiteme yaṋu ya tshi bveledza: zwiḽiwa, fodder, khuni, fhethu ha u tshavhela, u dudelwa, mushonga, mbeu kana mbuelo.
 
 Khaṋo dziṅwe dzi dzhia miṅwaha. Muri wa mitshelo u nga dzhia miṅwaha minzhi phanḓa ha u bveledza mitshelo. Ngauralo pulanani u ṱanganya khaṋo dza u ṱavhanya na dza u ongolowa, uri ni dzule ni na zwine na zwi sumbedza nga mushumo na zwiko zwine na zwi shumisa zwino. Ri pulana nga ndivho uri hu vhe na zwo salaho — zwo linganaho muṱa washu, zwimela na zwipuka, u kovhela vhahura na u rengisa.
 
@@ -109,7 +109,7 @@ Tsumbo:
 
 ### 4. Ḓilangeni nahone ni ṱanganedze zwine mupo wa ni sumbedza (apply self-regulation and accept feedback)
 
-Sisiteme dza mupo dzi a ḓi-dzikamisa. Kha ḓaka kana madambaya zwi re na mutakalo, a hu na tshimela kana tshipuka tshithihi tshine tsha vhusa zwiṅwe tshifhinga tshilapfu. Fhedzi vhathu vha dzulela u dzhia zwinzhi u fhira zwine vha zwi ṱoḓa. U shumisa hashu zwiko u fhira tshikalo ndi tshiṅwe tsha zwiitisi zwihulwane zwa tshanduko ya kilima na u xelelwa nga zwimela na zwipuka.
+Dzi-ecosystem dzi a ḓi-dzikamisa. Kha ḓaka kana madambaya zwi re na mutakalo, a hu na tshimela kana tshipuka tshithihi tshine tsha vhusa zwiṅwe tshifhinga tshilapfu. Fhedzi vhathu vha dzulela u dzhia zwinzhi u fhira zwine vha zwi ṱoḓa. U shumisa hashu zwiko u fhira tshikalo ndi tshiṅwe tsha zwiitisi zwihulwane zwa climate change na u xelelwa nga zwimela na zwipuka.
 
 Hafha ri humbelwa u **vhea mikano** — u tshila nga u leluwa na u sa dzhia zwinzhi u fhira zwine ra zwi ṱoḓa — uri vhana vhashu vha ḓo wana mavu a re na mutakalo.
 
@@ -126,19 +126,19 @@ Tsumbo:
 
 ### 5. Shumisani nahone ni dzhiele nṱha zwiko zwi vusuluwaho na tshumelo dza mupo (use and value renewable resources and services)
 
-Sedzani mupo u wana zwithu zwine ra zwi ṱoḓa. Zwimela, zwipuka, tshedza tsha ḓuvha, muya na mvula zwi a ḓivusulusa. Zwiko zwi sa vusuluwi sa phethiroḽo, dizili na manyoro a khemikhali zwi shumiswa luthihi zwa fhela, zwi ṱoḓa tshelede, nahone u fhisa mafura a bvaho fhasi ha mavu (fossil fuels) zwi engedza tshanduko ya kilima.
+Sedzani mupo u wana zwithu zwine ra zwi ṱoḓa. Zwimela, zwipuka, tshedza tsha ḓuvha, muya na mvula zwi a ḓivusulusa. Zwiko zwi sa vusuluwi sa phethiroḽo, dizili na manyoro a khemikhali zwi shumiswa luthihi zwa fhela, zwi ṱoḓa tshelede, nahone u fhisa mafura a bvaho fhasi ha mavu (fossil fuels) zwi engedza climate change.
 
-Zwimela na zwipuka zwi nga ri ṋea mafura na manyoro, nahone zwa thusa kha u langa zwikukumi, u langa zwimela zwi sa ṱoḓei, u langa mulilo, u thivhela u khukhulwa ha mavu, u shumisa hafhu zwiḽiwa zwa zwimela (nutrients), na u vhofholola mavu. Zwi nga dzhia vhudzulo ha theraka na michini ya u rema mahatsi na zwiṱaka i fhisaho mafura.
+Zwimela na zwipuka zwi nga ri ṋea mafura na manyoro, nahone zwa thusa kha u langa zwikukumi, u langa zwimela zwi sa ṱoḓei, u langa mulilo, u thivhela erosion, u shumisa hafhu zwiḽiwa zwa zwimela (nutrients), na u vhofholola mavu. Zwi nga dzhia vhudzulo ha theraka na michini ya u rema mahatsi na zwiṱaka i fhisaho mafura.
 
 Zwi dzhia tshifhinga u fhaṱa zwiko hezwi zwi tshilaho, ngauralo zwi vhoneni sa vhubindudzi ha tshifhinga tshilapfu. Nga tshifhinga, zwi ḓo ḓiengedza nahone zwa bvela phanḓa zwi noṱhe.
 
 Tsumbo:
 
-- **Danga ḽi pfukiswaho (animal tractor).** Khuhu na nguluvhe nga mupo wadzo dzi a ṱoḓa-ṱoḓa na u gwa mavu dzi tshi ṱoḓa zwivhungu, midzi na zwikukumi. Dzi fareni maḓuvha maṱuku kha fhethu ho vhiyelwaho nga lufhenḓe ho ḓalaho zwimela zwi sa ṱoḓei, dzi ḓo kunakisa zwimela zwi sa ṱoḓei nahone dza nontshisa mavu, a lugela u ṱavhiwa.
+- **Animal tractor** (danga ḽi pfukiswaho). Khuhu na nguluvhe nga mupo wadzo dzi a ṱoḓa-ṱoḓa na u gwa mavu dzi tshi ṱoḓa zwivhungu, midzi na zwikukumi. Dzi fareni maḓuvha maṱuku kha fhethu ho vhiyelwaho nga lufhenḓe ho ḓalaho zwimela zwi sa ṱoḓei, dzi ḓo kunakisa zwimela zwi sa ṱoḓei nahone dza nontshisa mavu, a lugela u ṱavhiwa.
 - **Manyoro a bvaho kha zwipuka.** Zwipuka zwi ḽa zwimela nahone zwa vhuisa zwiḽiwa zwa zwimela mavuni nga manyaga azwo. Manyaga na maḓi a manyaga (manure tea) zwi ḽisa zwimela zwa ngade.
-- **Lufhenḓe lwa zwimela na zwithivhela-muya (living fences and windbreaks).** Lufhenḓe lwa zwimela zwi re na mushumo, zwi si zwa u phaḓalala zwa tshinyadza (non-invasive), lu ṋea tshitshavhelo, zwiḽiwa zwa zwifuwo na khuni hu si na mafura kana waya.
+- **Lufhenḓe lwa zwimela na dzi-windbreak** (mitalo ya miri na zwiṱaka i fhungudzaho muya). Lufhenḓe lwa zwimela zwi re na mushumo, zwi si zwa u phaḓalala zwa tshinyadza (non-invasive), lu ṋea tshitshavhelo, fodder na khuni hu si na mafura kana waya.
 
-> **Tsireledzo:** Manyaga maswa a zwipuka a nga vha na zwitshili zwi ḓisaho malwadze mahulwane. Ni a ite khomposo (compost) zwavhuḓi phanḓa ha u a shumisa kha zwiliṅwa zwi ḽiwaho zwi songo bikwa, sa letisi, sipinashi na mihaṱa. Arali na shumisa manyaga maswa, a dzheniseni mavuni nga u ṱukusa miṅwedzi ya 4 (maḓuvha a 120) phanḓa ha u kaṋa zwiliṅwa zwi kwamaho mavu. Ṱanzwani zwanḓa musi no fara manyaga. Farani nguluvhe kha lufhenḓe lu khwaṱhaho uri dzi si kone u shavhela kha zwiliṅwa zwa vhahura.
+> **Tsireledzo:** Manyaga maswa a zwipuka a nga vha na zwitshili zwi ḓisaho malwadze mahulwane. Ni a ite **compost** (zwithu zwo vholaho zwi nontshisaho mavu) zwavhuḓi phanḓa ha u a shumisa kha zwiliṅwa zwi ḽiwaho zwi songo bikwa, sa letisi, sipinashi na mihaṱa. Arali na shumisa manyaga maswa, a dzheniseni mavuni nga u ṱukusa miṅwedzi ya 4 (maḓuvha a 120) phanḓa ha u kaṋa zwiliṅwa zwi kwamaho mavu. Ṱanzwani zwanḓa musi no fara manyaga. Farani nguluvhe kha lufhenḓe lu khwaṱhaho uri dzi si kone u shavhela kha zwiliṅwa zwa vhahura.
 
 ### 6. Ni songo bveledza malaṱwa (produce no waste)
 
@@ -150,23 +150,23 @@ Mulayo wavhuḓi ndi: **humbulisisani hafhu, fhungudzani, lugisani, shumisani ha
 
 Tsumbo:
 
-- **Masalela a khishi.** Makhwakhwa na masalela a miroho ndi zwiḽiwa zwavhuḓi zwa zwivhungu nahone ndi tshiṅwe tsha zwithu zwiswa zwi re na maḓi ("greens", zwi re na naiṱirodzheni nnzhi) zwa ndeme kha mulundu wa khomposo.
-- **Mahatsi o remiwaho.** A shumiseni sa tshifukedzi u mona na zwimela zwiṱuku uri mavu a dzule o rothola nahone a na maḓi, u thivhela zwimela zwi sa ṱoḓei, na u engedza zwiḽiwa zwa zwimela zwiṱuku nga zwiṱuku musi a tshi vhola. A phaḓaladzeni nga miṱaṱo misekene, kana ni a omise phanḓa, ngauri muṱaṱo muhulwane wa mahatsi maswa u a ṱanganela nahone wa fhisa. Ni songo shumisa mahatsi o remiwaho kha mahatsi a mudini o pfafadzwaho nga zwivhulahi zwa zwimela zwi sa ṱoḓei.
-- **Maḓi o shumiswaho (greywater).** Hu si u laṱa maḓi a u ṱanzwa zwiambaro na a u ṱamba, a shumiseni u sheledza miri ya mitshelo na zwimela zwa u ṋakisa. Shumisani tshisibe tshi si na maanḓa tshi vholaho (biodegradable) na phoda dza u ṱanzwa dzi re na muṅo muṱuku.
+- **Masalela a khishi.** Makhwakhwa na masalela a miroho ndi zwiḽiwa zwavhuḓi zwa zwivhungu nahone ndi tshiṅwe tsha zwithu zwiswa zwi re na maḓi ("greens", zwi re na naiṱirodzheni nnzhi) zwa ndeme kha mulundu wa compost.
+- **Mahatsi o remiwaho.** A shumiseni sa mulch u mona na zwimela zwiṱuku uri mavu a dzule o rothola nahone a na maḓi, u thivhela zwimela zwi sa ṱoḓei, na u engedza zwiḽiwa zwa zwimela zwiṱuku nga zwiṱuku musi a tshi vhola. A phaḓaladzeni nga miṱaṱo misekene, kana ni a omise phanḓa, ngauri muṱaṱo muhulwane wa mahatsi maswa u a ṱanganela nahone wa fhisa. Ni songo shumisa mahatsi o remiwaho kha mahatsi a mudini o pfafadzwaho nga zwivhulahi zwa zwimela zwi sa ṱoḓei.
+- **Greywater** (maḓi o shumiswaho a u ṱanzwa na a u ṱamba). Hu si u laṱa maḓi a u ṱanzwa zwiambaro na a u ṱamba, a shumiseni u sheledza miri ya mitshelo na zwimela zwa u ṋakisa. Shumisani tshisibe tshi si na maanḓa tshi vholaho (biodegradable) na phoda dza u ṱanzwa dzi re na muṅo muṱuku.
 
-> **Tsireledzo:** Maḓi o shumiswaho a nga vha na zwitshili zwi ḓisaho malwadze. Shumisani maḓi a bafu, a shawara na a beseni ya u ṱamba zwanḓa, hu si maḓi a khishi, ane a vha na mafuṱa nahone o ḓala zwitshili. Ni songo vhuya na shumisa maḓi a u ṱanzwa dzinapi (nappies). Shelani maḓi o shumiswaho mavuni kana kha tshifukedzi tshi re u mona na miri, hu si kha maṱari, nahone ni songo a shela kha miroho i ḽiwaho i songo bikwa, sa letisi na sipinashi. Ni songo a litsha a tshi ima fhasi, nahone ni songo a shumisa arali muṅwe muṱani a na vhulwadze ha thumbu. Nga zwifhinga zwiṅwe sheledzani nga maḓi o kunaho u bvisa muṅo.
+> **Tsireledzo:** Greywater i nga vha na zwitshili zwi ḓisaho malwadze. Shumisani maḓi a bafu, a shawara na a beseni ya u ṱamba zwanḓa, hu si maḓi a khishi, ane a vha na mafuṱa nahone o ḓala zwitshili. Ni songo vhuya na shumisa maḓi a u ṱanzwa dzinapi (nappies). Shelani greywater mavuni kana kha mulch i re u mona na miri, hu si kha maṱari, nahone ni songo i shela kha miroho i ḽiwaho i songo bikwa, sa letisi na sipinashi. Ni songo i litsha i tshi ima fhasi, nahone ni songo i shumisa arali muṅwe muṱani a na vhulwadze ha thumbu. Nga zwifhinga zwiṅwe sheledzani nga maḓi o kunaho u bvisa muṅo.
 
 ### 7. Pulanani u bva kha mivhumbeleo u ya kha zwidodombedzwa (design from patterns to details)
 
 Mupo wo ḓala mivhumbeleo (patterns) — sa u fhandekana ha mulambo kana ha maṱavhi a muri, u monamona ha khwatha ḽa khumba, na nḓila ine maḓi a dzula a tshi elela a tshi ya fhasi ngayo. Kha permaculture ri lingedza u thoma ra wana muvhumbeleo wa khwine wa fhethu hashu, ra kona u ḓadza zwidodombedzwa nga murahu.
 
-Thomani nga tshifanyiso tshihulwane: tshivhumbeo tsha mavu (u sendama hao na mitalo ya vhuimo vhuthihi), hune maḓi a bva hone na hune a ya hone (**fhethu ha u kuvhanganya maḓi** — catchment), na mutsho. Olani muvhumbeleo muhulwane wa pulane yaṋu u bva kha hezwi. Nga murahu ni shume zwidodombedzwa, sa uri ndi zwiliṅwa zwifhio zwine zwa ya kha ndima ifhio ya ngade. Bill Mollison o dzhia muvhumbeleo u wa ndeme lwe a u ṋea tshipiḓa tshoṱhe kha bugu yawe *Permaculture: A Designers' Manual* (1988).
+Thomani nga tshifanyiso tshihulwane: tshivhumbeo tsha mavu (u sendama hao na **dzi-contour** (mitalo ya vhuimo vhuthihi)), hune maḓi a bva hone na hune a ya hone (**catchment** — fhethu hune maḓi a mvula a kuvhangana hone), na mutsho. Olani muvhumbeleo muhulwane wa pulane yaṋu u bva kha hezwi. Nga murahu ni shume zwidodombedzwa, sa uri ndi zwiliṅwa zwifhio zwine zwa ya kha ndima ifhio ya ngade. Bill Mollison o dzhia muvhumbeleo u wa ndeme lwe a u ṋea tshipiḓa tshoṱhe kha bugu yawe *Permaculture: A Designers' Manual* (1988).
 
-Ni nga dovha na hadzima mivhumbeleo ya mupo nga ho livhaho: nḓila dzi kombamaho zwiṱuku sa mulambo, kana ndima dza ngade dzo vhumbiwaho sa tshimonamonane kana sa tshikhala tsha khii (keyhole). Sedzani zwivhumbeo zwi re u mona naṋu u wana mihumbulo.
+Ni nga dovha na hadzima mivhumbeleo ya mupo nga ho livhaho: nḓila dzi kombamaho zwiṱuku sa mulambo, kana ndima dza ngade dzo vhumbiwaho sa tshimonamonane kana sa **keyhole bed** (ndima yo vhumbiwaho sa tshikhala tsha khii). Sedzani zwivhumbeo zwi re u mona naṋu u wana mihumbulo.
 
 Tsumbo:
 
-- Shumisani **mitalo ya vhuimo vhuthihi** (contours) — mitalo i re kha vhuimo vhu fanaho — ya mavu aṋu u fhaṱa mushumo wa mavu, sa **mukubo** (swale) — mugero wo gwiwaho u tevhela mutalo wa vhuimo vhuthihi u fara maḓi a elelaho nṱha ha mavu (runoff) na u a nwisa mavu. Mutalo wa vhuimo vhuthihi ndi muvhumbeleo; mukubo ndi tshidodombedzwa.
+- Shumisani dzi-contour — mitalo i re kha vhuimo vhu fanaho — dza mavu aṋu u fhaṱa mushumo wa mavu, sa swale — mugero wo gwiwaho u tevhela contour u fara **runoff** (maḓi a elelaho nṱha ha mavu) na u i nwisa mavu. Contour ndi muvhumbeleo; swale ndi tshidodombedzwa.
 - Tevhelani nḓila ya ḓuvha nga ṅwaha woṱhe. Kha Tshipembe tsha Afrika ḓuvha ḽi devhula, nahone ḽi vha fhasi nga vhuria. Vheani zwiliṅwa, miri na zwifhaṱo hune zwa wana ḓuvha ḽine zwa ḽi ṱoḓa.
 - Sedzani mitevhe ya zwithu i re u mona naṋu, sa khalaṅwaha na mvula. Ṱhogomelani nḓila ine ya kwama ngayo zwimela na zwipuka, ni pulane u ṱavha na u ṱhogomela zwipuka zwaṋu u ya nga yone.
 
@@ -183,8 +183,8 @@ Ndi zwone na kha vhathu. Zwitshavha zwi a khwaṱha musi muṅwe na muṅwe a ts
 Tsumbo:
 
 - Itani fhethu ho tsireledzeaho hune vhana na vhaaluwa vha nga thusa na u guda ngadeni.
-- Ṱanganyani miri, zwiliṅwa na zwipuka (**vhulimi ha miri na zwiliṅwa** — agroforestry) uri tshiṅwe na tshiṅwe tshi ṋee zwiṅwe zwibveledzwa na tshumelo dzatsho. Sa tsumbo, miri i ṋea murunzi na zwiḽiwa zwa zwifuwo, zwipuka zwi ṋea manyaga, nahone zwiliṅwa zwi ṋea zwiḽiwa na masalela a zwiliṅwa a zwipuka.
-- Itani **zwigwada zwa zwimela** (guilds) — zwigwada zwa zwimela zwi aluwaho zwavhuḓi zwi khathihi nahone zwi thusanaho kha u langa zwikukumi, u nontshisa mavu, murunzi kana u tikedza.
+- Ṱanganyani miri, zwiliṅwa na zwipuka (**vhulimi ha miri na zwiliṅwa** — agroforestry) uri tshiṅwe na tshiṅwe tshi ṋee zwiṅwe zwibveledzwa na tshumelo dzatsho. Sa tsumbo, miri i ṋea murunzi na fodder, zwipuka zwi ṋea manyaga, nahone zwiliṅwa zwi ṋea zwiḽiwa na masalela a zwiliṅwa a zwipuka.
+- Itani **dzi-guild** (zwigwada zwa zwimela) — zwigwada zwa zwimela zwi aluwaho zwavhuḓi zwi khathihi nahone zwi thusanaho kha u langa zwikukumi, u nontshisa mavu, murunzi kana u tikedza.
 
 ### 9. Shumisani thandululo ṱhukhu dzi yaho zwiṱuku-zwiṱuku (use small and slow solutions)
 
@@ -192,15 +192,15 @@ Murero: *Ane a tshimbila zwiṱuku-zwiṱuku a sa imi u a swika.*
 
 Zwi a ṱuṱuwedza u thoma nga zwihulwane. Fhedzi zwi na vhuṱali vhukuma u thoma nga zwine na nga kona u zwi ṱhogomela. Fhethu huṱuku ho ṱhogomelwaho zwavhuḓi hu ṋea zwinzhi u fhira fhethu hulwane ho kundaho u langea. Thomani tsini na vothi ya murahu, itani tshithu tshithihi nga tshifhinga, ni fhaṱe kha ḽiga ḽiṅwe na ḽiṅwe. Thomani ḽiga ḽi tevhelaho fhedzi musi ḽa u thoma ḽi tshi khou shuma.
 
-Vhalimi vhanzhi vha thoma vha tshi funesa, vha kona u xelelwa nga tshivhindi ngauri fhethu he vha hu nanga ndi hulwane u fhira zwine vha nga kona u ṱhogomela. Sisiteme dza mupo dzi shanduka zwiṱuku-zwiṱuku, nga tshifhinga, nahone dzi a pfuma na u bveledza zwinzhi musi dzi tshi khou shanduka.
+Vhalimi vhanzhi vha thoma vha tshi funesa, vha kona u xelelwa nga tshivhindi ngauri fhethu he vha hu nanga ndi hulwane u fhira zwine vha nga kona u ṱhogomela. Dzi-ecosystem dzi shanduka zwiṱuku-zwiṱuku, nga tshifhinga, nahone dzi a pfuma na u bveledza zwinzhi musi dzi tshi khou shanduka.
 
 U dzhia tshifhinga tshaṋu zwi ni tendela u sedza mavu, khalaṅwaha na nḓila ine mavu a fhindula ngayo mushumo waṋu. Tshanduko dzine na dzi ita nga nḓila iyi dzi ḓo dzula. Permaculture i ṱoḓa u konḓelela. Naho zwo ralo, vhani na pulane ine na i shumela, naho i tshi ḓo shanduka nga tshifhinga.
 
 Tsumbo:
 
 - Thomani nga ngade ṱhukhu ya tsini ha nnḓu (kitchen garden), zwihuluhulu arali ni songo athu lima miroho. Dzhenisani mavu manzhi kha u bveledza ṅwaha muṅwe na muṅwe.
-- Shumisani zwishumiswa na michini zwi linganaho na vhuhulu ha mavu aṋu. Theraka khulwane kha tsimu ṱhukhu i a ḓura, i tikanya mavu nahone zwi a konḓa u i monisa. Khuhu dzi re kha **danga ḽa khuhu ḽi pfukiswaho** (chicken tractor) dzi shuma zwiṱuku-zwiṱuku, fhedzi dzi kunakisa na u nontshisa mavu nga tshelede ṱhukhu.
-- Fhaṱani mavu zwiṱuku-zwiṱuku, khalaṅwaha nga khalaṅwaha, nga khomposo, tshifukedzi na zwiliṅwa zwa u fukedza (cover crops).
+- Shumisani zwishumiswa na michini zwi linganaho na vhuhulu ha mavu aṋu. Theraka khulwane kha tsimu ṱhukhu i a ḓura, i tikanya mavu nahone zwi a konḓa u i monisa. Khuhu dzi re kha **chicken tractor** (danga ḽa khuhu ḽi pfukiswaho, animal tractor) dzi shuma zwiṱuku-zwiṱuku, fhedzi dzi kunakisa na u nontshisa mavu nga tshelede ṱhukhu.
+- Fhaṱani mavu zwiṱuku-zwiṱuku, khalaṅwaha nga khalaṅwaha, nga compost, mulch na zwiliṅwa zwa u fukedza (cover crops).
 
 ### 10. Shumisani nahone ni dzhiele nṱha u fhambana (use and value diversity)
 
@@ -216,22 +216,22 @@ Bulasi khulwane dzi limaho tshiliṅwa tshithihi fhethu hulwane (**u lima tshili
 
 Tsumbo:
 
-- Ṱavhani zwiliṅwa zwo ṱanganaho — miroho, zwiliṅwa zwa thoro, zwimela zwa lushaka lwa nawa (nawa, phizi na nḓuhu), na miri ya mitshelo na ya nḓuhu dza miri — zwi ṋeaho zwiḽiwa nga zwifhinga zwo fhambanaho zwa ṅwaha. Hezwi zwi fhaṱa tsireledzo ya zwiḽiwa nahone zwi ni thusa u konḓelela gomelelo na mutsho u shandukaho.
+- Ṱavhani zwiliṅwa zwo ṱanganaho — miroho, zwiliṅwa zwa thoro, dzi-legume (nawa, phizi na nḓuhu), na miri ya mitshelo na ya nḓuhu dza miri — zwi ṋeaho zwiḽiwa nga zwifhinga zwo fhambanaho zwa ṅwaha. Hezwi zwi fhaṱa tsireledzo ya zwiḽiwa nahone zwi ni thusa u konḓelela gomelelo na mutsho u shandukaho.
 - Vhulungani mbeu u bva kha zwimela zwaṋu zwa khwine, zwi re na mutakalo khalaṅwaha iṅwe na iṅwe. Nga miṅwaha, mbeu dzaṋu dzi a ḓowela maimo a fhethu haṋu, nahone u vhulunga u bva kha zwimela zwinzhi zwi ita uri dzi dzule dzo fhambana nga lushaka.
 - Fuwani zwipuka zwi thusanaho. Sa tsumbo, khuhu dzi tevhelaho kholomo dzi a ṱoḓa-ṱoḓa kha vhulongo, dza vhu phaḓaladza nahone dza ḽa zwivhungu zwa nzhinzhi (fly larvae).
 
 ### 11. Shumisani magumo nahone ni dzhiele nṱha zwa thungo (use edges and value the marginal)
 
-**Magumo** (edge) ndi fhethu hune fhethu huvhili ha mupo ho fhambanaho ha ṱangana hone — sa tsumbo, hune tshidziva tsha ṱangana na mavu o omaho, kana hune ḓaka ḽa ṱangana na madambaya. Magumo a anzela u vha na zwinzhi zwi itaho, a bveledza zwinzhi nahone ndi vhudzulo ha tshaka nnzhi dza zwimela na zwipuka u fhira fhethu huṅwe na huṅwe hu hoṱhe. A wana zwivhuya zwa thungo dzoṱhe mbili nahone a dalelwa nga zwivhumbwa zwi bvaho kha thungo dzoṱhe.
+**Edge** (magumo) ndi fhethu hune fhethu huvhili ha mupo ho fhambanaho ha ṱangana hone — sa tsumbo, hune tshidziva tsha ṱangana na mavu o omaho, kana hune ḓaka ḽa ṱangana na madambaya. Edge i anzela u vha na zwinzhi zwi itaho, i bveledza zwinzhi nahone ndi vhudzulo ha tshaka nnzhi dza zwimela na zwipuka u fhira fhethu huṅwe na huṅwe hu hoṱhe. I wana zwivhuya zwa thungo dzoṱhe mbili nahone i dalelwa nga zwivhumbwa zwi bvaho kha thungo dzoṱhe.
 
 > **Ḓivhani:** "Hune zwithu zwa ṱangana hone ndi hone hune zwithu zwi takadzaho vhukuma zwa itea. Zwenezwi zwipiḓa zwi anzela u vha zwa ndeme vhukuma, zwo fhambana vhukuma nahone zwi bveledza vhukuma kha sisiteme." — David Holmgren
 
-Fhethu **ha thungo** (marginal) — dzikhona, lufhenḓe, mavhondo, fhethu ho sendamaho vhukuma na fhethu ha maḓi-maḓi zwine zwa anzela u sa dzhielwa nṱha — na hone hu nga bveledza. Ri shumisa maitele aya nga u engedza zwimela zwi re na mushumo na vhudzulo ha zwipuka na zwimela (habitats) kha magumo na thungo.
+Fhethu **ha thungo** (marginal) — dzikhona, lufhenḓe, mavhondo, fhethu ho sendamaho vhukuma na fhethu ha maḓi-maḓi zwine zwa anzela u sa dzhielwa nṱha — na hone hu nga bveledza. Ri shumisa maitele aya nga u engedza zwimela zwi re na mushumo na **dzi-habitat** (vhudzulo ha zwipuka na zwimela) kha edge na thungo.
 
 Tsumbo:
 
 - Ṱavhani lufhenḓe lwa zwimela zwa sialala kha magumo a masimu a zwiliṅwa. Sa tsumbo, Kei apple (*Dovyalis caffra*) i ita lufhenḓe lu re na mipfa lu bveledzaho mitshelo, nahone Cape honeysuckle (*Tecoma capensis*) na plumbago (*Plumbago auriculata*) zwi kokodza zwiṋoni na zwikukumi zwi thusaho.
-- Itani nḓila dzi tshimbilaho vhukati ha fhethu huvhili ha u lima, sa ḓaka ḽa zwiḽiwa (food forest) na ngade ya miroho, uri ni kone u ṱhogomela zwoṱhe khathihi.
+- Itani nḓila dzi tshimbilaho vhukati ha fhethu huvhili ha u lima, sa **food forest** (ḓaka ḽa zwiḽiwa) na ngade ya miroho, uri ni kone u ṱhogomela zwoṱhe khathihi.
 - Vheani madanga a zwipuka tsini na fhethu ha zwiliṅwa uri zwoṱhe zwivhili zwi kone u kovhelana zwine zwa zwi bveledza. Sa tsumbo, zwimela zwi sa ṱoḓei na zwimela zwo tshinyalaho zwi bvaho ngadeni zwi nga ṋewa khuhu, nahone manyaga adzo a vhuyelela ngadeni.
 - Limani zwiḽiwa kha mavhondo na lufhenḓe (**u lima u ya nṱha** — vertical gardening). Nawa dzi gonyaho, makhukhamba na mikumbu (gourds) zwi shandukisa magumo a sa shumiswi a vha fhethu hu bveledzaho.
 
@@ -245,7 +245,7 @@ Bulasi yashu ya permaculture na yone i ḓo bvela phanḓa i tshi shanduka, naho
 
 Tsumbo:
 
-- Ḓaka ḽa zwiḽiwa ḽi shanduka lwa miṅwaha minzhi, u bva kha miri miṱuku na zwimela zwi aluwaho nga u ṱavhanya u ya kha ḓaka ḽo aluwaho ḽi re na murunzi. Zwine na zwi ṱavha na nḓila ine na ḽi ṱhogomela ngayo zwi fanela u shanduka naḽo.
+- Food forest i shanduka lwa miṅwaha minzhi, u bva kha miri miṱuku na zwimela zwi aluwaho nga u ṱavhanya u ya kha ḓaka ḽo aluwaho ḽi re na murunzi. Zwine na zwi ṱavha na nḓila ine na i ṱhogomela ngayo zwi fanela u shanduka nayo.
 - Zwifuwo zwa bulasini zwi ṱoḓa u ṱhogomelwa nga nḓila dzo fhambanaho kha zwiimo zwo fhambanaho zwa vhutshilo, u bva kha vhuṱuku u ya kha vhuhulwane na vhualuwa.
 - Khalaṅwaha, na tshanduko dza mvula na dza mufhiso ṅwaha nga ṅwaha, zwi kwama zwiliṅwa zwine na nga zwi lima na zwine zwa bveledza zwone. Pulanani u nanga zwiliṅwa zwaṋu u ya nga zwenezwo.
 
@@ -255,8 +255,8 @@ Tsumbo:
 
 - Permaculture i amba "vhulimi ha tshoṱhe" na "mvelele ya tshoṱhe": u lima na u tshila nga nḓila dzi dzulaho.
 - Ipfi ḽo vhumbiwa vhukati ha miṅwaha ya vho-1970 nga Bill Mollison na David Holmgren; bugu yavho *Permaculture One* yo bva nga 1978.
-- Permaculture i pulana bulasi dzi shumaho sa sisiteme dza mupo: dzo fhambana, dzo dzikama nahone dzi a konḓelela.
-- I thusa vhalimi vha Tshipembe tsha Afrika u konḓelela gomelelo, tshanduko ya kilima na u khukhulwa ha mavu, i tshi khou khwinisa zwiḽiwa, mutakalo na mbuelo.
+- Permaculture i pulana bulasi dzi shumaho sa dzi-ecosystem dza mupo: dzo fhambana, dzo dzikama nahone dzi a konḓelela.
+- I thusa vhalimi vha Tshipembe tsha Afrika u konḓelela gomelelo, climate change na erosion, i tshi khou khwinisa zwiḽiwa, mutakalo na mbuelo.
 - Milayo miraru ya vhuḓifari ndi: u ṱhogomela mavu na mupo, u ṱhogomela vhathu, na u kovhelana ho fanelaho.
 - Maitele a fumi na mavhili a David Holmgren ndi: sedzani nahone ni shumisane; farani nahone ni vhulunge maanḓa; wanani khaṋo; ḓilangeni nahone ni ṱanganedze zwine mupo wa ni sumbedza; shumisani nahone ni dzhiele nṱha zwiko zwi vusuluwaho na tshumelo dza mupo; ni songo bveledza malaṱwa; pulanani u bva kha mivhumbeleo u ya kha zwidodombedzwa; ṱanganyani u fhira u fhambanya; shumisani thandululo ṱhukhu dzi yaho zwiṱuku-zwiṱuku; shumisani nahone ni dzhiele nṱha u fhambana; shumisani magumo nahone ni dzhiele nṱha zwa thungo; shumisani tshanduko nahone ni i fhindule nga vhutsila.
 - Thomani nga zwiṱuku, sedzani nga vhuronwane, nahone ni tendele mavu a ni funze.

@@ -2,7 +2,7 @@
 
 ## Kungani izilwane ziyingxenye ye-permaculture
 
-Amapulazi amaningi nemizi eminingi kufuya izilwane ezithile. Uma zihlelwe kahle futhi zinakekelwa kahle, izilwane ziyingxenye ebalulekile yepulazi le-permaculture (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside). Zisiza ukwenza ipulazi libe wuhlelo oluphelele nolulinganiselayo.
+Amapulazi amaningi nemizi eminingi kufuya izilwane ezithile. Uma zihlelwe kahle futhi zinakekelwa kahle, izilwane ziyingxenye ebalulekile yepulazi **le-permaculture** (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside). Zisiza ukwenza ipulazi libe wuhlelo oluphelele nolulinganiselayo.
 
 Izilwane, ezasendle nezifuywayo, zinikeza izinzuzo eziningi:
 
@@ -12,10 +12,10 @@ Izilwane, ezasendle nezifuywayo, zinikeza izinzuzo eziningi:
 - **Ukulawula izimila.** Izilwane ezidlayo zigcina utshani nokhula kufushane.
 - **Ukulungisa umhlaba.** Izilwane ezinakekelwa kahle zingasiza ukubuyisela umhlaba owonakele.
 - **Imikhiqizo.** Inyama, amaqanda, ubisi, uboya, izimpaphe noju.
-- **Imisebenzi yemvelo.** Izinyosi zithutha impova ezitshalweni; amadada nezinkukhu zidla izinambuzane ezilimaza izitshalo.
+- **Imisebenzi ye-ecosystem** (usizo oluvela emvelweni). Izinyosi zithutha impova ezitshalweni; amadada nezinkukhu zidla izinambuzane ezilimaza izitshalo.
 - **Ukuphinda kusetshenziswe izinsalela.** Izilwane ziphendula izinsalela zasekhishini nezithelo ezonakele zibe ngumquba. Izingulube ezingeniswa engadini yezihlahla zezithelo isikhathi esifushane zihlanza izithelo eziwile.
 - **Ukwakha umhlabathi.** Izilwane zibuyisela izakhamzimba emhlabathini futhi ziqedele umjikelezo wezakhamzimba.
-- **Umanyolo owuketshezi.** Amapulazi emisundu akhiqiza uketshezi olucebile ngezakhamzimba ("itiye lemisundu").
+- **Umanyolo owuketshezi.** **Ama-worm farm** (izitsha lapho imisundu iguqula izinsalela zibe ngumquba) akhiqiza uketshezi olucebile ngezakhamzimba (**i-worm tea**).
 - **Ukuphula umjikelezo wezinambuzane.** Izinkukhu ezilandela izinkomo ziphenya ubulongwe futhi zidle izibungu zezimpukane.
 - **Ukudonsa nokuthutha.** Izimbongolo, amahhashi nezinkabi zidonsa amageja nezinqola.
 - **Ukuphepha.** Izinja, ngisho namahansi, zikwazisa uma kufika abantu ongabazi.
@@ -31,11 +31,11 @@ Zonke izilwane, kuhlanganise nabantu, zithinta indawo ezizungezile. Singasebenzi
 
 Khetha izinhlobo nezinhlobonhlobo (breeds) ezifanele isimo sezulu sakho nezidingo zakho. Njengoba isimo sezulu singasaqageleki kalula, kuhlakaniphile ukukhetha izilwane eziqinile ezikwazi ukubekezelela izimo eziningi ezehlukene.
 
-## Ogandaganda abayizilwane (ama-animal tractor)
+## Ama-animal tractor
 
 **I-animal tractor** (ugandaganda oyisilwane) yisibaya esisuswayo, noma indawo ebiyelwe esuswayo, lapho izilwane ezifana nezinkukhu, amadada, ama-turkey, amahansi, izingulube noma izimbuzi zenza umsebenzi owusizo. Zikhipha umquba, ziphenya, zidla utshani futhi zimbe njengoba zenza ngokwemvelo, ngakho zihlanza, zilungise futhi zinakekele izingxenye zepulazi. Uma isiqeshana esisodwa sesiqediwe, usisa isibaya esiqeshaneni esilandelayo.
 
-Ama-animal tractor mahle nasezilwaneni. Azivikela ezilwaneni ezizizingelayo, azinikeze ukudla okwehlukahlukene, umhlabathi omusha nethuba lokuziphatha ngokwemvelo.
+Ama-animal tractor mahle nasezilwaneni. Azivikela **kuma-predator** (izilwane ezizizingelayo), azinikeze ukudla okwehlukahlukene, umhlabathi omusha nethuba lokuziphatha ngokwemvelo.
 
 Asetshenziselwa:
 
@@ -57,7 +57,7 @@ Izinkukhu cishe yizilwane ezibaluleke kakhulu ku-Zone 1 naku-Zone 2 (ama-zone: i
 
 Izinkukhu **zidla konke** (omnivores): zidla kokubili ukudla kwezitshalo nokwezilwane. Ukudla okunempilo kuhlanganisa:
 
-- **Amaprotheni**, avela ezinambuzaneni, emisundwini nakuma-legume (izitshalo zohlobo lukabhontshisi) afana nobhontshisi (ophekiwe) nembewu ye-pigeon pea
+- **Amaprotheni**, avela ezinambuzaneni, emisundwini **nakuma-legume** (izitshalo zohlobo lukabhontshisi) afana nobhontshisi (ophekiwe) nembewu ye-pigeon pea
 - **Amandla**, avela okusanhlamvu okufana nommbila, amabele, ukolweni nebhali
 - **Imifino eluhlaza**, evela otshanini, okhuleni nakwezinye izitshalo
 - **I-calcium** yamagobolondo aqinile amaqanda, evela kumagobolondo e-oyster achotshoziwe, amatshana e-limestone noma amagobolondo amaqanda omisiwe achotshoziwe
@@ -75,8 +75,8 @@ Isikhukhukazi esizalayo sidla cishe u-110–140 g wokudla ngosuku futhi siphuza 
 
 - Izinsalela zasekhishini: amakhasi emifino, isinkwa esidala nokusanhlamvu okudala
 - Izinambuzane zasengadini: iminenke engenamagobolondo (slugs), iminenke, izibungu namaqabunga agcwele ama-aphid
-- I-mulch (isembozo somhlabathi): utshani obugundiwe noma amaqabunga aqoqwe ngereki aphethe izinambuzane ezincane nembewu yokhula
-- Inqwaba ye-compost (umquba owenziwe ngezinsalela zezitshalo ezibolile) (zivumele ziphenye ingxenye yayo yangaphandle)
+- **I-mulch** (isembozo somhlabathi): utshani obugundiwe noma amaqabunga aqoqwe ngereki aphethe izinambuzane ezincane nembewu yokhula
+- Inqwaba **ye-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) (zivumele ziphenye ingxenye yayo yangaphandle)
 - Imifino yasemadlelweni nokhula
 - Ubhekilanga olutshalwe emaphethelweni ezinsimu; lengisa izinhloko ezivuthiwe ukuze izinyoni zizicophe
 - Izinambuzane ezisebulongweni bezinkomo nezinye izilwane ezinkulu
@@ -98,11 +98,11 @@ Izinkukhu zidinga indlu evikelekile ebusuku.
 - **Amabhokisi ezidleke:** izikhukhukazi ezizalayo zidinga ibhokisi lesidleke elithule, elimnyama. Yenza ibhokisi ngalinye libe cishe ngu-30 cm ububanzi, 30 cm ukujula no-30 cm ukuphakama, futhi unikeze cishe ibhokisi elilodwa lezikhukhukazi ezine noma ezinhlanu. Amabhokisi amadala ezithelo enziwe ngokhuni asebenza kahle, noma uwakhe ngamapulangwe. Wendlale ngotshani obomile obuhlanzekile, amabibi otshani (straw) noma izincwecwe zokhuni.
 - **Ukungena komoya:** umoya kumele ungene uphume endlini, kodwa ngaphandle komoya obandayo oshaya izinyoni ebusuku.
 
-### Izilwane ezizingelayo
+### Ama-predator
 
-Ezindaweni zasemakhaya, izilwane ezizingela izinkukhu zivame ukuba yinkinga enkulu kunazo zonke. Izinyoka, amachakide, izinsimba, izimpaka (wild cats), izinja, amagundane nezinyoni ezizingelayo zonke zithatha izinkukhu namachwane.
+Ezindaweni zasemakhaya, ama-predator avame ukuba yinkinga enkulu kunazo zonke. Izinyoka, amachakide, izinsimba, izimpaka (wild cats), izinja, amagundane nezinyoni ezizingelayo zonke zithatha izinkukhu namachwane.
 
-- Valela izinyoni endlini evikelekile nengangeneki yizilwane ezizingelayo njalo ebusuku.
+- Valela izinyoni endlini evikelekile nengangeneki ngama-predator njalo ebusuku.
 - Sebenzisa ucingo lwenetha oluqinile olunezimbobo ezincane, bese ulugqiba noma ulugoqela ngaphandle phansi ukuze izilwane zingembi zingene ngaphansi.
 - Vikela amachwane amancane egcekeni elimboziwe.
 
@@ -140,7 +140,7 @@ Isifo singaqothula umhlambi wonke ezinsukwini ezimbalwa.
 2. **Phinda.** Ukuvikeleka kuyaphela. Imihlambi yasemakhaya ivame ukuphinde igonywe cishe njalo ezinyangeni ezintathu. Landela imiyalelo esemgomeni nezeluleko zomsizi wezempilo yezilwane wendawo (animal health technician) noma udokotela wezilwane kahulumeni (state veterinarian).
 3. **Bika.** Isifo i-Newcastle **yisifo esilawulwayo** ngaphansi kwe-Animal Diseases Act (Act 35 of 1984) (uMthetho Wezifo Zezilwane). Uma izinyoni zakho eziningi zigula noma zifa kungazelelwe, kubike ngokushesha kudokotela wezilwane kahulumeni oseduze.
 
-**Ukuvikela izifo** kwansuku zonke okuhle (biosecurity — imikhuba egcina izifo zingangeni):
+**I-biosecurity** yansuku zonke enhle (imikhuba egcina izifo zingangeni):
 
 - Gcina izinyoni ezintsha zihlukene nomhlambi wakho amasonto amabili kuya kwamathathu ngaphambi kokuthi uzixube, futhi ubheke izimpawu zokugula.
 - Ungavumeli izinyoni zasendle zabelane ngokudla namanzi ezinkukhu zakho.
@@ -158,7 +158,7 @@ Izinkukhu zinohlelo lokuhlonishana oluqinile, olubizwa **ngokuthi ngubani ophezu
 
 ## Izingulube
 
-Izingulube zingaba wusizo kakhulu, ikakhulukazi ezingadini zezihlahla zezithelo, ku-food forest (ihlathi lokudla) nasemhlabeni onamahlathana. Zifanele i-Zone 2, i-Zone 3 ne-Zone 4 futhi zihambisana kahle nezinye izilwane.
+Izingulube zingaba wusizo kakhulu, ikakhulukazi ezingadini zezihlahla zezithelo, **ku-food forest** (ihlathi lokudla) nasemhlabeni onamahlathana. Zifanele i-Zone 2, i-Zone 3 ne-Zone 4 futhi zihambisana kahle nezinye izilwane.
 
 ### Izingulube zidlani
 
@@ -173,7 +173,7 @@ Izingulube "zingabahlanzi bokuqala" abahle kakhulu bomhlaba omahhadlahhadla.
 - Faka izingulube ngaphakathi kothango lukagesi olususwayo endaweni emile ngokweqile cishe isonto, zizoyisiphula futhi ziyihlanze kangcono kunanoma yisiphi isipede noma imfologo.
 - Ukuze uzenze zimbe, zivumele ziqale zidle iningi lezitshalo ezingaphezu komhlabathi, futhi uqiniseke ukuthi umhlabathi unomswakama. Izingulube ngeke zimbe uma kunokudla okuningi phezulu.
 - Ezingadini zezihlahla zezithelo naku-food forest, izingulube zidla izithelo eziwile, kanye nezibungu zezimpukane zezithelo ezingaphakathi kuzo. Lokhu kusiza ukuphula umjikelezo wezimpukane zezithelo.
-- Landelisa izingulube nge-chicken tractor (ihhoko elihambayo) ukuze kusakazeke umquba wazo.
+- Landelisa izingulube nge-chicken tractor ukuze kusakazeke umquba wazo.
 
 ### Ukugcina izingulube zingaphumi
 
@@ -203,7 +203,7 @@ Amadada enza kahle epulazini le-permaculture futhi ayisilwane esihle se-Zone 2. 
 
 ### Amadada adingani
 
-- **Ukuvikelwa ezilwaneni ezizingelayo**, ikakhulukazi ebusuku, njengezinkukhu.
+- **Ukuvikelwa kuma-predator**, ikakhulukazi ebusuku, njengezinkukhu.
 - **Amanzi ajule ngokwanele ukuthi acwilise ikhanda lonke.** Amadada adinga ukugeza ukudla emakhaleni nasemehlweni awo. Isitsha noma ibhakede elijulile kwanele emadadeni amaningi; awalidingi ichibi.
 - **Amanzi amasha njalo.** Amadada ashesha ukungcolisa amanzi awo. Washintshe njalo. Amanzi angcolile angumanyolo owuketshezi omuhle wezihlahla zezithelo nezitshalo eziphekwa ngaphambi kokudliwa.
 
@@ -211,13 +211,13 @@ Amadada enza kahle epulazini le-permaculture futhi ayisilwane esihle se-Zone 2. 
 
 Amadada angaba nomsindo, ngakho angahle angafaneli izingadi zasedolobheni ezinomakhelwane abaseduze. I-Muscovy iyahluka: ithule kakhulu, futhi izinduna ikakhulukazi ziyahefuzela (hiss).
 
-> **Qaphela:** Iningi lezinhlobo zamadada afuywayo, njenge-Pekin, i-runner ne-Khaki Campbell, lisuka **ku-mallard**. I-mallard ifakwe ohlwini lwezinhlobo ezihlaselayo eNingizimu Afrika (Category 2 ngaphansi kwe-NEMBA, umthetho wokuvikela izinto eziphilayo), ngoba izalana namadada asendle omdabu njenge-yellow-billed duck (idada elinomlomo ophuzi) futhi iwafaka engozini. Gcina amadada ebiyelwe, kude nemifula, amadamu namaxhaphozi, futhi ungalokothi uwavumele abe ngawasendle. Buza ehhovisi lesifundazwe lokongiwa kwemvelo ukuthi uyayidinga yini imvume yamadada owafuyayo. I-Muscovy iwuhlobo oluhlukile.
+> **Qaphela:** Iningi lezinhlobo zamadada afuywayo, njenge-Pekin, i-runner ne-Khaki Campbell, lisuka **ku-mallard**. I-mallard ifakwe ohlwini **lwama-invasive species** (izinhlobo zangaphandle ezisakazeka zingalawuleki) eNingizimu Afrika (Category 2 ngaphansi kwe-NEMBA, umthetho wokuvikela izinto eziphilayo), ngoba izalana namadada asendle omdabu njenge-yellow-billed duck (idada elinomlomo ophuzi) futhi iwafaka engozini. Gcina amadada ebiyelwe, kude nemifula, amadamu namaxhaphozi, futhi ungalokothi uwavumele abe ngawasendle. Buza ehhovisi lesifundazwe lokongiwa kwemvelo ukuthi uyayidinga yini imvume yamadada owafuyayo. I-Muscovy iwuhlobo oluhlukile.
 
 ## Izinyosi
 
 Izinyosi zibaluleke kakhulu ezingadini nasezingadini zezihlahla zezithelo ngoba **zithutha impova** yezimbali: zithwala impova zisuka embalini ziye kwenye imbali ukuze kwakheke izithelo nembewu. Izithelo, imifino, imbewu yamafutha namantongomane amaningi kunikeza isivuno esikhulu nesingcono uma izinyosi zikuvakashela.
 
-Emhlabeni wonke, cishe izingxenye ezintathu kwezine zezitshalo zokudla eziphambili zizuza ekuthuthweni kwempova yizilwane, futhi lezi zitshalo zakha cishe ingxenye eyodwa kwezintathu yakho konke ukukhiqizwa kwezitshalo. Izitshalo ezinkulu zokusanhlamvu (ummbila, ukolweni, irayisi namabele) zithuthelwa impova ngumoya, hhayi yizinyosi, kodwa iningi lezithelo nemifino esinika amavithamini lincike ezinambuzaneni ezithutha impova.
+Emhlabeni wonke, cishe izingxenye ezintathu kwezine zezitshalo zokudla eziphambili zizuza ekuthuthweni kwempova yizilwane, futhi lezi zitshalo zakha cishe ingxenye eyodwa kwezintathu yakho konke ukukhiqizwa kwezitshalo. Izitshalo ezinkulu zokusanhlamvu (ummbila, ukolweni, irayisi namabele) zithuthelwa impova ngumoya, hhayi yizinyosi, kodwa iningi lezithelo nemifino esinika amavithamini lincike **kuma-pollinator** (izilwane nezinambuzane ezithutha impova).
 
 ### Yondla izinyosi
 
@@ -313,32 +313,32 @@ Noma ubani owake waba nokungezwani okubi nokutinyelwa akufanele asebenze nezinyo
 - Beka isitsha esingajulile samanzi esinamatshe noma izinti ngaphakathi, ukuze izinyosi zikwazi ukuhlala ziphuze zingaminzi.
 - Shiya isiqeshana sotshani basendle nokhula ukuze kuqhakaze.
 
-## Izitshalo zokudla kwemfuyo
+## Izitshalo ze-fodder
 
-Lezi zitshalo zingondla izilwane, kungaba ngokuzidla emadlelweni, njengokudla okusikwayo kuthwalelwe izilwane (cut-and-carry), njengotshani obomisiwe (hay) noma i-silage (ukudla okubilisiwe okugcinwe kuvalelwe), noma njengamaqabunga ezihlahla nezinhlamvu ezidliwa yizilwane. Eziningi futhi zithuthukisa umhlabathi noma zondla izinyosi. Ukuphakama kungokulinganiselwa.
+Lezi zitshalo zingondla izilwane, kungaba ngokuzidla emadlelweni, **njenge-fodder** (ukudla kwemfuyo) esikwayo ithwalelwe izilwane (cut-and-carry), njengotshani obomisiwe (hay) noma i-silage (ukudla okubilisiwe okugcinwe kuvalelwe), noma njengamaqabunga ezihlahla nezinhlamvu ezidliwa yizilwane. Eziningi futhi zithuthukisa umhlabathi noma zondla izinyosi. Ukuphakama kungokulinganiselwa.
 
-### Izitshalo ezimboza umhlabathi nezitshalo zasensimini
+### Ama-groundcover nezitshalo zasensimini
 
 | Isitshalo | Uhlobo | Ukusetshenziswa |
 |---|---|---|
-| Itheniphu (turnip, *Brassica rapa*) | Isitshalo sempande sonyaka owodwa | Ukudla kwasebusika kwezimvu nezinkomo; amadlelo ezingulube |
-| I-chicory (*Cichorium intybus*) | Ikhambi elihlala iminyaka, elinempande ende ejulile | Amadlelo; ikhula enkathini epholile |
-| I-Italian ryegrass (*Lolium multiflorum*) | Utshani bonyaka owodwa noma obuphila isikhathi esifushane | Amadlelo asebusika, utshani obomisiwe ne-silage |
-| I-sweet lupin (*Lupinus albus*) | I-legume yonyaka owodwa, enempande ende ejulile | Okusanhlamvu namadlelo; ilungile uma ishintshaniswa nezitshalo zokusanhlamvu |
-| I-lucerne (*Medicago sativa*) | I-legume ehlala iminyaka | Utshani obomisiwe obunomsoco omkhulu, i-silage nokudla okusikwayo kuthwalelwe izilwane |
-| I-fodder radish (*Raphanus sativus*) | Isitshalo sonyaka owodwa | Ukudla kwemfuyo okuhlwanyelwa ekwindla; impande yayo ewugqinsi ithambisa umhlabathi |
-| I-rye (*Secale cereale*) | Okusanhlamvu kwasebusika kwonyaka owodwa | Amadlelo asebusika nesitshalo sokumboza umhlabathi |
-| I-white clover (*Trifolium repens*) | I-legume ephansi ehlala iminyaka | Amadlelo, ibopha i-nitrogen, ukudla kwezinyosi |
-| Ubhontshisi obubanzi (broad bean, *Vicia faba*) | I-legume yonyaka owodwa | Utshani obomisiwe, i-silage nezitshalo zokuvundisa umhlabathi (green manure) uma ushintshaniswa nezitshalo zokusanhlamvu |
-| I-cowpea (*Vigna unguiculata*) | I-legume yonyaka owodwa | Amaqabunga nezihlahla ezikhasayo kunikwa kusemasha, njengotshani obomisiwe noma njenge-silage |
-| Utshani be-vetiver (*Chrysopogon zizanioides*), izinhlobo ezingazali kuphela | Utshani obuhlala iminyaka obukhula ngamaqoqo | Ukulawula ukuguguleka komhlabathi, i-mulch; amaqabunga amancane njengokudla okwengezelelwayo |
+| Itheniphu (turnip, *Brassica rapa*) | Isitshalo sempande **esiyi-annual** (siphila isizini eyodwa) | Ukudla kwasebusika kwezimvu nezinkomo; amadlelo ezingulube |
+| I-chicory (*Cichorium intybus*) | Ikhambi **eliyi-perennial** (liphila iminyaka eminingi), elinempande ende ejulile | Amadlelo; ikhula enkathini epholile |
+| I-Italian ryegrass (*Lolium multiflorum*) | Utshani obuyi-annual noma obuphila isikhathi esifushane | Amadlelo asebusika, utshani obomisiwe ne-silage |
+| I-sweet lupin (*Lupinus albus*) | I-legume eyi-annual, enempande ende ejulile | Okusanhlamvu namadlelo; ilungile uma ishintshaniswa nezitshalo zokusanhlamvu |
+| I-lucerne (*Medicago sativa*) | I-legume eyi-perennial | Utshani obomisiwe obunomsoco omkhulu, i-silage ne-fodder esikwayo ithwalelwe izilwane |
+| I-fodder radish (*Raphanus sativus*) | Isitshalo esiyi-annual | I-fodder ehlwanyelwa ekwindla; impande yayo ewugqinsi ithambisa umhlabathi |
+| I-rye (*Secale cereale*) | Okusanhlamvu kwasebusika okuyi-annual | Amadlelo asebusika nesitshalo sokumboza umhlabathi |
+| I-white clover (*Trifolium repens*) | I-legume ephansi eyi-perennial | Amadlelo, ibopha i-nitrogen, ukudla kwezinyosi |
+| Ubhontshisi obubanzi (broad bean, *Vicia faba*) | I-legume eyi-annual | Utshani obomisiwe, i-silage **ne-green manure** (izitshalo ezimbelwa emhlabathini ukuze ziwondle) uma ushintshaniswa nezitshalo zokusanhlamvu |
+| I-cowpea (*Vigna unguiculata*) | I-legume eyi-annual | Amaqabunga nezihlahla ezikhasayo kunikwa kusemasha, njengotshani obomisiwe noma njenge-silage |
+| Utshani be-vetiver (*Chrysopogon zizanioides*), izinhlobo ezingazali kuphela | Utshani obuyi-perennial obukhula ngamaqoqo | Ukulawula **i-erosion** (ukukhukhuleka komhlabathi), i-mulch; amaqabunga amancane njengokudla okwengezelelwayo |
 
 ### Izihlahlana
 
 | Isitshalo | Uhlobo | Ukusetshenziswa |
 |---|---|---|
-| I-pigeon pea (*Cajanus cajan*) | Isihlahlana esiphila isikhathi esifushane, esingasibekezeleli isithwathwa | Amaqabunga nezinhlamvu kungukudla kwemfuyo okunamaprotheni amaningi; imbewu yezinkukhu |
-| I-sunn hemp (*Crotalaria juncea*) | I-legume yasehlobo yonyaka owodwa | Isitshalo sokuvundisa umhlabathi (sigqibe emhlabathini noma usisike sibe yi-mulch) |
+| I-pigeon pea (*Cajanus cajan*) | Isihlahlana esiphila isikhathi esifushane, esingasibekezeleli isithwathwa | Amaqabunga nezinhlamvu kuyi-fodder enamaprotheni amaningi; imbewu yezinkukhu |
+| I-sunn hemp (*Crotalaria juncea*) | I-legume yasehlobo eyi-annual | I-green manure (yigqibe emhlabathini noma uyisike ibe yi-mulch) |
 
 ### Izihlahla
 
@@ -347,13 +347,13 @@ Lezi zitshalo zingondla izilwane, kungaba ngokuzidla emadlelweni, njengokudla ok
 | I-torchwood (*Balanites maughamii*) | 15–20 m | Amafutha embewu adliwayo, izinkuni |
 | I-pride-of-De Kaap (*Bauhinia galpinii*) | 3–5 m | Uthango oluphilayo; luheha izilwane zasendle |
 | I-false olive (*Buddleja saligna*) | 4–12 m | Amapulangwe; iheha izimvemvane |
-| I-carob (*Ceratonia siliqua*), akusona esomdabu | 5–10 m | Izinhlamvu zingukudla okuhle kwemfuyo; sibekezelela isomiso; isivikela-moya |
-| I-bluebush (*Diospyros lycioides*) | 3–7 m | Izithelo ezidliwayo, i-biomass (amaqabunga namagatsha) |
+| I-carob (*Ceratonia siliqua*), akusona esomdabu | 5–10 m | Izinhlamvu ziyi-fodder enhle; sibekezelela isomiso; **i-windbreak** (umugqa wezihlahla ovimba umoya) |
+| I-bluebush (*Diospyros lycioides*) | 3–7 m | Izithelo ezidliwayo, **i-biomass** (izinto zezitshalo ezikhulayo, njengamaqabunga namagatsha) |
 | I-puzzle bush (*Ehretia rigida*) | 5–12 m | Amaqabunga adliwa yimfuyo; iheha izinyoni |
 | I-blue guarri (*Euclea crispa*) | 8–20 m | Izithelo ezidliwayo, amapulangwe awusizo |
 | I-cross-berry (*Grewia occidentalis*) | 6–10 m | Izithelo ezidliwayo |
 | I-ouhout (*Leucosidea sericea*) | 6–9 m | Izinkuni, izigxobo zothango; isitshalo esiqala ukumila (pioneer) esibekezelela isithwathwa |
-| Umnqumo wasendle (wild olive, *Olea europaea* subsp. *cuspidata*) | 8–14 m | Izinkuni; uqinile; uhluma kahle uma usikwe phansi (coppicing) |
+| Umnqumo wasendle (wild olive, *Olea europaea* subsp. *cuspidata*) | 8–14 m | Izinkuni; uqinile; ulungele **i-coppicing** (ukusikwa phansi ukuze uhlume kabusha) |
 | I-African wattle (*Peltophorum africanum*) | 9–14 m | Ikhula ngokushesha; izinkuni; umthunzi |
 | I-English oak (*Quercus robur*), akusona esomdabu | 10–20 m | Ama-acorn ezingulube; amapulangwe |
 | Umnyezane (river willow, *Salix mucronata*) | kuze kufike ku-12 m | Uqinisa osebe lwemifudlana |
@@ -364,7 +364,7 @@ Lezi zitshalo zingondla izilwane, kungaba ngokuzidla emadlelweni, njengokudla ok
 | Umunga (sweet thorn, *Vachellia karroo*) | 7–12 m | Ubopha i-nitrogen; izinhlamvu namaqabunga kudliwa yimfuyo; inhlaka (gum) |
 | I-large sourplum (*Ximenia caffra*) | 5–7 m | Izithelo ezine-vitamin C eningi; uthango oluphilayo |
 
-> **Qaphela:** I-English oak ayikho ohlwini lwezinhlobo ezihlaselayo zaseNingizimu Afrika, kodwa isisabalele eduze kwemifula eNtshonalanga Kapa. Ungayitshali eduze kwemifudlana noma amaxhaphozi. Izihlahla zomdabu ezikulolu thebula ziyisinqumo esingcono noma kuphi lapho zikhula kahle khona.
+> **Qaphela:** I-English oak ayikho ohlwini lwama-invasive species aseNingizimu Afrika, kodwa isisabalele eduze kwemifula eNtshonalanga Kapa. Ungayitshali eduze kwemifudlana noma amaxhaphozi. Izihlahla zomdabu ezikulolu thebula ziyisinqumo esingcono noma kuphi lapho zikhula kahle khona.
 
 ## Amaphuzu amqoka
 

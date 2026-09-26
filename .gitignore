@@ -31,3 +31,7 @@ docs/narration/review/
 # Raw extraction of the RVCC handbook (Drive file 1C_KhxUhz5SVTEn3WeXr_6ZQ-cGd2VndG) — working copy only;
 # source documents are not published with the repo (see docs/studies-review-2026-09-20).
 research/manual/rvcc-handbook-source.txt
+
+# Printed manual PDFs (scripts/build-manual-pdfs.mjs) — shared via Drive, too large for git.
+output/manual/
+research/manual/figures-source/

@@ -1,4 +1,4 @@
-# Lehae le tsitsitseng: Zone 0 le theknoloji e loketseng
+# Lehae le tsitsitseng: Zone 0 le appropriate technology
 
 ## Lehae ke Zone 0
 
@@ -9,15 +9,15 @@ Nahana ka lehae:
 - le hahilweng ka disebediswa tsa moo, jwaloka letsopa le haufi kapa lepolanka le tswang serapeng sa difate sa moo, tse ka nkelwang sebaka ha di senyehile
 - le raletsweng boemo ba lehodimo ba sebaka sa hao, e le hore le lule le futhumetse mariha mme le pholile hlabula, ho sa hlokehe ho le futhumatsa kapa ho le pholisa haholo
 - le iketsetsang motlakase o hlwekileng ka diphanele tsa letsatsi (solar panels), e le hore mabone a dule a tukile le ha motlakase wa grid o tima
-- le etsang kgase ya ho pheha ka manyolo a diphoofolo ka tanka ya biogas (biogas digester)
+- le etsang kgase ya ho pheha ka manyolo a diphoofolo ka **biogas digester** (tanka e etsang kgase ya manyolo)
 - le bokellang metsi a pula ditankeng le matangwaneng, a lekaneng ho fihlela sehla sa komello se feta haeba a sebediswa ka hloko
-- le sebedisang theknoloji tse ding tse bonolo tse ngata ho fokotsa ditjeho, ho tshwara matla a mahala le ho aha matla a ho iphodisa (resilience) dinakong tse thata le phetohong ya boemo ba lehodimo
+- le sebedisang theknoloji tse ding tse bonolo tse ngata ho fokotsa ditjeho, ho tshwara matla a mahala le ho aha matla a ho iphodisa (resilience) dinakong tse thata le ho **climate change** (phetoho ya boemo ba lehodimo)
 
 Ha o a tlameha ho etsa tsena kaofela ka nako e le nngwe. Mohato o mong le o mong o monyane o boloka tjhelete mme o etsa hore lelapa le sireletsehe haholwanyane.
 
-## Theknoloji e loketseng
+## Appropriate technology
 
-Theknoloji e loketseng (appropriate technology) e bolela disebediswa le metjhini e bonolo, e menyane, eo:
+**Appropriate technology** (theknoloji e loketseng) e bolela disebediswa le metjhini e bonolo, e menyane, eo:
 
 - e tshwanelang batho ba e sebedisang le setso sa bona
 - e ka hahwang, ya sebediswa le ho lokiswa ka tsebo le disebediswa tsa moo
@@ -32,7 +32,7 @@ Borwa ba Afrika letsatsi le ka **leboya**. Le hodimo haholo lehodimong hlabula m
 - Beha dikamore tse kgolo tsa ho dula le difenstere tse ngata ka lehlakoreng la leboya, e le hore letsatsi le futhumetseng la mariha le kene.
 - Aha marulelo a fetelang pele ho lerako (eaves) kapa pergola hodima difenstere tsa leboya. A etsa moriti ha letsatsi le le hodimo hlabula, empa a dumella letsatsi le tlase la mariha hore le kene.
 - Etsa hore difenstere tsa lehlakore la bophirima di be nyane, hobane letsatsi la thapama hlabula le futhumatsa ntlo haholo.
-- Disebediswa tse boima tse kang majwe, ditena, letsopa le fatshe la konkreite di boloka mocheso wa motsheare mme di o ntsha bosiu. Sena se bitswa thermal mass (boima bo bolokang mocheso).
+- Disebediswa tse boima tse kang majwe, ditena, letsopa le fatshe la konkreite di boloka mocheso wa motsheare mme di o ntsha bosiu. Sena se bitswa **thermal mass** (boima bo bolokang mocheso).
 - Siling e nang le insulation (sekwahelo se thibelang mocheso) e boloka mocheso ka hare mariha mme e o thibela kantle hlabula.
 - Lema difate tse lahlang makgasi mariha (deciduous) kapa dimela tse palamang ka leboya le ka bophirima, e le hore di etse moriti hlabula mme di tlohele letsatsi le kene mariha.
 
@@ -40,7 +40,7 @@ Borwa ba Afrika letsatsi le ka **leboya**. Le hodimo haholo lehodimong hlabula m
 
 Matla a ntjhafalang (a hlwekileng) a tswa mehloding ya tlhaho e dulang e boela e eba teng, jwaloka kganya ya letsatsi, moya le metsi a phallang.
 
-Mashala a fapane. Ke mohlodi o sa ntjhafaleng: ha a se a tjhesitswe, a fedile, mme ka tsatsi le leng a tla fela. Motlakase o mongata wa Afrika Borwa o ntse o tswa ditsing tsa motlakase tse tjhesang mashala. Ho tjhesa mashala ho silafatsa moya, ho kenya letsoho dipuleng tsa asiti (acid rain) mme ho ntsha carbon dioxide e ngata haholo, e bakang phetoho ya boemo ba lehodimo.
+Mashala a fapane. Ke mohlodi o sa ntjhafaleng: ha a se a tjhesitswe, a fedile, mme ka tsatsi le leng a tla fela. Motlakase o mongata wa Afrika Borwa o ntse o tswa ditsing tsa motlakase tse tjhesang mashala. Ho tjhesa mashala ho silafatsa moya, ho kenya letsoho dipuleng tsa asiti (acid rain) mme ho ntsha carbon dioxide e ngata haholo, e bakang climate change.
 
 Mefuta e meholo ya matla a ntjhafalang ke:
 
@@ -72,7 +72,7 @@ Motlakase o ka bolokwa ka hara dibeteri hore o sebediswe bosiu.
 
 **Ditsamaiso tse kgolo** di ka sebetsa sehatsetsi, TV kapa khomphutha. Diphanele tsa letsatsi di etsa motlakase wa direct current (DC), empa disebediswa tse ngata tsa ntlo di sebedisa alternating current (AC), ka hona tsamaiso e kgolo e hloka inverter ho fetola DC hore e be AC.
 
-Sebedisa motlakase wa letsatsi ka bohlale. Di-geyser tsa motlakase, di-ketlele, di-heater le ditofo di sebedisa motlakase o mongata, ka hona ho di sebetsa ka letsatsi ho hloka tsamaiso e kgolo e turang. Ho theko e tlase ho boloka motlakase wa letsatsi bakeng sa mabone, dihatsetsi, difounu, dikhomphutha le di-TV, mme o futhumatse metsi le ho pheha ka theknoloji tse ding tse hlwekileng: di-geyser tsa letsatsi, di-heat pump, biogas, ditofo tsa letsatsi, mekotla e bolokang mocheso le ditofo tsa rokete.
+Sebedisa motlakase wa letsatsi ka bohlale. Di-geyser tsa motlakase, di-ketlele, di-heater le ditofo di sebedisa motlakase o mongata, ka hona ho di sebetsa ka letsatsi ho hloka tsamaiso e kgolo e turang. Ho theko e tlase ho boloka motlakase wa letsatsi bakeng sa mabone, dihatsetsi, difounu, dikhomphutha le di-TV, mme o futhumatse metsi le ho pheha ka theknoloji tse ding tse hlwekileng: di-geyser tsa letsatsi, di-heat pump, biogas, ditofo tsa letsatsi, mekotla e bolokang mocheso le **di-rocket stove** (ditofo tsa rokete).
 
 > **Polokeho:** Tsamaiso efe kapa efe e kgolo ho feta sete ya mabone e kenngwang ka plaka e tlameha ho kenngwa ke setsebi sa motlakase se nang le mangolo (electrician), se lokelang ho o fa Setifikeiti sa Tumellano (Certificate of Compliance). Tsamaiso e hokahantsweng le grid ya masepala kapa ya Eskom e tlameha ho dumellwa le ho ngodiswa ke masepala wa hao kapa Eskom pele e butswa. Dibeteri di boloka matla a mangata: di boloke sebakeng se omileng se nang le moya o kenang, hole le bana. Dibeteri tsa lead-acid di ntsha kgase e tukang ha di ntse di tjhajwa, ka hona le ka mohla o se ke wa tsuba kapa wa etsa ditlhase haufi le tsona. Reka dibeteri tsa lithium feela haeba di na le tsamaiso e nepahetseng e kahare ya ho laola beteri (battery management system).
 
@@ -134,11 +134,11 @@ Ka hona hangata boleng ba dijo ha bo botle, mme di ka ba ditshila. O ka etsa hor
 5. Di kenye ka tlung bosiu kapa o di kwahele hantle, e le hore phoka e se ke ya di kolobetsa.
 6. Fetola dikotwana hanngwe kapa habedi ka letsatsi.
 
-### Seomisi sa letsatsi (solar dryer)
+### Solar dryer
 
-Seomisi sa letsatsi se omisa kapele mme se hlwekile ho feta ho omisa ka letsatsi pepeneneng. Se ka etswa hae ka disebediswa tse bonolo kapa sa rekwa ka theko e utlwahalang. Se ka ba bonolo, jwaloka foreimi ya lebokose la lepolanka e kwahetsweng ka polasetiki e bonaletsang, kapa sa tiya haholwanyane, jwaloka foreimi ya tshepe e nang le polasetiki e bonaletsang kapa kgalase, le diterei tsa lesela la moriti (shade cloth) kapa letlowa.
+**Solar dryer** (seomisi sa letsatsi) e omisa kapele mme e hlwekile ho feta ho omisa ka letsatsi pepeneneng. E ka etswa hae ka disebediswa tse bonolo kapa ya rekwa ka theko e utlwahalang. E ka ba bonolo, jwaloka foreimi ya lebokose la lepolanka e kwahetsweng ka polasetiki e bonaletsang, kapa ya tiya haholwanyane, jwaloka foreimi ya tshepe e nang le polasetiki e bonaletsang kapa kgalase, le diterei tsa lesela la moriti (shade cloth) kapa letlowa.
 
-Diomisi tse ding tsa letsatsi di feta moya o futhumetseng ka hara diterei. Tse ding ke lebokose le tjhesang le nang le moya o fokolang o tsamayang. Moya o tsamayang o a thusa: o tsamaisa mongobo.
+Di-solar dryer tse ding di feta moya o futhumetseng ka hara diterei. Tse ding ke lebokose le tjhesang le nang le moya o fokolang o tsamayang. Moya o tsamayang o a thusa: o tsamaisa mongobo.
 
 Dijo di omme ka ho lekaneng neng?
 
@@ -170,34 +170,34 @@ Kamoo o ka se sebedisang:
 
 > **Polokeho:** Dinawa tse kgubedu tsa kidney le dinawa tse ding tse omileng di na le chefo ya tlhaho e bolawang feela ke ho bela hantle. Kolobetsa dinawa tse omileng, ebe o di bedisa ka matla bonyane metsotso e 10 pele o di kenya ka mokotleng. Mocheso o bobebe ntle le ho bela ka matla hoo ha pele o ka etsa hore chefo e be matla le ho feta.
 
-## Ditofo tsa rokete
+## Di-rocket stove
 
-Setofo sa rokete (rocket stove) se tjhesa dithupana tse nyane tsa patsi ka tsela e sa senyeng. Mollo o tukela ka hara tjhimini e nang le insulation, e bopehileng jwaloka tlhaku ya L. Sena se etsa hore o tuke ka mocheso o moholo le ka mosi o fokolang, mme o romele mocheso hodimo ka kotloloho ho ya pitseng.
+Rocket stove e tjhesa dithupana tse nyane tsa patsi ka tsela e sa senyeng. Mollo o tukela ka hara tjhimini e nang le insulation, e bopehileng jwaloka tlhaku ya L. Sena se etsa hore o tuke ka mocheso o moholo le ka mosi o fokolang, mme o romele mocheso hodimo ka kotloloho ho ya pitseng.
 
-Diteko tse entsweng masimong di fumane hore ditofo tsa rokete di sebedisa patsi e ka tlase ka hoo e ka bang 30 ho isa ho 50% ho feta ho pheha mollong o bulehileng wa majwe a mararo, mme di ntsha mosi le carbon monoxide e fokolang haholo.
+Diteko tse entsweng masimong di fumane hore di-rocket stove di sebedisa patsi e ka tlase ka hoo e ka bang 30 ho isa ho 50% ho feta ho pheha mollong o bulehileng wa majwe a mararo, mme di ntsha mosi le carbon monoxide e fokolang haholo.
 
 Sena se bohlokwa bophelong bo botle. World Health Organization (Mokgatlo wa Lefatshe wa Bophelo bo Botle) e hakanya hore batho ba ka bang dibilione tse 2.1, e leng hoo e ka bang kotara ya batho ba lefatshe, ba pheha mollong o bulehileng kapa ditofong tse bonolo tse tjhesang patsi, bolokwe, masalla a dijalo, mashala kapa parafene. Mosi o ka malapeng a bona o hakanngwa ho bakile mafu a batho ba dimilione tse 2.9 ka 2021. Basadi le bana ba banyane, ba qetang nako e ngata haufi le mollo, ke bona ba utlwang bohloko haholo.
 
-Ditofo tsa rokete di tla ka boholo bo bongata. Tse ngata di a jarwa. Tse ding di hahwa ka hara kitjhene, jwaloka setofo se tlwaelehileng, di na le tjhimini e ntshetsang mosi kantle.
+Di-rocket stove di tla ka boholo bo bongata. Tse ngata di a jarwa. Tse ding di hahwa ka hara kitjhene, jwaloka setofo se tlwaelehileng, di na le tjhimini e ntshetsang mosi kantle.
 
-Kamoo o ka sebedisang setofo sa rokete hantle:
+Kamoo o ka sebedisang rocket stove hantle:
 
 1. Sebedisa patsi e omileng. Patsi e metsi e etsa mosi mme e fana ka mocheso o monyane.
 2. Kenya dithupana tse mmalwa tse tshesane ka nako e le nngwe, mme o di sututsetse ka hare ha di ntse di tuka.
 3. Etsa hore lesoba la moya le ka tlasa dithupana le dule le hlwekile.
 4. Beha pitsa hantle hodima setofo, o siye sekgeo se senyane hore dikgase tse tjhesang di phalle ho e potoloha.
 
-> **Polokeho:** Setofo sa rokete se hlwekile ho feta mollo o bulehileng, empa se ntse se etsa mosi le carbon monoxide, e leng kgase eo o sa e boneng kapa wa e nkga mme e bolayang. Pheha kantle kapa ka kitjheneng e nang le moya o hlwekileng o kenang le tjhimini. Le ka mohla o se ke wa kenya setofo se tukang, mbawula (imbawula) kapa mollo wa mashala ka kamoreng e kwetsweng ho e futhumatsa, haholoholo bosiu. Mariha a mang le a mang Afrika Borwa batho ba shwa ba robetse ka tsela ena.
+> **Polokeho:** Rocket stove e hlwekile ho feta mollo o bulehileng, empa e ntse e etsa mosi le carbon monoxide, e leng kgase eo o sa e boneng kapa wa e nkga mme e bolayang. Pheha kantle kapa ka kitjheneng e nang le moya o hlwekileng o kenang le tjhimini. Le ka mohla o se ke wa kenya setofo se tukang, mbawula (imbawula) kapa mollo wa mashala ka kamoreng e kwetsweng ho e futhumatsa, haholoholo bosiu. Mariha a mang le a mang Afrika Borwa batho ba shwa ba robetse ka tsela ena.
 
 > **Polokeho:** Beha setofo hodima sebaka se tiileng, se lekalekaneng, hole le bana, jwang le eng kapa eng e ka tukang. Le ka mohla o se ke wa sebedisa peterole ho besa mollo. Boloka parafene ka setshelong se ngotsweng hantle se nang le sekwahelo seo bana ba ke keng ba se bula, le ka mohla e seng ka botlolong ya seno (cooldrink) kapa ya lebese. Ho metsa parafene ke sesosa se atileng ka ho fetisisa sa chefo e kenang ka phoso ho bana ba banyane Afrika Borwa.
 
-## Ditanka tsa biogas (biogas digesters)
+## Di-biogas digester
 
 Biogas, kapa kgase ya manyolo, ke kgase ya dibeso e etswang ha dibaktheria di bodisa ditshila tsa tlhaho, jwaloka manyolo a diphoofolo, mantle a batho kapa masalla a dijo, ka hara tanka e kwetsweng e se nang moya. Tshebetso e se nang oksijene e bitswa anaerobic. Tanka eo e bitswa digester (tanka ya biogas).
 
 Hangata biogas ke methane ka hoo e ka bang 50 ho isa ho 70%, e leng kgase e tukang. Boholo ba e setseng ke carbon dioxide, le dikgase tse ding ka bongata bo bonyane, ho kenyeletswa hydrogen sulphide, e nkgang jwaloka mahe a bodileng.
 
-Digester e fetola ditshila matla. Kgase e ka sebediswa ho pheha, ho tukisa mabone, kapa, ditsamaisong tse kgolo, ho etsa motlakase. Bakeng sa lelapa, ho pheha ke tsela e nang le molemo ka ho fetisisa ya ho e sebedisa. Mokelikeli o tswang ka hara digester, o bitswang slurry kapa digestate, ke manyolo a matle.
+Digester e fetola ditshila matla. Kgase e ka sebediswa ho pheha, ho tukisa mabone, kapa, ditsamaisong tse kgolo, ho etsa motlakase. Bakeng sa lelapa, ho pheha ke tsela e nang le molemo ka ho fetisisa ya ho e sebedisa. Mokelikeli o tswang ka hara digester, o bitswang **slurry** kapa digestate, ke manyolo a matle.
 
 Di-digester di ka rekwa di se di entswe, kapa tsa hahwa ka disebediswa tse fumanehang lebenkeleng la disebediswa tsa kaho (hardware), jwaloka ditanka tsa polasetiki, diphaephe le dikgokahanyo tsa tsona. Di tlameha ho kwala ka ho feletseng hore moya o se ke wa kena kapa wa tswa.
 
@@ -214,16 +214,16 @@ Dibaktheria di sebetsa hantle ka ho fetisisa ha digester e futhumetse, hoo e ka 
 
 > **Polokeho:** Le ka mohla o se ke wa kena ka hara digester, sekoti kapa tanka, le ha e se na letho. E ka ba le hydrogen sulphide, e leng kgase e chefo, le carbon dioxide, e sa siyeng moya wa ho hema. Batho ba shwele ba leka ho pholosa ba bang. Kwahela dikoti tsa ho kenya le tsa ho ntsha, mme o boloke bana hole le tsona.
 
-> **Polokeho:** Slurry e ntse e na le dikokwanahloko, haholoholo e tswang mantleng a batho kapa a dikolobe. E etse kompose (compost) kapa o e tlohele e eme dibeke tse mmalwa pele o e sebedisa. E sebedise difateng tsa ditholwana, poone le dijalong tse phehwang. O se ke wa e tshela meroho ya makgasi kapa dijalo tse ding tse jewang di le tala. Apara diatlana mme o hlatswe matsoho ka mora ho e tshwara.
+> **Polokeho:** Slurry e ntse e na le dikokwanahloko, haholoholo e tswang mantleng a batho kapa a dikolobe. E etse **compost** (manyolo a bodileng) kapa o e tlohele e eme dibeke tse mmalwa pele o e sebedisa. E sebedise difateng tsa ditholwana, poone le dijalong tse phehwang. O se ke wa e tshela meroho ya makgasi kapa dijalo tse ding tse jewang di le tala. Apara diatlana mme o hlatswe matsoho ka mora ho e tshwara.
 
 ## Dintlha tsa bohlokwa
 
 - Lehae ke Zone 0, bohare ba moralo wa permaculture.
-- Theknoloji e loketseng e bonolo, e theko e tlase, mme e ka hahwa le ho lokiswa ka tsebo ya moo.
+- Appropriate technology e bonolo, e theko e tlase, mme e ka hahwa le ho lokiswa ka tsebo ya moo.
 - Rala ntlo ho ya ka letsatsi: Borwa ba Afrika, difenstere tse kgolo le diphanele tsa letsatsi di shebana le leboya.
-- Sebedisa motlakase wa letsatsi bakeng sa mabone, difounu le dihatsetsi. Futhumatsa metsi le ho pheha ka di-geyser tsa letsatsi, biogas, ditofo tsa letsatsi, mekotla e bolokang mocheso le ditofo tsa rokete.
+- Sebedisa motlakase wa letsatsi bakeng sa mabone, difounu le dihatsetsi. Futhumatsa metsi le ho pheha ka di-geyser tsa letsatsi, biogas, ditofo tsa letsatsi, mekotla e bolokang mocheso le di-rocket stove.
 - Diphanele tsa letsatsi le ditsamaiso tse hokahantsweng le grid di tlameha ho kenngwa ke setsebi sa motlakase se nang le mangolo mme di ngodiswe moo ho hlokehang. Dibakeng tse nang le serame, sebedisa geyser ya letsatsi ya indirect.
 - Omisa dijo kapele, ka tsela e hlwekileng le hodimo ho fatshe. Omisa poone le matokomane kapele mme o lahle dijothollo tse nang le hlobo.
 - Ka mokotleng o bolokang mocheso, bedisa dijo pele mme o di boloke ka hodimo ho 60 °C. Bedisa dinawa tse omileng ka matla metsotso e 10 pele.
-- Ditofo tsa rokete di boloka patsi mme di fokotsa mosi, empa le ka mohla o se ke wa besa mollo ofe kapa ofe ka kamoreng e kwetsweng.
+- Di-rocket stove di boloka patsi mme di fokotsa mosi, empa le ka mohla o se ke wa besa mollo ofe kapa ofe ka kamoreng e kwetsweng.
 - Biogas e ka phatloha mme dikoti tsa yona di ka bolaya: ho se be le lelakabe, hlahloba ho dutla ka sesepa, le ka mohla o se ke wa kena ka hara digester, mme o se ke wa sebedisa slurry meroho e jewang e le tala.

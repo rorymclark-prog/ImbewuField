@@ -6,9 +6,9 @@ import ManualHeader from '@/components/manual/ManualHeader';
 import ManualBlocks from '@/components/manual/ManualBlocks';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
+  MANUAL_CHAPTERS, MANUAL_LANGS, chapterTitle, figuresBySection, isManualChapter, isManualLang, manualUi, parseManual, readingMinutes,
 } from '@/lib/manual';
-import { readChapter } from '@/lib/manual-content';
+import { manualFigures, readChapter } from '@/lib/manual-content';
 
 // One chapter in one language, generated at build time. A language whose chapter file does not
 // exist yet shows the English chapter (marked lang="en") rather than a 404, so the contents list
@@ -70,7 +70,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
               <Link href={`/manual/en/${slug}`} lang="en" style={{ textDecoration: 'underline', fontWeight: 600 }}>{manualUi('en').readInEnglish}</Link>
             </p>
           )}
-          <ManualBlocks blocks={body} />
+          <ManualBlocks blocks={body} figures={figuresBySection(manualFigures(), slug)} lang={contentLang} />
         </article>
         <nav aria-label={ui.chapters} style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginTop: 40 }}>
           {prev ? <Link href={`/manual/${lang}/${prev}`} style={navLink}><ChevronLeft size={18} aria-hidden />{ui.previous}</Link> : <span />}
