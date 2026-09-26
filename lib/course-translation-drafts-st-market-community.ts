@@ -19,7 +19,10 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'business' },
   title: machineDraft('Market Gardening & Community', 'Temo ea Marakeng le Sechaba'),
-  description: hold('Record-keeping, selling surplus and building local food networks.'),
+  description: machineDraft(
+    'Record-keeping, selling surplus and building local food networks.',
+    'Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.',
+  ),
   lessons: [
     {
       id: 'market-community-l1',
@@ -31,8 +34,8 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
         'Ho Boloka Lirekoto: Ho Tseba Hantle Seo Polasi ea Hao e se Hlahisang',
       ),
-      // Paragraphs 1–4 and 7–8 are proposed. Paragraph 5–6 and 9–17 stay in English
-      // because the unit wording and downstream yield, finance, and timing claims need review.
+      // Paragraphs 1–4, 7–8 and 11 are proposed. Ambiguous units and downstream
+      // yield, cost, pricing and timing claims stay in English for review.
       body: machineDraft(
         [
           'A harvest can feed the household, be sold, be shared, or be lost.',
@@ -64,7 +67,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Sehla se le seng sa lirekoto se araba lipotso tse sebetsang.',
           'Which crops give the best yield per bed? Which return the most for each hour of work?',
           'Which crops use more seeds, water, and compost than they return?',
-          'The record also shows which months leave the household buying food.',
+          'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.',
           'Before setting a price, record production, packing and selling costs, including labour and transport.',
           'Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.',
           'Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.',
