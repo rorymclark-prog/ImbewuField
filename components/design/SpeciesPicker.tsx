@@ -4,6 +4,7 @@ import { sectionedPaletteFor, broadReachPalette, type Species } from '@/lib/spec
 import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
 import { speciesPickerArtworkUrl } from '@/lib/species-art';
+import { formatDesignTranslation, translatedSpeciesSection, translatedSpeciesUse } from '@/lib/design-studio-i18n';
 
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
@@ -23,11 +24,20 @@ export default function SpeciesPicker({
 }: SpeciesPickerProps) {
   const { t } = useLanguage();
 
-  const sections = siteBiome
-    ? sectionedPaletteFor(SPECIES, siteBiome, siteMinTempC)
-    : [{ section: 'Broad-reach species (site climate unknown)', species: broadReachPalette(SPECIES, 4, siteMinTempC) }];
   // The registry key is what filtering needs; the farmer reads its name, not "IOCB".
   const siteBiomeName = siteBiome ? (BIOMES[siteBiome]?.name ?? siteBiome) : undefined;
+
+  const displaySections: Array<{ key: string; label: string; species: Species[] }> = siteBiome
+    ? sectionedPaletteFor(SPECIES, siteBiome, siteMinTempC).map((sec) => ({
+        key: sec.section,
+        label: translatedSpeciesSection(t, sec.section),
+        species: sec.species,
+      }))
+    : [{
+        key: 'broad-reach',
+        label: t('designSpeciesBroadReachSection'),
+        species: broadReachPalette(SPECIES, 4, siteMinTempC),
+      }];
 
   return (
     <div
@@ -55,9 +65,11 @@ export default function SpeciesPicker({
     >
       <div style={{ flexShrink: 0, padding: '8px 12px', background: '#F8F5EE', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>Plant Catalog</h3>
+          <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>{t('designSpeciesPickerTitle')}</h3>
           <p style={{ margin: 0, fontSize: 11, color: '#A9743F', fontWeight: 600 }}>
-            {siteBiomeName ? `Filtered for ${siteBiomeName} biome` : 'Showing broad-reach species'}
+            {siteBiomeName
+              ? formatDesignTranslation(t('designSpeciesFilteredForBiome'), { biome: siteBiomeName })
+              : t('designSpeciesBroadReach')}
           </p>
         </div>
         <button
@@ -72,15 +84,15 @@ export default function SpeciesPicker({
 
       {/* Honesty banner */}
       <div style={{ flexShrink: 0, padding: '6px 12px', background: '#FFF3CD', color: '#856404', fontSize: 11.5, borderBottom: '1px solid #FFEEBA' }}>
-        <strong>Note:</strong> Not yet agronomist-reviewed. Use as a starting point.
-        {siteMinTempC != null && siteMinTempC <= 0 && ' Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.'}
+        {t('designSpeciesReviewNote')}
+        {siteMinTempC != null && siteMinTempC <= 0 && ` ${t('designSpeciesFrostHidden')}`}
       </div>
 
       <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 12 }}>
-        {sections.map((sec) => (
-          <div key={sec.section} style={{ marginBottom: 16 }}>
+        {displaySections.map((sec) => (
+          <div key={sec.key} style={{ marginBottom: 16 }}>
             <h4 style={{ margin: '0 0 8px 0', fontSize: 13, color: '#2F7A4A', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              {sec.section}
+              {sec.label}
             </h4>
             <div style={{ border: '1px solid rgba(0,0,0,0.08)', borderRadius: 6, overflow: 'hidden' }}>
               {sec.species.map((s, idx) => {
@@ -124,13 +136,13 @@ export default function SpeciesPicker({
                           <div style={{ fontStyle: 'italic', fontSize: 11.5, color: '#555' }}>{s.botanicalName}</div>
                         </div>
                         <div style={{ fontSize: 11.5, color: '#555', textAlign: 'right', flexShrink: 0 }}>
-                          {s.matureHeightM}m h × {s.matureWidthM}m w
+                          {formatDesignTranslation(t('designSpeciesSize'), { height: s.matureHeightM, width: s.matureWidthM })}
                         </div>
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
                         {s.uses.map(u => (
                           <span key={u} style={{ background: '#E0E0E0', borderRadius: 4, padding: '2px 6px', fontSize: 10, color: '#333' }}>
-                            {u}
+                            {translatedSpeciesUse(t, u)}
                           </span>
                         ))}
                       </div>

@@ -64,7 +64,13 @@ const DARK = '#0B120B';
 type PrintLayer = {
   key: string;
   no: string; // '01'..'09'
+  // English — this is the sheet name PAINTED onto the exported PDF/PNG title block (see the
+  // ctx.fillText call in renderPage below), a document that gets printed, filed and sent to a
+  // funder, and must not change language with whatever the app happens to be set to when it's
+  // rendered (tests/design-studio-i18n.test.ts pins this). labelKey below is the translated
+  // sheet name for the ON-SCREEN sheet picker only — the two must stay independent.
   label: string;
+  labelKey: string;
   selfChromed: boolean; // sheet carries its own legend/scale/north (a Blueprint sheet)
   render: (state: DesignCanvasState, frame: CanvasFrame, refLayers: RefLayers, site: SectorSite | null, placeName?: string) => Promise<string>;
   // Only used to draw the PAPER legend on the two non-self-chromed pages.
@@ -83,19 +89,19 @@ const PRINT_LAYERS: PrintLayer[] = [
   //
   // Both now use the same builders the on-screen plan set uses, self-chromed like every other
   // sheet in this list. A defect fixed once is now fixed on screen AND on paper.
-  { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintBaseMap(s, f, r, pn) },
-  { key: 'sector', no: '02', label: 'Sector Analysis', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
-  { key: 'zones', no: '03', label: 'Permaculture Zones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
-  { key: 'water', no: '04', label: 'Water & Irrigation', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
+  { key: 'base', no: '01', label: 'Existing Site & Base', labelKey: 'designPrintSheetBase', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintBaseMap(s, f, r, pn) },
+  { key: 'sector', no: '02', label: 'Sector Analysis', labelKey: 'designPrintSheetSector', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
+  { key: 'zones', no: '03', label: 'Permaculture Zones', labelKey: 'designPrintSheetZones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
+  { key: 'water', no: '04', label: 'Water & Irrigation', labelKey: 'designPrintSheetWater', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
   // Sheet 05, NEW. Earthworks is the land-shaping / contour setting-out sheet split out of Water —
   // swale, contour berm, terrace and half-moon now print here instead (SHEET_OVERRIDE keeps the
   // two basin types on Water). Same pattern as the other filter-based layer sheets: the exact
   // Blueprint builder for the 'earthworks' GlossyLayerFilter, self-chromed like its siblings.
-  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
-  { key: 'planting', no: '06', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
-  { key: 'structures', no: '07', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
-  { key: 'all', no: '08', label: 'Integrated Masterplan', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },
-  { key: 'implementation', no: '09', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
+  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', labelKey: 'designPrintSheetEarthworks', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
+  { key: 'planting', no: '06', label: 'Planting & Agroforestry', labelKey: 'designPrintSheetPlanting', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
+  { key: 'structures', no: '07', label: 'Livestock & Infrastructure', labelKey: 'designPrintSheetStructures', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
+  { key: 'all', no: '08', label: 'Integrated Masterplan', labelKey: 'designPrintSheetAll', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },
+  { key: 'implementation', no: '09', label: 'Implementation & Phasing', labelKey: 'designPrintSheetImplementation', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
 
 // A sheet is exportable only when it has something true to say — mirrors the Glossy generate-all
@@ -524,7 +530,7 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
                       title={canUse ? undefined : t('designPrintNothingDrawn')}
                       style={{ ...chk(selected.has(l.key) && canUse), opacity: canUse ? 1 : 0.4, cursor: canUse ? 'pointer' : 'default' }}
                     >
-                      <span>{!canUse ? '·' : selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {l.label}
+                      <span>{!canUse ? '·' : selected.has(l.key) ? '☑' : '☐'}</span> {l.no} · {t(l.labelKey)}
                     </button>
                   );
                 })}

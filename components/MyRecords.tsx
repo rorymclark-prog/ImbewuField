@@ -1,6 +1,7 @@
 'use client';
 
 import { sampleProducePhoto } from '@/lib/sample-media';
+import { resizeFileForUpload } from '@/lib/site-evidence';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
@@ -278,7 +279,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     try {
       let photo_url: string | null = null;
       if (form.photoFile) {
-        photo_url = await uploadPhoto(form.photoFile, 'produce');
+        const resized = await resizeFileForUpload(form.photoFile);
+        photo_url = await uploadPhoto(resized, 'produce');
       }
       await addProduction({
         crop,

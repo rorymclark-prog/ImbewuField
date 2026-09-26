@@ -291,6 +291,17 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPrintShareError: 'Could not share the plan set: {error}',
   designPrintPngError: 'Could not save the PNGs: {error}',
   designPrintPdfError: 'Could not build the PDF: {error}',
+  // On-screen sheet-picker names — kept separate from PrintLayer.label, the English text painted
+  // onto the exported PDF/PNG title block, which must stay fixed regardless of app language.
+  designPrintSheetBase: 'Existing Site & Base',
+  designPrintSheetSector: 'Sector Analysis',
+  designPrintSheetZones: 'Permaculture Zones',
+  designPrintSheetWater: 'Water & Irrigation',
+  designPrintSheetEarthworks: 'Earthworks & Contour Setting-Out',
+  designPrintSheetPlanting: 'Planting & Agroforestry',
+  designPrintSheetStructures: 'Livestock & Infrastructure',
+  designPrintSheetAll: 'Integrated Masterplan',
+  designPrintSheetImplementation: 'Implementation & Phasing',
   designLessonHeading: 'LESSON',
   designLessonClose: 'Close lesson',
   designLessonPrinciple: 'The principle',
@@ -482,4 +493,37 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   // app repeatedly, so the app stopped retrying rather than stay stuck in a crash loop. Honest
   // about the state — the render happened server-side; this phone could not open it.
   designGlossyResumeGaveUp: 'Your AI render finished, but opening it kept crashing the app, so the app has stopped reopening it automatically. You can keep designing. To collect it, set Render quality to Standard and generate again, or open this design on a computer.',
+
+  // SpeciesPicker.tsx (Planting step, "Plant Catalog") chrome — was hard-coded English with no
+  // t() call at all except the close button. Plant common/botanical names stay untranslated (see
+  // lib/species-palette.ts): those are per-species data, not app chrome, and inventing a botanical
+  // translation would be worse than showing the English name.
+  designSpeciesPickerTitle: 'Plant Catalog',
+  designSpeciesFilteredForBiome: 'Filtered for {biome} biome',
+  designSpeciesBroadReach: 'Showing broad-reach species',
+  designSpeciesBroadReachSection: 'Broad-reach species (site climate unknown)',
+  designSpeciesReviewNote: 'Not yet agronomist-reviewed. Use as a starting point.',
+  designSpeciesFrostHidden: 'Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.',
+  designSpeciesSize: '{height}m h × {width}m w',
+  designSpeciesSectionIndigenousFruit: 'Indigenous fruit',
+  designSpeciesSectionExoticFruitNuts: 'Exotic fruit & nuts',
+  designSpeciesSectionLargeTrees: 'Large trees',
+  designSpeciesSectionMediumTrees: 'Medium trees',
+  designSpeciesSectionSmallTreesShrubs: 'Small trees & large shrubs',
+  designSpeciesSectionShrubs: 'Shrubs',
+  designSpeciesSectionGroundcovers: 'Groundcovers & herbaceous',
+  designSpeciesSectionClimbers: 'Climbers',
+  designSpeciesUseFood: 'food',
+  designSpeciesUseNitrogenFixer: 'nitrogen fixer',
+  designSpeciesUsePollinator: 'pollinator',
+  designSpeciesUseHabitat: 'habitat',
+  designSpeciesUseShade: 'shade',
+  designSpeciesUseWindbreak: 'windbreak',
+  designSpeciesUseFodder: 'fodder',
+  designSpeciesUseMulch: 'mulch',
+  designSpeciesUseLivingFence: 'living fence',
+  designSpeciesUseErosionControl: 'erosion control',
+  designSpeciesUseMedicinal: 'medicinal',
+  designSpeciesUseTimber: 'timber',
+  designSpeciesUseGroundcover: 'groundcover',
 };
