@@ -11,13 +11,13 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Seeds and Seed Sovereignty",
-    "sesothoDraft": "Peo le Boipuso ba Peo (Seed Sovereignty)",
-    "reviewStatus": "machine-draft"
+    "sesothoDraft": "Seeds and Seed Sovereignty",
+    "reviewStatus": "hold"
   },
   "description": {
     "sourceEnglish": "Save, store and share seed — freedom from buying seed every season.",
-    "sesothoDraft": "Boloka, beha le ho arolelana peo — tokoloho ho rekeng peo sehla se seng le se seng.",
-    "reviewStatus": "machine-draft"
+    "sesothoDraft": "Save, store and share seed — freedom from buying seed every season.",
+    "reviewStatus": "hold"
   },
   "lessons": [
     {
@@ -29,7 +29,7 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Why Seed Saving Matters",
-        "sesothoDraft": "Hobaneng ho Boloka Peo ho le Bohlokwa",
+        "sesothoDraft": "Bohlokoa ba ho Boloka Lipeo",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -141,8 +141,8 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "How to Save Seed: Dry and Wet Methods",
-        "sesothoDraft": "Mokgwa wa ho Boloka Peo: Mekgwa e Ommeng le e Metsi (Dry and Wet Methods)",
-        "reviewStatus": "machine-draft"
+        "sesothoDraft": "How to Save Seed: Dry and Wet Methods",
+        "reviewStatus": "hold"
       },
       "body": {
         "sourceEnglish": "Dry seed must mature before collection. Clean away chaff and damaged seed, then finish drying with shade and airflow.\n\nSeed in fleshy fruit needs a crop-specific method. Tomato seed can be briefly fermented to help remove its gel, then rinsed and dried thoroughly. Keep an active jar open or loosely covered. Fermentation is not required for every wet-seeded crop and does not guarantee disease-free seed.\n\nPollination matters too. Maize is wind-pollinated and can cross with other varieties. Tomatoes mostly self-pollinate, but crossing is possible. Check the crop and variety before planning isolation or saving seed.",
@@ -253,7 +253,7 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Drying, Storing, and Sharing Seed",
-        "sesothoDraft": "Ho Omisa, ho Boloka, le ho Arolelana Peo",
+        "sesothoDraft": "Ho Omisa, ho Boloka le ho Arolelana Lipeo",
         "reviewStatus": "machine-draft"
       },
       "body": {
