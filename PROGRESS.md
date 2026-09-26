@@ -39,7 +39,7 @@ must provision — not buildable from code alone).
 - **Lima Vision** (`/vision`) — photo → Claude estimates crop + yield + weeks, or weighs a harvest.
 - **Crop Planner** (`/plan`) — crops with bed quantities → projected plants/kg.
 - **Crop Plan** (`/cropplan`) — Day/Week/Month/Season task scheduler.
-- **Garden Survey** (`/survey`) — 5-step wizard → Lima-sized beds → 6-week plan + print.
+- ~~**Garden Survey** (`/survey`)~~ deleted 2026-09-26 (orphaned) — was a 5-step wizard → Lima-sized beds → 6-week plan + print.
 - **Calendar** (`/calendar`) — SA planting calendar, filtered to your crops.
 - **Field Journal** (`/journal`) · **Report** (ReportView, AI, print/share).
 - **Finances** (`/finances`) — Money in/out logging (+ **scan a till slip** OCR);
@@ -51,6 +51,19 @@ must provision — not buildable from code alone).
 ---
 
 ## Build Log (newest first)
+
+### 2026-09-26 (swarm wave 7 — last audit leftovers; three unused pages deleted)
+- **Deleted (owner-approved):** the orphaned `/survey` Garden Survey wizard (+ `lib/survey-pdf.ts`),
+  `components/ReportDocView.tsx`, and the unlinked `/design-studio-2` scaffold (+ `components/design-studio-2/`,
+  `lib/design-studio-2-storage.ts`, `lib/preview-export.ts`) with their tests. `lib/design-studio-shell.ts`
+  and `lib/report-doc.ts` stay (still read by live modules/tests). ~4,600 lines removed.
+- **Dead code (#693):** duplicate `app/student/guides/{invoices,sales}` pages removed (`[guide]` serves them);
+  the `'pro'` DesignMode and ~86 always-true `guided ?` ternaries in `DesignPalette.tsx` folded (output unchanged).
+- **Photos + labels (#694):** `MyRecords.tsx` produce photos go through `resizeFileForUpload`; SpeciesPicker
+  section names, size line and use tags go through `t()` (English pending, no isiZulu coined); DesignPrint's
+  on-screen sheet picker uses `labelKey` while the printed title stays English by design (existing test).
+  `FieldTeams.tsx` left English — the whole mentor screen has no i18n yet; full localisation is a separate job.
+- **Tests:** `species-picker-i18n`, `design-print-sheet-labels`; `profile-photo-resize` covers MyRecords.
 
 ### 2026-09-26 (Permaculture Manual — fact-checked edition in five languages; locale clean-up)
 - **What:** Rory's *RVCC Permaculture Gardening Handbook* (UNDP / Government of Lesotho project,
