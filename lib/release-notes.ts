@@ -42,14 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '2016eaa5', changes: [
+  { when: '26 September 2026', sha: '55c357c8', changes: [
     'Mentor team and people screens now follow your chosen language.',
     'New words waiting for isiZulu are listed in one sheet for a translator.',
+    'Tshivenda Soil Study marks the module and first two lesson titles as drafts.',
+    'Lesson guidance, slides and narration remain in English.',
   ], tour: [
     { title: 'Open your field teams', where: 'Mentor', href: '/mentor',
       detail: 'Team headings, buttons and empty messages now use the app language.' },
     { title: 'Switch the app language', where: 'Account', href: '/account',
       detail: 'Pick isiZulu; words still waiting for a translator show in English.' },
+    { title: 'Check the Tshivenda soil headings', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked module and first two lesson headings with their exact English source. Lesson guidance, slides and narration remain in English.' },
   ] },
   { when: '26 September 2026', sha: '491704b2', changes: [
     'The Xitsonga manual is unavailable while publication is paused.',
