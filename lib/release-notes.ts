@@ -42,11 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '8580f9dd', changes: [
+  { when: '26 September 2026', sha: '436b4055', changes: [
     'Sesotho Water Harvesting keeps ambiguous level-contour wording in English for review.',
+    'Sesotho Student labels now show a review notice on the welcome card.',
   ], tour: [
     { title: 'Check the swale lesson', where: 'Study → Water Harvesting', href: '/student',
       detail: 'Choose Sesotho and open lesson 1; the diagram description, contour guidance and paired quiz wording remain in English.' },
+    { title: 'Check the Sesotho welcome card', where: 'Welcome', href: '/home',
+      detail: 'Choose Sesotho and compare the marked welcome labels with their English source.' },
   ] },
   { when: '26 September 2026', sha: '7180296e', changes: [
     'Soil Health keeps compost guidance in English for Sesotho review.',
