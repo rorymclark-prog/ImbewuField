@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'cb82eb87', changes: [
+    'Water lesson 1 pairs an unreviewed Xitsonga draft with English; its quiz stays English.',
+  ], tour: [
+    { title: 'Check the Water lesson', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Xitsonga and open lesson 1. Check the draft text against the English source; slides and narration still play in English.' },
+  ] },
   { when: '26 September 2026', sha: '64c8257c', changes: [
     'The update guide pairs Sesotho and Tshivenda draft controls with English.',
     'Vegetables lesson 3 pairs two Tshivenda drafts with English.',

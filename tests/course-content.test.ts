@@ -120,10 +120,13 @@ test('Sesotho Water Harvesting uses a source-paired learner draft and keeps unre
   }
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} Changed.` }, 'st').status,
     'english-fallback', 'changed module description withdraws the card draft');
-  assert.equal(resolveCourseModulePresentation(module, 'ts').status,
-    'english-fallback', 'paused Xitsonga Water Harvesting keeps its English card');
-  assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status,
-    'english-fallback', 'paused Xitsonga Water Harvesting stays English');
+  // Rory resumed Xitsonga on 26 September. Only the first Water lesson is connected;
+  // later lessons still use exact English until their machine drafts are checked.
+  assert.equal(resolveCourseModulePresentation(module, 'ts').status, 'draft');
+  assert.equal(resolveLearnerLessonPresentation(module.lessons[0], 'ts').status, 'draft');
+  for (const lesson of module.lessons.slice(1)) {
+    assert.equal(resolveLearnerLessonPresentation(lesson, 'ts').status, 'english-fallback');
+  }
 });
 
 test('Sesotho Soil Health lessons retain exact English where the jar, compost or cover advice is held', () => {

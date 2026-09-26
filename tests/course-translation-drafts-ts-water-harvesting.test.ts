@@ -3,9 +3,30 @@ import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/course-translation-drafts-ts.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
+
+test('only Water lesson one is shown as a Xitsonga learner draft while earthwork quiz answers remain English', () => {
+  const module = resolveCourseModulePresentation(source, 'ts');
+  assert.equal(module.status, 'draft');
+  assert.equal(module.title, 'Ku hlengeleta Mati');
+  assert.equal(module.description, source.description);
+
+  const first = resolveLearnerLessonPresentation(source.lessons[0], 'ts');
+  assert.equal(first.status, 'draft');
+  assert.notEqual(first.content.title, source.lessons[0].title);
+  assert.notEqual(first.content.body, source.lessons[0].body);
+  assert.deepEqual(first.content.quiz, source.lessons[0].quiz);
+
+  for (const lesson of source.lessons.slice(1)) {
+    const unreleased = resolveLearnerLessonPresentation(lesson, 'ts');
+    assert.equal(unreleased.status, 'english-fallback');
+    assert.equal(unreleased.content.body, lesson.body);
+  }
+});
 
 function pairForHold(hold: XitsongaCourseModuleDraft['holds'][number]): XitsongaSourcePair | undefined {
   if (hold.lessonId === 'module') {
