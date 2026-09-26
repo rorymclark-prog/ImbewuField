@@ -1,8 +1,8 @@
 # Miroho na zwiliṅwa zwa ndeme
 
-## U lima zwiḽiwa kha mitsho ya tshipembe ha Afurika
+## U lima zwiḽiwa kha mitsho ya tshipembe ha Afrika
 
-Afurika Tshipembe i na mitsho yo fhambanaho, ngauralo a hu na khalanḓara ya u zwala nthihi fhedzi ine ya shuma fhethu hoṱhe.
+Afrika Tshipembe i na mitsho yo fhambanaho, ngauralo a hu na khalanḓara ya u zwala nthihi fhedzi ine ya shuma fhethu hoṱhe.
 
 - **Vhukati ha shango hune mvula ya na nga tshilimo** (Highveld, Free State, tshipiḓa tshihulwane tsha Eastern Cape, KwaZulu-Natal Midlands, Lesotho): mvula nnzhi i na u bva nga Tshimedzi (October) u swika nga Ṱhafamuhwe (March). Vhuria ho oma nahone hu a rotha, hu na tshando (frost) fhethu hunzhi. Tshifhinga tshihulwane tsha u lima ndi ṱhaṱula na tshilimo.
 - **Western Cape hune mvula ya na nga vhuria**: mvula nnzhi i na u bva nga Shundunthule (May) u swika nga Khubvumedzi (September). Tshilimo hu a fhisa nahone ho oma, ngauralo zwiliṅwa zwa tshilimo zwi ṱoḓa u sheledzwa.
@@ -90,7 +90,7 @@ Ngade ya u rengisa i dzudzanywa uri i bveledze zwinzhi nga hune zwa konadzea nga
 
 ### Ndi ngani ngade dza u rengisa dzi tshi nga shuma
 
-Ngade dza u rengisa dzo ḓivhalea shangoni ḽoṱhe, na kha tshipembe ha Afurika, ngauri vharengi vhanzhi zwino vha ṱoḓa zwiḽiwa zwiswa zwo limiwaho tsini na hayani.
+Ngade dza u rengisa dzo ḓivhalea shangoni ḽoṱhe, na kha tshipembe ha Afrika, ngauri vharengi vhanzhi zwino vha ṱoḓa zwiḽiwa zwiswa zwo limiwaho tsini na hayani.
 
 - **Rengisani nga ho livhaho.** Musi ni tshi rengisela vharengi nga ho livhaho (kha gethe ya bulasi, kha makete wa henefho, kha vhahura, zwikolo, zwiṱoro zwa spaza kana restorente) ni wana mutengo wa **u rengisela muthu muthihi (retail)** hu si mutengo wa fhasi wa **u rengisa nga vhunzhi (wholesale)** une wa badelwa nga vhavhambadzi.
 - **Tshelede ṱhukhu ya u thoma.** Fhethu huṱuku na zwishumiswa zwa tshanḓa zwi ḓura zwiṱuku vhukuma u thoma u fhira bulasi khulwane i shumisaho mitshini.
@@ -109,7 +109,7 @@ Zwiliṅwa zwa ndeme zwi ṱoḓa fhethu hunzhi u itela khaṋo ya vhukati. Zwin
 
 Ngade ya zwiliṅwa zwa ndeme i ṱoḓa mushumo muṱuku u fhira ngade ya tsini ha nnḓu kana ya miroho, nahone ni i dalela lwa si gathi. Zwiṅwe zwiliṅwa zwi sheledzwa nga zwiṅwe zwifhinga, fhedzi zwinzhi zwi limiwa nga mvula fhedzi. Khethani zwiliṅwa zwi tendelanaho na mutsho waṋu, nahone ni zwi ṱavhe nga tshifhinga tsho teaho uri zwi shumise mvula nga nḓila yavhuḓi.
 
-### Zwiliṅwa zwa ndeme zwa tshipembe ha Afurika
+### Zwiliṅwa zwa ndeme zwa tshipembe ha Afrika
 
 | Tshigwada | Zwiliṅwa |
 |---|---|
@@ -120,7 +120,7 @@ Ngade ya zwiliṅwa zwa ndeme i ṱoḓa mushumo muṱuku u fhira ngade ya tsini
 
 ### Mavhele
 
-Mavhele ndi tshiliṅwa tsha ndeme tshihulwane kha zwipiḓa zwinzhi zwa Afurika Tshipembe.
+Mavhele ndi tshiliṅwa tsha ndeme tshihulwane kha zwipiḓa zwinzhi zwa Afrika Tshipembe.
 
 - Fhethu hune mvula ya na nga tshilimo, ṱavhani musi mvula yavhuḓi yo no ita uri mavu a nuvhe nahone khombo ya tshando yo no fhela, kanzhi u bva nga Tshimedzi (October) u swika nga Nyendavhusiku (December).
 - Ṱavhani nga mitalo i re na vhukule ha 90 cm vhukati hayo. Fhethu ho omaho, ṱavhani zwimela zwi kule na zwiṅwe (tshimela tshithihi nga 50 cm kha mutalo) uri tshimela tshiṅwe na tshiṅwe tshi wane maḓi a eḓanaho. Arali mvula i yavhuḓi, hu na u sheledza kana mavu o nona, zwimela zwi nga vha tsini (vhukule ha 30 cm).
@@ -164,7 +164,7 @@ Hu na nḓila nnzhi dza u lima zwiliṅwa zwa ndeme. Ine ya vha yavhuḓi kha in
 6. **Reidzanyani zwiliṅwa.** Ni songo lima tshiliṅwa tshithihi fhethu huthihi ṅwaha nga ṅwaha.
 7. **Awedzani mavu.** Nga murahu ha khalaṅwaha dzi si gathi, tendelani tsimu i awele i na zwiliṅwa zwa u fukedza kana madambaya.
 
-> **Ṱhogomelani:** Nawa ndi zwiḽiwa zwa ḓuvha ḽiṅwe na ḽiṅwe kha zwipiḓa zwinzhi zwa Afurika. Rwanda na Burundi, muthu muṅwe na muṅwe u ḽa nawa dza 27–31 kg nga ṅwaha nga vhukati, nnzhi u fhira shangoni ḽoṱhe.
+> **Ḓivhani:** Nawa ndi zwiḽiwa zwa ḓuvha ḽiṅwe na ḽiṅwe kha zwipiḓa zwinzhi zwa Afrika. Rwanda na Burundi, muthu muṅwe na muṅwe u ḽa nawa dza 27–31 kg nga ṅwaha nga vhukati, nnzhi u fhira shangoni ḽoṱhe.
 
 ## Zwithu zwa ndeme
 

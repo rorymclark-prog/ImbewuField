@@ -31,7 +31,7 @@ Tshimbilani mavuni aṋu kanzhi, ni na muhumbulo wo vulea. Ni songo dzhia phetho
 
 U sedza a hu fheli. Khalaṅwaha iṅwe na iṅwe na ḓumbu ḽiṅwe na ḽiṅwe zwi ni funza tshithu tshiswa. Musi ni tshi sedza lwa tshifhinga tshilapfu, phetho dzaṋu dzi ḓo vha khwine.
 
-### Olani mmebe wa fhethu
+### Olani mmapa wa fhethu
 
 Mmebe wa fhethu (base map) ndi tshifanyiso tsha fhethu haṋu hoṱhe hu tshi vhonala u bva nṱha. Sumbedzani:
 
@@ -43,14 +43,14 @@ Mmebe wa fhethu (base map) ndi tshifanyiso tsha fhethu haṋu hoṱhe hu tshi vh
 - miri mihulwane na fhethu ha matombo,
 - mitalo ya vhuimo vhuthihi (contour lines) arali ni nayo. Mutalo wa vhuimo vhuthihi u ṱumanya fhethu hoṱhe hu re kha vhulapfu vhu fanaho.
 
-Hune na nga wana mmebe hone:
+Hune na nga wana mmapa hone:
 
-- Masipala waṋu a nga vha na mmebe wa fhethu haṋu.
+- Masipala waṋu a nga vha na mmapa wa fhethu haṋu.
 - Ni nga gandisa tshifanyiso tsha sathelaithi tsha mahala (sa tsumbo u bva kha Google Earth) na tou tshi tevhekanya.
 - Mimebe ya muvhuso ya muvhumbeleo wa mavu (topographic maps) ya tshikalo tsha 1:50 000 i sumbedza mitalo ya vhuimo vhuthihi kha Afrika Tshipembe yoṱhe.
-- Kha tshitentsi tshiṱuku, ni nga ela nga theiphi ya u ela na ḓiolela mmebe waṋu.
+- Kha tshitentsi tshiṱuku, ni nga ela nga theiphi ya u ela na ḓiolela mmapa waṋu.
 
-Olani mmebe waṋu nga tshikalo. Sa tsumbo, 1 cm kha bammbiri i nga imela 1 m mavuni. Rula ya tshikalo (scale ruler) i ni thusa u ela na u pulana nga vhuḓalo.
+Olani mmapa waṋu nga tshikalo. Sa tsumbo, 1 cm kha bammbiri i nga imela 1 m mavuni. Rula ya tshikalo (scale ruler) i ni thusa u ela na u pulana nga vhuḓalo.
 
 ## Zwine na fanela u zwi sedza fhethu haṋu
 
@@ -63,7 +63,7 @@ Maḓi ndi tshithu tsha ndeme vhukuma tshine na fanela u tshi pulanela. Ndima ya
 3. Sedzani maḓi a elelaho nṱha ha mavu (runoff): maḓi ane a elela nṱha ha mavu nga murahu ha mvula. Sedzani na zwiga zwa maḓi o no elela kale, sa migero mihulwane yo siwaho nga maḓi (gullies), fhethu hu si na zwimela na mavu o kukulwaho. Maḓi a elelaho a hwala mavu na zwiḽiwa zwa zwimela zwe na zwi engedza mavuni.
 4. Ṅwalani vhuvhulungelo ha maḓi he na vha naho zwino, na fhethu hune na nga engedza dzithanngi, zwidziva kana madamu.
 5. Ṅwalani zwiko zwaṋu zwa maḓi zwa u thusa: tshisima tsha u bowiwa (borehole), mulambo, tshisima tsha mupo kana pombi ya masipala.
-6. Swayani fhethu ho omaho vhukuma na fhethu hu re na maḓi manzhi vhukuma kha mmebe waṋu.
+6. Swayani fhethu ho omaho vhukuma na fhethu hu re na maḓi manzhi vhukuma kha mmapa waṋu.
 7. Humbulani uri ni ḓo sheledza hani zwimela zwiṱuku zwiswa ni sa shumi nga maanḓa, na uri ni nga shumisa hani maḓi maṱuku.
 
 ### Muvhumbeleo wa mavu na u sendama
@@ -83,7 +83,7 @@ U sendama ha mavu kanzhi hu ṋewa nga phesenthe (%). Hu ni vhudza uri mavu a ts
 
 Arali mavu aṋu o sendama vhukuma, pulanani zwiṱepisi zwa mavu kana ndima dzo tevhelaho mutalo wa vhuimo vhuthihi. Bill Mollison, muṅwe wa vho thomaho permaculture, o eletshedza uri mavu o sendamaho u fhira khona dza 18 (tsini na 32%) a fanela u dzula o fukedzwa nga miri tshoṱhe u tsireledza mavu. Humbulani zwenezwi musi ni tshi khetha mavu a u renga kana a u hira.
 
-Arali ni tshi nga wana mmebe wa muvhumbeleo wa mavu, tevhekanyani mitalo yawo ya vhuimo vhuthihi kha mmebe waṋu wa fhethu. I ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha mavu na vhuvhulungelo ha maḓi hoṱhe zwi fanela u ya ngafhi.
+Arali ni tshi nga wana mmapa wa muvhumbeleo wa mavu, tevhekanyani mitalo yawo ya vhuimo vhuthihi kha mmapa waṋu wa fhethu. I ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha mavu na vhuvhulungelo ha maḓi hoṱhe zwi fanela u ya ngafhi.
 
 ### Thungo ine fhethu ha lavhelesa khayo
 
@@ -97,7 +97,7 @@ A hu na mushumo une wa nga shandukisa hune ḓuvha ḽa bvela hone, ngauralo pul
 
 ### U swikelela
 
-Badi na nḓila zwi dzula tshoṱhe. Musi zwo no fhaṱwa, zwi konḓa u pfukiswa. Swayani badi na nḓila dzoṱhe dzi re hone kha mmebe waṋu wa fhethu.
+Badi na nḓila zwi dzula tshoṱhe. Musi zwo no fhaṱwa, zwi konḓa u pfukiswa. Swayani badi na nḓila dzoṱhe dzi re hone kha mmapa waṋu wa fhethu.
 
 Musi ni tshi pulana nḓila kana badi ntswa, dzi itani dzi tshi tevhela mutalo wa vhuimo vhuthihi. Nḓila i tevhelaho mutalo wa vhuimo vhuthihi i nga vha ṱhanga ya mukubo (swale). Mukubo ndi mugero wo gwiwaho u tshi tevhela mutalo wa vhuimo vhuthihi u itela u fara maḓi a mvula (sedzani ndima ya 7). Hezwi zwi kuvhanganya maḓi, zwi fhungudza maḓi a elelaho nṱha ha mavu nahone zwi thusa u thivhela u khukhulwa ha mavu (erosion). Ṋeani nḓila iṅwe na iṅwe u tsa hu si hunzhi uri mvula i elele i tshi ya kha mukubo kana kha mukwita wa muri, i si elele i tshi tevhela nḓila.
 
@@ -153,7 +153,7 @@ A si fhethu hoṱhe hu re na tshikhala tsha zoune dzoṱhe.
 - Ndi mavu mahulwane vhukuma fhedzi ane a vha na zoune 5 ya vhukuma.
 - Kha mavu a tshitshavha, zoune 4 na 5 dzi nga vha madambaya kana ḓaka ḽa mupo zwine zwa shumiswa nga vhathu vhoṱhe.
 
-Zoune a si zwitendeledzi zwo lugaho. U sendama, thungo ine fhethu ha lavhelesa khayo, maḓi na nḓila zwi dzi kotamisa dza vha na zwiṅwe zwivhumbeo. Olani mmebe wa zoune nṱha ha mmebe waṋu wa fhethu. U ḓo ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha bulasi tshi fanela u ya ngafhi.
+Zoune a si zwitendeledzi zwo lugaho. U sendama, thungo ine fhethu ha lavhelesa khayo, maḓi na nḓila zwi dzi kotamisa dza vha na zwiṅwe zwivhumbeo. Olani mmapa wa zoune nṱha ha mmapa waṋu wa fhethu. U ḓo ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha bulasi tshi fanela u ya ngafhi.
 
 ## Tshiṱepe 3: U pulana u ya nga u sendama ha mavu
 
@@ -173,7 +173,7 @@ Nḓila iyi i tevhela tshiedziso tsha Bill Mollison tsha u pulana u ya nga u sen
 ## Zwithu zwa ndeme
 
 - Sedzani mavu aṋu kha khalaṅwaha dzoṱhe phanḓa ha u ita tshanduko khulwane.
-- Olani mmebe wa fhethu u sumbedzaho mikano, zwifhaṱo, maḓi, badi, u shumiswa ha mavu na mitalo ya vhuimo vhuthihi.
+- Olani mmapa wa fhethu u sumbedzaho mikano, zwifhaṱo, maḓi, badi, u shumiswa ha mavu na mitalo ya vhuimo vhuthihi.
 - Sedzani maḓi, u sendama, thungo ine fhethu ha lavhelesa khayo na u swikelela fhethu haṋu.
 - Afrika Tshipembe ḓuvha ḽi kha devhula, ngauralo u sendama ho lavhelesaho devhula na vhubvaḓuvha ndi hone hu dudelaho vhukuma nahone ndi havhuḓi kha zwiliṅwa zwinzhi.
 - U sendama hu fhiraho 12% hu ṱoḓa u tsireledzwa ha mavu; u lima mavu o sendamaho u fhira 20% (12% kha zwiṅwe zwipiḓa) zwi ṱoḓa thendelo yo ṅwalwaho.

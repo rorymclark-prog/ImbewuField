@@ -2,7 +2,7 @@
 
 Miri na zwiṱaka zwi tshilaho miṅwaha minzhi zwi nga ni ṋea zwiḽiwa, khuni, zwiḽiwa zwa zwifuwo, vhudzulo na mishonga tshifhinga tshoṱhe tsha vhutshilo haṋu. Ndima iyi i amba nga ha sisiteme tharu dza miri: **ḓaka ḽa zwiḽiwa** (food forest), **tshithivhela-muya** (windbreak) na nḓila ya u **ṱavha muri muthihi** zwavhuḓi.
 
-> **Ḓivhani:** Miri minzhi ine ya funwa kha bugu dza permaculture dza maṅwe mashango **yo ambiwa sa zwimela zwi phaḓaladzeaho zwi tshinyadzaho (invasive plants) Afurika Tshipembe**. Ndi u pfuka mulayo u i ṱavha. Ndima iyi i themendela fhedzi zwimela zwa sialala (zwine zwa wanala nga mupo kha Afurika ya Tshipembe) kana zwi si kho kha mitevhe ya zwimela zwi phaḓaladzeaho ya Afurika Tshipembe. Musi ni sa athu u renga tshimela, humbelani nasari (fhethu ha u aluwisa zwimela zwiṱuku) dzina ḽa tshimela ḽa saintsi (ḽa Latin), ni sedze uri a tshi ho kha mutevhe wa zwimela zwi phaḓaladzeaho.
+> **Ḓivhani:** Miri minzhi ine ya funwa kha bugu dza permaculture dza maṅwe mashango **yo ambiwa sa zwimela zwi phaḓaladzeaho zwi tshinyadzaho (invasive plants) Afrika Tshipembe**. Ndi u pfuka mulayo u i ṱavha. Ndima iyi i themendela fhedzi zwimela zwa sialala (zwine zwa wanala nga mupo kha Afrika ya Tshipembe) kana zwi si kho kha mitevhe ya zwimela zwi phaḓaladzeaho ya Afrika Tshipembe. Musi ni sa athu u renga tshimela, humbelani nasari (fhethu ha u aluwisa zwimela zwiṱuku) dzina ḽa tshimela ḽa saintsi (ḽa Latin), ni sedze uri a tshi ho kha mutevhe wa zwimela zwi phaḓaladzeaho.
 
 ## Maḓaka a zwiḽiwa
 
@@ -41,7 +41,7 @@ Miri miṱuku i kha ḓi ṱoḓa u sheledzwa tshifhinga tshoṱhe kha tshifhing
 
 Kha ḓaka ḽa mupo, tshiimo tshiṅwe tsha vhutshilo ha zwimela tshi tevhela tshiṅwe lwa miṅwaha minzhi. Hezwi zwi vhidzwa **tshanduko ya zwimela nga tshifhinga** (succession). Zwimela zwa u thoma (pioneer plants, zwimela zwa u thoma u mela kha mavu o ṱalalaho) zwi khwinisa mavu na u ṋea vhudzulo, nahone miri i tshilaho tshifhinga tshilapfu i tevhela nga murahu.
 
-Afurika Tshipembe, ḓaka a si ḽone magumo a mupo hoṱhe. Mavu a mahatsi (grassland), fynbos, zwiṱaka zwa Karoo na savanna ndi sisiteme dza mupo dzo fhelelaho nahone dza kale. A si "ḓaka ḽi sa athu fhela". U ṱavha miri kha mavu a mahatsi a sialala o takalaho kana kha fynbos zwi tshinyadza zwimela zwi wanalaho nga ho kalulaho, zwi shumisa maḓi manzhi nahone zwi nga fhungudza maḓi a elelaho mikuloni.
+Afrika Tshipembe, ḓaka a si ḽone magumo a mupo hoṱhe. Mavu a mahatsi (grassland), fynbos, zwiṱaka zwa Karoo na savanna ndi sisiteme dza mupo dzo fhelelaho nahone dza kale. A si "ḓaka ḽi sa athu fhela". U ṱavha miri kha mavu a mahatsi a sialala o takalaho kana kha fynbos zwi tshinyadza zwimela zwi wanalaho nga ho kalulaho, zwi shumisa maḓi manzhi nahone zwi nga fhungudza maḓi a elelaho mikuloni.
 
 - Ṱavhani ḓaka ḽaṋu ḽa zwiḽiwa kha mavu **o no dzhenelelwaho**: masimu a kale, mavu o ṱalalaho a mudini, mavu a re tsini na mudi, mavu o khukhulwaho, kana mavu o kunakiswaho zwimela zwi phaḓaladzeaho.
 - **Ni songo** lima kana u ṱavha miri kha ḓaka ḽa mupo (veld) ḽo takalaho, mavu a mahatsi, fynbos kana mavu a re na maḓi (wetland).
@@ -71,14 +71,14 @@ Ngade ya miri ya mitshelo ya permaculture ndi ḓaka ḽa zwiḽiwa ḽo leluwah
 4. **Phaḓaladzani khaṋo ṅwaha woṱhe.** Sedzani uri tshimela tshiṅwe na tshiṅwe tshi kaṋwa lini. Sa tsumbo, miri ya lushaka lwa namuni i kaṋwa nga maanḓa nga ṱhanḓalaṅwaha na vhuria, na avokhado nga ṱhanḓalaṅwaha na vhuria, ngeno mirara (grapes) na phitshisi (peaches) zwi tshi kaṋwa nga tshilimo, na alimonde (almonds) nga magumo a tshilimo. Mitshelo minzhi i na mashaka a u thoma, a vhukati ha khalaṅwaha na a u fhedza. Ṱavhani maṅwe kha oṱhe.
 5. **Humbulani nga ha pfushi.** Pulanani mutanganyiko une wa ṋea muṱa waṋu mavithamini na minerala dzo fhambanaho ṅwaha woṱhe.
 6. **Sedzani mavu aṋu.** Miri ya mitshelo i ṱumanywa (grafted) kha midzi ya fhasi (rootstocks, tshipiḓa tsha midzi tsha muri wo ṱumanywaho) yo teaho mavu o fhambanaho. Vhudzisani nasari uri ndi midzi ya fhasi ifhio yo teaho mavu aṋu.
-7. **Sedzani uri tshimela tshiṅwe na tshiṅwe a si tshi phaḓaladzeaho.** Zwimela zwinzhi zwa maṅwe mashango zwi re na mushumo zwo ambiwa sa zwi phaḓaladzeaho Afurika Tshipembe. U zwi ṱavha ndi u pfuka mulayo.
+7. **Sedzani uri tshimela tshiṅwe na tshiṅwe a si tshi phaḓaladzeaho.** Zwimela zwinzhi zwa maṅwe mashango zwi re na mushumo zwo ambiwa sa zwi phaḓaladzeaho Afrika Tshipembe. U zwi ṱavha ndi u pfuka mulayo.
 8. **Takalelani zwimela zwa sialala zwi thusaho.** Kha zwimela zwi engedzaho naiṱirodzheni, zwimela zwi fukedzaho mavu na zwimela zwa zwipuka zwa ḓaka, thomani nga u nanga mashaka a sialala.
 
 > **Tsevhedzo:** Dalelani ḓaka kana tshiṱaka tsha mupo tsini na ni, ni dzhie tshifhinga tshaṋu. Sedzani uri ndi zwimela zwifhio zwi fukedzaho mavu zwine zwa mela murunzini na ḓuvhani, na uri ndi miri ifhio ya u thoma ine ya thoma u mela kha mavu o dzhenelelwaho. Ni nga kuvhanganya mbeu ya ḓaka i si nnzhi fhedzi nga thendelo ya muṋe wa mavu. Ni ṱoḓa phemithi (permit) u kuvhanganya zwimela kana mbeu kha fhethu ho tsireledzwaho ha mupo (nature reserves) na u kuvhanganya mashaka o tsireledzwaho. Nasari ya tsini na ni i nga ni ṋea mitengo na nyeletshedzo musi ni tshi ṅwala mutevhe waṋu wa zwimela.
 
 ### Tshimbidzanyani miri ya mitshelo na mutsho waṋu
 
-Afurika Tshipembe i na mitsho yo fhambanaho vhukuma. Mbudziso khulwane kha miri ya mitshelo ndi ya **tshando** (frost).
+Afrika Tshipembe i na mitsho yo fhambanaho vhukuma. Mbudziso khulwane kha miri ya mitshelo ndi ya **tshando** (frost).
 
 | Mutsho | Mitshelo ine kanzhi ya bvelela zwavhuḓi | Zwa u ḓivha |
 |---|---|---|
@@ -93,7 +93,7 @@ Afurika Tshipembe i na mitsho yo fhambanaho vhukuma. Mbudziso khulwane kha miri 
 
 Hu na nḓila nnzhi dza u vhekanya ḓaka ḽa zwiḽiwa: zwigwada zwa zwimela zwo phaḓalalaho, mafhenḓe a zwimela, mitalo yo lugaho, u lima zwiliṅwa vhukati ha mitalo ya miri (alley cropping) kana mitalo ya zwiṱaka (hedgerows). Nangani nḓila yo teaho fhethu haṋu na zwine na zwi ṱoḓa.
 
-- Vhonani uri miri yoṱhe i wana ḓuvha ḽo linganaho. Kha Afurika ya Tshipembe ḓuvha ḽi kha **devhula**, ngauralo vhekani miri milapfu i sa laṱi maṱari thungo ya **tshipembe** ya ḓaka ḽa zwiḽiwa, hune murunzi wayo wa wela nnḓa ha ngade.
+- Vhonani uri miri yoṱhe i wana ḓuvha ḽo linganaho. Kha Afrika ya Tshipembe ḓuvha ḽi kha **devhula**, ngauralo vhekani miri milapfu i sa laṱi maṱari thungo ya **tshipembe** ya ḓaka ḽa zwiḽiwa, hune murunzi wayo wa wela nnḓa ha ngade.
 - Ni nga dovha na vhea miri i sa laṱi maṱari vhukati ha miri i laṱaho maṱari nga vhuria (deciduous trees).
 - Shumisani magumo a ḓaka a re na ḓuvha kha mihaṱa na zwimela zwi tshilaho miṅwaha minzhi zwi funaho ḓuvha, u fana na kha magumo a ḓaka ḽa mupo.
 
@@ -126,7 +126,7 @@ Zwimela zwa u thoma zwa khwine ndi **zwimela zwa lushaka lwa nawa** (legumes). Z
 | Lablab bean *Lablab purpureus* | Tshimela tshi gonyaho tsha ṅwaha muthihi kana tshi sa tshili tshifhinga tshilapfu, tshi engedza naiṱirodzheni, zwiḽiwa zwa zwifuwo | Tshiliṅwa tsha tshilimo; a tshi konḓeleli tshando. |
 | Lupin *Lupinus angustifolius* | Tshimela tshi fukedzaho mavu nga vhuria tshi engedzaho naiṱirodzheni | Tshi tshimbilelana na vhuria ha Kapa Vhukovhela. Iṅwe mbeu ya lupin i a vhava nahone i na khombo i nga vhulaha; ni songo i ḽa kana u i ṋea zwifuwo nga nnḓa ha musi i lushaka lu ṱapfaho (lu ḽiwaho). |
 
-> **Ḓivhani:** Ni songo ṱavha zwimela izwi zwi engedzaho naiṱirodzheni zwi ḓivhiwaho kha permaculture Afurika Tshipembe. Zwo ambiwa sa zwimela zwi phaḓaladzeaho: black wattle na maṅwe mawattle (*Acacia mearnsii* na maṅwe mashaka a *Acacia* a Australia), leucaena (*Leucaena leucocephala*), red sesbania (*Sesbania punicea*), black locust (*Robinia pseudoacacia*) na stinkbean (*Paraserianthes lophantha*). Shumisani miri ya sialala ya mipfa yo ambiwaho afho nṱha.
+> **Ḓivhani:** Ni songo ṱavha zwimela izwi zwi engedzaho naiṱirodzheni zwi ḓivhiwaho kha permaculture Afrika Tshipembe. Zwo ambiwa sa zwimela zwi phaḓaladzeaho: black wattle na maṅwe mawattle (*Acacia mearnsii* na maṅwe mashaka a *Acacia* a Australia), leucaena (*Leucaena leucocephala*), red sesbania (*Sesbania punicea*), black locust (*Robinia pseudoacacia*) na stinkbean (*Paraserianthes lophantha*). Shumisani miri ya sialala ya mipfa yo ambiwaho afho nṱha.
 
 ### Maitele a u ṱavha
 
@@ -164,7 +164,7 @@ Zwimela zwa u thoma zwa khwine ndi **zwimela zwa lushaka lwa nawa** (legumes). Z
 
 ## Miṱaṱo ya ḓaka ḽa zwiḽiwa
 
-Kanzhi ḓaka ḽa zwiḽiwa ḽi ṱaluswa nga **miṱaṱo ya sumbe**. Zwimela zwi re afho fhasi ndi tsumbo. Nangani zwine zwa tshimbilelana na mutsho waṋu. Zwimela zwo swayiwaho sa zwa sialala zwi wanala nga mupo kha Afurika ya Tshipembe.
+Kanzhi ḓaka ḽa zwiḽiwa ḽi ṱaluswa nga **miṱaṱo ya sumbe**. Zwimela zwi re afho fhasi ndi tsumbo. Nangani zwine zwa tshimbilelana na mutsho waṋu. Zwimela zwo swayiwaho sa zwa sialala zwi wanala nga mupo kha Afrika ya Tshipembe.
 
 ### Mutaṱo wa 1: Miri milapfu (maṱavhi a nṱha a fukaho ḓaka, canopy)
 
@@ -204,7 +204,7 @@ Miri minzhi ya mitshelo i wela fhano. Minzhi i dzula i miṱuku nga u ṱahelwa.
 | Muembe (wild custard apple) *Annona senegalensis* | Mitshelo, mushonga | Wa sialala; fhethu hu fhisaho hu si na tshando. |
 | Mulanga (pepperbark) *Warburgia salutaris* | Mushonga wa sialala | Wa sialala nahone **u kha khombo ya u fhela ḓakani**. Rengani fhedzi miri yo aluwiswaho nasari. A u konḓeleli tshando. |
 
-> **Ḓivhani:** Ni songo ṱavha elderberry (*Sambucus*) kana white mulberry (*Morus alba*), zwine kanzhi zwa rengiswa sa zwimela zwa mitshelo. American elderberry ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 1b (Category 1b) nahone white mulberry ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 3 (Category 3) Afurika Tshipembe, ngauralo ndi u pfuka mulayo u zwi ṱavha. Zwimela zwa sialala zwa mitshelo miṱuku sa Kei apple, cross-berry na num-num ndi khwine u fhira.
+> **Ḓivhani:** Ni songo ṱavha elderberry (*Sambucus*) kana white mulberry (*Morus alba*), zwine kanzhi zwa rengiswa sa zwimela zwa mitshelo. American elderberry ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 1b (Category 1b) nahone white mulberry ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 3 (Category 3) Afrika Tshipembe, ngauralo ndi u pfuka mulayo u zwi ṱavha. Zwimela zwa sialala zwa mitshelo miṱuku sa Kei apple, cross-berry na num-num ndi khwine u fhira.
 
 ### Mutaṱo wa 3: Zwiṱaka
 
@@ -306,7 +306,7 @@ Zwimela zwi gonyaho zwi shumisa miri, mafhenḓe na zwiṱanda zwa u gonya (trel
 
 **Tshithivhela-muya** (windbreak, kana **mutalo wa tsireledzo**, shelter belt) ndi mutalo kana lupfumo lwa miri, zwiṱaka na zwiṅwe zwimela zwine zwa tsireledza nnḓu, zwiliṅwa na zwifuwo kha muya. A hu na pulane nthihi ine ya tea fhethu hoṱhe. Pulanani tshithivhela-muya tshaṋu u ya nga mavu aṋu na zwine na zwi ṱoḓa.
 
-Zwithivhela-muya zwi thusa nga maanḓa fhethu hu re na muya munzhi nahone ho omaho, sa zwipiḓa zwa Kapa Vhukovhela, Karoo na vhukati ha shango ḽa nṱha ḽa Afurika ya Tshipembe, hune muya wa omisa zwiliṅwa na u fhufhisa mavu.
+Zwithivhela-muya zwi thusa nga maanḓa fhethu hu re na muya munzhi nahone ho omaho, sa zwipiḓa zwa Kapa Vhukovhela, Karoo na vhukati ha shango ḽa nṱha ḽa Afrika ya Tshipembe, hune muya wa omisa zwiliṅwa na u fhufhisa mavu.
 
 Tshithivhela-muya tshavhuḓi tshi nga:
 
@@ -326,7 +326,7 @@ Tshithivhela-muya tshavhuḓi tshi nga:
 3. **Tshi iteni tshilapfu nahone tshi si na zwikhala.** Muya u a ṱavhanya musi u tshi pfuka nga zwikhala na u tshi mona magumoni a tshithivhela-muya.
 4. **Tendelani muya muṅwe u pfuke.** Tshithivhela-muya tshine tsha tendela muya muṅwe u pfuka (tsho ṱatamana nga hafu ya luvhondo lwo khwaṱhaho) tshi shuma zwavhuḓi u fhira luvhondo lwo khwaṱhaho. Tshithivheli tsho valaho tshoṱhe tshi vhumba muya u monaho thungo yo tsireledzwaho.
 5. **Shumisani mitalo minzhi.** Ṱavhani miri milapfu murahu (thungo ine muya wa bva khayo), miri ya vhukati vhukati, na zwiṱaka zwo ṱatamanaho phanḓa.
-6. **Siani tshikhala tsha tshedza.** Fhethu ho tsireledzwaho hu phaḓalala thungo ine muya wa ya khayo lwa lunzhi lwa vhulapfu ha tshithivhela-muya. Ngauralo a zwi ṱoḓei u tshi ṱavha tsho nambatela ngade. Midzi ya miri i dovha ya lwela maḓi na zwiliṅwa. Kha Afurika ya Tshipembe ḓuvha ḽi kha devhula, ngauralo tshithivhela-muya tshi re thungo ya **devhula** ya ngade tshi i fhedza nga murunzi. Thungo ya tshipembe tshi ita murunzi muṱuku.
+6. **Siani tshikhala tsha tshedza.** Fhethu ho tsireledzwaho hu phaḓalala thungo ine muya wa ya khayo lwa lunzhi lwa vhulapfu ha tshithivhela-muya. Ngauralo a zwi ṱoḓei u tshi ṱavha tsho nambatela ngade. Midzi ya miri i dovha ya lwela maḓi na zwiliṅwa. Kha Afrika ya Tshipembe ḓuvha ḽi kha devhula, ngauralo tshithivhela-muya tshi re thungo ya **devhula** ya ngade tshi i fhedza nga murunzi. Thungo ya tshipembe tshi ita murunzi muṱuku.
 
 > **Ḓivhani:** Dzibulasi dza bindu kanzhi dzi ṱavha beefwood (*Casuarina* spp.), miri ya gamu (*Eucalyptus*) kana miri ya phaini sa zwithivhela-muya. Beefwood (*Casuarina cunninghamiana* na *C. equisetifolia*) na mashaka manzhi a gamu na phaini ndi **zwimela zwi phaḓaladzeaho zwa Khethekanyo ya 2** (Category 2). Zwi nga aluwiswa fhedzi nga phemithi ya muvhuso, fhethu ho swayiwaho, nahone zwi songo vha tsini ha 30 m ha mulambo, damu kana mavu a re na maḓi. Vhalimi vhaṱuku vha tea u shumisa zwimela zwa sialala zwa zwithivhela-muya.
 
@@ -344,13 +344,13 @@ Tshithivhela-muya tshi re tshitala nahone tsho sheledzwaho zwavhuḓi tshi nga o
 
 **False olive** (*Buddleja saligna*). Muri muṱuku wo ṱatamanaho u re na maluvha maṱuku a muvhala wa kheremu a nukhaho zwavhuḓi u bva kha magumo a vhuria u swika tshilimo. Ṋotshi na zwiṅwe zwikukumi zwi dalela maluvha ayo. U mela kha mavu manzhi nahone u konḓelela muya, tshando na gomelelo. U nga swika 4 m kana u fhira arali u sa ṱahelwi, ngauralo u shumiseni kha mutalo wa murahu. U nga dovha wa ṱahelwa wa vha lufhenḓe lwa zwimela lwo lugaho lwo ṱatamanaho.
 
-**Karee** (*Searsia lancea*, hu ṱhoma ho vha *Rhus lancea*). Ndi muṅwe wa miri i konḓelelaho vhukuma kha Afurika ya Tshipembe. U mela kha vhudzulo vhunzhi, u konḓelela tshando na gomelelo, nahone u na midzi i sa tshinyadzi. U nga swika 7 u ya 9 m, ngauralo u ṱavheni kha mutalo wa murahu. U ṋea murunzi, zwiḽiwa zwa zwifuwo na khuni.
+**Karee** (*Searsia lancea*, hu ṱhoma ho vha *Rhus lancea*). Ndi muṅwe wa miri i konḓelelaho vhukuma kha Afrika ya Tshipembe. U mela kha vhudzulo vhunzhi, u konḓelela tshando na gomelelo, nahone u na midzi i sa tshinyadzi. U nga swika 7 u ya 9 m, ngauralo u ṱavheni kha mutalo wa murahu. U ṋea murunzi, zwiḽiwa zwa zwifuwo na khuni.
 
 **King protea** (*Protea cynaroides*), kha fhethu ha fynbos fhedzi. Dziprotea dzi mela nga mupo kha Kapa i re na muya munzhi nahone dzi konḓelela muya zwavhuḓi. King protea ndi tshiṱaka tshiṱuku tsho ṱatamanaho, kanzhi tshi na vhulapfu ha 0.5 u ya 2 m, tshi re na maṱari mahulwane na maluvha mahulwane vhukuma. Tshi ṱavheni kha mutalo wa vhukati. Tshi ṱoḓa mavu a re na asidi ane maḓi a bva nga u leluwa, ḓuvha ḽoṱhe na muya u tshimbilaho zwavhuḓi, ngauralo a tshi nga aluwi zwavhuḓi kha mavu a vumba a dzibulasi nnzhi dza mvula ya tshilimo. Maluvha o remiwaho a nga ḓisa mbuelo i engedzeaho, fhedzi ni ṱoḓa phemithi ya vhulanguli ha u tsireledza mupo ha vunḓu ḽaṋu u ka maluvha ḓakani kana u rengisa zwimela zwo tsireledzwaho. Zwimela zwo aluwaho zwi dovha zwa mela musi mulilo wa ḓaka wo fhira.
 
 ### Zwimela zwa zwithivhela-muya: zwiṱaka
 
-Zwimela zwoṱhe zwi re kha thebulu iyi ndi zwa sialala Afurika Tshipembe, nga nnḓa ha rosemary na lavender, zwine zwa si vhe zwi phaḓaladzeaho.
+Zwimela zwoṱhe zwi re kha thebulu iyi ndi zwa sialala Afrika Tshipembe, nga nnḓa ha rosemary na lavender, zwine zwa si vhe zwi phaḓaladzeaho.
 
 | Tshimela | Vhulapfu | Mushumo | Zwa u ḓivha |
 |---|---|---|---|
@@ -372,7 +372,7 @@ Zwimela zwoṱhe zwi re kha thebulu iyi ndi zwa sialala Afurika Tshipembe, nga n
 
 ### Zwimela zwa zwithivhela-muya: miri
 
-Miri yoṱhe i re kha thebulu iyi ndi ya sialala kha Afurika ya Tshipembe.
+Miri yoṱhe i re kha thebulu iyi ndi ya sialala kha Afrika ya Tshipembe.
 
 | Tshimela | Vhulapfu | Mushumo | Zwa u ḓivha |
 |---|---|---|---|
@@ -429,7 +429,7 @@ Miri yoṱhe i re kha thebulu iyi ndi ya sialala kha Afurika ya Tshipembe.
 ## Zwithu zwa ndeme
 
 - Ḓaka ḽa zwiḽiwa ḽi edzisa ḓaka ḽa mupo, ḽi na miṱaṱo ya miri, zwiṱaka, mihaṱa, zwimela zwi fukedzaho mavu, midzi na zwimela zwi gonyaho.
-- Ṱavhani maḓaka a zwiḽiwa kha mavu o no dzhenelelwaho. Mavu a mahatsi na fynbos zwa Afurika Tshipembe ndi sisiteme dza mupo, a si ḓaka ḽi sa athu fhela; ni songo ṱavha miri kha ḓaka ḽa mupo ḽo takalaho.
+- Ṱavhani maḓaka a zwiḽiwa kha mavu o no dzhenelelwaho. Mavu a mahatsi na fynbos zwa Afrika Tshipembe ndi sisiteme dza mupo, a si ḓaka ḽi sa athu fhela; ni songo ṱavha miri kha ḓaka ḽa mupo ḽo takalaho.
 - Tshimbidzanyani miri ya mitshelo na tshando na mahalwa a vhuria a fhethu haṋu: mitshelo i laṱaho maṱari kha fhethu ha mahalwa, mitshelo ya subtropiki kha fhethu hu si na tshando fhedzi.
 - Thomani nga zwimela zwa u thoma zwi engedzaho naiṱirodzheni sa muunga (sweet thorn), hook thorn, pigeon pea na nawa (cowpea), nga murahu ni zwi reme ni zwi laṱele fhasi musi miri ya mitshelo i tshi aluwa.
 - Ni songo vhuya na ṱavha zwimela zwi phaḓaladzeaho zwo ṅwaliwaho sa mawattle, leucaena, sesbania, elderberry, beefwood kana white mulberry. Nangani zwimela zwa sialala kha mishumo ya u thusa, ya zwithivhela-muya na ya zwipuka zwa ḓaka.

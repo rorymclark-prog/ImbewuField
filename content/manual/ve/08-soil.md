@@ -59,7 +59,7 @@ Mavu o itwa nga zwipiḓa zwa minerala zwa vhuhulwane vhu fhambanaho, na zwithu 
 - A na munukho wavhuḓi wa mavu.
 - Mavu o ṱanganaho ndi mavu avhuḓi vhukuma kha miroho minzhi. Nga tshifhinga, khomposo na tshifukedzi, ni nga shandukisa mavu a muṱavha kana a vumba a vha tsini na mavu o ṱanganaho.
 
-> **Khumbudzo:** A ni koni u shandukisa lushaka lwa mavu aṋu, fhedzi ni nga shandukisa **tshivhumbeo** (structure) tsha mavu aṋu na zwithu zwa mupo zwo vholaho zwi re khao. Zwithu zwa mupo zwo vholaho ndi phindulo kha mavu a muṱavha na a vumba.
+> **Ḓivhani:** A ni koni u shandukisa lushaka lwa mavu aṋu, fhedzi ni nga shandukisa **tshivhumbeo** (structure) tsha mavu aṋu na zwithu zwa mupo zwo vholaho zwi re khao. Zwithu zwa mupo zwo vholaho ndi phindulo kha mavu a muṱavha na a vumba.
 
 ## U linga mavu aṋu
 
@@ -117,11 +117,11 @@ Musi ni tshi khou ṱhoḓisisa mavu aṋu, sedzani na zwi re tsini ni ṅwale z
 
 - Miroho minzhi i aluwa zwavhuḓi kha mavu a re na asidi zwiṱuku u swika kha a vhukati, pH ya 6 u swika 7 (yo elwaho nga maḓi).
 - Kha mavu a re na asidi vhukuma, zwiḽiwa zwa zwimela zwi ngaho phosiforasi zwi a valelwa, nahone aluminiamu i nga shela midzi mushonga.
-- Afurika Tshipembe, mavu manzhi a vhubvaḓuvha hune mvula ya na nga maanḓa a na asidi. Mavu a vhukovhela ho omaho na a fhethu ha fhasi a nga vha na alkali kana muṱuku.
+- Afrika Tshipembe, mavu manzhi a vhubvaḓuvha hune mvula ya na nga maanḓa a na asidi. Mavu a vhukovhela ho omaho na a fhethu ha fhasi a nga vha na alkali kana muṱuku.
 
 Nḓila yavhuḓi ya u ḓivha pH yaṋu ndi ṱhoḓisiso ya mavu. Ni nga renga tshishumiswa tshiṱuku tsha u linga pH, kana na rumela tsumbo ya mavu kha laborari ya mavu. Vhudzisani ofisi ya vhaeletshedzi vha zwa vhulimi (extension office) kana khoporasi ya henefho uri ni i rumele ngafhi.
 
-> **Khumbudzo:** Dzilaborari dza Afurika Tshipembe kanzhi dzi ṋea **pH (KCl)**. Tshikalo itshi kanzhi tshi fhasi nga 0.5 u swika 1 u fhira pH yo elwaho nga maḓi. pH (KCl) i re fhasi ha 4.5 i sumbedza uri mavu a na asidi nnzhi vhukuma kha zwiliṅwa zwinzhi. Muvhigo wa laborari u ḓo sumbedza na "acid saturation" (u ḓala ha asidi) nahone u ḓo eletshedza uri ni engedze layime nngafhani.
+> **Ḓivhani:** Dzilaborari dza Afrika Tshipembe kanzhi dzi ṋea **pH (KCl)**. Tshikalo itshi kanzhi tshi fhasi nga 0.5 u swika 1 u fhira pH yo elwaho nga maḓi. pH (KCl) i re fhasi ha 4.5 i sumbedza uri mavu a na asidi nnzhi vhukuma kha zwiliṅwa zwinzhi. Muvhigo wa laborari u ḓo sumbedza na "acid saturation" (u ḓala ha asidi) nahone u ḓo eletshedza uri ni engedze layime nngafhani.
 
 U lugisa mavu a re na asidi, engedzani layime ya vhulimi kana layime ya dolomaithi (dolomitic lime), ni tshi tevhela ngeletshedzo ya laborari. U engedza khomposo na hone zwi a thusa, ngauri i tsireledza mavu kha tshanduko khulwane dza pH.
 
@@ -160,7 +160,7 @@ Zwimela zwa u nontshisa mavu:
 
 > **Tsevhedzo:** Arali ni tshi ṱavha tshimela tsha lushaka lwa nawa tsimuni lwa u thoma, rengani **phaudara ya bakteria dza midzi** (rhizobium inoculant) yo teaho kha murengisi wa mbeu, ni i ṱanganye na mbeu ni sa athu u zwala. Tshimela tshi ḓo bveledza naiṱirodzheni nnzhi.
 
-### Zwimela zwa u nontshisa mavu zwa Tshipembe ha Afurika
+### Zwimela zwa u nontshisa mavu zwa Tshipembe ha Afrika
 
 | Khalaṅwaha | Tshimela | Zwiṅwe |
 |---|---|---|
@@ -178,7 +178,7 @@ Kha fhethu hune mvula ya na nga tshilimo, zwalani zwimela zwa tshilimo zwa u non
 
 Zwiṅwe zwimela zwine ra zwi vhidza zwimela zwi sa ṱoḓei, zwi ngaho clover, na zwone ndi zwimela zwavhuḓi zwa u nontshisa mavu. Nṱhani ha u zwi tumula na u zwi laṱa, zwi remeni zwi sa athu u bveledza mbeu ni zwi litshe nṱha ha mavu kana ni zwi engedze kha khomposo.
 
-> **Khumbudzo:** Zwiṅwe zwimela zwine zwa rengiswa sa "green manure" kana "soil builders" mashangoni a nnḓa ndi zwimela zwi phaḓaladzeaho zwi tshinyadzaho (invasive) zwo ambiwaho nga mulayo Afurika Tshipembe. Mexican sunflower (*Tithonia diversifolia*), ine kanzhi ya rendiwa kha bugu dza permaculture, ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 1b (Category 1b) nga fhasi ha mulayo wa NEMBA: ndi u pfuka mulayo u i ṱavha kana u i rengisa. Ni songo i shumisa. Vhudzisani ofisi ya vhaeletshedzi vha zwa vhulimi nga ha tshimela tshiṅwe na tshiṅwe tshine na sa tshi ḓivhe ni sa athu u tshi ṱavha.
+> **Ḓivhani:** Zwiṅwe zwimela zwine zwa rengiswa sa "green manure" kana "soil builders" mashangoni a nnḓa ndi zwimela zwi phaḓaladzeaho zwi tshinyadzaho (invasive) zwo ambiwaho nga mulayo Afrika Tshipembe. Mexican sunflower (*Tithonia diversifolia*), ine kanzhi ya rendiwa kha bugu dza permaculture, ndi tshimela tshi phaḓaladzeaho tsha Khethekanyo ya 1b (Category 1b) nga fhasi ha mulayo wa NEMBA: ndi u pfuka mulayo u i ṱavha kana u i rengisa. Ni songo i shumisa. Vhudzisani ofisi ya vhaeletshedzi vha zwa vhulimi nga ha tshimela tshiṅwe na tshiṅwe tshine na sa tshi ḓivhe ni sa athu u tshi ṱavha.
 
 ## Nḓila ya 2: Manyaga a zwipuka
 
@@ -379,7 +379,7 @@ Zwivhungu zwinzhi kha garafu nthihi ya mavu ndi tshiga tsha uri mavu aṋu a na 
 
 Kha bodo ḽa zwivhungu (worm farm) ni ṱoḓa **zwivhungu zwa khomposo** zwa tshipentshela (composting worms). Zwivhungu izwi zwi dzula kha maṱari o vholaho, manyaga na khomposo, hu si fhasi-fhasi mavuni. Zwi ḽa zwinzhi, zwi andana nga u ṱavhanya nahone zwi takala kha bokisi ḽo ḓalaho.
 
-- **Red wiggler** (*Eisenia fetida*) ndi tshivhungu tsha khomposo tshi wanalaho nga maanḓa Afurika Tshipembe. Tshi konḓelela u rotha na mufhiso u fhira zwoṱhe.
+- **Red wiggler** (*Eisenia fetida*) ndi tshivhungu tsha khomposo tshi wanalaho nga maanḓa Afrika Tshipembe. Tshi konḓelela u rotha na mufhiso u fhira zwoṱhe.
 - **African nightcrawler** (*Eudrilus eugeniae*) ndi tshihulwane nahone tshi shuma nga u ṱavhanya fhethu ho dudelaho, fhedzi a tshi shumi zwavhuḓi kha vhuria vhu rothaho.
 - **Indian blue worm** (*Perionyx excavatus*) na tsho tshi shumiswa fhethu ho dudelaho.
 
