@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '491704b2', changes: [
+    'The Xitsonga manual is unavailable while publication is paused.',
+  ] },
   { when: '26 September 2026', sha: '5933a4ef', changes: [
     'Produce photos in Records now upload at a smaller size, so they send faster on slow data.',
     'The old Garden Survey wizard and two unused test pages are gone.',
