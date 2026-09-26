@@ -1,10 +1,8 @@
 'use client';
 
-// DesignWizard — the wizard chrome has to LOOK like two different products, not one
-// component with a filter, because "I don't see the difference" was the owner's actual
-// complaint. GUIDED renders a single big hero step (one focus, one primary action, no
-// step-jumping). PRO renders a dense, fully-tappable toolbar (speed, everything visible).
-// They share only the step data/labels below, not layout.
+// DesignWizard — the wizard chrome. GUIDED renders a single big hero step (one focus, one
+// primary action, no step-jumping) — the only mode left reachable; see the default export below
+// for the removed PRO alternative.
 
 import { useEffect, useState } from 'react';
 import {
@@ -12,11 +10,9 @@ import {
   ChevronRight,
   ChevronDown,
   ChevronUp,
-  Check,
   HelpCircle,
 } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
-import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { DESIGN_STEP_LESSONS } from '@/lib/design-lessons';
 import {
   DESIGN_CHROME_KEYS,
@@ -53,51 +49,9 @@ export const STEP_LABELS = Object.fromEntries(
   STEP_ORDER.map((step) => [step, translatedDesignStepLabel((key) => translate('en', key), step)]),
 ) as Record<WizardStep, string>;
 
-function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPresent: { boundary: boolean; house: boolean }): boolean {
-  switch (step) {
-    case 'base':
-      return refLayersPresent.boundary && refLayersPresent.house;
-    case 'water':
-      // Earthworks are placed on the Water step (see DesignPalette categoriesForStep), so they
-      // count as its content — otherwise a farmer who placed a tree basin or a swale berm here
-      // would still be told the step is empty.
-      return state.items.some((it) => {
-        const cat = ELEMENTS_BY_ID[it.defId]?.category;
-        return cat === 'water' || cat === 'earthworks';
-      }) ||
-        state.lines.some((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
-    case 'earthworks':
-      // The land-shaping content: swale lines, and the berm/terrace/half-moon that go with them.
-      // Deliberately NARROWER than the Water step's test above, which counts the whole earthworks
-      // category — a raised bed placed from Water must not make this step read as already done.
-      return state.lines.some((l) => l.kind === 'swale')
-        || state.items.some((it) => ['berm', 'terrace', 'half_moon'].includes(it.defId))
-        || state.zones.some((z) => z.feature === 'terrace_bank');
-    case 'zones':
-      return state.zones.length > 0;
-    case 'planting':
-      return state.items.some((it) => ELEMENTS_BY_ID[it.defId]?.category === 'growing');
-    case 'structures':
-      return state.items.some((it) => {
-        const cat = ELEMENTS_BY_ID[it.defId]?.category;
-        return cat === 'structure' || cat === 'animal';
-      });
-    case 'sector':
-      // Analysis-only reveal — nothing is drawn, so it is never "empty". The energies are
-      // computed deterministically (lib/sector) and shown the moment the farmer lands here.
-    case 'review':
-    case 'glossy':
-      return true;
-    default:
-      return false;
-  }
-}
-
-
 // "Why this step?" — per-step permaculture lesson (Lane 4, docs/DISCOVERABILITY-SIMPLE-PLAN.md
-// §4.2/§4.3). Split into a state hook + a pure content panel so guided and pro can place the
-// toggle button and the panel in different spots of their own chrome (pro puts the button
-// inline in the dense guidance row but the panel full-width below it) while sharing the same
+// §4.2/§4.3). A state hook plus a pure content panel, kept separate so the toggle button and the
+// panel can sit in different spots of the chrome while sharing the same
 // collapsed-by-default, reset-on-step-change behaviour and exact lesson content.
 function useLessonExpand(step: WizardStep) {
   const [expanded, setExpanded] = useState(false);
@@ -149,40 +103,6 @@ function GuidedLessonExpander({ step }: { step: WizardStep }) {
       {expanded && <LessonPanel lesson={lesson} />}
     </div>
   );
-}
-
-// Pro: compact 30px icon button matching the existing Back/Next controls (density over
-// hand-holding); caller places the button inline and the returned panel wherever full-width
-// space is available (below the toolbar row), so the two pieces are exposed separately.
-function useProLessonExpander(step: WizardStep) {
-  const { t } = useLanguage();
-  const { expanded, toggle, lesson } = useLessonExpand(step);
-  if (!lesson) return { button: null, panel: null };
-  const button = (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label={t(DESIGN_CHROME_KEYS.whyThisStep)}
-      aria-expanded={expanded}
-      style={{
-        minHeight: 30,
-        minWidth: 30,
-        flexShrink: 0,
-        borderRadius: 8,
-        border: `1px solid var(--color-forest-800)`,
-        background: expanded ? GREEN : 'transparent',
-        color: expanded ? PAPER : 'var(--color-forest-800)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-      }}
-    >
-      <HelpCircle size={15} />
-    </button>
-  );
-  const panel = expanded ? <LessonPanel lesson={lesson} /> : null;
-  return { button, panel };
 }
 
 // ---------------------------------------------------------------------------------------
@@ -308,155 +228,14 @@ function GuidedWizard({
   );
 }
 
-// ---------------------------------------------------------------------------------------
-// PRO — dense, fully-tappable stepper toolbar. Every step is a jump target, guidance is a
-// single line, Suggest is a compact inline pill. No hero card, no collapse toggle needed —
-// this layout is already minimal-height by design (speed over hand-holding).
-// ---------------------------------------------------------------------------------------
-function ProWizard({
-  step,
-  setStep,
-  state,
-  refLayersPresent,
-}: {
-  step: WizardStep;
-  setStep: (s: WizardStep) => void;
-  state: DesignCanvasState;
-  refLayersPresent: { boundary: boolean; house: boolean };
-}) {
-  const { t, lang } = useLanguage();
-  const idx = STEP_ORDER.indexOf(step);
-  const canBack = idx > 0;
-  const canNext = idx < STEP_ORDER.length - 1;
-  const { button: lessonButton, panel: lessonPanel } = useProLessonExpander(step);
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 6,
-        background: 'var(--bg-1)',
-        border: `1px solid rgba(31,77,43,0.3)`,
-        borderRadius: 10,
-        padding: '6px 8px',
-      }}
-    >
-      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-        {/* Full stepper — every step tappable, jump freely. Compact pill row. */}
-        <div style={{ display: 'flex', gap: 3, overflowX: 'auto', flex: 1 }}>
-          {STEP_ORDER.map((s, i) => {
-            const done = stepHasContent(s, state, refLayersPresent);
-            const active = s === step;
-            return (
-              <button
-                key={s}
-                onClick={() => setStep(s)}
-                title={translatedDesignStepLabel(t, s)}
-                style={{
-                  flex: '0 0 auto',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  minHeight: 30,
-                  padding: '0 8px',
-                  borderRadius: 999,
-                  border: active ? `1.5px solid var(--color-forest-800)` : '1px solid rgba(31,77,43,0.2)',
-                  background: active ? GREEN : 'transparent',
-                  color: active ? PAPER : 'var(--text-primary)',
-                  fontSize: 11.5,
-                  fontWeight: active ? 700 : 500,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span
-                  style={{
-                    width: 14,
-                    height: 14,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 9,
-                    fontWeight: 700,
-                    background: done ? GOLD : active ? PAPER : 'rgba(31,77,43,0.15)',
-                    color: 'var(--text-primary)',
-                    flexShrink: 0,
-                  }}
-                >
-                  {done ? <Check size={9} /> : i + 1}
-                </span>
-                {translatedDesignStepLabel(t, s)}
-              </button>
-            );
-          })}
-        </div>
-
-        <button
-          onClick={() => canBack && setStep(STEP_ORDER[idx - 1])}
-          disabled={!canBack}
-          aria-label={t(DESIGN_CHROME_KEYS.back)}
-          style={{
-            minHeight: 30,
-            minWidth: 30,
-            flexShrink: 0,
-            borderRadius: 8,
-            border: `1px solid var(--color-forest-800)`,
-            background: 'transparent',
-            color: canBack ? 'var(--color-forest-800)' : 'rgba(31,77,43,0.35)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: canBack ? 'pointer' : 'default',
-          }}
-        >
-          <ChevronLeft size={14} />
-        </button>
-        <button
-          onClick={() => canNext && setStep(STEP_ORDER[idx + 1])}
-          disabled={!canNext}
-          aria-label={t(DESIGN_CHROME_KEYS.next)}
-          style={{
-            minHeight: 30,
-            minWidth: 30,
-            flexShrink: 0,
-            borderRadius: 8,
-            border: `1px solid var(--color-forest-800)`,
-            background: canNext ? GREEN : 'rgba(31,77,43,0.08)',
-            color: canNext ? PAPER : 'rgba(31,77,43,0.35)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: canNext ? 'pointer' : 'default',
-          }}
-        >
-          <ChevronRight size={14} />
-        </button>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ flex: 1, fontSize: 11.5, lineHeight: 1.3, color: 'rgba(11,18,11,0.75)' }}>
-          {lang === 'zu' && <DesignZuluDraftNotice />}
-          {translatedDesignStepGuidance(t, step)}
-        </div>
-        {lessonButton}
-      </div>
-
-      {lessonPanel}
-    </div>
-  );
-}
-
+// PRO mode (a dense, fully-tappable stepper toolbar, as an alternative to the hero card below)
+// was removed here: `mode` is only ever constructed as the literal 'guided' (app/design/page.tsx
+// `const designMode: DesignMode = 'guided'`, with no setter and no stored flag anywhere in the
+// codebase), so the branch that rendered it could never run. `mode` stays on the props/import
+// list below so the three existing call sites (app/design/page.tsx) don't need to change.
 export default function DesignWizard({
   step,
   setStep,
-  state,
-  refLayersPresent,
-  mode = 'guided',
 }: DesignWizardProps) {
-  if (mode === 'pro') {
-    return <ProWizard step={step} setStep={setStep} state={state} refLayersPresent={refLayersPresent} />;
-  }
   return <GuidedWizard step={step} setStep={setStep} />;
 }
