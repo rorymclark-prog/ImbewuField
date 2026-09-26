@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '55c357c8', changes: [
+  { when: '26 September 2026', sha: 'a1222726', changes: [
     'Mentor team and people screens now follow your chosen language.',
     'New words waiting for isiZulu are listed in one sheet for a translator.',
     'Tshivenda Soil Study marks the module and first two lesson titles as drafts.',
