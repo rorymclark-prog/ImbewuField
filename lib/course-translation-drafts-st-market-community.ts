@@ -26,9 +26,8 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
   lessons: [
     {
       id: 'market-community-l1',
-      infographicAlt: machineDraft(
-        'A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.',
-        'Leqephe le bonolo la direkoto le nang le mela le dikholomo tsa se kotutsweng le moo se ileng teng, pela qubu ya dihlahiswa tse kotutsweng.',
+      infographicAlt: hold(
+        'A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.',
       ),
       title: machineDraft(
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',

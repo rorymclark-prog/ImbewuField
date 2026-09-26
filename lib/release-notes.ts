@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '0b6ac2c3', changes: [
+    'Market lessons 1 and 3 show short Xitsonga and Tshivenda drafts beside English.',
+  ], tour: [
+    { title: 'Check the Market lessons', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Xitsonga or Tshivenda and open lessons 1 and 3. Farming guidance, quizzes, slides and narration remain English.' },
+  ] },
   { when: '26 September 2026', sha: 'cb82eb87', changes: [
     'Water lesson 1 pairs an unreviewed Xitsonga draft with English; its quiz stays English.',
   ], tour: [
