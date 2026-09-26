@@ -128,6 +128,32 @@
 | season | nguva / minguva | app: drafts, ts.ts `allSectionSeasonalCalendar` |
 | temperature | mahiselo / tempheracha | app: drafts (*mahiselo*), ts.ts `monthlyTemperatureHeader` (*tempheracha*) |
 | evaporation | ku phyaphyarha ka mati | app: drafts |
+| sector map / sector planning | mepe wa ti-sector / ku hlela ti-sector | Used in ch. 2–3 |
+| true north / magnetic north | n'walungu wa ntiyiso / n'walungu wa makinete | Explain with "(true north)", "(magnetic north)" on first use. Ch. 3 (check) |
+| midday / noon | nhlikanhi | Ch. 3, 9–10 (check) |
+| wind vane / windsock | xikombisa-moya (wind vane) / windsock | Ch. 3 (check) |
+| berg wind / cold front | berg wind / cold front (ti-cold front) | Kept in English with a short gloss on first use. Ch. 3 (check) |
+| snow | gamboko | Explain with "(snow)" on first use. Ch. 3 (check) |
+| to freeze | ku ganga | Ch. 3 (check) |
+| water vapour | mphunga wa mati | Explain with "(water vapour)". Ch. 3 (check) |
+| white frost / black frost | xirhami xo basa / xirhami xa ntima | Explain with "(white frost)", "(black frost)". Ch. 3 (check) |
+| frost cloth | lapi ra xirhami | Explain with "(frost cloth)". Ch. 3 (check) |
+| thermal belt | bandi yo kufumela | Explain with "(thermal belt)". Ch. 3 (check) |
+| thermal mass | swilo leswi hlayisaka ku hisa | Explain with "(thermal mass)". Ch. 3 (check) |
+| deciduous | leyi hluvulaka matluka hi vuxika | Explain with "(deciduous)". Ch. 3, 6 (check) |
+| eave / roof overhang | xiphemu xa lwangu lexi humaka ehandle ka rirhangu | Explain with "(eave)". Ch. 3 (check) |
+| nurse trees | mirhi yo sirhelela | Explain with "(nurse trees)". Ch. 3 (check) |
+| heatwave | nguva yo hisa ngopfu / tinguva to hisa ngopfu | Explain with "(heatwaves)". Ch. 3 (check) |
+| greenhouse gases | tigasi leti kufumelisaka misava hinkwayo | Explain with "(greenhouse gases)". Ch. 3 (check) |
+| rain gauge | xipimo xa mpfula | Explain with "(rain gauge)". Ch. 3 (check) |
+| flood plain | ndhawu leyi tindhambi ti fikaka kona | Explain with "(flood plains)". Ch. 3 (check) |
+| Fire Protection Association | Fire Protection Association (ntlawa wo sirhelela eka ndzilo) | Name kept in English, gloss on first use. Ch. 3, 6 |
+| fire beaters / knapsack sprayer | swibi swa ndzilo / xifafazeli lexi rhwariwaka enkolweni | Explain with "(fire beaters)", "(knapsack sprayer)". Ch. 3 (check) |
+| wildlife corridor | tindlela ta swiharhi swa nhova | Explain with "(wildlife corridors)". Ch. 3 (check) |
+| noise / dust | huwa / ntshuri | Ch. 3 (check) |
+| planned grazing | ku risa loku hleriweke | Explain with "(planned grazing)". Ch. 3 (check) |
+| community seed bank | bangi ya mbewu ya vaaki | Explain with "(community seed bank)". Ch. 3 (check) |
+| stems (of a plant) | mahlanga | Explain with "(stems)". Ch. 3 (check) |
 
 ## 4. Water and earthworks
 
@@ -174,6 +200,19 @@
 | greywater | mati lama tirhisiweke (greywater) | app: ts.ts `waterSourceGreyWater` ("(greywater)" added 2026-09-26), drafts (`water-harvesting-l4` title and key point) |
 | germs / pathogens | switsongwatsongwana | app: drafts |
 | drinking water | mati yo nwa | app: drafts |
+| infiltration basin | xikhele xo nghenisa mati / swikhele swo nghenisa mati | Ch. 7. Explain with "(infiltration basins)" (check) |
+| runoff coefficient | runoff coefficient | Kept in English in ch. 7 and explained as "xiphemu xa mpfula lexi khulukaka" (check) |
+| blackwater (toilet water) | mati ya xihambukelo | Ch. 7. Explain with "(blackwater)" (check) |
+| grease trap | xikhomi xa mafurha | Ch. 7. Explain with "(grease trap)" (check) |
+| dripper (drip irrigation) | xithonisi / swithonisi | Coined in ch. 7. Explain with "(drippers)" (check) |
+| micro-sprinkler / impact sprinkler | xihahatelo lexitsongo / xihahatelo xa impact | Ch. 7, English in brackets (check) |
+| water pressure | ntshikelelo | Ch. 7. Explain with "(pressure)" (check) |
+| filter (drip line) | xisefo | Same word as the gutter leaf screen in ch. 7 (check) |
+| to drown | ku nwela | Used in ch. 2, 7, 9 (check) |
+| sunken bed | mubhedhi lowu eneleke ehansi | Ch. 7. Explain with "(sunken beds)" (check) |
+| pit bed / banana circle | mubhedhi wa mugodi / xirhendzevutana xa vanana | Ch. 7. Explain with "(pit bed)", "(banana circle)" (check) |
+| soil solarisation / tarping | ku hisisa misava hi dyambu / ku funengeta hi thapoleni | Ch. 7. English in brackets (check) |
+| stale seedbed | mubhedhi wa mbewu lowu basisiweke ka ha ri emahlweni | Ch. 7, descriptive. Explain with "(stale seedbed)" (check) |
 
 ## 5. Soil and fertility
 
@@ -408,6 +447,21 @@
 | fly (insect) | nhongana / tinhongana | (check) |
 | mole | mfuku / timfuku | (check) |
 | dragonfly / toad | ti-dragonfly / ti-toad | Loan words (check) |
+| honeybee(s) | tinyoxi ta vulombe | Coined in ch. 5 (check) |
+| beekeeper | mufuyi wa tinyoxi / vafuyi va tinyoxi | Follows *ku fuya tinyoxi* (check) |
+| comb (honeycomb) | tikhomu (combs) | Loan word. Explain on first use: "swiphemu swa wakisi leswi tinyoxi ti swi akaka". Used in ch. 5 (check) |
+| colony (of bees) / swarming | ntlawa wa tinyoxi / ku huma ka ntlawa lowuntshwa | Explain with "(colonies)", "(swarming)" (check) |
+| smoker (beekeeping) | xihumesa-musi | Coined in ch. 5. Explain with "(smoker)" (check) |
+| bee sting (the barb) | xitlhavo | Used in ch. 5 first aid. Explain with "(sting)"; "to be stung" = *ku lumiwa* (check) |
+| anaphylaxis | ku nga amukeli ka miri loku tlulaka mpimo (anaphylaxis) | Descriptive, English kept (check) |
+| to vaccinate / vaccine | ku jova / murhi wo sivela | Used in ch. 5 (Newcastle disease) (check) |
+| biosecurity | vusirheleri | Explain on first use: "mikhuva leyi sivelaka mavabyi ku nghena (biosecurity)" (check) |
+| pecking order | nongoloko wa ku tsontsana | Explain with "(pecking order)" (check) |
+| state veterinarian | dokodela wa swifuwo wa mfumo | Descriptive (check) |
+| swill (kitchen food waste for pigs) | swill | Loan word, kept in bold; explained as "masalela ya swakudya ya le khixini" (check) |
+| castrated (male animal) | wa xinuna lowu tsemiweke | Descriptive, "(castrated)" in brackets (check) |
+| perch / roost | mhandzi / timhandzi to etlela ehenhla | Used in ch. 5 (check) |
+| nest box | bokisi ra ku tshikela / mabokisi ya ku tshikela | Used in ch. 5 (check) |
 
 ## 9. Ecology
 
@@ -473,6 +527,24 @@
 | fuel (petrol, diesel) | mafurha | (check) |
 | fossil fuels | mafurha ya le hansi ka misava | Descriptive. Explain with "(fossil fuels)" (check) |
 | storage shed | khele ro hlayisa | app: ts.ts `infraStorageShed` |
+| renewable energy | matimba lama tipfuxetaka | Explain with "(renewable energy)" on first use. Coined in ch. 11 (check) |
+| grid electricity | gezi ra le ntambhwini (grid) | Descriptive, ch. 11 (check) |
+| electrician (qualified) | mutirhi wa gezi loyi a leteriweke no tsarisiwa (electrician) | Descriptive, ch. 11 (check) |
+| inverter | inverter | Loan word. Explain: "xitirhisiwa lexi hundzulaka DC ku va AC" (check) |
+| solar collector (geyser) | xikhomi xa ku hisa (collector) | Coined in ch. 11 (check) |
+| insulation / insulated | xisirheleri xa ku hisa (insulation) / leyi sirheleriweke leswaku ku hisa ku nga humi | Descriptive, ch. 11 (check) |
+| thermal mass | thermal mass (swilo leswi hlayisaka ku hisa) | Loan word + gloss, ch. 11 (check) |
+| chimney | chimini | Loan word, ch. 11 (check) |
+| paraffin | palafini | Loan word, ch. 11 (check) |
+| brazier (imbawula) | mbawula | Ch. 11 (check) |
+| heat-retention cooker / bag | xitofu xo hlayisa ku hisa / saka ro hlayisa ku hisa | Ch. 11; the Wonderbag itself is *saka ro sweka (wonder bag)* (check) |
+| mould (on food) | mikowa leyitsongo leyi bolisaka swakudya (mould) / mikowa | Follows *mikowa* = fungi (§5). Ch. 11 (check) |
+| dew | ku tsakama ka nivusiku (dew) | Descriptive, ch. 11. A single noun may exist; reviewer to decide (check) |
+| carbon dioxide | khaboni dayokisayidi (carbon dioxide) | Loan word, ch. 11 (check) |
+| carbon monoxide | khaboni monokisayidi (carbon monoxide) | Loan word, ch. 11 (check) |
+| methane / hydrogen sulphide / aflatoxin | methane / hydrogen sulphide / aflatoxin | Kept in English, each explained in the sentence, ch. 11 (check) |
+| slurry / digestate (from a digester) | slurry / digestate | Kept in English, explained as "xin'wana lexi khulukaka lexi humaka exiendlini", ch. 11 (check) |
+| toilet | xihambukelo | Ch. 11 (check) |
 
 ## 12. Safety words
 
