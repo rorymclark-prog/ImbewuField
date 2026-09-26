@@ -14,6 +14,7 @@ import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } f
 import { XITSONGA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ts-water-harvesting.ts';
 import { XITSONGA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ts-soil-health.ts';
 import { XITSONGA_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-ts-small-livestock.ts';
+import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-ts-vegetables-staples.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ts-market-community.ts';
 import { XITSONGA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ts-food-forest.ts';
 import { XITSONGA_PLANT_GUILDS_DRAFT } from './course-translation-drafts-ts-plant-guilds.ts';
@@ -183,6 +184,7 @@ const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: Regional
   // Release one source-paired Water lesson at a time; the remaining review data is not learner copy yet.
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT,
     { lessons: XITSONGA_WATER_HARVESTING_DRAFT.lessons.slice(0, 1) }, XITSONGA_SOIL_HEALTH_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT,
+    XITSONGA_VEGETABLES_STAPLES_DRAFT,
     XITSONGA_FOOD_FOREST_DRAFT,
     XITSONGA_MARKET_COMMUNITY_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT],
   ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT],
