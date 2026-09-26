@@ -1,5 +1,5 @@
 import { Fragment, type CSSProperties, type ReactNode } from 'react';
-import { figureCaption, type Block, type Inline, type ManualFigure, type ManualLang } from '@/lib/manual';
+import { figureCaption, inlineText, type Block, type Inline, type ManualFigure, type ManualLang } from '@/lib/manual';
 
 // Renders lib/manual.ts's parsed blocks. No hooks and no HTML strings, so it runs inside the
 // statically generated chapter page and a translation can only ever produce text.
@@ -33,19 +33,25 @@ const cell: CSSProperties = {
   lineHeight: 1.5,
 };
 
-export function ManualFigureView({ figure, lang }: { figure: ManualFigure; lang: ManualLang }) {
+// Never wider than the column or than the file itself (a small source photo is not blown up
+// soft), and never taller than about 560px: the width is capped at that height times the aspect
+// ratio, so a portrait photo cannot fill a whole phone screen. aspect-ratio reserves the space
+// before the lazy image loads.
+function figureImageStyle({ width, height }: ManualFigure): CSSProperties {
+  const ratio = Math.round((width / height) * 1000) / 1000;
+  return {
+    display: 'block', width: '100%', height: 'auto', aspectRatio: `${width} / ${height}`,
+    maxWidth: `min(100%, ${width}px, calc(min(70vh, 560px) * ${ratio}))`,
+    margin: '0 auto', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-2)',
+  };
+}
+
+export function ManualFigureView({ figure, lang, grouped = false }: { figure: ManualFigure; lang: ManualLang; grouped?: boolean }) {
   const caption = figureCaption(figure, lang);
   return (
-    <figure style={{ margin: '4px 0 24px' }}>
+    <figure style={{ margin: grouped ? 0 : '4px 0 24px', minWidth: 0 }}>
       {/* eslint-disable-next-line @next/next/no-img-element -- static export, sized, lazy */}
-      <img
-        src={figure.src}
-        alt={caption.text}
-        width={figure.width}
-        height={figure.height}
-        loading="lazy"
-        style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-2)' }}
-      />
+      <img src={figure.src} alt={caption.text} width={figure.width} height={figure.height} loading="lazy" style={figureImageStyle(figure)} />
       <figcaption lang={caption.lang} style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--text-secondary)', marginTop: 8 }}>
         {caption.text}
         {figure.credit && <span style={{ display: 'block', fontSize: 12, marginTop: 2 }}>{figure.credit}</span>}
@@ -55,9 +61,24 @@ export function ManualFigureView({ figure, lang }: { figure: ManualFigure; lang:
 }
 
 /**
+ * One section's pictures. Two or more sit in a grid: one column on a phone, two from 560px up and
+ * always two in print (the A4 book), each picture keeping its own caption. Every cell is a
+ * <figure>, so the book's `figure { break-inside: avoid }` still keeps a picture with its caption.
+ */
+export function ManualFigureGroup({ figures, lang }: { figures: ManualFigure[]; lang: ManualLang }) {
+  if (figures.length === 1) return <ManualFigureView figure={figures[0]} lang={lang} />;
+  return (
+    <div className="grid grid-cols-1 items-start min-[560px]:grid-cols-2 print:grid-cols-2" style={{ gap: '20px 16px', margin: '4px 0 24px' }}>
+      {figures.map((figure) => <ManualFigureView key={figure.id} figure={figure} lang={lang} grouped />)}
+    </div>
+  );
+}
+
+/**
  * `figures` maps a section index (the Nth "## " heading, from 0; -1 = before the first) to the
  * pictures that belong there. Each lands after the first paragraph/list/table of its section, so
- * it sits beside the text it illustrates rather than between a heading and its opening sentence.
+ * it sits beside the text it illustrates rather than between a heading and its opening sentence
+ * (or between a lead-in sentence ending in a colon and its list).
  */
 export default function ManualBlocks({ blocks, figures, lang = 'en' }: { blocks: Block[]; figures?: Map<number, ManualFigure[]>; lang?: ManualLang }) {
   let section = -1;
@@ -69,9 +90,12 @@ export default function ManualBlocks({ blocks, figures, lang = 'en' }: { blocks:
       return null;
     }
     if (block.type === 'h3' || !figures || placed.has(section)) return null;
+    // "Well-planned earthworks can:" belongs with the list that follows it, so the pictures wait.
+    const next = blocks[i + 1];
+    if (block.type === 'p' && /:\s*$/.test(inlineText(block.content)) && (next?.type === 'ul' || next?.type === 'ol')) return null;
     placed.add(section);
     const list = figures.get(section);
-    return list?.map((figure) => <ManualFigureView key={figure.id} figure={figure} lang={lang} />) ?? null;
+    return list?.length ? <ManualFigureGroup figures={list} lang={lang} /> : null;
   };
   return (
     <>

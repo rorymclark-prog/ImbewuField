@@ -52,6 +52,28 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-26 (Permaculture Manual — pictures, printable book, English terms + glossary)
+- **Pictures:** 73 of the original handbook photos/diagrams (`public/manual/figures/<id>.jpg`,
+  10 MB, ≤1400px) placed per section via `content/manual/figures.json` (captions in all five
+  languages). Two or more in a section render as a grid (1 column on phones, 2 from 560px and in
+  print). 22 more slots (replacements for photos with private faces, sesbania or third-party
+  art, plus captioned figures the handbook never had as images) are listed but hidden until a
+  file with that name exists — ChatGPT prompts in `research/manual/COVER-PROMPTS.md`. Picture
+  inventory and verdicts: `research/manual/FIGURES.md`. Tests check ids, sections, file size
+  and that the JPEG dimensions match the JSON.
+- **Book:** `/manual/<lang>/book` — cover, imprint, contents, a title page per chapter, A4 print
+  CSS. Cover/chapter art is optional, text-free, and dropped in `public/manual/covers/`
+  (`cover.jpg`, `chapter-00.jpg` … `chapter-12.jpg`); titles are overlaid per language.
+  `node scripts/build-manual-pdfs.mjs [baseUrl] [lang…]` prints the PDFs to `output/manual/`.
+- **English terms:** the 67 technical words (swale, berm, compost, mulch, food forest …) stay in
+  English in zu/st/ve/ts with the language's prefix and a short gloss on first use per chapter;
+  new chapter 12 Glossary in all five languages. Record per language in `glossary-<lang>.md`.
+- **Fix:** the manual routes check `public/` at build time, which made file tracing pack all of
+  `public/` into their serverless function (540 MB). `outputFileTracingExcludes` in
+  `next.config.mjs` keeps it out.
+- **Still to check before publishing:** sources of 5 images and consent for 4 (listed in
+  FIGURES.md); all non-English text is a machine draft for fluent-speaker review.
+
 ### 2026-09-26 (Permaculture Manual — fact-checked edition in five languages; locale clean-up)
 - **What:** Rory's *RVCC Permaculture Gardening Handbook* (UNDP / Government of Lesotho project,
   2020–21) is now the in-app **Permaculture Manual** at `/manual`, listed under Farm tools and in

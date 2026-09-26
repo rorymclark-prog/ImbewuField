@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, blockShape, chapterTitle, manualUi, parseInline, parseManual,
+  MANUAL_CHAPTERS, MANUAL_LANGS, blockShape, chapterTitle, isManualChapter, manualUi, parseInline, parseManual,
+  type ManualFigure,
 } from '@/lib/manual';
 
 // THE PERMACULTURE MANUAL (app/manual). Chapter text is Markdown in content/manual/<lang>/, written
@@ -100,4 +101,76 @@ test('UI strings: English complete, translated languages complete, placeholders 
 test('the menu links to the manual', () => {
   const drawer = readFileSync(path.join(ROOT, 'components', 'NavDrawer.tsx'), 'utf8');
   assert.match(drawer, /href: '\/manual'/);
+});
+
+// ── Figures (content/manual/figures.json → public/manual/figures/) ────────────────────────────
+//
+// An entry whose file is missing is a replacement slot waiting for a picture (the loader hides it),
+// so only entries whose file exists are checked against the file.
+
+const figuresDir = path.join(ROOT, 'public', 'manual', 'figures');
+const figures = JSON.parse(readFileSync(path.join(ROOT, 'content', 'manual', 'figures.json'), 'utf8')) as ManualFigure[];
+const figureFile = (f: ManualFigure) => path.join(ROOT, 'public', f.src.replace(/^\//, ''));
+
+/** Pixel size from a JPEG's SOF marker (baseline, progressive or lossless), or null if not a JPEG. */
+function jpegSize(buf: Buffer): { width: number; height: number } | null {
+  if (buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) return null;
+    const marker = buf[i + 1];
+    if (marker === 0xff) { i++; continue; } // fill byte
+    if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) { i += 2; continue; } // no length
+    const len = buf.readUInt16BE(i + 2);
+    const isSof = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isSof) return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+    if (marker === 0xda || marker === 0xd9) return null; // start of scan / end of image before any SOF
+    i += 2 + len;
+  }
+  return null;
+}
+
+test('jpegSize reads a baseline SOF0 header', () => {
+  const buf = Buffer.from([
+    0xff, 0xd8, // SOI
+    0xff, 0xe0, 0x00, 0x04, 0x00, 0x00, // APP0, 2 bytes of payload
+    0xff, 0xc0, 0x00, 0x0b, 0x08, 0x02, 0x1a, 0x05, 0x78, 0x01, 0x01, 0x11, 0x00, // SOF0: 538 x 1400
+  ]);
+  assert.deepEqual(jpegSize(buf), { width: 1400, height: 538 });
+  assert.equal(jpegSize(Buffer.from('not a jpeg')), null);
+});
+
+test('figures.json: unique ids, known chapters, sections that exist, English captions', () => {
+  const ids = new Set<string>();
+  for (const f of figures) {
+    assert.ok(!ids.has(f.id), `duplicate figure id ${f.id}`);
+    ids.add(f.id);
+    assert.ok(isManualChapter(f.chapter), `${f.id}: unknown chapter ${f.chapter}`);
+    const sections = parseManual(read('en', f.chapter)).filter((b) => b.type === 'h2').length;
+    assert.ok(Number.isInteger(f.section) && f.section >= -1 && f.section <= sections - 1,
+      `${f.id}: section ${f.section} is outside -1..${sections - 1} for ${f.chapter}`);
+    assert.ok(typeof f.caption?.en === 'string' && f.caption.en.trim(), `${f.id}: missing English caption`);
+    assert.equal(f.src, `/manual/figures/${f.id}.jpg`, `${f.id}: src must be /manual/figures/<id>.jpg`);
+    assert.ok(f.width > 0 && f.height > 0, `${f.id}: width/height`);
+  }
+});
+
+test('figure files: at most 400 KB and the size figures.json says', () => {
+  for (const f of figures) {
+    const file = figureFile(f);
+    if (!existsSync(file)) continue;
+    assert.ok(statSync(file).size <= 400 * 1024, `${f.id}: ${Math.round(statSync(file).size / 1024)} KB is over 400 KB`);
+    const size = jpegSize(readFileSync(file));
+    assert.ok(size, `${f.id}: not a readable JPEG`);
+    assert.deepEqual(size, { width: f.width, height: f.height }, `${f.id}: figures.json says ${f.width}x${f.height}`);
+  }
+});
+
+test('every file in public/manual/figures/ is listed in figures.json', () => {
+  if (!existsSync(figuresDir)) return;
+  const listed = new Set(figures.map((f) => path.basename(f.src)));
+  for (const name of readdirSync(figuresDir)) {
+    if (name.startsWith('.')) continue;
+    assert.ok(listed.has(name), `public/manual/figures/${name} is not in content/manual/figures.json`);
+  }
 });

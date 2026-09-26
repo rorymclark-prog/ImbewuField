@@ -1,1 +1,1522 @@
-[]
+[
+  {
+    "id": "00-handbook-collage",
+    "chapter": "00-introduction",
+    "section": 0,
+    "src": "/manual/figures/00-handbook-collage.jpg",
+    "width": 880,
+    "height": 880,
+    "caption": {
+      "en": "Scenes from the handbook's project gardens: maize, fruit, mulched beds, a home run on solar power and a harvest of vegetables.",
+      "zu": "Izithombe zezingadi zephrojekthi yale ncwadi: ummbila, izithelo, imibhede ene-mulch, indlu esebenzisa amandla elanga nesivuno semifino.",
+      "st": "Ditshwantsho tsa diserapa tsa projeke ya bukana ena: poone, ditholwana, dibethe tsa serapa tse nang le mulch, ntlo e sebedisang matla a letsatsi le kotulo ya meroho.",
+      "ve": "Zwifanyiso zwa ngade dza phurojeke ya bugu iyi: mavhele, mitshelo, ndima dzi re na mulch, nnḓu i shumisaho maanḓa a ḓuvha na khaṋo ya miroho.",
+      "ts": "Swifaniso swa mintanga ya phurojeke ya buku leyi: mavele, mihandzu, mibhedhi leyi nga na mulch, yindlu leyi tirhisaka matimba ya dyambu na ntshovelo wa matsavu."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "02-base-map",
+    "chapter": "02-planning-your-farm",
+    "section": 0,
+    "src": "/manual/figures/02-base-map.jpg",
+    "width": 682,
+    "height": 964,
+    "caption": {
+      "en": "A base map: an aerial photo of the property with contour lines, the buildings and a north arrow. Map what is already there before you plan anything new.",
+      "zu": "Imephu eyisisekelo: isithombe sendawo esithathwe phezulu, sinemigqa ye-contour, izakhiwo nomcibisholo okhomba inyakatho. Dweba okukhona kakade ngaphambi kokuhlela okusha.",
+      "st": "Mmapa wa motheo: setshwantsho sa sebaka se nkuweng hodimo, se nang le mela ya contour, meaho le motsu o supang leboya. Taka se seng se le teng pele o rala se setjha.",
+      "ve": "Mmapa wa fhethu: tshifanyiso tsha fhethu tsho dzhiiwaho u bva nṱha, tshi na mitalo ya contour, zwifhaṱo na musevhe u sumbaho devhula. Olani zwine zwa vha hone phanḓa ha u pulana zwiswa.",
+      "ts": "Mepe wa masungulo: xifaniso xa ndhawu lexi tekiweke ehenhla, xi ri na tilayini ta contour, swakiwa na museve lowu kombaka n'walungu. Dirowa leswi nga kona u nga si pulana swilo leswintshwa."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "02-planning-together",
+    "chapter": "02-planning-your-farm",
+    "section": 0,
+    "src": "/manual/figures/02-planning-together.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A family draws their farm plan together. Plan on paper first: a mistake on paper costs nothing to fix.",
+      "zu": "Umndeni udweba uhlelo lwepulazi lwawo ndawonye. Qala uhlele ephepheni: iphutha ephepheni alikhokhelwa lutho ukulilungisa.",
+      "st": "Lelapa le taka moralo wa polasi ya lona hammoho. Qala ka ho rala pampiring: phoso pampiring ha e o bitse letho ho e lokisa.",
+      "ve": "Muṱa u ola pulane ya bulasi yawo nga u tou shumisana. Thomani nga u pulana kha bammbiri: vhukhakhi kha bammbiri a vhu ni lifhisi tshithu u vhu lulamisa.",
+      "ts": "Ndyangu wu dirowa pulani ya purasi ra wona swin'we. Sungula hi ku pulana ephepheni: xihoxo ephepheni a xi ku durheli nchumu ku xi lulamisa."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "02-zone-map",
+    "chapter": "02-planning-your-farm",
+    "section": 2,
+    "src": "/manual/figures/02-zone-map.jpg",
+    "width": 837,
+    "height": 1184,
+    "caption": {
+      "en": "The same property divided into zones, from the home (Zone 0) out to the wild area (Zone 5). The places you visit every day are closest to the house.",
+      "zu": "Indawo efanayo ihlukaniswe ngama-zone, kusukela ekhaya (i-Zone 0) kuya endaweni yasendle (i-Zone 5). Izindawo ozivakashela nsuku zonke ziseduze nendlu.",
+      "st": "Sebaka se tshwanang se arotswe ka di-Zone, ho tloha lapeng (Zone 0) ho ya sebakeng sa naha (Zone 5). Dibaka tseo o di etelang letsatsi le leng le le leng di haufi le ntlo.",
+      "ve": "Fhethu hu fanaho ho khethekanywa nga dzi-zone, u bva hayani (Zone 0) u swika fhethu ha ḓaka (Zone 5). Fhethu hune na ya hone ḓuvha ḽiṅwe na ḽiṅwe hu tsini na nnḓu.",
+      "ts": "Ndhawu leyi fanaka yi aviwile hi ti-zone, ku sukela ekaya (Zone 0) ku ya eka ndhawu ya nhova (Zone 5). Tindhawu leti u ti endzelaka siku na siku ti le kusuhi na yindlu."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "02-zone-rings",
+    "chapter": "02-planning-your-farm",
+    "section": 2,
+    "src": "/manual/figures/02-zone-rings.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "Zones as rings around the home: the house is Zone 0, and each zone further out is visited less often.",
+      "zu": "Ama-zone njengezindilinga ezizungeze ikhaya: indlu i-Zone 0, futhi i-zone ngayinye eqhelile ivakashelwa kancane.",
+      "st": "Di-Zone jwaloka mesele e potolohileng lapa: ntlo ke Zone 0, mme Zone e nngwe le e nngwe e hole e etelwa ka makgetlo a fokolang.",
+      "ve": "Dzi-zone sa zwikhala zwo monaho hayani: nnḓu ndi Zone 0, nahone zone iṅwe na iṅwe i re kule i dalelwa lu si gathi.",
+      "ts": "Ti-zone tanihi swirhendzevutana leswi rhendzeleke kaya: yindlu i Zone 0, naswona zone yin'wana na yin'wana leyi nga ekule yi endzeriwa nkarhi na nkarhi hi ku hunguteka."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "02-slope-analysis",
+    "chapter": "02-planning-your-farm",
+    "section": 3,
+    "src": "/manual/figures/02-slope-analysis.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "Slope planning: water stored high up, trees on the steep upper slope, the house and gardens lower down, and greywater flowing on down to trees.",
+      "zu": "Ukuhlela umthambeka: amanzi agcinwa phezulu, izihlahla emthambekeni oweqeleyo ongenhla, indlu nezingadi ngezansi, ne-greywater igeleza yehlele ezihlahleni.",
+      "st": "Ho rala letswapo: metsi a bolokwa hodimo, difate letswapong le moepa le kahodimo, ntlo le diserapa ka tlase, mme greywater e phallela tlase ho ya difateng.",
+      "ve": "U pulana u sendama ha mavu: maḓi a vhulungwa nṱha, miri kha u sendama hu re nṱha, nnḓu na ngade fhasi, na greywater i tshi elela fhasi i tshi ya mirini.",
+      "ts": "Ku pulana ku rhelela: mati ma hlayisiwa ehenhla, mirhi eka ku rhelela ka le henhla, yindlu na mintanga ehansi, na greywater yi khuluka yi ya ehansi eka mirhi."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "03-sector-map",
+    "chapter": "03-sector-planning",
+    "section": 0,
+    "src": "/manual/figures/03-sector-map.jpg",
+    "width": 682,
+    "height": 964,
+    "caption": {
+      "en": "A sector map of the same property: hot and cold winds, fire risk, the best view and cold air flowing downhill at night. The small inset shows the sun's path across the north.",
+      "zu": "Imephu yama-sector yendawo efanayo: imimoya eshisayo nebandayo, ingozi yomlilo, umbono omuhle nomoya obandayo ogeleza wehle ebusuku. Isithombe esincane sikhombisa umzila welanga odabula enyakatho.",
+      "st": "Mmapa wa di-sector wa sebaka se tshwanang: meya e tjhesang le e batang, kotsi ya mollo, pono e ntle le moya o batang o phallelang tlase bosiu. Setshwantshwana se bontsha tsela ya letsatsi ka leboya.",
+      "ve": "Mmapa wa dzi-sector wa fhethu hu fanaho: miya ya u fhisa na ya u rotha, khombo ya mulilo, mbonalo yavhuḓi na muya u rothaho u elelaho fhasi vhusiku. Tshifanyiso tshiṱuku tshi sumbedza nḓila ya ḓuvha nga devhula.",
+      "ts": "Mepe wa ti-sector wa ndhawu leyi fanaka: moya wo hisa na wa xirhami, khombo ra ndzilo, xivono lexinene na moya wa xirhami lowu khulukaka wu ya ehansi nivusiku. Xifaniso lexitsongo xi komba ndlela ya dyambu hi le n'walungu."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "03-compass",
+    "chapter": "03-sector-planning",
+    "section": 1,
+    "src": "/manual/figures/03-compass.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "Finding north with a compass. In South Africa the needle points about 20 to 28 degrees west of true north.",
+      "zu": "Ukuthola inyakatho ngekhampasi. ENingizimu Afrika inaliti ikhomba cishe ama-degree angu-20 kuya ku-28 entshonalanga yenyakatho yangempela.",
+      "st": "Ho fumana leboya ka khampase. Afrika Borwa nale e supa hoo e ka bang di-degree tse 20 ho isa ho 28 ka bophirima ba leboya la nnete.",
+      "ve": "U wana devhula nga khamphasi. Afrika Tshipembe ṋanga i sumba khona dza 20 u swika 28 nga vhukovhela ha devhula ḽa ngoho.",
+      "ts": "Ku kuma n'walungu hi khompasi. Eafrika Dzonga nayiti yi komba kwalomu ka ti-degree ta 20 ku ya eka 28 hi le vupeladyambu bya n'walungu wa ntiyiso."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "03-sun-angles",
+    "chapter": "03-sector-planning",
+    "section": 4,
+    "src": "/manual/figures/03-sun-angles.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "The sun is in the north: high in the summer sky and low in winter, so winter shadows are much longer.",
+      "zu": "Ilanga lisenyakatho: liphezulu esibhakabhakeni ehlobo futhi liphansi ebusika, ngakho izithunzi zasebusika zinde kakhulu.",
+      "st": "Letsatsi le ka leboya: le hodimo lehodimong hlabula mme le tlase mariha, ka hona meriti ya mariha e melelele haholo.",
+      "ve": "Ḓuvha ḽi nga devhula: ḽi nṱha ṱaḓulu nga vhulimo nahone ḽi fhasi nga vhuriha, ngauralo mirunzi ya vhuriha i lapfa vhukuma.",
+      "ts": "Dyambu ri le n'walungu: ri le henhla etilweni hi ximumu naswona ri le hansi hi vuxika, hikwalaho mindzhuti ya vuxika yi leha swinene."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "03-frost-pocket",
+    "chapter": "03-sector-planning",
+    "section": 7,
+    "src": "/manual/figures/03-frost-pocket.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "On still, clear nights cold air flows downhill and settles in low places. Leave a gap on the downhill side of a hedge so it can drain away.",
+      "zu": "Ebusuku obuthulile nobucwebile umoya obandayo ugeleza wehle uhlale ezindaweni eziphansi. Shiya igebe ohlangothini olungezansi lothango lwezihlahla ukuze uphume.",
+      "st": "Masiu a kgutsitseng a hlakileng moya o batang o phallela tlase mme o dula dibakeng tse tlase. Siya sekgeo ka lehlakoreng la tlase la lehora hore o tsebe ho tswa.",
+      "ve": "Vhusiku ho dzikaho vhu si na makole muya u rothaho u elela fhasi wa dzula fhethu ha fhasi. Siani gake kha thungo ya fhasi ya luvhondo lwa miri uri u kone u bva.",
+      "ts": "Nivusiku lebyi miyeleke, lebyi nga riki na mapapa, moya wa xirhami wu khuluka wu ya ehansi wu tshama etindhawini ta le hansi. Siya ndhawu yo pfuleka eka tlhelo ra le hansi ra ribiya ra mirhi leswaku wu ta huma."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "04-kitchen-garden",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 2,
+    "src": "/manual/figures/04-kitchen-garden.jpg",
+    "width": 1160,
+    "height": 609,
+    "caption": {
+      "en": "A kitchen garden right beside the house, under a shade-net frame. It is the garden you pass many times a day (Zone 1).",
+      "zu": "Ingadi yasekhaya eseduze nekhishi, eduze kakhulu nendlu, ngaphansi kohlaka lwendwangu yomthunzi. Yingadi odlula kuyo kaningi ngosuku (i-Zone 1).",
+      "st": "Serapa sa kitjhene se haufi hantle le ntlo, ka tlasa foreimi ya lesela la moriti. Ke serapa seo o fetang ho sona makgetlo a mangata ka letsatsi (Zone 1).",
+      "ve": "Ngade ya tsini ha nnḓu, i re tsini-tsini na nnḓu, nga fhasi ha furemu ya ṋeṱe ya murunzi. Ndi ngade ine na i fhira lunzhi nga ḓuvha (Zone 1).",
+      "ts": "Ntanga wa le kusuhi na yindlu, ekusuhi swinene na yindlu, ehansi ka furemu ya lapi ra ndzhuti. I ntanga lowu u hundzaka eka wona minkarhi yo tala hi siku (Zone 1)."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-mandala-garden",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 2,
+    "src": "/manual/figures/04-mandala-garden.jpg",
+    "width": 1400,
+    "height": 503,
+    "caption": {
+      "en": "A mandala garden: beds edged with timber offcuts curve around a central sitting place. A kitchen garden can be useful and beautiful.",
+      "zu": "Ingadi ye-mandala: imibhede ezungezwe izingcezu zamapulangwe igoba izungeze indawo yokuhlala ephakathi. Ingadi yasekhaya ingaba wusizo futhi ibe yinhle.",
+      "st": "Serapa sa mandala: dibethe tsa serapa tse potolohilweng ke dikotwana tsa lepolanka di kobeha ho potoloha sebaka sa ho dula se bohareng. Serapa sa kitjhene se ka ba molemo hape sa ba setle.",
+      "ve": "Ngade ya mandala: ndima dzo kombetshedzwaho nga zwipiḓa zwa mapulanga dzi kombetshela u mona fhethu ha u dzula ha vhukati. Ngade ya tsini ha nnḓu i nga vha i vhuyelaho nahone yavhuḓi.",
+      "ts": "Ntanga wa mandala: mibhedhi leyi rhendzeriweke hi swiphemu swa mapulanka yi gombeka yi rhendzela ndhawu yo tshama exikarhi. Ntanga wa le kusuhi na yindlu wu nga pfuna naswona wu saseka."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-keyhole-beds",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 2,
+    "src": "/manual/figures/04-keyhole-beds.jpg",
+    "width": 683,
+    "height": 512,
+    "caption": {
+      "en": "Keyhole beds edged with recycled plastic strip, with stone paths and drip irrigation. You can reach every plant from the path.",
+      "zu": "Ama-keyhole bed azungezwe imichilo yepulasitiki esetshenziswe kabusha, anezindlela zamatshe ne-drip irrigation. Ungafinyelela kuso sonke isitshalo usendleleni.",
+      "st": "Di-keyhole bed tse potolohilweng ke dikgwele tsa polasetiki e sebediswang hape, di na le ditsela tsa majwe le drip irrigation. O ka fihlella semela se seng le se seng o eme tseleng.",
+      "ve": "Dzi-keyhole bed dzo kombetshedzwaho nga zwipiḓa zwa pulasitiki yo shumiswaho hafhu, dzi na nḓila dza matombo na drip irrigation. Ni nga swikela tshimela tshiṅwe na tshiṅwe no ima nḓilani.",
+      "ts": "Ti-keyhole bed leti rhendzeriweke hi swiphemu swa pulasitiki leyi tirhisiweke nakambe, ti na tindlela ta maribye na drip irrigation. U nga fikelela ximilana xin'wana na xin'wana u ri endleleni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-vegetable-garden-beds",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 3,
+    "src": "/manual/figures/04-vegetable-garden-beds.jpg",
+    "width": 1160,
+    "height": 600,
+    "caption": {
+      "en": "Stone-edged vegetable beds of spinach and beetroot inside a fence. The paths let you work without stepping on the beds.",
+      "zu": "Imibhede yemifino ezungezwe amatshe, enesipinashi nobhitrudi, ngaphakathi kothango. Izindlela zikwenza usebenze unganyatheli imibhede.",
+      "st": "Dibethe tsa meroho tse potolohilweng ke majwe, tse nang le sepinatjhe le bete, ka hare ho terata. Ditsela di o dumella ho sebetsa o sa hate dibethe.",
+      "ve": "Ndima dza miroho dzo kombetshedzwaho nga matombo, dzi na spinashi na bitiruti, ngomu ha luvhondo. Nḓila dzi ni thusa u shuma ni sa tshimbili kha ndima.",
+      "ts": "Mibhedhi ya matsavu leyi rhendzeriweke hi maribye, leyi nga na xipinichi na bitiruti, endzeni ka ribiya. Tindlela ti ku pfuna ku tirha u nga kandziyi mibhedhi."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-home-vegetable-garden",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 3,
+    "src": "/manual/figures/04-home-vegetable-garden.jpg",
+    "width": 960,
+    "height": 633,
+    "caption": {
+      "en": "A home vegetable garden with mulched rows of cabbage, a short walk from the house (Zone 2).",
+      "zu": "Ingadi yemifino yasekhaya enemigqa yeklabishi ene-mulch, ibanga elifushane ukusuka endlini (i-Zone 2).",
+      "st": "Serapa sa meroho sa lapeng se nang le mela ya khabetjhe e nang le mulch, sebaka se sekgutshwane ho tloha ntlong (Zone 2).",
+      "ve": "Ngade ya miroho ya hayani i re na mitalo ya khabishi i re na mulch, tsini na nnḓu (Zone 2).",
+      "ts": "Ntanga wa matsavu wa le kaya lowu nga na milayini ya khavichi leyi nga na mulch, kusuhi na yindlu (Zone 2)."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-market-garden-rows",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 4,
+    "src": "/manual/figures/04-market-garden-rows.jpg",
+    "width": 1040,
+    "height": 536,
+    "caption": {
+      "en": "A market garden: long rows of one crop each, here green and red cabbage, make planting, weeding and harvesting quick.",
+      "zu": "Ingadi yezimakethe: imigqa emide yesitshalo esisodwa ngamunye, lapha iklabishi eliluhlaza nelibomvu, yenza ukutshala, ukuhlakula nokuvuna kushesha.",
+      "st": "Serapa sa mmaraka: mela e melelele ya sejalo se le seng ka nngwe, mona khabetjhe e tala le e kgubedu, e etsa hore ho jala, ho hlaola le ho kotula ho potlake.",
+      "ve": "Ngade ya u rengisa: mitalo mirapfu ya tshiliṅwa tshithihi kha muṅwe na muṅwe, fhano ndi khabishi ṱalu na tswuku, i ita uri u ṱavha, u bvisa mahatsi na u kaṋa zwi ṱavhanye.",
+      "ts": "Ntanga wa ku xavisa: milayini yo leha ya ximilana xin'we eka wun'wana na wun'wana, laha i khavichi ya rihlaza na yo tshwuka, yi endla leswaku ku byala, ku susa nhova na ku tshovela swi hatlisa."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-market-garden-aerial",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 4,
+    "src": "/manual/figures/04-market-garden-aerial.jpg",
+    "width": 765,
+    "height": 430,
+    "caption": {
+      "en": "Two market-garden blocks seen from above. Beds of the same size make it easy to plan how much to plant and sell.",
+      "zu": "Izingxenye ezimbili zengadi yezimakethe zibonwa phezulu. Imibhede elingana ngosayizi yenza kube lula ukuhlela ukuthi uzotshala futhi uthengise okungakanani.",
+      "st": "Dikarolo tse pedi tsa serapa sa mmaraka di bonwa ho tswa hodimo. Dibethe tsa boholo bo lekanang di etsa hore ho be bonolo ho rala hore o tla jala le ho rekisa ho hokae.",
+      "ve": "Zwipiḓa zwivhili zwa ngade ya u rengisa zwo vhonwaho u bva nṱha. Ndima dza vhuhulu vhu linganaho dzi ita uri zwi leluwe u pulana uri ni ḓo ṱavha na u rengisa zwingana.",
+      "ts": "Swiphemu swimbirhi swa ntanga wa ku xavisa leswi voniwaka ehenhla. Mibhedhi ya vukulu byo fana yi olovisa ku pulana leswaku u ta byala na ku xavisa swingani."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "04-maize-staple-garden",
+    "chapter": "04-vegetable-and-staple-crops",
+    "section": 5,
+    "src": "/manual/figures/04-maize-staple-garden.jpg",
+    "width": 1040,
+    "height": 585,
+    "caption": {
+      "en": "A tall, healthy stand of maize in a staple garden. Staple crops need a lot of space, so they go in Zone 3.",
+      "zu": "Ummbila omude onempilo engadini yokudla okuyisisekelo. Izitshalo zokudla okuyisisekelo zidinga isikhala esikhulu, ngakho zitshalwa ku-Zone 3.",
+      "st": "Poone e telele e phetseng hantle serapeng sa dijo tsa motheo. Dijalo tsa motheo di hloka sebaka se seholo, ka hona di ya Zone 3.",
+      "ve": "Mavhele malapfu a re na mutakalo ngadeni ya zwiḽiwa zwa ndeme. Zwiliṅwa zwa ndeme zwi ṱoḓa fhethu hohulu, ngauralo zwi ya kha Zone 3.",
+      "ts": "Mavele yo leha lama hanyeke kahle entangeni wa swakudya swa masungulo. Swibyariwa swa swakudya swa masungulo swi lava ndhawu leyikulu, hikwalaho swi ya eka Zone 3."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-chicken-needs-yields",
+    "chapter": "05-animal-systems",
+    "section": 1,
+    "src": "/manual/figures/05-chicken-needs-yields.jpg",
+    "width": 937,
+    "height": 639,
+    "caption": {
+      "en": "A chicken's needs, products and behaviours: what it needs (food, water, shelter, grit, dust), what it gives (eggs, meat, manure, feathers) and what it does by nature (scratching, pecking).",
+      "zu": "Izidingo, imikhiqizo nemikhuba yenkukhu: lokho ekudingayo (ukudla, amanzi, indawo yokukhosela, izinhlayiya zamatshe, uthuli), lokho ekunikezayo (amaqanda, inyama, umquba, izimpaphe) nalokho ekwenzayo ngokwemvelo (ukuphanda, ukucosha).",
+      "st": "Ditlhoko, dihlahiswa le mekgwa ya kgoho: seo e se hlokang (dijo, metsi, bodulo, majwana, lerole), seo e se fanang (mahe, nama, manyolo a diphoofolo, masiba) le seo e se etsang ka tlhaho (ho fata, ho tjhoba).",
+      "ve": "Zwiṱoḓwa, zwibveledzwa na mikhwa ya khuhu: zwine ya zwi ṱoḓa (zwiḽiwa, maḓi, fhethu ha u dzumbama, zwiṱombo, luṱuṱa), zwine ya zwi ṋea (maḓuvha, nama, manyoro, mafhafhu) na zwine ya zwi ita nga mbumbo (u kwenya mavu na u doba zwiḽiwa).",
+      "ts": "Swilaveko, swihumesiwa na mahanyelo ya huku: leswi yi swi lavaka (swakudya, mati, vutumbelo, maribyana, ntshuri), leswi yi swi nyikaka (mandza, nyama, vulongo, tinsiva) na leswi yi swi endlaka hi ntumbuluko (ku kokorha misava, ku tsotsa)."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-poultry-tractors",
+    "chapter": "05-animal-systems",
+    "section": 2,
+    "src": "/manual/figures/05-poultry-tractors.jpg",
+    "width": 1160,
+    "height": 545,
+    "caption": {
+      "en": "Movable poultry pens (animal tractors) on grass. Move them every few days so the birds get fresh ground and the grass can recover.",
+      "zu": "Amahhoko ahambayo (ama-animal tractor) otshanini. Wasuse njalo emva kwezinsuku ezimbalwa ukuze izinyoni zithole umhlabathi omusha notshani buphinde bukhule.",
+      "st": "Matlo a dikgoho a tsamaisehang (di-animal tractor) jwanng. A tsamaise kamora matsatsi a mmalwa hore dinonyana di fumane mobu o motjha mme jwang bo hlole bo mela hape.",
+      "ve": "Zwiṱumba zwa khuhu zwine zwa tshimbidzwa (dzi-animal tractor) hatsini. Zwi tshimbidzeni nga murahu ha maḓuvha a si gathi uri zwiṋoni zwi wane mavu maswa nahone hatsi hu dovhe hu mele.",
+      "ts": "Swivala swa tihuku leswi fambaka (ti-animal tractor) ebyanyini. Swi rhurhise endzhaku ka masiku ma nga ri mangani leswaku swinyenyana swi kuma misava leyintshwa naswona byanyi byi kota ku mila nakambe."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-chicken-tractor",
+    "chapter": "05-animal-systems",
+    "section": 2,
+    "src": "/manual/figures/05-chicken-tractor.jpg",
+    "width": 680,
+    "height": 602,
+    "caption": {
+      "en": "An A-frame chicken tractor: a light wooden frame with wire mesh, a tin roof for shade and rain, and a drinker inside.",
+      "zu": "I-chicken tractor emise okuka-A: uhlaka lwamapulangwe olulula olunocingo lwenetha, uphahla lukazinki lomthunzi nemvula, kanye nesiphuzo samanzi ngaphakathi.",
+      "st": "Chicken tractor e bopehileng jwaloka A: foreimi e bobebe ya lepolanka e nang le letlooa la terata, marulelo a zinki bakeng sa moriti le pula, le sesebediso sa ho nwa metsi ka hare.",
+      "ve": "Chicken tractor i re na tshivhumbeo tsha A: furemu i leluwaho ya mapulanga i na ṋeṱe ya tsimbi, ṱhanga ya zinki ya murunzi na mvula, na tshinwelo tsha maḓi ngomu.",
+      "ts": "Chicken tractor leyi nga na xivumbeko xa A: furemu yo olova ya mapulanka yi ri na nete ya nsimbi, lwangu ra zinki ra ndzhuti na mpfula, na xinwelo xa mati endzeni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-poultry-netting-energiser",
+    "chapter": "05-animal-systems",
+    "section": 2,
+    "src": "/manual/figures/05-poultry-netting-energiser.jpg",
+    "width": 666,
+    "height": 960,
+    "caption": {
+      "en": "A solar energiser powers movable electric netting around a poultry run: an open animal tractor that you can shift across the land.",
+      "zu": "I-energiser yelanga inika amandla inetha kagesi ehambayo ezungeze ibala lezinkukhu: i-animal tractor evulekile ongayisusa endaweni ngendawo.",
+      "st": "Energiser ya letsatsi e fa letlooa la motlakase le tsamaisehang le potolohileng lebala la dikgoho matla: animal tractor e bulehileng eo o ka e tsamaisang ho pota naha.",
+      "ve": "Energiser ya ḓuvha i ṋea maanḓa kha ṋeṱe ya muḓagasi ine ya tshimbidzwa yo kombetshedzaho fhethu ha khuhu: animal tractor yo vulaho ine na nga i shandukisa fhethu nga fhethu.",
+      "ts": "Energiser ya dyambu yi nyika matimba eka nete ya gezi leyi fambaka leyi rhendzeleke xivala xa tihuku: animal tractor leyi pfulekeke leyi u nga yi rhurhisaka ndhawu na ndhawu."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-pigs-windfall-fruit",
+    "chapter": "05-animal-systems",
+    "section": 4,
+    "src": "/manual/figures/05-pigs-windfall-fruit.jpg",
+    "width": 683,
+    "height": 512,
+    "caption": {
+      "en": "Young pigs eating spoiled apricots. Pigs turn fallen and spoiled fruit into meat and manure.",
+      "zu": "Izingulube ezincane zidla ama-apricot abolile. Izingulube ziguqula izithelo eziwile nezibolile zibe yinyama nomquba.",
+      "st": "Dikolobe tse nyane di ja diapolekose tse bodileng. Dikolobe di fetola ditholwana tse wetseng le tse bodileng hore e be nama le manyolo.",
+      "ve": "Nguluvhe ṱhukhu dzi tshi ḽa maapurikosi o vholaho. Nguluvhe dzi shandukisa mitshelo yo waho na yo vholaho i vha nama na manyoro.",
+      "ts": "Tinguluve letintsongo ti dya maapurikosi lama boleke. Tinguluve ti hundzula mihandzu leyi weke na leyi boleke yi va nyama na vulongo."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-pig-tractor",
+    "chapter": "05-animal-systems",
+    "section": 4,
+    "src": "/manual/figures/05-pig-tractor.jpg",
+    "width": 652,
+    "height": 489,
+    "caption": {
+      "en": "A pig tractor: pigs graze inside an electric fence powered by a small solar panel, with a simple shelter for shade.",
+      "zu": "I-pig tractor: izingulube zidla ngaphakathi kothango lukagesi olunikwa amandla yiphaneli yelanga encane, kanye nendawo elula yokukhosela ukuze zithole umthunzi.",
+      "st": "Pig tractor: dikolobe di fula ka hare ho terata ya motlakase e fumanang matla ho phanele e nyane ya letsatsi, le bodulo bo bonolo ba moriti.",
+      "ve": "Pig tractor: nguluvhe dzi fula ngomu ha lufhenḓe lwa muḓagasi lu fhiwaho maanḓa nga phanele ṱhukhu ya ḓuvha, na fhethu hu leluwaho ha murunzi.",
+      "ts": "Pig tractor: tinguluve ti dya endzeni ka ribiya ra gezi leri nyikiwaka matimba hi phanele leyitsongo ya dyambu, na vutumbelo byo olova bya ndzhuti."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-pig-cleared-ground",
+    "chapter": "05-animal-systems",
+    "section": 4,
+    "src": "/manual/figures/05-pig-cleared-ground.jpg",
+    "width": 649,
+    "height": 633,
+    "caption": {
+      "en": "The ground after the pigs have moved on: they have rooted out the grass and turned the soil, ready for planting.",
+      "zu": "Umhlabathi ngemuva kokuba izingulube zisusiwe: zimbe zakhipha utshani zaphendula umhlabathi, usulungele ukutshalwa.",
+      "st": "Mobu kamora hore dikolobe di tsamaiswe: di epolotse jwang mme di phethotse mobu, o se o loketse ho jalwa.",
+      "ve": "Mavu nga murahu ha musi nguluvhe dzo pfuluswa: dzo tumula hatsi na u lima mavu, zwino o lugela u ṱavhwa.",
+      "ts": "Misava endzhaku ka loko tinguluve ti rhurhisiwile: ti cele byanyi ti tlhela ti hundzuluxa misava, sweswi yi lunghekele ku byariwa."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-muscovy-ducks",
+    "chapter": "05-animal-systems",
+    "section": 5,
+    "src": "/manual/figures/05-muscovy-ducks.jpg",
+    "width": 1280,
+    "height": 544,
+    "caption": {
+      "en": "Muscovy ducks resting in the shade. They help control pests, graze grass and are much quieter than other ducks.",
+      "zu": "Amadada e-Muscovy aphumule emthunzini. Asiza ukulawula izinambuzane ezilimaza izitshalo, adla utshani futhi athule kakhulu kunamanye amadada.",
+      "st": "Matata a Muscovy a phomotse moriting. A thusa ho laola disenyi, a fula jwang mme a kgutsitse haholo ho feta matata a mang.",
+      "ve": "Madada a Muscovy o awela murunzini. A thusa u langa zwikukumi zwi tshinyadzaho, a fula hatsi nahone a a dzika u fhira maṅwe madada.",
+      "ts": "Tidada ta Muscovy ti wisa endzhutini. Ti pfuna ku lawula swivungu swo onha, ti dya byanyi naswona ti miyele swinene ku tlula tidada tin'wana."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "05-hive-on-tyres",
+    "chapter": "05-animal-systems",
+    "section": 6,
+    "src": "/manual/figures/05-hive-on-tyres.jpg",
+    "width": 720,
+    "height": 1280,
+    "caption": {
+      "en": "A wooden beehive raised on a stack of old tyres: level, firm and off the damp ground.",
+      "zu": "I-hive (indlu yezinyosi) yamapulangwe iphakanyiswe phezu kwamathayi amadala: ilinganile, iqinile futhi ingekho emhlabathini omanzi.",
+      "st": "Ntlo ya dinotshi ya lepolanka e phahamisitswe hodima dithaere tsa kgale: e lekalekane, e tiile ebile ha e fatshe mobung o mongobo.",
+      "ve": "Nnḓu ya ṋotshi ya mapulanga yo gonyiswaho nṱha ha thaere dza kale: yo linganaho, yo khwaṱhaho nahone i si kha mavu a re na maḓi.",
+      "ts": "Yindlu ya tinyoxi ya mapulanka leyi tlakusiweke ehenhla ka mathayere ya khale: yi ringanile, yi tiyile naswona a yi le misaveni leyi tsakamaka."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-food-forest-durban",
+    "chapter": "06-tree-systems",
+    "section": 0,
+    "src": "/manual/figures/06-food-forest-durban.jpg",
+    "width": 833,
+    "height": 596,
+    "caption": {
+      "en": "A subtropical food forest in Durban, seen from above: bananas, a young fruit tree, shrubs and groundcover, with no bare soil.",
+      "zu": "I-food forest yendawo efudumele eThekwini, ibonwa phezulu: ubhanana, isihlahla sezithelo esisencane, izihlahlana ne-groundcover, futhi awukho umhlabathi ongamboziwe.",
+      "st": "Food forest ya sebaka se futhumetseng Durban, e bonwa ho tswa hodimo: dibanana, sefate sa ditholwana se senyane, dihlahla le groundcover, mme ha ho mobu o se nang sekwahelo.",
+      "ve": "Food forest ya fhethu hu dudelaho ngei Durban, yo vhonwaho u bva nṱha: miomva, muri muṱuku wa mitshelo, zwiṱaka na groundcover, nahone a hu na mavu a songo fukedzwaho.",
+      "ts": "Food forest ya ndhawu yo kufumela eThekwini, leyi voniwaka ehenhla: vanana, murhi wa mihandzu lowuntshwa, swihlahla na groundcover, naswona a ku na misava leyi nga funengetiwangiki."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-quince",
+    "chapter": "06-tree-systems",
+    "section": 1,
+    "src": "/manual/figures/06-quince.jpg",
+    "width": 670,
+    "height": 384,
+    "caption": {
+      "en": "Quinces: a very frost-hardy fruit for jam and cooking, well suited to cold Highveld and Lesotho winters.",
+      "zu": "Ama-quince: isithelo esibekezelela isithwathwa kakhulu, esenza ujamu nokupheka, silungele ubusika obubandayo base-Highveld naseLesotho.",
+      "st": "Diquince: setholwana se mamellang serame haholo, bakeng sa jeme le ho pheha, se loketse mariha a batang a Highveld le Lesotho.",
+      "ve": "Maquince: mutshelo u konḓelelaho tshando vhukuma, wa jamu na u bika, u tshimbilelanaho na vhuriha vhu rothaho ha Highveld na Lesotho.",
+      "ts": "Ti-quince: muhandzu lowu tiyiselaka xirhami ngopfu, wa jamu na ku sweka, lowu fanelaka vuxika bya xirhami bya Highveld na Lesotho."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-peach",
+    "chapter": "06-tree-systems",
+    "section": 1,
+    "src": "/manual/figures/06-peach.jpg",
+    "width": 541,
+    "height": 724,
+    "caption": {
+      "en": "A young peach. Choose a peach variety that matches the winter cold where you live.",
+      "zu": "Ipetshisi elisencane. Khetha uhlobo lwepetshisi oluhambisana namakhaza obusika endaweni ohlala kuyo.",
+      "st": "Perekisi e nyane. Kgetha mofuta wa perekisi o tsamaellanang le mohatsela wa mariha moo o dulang teng.",
+      "ve": "Phitshi ṱhukhu. Nangani lushaka lwa phitshi lu tshimbilelanaho na u rotha ha vhuriha hune na dzula hone.",
+      "ts": "Pichisi leyintshwa. Hlawula muxaka wa pichisi lowu fambelanaka na xirhami xa vuxika laha u tshamaka kona."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-apple",
+    "chapter": "06-tree-systems",
+    "section": 1,
+    "src": "/manual/figures/06-apple.jpg",
+    "width": 466,
+    "height": 647,
+    "caption": {
+      "en": "A young apple. Apples need cold winters; in warmer areas choose low-chill varieties.",
+      "zu": "I-apula elisencane. Ama-apula adinga ubusika obubandayo; ezindaweni ezifudumele khetha izinhlobo ezingadingi amakhaza amaningi.",
+      "st": "Apole e nyane. Diapole di hloka mariha a batang; dibakeng tse futhumetseng kgetha mefuta e sa hlokeng mohatsela o mongata.",
+      "ve": "Apula ṱhukhu. Maapula a ṱoḓa vhuriha vhu rothaho; fhethu hu dudelaho nangani tshaka dzi sa ṱoḓi u rotha vhunzhi.",
+      "ts": "Apula leyintshwa. Maapula ma lava vuxika bya xirhami; etindhawini to kufumela hlawula mixaka leyi nga laviki xirhami xo tala."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-legume-seed-mix",
+    "chapter": "06-tree-systems",
+    "section": 2,
+    "src": "/manual/figures/06-legume-seed-mix.jpg",
+    "width": 791,
+    "height": 553,
+    "caption": {
+      "en": "Mixed cowpea and bean seed, ready to sow as a legume groundcover between young trees.",
+      "zu": "Imbewu exubile ye-cowpea nobhontshisi, ilungele ukuhlwanyelwa njenge-groundcover yama-legume phakathi kwezihlahla ezincane.",
+      "st": "Peo e kopantsweng ya cowpea le dinawa, e lokiselitswe ho jalwa e le groundcover ya di-legume pakeng tsa difate tse nyane.",
+      "ve": "Mbeu yo ṱanganyiswaho ya nawa dza sialala na nawa, yo lugela u zwala sa groundcover ya dzi-legume vhukati ha miri miṱuku.",
+      "ts": "Mbewu leyi hlanganisiweke ya dlodlo na tinyawa, yi lunghekele ku byariwa tanihi groundcover ya ti-legume exikarhi ka mirhi leyintshwa."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-planting-basins",
+    "chapter": "06-tree-systems",
+    "section": 2,
+    "src": "/manual/figures/06-planting-basins.jpg",
+    "width": 681,
+    "height": 347,
+    "caption": {
+      "en": "Planting basins dug and ready, with the young trees waiting beside them. Dig all the holes and basins before you plant.",
+      "zu": "Izitsha zokutshala zimbiwe futhi zilungile, izihlahla ezincane zilinde eceleni kwazo. Mba yonke imigodi nezitsha ngaphambi kokutshala.",
+      "st": "Dibesine tsa ho lema di epilwe mme di lokile, difate tse nyane di emetse pela tsona. Epa dikoti tsohle le dibesine pele o lema.",
+      "ve": "Mikwita ya u ṱavha yo gwiwa nahone yo lugela, miri miṱuku yo lindela tsini hayo. Gwani mikwita yoṱhe phanḓa ha u ṱavha.",
+      "ts": "Swikhele swo byala swi cheriwile naswona swi lunghekile, mirhi leyintshwa yi rindzele etlhelo ka swona. Cela migodi hinkwayo na swikhele u nga si byala."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-nitrogen-fixers-citrus",
+    "chapter": "06-tree-systems",
+    "section": 2,
+    "src": "/manual/figures/06-nitrogen-fixers-citrus.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A young lemon tree ringed by pigeon pea. The nitrogen fixers are cut back often and left on the ground as mulch (chop and drop).",
+      "zu": "Isihlahla sikalamula esisencane sizungezwe i-pigeon pea. Ama-nitrogen fixer anqunywa njalo ashiywe phansi njenge-mulch (i-chop and drop).",
+      "st": "Sefate sa lemone se senyane se potolohilweng ke pigeon pea. Di-nitrogen fixer di kgaolwa kgafetsa mme di siuwa fatshe e le mulch (chop and drop).",
+      "ve": "Muri muṱuku wa ḽemoni wo kombetshedzwaho nga pigeon pea. Dzi-nitrogen fixer dzi rengwa kanzhi dza siiwa fhasi sa mulch (chop and drop).",
+      "ts": "Murhi lowuntshwa wa lamula lowu rhendzeriweke hi pigeon pea. Ti-nitrogen fixer ti tsemiwa nkarhi na nkarhi ti siyiwa ehansi tanihi mulch (chop and drop)."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "06-food-forest-layers",
+    "chapter": "06-tree-systems",
+    "section": 4,
+    "src": "/manual/figures/06-food-forest-layers.jpg",
+    "width": 763,
+    "height": 652,
+    "caption": {
+      "en": "The seven layers of a food forest planted along a swale: tall trees, small trees, shrubs, herbs, roots, groundcover and climbers.",
+      "zu": "Izingqimba eziyisikhombisa ze-food forest etshalwe eduze kwe-swale: izihlahla ezinde, izihlahla ezincane, izihlahlana, amakhambi, izimpande, i-groundcover nezitshalo ezikhuphukayo.",
+      "st": "Mekgahlelo e supileng ya food forest e jadilweng pela swale: difate tse telele, difate tse nyane, dihlahla, ditlama, metso, groundcover le dimela tse palamang.",
+      "ve": "Miṱaṱo ya sumbe ya food forest yo ṱavhwaho tsini na swale: miri milapfu, miri miṱuku, zwiṱaka, mihaṱa, midzi, groundcover na zwimela zwi gonyaho.",
+      "ts": "Swiyenge swa nkombo swa food forest leyi byariweke ekusuhi na swale: mirhi yo leha, mirhi leyitsongo, swihlahla, mirhi yo nun'hwela, timitsu, groundcover na swimilana leswi khandziyaka."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-turmeric-harvest",
+    "chapter": "06-tree-systems",
+    "section": 4,
+    "src": "/manual/figures/06-turmeric-harvest.jpg",
+    "width": 703,
+    "height": 524,
+    "caption": {
+      "en": "Freshly dug turmeric: a crop for the root layer of a warm, frost-free food forest.",
+      "zu": "I-turmeric esanda kumbiwa: isitshalo songqimba lwezimpande lwe-food forest efudumele engenaso isithwathwa.",
+      "st": "Turmeric e sa tswa epollwa: sejalo sa mokgahlelo wa metso wa food forest e futhumetseng e se nang serame.",
+      "ve": "Turmeric yo gwiwaho zwino: tshiliṅwa tsha muṱaṱo wa midzi kha food forest i dudelaho i si na tshando.",
+      "ts": "Turmeric leyi ha ku cheriwaka: ximilana xa xiyenge xa timitsu eka food forest yo kufumela leyi nga riki na xirhami."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-wild-dagga",
+    "chapter": "06-tree-systems",
+    "section": 5,
+    "src": "/manual/figures/06-wild-dagga.jpg",
+    "width": 653,
+    "height": 1160,
+    "caption": {
+      "en": "Wild dagga (Leonotis leonurus): a fast-growing indigenous windbreak shrub whose orange flowers feed sunbirds.",
+      "zu": "I-wild dagga (Leonotis leonurus): isihlahlana se-indigenous esikhula ngokushesha, esisetshenziswa njenge-windbreak, izimbali zaso ezisawolintshi zondla izinyoni ezincela umpe.",
+      "st": "Wild dagga (Leonotis leonurus): sehlahla sa indigenous se holang kapele, se sebediswang e le windbreak, seo dipalesa tsa sona tsa lamunu di fepang dinonyana tse monyang lero.",
+      "ve": "Wild dagga (Leonotis leonurus): tshiṱaka tsha indigenous tshi hulaho nga u ṱavhanya, tshi shumaho sa windbreak, tshine maluvha atsho a muvhala wa lamula a ṋea zwiṋoni zwi mamaho ṱuvhi zwiḽiwa.",
+      "ts": "Wild dagga (Leonotis leonurus): xihlahla xa indigenous lexi kulaka hi ku hatlisa, lexi tirhaka tanihi windbreak, lexi swiluva swa xona swa muvala wa lamula swi phamelaka swinyenyana leswi mamaka vulombe."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "06-windbreak",
+    "chapter": "06-tree-systems",
+    "section": 5,
+    "src": "/manual/figures/06-windbreak.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A windbreak of several rows of indigenous trees and shrubs, planted across the damaging wind and kept away from the north side of the garden.",
+      "zu": "I-windbreak yemigqa eminingi yezihlahla nezihlahlana ze-indigenous, etshalwe inqamula umoya olimazayo futhi iqhelile ohlangothini olusenyakatho lwengadi.",
+      "st": "Windbreak ya mela e mmalwa ya difate le dihlahla tsa indigenous, e jadilweng e thibela moya o senyang mme e le hole le lehlakore la leboya la serapa.",
+      "ve": "Windbreak ya mitalo minzhi ya miri na zwiṱaka zwa indigenous, yo ṱavhwaho i tshi thivhela muya u tshinyadzaho nahone i kule na thungo ya devhula ya ngade.",
+      "ts": "Windbreak ya milayini yo tala ya mirhi na swihlahla swa indigenous, leyi byariweke yi tsemakanya moya lowu onhaka naswona yi le kule na tlhelo ra n'walungu ra ntanga."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "06-planting-hole",
+    "chapter": "06-tree-systems",
+    "section": 6,
+    "src": "/manual/figures/06-planting-hole.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A planting hole two to three times as wide as the root ball, with the topsoil and subsoil kept in separate heaps and the stake knocked in first.",
+      "zu": "Umgodi wokutshala obanzi ngokuphindwe kabili kuya kathathu kunesigaxa sezimpande, i-topsoil nomhlabathi ongaphansi kubekwe ezinqwabeni ezihlukene, nesikhonkwane sishayelwe kuqala.",
+      "st": "Sekoti sa ho lema se bophara bo imenneng habedi ho isa ho hararo ho bolo ya metso, topsoil le mobu wa ka tlase di beilwe diqubung tse fapaneng, mme thupa e tshehetsang e kokotetswe pele.",
+      "ve": "Mukwita wa u ṱavha u re na vhuphara vhu no lingana kavhili u swika kararu ha midzi na mavu ayo, topsoil na mavu a fhasi zwo vhewa mulunduni wo fhambanaho, nahone tshiṱanda tsho thoma u rwiwa.",
+      "ts": "Mugodi wo byala lowu anameke ku phindha kambirhi ku ya kanharhu ku tlula bolo ya timitsu, topsoil na misava ya le hansi swi vekiwile eka tinhulu to hambana, naswona mhandzi yi rhange yi bokoteriwa."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "06-staking-a-tree",
+    "chapter": "06-tree-systems",
+    "section": 6,
+    "src": "/manual/figures/06-staking-a-tree.jpg",
+    "width": 593,
+    "height": 638,
+    "caption": {
+      "en": "Tying a young tree to its stake. Use a soft tie in a loose figure of eight so the stem can still move a little.",
+      "zu": "Ukubophela isihlahla esisencane esikhonkwaneni saso. Sebenzisa intambo ethambile oyibopha ngokukhululekile njengenombolo 8 ukuze isiqu sikwazi ukunyakaza kancane.",
+      "st": "Ho tlama sefate se senyane thupeng ya sona e tshehetsang. Sebedisa thapo e bonolo e tlamilweng ka bolokolohi jwaloka nomoro 8 hore kutu e kgone ho sisinyeha hanyane.",
+      "ve": "U vhofha muri muṱuku kha tshiṱanda tshawo. Shumisani thambo i sa konḓi ni tshi i vhofha nga u lefhela sa nomboro 8 uri thanda i kone u tshimbila zwiṱuku.",
+      "ts": "Ku boha murhi lowuntshwa eka mhandzi ya wona. Tirhisa ntambhu yo olova u yi boha hi ku ntshunxeka ku fana na nomboro 8 leswaku rhavi ri kota ku tsekatseka katsongo."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-earthworks-plan",
+    "chapter": "07-earthworks-and-water",
+    "section": 0,
+    "src": "/manual/figures/07-earthworks-plan.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "An earthworks plan for a whole property: swales, basins and a pond catch runoff from the top of the land to the bottom, each with a safe overflow.",
+      "zu": "Uhlelo lwemisebenzi yomhlabathi yendawo yonke: ama-swale, izitsha nechibi kubamba i-runoff kusukela phezulu kuya phansi, ngakunye kunendlela ephephile yokuchichima.",
+      "st": "Moralo wa mesebetsi ya mobu wa sebaka sohle: di-swale, dibesine le letangwana di tshwara runoff ho tloha hodimo ho isa tlase, se seng le se seng se na le tsela e sireletsehileng ya ho phalla.",
+      "ve": "Pulane ya mishumo ya mavu ya fhethu hoṱhe: dzi-swale, mikwita na tshidziva zwi fara runoff u bva nṱha u swika fhasi, tshiṅwe na tshiṅwe tshi na nḓila yo tsireledzeaho ya u ṱalala.",
+      "ts": "Pulani ya mintirho ya misava ya ndhawu hinkwayo: ti-swale, swikhele na xidziva swi khoma runoff ku sukela ehenhla ku ya ehansi, xin'wana na xin'wana xi ri na ndlela leyi hlayisekeke yo khulukela."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "07-swale-full-of-runoff",
+    "chapter": "07-earthworks-and-water",
+    "section": 0,
+    "src": "/manual/figures/07-swale-full-of-runoff.jpg",
+    "width": 806,
+    "height": 635,
+    "caption": {
+      "en": "A swale full of runoff from a nearby driveway. The water soaks into the soil slowly instead of running away.",
+      "zu": "I-swale egcwele i-runoff evela emgwaqweni oseduze. Amanzi angena kancane emhlabathini esikhundleni sokugeleza ahambe.",
+      "st": "Swale e tletseng runoff e tswang tseleng e haufi. Metsi a kena mobung butle ho ena le hore a phallele hole.",
+      "ve": "Swale yo ḓalaho runoff i bvaho badani ḽi re tsini. Maḓi a dzhena mavuni zwiṱuku nga zwiṱuku ho ngo ṱalala a tshi ya kule.",
+      "ts": "Swale leyi teleke runoff leyi humaka egondzweni ra le kusuhi. Mati ma nghena emisaveni hi ku nonoka ematshan'weni yo khuluka ma famba."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-swale-dug-by-machine",
+    "chapter": "07-earthworks-and-water",
+    "section": 0,
+    "src": "/manual/figures/07-swale-dug-by-machine.jpg",
+    "width": 1400,
+    "height": 681,
+    "caption": {
+      "en": "A long swale being dug by TLB, with a survey staff to check the level. Get experienced advice before any large machine earthworks.",
+      "zu": "I-swale ende imbiwa nge-TLB, kusetshenziswa induku yokukala ukuhlola izinga. Thola iseluleko komuntu onolwazi ngaphambi kwemisebenzi emikhulu yomhlabathi ngemishini.",
+      "st": "Swale e telele e epjwa ka TLB, ho sebediswa thupa ya ho metha ho hlahloba bophahamo. Fumana keletso ho motho ya nang le boiphihlelo pele o etsa mesebetsi e meholo ya mobu ka metjhini.",
+      "ve": "Swale ndapfu i tshi gwiwa nga TLB, hu tshi shumiswa lufhanga lwa u ela u sedza vhuimo. Wanani nyeletshedzo kha muthu a re na tshenzhemo phanḓa ha mishumo mihulwane ya mavu nga metshini.",
+      "ts": "Swale yo leha yi ri karhi yi cheriwa hi TLB, ku tirhisiwa nhonga yo pima ku kambela ku ringana. Kuma ndzayo eka munhu la nga na ntokoto u nga si endla mintirho leyikulu ya misava hi michini."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-rain-barrel",
+    "chapter": "07-earthworks-and-water",
+    "section": 1,
+    "src": "/manual/figures/07-rain-barrel.jpg",
+    "width": 650,
+    "height": 836,
+    "caption": {
+      "en": "A recycled drum under a roof downpipe, with a tap near the bottom: a cheap way to start harvesting rainwater. Keep it covered.",
+      "zu": "Umgqomo osetshenziswe kabusha ngaphansi kwepayipi lokwehlisa amanzi ophahleni, onompompi ngezansi: indlela eshibhile yokuqala ukuqoqa amanzi emvula. Wugcine umbozwe.",
+      "st": "Moqomo o sebediswang hape ka tlasa phaephe e theohang marulelong, o nang le pompo ka tlase: tsela e theko e tlase ya ho qala ho kotula metsi a pula. O boloke o kwahetswe.",
+      "ve": "Dirama ḽo shumiswaho hafhu nga fhasi ha phaiphi i tsitsaho maḓi u bva kha ṱhanga, ḽi na thepe fhasi: nḓila i sa ḓuri ya u thoma u kuvhanganya maḓi a mvula. Ḽi fhefheni tshifhinga tshoṱhe.",
+      "ts": "Dirama leri tirhisiweke nakambe ehansi ka phayiphi leyi xikisaka mati ku suka elwangwini, leri nga na mpompi ehansi: ndlela yo chipa yo sungula ku hlengeleta mati ya mpfula. Ri funengete minkarhi hinkwayo."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-linked-tanks",
+    "chapter": "07-earthworks-and-water",
+    "section": 1,
+    "src": "/manual/figures/07-linked-tanks.jpg",
+    "width": 693,
+    "height": 564,
+    "caption": {
+      "en": "Three tanks joined by a pipe at the base, so they fill and empty together.",
+      "zu": "Amathangi amathathu axhunywe ngepayipi ngezansi, ukuze agcwale futhi aphele ndawonye.",
+      "st": "Ditanka tse tharo tse hokahantsweng ka phaephe ka tlase, hore di tlale le ho fela hammoho.",
+      "ve": "Dzithanngi tharu dzo ṱanganywaho nga phaiphi fhasi, uri dzi ḓale na u fhela nga tshifhinga tshithihi.",
+      "ts": "Tithanki tinharhu leti hlanganisiweke hi phayiphi ehansi, leswaku ti tala na ku hela swin'we."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-infiltration-basins",
+    "chapter": "07-earthworks-and-water",
+    "section": 2,
+    "src": "/manual/figures/07-infiltration-basins.jpg",
+    "width": 1160,
+    "height": 565,
+    "caption": {
+      "en": "Stone-lined channels lead runoff into infiltration basins around young trees, watering them after every rain.",
+      "zu": "Imisele enamatshe iholela i-runoff ezitsheni ze-infiltration ezizungeze izihlahla ezincane, izinisele emva kwayo yonke imvula.",
+      "st": "Diforo tse nang le majwe di isa runoff dibesineng tsa infiltration tse potolohileng difate tse nyane, di di nosetsa kamora pula e nngwe le e nngwe.",
+      "ve": "Migero yo ṱanganiwaho nga matombo i isa runoff kha mikwita ya infiltration yo monaho miri miṱuku, i i sheledza nga murahu ha mvula iṅwe na iṅwe.",
+      "ts": "Swisele leswi nga na maribye swi yisa runoff eka swikhele swa infiltration leswi rhendzeleke mirhi leyintshwa, swi yi cheleta endzhaku ka mpfula yin'wana na yin'wana."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-runoff-dam",
+    "chapter": "07-earthworks-and-water",
+    "section": 3,
+    "src": "/manual/figures/07-runoff-dam.jpg",
+    "width": 1280,
+    "height": 494,
+    "caption": {
+      "en": "A runoff dam at the top of a property catches water flowing down the valley. Dams have legal rules in South Africa.",
+      "zu": "Idamu le-runoff elisenhla kwendawo libamba amanzi ageleza ehla esigodini. Amadamu anemithetho eNingizimu Afrika.",
+      "st": "Letamo la runoff le kahodimo ho sebaka le tshwara metsi a phallang a theoha phuleng. Matamo a na le melao Afrika Borwa.",
+      "ve": "Damu ḽa runoff ḽi re nṱha ha fhethu ḽi fara maḓi a elelaho a tshi tsela mulamboni. Madamu a na milayo Afrika Tshipembe.",
+      "ts": "Damu ra runoff leri nga ehenhla ka ndhawu ri khoma mati lama khulukaka ma rhelela nkoveni. Madamu ma na milawu eAfrika Dzonga."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-pond-digging",
+    "chapter": "07-earthworks-and-water",
+    "section": 3,
+    "src": "/manual/figures/07-pond-digging.jpg",
+    "width": 1260,
+    "height": 710,
+    "caption": {
+      "en": "Digging a runoff pond with a TLB. Keep people well away from a working machine, and slope the sides of the hole.",
+      "zu": "Ukumba ichibi le-runoff nge-TLB. Gcina abantu bekude nomshini osebenzayo, futhi wenze izinhlangothi zomgodi zitshekile.",
+      "st": "Ho epa letangwana la runoff ka TLB. Boloka batho ba le hole le motjhini o sebetsang, mme o etse mahlakore a sekoti a sekame.",
+      "ve": "U gwa tshidziva tsha runoff nga TLB. Vhathu vha dzule kule na metshini u shumaho, nahone ni ite uri matungo a mukwita a sendame.",
+      "ts": "Ku cela xidziva xa runoff hi TLB. Hlayisa vanhu va ri ekule na muchini lowu tirhaka, naswona u endla leswaku matlhelo ya mugodi ma rhelela."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-pond-filled",
+    "chapter": "07-earthworks-and-water",
+    "section": 3,
+    "src": "/manual/figures/07-pond-filled.jpg",
+    "width": 1160,
+    "height": 794,
+    "caption": {
+      "en": "The same pond, lined with plastic, three weeks later after 45 mm of rain. Fence ponds so that children cannot get in.",
+      "zu": "Ichibi elifanayo, elinepulasitiki ngaphakathi, emavikini amathathu kamuva ngemva kwemvula engu-45 mm. Biyela amachibi ukuze izingane zingangeni.",
+      "st": "Letangwana le tshwanang, le nang le polasetiki ka hare, dibeke tse tharo hamorao kamora pula ya 45 mm. Terata matangwana hore bana ba se kene.",
+      "ve": "Tshidziva tshi fanaho, tsho ṱanganiwaho nga pulasitiki, nga murahu ha vhege tharu musi ho na mvula ya 45 mm. Tangani zwidziva nga luvhondo uri vhana vha si dzhene.",
+      "ts": "Xidziva lexi fanaka, lexi nga na pulasitiki endzeni, endzhaku ka mavhiki manharhu loko ku nele mpfula ya 45 mm. Biyela swidziva leswaku vana va nga nghenisi."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-sand-dam-diagram",
+    "chapter": "07-earthworks-and-water",
+    "section": 4,
+    "src": "/manual/figures/07-sand-dam-diagram.jpg",
+    "width": 518,
+    "height": 354,
+    "caption": {
+      "en": "How a sand dam works: a concrete wall is built on bedrock across a dry river bed. Sand builds up behind it and holds water that the sun cannot dry up.",
+      "zu": "Indlela idamu lesihlabathi elisebenza ngayo: udonga lukakhonkolo lwakhiwa phezu kwedwala eliqinile, lunqamule umfula owomile. Isihlabathi siqoqana ngemuva kwalo sigcine amanzi ilanga elingakwazi ukuwomisa.",
+      "st": "Kamoo letamo la lehlabathe le sebetsang ka teng: lerako la konkreite le hahwa hodima lefika le tiileng, le tshela noka e omileng. Lehlabathe le bokellana ka mora lona mme le boloka metsi ao letsatsi le sa kgoneng ho a omisa.",
+      "ve": "Nḓila ine damu ḽa muṱavha ḽa shuma ngayo: luvhondo lwa khonkhorithi lu fhaṱiwa nṱha ha tombo ḽo khwaṱhaho, lu tshi pfuka mulambo wo omaho. Muṱavha u kuvhangana nga murahu halwo wa vhulunga maḓi ane ḓuvha ḽa sa kone u a omisa.",
+      "ts": "Ndlela leyi damu ra sava ri tirhaka ha yona: rirhangu ra khongiri ri akiwa ehenhla ka ribye ro tiya, ri tsemakanya nambu wo oma. Sava yi hlengeletana endzhaku ka rona yi hlayisa mati lawa dyambu ri nga kotiki ku ma omisa."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-sand-dam-lesotho",
+    "chapter": "07-earthworks-and-water",
+    "section": 4,
+    "src": "/manual/figures/07-sand-dam-lesotho.jpg",
+    "width": 930,
+    "height": 474,
+    "caption": {
+      "en": "A sand dam across a river bed at a community centre in Lesotho.",
+      "zu": "Idamu lesihlabathi elinqamula umfula esikhungweni somphakathi eLesotho.",
+      "st": "Letamo la lehlabathe le tshelang noka setsing sa setjhaba Lesotho.",
+      "ve": "Damu ḽa muṱavha ḽo pfukaho mulambo kha senthara ya tshitshavha ngei Lesotho.",
+      "ts": "Damu ra sava leri tsemakanyaka nambu eka senthara ya muganga eLesotho."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-a-frame-level",
+    "chapter": "07-earthworks-and-water",
+    "section": 5,
+    "src": "/manual/figures/07-a-frame-level.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "An A-frame level: a string with a weight hangs from the top. When the string crosses the centre mark, both legs stand at the same height.",
+      "zu": "I-A-frame: intambo enesisindo ilenga phezulu. Uma intambo idlula phezu kophawu oluphakathi, imilenze yomibili imi ezingeni elifanayo.",
+      "st": "A-frame: thapo e nang le boima e leketlile ho tswa hodimo. Ha thapo e feta letshwao le bohareng, maoto a mabedi a eme bophahamong bo lekanang.",
+      "ve": "A-frame: thambo i re na tshileme i tou lembelela u bva nṱha. Musi thambo i tshi fhira tshiga tsha vhukati, milenzhe yoṱhe mivhili yo ima vhuimoni vhuthihi.",
+      "ts": "A-frame: ntambhu leyi nga na ntiko yi hayekiwile ku suka ehenhla. Loko ntambhu yi hundza eka mfungho wa le xikarhi, milenge hinkwayo yimbirhi yi yime eka ku tlakuka loku fanaka."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "07-a-frame-contour",
+    "chapter": "07-earthworks-and-water",
+    "section": 5,
+    "src": "/manual/figures/07-a-frame-contour.jpg",
+    "width": 740,
+    "height": 534,
+    "caption": {
+      "en": "Pegging out a contour line with an A-frame. Each new peg is at the same height as the one before.",
+      "zu": "Ukumaka umugqa we-contour nge-A-frame. Isikhonkwane ngasinye esisha sisezingeni elifanayo nesangaphambilini.",
+      "st": "Ho tshwaya mola wa contour ka A-frame. Thupana e nngwe le e nngwe e ntjha e bophahamong bo lekanang le ya pele.",
+      "ve": "U swaya mutalo wa contour nga A-frame. Tshiṱanda tshiṅwe na tshiṅwe tshiswa tshi vhuimoni vhuthihi na tsha u thoma.",
+      "ts": "Ku funga layini ya contour hi A-frame. Xikhonkwana xin'wana na xin'wana lexintshwa xi le ku tlakukeni loku fanaka na xa le mahlweni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-swale-digging",
+    "chapter": "07-earthworks-and-water",
+    "section": 5,
+    "src": "/manual/figures/07-swale-digging.jpg",
+    "width": 590,
+    "height": 453,
+    "caption": {
+      "en": "Digging a swale by hand along the pegged contour. The soil is piled on the downhill side to make the berm.",
+      "zu": "Ukumba i-swale ngesandla kulandela i-contour emakiwe ngezikhonkwane. Umhlabathi unqwabelwa ohlangothini olungezansi ukwakha i-berm.",
+      "st": "Ho epa swale ka letsoho ho latela contour e tshwailweng ka dithupana. Mobu o bokellwa lehlakoreng la tlase ho etsa berm.",
+      "ve": "U gwa swale nga zwanḓa hu tshi tevhelwa contour yo swaiwaho nga zwiṱanda. Mavu a kuvhanganyelwa kha thungo ya fhasi u ita berm.",
+      "ts": "Ku cela swale hi mavoko hi ku landza contour leyi fungiweke hi swikhonkwana. Misava yi hlengeletiwa eka tlhelo ra le hansi ku endla berm."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-planted-berm",
+    "chapter": "07-earthworks-and-water",
+    "section": 5,
+    "src": "/manual/figures/07-planted-berm.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A planted swale and berm: amadumbe in the moist ditch, with lemongrass, sweet potato and pigeon pea on the berm.",
+      "zu": "I-swale ne-berm okutshaliwe: amadumbe emseleni omanzi, nomsinsi welemoni, ubhatata ne-pigeon pea phezu kwe-berm.",
+      "st": "Swale le berm tse jadilweng: amadumbe foroung e mongobo, le lemongrass, patata le pigeon pea hodima berm.",
+      "ve": "Swale na berm zwo ṱavhwaho: madumbe mugeroni u re na maḓi, na lemongrass, vhulombe na pigeon pea nṱha ha berm.",
+      "ts": "Swale na berm leswi byariweke: madumbe exiseleni lexi tsakameke, na lemongrass, murhi wa patata na pigeon pea ehenhla ka berm."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "07-volunteers-dug-beds",
+    "chapter": "07-earthworks-and-water",
+    "section": 6,
+    "src": "/manual/figures/07-volunteers-dug-beds.jpg",
+    "width": 1400,
+    "height": 675,
+    "caption": {
+      "en": "A small vegetable garden prepared by hand by a team of volunteers. With many hands, digging goes quickly.",
+      "zu": "Ingadi encane yemifino elungiswe ngesandla yithimba lamavolontiya. Ngezandla eziningi, ukumba kuhamba ngokushesha.",
+      "st": "Serapa se senyane sa meroho se lokisitsweng ka matsoho ke sehlopha sa baithaopi. Ka matsoho a mangata, ho epa ho tsamaya kapele.",
+      "ve": "Ngade ṱhukhu ya miroho yo lugiselwaho nga zwanḓa nga tshigwada tsha vhaḓiṋekedzi. Nga zwanḓa zwinzhi, u gwa hu ṱavhanya.",
+      "ts": "Ntanga lowutsongo wa matsavu lowu lunghiseriweke hi mavoko hi ntlawa wa vatirhi va ku tinyiketela. Hi mavoko yo tala, ku cela swi hatlisa."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-two-wheel-tractor",
+    "chapter": "07-earthworks-and-water",
+    "section": 6,
+    "src": "/manual/figures/07-two-wheel-tractor.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A two-wheel tractor: small enough for a smallholding, it can plough, rotavate and pull a planter.",
+      "zu": "Ugandaganda wamasondo amabili: mncane ngokwanele ukulingana nepulazi elincane, ungalima, uphendule umhlabathi futhi udonse umshini wokutshala.",
+      "st": "Terekere ya mabili a mabedi: e nyane ho lekana polasi e nyane, e ka lema, ya fetola mobu mme ya hula motjhini wa ho jala.",
+      "ve": "Theraka ya mavhili mavhili: ṱhukhu u lingana bulasi ṱhukhu, i nga lima, ya pfumbudza mavu nahone ya kokodza metshini wa u zwala.",
+      "ts": "Thirakitara ya mavhilwa mambirhi: yitsongo ku ringana purasi leritsongo, yi nga rima, yi hundzuluxa misava naswona yi koka muchini wo byala."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "07-tarping",
+    "chapter": "07-earthworks-and-water",
+    "section": 6,
+    "src": "/manual/figures/07-tarping.jpg",
+    "width": 1280,
+    "height": 770,
+    "caption": {
+      "en": "Black plastic held down with bales and sandbags. Left for some weeks, it kills the grass so that beds can be made without digging.",
+      "zu": "Ipulasitiki elimnyama elicindezelwe phansi ngamabhela nezikhwama zesihlabathi. Uma lishiywe amasonto athile, libulala utshani ukuze imibhede yenziwe ngaphandle kokumba.",
+      "st": "Polasetiki e ntsho e hatellwang fatshe ka dibolo tsa jwang le mekotla ya lehlabathe. Ha e siuwa dibeke tse itseng, e bolaya jwang hore dibethe di etswe ntle le ho epa.",
+      "ve": "Pulasitiki ntswu yo tsikeledzwaho fhasi nga zwiṱumba zwa mahatsi na mikhwama ya muṱavha. Musi yo siiwa vhege dzi si gathi, i vhulaha hatsi uri ndima dzi itwe hu si na u gwa.",
+      "ts": "Pulasitiki ya ntima leyi tshikileriweke ehansi hi mabolo ya byanyi na masaka ya sava. Loko yi siyiwile mavhiki man'wana, yi dlaya byanyi leswaku mibhedhi yi endliwa handle ko cela."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-beds-on-contour",
+    "chapter": "07-earthworks-and-water",
+    "section": 7,
+    "src": "/manual/figures/07-beds-on-contour.jpg",
+    "width": 717,
+    "height": 528,
+    "caption": {
+      "en": "Beds pegged out along the contour on a slope, with the soil pulled downhill to make each bed level.",
+      "zu": "Imibhede imakwe ngezikhonkwane kulandela i-contour emthambekeni, umhlabathi udonselwe phansi ukuze umbhede ngamunye ulingane.",
+      "st": "Dibethe tsa serapa di tshwailwe ka dithupana ho latela contour letswapong, mobu o huletswe tlase hore bethe e nngwe le e nngwe e lekalekane.",
+      "ve": "Ndima dzo swaiwa nga zwiṱanda hu tshi tevhelwa contour kha u sendama ha mavu, mavu o kokodzelwa fhasi uri ndima iṅwe na iṅwe i lingane.",
+      "ts": "Mibhedhi yi fungiwile hi swikhonkwana hi ku landza contour eka ku rhelela, misava yi kokiwile yi ya ehansi leswaku mubhedhi wun'wana na wun'wana wu ringana."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-stone-edged-beds",
+    "chapter": "07-earthworks-and-water",
+    "section": 7,
+    "src": "/manual/figures/07-stone-edged-beds.jpg",
+    "width": 739,
+    "height": 554,
+    "caption": {
+      "en": "Double-reach beds edged with stones and filled with good topsoil. Each bed is narrow enough to reach the middle from both sides.",
+      "zu": "Ama-double-reach bed azungezwe amatshe futhi agcwaliswe nge-topsoil enhle. Umbhede ngamunye umncane ngokwanele ukuthi ufinyelele maphakathi usuka ezinhlangothini zombili.",
+      "st": "Di-double-reach bed tse potolohilweng ke majwe mme di tlatsitswe ka topsoil e ntle. Bethe e nngwe le e nngwe e tshesane hoo o ka fihlellang bohareng ho tswa mahlakoreng a mabedi.",
+      "ve": "Dzi-double-reach bed dzo kombetshedzwaho nga matombo nahone dzo ḓadzwa nga topsoil yavhuḓi. Ndima iṅwe na iṅwe i a sesa lune na nga swikela vhukati u bva kha thungo mbili.",
+      "ts": "Ti-double-reach bed leti rhendzeriweke hi maribye naswona ti tatiwile hi topsoil leyinene. Mubhedhi wun'wana na wun'wana wu hunguteka ku ringana leswaku u fikelela exikarhi ku suka matlhelo mambirhi."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-banana-circle",
+    "chapter": "07-earthworks-and-water",
+    "section": 7,
+    "src": "/manual/figures/07-banana-circle.jpg",
+    "width": 731,
+    "height": 549,
+    "caption": {
+      "en": "A pit bed (banana circle) lined with cardboard and filled with organic matter, being watered. The plants go around the rim.",
+      "zu": "Umbhede womgodi (indilinga kabhanana) onekhadibhodi ngaphakathi futhi ogcwaliswe ngezinto eziphilayo ezibolayo, uyaniselwa. Izitshalo zitshalwa zizungeze umphetho.",
+      "st": "Bethe ya sekoti (sedikadikwe sa dibanana) e nang le khateboto ka hare mme e tlatsitswe ka dintho tse bolang, e ntse e nosetswa. Dimela di jalwa ho potoloha molomo wa sekoti.",
+      "ve": "Ndima ya mukwita (banana circle) yo ṱanganiwaho nga khadibodo nahone yo ḓadzwa nga zwithu zwi vholaho, i tshi khou sheledzwa. Zwimela zwi ṱavhwa u mona mulomo wa mukwita.",
+      "ts": "Mubhedhi wa mugodi (xirhendzevutana xa vanana) lowu nga na khadibodo endzeni naswona wu tatiwile hi swilo leswi bolaka, wu ri karhi wu chelela. Swimilana swi byariwa swi rhendzela nomu wa mugodi."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-hand-watering",
+    "chapter": "07-earthworks-and-water",
+    "section": 8,
+    "src": "/manual/figures/07-hand-watering.jpg",
+    "width": 749,
+    "height": 1060,
+    "caption": {
+      "en": "Hand watering under shade cloth. Water the soil at the base of the plants, not the leaves.",
+      "zu": "Ukunisela ngesandla ngaphansi kwendwangu yomthunzi. Nisela umhlabathi ezansi kwezitshalo, hhayi amaqabunga.",
+      "st": "Ho nosetsa ka letsoho ka tlasa lesela la moriti. Nosetsa mobu botlaaseng ba dimela, e seng makgasi.",
+      "ve": "U sheledza nga zwanḓa nga fhasi ha ṋeṱe ya murunzi. Sheledzani mavu a re fhasi ha zwimela, hu si maṱari.",
+      "ts": "Ku cheleta hi mavoko ehansi ka lapi ra ndzhuti. Cheleta misava ehansi ka swimilana, ku nga ri matluka."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-bottle-irrigation",
+    "chapter": "07-earthworks-and-water",
+    "section": 8,
+    "src": "/manual/figures/07-bottle-irrigation.jpg",
+    "width": 348,
+    "height": 512,
+    "caption": {
+      "en": "Bottle irrigation: an upturned bottle buried beside the plants lets water seep slowly into the roots.",
+      "zu": "Ukunisela ngebhodlela: ibhodlela elibheke phansi elingcwatshwe eduze kwezitshalo livumela amanzi ukuthi angene kancane ezimpandeni.",
+      "st": "Nosetso ka dibotlolo: botlolo e phethotsweng e patilweng pela dimela e dumella metsi ho kena butle metsong.",
+      "ve": "U sheledza nga bodelo: bodelo ḽo tou shandukiswaho ḽo vhulungwaho tsini na zwimela ḽi tendela maḓi u dzhena zwiṱuku nga zwiṱuku midzini.",
+      "ts": "Ku cheleta hi bodlhela: bodlhela leri hundzuluxiweke leri celeriweke ekusuhi na swimilana ri pfumelela mati ku nghena hi ku nonoka etimitsini."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-drip-irrigation",
+    "chapter": "07-earthworks-and-water",
+    "section": 8,
+    "src": "/manual/figures/07-drip-irrigation.jpg",
+    "width": 481,
+    "height": 854,
+    "caption": {
+      "en": "Drip irrigation: the drip line runs past the base of each pepper plant and wets only the soil around its roots.",
+      "zu": "I-drip irrigation: ipayipi lamaconsi lidlula ezansi kwesitshalo ngasinye sikapelepele futhi limanzisa kuphela umhlabathi ozungeze izimpande zaso.",
+      "st": "Drip irrigation: phaephe ya marothodi e feta botlaaseng ba semela se seng le se seng sa pepere mme e kolobisa feela mobu o potolohileng metso ya sona.",
+      "ve": "Drip irrigation: phaiphi ya matonsi i fhira fhasi ha tshimela tshiṅwe na tshiṅwe tsha phiriphiri nahone i nukisa fhedzi mavu o monaho midzi yatsho.",
+      "ts": "Drip irrigation: phayiphi ya mathonsi yi hundza ehansi ka ximilana xin'wana na xin'wana xa pepere naswona yi tsakamisa ntsena misava leyi rhendzeleke timitsu ta xona."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "07-greywater-drum",
+    "chapter": "07-earthworks-and-water",
+    "section": 9,
+    "src": "/manual/figures/07-greywater-drum.jpg",
+    "width": 798,
+    "height": 557,
+    "caption": {
+      "en": "A greywater drum: kitchen water runs through a filter box (grease trap) and on to a mulched swale. Let it flow on the same day; stored greywater goes bad.",
+      "zu": "Umgqomo we-greywater: amanzi asekhishini adlula ebhokisini lesihlungi (isicupho samafutha) aqhubeke aye ku-swale ene-mulch. Awayeke ageleze ngalo lelo langa; i-greywater egciniwe iyabola.",
+      "st": "Moqomo wa greywater: metsi a kitjhene a feta lebokoseng la sefe (sethibela mafura) mme a tswela pele ho ya swale e nang le mulch. A tlohele a phalle ka lona letsatsi leo; greywater e bolokilweng e a bola.",
+      "ve": "Dirama ḽa greywater: maḓi a khitshini a fhira kha bogisi ḽa tshisefi (tshifari tsha mafuṱa) a bvela phanḓa a ya kha swale i re na mulch. A tendeleni a elele nga ḓuvha ḽeneḽo; greywater yo vhulungwaho i a tshinyala.",
+      "ts": "Dirama ra greywater: mati ya le khixini ma hundza hi le bokisini ra xisefo (xikhomi xa mafurha) ma ya emahlweni eka swale leyi nga na mulch. Ma tshike ma khuluka hi siku rero; greywater leyi hlayisiweke ya onhaka."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-soil-profile",
+    "chapter": "08-soil",
+    "section": 1,
+    "src": "/manual/figures/08-soil-profile.jpg",
+    "width": 411,
+    "height": 572,
+    "caption": {
+      "en": "The layers of the soil: dark topsoil full of roots and life, lighter subsoil below, and stones and rock at the bottom.",
+      "zu": "Izingqimba zomhlabathi: i-topsoil emnyama egcwele izimpande nokuphila, umhlabathi ongaphansi okhanyayo, namatshe nedwala ngezansi.",
+      "st": "Mekgahlelo ya mobu: topsoil e lefifi e tletseng metso le bophelo, mobu wa ka tlase o bobebe ka mmala, le majwe le lefika botlaaseng.",
+      "ve": "Miṱaṱo ya mavu: topsoil ntswu yo ḓalaho midzi na vhutshilo, mavu a fhasi a re na muvhala wo vhonalaho, na matombo na tombo fhasi-fhasi.",
+      "ts": "Swiyenge swa misava: topsoil ya ntima leyi teleke timitsu na vutomi, misava ya le hansi leyi vonakaka, na maribye na ribye ehansi-hansi."
+    },
+    "credit": "Diagram: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-soil-jar-test",
+    "chapter": "08-soil",
+    "section": 3,
+    "src": "/manual/figures/08-soil-jar-test.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "The jar test: shake soil with water in a clear jar, let it settle for a day, then read the layers of sand, silt and clay.",
+      "zu": "Ukuhlola umhlabathi ebhodleleni: nyakazisa umhlabathi namanzi embizeni ecwebile, uwuyeke uhlale usuku, bese ufunda izingqimba zesihlabathi, i-silt nobumba.",
+      "st": "Teko ya nkgo (jar test): sisinya mobu le metsi ka nkgong e bonahalang, o o tlohele o dule letsatsi, ebe o bala mekgahlelo ya lehlabathe, seretse se setle le letsopa.",
+      "ve": "Ndingo ya bodelo (jar test): dzinginyani mavu na maḓi kha bodelo ḽi vhonalaho, ni a litshe a dzule ḓuvha, ni kone u vhala miṱaṱo ya muṱavha, matope na vumba.",
+      "ts": "Ku kambela hi xibya xa ngilazi (jar test): tsekatsekisa misava na mati eka xibya lexi vonakaka, u yi tshika yi tshama siku, kutani u hlaya swiyenge swa sava, ndhaka na vumba."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "08-straw-mulch",
+    "chapter": "08-soil",
+    "section": 4,
+    "src": "/manual/figures/08-straw-mulch.jpg",
+    "width": 682,
+    "height": 453,
+    "caption": {
+      "en": "A young pumpkin-family seedling growing through straw mulch. The mulch keeps the soil covered, cool and moist.",
+      "zu": "Isithombo esisencane somndeni wamathanga sikhula ngaphakathi kwe-mulch yotshani obomile. I-mulch igcina umhlabathi umbozekile, upholile futhi umanzi.",
+      "st": "Semela se senyane sa lelapa la mokopu se hola ka hara mulch ya jwang bo omileng. Mulch e boloka mobu o kwahetswe, o pholile ebile o le mongobo.",
+      "ve": "Tshimela tshiṱuku tsha lushaka lwa phuri tshi tshi hula nga ngomu ha mulch ya mahatsi o omaho. Mulch i vhulunga mavu o fukedzwa, o rothaho nahone a re na mutsho.",
+      "ts": "Ximilana lexintshwa xa ndyangu wa pfhuka xi kula exikarhi ka mulch ya byanyi byo oma. Mulch yi hlayisa misava yi funengetiwile, yi titimela naswona yi tsakama."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-manure-on-cut-grass",
+    "chapter": "08-soil",
+    "section": 6,
+    "src": "/manual/figures/08-manure-on-cut-grass.jpg",
+    "width": 480,
+    "height": 337,
+    "caption": {
+      "en": "Spreading manure on freshly cut, moist grass: the first layer of a sheet-mulched bed.",
+      "zu": "Ukusabalalisa umquba phezu kotshani obusanda kusikwa obumanzi: ungqimba lokuqala lombhede owenziwe ngokumboza umhlabathi ngezingqimba.",
+      "st": "Ho hasanya manyolo a diphoofolo hodima jwang bo sa tswa kutwa bo mongobo: mokgahlelo wa pele wa bethe e kwahetsweng ka mulch ka mekgahlelo.",
+      "ve": "U phaḓaladza manyoro nṱha ha hatsi ho tou rengwaho zwino hu re na mutsho: muṱaṱo wa u thoma wa ndima yo fukedzwaho nga mulch nga miṱaṱo.",
+      "ts": "Ku hangalasa vulongo bya swifuwo ehenhla ka byanyi lebyi ha ku tsemiwaka lebyi tsakameke: xiyenge xo sungula xa mubhedhi lowu funengetiweke hi makhadibodo na mulch."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-sheet-mulch-cardboard",
+    "chapter": "08-soil",
+    "section": 7,
+    "src": "/manual/figures/08-sheet-mulch-cardboard.jpg",
+    "width": 682,
+    "height": 476,
+    "caption": {
+      "en": "Sheet mulching: cardboard laid over the grass and covered with compost. The cardboard smothers the grass and then rots away.",
+      "zu": "Ukumboza ngamaphepha (sheet mulching): ikhadibhodi elibekwe phezu kotshani lembozwe nge-compost. Ikhadibhodi liminyanisa utshani bese liyabola.",
+      "st": "Ho kwahela ka mulch ka mekgahlelo (sheet mulching): khateboto e alwa hodima jwang mme e kwahelwa ka compost. Khateboto e kgama jwang ebe e a bola.",
+      "ve": "U fukedza nga miṱaṱo (sheet mulching): khadibodo yo aliwaho nṱha ha hatsi ya fukedzwa nga compost. Khadibodo i thithisa hatsi ya kona u vhola.",
+      "ts": "Ku funengeta hi makhadibodo (sheet mulching): khadibodo yi andlariwa ehenhla ka byanyi kutani yi funengetiwa hi compost. Khadibodo yi hefemulisa byanyi kutani yi bola."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-planting-into-mulch",
+    "chapter": "08-soil",
+    "section": 7,
+    "src": "/manual/figures/08-planting-into-mulch.jpg",
+    "width": 761,
+    "height": 571,
+    "caption": {
+      "en": "Planting seedlings through a thick layer of straw into the finished sheet-mulched bed.",
+      "zu": "Ukutshala izithombo ngokudabula ungqimba olujiyile lotshani obomile embhedeni oseqediwe owenziwe ngokumboza ngezingqimba.",
+      "st": "Ho jala dimela tse nyane ka hara mokgahlelo o motenya wa jwang bo omileng betheng e phethilweng e kwahetsweng ka mulch ka mekgahlelo.",
+      "ve": "U ṱavha zwimela zwiṱuku nga ngomu ha muṱaṱo mulapfu wa mahatsi o omaho kha ndima yo fhelaho yo fukedzwaho nga miṱaṱo.",
+      "ts": "Ku byala swimilana leswintshwa exikarhi ka xiyenge xo tika xa byanyi byo oma eka mubhedhi lowu hetiweke lowu funengetiweke hi makhadibodo."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-compost-stick-base",
+    "chapter": "08-soil",
+    "section": 8,
+    "src": "/manual/figures/08-compost-stick-base.jpg",
+    "width": 746,
+    "height": 651,
+    "caption": {
+      "en": "Building a compost heap on a base of sticks, which lets air in from below.",
+      "zu": "Ukwakha inqwaba ye-compost phezu kwesisekelo sezinti, esivumela umoya ukuthi ungene uvela ngezansi.",
+      "st": "Ho haha qubu ya compost hodima motheo wa dithupa, o dumellang moya ho kena ho tswa tlase.",
+      "ve": "U fhaṱa mulundu wa compost nṱha ha mutheo wa zwiṱanda, une wa tendela muya u dzhena u bva fhasi.",
+      "ts": "Ku aka nhulu wa compost ehenhla ka masungulo ya tinhonga, lawa ma pfumelelaka moya ku nghena ku suka ehansi."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-compost-watering-layers",
+    "chapter": "08-soil",
+    "section": 8,
+    "src": "/manual/figures/08-compost-watering-layers.jpg",
+    "width": 735,
+    "height": 651,
+    "caption": {
+      "en": "Watering each layer as the compost heap is built. Keep it about as damp as a wrung-out sponge.",
+      "zu": "Ukunisela ungqimba ngalunye njengoba inqwaba ye-compost yakhiwa. Yigcine imanzi njengesipontshi esikhanyiwe.",
+      "st": "Ho nosetsa mokgahlelo o mong le o mong ha qubu ya compost e ntse e hahwa. E boloke e le mongobo jwaloka seponche se hameletsweng.",
+      "ve": "U sheledza muṱaṱo muṅwe na muṅwe musi mulundu wa compost u tshi fhaṱiwa. U vhulungeni wo ṋukaho sa siphontshi yo sindiwaho.",
+      "ts": "Ku cheleta xiyenge xin'wana na xin'wana loko nhulu wa compost wu ri karhi wu akiwa. Wu hlayise wu tsakama ku fana na siponji leyi kamiweke."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-red-wigglers",
+    "chapter": "08-soil",
+    "section": 9,
+    "src": "/manual/figures/08-red-wigglers.jpg",
+    "width": 708,
+    "height": 698,
+    "caption": {
+      "en": "Red wigglers: the small compost worms used in a worm farm. They are a different kind from ordinary garden earthworms.",
+      "zu": "Ama-red wiggler: imisundu emincane ye-compost esetshenziswa ku-worm farm. Ayisona uhlobo olufanayo nemisundu evamile yasengadini.",
+      "st": "Red wiggler: diboko tse nyane tsa compost tse sebediswang ho worm farm. Ke mofuta o fapaneng le diboko tse tlwaelehileng tsa serapeng.",
+      "ve": "Red wiggler: zwivhungu zwiṱuku zwa compost zwi shumiswaho kha worm farm. Ndi lushaka lwo fhambanaho na zwivhungu zwa mavu zwa ngadeni.",
+      "ts": "Red wiggler: swivungu leswitsongo swa compost leswi tirhisiwaka eka worm farm. I muxaka wo hambana na swivungu swa misava swa le ntangeni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-bathtub-worm-farm",
+    "chapter": "08-soil",
+    "section": 9,
+    "src": "/manual/figures/08-bathtub-worm-farm.jpg",
+    "width": 1400,
+    "height": 653,
+    "caption": {
+      "en": "An old bath on bricks used as a worm farm, with a hessian cover to keep it dark and moist.",
+      "zu": "Ubhavu omdala phezu kwezitini osetshenziswa njenge-worm farm, onesimbozo sesaka ukuze uhlale umnyama futhi umanzi.",
+      "st": "Bafo ya kgale hodima ditena e sebediswang e le worm farm, e nang le sekwahelo sa kgetsi hore e dule e le lefifi ebile e le mongobo.",
+      "ve": "Bafu ya kale nṱha ha zwidina i shumiswaho sa worm farm, i re na tshifukedzi tsha tsaka uri i dzule i swiswi nahone i na mutsho.",
+      "ts": "Bafu ya khale ehenhla ka switina leyi tirhisiwaka tanihi worm farm, leyi nga na xifunengeto xa saka leswaku yi tshama yi ri ni munyama naswona yi tsakama."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "08-stacking-worm-farm",
+    "chapter": "08-soil",
+    "section": 9,
+    "src": "/manual/figures/08-stacking-worm-farm.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A stacking worm farm: the worms move up into the top tray of fresh food, and worm tea drains out at the bottom.",
+      "zu": "I-worm farm yamathileyi afakwe phezulu kwelinye: imisundu ikhuphukela ethileyini eliphezulu elinokudla okusha, bese i-worm tea iphuma ngezansi.",
+      "st": "Worm farm ya ditrei tse behilweng hodima e nngwe: diboko di nyolohela treing e kahodimo e nang le dijo tse ntjha, mme worm tea e tswa ka tlase.",
+      "ve": "Worm farm ya zwiḓisiṱa zwo vhewaho nṱha ha zwiṅwe: zwivhungu zwi gonyela kha tshiḓisiṱa tsha nṱha tshi re na zwiḽiwa zwiswa, nahone worm tea i bva fhasi.",
+      "ts": "Worm farm ya switeyi leswi vekiweke ehenhla ka swin'wana: swivungu swi khandziyela eka xiteyi xa le henhla lexi nga na swakudya leswintshwa, naswona worm tea yi huma ehansi."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "09-trophic-pyramid",
+    "chapter": "09-balanced-ecology",
+    "section": 2,
+    "src": "/manual/figures/09-trophic-pyramid.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "The ecological pyramid: many plants at the base, fewer plant-eaters above them, fewer predators again, and only a few top predators such as owls.",
+      "zu": "Iphiramidi yemvelo: izitshalo eziningi phansi, izilwane ezidla izitshalo ezimbalwa ngaphezu kwazo, ama-predator ambalwa kakhulu, futhi ama-predator aphezulu ambalwa nje njengezikhova.",
+      "st": "Phiramiti ya tlhaho: dimela tse ngata botlaaseng, diphoofolo tse jang dimela tse fokolang ka hodima tsona, di-predator tse fokolang le ho feta, le di-predator tse kahodimo tse mmalwa feela jwaloka diphooko.",
+      "ve": "Phiramidi ya mupo: zwimela zwinzhi fhasi, zwipuka zwi ḽaho zwimela zwi si gathi nṱha hazwo, dzi-predator dzi si gathi hu tshi fhira, na dzi-predator dza nṱha dzi si gathi fhedzi sa zwikhovha.",
+      "ts": "Phiramidi ya ntumbuluko: swimilana swo tala ehansi, swiharhi leswi dyaka swimilana swi nga ri swingani ehenhla ka swona, ti-predator ti nga ri tingani ku tlula, na ti-predator ta le henhla ti nga ri tingani ntsena ku fana na swikhova."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "09-cowpea-ground-cover",
+    "chapter": "09-balanced-ecology",
+    "section": 4,
+    "src": "/manual/figures/09-cowpea-ground-cover.jpg",
+    "width": 682,
+    "height": 511,
+    "caption": {
+      "en": "A dense cowpea groundcover. As a pioneer legume it covers bare soil, feeds it with nitrogen and gives food as well.",
+      "zu": "I-groundcover eminyene ye-cowpea. Njenge-legume eqala kuqala imboza umhlabathi ongenalutho, iwondle nge-nitrogen futhi inike nokudla.",
+      "st": "Groundcover e teteaneng ya cowpea. E le legume e qalang pele, e kwahela mobu o se nang letho, e o fepa ka naetrojene mme e fana ka dijo hape.",
+      "ve": "Groundcover yo ṱhaṱhaba ya nawa dza sialala. Sa legume i thomaho, i fukedza mavu a si na tshithu, ya a ṋea naiṱirodzheni nahone ya ṋea na zwiḽiwa.",
+      "ts": "Groundcover leyi tsindzeke ya dlodlo. Tanihi legume leyi rhangaka, yi funengeta misava leyi nga riki na nchumu, yi yi phamela naytirojini naswona yi nyika na swakudya."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "09-legume-trees",
+    "chapter": "09-balanced-ecology",
+    "section": 4,
+    "src": "/manual/figures/09-legume-trees.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "Pioneers first: pigeon pea and indigenous sweet thorn growing between young fruit trees to feed the soil.",
+      "zu": "Okuqala kuqala: i-pigeon pea nomunga we-indigenous kukhula phakathi kwezihlahla zezithelo ezincane ukuze kondle umhlabathi.",
+      "st": "Tse qalang pele: pigeon pea le mooka wa indigenous di hola pakeng tsa difate tsa ditholwana tse nyane ho fepa mobu.",
+      "ve": "Zwa u thoma u tou thoma: pigeon pea na muunga wa indigenous zwi tshi hula vhukati ha miri miṱuku ya mitshelo u ṋea mavu zwiḽiwa.",
+      "ts": "Swo rhanga ku sungula: pigeon pea na munga wa indigenous swi kula exikarhi ka mirhi leyintshwa ya mihandzu ku phamela misava."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "09-wildlife-pond",
+    "chapter": "09-balanced-ecology",
+    "section": 5,
+    "src": "/manual/figures/09-wildlife-pond.jpg",
+    "width": 618,
+    "height": 512,
+    "caption": {
+      "en": "Filling a small wildlife pond made from an old tyre, a blanket and plastic, edged with stones. Frogs and dragonflies soon move in.",
+      "zu": "Ukugcwalisa ichibi elincane lezilwane zasendle elenziwe ngethayi elidala, ingubo nepulasitiki, elizungezwe amatshe. Amaxoxo nojekamanzi basheshe bafike.",
+      "st": "Ho tlatsa letangwana le lenyane la diphoofolo tsa naha le entsweng ka thaere ya kgale, kobo le polasetiki, le potolohilweng ke majwe. Dihwaswa le di-dragonfly di fihla kapele.",
+      "ve": "U ḓadza tshidziva tshiṱuku tsha zwipuka zwa ḓaka tsho itwaho nga thaere ya kale, gumbelo na pulasitiki, tsho kombetshedzwaho nga matombo. Matsheke na dzi-dragonfly zwi swika nga u ṱavhanya.",
+      "ts": "Ku tata xidziva lexitsongo xa swiharhi swa nhova lexi endliweke hi thayere ya khale, kumbesi na pulasitiki, lexi rhendzeriweke hi maribye. Swiketlane na ti-dragonfly swi fika hi ku hatlisa."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "09-owl-box",
+    "chapter": "09-balanced-ecology",
+    "section": 5,
+    "src": "/manual/figures/09-owl-box.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A barn owl box on a pole at least 3 m above the ground. A family of barn owls can eat 1 000 or more rodents a year.",
+      "zu": "Ibhokisi lezikhova esigxotsheni okungenani esingu-3 m ngaphezu komhlabathi. Umndeni wezikhova ungadla amagundane angu-1 000 noma ngaphezulu ngonyaka.",
+      "st": "Lebokose la diphooko palong e bophahamo ba bonyane 3 m ho tloha fatshe. Lelapa la diphooko le ka ja dikgoto tse 1 000 kapa ho feta ka selemo.",
+      "ve": "Bogisi ḽa zwikhovha kha danda ḽi re nṱha ha mavu nga 3 m nyana. Muṱa wa zwikhovha u nga ḽa magondo a 1 000 kana u fhira nga ṅwaha.",
+      "ts": "Bokisi ra swikhova eka pholo leri nga ehenhla ka misava hi 3 m kumbe ku tlula. Ndyangu wa swikhova wu nga dya makondlo ya 1 000 kumbe ku tlula hi lembe."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "10-companion-flowers",
+    "chapter": "10-natural-pest-control",
+    "section": 7,
+    "src": "/manual/figures/10-companion-flowers.jpg",
+    "width": 1160,
+    "height": 662,
+    "caption": {
+      "en": "Cabbages with marigolds, nasturtiums and borage between them. The mixed flowers feed useful insects and help hide the cabbages from pests.",
+      "zu": "Amaklabishi ane-marigold, ama-nasturtium ne-borage phakathi kwawo. Izimbali ezixubile zondla izinambuzane eziwusizo futhi zisize ukufihla amaklabishi ezinambuzaneni ezilimazayo.",
+      "st": "Dikhabetjhe tse nang le marigold, nasturtium le borage pakeng tsa tsona. Dipalesa tse kopaneng di fepa dikokonyana tse thusang mme di thusa ho pata dikhabetjhe ho disenyi.",
+      "ve": "Makhabishi a re na marigold, nasturtium na borage vhukati hao. Maluvha o ṱanganaho a ṋea zwikokonyi zwi thusaho zwiḽiwa nahone a thusa u dzumba makhabishi kha zwikukumi zwi tshinyadzaho.",
+      "ts": "Tikhavichi leti nga na marigold, nasturtium na borage exikarhi ka tona. Swiluva leswi hlanganeke swi phamela swivungwana leswi pfunaka naswona swi pfuna ku fihla tikhavichi eka swivungu swo onha."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "10-nasturtium-aphids",
+    "chapter": "10-natural-pest-control",
+    "section": 7,
+    "src": "/manual/figures/10-nasturtium-aphids.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "Nasturtium as a trap crop: aphids gather on its leaves instead of on the cabbages. Pick the infested leaves and feed them to the chickens.",
+      "zu": "I-nasturtium njenge-trap crop: ama-aphid aqoqana emaqabungeni ayo esikhundleni samaklabishi. Khetha amaqabunga agcwele ama-aphid uwanike izinkukhu.",
+      "st": "Nasturtium e le trap crop: di-aphid di bokana makgasing a yona ho ena le dikhabetjhe. Kgetha makgasi a tletseng di-aphid o a fe dikgoho.",
+      "ve": "Nasturtium sa trap crop: zwikukumi zwiṱuku zwi mamaho maṱari (aphids) zwi kuvhangana kha maṱari ayo nṱhani ha makhabishi. Kaṋani maṱari o ḓalaho zwikukumi ni a ṋee khuhu.",
+      "ts": "Nasturtium tanihi trap crop: ti-aphid ti hlengeletana ematlukeni ya yona ematshan'weni ya tikhavichi. Tshovela matluka lama teleke ti-aphid u ma nyika tihuku."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "10-onions-beside-carrots",
+    "chapter": "10-natural-pest-control",
+    "section": 10,
+    "src": "/manual/figures/10-onions-beside-carrots.jpg",
+    "width": 682,
+    "height": 453,
+    "caption": {
+      "en": "Onions planted along the edge of a carrot bed: good neighbours in the garden.",
+      "zu": "U-anyanisi otshalwe emaphethelweni ombhede wezaqathe: omakhelwane abahle engadini.",
+      "st": "Dieie tse jadilweng pheletsong ya bethe ya dihwete: baahisani ba batle serapeng.",
+      "ve": "Anyanisi dzo ṱavhwaho mathomoni a ndima ya kherotsi: vhahura vhavhuḓi ngadeni.",
+      "ts": "Tinyala leti byariweke emakumu ka mubhedhi wa tikherotsi: vaakelani lavanene entangeni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-stone-house-bethel",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 2,
+    "src": "/manual/figures/11-stone-house-bethel.jpg",
+    "width": 1280,
+    "height": 720,
+    "caption": {
+      "en": "A stone-and-cob building at a community centre in Lesotho, with solar panels and a roof vent: a home designed for the sun.",
+      "zu": "Isakhiwo samatshe nodaka esikhungweni somphakathi eLesotho, esinamaphaneli elanga nembobo yomoya ophahleni: ikhaya eliklanyelwe ilanga.",
+      "st": "Moaho wa majwe le seretse setsing sa setjhaba Lesotho, o nang le diphanele tsa letsatsi le lesoba la moya marulelong: lehae le raletsweng letsatsi.",
+      "ve": "Tshifhaṱo tsha matombo na vhu kha senthara ya tshitshavha ngei Lesotho, tshi na dziphanele dza ḓuvha na mukwita wa muya kha ṱhanga: hayani ho pulanelwaho ḓuvha.",
+      "ts": "Xakiwa xa maribye na vumba eka senthara ya muganga eLesotho, lexi nga na tiphanele ta dyambu na xiphuphu xa moya elwangwini: kaya leri pulaneriweke dyambu."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-small-solar-panels",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 4,
+    "src": "/manual/figures/11-small-solar-panels.jpg",
+    "width": 801,
+    "height": 711,
+    "caption": {
+      "en": "Two small solar panels on a tin roof: enough for LED lights and charging phones.",
+      "zu": "Amaphaneli elanga amancane amabili ophahleni lukazinki: anele amalambu e-LED nokushaja omakhalekhukhwini.",
+      "st": "Diphanele tse nyane tse pedi tsa letsatsi marulelong a zinki: di lekane bakeng sa mabone a LED le ho tjhaja difounu.",
+      "ve": "Dziphanele ṱhukhu mbili dza ḓuvha kha ṱhanga ya zinki: dzi lingana mabone a LED na u tshadzha foni.",
+      "ts": "Tiphanele timbirhi letitsongo ta dyambu elwangwini ra zinki: ti ringanela mabone ya LED na ku chaja tifoni."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-solar-geyser",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 4,
+    "src": "/manual/figures/11-solar-geyser.jpg",
+    "width": 775,
+    "height": 581,
+    "caption": {
+      "en": "An evacuated-tube solar geyser on a roof. Like solar panels, it should face north.",
+      "zu": "I-geyser yelanga enamashubhu ophahleni. Njengamaphaneli elanga, kufanele ibheke enyakatho.",
+      "st": "Geyser ya letsatsi e nang le diphaephe tsa kgalase marulelong. Jwaloka diphanele tsa letsatsi, e lokela ho sheba leboya.",
+      "ve": "Giza ḽa ḓuvha ḽi re na phaiphi dza gilasi kha ṱhanga. Sa dziphanele dza ḓuvha, ḽi fanela u lavhelesa devhula.",
+      "ts": "Giza ya dyambu leyi nga na tiphayiphi ta nghilazi elwangwini. Ku fana na tiphanele ta dyambu, yi fanele ku languta n'walungu."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-solar-oven",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 4,
+    "src": "/manual/figures/11-solar-oven.jpg",
+    "width": 703,
+    "height": 727,
+    "caption": {
+      "en": "A box solar cooker with a pot of stew. Use thick gloves: the pot and the box get very hot.",
+      "zu": "Isitofu selanga esiyibhokisi esinembiza yesitshulu. Sebenzisa amagilavu awugqinsi: imbiza nebhokisi kushisa kakhulu.",
+      "st": "Setofo sa letsatsi sa lebokose se nang le pitsa ya sechu. Sebedisa ditlelafo tse teteaneng: pitsa le lebokose di a tjhesa haholo.",
+      "ve": "Tshibikisi tsha ḓuvha tsha bogisi tshi re na khali ya tshisiṱu. Shumisani magiḽavu o khwaṱhaho: khali na bogisi zwi a fhisa vhukuma.",
+      "ts": "Xitofu xa dyambu xa bokisi lexi nga na poto ya xitshulu. Tirhisa mavhoko yo tiya: poto na bokisi swi hisa swinene."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-sun-drying-fruit",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 5,
+    "src": "/manual/figures/11-sun-drying-fruit.jpg",
+    "width": 1168,
+    "height": 478,
+    "caption": {
+      "en": "Halved fruit drying on corrugated iron. Dry food off the ground, cover it with netting against flies and bring it in at night.",
+      "zu": "Izithelo ezisikwe kabili zomiswa phezu kukazinki. Omisa ukudla kungekho phansi, ukumboze ngenetha ukuvikela izimpukane futhi ukungenise ebusuku.",
+      "st": "Ditholwana tse arotsweng habedi di omiswa hodima zinki. Omisa dijo di se fatshe, o di kwahele ka letlooa kgahlanong le dintsintsi mme o di kenye bosiu.",
+      "ve": "Mitshelo yo khethwaho kavhili i tshi omiswa nṱha ha zinki. Omisani zwiḽiwa zwi si fhasi, ni zwi fukedze nga ṋeṱe u thivhela nziṋi nahone ni zwi dzhenise vhusiku.",
+      "ts": "Mihandzu leyi avaniweke hi le xikarhi yi omisiwa ehenhla ka zinki. Omisa swakudya swi nga ri ehansi, u swi funengeta hi nete ku sivela tinhongana naswona u swi nghenisa nivusiku."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-solar-dryer",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 5,
+    "src": "/manual/figures/11-solar-dryer.jpg",
+    "width": 1400,
+    "height": 751,
+    "caption": {
+      "en": "A solar dryer with a glass lid: food dries faster and stays clean, safe from flies and dust.",
+      "zu": "I-solar dryer enesivalo sengilazi: ukudla kuma ngokushesha futhi kuhlale kuhlanzekile, kuvikelekile ezimpukaneni nasothulini.",
+      "st": "Solar dryer e nang le sekwahelo sa kgalase: dijo di oma kapele mme di dula di hlwekile, di sireletsehile ho dintsintsi le lerole.",
+      "ve": "Solar dryer i re na tshifhefho tsha gilasi: zwiḽiwa zwi oma nga u ṱavhanya nahone zwi dzula zwo kuna, zwo tsireledzea kha nziṋi na luṱuṱa.",
+      "ts": "Solar dryer leyi nga na xifunengeto xa nghilazi: swakudya swi oma hi ku hatlisa naswona swi tshama swi basile, swi sirhelelekile eka tinhongana na ntshuri."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-wonder-bag",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 6,
+    "src": "/manual/figures/11-wonder-bag.jpg",
+    "width": 803,
+    "height": 722,
+    "caption": {
+      "en": "A wonder bag. Bring the pot to the boil on the stove, then put it in the bag to finish cooking without more fuel.",
+      "zu": "I-wonder bag. Bilisa imbiza esitofini, bese uyifaka esikhwameni ukuze kuqedwe ukupheka ngaphandle kokusebenzisa amandla engeziwe.",
+      "st": "Wonder bag. Bedisa pitsa setofong, ebe o e kenya mokotleng hore ho qetwe ho pheha ntle le ho sebedisa matla a mang.",
+      "ve": "Wonder bag. Vhilisani khali kha tshiṱofu, ni kone u i dzhenisa mukhwamani uri i fhedze u bika hu si na u shumisa khuni kana gese i engedzeaho.",
+      "ts": "Wonder bag. Virisa poto exitofini, kutani u yi nghenisa esakeni leswaku yi hetisa ku sweka handle ko tirhisa matimba man'wana."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-rocket-stove",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 7,
+    "src": "/manual/figures/11-rocket-stove.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A rocket stove cut away to show inside: sticks burn at the base of a short, insulated chimney, so the fire is hot and uses little wood.",
+      "zu": "I-rocket stove evulwe ukuze kubonakale ngaphakathi: izinti zisha phansi koshimula omfushane ovikelwe ukushisa, ngakho umlilo uyashisa futhi usebenzisa izinkuni ezimbalwa.",
+      "st": "Rocket stove e bulehileng hore ho bonahale ka hare: dithupa di tuka botlaaseng ba tjhimini e kgutshwane e thibelang ho lahleha ha mocheso, ka hona mollo o a tjhesa mme o sebedisa patsi e nyane.",
+      "ve": "Rocket stove yo vulwaho uri hu vhonale ngomu: zwiṱanda zwi swa fhasi ha tshimini pfufhi yo tsireledzwaho, ngauralo mulilo u a fhisa nahone u shumisa khuni dzi si gathi.",
+      "ts": "Rocket stove leyi pfuriweke leswaku ku vonaka endzeni: tinhonga ti tshwa ehansi ka chimini yo koma leyi sirheleriweke, hikwalaho ndzilo wu hisa naswona wu tirhisa tihunyi titsongo."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "11-biogas-diagram",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 8,
+    "src": "/manual/figures/11-biogas-diagram.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "How a household biogas digester works: manure and food waste go in, gas flows to the kitchen stove, and the slurry goes to the garden.",
+      "zu": "Indlela i-biogas digester yasekhaya esebenza ngayo: umquba nemfucuza yokudla kungena, igesi igelezela esitofini sasekhishini, bese i-slurry iya engadini.",
+      "st": "Kamoo biogas digester ya lelapa e sebetsang ka teng: manyolo a diphoofolo le masalla a dijo a kena, kgase e phallela setofong sa kitjhene, mme slurry e ya serapeng.",
+      "ve": "Nḓila ine biogas digester ya hayani ya shuma ngayo: manyoro na zwiḽiwa zwo salaho zwi dzhena, gesi i elela kha tshiṱofu tsha khitshini, nahone slurry i ya ngadeni.",
+      "ts": "Ndlela leyi biogas digester ya le kaya yi tirhaka ha yona: vulongo na thyaka ra swakudya swi nghena, gasi yi khulukela exitofini xa le khixini, naswona slurry yi ya entangeni."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  },
+  {
+    "id": "11-biogas-digester-build",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 8,
+    "src": "/manual/figures/11-biogas-digester-build.jpg",
+    "width": 769,
+    "height": 575,
+    "caption": {
+      "en": "Building a household biogas digester in Lesotho: the tank sits in a block-lined pit. Never work alone in a pit.",
+      "zu": "Ukwakha i-biogas digester yasekhaya eLesotho: ithangi lihlala emgodini onezitini. Ungalokothi usebenze wedwa emgodini.",
+      "st": "Ho haha biogas digester ya lelapa Lesotho: tanka e dula sekoting se nang le ditena. O se ke wa sebetsa o le mong sekoting.",
+      "ve": "U fhaṱa biogas digester ya hayani ngei Lesotho: thanngi i dzula mukwitani wo fhaṱiwaho nga zwidina. Ni songo shuma no ḓiṋa mukwitani.",
+      "ts": "Ku aka biogas digester ya le kaya eLesotho: thanki yi tshama emugodini lowu akiweke hi switina. U nga tshuki u tirha u ri wexe emugodini."
+    },
+    "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
+  },
+  {
+    "id": "11-biogas-digester-finished",
+    "chapter": "11-home-and-appropriate-technology",
+    "section": 8,
+    "src": "/manual/figures/11-biogas-digester-finished.jpg",
+    "width": 1400,
+    "height": 1050,
+    "caption": {
+      "en": "A finished household biogas digester, with the gas pipe running to the kitchen. Biogas can explode: keep flames away from leaks and let fresh air in.",
+      "zu": "I-biogas digester yasekhaya eseqediwe, nepayipi legesi eliya ekhishini. I-biogas ingaqhuma: gcina amalangabi ekude nokuvuza futhi uvumele umoya omusha ungene.",
+      "st": "Biogas digester ya lelapa e phethilweng, e nang le phaephe ya kgase e yang kitjhene. Biogas e ka phatloha: boloka malakabe a le hole le ho dutla mme o dumelle moya o hlwekileng ho kena.",
+      "ve": "Biogas digester ya hayani yo fhelaho, i re na phaiphi ya gesi i yaho khitshini. Biogas i nga thuthuba: vhulungani malaḓana kule na hune gesi ya bvisa hone nahone ni tendele muya muswa u dzhene.",
+      "ts": "Biogas digester ya le kaya leyi hetiweke, leyi nga na phayiphi ya gasi leyi yaka ekhixini. Biogas yi nga buluka: hlayisa malangavi ekule na laha gasi yi humaka kona naswona u pfumelela moya lowuntshwa wu nghena."
+    },
+    "credit": "Illustration: made with AI for this manual"
+  }
+]

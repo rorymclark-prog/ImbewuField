@@ -41,7 +41,12 @@ for (const lang of langs) {
     } catch { /* storage blocked: the print CSS hides everything outside the book anyway */ }
   });
   await page.goto(`${base}/manual/${lang}/book`, { waitUntil: 'networkidle', timeout: 300_000 });
-  await page.evaluate(() => Promise.all([...document.images].map((img) => img.complete || new Promise((r) => { img.onload = img.onerror = r; }))));
+  // Manual figures are loading="lazy": an off-screen lazy image never starts loading (and never
+  // fires onload), so switch them all to eager first, then wait for every one.
+  await page.evaluate(() => Promise.all([...document.images].map((img) => {
+    img.loading = 'eager';
+    return img.complete || new Promise((r) => { img.onload = img.onerror = r; });
+  })));
   await page.emulateMedia({ media: 'print' });
   const file = path.join(outDir, `permaculture-manual-${lang}.pdf`);
   await page.pdf({ path: file, format: 'A4', printBackground: true, preferCSSPageSize: true });
