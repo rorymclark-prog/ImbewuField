@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'd4029ab6', changes: [
+    'The Garden Survey camera tip shows its isiZulu draft beside the English source.',
+  ] },
   { when: '26 September 2026', sha: '6ad54fdb', changes: [
     'The tank calculator pairs its isiZulu draft labels with the English source.',
     'The Water guide can scroll its calculator above the mobile element palette.',
