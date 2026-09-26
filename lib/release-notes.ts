@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '3968cb43', changes: [
+    'The Permaculture Manual now shows the handbook photos beside the text.',
+    'Hard words like swale and compost stay in English; the new Glossary explains them.',
+    'You can print or save the whole manual as one book in your language.',
+  ], tour: [
+    { title: 'Open the manual', where: 'Manual', href: '/manual',
+      detail: 'Pick your language, open a chapter to see the photos, or tap "Print or save the whole book".' },
+  ] },
   { when: '26 September 2026', sha: '2e24930b', changes: [
     'Sesotho and Tshivenda Study show more course and offline save labels.',
   ], tour: [
