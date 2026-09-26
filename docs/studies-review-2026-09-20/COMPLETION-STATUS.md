@@ -25,7 +25,11 @@ Do not stop merely because one small patch or release has finished.
 
 ## Current release batch
 
-Branch: `codex/studies-completion-review`, based on `64edbc9`.
+Implementation branch `codex/studies-completion-review` was merged as PR496,
+`91e28ca`. Both CI jobs, preview and production deployment passed. The live
+`/api/build-info` returned `91e28ca`; live Design interaction and the Finance
+download control were checked in the browser. The continuation branch is now
+`codex/studies-core-correction-review`, holding review documents only.
 
 - [x] Repair standalone diagram styling, legends and readable phone enlargement.
 - [x] Make the concept comparison fair; require evidence-based reasoning.
@@ -33,8 +37,8 @@ Branch: `codex/studies-completion-review`, based on `64edbc9`.
 - [x] Add edge-distance practice, a fresh evidence variation and a handover record.
 - [x] Inspect actual standalone exports and desktop/390px views.
 - [x] Complete targeted Studies journey audit and act on its verified priority gaps.
-- [ ] Run final checks once on the complete batch, publish, verify production.
-- [ ] Update this file with evidence, limitations and the next unfinished item.
+- [x] Run final checks on the complete batch, publish, verify production.
+- [x] Update this file with evidence, limitations and the next unfinished item.
 
 The primary agent owns integration and release. Terra agent `worked_diagram` owns
 only the new diagram component/styles. Terra agent `studies_completion_audit`
@@ -44,7 +48,7 @@ No agent changes existing lesson bodies, quizzes, translations or audio.
 Checkpoint `a22869d` saves the connected teaching revision. The actual browser SVG
 download opens independently with its colors and source labels. Visual inspection
 found and corrected water-label, scale-bar and alternative-dimension collisions;
-final production-build browser and offline checks are still pending.
+the completed production-build browser and offline checks are listed below.
 
 ## Verified release candidate
 
@@ -76,6 +80,11 @@ The next bounded editorial item is [CORE-FACT-CHECK-FOLLOWUP.md](CORE-FACT-CHECK
 correct the twelve-principle attribution and A-frame observation/construction claims
 across the lesson, quiz, transcript and audio together. Do not make a text-only fix
 that leaves narration contradicting it. The original animation hold remains in force.
+
+The concrete proposed wording, quiz and narration are saved in
+[CORE-FACT-CORRECTION-DRAFT.md](CORE-FACT-CORRECTION-DRAFT.md). They are not applied
+to live core lessons or recordings. Preserve this packet and complete its coordinated
+review/media checks rather than repeating the same factual investigation.
 
 ## Remaining gates
 
