@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 test('Soil Health Sesotho draft preserves exact sources, safety holds, plant names and quiz indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
@@ -87,6 +88,8 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'lessons[0] soil-health-l1.quiz[0].options[1]',
     'lessons[0] soil-health-l1.quiz[0].rationale',
     'lessons[1] soil-health-l2.infographicAlt',
+    'lessons[1] soil-health-l2.body',
+    'lessons[1] soil-health-l2.keyPoints[1]',
     'lessons[1] soil-health-l2.quiz[0].question',
     'lessons[1] soil-health-l2.quiz[0].rationale',
     'lessons[1] soil-health-l2.quiz[1].rationale',
@@ -97,4 +100,17 @@ test('Soil Health Sesotho draft preserves exact sources, safety holds, plant nam
     'lessons[2] soil-health-l3.quiz[0].rationale',
     'lessons[2] soil-health-l3.quiz[1].rationale',
   ], 'uncertain and untranslated fields must remain exact-English holds');
+
+  const compostLesson = source.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  assert.ok(compostLesson);
+  const compostDraft = draft.lessons.find(lesson => lesson.id === 'soil-health-l2');
+  assert.ok(compostDraft);
+  assert.equal(compostDraft.body.reviewStatus, 'hold');
+  assert.equal(compostDraft.body.sesothoDraft, compostLesson.body);
+  const presentation = resolveLearnerLessonPresentation(compostLesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, compostLesson.body,
+    'the visible draft must keep the whole compost procedure exact English until its sanitation wording is reviewed');
+  assert.equal(presentation.content.keyPoints[1], compostLesson.keyPoints[1],
+    'the visible summary must retain the exact sanitation claim until its Sesotho wording is reviewed');
 });

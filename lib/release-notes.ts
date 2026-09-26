@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '7180296e', changes: [
+    'Soil Health keeps compost guidance in English for Sesotho review.',
+  ], tour: [
+    { title: 'Check the compost lesson', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; its compost guidance remains in English for review.' },
+  ] },
   { when: '26 September 2026', sha: '719f440b', changes: [
     'Tshivenda Introduction keeps uncertain advice and the wet-season minimum in English.',
     'Tshivenda Food Forest and Sesotho Bees add marked draft text beside English.',
