@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '8b06ebbf', changes: [
+  { when: '26 September 2026', sha: '0432721e', changes: [
     'Tshivenda learners can read a marked Small Livestock module description.',
   ], tour: [
     { title: 'Check the livestock module card', where: 'Study → Small Livestock Integration', href: '/student',
