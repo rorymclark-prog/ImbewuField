@@ -4,7 +4,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { usePathname, useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { floatingBackAllowed } from '@/lib/back-routes';
-import { useLanguage } from '@/lib/i18n';
+import { accessibleSourceLabel } from '@/lib/accessible-label';
+import { translate, useLanguage } from '@/lib/i18n';
 
 /**
  * ONE WAY BACK, ON EVERY PAGE (Rory: "we need a simple go back to the last page button for
@@ -69,7 +70,7 @@ export default function BackControlProvider({ children }: { children: React.Reac
       {show && (
         <button
           onClick={goBack}
-          aria-label={lang === 'zu' ? 'Buyela emuva' : 'Go back'}
+          aria-label={accessibleSourceLabel(lang, t('buttonBack'), translate('en', 'buttonBack'))}
           title={t('buttonBack')}
           style={{
             position: 'fixed',

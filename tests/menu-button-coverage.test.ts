@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { accessibleSourceLabel } from '@/lib/accessible-label';
 
 // Rory: "lets have a burger menu option on every screen."
 //
@@ -87,11 +88,30 @@ test('the menu button keeps the touch floor and the theme tokens', () => {
   assert.match(src, /var\(--bg-1\)/, 'themed background, not a hardcoded hex');
   assert.match(src, /var\(--border\)/);
   assert.match(src, /var\(--text-primary\)/);
-  // The old assertion pinned the English label, which left the shared control English after
-  // the farmer chose isiZulu. Keep the accessibility rule: name the button from the locale.
-  assert.match(src, /aria-label=\{t\('openNavigationAriaLabel'\)\}/,
-    'the menu needs a translated accessible name, not a fixed English label');
+  assert.match(src, /aria-label=\{accessibleSourceLabel\(lang, t\('openNavigationAriaLabel'\), translate\('en', 'openNavigationAriaLabel'\)\)\}/,
+    'the menu needs the shared accessible label rule');
   // A hex here is the exact bug SettingsButton's comment records: a bright chip
   // in the corner of every dark-mode screen.
   assert.ok(!/#[0-9A-Fa-f]{6}/.test(src.replace(/\/\/.*$/gm, '')), 'no hardcoded colours');
+});
+
+test('isiZulu navigation exposes the English source and visibly marks unreviewed menu wording', async () => {
+  assert.equal(accessibleSourceLabel('zu', 'Emuva', 'Back'), 'Emuva — Back');
+  assert.equal(accessibleSourceLabel('zu', 'Emuva', 'Emuva'), 'Emuva');
+  assert.equal(accessibleSourceLabel('en', 'Go back', 'Go back'), 'Go back');
+
+  const readComponent = (name: string) => readFileSync(
+    fileURLToPath(new URL(`../components/${name}.tsx`, import.meta.url)),
+    'utf8',
+  );
+  for (const name of ['BackButton', 'BackControl'] as const) {
+    const src = readComponent(name);
+    assert.match(src, /aria-label=\{accessibleSourceLabel\(lang, t\('buttonBack'\), translate\('en', 'buttonBack'\)\)\}/,
+      `${name} must use the shared accessible name`);
+  }
+  const drawer = readComponent('NavDrawer');
+  assert.match(drawer, /isZulu && \([\s\S]*role="note" lang="en"[\s\S]*ISIZULU MACHINE DRAFT[\s\S]*reviewed by a fluent isiZulu speaker/,
+    'the drawer must visibly identify the navigation as an unreviewed machine draft');
+  assert.match(drawer, /aria-label=\{accessibleSourceLabel\(lang, t\('navCloseMenu'\), translate\('en', 'navCloseMenu'\)\)\}/,
+    'the close-menu control must use the shared accessible name');
 });
