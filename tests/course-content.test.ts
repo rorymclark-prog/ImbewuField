@@ -403,7 +403,7 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
     'the mulch claim stays conditional on rain hitting the cover');
   assert.match(soilHealthL3.body, /Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe/,
     'the spring rain passage separates soil impact from conditional runoff transport');
-  assert.match(soilHealthL3.body, /Uketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate/,
+  assert.match(soilHealthL3.body, /Uketshezi oluphuma ngokwemvelo emgqonyeni wemisundu lubizwa nge-leachate/,
     'leachate means natural liquid drainage from a worm bin');
   assert.match(soilHealthL3.body, /Ungayisebenzisi ezitshalweni ezidliwayo/,
     'the translated leachate warning keeps it off edible plants');

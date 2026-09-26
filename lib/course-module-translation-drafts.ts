@@ -32,13 +32,13 @@ export const COURSE_MODULE_TRANSLATION_DRAFTS = {
     sourceTitle: 'Water Harvesting',
     sourceDescription: 'Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.',
     title: 'Ukuvunwa Kwamanzi',
-    description: 'Funda ngezindlela zokubamba nokusebenzisa amanzi: ama-swale, ama-berm, amadamu, amathangi emvula namanzi ampunga. Khetha indlela efanele indawo yakho.',
+    description: 'Funda ngezindlela zokubamba nokusebenzisa amanzi: ama-swale, ama-berm, amadamu, amathangi emvula namanzi asetshenzisiwe (greywater). Khetha indlela efanele indawo yakho.',
   },
   'soil-health': {
     sourceTitle: 'Soil Health & Composting',
     sourceDescription: 'Build living soil with compost, mulch, cover crops and worm farms.',
     title: 'Impilo Yomhlabathi Ne-Compost',
-    description: 'Funda ngomhlabathi, wenze i-compost, usebenzise i-mulch nezitshalo zokumboza umhlabathi, futhi unakekele amapulazi ezikelemu.',
+    description: 'Funda ngomhlabathi, wenze i-compost, usebenzise i-mulch nezitshalo zokumboza umhlabathi, futhi unakekele amapulazi emisundu.',
   },
   'vegetables-staples': {
     sourceTitle: 'Vegetables and Staple Crops',
