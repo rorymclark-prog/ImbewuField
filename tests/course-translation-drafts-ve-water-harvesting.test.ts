@@ -22,10 +22,10 @@ test('Water Harvesting Tshivenda draft keeps safety guidance exact and answer ma
 
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   const titles: Record<string, string> = {
-    'water-harvesting': 'U Kuvhanganedza Maḓi',
-    'water-harvesting-l1': 'Swales na Berms: U Fhungudza Luvhilo lwa Maḓi kha Mudzengamo',
-    'water-harvesting-l2': 'Madamu na Madzivha a Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo',
-    'water-harvesting-l3': 'Matangi a Maḓi a Mvula na U Kuvhanganya Ṱhangani: U Kuvhanganedza na U Tsireledza Maḓi',
+    'water-harvesting': 'U Kuvhanganya Maḓi',
+    'water-harvesting-l1': 'Mikubo (Swales) na Ṱhanga dza Mavu (Berms): U Fhungudza Luvhilo lwa Maḓi kha U Sendama ha Mavu',
+    'water-harvesting-l2': 'Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo',
+    'water-harvesting-l3': 'Dzithanngi dza Maḓi a Mvula na U Kuvhanganya Maḓi kha Mutombo: U Kuvhanganya na U Tsireledza Maḓi',
   };
   const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string) => {
     assert.equal(pair.sourceEnglish, english, `${path}: retain exact English beside every draft`);
@@ -127,11 +127,11 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
 
   const translated = new Map([
-    ['module.title', 'Mutakalo wa Mavu na Muvhundo (Composting)'],
-    ['module.description', 'Fhatani mavu a re na vhutshilo nga manyoro (compost), mulitshi (mulch), zwimela zwa u thivhela (cover crops) na mabodo a mahuvhane (worm farms).'],
-    ['lessons[0].title', 'U Pfesesa Mavu A Vhoiwe: Mutheo wa Zwoṱhe'],
-    ['lessons[1].title', 'U Ita na U Shumisa Manyoro (Compost)'],
-    ['lessons[2].title', 'Mulitshi (Mulching) na Zwimela zwa u Thivhela (Cover Crops): U Tsireledza na U Fhaṱa Mavu'],
+    ['module.title', 'Mutakalo wa Mavu na U Ita Khomposo (Composting)'],
+    ['module.description', 'Fhaṱani mavu a re na vhutshilo nga khomposo (compost), tshifukedzi (mulch), zwiliṅwa zwa u fukedza (cover crops) na mabodo a zwivhungu (worm farms).'],
+    ['lessons[0].title', 'U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe'],
+    ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
+    ['lessons[2].title', 'Tshifukedzi (Mulching) na Zwiliṅwa zwa u Fukedza (Cover Crops): U Tsireledza na U Fhaṱa Mavu'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -141,7 +141,7 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     assert.deepEqual(numberTokens(pair.tshivendaDraft), numberTokens(english), `${path}: preserve numeric tokens`);
     if (shouldTranslate) {
       assert.equal(pair.reviewStatus, 'machine-draft', `${path}: label AI text as an unreviewed draft`);
-      assert.equal(pair.tshivendaDraft, translated.get(path), `${path}: keep the Agy output unchanged`);
+      assert.equal(pair.tshivendaDraft, translated.get(path), `${path}: keep the pinned (glossary-aligned) draft wording`);
     } else {
       heldFields++;
       assert.equal(pair.reviewStatus, 'hold', `${path}: farming content must remain held for fluent local review`);
