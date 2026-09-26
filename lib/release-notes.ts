@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'fa7843ab', changes: [
+    'Tshivenda Food Forest habitat wording stays in English for review.',
+  ], tour: [
+    { title: 'Check the food forest lesson', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; the heading is marked as a machine draft, while the body and quizzes remain in English.' },
+  ] },
   { when: '26 September 2026', sha: '9fad460', changes: [
     'Sesotho ethics lesson keeps its explanation in English for review.',
   ], tour: [

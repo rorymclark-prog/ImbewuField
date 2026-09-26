@@ -97,7 +97,7 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
       'Species Selection for South African Food Forests',
       'U Nanga Lushaka lwa Zwimela zwa Daka ḽa Zwiḽiwa ḽa Afrika Tshipembe',
     ),
-    body: pair(
+    body: hold(
       [
         'Check local rainfall, frost, heat, soil and water availability before choosing plants.',
         'Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.',
@@ -109,20 +109,6 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
         'Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.',
         'Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.',
         'Locally appropriate indigenous plants can support habitat as part of the design.',
-        'Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.',
-        'Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.',
-      ].join('\n\n'),
-      [
-        'Check local rainfall, frost, heat, soil and water availability before choosing plants.',
-        'Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.',
-        'A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.',
-        'The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.',
-        'This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.',
-        'Keep existing legal and project restrictions in force. Do not plant from a picture alone.',
-        'The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.',
-        'Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.',
-        'Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.',
-        'Zwimela zwa mupo zwo teaho vhupo hazwo zwi nga tikedza vhupo sa tshipiḓa tsha nzudzanyo.',
         'Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.',
         'Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.',
       ].join('\n\n'),
