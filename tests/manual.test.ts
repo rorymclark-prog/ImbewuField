@@ -61,6 +61,24 @@ test('each translated chapter keeps the English structure', () => {
   }
 });
 
+// Rory's rule (26 Sep 2026): the technical words stay in English in every language, and the
+// Glossary's first column is that fixed list. The structure check above only counts rows, so a
+// translated or re-ordered word would slip through. Paused languages (Xitsonga) are checked too.
+test('every Glossary keeps the English word column exactly', () => {
+  const words = (lang: string) => {
+    const table = parseManual(read(lang, '12-glossary')).find((b) => b.type === 'table');
+    assert.ok(table && table.type === 'table', `${lang}/12-glossary has no table`);
+    return table.rows.map((row) => row[0].map((part) => part.text).join('').trim());
+  };
+  const english = words('en');
+  assert.ok(english.length >= 60, 'the English glossary lists the technical words');
+  const langs = readdirSync(path.join(ROOT, 'content', 'manual'), { withFileTypes: true })
+    .filter((d) => d.isDirectory() && d.name !== 'en' && existsSync(file(d.name, '12-glossary')))
+    .map((d) => d.name);
+  assert.ok(langs.length >= 3, 'the translated glossaries exist');
+  for (const lang of langs) assert.deepEqual(words(lang), english, `${lang}/12-glossary changed the English words`);
+});
+
 test('chapter files use only the supported Markdown subset', () => {
   for (const lang of MANUAL_LANGS) {
     for (const slug of MANUAL_CHAPTERS) {
@@ -171,6 +189,24 @@ test('figures.json: unique ids, known chapters, sections that exist, English cap
     assert.ok(typeof f.caption?.en === 'string' && f.caption.en.trim(), `${f.id}: missing English caption`);
     assert.equal(f.src, `/manual/figures/${f.id}.jpg`, `${f.id}: src must be /manual/figures/<id>.jpg`);
     assert.ok(f.width > 0 && f.height > 0, `${f.id}: width/height`);
+  }
+});
+
+// ManualBlocks puts a section's pictures after its first paragraph, list or table. A section that
+// is only headings would drop them without a sound, in any language, so every one must have one.
+test('every figure has body text in its section to sit under, in every language', () => {
+  const langs = ['en', ...MANUAL_LANGS.filter((l) => l !== 'en')];
+  for (const f of figures) {
+    for (const lang of langs) {
+      if (!existsSync(file(lang, f.chapter))) continue;
+      let section = -1;
+      let hasBody = false;
+      for (const b of parseManual(read(lang, f.chapter))) {
+        if (b.type === 'h2') section += 1;
+        else if (section === f.section && b.type !== 'h1' && b.type !== 'h3') hasBody = true;
+      }
+      assert.ok(hasBody, `${f.id}: section ${f.section} of ${lang}/${f.chapter} has no body text, so the picture would never show`);
+    }
   }
 });
 
