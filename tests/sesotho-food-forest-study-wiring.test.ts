@@ -44,6 +44,24 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     assert.equal(presentation.content.body, resolved(translation.body, lesson.body, `${prefix}.body`));
     assert.equal(presentation.content.body.split('\n\n').length, lesson.body.split('\n\n').length,
       `${prefix}: keep the source's paragraph breaks`);
+    if (lesson.id === 'food-forest-l2') {
+      assert.equal(translation.title.reviewStatus, 'machine-draft');
+      assert.equal(translation.infographicAlt?.reviewStatus, 'machine-draft');
+      assert.deepEqual(translation.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold']);
+      assert.deepEqual(translation.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
+        ['hold', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+      ], 'keep the learner-visible L2 quiz content in its pre-existing state');
+    }
+    if (lesson.id === 'food-forest-l3') {
+      assert.equal(translation.title.reviewStatus, 'hold');
+      assert.equal(translation.infographicAlt?.reviewStatus, 'hold');
+      assert.deepEqual(translation.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
+      assert.deepEqual(translation.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+      ], 'keep the learner-visible L3 quiz content in its pre-existing state');
+    }
     if (lesson.id === 'food-forest-l1') {
       const sourceParagraphs = lesson.body.split('\n\n');
       const shownParagraphs = presentation.content.body.split('\n\n');
@@ -85,12 +103,13 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     }
   }
 
-  assert.deepEqual(holds, [
+  assert.deepEqual(holds.filter(path => path.startsWith('lessons[0]')), [
     'lessons[0] food-forest-l1.title',
     'lessons[0] food-forest-l1.quiz[0].rationale',
     'lessons[0] food-forest-l1.quiz[1].rationale',
     'lessons[0] food-forest-l1.infographicAlt',
-    'lessons[1] food-forest-l2.body',
+  ], 'planting, species-selection, frost and image wording holds must not drift');
+  assert.deepEqual(holds.filter(path => path.startsWith('lessons[1]') || path.startsWith('lessons[2]')), [
     'lessons[1] food-forest-l2.keyPoints[0]',
     'lessons[1] food-forest-l2.keyPoints[1]',
     'lessons[1] food-forest-l2.keyPoints[2]',
@@ -99,11 +118,10 @@ test('Food Forest Sesotho appears as a source-paired draft and all held fields s
     'lessons[1] food-forest-l2.quiz[0].rationale',
     'lessons[1] food-forest-l2.quiz[1].rationale',
     'lessons[2] food-forest-l3.title',
-    'lessons[2] food-forest-l3.body',
     'lessons[2] food-forest-l3.quiz[0].rationale',
     'lessons[2] food-forest-l3.quiz[1].rationale',
     'lessons[2] food-forest-l3.infographicAlt',
-  ], 'planting, species-selection, frost and image wording holds must not drift');
+  ], 'preserve existing holds while adding only the selected body drafts');
 
   assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} changed` }, 'st').status,
     'english-fallback', 'changed module description must withdraw the card draft');

@@ -67,6 +67,49 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
         if (!translatedParagraphs.has(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L1 paragraph ${index + 1} stays English`);
       });
     }
+    if (original.id === 'food-forest-l2') {
+      const sourceParagraphs = original.body.split('\n\n');
+      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
+      assert.equal(lesson.body.reviewStatus, 'machine-draft');
+      assert.equal(lesson.title.reviewStatus, 'machine-draft', 'retain the already-visible L2 title draft');
+      assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft', 'retain the already-visible L2 image-description draft');
+      assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['hold', 'hold', 'hold', 'hold'],
+        'retain existing L2 key-point holds');
+      assert.deepEqual(lesson.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
+        ['hold', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+      ], 'retain all pre-existing L2 quiz draft and hold statuses');
+      assert.equal(draftParagraphs[9],
+        'Dimela tsa tlhaho (indigenous plants) tse loketseng sebaka di ka tshehetsa habitat e le karolo ya moralo.');
+      sourceParagraphs.forEach((paragraph, index) => {
+        if (index !== 9) assert.equal(draftParagraphs[index], paragraph, `Food Forest L2 paragraph ${index + 1} stays English`);
+      });
+    }
+    if (original.id === 'food-forest-l3') {
+      const sourceParagraphs = original.body.split('\n\n');
+      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
+      assert.equal(lesson.body.reviewStatus, 'machine-draft');
+      assert.equal(lesson.title.reviewStatus, 'hold', 'retain the existing L3 title hold');
+      assert.equal(lesson.infographicAlt?.reviewStatus, 'hold', 'retain the existing L3 image-description hold');
+      assert.deepEqual(lesson.keyPoints.map(point => point.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'],
+        'retain the already-visible L3 key-point drafts');
+      assert.deepEqual(lesson.quiz.map(question => [question.question.reviewStatus, question.options.map(option => option.reviewStatus), question.rationale.reviewStatus]), [
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+        ['machine-draft', ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft'], 'hold'],
+      ], 'retain all pre-existing L3 quiz draft and hold statuses');
+      assert.equal(draftParagraphs[2],
+        'Difate tsa sehlooho (main trees) le mekgahlelo e ka tlase (lower layers) di ka kenngwa ha maemo a dumela. ' +
+        'Ground cover ha e hloke ho ema ho fihlela qetellong; qoba dimela tse qothisanang le difate tse nyane.');
+      assert.equal(draftParagraphs[3],
+        'Qala ka sebaka seo o ka se nosetsang le ho se hlokomela. Check existing vegetation before clearing.');
+      assert.equal(draftParagraphs[9],
+        'Kgetha monyetla wa ho lema ha mongobo wa mobu le maemo a lehodimo a lebelletsweng di tshehetsa establishment.');
+      assert.equal(draftParagraphs[10],
+        'Pula e ka thusa, empa hlahloba root zone mme o boloke leano la nosetso la backup. Avoid planting into waterlogged ground.');
+      sourceParagraphs.forEach((paragraph, index) => {
+        if (![2, 3, 9, 10].includes(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L3 paragraph ${index + 1} stays English`);
+      });
+    }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: keep key-point count/order`);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
@@ -87,12 +130,13 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
     }
   }
 
-  assert.deepEqual(holds, [
+  assert.deepEqual(holds.filter(path => path.startsWith('lessons[0]')), [
     'lessons[0] food-forest-l1.infographicAlt',
     'lessons[0] food-forest-l1.title',
     'lessons[0] food-forest-l1.quiz[0].rationale',
     'lessons[0] food-forest-l1.quiz[1].rationale',
-    'lessons[1] food-forest-l2.body',
+  ], 'uncertain planting, legal, and visually corrected image wording stay exact English');
+  assert.deepEqual(holds.filter(path => path.startsWith('lessons[1]') || path.startsWith('lessons[2]')), [
     'lessons[1] food-forest-l2.keyPoints[0]',
     'lessons[1] food-forest-l2.keyPoints[1]',
     'lessons[1] food-forest-l2.keyPoints[2]',
@@ -102,10 +146,9 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
     'lessons[1] food-forest-l2.quiz[1].rationale',
     'lessons[2] food-forest-l3.infographicAlt',
     'lessons[2] food-forest-l3.title',
-    'lessons[2] food-forest-l3.body',
     'lessons[2] food-forest-l3.quiz[0].rationale',
     'lessons[2] food-forest-l3.quiz[1].rationale',
-  ], 'uncertain planting, legal, and visually corrected image wording stay exact English');
+  ], 'retain existing holds; the only new drafts are the selected L2/L3 body sentences');
   assert.doesNotMatch(source.lessons[0].infographicAlt ?? '', /root crops|seven layers/i,
     'the pictured woody roots and overlapping plant heights cannot support an exact crop or layer count');
 

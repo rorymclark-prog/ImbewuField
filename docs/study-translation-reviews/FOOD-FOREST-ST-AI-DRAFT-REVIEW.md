@@ -1,9 +1,28 @@
-# Food Forest Design — Sesotho machine draft
+# Food Forest Design — Sesotho source-paired drafts
 
-- **Status:** Agy `gemini-3.8-flash-low` translation draft with an independent Agy `gemini-3.1-pro-low` source-pair audit. Neither model is a fluent speaker or local farming adviser; no human review has happened.
+- **Status:** Unreviewed AI drafts. The Study lesson marks drafted body text and presents its exact English source alongside it. This is not fluent or farming approval.
 - **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), canonical module `food-forest` (three lessons, 25 minutes, design).
-- **Paired data:** [`lib/course-translation-drafts-st-food-forest.ts`](../../lib/course-translation-drafts-st-food-forest.ts). Review data only: not imported by Study, not learner-visible, and no Sesotho audio or slides were created.
-- **Exact-English holds (17 fields):** L1 title and body; both L1 quiz rationales; L2 body, all four key points, first quiz question and both quiz rationales; L3 infographic description, title, body and both quiz rationales. The whole lesson bodies stay English because they contain field actions, species choice, local suitability and/or safety wording. L2's selection advice stays English because it includes plant identity, edibility, ecological and legal restrictions. The frost question stays English because Agy Pro flagged the draft's phrase for hard frost as potentially changing the condition. The L1 and L3 titles and L3 image description stay English after the same audit flagged spelling/voice uncertainty.
-- **Automated QA findings:** Agy Pro flagged `Itphelisang` in the L1 title, `Ho Homa` in the L3 title, and an active/passive mismatch in the L3 image description. Those three fields were changed to exact-English holds. It also suggested `mango` under hard frost could be rendered as “heavy dew frost”; that question is now an exact-English hold. The audit incorrectly called the deliberately held L2 key points an inconsistency; the exact holds are an intentional risk decision, not an English source-pair mismatch.
-- **Preservation checks:** Focused tests compare every pair against the canonical module, retain all three lesson IDs and order, keep paragraph boundaries, preserve all six quiz indexes and option order, check Latin script and source number/placeholders, and assert the exact hold list. The named plant list is retained in the source bodies, which remain byte-for-byte English.
-- **Review needed before any learner wiring:** A first-language Sesotho reviewer familiar with South African smallholder food-forest practice should check grammar/register, module titles and quiz meaning. A local farming reviewer should check plant suitability, frost, edible-use identification, ecological/legal restrictions and establishment steps. The current work makes no approval claim.
+- **Paired data:** [`lib/course-translation-drafts-st-food-forest.ts`](../../lib/course-translation-drafts-st-food-forest.ts). Food Forest drafts are already registered in Study. This batch changes only the L2/L3 body pairs, leaving every pre-existing title, image description, key point, quiz field, and L1 field as it was. It creates no audio or translated slides.
+
+## New draft scope
+
+The following complete source sentences are paired with Sesotho drafts. Technical terms without a confident equivalent remain in English in the draft.
+
+| Lesson | Exact English source | Unreviewed draft |
+|---|---|---|
+| L2 | Locally appropriate indigenous plants can support habitat as part of the design. | Dimela tsa tlhaho (indigenous plants) tse loketseng sebaka di ka tshehetsa habitat e le karolo ya moralo. |
+| L3 | Main trees and lower layers can be introduced as conditions allow. | Difate tsa sehlooho (main trees) le mekgahlelo e ka tlase (lower layers) di ka kenngwa ha maemo a dumela. |
+| L3 | Ground cover need not wait until the end; avoid plants competing with young trees. | Ground cover ha e hloke ho ema ho fihlela qetellong; qoba dimela tse qothisanang le difate tse nyane. |
+| L3 | Begin with an area you can water and maintain. | Qala ka sebaka seo o ka se nosetsang le ho se hlokomela. |
+| L3 | Choose a planting opportunity when soil moisture and expected weather support establishment. | Kgetha monyetla wa ho lema ha mongobo wa mobu le maemo a lehodimo a lebelletsweng di tshehetsa establishment. |
+| L3 | Rain can help, but check the root zone and keep a backup watering plan. | Pula e ka thusa, empa hlahloba root zone mme o boloke leano la nosetso la backup. |
+
+Every other sentence in L2 and L3 remains exact English within its original paragraph. In particular, the L2 plant-selection, frost, identity, edible-use, legal, and grassland text stays English. L3 planting steps, species examples, mulch and trunk instructions, pruning, the waterlogged-ground warning, harvest timing, and other care guidance stay English. Existing titles, image descriptions, key points, quiz questions, options, rationales, their review states, answer indexes, and lesson order are unchanged by this batch; some of those fields already contain learner-visible Sesotho drafts.
+
+## Review needed
+
+A first-language Sesotho reviewer should check grammar, register, and terms such as *indigenous plants*, *habitat*, *main trees*, *lower layers*, *ground cover*, and *establishment*. A local food-forest practitioner should confirm that the conditional and modal meaning is preserved. Until then, these remain visibly unreviewed drafts; no fluent-review claim is made.
+
+## Preservation checks
+
+Automated tests compare all source pairs with the canonical module, preserve paragraph boundaries and unselected English sentences, check the six exact candidate strings, retain all answer indexes and lesson order, and assert that the existing L2/L3 non-body draft/hold pattern is preserved. Slides and narration continue to resolve to English.
