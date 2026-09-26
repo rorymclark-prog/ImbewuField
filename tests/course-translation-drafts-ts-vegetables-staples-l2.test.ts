@@ -9,12 +9,10 @@ const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'vegetabl
 const sourceParagraphsSelected = [
   'Succession planting is a calendar habit, not a special crop.',
   'Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.',
-  'Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.',
 ];
 const draftParagraphsSelected = [
   'Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka.',
   'Ku lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan\'weni yo ku wu humelela hinkwawo hi nkarhi wun\'we.',
-  'Ku byala hi swiphemu swo hambana swi nga hunguta khombo ra ku lahlekeriwa hi ntshovelo hinkwawo hi nkarhi wun\'we. A swi tiyisisi leswaku ku ta va na ntshovelo loko swiyimo swo tika swi ya mahlweni.',
 ];
 
 test('Vegetables & Staple Crops L2 exposes only its source-paired Xitsonga concept sentences', () => {
@@ -30,10 +28,10 @@ test('Vegetables & Staple Crops L2 exposes only its source-paired Xitsonga conce
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const localizedParagraphs = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(localizedParagraphs.length, sourceParagraphs.length);
-  assert.deepEqual([0, 3, 4].map(index => sourceParagraphs[index]), sourceParagraphsSelected);
-  assert.deepEqual([0, 3, 4].map(index => localizedParagraphs[index]), draftParagraphsSelected);
+  assert.deepEqual([0, 3].map(index => sourceParagraphs[index]), sourceParagraphsSelected);
+  assert.deepEqual([0, 3].map(index => localizedParagraphs[index]), draftParagraphsSelected);
   for (const index of sourceParagraphs.keys()) {
-    if (![0, 3, 4].includes(index)) assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} remains exact English`);
+    if (![0, 3].includes(index)) assert.equal(localizedParagraphs[index], sourceParagraphs[index], `body paragraph ${index} remains exact English`);
   }
 
   assert.equal(draft.title.sourceEnglish, sourceLesson.title);
@@ -66,7 +64,7 @@ test('Vegetables & Staple Crops L2 exposes only its source-paired Xitsonga conce
 test('Vegetables & Staple Crops L2 keeps sowing schedules, species, instructions and quizzes exact English', () => {
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
-  for (const index of [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]) {
+  for (const index of [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index]);
   }
   assert.ok(draftParagraphs[2].includes('two to three weeks'));
@@ -75,15 +73,12 @@ test('Vegetables & Staple Crops L2 keeps sowing schedules, species, instructions
   assert.ok(draftParagraphs[17].includes('Beans fix nitrogen'));
 });
 
-test('Vegetables & Staple Crops L2 preserves may-reduce and do-not-guarantee qualifiers', () => {
-  const source = sourceParagraphsSelected[2];
-  const candidate = draftParagraphsSelected[2];
-  assert.match(source, /may reduce/);
-  assert.match(candidate, /swi nga hunguta khombo/);
-  assert.match(source, /do not guarantee a harvest/);
-  assert.match(candidate, /A swi tiyisisi leswaku ku ta va na ntshovelo/);
-  assert.match(source, /if difficult conditions continue/);
-  assert.match(candidate, /loko swiyimo swo tika swi ya mahlweni/);
+test('Vegetables & Staple Crops L2 keeps sowing-risk and harvest uncertainty exact English', () => {
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const localizedParagraphs = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
+  assert.match(sourceParagraphs[4], /Separate sowings may reduce the risk/);
+  assert.match(sourceParagraphs[4], /They do not guarantee a harvest if difficult conditions continue/);
+  assert.equal(localizedParagraphs[4], sourceParagraphs[4]);
 });
 
 test('Vegetables & Staple Crops L2 source drift and other lessons fall back to English', () => {
