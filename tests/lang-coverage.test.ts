@@ -12,7 +12,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { coverageOf, LANG_COVERAGE_COMPLETE_THRESHOLD } from '@/lib/lang-coverage';
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING } from '@/lib/i18n-pending';
+import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING } from '@/lib/i18n-pending';
 import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
 
 test('coverageOf counts a key as translated only when the locale gives it a different value', () => {
@@ -68,10 +68,10 @@ function realEnglishDict(): Record<string, string> {
   const end = src.indexOf('\n};', start);
   const literal = src.slice(start, end + 3).replace('export const T_en: Dict = ', 'return ');
   const build = new Function(
-    'DESIGN_STUDIO_ENGLISH_PENDING', 'JOURNAL_ENGLISH_PENDING', 'LIMA_ENGLISH_PENDING', 'LEARNER_UI_ENGLISH',
+    'DESIGN_STUDIO_ENGLISH_PENDING', 'JOURNAL_ENGLISH_PENDING', 'LIMA_ENGLISH_PENDING', 'MENTOR_ENGLISH_PENDING', 'LEARNER_UI_ENGLISH',
     literal,
   ) as (...args: unknown[]) => Record<string, string>;
-  return build(DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, LEARNER_UI_ENGLISH);
+  return build(DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, LEARNER_UI_ENGLISH);
 }
 
 test('a dictionary compared against itself reads as untranslated, not complete', () => {

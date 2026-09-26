@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '2016eaa5', changes: [
+    'Mentor team and people screens now follow your chosen language.',
+    'New words waiting for isiZulu are listed in one sheet for a translator.',
+  ], tour: [
+    { title: 'Open your field teams', where: 'Mentor', href: '/mentor',
+      detail: 'Team headings, buttons and empty messages now use the app language.' },
+    { title: 'Switch the app language', where: 'Account', href: '/account',
+      detail: 'Pick isiZulu; words still waiting for a translator show in English.' },
+  ] },
   { when: '26 September 2026', sha: '491704b2', changes: [
     'The Xitsonga manual is unavailable while publication is paused.',
   ] },

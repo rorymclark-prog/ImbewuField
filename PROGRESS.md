@@ -52,6 +52,11 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Sep 2026 — Wave 8: mentor screens i18n + translator hand-off (#699)
+- FieldTeams, MemberAccessPreview and PeoplePanel route visible text through t() (new MENTOR_ENGLISH_PENDING; FieldTeams' inline isiZulu drafts moved to lib/locales/zu.ts). Exported funder report text stays English on purpose.
+- `npm run i18n:pending` writes docs/translation/pending-isizulu.csv (group,key,english,isizulu) for a translator; README explains how to bring it back into zu.ts. Test fails if the CSV is stale.
+- Guard: tests/mentor-screens-i18n.test.ts, tests/pending-translations-csv.test.ts.
+
 ### 2026-09-26 (Permaculture Manual — pictures, printable book, English terms + glossary)
 - **Pictures:** 73 of the original handbook photos/diagrams (`public/manual/figures/<id>.jpg`,
   10 MB, ≤1400px) placed per section via `content/manual/figures.json` (captions in all five
