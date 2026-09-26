@@ -4,6 +4,7 @@
 // farm on Earth. These tests pin the replacement — and, more importantly, they pin ABSENCE:
 // a farm with no roof, no tank and no dam must be told so in words, never handed a default.
 import test from 'node:test';
+import { numberLabel } from '@/lib/format-figures';
 import assert from 'node:assert/strict';
 
 import {
@@ -56,8 +57,8 @@ test('report preparation uses the existing boundary measurements and saved map r
   const items=reportPreparation(inputs,{}, {facts,maps:{count:9,latestAt:'2026-09-07T10:00:00Z'}});
   const boundary=items.find(i=>i.id==='boundary')!;
   assert.equal(boundary.status,'Boundary measurements available');
-  assert.ok(boundary.detail.includes(facts.boundary!.areaM2.toLocaleString('en-ZA',{maximumFractionDigits:1})));
-  assert.ok(boundary.detail.includes(facts.boundary!.perimeterM!.toLocaleString('en-ZA',{maximumFractionDigits:1})));
+  assert.ok(boundary.detail.includes(numberLabel(facts.boundary!.areaM2,1)));
+  assert.ok(boundary.detail.includes(numberLabel(facts.boundary!.perimeterM!,1)));
   assert.equal(boundary.action,'View boundary and measurements');
   const design=items.find(i=>i.id==='design')!;
   assert.equal(design.status,'9 saved design maps available');

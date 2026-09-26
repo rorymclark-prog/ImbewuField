@@ -3,9 +3,10 @@
 import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save } from 'lucide-react';
+import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -35,6 +36,7 @@ import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -60,6 +62,12 @@ const BUYER_TYPES = [
 const WHOLESALE_BUYERS = ['spaza shop', 'bakkie trader', 'market stall', 'hawker', 'school', 'crèche', 'restaurant or lodge', 'co-op'];
 const INVOICE_ZU: Record<string, string> = {
   'Share PDF': 'Yabelana nge-PDF', 'Print': 'Phrinta',
+  'Invoice': 'I-invoyisi', 'Learn': 'Funda', 'Share PDF (WhatsApp, email…)': 'Yabelana nge-PDF (WhatsApp, i-imeyili…)',
+  'New invoice': 'I-invoyisi entsha', 'Saved': 'Okulondoloziwe', 'Editing': 'Kuyahlelwa',
+  'Invoice and payment details': 'Imininingwane ye-invoyisi nenkokhelo', 'Record the sale once': 'Rekhoda ukuthengisa kanye kuphela',
+  'Keep the invoice, payment and kilograms together.': 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.',
+  'A new invoice': 'I-invoyisi entsha', 'Produce already sold': 'Umkhiqizo osudayisiwe', 'An invoice already written on paper': 'I-invoyisi esivele ibhalwe ephepheni',
+  'VAT / tax no.': 'Inombolo ye-VAT / yentela', 'Qty': 'Inani',
   'What are you recording?': 'Urekhoda ini?', 'Invoice type': 'Uhlobo lwe-invoyisi',
   'Is this sale already in My Records?': 'Ingabe lokhu kuthengisa sekukhona kokuthi Okurekhodiwe Kwami?',
   'Existing sale record': 'Irekhodi lokuthengisa elikhona', 'Choose before saving': 'Khetha ngaphambi kokulondoloza',
@@ -89,6 +97,7 @@ const INVOICE_ZU: Record<string, string> = {
   'Optional — printed under the buyer name': 'Akuphoqelekile — kuboniswa ngaphansi kwegama lomthengi',
   'Address': 'Ikheli', 'Phone': 'Ucingo', 'Line items': 'Imigqa yezinto ezithengisiwe', 'Remove item': 'Susa into',
   'Quantity': 'Inani', 'Unit': 'Iyunithi', 'Price each': 'Intengo ngeyunithi', 'Add line item': 'Engeza umugqa wento',
+  'Add another item': 'Engeza enye into',
   'Suggested price filled in — change it if you agreed something else.': 'Kufakwe intengo eyisiphakamiso — yishintshe uma nivumelene ngenye.',
   'Payment due': 'Usuku lokukhokha', 'No due date': 'Alukho usuku lokukhokha', 'On receipt': 'Uma yamukelwe',
   "Buyer's reference": 'Ireferensi yomthengi', 'Their order number — optional': 'Inombolo ye-oda labo — akuphoqelekile',
@@ -140,6 +149,30 @@ const INVOICE_ZU: Record<string, string> = {
   'Keep the recorded payment date and paid status for this sale.': 'Gcina usuku lwenkokhelo nesimo sokukhokha okurekhodiwe kwalokhu kuthengisa.',
   'Keep the recorded crop, kilograms and total when documenting this sale.': 'Gcina isilimo, amakhilogremu nesamba okurekhodiwe lapho ubhala lokhu kuthengisa.',
 };
+
+// These instructions affect payment status, duplicate counting, sync, or deletion. Keep the
+// English visible beside the draft so a farmer can check the meaning before acting.
+const INVOICE_PAIRED_COPY = new Set([
+  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.',
+  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.',
+  'For your R/m² records. Choose only if every line belongs to this area.',
+  'Marking an invoice paid adds its kg crop lines to My Records automatically.',
+  'Bags, crates and bunches are not converted because their weight is unknown.',
+  'Invoice saved on this device. The shared sales records have not confirmed yet.',
+  'Retry sales sync',
+  'Choose paid or unpaid to continue.',
+  'Invoice saved on this device. Reconnect and save it again to update the crop sale book.',
+  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.',
+  'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.',
+  'Connect to the internet to load a sale you have already recorded.',
+  'Load the recorded sale before saving this invoice.',
+  'Connect to the internet to link this existing sale safely.',
+  'Free some device storage before linking this sale. Its existing record has not been changed.',
+  'Your account changed. Open the invoice again in the correct workspace.',
+  'This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.',
+  'Delete?',
+  'Delete invoice',
+]);
 /** Offered as terms. Absent from the list on purpose: a preselected default. */
 const TERM_CHOICES: { label: string; days: number | null }[] = [
   { label: 'No due date', days: null },
@@ -149,12 +182,12 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
   { label: '30 days', days: 30 },
 ];
 
-const CARD = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
-const FIELD = { background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' };
+const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
+const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>{children}</div>
+    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-secondary)' }}>{children}</div>
   );
 }
 
@@ -172,24 +205,29 @@ function Disclosure({
         className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left"
         style={{ background: 'none', border: 'none', cursor: 'pointer' }}
       >
-        <span style={{ color: '#1F4D2B', display: 'flex' }}>{icon}</span>
+        <span style={{ color: 'var(--color-forest-800)', display: 'flex' }}>{icon}</span>
         <span className="flex-1 min-w-0">
-          <span className="block font-display text-sm font-semibold" style={{ color: '#20190F' }}>{title}</span>
-          <span className="block text-xs font-sans" style={{ color: '#8C7A62' }}>{hint}</span>
+          <span className="block font-display text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{title}</span>
+          <span className="block text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{hint}</span>
         </span>
         <ChevronDown
           size={16}
-          style={{ color: '#8C7A62', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
+          style={{ color: 'var(--text-muted)', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }}
         />
       </button>
-      {open && <div className="px-3 pb-3 space-y-2.5" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 12 }}>{children}</div>}
+      {open && <div className="px-3 pb-3 space-y-2.5" style={{ borderTop: '1px solid var(--border)', paddingTop: 12 }}>{children}</div>}
     </div>
   );
 }
 
 export default function InvoicePage() {
   const { lang } = useLanguage();
-  const ui = (english: string, isiZulu?: string) => lang === 'zu' ? (isiZulu ?? INVOICE_ZU[english] ?? english) : english;
+  const simple = useAppLevel() === 'simple';
+  const ui = (english: string, isiZulu?: string) => {
+    if (lang !== 'zu') return english;
+    const zulu = isiZulu ?? INVOICE_ZU[english] ?? english;
+    return INVOICE_PAIRED_COPY.has(english) ? `${english} — ${zulu}` : zulu;
+  };
   const paymentLabel = (method: PaymentMethod) => lang === 'zu'
     ? ({ cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' } as const)[method]
     : paymentMethodLabel(method);
@@ -240,7 +278,7 @@ export default function InvoicePage() {
   const [products, setProducts] = useState<{ desc: string; unit: string; price: number }[]>([]);
   const [saved, setSaved] = useState<SavedInvoice[]>([]);
   const [showSaved, setShowSaved] = useState(false);
-  const [openPanel, setOpenPanel] = useState<'seller' | 'buyer' | null>(null);
+  const [openPanel, setOpenPanel] = useState<'seller' | 'buyer' | 'enterprise' | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   /** Set when persist() could not store the invoice. Shown next to the actions, because an error
    *  the farmer never sees is the same defect as no error at all. */
@@ -690,19 +728,19 @@ export default function InvoicePage() {
   }
 
   return (
-    <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* overflow-x-auto, like the crop-plan header: seven controls (Back, home,
           title, Learn, Share PDF, Print, Settings) do not fit a 375px phone and
           never did — 90px of this bar, Settings included, was simply off-screen
           and unreachable before the menu button was added here. Scrolling is not
           the prettiest answer, but a control a farmer cannot reach is worse than
           one they have to swipe to. */}
-      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton />
         <BackButton fallback="/records?tab=sold" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
         <button
@@ -710,7 +748,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={13} />{ui('Share PDF', 'Yabelana nge-PDF')}
         </button>
@@ -718,7 +756,7 @@ export default function InvoicePage() {
           onClick={printInvoice}
           disabled={!valid}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Printer size={13} />{ui('Print', 'Phrinta')}
         </button>
@@ -738,24 +776,30 @@ export default function InvoicePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ ...CARD, color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ ...CARD, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <FilePlus2 size={14} />{ui('New invoice', 'I-invoyisi entsha')}
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
-                <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
+                <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui('Editing', 'Kuyahlelwa')} {invoiceNo}</span>
               )}
             </div>
 
             <section className="rounded-2xl p-4 space-y-3" style={CARD} aria-label={ui('Invoice and payment details', 'Imininingwane ye-invoyisi nenkokhelo')}>
               <div>
-                <h1 className="font-display text-xl font-semibold" style={{ color: '#1F4D2B' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
-                <p className="text-sm mt-1" style={{ color: '#5C5040' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
+                <h1 className="font-display text-xl font-semibold" style={{ color: 'var(--color-forest-800)' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
               </div>
+              {/* Simple defaults straight to a new sale — a quick farm-gate sale is the common
+                  case, and the picker below is how the other two entry kinds stayed reachable:
+                  a farmer arriving here from a "record this sale" or "paper copy" link still
+                  gets the right follow-up questions, it is just not offered as a choice up
+                  front. */}
+              {!simple && (
               <label className="block">
                 <FieldLabel>{ui('What are you recording?', 'Urekhoda ini?')}</FieldLabel>
                 <select aria-label={ui('Invoice type')} value={entryKind} disabled={Boolean(currentId) || saving}
@@ -766,6 +810,7 @@ export default function InvoicePage() {
                   <option value="paper-copy">{ui('An invoice already written on paper', 'I-invoyisi esibhalwe ephepheni')}</option>
                 </select>
               </label>
+              )}
               {entryKind !== 'new' && (
                 <label className="block">
                   <FieldLabel>{ui('Is this sale already in My Records?')}</FieldLabel>
@@ -790,7 +835,7 @@ export default function InvoicePage() {
                       ))}
                     </select>
                   </label>
-                  <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
       {salesError && <p role="alert" className="text-sm" style={{ color: '#A02B28' }}>{ui(salesError)}</p>}
                 </div>
               )}
@@ -831,28 +876,28 @@ export default function InvoicePage() {
                   </label>
                 </div>
               )}
-              <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
             </section>
 
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
-                <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: '#5C5040', background: '#F7F2E9', borderBottom: '1px solid #E2D8C4' }}>
+                <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
                   {ui('Marking an invoice paid adds its kg crop lines to My Records automatically.')}
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}
                 </div>
                 {saved.length === 0 ? (
-                  <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
+                  <div className="px-3 py-3 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                     {ui('No saved invoices yet — save your first invoice here.')}
                   </div>
                 ) : saved.map((inv) => (
-                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
+                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
                     <div className="flex items-center gap-2">
                       <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
-                        <div className="font-display text-sm" style={{ color: '#20190F' }}>
+                        <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
                           #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                         </div>
-                        <div className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+                        <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                           {new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       </button>
@@ -862,8 +907,8 @@ export default function InvoicePage() {
                         aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
                         className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                         style={inv.status === 'paid'
-                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
-                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
+                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
+                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
                         {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
                       </button>
                       {/* Two taps to destroy accounting history. The first tap used to be enough. */}
@@ -875,12 +920,16 @@ export default function InvoicePage() {
                         </button>
                       ) : (
                         <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
+                          style={{
+                            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
+                          }}>
                           <X size={15} />
                         </button>
                       ))}
                     </div>
-                    {inv.status === 'paid' && (
+                    {inv.status === 'paid' && !simple && (
                       <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
                         {PAYMENT_METHODS.map((m) => (
                           <button key={m} onClick={() => void changeInvoiceStatus(inv, 'paid', m)}
@@ -888,7 +937,7 @@ export default function InvoicePage() {
                             className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                             style={inv.paymentMethod === m
                               ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                              : { background: '#FFFEFA', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                              : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                             {paymentLabel(m)}
                           </button>
                         ))}
@@ -918,13 +967,13 @@ export default function InvoicePage() {
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
-                <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+                <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
                     : ui('Leave empty to invoice under your own name. Add a logo in Account.')}
                 </div>
               </label>
-              <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>
+              <p className="text-xs font-sans leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                 {ui('Your name and phone come from your account. Everything else here is added to the letterhead on every invoice, and stays on this device.')}
               </p>
               <label className="block">
@@ -1054,7 +1103,7 @@ export default function InvoicePage() {
                     </div>
                     <button onClick={() => removeItem(it.id)} aria-label={ui('Remove item')}
                       className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040' }}>
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)' }}>
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -1075,15 +1124,15 @@ export default function InvoicePage() {
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
                     <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
-                      <span className="text-sm font-display" style={{ color: '#8C7A62' }}>R</span>
+                      <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
                         className="w-full text-sm font-display outline-none tabular-nums"
-                        style={{ background: 'transparent', border: 'none', color: '#20190F' }} />
-                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: '#8C7A62' }}>{ui('each')}</span>
+                        style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }} />
+                      <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
                   </div>
-                  {(() => {
+                  {!simple && (() => {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;
                     if (!guide || it.unit !== 'kg') return null;
@@ -1094,13 +1143,13 @@ export default function InvoicePage() {
                       ? `direct/farm gate about R${guide.retailPerKg}/kg`
                       : `shops/bulk about R${guide.wholesalePerKg}/kg`;
                     return (
-                      <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: '#F7F2E9', color: '#5C5040' }}>
+                      <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', color: 'var(--text-secondary)' }}>
                         {it.priceFromGuide && (
-                          <div className="font-semibold mb-0.5" style={{ color: '#1F4D2B' }}>
+                          <div className="font-semibold mb-0.5" style={{ color: 'var(--color-forest-800)' }}>
                             {ui('Suggested price filled in — change it if you agreed something else.')}
                           </div>
                         )}
-                        <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
+                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
                         {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide.'}
                       </div>
                     );
@@ -1110,13 +1159,17 @@ export default function InvoicePage() {
 
               <button onClick={addItem}
                 className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-display font-semibold"
-                style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}>
-                <Plus size={14} />{ui('Add line item')}
+                style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
+                <Plus size={14} />{simple ? ui('Add another item') : ui('Add line item')}
               </button>
             </fieldset>
 
             {/* ── Terms, reference, note ──────────────────────────────── */}
             <div className="rounded-xl p-3 space-y-2.5" style={CARD}>
+              {/* Simple uses the letterhead's existing default term rather than asking — a
+                  quick farm-gate sale is usually paid on the spot or on the buyer's usual
+                  terms, not something worth a decision on every invoice. */}
+              {!simple && (
               <div>
                 <FieldLabel>{ui('Payment due')}</FieldLabel>
                 <div className="flex flex-wrap gap-1.5">
@@ -1126,25 +1179,49 @@ export default function InvoicePage() {
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
                         ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                        : { background: '#fff', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                        : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
                   ))}
                 </div>
               </div>
+              )}
               <label className="block">
                 <FieldLabel>{ui("Buyer's reference")}</FieldLabel>
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder={ui('Their order number — optional')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
               </label>
-              <label className="block">
-                <FieldLabel>{ui('Growing area for these sales')}</FieldLabel>
-                <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
-                  <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
-                </select>
-                <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
-              </label>
+              {/* Growing area stays reachable — a farmer may still want this sale on their
+                  R/m² records — but Simple keeps it closed until asked for, the same as the
+                  banking disclosure above. */}
+              {simple ? (
+                <Disclosure
+                  open={openPanel === 'enterprise'}
+                  onToggle={() => setOpenPanel((p) => (p === 'enterprise' ? null : 'enterprise'))}
+                  icon={<Sprout size={16} />}
+                  title={ui('Growing area for these sales')}
+                  hint={
+                    enterprise === 'vegetables' ? ui('Vegetable beds')
+                    : enterprise === 'staples' ? ui('Staple plots')
+                    : enterprise === 'other' ? ui('Orchard / other')
+                    : ui('Unassigned / mixed invoice')
+                  }
+                >
+                  <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                    <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
+                  </select>
+                  <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
+                </Disclosure>
+              ) : (
+                <label className="block">
+                  <FieldLabel>{ui('Growing area for these sales')}</FieldLabel>
+                  <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                    <option value="">{ui('Unassigned / mixed invoice')}</option><option value="vegetables">{ui('Vegetable beds')}</option><option value="staples">{ui('Staple plots')}</option><option value="other">{ui('Orchard / other')}</option>
+                  </select>
+                  <span className="block text-xs mt-1">{ui('For your R/m² records. Choose only if every line belongs to this area.')}</span>
+                </label>
+              )}
               <label className="block">
                 <FieldLabel>{ui('Note on the invoice')}</FieldLabel>
                 <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)}
@@ -1164,12 +1241,12 @@ export default function InvoicePage() {
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#8C7A62', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>
@@ -1187,7 +1264,7 @@ export default function InvoicePage() {
             )}
 
             {!valid && (
-              <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
+              <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                 {entryError ? ui(entryError) : (!paymentStatus ? ui('Choose paid or unpaid to continue.') : recordBasis === '' ? ui('Confirm whether this sale is already recorded.') : recordBasis === 'existing' && !sourceSaleId ? ui('Select the existing sale to continue.') : ui('Add a buyer and at least one item to save, print or share.'))}
               </p>
             )}

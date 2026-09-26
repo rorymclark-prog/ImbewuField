@@ -74,3 +74,10 @@ test('the Print button is wired to printPlan and disables itself while building'
   assert.match(headerButton, /onClick=\{printPlan\}/);
   assert.match(headerButton, /disabled=\{pdfBusy\}/);
 });
+
+test('isiZulu goal descriptions are marked drafts beside their exact English source', () => {
+  assert.match(PAGE_SRC, /descZu: string/);
+  assert.match(PAGE_SRC, /surveyDraft\(desc, descZu, lang\)/);
+  assert.match(PAGE_SRC, /Goal descriptions appear as drafts beside English/);
+  assert.match(PAGE_SRC, /label=\{localUi\('Learn', 'Funda', lang\)\}/);
+});

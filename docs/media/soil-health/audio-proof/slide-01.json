@@ -1,0 +1,201 @@
+{
+  "seconds": 27.84,
+  "bytes": 167040,
+  "audioSha256": "17e9f22f4cece15b51ee25c62d4752b9008aa9f9aee1a9e972beec45ea1bfb17",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Umhlabathi",
+      "offset": 1460410,
+      "duration": 7812500
+    },
+    {
+      "text": "ungaphezu",
+      "offset": 9840830,
+      "duration": 6534160
+    },
+    {
+      "text": "kokuba",
+      "offset": 16375000,
+      "duration": 4829580
+    },
+    {
+      "text": "yindawo",
+      "offset": 21204580,
+      "duration": 5539580
+    },
+    {
+      "text": "engaphansi",
+      "offset": 27028330,
+      "duration": 7670410
+    },
+    {
+      "text": "kwezinyawo",
+      "offset": 34698750,
+      "duration": 6676250
+    },
+    {
+      "text": "zakho",
+      "offset": 41375000,
+      "duration": 5539580
+    },
+    {
+      "text": "Uyindawo",
+      "offset": 56642080,
+      "duration": 6534160
+    },
+    {
+      "text": "ephilayo",
+      "offset": 63744160,
+      "duration": 6960410
+    },
+    {
+      "text": "esiza",
+      "offset": 70988750,
+      "duration": 5397910
+    },
+    {
+      "text": "izitshalo",
+      "offset": 76812500,
+      "duration": 6392080
+    },
+    {
+      "text": "zikhule",
+      "offset": 83204580,
+      "duration": 6392080
+    },
+    {
+      "text": "ebamba",
+      "offset": 91443330,
+      "duration": 5255830
+    },
+    {
+      "text": "amanzi",
+      "offset": 97125000,
+      "duration": 6676250
+    },
+    {
+      "text": "futhi",
+      "offset": 105079580,
+      "duration": 4545410
+    },
+    {
+      "text": "esekela",
+      "offset": 109767080,
+      "duration": 6107910
+    },
+    {
+      "text": "isivuno",
+      "offset": 116159160,
+      "duration": 6107910
+    },
+    {
+      "text": "sakho",
+      "offset": 122267080,
+      "duration": 5681660
+    },
+    {
+      "text": "Kule",
+      "offset": 137607910,
+      "duration": 2698750
+    },
+    {
+      "text": "modyuli",
+      "offset": 140732910,
+      "duration": 6960410
+    },
+    {
+      "text": "funda",
+      "offset": 148687500,
+      "duration": 4829580
+    },
+    {
+      "text": "ukubheka",
+      "offset": 153943330,
+      "duration": 6250000
+    },
+    {
+      "text": "nokufunda",
+      "offset": 160193330,
+      "duration": 7528330
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 168005830,
+      "duration": 8664580
+    },
+    {
+      "text": "ukwenza",
+      "offset": 178801250,
+      "duration": 6250000
+    },
+    {
+      "text": "i-compost",
+      "offset": 185335410,
+      "duration": 7670410
+    },
+    {
+      "text": "ukuvikela",
+      "offset": 195562500,
+      "duration": 8380830
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 204227080,
+      "duration": 7812500
+    },
+    {
+      "text": "ongenalutho",
+      "offset": 212323750,
+      "duration": 9375000
+    },
+    {
+      "text": "nokusebenzisa",
+      "offset": 224965830,
+      "duration": 10653330
+    },
+    {
+      "text": "izitshalo",
+      "offset": 235903330,
+      "duration": 6818330
+    },
+    {
+      "text": "zokumboza",
+      "offset": 242721660,
+      "duration": 7670410
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 250676250,
+      "duration": 7102080
+    },
+    {
+      "text": "nama-worm",
+      "offset": 257778330,
+      "duration": 5681660
+    },
+    {
+      "text": "farm.",
+      "offset": 263602500,
+      "duration": 4261250
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "soil-health",
+  "language": "zu",
+  "slide": 1,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-01.txt",
+  "sourceSha256": "12f910bbb862888f1a1fb7c2c87f6f20373abf299c0250bd43abf3b79cde6886",
+  "scriptFile": "docs/narration/soil-health.zu.md",
+  "scriptSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+  "englishSourceFile": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "363d6d84d2ed56731b22fa482c0c1037346455b4283e58680bad5d51076dc0c3",
+  "generatedAt": "2026-09-24T18:21:07.486755+00:00",
+  "reviewStatus": "unreviewed-draft; fluent isiZulu and local farming review pending"
+}

@@ -42,6 +42,725 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'c48e3971', changes: [
+    'Farm Finance lessons and worksheets now have isiZulu drafts; due dates use your language.',
+  ], tour: [
+    { title: 'Read Farm Finance in isiZulu', where: 'Study → Farm Finance', href: '/student/finance',
+      detail: 'Switch the app to isiZulu and open a lesson; draft translations are marked.' },
+  ] },
+  { when: '26 September 2026', sha: 'a46473ba', changes: [
+    'Sesotho Study keeps seed terms in English and marks two general lesson headings as drafts.',
+  ], tour: [
+    { title: 'Check the Seeds and Seed Sovereignty labels', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho. The module title and L2 Dry and Wet Methods remain English. L1 and L3 use marked general headings; open-pollinated and F1 hybrid remain in the English lesson source.' },
+  ] },
+  { when: '26 September 2026', sha: 'df531de7', changes: [
+    'The old unused site-password page is gone; sign-in is the only way in.',
+  ] },
+  { when: '26 September 2026', sha: '5dfc19f5', changes: [
+    'Profile photos are made smaller before upload, so they send faster on slow signal.',
+    'Simple view hides the staff-only readiness badge, video quality picker and Calendar link.',
+    'The remove buttons on evidence photos and documents are easier to tap.',
+  ], tour: [
+    { title: 'Change your profile photo', where: 'Account → Profile photo', href: '/account',
+      detail: 'Pick a large phone photo; it uploads as a smaller copy.' },
+  ] },
+  { when: '26 September 2026', sha: '4bda1cd6', changes: [
+    'Sesotho Study marks the Market lesson picture description in Sesotho.',
+  ], tour: [
+    { title: 'Check the Market picture description', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked picture description with its English source.' },
+  ] },
+  { when: '26 September 2026', sha: '4ed38dcb', changes: [
+    'Tshivenda learners can compare selling costs and losses in a marked Market lesson draft.',
+  ], tour: [
+    { title: 'Check the Tshivenda selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; compare the marked cost-and-loss point with its English source. Other lesson guidance remains in English.' },
+  ] },
+  { when: '26 September 2026', sha: '1fd3f582', changes: [
+    'Sale labels now show draft isiZulu beside the exact English source.',
+  ], tour: [
+    { title: 'Check the draft sale labels', where: 'Records → Sold', href: '/records',
+      detail: 'Choose isiZulu, open Sold and compare each proposed label with its English source.' },
+  ] },
+  { when: '26 September 2026', sha: '7425ed0f', changes: [
+    'Sesotho learners can read a marked draft about comparing selling costs and losses.',
+  ], tour: [
+    { title: 'Check the selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; compare its cost-and-loss key point with the English source. Other lesson guidance remains in English.' },
+  ] },
+  { when: '26 September 2026', sha: '66d3c94b', changes: [
+    'Sesotho drafts now explain Market surplus and household food records.',
+  ], tour: [
+    { title: 'Check the Market Gardening draft', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked module description and household food-record sentence with their English source.' },
+  ] },
+  { when: '26 September 2026', sha: '9186ec9', changes: [
+    'Sesotho Introduction lesson 2 keeps unclear swale and bed wording in English.',
+  ], tour: [
+    { title: 'Check the principles lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; the explanation, slope rationale and chicken-bed answer stay in English for review.' },
+  ] },
+  { when: '26 September 2026', sha: 'fa7843ab', changes: [
+    'Tshivenda Food Forest habitat wording stays in English for review.',
+  ], tour: [
+    { title: 'Check the food forest lesson', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; the heading is marked as a machine draft, while the body and quizzes remain in English.' },
+  ] },
+  { when: '26 September 2026', sha: '9fad460', changes: [
+    'Sesotho ethics lesson keeps its explanation in English for review.',
+  ], tour: [
+    { title: 'Check the three ethics lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1; the three-paragraph ethics explanation is held in English beside the unreviewed draft fields.' },
+  ] },
+  { when: '26 September 2026', sha: '436b4055', changes: [
+    'Sesotho Water Harvesting keeps ambiguous level-contour wording in English for review.',
+    'Sesotho Student labels now show a review notice on the welcome card.',
+  ], tour: [
+    { title: 'Check the swale lesson', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1; the diagram description, contour guidance and paired quiz wording remain in English.' },
+    { title: 'Check the Sesotho welcome card', where: 'Welcome', href: '/home',
+      detail: 'Choose Sesotho and compare the marked welcome labels with their English source.' },
+  ] },
+  { when: '26 September 2026', sha: '7180296e', changes: [
+    'Soil Health keeps compost guidance in English for Sesotho review.',
+  ], tour: [
+    { title: 'Check the compost lesson', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; its compost guidance remains in English for review.' },
+  ] },
+  { when: '26 September 2026', sha: '719f440b', changes: [
+    'Tshivenda Introduction keeps uncertain advice and the wet-season minimum in English.',
+    'Tshivenda Food Forest and Sesotho Bees add marked draft text beside English.',
+    'These lessons still use English slides and narration.',
+  ], tour: [
+    { title: 'Compare the Introduction wording', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; uncertain wording remains in English.' },
+    { title: 'Compare the Food Forest draft', where: 'Study → Food Forest', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2 to compare the heading and habitat sentence with English.' },
+    { title: 'Compare the Bees draft', where: 'Study → Small Livestock', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2 to compare the heading and pollen sentence with English.' },
+  ] },
+  { when: '26 September 2026', sha: '89d44f5f', changes: [
+    'Settings marks languages that are still partly shown in English.',
+    'Design Studio buttons and the element list use clear icons instead of emoji.',
+    'The crop planner follows dark mode and reads larger on computers.',
+    'The facilitator print page picks its pages with icons instead of emoji.',
+    'One more Design Studio warning is now in isiZulu.',
+  ], tour: [
+    { title: 'Language honesty', where: 'Settings → Language', href: '/home',
+      detail: 'Languages still being translated show "Partly in English" under their name.' },
+    { title: 'Icons in the Design Studio', where: 'Design Studio → element list', href: '/design',
+      detail: 'Line tools, the ruler and base-map switch now use the same icons as the rest of the app.' },
+  ] },
+  { when: '26 September 2026', sha: 'b544cb47', changes: [
+    'Sesotho Study shows a marked Chickens lesson draft beside English.',
+    'Animal care, manure advice and quiz answers stay in English for review.',
+    'The chicken-pen picture description now says only what is visible.',
+  ], tour: [
+    { title: 'Compare the Chickens draft', where: 'Study', href: '/student',
+      detail: 'Choose Sesotho, then open Small Livestock lesson 1 to compare the draft and English.' },
+  ] },
+  { when: '26 September 2026', sha: '909246b1', changes: [
+    'Tshivenda Study shows a marked Food Forest layer draft beside English.',
+    'Species, care guidance and quiz answers stay in English for review.',
+    'The Food Forest picture description now matches the visible plants and roots.',
+  ], tour: [
+    { title: 'Compare the Food Forest layer draft', where: 'Study', href: '/student',
+      detail: 'Choose Tshivenda, then open Food Forest lesson 1 to compare the draft and English.' },
+  ] },
+  { when: '26 September 2026', sha: 'b081886c', changes: [
+    'Sesotho Study shows a marked Record-Keeping draft beside its English source.',
+    'The price example, crop advice and quiz remain in English for review.',
+    'English answers held for review appear once in the quiz.',
+  ], tour: [
+    { title: 'Compare the Record-Keeping draft', where: 'Study', href: '/student',
+      detail: 'Choose Sesotho, then open Market Gardening lesson 1 to compare the draft and English.' },
+  ] },
+  { when: '26 September 2026', sha: '8a9abb4e', changes: [
+    'Garden Survey isiZulu pairs sun, tank and growing-space labels with English.',
+    'Plan quantities and the English source recommendation stay unchanged.',
+  ], tour: [
+    { title: 'Compare Garden Survey status labels', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu and step through the survey to compare the plan summary with English.' },
+  ] },
+  { when: '26 September 2026', sha: '40ee1e48', changes: [
+    'Sesotho Garden Survey shell drafts show English sources; farming text stays English.',
+    'The Garden Survey Back control has space beside the floating Lima button on phones.',
+  ], tour: [
+    { title: 'Compare survey shell drafts', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose Sesotho to see marked shell labels beside English and the review notice.' },
+  ] },
+  { when: '26 September 2026', sha: 'b54d433a', changes: [
+    'Study has marked Tshivenda drafts for starting, the course and offline study.',
+    'The English review notice remains visible while these labels await fluent review.',
+  ], tour: [
+    { title: 'Compare more Study label drafts', where: 'Study → My Studies', href: '/student',
+      detail: 'See the marked Tshivenda headings and English review notice.' },
+  ] },
+  { when: '25 September 2026', sha: '0a4a67d0', changes: [
+    'Sesotho Seeds and Tshivenda Soil Health review data is ready; lessons stay in English.',
+    'Existing Xitsonga text only: the Shangani packet adds no learner translation or wiring.',
+  ] },
+  { when: '25 September 2026', sha: '5a269771', changes: [
+    'Study controls now have marked Tshivenda drafts with an English review notice.',
+  ], tour: [
+    { title: 'Compare Study control drafts', where: 'Study → My Studies', href: '/student',
+      detail: 'Choose Tshivenda to see marked Study controls and their English review notice.' },
+  ] },
+  { when: '25 September 2026', sha: '046de5d7', changes: [
+    'Garden Survey goal descriptions show marked isiZulu drafts beside English.',
+    'The Garden Survey lesson link follows the selected language.',
+  ], tour: [
+    { title: 'Compare Garden Survey goal drafts', where: 'Garden Survey → Goal', href: '/survey',
+      detail: 'Choose isiZulu to compare each marked goal description with its exact English source.' },
+  ] },
+  { when: '25 September 2026', sha: '1cb654ad', changes: [
+    'Plant Guilds now shows a marked Sesotho review draft beside English.',
+    'Pruning, mulch and insect checks stay in English pending review.',
+  ], tour: [
+    { title: 'Review Plant Guilds in Sesotho', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Sesotho to compare the marked title and lesson draft with English. Held guidance stays English.' },
+  ] },
+  { when: '25 September 2026', sha: '0dded1e3', changes: [
+    'Simple mode now covers Preview & Export in the Design Studio: pick a finish and save.',
+    'In Simple, the farm map keeps finding your land, tracing it and adding trees or tanks.',
+    'Community, messages and profiles are shorter in Simple.',
+    'Crop plan, Prices, Lima Vision and the Field Journal are simpler in Simple.',
+    'Account and survey answering show the essentials first in Simple.',
+  ], tour: [
+    { title: 'Preview in Simple', where: 'Design Studio → Preview & Export', href: '/design',
+      detail: 'Pick a sheet, then choose a finish; the extra steps stay in All tools.' },
+    { title: 'A calmer farm map', where: 'Farm map', href: '/farmer',
+      detail: 'Turn on Simple in Settings: contours, 3D and printing move out of the way.' },
+  ] },
+  { when: '25 September 2026', sha: '02f4355a', changes: [
+    'Water Harvesting has Tshivenda title drafts; guidance and media stay English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Tshivenda', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Tshivenda to see the marked module and lesson title drafts. Safety instructions, slides and narration stay English.' },
+  ] },
+  { when: '25 September 2026', sha: '830d049f', changes: [
+    'Plant Guilds Sesotho review draft is paired with English; it is not in Study.',
+  ] },
+  { when: '25 September 2026', sha: '2b44ee39', changes: [
+    'Teach the Teachers now scrolls with a mouse or trackpad on desktop.',
+  ] },
+  { when: '25 September 2026', sha: '532f3069', changes: [
+    'Challenges & Priorities and Review now show isiZulu drafts beside English sources.',
+    'Advice about saving and required answers stays in English until checked.',
+  ], tour: [
+    { title: 'Review survey challenges and answers', where: 'Site Survey → Challenges & Priorities → Review', href: '/farmer',
+      detail: 'Switch to isiZulu and compare the draft choices with English. Saving still requires your action.' },
+  ] },
+  { when: '25 September 2026', sha: '3b5585e4', changes: [
+    'ACT facilitators can open a two-day Teach the Teachers refresher in My Studies.',
+    'The preview links core lessons and app practice with a paper fallback.',
+  ], tour: [
+    { title: 'Try the facilitator refresher', where: 'My Studies → Teach the Teachers',
+      href: '/student/teach-the-teachers', detail: 'Open the two-day English teaching preview and practise with a demo site.' },
+  ] },
+  { when: '25 September 2026', sha: '63b4a500', changes: [
+    'Tshivenda Water Harvesting draft ready; safety text and media stay English.',
+  ] },
+  { when: '25 September 2026', sha: 'dba79477', changes: [
+    'Resources & Inputs water and roof entries now pair isiZulu drafts with English sources.',
+    'Unverified roof-size estimates and water guidance stay in English.',
+  ], tour: [
+    { title: 'Review water sources and roof inputs', where: 'Site Survey → Resources & Inputs', href: '/farmer',
+      detail: 'Switch to isiZulu to compare water and roof entries with English; guidance with uncertain values stays in English.' },
+  ] },
+  { when: '25 September 2026', sha: '2fe2a6c8', changes: [
+    'Food Forest now has a marked Sesotho lesson draft beside its English source.',
+    'Held planting advice stays in English; slides and narration remain English.',
+  ], tour: [
+    { title: 'Read Food Forest in Sesotho', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Sesotho to compare the marked lesson draft with English. Slides and narration remain in English.' },
+  ] },
+  { when: '25 September 2026', sha: 'ef69119c', changes: [
+    'Income & Sales choices now pair isiZulu drafts with English sources.',
+    'The income-before-costs guide stays in English.',
+  ], tour: [
+    { title: 'Review income and sales choices', where: 'Site Survey → Income & Sales', href: '/farmer',
+      detail: 'Switch to isiZulu to compare market choices with English; profit wording stays English.' },
+  ] },
+  { when: '25 September 2026', sha: 'cc628cd1', changes: [
+    'Reading the Landscape now shows a source-paired Tshivenda machine draft in Study.',
+    'Held water, A-frame, frost, and soil claims stay in English pending review.',
+    'Slides and narration stay in English.',
+  ], tour: [
+    { title: 'Read Reading the Landscape in Tshivenda', where: 'Study → Reading the Landscape', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked lessons and answers with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '80bd3cfe', changes: [
+    'Food Forest Sesotho draft prepared for review; not in Study.',
+  ] },
+  { when: '25 September 2026', sha: 'a459b15c', changes: [
+    'Livestock choices and field guidance now pair isiZulu drafts with English.',
+  ], tour: [
+    { title: 'Review livestock choices', where: 'Site Survey → Livestock & Poultry', href: '/farmer',
+      detail: 'Switch to isiZulu and compare livestock choices and field guidance with English.' },
+  ] },
+  { when: '25 September 2026', sha: 'd2250e8e', changes: [
+    'A Tshivenda Landscape draft is ready for review; learners cannot see it yet.',
+  ] },
+  { when: '25 September 2026', sha: '7a87483e', changes: [
+    'Introduction has a machine Tshivenda draft pending fluent and local farming review.',
+    'Held flood and compass wording stays in English pending review.',
+    'Slides and narration stay in English.',
+  ], tour: [
+    { title: 'Read the Introduction draft in Tshivenda', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked lesson draft and answers with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '31a452dd', changes: [
+    'Vegetables and Staple Crops now shows marked Sesotho lesson drafts.',
+    'Held crop and pest advice stays in English beside its exact source.',
+    'Garden Survey opens from a saved site even when its location data is unavailable.',
+    'Site Survey land and production choices now pair isiZulu drafts with English.',
+    'Uncertain farming text stays English; production units and food groups show English.',
+  ], tour: [
+    { title: 'Read Vegetables and Staple Crops in Sesotho', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Switch to Sesotho and compare the marked lesson draft with English. Slides and narration remain in English.' },
+    { title: 'Review Site Survey land choices', where: 'Site Survey → Land & Location', href: '/farmer',
+      detail: 'Open a saved site, choose isiZulu, and compare the draft land and soil choices with their English source.' },
+    { title: 'Compare production entries', where: 'Site Survey → Current Production', href: '/farmer',
+      detail: 'Switch to isiZulu and compare crop choices, harvest months and production fields with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: 'aaf17a56', changes: [
+    'Soil Health lessons now show marked Sesotho drafts beside their English source.',
+    'Held soil, compost and cover advice stays in English until reviewed.',
+  ], tour: [
+    { title: 'Read Soil Health in Sesotho', where: 'Study → Soil Health', href: '/student',
+      detail: 'Switch to Sesotho in Settings and compare each marked lesson draft with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: 'c8d8b84a', changes: [
+    'Money charts are readable in dark mode: figures and labels follow the theme.',
+    'In Simple, Exchange shows its numbers once and puts listings before the guide.',
+    'Mentor, Surveys and Funder screens now follow dark mode too.',
+    'Study names the Design and Farm Finance courses clearly in Simple.',
+    'Phones no longer download the full list of updates on every page.',
+  ], tour: [
+    { title: 'Exchange in Simple', where: 'Farmer exchange', href: '/exchange',
+      detail: 'Listings and Post come first; How the exchange works opens when you want it.' },
+    { title: 'Charts in dark mode', where: 'My Records → Charts', href: '/records',
+      detail: 'Switch to dark in Settings: money in, money out and returns stay readable.' },
+  ] },
+  { when: '25 September 2026', sha: '746a8dfc', changes: [
+    'Simple mode now covers the Design Studio: fewer tools and one Save my plan button.',
+    'Community, Contact and Feedback are shorter in Simple, with more isiZulu.',
+    'The welcome, privacy and Community screens now follow dark mode.',
+    'Photos you post to Community shrink first, so they use less mobile data.',
+    'The Crop plan now follows dark mode, with larger text on a computer.',
+  ], tour: [
+    { title: 'Design in Simple', where: 'Design Studio', href: '/design',
+      detail: 'A short list of things to place, then Save my plan to keep or share it.' },
+    { title: 'Tell us in one box', where: 'Feedback', href: '/feedback',
+      detail: 'In Simple there is one box: say what went wrong or what you would like.' },
+  ] },
+  { when: '25 September 2026', sha: 'c3954489', changes: [
+    'The opening Site Survey choices now show draft isiZulu beside English.',
+    'Uncertain descriptions stay in English pending local review.',
+  ], tour: [
+    { title: 'Review Site Survey choices', where: 'Site Survey → Site and goals', href: '/farmer',
+      detail: 'Choose isiZulu and compare the household, community and goal choices with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '01890303', changes: [
+    'Water Harvesting lessons now show marked Sesotho drafts.',
+    'Uncertain water-safety passages stay in English; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read Water Harvesting in Sesotho', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Switch to Sesotho in Settings, open Water Harvesting, and compare the marked draft with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: '4061ada0', changes: [
+    'Introduction and Landscape lessons now show marked Sesotho and Xitsonga drafts.',
+    'Each draft shows exact English text and answers; slides and audio remain English.',
+  ], tour: [
+    { title: 'Read the first two modules in Sesotho or Xitsonga', where: 'Study', href: '/student',
+      detail: 'Switch language in Settings and open a lesson to compare its draft with English.' },
+  ] },
+  { when: '25 September 2026', sha: '6c276e4e', changes: [
+    'Palette controls and map prompts now pair draft isiZulu with English.',
+    'Climate and frost claims and technical tools stay in English.',
+  ], tour: [
+    { title: 'Review Design Palette labels', where: 'Design Studio → Sector', href: '/design',
+      detail: 'Choose isiZulu to check the wind prompt and palette labels; uncertain climate and technical wording stays in English.' },
+  ] },
+  { when: '25 September 2026', sha: '7483ff32', changes: [
+    'Print / Export now has draft isiZulu controls with English on key choices.',
+    'Plan set count now shows nine maps; inactive controls are gone.',
+  ], tour: [
+    { title: 'Check the print choices', where: 'Design Studio → Print / Export', href: '/design',
+      detail: 'Choose isiZulu and open Print / Export. The nine sheets and working title-block choice are shown on a phone.' },
+  ] },
+  { when: '25 September 2026', sha: '02c9e7e9', changes: [
+    'Sector guidance now pairs marked isiZulu drafts with their English source.',
+  ], tour: [
+    { title: 'Review Sector guidance', where: 'Design Studio → Sector', href: '/design',
+      detail: 'Choose isiZulu to compare the draft sun, wind, fire and water guidance with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: 'a7dd6c3b', changes: [
+    'Study navigation and lesson controls now have a Sesotho draft.',
+    'Study portal and lesson controls now include draft Xitsonga labels.',
+    'The unreviewed draft notice keeps its English source visible.',
+    'Settings marks the Xitsonga interface as an unreviewed draft.',
+    'The Water rainfall chart adds unreviewed isiZulu labels.',
+  ], tour: [
+    { title: 'Check the Sesotho study screen', where: 'My Studies', href: '/student',
+      detail: 'The study labels are an unreviewed draft; the English source appears beside the notice.' },
+    { title: 'Check rainfall labels', where: 'Map → Water', href: '/farmer',
+      detail: 'Choose isiZulu and open the Water tab to see the draft rainfall chart labels.' },
+    { title: 'Check Study in Xitsonga', where: 'Learning Portal', href: '/student',
+      detail: 'Choose Xitsonga; Study and lesson controls are marked as an unreviewed draft.' },
+  ] },
+  { when: '25 September 2026', sha: 'df031dbb', changes: [
+    'Introduction slide 22 audio preserves the full Zone 1 counting instruction.',
+    'The draft still awaits fluent isiZulu and local farming review.',
+  ], tour: [
+    { title: 'Listen to Introduction slide 22', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Open the isiZulu narration. It remains an unreviewed draft.' },
+  ] },
+  { when: '25 September 2026', sha: '0ffa46c7', changes: [
+    'Tips, site survey entry, map controls and Records tabs now have marked isiZulu drafts.',
+    'Soil improvement drafts keep their English source beside each suggestion.',
+  ], tour: [
+    { title: 'Review the isiZulu interface drafts', where: 'Tips and My Records', href: '/tips',
+      detail: 'The new isiZulu wording is marked as a draft; soil advice keeps its English source beside it.' },
+  ] },
+  { when: '25 September 2026', sha: '2bc9987b', changes: [
+    'Assessment questions and averages now show draft isiZulu beside English.',
+    'Design photo, Lima tip, and map measurement controls show draft isiZulu beside English.',
+    'Contour wording keeps its English source beside the isiZulu draft.',
+    'The Design Studio unreviewed-draft notice now shows isiZulu beside English.',
+  ], tour: [
+    { title: 'Check the assessment wording', where: 'Assessments', href: '/assessments',
+      detail: 'Choose isiZulu to read each draft question and average label beside its English source.' },
+    { title: 'Check Design Studio controls', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu and inspect photo import, map measurements, contour wording, and the draft notice.' },
+  ] },
+  { when: '25 September 2026', sha: '08a46c34', changes: [
+    'The site report water balance has isiZulu labels and shortfall wording.',
+  ], tour: [
+    { title: 'Check the water balance', where: 'Site report → Water balance', href: '/reports',
+      detail: 'Choose isiZulu; check the chart labels and possible shortfall wording.' },
+  ] },
+  { when: '25 September 2026', sha: '9ad29a75', changes: [
+    'Design Studio labels and guide actions show draft isiZulu with English sources.',
+    'Farming and measurement guidance stays in English pending review.',
+  ], tour: [
+    { title: 'Check Design Studio language', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu; step names and guide controls show their English source. Farming guidance remains in English.' },
+  ] },
+  { when: '25 September 2026', sha: 'dd9e1562', changes: [
+    'Garden Survey save and PDF errors show draft isiZulu beside English.',
+    'A failed save now says to keep the screen open and retry.',
+  ], tour: [
+    { title: 'Check Garden Survey saving', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu, reach your plan, then check Save and PDF messages.' },
+  ] },
+  { when: '25 September 2026', sha: '81ce3442', changes: [
+    'Settings now shows Simple or All tools straight under the language choice.',
+  ], tour: [
+    { title: 'Find Simple or All tools', where: 'Home → Settings', href: '/home',
+      detail: 'Tap the gear on Home: How much to show is right under the languages.' },
+  ] },
+  { when: '25 September 2026', sha: '19ea566f', changes: [
+    'Simple mode now tidies Records, Crop plan, the Map, Study, Invoice and Exchange.',
+    'In Simple the menu is shorter; All tools in Settings still shows everything.',
+    'The Planting calendar now follows the crops in your own plan.',
+    'Mentor, NGO and funder screens get a Simple view; Assessments has its menu back.',
+  ], tour: [
+    { title: 'Records in Simple', where: 'My Records', href: '/records',
+      detail: 'See how much you kept, in one line; the charts are under All tools.' },
+    { title: 'Crop plan in Simple', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'Your beds by month, with one button to suggest a plan.' },
+    { title: 'Your planting month', where: 'Planting calendar', href: '/calendar',
+      detail: 'This month\'s planting, harvesting and care, for the crops you planned.' },
+  ] },
+  { when: '25 September 2026', sha: '403d0444', changes: [
+    'Calendar advice and crop tasks show draft isiZulu beside English sources.',
+    'Design Studio adds draft isiZulu controls; swale terminology remains held.',
+  ], tour: [
+    { title: 'Check planting advice', where: 'Planting Calendar', href: '/calendar',
+      detail: 'Choose isiZulu; monthly chores and Lima advice retain their English source.' },
+    { title: 'Check Design controls', where: 'Design Studio', href: '/design',
+      detail: 'Choose isiZulu; swale width and photo controls keep source wording.' },
+  ] },
+  { when: '25 September 2026', sha: 'fd12838f', changes: [
+    'Farmer Exchange controls add draft isiZulu beside English.',
+    'Listing details stay as entered; transaction wording keeps its English source.',
+  ], tour: [
+    { title: 'Check Exchange language', where: 'Farmer Exchange', href: '/exchange',
+      detail: 'Choose isiZulu and inspect the board and listing form. User-entered listing details remain unchanged.' },
+  ] },
+  { when: '25 September 2026', sha: '4a234130', changes: [
+    'Settings has a new choice: Simple or All tools. Farmers start on Simple.',
+    'Simple Home names your site once, with your next step on the green card.',
+  ], tour: [
+    { title: 'Try Simple and All tools', where: 'Home → Settings', href: '/home',
+      detail: 'Tap the gear on Home, then choose under How much to show. All tools is the old Home.' },
+  ] },
+  { when: '25 September 2026', sha: '8e9bbdf6', changes: [
+    'Garden Atlas search and map labels add draft isiZulu; site data stays as supplied.',
+  ], tour: [
+    { title: 'Check Atlas labels', where: 'Garden Atlas', href: '/atlas',
+      detail: 'Choose isiZulu and open a point; data, sources and farming cautions remain unchanged.' },
+  ] },
+  { when: '25 September 2026', sha: 'd39ac418', changes: [
+    'Training records add draft isiZulu for attendance, photos and sharing.',
+  ], tour: [
+    { title: 'Check the training record', where: 'Programme evidence', href: '/ngo',
+      detail: 'Choose isiZulu and open a training session to check attendance and sharing wording.' },
+  ] },
+  { when: '25 September 2026', sha: '658185d2', changes: [
+    'The site survey now opens over the full phone screen from the Farmer map.',
+  ], tour: [
+    { title: 'Open the site survey', where: 'Farmer map', href: '/farmer',
+      detail: 'On a phone, open Site Survey; its introduction and questions should appear above the map.' },
+  ] },
+  { when: '25 September 2026', sha: 'c1e79c39', changes: [
+    'The design learning pathway adds marked isiZulu drafts for navigation and exercises.',
+    'Design lessons, model measurements and narration still identify their English content.',
+  ], tour: [
+    { title: 'Check design pathway language', where: 'My Studies', href: '/student/design',
+      detail: 'Choose isiZulu; draft prompts show English source, while core lessons remain English.' },
+  ] },
+  { when: '25 September 2026', sha: '5f610aae', changes: [
+    'A failed organisation survey send keeps your answers and lets you retry.',
+    'Crop plan controls and chart accessibility labels add isiZulu drafts.',
+  ], tour: [
+    { title: 'Check survey retry', where: 'Surveys', href: '/surveys',
+      detail: 'Choose isiZulu; if a send fails, your answers stay available for retry.' },
+    { title: 'Check crop plan labels', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'Choose isiZulu and inspect the plan controls; farming guidance remains in English.' },
+  ] },
+  { when: '25 September 2026', sha: 'fd4bd6ae', changes: [
+    'Field visit controls and save notices show draft isiZulu beside English.',
+    'Programme progress explains evidence and totals in draft isiZulu beside English.',
+    'Training photo and report sharing choices show both languages before sharing.',
+  ], tour: [
+    { title: 'Check field visit wording', where: 'Mentor visits', href: '/mentor',
+      detail: 'Choose isiZulu and open a visit; check the source beside draft controls.' },
+    { title: 'Check programme sharing', where: 'Programme evidence', href: '/ngo',
+      detail: 'Choose isiZulu and inspect training photo and funder sharing choices.' },
+  ] },
+  { when: '25 September 2026', sha: '949e0fd6', changes: [
+    'Harvest and money charts now explain their figures in draft isiZulu beside English.',
+    'The charts clarify unrecorded costs, harvest gaps and estimates before you act.',
+  ], tour: [
+    { title: 'Check record explanations', where: 'My Records', href: '/records',
+      detail: 'Choose isiZulu and compare the chart notes with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '7f249ba4', changes: [
+    'The login, password gate and sharing consent show marked isiZulu drafts beside English.',
+    'The farmer map explains site data in isiZulu with the English farming source beside it.',
+    'Community location and profile deletion choices show isiZulu drafts beside English.',
+    'Crop prices show draft isiZulu beside English source and estimate labels.',
+  ], tour: [
+    { title: 'Check community privacy', where: 'Community profile', href: '/community/profile',
+      detail: 'Choose isiZulu and read the paired location and deletion descriptions.' },
+    { title: 'Check price explanations', where: 'Prices', href: '/prices',
+      detail: 'Choose isiZulu and open a crop; compare the draft with its English source.' },
+  ] },
+  { when: '25 September 2026', sha: '05636cde', changes: [
+    'Feedback form labels now follow the isiZulu setting.',
+    'Feedback privacy and send consent show isiZulu drafts beside their English source.',
+  ], tour: [
+    { title: 'Check feedback privacy', where: 'Feedback', href: '/feedback',
+      detail: 'Choose isiZulu and read what is sent before ticking the consent box.' },
+  ] },
+  { when: '25 September 2026', sha: '439db958', changes: [
+    'Home marks its isiZulu interface as an unreviewed draft.',
+    'Deleting a saved site shows isiZulu beside the exact English action.',
+    'Study pages explain whether this module’s slides or audio remain in English.',
+  ], tour: [
+    { title: 'Check study media language', where: 'My Studies', href: '/student',
+      detail: 'Choose isiZulu and open a module; any English slides or audio are identified.' },
+  ] },
+  { when: '25 September 2026', sha: 'cdae7c95', changes: [
+    'Survey creators can add isiZulu labels to new and existing surveys.',
+    'Farmers see any supplied isiZulu labels beside the English questions and choices.',
+  ], tour: [
+    { title: 'Check survey labels', where: 'Surveys', href: '/surveys',
+      detail: 'Choose isiZulu. Organisation surveys show supplied labels beside their English source.' },
+  ] },
+  { when: '25 September 2026', sha: 'a2200c89', changes: [
+    'The farmer goal and Design Studio link have marked isiZulu drafts.',
+    'Soil suggestions pair isiZulu drafts with exact English source wording.',
+  ], tour: [
+    { title: 'Check soil wording', where: 'Farmer map', href: '/farmer',
+      detail: 'Choose isiZulu and open soil details; read the English source beside each draft suggestion.' },
+  ] },
+  { when: '25 September 2026', sha: '315bbfe0', changes: [
+    'Account access and consent choices show marked isiZulu drafts beside English.',
+    'Design photo and size controls now follow the isiZulu setting.',
+  ], tour: [
+    { title: 'Check sharing choices', where: 'Account', href: '/account',
+      detail: 'Choose isiZulu; each sharing choice keeps its English source beside the draft.' },
+    { title: 'Check design controls', where: 'Design Studio', href: '/design',
+      detail: 'Photo, status and dimension controls follow your language setting.' },
+  ] },
+  { when: '25 September 2026', sha: '98ce2fe1', changes: [
+    'The site survey pairs isiZulu and English for saving and roof water checks.',
+    'The crop planner has isiZulu controls; farming guidance remains in English.',
+    'Records and invoices pair sensitive money guidance with isiZulu drafts.',
+    'Programme report controls and PDF labels now follow the isiZulu setting.',
+    'Back and menu controls now follow your isiZulu setting.',
+  ], tour: [
+    { title: 'Open the site survey', where: 'Sample farm', href: '/samples/farm',
+      detail: 'Choose isiZulu and open Edit site survey. Roof water and save instructions show their English source.' },
+    { title: 'Check your records', where: 'My Records', href: '/records',
+      detail: 'Money and sync guidance keeps the English wording beside the isiZulu draft.' },
+    { title: 'See the crop planner', where: 'Crop plan', href: '/facilitator/crops',
+      detail: 'The note explains which crop instructions are still in English.' },
+  ] },
+  { when: '25 September 2026', sha: '95be15e8', changes: [
+    'Calendar month labels now appear in isiZulu.',
+    'Task Planner labels its English farming guidance.',
+    'Report preparation headings and actions have isiZulu drafts.',
+    'Offline sync keeps its isiZulu drafts with English source details.',
+    'Garden Survey choices and plan show paired isiZulu drafts.',
+  ], tour: [
+    { title: 'See isiZulu calendar months', where: 'Planting Calendar', href: '/calendar',
+      detail: 'Choose isiZulu and open the calendar month strip.' },
+    { title: 'Check Task Planner language', where: 'Task Planner', href: '/cropplan',
+      detail: 'The note above the plan says which guidance remains in English.' },
+    { title: 'See the Garden Survey draft', where: 'Garden Survey', href: '/survey',
+      detail: 'The choices and plan pair isiZulu drafts with their English source.' },
+  ] },
+  { when: '25 September 2026', sha: '16056954', changes: [
+    'Contact messages now reach your mentor or organisation when your account is linked to one.',
+    'The partners and pitch pages appear straight away when opened from a link.',
+    'The partner pitch slide stays on screen when you turn your phone.',
+  ], tour: [
+    { title: 'Send a message', where: 'Contact', href: '/contact',
+      detail: 'Choose your mentor, organisation or support and send a message.' },
+    { title: 'Open the partner page', where: 'For partners', href: '/partners',
+      detail: 'The page content is available as soon as the link opens.' },
+  ] },
+  { when: '25 September 2026', sha: 'f3ae3586', changes: [
+    'The top bar now clears your phone\u2019s clock on every screen, not just some.',
+  ], tour: [
+    { title: 'Check the top bar on Journal', where: 'Field Journal', href: '/journal',
+      detail: 'The title and Back button now sit clear of the clock and battery.' },
+  ] },
+  { when: '25 September 2026', sha: '44f938b4', changes: [
+    'The Journal card on Home says “Notes & photos” in isiZulu.',
+  ] },
+  { when: '24 September 2026', sha: '25dfb01a', changes: [
+    'The top bar no longer sits under your phone\u2019s clock and battery.',
+    'Lesson slides are wider on a phone, so the picture is easier to see.',
+  ], tour: [
+    { title: 'See the wider lesson slides', where: 'My Studies \u00b7 Introduction to Permaculture', href: '/student',
+      detail: 'Open the module and look at the slide \u2014 it now reaches the edge of its card.' },
+  ] },
+  { when: '24 September 2026', sha: 'af29e1cc', changes: [
+    'Survey controls have isiZulu drafts and a review notice.',
+  ] },
+  { when: '24 September 2026', sha: 'b20f40eb', changes: [
+    'Faint grey text across the app is darker, so it holds up in bright sun.',
+    'Dark mode now works properly — cards, text and borders all follow it.',
+  ], tour: [
+    { title: 'Try dark mode on your screens', where: 'Account · Appearance & language', href: '/account',
+      detail: 'Switch to dark, then open Journal and Calendar — both follow it now.' },
+  ] },
+  { when: '24 September 2026', sha: '01504a6d', changes: [
+    'Plant Guilds lessons now show isiZulu reading and quiz drafts.',
+    'Each lesson says language and local farming review is still due.',
+  ], tour: [
+    { title: 'Read Plant Guilds in isiZulu', where: 'My Studies · Plant Selection & Guilds', href: '/student',
+      detail: 'Choose isiZulu, open Plant Selection & Guilds, and read a labelled lesson draft.' },
+  ] },
+  { when: '24 September 2026', sha: '5a9f11af', changes: [
+    'Small Livestock now has twenty isiZulu slides and the woman’s narration.',
+    'Its three isiZulu lessons and quizzes are marked as drafts for review.',
+  ], tour: [
+    { title: 'Hear Small Livestock in isiZulu', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Choose isiZulu, open Small Livestock, and play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '8483e254', changes: [
+    'Water Harvesting now has isiZulu slides and the same woman’s voice as Seeds.',
+    'The greywater lesson asks for qualified local advice before any reuse.',
+    'The isiZulu lessons are marked as drafts.',
+  ], tour: [
+    { title: 'Hear Water Harvesting in isiZulu', where: 'My Studies · Water Harvesting', href: '/student',
+      detail: 'Choose isiZulu, open Water Harvesting, and play a narrated slide. The greywater lesson is lesson 4.' },
+  ] },
+  { when: '24 September 2026', sha: 'f249ea06', changes: [
+    'Soil Health now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Both are review drafts; slides 10–11 use matching still pictures.',
+  ], tour: [
+    { title: 'Hear Soil Health in isiZulu', where: 'My Studies · Soil Health', href: '/student',
+      detail: 'Choose isiZulu, open Soil Health, then play a narrated slide. Review drafts are labelled.' },
+  ] },
+  { when: '24 September 2026', sha: '6d0c39b2', changes: [
+    'Small Livestock now explains bee ranges and movement rules.',
+    'Bee registration guidance names the activities covered by national rules.',
+  ], tour: [
+    { title: 'Read the bee lesson', where: 'My Studies · Small Livestock Integration', href: '/student',
+      detail: 'Open Small Livestock and choose the bees lesson.' },
+  ] },
+  { when: '24 September 2026', sha: '072257f8', changes: [
+    'Vegetables and Staples now has 18 isiZulu slides and the woman’s narration.',
+    'The isiZulu lesson remains a draft for language and farming review.',
+  ], tour: [
+    { title: 'Hear Vegetables and Staples in isiZulu', where: 'My Studies · Vegetables and Staples', href: '/student',
+      detail: 'Choose isiZulu, open Vegetables and Staples, and play a slide.' },
+  ] },
+  { when: '24 September 2026', sha: '9a3326e0', changes: [
+    'The Introduction zones slide now shows a walking path with Zones 0–5.',
+  ], tour: [
+    { title: 'See the Zones picture', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction, and view slide 15.' },
+  ] },
+  { when: '24 September 2026', sha: 'a59fbec9', changes: [
+    'Food Forest Design now has 20 isiZulu slides.',
+    'Hear the woman’s isiZulu narration; both are drafts for review.',
+  ], tour: [
+    { title: 'Hear Food Forest Design in isiZulu', where: 'My Studies · Food Forest Design', href: '/student',
+      detail: 'Choose isiZulu, open Food Forest Design, then play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '897edc38', changes: [
+    'Reading the Landscape now has 21 isiZulu slides.',
+    'Hear the woman’s isiZulu narration; both are drafts for review.',
+  ], tour: [
+    { title: 'Hear Reading the Landscape in isiZulu', where: 'My Studies · Reading the Landscape', href: '/student',
+      detail: 'Choose isiZulu, open Reading the Landscape, then play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '3b87d7c9', changes: [
+    'Full-screen lesson text now fits your phone; use − and + to change its size.',
+  ], tour: [
+    { title: 'Fit a lesson slide', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Open Learning Outcomes full screen and use the size buttons above the slide.' },
+  ] },
+  { when: '24 September 2026', sha: '146257a1', changes: [
+    'Market Gardening now shows 20 isiZulu still slides with its isiZulu narration.',
+    'Three teaching diagrams show the farm record, sales routes and neighbour network.',
+  ], tour: [
+    { title: 'View Market Gardening in isiZulu', where: 'My Studies · Market Gardening', href: '/student',
+      detail: 'Choose isiZulu, open Market Gardening, and view the narrated slides.' },
+  ] },
+  { when: '24 September 2026', sha: '66f24e47', changes: [
+    'Seeds lessons 2 and 3 now show isiZulu reading and quiz drafts.',
+    'Seed lessons now explain tomato crossing and why stored seed must be dry.',
+  ], tour: [
+    { title: 'Read more Seeds lessons in isiZulu', where: 'My Studies · Seeds', href: '/student',
+      detail: 'Choose isiZulu, open Seeds lessons 2 and 3, and read the language review notice.' },
+  ] },
+  { when: '24 September 2026', sha: '1d40dcc6', changes: [
+    'Introduction now has isiZulu slides and the same woman’s voice as Seeds.',
+    'Seeds lesson 1 now has isiZulu reading and a quiz draft, labelled for review.',
+    'The guided tour follows isiZulu when you choose it in Settings.',
+  ], tour: [
+    { title: 'Hear Introduction in isiZulu', where: 'My Studies · Introduction to Permaculture', href: '/student',
+      detail: 'Choose isiZulu, open Introduction to Permaculture, then play a narrated slide.' },
+  ] },
+  { when: '24 September 2026', sha: '77b49be9', changes: [
+    'Design views on your phone opens any Studio section, including Preview & Export.',
+    'Map, Crop plan and Print / Export are under More in the Studio.',
+    'In isiZulu, course cards show when slides or audio are still in English.',
+  ], tour: [
+    { title: 'Switch design views', where: 'Farmer map → Design Studio', href: '/farmer',
+      detail: 'Open your site in Design Studio, then use Design views to choose a section.' },
+  ] },
   { when: '24 September 2026', sha: '1ce587e1', changes: [
     'Your course comes first in My Studies; other courses have photos and guides are last.',
     'Landscape slides open clear; tap the picture to show or hide controls.',

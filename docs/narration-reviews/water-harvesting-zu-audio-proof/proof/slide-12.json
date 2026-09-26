@@ -1,0 +1,172 @@
+{
+  "seconds": 23.616,
+  "bytes": 141696,
+  "audioSha256": "3c740cf3eecc2e543aece6ebfec4d0517faec256d00413cf562b78581cf3b95a",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Klama",
+      "offset": 1318330,
+      "duration": 3977080
+    },
+    {
+      "text": "i-spillway",
+      "offset": 6005830,
+      "duration": 7244160
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 13676250,
+      "duration": 5113330
+    },
+    {
+      "text": "kodonga",
+      "offset": 18789580,
+      "duration": 6250000
+    },
+    {
+      "text": "udonga",
+      "offset": 27028330,
+      "duration": 6392080
+    },
+    {
+      "text": "oluchichimelwe",
+      "offset": 34130830,
+      "duration": 10511250
+    },
+    {
+      "text": "lungabhodloka",
+      "offset": 45210410,
+      "duration": 9375000
+    },
+    {
+      "text": "ngendlela",
+      "offset": 54727080,
+      "duration": 5965830
+    },
+    {
+      "text": "eyinhlekelele",
+      "offset": 60977080,
+      "duration": 10227080
+    },
+    {
+      "text": "Ukugeleza",
+      "offset": 80931660,
+      "duration": 7812500
+    },
+    {
+      "text": "kwamanzi",
+      "offset": 89028330,
+      "duration": 6676250
+    },
+    {
+      "text": "avela",
+      "offset": 96130830,
+      "duration": 4545410
+    },
+    {
+      "text": "endaweni",
+      "offset": 100960410,
+      "duration": 6250000
+    },
+    {
+      "text": "eqoqela",
+      "offset": 107494160,
+      "duration": 6392080
+    },
+    {
+      "text": "amanzi",
+      "offset": 114170410,
+      "duration": 5681660
+    },
+    {
+      "text": "kuyisici",
+      "offset": 119852080,
+      "duration": 6960410
+    },
+    {
+      "text": "esisodwa",
+      "offset": 126954580,
+      "duration": 8238750
+    },
+    {
+      "text": "Umuntu",
+      "offset": 145562500,
+      "duration": 5255830
+    },
+    {
+      "text": "oneziqu",
+      "offset": 151528330,
+      "duration": 7528330
+    },
+    {
+      "text": "nolwazi",
+      "offset": 159056660,
+      "duration": 6818330
+    },
+    {
+      "text": "olufanele",
+      "offset": 166301250,
+      "duration": 7386250
+    },
+    {
+      "text": "kufanele",
+      "offset": 173687500,
+      "duration": 5965830
+    },
+    {
+      "text": "ahlole",
+      "offset": 180079580,
+      "duration": 4829580
+    },
+    {
+      "text": "indawo",
+      "offset": 185335410,
+      "duration": 6107910
+    },
+    {
+      "text": "idamu",
+      "offset": 193573750,
+      "duration": 5823750
+    },
+    {
+      "text": "nomklamo",
+      "offset": 199397910,
+      "duration": 6675830
+    },
+    {
+      "text": "we-spillway",
+      "offset": 206073750,
+      "duration": 7528330
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 214312500,
+      "duration": 5255830
+    },
+    {
+      "text": "kokwakha",
+      "offset": 219568330,
+      "duration": 6676250
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l2",
+  "language": "zu",
+  "slide": 12,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-12.txt",
+  "sourceSha256": "1b3ef8d22ed5538f1fb4aef6eefd56b7430c7004592ed73dadbf961725dc8cbf",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:48:02.455277+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

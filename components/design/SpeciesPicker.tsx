@@ -1,10 +1,11 @@
 import React from 'react';
+import { X } from 'lucide-react';
 import { SPECIES } from '@/lib/species-catalog';
 import { sectionedPaletteFor, broadReachPalette, type Species } from '@/lib/species-palette';
 import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
-import { speciesPickerArtworkUrl } from '@/lib/species-art';
 import { formatDesignTranslation, translatedSpeciesSection, translatedSpeciesUse } from '@/lib/design-studio-i18n';
+import { speciesPickerArtworkUrl } from '@/lib/species-art';
 
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
@@ -35,7 +36,7 @@ export default function SpeciesPicker({
       }))
     : [{
         key: 'broad-reach',
-        label: t('designSpeciesBroadReachSection'),
+        label: t('speciesPickerBroadReachSection'),
         species: broadReachPalette(SPECIES, 4, siteMinTempC),
       }];
 
@@ -65,27 +66,25 @@ export default function SpeciesPicker({
     >
       <div style={{ flexShrink: 0, padding: '8px 12px', background: '#F8F5EE', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>{t('designSpeciesPickerTitle')}</h3>
+          <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>{t('speciesPickerTitle')}</h3>
           <p style={{ margin: 0, fontSize: 11, color: '#A9743F', fontWeight: 600 }}>
-            {siteBiomeName
-              ? formatDesignTranslation(t('designSpeciesFilteredForBiome'), { biome: siteBiomeName })
-              : t('designSpeciesBroadReach')}
+            {siteBiomeName ? formatDesignTranslation(t('speciesPickerFilteredFor'), { biome: siteBiomeName }) : t('speciesPickerBroadReach')}
           </p>
         </div>
         <button
           type="button"
           onClick={onClose}
           aria-label={t('designClose')}
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: 18, color: '#0B120B', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+          style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#0B120B', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
         >
-          ✕
+          <X size={18} />
         </button>
       </div>
 
       {/* Honesty banner */}
       <div style={{ flexShrink: 0, padding: '6px 12px', background: '#FFF3CD', color: '#856404', fontSize: 11.5, borderBottom: '1px solid #FFEEBA' }}>
-        {t('designSpeciesReviewNote')}
-        {siteMinTempC != null && siteMinTempC <= 0 && ` ${t('designSpeciesFrostHidden')}`}
+        <strong>{t('speciesPickerNoteLabel')}</strong> {t('speciesPickerNoteBody')}
+        {siteMinTempC != null && siteMinTempC <= 0 && ` ${t('speciesPickerFrostNote')}`}
       </div>
 
       <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 12 }}>

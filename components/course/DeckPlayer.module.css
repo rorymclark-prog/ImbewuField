@@ -114,9 +114,12 @@
   flex: none;
   flex-direction: column;
   width: 100%;
+  min-width: 0;
   min-height: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   padding: max(70px, env(safe-area-inset-top)) clamp(24px, 5vw, 76px) max(116px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
   overflow-y: auto;
   background: #faf7ee;
   color: #20190f;
@@ -134,28 +137,35 @@
   text-transform: uppercase;
 }
 .presentationSlide h2 {
+  min-width: 0;
   margin: 14px 0 0;
   padding-bottom: 12px;
   border-bottom: 2px solid #e1d8c5;
   color: #1f4d2b;
   font-family: Georgia, serif;
-  font-size: clamp(30px, 4.8vw, 62px);
+  font-size: calc(clamp(30px, 4.8vw, 62px) * var(--presentation-scale, 1));
   line-height: 1.12;
+  overflow-wrap: anywhere;
 }
 .presentationSlide ul {
+  /* The long isiZulu points pushed the grid's minimum width past a phone screen. */
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   list-style: disc outside;
   gap: clamp(8px, 2vh, 24px);
   align-content: center;
   flex: 1;
-  width: min(100%, 95ch);
+  width: 100%;
+  max-width: 95ch;
+  min-width: 0;
+  box-sizing: border-box;
   margin: 18px auto;
   padding-left: 1.25em;
-  font-size: clamp(22px, 2.7vw, 36px);
+  font-size: calc(clamp(22px, 2.7vw, 36px) * var(--presentation-scale, 1));
   line-height: 1.3;
   font-weight: 650;
 }
-.presentationSlide li { padding-left: .2em; }
+.presentationSlide li { min-width: 0; padding-left: .2em; overflow-wrap: anywhere; }
 .presentationSlide li::marker { color: #bd792c; }
 .presentationSlide footer {
   display: flex;
@@ -242,6 +252,16 @@
 }
 .zoomBar button:disabled { opacity: .45; cursor: default; }
 .expanded .transcript { display: none; }
+
+@media (orientation: portrait) and (max-width: 600px) {
+  .expanded.textSlide .zoomBar {
+    top: calc(max(8px, env(safe-area-inset-top)) + 106px);
+  }
+  .expanded.textSlide .presentationSlide {
+    padding-top: max(168px, calc(env(safe-area-inset-top) + 160px));
+    padding-inline: 20px;
+  }
+}
 
 .player button:focus-visible, .player summary:focus-visible {
   outline: 3px solid #b88237;
@@ -354,6 +374,24 @@
   object-fit: contain;
 }
 
+/* THE PICTURE IS THE LESSON, SO GIVE IT THE CARD.
+   Measured on a 390px phone: the slide arrived 280px wide. Nothing was broken — it was four
+   nested levels of horizontal padding, and the innermost 24px of it is this player's own. The
+   stage also carried a 10px radius sitting inside the module card's 28px one, so the farmer saw
+   two rounded rectangles 12px apart with a sliver of card between them.
+   Side padding earns its keep beside text; beside the largest thing on the screen it costs
+   picture. Below 650px the stage reaches the card's edge instead, which takes the image from
+   280x158 to 304x171 and leaves the corner rounding to the card that owns it.
+   Only the non-expanded player: .expanded already fills the viewport and overrides these.
+   border-radius needs !important because DeckPlayer.tsx sets it inline. */
+@media (max-width: 650px) {
+  .player:not(.expanded) .slideStage {
+    width: calc(100% + 24px);
+    margin-inline: -12px;
+    border-radius: 0 !important;
+  }
+}
+
 @media (max-width: 480px) {
   .player:not(.expanded) .controlStrip {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -401,10 +439,10 @@
     gap: 8px 24px;
     padding: 52px 26px 64px;
   }
-  .expanded .presentationSlide h2 { font-size: clamp(30px, 4vw, 46px); }
+  .expanded .presentationSlide h2 { font-size: calc(clamp(30px, 4vw, 46px) * var(--presentation-scale, 1)); }
   .expanded .presentationSlide ul {
     margin: 0;
-    font-size: clamp(22px, 2.6vw, 27px);
+    font-size: calc(clamp(22px, 2.6vw, 27px) * var(--presentation-scale, 1));
     line-height: 1.22;
     gap: 6px;
   }

@@ -45,17 +45,22 @@ import {
 } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { useLanguage } from '@/lib/i18n';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 
-const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
+const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
-const INK = '#20190F';
-const MUTED = '#5C5040';
-const FAINT = '#5d5143';
-const HAIRLINE = '#E2D8C4';
-const SOLD = '#1F4D2B';    // the forest green used for money in, for the same reason
+const INK = 'var(--text-primary)';
+const MUTED = 'var(--text-secondary)';
+const FAINT = 'var(--text-muted)';
+const HAIRLINE = 'var(--border)';
+const SOLD = '#1F4D2B';    // the forest green used for money in, for the same reason. A
+                            // fill/border colour only: paired everywhere with a fixed white
+                            // label, so it stays constant — see SOLD_TEXT below for text.
 const KEPT = '#C4A46A';    // gold — lighter by ~40 L*, so the split survives greyscale
 const SHORT = '#B33A3A';   // sold beyond what the picking log accounts for
 const BENCH = '#E3D8C0';   // the plan's benchmark: present, recessive, never the hero
+// SOLD as TEXT: the raw fill measures ~1.9:1 on a dark card, so text follows the theme instead.
+const SOLD_TEXT = 'var(--color-forest-800)';
 
 type View = 'measured' | 'plan';
 const WINDOWS = [6, 12, 24];
@@ -183,8 +188,8 @@ function OrchardToggle({ on, onChange, lang }: { on: boolean; onChange: (next: b
       aria-pressed={on}
       title={lang === 'zu'
         ? on
-          ? 'Izithelo, amantongomane nezinye izivuno zengadi yezithelo zibaliwe kulawa makhilogremu. Thinta ukuze ubone imifino yodwa.'
-          : 'Kubalwa imifino kuphela. Thinta ukuze ufake izithelo, amantongomane nezinye izivuno zengadi yezithelo.'
+          ? 'Izithelo, amantongomane nezinye izivuno zengadi yezithelo zibaliwe kulawa makhilogremu. Thinta ukuze ubone imifino yodwa. English source: Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.'
+          : 'Kubalwa imifino kuphela. Thinta ukuze ufake izithelo, amantongomane nezinye izivuno zengadi yezithelo. English source: Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'
         : on
           ? 'Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.'
           : 'Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'}
@@ -194,7 +199,7 @@ function OrchardToggle({ on, onChange, lang }: { on: boolean; onChange: (next: b
         fontWeight: on ? 600 : 400,
         border: `1px solid ${on ? SOLD : HAIRLINE}`,
         background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
-        color: on ? SOLD : FAINT,
+        color: on ? SOLD_TEXT : FAINT,
         cursor: 'pointer',
       }}
     >
@@ -245,18 +250,20 @@ function MeasuredView({
 }) {
   const { W, PAD, PLOT_H, barCap } = wide ? DESK : PHONE;
   if (!series.hasRecords) {
+    const emptyEnglish = series.earlierRecords
+      ? `Your records start in ${series.firstRecordLabel}. Try a longer window above to reach them.`
+      : 'Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.';
+    const emptyZulu = series.earlierRecords
+      ? `Amarekhodi akho aqala ku-${series.firstRecordLabel}. Khetha isikhathi eside ngenhla ukuze uwafinyelele.`
+      : 'Rekhoda okuvunile nokuthengisile; leli shadi libonisa ukuthi kungakanani okuvunile okuphuma epulazini nokuthi kungakanani okusala kulo.';
     return (
       <div className="px-4 py-5">
         <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>
           {lang === 'zu' ? (series.earlierRecords ? 'Akukho okuvunyiwe noma okudayisiwe kulezi zinyanga' : 'Asikho isivuno esirekhodiwe okwamanje') : (series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet')}
         </p>
-        <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-          {lang === 'zu' ? 'Incazelo enemininingwane ngesiNgisi okwamanje: Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.' : series.earlierRecords
-            ? `Your records start in ${series.firstRecordLabel}. Try a longer window above.`
-            : 'Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.'}
-        </p>
+        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu} />
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
-          style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
+          style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {lang === 'zu' ? 'Rekhoda isivuno' : 'Log a harvest'}
         </Link>
       </div>
@@ -290,12 +297,20 @@ function MeasuredView({
   const clipped = months
     .filter((_, i) => kgScale.isClipped(monthTotals[i]))
     .map((m) => `${m.longLabel}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
+  const keptExplanationEnglish = '“Kept” is what you picked less what you sold — food eaten at home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.';
+  const keptExplanationZulu = '“Okusele” yinani olivunile kususwe oluthengisile — kungaba ukudla okudliwe ekhaya, okuphiwe abanye, okuphiwe izilwane, okugcinelwe imbewu noma okonakele. Uhlelo alukwazi ukuhlukanisa lezi zinto, ngakho aluqageli.';
+  const mismatchExplanationEnglish = 'A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown — usually picking that never got written down, sometimes a sale out of an earlier month’s harvest.';
+  const mismatchExplanationZulu = 'Ulayini onamadeshi usho ukuthi kuleyo nyanga kudayiswe okungaphezu kokuvuniwe okurekhodiwe. Ngakho asazi inani elisele — ngokuvamile ukuvunwa okungabhalwanga, noma ukuthengisa okuvela esivunweni senyanga edlule.';
+  const clippedExplanationEnglish = `Too tall for this chart, and cut off at the mark so the other months stay readable: ${clipped.join('; ')}.`;
+  const clippedExplanationZulu = `La manani made kakhulu ukuba abonakale eshadini lonke, ngakho anqanyulwe ophawini ukuze ezinye izinyanga zifundeke: ${clipped.join('; ')}.`;
+  const dateExplanationEnglish = 'Entries land in the month you recorded them; the logging forms have no date field yet.';
+  const dateExplanationZulu = 'Okufakile kubalwa enyangeni okurekhode ngayo; amafomu okufaka amarekhodi awanayo inkambu yosuku okwamanje.';
 
   return (
     <>
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
         <Figure label={lang === 'zu' ? `Okuvunyiwe, izinyanga ezingu-${series.windowMonths}` : `Picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
-        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD} />
+        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
         {/* Null is not zero: when the window sold more than it logged picking, the
             difference is a missing record, not food that stayed on the farm. */}
         {series.totalKeptKg === null
@@ -308,8 +323,8 @@ function MeasuredView({
           aria-label={lang === 'zu' ? `Amakhilogremu avunyiwe ngenyanga ezinyangeni ezingu-${n}, ahlukaniswe ngokudayisiwe nokusele epulazini.` : `Kilograms picked each month for ${n} months, split into sold and kept on the farm.`}>
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + PLOT_H} y2={PAD.top + PLOT_H} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">{Math.round(maxKg)}</text>
-          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">0</text>
+          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{Math.round(maxKg)}</text>
+          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>0</text>
 
           {months.map((m, i) => {
             const x = cx(i) - barW / 2;
@@ -343,7 +358,7 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`x-${m.key}`}>
               {showLabel(i) && (
-                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" fill={FAINT} fontFamily="monospace">{m.label}</text>
+                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.label}</text>
               )}
             </g>
           ))}
@@ -355,14 +370,16 @@ function MeasuredView({
               )}
               <rect x={cx(i) - colW / 2} y={0} width={colW} height={totalH} fill="transparent"
                 style={{ cursor: 'pointer' }} onClick={() => onPick(m.key)}>
-                <title>{`${m.longLabel} — picked ${kgLabel(m.producedKg)}, sold ${kgLabel(m.soldKg)}`}</title>
+                <title>{lang === 'zu'
+                  ? `${m.longLabel} — kuvuniwe ${kgLabel(m.producedKg)}, kudayisiwe ${kgLabel(m.soldKg)}. English source: ${m.longLabel} — picked ${kgLabel(m.producedKg)}, sold ${kgLabel(m.soldKg)}`
+                  : `${m.longLabel} — picked ${kgLabel(m.producedKg)}, sold ${kgLabel(m.soldKg)}`}</title>
               </rect>
             </g>
           ))}
         </svg>
       </div>
 
-      <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid #F0E9DA' }}>
+      <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid var(--border)' }}>
         <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{selected.longLabel}</span>
         {selected.hasRecords ? (
           <>
@@ -377,40 +394,23 @@ function MeasuredView({
         )}
       </div>
 
-      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
-        {lang === 'zu' && <p className="font-sans" style={{ fontSize: 12, color: FAINT }}>Incazelo enemininingwane ngesiNgisi okwamanje.</p>}
+      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         {(series.excludedProducedKg > 0 || series.excludedSoldKg > 0) && (
           /* Picked and sold said separately, because the card's own figures are separate and their
              sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
              single "65 kg" would match none of picked, sold or kept. */
-          <p className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-            <b style={{ fontWeight: 600 }}>Orchard is switched off</b>, so this card leaves out
-            {series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}
-            {series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}
-            {series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}
-            : {series.excludedNames.join(', ')}. The rands elsewhere on this
-            page still count those sales — only the kilograms here are filtered.
-          </p>
+          <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+            english={`Orchard is switched off, so this card leaves out${series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}${series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}: ${series.excludedNames.join(', ')}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.`}
+            zulu={`Ingadi yezithelo icishiwe, ngakho leli khadi alifaki${series.excludedProducedKg > 0 ? ` ukuvunwa okungu-${kgLabel(series.excludedProducedKg)}` : ''}${series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' kanye' : ''}${series.excludedSoldKg > 0 ? ` ukuthengiswa okungu-${kgLabel(series.excludedSoldKg)}` : ''}: ${series.excludedNames.join(', ')}. Imali yalokho kuthengisa isabalwa kwenye indawo kuleli khasi — lapha kususwa amakhilogremu kuphela.`} />
         )}
-        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-          <b style={{ color: MUTED, fontWeight: 600 }}>Kept</b> is what you picked less what you sold — food eaten at
-          home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.
-        </p>
+        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={keptExplanationEnglish} zulu={keptExplanationZulu} />
         {anyShort && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown —
-            usually picking that never got written down, sometimes a sale out of an earlier month&apos;s harvest.
-          </p>
+          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={mismatchExplanationEnglish} zulu={mismatchExplanationZulu} />
         )}
         {clipped.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
-            <b style={{ color: MUTED, fontWeight: 600 }}>{clipped.join('; ')}</b>.
-          </p>
+          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={clippedExplanationEnglish} zulu={clippedExplanationZulu} />
         )}
-        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-          Entries land in the month you recorded them; the logging forms have no date field yet.
-        </p>
+        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={dateExplanationEnglish} zulu={dateExplanationZulu} />
       </div>
     </>
   );
@@ -434,13 +434,18 @@ function PlanView({ plan, source, wide, orchard, lang }: {
       : plan.unbenchmarkedCropNames.length > 0
         ? `Nothing in your plan has a verified yield figure to compare against yet — ${plan.unbenchmarkedCropNames.join(', ')}.`
         : 'Your crop plan is empty, so there is nothing to compare your harvest against.';
+    const reasonZulu = source.origin === 'none'
+      ? 'Dweba imibhede e-Design Studio, bese uhlela isizini. Leli shadi lizoqhathanisa uhlelo namarekhodi okuvunwe ngempela.'
+      : plan.unbenchmarkedCropNames.length > 0
+        ? `Alikho inani lesivuno eliqinisekisiwe lokuqhathanisa nakho okwamanje: ${plan.unbenchmarkedCropNames.join(', ')}.`
+        : 'Uhlelo lwakho lwezitshalo alunalutho, ngakho akukho okuqhathaniswa nesivuno sakho.';
     return (
       <div className="px-4 py-5">
         <p className="font-display font-semibold" style={{ fontSize: 13.5, color: INK }}>{lang === 'zu' ? 'Akukho okuqhathaniswayo okwamanje' : 'Nothing to compare yet'}</p>
-        <p className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>{lang === 'zu' ? `Incazelo enemininingwane ngesiNgisi okwamanje: ${reason}` : reason}</p>
+        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={reason} zulu={reasonZulu} />
         <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'}
           className="inline-block mt-2.5 font-sans font-semibold"
-          style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
+          style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {lang === 'zu' ? (source.origin === 'none' ? 'Vula i-Design Studio' : 'Vula uhlelo lwezitshalo') : (source.origin === 'none' ? 'Open the Design Studio' : 'Open the crop plan')}
         </Link>
       </div>
@@ -460,70 +465,67 @@ function PlanView({ plan, source, wide, orchard, lang }: {
 
   return (
     <>
-      <p className="px-4 pt-3 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-        Each crop&apos;s plan benchmark, with what you have logged picking this year on top of it.
-      </p>
+      <IsiZuluDraftSource className="px-4 pt-3 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+        english="Each crop’s plan benchmark, with what you have logged picking this year on top of it."
+        zulu="Isilinganiso sohlelo sesitshalo ngasinye, kanye nesivuno osirekhodile salo nyaka esiboniswe phezu kwaso." />
 
       <div className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
         {plan.rows.map((row, i) => (
           <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent}
-            clipped={rowScale.isClipped(rowTotals[i])} />
+            clipped={rowScale.isClipped(rowTotals[i])} lang={lang} />
         ))}
       </div>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} label={lang === 'zu' ? 'isilinganiso sohlelo' : 'plan benchmark'} value="" />
-        <Chip dot={SOLD} label={lang === 'zu' ? 'okuvunyiwe okurekhodiwe' : 'logged picked'} value="" />
-        {lang === 'zu' && <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>Incazelo enemininingwane ngesiNgisi okwamanje.</span>}
+        <Chip dot={BENCH} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={lang === 'zu' ? 'isilinganiso sohlelo' : 'plan benchmark'} value="" />
+        <Chip dot={SOLD} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={lang === 'zu' ? 'okuvuniwe okurekhodiwe' : 'logged picked'} value="" />
         {plan.lossConfirmed
-          ? <Chip dot="#C07A1E" label={`after your ${Math.round(plan.lossPercent)}% loss allowance`} value="" />
+          ? <Chip dot="#C07A1E"
+              title={lang === 'zu' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
+              label={lang === 'zu' ? `ngemva kwesilinganiso sokulahleka esingu-${Math.round(plan.lossPercent)}%` : `after your ${Math.round(plan.lossPercent)}% loss allowance`} value="" />
           : (
             <Link href="/facilitator/crops" className="font-sans"
-              style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
-              Set your loss allowance to mark it on these bars
+              style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
+              <IsiZuluDraftSource lang={lang} english="Set your loss allowance to mark it on these bars" zulu="Faka isilinganiso sakho sokulahleka ukuze usibone kule migqa." />
             </Link>
           )}
       </div>
 
-      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         {/* Deliberately does NOT repeat the names: `offPlanNames` below already lists them, and on
             a farm with fruit trees this paragraph and that one would otherwise say the same word
             twice, three lines apart. This one carries the reason; that one carries the list. */}
         {orchard.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            <b style={{ color: MUTED, fontWeight: 600 }}>Nothing from the orchard is compared here.</b> A tree is not
-            planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales
-            still count everywhere else on this page.
-          </p>
+          <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+            english="Nothing from the orchard is compared here. A tree is not planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales still count everywhere else on this page."
+            zulu="Akukho sivuno sengadi yezithelo esiqhathaniswa lapha. Isihlahla asitshalwa embhedeni wesizini eyodwa, ngakho asikho isilinganiso sohlelo sokuqhathanisa naso. Isivuno nokuthengisa kwaso kusabalwa kwezinye izindawo kuleli khasi." />
         )}
-        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-          The benchmark is what one <b style={{ color: MUTED, fontWeight: 600 }}>complete crop cycle</b> on that much
-          ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is
-          not finished, or that picking was not written down. It is not proof of a lost harvest.
-        </p>
+        <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+          english="The benchmark is what one complete crop cycle on that much ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is not finished, or that picking was not written down. It is not proof of a lost harvest."
+          zulu="Isilinganiso sibonisa ukuthi umjikelezo owodwa ophelele wesitshalo kuleyo ndawo ungakhiqiza amakhilogremu amangaki — akusona isivuno esihlosiwe salo nyaka wekhalenda. Umugqa oluhlaza omfushane ungasho ukuthi umjikelezo awukapheli noma ukuvunwa akubhalwanga. Awufakazeli ukuthi isivuno silahlekile." />
         {clippedRows.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            Too long for these bars, and cut off at the mark so the smaller crops still have one:{' '}
-            <b style={{ color: MUTED, fontWeight: 600 }}>{clippedRows.join('; ')}</b>.
-          </p>
+          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+            english={`Too long for these bars, and cut off at the mark so the smaller crops still have one: ${clippedRows.join('; ')}.`}
+            zulu={`Ezinye izibalo zinde kakhulu kule migqa; zinophawu lokunqamuka ukuze kubonakale nemigqa yezitshalo ezincane: ${clippedRows.join('; ')}.`} />
         )}
         {plan.unbenchmarkedCropNames.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            Left out — no verified yield figure yet: {plan.unbenchmarkedCropNames.join(', ')}.
-          </p>
+          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+            english={`Left out — no verified yield figure yet: ${plan.unbenchmarkedCropNames.join(', ')}.`}
+            zulu={`Akufakwanga — alikho inani lesivuno eliqinisekisiwe okwamanje: ${plan.unbenchmarkedCropNames.join(', ')}.`} />
         )}
         {plan.offPlanNames.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
-            Harvested but not in the plan, so not compared: {plan.offPlanNames.join(', ')}.
-          </p>
+          <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
+            english={`Harvested but not in the plan, so not compared: ${plan.offPlanNames.join(', ')}.`}
+            zulu={`Kuvuniwe kodwa akukho ohlelweni, ngakho akuqhathaniswa: ${plan.offPlanNames.join(', ')}.`} />
         )}
       </div>
     </>
   );
 }
 
-function PlanRow({ row, pct, lossPercent, clipped }: {
+function PlanRow({ row, pct, lossPercent, clipped, lang }: {
   row: PlanVsActualRow; pct: (kg: number) => string; lossPercent: number; clipped: boolean;
+  lang: string;
 }) {
   return (
     <div>
@@ -531,8 +533,11 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
         <span className="font-sans truncate min-w-0" style={{ fontSize: 12.5, color: INK }}>
           <span aria-hidden="true">{row.icon}</span> {row.cropName}
         </span>
-        <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: MUTED }}>
-          {kgLabel(row.harvestedKg)} <span style={{ color: '#B8AC96' }}>of {kgLabel(row.benchmarkKg)}</span>
+        <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: MUTED }}
+          title={lang === 'zu' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
+          {lang === 'zu'
+            ? <>Kuvunyiwe {kgLabel(row.harvestedKg)} · isilinganiso {kgLabel(row.benchmarkKg)}</>
+            : <>{kgLabel(row.harvestedKg)} <span style={{ color: 'var(--text-muted)' }}>of {kgLabel(row.benchmarkKg)}</span></>}
         </span>
       </div>
 
@@ -540,12 +545,14 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
           inside it, the loss allowance is the target mark. One shared scale across
           every crop, so the rows are comparable to each other and not just to
           themselves. */}
-      <div className="mt-1.5 relative" style={{ height: 14, background: '#F5F0E8', borderRadius: 3 }}>
+      <div className="mt-1.5 relative" style={{ height: 14, background: 'var(--bg-2)', borderRadius: 3 }}>
         <div style={{ position: 'absolute', inset: 0, width: pct(row.benchmarkKg), background: BENCH, borderRadius: 3 }} />
         <div style={{ position: 'absolute', top: 3.5, left: 0, height: 7, width: pct(row.harvestedKg), background: SOLD, borderRadius: 2 }} />
         {row.afterLossKg !== null && (
           <div
-            title={`After your ${Math.round(lossPercent)}% loss allowance: ${kgLabel(row.afterLossKg)}`}
+            title={lang === 'zu'
+              ? `Ngemva kwesilinganiso sakho sokulahleka esingu-${Math.round(lossPercent)}%: ${kgLabel(row.afterLossKg)}. English source: After your ${Math.round(lossPercent)}% loss allowance: ${kgLabel(row.afterLossKg)}`
+              : `After your ${Math.round(lossPercent)}% loss allowance: ${kgLabel(row.afterLossKg)}`}
             style={{ position: 'absolute', top: -1, height: 16, left: pct(row.afterLossKg), width: 2, background: '#C07A1E', borderRadius: 1 }}
           />
         )}
@@ -553,9 +560,9 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
       </div>
 
       {row.soldExceedsHarvested && (
-        <p className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }}>
-          Sold {kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.
-        </p>
+        <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }} lang={lang}
+          english={`Sold ${kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.`}
+          zulu={`Kudayiswe ${kgLabel(row.soldKg)} — kungaphezu kwalokho okurekhodwe njengokuvuniwe, ngakho umugqa oluhlaza mfushane kunesivuno sangempela.`} />
       )}
     </div>
   );
@@ -572,9 +579,9 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
   );
 }
 
-function Chip({ dot, label, value }: { dot: string; label: string; value: string }) {
+function Chip({ dot, label, value, title }: { dot: string; label: string; value: string; title?: string }) {
   return (
-    <span className="flex items-baseline gap-1.5">
+    <span className="flex items-baseline gap-1.5" title={title}>
       <span aria-hidden="true" style={{
         width: 7, height: 7, borderRadius: 2, display: 'inline-block',
         background: dot, border: dot === 'transparent' ? `1px solid ${HAIRLINE}` : undefined,

@@ -17,6 +17,7 @@
 // than being copied so the calendar event, the PDF and the screen can never
 // drift into describing the same task three different ways.
 
+import { numberLabel } from '@/lib/format-figures';
 import type { CropDef } from '@/lib/crop-catalog';
 import { MONTHS_SHORT, cropByKey, plantSpacingCm, plantSpacingRangeCm } from '@/lib/crop-catalog';
 import type { CropTask, PlanBed, Planting, SeedBoqRow } from '@/lib/crop-plan';
@@ -550,8 +551,8 @@ function buyingNote(
 }
 
 export function positionRangeLabel(range: readonly [number, number]): string {
-  const minimum = range[0].toLocaleString('en-ZA');
-  const maximum = range[1].toLocaleString('en-ZA');
+  const minimum = numberLabel(range[0]);
+  const maximum = numberLabel(range[1]);
   return range[0] === range[1] ? minimum : `${minimum}–${maximum}`;
 }
 

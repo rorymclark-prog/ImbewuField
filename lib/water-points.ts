@@ -22,7 +22,7 @@ export const WATER_POINT_CATEGORIES: { v: WaterPointCategory; icon: string; colo
   { v: 'Spring',   icon: '♒',  color: '#3A9E7C' },
   { v: 'Well',     icon: '⭕',  color: '#7A5230' },
   { v: 'Tank',     icon: '🔵',  color: '#235E86' },
-  { v: 'Other',    icon: '📍',  color: '#8C7A62' },
+  { v: 'Other',    icon: '📍',  color: '#755942' },
 ];
 
 const WATER_POINT_CATEGORY_VALUES = new Set<WaterPointCategory>(

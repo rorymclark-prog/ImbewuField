@@ -80,8 +80,29 @@ export function assignmentState(
   return 'open';
 }
 
-/** Plain-language deadline for the learner. Null when there is no due date. */
-export function formatDue(due_at: string | null, today: string): string | null {
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/** Short month abbreviation in the app's active language (lib/i18n.tsx's APP_LANGS codes are
+ *  valid BCP-47 primary subtags). Was hard-coded to MONTHS_EN for every language but isiZulu —
+ *  a farmer reading Afrikaans, Sesotho or any of the other nine languages still saw English
+ *  month names. Intl carries real CLDR data for several of these (zu, xh, af, st, nso, tn) and
+ *  falls back to English for the others (pinned explicitly below), which is the same fallback the old hard-coded table
+ *  gave everyone except isiZulu — so this can only add coverage, never remove it. */
+function monthAbbrev(monthIndex: number, lang: string): string {
+  try {
+    // An unsupported tag falls back to the *runtime's* default locale (a German browser would
+    // print German months), not English — so check support first and pin English ourselves.
+    const locale = Intl.DateTimeFormat.supportedLocalesOf([lang]).length ? lang : 'en';
+    return new Intl.DateTimeFormat(locale, { month: 'short' }).format(new Date(2000, monthIndex, 1));
+  } catch {
+    return MONTHS_EN[monthIndex] ?? '';
+  }
+}
+
+/** Plain-language deadline for the learner. Null when there is no due date. `lang` only affects
+ *  the month abbreviation in the far-future case below — the near-term phrasing ("Due today" etc)
+ *  is localised by the caller (e.g. app/student/page.tsx's localisedDueText). */
+export function formatDue(due_at: string | null, today: string, lang: string = 'en'): string | null {
   if (!due_at) return null;
   const days = daysBetween(today, due_at);
   if (days === null) return null;
@@ -91,7 +112,7 @@ export function formatDue(due_at: string | null, today: string): string | null {
   if (days < 0) return `${Math.abs(days)} days overdue`;
   if (days <= DUE_SOON_DAYS) return `Due in ${days} days`;
   const [y, m, d] = due_at.split('-').map(Number);
-  const month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1] ?? '';
+  const month = monthAbbrev(m - 1, lang);
   return `Due ${d} ${month}${y === new Date().getFullYear() ? '' : ` ${y}`}`;
 }
 

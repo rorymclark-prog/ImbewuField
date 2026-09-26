@@ -35,7 +35,7 @@ export const APP_LANGS = [
 // eagerly below (it is the default locale and the fallback for every other one, needed
 // synchronously before we even know which language the farmer wants); the other ten live in
 // lib/locales/<code>.ts and are fetched as small async chunks on demand via loadLocale().
-const T_en: Dict = {
+export const T_en: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...LEARNER_UI_ENGLISH,
   completionScoreAria: 'Site setup completeness',
@@ -57,6 +57,8 @@ const T_en: Dict = {
   welcomeSub: 'Smart permaculture planning for South African land.',
   pickLang: 'Choose your language',
   pickLangSub: 'You can change it any time from the top bar.',
+  langPartialTag: 'Partly in English',
+  langPartialActiveNote: 'Some of {lang} is still shown in English while translation continues.',
   start: 'Start',
   heroSub: 'Tap anywhere in South Africa to get a full permaculture plan for your land.',
   // Farmer-page crash guard (lib/crash-loop.ts) — English-only for now; t() falls back.
@@ -68,6 +70,7 @@ const T_en: Dict = {
   // for now; t() falls back.
   reportsOfflineTitle: 'Reports need signal the first time',
   reportsOfflineMessage: 'This part of the app is not saved on your phone yet, and there is no signal right now. Open it once with signal and it will work offline after that.',
+  reportsOfflineZuluDraftNotice: 'Unreviewed isiZulu draft.',
   reportsOfflineRetry: 'Try again',
   reportsOfflineClose: 'Close',
   clickAnalyse: 'Tap the map to analyse',
@@ -100,6 +103,13 @@ const T_en: Dict = {
   mapSaveSpotTitle: 'Save this spot to your Places',
   mapSelectSpotTitle: 'Tap a spot on the map first',
   mapPrintBaseTitle: 'Print a clean base map (boundary, house outlines and contours, no hatching) to sketch your design by hand',
+  siteSummaryRainEssential: 'Only {mm}mm of rain so water harvesting is essential.',
+  siteSummaryRainEstimate: '{mm}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.',
+  siteSummarySoilTested: 'Use your soil test and local crop requirements to plan amendments.',
+  siteSummarySoilUntested: 'Soil conditions need checking on site; arrange a soil test.',
+  siteSummaryFrostProtection: 'Protect against frost in winter.',
+  siteSummaryPlanPrompt: 'Want a full planting plan?',
+  siteSummaryZuluDraftNotice: 'Unreviewed isiZulu draft. Read the English source before making farming decisions.',
   mapEditPlaceTitle: 'Edit name or colour',
   mapEditShapeTitle: 'Edit shape',
   mapDeletePlaceTitle: 'Delete this place',
@@ -192,6 +202,40 @@ const T_en: Dict = {
   limaAskButton: 'Ask for help',
   limaPhotoButton: 'Photo',
   askLimaSubtitle: 'Sizes, water, what to plant…',
+  waterBalanceTitle: 'Water balance',
+  waterBalanceEstimateLabel: 'estimates',
+  waterBalanceLegendRoofCatchment: 'Roof catchment',
+  waterBalanceLegendTotalDemand: 'Total demand',
+  waterBalanceLegendTankLevel: 'Tank level',
+  waterBalanceLegendMinSafe: 'Min safe level',
+  waterBalancePeopleEstimated: 'People estimated',
+  waterBalanceHouseholdMonthly: '{litres} L/month household',
+  waterBalanceStorageCapacity: 'Storage capacity',
+  waterBalanceMinSafe: 'Min safe: {amount} kL',
+  waterBalanceStorage: 'Storage',
+  waterBalanceNotMapped: 'Not mapped',
+  waterBalanceDrawWaterArea: 'Draw a water area to calculate',
+  waterBalanceVegIrrigation: 'Veg irrigation',
+  waterBalancePerDryMonthEstimate: 'per dry month (est.)',
+  waterBalanceFruitTrees: 'Fruit trees',
+  waterBalancePerDryMonthUnit: 'per dry month',
+  waterBalanceCompleteSurvey: 'Complete the site survey to see household water demand and irrigation needs.',
+  waterBalanceAddRoofArea: 'Add roof area in the site survey to calculate monthly catchment potential.',
+  waterBalanceDrawHarvestArea: 'Draw a water harvesting area on the map to model how much storage you can build.',
+  waterBalancePossibleShortfall: 'Possible dry-season shortfall',
+  waterBalanceShortfallDetail: 'Tank level dips below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.',
+  waterBalanceMonthJan: 'January',
+  waterBalanceMonthFeb: 'February',
+  waterBalanceMonthMar: 'March',
+  waterBalanceMonthApr: 'April',
+  waterBalanceMonthMay: 'May',
+  waterBalanceMonthJun: 'June',
+  waterBalanceMonthJul: 'July',
+  waterBalanceMonthAug: 'August',
+  waterBalanceMonthSep: 'September',
+  waterBalanceMonthOct: 'October',
+  waterBalanceMonthNov: 'November',
+  waterBalanceMonthDec: 'December',
   elevationReadoutLabel: 'elev',
   elevationReadoutUnit: 'asl',
   zoomInTitle: 'Zoom in',
@@ -273,6 +317,8 @@ const T_en: Dict = {
   waterPointNamingDeleteButton: 'Delete',
   waterPointNamingSkipButton: 'Skip',
   waterPointNamingConfirmButton: 'Save',
+  elementCountFewer: 'Fewer',
+  elementCountMore: 'More',
   threeDWarning: 'In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.',
   guideLimaSubtitle: 'Your map guide',
   guideIntroText: "Here's the map in a few taps — you can reopen this any time with the ? button.",
@@ -307,6 +353,7 @@ const T_en: Dict = {
   suitabilityGoodFit: 'Good fit',
   suitabilityFairSite: 'Fair site',
   suitabilityChallenging: 'Challenging',
+  seeMoreDetail: 'See more detail',
   statAnnualRainfall: 'Annual rainfall',
   statSoilTexture: 'Soil texture',
   statFrostRisk: 'Frost risk',
@@ -357,6 +404,7 @@ const T_en: Dict = {
   soilHealthScoreModerate: 'Moderate',
   soilHealthScoreDegraded: 'Degraded',
   priorityImprovementsHeader: 'Priority improvements',
+  soilImprovementZuluDraftNotice: 'ISIZULU DRAFT — These soil improvement suggestions are machine-translated and have not been checked by a fluent isiZulu speaker or local soil practitioner. Read the English source beside each suggestion; if it is unclear, use the English wording and seek local advice before applying amendments.',
   // Soil "Priority improvements" body (components/DataPanel.tsx) — these sentences are
   // assembled at runtime from live soil values, so each fixed phrase gets its own key with a
   // {placeholder} filled in via .replace(), same pattern as insightSemiArid etc. above.
@@ -758,7 +806,7 @@ const T_en: Dict = {
   homeStatASL: 'ASL',
   homeMainSite: 'Main site',
   homeSetAsMain: 'Set as main site',
-  homeMainSiteLabel: '★ Main',
+  homeMainSiteLabel: 'Main',   // the ★ that used to prefix this is a Lucide icon's job, not a string's
   homeLimaSuggests: 'Lima suggests',
   homeSurveyNew: 'Survey a new site',
   homeSurveyDesc: 'Drop a pin and Lima will read its climate, soil and water.',
@@ -812,6 +860,9 @@ const T_en: Dict = {
   navTaskPlanner: 'Task Planner',
   navPlantingCalendar: 'Planting Calendar',
   navGardenSurvey: 'Garden Survey',
+  openSurveyNoSiteTitle: 'Save a site first',
+  openSurveyNoSiteMessage: 'The garden survey belongs to a saved site. Tap a spot on the map and save it, then open the survey from there.',
+  openSurveyNoSiteConfirm: 'Got it',
   navNGODashboard: 'Organisation Dashboard',
   navFacilitator: 'Design canvas',
   navMyAccount: 'My Account',
@@ -831,6 +882,22 @@ const T_en: Dict = {
   navWhatsNew: "What's new",
   navTour: 'Take a tour',
   navTipsHelp: 'Tips and help',
+  // app/tips/page.tsx — English-only for now; t() falls back. Guide card copy (title/body/action
+  // per tip) stays inline in that file; these are the hero, section headings and controls around
+  // it (Study — Simple mode track brief, task 5).
+  tipsEyebrow: 'LEARN AT YOUR OWN PACE',
+  tipsTitle: 'Tips & help',
+  tipsIntro: 'A quick answer when you need it, or a guided look around the app.',
+  tipsChoosePracticeView: 'Choose a practice view',
+  tipsBrowseGardensReports: 'Browse gardens & reports',
+  tipsFindLabel: 'Find a tip',
+  tipsSearchPlaceholder: 'Try invoices, orchard or cash',
+  tipsNoMatch: 'No matching tips. Try another word or',
+  tipsAskForHelp: 'ask for help',
+  tipsVideoGuidesTitle: 'Video guides',
+  tipsVideoGuidesBody: 'For now, follow the interactive tour and the steps above. App video walkthroughs will be added here when published.',
+  tipsYoutubeLink: 'Find gardening how-to videos on YouTube ↗',
+  tipsYoutubeNote: 'External search results cover gardening, rather than using ImbewuField.',
   navTourControls: 'Tour controls',
   navTourWorkspace: 'Tour workspace',
   navTourWorkspaceNote: 'Changes stay in this tour workspace.',
@@ -838,6 +905,34 @@ const T_en: Dict = {
   navTourGardensReports: '18 gardens and completed reports',
   navExitTour: 'Exit tour',
   navPageHelp: 'Page help',
+  tourMenuTipOpenMenuAria: 'Open menu to find Take a tour',
+  tourMenuTipTitle: 'Your tour is always here',
+  tourMenuTipBodyBefore: 'The garden photo stays on Home. You can also open ',
+  tourMenuTipBodyAfter: ' from this menu whenever you need it.',
+  tourMenuTipShowMenu: 'Show me the menu',
+  updateBannerRefreshing: 'Refreshing…',
+  updateBannerReady: 'Update ready{sha}',
+  updateBannerWhatChangedAria: 'What changed',
+  updateBannerDismissAria: 'Dismiss until the next build',
+  updateBannerNewVersion: 'New version{sha} available.',
+  updateBannerCollapseAria: 'Collapse update notice',
+  updateBannerRefreshButton: 'Refresh update',
+  updateBannerShowMore: 'and {count} more',
+  updateBannerShowLess: 'show less',
+  updateGuideContinue: 'Continue guide · {index}/{total}',
+  updateGuideCloseAria: 'Close update guide',
+  updateGuideRegionAria: 'Update guide',
+  updateGuideOfferBadge: 'UPDATED APP',
+  updateGuideTourBadge: 'UPDATE GUIDE · {index} OF {total}',
+  updateGuideOfferTitle: 'Want to see what changed?',
+  updateGuideOfferBody: 'A short guide will take you to the pages in this update. You can stop at any time.',
+  updateGuideNotNow: 'Not now',
+  updateGuideOpenPage: 'Open this page',
+  updateGuideArrived: 'You’re on this page. Take a look around.',
+  updateGuidePrevious: 'Previous',
+  updateGuideNext: 'Next update',
+  updateGuideFinish: 'Finish guide',
+  updateGuideStop: 'Stop',
   tourOnboardingCta: 'Take the 15-minute tour',
   studentPortal: 'Learning Portal',
   studentPortalTitle: 'This is the Learning Portal',
@@ -935,6 +1030,8 @@ const T_en: Dict = {
   studentOpenDesignStudio: 'Open Design Studio',
   studentCompletionMessage: 'You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.',
   studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',
+  studentSesothoUiDraftNotice: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
+  studentSesothoUiDraftNoticeSource: 'This translation is an AI draft. A fluent Sesotho speaker has not checked it.',
   studentEnglishContentNotice: 'Some module names and descriptions are unreviewed isiZulu drafts; module cards mark each one. Some lesson text and quizzes also remain in English. Audio review is separate.',
   studentZuluLessonDraftNotice: 'This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
   studentZuluLessonEnglishFallbackNotice: 'This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.',
@@ -947,12 +1044,14 @@ const T_en: Dict = {
   studentDesignEnglishPreview: 'Design course · English teaching preview',
   studentDesignPreviewTitle: 'Design a working homestead',
   studentDesignPreviewIntro: 'Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.',
+  studentDesignPreviewSimpleLabel: 'Design course',
   studentDesignPreviewCardTitle: 'Bring the decisions together.',
   studentDesignPreviewCardBody: 'Build a design folder with a facilitator or learning partner. This preview does not award course credit.',
   studentDesignPreviewAction: 'Explore the design teaching preview · English →',
   studentFinanceEnglishPreview: 'Separate course · English teaching preview',
   studentFinancePreviewTitle: 'Farm Finance',
   studentFinancePreviewIntro: 'Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.',
+  studentFinancePreviewSimpleLabel: 'Farm Finance course',
   studentFinancePreviewCardTitle: 'Understand the money. Plan the next season.',
   studentFinancePreviewCardBody: 'Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.',
   studentFinancePreviewAction: 'Explore the finance teaching preview · English →',
@@ -968,6 +1067,8 @@ const T_en: Dict = {
   communityNearbyIntro: 'Farmers who choose to be visible show up here as an approximate area — never their exact homestead.',
   communityMessageButton: 'Message',
   communityReportButton: 'Report',
+  communityMoreLabel: 'More',
+  communityLessLabel: 'Less',
   communityViewProfile: 'View profile',
   communityEditProfileTitle: 'Your community profile',
   communityEditProfileIntro: 'Share as much or as little as you like. Nothing here is visible until you save it.',
@@ -1013,14 +1114,9 @@ const T_en: Dict = {
   communityLoadError: 'Couldn\'t load the community layer right now. Check your connection and try again.',
   communityRetry: 'Retry',
   /*
-   * THE THREE TABS, PLUS THE CHARTS AS A VIEW INSIDE THE BOOK.
-   *
-   * ENGLISH ONLY, ON PURPOSE. The Gogo Test audit gave these words — "one book with three tabs:
-   * Picked · Sold · Spent. That's her mental model already and it needs no translation" — and no
-   * existing key in this dictionary carries any of them as a standalone label. Nothing here may
-   * be coined in isiZulu or any other language without a first-language reviewer (see
-   * tests/farmer-i18n-gaps.test.ts), so the other ten locales fall through to these strings until
-   * one supplies the real words. A true English word beats a fluent invented isiZulu one.
+   * The English tab labels remain the source. IsiZulu has separately named draft keys in
+   * lib/locales/zu.ts; the Records screen labels them as unreviewed and shows the English terms.
+   * Other locales continue to use these English strings until reviewed translations are supplied.
    */
   bookTabPicked: 'Picked',
   bookTabSold: 'Sold',
@@ -1220,6 +1316,7 @@ const T_en: Dict = {
   surveyCardHint: 'Choose a short or comprehensive survey. Review your answers before using them in your site report.',
   surveyFieldNotebook: 'Your field notebook',
   surveyWelcomeTitle: 'A good plan starts with your land.',
+  surveyZuluDraftNotice: 'ISI ZULU DRAFT — This survey’s isiZulu wording has not been reviewed. If anything is unclear, switch to English before saving your answers.',
   surveyWelcomeIntro: 'Tell us what you see, what you have, and what matters to you. Your observations help shape a more useful site report.',
   surveyShortTitle: 'Short & simple',
   surveyFullTitle: 'Comprehensive',
@@ -1407,8 +1504,15 @@ const T_en: Dict = {
   loginErrorBackendUnavailable: 'Firebase is not configured yet.',
   loginErrorGoogleEmbedded: 'Google sign-in won’t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.',
   loginErrorUnexpected: 'Something went wrong. Please try again.',
+  gateTitle: 'Access ImbewuField',
+  gateDescription: 'Private prototype — enter the password to continue.',
+  gatePassword: 'Password',
+  gateWrongPassword: 'Wrong password — try again.',
+  gateChecking: 'Checking...',
+  gateEnter: 'Enter',
 
   // Offline preparation and queued fieldwork.
+  offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
   offlineTitle: 'Offline & sync',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
@@ -1549,6 +1653,13 @@ export async function loadLocale(code: string): Promise<void> {
   if (LOADED[code]) return;
   const mod = (await import(`./locales/${code}`)) as { default: Dict };
   LOADED[code] = mod.default;
+}
+
+// A locale's full dictionary once loadLocale() has resolved it — English before that, for callers
+// (lib/lang-coverage.ts) that compare a locale against T_en and want a safe default rather than
+// undefined while the chunk is still in flight.
+export function getLoadedDict(code: string): Dict {
+  return LOADED[code] ?? LOADED.en;
 }
 
 // Look up a string in any language (used by onboarding to preview before committing). Reads

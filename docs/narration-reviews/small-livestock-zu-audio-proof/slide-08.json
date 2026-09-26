@@ -1,0 +1,227 @@
+{
+  "seconds": 31.944,
+  "bytes": 191664,
+  "audioSha256": "756564929b5603c5bbefe94e32b798f2dc91f73dcb3885254a9bbadb7ea3c7c3",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "I-chicken",
+      "offset": 1460410,
+      "duration": 4971660
+    },
+    {
+      "text": "tractor",
+      "offset": 6857910,
+      "duration": 4829580
+    },
+    {
+      "text": "iyihhoko",
+      "offset": 11829580,
+      "duration": 6676250
+    },
+    {
+      "text": "elihambayo",
+      "offset": 18789580,
+      "duration": 8380830
+    },
+    {
+      "text": "elingenaphansi",
+      "offset": 27312500,
+      "duration": 12073750
+    },
+    {
+      "text": "Lihambise",
+      "offset": 49539580,
+      "duration": 7244160
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 57068330,
+      "duration": 5255410
+    },
+    {
+      "text": "kokuba",
+      "offset": 62323750,
+      "duration": 4971660
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 67437500,
+      "duration": 7812500
+    },
+    {
+      "text": "ube",
+      "offset": 75534160,
+      "duration": 2556660
+    },
+    {
+      "text": "yize",
+      "offset": 78375000,
+      "duration": 5113750
+    },
+    {
+      "text": "ube",
+      "offset": 85903330,
+      "duration": 3693330
+    },
+    {
+      "text": "nodaka",
+      "offset": 90022910,
+      "duration": 5965830
+    },
+    {
+      "text": "noma",
+      "offset": 95988750,
+      "duration": 3551250
+    },
+    {
+      "text": "ugcwale",
+      "offset": 99965830,
+      "duration": 5255830
+    },
+    {
+      "text": "umquba",
+      "offset": 105647910,
+      "duration": 4829160
+    },
+    {
+      "text": "kakhulu",
+      "offset": 110477080,
+      "duration": 6107910
+    },
+    {
+      "text": "Isikhathi",
+      "offset": 126812500,
+      "duration": 6107910
+    },
+    {
+      "text": "esifanele",
+      "offset": 133204580,
+      "duration": 7102080
+    },
+    {
+      "text": "sincike",
+      "offset": 140306660,
+      "duration": 5681660
+    },
+    {
+      "text": "ezinkukhwini",
+      "offset": 146272910,
+      "duration": 9090830
+    },
+    {
+      "text": "enhlabathini",
+      "offset": 156500000,
+      "duration": 9659160
+    },
+    {
+      "text": "nasesimweni",
+      "offset": 166159160,
+      "duration": 8380410
+    },
+    {
+      "text": "sezulu",
+      "offset": 174539580,
+      "duration": 6676250
+    },
+    {
+      "text": "Vumela",
+      "offset": 191443330,
+      "duration": 4971660
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 196982910,
+      "duration": 7528330
+    },
+    {
+      "text": "ululame",
+      "offset": 204795410,
+      "duration": 6250000
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 211187500,
+      "duration": 4971660
+    },
+    {
+      "text": "kokubuyisa",
+      "offset": 216159160,
+      "duration": 7528330
+    },
+    {
+      "text": "izinkukhu",
+      "offset": 223971660,
+      "duration": 7528330
+    },
+    {
+      "text": "Alikho",
+      "offset": 241443330,
+      "duration": 4829580
+    },
+    {
+      "text": "inani",
+      "offset": 246982910,
+      "duration": 5113750
+    },
+    {
+      "text": "elilodwa",
+      "offset": 252380830,
+      "duration": 6817910
+    },
+    {
+      "text": "lezinkukhu",
+      "offset": 259198750,
+      "duration": 7386250
+    },
+    {
+      "text": "eliqinisekisa",
+      "offset": 267153330,
+      "duration": 11505830
+    },
+    {
+      "text": "ukuvunda",
+      "offset": 279085410,
+      "duration": 7102080
+    },
+    {
+      "text": "okwanele",
+      "offset": 286755830,
+      "duration": 6250000
+    },
+    {
+      "text": "kuzo",
+      "offset": 293147910,
+      "duration": 3692910
+    },
+    {
+      "text": "zonke",
+      "offset": 296840830,
+      "duration": 4545410
+    },
+    {
+      "text": "izingadi",
+      "offset": 301670410,
+      "duration": 7670410
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "small-livestock",
+  "lesson": "small-livestock-l1",
+  "language": "zu",
+  "slide": 8,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-08.txt",
+  "sourceSha256": "8cfbc497e1caed6079d2bb404b3331fee7123b1d6f378f847e0a34f548fb8c8c",
+  "scriptFile": "docs/narration/small-livestock.zu.md",
+  "scriptSha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+  "englishSourceFile": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+  "generatedAt": "2026-09-24T18:50:51.082401+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

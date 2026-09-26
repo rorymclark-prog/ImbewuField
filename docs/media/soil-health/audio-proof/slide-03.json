@@ -1,0 +1,176 @@
+{
+  "seconds": 24.576,
+  "bytes": 147456,
+  "audioSha256": "ec5beb6e31cfc42ff1d2734940aaab234752376e5613e309f6975ce08da48919",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Bheka",
+      "offset": 1318330,
+      "duration": 3125000
+    },
+    {
+      "text": "izimpawu",
+      "offset": 5153330,
+      "duration": 7102080
+    },
+    {
+      "text": "eziningana",
+      "offset": 12539580,
+      "duration": 7386250
+    },
+    {
+      "text": "zesimo",
+      "offset": 19926250,
+      "duration": 5397500
+    },
+    {
+      "text": "somhlabathi",
+      "offset": 25323750,
+      "duration": 10085410
+    },
+    {
+      "text": "Sebenzisa",
+      "offset": 45704580,
+      "duration": 7244160
+    },
+    {
+      "text": "ibhodlela",
+      "offset": 53659160,
+      "duration": 7528330
+    },
+    {
+      "text": "ukuze",
+      "offset": 61613750,
+      "duration": 4829580
+    },
+    {
+      "text": "uhlole",
+      "offset": 66869160,
+      "duration": 4829580
+    },
+    {
+      "text": "ukuthungwa",
+      "offset": 72125000,
+      "duration": 6676250
+    },
+    {
+      "text": "komhlabathi",
+      "offset": 78801250,
+      "duration": 9375000
+    },
+    {
+      "text": "kodwa",
+      "offset": 89596660,
+      "duration": 4545410
+    },
+    {
+      "text": "uqaphele",
+      "offset": 94426250,
+      "duration": 6392080
+    },
+    {
+      "text": "imingcele",
+      "offset": 101244160,
+      "duration": 6392080
+    },
+    {
+      "text": "yalolu",
+      "offset": 107636250,
+      "duration": 4545410
+    },
+    {
+      "text": "vivinyo",
+      "offset": 112181660,
+      "duration": 6392080
+    },
+    {
+      "text": "Nakekela",
+      "offset": 128659160,
+      "duration": 6676250
+    },
+    {
+      "text": "inqwaba",
+      "offset": 136045410,
+      "duration": 5397910
+    },
+    {
+      "text": "ye-compost",
+      "offset": 141443330,
+      "duration": 7954580
+    },
+    {
+      "text": "vikela",
+      "offset": 151670410,
+      "duration": 5397910
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 157352080,
+      "duration": 7812500
+    },
+    {
+      "text": "ongenalutho",
+      "offset": 165306660,
+      "duration": 9375000
+    },
+    {
+      "text": "futhi",
+      "offset": 176954580,
+      "duration": 4687500
+    },
+    {
+      "text": "uhlukanise",
+      "offset": 182068330,
+      "duration": 8096660
+    },
+    {
+      "text": "ama-worm",
+      "offset": 190448750,
+      "duration": 5539580
+    },
+    {
+      "text": "castings",
+      "offset": 196130830,
+      "duration": 6107910
+    },
+    {
+      "text": "noketshezi",
+      "offset": 204085410,
+      "duration": 8664580
+    },
+    {
+      "text": "oluphuma",
+      "offset": 213176250,
+      "duration": 6250000
+    },
+    {
+      "text": "emgqonyeni",
+      "offset": 219710410,
+      "duration": 7386250
+    },
+    {
+      "text": "wezikelemu",
+      "offset": 227096660,
+      "duration": 8664580
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "soil-health",
+  "language": "zu",
+  "slide": 3,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-03.txt",
+  "sourceSha256": "c570b8828b33e39b854e61d9bfb2b0421ef6bf3a03fc1ce40b471553488ec9fd",
+  "scriptFile": "docs/narration/soil-health.zu.md",
+  "scriptSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51",
+  "englishSourceFile": "docs/narration/soil-health.en.md",
+  "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "363d6d84d2ed56731b22fa482c0c1037346455b4283e58680bad5d51076dc0c3",
+  "generatedAt": "2026-09-24T18:21:13.033292+00:00",
+  "reviewStatus": "unreviewed-draft; fluent isiZulu and local farming review pending"
+}

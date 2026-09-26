@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
@@ -31,7 +32,7 @@ import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/comple
 import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
@@ -40,6 +41,8 @@ import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, type EvidenceCatalogueGroup, t
 import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useAppLevel } from '@/lib/app-level';
+import { ChevronDown } from 'lucide-react';
 
 // These two are the biggest sub-panels in this file (the farm-records ledger and the full site
 // survey) and each is reachable from only one tab. Statically importing them meant every farmer —
@@ -75,6 +78,7 @@ interface Props {
   // Parent raises this via ?openSurvey=1; we consume it once (onSurveyOpened).
   openSurvey?: boolean;
   onSurveyOpened?: () => void;
+  surveyViewport: 'desktop' | 'mobile';
 }
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
@@ -87,6 +91,9 @@ const wantsSavedReports = (tab: Tab, forcedTab?: string | null): boolean => tab 
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
 const VISIBLE_TABS = TABS.filter((t) => t !== 'Farm');
+// Simple / All tools (lib/app-level.ts). All tools keeps every tab above; Simple shows the five
+// a low-tech-literate farmer actually needs — the rest stay reachable by switching to All tools.
+const SIMPLE_TABS: Tab[] = ['Overview', 'Ask', 'Water', 'Photos', 'Reports'];
 
 const BIOME_COLORS: Record<string, string> = {
   SV: '#8B9D5E', GR: '#6BA84F', FY: '#C8974A', SK: '#D07850',
@@ -173,8 +180,8 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
     <div
       className={`rounded-xl transition-all duration-200 ${className}`}
       style={{
-        backgroundColor: '#FFFEFA',
-        border: '1px solid #E2D8C4',
+        backgroundColor: 'var(--bg-1)',
+        border: '1px solid var(--border)',
         borderRadius: 12,
         padding: 16,
         ...(accent ? { borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' } : {}),
@@ -187,7 +194,7 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: '#5C5040' }}>
+    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );
@@ -214,7 +221,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
           }} />
         </div>
       )}
-      {sub && <div className="text-xs mt-1.5 font-mono" style={{ color: '#5C5040' }}>{sub}</div>}
+      {sub && <div className="text-xs mt-1.5 font-mono" style={{ color: 'var(--text-secondary)' }}>{sub}</div>}
     </Card>
   );
 }
@@ -244,7 +251,7 @@ function EmptyState() {
               boxShadow: '0 8px 32px rgba(31,77,43,0.2), inset 0 1px 0 rgba(255,255,255,0.06)',
             }}
           >
-            <Sprout size={32} style={{ color: '#1F4D2B' }} />
+            <Sprout size={32} style={{ color: 'var(--color-forest-800)' }} />
           </div>
         </div>
 
@@ -254,7 +261,7 @@ function EmptyState() {
         >
           ImbewuField
         </h1>
-        <p className="font-sans leading-relaxed mb-8" style={{ fontSize: 14, color: '#5C5040', maxWidth: 272 }}>
+        <p className="font-sans leading-relaxed mb-8" style={{ fontSize: 14, color: 'var(--text-secondary)', maxWidth: 272 }}>
           {t('heroSub')}
         </p>
 
@@ -264,7 +271,7 @@ function EmptyState() {
           style={{
             background: 'rgba(31,77,43,0.2)',
             border: '1px solid rgba(31,77,43,0.2)',
-            color: '#1F4D2B',
+            color: 'var(--color-forest-800)',
           }}
         >
           <span className="relative flex h-2 w-2">
@@ -299,9 +306,9 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened, surveyViewport }: Props) {
   const appConfirm = useAppConfirm();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
     soil: t('reportGroupSoil'), trees: t('reportGroupTrees'),
@@ -329,7 +336,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     window.addEventListener('permamap-places-changed', refresh);
     return () => window.removeEventListener('permamap-places-changed', refresh);
   }, []);
+  const simple = useAppLevel() === 'simple';
   const [tab, setTab] = useState<Tab>('Overview');
+  // Simple Overview folds the stats ledger / insights / Lima read / planting calendar behind
+  // one disclosure, collapsed by default. All tools shows them inline, unchanged.
+  const [detailOpen, setDetailOpen] = useState(false);
   // Survey is keyed by the lat/lon-derived siteId (designSiteIdFromLocation), not the
   // SavedPlace id — derive it from the active place's own coordinates so it matches the key
   // the AI design-plan generator reads (lib/design-studio.ts).
@@ -351,7 +362,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // in-panel NextStepCoach button does. Consumed once. The sheet still gates on
   // activePlaceId below, so it appears as soon as the parent's site load lands.
   useEffect(() => {
-    if (openSurvey) { setSurveySheetOpen(true); onSurveyOpened?.(); }
+    // Both desktop and mobile panels stay mounted; only the visible one may consume the deep link.
+    if (openSurvey && window.matchMedia(surveyViewport === 'mobile' ? '(max-width: 1023px)' : '(min-width: 1024px)').matches) {
+      setSurveySheetOpen(true);
+      onSurveyOpened?.();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSurvey]);
   // Refresh survey card when the survey sheet closes (save happened inside the sheet)
@@ -631,6 +646,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     }
   }
 
+  // The site survey is local to the saved place and can work without location analysis. Keep
+  // it outside the data-dependent panel body so the map's empty/error state cannot swallow a
+  // survey opened from a saved site (sample mode intentionally cannot fetch location-data).
+  const siteSurveySheet = surveySheetOpen && activePlaceId ? (
+    <SiteSurveySheet
+      placeId={activePlaceId}
+      coords={coords}
+      annualRainfallMm={data?.rainfall.annual}
+      onSaved={() => { setSurveySheetOpen(false); if (data) openPhotoOrReport(); }}
+      onClose={() => setSurveySheetOpen(false)}
+    />
+  ) : null;
+
   // One-tap save of the current location (prominent, vs the Places tab form).
   const quickSavePlace = async () => {
     if (!data || !coords) return;
@@ -681,12 +709,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // exists for. Their saved reports are right there in storage; there is just no pin.
   if (!data && !loading && wantsSavedReports(tab, forcedTab)) {
     return (
-      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3" style={{ background: '#F7F2E9' }}>
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3" style={{ background: 'var(--bg-1)' }}>
         <div>
-          <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#C07A1E' }}>
+          <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold)' }}>
             {t('siteReportOverline')}
           </div>
-          <h2 className="font-display font-bold" style={{ fontSize: 19, color: '#20190F', marginTop: 2 }}>
+          <h2 className="font-display font-bold" style={{ fontSize: 19, color: 'var(--text-primary)', marginTop: 2 }}>
             {t('savedReportsHeader')}
           </h2>
         </div>
@@ -706,15 +734,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         {/* Only when there IS a list. With none, SavedReportsList already says this in its own
             empty box, and printing it twice under each other is how the first build looked. */}
         {savedReports.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: '#8C7A62' }}>
+          <p className="font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('heroSub')}
           </p>
         )}
       </div>
     );
   }
-  if (!data && !loading) return <EmptyState />;
-  if (loading && !data) return <Skeleton />;
+  if (!data && !loading) return <><EmptyState />{siteSurveySheet}</>;
+  if (loading && !data) return <><Skeleton />{siteSurveySheet}</>;
   if (!data) return null;
 
   const bColor = BIOME_COLORS[data.biome.code] ?? '#6BA84F';
@@ -732,22 +760,35 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const frostLabel = data.climate.minTemp < 2 ? t('frostLikely') : data.climate.minTemp < 5 ? t('frostOccasional') : t('frostRare');
 
   // Lima contextual read — one-line from actual data
-  const limaRead = (() => {
+  const limaReadParts = (() => {
     const r = data.rainfall.annual;
     const soilMeasured = data.soil.soilSource === 'lab';
-    const waterNote = r < 400 ? `Only ${r}mm of rain so water harvesting is essential.` : `${r}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.`;
-    const frostNote = data.climate.minTemp < 2 ? ' Protect against frost in winter.' : '';
-    const soilNote = soilMeasured ? ' Use your soil test and local crop requirements to plan amendments.' : ' Soil conditions need checking on site; arrange a soil test.';
-    return `${waterNote}${soilNote}${frostNote} Want a full planting plan?`;
+    const englishWater = r < 400
+      ? translate('en', 'siteSummaryRainEssential').replace('{mm}', String(r))
+      : translate('en', 'siteSummaryRainEstimate').replace('{mm}', String(r));
+    const zuluWater = r < 400
+      ? t('siteSummaryRainEssential').replace('{mm}', String(r))
+      : t('siteSummaryRainEstimate').replace('{mm}', String(r));
+    const englishSoil = translate('en', soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
+    const zuluSoil = t(soilMeasured ? 'siteSummarySoilTested' : 'siteSummarySoilUntested');
+    const englishFrost = data.climate.minTemp < 2 ? ` ${translate('en', 'siteSummaryFrostProtection')}` : '';
+    const zuluFrost = data.climate.minTemp < 2 ? ` ${t('siteSummaryFrostProtection')}` : '';
+    const englishPlan = translate('en', 'siteSummaryPlanPrompt');
+    const zuluPlan = t('siteSummaryPlanPrompt');
+    return {
+      english: `${englishWater} ${englishSoil}${englishFrost} ${englishPlan}`,
+      zulu: `${zuluWater} ${zuluSoil}${zuluFrost} ${zuluPlan}`,
+    };
   })();
+  const limaRead = lang === 'zu' ? limaReadParts.zulu : limaReadParts.english;
 
   return (
     <div className="h-full flex flex-col overflow-hidden">
 
       {/* ── Site report header (Screen 3 design) — collapses to a slim row on scroll ─── */}
       {headerCollapsed ? (
-        <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
-          <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: '#20190F' }}>
+        <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border)' }}>
+          <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
             {displayName || data.biome.name}
           </span>
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
@@ -756,14 +797,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <span className="font-sans font-bold" style={{ fontSize: 11, color: suitability.text, whiteSpace: 'nowrap' }}>{suitability.label}</span>
           </span>
           {isSaved && (
-            <span className="ml-auto font-mono flex-shrink-0" style={{ fontSize: 11, color: '#C07A1E' }}>{scorePct}%</span>
+            <span className="ml-auto font-mono flex-shrink-0" style={{ fontSize: 11, color: 'var(--gold)' }}>{scorePct}%</span>
           )}
           {isSaved && currentPlace && <SiteManageMenu place={currentPlace} />}
         </div>
       ) : (
-      <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
         {/* Overline */}
-        <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.16em' }}>
+        <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 11, color: 'var(--gold)', letterSpacing: '0.16em' }}>
           {t('siteReportOverline')}
         </div>
 
@@ -772,36 +813,36 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           <div className="min-w-0">
             {displayName ? (
               <>
-                <div className="font-display font-semibold leading-tight" style={{ fontSize: 16, color: '#20190F', letterSpacing: '-0.01em' }}>
+                <div className="font-display font-semibold leading-tight" style={{ fontSize: 16, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
                   {displayName}
                 </div>
-                <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                   {data.biome.name}
                 </div>
               </>
             ) : (
-              <div className="font-display font-semibold leading-tight" style={{ fontSize: 15, color: '#20190F', letterSpacing: '-0.01em' }}>
+              <div className="font-display font-semibold leading-tight" style={{ fontSize: 15, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
                 {data.biome.name}
               </div>
             )}
             {data.vegetation && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: displayName ? '#94876F' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: displayName ? '#755942' : '#5C5040' }}>
                 {data.vegetation.vegUnit}
               </div>
             )}
             {data.bru && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: displayName ? '#94876F' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: displayName ? '#755942' : '#5C5040' }}>
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
                 BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}°C avg
               </div>
             )}
-            <div className="font-mono mt-1" style={{ fontSize: 11, color: '#94876F' }}>
+            <div className="font-mono mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
               {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
             </div>
             {data.bru && (
-              <div className="font-mono mt-0.5" style={{ fontSize: 9.5, color: '#B0A48C' }}>
+              <div className="font-mono mt-0.5" style={{ fontSize: 9.5, color: 'var(--text-muted)' }}>
                 {data.bru.attribution} — zone name is a best-effort climate match, not verified
               </div>
             )}
@@ -823,13 +864,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Tabs (wrap so all are always visible) ──── */}
       <div
         className="flex-shrink-0"
-        style={{ borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}
+        style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
       >
         <div
           className="flex overflow-x-auto"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {VISIBLE_TABS.map((tabName) => (
+          {(simple ? SIMPLE_TABS : VISIBLE_TABS).map((tabName) => (
             <button
               key={tabName}
               onClick={() => setTab(tabName)}
@@ -914,30 +955,30 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         <Sprout size={16} style={{ color: '#A8D88A' }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#1F4D2B' }}>
+                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: 'var(--color-forest-800)' }}>
                           {t('yourLand')}{siteMetrics.land.count && siteMetrics.land.count > 1 ? ` · ${siteMetrics.land.count} ${t('parcelsSectionLabel').toLowerCase()}` : ''}
                         </div>
-                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteMetrics.land.perimeterM >= 1000 ? `${(siteMetrics.land.perimeterM / 1000).toFixed(2)} km` : `${siteMetrics.land.perimeterM} m`} {t('perimeterUnit')} · {siteMetrics.land.areaM2.toLocaleString()} m²
+                        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
+                          {siteMetrics.land.perimeterM >= 1000 ? `${(siteMetrics.land.perimeterM / 1000).toFixed(2)} km` : `${siteMetrics.land.perimeterM} m`} {t('perimeterUnit')} · {numberLabel(siteMetrics.land.areaM2)} m²
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
                         {siteMetrics.land.areaHa < 1
-                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaM2.toLocaleString()}</div>
-                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>m²</div></>
-                          : <><div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.land.areaHa}</div>
-                              <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>{t('hectaresUnit')}</div></>
+                          ? <><div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(siteMetrics.land.areaM2)}</div>
+                              <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>m²</div></>
+                          : <><div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{siteMetrics.land.areaHa}</div>
+                              <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('hectaresUnit')}</div></>
                         }
                       </div>
                     </div>
                     {siteMetrics.land.features && siteMetrics.land.features.some(f => f.name) && (
                       <div className="px-3.5 pb-2.5 space-y-1">
                         {siteMetrics.land.features.map((f, i) => f.name ? (
-                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
-                            <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
-                            {f.category && <span style={{ color: '#94876F' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.areaHa < 1 ? `${Math.round(f.areaHa * 10000).toLocaleString()} m²` : `${f.areaHa} ha`}</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                            {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
+                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                           </div>
                         ) : null)}
                       </div>
@@ -951,26 +992,26 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         <Droplets size={16} style={{ color: '#CFE6F5' }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: '#235E86' }}>
+                        <div className="font-display font-semibold" style={{ fontSize: 13.5, color: 'var(--blue)' }}>
                           {t('harvestingAreas')}{siteMetrics.water.count > 1 ? ` · ${siteMetrics.water.count}` : ''}
                         </div>
-                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-                          {siteMetrics.water.areaM2.toLocaleString()} m² {t('catchmentAreaLabel')}
+                        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
+                          {numberLabel(siteMetrics.water.areaM2)} m² {t('catchmentAreaLabel')}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 15, color: '#20190F', lineHeight: 1 }}>{siteMetrics.water.estVolumeKL.toLocaleString()}</div>
-                        <div className="font-sans" style={{ fontSize: 11, color: '#94876F' }}>kL est.</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(siteMetrics.water.estVolumeKL)}</div>
+                        <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>kL est.</div>
                       </div>
                     </div>
                     {siteMetrics.water.features && siteMetrics.water.features.some(f => f.name) && (
                       <div className="px-3.5 pb-2.5 space-y-1">
                         {siteMetrics.water.features.map((f, i) => f.name ? (
-                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                          <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
-                            <span className="font-medium" style={{ color: '#20190F' }}>{f.name}</span>
-                            {f.category && <span style={{ color: '#94876F' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: '#94876F' }}>{f.estVolumeKL.toLocaleString()} kL</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                            {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
+                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{numberLabel(f.estVolumeKL)} kL</span>
                           </div>
                         ) : null)}
                       </div>
@@ -980,49 +1021,37 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
 
+            {(() => {
+              const detailContent = (
+                <>
             {/* Stats ledger — Screen 3 design */}
-            <div style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden' }}>
-              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-                <Droplets size={18} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statAnnualRainfall')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
-                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> mm</span>
+            <div style={{ background: 'var(--bg-1)', borderRadius: 16, border: '1px solid var(--border)', overflow: 'hidden' }}>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
+                <Droplets size={18} style={{ color: 'var(--blue)', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statAnnualRainfall')}</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+                  {data.rainfall.annual}<span className="font-sans font-medium" style={{ fontSize: 11, color: 'var(--text-muted)' }}> mm</span>
                 </span>
-                {data.rainfall.rainfallSource && (
-                  <span
-                    className="font-sans ml-2"
-                    style={{
-                      fontSize: 9, letterSpacing: '0.04em', padding: '1px 5px', borderRadius: 4,
-                      background: data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.10)' : 'rgba(32,25,15,0.06)',
-                      color: data.rainfall.rainfallSource === 'open-meteo' ? '#235E86' : '#8C7A62',
-                      border: `1px solid ${data.rainfall.rainfallSource === 'open-meteo' ? 'rgba(35,94,134,0.25)' : '#E2D8C4'}`,
-                      whiteSpace: 'nowrap',
-                    }}
-                    title={data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5-Land 9km grid (Open-Meteo)' : 'NASA POWER 50km grid'}
-                  >
-                    {data.rainfall.rainfallSource === 'open-meteo' ? 'ERA5' : 'NASA'}
-                  </span>
-                )}
               </div>
-              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-                <Layers size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statSoilTexture')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
+                <Layers size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statSoilTexture')}</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                   {data.soil.textureClass}
                 </span>
               </div>
-              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid #E2D8C4' }}>
-                <Snowflake size={16} style={{ color: '#235E86', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statFrostRisk')}</span>
+              <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
+                <Snowflake size={16} style={{ color: 'var(--blue)', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statFrostRisk')}</span>
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
                   {frostLabel}
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4" style={{ height: 46 }}>
-                <Mountain size={16} style={{ color: '#5C5040', flexShrink: 0 }} />
-                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: '#5C5040' }}>{t('statElevation')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
-                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: '#94876F' }}> m</span>
+                <Mountain size={16} style={{ color: 'var(--text-secondary)', flexShrink: 0 }} />
+                <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statElevation')}</span>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
+                  {data.elevation.elevation}<span className="font-sans font-medium" style={{ fontSize: 11, color: 'var(--text-muted)' }}> m</span>
                 </span>
               </div>
             </div>
@@ -1031,23 +1060,23 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div className="space-y-1.5">
               {([
                 data.rainfall.annual < 400
-                  ? { color: '#D4922A', text: t('insightSemiArid').replace('{mm}', String(data.rainfall.annual)) }
+                  ? { color: 'var(--gold)', text: t('insightSemiArid').replace('{mm}', String(data.rainfall.annual)) }
                   : data.rainfall.annual < 700
-                  ? { color: '#5C5040', text: t('insightModerateRain').replace('{mm}', String(data.rainfall.annual)) }
-                  : { color: '#1F4D2B', text: t('insightStrongRain').replace('{mm}', String(data.rainfall.annual)) },
+                  ? { color: 'var(--text-secondary)', text: t('insightModerateRain').replace('{mm}', String(data.rainfall.annual)) }
+                  : { color: 'var(--color-forest-800)', text: t('insightStrongRain').replace('{mm}', String(data.rainfall.annual)) },
                 data.climate.minTemp < 2
-                  ? { color: '#235E86', text: t('insightFrostExpected').replace('{tempC}', String(data.climate.minTemp)) }
+                  ? { color: 'var(--blue)', text: t('insightFrostExpected').replace('{tempC}', String(data.climate.minTemp)) }
                   : data.climate.minTemp < 6
-                  ? { color: '#5C5040', text: t('insightLightFrost').replace('{tempC}', String(data.climate.minTemp)) }
-                  : { color: '#1F4D2B', text: t('insightFrostFree').replace('{tempC}', String(data.climate.minTemp)) },
+                  ? { color: 'var(--text-secondary)', text: t('insightLightFrost').replace('{tempC}', String(data.climate.minTemp)) }
+                  : { color: 'var(--color-forest-800)', text: t('insightFrostFree').replace('{tempC}', String(data.climate.minTemp)) },
                 (data.climate.windSpeed * 3.6) > 18
-                  ? { color: '#D4922A', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
-                  : { color: '#5C5040', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
+                  ? { color: 'var(--gold)', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
+                  : { color: 'var(--text-secondary)', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
                 data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
-                  ? { color: '#5C5040', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
+                  ? { color: 'var(--text-secondary)', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
                   : data.soil.organicCarbon < 1.5
-                  ? { color: '#C07A1E', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
-                  : { color: '#1F4D2B', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
+                  ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
+                  : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (
                 <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(255,254,250,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
@@ -1057,23 +1086,29 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* Lima contextual read card */}
-            <div className="flex gap-3 items-start" style={{ background: '#FFFEFA', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
+            <div className="flex gap-3 items-start" style={{ background: 'var(--bg-1)', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
               <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B' }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
               </div>
               <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
-                <span className="font-display font-semibold" style={{ color: '#1F4D2B' }}>Lima · </span>
-                {limaRead}
+                <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
+                {lang === 'zu' ? (
+                  <>
+                    <span>{limaRead}</span>
+                    <span className="block mt-1 text-xs text-stone-600">{t('siteSummaryZuluDraftNotice')}</span>
+                    <span className="block mt-1 text-xs text-stone-600" lang="en">English source: {limaReadParts.english}</span>
+                  </>
+                ) : limaRead}
               </p>
-              <SpeakButton text={limaRead} size={15} color="#5C5040" />
+              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="#5C5040" />
             </div>
 
             {/* 12-month planting calendar strip */}
             {data.rainfall.monthly?.length === 12 && (
-              <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
-                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#1F4D2B' }}>{t('plantingCalendarHeader')}</span>
+              <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('plantingCalendarHeader')}</span>
                 <div className="flex gap-0.5 mt-2">
                   {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
                     const rain = data.rainfall.monthly![i];
@@ -1086,7 +1121,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
                         <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
-                        <span style={{ fontSize: 7.5, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{m}</span>
+                        <span style={{ fontSize: 7.5, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{m}</span>
                       </div>
                     );
                   })}
@@ -1095,12 +1130,39 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#BFD9EE', t('calendarFrost')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
                     <div key={l} className="flex items-center gap-1">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
-                      <span style={{ fontSize: 9.5, color: '#8C7A62', fontFamily: 'var(--font-mono)' }}>{l}</span>
+                      <span style={{ fontSize: 9.5, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{l}</span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
+                </>
+              );
+              if (!simple) return detailContent;
+              return (
+                <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
+                  <button
+                    onClick={() => setDetailOpen((open) => !open)}
+                    aria-expanded={detailOpen}
+                    className="w-full flex items-center justify-between gap-2 font-sans font-medium"
+                    style={{ minHeight: 44, padding: '11px 14px', background: 'var(--bg-1)', border: 'none', cursor: 'pointer', fontSize: 13, color: 'var(--text-secondary)' }}
+                  >
+                    {lang === 'zu' ? (
+                      <span className="flex flex-col items-start text-left">
+                        <span lang="zu">{t('seeMoreDetailZuDraft')}</span>
+                        <small className="text-xs font-normal"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — Unreviewed isiZulu draft. English: {translate('en', 'seeMoreDetail')}</small>
+                      </span>
+                    ) : t('seeMoreDetail')}
+                    <ChevronDown size={16} style={{ transform: detailOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
+                  </button>
+                  {detailOpen && (
+                    <div className="space-y-3" style={{ padding: '0 12px 12px' }}>
+                      {detailContent}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Primary CTA */}
             <button
@@ -1130,7 +1192,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <span
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
-                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B' }}
+                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--color-forest-800)' }}
                   >
                     {s}
                   </span>
@@ -1143,8 +1205,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>{t('cardMainChallenges')}</Label>
               <div className="space-y-1.5">
                 {data.biome.challenges.slice(0, 4).map((c, i) => (
-                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                    <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#D4922A' }}><AlertTriangle size={12} /></span>
+                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                    <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
                     {c}
                   </div>
                 ))}
@@ -1178,7 +1240,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </Card>
             <Card>
               <Label>{t('waterHarvestingStrategyHeader')}</Label>
-              <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+              <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 {data.biome.waterStrategy}
               </p>
             </Card>
@@ -1208,12 +1270,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>{t('textureCompositionHeader')}</Label>
               <div className="space-y-2.5">
                 {[
-                  { name: t('textureSand'), pct: data.soil.sand, color: '#C07A1E' },
-                  { name: t('textureSilt'), pct: data.soil.silt, color: '#1F4D2B' },
-                  { name: t('textureClay'), pct: data.soil.clay, color: '#2D6B3C' },
+                  { name: t('textureSand'), pct: data.soil.sand, color: 'var(--gold)' },
+                  { name: t('textureSilt'), pct: data.soil.silt, color: 'var(--color-forest-800)' },
+                  { name: t('textureClay'), pct: data.soil.clay, color: 'var(--color-forest-700)' },
                 ].map(({ name, pct, color }) => (
                   <div key={name}>
-                    <div className="flex justify-between text-xs font-sans mb-1" style={{ color: '#5C5040' }}>
+                    <div className="flex justify-between text-xs font-sans mb-1" style={{ color: 'var(--text-secondary)' }}>
                       <span>{name}</span>
                       <span style={{ color }}>{pct}%</span>
                     </div>
@@ -1229,7 +1291,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </Card>
             <Card>
               <Label>{t('soilStrategyHeader')}</Label>
-              <p className="text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
+              <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 {data.biome.soilStrategy}
               </p>
             </Card>
@@ -1248,19 +1310,24 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
               const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
               const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
-              const improvements: string[] = [];
-              if (pHScore < 2) improvements.push(ph < 6 ? t('soilImprovementPhAcidic').replace('{ph}', String(ph)) : t('soilImprovementPhAlkaline').replace('{ph}', String(ph)));
-              if (ocScore < 2) improvements.push(t('soilImprovementLowCarbon').replace('{oc}', String(oc)));
-              if (bdScore < 2) improvements.push(t('soilImprovementCompacted').replace('{bd}', String(bd)));
-              if (texScore < 2 && clay > 40) improvements.push(t('soilImprovementHighClay').replace('{clay}', String(clay)));
-              else if (texScore < 2 && sand > 70) improvements.push(t('soilImprovementSandy').replace('{sand}', String(sand)));
+              const improvements: { key: string; source: string; values: Record<string, string> }[] = [];
+              if (pHScore < 2) {
+                improvements.push(ph < 6
+                  ? { key: 'soilImprovementPhAcidic', source: t('soilImprovementPhAcidic'), values: { ph: String(ph) } }
+                  : { key: 'soilImprovementPhAlkaline', source: t('soilImprovementPhAlkaline'), values: { ph: String(ph) } });
+              }
+              if (ocScore < 2) improvements.push({ key: 'soilImprovementLowCarbon', source: t('soilImprovementLowCarbon'), values: { oc: String(oc) } });
+              if (bdScore < 2) improvements.push({ key: 'soilImprovementCompacted', source: t('soilImprovementCompacted'), values: { bd: String(bd) } });
+              if (texScore < 2 && clay > 40) improvements.push({ key: 'soilImprovementHighClay', source: t('soilImprovementHighClay'), values: { clay: String(clay) } });
+              else if (texScore < 2 && sand > 70) improvements.push({ key: 'soilImprovementSandy', source: t('soilImprovementSandy'), values: { sand: String(sand) } });
+              const interpolate = (template: string, values: Record<string, string>) => template.replace(/\{([^}]+)\}/g, (_, key: string) => values[key] ?? `{${key}}`);
               return (
-                <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
+                <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: '#5C5040' }}>{t('soilHealthScoreHeader')}</span>
+                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>{t('soilHealthScoreHeader')}</span>
                     <div className="flex items-baseline gap-1">
                       <span className="font-display font-bold" style={{ fontSize: 18, color: scoreColor, lineHeight: 1 }}>{total}</span>
-                      <span className="font-mono" style={{ fontSize: 10, color: '#8C7A62' }}>/10</span>
+                      <span className="font-mono" style={{ fontSize: 10, color: 'var(--text-muted)' }}>/10</span>
                       <span className="font-sans font-semibold ml-1" style={{ fontSize: 10, color: scoreColor }}>{scoreLabel}</span>
                     </div>
                   </div>
@@ -1269,11 +1336,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                   {improvements.length > 0 && (
                     <div className="space-y-1.5">
-                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#8C7A62', fontSize: 9.5 }}>{t('priorityImprovementsHeader')}</p>
+                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 9.5 }}>{t('priorityImprovementsHeader')}</p>
+                      {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
-                          <span className="flex-shrink-0 font-bold" style={{ color: '#C07A1E' }}>{i + 1}.</span>
-                          {imp}
+                          <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
+                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
                         </div>
                       ))}
                     </div>
@@ -1392,11 +1460,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
           // Shared style helpers
           const cardSt = { background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 16, padding: '19px 19px 17px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)' };
-          const ovlSt  = { fontFamily: 'var(--font-sans)', fontWeight: 700 as const, fontSize: 11.5, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: '#B07A1E' };
+          const ovlSt  = { fontFamily: 'var(--font-sans)', fontWeight: 700 as const, fontSize: 11.5, letterSpacing: '0.13em', textTransform: 'uppercase' as const, color: 'var(--gold)' };
           const implSt = { fontFamily: 'var(--font-display)', fontWeight: 400 as const, fontSize: 13.5, fontStyle: 'italic' as const, color: '#5C5240', lineHeight: 1.45 };
           const colSt  = { flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center' as const, justifyContent: 'flex-end' as const, height: '100%' };
           const valSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 11, color: '#766A50', marginBottom: 5 };
-          const monSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 10, color: '#AC9E82', marginTop: 7, textTransform: 'uppercase' as const };
+          const monSt  = { fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 10, color: 'var(--text-muted)', marginTop: 7, textTransform: 'uppercase' as const };
           function chip(bg: string, color: string) {
             return { display: 'inline-flex' as const, alignItems: 'center' as const, gap: 6, fontFamily: 'var(--font-sans)', fontWeight: 600 as const, fontSize: 12.5, padding: '5px 11px', borderRadius: 999, background: bg, color };
           }
@@ -1408,7 +1476,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: '#9A8C70', margin: '3px 0 11px' }}>
+                <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
                   Köppen {kp} — {zoneLabel}
                 </div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5 }}>{zoneSummary}</div>
@@ -1417,7 +1485,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
                     </svg>
-                    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 11.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#3C6B3F' }}>{t('goodForGrowing')}</span>
+                    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 11.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-forest-700)' }}>{t('goodForGrowing')}</span>
                   </div>
                   <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 14, color: '#3D4A36', lineHeight: 1.5 }}>
                     {cropSegs.map((seg, i) => (
@@ -1478,7 +1546,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     );
                   })}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: '#9A8C70' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 11, fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)' }}>
                   <span>{t('winterLowPrefix')} {Math.round(tMin)}° (Jun–Jul)</span>
                   <span>{t('summerHighPrefix')} {Math.round(tMax)}°</span>
                 </div>
@@ -1488,7 +1556,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div style={cardSt}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                   <div style={ovlSt}>{t('sunlightHoursDay')}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#C77F1A' }}>≈ {sunAvg} h avg</div>
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: 'var(--gold)' }}>≈ {sunAvg} h avg</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: 5, height: 130, paddingTop: 2 }}>
                   {sunHours.map((h, i) => (
@@ -1543,7 +1611,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <text x="9" y="54" textAnchor="middle" fontFamily="var(--font-sans)" fontSize="11" fontWeight="700" fill="#A89A7E">W</text>
                     </svg>
                     <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, color: '#3C6B4A', marginTop: 2 }}>{t('prevailingWind')} {data.climate.windFromSummer}</div>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 11, color: '#9A8C70' }}>{data.climate.windFromWinter} {t('inWinter')}</div>
+                    <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 11, color: 'var(--text-muted)' }}>{data.climate.windFromWinter} {t('inWinter')}</div>
                   </div>
                 </div>
                 <div style={{ ...implSt, marginTop: 13 }}>
@@ -1568,7 +1636,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
                 <div style={{ display: 'flex', gap: 4, marginBottom: 14 }}>
                   {MS.map((m, i) => (
-                    <div key={i} style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 10, color: '#AC9E82', textTransform: 'uppercase' }}>{m}</div>
+                    <div key={i} style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{m}</div>
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -1663,7 +1731,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               return (
                 <div style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                    <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                       {t('surveySectionLabel')}
                     </span>
                     <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === SURVEY_TOTAL_FIELDS ? '#3C6B3F' : '#B07A1E' }}>
@@ -1677,7 +1745,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {(sv?.goals?.length ?? 0) > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
                       {(sv?.goals ?? []).map((g: string) => (
-                        <span key={g} style={{ font: '500 11px/1 system-ui', padding: '4px 9px', borderRadius: 99, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>
+                        <span key={g} style={{ font: '500 11px/1 system-ui', padding: '4px 9px', borderRadius: 99, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>
                           {GOAL_LABELS[g] ?? g}
                         </span>
                       ))}
@@ -1685,7 +1753,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   )}
                   <button
                     onClick={() => setSurveySheetOpen(true)}
-                    style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
+                    style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: 'var(--color-forest-700)', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
                   >
                     {done === SURVEY_TOTAL_FIELDS ? t('surveyUpdateButton') : t('surveyOpenButton')}
                   </button>
@@ -1696,7 +1764,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Report completeness bar */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+                <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                   {t('reportCompletenessLabel')}
                 </span>
                 <span style={{ font: '700 11px/1 system-ui, sans-serif', color: completeness >= 60 ? '#3C6B3F' : '#B07A1E' }}>
@@ -1710,12 +1778,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             {/* Evidence & Documents label + catalogue link */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
+              <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                 {t('reportEvidenceDocsLabel')}
               </span>
               <button
                 onClick={() => setEvidenceCatalogueOpen(true)}
-                style={{ font: '500 11.5px/1 system-ui, sans-serif', color: '#3C6B3F', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                style={{ font: '500 11.5px/1 system-ui, sans-serif', color: 'var(--color-forest-700)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
               >
                 {t('reportFullLibraryLink')} →
               </button>
@@ -1745,7 +1813,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
                         {EVIDENCE_GROUP_ICON[group.key]}
                       </div>
-                      <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519' }}>{REPORT_GROUP_LABEL[group.key] ?? group.label}</span>
+                      <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)' }}>{REPORT_GROUP_LABEL[group.key] ?? group.label}</span>
                     </div>
 
                     {/* Thumbnail row or + prompt */}
@@ -1759,12 +1827,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         width: 34, height: 34, borderRadius: 7,
                         border: '1.5px dashed #C3B695', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                       }}>
-                        <span style={{ font: '400 18px/1 system-ui', color: '#9A8B6E' }}>+</span>
+                        <span style={{ font: '400 18px/1 system-ui', color: 'var(--text-muted)' }}>+</span>
                       </div>
                     </div>
 
                     {count > 0 ? (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 8 }}>{count} {count === 1 ? t('reportItemSingular') : t('reportItemPlural')}</div>
+                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 8 }}>{count} {count === 1 ? t('reportItemSingular') : t('reportItemPlural')}</div>
                     ) : (
                       <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#C0392B', marginTop: 8 }}>{REPORT_GROUP_ADD[group.key] ?? `Add ${group.label.toLowerCase()}`}</div>
                     )}
@@ -1786,8 +1854,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
                       {EVIDENCE_GROUP_ICON.site_photos}
                     </div>
-                    <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
-                    {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}
+                    <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
+                    {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}
                   </div>
                   <div style={{ display: 'flex', gap: 6 }}>
                     {allPhotos.slice(0, 4).map((ev) => (
@@ -1796,7 +1864,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       </div>
                     ))}
                     <div style={{ width: 44, height: 44, borderRadius: 8, border: '1.5px dashed #C3B695', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <span style={{ font: '400 20px/1 system-ui', color: '#9A8B6E' }}>+</span>
+                      <span style={{ font: '400 20px/1 system-ui', color: 'var(--text-muted)' }}>+</span>
                     </div>
                   </div>
                 </button>
@@ -1821,7 +1889,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {/* ── Pre-report survey prompt ── */}
       {surveyPromptOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }}>
-          <div className="w-full max-w-md font-sans" style={{ background: '#E4DCC6', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: 'var(--bg-0)', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
             <div className="flex items-start gap-3 mb-4">
               <div style={{ width: 44, height: 44, borderRadius: 13, background: '#1F4D2B', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -1829,8 +1897,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </svg>
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('surveyPromptTitle')}</div>
-                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{t('surveyPromptTitle')}</div>
+                <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginTop: 3 }}>
                   {t('surveyPromptBody')}
                 </div>
               </div>
@@ -1843,7 +1911,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </button>
               <button onClick={() => { setSurveyPromptOpen(false); openPhotoOrReport(); }}
                 className="w-full flex items-center justify-center font-sans font-semibold"
-                style={{ height: 40, borderRadius: 13, background: 'transparent', color: '#8C7A62', border: 'none', fontSize: 13, cursor: 'pointer' }}>
+                style={{ height: 40, borderRadius: 13, background: 'transparent', color: 'var(--text-muted)', border: 'none', fontSize: 13, cursor: 'pointer' }}>
                 {t('surveySkipButton')}
               </button>
             </div>
@@ -1852,20 +1920,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       )}
 
       {/* ── Site survey sheet ── */}
-      {surveySheetOpen && activePlaceId && (
-        <SiteSurveySheet
-          placeId={activePlaceId}
-          coords={coords}
-          annualRainfallMm={data?.rainfall.annual}
-          onSaved={() => { setSurveySheetOpen(false); openPhotoOrReport(); }}
-          onClose={() => setSurveySheetOpen(false)}
-        />
-      )}
+      {siteSurveySheet}
 
       {/* ── Pre-report photo prompt ── */}
       {photoPromptOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(4px)' }}>
-          <div className="w-full max-w-md font-sans" style={{ background: '#E4DCC6', borderRadius: '24px 24px 0 0', padding: '24px 20px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))', maxHeight: '90dvh', overflowY: 'auto' }}>
+          <div className="w-full max-w-md font-sans" style={{ background: 'var(--bg-0)', borderRadius: '24px 24px 0 0', padding: '24px 20px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))', maxHeight: '90dvh', overflowY: 'auto' }}>
 
             {/* Header */}
             <div className="flex items-start gap-3 mb-4">
@@ -1873,8 +1933,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <Camera size={20} color="#EAF3E2" />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('photoPromptTitle')}</div>
-                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginTop: 3 }}>
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{t('photoPromptTitle')}</div>
+                <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginTop: 3 }}>
                   {t('photoPromptBody')}
                 </div>
               </div>
@@ -1890,8 +1950,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               ].map(({ Icon, label, detail }) => (
                 <div key={label} style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 10, padding: '9px 10px' }}>
                   <Icon size={15} color="#1F4D2B" />
-                  <div className="font-sans font-semibold" style={{ fontSize: 12, color: '#20190F', marginTop: 4 }}>{label}</div>
-                  <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4, marginTop: 2 }}>{detail}</div>
+                  <div className="font-sans font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)', marginTop: 4 }}>{label}</div>
+                  <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4, marginTop: 2 }}>{detail}</div>
                 </div>
               ))}
             </div>
@@ -1912,7 +1972,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 className="w-full flex flex-col items-center justify-center gap-2"
                 style={{ height: 76, borderRadius: 13, border: '2px dashed rgba(31,77,43,0.3)', background: 'rgba(31,77,43,0.04)', cursor: 'pointer' }}>
                 <Camera size={20} color="#1F4D2B" />
-                <span className="font-sans font-semibold" style={{ fontSize: 13, color: '#1F4D2B' }}>{t('photoTapToAdd')}</span>
+                <span className="font-sans font-semibold" style={{ fontSize: 13, color: 'var(--color-forest-800)' }}>{t('photoTapToAdd')}</span>
               </button>
             ) : (
               <div className="flex gap-2 pb-1 overflow-x-auto">
@@ -1924,7 +1984,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     onClick={() => promptInputRef.current?.click()}
                     className="flex-shrink-0 flex items-center justify-center rounded-xl"
                     style={{ width: 68, height: 68, background: 'rgba(31,77,43,0.06)', border: '2px dashed rgba(31,77,43,0.25)', cursor: 'pointer' }}>
-                    <span style={{ fontSize: 20, color: '#1F4D2B', lineHeight: 1 }}>+</span>
+                    <span style={{ fontSize: 20, color: 'var(--color-forest-800)', lineHeight: 1 }}>+</span>
                   </button>
                 )}
               </div>
@@ -1937,7 +1997,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
 
             {promptError && (
-              <div className="font-sans" style={{ marginTop: 10, padding: '9px 12px', borderRadius: 10, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)', fontSize: 12.5, color: '#8B2020', lineHeight: 1.5 }}>
+              <div className="font-sans" style={{ marginTop: 10, padding: '9px 12px', borderRadius: 10, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)', fontSize: 12.5, color: 'var(--orange)', lineHeight: 1.5 }}>
                 {t('photoAnalyseError')}
               </div>
             )}
@@ -1957,7 +2017,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <button
                 onClick={() => { setPhotoPromptOpen(false); onOpenReport(photoAnalysis); }}
                 className="w-full flex items-center justify-center font-sans font-semibold"
-                style={{ height: 40, borderRadius: 13, background: 'transparent', color: '#8C7A62', border: 'none', fontSize: 13, cursor: 'pointer' }}>
+                style={{ height: 40, borderRadius: 13, background: 'transparent', color: 'var(--text-muted)', border: 'none', fontSize: 13, cursor: 'pointer' }}>
                 {t('photoSkipButton')}
               </button>
             </div>

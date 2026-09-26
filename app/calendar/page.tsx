@@ -1,20 +1,46 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Sprout, Leaf, Droplets, Sun, Snowflake } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Sprout, Leaf, Droplets, Sun, Snowflake, ChevronDown } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
-import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_INSET } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
+import { loadCropPlan } from '@/lib/crop-plan';
+import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import {
+  CALENDAR_LIMA_ADVICE_ZU, CALENDAR_LIMA_HOLD_MONTHS,
+  CALENDAR_MAINTAIN_HOLD_KEYS, CALENDAR_MAINTAIN_ZU,
+} from '@/lib/calendar-zu-draft';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
+}
+
+function CalendarDraftSource({
+  lang, english, zulu, heldForReview = false, style,
+}: {
+  lang: string; english: string; zulu: string; heldForReview?: boolean; style?: React.CSSProperties;
+}) {
+  if (lang === 'zu' && heldForReview) {
+    return (
+      <div style={style}>
+        <p style={{ margin: 0 }}>
+          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span lang="en">{english}</span>
+        </p>
+      </div>
+    );
+  }
+  return <IsiZuluDraftSource lang={lang} english={english} zulu={zulu} style={style} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -244,10 +270,12 @@ const MONTHLY_DATA: MonthData[] = MONTHLY_ADVICE.map((advice, monthIndex) => ({
 // ---------------------------------------------------------------------------
 
 function SeasonIcon({ season, size = 16 }: { season: MonthData['season']; size?: number }) {
-  if (season === 'summer') return <Sun size={size} color="#C07A1E" strokeWidth={1.6} />;
-  if (season === 'winter') return <Snowflake size={size} color="#235E86" strokeWidth={1.6} />;
-  if (season === 'spring') return <Sprout size={size} color="#1F4D2B" strokeWidth={1.6} />;
-  return <Leaf size={size} color="#5C5040" strokeWidth={1.6} />;
+  // Unfilled icons on the page background, not sitting on an ochre-filled chip — ochre reads as
+  // text/stroke here, so --gold-dim (not the --gold fill token) is the one that clears contrast.
+  if (season === 'summer') return <Sun size={size} color="var(--gold-dim)" strokeWidth={1.6} />;
+  if (season === 'winter') return <Snowflake size={size} color="var(--blue)" strokeWidth={1.6} />;
+  if (season === 'spring') return <Sprout size={size} color="var(--color-forest-800)" strokeWidth={1.6} />;
+  return <Leaf size={size} color="var(--text-muted)" strokeWidth={1.6} />;
 }
 
 function seasonLabel(season: MonthData['season'], lang: string) {
@@ -269,11 +297,11 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <div
       style={{
         fontFamily: 'var(--font-mono, monospace)',
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: 700,
         letterSpacing: '0.10em',
         textTransform: 'uppercase',
-        color: '#8C7A62',
+        color: 'var(--text-muted)',
         marginBottom: 8,
       }}
     >
@@ -283,19 +311,22 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function Pill({ color, children }: { color: string; children: React.ReactNode }) {
+  // `color` is a CSS custom property reference (e.g. `var(--color-forest-800)`), not a literal
+  // hex — color-mix() lets the same translucent-fill/border trick this used to do with string
+  // concatenation on a hex literal work on a token that changes with the theme.
   return (
     <span
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: 5,
-        background: color + '14',
-        border: `1px solid ${color}30`,
+        background: `color-mix(in srgb, ${color} 14%, transparent)`,
+        border: `1px solid color-mix(in srgb, ${color} 30%, transparent)`,
         borderRadius: 20,
         padding: '3px 10px',
         fontSize: 13,
         fontFamily: 'var(--font-sans, sans-serif)',
-        color: '#20190F',
+        color: 'var(--text-primary)',
         marginRight: 6,
         marginBottom: 6,
       }}
@@ -314,7 +345,7 @@ function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
           width: 10,
           height: 10,
           borderRadius: '50%',
-          background: '#1F4D2B',
+          background: 'var(--color-forest-800)',
           flexShrink: 0,
         }}
         aria-label={localUi('Best time to plant', 'Isikhathi esihle sokutshala', lang)}
@@ -329,25 +360,68 @@ function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
 // ---------------------------------------------------------------------------
 
 export default function CalendarPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
+  const simple = useAppLevel() === 'simple';
+  const monthLabels = lang === 'zu'
+    ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+       t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+       t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
+    : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
-  const [myPlannerCrops, setMyPlannerCrops] = useState<string[]>([]);
+  // The crops the farmer actually planted, read from lib/crop-plan.ts's loadCropPlan() — the same
+  // store the crop planner (app/cropplan, app/facilitator/crops) writes to. This used to read
+  // 'imbewu_planner_crops', a key app/survey/page.tsx also only ever READ and nothing in the app
+  // ever wrote — a permanently empty filter that could never once have matched anything.
+  const [plannedCropKeys, setPlannedCropKeys] = useState<Set<string>>(new Set());
+  // "Show all" overrides a real plan without touching it — the plan itself is read-only here.
+  const [showAllOverride, setShowAllOverride] = useState(false);
+  // Simple: the 12-month reference grid is behind this disclosure; All tools always shows it.
+  const [showYear, setShowYear] = useState(false);
+
+  // THE SELECTED MONTH WAS OFF-SCREEN. The strip already paints the active chip forest-filled,
+  // but it is twelve chips wide and starts at January, so at 390px only Jan–Aug fit and the
+  // September a farmer opens the page on sits past the right edge — unreachable without a
+  // sideways drag nobody is prompted to make, and invisible, so the screen read as a row of
+  // twelve identical outlined months above a heading that said "Sep". The state was fine; it was
+  // never brought into view. Scrolling it to the centre on mount and on every change is the fix.
+  const activeChipRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    // `nearest` on the block axis so centring a chip never scrolls the page itself.
+    activeChipRef.current?.scrollIntoView({ inline: 'center', block: 'nearest' });
+  }, [selectedMonth]);
+
+  // The month the farmer is actually in, kept apart from the one they are reading. Tapping March
+  // in January used to leave nothing on screen saying which month was now — the heading follows
+  // the selection, so "this month" had no marker at all once you browsed away from it.
+  const currentMonth = new Date().getMonth();
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(
-        activeAccountLocalStorageKey('imbewu_planner_crops'),
-      );
-      if (raw) setMyPlannerCrops(JSON.parse(raw) as string[]);
+      const plan = loadCropPlan();
+      setPlannedCropKeys(new Set(plan.plantings.map((p) => p.cropKey)));
     } catch { /* ignore */ }
   }, []);
 
-  const visibleCrops = myPlannerCrops.length > 0
-    ? CROPS.filter((c) => myPlannerCrops.some((p) => p.toLowerCase() === c.name.toLowerCase()))
+  const hasPlan = plannedCropKeys.size > 0;
+  const isFiltered = hasPlan && !showAllOverride;
+  // Plantings are keyed by the catalog key (e.g. 'tomatoes', 'sweet-potato') — the same key
+  // CROPS[].catalogKey carries via lib/crop-display.ts's CATALOG_KEY_FOR_CROP, so this is a
+  // direct match, not a name comparison.
+  const visibleCrops = isFiltered
+    ? CROPS.filter((c) => plannedCropKeys.has(c.catalogKey))
     : CROPS;
-  const isFiltered = myPlannerCrops.length > 0;
 
   const monthData = MONTHLY_DATA[selectedMonth];
+  // Simple's "what to do" card follows the real plan when there is one; All tools' card is
+  // unchanged below and always reads the general monthData list.
+  const simplePlant = hasPlan
+    ? visibleCrops.filter((c) => c.marks[selectedMonth] === 'B').map((c) => c.name)
+    : monthData.plant;
+  const simpleHarvest = hasPlan
+    ? visibleCrops.filter((c) => c.harvestMonths.includes(selectedMonth)).map((c) => c.name)
+    : monthData.harvest;
+  const cardPlant = simple ? simplePlant : monthData.plant;
+  const cardHarvest = simple ? simpleHarvest : monthData.harvest;
 
   return (
     <div
@@ -356,17 +430,17 @@ export default function CalendarPage() {
         flexDirection: 'column',
         height: '100dvh',
         overflow: 'hidden',
-        background: '#E4DCC6',
+        background: 'var(--bg-0)',
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</span>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
         <div className="flex-1" />
-        <LessonLink id="crops:calendar" label="Learn" />
+        <LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />
         <SettingsButton />
       </header>
 
@@ -375,19 +449,20 @@ export default function CalendarPage() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          background: '#E4DCC6',
+          background: 'var(--bg-0)',
         }}
       >
         {lang === 'zu' && (
-          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', fontSize: 12 }}>
-            Iseluleko somsebenzi nezikhathi zokutshala nokuvuna kuboniswa ngesiNgisi.
+          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
+            Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
+            <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed isiZulu drafts beside English sources. Some farming instructions remain in English for review.</span>
           </p>
         )}
         {/* ---- Month strip ---- */}
         <div
           style={{
-            background: '#FFFEFA',
-            borderBottom: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            borderBottom: '1px solid var(--border)',
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
@@ -406,15 +481,20 @@ export default function CalendarPage() {
               return (
                 <button
                   key={abbr}
+                  ref={active ? activeChipRef : undefined}
                   onClick={() => setSelectedMonth(idx)}
                   style={{
-                    background: active ? '#1F4D2B' : 'transparent',
-                    border: active ? '1px solid #1F4D2B' : '1px solid #E2D8C4',
+                    background: active ? 'var(--color-forest-800)' : 'transparent',
+                    // The month you are in, when you are reading a different one: a ring rather
+                    // than a fill, so "now" and "showing" never look like the same thing.
+                    border: active
+                      ? '1px solid var(--color-forest-800)'
+                      : idx === currentMonth ? '1px solid var(--gold-dim)' : '1px solid var(--border)',
                     borderRadius: 8,
-                    color: active ? '#EAF3E2' : '#5C5040',
+                    color: active ? 'var(--color-canvas)' : idx === currentMonth ? 'var(--gold-dim)' : 'var(--text-secondary)',
                     fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: 12,
-                    fontWeight: active ? 700 : 500,
+                    fontSize: 'clamp(12px, 1vw, 13px)',
+                    fontWeight: active || idx === currentMonth ? 700 : 500,
                     padding: '5px 11px',
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
@@ -422,9 +502,14 @@ export default function CalendarPage() {
                     letterSpacing: '0.04em',
                   }}
                   aria-pressed={active}
-                  aria-label={localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${MONTH_ABBR[idx]}`, lang)}
+                  aria-current={idx === currentMonth ? 'date' : undefined}
+                  aria-label={
+                    idx === currentMonth
+                      ? localUi(`Select ${MONTH_ABBR[idx]} — this month`, `Khetha u-${monthLabels[idx]} — le nyanga`, lang)
+                      : localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${monthLabels[idx]}`, lang)
+                  }
                 >
-                  {abbr}
+                  {monthLabels[idx]}
                 </button>
               );
             })}
@@ -435,8 +520,8 @@ export default function CalendarPage() {
           {/* ---- What to do this month ---- */}
           <div
             style={{
-              background: '#FFFEFA',
-              border: '1px solid #E2D8C4',
+              background: 'var(--bg-1)',
+              border: '1px solid var(--border)',
               borderRadius: 14,
               padding: '16px',
               marginBottom: 16,
@@ -455,13 +540,13 @@ export default function CalendarPage() {
                 <div
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 20,
+                    fontSize: 'clamp(20px, 2.2vw, 26px)',
                     fontWeight: 600,
-                    color: '#20190F',
+                    color: 'var(--text-primary)',
                     lineHeight: 1.2,
                   }}
                 >
-                  {MONTH_ABBR[selectedMonth]} — {localUi('What to do', 'Ongakwenza', lang)}
+                  {monthLabels[selectedMonth]} — {localUi('What to do', 'Ongakwenza', lang)}
                 </div>
                 <div
                   style={{
@@ -470,8 +555,8 @@ export default function CalendarPage() {
                     gap: 5,
                     marginTop: 4,
                     fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: 11,
-                    color: '#8C7A62',
+                    fontSize: 12,
+                    color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
                   }}
@@ -485,20 +570,23 @@ export default function CalendarPage() {
             {/* Plant */}
             <div style={{ marginBottom: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                <Sprout size={14} color="#1F4D2B" strokeWidth={1.7} />
+                <Sprout size={14} color="var(--color-forest-800)" strokeWidth={1.7} />
                 <SectionLabel>{localUi('Plant now', 'Tshala manje', lang)}</SectionLabel>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {monthData.plant.length > 0 ? (
-                  monthData.plant.map((crop) => (
-                    <Pill key={crop} color="#1F4D2B">
+                {cardPlant.length > 0 ? (
+                  cardPlant.map((crop) => (
+                    <Pill key={crop} color="var(--color-forest-800)">
                       {crop}
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#8C7A62', fontStyle: 'italic' }}>
-                    No planting recommended this month
-                  </span>
+                  <CalendarDraftSource
+                    lang={lang}
+                    english="No planting recommended this month"
+                    zulu="Akukho sitshalo esinconyiwe kule nyanga."
+                    style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}
+                  />
                 )}
               </div>
             </div>
@@ -506,20 +594,23 @@ export default function CalendarPage() {
             {/* Harvest */}
             <div style={{ marginBottom: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                <Leaf size={14} color="#C07A1E" strokeWidth={1.7} />
+                <Leaf size={14} color="var(--gold-dim)" strokeWidth={1.7} />
                 <SectionLabel>{localUi('Harvest ready', 'Okulungele ukuvunwa', lang)}</SectionLabel>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {monthData.harvest.length > 0 ? (
-                  monthData.harvest.map((crop) => (
-                    <Pill key={crop} color="#C07A1E">
+                {cardHarvest.length > 0 ? (
+                  cardHarvest.map((crop) => (
+                    <Pill key={crop} color="var(--gold)">
                       {crop}
                     </Pill>
                   ))
                 ) : (
-                  <span style={{ fontSize: 13, color: '#8C7A62', fontStyle: 'italic' }}>
-                    Nothing ready to harvest this month
-                  </span>
+                  <CalendarDraftSource
+                    lang={lang}
+                    english="Nothing ready to harvest this month"
+                    zulu="Akukho okulungele ukuvunwa kule nyanga."
+                    style={{ fontSize: 13, color: 'var(--text-muted)', fontStyle: 'italic' }}
+                  />
                 )}
               </div>
             </div>
@@ -527,11 +618,11 @@ export default function CalendarPage() {
             {/* Maintain */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-                <Droplets size={14} color="#235E86" strokeWidth={1.7} />
+                <Droplets size={14} color="var(--blue)" strokeWidth={1.7} />
                 <SectionLabel>{localUi('Maintain', 'Umsebenzi wokunakekela', lang)}</SectionLabel>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-                {monthData.maintain.map((task) => (
+                {monthData.maintain.map((task, taskIndex) => (
                   <li
                     key={task}
                     style={{
@@ -541,7 +632,7 @@ export default function CalendarPage() {
                       marginBottom: 6,
                       fontSize: 13,
                       fontFamily: 'var(--font-sans, sans-serif)',
-                      color: '#20190F',
+                      color: 'var(--text-primary)',
                       lineHeight: 1.45,
                     }}
                   >
@@ -551,12 +642,17 @@ export default function CalendarPage() {
                         width: 5,
                         height: 5,
                         borderRadius: '50%',
-                        background: '#235E86',
+                        background: 'var(--blue)',
                         marginTop: 6,
                         flexShrink: 0,
                       }}
                     />
-                    {task}
+                    <CalendarDraftSource
+                      lang={lang}
+                      english={task}
+                      zulu={CALENDAR_MAINTAIN_ZU[selectedMonth]?.[taskIndex] ?? task}
+                      heldForReview={CALENDAR_MAINTAIN_HOLD_KEYS.has(`${selectedMonth}:${taskIndex}`)}
+                    />
                   </li>
                 ))}
               </ul>
@@ -566,8 +662,8 @@ export default function CalendarPage() {
           {/* ---- Lima tip card ---- */}
           <div
             style={{
-              background: '#1F4D2B0D',
-              border: '1px solid #1F4D2B30',
+              background: 'var(--brand-soft)',
+              border: '1px solid var(--brand-soft-2)',
               borderRadius: 14,
               padding: '14px 16px',
               marginBottom: 16,
@@ -578,7 +674,7 @@ export default function CalendarPage() {
           >
             <div
               style={{
-                background: '#1F4D2B',
+                background: 'var(--color-forest-800)',
                 borderRadius: 8,
                 width: 32,
                 height: 32,
@@ -595,7 +691,7 @@ export default function CalendarPage() {
                 height="16"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#EAF3E2"
+                stroke="var(--color-canvas)"
                 strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -609,35 +705,59 @@ export default function CalendarPage() {
               <div
                 style={{
                   fontFamily: 'var(--font-mono, monospace)',
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: '0.10em',
                   textTransform: 'uppercase',
-                  color: '#1F4D2B',
+                  color: 'var(--color-forest-800)',
                   marginBottom: 5,
                 }}
               >
                 {localUi('Lima — Seasonal advice', 'Lima — Iseluleko sesizini', lang)}
               </div>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: 13,
-                  fontFamily: 'var(--font-sans, sans-serif)',
-                  color: '#20190F',
-                  lineHeight: 1.55,
-                }}
-              >
-                {monthData.limaAdvice}
-              </p>
+              <CalendarDraftSource
+                lang={lang}
+                english={monthData.limaAdvice}
+                zulu={CALENDAR_LIMA_ADVICE_ZU[selectedMonth] ?? monthData.limaAdvice}
+                heldForReview={CALENDAR_LIMA_HOLD_MONTHS.has(selectedMonth)}
+                style={{ fontSize: 13, fontFamily: 'var(--font-sans, sans-serif)', color: 'var(--text-primary)', lineHeight: 1.55 }}
+              />
             </div>
           </div>
 
           {/* ---- SA Planting Calendar Grid ---- */}
+          {/* Simple keeps this whole card, and everything in it, one tap away rather than
+              removing it — "everything hidden in Simple stays reachable by switching". */}
+          {simple && !showYear ? (
+            <button
+              onClick={() => setShowYear(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                width: '100%',
+                minHeight: 44,
+                padding: '12px 16px',
+                background: 'var(--bg-1)',
+                border: '1px solid var(--border)',
+                borderRadius: 14,
+                color: 'var(--text-secondary)',
+                fontFamily: 'var(--font-sans, sans-serif)',
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: 'pointer',
+                marginBottom: 8,
+              }}
+            >
+              {localUi('See the whole year', 'Bona unyaka wonke', lang)}
+              <ChevronDown size={16} />
+            </button>
+          ) : (
           <div
             style={{
-              background: '#FFFEFA',
-              border: '1px solid #E2D8C4',
+              background: 'var(--bg-1)',
+              border: '1px solid var(--border)',
               borderRadius: 14,
               overflow: 'hidden',
               marginBottom: 8,
@@ -647,15 +767,15 @@ export default function CalendarPage() {
             <div
               style={{
                 padding: '12px 14px 8px',
-                borderBottom: '1px solid #E2D8C4',
+                borderBottom: '1px solid var(--border)',
               }}
             >
               <div
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: 16,
+                  fontSize: 'clamp(16px, 1.6vw, 20px)',
                   fontWeight: 600,
-                  color: '#20190F',
+                  color: 'var(--text-primary)',
                   marginBottom: 2,
                 }}
               >
@@ -667,9 +787,9 @@ export default function CalendarPage() {
                   <Dot mark="B" lang={lang} />
                   <span
                     style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       fontFamily: 'var(--font-mono, monospace)',
-                      color: '#5C5040',
+                      color: 'var(--text-secondary)',
                     }}
                   >
                     {localUi('In catalog sowing window', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
@@ -677,9 +797,9 @@ export default function CalendarPage() {
                 </div>
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     fontFamily: 'var(--font-mono, monospace)',
-                    color: '#5C5040',
+                    color: 'var(--text-secondary)',
                   }}
                 >
                   {localUi('Summer-rainfall pattern', 'Iphethini yemvula yasehlobo', lang)}
@@ -689,15 +809,23 @@ export default function CalendarPage() {
 
             {/* Crop planner filter notice */}
             {isFiltered && (
-              <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ margin: '12px 14px 0', padding: '8px 12px', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
                   {visibleCrops.length > 0
                     ? localUi(`Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`, `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}`, lang)
                     : localUi('None of your planned crops are in this calendar yet', 'Azikho izitshalo zakho ezihleliwe kule khalenda okwamanje', lang)}
                 </span>
-                <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+                <button onClick={() => setShowAllOverride(true)} style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                   {localUi('Show all', 'Bonisa konke', lang)}
                 </button>
+              </div>
+            )}
+
+            {/* No planted crops on this device at all — the fallback is the same general grid
+                every farmer used to see, but said out loud rather than left to guesswork. */}
+            {!hasPlan && (
+              <div style={{ margin: '12px 14px 0', padding: '8px 12px', background: 'var(--bg-0)', border: '1px solid var(--border)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)' }}>
+                {localUi('Showing the general planting guide — plant crops in your crop plan to filter this to just yours', 'Kuboniswa umhlahlandlela wokutshala ojwayelekile — tshala izitshalo ohlelweni lwakho ukuze kucwengwe lokhu kube okwakho kuphela', lang)}
               </div>
             )}
 
@@ -706,7 +834,7 @@ export default function CalendarPage() {
                 otherwise see a table with a header row and nothing under it, with
                 no clue why. Name what this grid covers instead of just going blank. */}
             {isFiltered && visibleCrops.length === 0 ? (
-              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: '#8C7A62', lineHeight: 1.5 }}>
+              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
                 This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
@@ -727,23 +855,23 @@ export default function CalendarPage() {
                 aria-label={localUi('South African planting calendar', 'Ikhalenda lokutshala laseNingizimu Afrika', lang)}
               >
                 <thead>
-                  <tr style={{ background: '#E4DCC6' }}>
+                  <tr style={{ background: 'var(--bg-0)' }}>
                     <th
                       style={{
                         padding: '7px 14px',
                         textAlign: 'left',
                         fontFamily: 'var(--font-mono, monospace)',
-                        fontSize: 10,
+                        fontSize: 12,
                         fontWeight: 700,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#8C7A62',
-                        borderBottom: '1px solid #E2D8C4',
+                        color: 'var(--text-muted)',
+                        borderBottom: '1px solid var(--border)',
                         whiteSpace: 'nowrap',
                         minWidth: 110,
                         position: 'sticky',
                         left: 0,
-                        background: '#E4DCC6',
+                        background: 'var(--bg-0)',
                         zIndex: 1,
                       }}
                     >
@@ -756,18 +884,18 @@ export default function CalendarPage() {
                           padding: '7px 4px',
                           textAlign: 'center',
                           fontFamily: 'var(--font-mono, monospace)',
-                          fontSize: 10,
+                          fontSize: 'clamp(12px, 1vw, 13px)',
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
-                          color: idx === selectedMonth ? '#1F4D2B' : '#8C7A62',
-                          borderBottom: '1px solid #E2D8C4',
-                          borderLeft: '1px solid #E2D8C420',
+                          color: idx === selectedMonth ? 'var(--color-forest-800)' : 'var(--text-muted)',
+                          borderBottom: '1px solid var(--border)',
+                          borderLeft: '1px solid var(--border)20',
                           background:
-                            idx === selectedMonth ? '#1F4D2B12' : '#E4DCC6',
+                            idx === selectedMonth ? 'var(--brand-soft)' : 'var(--bg-0)',
                           minWidth: 36,
                         }}
                       >
-                        {abbr}
+                        {monthLabels[idx]}
                       </th>
                     ))}
                   </tr>
@@ -777,7 +905,7 @@ export default function CalendarPage() {
                     <tr
                       key={crop.name}
                       style={{
-                        background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
+                        background: rowIdx % 2 === 0 ? 'var(--bg-1)' : 'var(--bg-0)',
                       }}
                     >
                       {/* Crop name — sticky left */}
@@ -787,12 +915,12 @@ export default function CalendarPage() {
                           fontFamily: 'var(--font-sans, sans-serif)',
                           fontSize: 13,
                           fontWeight: 500,
-                          color: '#20190F',
-                          borderBottom: '1px solid #E2D8C430',
+                          color: 'var(--text-primary)',
+                          borderBottom: '1px solid var(--border)30',
                           whiteSpace: 'nowrap',
                           position: 'sticky',
                           left: 0,
-                          background: rowIdx % 2 === 0 ? '#FFFEFA' : '#E4DCC6',
+                          background: rowIdx % 2 === 0 ? 'var(--bg-1)' : 'var(--bg-0)',
                           zIndex: 1,
                         }}
                       >
@@ -804,11 +932,11 @@ export default function CalendarPage() {
                           style={{
                             padding: '9px 4px',
                             textAlign: 'center',
-                            borderBottom: '1px solid #E2D8C430',
-                            borderLeft: '1px solid #E2D8C420',
+                            borderBottom: '1px solid var(--border)30',
+                            borderLeft: '1px solid var(--border)20',
                             background:
                               monthIdx === selectedMonth
-                                ? '#1F4D2B0A'
+                                ? 'var(--brand-soft)'
                                 : 'transparent',
                           }}
                         >
@@ -830,11 +958,19 @@ export default function CalendarPage() {
             </div>
             )}
           </div>
+          )}
 
           {/* Bottom breathing room */}
           <div style={{ height: 8 }} />
         </div>
       </main>
+
+      {/* Lima in the document flow, not floating over the page. The draggable FAB was measured
+          covering real content on every one of these screens — on /cropplan it sat on a task
+          row's "Mark done" checkbox, a tap target. components/ChatWidget.tsx excludes these
+          routes; this strip is the help it owes them, the same swap /student and /home already
+          made. */}
+      <LimaBar />
 
       <TabBar />
     </div>

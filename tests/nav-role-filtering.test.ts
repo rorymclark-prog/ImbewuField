@@ -143,14 +143,20 @@ test('the Journal tile does not promise to record harvests', () => {
     'the Journal stores notes and photos, not weights. A tile that says "Log harvests" sends a ' +
     'farmer to record her yield somewhere no report will ever read it. Weights live in /records.');
 
-  // And no locale may re-introduce it: the claim had been faithfully translated into all ten, which
-  // is how a false statement gets ten times harder to withdraw.
+  // The isiZulu draft now names the Journal's actual notes and photos. Other locales still use the
+  // English pending text until their wording is prepared; none may restore the old harvest promise.
   const dir = join(ROOT, 'lib/locales');
   for (const f of readdirSync(dir).filter((n) => n.endsWith('.ts'))) {
     const src = read(`lib/locales/${f}`);
-    assert.doesNotMatch(src, /homeQuickJournalDesc:/,
-      `${f} redefines homeQuickJournalDesc. It is pending review in JOURNAL_ENGLISH_PENDING and ` +
-      'must stay English until a speaker writes the true sentence — never the old harvest claim.');
+    assert.doesNotMatch(src, /homeQuickJournalDesc:\s*['"][^'"\n]*(?:Rekhoda izivuno|Log harvests)/i,
+      `${f} must not restore the old promise that the Journal records harvests.`);
+    if (f === 'zu.ts') {
+      assert.match(src, /homeQuickJournalDesc:\s*['"][^'"\n]+['"]/,
+        'the isiZulu draft must not fall back to the old English-only Journal label');
+    } else {
+      assert.doesNotMatch(src, /homeQuickJournalDesc:/,
+        `${f} remains on the English pending text until its own review draft is prepared`);
+    }
   }
 });
 

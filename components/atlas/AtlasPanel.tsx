@@ -24,6 +24,7 @@ import { AlertTriangle, Sprout, Mountain, Droplets, Thermometer, Layers, Leaf } 
 import type { LocationData } from '@/lib/types';
 import { SOIL_CAUTION } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
+import { useLanguage } from '@/lib/i18n';
 import {
   atlasRainPattern, catalogMonthFor, koppenFrom, sowableInMonth,
   type AtlasRainPattern,
@@ -39,14 +40,21 @@ const PATTERN_LABEL: Record<AtlasRainPattern, string> = {
   'mild-frost': 'Summer rainfall, light frost',
 };
 
+const PATTERN_LABEL_ZU: Record<AtlasRainPattern, string> = {
+  summer: 'Imvula yasehlobo',
+  winter: 'Imvula yasebusika',
+  'all-year': 'Imvula unyaka wonke',
+  'mild-frost': 'Imvula yasehlobo, isithwathwa esincane',
+};
+
 /* ── Shared micro-styles (copied idiom from DataPanel) ─────────────────── */
 
 function Card({ children, accent }: { children: React.ReactNode; accent?: string }) {
   return (
     <div
       style={{
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
         borderRadius: 14,
         padding: 16,
         ...(accent ? { borderLeftWidth: 3, borderLeftColor: accent, borderLeftStyle: 'solid' } : {}),
@@ -74,14 +82,32 @@ function chip(bg: string, color: string): React.CSSProperties {
   };
 }
 
-function MiniStat({ label, value, sub }: { label: string; value: string; sub?: string }) {
+function MiniStat({ label, value, sub }: { label: React.ReactNode; value: string; sub?: string }) {
   return (
     <div className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
-      <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{value}</div>
-      <div className="font-sans mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{label}</div>
-      {sub && <div className="font-sans" style={{ color: '#94876F', fontSize: 9.5 }}>{sub}</div>}
+      <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{value}</div>
+      <div className="font-sans mt-0.5" style={{ color: 'var(--text-muted)', fontSize: 10 }}>{label}</div>
+      {sub && <div className="font-sans" style={{ color: 'var(--text-muted)', fontSize: 9.5 }}>{sub}</div>}
     </div>
   );
+}
+
+function pairedLabel(english: string, zulu: string, isZulu: boolean): React.ReactNode {
+  return isZulu ? (
+    <>
+      <span>{zulu}</span>
+      <span className="block font-normal normal-case" style={{ fontSize: 9, letterSpacing: 0, color: 'var(--text-muted)' }}>{english}</span>
+    </>
+  ) : english;
+}
+
+function heldTechnicalLabel(english: string, isZulu: boolean): React.ReactNode {
+  return isZulu ? (
+    <>
+      <span>{english}</span>
+      <span className="block font-normal normal-case" style={{ fontSize: 9, letterSpacing: 0, color: 'var(--text-muted)' }}>isiZulu translation pending</span>
+    </>
+  ) : english;
 }
 
 /** Monthly bars, in the Climate-tab idiom (value on top, month letter below). */
@@ -115,9 +141,9 @@ function MonthBars({ values, unit, colorFor, height = 96 }: {
 
 const SOIL_CAUTION_STYLE: Record<'lab' | 'soilgrids' | 'estimate' | 'unknown', { bg: string; border: string; color: string; title: string }> = {
   lab: { bg: '#EAF3E2', border: '#CBDDBA', color: '#3C6B3F', title: 'Your soil test' },
-  soilgrids: { bg: 'rgba(31,77,43,0.05)', border: '#E2D8C4', color: '#5C5040', title: 'Modelled — SoilGrids' },
+  soilgrids: { bg: 'rgba(31,77,43,0.05)', border: 'var(--border)', color: 'var(--text-secondary)', title: 'Modelled — SoilGrids' },
   estimate: { bg: '#F8ECDD', border: '#E4C9A2', color: '#8A4A12', title: 'Not a reading' },
-  unknown: { bg: 'rgba(32,25,15,0.05)', border: '#E2D8C4', color: '#5C5040', title: 'Source unknown' },
+  unknown: { bg: 'rgba(32,25,15,0.05)', border: 'var(--border)', color: 'var(--text-secondary)', title: 'Source unknown' },
 };
 
 function SoilProvenance({ source }: { source: LocationData['soil']['soilSource'] }) {
@@ -145,6 +171,8 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
   /** Injectable for stable rendering in tests/previews. */
   now?: Date;
 }) {
+  const { lang } = useLanguage();
+  const isZulu = lang === 'zu';
   const { climate, rainfall, soil, elevation } = data;
   const derived = koppenFrom(data);
   const koppenKnown = climate.koppen !== '?' && climate.koppen !== '';
@@ -166,34 +194,41 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
 
   const frostChipGreen = tMin >= 5;
   const frostChip = tMin < 2 ? 'Frost expected' : tMin < 5 ? 'Light frost possible' : 'Frost-free';
+  const frostChipZu = tMin < 2 ? 'Kulindeleke isithwathwa' : tMin < 5 ? 'Kungenzeka kube nesithwathwa esincane' : 'Akunasithwathwa';
 
   const coordLabel = `${Math.abs(data.lat).toFixed(3)}°${data.lat < 0 ? 'S' : 'N'}, ${Math.abs(data.lon).toFixed(3)}°${data.lon < 0 ? 'W' : 'E'}`;
 
   return (
     <div className="space-y-3">
+      {isZulu && (
+        <div role="note" className="rounded-xl px-3 py-2 font-sans" style={{ fontSize: 11, lineHeight: 1.45, color: 'var(--text-secondary)', background: '#FFF8E8', border: '1px solid #E7D4A9' }}>
+          Umbhalo wesiZulu oboniswe lapha uwuhlaka olungakabuyekezwa. IsiNgisi sikhonjiswa ngaphansi kwamalebula ahunyushiwe. Idatha, amagama ezindawo nezinhlobo zezitshalo, izincazelo, imithombo nezixwayiso zokulima kuhlala njengoba zinikeziwe.
+          <span className="block mt-1">IsiZulu interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.</span>
+        </div>
+      )}
 
       {/* Where */}
       <div className="px-0.5">
         {placeName && (
-          <div className="font-display font-bold" style={{ fontSize: 19, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+          <div className="font-display font-bold" style={{ fontSize: 19, color: 'var(--text-primary)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>
             {placeName}
           </div>
         )}
-        <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: placeName ? 2 : 0 }}>
+        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: placeName ? 2 : 0 }}>
           {coordLabel} · {Math.round(elevation.elevation)} m
         </div>
       </div>
 
       {/* 1 — Climate headline (Köppen) */}
       <Card accent="#1F4D2B">
-        <Label>Climate</Label>
+        <Label>{pairedLabel('Climate', 'Isimo sezulu', isZulu)}</Label>
         {koppenKnown ? (
           <>
             <div className="flex items-baseline gap-2 flex-wrap">
               <span className="font-display font-bold" style={{ fontSize: 26, color: '#1F4D2B', letterSpacing: '-0.02em', lineHeight: 1 }}>
                 {climate.koppen}
               </span>
-              <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+              <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
                 {climate.koppenDesc}
               </span>
             </div>
@@ -204,8 +239,8 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             )}
             <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
               <span style={chip('#E7EEF4', '#3A6E92')}>≈ {annualRain} mm/yr</span>
-              {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{PATTERN_LABEL[pattern]}</span>}
-              <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{frostChip}</span>
+              {pattern && <span style={chip('#EDE7DA', '#7A6A48')}>{pairedLabel(PATTERN_LABEL[pattern], PATTERN_LABEL_ZU[pattern], isZulu)}</span>}
+              <span style={chip(frostChipGreen ? '#DDEBCF' : '#F4EAD0', frostChipGreen ? '#3C6B3F' : '#9A7A2E')}>{pairedLabel(frostChip, frostChipZu, isZulu)}</span>
             </div>
           </>
         ) : (
@@ -213,7 +248,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
           </p>
         )}
-        <p className="font-sans mt-2.5" style={{ fontSize: 10.5, color: '#94876F', lineHeight: 1.45 }}>
+        <p className="font-sans mt-2.5" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.45 }}>
           Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate.
         </p>
       </Card>
@@ -222,7 +257,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       {rainfall.monthly?.length === 12 && (
         <Card>
           <div className="flex items-baseline justify-between">
-            <Label icon={<Droplets size={12} />}>Rainfall</Label>
+            <Label icon={<Droplets size={12} />}>{pairedLabel('Rainfall', 'Imvula', isZulu)}</Label>
             <span className="font-sans font-bold" style={{ fontSize: 12.5, color: '#3A6E92' }}>≈ {annualRain} mm / yr</span>
           </div>
           <MonthBars
@@ -231,20 +266,20 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             colorFor={(v) => (v > rainAvg * 0.9 ? '#3F92C9' : '#A6C9DF')}
             height={86}
           />
-          <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: '#8C7A62' }}>
-            <span>Wet: <b style={{ color: '#5C5040', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
-            <span>Dry: <b style={{ color: '#5C5040', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
+          <div className="flex justify-between font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+            <span>{pairedLabel('Wet:', 'Isikhathi sezimvula:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.wetSeason}</b></span>
+            <span>{pairedLabel('Dry:', 'Isikhathi esomile:', isZulu)} <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{rainfall.drySeason}</b></span>
           </div>
         </Card>
       )}
 
       {/* 3 — Temperature */}
       <Card>
-        <Label icon={<Thermometer size={12} />}>Temperature</Label>
+        <Label icon={<Thermometer size={12} />}>{pairedLabel('Temperature', 'Izinga lokushisa', isZulu)}</Label>
         <div className="grid grid-cols-3 gap-2 mb-1">
-          <MiniStat label="Mean" value={`${climate.meanTemp}°C`} />
-          <MiniStat label="Coldest month" value={`${Math.round(tMin)}°C`} />
-          <MiniStat label="Hottest month" value={`${Math.round(tMax)}°C`} />
+          <MiniStat label={pairedLabel('Mean', 'Isilinganiso', isZulu)} value={`${climate.meanTemp}°C`} />
+          <MiniStat label={pairedLabel('Coldest month', 'Inyanga ebanda kakhulu', isZulu)} value={`${Math.round(tMin)}°C`} />
+          <MiniStat label={pairedLabel('Hottest month', 'Inyanga eshisa kakhulu', isZulu)} value={`${Math.round(tMax)}°C`} />
         </div>
         {temps.length === 12 && (
           <MonthBars
@@ -261,20 +296,20 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
 
       {/* 4 — Soil, with provenance */}
       <Card>
-        <Label icon={<Layers size={12} />}>Soil</Label>
+        <Label icon={<Layers size={12} />}>{pairedLabel('Soil', 'Umhlabathi', isZulu)}</Label>
         <div className="grid grid-cols-3 gap-2">
-          <MiniStat label="Texture" value={soil.textureClass} />
+          <MiniStat label={heldTechnicalLabel('Texture', isZulu)} value={soil.textureClass} />
           <MiniStat label="pH" value={String(soil.ph)} sub={soil.ph < 5.5 ? 'acidic' : soil.ph > 7.5 ? 'alkaline' : 'near neutral'} />
-          <MiniStat label="Organic C" value={`${soil.organicCarbon}%`} />
+          <MiniStat label={heldTechnicalLabel('Organic C', isZulu)} value={`${soil.organicCarbon}%`} />
         </div>
         <div className="space-y-2 mt-3">
           {[
-            { name: 'Sand', pct: soil.sand, color: '#C07A1E' },
+            { name: 'Sand', pct: soil.sand, color: '#7A4408' },
             { name: 'Silt', pct: soil.silt, color: '#1F4D2B' },
             { name: 'Clay', pct: soil.clay, color: '#2D6B3C' },
           ].map(({ name, pct, color }) => (
             <div key={name}>
-              <div className="flex justify-between font-sans mb-0.5" style={{ fontSize: 11, color: '#5C5040' }}>
+              <div className="flex justify-between font-sans mb-0.5" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span>{name}</span>
                 <span style={{ color }}>{pct}%</span>
               </div>
@@ -289,35 +324,35 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
 
       {/* 5 — Terrain */}
       <Card>
-        <Label icon={<Mountain size={12} />}>Terrain</Label>
+        <Label icon={<Mountain size={12} />}>{pairedLabel('Terrain', 'Ukuma komhlaba', isZulu)}</Label>
         <div className="grid grid-cols-3 gap-2">
-          <MiniStat label="Elevation" value={`${Math.round(elevation.elevation)} m`} />
-          <MiniStat label="Slope" value={`${elevation.slopeDeg}°`} sub={`${elevation.slopePct}%`} />
-          <MiniStat label="Aspect" value={elevation.aspectLabel} sub={`${Math.round(elevation.aspectDeg)}°`} />
+          <MiniStat label={pairedLabel('Elevation', 'Ukuphakama', isZulu)} value={`${Math.round(elevation.elevation)} m`} />
+          <MiniStat label={heldTechnicalLabel('Slope', isZulu)} value={`${elevation.slopeDeg}°`} sub={`${elevation.slopePct}%`} />
+          <MiniStat label={pairedLabel('Aspect', 'Indlela umqansa obheke ngayo', isZulu)} value={elevation.aspectLabel} sub={`${Math.round(elevation.aspectDeg)}°`} />
         </div>
       </Card>
 
       {/* 6 — South African layers, when the point has them */}
       {(data.vegetation || data.bru) && (
         <Card>
-          <Label icon={<Leaf size={12} />}>South African layers</Label>
+          <Label icon={<Leaf size={12} />}>{pairedLabel('South African layers', 'Izingqimba zedatha zaseNingizimu Afrika', isZulu)}</Label>
           {data.vegetation && (
             <div className="mb-2">
-              <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{data.vegetation.vegUnit}</div>
-              <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 1 }}>
+              <div className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{data.vegetation.vegUnit}</div>
+              <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 1 }}>
                 {data.vegetation.biome} · {data.vegetation.bioregion} (SANBI 2018)
               </div>
             </div>
           )}
           {data.bru && (
             <div>
-              <div className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>
+              <div className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                 Bioresource zone {data.bru.brucode}
               </div>
-              <div className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 1 }}>
+              <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 1 }}>
                 Zone rainfall {Math.round(data.bru.map)} mm/yr · mean {data.bru.tmean}°C
               </div>
-              <div className="font-sans" style={{ fontSize: 10, color: '#94876F', marginTop: 3 }}>{data.bru.attribution}</div>
+              <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3 }}>{data.bru.attribution}</div>
             </div>
           )}
         </Card>
@@ -326,10 +361,10 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
       {/* 7 — What could grow here */}
       {pattern && (
         <Card accent="#C07A1E">
-          <Label icon={<Sprout size={12} />}>What could grow here</Label>
-          <p className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginBottom: 10 }}>
+          <Label icon={<Sprout size={12} />}>{pairedLabel('What could grow here', 'Yini engakhula lapha?', isZulu)}</Label>
+          <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 10 }}>
             From our crop catalog: crops with a sowing window open in {MONTH_NAMES[monthNow - 1]} under a{' '}
-            <b style={{ color: '#5C5040', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> pattern
+            <b style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{PATTERN_LABEL[pattern].toLowerCase()}</b> pattern
             {northern ? ' (calendar shifted six months for the northern hemisphere)' : ''}.
             A description of the catalog, not planting advice for this site.
           </p>
@@ -341,7 +376,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
                   className="font-display"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: 6,
-                    fontSize: 13, fontWeight: 600, color: '#20190F',
+                    fontSize: 13, fontWeight: 600, color: 'var(--text-primary)',
                     background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)',
                     borderRadius: 999, padding: '5px 12px 5px 8px',
                   }}
@@ -356,7 +391,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               ))}
             </div>
           ) : (
-            <p className="font-display" style={{ fontSize: 13, color: '#5C5040' }}>
+            <p className="font-display" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
               No catalog crop opens a sowing window this month under this pattern.
             </p>
           )}

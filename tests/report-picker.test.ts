@@ -32,9 +32,11 @@ test('a deep link to Reports survives having no site yet', () => {
 
   // ORDER IS THE BUG. The hatch is worthless below the empty-state return.
   const hatch = panel.indexOf('wantsSavedReports(tab, forcedTab)');
-  const empty = panel.indexOf('if (!data && !loading) return <EmptyState />;');
+  const empty = panel.indexOf('if (!data && !loading) return');
   assert.ok(hatch > 0 && empty > 0, 'expected both the hatch and the empty-state return');
   assert.ok(hatch < empty, 'the Reports hatch must run BEFORE the map empty state, not after it');
+  assert.match(panel.slice(empty, empty + 100), /<EmptyState \/>[\s\S]*siteSurveySheet/,
+    'the map empty state must retain a saved-site survey opened from the deep link');
 
   // And the Farm hatch it was modelled on must still be there — same class, same fix.
   assert.match(panel, /wantsFarmRecords\(tab, forcedTab\)/);
@@ -67,12 +69,15 @@ test('every translated string on these screens actually exists', () => {
   // string. That is the same failure as the untranslated empty state this whole change exists to
   // fix, so it gets a test rather than a promise to be careful.
   const i18n = source('../lib/i18n.tsx');
+  const zulu = source('../lib/locales/zu.ts');
   const keys = new Set<string>();
   for (const file of [PANEL, LIST]) {
     for (const m of stripComments(source(file)).matchAll(/\bt\('([A-Za-z0-9_]+)'\)/g)) keys.add(m[1]);
   }
   assert.ok(keys.size > 5, 'expected these screens to use translated copy');
-  const missing = [...keys].filter((k) => !new RegExp(`^\\s*${k}:`, 'm').test(i18n));
+  const missing = [...keys].filter((k) => k.endsWith('ZuDraft')
+    ? !new RegExp(`^\\s*${k}:`, 'm').test(zulu)
+    : !new RegExp(`^\\s*${k}:`, 'm').test(i18n));
   assert.deepEqual(missing, [], `keys used but never translated: ${missing.join(', ')}`);
 });
 

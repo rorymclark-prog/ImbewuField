@@ -131,7 +131,7 @@ Chaza ngokwethembeka izindlela okhulisa ngazo izitshalo. Ngaphambi kokufaka ileb
 
 ---
 
-**Ikhasi 14 — Buka: Omakhelwane Basqinisa Kanjani Isivuno (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**
+**Ikhasi 14 — Buka: Ukubambisana Komakhelwane (Slide 14 — Watch: How Neighbours Strengthen a Harvest)**
 
 Ipulazi elilodwa lingakhiqiza ukudla.
 

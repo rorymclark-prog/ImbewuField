@@ -1,0 +1,192 @@
+{
+  "seconds": 27.528,
+  "bytes": 165168,
+  "audioSha256": "d4770737eda0510ecf338b26b8115a9726160ea75dcb3b9f4f9106a46958bd71",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Lesi",
+      "offset": 1318330,
+      "duration": 3693330
+    },
+    {
+      "text": "sithombe",
+      "offset": 5295410,
+      "duration": 5965830
+    },
+    {
+      "text": "esijwayelekile",
+      "offset": 11545410,
+      "duration": 11363750
+    },
+    {
+      "text": "asiwona",
+      "offset": 23619160,
+      "duration": 6534160
+    },
+    {
+      "text": "umklamo",
+      "offset": 30437500,
+      "duration": 5823750
+    },
+    {
+      "text": "wepulazi",
+      "offset": 36261250,
+      "duration": 7244160
+    },
+    {
+      "text": "ohloliwe",
+      "offset": 43789580,
+      "duration": 6676250
+    },
+    {
+      "text": "noma",
+      "offset": 50465830,
+      "duration": 3409160
+    },
+    {
+      "text": "ogunyaziwe",
+      "offset": 54301250,
+      "duration": 10653330
+    },
+    {
+      "text": "Asifakazeli",
+      "offset": 75392080,
+      "duration": 9232910
+    },
+    {
+      "text": "ukuthi",
+      "offset": 85335410,
+      "duration": 4261250
+    },
+    {
+      "text": "umthombo",
+      "offset": 89738750,
+      "duration": 7102080
+    },
+    {
+      "text": "indlela",
+      "offset": 98261250,
+      "duration": 5965830
+    },
+    {
+      "text": "noma",
+      "offset": 104227080,
+      "duration": 3267080
+    },
+    {
+      "text": "indawo",
+      "offset": 107920410,
+      "duration": 4829580
+    },
+    {
+      "text": "yokugcina",
+      "offset": 112750000,
+      "duration": 5965830
+    },
+    {
+      "text": "amanzi",
+      "offset": 119000000,
+      "duration": 5539580
+    },
+    {
+      "text": "iphephile",
+      "offset": 124823750,
+      "duration": 7812500
+    },
+    {
+      "text": "Thola",
+      "offset": 142153330,
+      "duration": 3693330
+    },
+    {
+      "text": "iseluleko",
+      "offset": 146556660,
+      "duration": 8380830
+    },
+    {
+      "text": "kubeluleki",
+      "offset": 154937500,
+      "duration": 8096660
+    },
+    {
+      "text": "bendawo",
+      "offset": 163034160,
+      "duration": 5965830
+    },
+    {
+      "text": "abaqeqeshiwe",
+      "offset": 169284160,
+      "duration": 10085410
+    },
+    {
+      "text": "ngaphambi",
+      "offset": 179511250,
+      "duration": 4971660
+    },
+    {
+      "text": "kokuphinda",
+      "offset": 184482910,
+      "duration": 6818330
+    },
+    {
+      "text": "usebenzise",
+      "offset": 191727080,
+      "duration": 7812500
+    },
+    {
+      "text": "amanzi",
+      "offset": 199823750,
+      "duration": 7244160
+    },
+    {
+      "text": "Umhlabathi",
+      "offset": 217011250,
+      "duration": 7102080
+    },
+    {
+      "text": "ne-mulch",
+      "offset": 224539580,
+      "duration": 6107910
+    },
+    {
+      "text": "akuwabulali",
+      "offset": 231357910,
+      "duration": 9090830
+    },
+    {
+      "text": "amagciwane",
+      "offset": 240732910,
+      "duration": 7954580
+    },
+    {
+      "text": "asemanzini",
+      "offset": 249113750,
+      "duration": 8238750
+    },
+    {
+      "text": "angcolile",
+      "offset": 257636250,
+      "duration": 8096660
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": "water-harvesting-l4",
+  "language": "zu",
+  "slide": 21,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-21.txt",
+  "sourceSha256": "b334154b4d76661527aee4a7a0eaf1d0d04838387ecebc48300385dba83d16a3",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:48:50.661849+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

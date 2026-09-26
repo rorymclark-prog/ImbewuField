@@ -31,10 +31,13 @@ import BrandLogo from '@/components/BrandLogo';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
 import MyRecords from '@/components/MyRecords';
 import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
+import { buildFinanceSeries, type FinanceSeries } from '@/lib/finance-series';
+import { useAppLevel } from '@/lib/app-level';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
@@ -49,12 +52,13 @@ import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/f
 import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
   EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
   validateExpenseReceipt, saveExpenseWithReceipt,
 } from '@/lib/expense-receipts';
+import { APP_HEADER_INSET } from '@/lib/app-header';
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -111,6 +115,11 @@ function categoryLabel(c: ExpenseCategory | null | undefined, lang = 'en'): stri
 /** This page is outside the lesson translation queue; keep small UI labels here until they are reviewed. */
 function recordsText(lang: string, english: string, isiZulu: string): string {
   return lang === 'zu' ? isiZulu : english;
+}
+
+/** Keep the English beside isiZulu when a farmer may act on money or saved records. */
+function recordsInstruction(lang: string, english: string, isiZulu: string): string {
+  return lang === 'zu' ? `${english} — ${isiZulu}` : english;
 }
 
 function recordsMessage(lang: string, message: string): string {
@@ -271,6 +280,41 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
   );
 }
 
+/* ── Simple mode: one plain-language answer, above the tabs ─────────────────
+ *
+ * The Charts tab is All tools only in Simple, so this is Simple's one number: the same 12-month
+ * totalInZar / totalOutZar / totalNetZar the Charts tab's cash-flow chart computes (buildFinanceSeries()
+ * in lib/finance-series.ts) — never a second calculation of the same money-in/out arithmetic.
+ */
+function SimpleMoneySummary({ series, lang }: { series: FinanceSeries; lang: string }) {
+  if (!series.hasRecords) return null;
+  const net = series.totalNetZar;
+  const headline = net < 0
+    ? recordsText(lang, `You spent ${fmtZAR(Math.abs(net))} more than you made`, `Usebenzise i-${fmtZAR(Math.abs(net))} ngaphezu kwalokho okutholile`)
+    : recordsText(lang, `You kept ${fmtZAR(net)}`, `Ugcine i-${fmtZAR(net)}`);
+  return (
+    <div
+      className="rounded-2xl p-4"
+      style={{
+        background: net < 0 ? 'rgba(192,122,30,0.08)' : 'rgba(46,107,58,0.08)',
+        border: `1px solid ${net < 0 ? 'rgba(192,122,30,0.18)' : 'rgba(46,107,58,0.18)'}`,
+      }}
+    >
+      <p className="font-display font-bold text-xl" style={{ color: 'var(--color-ink)' }}>{headline}</p>
+      <p className="font-sans text-sm mt-1" style={{ color: 'var(--color-muted-strong)' }}>
+        {recordsText(
+          lang,
+          `Money in ${fmtZAR(series.totalInZar)} · Money out ${fmtZAR(series.totalOutZar)}`,
+          `Imali engenile ${fmtZAR(series.totalInZar)} · Imali ephumile ${fmtZAR(series.totalOutZar)}`,
+        )}
+      </p>
+      <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted)' }}>
+        {recordsText(lang, 'Only what you have written down.', 'Yilokho kuphela osukubhalile.')}
+      </p>
+    </div>
+  );
+}
+
 /* ── Recent sales/expenses/invoices ledger (phone) ───────────────────────── */
 
 // Unified row shape the phone ledger renders — one of sale | expense | invoice.
@@ -428,7 +472,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                       if (!src) return;
                       if (item.kind === 'sale') onEditSale(src as SalesLog); else onEditExpense(src as ExpenseLog);
                     }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     <Pencil size={14} />
                   </button>
@@ -437,8 +481,8 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     aria-label={pendingDelete === item.id ? recordsText(lang, 'Confirm delete', 'Qinisekisa ukususa') : recordsText(lang, 'Delete', 'Susa')}
                     onClick={() => requestDelete(item)}
                     style={pendingDelete === item.id
-                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', padding: '3px 6px', color: '#B23A3A', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }
-                      : { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
+                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3px 6px', color: '#B23A3A', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }
+                      : { background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     {pendingDelete === item.id ? recordsText(lang, 'Sure?', 'Uqinisekile?') : <Trash2 size={14} />}
                   </button>
@@ -687,8 +731,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         setForm(() => ({
           ...emptyForm(),
           error: online
-            ? recordsText(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
-            : recordsText(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'),
+            ? recordsInstruction(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisekiswa yiseva. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.')
+            : recordsInstruction(lang, "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuthunyelwa. Isithombe serisidi esifakiwe sigcinwa kule divayisi kuphela.'),
         }));
         setScanNote('');
         onSaved();
@@ -745,7 +789,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
               <button key={k} type="button" disabled={form.loading} onClick={() => { clearReceiptDraft(); setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
                 style={kind === k
-                  ? { background: k === 'in' ? '#2E6B3A' : '#C07A1E', color: '#fff', fontSize: 13 }
+                  ? { background: k === 'in' ? '#2E6B3A' : '#9A6018', color: '#fff', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
                 {label}
               </button>
@@ -759,7 +803,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
             <option value="">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsText(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option>{!isIn && <option value="shared">{recordsText(lang, 'Shared by beds and staple plots', 'Kwabiwe phakathi kwemibhede namasimu ezitshalo eziyisisekelo')}</option>}<option value="other">{recordsText(lang, 'Orchard / other', 'Ingadi yezithelo / okunye')}</option>
           </select>
-          <span className="block text-xs mt-1">{recordsText(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</span>
+          <span className="block text-xs mt-1">{recordsInstruction(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</span>
         </label>
         {/* The original belongs to the cost, regardless of whether Lima reads it. */}
         {!isIn && (
@@ -771,7 +815,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             </div>
             <input ref={slipInputRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} capture="environment" className="hidden" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Take a receipt photo', 'Thatha isithombe serisidi')} />
             <input ref={slipUploadRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} className="hidden" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Choose a receipt photo', 'Khetha isithombe serisidi')} />
-            <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.', 'Isebenza ungaxhunyiwe. Isithombe sokuqala sigcinwa nalezi zindleko kule divayisi kuphela. JPG, PNG noma WebP, kufika ku-10 MB.')}</p>
+            <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsInstruction(lang, 'Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.', 'Isebenza ungaxhunyiwe. Isithombe sokuqala sigcinwa nalezi zindleko kule divayisi kuphela. JPG, PNG noma WebP, kufika ku-10 MB.')}</p>
             {readingPhoto && <p role="status" className="text-sm">{recordsText(lang, 'Checking photo…', 'Kuhlolwa isithombe…')}</p>}
             {receiptPhoto && receiptUrl && <div className="rounded-lg p-2" style={{ background: 'var(--color-canvas)' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -812,7 +856,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
-            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsText(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
+            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
           </div>
         )}
 
@@ -868,7 +912,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
                   onClick={() => setForm((f) => ({ ...f, category: f.category === c ? null : c }))}
                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                   style={form.category === c
-                    ? { background: '#C07A1E', color: '#fff', border: '1px solid #C07A1E', cursor: 'pointer' }
+                    ? { background: '#9A6018', color: '#fff', border: '1px solid #9A6018', cursor: 'pointer' }
                     : { background: 'var(--color-canvas)', color: 'var(--color-muted-strong)', border: '1px solid var(--color-border)', cursor: 'pointer' }}>
                   {c}
                 </button>
@@ -1050,7 +1094,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
           <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
-          <h1 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h1>
+          <h2 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h2>
         </div>
         <div className="flex items-center gap-2">
           {onSeeSample && (
@@ -1098,7 +1142,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
             <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
-            <div className="font-display font-bold mt-1" style={{ fontSize: 28, color: s.color, letterSpacing: '-0.02em' }}>{loading ? '…' : s.value}</div>
+            <div className="t-hero mt-1" style={{ color: s.color }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
       </div>
@@ -1125,7 +1169,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <tbody>
             {rows.length === 0 ? (
               <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
-                {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsText(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
+          {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsInstruction(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
               </td></tr>
             ) : rows.map((r, i) => (
               <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
@@ -1134,8 +1178,8 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   {r.desc}
                   <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
                   {r.duplicateSuspect && (
-                    <span className="block font-sans" style={{ fontSize: 12, color: '#B07A1E', marginTop: 2 }}>
-                      {recordsText(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
+                    <span className="block font-sans" style={{ fontSize: 12, color: 'var(--gold)', marginTop: 2 }}>
+                      {recordsInstruction(lang, DUPLICATE_ROW_NOTE, 'Kungenzeka ukuthi lokhu ukuthengisa okufanayo — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.')}
                     </span>
                   )}
                 </td>
@@ -1155,7 +1199,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                           if (src) onEditExpense(src);
                         }
                       }}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}>
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-muted-strong)', opacity: 0.55 }}>
                       <Pencil size={14} />
                     </button>
                   )}
@@ -1166,7 +1210,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
         </table>
       </div>
       <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
-        {recordsText(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsText(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
+        {recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsInstruction(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
       </p>
     </div>
   );
@@ -1174,8 +1218,8 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
 
 /* ── Measured farm metrics ──────────────────────────────────────────────── */
 
-function metricNumber(value: number | null, unit: string): string {
-  return value === null || !Number.isFinite(value) ? 'Unknown' : `${value.toFixed(1)} ${unit}`;
+function metricNumber(value: number | null, unit: string, lang: string): string {
+  return value === null || !Number.isFinite(value) ? recordsText(lang, 'Unknown', 'Akwaziwa') : `${value.toFixed(1)} ${unit}`;
 }
 
 /**
@@ -1196,33 +1240,33 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
   const waiting = loading || !planLoaded;
 
   return (
-    <section className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
-        <h2 className="text-xl font-display font-semibold" style={{ color: '#203c2c' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
-        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
+    <section className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
+        <h2 className="text-xl font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokulima ngisho noma amanani eshintsha.')}</p>
       </div>
       {waiting ? (
-        <p className="px-4 py-6 text-xs font-sans" style={{ color: '#5d5143' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>
+        <p className="px-4 py-6 text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>
       ) : metrics.crops.length === 0 ? (
-        <p className="px-4 py-6 text-sm font-display" style={{ color: '#5C5040' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
+        <p className="px-4 py-6 text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No crop activity or crop plan for this ${period}.`, `Akukho msebenzi wezitshalo noma uhlelo lwezitshalo lwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
       ) : (
-        <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
+        <div className="divide-y" style={{ borderColor: 'var(--border)' }}>
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
-                <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: '#203c2c' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
+                <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
                 <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#9E5C08' : '#5d5143' }}>
                   {crop.areaM2 === null ? recordsText(lang, 'Planted area not recorded', 'Indawo etshaliwe ayirekhodiwe') : `${crop.areaM2.toFixed(1)} m² ${recordsText(lang, 'planned', 'ihleliwe')}`}
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
               </div>
-              <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
+              <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-secondary)' }}>
                 {crop.hasTaggedCost
-                  ? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²')}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other costs not attributed', 'Ezinye izindleko azabelwanga')}` : ''}`
+                  ? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²', lang)}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other costs not attributed', 'Ezinye izindleko azabelwanga')}` : ''}`
                   : metrics.hasUnattributedExpenses ? recordsText(lang, 'Cost per m²: not attributed', 'Izindleko nge-m²: azabelwanga') : recordsText(lang, 'No crop cost logged', 'Azikho izindleko zesitshalo ezirekhodiwe')}
               </p>
             </div>
@@ -1237,31 +1281,31 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
            it fetched per kilogram. The app was already computing both and dropping them on the
            floor. There is still deliberately no yield-per-area and no projection here — these are
            achieved numbers off the farmer's own logs, which is why they need no sourcing. */
-        <div className="px-4 py-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <div className="px-4 py-3" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="flex items-baseline justify-between gap-3">
-            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
-            <p className="text-xs font-sans" style={{ color: '#5d5143' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>
+            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
+            <p className="text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>
           </div>
           {metrics.perennialCrops.map((row) => (
             <div key={row.cropName} className="mt-3">
-              <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{row.cropName}</p>
+              <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{row.cropName}</p>
               <div className="grid grid-cols-3 gap-2 mt-1">
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
-                    {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg') : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
+                    {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>
                     {row.hasSale ? fmtZAR(row.turnoverZar) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>{recordsText(lang, 'Price', 'Inani')}</p>
-                  <p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>
-                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg') : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
+                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>
+                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
               </div>
@@ -1269,28 +1313,28 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 /* Said out loud rather than left for the farmer to subtract. The gap between picked
                    and sold is the eaten-at-home-or-lost share, and on fruit it is usually the
                    larger half — printing only the rand would quietly imply the rest was worthless. */
-                <p className="text-xs font-sans mt-1" style={{ color: '#5C5040' }}>
-                  {recordsText(lang, `${metricNumber(row.soldKg, 'kg')} of that was sold · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} eaten at home, given away or lost`, `Kuthengiswe ${metricNumber(row.soldKg, 'kg')} · ${metricNumber(row.harvestedKg - row.soldKg, 'kg')} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile`)}
+                <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>
+                  {recordsText(lang, `${metricNumber(row.soldKg, 'kg', lang)} of that was sold · ${metricNumber(row.harvestedKg - row.soldKg, 'kg', lang)} eaten at home, given away or lost`, `Kuthengiswe ${metricNumber(row.soldKg, 'kg', lang)} · ${metricNumber(row.harvestedKg - row.soldKg, 'kg', lang)} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile`)}
                 </p>
               )}
             </div>
           ))}
-          <p className="text-xs font-sans mt-3" style={{ color: '#5d5143' }}>
-            {recordsText(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.', 'Lezi azikho ohlwini olungenhla ngoba izibalo zalo zisebenza ngemitha-skwele yemibhede, kanti izithelo zesihlahla aziveli embhedeni. Imali yokuthengisa lapha isivele ibaliwe emalini engezansi.')}
+          <p className="text-xs font-sans mt-3" style={{ color: 'var(--text-secondary)' }}>
+            {recordsInstruction(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.', 'Lezi azikho ohlwini olungenhla ngoba izibalo zalo zisebenza ngemitha-skwele yemibhede, kanti izithelo zesihlahla aziveli embhedeni. Imali yokuthengisa lapha isivele ibaliwe emalini engezansi.')}
           </p>
         </div>
       )}
-      <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
-        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
+      <div className="px-4 py-3" style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)' }}>
+        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
         {metrics.gardenMargins.length === 0 ? (
-          <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, `No sales or costs logged for this ${period}.`, `Akukho okudayisiwe noma izindleko ezirekhodiwe zale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
+          <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No sales or costs logged for this ${period}.`, `Akukho okudayisiwe noma izindleko ezirekhodiwe zale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
         ) : metrics.gardenMargins.map((margin) => (
           <div key={margin.gardenId ?? 'this-farm'} className="flex items-baseline justify-between gap-3 mt-2">
-            <p className="text-sm font-display" style={{ color: '#20190F' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>
-            <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{fmtZAR(margin.grossMarginZar)}</p>
+            <p className="text-sm font-display" style={{ color: 'var(--text-primary)' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>
+            <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{fmtZAR(margin.grossMarginZar)}</p>
           </div>
         ))}
-        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>{recordsText(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhodiwe kukhishwe izindleko ezirekhodiwe. Izindleko ezabiwe azifakwa ngokuqagela enzuzweni yesitshalo.')}</p>
       </div>
     </section>
   );
@@ -1325,6 +1369,14 @@ export default function RecordsPage() {
     const wanted = new URLSearchParams(window.location.search).get('tab');
     if (isBookTab(wanted)) setTab(wanted);
   }, []);
+
+  // Simple / All tools (lib/app-level.ts). Charts is All tools only: a farmer arriving on
+  // ?tab=charts, or switching to Simple while already on that tab, lands on Picked instead.
+  const level = useAppLevel();
+  const simple = level === 'simple';
+  useEffect(() => {
+    if (simple && tab === 'charts') setTab('picked');
+  }, [simple, tab]);
 
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [sales, setSales] = useState<SalesLog[]>([]);
@@ -1362,6 +1414,13 @@ export default function RecordsPage() {
   // The toggle is right there for anyone who wants the tighter window.
   const [period, setPeriod] = useState<Period>('season');
   const now = useMemo(() => new Date(), []);
+
+  // The same 12-month series the Charts tab's cash-flow chart builds (CashflowChart's default
+  // windowMonths), so Simple's card and Charts can never show two different totals.
+  const simpleMoneySeries = useMemo(
+    () => buildFinanceSeries(production, sales, expenses, invoices, now, 12),
+    [production, sales, expenses, invoices, now],
+  );
 
   // ONE bed authority for this whole screen — see lib/finance-plan-source.ts for
   // the two-authorities bug this closed. Every card that measures land takes its
@@ -1463,11 +1522,12 @@ export default function RecordsPage() {
     if (enterSampleMode()) window.location.href = '/records?tab=charts';
   }
 
+  // Simple leaves Charts off the book's tabs entirely — All tools keeps all four, exactly as today.
   const bookTabs: { id: BookTab; label: string; Icon: typeof Sprout }[] = [
-    { id: 'picked', label: recordsText(lang, t('bookTabPicked'), 'Okuvunyiwe'), Icon: Sprout },
-    { id: 'sold', label: recordsText(lang, t('bookTabSold'), 'Okudayisiwe'), Icon: TrendingUp },
-    { id: 'spent', label: recordsText(lang, t('bookTabSpent'), 'Okusetshenzisiwe'), Icon: Receipt },
-    { id: 'charts', label: recordsText(lang, t('bookTabCharts'), 'Amashadi'), Icon: BarChart3 },
+    { id: 'picked', label: lang === 'zu' ? translate('zu', 'bookTabPickedZuDraft') : t('bookTabPicked'), Icon: Sprout },
+    { id: 'sold', label: lang === 'zu' ? translate('zu', 'bookTabSoldZuDraft') : t('bookTabSold'), Icon: TrendingUp },
+    { id: 'spent', label: lang === 'zu' ? translate('zu', 'bookTabSpentZuDraft') : t('bookTabSpent'), Icon: Receipt },
+    ...(simple ? [] : [{ id: 'charts' as const, label: lang === 'zu' ? translate('zu', 'bookTabChartsZuDraft') : t('bookTabCharts'), Icon: BarChart3 }]),
   ];
 
   return (
@@ -1478,17 +1538,18 @@ export default function RecordsPage() {
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto"
-        style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
+        style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
-        <BackButton fallback="/home" />
+        {/* Records is a tab-bar root screen; Simple Home already has no Back on its root screen. */}
+        {!simple && <BackButton fallback="/home" />}
         <BrandLogo />
         {/* On a 375px phone the burger, back arrow, logo, Learn, Invoice and Settings leave this
             label about four characters, so it truncated to something that told you less than
             nothing. The bottom nav already names this screen and highlights it, so below sm the
             label simply steps aside — the same pattern the funder and NGO headers use. */}
         <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0 hidden sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</h1>
         <div className="flex-1" />
         {/* 'finances:overview', which is the id lib/lesson-registry.ts actually holds. The old
             /records header asked for 'finance:overview' — no such lesson — so Learn opened onto
@@ -1536,6 +1597,10 @@ export default function RecordsPage() {
               />
             </div>
 
+            {/* Simple's one plain-language answer for the last 12 months — Charts, where this same
+                figure lives in full, is All tools only. */}
+            {simple && !dataLoading && <SimpleMoneySummary series={simpleMoneySeries} lang={lang} />}
+
             {/* ── The three tabs, plus the charts as a view inside the book ──────────────
                 Not a menu: four fixed pages, all visible at once, so she can see what this
                 screen holds without opening anything. 48px tall and 13px type — above both
@@ -1573,6 +1638,7 @@ export default function RecordsPage() {
                 );
               })}
             </div>
+            {lang === 'zu' && <p role="note" className="mt-1 text-xs text-stone-600"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu tab-label drafts. English: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</span></p>}
 
             <div data-book-tab={tab} className={`${styles.bookPage} space-y-4`}>
             {/* PICKED and SOLD both take their forms from the same mounted MyRecords, in the same
@@ -1718,9 +1784,9 @@ export default function RecordsPage() {
                   {!online && (
                     <div
                       className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-sm font-display"
-                      style={{ background: '#FDF3E3', border: '1px solid #E8D6B0', color: '#7A5B18' }}
+                      style={{ background: 'color-mix(in srgb, var(--orange) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 30%, transparent)', color: 'var(--orange)' }}
                     >
-                      {recordsText(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovela uma usuthola uxhumano futhi.')}
+                      {recordsInstruction(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovela uma usuthola uxhumano futhi.')}
                     </div>
                   )}
                   {/* Offered whether or not the ledger has rows — a farmer with one entry still
@@ -1769,6 +1835,13 @@ export default function RecordsPage() {
           </>
         )}
       </main>
+
+      {/* Lima in the document flow, not floating over the page. The draggable FAB was measured
+          covering real content on every one of these screens — on /cropplan it sat on a task
+          row's "Mark done" checkbox, a tap target. components/ChatWidget.tsx excludes these
+          routes; this strip is the help it owes them, the same swap /student and /home already
+          made. */}
+      <LimaBar />
 
       <TabBar />
     </div>

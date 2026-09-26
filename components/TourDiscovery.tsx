@@ -1,10 +1,12 @@
 'use client';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { Menu } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { dismissTourMenuTip, recordTourOpening, TOUR_INVITATION_LIMIT, type TourDiscovery } from '@/lib/tour-discovery';
 import { announceOverlay } from '@/lib/overlay-signal';
+import { useLanguage } from '@/lib/i18n';
 
 const Context = createContext(false);
 export const useTourInvitation = () => useContext(Context);
@@ -12,6 +14,7 @@ export default function TourDiscoveryProvider({ children }: { children: React.Re
   const { user, loading } = useAuth();
   const sample = useSampleRole();
   const pathname = usePathname();
+  const { t } = useLanguage();
   const key = `imbewu-tour-discovery:${encodeURIComponent(user?.uid ?? 'guest')}`;
   const [record, setRecord] = useState<{ key: string; value: TourDiscovery } | null>(null);
   const [menuRect, setMenuRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
@@ -44,13 +47,16 @@ export default function TourDiscoveryProvider({ children }: { children: React.Re
   return <Context.Provider value={!sample}>
     {children}
     {showTip && <dialog ref={dialog} onCancel={event => { event.preventDefault(); dismiss(); }} aria-labelledby="tour-menu-tip-title" style={{ position: 'fixed', inset: 0, width: '100vw', maxWidth: 'none', height: '100dvh', maxHeight: 'none', margin: 0, padding: 24, border: 0, background: 'rgba(0,0,0,.82)', color: 'var(--text-primary)' }}>
-      {menuRect && <button type="button" aria-label="Open menu to find Take a tour" onClick={() => dismiss(true)} style={{ position: 'fixed', ...menuRect, borderRadius: 99, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '3px solid var(--color-harvest)', boxShadow: '0 0 0 8px rgba(192,122,30,.25)', fontSize: 24 }}>☰</button>}
+      {menuRect && <button type="button" aria-label={t('tourMenuTipOpenMenuAria')} onClick={() => dismiss(true)} style={{ position: 'fixed', ...menuRect, borderRadius: 99, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '3px solid var(--color-harvest)', boxShadow: '0 0 0 8px rgba(192,122,30,.25)', fontSize: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Menu size={24} aria-hidden /></button>}
       <div style={{ maxWidth: 440, margin: 'max(110px, 20vh) auto 0', padding: 28, borderRadius: 22, background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-        <h2 id="tour-menu-tip-title" style={{ fontSize: 25, fontWeight: 700 }}>Your tour is always here</h2>
-        <p style={{ margin: '16px 0', lineHeight: 1.6 }}>The garden photo stays on Home. You can also open <strong>Take a tour</strong> from this menu whenever you need it.</p>
+        <h2 id="tour-menu-tip-title" style={{ fontSize: 25, fontWeight: 700 }}>{t('tourMenuTipTitle')}</h2>
+        <p style={{ margin: '16px 0', lineHeight: 1.6 }}>{t('tourMenuTipBodyBefore')}<strong>{t('navTour')}</strong>{t('tourMenuTipBodyAfter')}</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-          <button autoFocus type="button" onClick={() => dismiss(true)} style={{ minHeight: 44, padding: '10px 18px', borderRadius: 99, background: 'var(--color-harvest)', color: '#20190f', fontWeight: 700 }}>Show me the menu</button>
-          <button type="button" onClick={() => dismiss()} style={{ minHeight: 44, padding: '10px 18px' }}>Got it</button>
+          {/* A real fill under fixed white type — not var(--color-harvest) (the text-only
+              dim-ochre token) under var(--text-primary), which measured ~2.1:1 in light and
+              ~1.7:1 in dark. #9A6018 is CLAUDE.md's ochre fill for white type. */}
+          <button autoFocus type="button" onClick={() => dismiss(true)} style={{ minHeight: 44, padding: '10px 18px', borderRadius: 99, background: '#9A6018', color: '#fff', fontWeight: 700 }}>{t('tourMenuTipShowMenu')}</button>
+          <button type="button" onClick={() => dismiss()} style={{ minHeight: 44, padding: '10px 18px' }}>{t('guideGotItButton')}</button>
         </div>
       </div>
     </dialog>}

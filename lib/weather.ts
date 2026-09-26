@@ -42,12 +42,28 @@ const FROST_TMIN_C = 2;
 const HEAT_TMAX_C = 35;
 const HEAVY_RAIN_MM = 25;
 
+// app/farmer/page.tsx mounts a desktop and a mobile DataPanel side by side, so the same site's
+// forecast was fetched twice on every load. Short in-memory cache, keyed by the coords actually
+// sent upstream, so the second mount's near-simultaneous call reuses the first's request/result
+// instead of firing its own.
+const FORECAST_CACHE_TTL_MS = 5 * 60 * 1000;
+const forecastCache = new Map<string, { promise: Promise<WeatherForecast | null>; ts: number }>();
+
 /**
  * Fetch current conditions + next-7-days forecast for a point.
  * Returns null on any failure — caller must degrade gracefully (this powers
  * a widget that must never block or break the page).
  */
-export async function fetchWeatherForecast(lat: number, lon: number): Promise<WeatherForecast | null> {
+export function fetchWeatherForecast(lat: number, lon: number): Promise<WeatherForecast | null> {
+  const key = `${lat.toFixed(4)},${lon.toFixed(4)}`;
+  const cached = forecastCache.get(key);
+  if (cached && Date.now() - cached.ts < FORECAST_CACHE_TTL_MS) return cached.promise;
+  const promise = fetchWeatherForecastUncached(lat, lon);
+  forecastCache.set(key, { promise, ts: Date.now() });
+  return promise;
+}
+
+async function fetchWeatherForecastUncached(lat: number, lon: number): Promise<WeatherForecast | null> {
   try {
     const url = new URL('https://api.open-meteo.com/v1/forecast');
     url.searchParams.set('latitude', lat.toFixed(4));

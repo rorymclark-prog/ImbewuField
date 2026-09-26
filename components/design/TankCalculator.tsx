@@ -20,6 +20,10 @@ const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// (CLAUDE.md); keep OCHRE itself for fills and borders. A literal, not var(--gold-dim): this card
+// paints the fixed PAPER constant in every theme, and dark mode's --gold-dim (#B49040) is ~2.6:1 on it.
+const GOLD_DIM = '#7A4408';
 const BLUE = '#3E8FBF'; // STEP_ACCENT.water
 
 const DEFAULT_ROOF_M2 = 80;
@@ -164,7 +168,7 @@ export default function TankCalculator({
                     </div>
                   </div>
                 ) : (
-                  <div style={{ marginTop: 9, fontSize: 12, color: OCHRE, fontWeight: 700 }}>
+                  <div style={{ marginTop: 9, fontSize: 12, color: GOLD_DIM, fontWeight: 700 }}>
                     {t('designTankEnterValues')}
                   </div>
                 )}

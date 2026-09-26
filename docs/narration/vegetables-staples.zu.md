@@ -1,45 +1,10 @@
-REVIEW UPDATE — 20 September 2026: English slides 5, 6, 8, 9, 10, 11, 16, 17 and 18 have factual corrections. Reconcile this draft before fluent review and recording; old review audio is stale and must not be published.
+**Ikhasi 1 — Imifino Nezitshalo Eziyisisekelo (Slide 1 — Vegetables and Staple Crops)**
 
-# Imifino neZitshalo Eziyisisekelo (Vegetables and Staple Crops) — Narration Script (isiZulu)
+Siyakwamukela. Lesi isifundo Semifino Nezitshalo Eziyisisekelo. Singesinye sezingxenye eziyishumi zokuqeqeshwa kwe-ImbewuField.
 
+Ingadi ekhiqizayo akuyona egcwele kakhulu ngosuku olulodwa. Yileyo eqhubeka iletha ukudla ekhaya, isonto ngalinye.
 
-**Kuhloselwe:** Injini ye-Text-to-Speech noma Umhlanganisi (Facilitator)
-**Amakhasi (Deck):** ImbewuField_Module_02_Vegetables_and_Staples_Deck.pptx (Amakhasi alishumi nesishagalombili - 18 slides)
-**Ulimi:** isiZulu esilula nesijwayelekile sabalimi
-
----
-
-> **DRAFT — OKUFUNDWA UMUNTU NGAPHAMBI KOKUSETSHENZISWA. AKUKAYI EMPHAKATHINI.**
-> **DRAFT FOR HUMAN REVIEW — NOT SHIPPABLE TEXT.**
->
-> Lolu chwepheshe lolimi lwesiZulu maluvame ukubuyekezwa umuntu ngaphambi kokuba lube ingxenye
-> yesifundo esisemthethweni. Amagama obuchwepheshe emvelo/ukulima (permaculture) esiZulu awakabi
-> nemvume yezinhlangano — igama elikhonjiswe ngokungaqiniseki elifundisa umlimi ngephutha libi
-> kunokungabi khona kwesiZulu neze. Lapho igama lobuchwepheshe lingaqinisekile, elesiNgisi
-> lifakwe ebhaketheni ngqo emva kwaleli lesiZulu, futhi wonke lawo magama alanjalo abhalwe
-> futhi ohlwini "AMAGAMA ADINGA UKUBUYEKEZWA" ekugcineni kwaleli fayela.
-
-Each block below is written for listening, not reading — short sentences, one idea at a time, key
-facts repeated. Paste each block into your TTS tool as one clip, in order. Where you see `[pause]`,
-insert a beat of silence.
-
-**This is the HOME-STUDY voice**, rendered from `docs/narration/vegetables-staples.en.md`, the
-same 18 blocks, same teaching, same order. Facts, figures and crop names come from
-`lib/course-modules.ts` — nothing has been added, changed or softened for translation.
-
----
-
-**Ikhasi 1 — Imifino neZitshalo Eziyisisekelo (Slide 1 — Vegetables and Staple Crops)**
-
-Siyakwamukela. Le ngxenye ikhuluma ngeMifino nezinye iZitshalo Eziyisisekelo. Ingenye
-yezifundo ezilishumi eziyingxenye yaMabhuku e-ImbewuField.
-
-Igadi ekhiqizayo akusiyona leyo ebukeka igcwele kakhulu ngosuku olulodwa. Iyona egcina
-ukudla kungena emzini, iviki ngeviki.
-
-Eminizini embalwa ezayo, sizoxoxa ngezinto ezine. Indlela yokwakha ibhedi yokutshala.
-Indlela yokugcina isivuno siqhubeka size sifike. Ukuthi yiziphi izitshalo eziyisisekelo
-okufanele uzitshale. Nokuthi wenzenjani lapho izinambuzane ezicekelayo zifika.
+Emizuzwini embalwa ezayo, sizokhuluma ngezinto ezine: indlela yokwenza umbhede; indlela yokugcina isivuno siqhubeka; ukuthi yiziphi izitshalo eziyisisekelo ongazitshala; nokuthi wenzeni uma kuvela izinambuzane.
 
 ---
 
@@ -47,429 +12,278 @@ okufanele uzitshale. Nokuthi wenzenjani lapho izinambuzane ezicekelayo zifika.
 
 Ake siqale ngenkinga.
 
-Ukutshala okukhulu kanye kunikeza ukugcwala okweqile (glut). Konke kuvuthwa ngasikhathi
-sinye. Udla lokho okungakwazi, unikeze abanye okunye, kanti okusalayo kuyamoshakala.
+Ukuhlwanyela okuningi ngesikhathi esisodwa kungaletha isivuno esiningi esilungele ukuvunwa ngesikhathi esisodwa. Udla ongakudla, uphe abanye, bese okunye kumoshakala.
 
-Emva kwalokho kufika igebe. Akukho okuvuthiwe. Igadi igcwele izitshalo, kodwa akukho
-ukudla kuyo.
+Bese kufika isikhathi lapho kungekho okuvuthiwe. Ingadi igcwele izitshalo, kodwa akukho ukudla okulungele ukuvunwa.
 
-[pause]
+Ukuhlwanyela okuncane ngezikhathi ezihlukene kudala isigqi. Ukutshala, ukunakekela nokuvuna kuyagqagqana. Kuhlala kunokuthile okusondela esikhathini sokuvunwa.
 
-Ukutshala okuncane futhi njalonjalo kudala isigqi (rhythm) esihlukile. Ukutshala,
-ukunakekela nokuvuna kuyahlangana kuhambisane. Kukhona okuqhubekayo okuvuthwayo ngaso
-sonke isikhathi.
-
-Yileso sigqi esondla umuzi. Hhayi ubukhulu begadi.
+Yileso sigqi esiletha ukudla ekhaya, hhayi ubukhulu bengadi.
 
 ---
 
 **Ikhasi 3 — Imiphumela Yokufunda (Slide 3 — Learning Outcomes)**
 
-Uma iphela le ngxenye, uzobe usukwazi ukwenza izinqumo ezine ensimini yakho ngokwakho.
+Ekupheleni kwale mojuli, uzokwazi ukwenza izinqumo ezine ensimini yakho.
 
-Okokuqala. Yakha ibhedi efanele — uhambisanise ububanzi bayo nohlobo lwayo nenhlabathi
-yakho namanzi emvula akho.
+Okokuqala. Yakha umbhede ofanele, uhambisanise ububanzi nohlobo lombhede nomhlabathi wakho nemvula etholwa indawo yakho.
 
-Okwesibili. Gcina isivuno siqhubeka, usebenzisa ukutshala ngezigaba ezilandelanayo
-(succession planting) nokuxubanisa izitshalo ezahlukene endaweni eyodwa (intercropping).
+Okwesibili. Gcina ukuvunwa kuqhubeka ngokuhlwanyela ngezigaba nangokutshala izitshalo ezahlukene ndawonye.
 
-Okwesithathu. Khetha izitshalo eziyisisekelo ezikuvikelayo uma esinye isitshalo sisehluleka.
+Okwesithathu. Khetha izitshalo eziyisisekelo ezikunika ezinye izindlela uma esinye isitshalo sihluleka.
 
-Okwesine. Funda inkinga yezinambuzane ngaphambi kokuba uyelaphe.
+Okwesine. Funda inkinga yezinambuzane ngaphambi kokwelapha.
 
-[pause]
-
-Lezi zine zihambisana ndawonye. Ibhedi eyakhiwe kahle isengahluleka uma konke kutshalwa
-ngosuku olulodwa. Ukutshala okuxubene nakho kusengaba nzima uma uphatha wonke amaqabunga
-aphuzi njengenkinga yesinambuzane.
+Lezi zinto ezine zihambisana. Umbhede omuhle usengahluleka uma yonke into itshalwa ngosuku olulodwa. Ukutshala izitshalo ezahlukene nakho kungaba nenkinga uma wonke amaqabunga aphuzi ethathwa njengomonakalo wezinambuzane.
 
 ---
 
 **Ikhasi 4 — Izimpande Zidinga Inhlabathi Etshelekile, Izindlela Zidinga Izinyawo Zakho (Slide 4 — Roots Need Loose Soil, Paths Need Your Feet)**
 
-Inhlabathi ecindezelekile (compacted soil) ilahlekelwa yizikhala zomoya ezikuyo. Impande
-ziyaphuza ukukhula. Amanzi angena ngendlela ehlukile. Ibhedi iba nzima ukuyisebenza
-isizini ngayinye.
+Umhlabathi ominyene ulahlekelwa yizikhala zomoya. Izimpande zikhula kancane. Amanzi angena ngendlela ehlukile. Umbhede uba nzima ukuwusebenza inkathi ngayinye.
 
-Ukuvikela kulula. Izindlela ezihlala njalo (izindlela ezingashintshi), nebhedi encane
-ngokwanele ukuthi ufinyelele kuyo uvela nhlangothi zombili.
+Ukuvikela kulula: yiba nezindlela ezihlala njalo, nombhede omncane ngokwanele ukuthi ufinyelele kuwo uvela ezinhlangothini zombili.
 
-Kusukela kumitha eyodwa kuya kwemitha eyi-1.2 ububanzi. Yileyo linani okusetshenziswa
-ngayo. Ngalobo bubanzi ungafinyelela embili uvela nhlangothi ngalinye, kanti izinyawo
-zakho azisoze zathinta indawo yokukhulisa izitshalo.
+Ububanzi obusebenzayo busuka kumitha elilodwa kuya kumamitha angu-1.2. Ngalobo bubanzi ungafinyelela maphakathi uvela kunoma iyiphi indlela, izinyawo zakho zingangeni endaweni okukhulela kuyo izitshalo.
 
-[pause]
-
-Manje cabanga ngamabhedi akho. Ungafinyelela embili ngaphandle kokungena ngaphakathi?
-Hamba uyokuzama lokhu ngaphambi kokuba utshale noma yini enye.
+Manje cabanga ngamabhede akho. Ungafinyelela phakathi ngaphandle kokungena kuwo? Hamba uyokuzama lokhu ngaphambi kokutshala enye into.
 
 ---
 
 **Ikhasi 5 — Khetha Ibhedi Ngokwenhlabathi Nemvula (Slide 5 — Choose the Bed for the Soil and Rainfall)**
 
-Awukho umumo owodwa webhedi ofanele yonke indawo.
+Awukho umumo wombhede owodwa ofanele yonke indawo.
 
-Qala ngokuphazamisa okuncane kunazo zonke okuxazulula inkinga yakho.
+Qala ngokuphazamisa umhlabathi kancane ngangokunokwenzeka ukuze uxazulule inkinga yakho.
 
-Indlela engagujwa phansi (no-dig) ihambisana nezinhlabathi zezingadi eziningi. Yeka
-isakhiwo senhlabathi sihlale njengoba sinjalo, wakhe ukuvunda phezu kwaso.
+Indlela ye-no-dig ifanele inhlabathi yezingadi eminingi. Shiya ukwakheka komhlabathi kungaphazamisekile, wakhe ukuvunda phezu kwawo.
 
-Ukugubha kabili (double-digging) kungumsebenzi onzima, futhi kufanele kuphendule inkinga
-engokoqobo — inhlabathi ecindezelekile noma udaka olunzima. Hhayi umkhuba nje.
+Ungawumbi ubumba olumanzi. Uma ukucinana noma ukungaphumi kahle kwamanzi kukukhulu, thola imbangela ngosizo lwendawo ngaphambi kokukhetha ukulima ujule.
 
-Amabhedi aphakanyisiwe (raised beds) ahambisana nomhlaba omanzi, lapho amanzi edinga
-indawo yokuhamba khona.
+Amabhede aphakanyisiwe afanele umhlabathi omanzi, lapho amanzi edinga khona indawo yokuphuma.
 
-Amabhedi acwiliswe phansi (sunken beds) ahambisana nomhlaba owomile, lapho ufuna ukubamba
-nokugcina noma yimuphi umvula owutholayo.
+Amabhede acwile phansi afanele umhlabathi owomile, lapho ufuna ukubamba khona amanzi emvula uwagcine.
 
-[pause]
-
-Bheka umhlaba wakho emva kwemvula enkulu. Amanzi ayahlala, noma ayahamba? Leyo mpendulo
-ikhetha ibhedi yakho.
+Ngemva kwemvula enkulu, bheka ukuthi amanzi ahlala kuphi noma ageleza ngakuphi. Hlanganisa lokho okubonile neseluleko ngomhlabathi nangokuphuma kwamanzi ngaphambi kokukhetha uhlobo lombhede.
 
 ---
 
 **Ikhasi 6 — Imbewu Noma Isithombo? (Slide 6 — Seed or Seedling?)**
 
-Ezinye izitshalo azizithandi ukuphazanyiswa kwezimpande zazo. Zikhula kangcono uma
-zitshalwa ngqo lapho ezizokhulela khona. Izimbotyi, ukhathoni nommbila bakulelo qembu.
+Ezinye izitshalo azikuthandi ukuphazanyiswa kwezimpande. Zikhula kangcono uma zihlwanyelwa ngqo lapho zizokhulela khona. Izimbotyi, izaqathe nommbila kungena kulelo qembu.
 
-Ezinye zikhula kangcono uma ziqala endaweni evikelekile — inaseli (nursery) — bese kamuva
-zisuselwa (transplanted). Amatamatisi nezitshalo zohlobo lwamakhabishi (brassicas —
-njengekhabishi, ubroccoli, ne-cauliflower) bakulelo qembu.
+Ezinye zikhula kangcono uma ziqala zisesitshalweni esincane endaweni evikelekile yokukhulisela izithombo, bese zitshalwa kwenye indawo. Utamatisi nezitshalo zohlobo lwe-brassica kungena kulelo qembu.
 
-[pause]
-
-Noma yikuphi okhetha khona, ibanga phakathi kwezitshalo (spacing) libaluleke kakhulu
-kunalokho okuphakanyiswa yiphakethe lembewu. Amaphakethe embewu aphrintelwe izindawo
-ezipholile nezimanzi kakhulu kuneningi laseNingizimu Afrika. Nika izitshalo zakho indawo
-eningi kunebanga elincane kakhulu elikuphakethe.
+Sebenzisa iseluleko sebanga lokutshala esifanele isitshalo, uhlobo lwaso nezimo zendawo. Hlola iphakethe lembewu neseluleko somlimi wendawo. Njengoba izitshalo zikhula, bheka ukuthi aziminyene yini.
 
 ---
 
-**Ikhasi 7 — Hlobo Umumo Wokusebenza (Slide 7 — Mark the Working Shape)**
+**Ikhasi 7 — Maka Umumo Wombhede (Slide 7 — Mark the Working Shape)**
 
-Ngaphambi kokutshala, hlobo ibhedi ngaphambili.
+Ngaphambi kokutshala, maka indawo yombhede.
 
-Imitha eyi-1.2 ububanzi. Imitha ezintathu ubude. Ibhedi eyodwa yokuzijwayeza.
+Umbhede owodwa wokuzijwayeza: ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.
 
-Sebenzisa izinsimbi (pegs) nentambo. Hlobo isikwele esiyirekthangeli, uphinde uhlobo
-zombili izindlela zokungena.
+Sebenzisa izikhonkwane nentambo. Maka unxande kanye nezindlela zokungena kuzo zombili izinhlangothi.
 
-Bese ulungisa ngokohlobo lwenhlabathi yakho — qala ngendlela engagujwa phansi (no-dig),
-ubuye ugubhe ujule kuphela uma umhlaba wakho ngempela udinga lokho.
+Bese ulungiselela umhlabathi wakho: qala nge-no-dig, bese umba ujule kuphela uma umhlabathi wakho ukudinga ngempela.
 
-[pause]
+Umugqa wentambo uguqula umbono ube yisinqumo. Uma usunezindlela, zigcine zikhona. Uma usunendawo yokukhulisela izitshalo, yivikele.
 
-Umugqa wentambo uguqula umcabango ube yisinqumo. Uma izindlela zikhona, zigcine zinjalo.
-Uma indawo yokukhulisa izitshalo ikhona, uyivikele.
-
-Leyo bhedi iba lula ukuyithuthukisa isizini ngasinye, ngoba uyekile ukuhamba phezu kwayo.
+Lowo mbhede uba lula ukuwuthuthukisa inkathi ngayinye ngoba uyeka ukuhamba phezu kwawo.
 
 ---
 
-**Ikhasi 8 — Isigqi Sokutshala Sigcina Ukudla Kuqhubeka (Slide 8 — A Sowing Rhythm Keeps Food Moving)**
+**Ikhasi 8 — Isigqi Sokuhlwanyela Sigcina Ukudla Kuqhubeka (Slide 8 — A Sowing Rhythm Keeps Food Moving)**
 
-Ukutshala ngezigaba ezilandelanayo (succession planting) ngumkhuba wekhalenda, hhayi
-isitshalo esikhethekile.
+Ukuhlwanyela ngokulandelana kuwumkhuba wokuhlela ikhalenda, akusona isitshalo esikhethekile.
 
-Khetha into umuzi wakho oyidlayo ngempela njalo. Bese utshala isilinganiso esincane saso,
-futhi njalo.
+Khetha into umuzi wakho oyidla njalo ngempela. Bese uhlwanyela isilinganiso esincane sayo, uphinde wenze njalo.
 
-Tshala umugqa omfushane njalo emavikini amabili kuya kwamathathu.
+Tshala umugqa omfushane njalo ngemva kwamaviki amabili kuya kwamathathu.
 
-[pause]
+Lokhu kunganciphisa ukumoshakala ngesikhathi isivuno sisiningi kakhulu. Kungaletha ukudla okusha isikhathi eside futhi kusabalalise umsebenzi kuyo yonke inkathi, esikhundleni sokuwenza wonke ngesikhathi esisodwa.
 
-Ukumoshakala okuncane ngesikhathi sokugcwala okweqile. Ukudla okusha isikhathi eside.
-Kanti umsebenzi wenza wehlukaniswe kulo lonke isizini kunokuba uwele phezu kwakho
-ngasikhathi sinye.
+Ukuhlwanyela ngezikhathi ezihlukene kunganciphisa ingozi yokulahlekelwa yikho konke ngesikhathi esisodwa. Kodwa akukuqinisekisi ukuvuna uma izimo ezinzima ziqhubeka.
 
-Uma ukushisa noma imvula enkulu icekela phansi ukutshala okukodwa, okunye kuyaqhubeka
-nokuthwala isizini.
-
-Yisiphi isitshalo esisheshayo ongasitshala ngamaqoqo amancane? Nquma ngasinye, bese uqala
-ngaso kuleli sonto.
+Yisiphi isitshalo esikhula ngokushesha ongasihlwanyela ngamaqoqo amancane? Khetha esisodwa, bese uqala ukusihlwanyela kuleli sonto.
 
 ---
 
-**Ikhasi 9 — Tshala Kancane Futhi Njalo (Slide 9 — Sow Little and Often)**
+**Ikhasi 9 — Hlwanyela Kancane Futhi Njalo (Slide 9 — Sow Little and Often)**
 
-Nakhu ukubukeka kwakho ekwenzeni ngokoqobo.
+Nansi indlela esebenza ngayo.
 
-Tshala okokuqala. Bese emavikini amabili kuya kwamathathu kamuva, utshale okwesibili.
-Bese utshala okwesithathu. Bese utshala okwesine.
+Hlwanyela iqoqo lokuqala. Ngemva kwamaviki amabili kuya kwamathathu, hlwanyela elesibili. Bese uhlwanyela elesithathu, bese elesine.
 
-Ngesikhathi ukutshala kwesine sekusenhlabathini, okokuqala sekulungele ukuvunwa. Isivuno
-siyaqala ukuhlangana.
+Uma isikhathi sokukhula kwesitshalo sikuvumela, ukuvuna kwamaqoqo kungaqala ukuhlangana. Iqoqo lokuqala alihlali lilungele ukuvunwa ngesikhathi kuhlwanyelwa iqoqo lesine.
 
-[pause]
+Amaviki amabili kuya kwamathathu ayisiqalo sesigqi sokuhlwanyela, akuwona umthetho. Isitshalo samaqabunga senkathi epholile singathatha isikhathi eside. Ukushisa kungasheshisa ukukhula noma kubangele ukwehluleka.
 
-Emavikini amabili kuya kwamathathu kuyisigqi sokuqala, hhayi umthetho ongaguquki.
-Isitshalo samaqabunga senkathi epholile singahlala isikhathi eside. Ukushisa
-kungasheshisa izinto, noma kubangele ukwehluleka.
-
-Bheka lokho igadi yakho ngokwayo ekwenzayo, ubuye uguqule leso sikhathi esiphakathi.
-Lokho kubuka yikhono ngokwalo.
+Bheka okwenzeka engadini yakho, bese ulungisa isikhawu sokuhlwanyela. Lelo khono lokubuka nokulungisa libalulekile.
 
 ---
 
-**Ikhasi 10 — Isitshalo Ngasinye Sizuza Indawo Yaso (Slide 10 — Each Crop Earns Its Place)**
+**Ikhasi 10 — Isitshalo Ngasinye Sidinga Isizathu Sendawo Yaso (Slide 10 — Each Crop Earns Its Place)**
 
-Ukuxubanisa izitshalo ezahlukene endaweni eyodwa (intercropping) akusikho nje
-ukuminyanisa izitshalo ezahlukene ndawonye. Isitshalo ngasinye sidinga umsebenzi waso,
-nendawo eyanele ukuwenza.
+Ukutshala izitshalo ezahlukene ndawonye akukhona ukuminyanisa izitshalo nje. Isitshalo ngasinye sidinga umsebenzi waso nesikhala esanele sokuwenza.
 
-Odade Abathathu (Three Sisters — ummbila, izimbotyi, namaphuzi) yisibonelo esicace
-kakhulu.
+I-Three Sisters iyisibonelo esivela emasikweni okulima abantu boMdabu baseMelika.
 
 Ummbila unikeza ukuphakama nesakhiwo.
 
-Izimbotyi zikhwela ummbila, futhi zigcinwe njengeprotheni.
+Izimbotyi zikhwela ummbila futhi zingagcinwa njengomthombo wamaprotheni.
 
-Amaphuzi asakazeka phansi emhlabeni, enza umthunzi enhlabathini agcine ukuswakama.
+Ithanga lisabalala phansi, lenze umthunzi emhlabathini futhi lisize ukuwugcina unomswakama.
 
-[pause]
+Isikhathi sokutshala sibalulekile. Qala ngokutshala ummbila ukuze uqine ngokwanele ukuthwala izimbotyi lapho seziqala ukukhwela.
 
-Isikhathi siyabaluleka. Qala ngokutshala ummbila kuqala, ukuze ube namandla anele
-ukuthwala izimbotyi lapho ziqala ukukhwela.
-
-Izitshalo ezintathu, indawo eyodwa yomhlaba, kanti azikho ezilwa nezinye.
+Lezi zitshalo zisengancintisana. Zinike isikhala, amanzi nokukhanya okufanele. Izimbotyi zibopha i-nitrogen ngosizo lwamagciwane asezimpandeni, kodwa ungacabangi ukuthi zondla ummbila ngokushesha; izakhamzimba ezisezinsaleleni zitholakala lapho sezibola.
 
 ---
 
-**Ikhasi 11 — Hlela Usuka Emuva Kusukela Egebeni Lakho Lendlala (Slide 11 — Plan Backwards From Your Hungry Gap)**
+**Ikhasi 11 — Hlela Usuka Emuva Esikhathini Sokushoda Kokudla (Slide 11 — Plan Backwards From Your Hungry Gap)**
 
-Yonke indawo inegebe lendlala (hungry gap). Amaviki lapho isivuno sokugcina sesehla
-khona kanti esilandelayo sisengakalungeli.
+Umuzi ungase ube nesikhathi sokushoda kokudla: amasonto lapho ukudla okugcinwe khona sekuncipha ngaphambi kokuba isivuno esilandelayo silungele ukuvunwa.
 
-Elakho lingafika ngemuva kokuba ummbila ogciniwe usuphelile. Lingafika ngaphambi kokuba
-imifino yasebusika ilunge. Lingafika ngesikhathi sokoma lapho amanzi elinganisela igadi.
+Kowenu leso sikhathi singafika ngemva kokuphela kommbila ogciniwe. Singafika ngaphambi kokuba imifino yasebusika ilungele ukuvunwa. Singafika nangesikhathi esomile lapho amanzi enciphisa okungatshalwa engadini.
 
-[pause]
+Ungakopeli ikhalenda lomunye umuntu. Qala ngokusho izinyanga zakho.
 
-Ungakopeli ikhalenda yomunye umuntu. Qala ngokusho izinyanga zakho ngokwakho.
+Zibhale phansi. Bese ukhetha isitshalo nesikhathi sokusihlwanyela ukuze ukudla kutholakale ngaleso sikhathi sokushoda.
 
-Zibhale phansi. Bese ukhetha isitshalo nosuku lokutshala oluzofaka ukudla kulelo gebe.
-
-Yilokho ukuhlela usuka emuva uya phambili, kanti ngumehluko phakathi kwegadi ebukeka
-ikhiqiza nomuzi odlayo ngempela.
+Lokho ukuhlela usuka ekudingeni uye emuva. Kwenza umehluko phakathi kwengadi ebonakala ikhiqiza nomuzi othola ukudla.
 
 ---
 
-**Ikhasi 12 — Izitshalo Eziyisisekelo Ziwuvikelo Lokudla (Slide 12 — Staples Are Food Insurance)**
+**Ikhasi 12 — Izitshalo Eziyisisekelo Ziwukuvikeleka Kokudla (Slide 12 — Staples Are Food Insurance)**
 
-Isitshalo esiyisisekelo (staple) sizuza indawo yaso ngoba sondla umuzi ngale kosuku
-lokuvuna.
+Isitshalo esiyisisekelo sikufanele ukutshalwa uma sondla umuzi nangemva kosuku lokuvuna.
 
-Sithwala amandla (energy) noma iprotheni. Siyagcinwa, noma sihlale emhlabathini size
-sikudingeke. Futhi ngokuvamile sithwala nomlando wesiko.
+Sinikeza amandla okudla noma amaprotheni. Singagcinwa, noma sihlale emhlabathini size sisidinge. Sivame nokuthwala umlando wesiko.
 
 [pause]
 
-Isitshalo esisodwa esiyisisekelo sikushiya usengcupheni. Ezimbili noma ngaphezulu
-zikunika izinketho lapho isimo sezulu noma izinambuzane zishaya.
+Ukuthembela esitshalweni esisodwa kukushiya usengozini. Izitshalo eziyisisekelo ezimbili noma ngaphezulu zikunika izindlela ongakhetha kuzo lapho isimo sezulu noma izinambuzane zidala umonakalo.
 
-Tshala okungenani ezimbili. Hhayi eyodwa.
+Tshala okungenani ezimbili, hhayi esisodwa.
 
-Yisiphi isitshalo esiyisisekelo umuzi wakho oncike kuso kakhulu njengamanje? Yiso leso
-okuzoba ubuhlungu kakhulu uma sehluleka — ngakho yiso esidinga umngane.
+Yisiphi isitshalo esiyisisekelo umuzi wakho oncike kuso kakhulu njengamanje? Uma singavuni, yisona esingawulimaza kakhulu umuzi wakho ngokushoda kokudla; cabanga ngesinye esingahambisana naso.
 
 ---
 
-**Ikhasi 13 — Izitshalo Eziyisisekelo Ezahlukene Zivikela Kokuhlukene (Slide 13 — Different Staples Protect Against Different Risks)**
+**Ikhasi 13 — Izitshalo Eziyisisekelo Ezahlukene Zivikela Ezingozini Ezahlukene (Slide 13 — Different Staples Protect Against Different Risks)**
 
-Isitshalo ngasinye esiyisisekelo sikuvikela kokuthile okuhlukile.
+Isitshalo ngasinye esiyisisekelo singasiza ngezimo ezihlukene.
 
-Ummbila unikeza amakhalori, futhi uyagcinwa uwomile. Ummbila wemvelo ovulelekile
-(open-pollinated maize) uphinde ukuvumele ukuba ugcine imbewu yakho, uma ulawula ibanga
-lokuhlukanisa (isolation) nokukhetha kwezitshalo ezinhle kunazo zonke (selection).
+Ummbila unikeza amakhalori futhi ungomiswa ugcinwe. Ummbila ovulekele impova yezinye izitshalo zohlobo olufanayo ungakuvumela ugcine imbewu yakho, uma ulawula ukuhlangana kwempova nokukhetha izitshalo zembewu.
 
-Izimbotyi nezindumba (cowpeas) zinikeza isivuno seprotheni esigcinekayo.
+Izimbotyi nezindumba zinikeza isivuno samaprotheni esingagcinwa.
 
-Ubhatata (sweet potato) ukhuthazelela izikhathi zokoma, kanti namaqabunga awo ayadleka.
+Ubhatata ungakhula ubekezelele ukoma ngezinga elithile ngemva kokwakheka kwezimpande zawo ezigcinela ukudla. Udinga amanzi emasontweni okuqala nangesikhathi kwakheka lezo zimpande; ukuntuleka kwamanzi ngalezo zikhathi kunganciphisa isivuno. Amaqabunga awo amancane nawo ayadliwa.
 
-Amadumbe abhekana nomhlaba omanzi kakhulu, lapho ezinye izitshalo eziyisisekelo
-zisebenza kanzima khona.
+Amadumbe abhekana nomhlabathi omanzi kakhulu, lapho ezinye izitshalo eziyisisekelo zingase zingakhuli kahle khona.
 
 [pause]
 
-Qaphela ukuthi zehluleka ezimeni ezahlukene. Yilokho okuyinhloso yonke.
+Qaphela ukuthi lezi zitshalo azihluleki ezimweni ezifanayo. Yilokho okubalulekile.
 
 ---
 
 **Ikhasi 14 — Ukwahlukahluka Kugcina Ukudla Kuqhubeka (Slide 14 — Diversity Keeps Food Moving)**
 
-Ukumelana nezinkinga (resilience) akusho ukuthi akukho okwehlulekayo.
+Ukukwazi ukuqhubeka nezinhlelo akusho ukuthi akukho lutho oluzohluleka.
 
-Kusho ukuthi ukwehluleka okukodwa akuqedi uhlelo lokudla lomuzi wakho.
+Kusho ukuthi ukwehluleka kwesitshalo esisodwa akupheli uhlelo lokudla lomndeni wakho.
 
 [pause]
 
-Isitshalo esisodwa siyindawo eyodwa yokwehluleka.
+Ukuthembela esitshalweni esisodwa kubeka umuzi engcupheni eyodwa.
 
-Izitshalo eziyisisekelo ezimbili noma ngaphezulu zikunika izindlela eziningi zokuqhubeka
-udla.
+Izitshalo ezimbili noma ngaphezulu zikunika izindlela eziningi zokuqhubeka uthola ukudla.
 
-Izitshalo ezahlukene zisebenzisa amanzi, inhlabathi nezinkathi zonyaka ngezindlela
-ezahlukene. Lowo mehluko yiwo ukuvikela.
+Izitshalo ezahlukene zisebenzisa amanzi, umhlabathi nezinkathi ngezindlela ezahlukene. Lo mehluko unikeza ezinye izindlela uma isimo sishintsha.
 
 ---
 
 **Ikhasi 15 — Izinambuzane Ziyizithunywa Ngaphambi Kokuba Zibe Yizitha (Slide 15 — Pests Are Messengers Before They Are Enemies)**
 
-Ukwanda kwezinambuzane ezicekelayo (pest pressure) ngokuvamile kuba khona ngesizathu.
+Ukwanda kwezinambuzane ezilimaza izitshalo kuvame ukuba nesizathu.
 
-Izitshalo ezicindezelekile. Isitshalo esisodwa esibusa umhlaba. Noma ukusetshenziswa
-okubanzi kwamakhemikhali osekususe izilwane ezidla izinambuzane (predators) ebeziku
-sizile ngaphambilini.
+Izitshalo zingacindezeleka. Uhlobo olulodwa lwesitshalo lungabusa indawo. Noma ukusetshenziswa kabanzi kwamakhemikhali kungase kube sekususe izilwane ezidla izinambuzane ezazikusiza.
 
-[pause]
+Ngakho ngaphambi kokwelapha noma yini, bheka lonke uhlelo.
 
-Ngakho ngaphambi kokwelapha noma yini, buka sonke isistimu.
+Ingabe isitshalo sishoda ngamanzi? Ingabe umhlabathi uminyene noma untula izakhamzimba? Ingabe izilwane ezidla izinambuzane sezisiza kule nkinga?
 
-Isitshalo sishoda ngamanzi? Inhlabathi icindezelekile, noma ilambile? Izilwane
-ezidlayo sezisiyisebenzela le nkinga?
-
-Iqabunga eliphuzi akulona ngokuzenzekelayo isinambuzane. Kungaba amanzi, ukondleka,
-noma ukulimala kwezimpande. Thola ukuthi yikuphi ngaphambi kokuba wenze isinyathelo.
+Iqabunga eliphuzi alisho ngokuzenzakalelayo ukuthi kunesinambuzane. Kungabangelwa amanzi, ukondleka noma ukulimala kwezimpande. Thola ukuthi iyiphi imbangela ngaphambi kokuthatha isinyathelo.
 
 ---
 
-**Ikhasi 16 — Yelapha Imbangela Ngaphambi Kwesinambuzane (Slide 16 — Treat the Cause Before the Insect)**
+**Ikhasi 16 — Bheka Imbangela Ngaphambi Kwesinambuzane (Slide 16 — Treat the Cause Before the Insect)**
 
-Sebenza ngezinyathelo ezine, ngokulandelana.
+Landela izinyathelo ezine ngokulandelana.
 
-Okokuqala. Bheka ngokucophelela (observe). Bheka indlela okulimele ngayo, ngaphansi
-kweqabunga, isiqu, nezitshalo ezingakelene.
+Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.
 
-Okwesibili. Hlola ukucindezeleka. Ukuswakama kwenhlabathi, izimpande, ibanga phakathi
-kwezitshalo, ukondleka, ukuhamba kwamanzi.
+Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.
 
-Okwesithathu. Vikela lokho okukusizayo. Izinambuzane ezisizayo (beneficial insects)
-zenza umsebenzi obungazenzela wona wena.
+Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.
 
-Okwesine. Kuphela-ke lapho, yenza isinyathelo — uqale ngento elula kunazo zonke
-esebenzayo. Ukususa ngesandla nempilo engcono yesitshalo kuxazulula iningi lezinkinga
-ezincane.
+Okwesine. Yilapho kuphela osuthatha khona isinyathelo; qala ngesenzo esilula kunazo zonke esifanele. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.
 
-[pause]
+Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.
 
-Uma usebenzisa umkhiqizo we-neem (neem), landela imiyalo esemvilophini. Ungazenzeli
-inhlanganisela enamandla ngokwakho. Ngisho nemikhiqizo enobungozi obuncane iyalimaza
-izinambuzane ezingafanele uma isetshenziswa kabi.
-
-Zithobe uqinisile ngokuthi yisiphi isinyathelo osuvame ukusishiya.
+Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya.
 
 ---
 
-**Ikhasi 17 — Umsebenzi Wasensimini (Slide 17 — Field Assignment)**
+**Ikhasi 17 — Umsebenzi Wensimu (Slide 17 — Field Assignment)**
 
-Manje isifundo siphela enhlabathini.
+Manje isifundo siphetha ngomsebenzi emhlabathini.
 
-Yakha ibhedi eyodwa engakugcina ukudla. Imitha eyi-1.2 ngemitha ezintathu.
+Yenza umbhede owodwa ongakusiza uqhubeke uthola ukudla. Ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.
 
-Finyelela embili uvela nhlangothi zombili. Gcina zonke izinyawo ezindleleni. Beka
-izitshalo zakho ngebanga elifanele isimo sezulu sendawo yakho. Fulela ibhedi ngophoyi
-(mulch).
+Finyelela maphakathi uvela ezinhlangothini zombili. Hamba ezindleleni kuphela. Shiya isikhala esifanele phakathi kwezitshalo ngokwesimo sezulu sendawo yakho. Mboza umbhede nge-mulch.
 
-[pause]
+Bheka umbhede njalo kusukela ngosuku otshalwe ngalo. Isithombe sezinsuku eziyishumi siyisikhathi sokuhlola umsebenzi; akusona isizathu sokulinda ngaphambi kokunakekela umbhede.
 
-Yinike okungenani izinsuku eziyishumi ngaphambi kokuba uyahlulele.
+Thatha isithombe lapho usanda kutshalwa. Buya ngemva kwezinsuku eziyishumi nokubone kwenzeka.
 
-Ithathele isithombe uma isanda kutshalwa. Bese ubuya ngemva kwezinsuku eziyishumi
-nalokho okukubonile.
-
-Inhloso ayisiyona isithombe esiphelele. Inhloso ibhedi lapho umumo wayo, ibanga phakathi
-kwezitshalo, nesigqi sokutshala ukhethe ngamabomu.
+Inhloso akusona isithombe esiphelele. Inhloso umbhede omumo wawo, isikhala sezitshalo nesigqi sokuhlwanyela okukhethe ngamabomu.
 
 ---
 
-**Ikhasi 18 — Isenzo Sasensimini (Slide 18 — Field Action)**
+**Ikhasi 18 — Isenzo SaseNsimini (Slide 18 — Field Action)**
 
-Kuleli sonto, faka ibhedi eyodwa ekusebenzeni.
+Kuleli sonto, sebenzisa umbhede owodwa.
 
-Okokuqala. Hlobo ibhedi nezindlela.
+Okokuqala. Maka umbhede nezindlela.
 
-Okwesibili. Tshala, usebenzisa ibanga lakho nesigqi sakho sokutshala.
+Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.
 
-Okwesithathu. Buyela ngemva kwezinsuku eziyishumi, nesithombe.
+Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.
 
-[pause]
+Bese ubheka, ulungise, ubhale phansi.
 
-Bese ubuka ngokucophelela. Guqula. Bese ukubhala phansi.
+Bhala usuku lokuhlwanyela, imvula, okumilile, ukwanda kwezinambuzane, nokuvunile.
 
-Bhala usuku lokutshala. Imvula. Okumilile. Ukwanda kwezinambuzane. Osuvunile.
-
-Isizini ngesizini, igadi yakho iyaqala incike kancane ekuqageleni — futhi incike kakhulu
-kulokho ovele wakubona kwenzeka emhlabeni wakho ngokwakho.
-
-Lowo mlando ubaluleke kakhulu kunanoma yiziphi izeluleko.
+Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho. Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo.
 
 ---
 
-## AMAGAMA ADINGA UKUBUYEKEZWA / TERMS NEEDING REVIEW
+## TERMS NEEDING REVIEW
 
-Every technical agronomic term below is uncertain isiZulu terminology, coined or
-adapted for this draft because no settled, community-verified isiZulu vocabulary was
-found for it. Each needs a human reviewer (ideally an isiZulu-speaking agronomist or
-extension worker) before this script goes anywhere near a learner.
+Le yidrafti yesiZulu engakabuyekezwa. Akekho umuntu okhuluma isiZulu njengolimi lokuqala oyigunyazile; akukho ukubuyekezwa kokulalelwa, kolimi noma kokulima okwenziwe. Iyatholakala njengedrafti elindele ukubuyekezwa.
 
-| English | My isiZulu rendering | Why uncertain |
-|---|---|---|
-| Succession planting | ukutshala ngezigaba ezilandelanayo | Coined descriptive phrase ("planting in sequential stages"). No single established isiZulu agronomic term found; unclear if it reads naturally to a farmer on first hearing. |
-| Intercropping | ukuxubanisa izitshalo ezahlukene endaweni eyodwa | Coined descriptive phrase ("mixing different crops in one place"). No single-word or short established term found. |
-| No-dig | indlela engagujwa phansi | Coined descriptive phrase ("the method that isn't dug"). Not verified as a term farmers already use. |
-| Double-digging | ukugubha kabili | Literal "digging twice." Doesn't capture the specific two-spade-depth technique meaning; may need a fuller descriptive gloss instead. |
-| Raised beds | amabhedi aphakanyisiwe | Literal/coined, not verified as an established gardening term in isiZulu extension material. |
-| Sunken beds | amabhedi acwiliswe phansi | Literal/coined, same concern as raised beds above. |
-| Compacted soil / compaction | inhlabathi ecindezelekile / ukucindezeleka | Literal "pressed-down soil." Unsure whether this is the term isiZulu-speaking extension officers actually use for soil compaction specifically. |
-| Mulch (verb, "mulch the bed") | ukufulela ngophoyi | Coined; "ophoyi" for mulch material is not verified as standard — could also be rendered with a loanword ("i-mulch") which may in fact be more recognisable to farmers. |
-| Brassicas | izitshalo zohlobo lwamakhabishi (njengekhabishi, ubroccoli, ne-cauliflower) | isiZulu has no single word for the botanical brassica family; used a "cabbage-family" gloss listing examples instead. Needs a reviewer's judgement on whether this is clear enough without being misleading. |
-| Beneficial insects | izinambuzane ezisizayo | "Isinambuzane" often carries a generic/negative "bug" connotation in everyday use — unsure this clearly reads as "helpful/beneficial" without the English gloss doing the real work. |
-| Neem | i-neem (kept as loanword) | No isiZulu term exists for neem. Unclear whether farmers in the target area know the product by "neem," an Afrikaans-derived name, or a trade name — reviewer should confirm the term actually used on the ground. |
-| Sweet potato | ubhatata | Loanword from Afrikaans "patat." Risk of confusion with regular potato (izambane) — the scope of "ubhatata" (sweet potato specifically vs. potato generally) may vary by region/speaker and needs local confirmation. |
-| Cowpeas | izindumba | Believed to be a recognised isiZulu term for cowpea, but not confirmed here — risk of conflation with a related legume (e.g. Bambara groundnut) under the same or a similar name. |
-| Open-pollinated (maize) | ummbila wemvelo ovulelekile | Coined by extending the "imbewu evulelekile ngokwemvelo" (open-pollinated seed) phrasing already used in the Seeds isiZulu script to maize specifically — should be checked for naturalness applied this way. |
-| Isolation (seed-saving distance) | ibanga lokuhlukanisa | Reused from the Seeds script's maize-isolation-distance phrasing; here it's applied to staple seed-saving generally rather than maize alone, so the fit should be re-checked. |
-| Selection (choosing best plants for seed) | ukukhetha kwezitshalo ezinhle kunazo zonke | Expanded gloss for the specific agronomic sense of "selection" (picking the best individual plants to save seed from), not just general "choosing" — needs a reviewer's confirmation this reads correctly. |
-| Three Sisters (named technique) | Odade Abathathu | Literal translation of the English name. Unclear whether this named intercropping technique already has recognition or a preferred name among isiZulu-speaking farmers, or whether the English name should simply be kept as a loan term. |
-| Resilience | ukumelana nezinkinga | Descriptive gloss ("standing up to / withstanding problems"), not a settled single term. |
-| Pest pressure | ukwanda kwezinambuzane ezicekelayo | Descriptive phrase ("the increase of destructive insects"), coined for this script — no verified standard term found. |
-| Glut (crop glut) | ukugcwala okweqile | Descriptive, coined ("excessive fullness/abundance") for the specific sense of a food glut from one big harvest landing at once. |
-| Hungry gap (named seasonal concept) | igebe lendlala | Literal translation of the English farming term. Coined for this script; not confirmed as an existing term in isiZulu extension material. |
+Siza uhlole ukuthi amagama nemisho elandelayo izwakala ijwayelekile yini esiZulwini esikhulunywa abalimi: ukuhlanganiswa komhlabathi, indlela ye-no-dig, amabhede aphakanyisiwe nacwile phansi, i-brassica, ukuhlwanyela ngezigaba, ukutshala izitshalo ndawonye, i-Three Sisters, isikhathi sokushoda kokudla, i-nitrogen, ummbila ovulekele impova, ukukhetha nokuhlukanisa imbewu, ubhatata, amadumbe, izinambuzane ezizuzisayo, i-neem, ilebula lomkhiqizo, isikhathi sokulinda ngaphambi kokuvuna ne-mulch.
 
----
+Hlola ngokukhethekile ukuthi:
+- Ukuhlwanyela ngezigaba kunganciphisa ingozi yokulahlekelwa yikho konke ngesikhathi esisodwa, kodwa akuqinisekisi isivuno uma izimo ezinzima ziqhubeka.
+- E-Three Sisters, ummbila utshalwa kuqala; lezi zitshalo zisengancintisana. Izimbotyi zibopha i-nitrogen kodwa ungacabangi ukuthi zondla ummbila ngokushesha.
+- Ubhatata uthola ukubekezelela ukoma ngezinga elithile ngemva kokwakheka kwezimpande ezigcina ukudla. Udinga amanzi emasontweni okuqala nangesikhathi kwakheka lezo zimpande; ukuntuleka kwamanzi ngaleso sikhathi kunganciphisa isivuno.
+- Amadumbe akhulunywa ngomhlabathi omanzi kakhulu kuphela; ukubavumelana kwendawo nokuthi lezi zitshalo zikhetha umhlabathi omanzi kudinga ukubuyekezwa kwendawo.
+- Iqabunga eliphuzi alisho ngokuzenzakalelayo ukuthi kunesinambuzane.
+- Uma kusetshenziswa umkhiqizo wokwelapha, kufanele ubhaliselwe leso sitshalo naleso sinambuzane, kulandelwe ilebula lonke, imiyalelo yokuzivikela nesikhathi sokulinda ngaphambi kokuvuna. I-neem ayikhululi kule mithetho.
 
-## Amabala Omcwaningi Wobuntu / Notes for the Human Reviewer
-
-- This is a **draft translation only**. It has not been reviewed by an isiZulu-speaking
-  agronomist, extension worker, or native-speaker educator, and per Rory's standing
-  constraint on this project, isiZulu translation stays blocked from shipping until that
-  review happens.
-- I matched the register, second-person direct address, and sentence rhythm of the
-  existing `seeds-sovereignty.zu.md` script as the model, and reused every isiZulu crop
-  name and phrase that already appears there (ummbila, izimbotyi, amaphuzi, amatamatisi,
-  amadumbe, imbewu evulelekile ngokwemvelo, ibanga lokuhlukanisa) rather than inventing
-  new renderings for terms already settled by that script.
-- The 22 terms flagged in the table above are the highest-risk spots: mostly named
-  agronomic techniques (succession planting, intercropping, no-dig, double-digging,
-  brassicas, beneficial insects, neem) plus a handful of crop names and seasonal-concept
-  terms (sweet potato, cowpeas, open-pollinated, hungry gap, resilience, pest pressure,
-  glut) that don't have a settled isiZulu rendering I could verify. Everywhere one of
-  these appears in the script body, the English original sits in parentheses immediately
-  after my isiZulu, by design — so a reviewer can see exactly what I was trying to say
-  and correct it without hunting through the whole document.
-- Every number, spacing figure, crop name, and sequence of steps was checked against
-  `lib/course-modules.ts` and against `docs/narration/vegetables-staples.en.md` — nothing
-  was invented, rounded, or dropped for translation convenience, including in the harder
-  sentences (e.g. the four-step pest diagnostic in Slide 16, and the isolation/selection
-  seed-saving detail in Slide 13).
-- Slide 12's isiZulu heading renders "Food Insurance" as "Izitshalo Eziyisisekelo Ziwuvikelo
-  Lokudla" (staples are protection/cover for food) rather than borrowing the English
-  financial word "insurance," since that loanword would likely confuse rather than clarify
-  in this context — flag if a reviewer disagrees.
-- I did not soften or cut any agronomic content to make the translation easier — where a
-  sentence was hard (soil compaction mechanics, seed isolation distances, the four-step
-  IPM sequence), I translated it in full and flagged the uncertain term instead of
-  simplifying the teaching.
+I-English narration yamanje iyona elawula incazelo. Amadrafti aphelele ezifundo ezine aku- docs/narration-reviews/vegetables-staples-l1.zu.full-draft.md kuya ku-l4. Akukho kuvunywa kolimi noma kwezolimo okushiwo lapha.

@@ -6,7 +6,7 @@ import type { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from 'react';
 
 // Overline — small ochre uppercase label above headings
 export function Overline({ children, className }: { children: ReactNode; className?: string }) {
-  return <span className={cn('text-xs font-sans font-semibold uppercase tracking-widest', className)} style={{ color: '#C07A1E' }}>{children}</span>;
+  return <span className={cn('text-xs font-sans font-semibold uppercase tracking-widest', className)} style={{ color: '#7A4408' }}>{children}</span>;
 }
 
 // AlmanacCard — the main raised surface
@@ -32,7 +32,7 @@ const btnStyles: Record<BtnVariant, React.CSSProperties> = {
   primary:   { backgroundColor: '#1F4D2B', color: '#fff' },
   secondary: { backgroundColor: '#FFFEFA', color: '#20190F', border: '1px solid #E2D8C4' },
   ghost:     { color: '#20190F' },
-  ochre:     { backgroundColor: '#C07A1E', color: '#fff' },
+  ochre:     { backgroundColor: '#9A6018', color: '#fff' },
 };
 export function AlmanacButton({ variant = 'primary', size = 'md', className, style, ...props }: BtnProps) {
   return <button className={cn(btnBase, btnSizes[size], className)} style={{ ...btnStyles[variant], ...style }} {...props} />;

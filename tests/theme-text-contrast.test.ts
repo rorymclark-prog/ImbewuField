@@ -80,30 +80,72 @@ function tokenValue(css: string, selector: string, token: string): string {
   return value as string;
 }
 
+/**
+ * The value that actually reaches an element in `column`, following the real cascade: the
+ * column's own selector if it declares the token, else the `:root` authority it inherits from.
+ * Vision 2 tokens (--color-muted among them) deliberately keep ONE earth-light authority in
+ * `:root` and one override per non-earth column — see css-token-collisions.test.ts — so looking
+ * only under `html[data-theme="earth"]` finds nothing and would silently skip the earth-light
+ * column, which is exactly the column --color-muted was failing in.
+ */
+function resolvedTokenValue(css: string, selector: string, token: string): string {
+  const withoutComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  const declaredUnder = (sel: string) => {
+    const pattern = new RegExp(
+      `(?:^|\\n)${sel.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}\\s*\\{`,
+    );
+    let rest = withoutComments;
+    let offset = 0;
+    while (true) {
+      const m = rest.match(pattern);
+      if (!m || m.index === undefined) return false;
+      const start = offset + m.index + m[0].length;
+      const end = withoutComments.indexOf('\n}', start);
+      const body = withoutComments.slice(start, end === -1 ? undefined : end);
+      if (new RegExp(`^\\s*${token}\\s*:`, 'm').test(body)) return true;
+      offset = start;
+      rest = withoutComments.slice(start);
+    }
+  };
+  return declaredUnder(selector) ? tokenValue(css, selector, token) : tokenValue(css, ':root', token);
+}
+
+// `inset` is --bg-2, the third surface muted copy actually lands on: the ThemePanel's own rows,
+// the /records field-hint insets, the /survey "already known from the map" boxes. It was missing
+// from this model, and that omission is how --text-muted passed here at 4.61:1 (card) while
+// rendering at 4.29:1 on a real panel row. Earth light's --bg-2 is rgba(236,227,201,0.35), so its
+// inset is that composited over the card, which is what a browser paints.
 const THEME_COLUMNS = [
-  { name: 'earth light', selector: 'html[data-theme="earth"]', card: '#FFFEFA', page: '#E4DCC6' },
-  { name: 'earth dark', selector: 'html[data-theme="earth"].dark', card: '#181208', page: '#0D0A06' },
-  { name: 'slate light', selector: 'html[data-theme="slate"]', card: '#F8FAFC', page: '#FFFFFF' },
-  { name: 'slate dark', selector: 'html[data-theme="slate"].dark', card: '#0C1526', page: '#060A12' },
+  { name: 'earth light', selector: 'html[data-theme="earth"]', card: '#FFFEFA', page: '#E4DCC6', inset: '#F8F5E9' },
+  { name: 'earth dark', selector: 'html[data-theme="earth"].dark', card: '#181208', page: '#0D0A06', inset: '#22190E' },
+  { name: 'slate light', selector: 'html[data-theme="slate"]', card: '#F8FAFC', page: '#FFFFFF', inset: '#F1F5F9' },
+  { name: 'slate dark', selector: 'html[data-theme="slate"].dark', card: '#0C1526', page: '#060A12', inset: '#1A2540' },
 ];
 
 const BODY_TEXT_MIN = 4.5;
 
-test('--text-muted clears 4.5:1 against both the card and the page, in every theme column', () => {
+// Both muted text tokens, on all three surfaces, in all four columns. --color-muted was added
+// here after a measured sweep of the rendered pages found it at 2.49:1 on the /home tile captions
+// in earth dark and 2.82:1 in slate light: it is not a decorative token, it is the caption under
+// every home tile and the hint under every /records field (grep var(--color-muted)).
+const MUTED_TEXT_TOKENS = ['--text-muted', '--color-muted'] as const;
+
+test('the muted text tokens clear 4.5:1 on the card, the page AND the inset, in every theme column', () => {
   const css = readFileSync(CSS, 'utf8');
   for (const col of THEME_COLUMNS) {
-    const hex = tokenValue(css, col.selector, '--text-muted');
-    const cardRatio = contrastRatio(hex, col.card);
-    const pageRatio = contrastRatio(hex, col.page);
-    assert.ok(
-      cardRatio >= BODY_TEXT_MIN,
-      `${col.name} --text-muted (${hex}) is ${cardRatio.toFixed(2)}:1 against the card ${col.card} — ` +
-        `under 4.5:1, and this token carries real body copy in components/ThemePanel.tsx`,
-    );
-    assert.ok(
-      pageRatio >= BODY_TEXT_MIN,
-      `${col.name} --text-muted (${hex}) is ${pageRatio.toFixed(2)}:1 against the page ${col.page} — under 4.5:1`,
-    );
+    for (const token of MUTED_TEXT_TOKENS) {
+      const hex = resolvedTokenValue(css, col.selector, token);
+      for (const [surfaceName, surface] of [['card', col.card], ['page', col.page], ['inset', col.inset]] as const) {
+        const ratio = contrastRatio(hex, surface);
+        assert.ok(
+          ratio >= BODY_TEXT_MIN,
+          `${col.name} ${token} (${hex}) is ${ratio.toFixed(2)}:1 against the ${surfaceName} ${surface} — ` +
+            `under 4.5:1. These tokens carry real body copy (ThemePanel descriptions, the /home tile ` +
+            `captions, /records field hints); darken (light columns) or lighten (dark columns) rather ` +
+            `than widening this test.`,
+        );
+      }
+    }
   }
 });
 
@@ -113,10 +155,10 @@ test('--color-harvest (earth light) clears 4.5:1 against the card and the page',
   // this exact value can regress without a collision test catching it.
   const css = readFileSync(CSS, 'utf8');
   const hex = tokenValue(css, ':root', '--color-harvest');
-  const cardRatio = contrastRatio(hex, '#FFFEFA');
-  const pageRatio = contrastRatio(hex, '#E4DCC6');
-  assert.ok(cardRatio >= BODY_TEXT_MIN, `--color-harvest (${hex}) is ${cardRatio.toFixed(2)}:1 against the card — under 4.5:1`);
-  assert.ok(pageRatio >= BODY_TEXT_MIN, `--color-harvest (${hex}) is ${pageRatio.toFixed(2)}:1 against the page — under 4.5:1`);
+  for (const [name, surface] of [['card', '#FFFEFA'], ['page', '#E4DCC6'], ['inset', '#F8F5E9']] as const) {
+    const ratio = contrastRatio(hex, surface);
+    assert.ok(ratio >= BODY_TEXT_MIN, `--color-harvest (${hex}) is ${ratio.toFixed(2)}:1 against the ${name} — under 4.5:1`);
+  }
 });
 
 test('the map\'s "no saved places" message no longer reads a theme colour on its fixed-dark panel', () => {

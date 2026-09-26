@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import turfArea from '@turf/area';
 import type { Feature, FeatureCollection, Geometry, Position } from 'geojson';
 import {
@@ -138,7 +139,7 @@ export function getDesignLayerColor(type: DesignLayerType): string {
 
 export function formatDesignArea(m2: number): string {
   if (!Number.isFinite(m2) || m2 <= 0) return 'area unknown';
-  if (m2 < 10_000) return `${Math.round(m2).toLocaleString()} m2`;
+  if (m2 < 10_000) return `${numberLabel(Math.round(m2))} m2`;
   return `${(m2 / 10_000).toFixed(2)} ha`;
 }
 
@@ -786,7 +787,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
 
   // Roof harvest human-readable
   const roofHarvestNote = waterCalc.roofHarvestAnnualKL != null
-    ? `Estimated roof harvest (${waterCalc.roofAreaM2Used} m² × ${Math.round(annualRainfall ?? 0)} mm × ${Math.round(WATER_SHEET_ROOF_RUNOFF_COEFFICIENT * 100)}%): ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year.`
+    ? `Estimated roof harvest (${waterCalc.roofAreaM2Used} m² × ${Math.round(annualRainfall ?? 0)} mm × ${Math.round(WATER_SHEET_ROOF_RUNOFF_COEFFICIENT * 100)}%): ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year.`
     : roofOnly.length === 0 && (survey?.roofMainM2 ?? 0) === 0
       ? 'Roof area not yet mapped or surveyed — add it to calculate harvest potential.'
       : annualRainfall == null
@@ -796,7 +797,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
   const householdNeedNote = `Household need (${householdLabel} × 50 L/day): ~${waterCalc.householdDailyLitres} L/day, ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month. A 90-day dry-season buffer needs ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL stored.`;
 
   const gardenIrrigNote = waterCalc.gardenIrrigationDrySeasonDailyLitres != null
-    ? `Estimated dry-season garden irrigation for ${formatDesignArea(waterCalc.cultivationAreaM2)} of beds: ~${waterCalc.gardenIrrigationDrySeasonDailyLitres.toLocaleString()} L/day (at 3.5 L/m²).`
+    ? `Estimated dry-season garden irrigation for ${formatDesignArea(waterCalc.cultivationAreaM2)} of beds: ~${numberLabel(waterCalc.gardenIrrigationDrySeasonDailyLitres)} L/day (at 3.5 L/m²).`
     : '';
 
   // Frost / elevation note for sector map
@@ -1083,7 +1084,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         body: [
           'The sequence that works on almost every SA smallholding: (1) fix the water system, (2) fence a small intensive Zone 1, (3) build soil with compost, then (4) expand planting. Skipping steps wastes effort.',
           waterCalc.roofHarvestAnnualKL != null
-            ? `Your roof can catch ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year — if you only do one thing this season, connect gutters to a tank.`
+            ? `Your roof can catch ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year — if you only do one thing this season, connect gutters to a tank.`
             : 'Start with water: map your roof area in the site survey to see what harvest is possible before buying any tanks.',
           goalNote,
           commercialNote,
@@ -1124,10 +1125,10 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
         title: 'Water infrastructure upgrades',
         body: [
           waterCalc.roofHarvestAnnualKL != null && waterCalc.dryBufferLitres90Day > 0
-            ? `Tank sizing guide: roof harvest ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
+            ? `Tank sizing guide: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, 90-day household buffer ~${Math.round(waterCalc.dryBufferLitres90Day / 1000)} kL. If harvest > buffer, one good rainy season fills your reserve. If not, supplement with a borehole or grey-water reuse.`
             : 'Complete the roof harvest estimate in the site survey to size your tanks correctly.',
           waterCalc.gardenIrrigationDrySeasonDailyLitres != null
-            ? `Dry-season garden irrigation for ${formatDesignArea(cultivationTotalM2)}: roughly ${waterCalc.gardenIrrigationDrySeasonDailyLitres.toLocaleString()} L/day. Drip irrigation reduces this by 40–60% versus overhead watering.`
+            ? `Dry-season garden irrigation for ${formatDesignArea(cultivationTotalM2)}: roughly ${numberLabel(waterCalc.gardenIrrigationDrySeasonDailyLitres)} L/day. Drip irrigation reduces this by 40–60% versus overhead watering.`
             : '',
           surveyChallenges.includes('drought') ? 'Drought is your main challenge — invest in shade cloth (30–40%), thick mulch (10 cm minimum), and drip lines before the dry season. These three together can halve your irrigation demand.' : '',
           surveyChallenges.includes('flooding') ? 'Flooding challenge noted — raised beds (30 cm above current grade) and swale cut-off drains above the growing area keep production going through wet spells.' : '',
@@ -1153,7 +1154,7 @@ export function generateGeometryDesignPlan(state: DesignStudioState, locationDat
       'North is preserved from the map. Do not rotate the base geometry in the final map.',
       'Locked layers are farmer-approved and must not be moved by AI-generated styling.',
       'Use the PNG for quick sharing and the PDF for a one-page farmer handout.',
-      ...(waterCalc.roofHarvestAnnualKL != null ? [`Water estimates are approximate: roof harvest ~${waterCalc.roofHarvestAnnualKL.toLocaleString()} kL/year, household need ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month.`] : []),
+      ...(waterCalc.roofHarvestAnnualKL != null ? [`Water estimates are approximate: roof harvest ~${numberLabel(waterCalc.roofHarvestAnnualKL)} kL/year, household need ~${Math.round(waterCalc.householdMonthlyLitres / 1000)} kL/month.`] : []),
     ],
     // Enrichment fields
     waterCalc,

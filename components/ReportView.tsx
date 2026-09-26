@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
@@ -40,6 +41,7 @@ import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/
 import { REPORT_ZU } from '@/lib/report-localisation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
+import { useAppLevel } from '@/lib/app-level';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -292,6 +294,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [cropMapMonth, setCropMapMonth] = useState(0);
   const [includeCropWorkingPlan, setIncludeCropWorkingPlan] = useState(false);
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
+  const simple = useAppLevel() === 'simple';
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const displayError = (message: string) => {
@@ -1227,8 +1230,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
                   ...(d.bru ? [{ label: 'BRU Zone', value: `${d.bru.brucode} · approx. ${d.bru.nearestBrg}`, color: bColor }] : []),
                   ...(facts?.boundary ? [{ label: tr('Mapped boundary', 'Umngcele obalazwe'), value: `${(facts.boundary.areaM2 / 10000).toFixed(3)} ha`, color: 'var(--report-green)' }] : []),
-                  ...(facts?.design ? [{ label: tr('Mapped growing area', 'Indawo yokutshala ebalazwe'), value: `${facts.design.growingAreaM2.toLocaleString()} m²`, color: 'var(--report-green)' }] : []),
-                  ...(facts?.water ? [{ label: tr('Tank capacity in plan', 'Umthamo wamathangi ohlelweni'), value: `${facts.water.statedStorageLitres.toLocaleString()} L`, color: 'var(--report-blue)' }] : []),
+                  ...(facts?.design ? [{ label: tr('Mapped growing area', 'Indawo yokutshala ebalazwe'), value: `${numberLabel(facts.design.growingAreaM2)} m²`, color: 'var(--report-green)' }] : []),
+                  ...(facts?.water ? [{ label: tr('Tank capacity in plan', 'Umthamo wamathangi ohlelweni'), value: `${numberLabel(facts.water.statedStorageLitres)} L`, color: 'var(--report-blue)' }] : []),
                 ].map(({ label, value, color }) => (
                   <div key={label} className={styles.summaryTile} style={{ borderTop: `3px solid ${color ?? 'var(--report-border)'}` }}>
                     <div className={`${styles.summaryLabel} font-sans`}>{label}</div>
@@ -1238,20 +1241,31 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {/* Coords */}
-              <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · Köppen {d.climate.koppen} ({d.climate.koppenDesc}) ·
-                {d.rainfall.pattern} rainfall · {d.rainfall.wetSeason} wet / {d.rainfall.drySeason} dry ·
-                {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
-              </div>
-
-              {d.bru && (
-                // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
-                // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
-                // here reads as a second, conflicting rainfall claim for a non-expert reader.
-                <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                  {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
-                  Zone name &ldquo;{d.bru.nearestBrg}&rdquo; is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.
+              {simple ? (
+                <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                  {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E
                 </div>
+              ) : (
+                <>
+                  <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({d.climate.koppenDesc}) ·
+                    {' '}{d.rainfall.pattern} {tr('rainfall', 'imvula')} · {d.rainfall.wetSeason} {tr('wet', 'manzi')} / {d.rainfall.drySeason} {tr('dry', 'omile')} ·
+                    {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
+                  </div>
+
+                  {d.bru && (
+                    // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
+                    // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
+                    // here reads as a second, conflicting rainfall claim for a non-expert reader.
+                    <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                      {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
+                      {' '}{tr(
+                        `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
+                        `Igama lesigodi elithi "${d.bru.nearestBrg}" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.`
+                      )}
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
@@ -1401,7 +1415,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           <div className={styles.recordTools}>
           {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
-          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
+          <ReportPreparation language={language} location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           </div>
         </div>
       </div>

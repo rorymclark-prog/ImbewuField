@@ -9,10 +9,52 @@ import {
   DESIGN_STEP_LABEL_KEYS,
   DESIGN_STUDIO_I18N_KEYS,
   formatDesignTranslation,
+  sectorCompassWord,
   translatedDesignStepGuidance,
   translatedDesignStepLabel,
 } from '@/lib/design-studio-i18n';
 import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
+import { DESIGN_STUDIO_ENGLISH_PENDING } from '@/lib/i18n-pending';
+import zuLocale from '@/lib/locales/zu';
+
+test('Sector compass words preserve each bearing when the overlay and summary share the direction label', () => {
+  const keyFor = (key: string) => key;
+  assert.equal(sectorCompassWord(0, keyFor), 'designSectorDirectionNorth');
+  assert.equal(sectorCompassWord(45, keyFor), 'designSectorDirectionNorthEast');
+  assert.equal(sectorCompassWord(112.5, keyFor), 'designSectorDirectionSouthEast');
+  assert.equal(sectorCompassWord(180, keyFor), 'designSectorDirectionSouth');
+  assert.equal(sectorCompassWord(225, keyFor), 'designSectorDirectionSouthWest');
+  assert.equal(sectorCompassWord(270, keyFor), 'designSectorDirectionWest');
+  assert.equal(sectorCompassWord(315, keyFor), 'designSectorDirectionNorthWest');
+});
+
+test('isiZulu Design Palette action drafts keep their exact English source and template tokens', () => {
+  const pairedKeys = [
+    'designPaletteRegionalWind',
+    'designPaletteNoRegionalWind',
+    'designPaletteTapPlace',
+    'designPaletteTapCorners',
+    'designPaletteRecorded',
+  ] as const;
+  for (const key of pairedKeys) {
+    const source = DESIGN_STUDIO_ENGLISH_PENDING[key];
+    const draft = zuLocale[key];
+    assert.ok(draft.endsWith(source), `${key} keeps its complete English source beside the draft`);
+    const sourceTokens = source.match(/\{[^}]+\}/g) ?? [];
+    for (const token of sourceTokens) {
+      assert.ok(draft.includes(token), `${key} retains ${token} for its dynamic value`);
+    }
+  }
+
+  for (const key of [
+    'designPaletteClimateHidden',
+    'designPaletteFrostHidden',
+    'designPaletteFrostCheckTitle',
+    'designPaletteLayerContours',
+  ] as const) {
+    assert.equal(zuLocale[key], DESIGN_STUDIO_ENGLISH_PENDING[key], `${key} stays in English pending fluent review`);
+  }
+});
 
 test('every Design Studio chrome key exists in every language slot instead of silently falling back', () => {
   // The pending English source text for every unreviewed Design Studio key now lives in one

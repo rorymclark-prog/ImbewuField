@@ -250,15 +250,15 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       {/* Intro / empty state */}
       {messages.length === 0 && !initialFile && (
         <div className="space-y-3">
-          <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="flex items-center gap-1.5 mb-1">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D2B" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/>
                 <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
               </svg>
-              <div className="text-sm font-display font-semibold italic" style={{ color: '#1F4D2B' }}>Hi — I&apos;m Lima.</div>
+              <div className="text-sm font-display font-semibold italic" style={{ color: 'var(--color-forest-800)' }}>Hi — I&apos;m Lima.</div>
             </div>
-            <div className="text-xs" style={{ color: '#5C5040' }}>
+            <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
               Ask about your site, crops, soil &amp; water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic &amp; regenerative only.
             </div>
           </div>
@@ -268,8 +268,8 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             onClick={() => (hasSample ? clearSampleFarmData() : loadSampleFarmData())}
             className="w-full text-left px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={hasSample
-              ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }
-              : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: '#1F4D2B' }}>
+              ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)' }
+              : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: 'var(--color-forest-800)' }}>
             <FlaskConical size={13} className="inline mr-1" />
             {hasSample ? "Ubhejane farm data loaded — tap to clear" : "Load Ubhejane farm data (to test finance questions)"}
           </button>
@@ -278,7 +278,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             {SUGGESTIONS.map((s) => (
               <button key={s} onClick={() => send(s)}
                 className="text-left px-3 py-2 rounded-lg font-display hover:bg-[rgba(31,77,43,0.05)] transition-colors"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 13 }}>
+                style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 13 }}>
                 {s}
               </button>
             ))}
@@ -292,10 +292,10 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
           <div className="px-3.5 py-2.5 text-sm"
             style={m.role === 'user'
               ? { maxWidth: '85%', background: '#1F4D2B', color: '#F2EBDD', borderRadius: '16px 4px 16px 16px', whiteSpace: 'pre-wrap' }
-              : { maxWidth: '92%', background: '#FFFEFA', border: '1px solid #E7DDC9', color: '#20190F', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
+              : { maxWidth: '92%', background: 'var(--bg-1)', border: '1px solid #E7DDC9', color: 'var(--text-primary)', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
             {m.role === 'assistant' && m.content.startsWith('Sorry,')
-              ? <span style={{ color: '#D4922A' }}>{m.content}</span>
+              ? <span style={{ color: 'var(--orange)' }}>{m.content}</span>
               : m.content || (loading && i === messages.length - 1 ? <span className="lima-shimmer">Thinking…</span> : '')}
           </div>
         </div>
@@ -303,12 +303,12 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       <div ref={endRef} />
 
       {/* Input — sticks to the bottom of the scrolling panel */}
-      <div className="sticky bottom-0 pt-2" style={{ background: 'linear-gradient(to top, #E4DCC6 70%, transparent)' }}>
+      <div className="sticky bottom-0 pt-2" style={{ background: 'linear-gradient(to top, var(--bg-0) 70%, transparent)' }}>
         {pendingImage && (
           <div className="flex items-center gap-2 mb-1.5">
             <img src={pendingImage.preview} alt="" className="rounded-lg" style={{ width: 44, height: 44, objectFit: 'cover' }} />
-            <span className="text-xs" style={{ color: '#5C5040' }}>Photo attached</span>
-            <button onClick={() => setPendingImage(null)} className="flex items-center gap-0.5 text-xs" style={{ color: '#D4922A' }}>
+            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>Photo attached</span>
+            <button onClick={() => setPendingImage(null)} className="flex items-center gap-0.5 text-xs" style={{ color: 'var(--gold)' }}>
               <X size={12} />remove
             </button>
           </div>
@@ -317,7 +317,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
           <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={onPickFile} className="hidden" />
           <button type="button" onClick={() => fileRef.current?.click()} title="Take / attach a photo"
             className="flex-shrink-0 rounded-xl flex items-center justify-center hover:bg-[rgba(31,77,43,0.08)] transition-colors"
-            style={{ minHeight: 46, minWidth: 46, background: 'rgba(226,216,196,0.4)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+            style={{ minHeight: 46, minWidth: 46, background: 'rgba(226,216,196,0.4)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             <Camera size={18} />
           </button>
           <input
@@ -325,14 +325,14 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask Lima anything..."
             className="flex-1 rounded-xl px-3 outline-none min-w-0 font-display"
-            style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 16, minHeight: 46, borderRadius: 12 }}
+            style={{ background: '#fff', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 16, minHeight: 46, borderRadius: 12 }}
           />
           <button type="submit" disabled={isDisabled}
             className="px-4 rounded-xl font-display font-semibold flex-shrink-0 flex items-center justify-center transition-all"
             style={{ minHeight: 46,
               background: isDisabled ? 'rgba(226,216,196,0.4)' : '#1F4D2B',
               border: isDisabled ? '1px solid #E2D8C4' : 'none',
-              color: isDisabled ? '#8C7A62' : '#F7F2E9' }}>
+              color: isDisabled ? '#755942' : '#F7F2E9' }}>
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
         </form>

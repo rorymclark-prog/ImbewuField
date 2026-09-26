@@ -28,6 +28,8 @@ import {
 } from 'firebase/auth';
 import { bindFieldIdentity } from '@/lib/field-session';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { usePathname } from 'next/navigation';
+import { shouldSuspendAccountTree } from '@/lib/public-routes';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
 import {
@@ -330,7 +332,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const role: UserRole | null = profile?.role ?? null;
-  const suspendAccountTree = isBackendConfigured() && loading;
+  // Public pages can render while Firebase resolves. Account pages still wait for their
+  // storage namespace to bind before children mount.
+  const pathname = usePathname();
+  const suspendAccountTree = shouldSuspendAccountTree({
+    backendConfigured: isBackendConfigured(),
+    loading,
+    pathname,
+  });
   const accountTreeKey = user?.uid ?? 'signed-out';
 
   return (

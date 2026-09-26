@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
-import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
+import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
-import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import { APP_LANGS, useLanguage, translate, loadLocale, T_en, getLoadedDict } from '@/lib/i18n';
+import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
+import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
@@ -62,6 +64,35 @@ export default function ThemePanel({ open, onClose }: Props) {
   const { lang, setLang, t } = useLanguage();
   const zu = lang === 'zu';
   const panelRef = useRef<HTMLDivElement>(null);
+  const level = useAppLevel();
+
+  // How much of each language is actually translated, so a language that is still mostly
+  // English says so instead of looking finished. Computed from the real dictionaries (see
+  // lib/lang-coverage.ts) once every locale chunk has loaded — the same up-front prefetch
+  // components/Onboarding.tsx already does for its own language-pick screen.
+  const [langCoverage, setLangCoverage] = useState<Record<string, LangCoverage>>({});
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    Promise.all(APP_LANGS.map((l) => loadLocale(l.code))).then(() => {
+      if (cancelled) return;
+      // English is the source dictionary itself, so it is complete by definition — coverageOf()
+      // compares a locale's translated wording against English and would (correctly) read a
+      // dictionary compared against itself as 0% translated, not 100%.
+      const next: Record<string, LangCoverage> = {};
+      for (const l of APP_LANGS) {
+        if (l.code === 'en') continue;
+        next[l.code] = coverageOf(T_en, getLoadedDict(l.code));
+      }
+      setLangCoverage(next);
+    });
+    return () => { cancelled = true; };
+  }, [open]);
+  const isPartialLang = (code: string) => code !== 'en' && langCoverage[code] !== undefined && !langCoverage[code].complete;
+  const LEVELS: { key: AppLevel; label: string; desc: string }[] = [
+    { key: 'simple', label: zu ? 'Okulula' : 'Simple', desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : 'The main jobs only. Best when you are starting out.' },
+    { key: 'full', label: zu ? 'Wonke amathuluzi' : 'All tools', desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : 'Everything, including every planning and money tool.' },
+  ];
 
   // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
   const [guidedOn, setGuidedOn] = useState(true);
@@ -175,13 +206,6 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
-          <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
-            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
-            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
-            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
-            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
-          </section>
-
           {/* LANGUAGE — first, because a panel she cannot read is not a panel.
               This is the only working language control on a phone. The onboarding screen ends
               with "you can change this later" (pickLangSub), and until now that was not true:
@@ -199,27 +223,84 @@ export default function ThemePanel({ open, onClose }: Props) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {APP_LANGS.map((l) => {
                 const active = l.code === lang;
+                const partial = isPartialLang(l.code);
+                return (
+                  <div key={l.code} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <button
+                      onClick={() => setLang(l.code)}
+                      aria-pressed={active}
+                      style={{
+                        minHeight: 46, padding: '10px 12px', borderRadius: 8,
+                        border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
+                        background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
+                        color: active ? 'var(--emerald)' : 'var(--text-secondary)',
+                        fontSize: 14, fontWeight: active ? 700 : 500,
+                        fontFamily: 'var(--font-display)', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.native}</span>
+                      {active && <Check size={15} style={{ flexShrink: 0 }} />}
+                    </button>
+                    {partial && (
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
+                        {translate(l.code, 'langPartialTag')}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {lang === 'ts' && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+                <span lang="en">/ Unreviewed Xitsonga draft.</span>
+              </p>
+            )}
+            {lang !== 'ts' && isPartialLang(lang) && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                {translate(lang, 'langPartialActiveNote').replace('{lang}', APP_LANGS.find((l) => l.code === lang)?.native ?? lang)}
+              </p>
+            )}
+          </div>
+
+          {/* HOW MUCH TO SHOW — Simple / All tools (lib/app-level.ts). Straight after language: it is
+              the other thing that decides whether the app is usable for someone new to phones.
+              Farmers start on Simple; this is where they, or a mentor at training, change it. */}
+          <div style={{ marginBottom: 28 }}>
+            <div id="app-level-heading" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              {zu ? 'Kuboniswe okungakanani' : 'How much to show'}
+            </div>
+            <div role="radiogroup" aria-labelledby="app-level-heading" style={{ display: 'grid', gap: 8 }}>
+              {LEVELS.map((l) => {
+                const active = level === l.key;
                 return (
                   <button
-                    key={l.code}
-                    onClick={() => setLang(l.code)}
-                    aria-pressed={active}
+                    key={l.key}
+                    type="button"
+                    role="radio"
+                    aria-checked={active}
+                    onClick={() => setAppLevel(l.key)}
                     style={{
-                      minHeight: 46, padding: '10px 12px', borderRadius: 8,
+                      minHeight: 64, padding: '12px 14px', borderRadius: 10, textAlign: 'left',
                       border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
                       background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
-                      color: active ? 'var(--emerald)' : 'var(--text-secondary)',
-                      fontSize: 14, fontWeight: active ? 700 : 500,
-                      fontFamily: 'var(--font-display)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
+                      cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 3,
                       transition: 'all 0.15s ease',
                     }}
                   >
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.native}</span>
-                    {active && <Check size={15} style={{ flexShrink: 0 }} />}
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, width: '100%' }}>
+                      <span style={{ fontSize: 15, fontWeight: 600, fontFamily: 'var(--font-display)', color: active ? 'var(--emerald)' : 'var(--text-primary)' }}>{l.label}</span>
+                      {active && <Check size={15} style={{ flexShrink: 0, color: 'var(--emerald)' }} />}
+                    </span>
+                    <span style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.4 }}>{l.desc}</span>
                   </button>
                 );
               })}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
+              {zu ? 'Ungakushintsha noma nini.' : 'You can change this any time.'}
             </div>
           </div>
 
@@ -381,27 +462,21 @@ export default function ThemePanel({ open, onClose }: Props) {
             </div>
           </div>
 
-          {/* Data sources */}
-          <div style={{ marginTop: 28 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Imithombo yedatha' : 'Data sources'}
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-              {[
-                { Icon: Satellite, label: zu ? 'Isimo sezulu seNASA seminyaka engu-30' : 'NASA 30yr climate' },
-                { Icon: Sprout,    label: zu ? 'Idatha yenhlabathi yeISRIC' : 'ISRIC soil data' },
-                { Icon: Mountain,  label: zu ? 'Imigqa yokuphakama nendawo engu-3D' : 'Contours + 3D terrain' },
-                { Icon: Sparkles,  label: zu ? 'Imibono yeClaude AI' : 'Claude AI insights' },
-              ].map((s) => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                  <s.Icon size={15} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
-                  <span style={{ fontSize: 12, fontFamily: 'var(--font-display)', color: 'var(--text-secondary)', lineHeight: 1.2 }}>{s.label}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              {zu ? 'INingizimu Afrika · izindawo zemvelo ezingu-9 · wonke ama-API amahhala.' : 'South Africa · 9 biomes · all free APIs.'}
-            </div>
+          {/* TOUR AND SUPPORT LINKS LIVE DOWN HERE. They used to open the panel, which pushed "How much
+              to show" (Simple / All tools) below the fold on a phone — Rory went looking for the switch
+              and could not find it. Settings now opens on the two choices that decide whether the app
+              is usable at all: language, then how much to show. */}
+          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
+            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
+            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
+            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
+            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
+          </section>
+
+          {/* CLAUDE.md: no data-vendor badges in the UI — this used to name each data provider by
+              brand. One unbranded line instead of a vendor list. */}
+          <div style={{ marginTop: 28, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            {zu ? 'Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.' : 'Farm guidance is built from South African climate, soil and terrain data.'}
           </div>
         </div>
 

@@ -37,6 +37,8 @@ export interface DeckAnimation {
   playOnce?: boolean;
   /** Exact text-labelled variants; wordless clips share their base asset. */
   byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
+  /** Languages for which the registered clip contradicts the lesson's localized still. */
+  unavailableLanguages?: string[];
 }
 
 export interface DeckSlide {
@@ -192,8 +194,8 @@ const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
   // Moisture, decomposition and finished compost remain in the narration and later slides.
-  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true },
-  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8 },
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu'] },
+  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu'] },
 };
 
 // Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
@@ -225,35 +227,35 @@ const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'market-community': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
   },
   'small-livestock': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
   'plant-guilds': {
@@ -336,7 +338,7 @@ export function slideImageFor(
 
 export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean; playOnce?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
-  if (!base) return null;
+  if (!base || base.unavailableLanguages?.includes(lang)) return null;
   const a = base.byLang?.[lang] ?? base;
   return {
     video: `/course-animations/${moduleId}/${a.src}.mp4`,

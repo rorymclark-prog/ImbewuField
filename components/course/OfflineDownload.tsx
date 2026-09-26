@@ -9,6 +9,8 @@ import {
   CACHE_CHANGED_EVENT,
 } from '@/lib/offline-cache';
 import { useLanguage } from '@/lib/i18n-context';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
 
 /**
  * Take a module — or the whole course — home.
@@ -37,6 +39,14 @@ interface Props {
 
 export default function OfflineDownload({ moduleIds, lang, label, compact = false }: Props) {
   const { t } = useLanguage();
+  // Simple / All tools (lib/app-level.ts). Farmers get Standard quality silently — the picker
+  // below is a facilitator/funder tool for a projector, not a decision a farmer on metered data
+  // needs to make; `quality` still defaults to 'standard' either way.
+  const simple = useAppLevel() === 'simple';
+  // Truly staff-only (mentor/ngo/funder/admin), not a Simple/All tools density choice — a
+  // student or farmer who switches to All tools must still never see this, only its own default.
+  const { navigationRole } = useRoleNavigation();
+  const isStaff = isStaffRole(navigationRole);
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -137,7 +147,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (!offlineSupported()) {
     return compact ? null : (
-      <p className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+      <p className="font-sans text-xs" style={{ color: '#755942' }}>
         {t('offlineDownloadUnsupported')}
       </p>
     );
@@ -184,7 +194,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={remove}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
               <Trash2 size={12} />{t('offlineRemovePack')}
             </button>
           </>
@@ -199,7 +209,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#8C7A62', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
               {t('offlineStopDownload')}
             </button>
           </>
@@ -224,7 +234,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           higher option says who it is for — a farmer scanning this should be able to tell in one
           read that it is not the one for them. Hidden entirely when the module has no
           higher-quality files, rather than offering a choice that changes nothing. */}
-      {hasHigher && !busy && phase !== 'done' && (
+      {hasHigher && !busy && phase !== 'done' && !simple && isStaff && (
         <div role="group" aria-label={t('offlineDownloadQuality')} className="flex flex-wrap items-center gap-1.5">
           {([
             { key: 'standard' as PackQuality, name: t('offlineQualityStandard'), note: t('offlineQualityStandardNote'), size: standardBytes },
@@ -247,7 +257,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                 <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
-                <span className="font-sans block" style={{ fontSize: 10.5, color: '#8C7A62' }}>{opt.note}</span>
+                <span className="font-sans block" style={{ fontSize: 10.5, color: '#755942' }}>{opt.note}</span>
               </button>
             );
           })}
@@ -259,7 +269,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(32,25,15,0.08)' }}>
             <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: '#1F4D2B' }} />
           </div>
-          <p className="font-mono text-xs mt-1" style={{ color: '#8C7A62' }}>
+          <p className="font-mono text-xs mt-1" style={{ color: '#755942' }}>
             {t('offlineFilesProgress').replace('{done}', String(doneFiles)).replace('{total}', String(totalFiles))}
           </p>
         </div>
@@ -275,7 +285,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
       )}
 
       {phase === 'done' && notPersisted && (
-        <p className="font-sans text-xs leading-relaxed" style={{ color: '#8C7A62' }}>
+        <p className="font-sans text-xs leading-relaxed" style={{ color: '#755942' }}>
           {t('offlineSavedMayClear')}
         </p>
       )}

@@ -9,6 +9,9 @@ import { readFileSync } from 'node:fs';
 // read the real shipped file and assert the wiring a farmer would actually tap is present.
 
 const HOME_SOURCE = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
+// The next-step table both Home layouts share (All tools' FarmPlanCard, Simple's site card).
+const NEXT_STEP_SOURCE = readFileSync(new URL('../lib/home-next-step.ts', import.meta.url), 'utf8');
+const HERO_SOURCE = readFileSync(new URL('../components/home/HomeHeroCard.tsx', import.meta.url), 'utf8');
 const NAV_DRAWER_SOURCE = readFileSync(new URL('../components/NavDrawer.tsx', import.meta.url), 'utf8');
 
 test('the "Your farm plan" boundary step actually lands on the boundary tool', () => {
@@ -17,8 +20,8 @@ test('the "Your farm plan" boundary step actually lands on the boundary tool', (
   // coaching card told them to do a thing the link never started. It must now carry the same
   // ?arm=site handoff the "+Add → Boundary" row on the map itself fires (components/Map.tsx,
   // imbewu-arm-draw), and land on the farmer's own site rather than a blank map.
-  const boundaryBlock = HOME_SOURCE.match(/boundary:\s*\{[\s\S]*?\},\n\s*\/\/ The real survey/);
-  assert.ok(boundaryBlock, 'could not find the boundary STEP_ACTIONS entry in app/home/page.tsx');
+  const boundaryBlock = NEXT_STEP_SOURCE.match(/boundary:\s*\{[\s\S]*?\},\n\s*\/\/ The real survey/);
+  assert.ok(boundaryBlock, 'could not find the boundary STEP_ACTIONS entry in lib/home-next-step.ts');
   assert.match(boundaryBlock![0], /arm=site/, 'boundary href must arm the map\'s boundary draw tool');
   assert.match(boundaryBlock![0], /siteId/, 'boundary href must thread the farmer\'s own site id through, not a blank map');
 });
@@ -35,8 +38,29 @@ test('home leads with the recommendation and next action before weather or repea
     'the last-viewed and main-site cards need one coordinate comparison instead of repeating one farm');
   assert.match(HOME_SOURCE, /lastSite && !lastSiteMatchesMain && <LastSiteCard/,
     'the recent-site card should render only when it is genuinely a different place');
-  assert.match(HOME_SOURCE, /STEP_COPY\[nextStep\][\s\S]*t\(nextStepCopy\.titleKey\)/,
+  assert.match(NEXT_STEP_SOURCE, /STEP_COPY\[nextStep\][\s\S]*t\(nextStepCopy\.titleKey\)/,
     'the highlighted action and the guided journey must name one step from the same copy authority');
+  assert.match(HOME_SOURCE, /nextAction\(progress\.nextStep/, 'the All tools next-step card must use the shared step table');
+});
+
+test('Simple Home names the site once and says what to do on the same card', () => {
+  // Simple / All tools (lib/app-level.ts). All tools keeps the Home above exactly; Simple drops the
+  // repeats a 20-screen audit counted: the site's name three times, "75% complete" twice (the
+  // green card and FarmPlanCard both read useSiteProgress), and the second My Records door.
+  assert.match(HOME_SOURCE, /const level = useAppLevel\(\);/, 'Home must read the Simple / All tools level');
+  assert.match(HOME_SOURCE, /\{!simple && <FarmPlanCard/, 'Simple must not render the second progress card');
+  assert.match(HOME_SOURCE, /<HomeHeroCard[^>]*level=\{level\}/, 'the site card must know which layout it is in');
+  const continueCards = HERO_SOURCE.slice(HERO_SOURCE.indexOf("if (mainSite && level === 'full')"));
+  assert.match(continueCards, /nextAction\(progress\.nextStep/, 'the Simple site card must carry the next step itself');
+  assert.equal((continueCards.match(/continueSitePct/g) ?? []).length, 2,
+    'each layout prints the progress figure exactly once (one in All tools, one in Simple)');
+
+  const weather = HOME_SOURCE.slice(HOME_SOURCE.indexOf('function MainSiteWeatherCard'), HOME_SOURCE.indexOf('const VISIBLE_TASK_COUNT'));
+  const simpleWeather = weather.slice(weather.indexOf('if (simple) {'), weather.indexOf('\n  return (', weather.indexOf('if (simple) {')));
+  assert.ok(simpleWeather.length > 0, 'the weather card needs its Simple branch');
+  assert.doesNotMatch(simpleWeather, /\{site\.name\}/, 'the Simple weather card repeats the name the card above already shows');
+
+  assert.match(HOME_SOURCE, /<MenuButton \/>\{!simple && <BackButton/, 'Simple Home is the root screen — no Back button');
 });
 
 test('home uses a two-column priority area on wide screens but keeps one reading order on phones', () => {
@@ -45,6 +69,8 @@ test('home uses a two-column priority area on wide screens but keeps one reading
     'the signed-in priority area must use the available desktop width');
   assert.match(HOME_SOURCE, /home-quick-grid[\s\S]*repeat\(6/,
     'six quick actions should form one calm desktop row rather than two phone rows');
+  assert.match(HOME_SOURCE, /home-quick-grid\.is-simple[\s\S]*repeat\(5/,
+    'Simple has five quick actions, and they still form one desktop row');
 });
 
 test('the farmer page still understands ?arm=site — the link above depends on it', () => {

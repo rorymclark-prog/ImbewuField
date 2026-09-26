@@ -237,14 +237,14 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
     {
       label: ui('Logged this month','Okuqoshiwe kule nyanga'),
       value: thisMonth === null ? DASH : String(thisMonth.activeFarmers),
-      sub: thisMonth === null ? ui('no month-by-month data','ayikho idatha yenyanga ngayinye') : `${ui('farms recording in','amapulazi aqopha ngo-')}${thisMonth.longLabel}`,
+      sub: thisMonth === null ? ui('no month-by-month data','ayikho idatha yenyanga ngayinye') : `${ui('farms recording in ', 'amapulazi aqopha ngo-')}${thisMonth.longLabel}` /* the trailing space is deliberate: isiZulu joins as a prefix, English needs the gap */,
     },
     {
       label: ui('Course finished','Isifundo esiqediwe'),
       value: training.reporting === 0 ? DASH : `${training.averagePct ?? 0}%`,
       sub: training.reporting === 0
         ? ui('no training records shared','akukho marekhodi okuqeqeshwa abiwe')
-        : `${ui('average over','isilinganiso samapulazi angu-')}${training.reporting} ${ui('of','kwangu-')} ${training.total}`,
+        : `${ui('average over ', 'isilinganiso samapulazi angu-')}${training.reporting} ${ui('of','kwangu-')} ${training.total}` /* same: 'over 16', not 'over16' */,
     },
     {
       label: ui('Needs a visit','Idinga ukuvakashelwa'),

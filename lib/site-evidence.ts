@@ -300,34 +300,14 @@ export function resizeForStorage(file: File, maxPx = 400): Promise<string> {
   });
 }
 
-// Resize a File to a smaller File before a Firebase Storage upload (uploadPhoto in
-// lib/db/queries.ts). Unlike resizeForStorage above, this returns a File, not a data URL —
-// Storage has no Firestore-style document size cap, but an unshrunk multi-MB phone camera
-// photo still costs a farmer real mobile data on every upload. Decoding through Image()
-// before drawing to canvas keeps EXIF-orientation handling the same as resizeForStorage.
-export function resizeFileForUpload(file: File, maxPx = 1280, quality = 0.82): Promise<File> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read file'));
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onerror = () => reject(new Error('Could not decode image'));
-      img.onload = () => {
-        const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
-        const canvas = document.createElement('canvas');
-        canvas.width = Math.max(1, Math.round(img.width * ratio));
-        canvas.height = Math.max(1, Math.round(img.height * ratio));
-        const ctx = canvas.getContext('2d');
-        if (!ctx) { reject(new Error('Could not process that image.')); return; }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob((blob) => {
-          if (!blob) { reject(new Error('Could not process that image.')); return; }
-          const name = file.name.replace(/\.(png|heic|heif|webp)$/i, '.jpg');
-          resolve(new File([blob], name, { type: 'image/jpeg' }));
-        }, 'image/jpeg', quality);
-      };
-      img.src = e.target!.result as string;
-    };
-    reader.readAsDataURL(file);
-  });
+/**
+ * The same resize as resizeForStorage, but handed back as a File rather than a data URL — for
+ * callers that upload to Cloud Storage (lib/db/queries.ts's uploadPhoto) instead of embedding the
+ * result inline. Community board posts and profile photos were the two upload paths still sending
+ * whatever resolution the phone's camera produced, often several megabytes, over mobile data.
+ */
+export async function resizeFileForUpload(file: File, maxPx = 1200): Promise<File> {
+  const dataUrl = await resizeForStorage(file, maxPx);
+  const blob = await (await fetch(dataUrl)).blob();
+  return new File([blob], file.name, { type: blob.type || file.type });
 }

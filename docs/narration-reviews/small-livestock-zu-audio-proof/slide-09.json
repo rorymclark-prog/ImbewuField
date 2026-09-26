@@ -1,0 +1,97 @@
+{
+  "seconds": 10.08,
+  "bytes": 60480,
+  "audioSha256": "b5a230f7d1f5f99a73be3d2941c443dc3218f820fd51f45abb366a5a097ca7a3",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Buka",
+      "offset": 1318330,
+      "duration": 3267080
+    },
+    {
+      "text": "inyosi",
+      "offset": 5295410,
+      "duration": 5539580
+    },
+    {
+      "text": "eyodwa",
+      "offset": 11119160,
+      "duration": 5681660
+    },
+    {
+      "text": "isuka",
+      "offset": 17085410,
+      "duration": 4687500
+    },
+    {
+      "text": "kwenye",
+      "offset": 21772910,
+      "duration": 3551250
+    },
+    {
+      "text": "imbali",
+      "offset": 25750000,
+      "duration": 5539580
+    },
+    {
+      "text": "iye",
+      "offset": 31715830,
+      "duration": 2698750
+    },
+    {
+      "text": "kwenye",
+      "offset": 34556660,
+      "duration": 5113750
+    },
+    {
+      "text": "Izinyosi",
+      "offset": 49823750,
+      "duration": 6960410
+    },
+    {
+      "text": "zingathwala",
+      "offset": 57210410,
+      "duration": 7386250
+    },
+    {
+      "text": "impova",
+      "offset": 64880830,
+      "duration": 5539580
+    },
+    {
+      "text": "lapho",
+      "offset": 70420410,
+      "duration": 3977080
+    },
+    {
+      "text": "zivakashela",
+      "offset": 74397910,
+      "duration": 8096660
+    },
+    {
+      "text": "izimbali",
+      "offset": 82778330,
+      "duration": 8238750
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "small-livestock",
+  "lesson": "small-livestock-l2",
+  "language": "zu",
+  "slide": 9,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-09.txt",
+  "sourceSha256": "1477322d475f9250ce254846dd0ab394f567cb4d5b64e07edaca96b14ad17add",
+  "scriptFile": "docs/narration/small-livestock.zu.md",
+  "scriptSha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+  "englishSourceFile": "docs/narration/small-livestock.en.md",
+  "englishSourceSha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "2dba1be00275543955c2af76e0416dd8bc899c40af09eb8696a04ed75a84da97",
+  "generatedAt": "2026-09-24T18:50:52.612902+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

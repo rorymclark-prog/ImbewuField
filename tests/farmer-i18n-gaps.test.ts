@@ -14,10 +14,9 @@
 //     soil values, so a plain key would not do: each fixed phrase gets its own key with a
 //     {placeholder} filled in via .replace(), same pattern as insightSemiArid etc.
 //
-// Per the absolute rule this change worked under: no isiZulu (or any other language) may be
-// coined. New keys go into the English (`en`) block of lib/i18n.tsx ONLY — every other locale is
-// left untouched so the existing missing-key fallback (T[lang]?.[key] ?? T.en[key] ?? key) serves
-// English until a first-language reviewer supplies the real words. This test enforces that split.
+// The original gate held all new translations until first-language review. Rory subsequently
+// authorised clearly marked isiZulu drafts before review. English remains the fixed source for
+// consequential advice, while languages without drafts still use the English fallback.
 //
 // Run with:
 //   node --import ./tests/register-alias.mjs --test tests/farmer-i18n-gaps.test.ts
@@ -35,6 +34,12 @@ import test from 'node:test';
 const i18nSource = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 const farmerPageSource = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 const dataPanelSource = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
+const mapSource = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
+const tipsSource = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
+const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
+const studentPageSource = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
+const homeHeroCardSource = readFileSync(new URL('../components/home/HomeHeroCard.tsx', import.meta.url), 'utf8');
+const sesothoUiReviewSource = readFileSync(new URL('../docs/study-translation-reviews/SESOTHO-STUDENT-WELCOME-UI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
 
 const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
 
@@ -53,7 +58,7 @@ function localeBlocks(): Array<{ locale: string; block: string }> {
 }
 
 // Brand new — did not exist anywhere in the dictionary before this change.
-const NEW_ENGLISH_ONLY_KEYS = [
+const ENGLISH_SOURCE_KEYS = [
   'designStudioLabel',
   'soilImprovementPhAcidic',
   'soilImprovementPhAlkaline',
@@ -73,26 +78,49 @@ const REWIRED_EXISTING_KEYS = [
   'closeDetailsPanelAriaLabel',
 ] as const;
 
-test('the new farmer-facing keys exist in English only, and no other locale was touched', () => {
+const ZULU_UI_DRAFT_SOURCE_KEYS = [
+  'elementCountFewer', 'elementCountMore', 'seeMoreDetail',
+  'soilImprovementPhAcidic', 'soilImprovementPhAlkaline', 'soilImprovementLowCarbon',
+  'soilImprovementCompacted', 'soilImprovementHighClay', 'soilImprovementSandy',
+  'openSurveyNoSiteTitle', 'openSurveyNoSiteMessage', 'openSurveyNoSiteConfirm',
+  'tipsEyebrow', 'tipsTitle', 'tipsIntro', 'tipsChoosePracticeView', 'tipsBrowseGardensReports',
+  'tipsFindLabel', 'tipsSearchPlaceholder', 'tipsNoMatch', 'tipsAskForHelp',
+  'tipsVideoGuidesTitle', 'tipsVideoGuidesBody', 'tipsYoutubeLink', 'tipsYoutubeNote',
+  'bookTabPicked', 'bookTabSold', 'bookTabSpent', 'bookTabCharts',
+] as const;
+
+test('farmer-facing English source stays present while only isiZulu gains marked drafts', () => {
   const blocks = localeBlocks();
   assert.ok(blocks.length >= 11, 'expected all eleven ImbewuField locales to be present');
 
   const en = blocks.find((b) => b.locale === 'en');
   assert.ok(en, 'no `en` locale block found in lib/i18n.tsx');
-  for (const key of NEW_ENGLISH_ONLY_KEYS) {
+  for (const key of ENGLISH_SOURCE_KEYS) {
     assert.match(en!.block, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} has no English source text in the en block`);
   }
 
   for (const { locale, block } of blocks) {
     if (locale === 'en') continue;
-    for (const key of NEW_ENGLISH_ONLY_KEYS) {
+    for (const key of ENGLISH_SOURCE_KEYS) {
+      if (locale === 'zu' && key === 'designStudioLabel') {
+        assert.match(block, /^  designStudioLabel: ['"]/m, 'the isiZulu Design Studio draft is missing');
+        assert.match(block, /^  designStudioZuluDraftBadge: ['"]/m, 'the isiZulu draft marker is missing');
+        continue;
+      }
       assert.doesNotMatch(
         block,
         new RegExp(`^  ${key}:`, 'm'),
-        `${locale} must stay untouched — ${key} is English-only until a first-language reviewer supplies real words`,
+        `${locale} must use the English source for ${key} unless a separately marked draft is displayed`,
       );
     }
   }
+  assert.match(farmerPageSource, /t\('designStudioZuluDraftBadge'\)/, 'the Design Studio draft is not visibly marked');
+  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must retain the English source even if a draft is added');
+  const zu = blocks.find((b) => b.locale === 'zu')!.block;
+  for (const key of ENGLISH_SOURCE_KEYS.filter((key) => key.startsWith('soilImprovement'))) {
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: ['"]`, 'm'), `${key} has no marked isiZulu draft`);
+  }
+  assert.match(zu, /^  soilImprovementZuluDraftNotice: ['"]/m, 'the soil advice draft notice is missing');
 });
 
 test('the rewired keys (Details/Results, tap to close, panel aria-labels) were already fully translated', () => {
@@ -102,6 +130,134 @@ test('the rewired keys (Details/Results, tap to close, panel aria-labels) were a
       assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `${locale} is missing ${key} — it should predate this change`);
     }
   }
+});
+
+test('the remaining 29 English UI sources have marked isiZulu drafts and keep their source meaning available', () => {
+  const blocks = localeBlocks();
+  const en = blocks.find((b) => b.locale === 'en')!.block;
+  const zu = blocks.find((b) => b.locale === 'zu')!.block;
+  assert.equal(ZULU_UI_DRAFT_SOURCE_KEYS.length, 29, 'keep the reviewed gap-audit batch complete');
+  for (const key of ZULU_UI_DRAFT_SOURCE_KEYS) {
+    assert.match(en, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} lost its exact English source`);
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: ['"]`, 'm'), `${key} has no separately marked isiZulu draft`);
+    for (const { locale, block } of blocks) {
+      if (locale === 'en' || locale === 'zu') continue;
+      assert.doesNotMatch(block, new RegExp(`^  ${key}ZuDraft:`, 'm'), `${locale} must not use an unreviewed isiZulu draft`);
+    }
+  }
+  assert.match(dataPanelSource, /soilImprovementZuluDraftNotice/);
+  assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must keep the English wording beside each draft');
+  for (const key of ['elementCountFewer', 'elementCountMore']) {
+    assert.match(
+      mapSource,
+      new RegExp(`aria-label=\\{lang === 'zu'[\\s\\S]*?t\\('${key}ZuDraft'\\)[\\s\\S]*?translate\\('en', '${key}'\\)[\\s\\S]*?: t\\('${key}'\\)`),
+      `${key} must announce its draft and English source to assistive technology`,
+    );
+  }
+  assert.match(farmerPageSource, /Unreviewed isiZulu draft\. English source:[\s\S]*openSurveyNoSiteMessage/);
+  assert.match(tipsSource, /Unreviewed isiZulu draft\. Each guide keeps its exact English source below\./,
+    'Tips now drafts the instructions as well as the page labels, so the notice must describe both');
+  assert.match(tipsSource, /English source: \{g\.en\.text\}/,
+    'record and money guides must keep their exact English instructions beside the isiZulu draft');
+  assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
+});
+
+const SESOTHO_STUDY_DRAFT_KEYS = [
+  'studentPortal', 'studentPortalTitle', 'studentBackHome', 'studentMyStudies',
+  'studentLearnPracticeGrow', 'studentRevisit', 'studentStart', 'studentContinue',
+  'studentReady', 'studentKeepGoing', 'studentModulesComplete', 'studentRemaining',
+  'studentPractitioner', 'studentCategoryFoundation', 'studentCategoryWater',
+  'studentCategorySoil', 'studentCategoryPlants', 'studentCategoryDesign',
+  'studentCategoryBusiness', 'studentCategorySeeds', 'studentCorrect',
+  'studentCloseLesson', 'studentOpenLesson', 'studentListenOrRead',
+  'studentReadAndPractise', 'studentListenToLesson', 'studentWatchAndListen',
+  'studentKeyPoints', 'studentCheckUnderstanding', 'studentRelatedLessons',
+  'studentStudyOffline', 'studentSaveBeforeSignal', 'studentSaveAvailable',
+  'studentYourCourse', 'studentModule', 'studentModules', 'studentLocked',
+  'studentComplete', 'studentContinueHere', 'studentAssigned', 'studentAudio',
+  'studentLessonOne', 'studentLessons', 'studentDone', 'studentMarkDone',
+  'studentLessonsLabel', 'studentSesothoUiDraftNotice',
+] as const;
+
+const SESOTHO_STUDY_HOLD_KEYS = [
+  'studentCourseDescription',
+  'studentCourseComplete',
+  'studentMarkComplete',
+] as const;
+
+const SESOTHO_SAFE_UI_DRAFT_KEYS = [
+  'studentAppGuidesHeading',
+  'studentAppGuidesTitle',
+  'studentOpenDesignStudio',
+  'welcomeShowExample',
+] as const;
+
+function dictionaryString(block: string, key: string): string | undefined {
+  return block.match(new RegExp(`^\\s{2}${key}: '([^']*)',?$`, 'm'))?.[1];
+}
+
+test('a QwaQwa learner sees Latin-script Sesotho drafts and English for held study wording', () => {
+  const enStart = i18nSource.indexOf('const T_en: Dict = {');
+  const enEnd = i18nSource.indexOf('\n};', enStart);
+  const english = i18nSource.slice(enStart, enEnd);
+  const sesotho = readFileSync(new URL('../lib/locales/st.ts', import.meta.url), 'utf8');
+  const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
+
+  for (const key of SESOTHO_STUDY_DRAFT_KEYS) {
+    const source = dictionaryString(english, key);
+    const draft = dictionaryString(sesotho, key);
+    assert.ok(source, `${key} must keep its English source`);
+    assert.ok(draft, `${key} must be present in the Sesotho draft`);
+    assert.doesNotMatch(draft, nonLatin, `${key} must not contain non-Latin script`);
+    assert.deepEqual(
+      draft.match(/\{[^{}]+\}/g) ?? [],
+      source.match(/\{[^{}]+\}/g) ?? [],
+      `${key} must preserve every runtime placeholder`,
+    );
+  }
+
+  for (const key of SESOTHO_STUDY_HOLD_KEYS) {
+    assert.ok(dictionaryString(english, key), `${key} must keep its English source`);
+    assert.equal(dictionaryString(sesotho, key), undefined, `${key} must remain in English until the wording is reviewed`);
+  }
+
+  assert.equal(
+    dictionaryString(sesotho, 'studentSesothoUiDraftNoticeSource'),
+    dictionaryString(english, 'studentSesothoUiDraftNoticeSource'),
+    'the Study page must show the exact English source beside the Sesotho notice',
+  );
+  assert.match(studentPageSource, /lang === 'st'/, 'the Study page must identify the Sesotho draft');
+  assert.match(studentPageSource, /t\('studentSesothoUiDraftNotice'\)/, 'the unreviewed Sesotho notice must be visible');
+  assert.match(studentPageSource, /t\('studentSesothoUiDraftNoticeSource'\)/, 'the notice must show its exact English source');
+  assert.match(studentPageSource, /<span lang="st">\{t\('studentSesothoUiDraftNotice'\)\}<\/span>/, 'the Sesotho notice must expose its language to assistive technology');
+  assert.match(studentPageSource, /<span lang="en"[^>]*>English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}<\/span>/, 'the paired English source must expose its language');
+});
+
+test('the small Sesotho Student and Welcome draft keeps its English sources and visible review notice', () => {
+  const enStart = i18nSource.indexOf('const T_en: Dict = {');
+  const enEnd = i18nSource.indexOf('\n};', enStart);
+  const english = i18nSource.slice(enStart, enEnd);
+  const sesotho = readFileSync(new URL('../lib/locales/st.ts', import.meta.url), 'utf8');
+  const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
+
+  for (const key of SESOTHO_SAFE_UI_DRAFT_KEYS) {
+    const source = dictionaryString(english, key);
+    const draft = dictionaryString(sesotho, key);
+    assert.ok(source, `${key} must retain its English source`);
+    assert.ok(draft, `${key} must have its marked Sesotho UI draft`);
+    assert.notEqual(draft, source, `${key} must not silently show English`);
+    assert.doesNotMatch(draft, nonLatin, `${key} must use Latin script`);
+    assert.deepEqual(draft.match(/\{[^{}]+\}/g) ?? [], source.match(/\{[^{}]+\}/g) ?? [],
+      `${key} must preserve any runtime placeholders`);
+    assert.ok(sesothoUiReviewSource.includes(`| \`${key}\` | ${source} | ${draft} |`),
+      `${key} must keep its exact source and draft in the review packet`);
+  }
+
+  assert.match(homeHeroCardSource, /lang === 'st'/, 'Welcome must show its notice for Sesotho');
+  assert.match(homeHeroCardSource, /t\('studentSesothoUiDraftNotice'\)/, 'Welcome must identify the text as an unreviewed Sesotho draft');
+  assert.match(homeHeroCardSource, /English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}/,
+    'Welcome must show the exact English source of its draft notice');
+  assert.match(sesothoUiReviewSource, /No human fluent review has been completed/);
 });
 
 test('the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English', () => {
@@ -141,6 +297,17 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
   assert.match(en, /soilImprovementCompacted: '[^']*\{bd\}[^']*'/);
   assert.match(en, /soilImprovementHighClay: '[^']*\{clay\}[^']*'/);
   assert.match(en, /soilImprovementSandy: '[^']*\{sand\}[^']*'/);
+  const zu = localeBlocks().find((b) => b.locale === 'zu')!.block;
+  for (const [key, token] of [
+    ['soilImprovementPhAcidic', '{ph}'], ['soilImprovementPhAlkaline', '{ph}'],
+    ['soilImprovementLowCarbon', '{oc}%'], ['soilImprovementCompacted', '{bd} g/cm³'],
+    ['soilImprovementHighClay', '{clay}%'], ['soilImprovementSandy', '{sand}%'],
+  ] as const) {
+    const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    assert.match(zu, new RegExp(`^  ${key}ZuDraft: '[^']*${escaped}[^']*'`, 'm'), `${key} draft lost its live value placeholder`);
+  }
+  assert.match(zu, /^  soilImprovementPhAcidicZuDraft: '[^']*1–2 t\/ha[^']*'/m);
+  assert.match(zu, /^  soilImprovementLowCarbonZuDraft: '[^']*5 cm[^']*'/m);
 
   // The defect this guards against: the exact hard-coded template literals that used to sit here,
   // directly under the translated priorityImprovementsHeader — the worst version of this bug,

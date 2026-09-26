@@ -1,0 +1,132 @@
+{
+  "seconds": 17.232,
+  "bytes": 103392,
+  "audioSha256": "8c985d95773cf4ac266fbd8648a76443b69635dd402981a8877fd1f349cd90ea",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Yakha",
+      "offset": 1318330,
+      "duration": 4261250
+    },
+    {
+      "text": "ileveli",
+      "offset": 6289580,
+      "duration": 5965830
+    },
+    {
+      "text": "ye-A-frame",
+      "offset": 12255830,
+      "duration": 6960410
+    },
+    {
+      "text": "ngezigxobo",
+      "offset": 19357910,
+      "duration": 7528330
+    },
+    {
+      "text": "ezintathu",
+      "offset": 27170410,
+      "duration": 6818330
+    },
+    {
+      "text": "nentambo",
+      "offset": 33988750,
+      "duration": 6107910
+    },
+    {
+      "text": "enesisindo",
+      "offset": 40522910,
+      "duration": 9232910
+    },
+    {
+      "text": "Yisebenzise",
+      "offset": 60193330,
+      "duration": 8522910
+    },
+    {
+      "text": "ukuthola",
+      "offset": 69426250,
+      "duration": 6107910
+    },
+    {
+      "text": "umugqa",
+      "offset": 75960410,
+      "duration": 5113750
+    },
+    {
+      "text": "owodwa",
+      "offset": 81642080,
+      "duration": 6250000
+    },
+    {
+      "text": "olinganayo",
+      "offset": 88176250,
+      "duration": 8380830
+    },
+    {
+      "text": "onqamula",
+      "offset": 96840830,
+      "duration": 6818330
+    },
+    {
+      "text": "umthambeka",
+      "offset": 103943330,
+      "duration": 6960000
+    },
+    {
+      "text": "wakho",
+      "offset": 110903330,
+      "duration": 4971660
+    },
+    {
+      "text": "Thatha",
+      "offset": 125392080,
+      "duration": 3693330
+    },
+    {
+      "text": "isithombe",
+      "offset": 129653330,
+      "duration": 6534160
+    },
+    {
+      "text": "se-A-frame",
+      "offset": 136187500,
+      "duration": 7386250
+    },
+    {
+      "text": "kanye",
+      "offset": 143715830,
+      "duration": 3551250
+    },
+    {
+      "text": "nomugqa",
+      "offset": 147267080,
+      "duration": 5681660
+    },
+    {
+      "text": "owumakile",
+      "offset": 153375000,
+      "duration": 9375000
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "water-harvesting",
+  "lesson": null,
+  "language": "zu",
+  "slide": 23,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-23.txt",
+  "sourceSha256": "e1b6ace24ea9b5d310d2237d09cd97afb01d883f3a3e796af14f78492e77810a",
+  "scriptFile": "docs/narration/water-harvesting.zu.md",
+  "scriptSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255",
+  "englishSourceFile": "docs/narration/water-harvesting.en.md",
+  "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "28f1faa0bc78be591e264f3ff0845761751ceee7697be705bfc0b9a5f52901b9",
+  "generatedAt": "2026-09-24T18:48:59.024720+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review"
+}

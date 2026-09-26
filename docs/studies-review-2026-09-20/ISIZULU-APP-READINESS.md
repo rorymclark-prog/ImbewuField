@@ -1,5 +1,52 @@
 # IsiZulu app readiness — 23 September 2026
 
+## Sales entry labels — 26 September
+
+The Sold page in My Records now shows a proposed isiZulu draft for its sale heading,
+invoice links, short explanation and quick-entry disclosure. Each draft line displays
+its exact English source, with a notice that no fluent speaker has reviewed it. The
+[Agy draft and independent Pro back-check](ISIZULU-RECORD-SALES-UI-REVIEW-2026-09-26.md)
+records the wording and remaining review points. The sale form, invoice destinations,
+money, saved records and access rules are unchanged. This is an interface draft, not
+fluent or local approval.
+
+## Calendar and task planner follow-up — 25 September
+
+The Planting Calendar now displays its month labels through the device's
+`zu-ZA` locale when isiZulu is selected, and its Learn control follows the
+selected language. The Task Planner now keeps a bilingual notice in view in
+both month and season views: task names and seasonal farming guidance remain
+English while they await exact source and local farming review. Neither page's
+crop catalog, sowing windows, saved tasks, month arithmetic or farming advice
+was changed. The [Agy held-key review packet](ISIZULU-HELD-KEYS-AGY-PACKET-2026-09-25.md)
+records proposed wording separately from learner text; its soil treatment
+proposals remain held. No fluent, agricultural or privacy approval is implied.
+
+## Direct interface dictionary key coverage — 24 September
+
+The direct dictionary has 1,441 English keys and 1,508 isiZulu keys. Their
+intersection is 1,427 keys; 14 English keys remain on English fallback. Existing
+review guards hold `designStudioLabel`, `bookTabPicked`, `bookTabSold`,
+`bookTabSpent`, and `bookTabCharts`; source-backed soil
+recommendations and coaching claims also remain in English. There are 81
+isiZulu-only keys. Forty-six shared values are identical to English, including
+numeric chips, compact calendar month labels and explicitly held claims. These
+counts describe dictionary key presence only; they do not prove fluency, route
+coverage or correct rendering.
+
+Of 288 direct-key candidates, 251 now have proposed isiZulu draft values, 23
+retain the exact English source for financial guidance, privacy, deletion,
+offline and save-status claims, and 14 remain absent from the locale dictionary
+under existing review guards or because they express unreviewed soil/coaching
+claims. None of the proposed drafts has fluent review. The survey route shows a
+persistent bilingual draft notice before its isiZulu instructions. Its
+remaining draft text still needs a first-language and local farming review.
+The interface also contains hardcoded English outside this dictionary,
+including crop catalog names, several report and planning views, staff tools,
+AI-generated results, and authored guide and lesson prose. The route audit
+below remains the scope check; dictionary completion alone does not make the
+whole app available in isiZulu.
+
 ## 24 September verification batch
 
 The farmer Add menu now has proposed isiZulu section labels, map choices and
@@ -165,6 +212,22 @@ pass, but dictionary coverage is not route coverage. `node
 scripts/course-i18n-status.mjs` counts direct keys and real audio files; it
 does not attest meaning, fluency or every rendered state. All new control and
 document translations remain review drafts on this branch.
+
+The 25 September route pass gives the Garden Survey paired isiZulu/English
+drafts for its choices and six-week plan, including its PDF; the Week 5 compost
+tea instruction stays in English pending local farming review. Built-in sample
+surveys have paired questions and choices, while live organisation-authored
+surveys retain their authored language and saved response values. The site
+questionnaire already has a wider draft translation, but consequential save
+and roof-calculation wording remains source-held. The offline screen keeps its
+isiZulu drafts with nearby English sources for sync and removal; report
+preparation headings and actions are drafts while evidence details and report
+output remain English. Calendar and task planner now reuse the site's existing
+isiZulu month abbreviations: a phone browser check found `Intl` fell back to
+English even though Node returned localized months. These are route checks,
+not a whole-app or fluent-language completion claim.
+The remaining questionnaire terms are listed with exact English sources and
+conservative holds in [the Site Survey Agy packet](SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
 ## Release gate
 

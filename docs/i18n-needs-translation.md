@@ -182,11 +182,10 @@ Glossy-plan UI chrome and status/error copy:
 `designGlossyRefreshing`, `designGlossyLostConnection`, `designGlossyAssembleError`,
 `designGlossyRenderIncomplete`, `designGlossyReconnecting`.
 
-Species picker (Plant Catalog) chrome, section names and use tags. Plant common and botanical
-names are per-species data (lib/species-palette.ts), not app chrome — they are not in this list
-and must not be machine-translated:
-`designSpeciesPickerTitle`, `designSpeciesFilteredForBiome`, `designSpeciesBroadReach`,
-`designSpeciesBroadReachSection`, `designSpeciesReviewNote`, `designSpeciesFrostHidden`,
+Species picker (Plant Catalog) size line, section names and use tags — the chrome (title,
+biome/broad-reach note, honesty banner) is the `speciesPicker*` keys above this doc doesn't track
+individually. Plant common and botanical names are per-species data (lib/species-palette.ts), not
+app chrome — they are not in this list and must not be machine-translated:
 `designSpeciesSize`, `designSpeciesSectionIndigenousFruit`,
 `designSpeciesSectionExoticFruitNuts`, `designSpeciesSectionLargeTrees`,
 `designSpeciesSectionMediumTrees`, `designSpeciesSectionSmallTreesShrubs`,

@@ -2,11 +2,16 @@
 
 **REVIEW ONLY — not approved for learners, recording or publication.** This draft aligns the current English lesson body, key points, both quiz questions with every option and rationale, and exact narration slides 9–13. It is a working draft for first-language isiZulu farmer/practitioner review. English meanings below control; no fluent-language or compost-process approval is claimed.
 
+**24 September media update:** the revised 20-slide isiZulu narration source,
+still deck and Thando voice audio were prepared from this full-draft packet and
+the L1/L3 packets. They remain unreviewed AI draft assets. See
+[`SOIL-HEALTH-ZU-REVIEW.md`](../media/soil-health/SOIL-HEALTH-ZU-REVIEW.md).
+
 ## Sources and holds
 
 - Current lesson authority: `soil-health-l2` in `lib/course-modules.ts`.
 - Current narration: slides 9–13 in `docs/narration/soil-health.en.md`.
-- Previous isiZulu text: slides 9–13 in `docs/narration/soil-health.zu.md`; it is stale and reference-only.
+- Current isiZulu text: slides 9–13 in `docs/narration/soil-health.zu.md`; it now follows this corrected draft and still needs fluent/local review.
 - Readiness time varies with materials, moisture, air and temperature. Province and a fixed number of weeks are not a readiness test.
 - The compost heap needs moisture and air; one recipe does not suit every mix. Sliminess or strong ammonia smell prompts an action, but does not prove a single cause.
 - A hot centre does not prove every part of a heap was treated. Do not invent a temperature, schedule or sanitation guarantee. When sanitation is required, the English calls for a recognised process.

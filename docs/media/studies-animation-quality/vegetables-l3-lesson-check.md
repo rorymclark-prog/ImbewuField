@@ -45,6 +45,10 @@ is review-only; its old broad dry-period claim is unpublished. Human listening,
 physical-phone, learner, farmer, practitioner and fluent isiZulu approval are
 not claimed.
 
+## isiZulu learner preview — 24 September 2026
+
+The 18-slide isiZulu deck now includes a localized four-card slide 13. Its sweet-potato card says water is needed early and during root formation, with some drought tolerance only after that stage; the matching isiZulu narration and transcript also retain the possibility of reduced harvest from water stress. The updated deck and all 18 recordings are clearly labelled as an unreviewed learner preview. First-language isiZulu, local farming and human listening review remain pending. The localized card was rendered from the committed English card still by [the matching Pillow renderer](render-vegetables-l3-slide-13-zu.py) and inspected at full size and 390px fit. No animation or Flow render was created.
+
 ## Earlier technical checkpoint — before the correction
 
 **Checkpoint:** 22 September 2026, deployed English sample build `0f505fe`.

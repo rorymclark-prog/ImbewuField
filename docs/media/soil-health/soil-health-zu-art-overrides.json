@@ -1,0 +1,22 @@
+{
+  "5": {
+    "path": "public/course-images/soil-health/soil-health-l1.jpg",
+    "layout": "diagram",
+    "purpose": "Existing soil profile and jar illustration; no unsupported diagnosis is added."
+  },
+  "10": {
+    "path": "docs/media/studies-illustrated-release/art/soil-health/compost-materials.jpg",
+    "layout": "diagram",
+    "purpose": "Existing image of a Black African farmer handling compost materials; the lesson narration carries the process cautions."
+  },
+  "11": {
+    "path": "public/course-images/soil-health/soil-health-l2.jpg",
+    "layout": "diagram",
+    "purpose": "Existing compost-layer illustration; avoids a mismatched photo of adding greens while the lesson discusses correcting a wet heap."
+  },
+  "14": {
+    "path": "public/course-images/soil-health/soil-health-l3.jpg",
+    "layout": "diagram",
+    "purpose": "Existing static bare-soil and mulch comparison; slide remains still-only."
+  }
+}

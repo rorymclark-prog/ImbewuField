@@ -24,8 +24,9 @@ export type Dict = Record<string, string>;
  * copy in ten languages without a first-language reviewer is what tests/farmer-i18n-gaps.test.ts
  * exists to prevent, and a true sentence in English beats a fluent false one in isiZulu. Spread
  * into every locale (not left to translate()'s fallback) so the gap is explicit in each slot —
- * the same reason the Design Studio block below is spread. A reviewer overrides the key inside
- * their own locale, below the spread, and it stops being pending.
+ * the same reason the Design Studio block below is spread. Rory has since authorised labelled
+ * learner-visible isiZulu drafts before fluent review. The isiZulu override names the Journal's
+ * actual notes and photos; its review status remains recorded separately.
  */
 /*
  * The home help strip, pending review.
@@ -120,6 +121,29 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPhotoChooseDifferent: 'Choose a different photo',
   designPhotoSaving: 'Saving...',
   designPhotoUse: 'Use this photo',
+  designPhotoZoomSize: 'Size',
+  designPhotoOpacityLabel: 'See through',
+  designPhotoPointInstruction: 'Tap point {point} of 2 on the photo. The photo will not move while you do.',
+  designPhotoMoveInstruction: 'Drag the photo to move it. Fade it down to match it against the satellite underneath.',
+  designStorageFull: 'Storage full — your design is NOT being saved. Free up space, then re-open.',
+  designPhotoRemoveConfirm: 'Remove your photo and go back to the satellite view?\n\nYour design is not affected.',
+  designPhotoRemoveTitle: 'Remove your photo and go back to the satellite. Your design is not affected.',
+  designPhotoRemove: 'Remove photo',
+  designPhotoAdjust: 'Adjust photo',
+  designPhotoUseDifferent: 'Use a different photo',
+  designPhotoUseAerial: 'Use your own aerial photo',
+  designPhotoDragToMove: 'drag to move',
+  designPhotoTapping: 'Tapping…',
+  designPhotoAddScalePoint: 'Add scale point ({current}/{total})',
+  designPhotoUndoPoint: 'Undo point',
+  designPhotoScaleKept: 'Keeping your existing scale — re-measure only if it looks wrong.',
+  speciesPickerTitle: 'Plant Catalog',
+  speciesPickerFilteredFor: 'Filtered for {biome} biome',
+  speciesPickerBroadReach: 'Showing broad-reach species',
+  speciesPickerBroadReachSection: 'Broad-reach species (site climate unknown)',
+  speciesPickerNoteLabel: 'Note:',
+  speciesPickerNoteBody: 'Not yet agronomist-reviewed. Use as a starting point.',
+  speciesPickerFrostNote: 'Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.',
   designAdvisorLayerWater: 'Water',
   designAdvisorLayerZones: 'Zones',
   designAdvisorLayerPlanting: 'Planting',
@@ -174,6 +198,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designCanvasMeasureAgain: 'Keep tapping to add legs to the path.',
   designCanvasMeasureClear: 'Start over',
   designCanvasMeasureActually: 'Actually',
+  designZuluDraftNotice: 'Unreviewed isiZulu draft. English stays beside translated photo and canvas guidance. Guidance not yet translated remains in English.',
   designPaletteSelect: '↖️ Select',
   designPaletteUndo: '↩️ Undo',
   designPaletteRedo: '↪️ Redo',
@@ -187,6 +212,8 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteCleanupTitle: 'Preview straightening and evenly spacing the selected items',
   designPaletteAngle: 'Angle',
   designPaletteSize: 'Size',
+  designPaletteSizeLength: 'Length',
+  designPaletteGateLengthTitle: 'Gate length in metres',
   designPaletteSizeDown: 'Shrink every selected item by 10% — positions stay put',
   designPaletteSizeUp: 'Grow every selected item by 10% — positions stay put',
   designPaletteSizeWidth: 'W',
@@ -227,6 +254,21 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteCollapse: 'Collapse element palette',
   designPaletteExpand: 'Expand element palette',
   designPaletteLineSwale: 'Swale',
+  designPaletteSwaleLength: '{length} m long',
+  designPaletteSwaleLengthTitle: 'Measured along the line you drew',
+  designPaletteWidth: 'Width',
+  designPaletteSwaleWidthPlaceholder: 'not stated',
+  designPaletteSwaleWidthTitle: 'Stated disturbed-ground width; leave blank when it has not been set',
+  designPaletteSwaleWidthLabel: 'Stated swale width in metres',
+  designPaletteShow: 'Show',
+  designPaletteSelectColumn: 'Select',
+  designPaletteMoveColumn: 'Move',
+  designPaletteLayerColumn: 'Layer',
+  designPaletteFloat: 'Float',
+  designPaletteFloatTitle: 'Float the element palette — drag it anywhere and scroll down through the chips',
+  designPaletteFloatLabel: 'Float the element palette',
+  designPaletteElements: 'Elements',
+  designPaletteElementsDragTitle: 'Drag Elements panel',
   designPaletteLineFence: 'Fence',
   designPaletteLinePath: 'Path',
   designPaletteLinePipe: 'Pipe',
@@ -261,15 +303,16 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteLayerIcons: 'Icons',
   designPaletteLayerContours: 'Contours',
   designPaletteLayerSector: 'Sector energies',
+  designPaletteShowAllElements: 'Show all',
   designPrintTitle: 'Print / Export',
-  designPrintSubtitle: '8-map plan set · exact · print-ready',
+  designPrintSubtitle: '9-map plan set · exact · print-ready',
   designPrintSheets: 'Sheets (one page each)',
   designPrintNothingDrawn: 'Nothing drawn on this layer yet',
   designPrintPaper: 'Paper',
   designPrintOrientation: 'Orientation',
   designPrintLandscape: 'Landscape',
   designPrintPortrait: 'Portrait',
-  designPrintInclude: 'Include (legend / scale / north apply to the Base & Masterplan pages only)',
+  designPrintInclude: 'Include on every page',
   designPrintTitleBlock: 'Title block',
   designPrintLegend: 'Legend',
   designPrintScaleBar: 'Scale bar',
@@ -291,6 +334,9 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPrintShareError: 'Could not share the plan set: {error}',
   designPrintPngError: 'Could not save the PNGs: {error}',
   designPrintPdfError: 'Could not build the PDF: {error}',
+  designPrintSaveSimple: 'Save my plan',
+  designPrintPreviewError: 'Could not render the preview ({error}).',
+  designPrintRetry: 'Try again',
   // On-screen sheet-picker names — kept separate from PrintLayer.label, the English text painted
   // onto the exported PDF/PNG title block, which must stay fixed regardless of app language.
   designPrintSheetBase: 'Existing Site & Base',
@@ -494,16 +540,12 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   // about the state — the render happened server-side; this phone could not open it.
   designGlossyResumeGaveUp: 'Your AI render finished, but opening it kept crashing the app, so the app has stopped reopening it automatically. You can keep designing. To collect it, set Render quality to Standard and generate again, or open this design on a computer.',
 
-  // SpeciesPicker.tsx (Planting step, "Plant Catalog") chrome — was hard-coded English with no
-  // t() call at all except the close button. Plant common/botanical names stay untranslated (see
+  // SpeciesPicker.tsx (Planting step, "Plant Catalog") — the chrome (title, biome/broad-reach
+  // note, honesty banner) is translated above via speciesPicker* keys. Its section names, the
+  // "m h × m w" size line and the use-tag chips were still hard-coded English on top of that; the
+  // keys below cover those. Plant common/botanical names stay untranslated (see
   // lib/species-palette.ts): those are per-species data, not app chrome, and inventing a botanical
   // translation would be worse than showing the English name.
-  designSpeciesPickerTitle: 'Plant Catalog',
-  designSpeciesFilteredForBiome: 'Filtered for {biome} biome',
-  designSpeciesBroadReach: 'Showing broad-reach species',
-  designSpeciesBroadReachSection: 'Broad-reach species (site climate unknown)',
-  designSpeciesReviewNote: 'Not yet agronomist-reviewed. Use as a starting point.',
-  designSpeciesFrostHidden: 'Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.',
   designSpeciesSize: '{height}m h × {width}m w',
   designSpeciesSectionIndigenousFruit: 'Indigenous fruit',
   designSpeciesSectionExoticFruitNuts: 'Exotic fruit & nuts',

@@ -87,7 +87,10 @@ test('the menu button keeps the touch floor and the theme tokens', () => {
   assert.match(src, /var\(--bg-1\)/, 'themed background, not a hardcoded hex');
   assert.match(src, /var\(--border\)/);
   assert.match(src, /var\(--text-primary\)/);
-  assert.match(src, /aria-label="Open navigation"/);
+  // The old assertion pinned the English label, which left the shared control English after
+  // the farmer chose isiZulu. Keep the accessibility rule: name the button from the locale.
+  assert.match(src, /aria-label=\{t\('openNavigationAriaLabel'\)\}/,
+    'the menu needs a translated accessible name, not a fixed English label');
   // A hex here is the exact bug SettingsButton's comment records: a bright chip
   // in the corner of every dark-mode screen.
   assert.ok(!/#[0-9A-Fa-f]{6}/.test(src.replace(/\/\/.*$/gm, '')), 'no hardcoded colours');

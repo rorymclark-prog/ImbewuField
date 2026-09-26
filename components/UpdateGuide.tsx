@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { visibleUpdateTour } from '@/lib/release-notes';
+import { X } from 'lucide-react';
 import {
   OPEN_UPDATE_GUIDE_EVENT, UPDATE_GUIDE_KEY, readUpdateGuide, type UpdateGuideState,
 } from '@/lib/update-tour';
+import { useLanguage } from '@/lib/i18n';
 import styles from './UpdateGuide.module.css';
 
 export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string | null }) {
   const pathname = usePathname();
+  const { t } = useLanguage();
   const [guide, setGuide] = useState<UpdateGuideState | null>(null);
   const [minimized, setMinimized] = useState(false);
 
@@ -17,11 +19,20 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
     try {
       setGuide(readUpdateGuide(window.sessionStorage.getItem(UPDATE_GUIDE_KEY), loadedBuildSha));
     } catch { /* The tour is optional when storage is unavailable. */ }
-    const open = () => setGuide({
-      sha: loadedBuildSha, stops: visibleUpdateTour(), phase: 'offer', index: 0,
-    });
+    let cancelled = false;
+    // Loaded on demand — the guide is opened far less often than every route mounts this
+    // component, so the full changelog stays out of the shared layout bundle until asked for.
+    const open = () => {
+      import('@/lib/release-notes').then(({ visibleUpdateTour }) => {
+        if (cancelled) return;
+        setGuide({ sha: loadedBuildSha, stops: visibleUpdateTour(), phase: 'offer', index: 0 });
+      }).catch(() => { /* Offline and the chunk never cached: the guide is optional, stay quiet. */ });
+    };
     window.addEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
-    return () => window.removeEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
+    return () => {
+      cancelled = true;
+      window.removeEventListener(OPEN_UPDATE_GUIDE_EVENT, open);
+    };
   }, [loadedBuildSha]);
 
   // On arrival, get out of the way so the farmer can actually see and use the page.
@@ -43,27 +54,27 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   const onPage = pathname === stop.href.split('#')[0];
 
   if (minimized && guide.phase === 'tour') {
-    return <section className={styles.mini} role="region" aria-label="Update guide">
+    return <section className={styles.mini} role="region" aria-label={t('updateGuideRegionAria')}>
       <button type="button" onClick={() => setMinimized(false)}>
-        Continue guide · {guide.index + 1}/{guide.stops.length}
+        {t('updateGuideContinue').replace('{index}', String(guide.index + 1)).replace('{total}', String(guide.stops.length))}
       </button>
-      <button type="button" onClick={() => save(null)} aria-label="Close update guide">×</button>
+      <button type="button" onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={16} aria-hidden /></button>
     </section>;
   }
 
   return (
-    <section className={styles.guide} role="region" aria-label="Update guide">
+    <section className={styles.guide} role="region" aria-label={t('updateGuideRegionAria')}>
       <div className={styles.head}>
-        <span>{guide.phase === 'offer' ? 'UPDATED APP' : `UPDATE GUIDE · ${guide.index + 1} OF ${guide.stops.length}`}</span>
-        <button type="button" className={styles.close} onClick={() => save(null)} aria-label="Close update guide">×</button>
+        <span>{guide.phase === 'offer' ? t('updateGuideOfferBadge') : t('updateGuideTourBadge').replace('{index}', String(guide.index + 1)).replace('{total}', String(guide.stops.length))}</span>
+        <button type="button" className={styles.close} onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={18} aria-hidden /></button>
       </div>
       {guide.phase === 'offer' ? (
         <>
-          <h2>Want to see what changed?</h2>
-          <p>A short guide will take you to the pages in this update. You can stop at any time.</p>
+          <h2>{t('updateGuideOfferTitle')}</h2>
+          <p>{t('updateGuideOfferBody')}</p>
           <div className={styles.actions}>
-            <button type="button" className={styles.primary} onClick={() => save({ ...guide, phase: 'tour' })}>Guide me</button>
-            <button type="button" onClick={() => save(null)}>Not now</button>
+            <button type="button" className={styles.primary} onClick={() => save({ ...guide, phase: 'tour' })}>{t('settingsGuideMe')}</button>
+            <button type="button" onClick={() => save(null)}>{t('updateGuideNotNow')}</button>
           </div>
         </>
       ) : (
@@ -72,16 +83,16 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
           <p className={styles.where}>{stop.where}</p>
           <p>{stop.detail}</p>
           <div className={styles.actions}>
-            {!onPage && <a className={styles.primary} href={stop.href}>Open this page</a>}
-            {onPage && <span className={styles.arrived}>You’re on this page. Take a look around.</span>}
+            {!onPage && <a className={styles.primary} href={stop.href}>{t('updateGuideOpenPage')}</a>}
+            {onPage && <span className={styles.arrived}>{t('updateGuideArrived')}</span>}
           </div>
           <div className={styles.actions}>
-            {guide.index > 0 && <button type="button" onClick={() => save({ ...guide, index: guide.index - 1 })}>Previous</button>}
+            {guide.index > 0 && <button type="button" onClick={() => save({ ...guide, index: guide.index - 1 })}>{t('updateGuidePrevious')}</button>}
             <button type="button" onClick={() => guide.index + 1 < guide.stops.length
               ? save({ ...guide, index: guide.index + 1 }) : save(null)}>
-              {guide.index + 1 < guide.stops.length ? 'Next update' : 'Finish guide'}
+              {guide.index + 1 < guide.stops.length ? t('updateGuideNext') : t('updateGuideFinish')}
             </button>
-            <button type="button" onClick={() => save(null)}>Stop</button>
+            <button type="button" onClick={() => save(null)}>{t('updateGuideStop')}</button>
           </div>
         </>
       )}

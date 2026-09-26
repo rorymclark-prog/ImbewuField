@@ -160,8 +160,26 @@ export interface GardenerProfile {
 
 // ─── Surveys (NGO asks, farmer answers) ──────────────────────────────────────
 export type SurveyQType = 'yesno' | 'choice' | 'text';
-export interface SurveyQuestion { id: string; text: string; type: SurveyQType; options: string[] }
-export interface Survey { id: string; org_name: string; title: string; questions: SurveyQuestion[]; created_by: string; created_at: string }
+export interface SurveyQuestion {
+  id: string;
+  text: string;
+  /** Optional organisation-authored isiZulu label; the English `text` remains canonical. */
+  text_zu?: string;
+  type: SurveyQType;
+  options: string[];
+  /** Position-aligned optional isiZulu labels; submitted answers still use `options`. */
+  options_zu?: string[];
+}
+export interface Survey {
+  id: string;
+  org_name: string;
+  title: string;
+  /** Optional organisation-authored isiZulu title. */
+  title_zu?: string;
+  questions: SurveyQuestion[];
+  created_by: string;
+  created_at: string;
+}
 export interface SurveyResponse {
   id: string; survey_id: string; profile_id: string;
   /**

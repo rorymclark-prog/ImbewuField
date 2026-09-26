@@ -11,7 +11,8 @@ import { fieldIdentity,fieldScope } from '@/lib/field-session';
 import { FIELD_PAGE_NAMES,fieldPageDownloads,type FieldPageStatus } from '@/lib/field-page-downloads';
 import { canSeeNavLink } from '@/lib/role-access';
 import { isSampleMode } from '@/lib/sample-mode';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 
 const PAGE_NAME_KEYS: Record<string, string> = {
   '/home': 'offlinePageHome', '/offline': 'offlinePageOffline', '/farmer': 'offlinePageFarmer',
@@ -39,10 +40,12 @@ const WRITE_LABEL_KEYS: Record<string, string> = {
   'Garden observation': 'offlineLabelGardenObservation',
   'Assessment response': 'offlineLabelAssessmentResponse',
 };
+const OFFLINE_PROGRESS_KEYS = ['offlinePreparingPages','offlineSavingFieldwork','offlinePreparationGaps','offlinePreparationComplete','offlineSyncComplete'];
 
 export default function OfflinePage(){
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const {user,profile,role}=useAuth();
+  const simple = useAppLevel() === 'simple';
   const [online,setOnline]=useState(true),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');
   const [pages,setPages]=useState<Record<string,FieldPageStatus>>({}),[rows,setRows]=useState<DeviceRow[]>([]),[confirmDiscard,setConfirmDiscard]=useState('');
   const paths=Object.keys(FIELD_PAGE_NAMES).filter(path=>canSeeNavLink(role,path));
@@ -50,6 +53,10 @@ export default function OfflinePage(){
     const key = OFFLINE_ERROR_KEYS[message];
     return key ? t(key) : message;
   };
+  const source = (key: string) => lang==='zu' ? <details style={{marginTop:6}}><summary style={{minHeight:44,display:'flex',alignItems:'center',cursor:'pointer'}}>English source</summary><p style={{margin:'4px 0'}}>{translate('en',key)}</p></details> : null;
+  const actionLabel = (key: string) => lang==='zu' ? `${t(key)} (${translate('en',key)})` : t(key);
+  const englishError = lang==='zu' ? Object.entries(OFFLINE_ERROR_KEYS).find(([,key])=>t(key)===error)?.[0] : undefined;
+  const messageKey = OFFLINE_PROGRESS_KEYS.find(key=>t(key)===message);
   const pageName = (path: string) => t(PAGE_NAME_KEYS[path] ?? 'offlineUnknownPage');
   const writeLabel = (label: string) => {
     const visitDate = label.match(/^Visit · (.*)$/);
@@ -102,15 +109,16 @@ export default function OfflinePage(){
   const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:18,background:'var(--bg-1)'};
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8};
   return <main style={{height:'100%',overflowY:'auto',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 90px'}}>
-    <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:28,margin:0}}>{t('offlineTitle')}</h1></header>
-    <p role="status"><strong>{online?t('offlineConnected'):t('offlineUsingSavedCopies')}</strong>{writes.length?` · ${t('offlineEntriesWaiting').replace('{count}',String(writes.length))}`:''}</p>
-    <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p><button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?t('offlineWorking'):t('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{t('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>
-      <details><summary style={{minHeight:44,cursor:'pointer'}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}</summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p></details>
+    <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:18,lineHeight:'20px',margin:0,minWidth:0,flex:1,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{t('offlineTitle')}</h1></header>
+    {lang==='zu'&&<p role="note" style={{...card,marginTop:12,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
+    <div role="status"><strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}</div>
+    <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p>{source('offlinePrepareDescription')}<button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?actionLabel('offlineWorking'):actionLabel('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{actionLabel('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>{source('offlineLessonDownloads')}{source('offlineOpenToolsOnce')}
+      {!simple && <details><summary style={{minHeight:44,cursor:'pointer'}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}</summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}{source(pages[path]?.ready?'offlineStartupFilesSaved':'offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p>{source('offlineReadinessLimit')}</details>}
     </section>
-    <section style={card}><h2>{t('offlineSavedEntriesTitle')}</h2><p>{t('offlineSavedEntriesDescription')}</p><button style={button} disabled={!online||busy||!user||isSampleMode()} onClick={()=>void sync()}>{t('offlineSyncNow')}</button>{!writes.length&&<p>{t('offlineQueueEmpty')}</p>}
-      {writes.map(row=>{const w=row.value as FieldWrite;return <article key={row.key} style={{borderTop:'1px solid var(--border)',marginTop:16,paddingTop:12}}><h3>{writeLabel(w.label)}</h3><p>{w.state==='review'?t('offlineNeedsReview'):w.state==='sending'?t('offlineSending'):t('offlineWaitingToSend')}</p>{w.error&&<p>{showError(w.error)}</p>}<button style={button} onClick={()=>download(row)}>{t('offlineDownloadCopy')}</button>{confirmDiscard===row.key?<><p>{t('offlineRemoveConfirm')}</p><button style={button} onClick={()=>void discard(row).catch(e=>setError(showError(e.message)))}>{t('offlineRemoveQueuedChange')}</button><button style={button} onClick={()=>setConfirmDiscard('')}>{t('offlineKeepEntry')}</button></>:<button style={button} onClick={()=>setConfirmDiscard(row.key)}>{t('offlineReviewRemove')}</button>}{w.state==='review'&&<p>{t('offlineConflictHelp')}</p>}</article>;})}
+    <section style={card}><h2>{t('offlineSavedEntriesTitle')}</h2>{source('offlineSavedEntriesTitle')}<p>{t('offlineSavedEntriesDescription')}</p>{source('offlineSavedEntriesDescription')}<button style={button} disabled={!online||busy||!user||isSampleMode()} onClick={()=>void sync()}>{actionLabel('offlineSyncNow')}</button>{!writes.length&&<><p>{t('offlineQueueEmpty')}</p>{source('offlineQueueEmpty')}</>}
+      {writes.map(row=>{const w=row.value as FieldWrite;const stateKey=w.state==='review'?'offlineNeedsReview':w.state==='sending'?'offlineSending':'offlineWaitingToSend';const errorSource=Object.entries(OFFLINE_ERROR_KEYS).find(([message])=>message===w.error)?.[1];return <article key={row.key} style={{borderTop:'1px solid var(--border)',marginTop:16,paddingTop:12}}><h3>{writeLabel(w.label)}</h3><p>{t(stateKey)}</p>{source(stateKey)}{w.error&&<><p>{showError(w.error)}</p>{errorSource&&source(errorSource)}</>}{!simple&&<button style={button} onClick={()=>download(row)}>{actionLabel('offlineDownloadCopy')}</button>}{confirmDiscard===row.key?<><p>{t('offlineRemoveConfirm')}</p>{source('offlineRemoveConfirm')}<button style={button} onClick={()=>void discard(row).catch(e=>setError(showError(e.message)))}>{actionLabel('offlineRemoveQueuedChange')}</button><button style={button} onClick={()=>setConfirmDiscard('')}>{actionLabel('offlineKeepEntry')}</button></>:<button style={button} onClick={()=>setConfirmDiscard(row.key)}>{actionLabel('offlineReviewRemove')}</button>}{w.state==='review'&&<><p>{t('offlineConflictHelp')}</p>{source('offlineConflictHelp')}</>}</article>;})}
     </section>
-    <section style={card}><h2>{t('offlineAvailableTitle')}</h2><p>{t('offlineCachedCount').replace('{count}',String(cached.length))}</p><p>{t('offlineAvailableDescription')}</p><p>{t('offlineDeviceSafety')}</p></section>
-    {message&&<p role="status" style={card}>{message}</p>}{error&&<p role="alert" style={{...card,whiteSpace:'pre-wrap'}}>{error}</p>}
+    <section style={card}><h2>{t('offlineAvailableTitle')}</h2><p>{t('offlineCachedCount').replace('{count}',String(cached.length))}</p>{source('offlineCachedCount')}<p>{t('offlineAvailableDescription')}</p>{source('offlineAvailableDescription')}<p>{t('offlineDeviceSafety')}</p>{source('offlineDeviceSafety')}</section>
+    {message&&<><p role="status" style={card}>{message}</p>{messageKey&&source(messageKey)}</>}{error&&<div role="alert" style={{...card,whiteSpace:'pre-wrap'}}>{error}{englishError&&source(OFFLINE_ERROR_KEYS[englishError])}</div>}
   </div></main>;
 }

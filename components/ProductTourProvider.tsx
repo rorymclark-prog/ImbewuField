@@ -9,7 +9,9 @@ import { startRolePreview, useSampleRole } from '@/lib/use-role-navigation';
 import { readSampleChooserAccountRole } from '@/lib/sample-choice-access';
 import { prepareSampleFarm } from '@/lib/sample-farm-session';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, cleanProductTourProgress, sampleChoicesForAccount } from '@/lib/sample-tour';
+import { productTourError, productTourFeatureCopy, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
 import type { UserRole } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n-context';
 import { announceOverlay } from '@/lib/overlay-signal';
 import styles from './ProductTour.module.css';
 import TourDiscoveryProvider from './TourDiscovery';
@@ -25,6 +27,9 @@ const Context = createContext<TourContextValue | null>(null);
 export function useProductTour() { return useContext(Context); }
 
 export default function ProductTourProvider({ children }: { children: React.ReactNode }) {
+  const { lang } = useLanguage();
+  const tourUi = (key: Parameters<typeof productTourUi>[0], fallback: string, values: Record<string, string | number> = {}) =>
+    productTourUi(key, lang, values) ?? fallback;
   const router = useRouter();
   const pathname = usePathname();
   const sample = useSampleRole();
@@ -125,38 +130,43 @@ export default function ProductTourProvider({ children }: { children: React.Reac
   }
   const step = PRODUCT_TOUR[state.current];
   const features = PRODUCT_TOUR_FEATURES[step.id] ?? [];
-  const feature = features[Math.min(featureIndex, features.length - 1)];
+  const feature = productTourFeatureCopy(step.id, Math.min(featureIndex, features.length - 1), lang, features[Math.min(featureIndex, features.length - 1)]);
+  const stepCopy = productTourStepCopy(step, lang);
   const inView = pathname === step.href.split(/[?#]/)[0];
   const previous = PRODUCT_TOUR.map((_,i)=>i).filter(i=>i<state.current && allowed(i)).pop();
   return <TourDiscoveryProvider><Context.Provider value={{ ...state, ready, error, allowed, start, open:()=>{if(state.active && isSampleMode())setExpanded(true);}, go }}>
     {children}
-    <dialog ref={dialog} className={styles.dialog} aria-labelledby="product-tour-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
-      <div className={styles.dialogHead}><span>TOUR · {state.current + 1} OF {PRODUCT_TOUR.length}</span><button type="button" onClick={()=>setExpanded(false)} aria-label="Close tour guide">×</button></div>
-      <h2 id="product-tour-title">{inView && feature ? feature.title : step.title}</h2>
-      <p className={styles.time}>{step.title}{inView && features.length > 1 ? ` · Tip ${featureIndex + 1} of ${features.length}` : ` · About ${step.minutes} min`}</p>
-      <p>{inView && feature ? feature.text : step.task}</p>
-      {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={`Tip ${featureIndex + 1} of ${features.length}`}>
-        {features.map((tip, i) => <button key={tip.title} type="button" aria-label={`Tip ${i + 1}: ${tip.title}`} aria-current={i === featureIndex ? 'step' : undefined} onClick={() => setFeatureIndex(i)} />)}
+    <dialog ref={dialog} className={styles.dialog} lang={lang} aria-labelledby="product-tour-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
+      <div className={styles.dialogHead}><span>{tourUi('tour', 'TOUR')} · {state.current + 1} / {PRODUCT_TOUR.length}</span><button type="button" onClick={()=>setExpanded(false)} aria-label={tourUi('close', 'Close tour guide')}>×</button></div>
+      <h2 id="product-tour-title">{inView && feature ? feature.title : stepCopy.title}</h2>
+      <p className={styles.time}>{stepCopy.title}{inView && features.length > 1 ? ` · ${tourUi('tip', 'Tip')} ${featureIndex + 1} / ${features.length}` : ` · ${tourUi('aboutMinutes', `About ${step.minutes} min`, { duration: step.minutes === 1 ? 'umzuzu' : `imizuzu engu-${step.minutes}` })}`}</p>
+      <p>{inView && feature ? feature.text : stepCopy.task}</p>
+      {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={tourUi('tipAria', `Tip ${featureIndex + 1} of ${features.length}: ${feature?.title ?? stepCopy.title}`, { current: featureIndex + 1, total: features.length, title: feature?.title ?? stepCopy.title })}>
+        {features.map((tip, i) => {
+          const translatedTip = productTourFeatureCopy(step.id, i, lang, tip)!;
+          return <button key={tip.title} type="button" aria-label={tourUi('tipAria', `Tip ${i + 1}: ${tip.title}`, { current: i + 1, total: features.length, title: translatedTip.title })} aria-current={i === featureIndex ? 'step' : undefined} onClick={() => setFeatureIndex(i)} />;
+        })}
       </div>}
-      {error && <p role="alert">{error}</p>}
+      {error && <p role="alert">{productTourError(error, lang)}</p>}
       <div className={styles.controls}>
-      {inView && featureIndex < features.length - 1 && <button type="button" className={styles.primary} onClick={() => setFeatureIndex(i => i + 1)}>Next tip</button>}
-      <button type="button" className={inView && featureIndex < features.length - 1 ? undefined : styles.primary} onClick={()=>inView ? setExpanded(false) : go(state.current)} disabled={!allowed(state.current)}>{inView ? 'Try it now' : 'Open this view'}</button>
+      {inView && featureIndex < features.length - 1 && <button type="button" className={styles.primary} onClick={() => setFeatureIndex(i => i + 1)}>{tourUi('nextTip', 'Next tip')}</button>}
+      <button type="button" className={inView && featureIndex < features.length - 1 ? undefined : styles.primary} onClick={()=>inView ? setExpanded(false) : go(state.current)} disabled={!allowed(state.current)}>{inView ? tourUi('tryNow', 'Try it now') : tourUi('openView', 'Open this view')}</button>
       {step.secondaryHref && <Link href={step.secondaryHref} onClick={event=>{
         if (!state.active || !allowed(state.current) || !isSampleMode()) { event.preventDefault(); return; }
         // The optional crop, invoice, Lima and site-report actions are farm tools.
         if (!startRolePreview('farmer')) { event.preventDefault(); setError("The view could not open. Please try again."); return; }
         setExpanded(false);
-      }}>{step.secondaryLabel}</Link>}</div>
-      <p className={styles.hint}>Tap Tour beside the menu whenever you want these tips back.</p>
-      <div className={styles.controls}><button type="button" onClick={()=>next(true)} disabled={!ready}>I’ve explored this · Next</button><button type="button" onClick={()=>next(false)} disabled={!ready}>Skip this stop</button></div>
-      <div className={styles.controls}>{previous !== undefined && <button type="button" onClick={()=>go(previous)}>Previous stop</button>}<Link href="/tour" onClick={()=>setExpanded(false)}>Tour overview</Link><button type="button" onClick={()=>{if(save({...state,active:false}))setExpanded(false);}}>End tour</button></div>
+        }}>{stepCopy.secondaryLabel}</Link>}</div>
+      <p className={styles.hint}>{tourUi('hint', 'Tap Tour beside the menu whenever you want these tips back.')}</p>
+      <div className={styles.controls}><button type="button" onClick={()=>next(true)} disabled={!ready}>{tourUi('exploredNext', 'I’ve explored this · Next')}</button><button type="button" onClick={()=>next(false)} disabled={!ready}>{tourUi('skip', 'Skip this stop')}</button></div>
+      <div className={styles.controls}>{previous !== undefined && <button type="button" onClick={()=>go(previous)}>{tourUi('previous', 'Previous stop')}</button>}<Link href="/tour" onClick={()=>setExpanded(false)}>{tourUi('overview', 'Tour overview')}</Link><button type="button" onClick={()=>{if(save({...state,active:false}))setExpanded(false);}}>{tourUi('end', 'End tour')}</button></div>
     </dialog>
   </Context.Provider></TourDiscoveryProvider>;
 }
 
 export function ProductTourButton() {
   const tour = useProductTour();
+  const { lang } = useLanguage();
   if (!tour?.active) return null;
-  return <button type="button" className={styles.badge} onClick={tour.open} aria-label={`Tour guide, stop ${tour.current+1} of ${PRODUCT_TOUR.length}`}><span>Tour</span><strong>{tour.current+1}/{PRODUCT_TOUR.length}</strong></button>;
+  return <button type="button" className={styles.badge} data-lang={lang} onClick={tour.open} aria-label={productTourUi('buttonAria', lang, { current: tour.current + 1, total: PRODUCT_TOUR.length }) ?? `Tour guide, stop ${tour.current+1} of ${PRODUCT_TOUR.length}`}><span>{productTourUi('tour', lang) ?? 'Tour'}</span><strong>{tour.current+1}/{PRODUCT_TOUR.length}</strong></button>;
 }

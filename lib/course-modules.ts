@@ -449,38 +449,36 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "water-harvesting-l4",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
-        infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
-        title: "Greywater: Reuse with Care",
-        body: "Greywater is used water from washing. Toilet water needs separate handling. Washwater may still contain germs, salts and chemicals.\n\nDo not reuse water from nappies, sick people, animal washing or harmful chemicals. Ask the municipality which sources and uses are allowed.\n\nWhere local rules allow it, use suitable greywater below mulch around non-food planting. Keep people and animals away from the discharge.\n\nDo not spray it, let it pool, or let it run into a street, drain or watercourse. Mulch does not disinfect water.\n\nUse it promptly. Stored greywater needs specialist advice and appropriate treatment.\n\nKeep untreated greywater away from edible crops and places where people or animals can touch it. Never connect it to drinking-water pipes.\n\nCheck municipal rules before installing a greywater system. The right design depends on the source, soil, drainage and intended use.\n\nIf the water smells bad, pools or harms plants, stop using it and seek advice.",
+        title: "Greywater: Check Before Reuse",
+        body: "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
         keyPoints: [
-          "Greywater can contain germs, salts and chemicals",
-          "Keep untreated greywater away from food and people",
-          "Mulch does not disinfect water",
-          "Check municipal rules and avoid spraying, pooling and runoff",
+          "Water sources and greywater guidance can differ",
+          "Check the source, service status, intended use and site locally before any reuse",
+          "Soil and mulch do not disinfect wastewater",
+          "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
         ],
         quiz: [
           {
-            q: "Where may suitable greywater be directed if local rules allow it?",
+            q: "What should happen before any household washwater is reused?",
             options: [
-              "Watering lettuce that will be eaten raw",
-              "Below mulch around non-food planting, away from people and animals",
-              "Watering seedlings in a nursery tray",
-              "Filling a fishpond",
+              "Direct it below mulch around a tree",
+              "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+              "Use it if it looks clear",
+              "Use it only on plants that are not eaten raw",
             ],
             correct: 1,
-            rationale: "Keep greywater away from edible crops and contact with people or animals. Mulch is not disinfection; local rules and site conditions still apply.",
+            rationale: "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
           },
           {
-            q: "Why avoid bleach or strong disinfectant in water destined for greywater reuse?",
+            q: "Why check the exact water source and cleaning products before considering reuse?",
             options: [
-              "They make the water too alkaline for any plant",
-              "They can kill the soil organisms and harm plant roots that greywater is meant to feed",
-              "They cause tanks to corrode faster",
-              "They attract more mosquitoes",
+              "All cleaning products are safe if the water is diluted",
+              "Water composition and product effects vary, so the actual source and products need assessment",
+              "The water can be reused when it has no smell",
+              "Mulch removes every harmful substance",
             ],
             correct: 1,
-            rationale: "Some cleaning chemicals and salts can harm soil organisms and plants. Water sources and products must be assessed before reuse.",
+            rationale: "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
           },
         ],
       },
@@ -572,7 +570,7 @@ export const COURSE_MODULES: CourseModule[] = [
         "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
         "infographicAlt": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         "title": "Mulching and Cover Crops: Protecting and Building Soil",
-        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid draining from the bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.",
+        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
         "keyPoints": [
           "Protect exposed soil with suitable cover",
           "Keep mulch away from trunks and stems",
@@ -589,7 +587,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil pH drops and nitrogen builds up"
             ],
             "correct": 2,
-            "rationale": "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly."
+            "rationale": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away."
           },
           {
             "q": "What should you remember about liquid draining from a worm bin?",
@@ -600,7 +598,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "A fixed dilution makes every liquid safe"
             ],
             "correct": 1,
-            "rationale": "Leachate is drainage from unfinished material. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
+            "rationale": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
           }
         ]
       }
@@ -779,7 +777,7 @@ export const COURSE_MODULES: CourseModule[] = [
         keyPoints: [
           "Stable open-pollinated varieties need suitable pollination management",
           "Seed sovereignty means freedom from depending on a seed company every season",
-          "Genetic diversity across many saved varieties is real protection against climate unpredictability",
+          "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
           "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
         ],
         quiz: [
@@ -817,7 +815,7 @@ export const COURSE_MODULES: CourseModule[] = [
           "Dry-method crops (beans, maize, sunflower) simply dry on the plant before collection",
 
           "Tomato fermentation removes gel; other wet seeds need their own processing method",
-          "Tomatoes need little isolation; maize needs real distance between varieties to stay pure",
+          "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
           "Rinse processed tomato seed and dry it thoroughly before storage",
         ],
         quiz: [
@@ -850,7 +848,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
         infographicAlt: "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
         title: "Drying, Storing, and Sharing Seed",
-        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture; get all three low and seed can last for years.\n\nLabel every envelope with crop, variety, and date saved. Store in a cool, dark, dry place — a sealed container with a little rice or dried milk powder as a moisture absorber works well.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
+        body: "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
         keyPoints: [
           "Dry seed in shade with good airflow; never in direct sun or sealed heat",
           "Store labelled seed cool, dark, and dry — heat, light, and moisture are the three enemies of viability",
@@ -867,7 +865,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "Soil contact, pests, and rodents",
             ],
             correct: 1,
-            rationale: "Keeping seed cool, dark, and dry directly counters all three — which is exactly why a sealed container in a shaded cupboard works so well.",
+            rationale: "Keeping thoroughly dry seed cool and dark counters all three. A sealed container helps keep dry seed dry, but can trap moisture if seed is packed while damp.",
           },
           {
             q: "Why test a small batch of stored seed for germination before planting season?",
@@ -1014,7 +1012,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "food-forest-l1",
         "infographicUrl": "/course-images/food-forest/food-forest-l1.jpg",
-        "infographicAlt": "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
+        "infographicAlt": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
         "title": "The Seven Layers: How a Forest Feeds Itself",
         "body": "An indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThink of tall canopy, smaller trees, shrubs and herbaceous plants.\n\nGround cover protects the surface, root crops grow below it, and climbers use suitable supports.\n\nThe heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.\n\nThe original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nIt places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.\n\nTreat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.\n\nYoung plants need establishment care: moisture checks, weed control and protection from damage.\n\nAs plants grow, shade and leaf litter change conditions below them.\n\nCheck competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
         "keyPoints": [
@@ -1135,7 +1133,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "small-livestock-l1",
         infographicUrl: "/course-images/small-livestock/small-livestock-l1.jpg",
-        infographicAlt: "A moveable chicken pen shown in two positions along a strip of ground, with an arrow showing it being moved on. The ground it has left is scratched over and enriched.",
+        infographicAlt: "An illustration of a wheeled chicken pen shown in two positions along a strip of ground. An arrow points right; three chickens stand in the pen on the right, and a darker scratched patch lies between the two positions.",
         title: "Chickens in the System: Pest Control, Fertility, and Food",
         body: "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
         keyPoints: [
@@ -1174,12 +1172,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/small-livestock/small-livestock-l2.jpg",
         infographicAlt: "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
         title: "Bees: Pollination, Honey, and System Ecology",
-        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. Learn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first.\n\nProvide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. All beekeepers must register with the national Department of Agriculture. Check the current rules before moving bees or hives. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+        body: "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
         keyPoints: [
           "Pollinators help many crops; the benefit depends on the crop and conditions",
           "Learn safe hive care from an experienced local beekeeper",
           "Choose a safe hive site away from busy paths and children",
-          "All beekeepers must register with the national Department of Agriculture",
+          "Register with the Department for activities covered by the national honey-bee control measures",
         ],
         quiz: [
           {
@@ -1375,6 +1373,15 @@ export const CATEGORY_COLORS: Record<ModuleCategory, string> = {
   design:     "#C07A1E",
   business:   "#5C5040",
   seeds:      "#B8860B",
+};
+
+// Text-safe variant of CATEGORY_COLORS. Ochre (design) is a FILL — as text it is 2.54:1 on paper,
+// below the contrast a farmer can read (CLAUDE.md). Every category chip/label/icon that paints
+// readable TEXT (not a background, border or icon stroke) with the category colour must use this
+// map instead; design is the only entry that actually differs from CATEGORY_COLORS.
+export const CATEGORY_TEXT_COLORS: Record<ModuleCategory, string> = {
+  ...CATEGORY_COLORS,
+  design: "#7A4408",
 };
 
 export const TOTAL_MODULES = COURSE_MODULES.length;

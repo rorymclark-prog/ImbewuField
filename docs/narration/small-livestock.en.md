@@ -112,7 +112,7 @@ South Africa has two native honeybee subspecies.
 
 The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.
 
-Learn safe hive care from an experienced local beekeeper. Check the current rules before moving bees or hives between areas.
+These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives.
 
 ---
 
@@ -134,7 +134,7 @@ Provide flowering plants through the seasons and avoid exposing bees to pesticid
 
 Active bees do not prove that the farm is free of chemicals or disease.
 
-All beekeepers must register with the national Department of Agriculture.
+Registration is required for activities defined by the national honey-bee control measures. These include keeping managed hives for bee products, queen rearing, commercial pollination, and removing, eradicating or relocating colonies. Check with the Department if you are unsure whether your activity is covered.
 
 If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.
 

@@ -1,5 +1,6 @@
 'use client';
 
+import { numberLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 
@@ -61,6 +62,22 @@ import {
   creditPackPdfFilename,
   CreditPackSampleModeError,
 } from '@/lib/credit-pack-pdf';
+
+function recordsUi(lang: string, english: string, isiZulu: string, paired = false): string {
+  if (lang !== 'zu') return english;
+  return paired ? `${english} — ${isiZulu}` : isiZulu;
+}
+
+/** Keep the English control label visible until this transactional copy has fluent review. */
+function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: string; isiZulu: string }) {
+  if (lang !== 'zu') return <>{english}</>;
+  return (
+    <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
+      <span lang="zu">{isiZulu}</span>
+      <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
+    </span>
+  );
+}
 
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
 // WriteTimeoutError comment there. Deliberately NOT run through t(): this repo never invents
@@ -131,9 +148,9 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
       {...props}
       className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
       style={{
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
-        color: '#20190F',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
+        color: 'var(--text-primary)',
         ...props.style,
       }}
     />
@@ -147,24 +164,28 @@ function SubmitBtn({
   loading: boolean;
   children: React.ReactNode;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
     <button
       type="submit"
       disabled={loading}
-      className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
+      // THE PRIMARY ACTION OF THIS FORM, and it looked like the least important thing on the
+      // page: a 14%-alpha forest tint that read as a disabled control. CLAUDE.md makes ochre the
+      // primary CTA; #9A6018 rather than #C07A1E because white type on #C07A1E is 3.47:1 and on
+      // #9A6018 it is 5.17:1. Public Sans, not the display serif — §0 puts buttons in Public
+      // Sans, and a serif at 13px with -0.02em tracking is the least legible thing in a form.
+      className="w-full py-2.5 rounded-xl font-sans font-bold flex items-center justify-center gap-2 transition-all"
       style={{
-        background: loading
-          ? 'rgba(31,77,43,0.06)'
-          : 'rgba(31,77,43,0.14)',
-        border: '1px solid rgba(31,77,43,0.28)',
-        color: 'var(--color-ink)',
+        fontSize: 15,
+        background: loading ? 'rgba(154,96,24,0.35)' : '#9A6018',
+        border: 'none',
+        color: '#FFFFFF',
         cursor: loading ? 'not-allowed' : 'pointer',
       }}
     >
       {loading ? (
         <>
-          <Loader2 size={14} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <Loader2 size={14} className="animate-spin" style={{ color: '#FFFFFF' }} />
           {t('myRecordsSaving')}
         </>
       ) : (
@@ -201,16 +222,16 @@ function SignInPrompt() {
           border: '1px solid rgba(31,77,43,0.25)',
         }}
       >
-        <Sprout size={28} style={{ color: '#1F4D2B' }} />
+        <Sprout size={28} style={{ color: 'var(--color-forest-800)' }} />
       </div>
       <div>
         <p
           className="font-display font-semibold text-base mb-1"
-          style={{ color: '#20190F' }}
+          style={{ color: 'var(--text-primary)' }}
         >
           {t('myRecordsSignInTitle')}
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: '#9A8268' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsSignInBody')}
         </p>
       </div>
@@ -220,7 +241,7 @@ function SignInPrompt() {
         style={{
           background: 'rgba(31,77,43,0.14)',
           border: '1px solid rgba(31,77,43,0.35)',
-          color: '#1F4D2B',
+          color: 'var(--color-forest-800)',
         }}
       >
         {t('myRecordsSignInButton')} <ArrowRight size={16} />
@@ -332,8 +353,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#1F4D2B">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3">
-        {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">AI-generated crop reference · add your own harvest photo below.</figcaption></figure>}
+      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
+        {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
           <CropSelect
@@ -373,7 +394,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   if (fileRef.current) fileRef.current.value = '';
                 }}
                 className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
-                style={{ background: 'rgba(31,25,15,0.12)', color: '#20190F' }}
+                style={{ background: 'rgba(31,25,15,0.12)', color: 'var(--text-primary)' }}
               >
                 <X size={14} />
               </button>
@@ -382,12 +403,12 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <label
             className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
             style={{
-              background: '#FFFEFA',
-              border: '1px dashed #E2D8C4',
-              color: '#9A8268',
+              background: 'var(--bg-1)',
+              border: '1px dashed var(--border)',
+              color: 'var(--text-muted)',
             }}
           >
-            <Camera size={16} style={{ color: '#9A8268' }} />
+            <Camera size={16} style={{ color: 'var(--text-muted)' }} />
             <span>{form.photoFile ? form.photoFile.name : t('myRecordsChoosePhoto')}</span>
             <input
               ref={fileRef}
@@ -400,7 +421,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
@@ -491,7 +512,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#9E5C08">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         <div className="grid grid-cols-2 gap-2">
           <div>
             <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
@@ -516,11 +537,11 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         {form.crop && (
           <div
             className="rounded-lg px-3 py-2 text-xs font-sans leading-relaxed"
-            style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#5C5040' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
           >
             {guide && guideLow !== null && guideHigh !== null ? (
               <>
-                <strong style={{ color: '#20190F' }}>{t('myRecordsGuidePriceLabel')}</strong>{' '}
+                <strong style={{ color: 'var(--text-primary)' }}>{t('myRecordsGuidePriceLabel')}</strong>{' '}
                 {t('myRecordsGuidePriceRange')
                   .replace('{wholesale}', String(guide.wholesalePerKg))
                   .replace('{retail}', String(guide.retailPerKg))}
@@ -542,9 +563,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             )}
           </div>
         )}
-        <label className="block text-sm">Growing area for this sale (optional)
+        <label className="block text-sm">{recordsUi(lang, 'Growing area for this sale (optional)', 'Indawo yokulima yalokhu kuthengisa (akuphoqelekile)')}
           <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
-            <option value="">Unassigned</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option><option value="other">Orchard / other</option>
+            <option value="">{recordsUi(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsUi(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsUi(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option><option value="other">{recordsUi(lang, 'Orchard / other', 'Ingadi yezihlahla zezithelo / okunye')}</option>
           </select>
         </label>
         <div className="grid grid-cols-2 gap-2">
@@ -569,12 +590,12 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
-        <Link href="/invoice" className="block py-2 text-sm underline">Multiple products or payment later? Create an invoice</Link>
+        <Link href="/invoice" className="block py-2 text-sm underline">{recordsUi(lang, 'Multiple products or payment later? Create an invoice', 'Imikhiqizo eminingi noma ukukhokha kamuva? Dala i-invoyisi', true)}</Link>
       </form>
     </Card>
   );
@@ -615,7 +636,7 @@ function OrchardSwitch({ on, onChange, t }: {
         fontWeight: on ? 600 : 400,
         border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
         background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
-        color: on ? '#1F4D2B' : '#8C7A62',
+        color: on ? '#1F4D2B' : '#755942',
         cursor: 'pointer',
       }}
     >
@@ -631,7 +652,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}
@@ -643,7 +664,7 @@ function ExampleRowsHeading({ label }: { label: string }) {
   return (
     <div
       className="flex items-center gap-1.5 mb-2 px-0.5"
-      style={{ font: '700 10px/1 system-ui, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#A66A16' }}
+      style={{ font: '700 10px/1 system-ui, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gold)' }}
     >
       <Sparkles size={11} />
       {label}
@@ -655,7 +676,7 @@ function ExampleBadge({ label }: { label: string }) {
   return (
     <span
       className="flex-shrink-0"
-      style={{ padding: '3px 7px', borderRadius: 6, background: '#C07A1E', color: '#fff', font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase' }}
+      style={{ padding: '3px 7px', borderRadius: 6, background: '#9A6018', color: '#fff', font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase' }}
     >
       {label}
     </span>
@@ -672,7 +693,7 @@ function HarvestCropPicture({ name }: { name: string }) {
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
     ? <CropIcon cropKey={key} icon="🌱" size={32} />
-    : <Leaf size={18} style={{ color: '#1F4D2B' }} />;
+    : <Leaf size={18} style={{ color: 'var(--color-forest-800)' }} />;
 }
 
 /* ── Production list ─────────────────────────────────────────────────────── */
@@ -682,7 +703,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
+        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -692,7 +713,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
         <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
         <div
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
-          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+          style={{ background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4' }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
@@ -701,12 +722,12 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             <HarvestCropPicture name={EXAMPLE_PRODUCTION.crop} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {EXAMPLE_PRODUCTION.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
           </div>
-          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#1F4D2B' }}>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
           </div>
           <ExampleBadge label={t('myRecordsExampleBadge')} />
@@ -721,8 +742,8 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           {item.photo_url ? (
@@ -745,17 +766,17 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {item.crop}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {fmtDate(item.logged_at)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#1F4D2B' }}
+            style={{ color: 'var(--color-forest-800)' }}
           >
             {item.kg} kg
           </div>
@@ -768,11 +789,11 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 /* ── Sales list ──────────────────────────────────────────────────────────── */
 
 function SalesList({ items }: { items: SalesLog[] }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
+        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -782,24 +803,24 @@ function SalesList({ items }: { items: SalesLog[] }) {
         <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
         <div
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
-          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+          style={{ background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4' }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(158,92,8,0.08)', border: '1px dashed rgba(158,92,8,0.25)' }}
           >
-            <Banknote size={18} style={{ color: '#9E5C08' }} />
+            <Banknote size={18} style={{ color: 'var(--gold)' }} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {EXAMPLE_SALE.crop}
-              <span className="font-normal" style={{ color: '#9A8268' }}> → {EXAMPLE_SALE.buyer}</span>
+              <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {EXAMPLE_SALE.buyer}</span>
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {EXAMPLE_SALE.dateLabel}
             </p>
           </div>
-          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#9E5C08' }}>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--gold)' }}>
             R {EXAMPLE_SALE.amount.toFixed(2)}
           </div>
           <ExampleBadge label={t('myRecordsExampleBadge')} />
@@ -814,37 +835,37 @@ function SalesList({ items }: { items: SalesLog[] }) {
           key={item.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(158,92,8,0.10)', border: '1px solid rgba(158,92,8,0.15)' }}
           >
-            <Banknote size={18} style={{ color: '#9E5C08' }} />
+            <Banknote size={18} style={{ color: 'var(--gold)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {item.crop}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: '#9A8268' }}>
+                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
-            {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`View invoice for ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />Invoice #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · View</Link>}
-            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${item.invoice_source_sale ? 'Recover' : 'Create'} invoice for ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{item.invoice_source_sale ? 'Recover invoice' : 'Create invoice'}</Link>}
+            {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
+            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
-            style={{ color: '#9E5C08' }}
+            style={{ color: 'var(--gold)' }}
           >
             R {item.amount.toFixed(2)}
           </div>
@@ -860,7 +881,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   const { t } = useLanguage();
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
+      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -872,24 +893,24 @@ function SharedDesignsList({ items }: { items: Design[] }) {
           key={design.id}
           className="flex items-center gap-3 rounded-xl px-3 py-2.5"
           style={{
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
           }}
         >
           <div
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(47,111,158,0.10)', border: '1px solid rgba(47,111,158,0.15)' }}
           >
-            <Ruler size={18} style={{ color: '#2F6F9E' }} />
+            <Ruler size={18} style={{ color: 'var(--blue)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-display font-medium leading-tight truncate"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -899,7 +920,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             style={{
               background: 'rgba(47,111,158,0.08)',
               border: '1px solid rgba(47,111,158,0.2)',
-              color: '#2F6F9E',
+              color: 'var(--blue)',
               textDecoration: 'none',
             }}
           >
@@ -934,11 +955,12 @@ function CreditPackCard({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const sampling = isSampleMode();
+  const { lang } = useLanguage();
   const ready = creditPackHasAnyRecords(production, sales, expenses, invoices);
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
   const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
-  const money = (value: number) => `R ${value.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`;
+  const money = (value: number) => `R ${numberLabel(value, 0)}`;
 
   async function handleExport() {
     setError('');
@@ -957,7 +979,7 @@ function CreditPackCard({
       setError(
         err instanceof CreditPackSampleModeError
           ? err.message
-          : 'Could not build the document. Please try again.',
+          : recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.'),
       );
     } finally {
       setLoading(false);
@@ -971,38 +993,36 @@ function CreditPackCard({
           className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
           style={{ background: 'rgba(46,107,58,0.10)', border: '1px solid rgba(46,107,58,0.18)' }}
         >
-          <Landmark size={18} style={{ color: '#2E6B3A' }} />
+          <Landmark size={18} style={{ color: 'var(--color-forest-700)' }} />
         </div>
         <div>
           <p className="text-xl font-display font-semibold" style={{ color: 'var(--color-ink)' }}>
-            Records for a lender
+            {recordsUi(lang, 'Records for a lender', 'Amarekhodi okubolekwa imali')}
           </p>
           <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
-            A summary of your logged harvests, sales and costs — income consistency, cash flow and
-            a track record, built only from what you have entered. Material for a conversation with
-            a lender, not a credit score or a loan approval.
+            {recordsUi(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.', true)}
           </p>
         </div>
       </div>
 
       {!ready ? (
-        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
-          Log at least one harvest, sale or cost first — there is nothing to summarise yet.
+        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: 'var(--bg-1)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
+          {recordsUi(lang, 'Log at least one harvest, sale or cost first — there is nothing to summarise yet.', 'Rekhoda okungenani isivuno esisodwa, ukuthengisa noma izindleko kuqala — akukho okungafingqwa okwamanje.', true)}
         </p>
       ) : (
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
-          {[['Income', money(totals.income)], ['Costs', money(totals.spent)], ['Harvested', `${production.reduce((n, p) => n + (p.kg ?? 0), 0).toLocaleString('en-ZA')} kg`]].map(([label, value]) => (
+          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
             <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{previewOpen ? 'Close summary' : 'View summary'}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
-            <caption className="text-left py-2 font-semibold">Monthly income and costs</caption>
-            <thead><tr><th className="text-left p-2">Month</th><th className="text-right p-2">Income</th><th className="text-right p-2">Costs</th><th className="text-right p-2">Balance</th></tr></thead>
+            <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
+            <thead><tr><th className="text-left p-2">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className="text-right p-2">{recordsUi(lang, 'Income', 'Imali engenayo', true)}</th><th className="text-right p-2">{recordsUi(lang, 'Costs', 'Izindleko', true)}</th><th className="text-right p-2">{recordsUi(lang, 'Balance', 'Ibhalansi', true)}</th></tr></thead>
             <tbody>{months.map(month => <tr key={month.monthKey} style={{ borderTop: '1px solid var(--color-border)' }}><td className="p-2">{month.label}</td><td className="p-2 text-right">{money(month.incomeZar)}</td><td className="p-2 text-right">{money(month.expensesZar)}</td><td className="p-2 text-right">{money(month.netZar)}</td></tr>)}</tbody>
           </table>
         </div>}
@@ -1014,18 +1034,18 @@ function CreditPackCard({
           style={{
             background: loading ? 'rgba(46,107,58,0.06)' : 'rgba(46,107,58,0.14)',
             border: '1px solid rgba(46,107,58,0.32)',
-            color: loading ? '#9A8268' : '#2E6B3A',
+            color: loading ? '#755942' : '#2E6B3A',
             cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? (
             <>
-              <Loader2 size={14} className="animate-spin" style={{ color: '#2E6B3A' }} />
-              Building document…
+              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
+              {recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}
             </>
           ) : (
             <>
-              <Landmark size={14} /> Export records for a lender
+              <Landmark size={14} /> {recordsUi(lang, 'Export records for a lender', 'Khipha amarekhodi kumbolekisi')}
             </>
           )}
         </button>
@@ -1033,7 +1053,7 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: '#C0531E' }}>
+        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
           {error}
         </p>
       )}
@@ -1077,7 +1097,7 @@ export default function MyRecords({
 }) {
   const showPicked = section === 'all' || section === 'picked';
   const showSold = section === 'all' || section === 'sold';
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [sales, setSales] = useState<SalesLog[]>([]);
@@ -1208,7 +1228,7 @@ export default function MyRecords({
           <div
             key={i}
             className="h-24 rounded-xl animate-pulse"
-            style={{ background: '#EDE7DB', animationDelay: `${i * 80}ms` }}
+            style={{ background: 'var(--bg-2)', animationDelay: `${i * 80}ms` }}
           />
         ))}
       </div>
@@ -1238,21 +1258,21 @@ export default function MyRecords({
           <div>
             <h2
               className="font-display font-bold text-base leading-tight"
-              style={{ color: '#20190F' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {t('myRecordsTitle')}
             </h2>
-            <p className="font-display text-xs mt-0.5" style={{ color: '#9A8268' }}>
+            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('myRecordsSubtitle')}
             </p>
           </div>
           {dataLoading && (
-            <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
+            <Loader2 size={16} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
           )}
         </div>
       ) : dataLoading ? (
         <div className="flex justify-end">
-          <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          <Loader2 size={16} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
         </div>
       ) : null}
 
@@ -1260,16 +1280,16 @@ export default function MyRecords({
       {loadError && !dataLoading && (
         <div
           className="flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5"
-          style={{ background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
+          style={{ background: 'color-mix(in srgb, var(--orange) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 25%, transparent)' }}
         >
-          <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>
+          <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--orange)' }}>
             {t('myRecordsLoadError')}
           </span>
           <button
             type="button"
             onClick={() => { void loadData(); }}
             className="font-sans font-semibold flex-shrink-0"
-            style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+            style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
           >
             {t('myRecordsRetry')}
           </button>
@@ -1309,10 +1329,10 @@ export default function MyRecords({
           <Card>
             <div className="flex items-center justify-between gap-4 mb-3">
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 22, color: '#1F4D2B', lineHeight: 1 }}>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
                   {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
                 </div>
                 <OrchardSwitch
@@ -1353,15 +1373,16 @@ export default function MyRecords({
              same page, below this component. ── */}
       {showSold && (
         <Card accent="#315939">
-          <SectionLabel>Record a sale</SectionLabel>
-          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>Create an invoice to keep the buyer, produce, quantity and payment together.</p>
+          {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
+          <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
+          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>
           <div className="flex flex-wrap gap-2">
-            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />New sale &amp; invoice</Link>
-            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>Past sale / paper invoice<ArrowRight size={16} /></Link>
+            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} /><RecordZuluDraft lang={lang} english="New sale & invoice" isiZulu="Ukuthengisa okusha ne-invoyisi" /></Link>
+            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Past sale / paper invoice" isiZulu="Ukuthengisa kwangaphambilini / i-invoyisi yephepha" /><ArrowRight size={16} /></Link>
           </div>
-          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>Already logged this sale? Use Create invoice on its row below to keep one record.</p>
+          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}><RecordZuluDraft lang={lang} english="Already logged this sale? Use Create invoice on its row below to keep one record." isiZulu="Usuvele ukuqophile lokhu kuthengisa? Sebenzisa u-Dala i-invoyisi emgqeni wako ongezansi ukuze ugcine irekhodi elilodwa." /></p>
           <details className="mt-3">
-            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>Quick sale entry</summary>
+            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Quick sale entry" isiZulu="Ukufaka ukuthengisa okusheshayo" /></summary>
             <LogSaleForm onSaved={handleSaved} />
           </details>
         </Card>
@@ -1398,10 +1419,10 @@ export default function MyRecords({
           <Card>
             <div className="flex items-center justify-between gap-4 mb-3">
               <div>
-                <div className="font-display font-bold" style={{ fontSize: 22, color: '#C07A1E', lineHeight: 1 }}>
+                <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
                   {t('myRecordsTotalRevenue')} · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} {t('myRecordsKgSoldSuffix')}
                 </div>
               </div>

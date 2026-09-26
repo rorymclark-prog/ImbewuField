@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { X, Camera, Trash2, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { resizeForStorage } from '@/lib/site-evidence';
 import {
   JOURNAL_CATEGORIES,
@@ -40,6 +41,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const simple = useAppLevel() === 'simple';
   const [date, setDate] = useState(entry?.date ?? todayISODate());
   const [title, setTitle] = useState(entry?.title ?? '');
   const [notes, setNotes] = useState(entry?.notes ?? '');
@@ -124,10 +126,10 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>
+              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#8A7C62', marginTop: 1 }}>
+              <div style={{ font: '400 11.5px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -135,7 +137,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               type="button"
               onClick={onClose}
               aria-label={ui('Close', 'Vala')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: '#8A7C62' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text-muted)' }}
             >
               <X size={20} />
             </button>
@@ -143,48 +145,56 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         </div>
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* Category — big tap targets, wraps on a phone */}
-          <div>
-            <Label>{ui('What kind of note?', 'Lolu hlobo luni lwenothi?')}</Label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-              {JOURNAL_CATEGORIES.map((c) => {
-                const on = c.key === category;
-                return (
-                  <button
-                    key={c.key}
-                    type="button"
-                    onClick={() => setCategory(c.key)}
-                    aria-pressed={on}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 6,
-                      minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
-                      background: on ? c.tint : '#FFFEFA',
-                      border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
-                      color: on ? c.ink : '#5C5040',
-                      font: `${on ? 700 : 500} 13px/1 system-ui, sans-serif`,
-                    }}
-                  >
-                    {getElementArt2(`journal_${c.key}`) ? (
-                      <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ fontSize: 15 }}>{c.icon}</span>
-                    )}
-                    {isZulu ? journalCategoryLabel(c.key) : c.label}
-                  </button>
-                );
-              })}
+          {/* Category — big tap targets, wraps on a phone. Collapsed in Simple: the note still
+              saves with its default category ('planting', or the entry's own on edit) — hiding
+              the picker never changes what gets stored. */}
+          {!simple && (
+            <div>
+              <Label>{ui('What kind of note?', 'Lolu hlobo luni lwenothi?')}</Label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+                {JOURNAL_CATEGORIES.map((c) => {
+                  const on = c.key === category;
+                  return (
+                    <button
+                      key={c.key}
+                      type="button"
+                      onClick={() => setCategory(c.key)}
+                      aria-pressed={on}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 6,
+                        minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
+                        background: on ? c.tint : '#FFFEFA',
+                        border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
+                        color: on ? c.ink : '#5C5040',
+                        font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
+                      }}
+                    >
+                      {getElementArt2(`journal_${c.key}`) ? (
+                        <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
+                      ) : (
+                        <span style={{ fontSize: 15 }}>{c.icon}</span>
+                      )}
+                      {isZulu ? journalCategoryLabel(c.key) : c.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
 
-          <div>
-            <Label>{ui('Date', 'Usuku')}</Label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              style={inputStyle}
-            />
-          </div>
+          {/* Date defaults to today (or the entry's own date on edit) whether or not this
+              field is shown — Simple keeps that default instead of asking for it. */}
+          {!simple && (
+            <div>
+              <Label>{ui('Date', 'Usuku')}</Label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+          )}
 
           <div>
             <Label>{ui('Title', 'Isihloko')}</Label>
@@ -210,39 +220,43 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             />
           </div>
 
-          <div style={{ display: 'flex', gap: 10 }}>
-            <div style={{ flex: 1 }}>
-              <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
-              {beds.length > 0 ? (
-                <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
-                  <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
-                  {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
-                </select>
-              ) : (
+          {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
+              so collapsing them in Simple never changes what gets saved. */}
+          {!simple && (
+            <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ flex: 1 }}>
+                <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
+                {beds.length > 0 ? (
+                  <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
+                    <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
+                    {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
+                  </select>
+                ) : (
+                  <input
+                    type="text"
+                    value={bedLabel}
+                    placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
+                    onChange={(e) => setBedLabel(e.target.value)}
+                    style={inputStyle}
+                  />
+                )}
+              </div>
+              <div style={{ flex: 1 }}>
+                <Label>{ui('Crop', 'Isitshalo')}</Label>
                 <input
                   type="text"
-                  value={bedLabel}
-                  placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
-                  onChange={(e) => setBedLabel(e.target.value)}
+                  list="journal-crop-options"
+                  value={cropName}
+                  placeholder={ui('Optional', 'Akudingeki')}
+                  onChange={(e) => setCropName(e.target.value)}
                   style={inputStyle}
                 />
-              )}
+                <datalist id="journal-crop-options">
+                  {crops.map((c) => <option key={c} value={c} />)}
+                </datalist>
+              </div>
             </div>
-            <div style={{ flex: 1 }}>
-              <Label>{ui('Crop', 'Isitshalo')}</Label>
-              <input
-                type="text"
-                list="journal-crop-options"
-                value={cropName}
-                placeholder={ui('Optional', 'Akudingeki')}
-                onChange={(e) => setCropName(e.target.value)}
-                style={inputStyle}
-              />
-              <datalist id="journal-crop-options">
-                {crops.map((c) => <option key={c} value={c} />)}
-              </datalist>
-            </div>
-          </div>
+          )}
 
           {/* Photos */}
           <div>
@@ -273,9 +287,9 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   disabled={busy}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
-                    background: '#FFFEFA', border: '1.5px dashed #CFC4AC', color: '#3C6B3F',
+                    background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
-                    font: '600 10px/1 system-ui, sans-serif',
+                    font: '600 10px/1 var(--font-sans), sans-serif',
                   }}
                 >
                   {busy ? <Loader2 size={18} className="animate-spin" /> : <Camera size={18} />}
@@ -284,7 +298,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               )}
             </div>
             {photoError && (
-              <div style={{ marginTop: 6, font: '500 12px/1.4 system-ui, sans-serif', color: '#B91C1C' }}>{photoError}</div>
+              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: '#B91C1C' }}>{photoError}</div>
             )}
             <input
               ref={fileRef}
@@ -306,8 +320,8 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               onClick={() => onDelete(entry.id)}
               style={{
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: '#FFFEFA', border: '1.5px solid #E7C9C6', color: '#9B3630',
-                font: '600 14px/1 system-ui, sans-serif', display: 'flex', alignItems: 'center', gap: 7,
+                background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
+                font: '600 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
               <Trash2 size={16} />
@@ -321,7 +335,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
               background: canSave && !busy ? '#274D2C' : 'rgba(39,77,44,0.25)',
-              color: '#fff', font: '700 15px/1 system-ui, sans-serif',
+              color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >
             {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}
@@ -335,20 +349,20 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 const inputStyle: React.CSSProperties = {
   width: '100%',
   minHeight: 46,
-  background: '#FFFEFA',
-  border: '1px solid #E2D8C4',
+  background: 'var(--bg-1)',
+  border: '1px solid var(--border)',
   borderRadius: 11,
   padding: '11px 12px',
-  font: '400 15px/1.2 system-ui, sans-serif',
-  color: '#20190F',
+  font: '400 15px/1.2 var(--font-sans), sans-serif',
+  color: 'var(--text-primary)',
   outline: 'none',
 };
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: '#8A7C62', marginBottom: 8,
+      font: '700 10.5px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
+      textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}
     </div>

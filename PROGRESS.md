@@ -29,7 +29,7 @@ must provision — not buildable from code alone).
 ### What's live
 - **Auth** — email/password + Google sign-in + password reset + change-password +
   profile photo. Firebase env is set in the Vercel project; Auth authorized domains
-  include the vercel.app domains + localhost. (Site gate via `SITE_PASSWORD` env.)
+  include the vercel.app domains + localhost. (The old `SITE_PASSWORD` site gate was deleted 2026-09-26.)
 - **Roles** — five: farmer · mentor · student · ngo · funder (+admin). Mentor merges
   the old supervisor + trainer. Task-first home; roles behind a quiet "Dashboards" link.
 - **Map** (`/farmer`) — search/analyse, draw land boundary + water storage (reticle
@@ -51,6 +51,161 @@ must provision — not buildable from code alone).
 ---
 
 ## Build Log (newest first)
+
+### 2026-09-26 (swarm wave 6b — Farm Finance in isiZulu)
+- **Finance track retry (PR #689).** New `lib/course-finance-i18n.ts` holds source-paired isiZulu
+  drafts for the Farm Finance course: `financeZu(map, id, liveEnglish)` only returns the draft while
+  its stored English still equals the live English, so an edited lesson falls back to English
+  instead of showing a stale translation. `components/studies/FinanceZu.tsx` renders the drafts plus
+  a "draft translation" badge/notice; wired into the course page, lesson reader, project worksheet,
+  CourseSyllabus (title/blurb widened to ReactNode) and the mentor course list.
+- **Due-date months via Intl.** `lib/course-assignments.ts` `monthAbbrev` now formats with
+  `Intl.DateTimeFormat`, checking `supportedLocalesOf` first — an unsupported tag (ss/nr/ve/ts)
+  would otherwise fall back to the *browser's* locale (German months in Vienna), so it pins English.
+- Tests: new `tests/course-finance-zu.test.ts`; `tests/student-simple.test.ts` pins the
+  supported-locale check.
+
+### 2026-09-26 (gate deleted)
+- **Rory: "yes delete the gate".** Removed `app/gate/page.tsx`, `app/api/gate/route.ts` and
+  `tests/gate-guard.test.ts`; dropped `/gate` from ChatWidget's exclusions and `NO_FLOATING_BACK`,
+  and pointed the tests that anchored on it at `/login`. `middleware.ts` notes where to restore
+  it from git history. The optional `SITE_PASSWORD` env var is now unused (left in Vercel — not
+  touched from here).
+
+### 2026-09-26 (swarm wave 6 — lighter pages, less clutter, tap targets, API guard)
+- **Merged (four swarm PRs, one integration PR):** Perf (#668: profile photos on /account and
+  ProfileSheet go through `resizeFileForUpload` before upload; the lazy release-notes import,
+  weather cache and Portfolio next/link were already done). Clutter (#669: `isStaffRole` in
+  `lib/app-level-core.ts`; the Study readiness badge and the offline quality picker are staff-only
+  and hidden in Simple; /calendar left the Simple nav). Tap targets (#673: EvidenceSheet photo and
+  document remove buttons reach 44×44; the other four items were already fixed). API guard (#670).
+- **API guard finding:** the open map routes (contours, site-features, location-data) were
+  ALREADY rate-limited per IP by `guardPaidApiRequest` (data 20/hr anon, 300/hr signed in), and
+  the contour cache key already snaps to the DEM grid. The only real gap was `/api/gate`: it now
+  allows 10 attempts per 10 minutes per IP and compares with `crypto.timingSafeEqual`. Deleting
+  the unused gate was blocked by the session safeguard, so it was hardened instead —
+  `middleware.ts` routes nothing to /gate; deleting it is Rory's call.
+- **Not touched:** MyRecords produce photos still upload unresized (next wave).
+- **Farm Finance isiZulu track:** hit the session limit without pushing; relaunched, lands as 6b.
+- **Checks:** tsc clean; the four new tests plus student-simple, nav-simple-track, app-level,
+  nav-menu-links, test-registry/manifest and theme-token gates pass (53/53).
+- **Cost:** about $20 of Sonnet so far (including the failed first isiZulu run).
+
+### 2026-09-26 (swarm wave 5 — audit leftovers: language honesty, icons, crop planner theme)
+- **Owner decisions (Rory, 26 Sep):** no extra sign-in — the public map data routes (contours,
+  site-features, location-data) stay open behind their existing rate limits and REQUIRE_API_AUTH
+  stays off for them. Mentors keep defaulting to All tools. A partly-translated-language notice
+  is approved.
+- **Merged (four swarm PRs, one integration PR):** Language notice (#662: `lib/lang-coverage.ts`
+  counts keys a locale renders differently from English; under 95% shows "Partly in English"
+  in the Settings picker plus a note for the active language; Xitsonga keeps its draft notice).
+  Design Studio isiZulu (#660: resume-gave-up banner in isiZulu, print-preview failures logged;
+  the other audit items were already fixed). Crop planner theme (#661: planner chrome on theme
+  tokens, clamp() headings, ochre text via --gold-dim, white-on-ochre banner #9A6018). Icons
+  (#663: Design Studio chrome, line tools, canvas handles and facilitator print page picker on
+  Lucide; unreachable ProWizard removed — `designMode` is the constant 'guided').
+- **Integrator fix:** SectorSummary, TankCalculator and the Glossy saved-maps header paint the
+  fixed PAPER constant in every theme, so their ochre text stays #7A4408 (dark mode's --gold-dim
+  is ~2.6:1 on it); the crop-plan month count now reads --color-forest-800 on the themed card.
+- **Dead taps track:** nothing to change — all six items were already fixed on main (spot-checked
+  the facilitator print disable, /assessments BackButton and the sign-up auth-code map).
+- **Checks:** tsc clean; the five new tests plus design-simple, theme-token, facilitator-print and
+  release-notes gates pass locally.
+- **Cost:** about $34 of Sonnet across the five tracks.
+
+### 2026-09-25 (swarm wave 4 — Simple mode for the rest of the app)
+- **Merged (six swarm PRs, one integration PR):** Design Studio Preview & Export (#644: Simple
+  keeps choose-a-sheet and Finish as step 2; underlay, plant labels, style, AI layers, All sheets
+  and the saved-maps rail stay in All tools). Farm map (#641: Simple keeps finding land, boundary
+  tracing, a two-item Add (tree, tank), basemap switch and locate-me; contours, terrain/3D, HD
+  imagery, the edit-engine picker, printing, elevation and Labels are All tools only — Simple
+  always uses the big-handle editor without touching the stored preference). Community board,
+  messages and profiles (#642, with more isiZulu). Crop plan + Prices (#643). Lima Vision + Field
+  Journal (#640). Account + survey answering (#639). Each track added a source-level test.
+- **Checks:** tsc clean; the six new tests plus design-simple, app-level, theme-token and
+  release-notes gates pass locally; no new hex or emoji in the convention scan.
+- **Cost:** about $31 of Sonnet across the six tracks (~20 min each).
+
+### 2026-09-25 (swarm wave 2b/3 — money charts dark, Exchange/Study polish, staff theme, lighter notes)
+- **Merged (four swarm PRs, one integration PR):** money charts (#619: CashflowChart,
+  FinanceGraphs, AreaReturnCards, ComingUpHarvests on theme tokens; sample-mode pending invoice
+  links now live in the in-memory sandbox, never real storage). Exchange & Study (#616: numbers
+  shown once, "How the exchange works" collapsed in Simple, one back control, named course links
+  in Study Simple). Staff theme (#618: Mentor / Surveys / Funder + two map-page hairlines on theme
+  tokens). Report + notes (#617: the Köppen/BRU technical footnote hidden in Simple and put
+  through tr() in All tools; PWAUpdateNotifier and UpdateGuide import lib/release-notes lazily, so
+  the 2,500-line changelog leaves the shared layout bundle).
+- **Integrator fix:** UpdateGuide's lazy import gets a quiet catch for an offline tap.
+- **Ops:** the swarm hit the account's five-hour usage limit at ~07:00 and the container restart
+  held work until 11:30; the two stalled tracks were relaunched and all four finished in ~25 min
+  (about $26 of Sonnet in total). A parallel translation stream (isiZulu / Sesotho / Xitsonga
+  drafts) merged ~24 PRs to main meanwhile; integrations merge main in and keep both sides.
+- **Still open:** Design Studio surfaces on theme tokens (design-08) and its emoji element
+  catalogue (design-02); dead routes (/survey, /gate, /design-studio-2); the owner decisions
+  listed under wave 1b (public data routes vs REQUIRE_API_AUTH, mentors' default level).
+
+### 2026-09-25 (swarm wave 1b — Design Studio + People screens in Simple, dark-mode fixes)
+- **Merged (four swarm PRs, one integration PR):** Design Studio Simple (#585: curated element
+  palette with Show all, one top Lima tip, guided base-photo line-up, Print → one "Save my plan" +
+  Share; Layers / workspace layouts / multi-select / align stay in All tools; live-preview errors
+  now shown with a retry; ochre text → #7A4408 on the studio's fixed light surface). People +
+  Atlas (#582: Contact / Community / map popup isiZulu, Field Journal fonts, dark-mode tokens on
+  Community / Contact / Atlas / Example, board and profile photos resized to 1200px before upload,
+  Simple for Contact / profile crops / Feedback, `/api/location-data` rate-limited). First-run
+  Onboarding + POPIA consent follow the theme (#586). Records polish (#587: 44px edit/delete,
+  isiZulu lender-export strings, theme reds/ambers). Crop planner (#588: `/facilitator/crops`
+  surfaces, text and borders on theme tokens; clamp() type for headings, month labels, beds and
+  the R/m² figure, so desktop is no longer phone-sized).
+- **Integrator fix:** the POPIA step-2 button put white 15px type on #C07A1E (3.5:1); now
+  #9A6018 (5.2:1), per the ochre rule.
+- **Open, for the owner:** `/api/contours`, `/api/site-features` and now `/api/location-data`
+  sit behind `guardPaidApiRequest`, so with REQUIRE_API_AUTH=1 they would refuse signed-out
+  callers: guests drawing a farm would lose contours / OSM features / climate, and the public
+  Atlas would stop answering. Decide alongside the REQUIRE_API_AUTH switch (a public-data guard
+  that stays rate-limited but never requires sign-in is one option).
+- **Still running:** money-chart dark mode (relaunched as `swarm/money-charts-dark-v2`), Exchange
+  & Study polish.
+
+### 2026-09-25 (swarm wave 1 — Simple mode across the farmer screens + 17 verified fixes)
+- **How:** an app-wide code audit (9 Sonnet auditors, one per area, each followed by a Sonnet
+  verifier told to refute every bug/security claim) found 92 issues; all 17 bug/security claims
+  were confirmed. Twelve Sonnet cloud sessions then took one track each (branch `swarm/<track>`,
+  draft PR, own CI); the integrator merged the nine green ones into `claude/wave-1`, re-ran the
+  full suite, hardened one rule, and shipped them as one PR with one release note.
+- **Simple mode (All tools unchanged):** Records (Picked/Sold/Spent + "You kept R…" for 12
+  months; Charts in All tools), Crop planner (grid kept; % labels, task chips, Clear all and the
+  long panels hidden; one Auto-suggest), Farm map (5 site-panel tabs; Overview folded), menu,
+  Study, Invoice & Exchange, Planting calendar (this month's card), Print, Mentor / NGO / Funder
+  (NGO 4 tabs, funder Cohort + Progress, mentor declutter), Assessments, Surveys, Offline.
+- **Fixes:** tour button contrast (dark text on dim ochre), NGO/funder tab label, Garden Survey
+  dead tap, calendar "your crops" filter (read the real plan), Assessments navigation, survey
+  answers limited to farmer/student (rules too; a profile with no role counts as farmer), print
+  blank job, contours/site-features/build-info API guards, baseline security headers (no CSP
+  yet), sign-up error field, ochre error text, vendor badges removed, emoji icons → Lucide,
+  isiZulu for Tour discovery / update toast / Tips / unlock reason / due dates.
+- **Still open (wave 2):** Design Studio, People screens + Atlas API guard, money-chart dark mode
+  (sessions still running); Exchange Simple still wordy (explainer, stats twice, two back
+  buttons); Study companion links read as bare headlines; theme tokens on the crop planner.
+- **Owner decisions pending:** REQUIRE_API_AUTH (paid AI routes are log-only), mentors' default
+  level, partly translated languages (9 of 11 under half).
+
+### 2026-09-25 (Simple / All tools switch — Home is the first screen to use it)
+- **Why:** Rory: the app "has now become very busy". A 20-screen audit (390 × 844, sample farm)
+  found Home's busyness was mostly repetition: the main site's name three times, "75% complete"
+  twice (`HomeHeroCard` and `FarmPlanCard` both read `useSiteProgress`), Lima named three times,
+  a Back button on the root screen, "My Records" as both a tile and a tab. Shown the tidy Home next
+  to today's, Rory: "there's a lot I like about both ... let's keep it a switch", so both stay.
+- **The switch:** `lib/app-level.ts` (+ pure `lib/app-level-core.ts`) — `useAppLevel()` returns
+  `'simple' | 'full'`, stored per account in localStorage. Defaults: farmers and signed-out
+  visitors → Simple; mentor/student/ngo/funder/admin → All tools; the sample tour → All tools
+  unless previewing the farmer. Settings (`components/ThemePanel.tsx`) → "How much to show".
+- **Home:** All tools = Home exactly as before. Simple = the site card headed "Main site" + name
+  with the next step inside it, no FarmPlanCard, weather card without the repeated name, no Back,
+  no My Records tile. The step table moved to `lib/home-next-step.ts`, shared by both layouts.
+- **Measured (Simple vs old Home):** whole-page tap targets 62 → 60, words 327 → 312, "My Records
+  ×2" gone; first-screen taps 38 → 39 (the page is shorter, so more tiles fit on it).
+- **Next:** app-wide audit (running), then Simple mode screen by screen; an organisation-wide
+  default for its farmers (Step 3) on the org record.
 
 ### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
@@ -484,6 +639,6 @@ passed; the walkthrough still found two bugs, both older than this branch.
 ---
 
 ## Auth / passwords (operational)
-- **Site gate:** controlled by the `SITE_PASSWORD` env var on Vercel (ask the owner for the value; not committed here).
+- **Site gate:** deleted 2026-09-26 (`/gate` + `/api/gate`). `SITE_PASSWORD` in Vercel is now unused and can be removed.
 - **Account auth:** Firebase email/password (enabled) + Google. To enable the Google button end-to-end, the owner enables **Google** as a sign-in provider in Firebase Console → Authentication → Sign-in method (email/password is already on; authorized domains are set).
 - **Env:** managed via GitHub repo secrets → pushed to the Vercel project by `.github/workflows/set-vercel-env.yml` (`gh workflow run set-vercel-env.yml`). Never commit `.env*`.

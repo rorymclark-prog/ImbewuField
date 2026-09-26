@@ -1,12 +1,27 @@
 # Soil Health L3 English lesson and Flow check — 23 September 2026
 
-**Decision — 23 September 2026:** Replace only slide 14's still with the static
-comparison below. The one-output Flow rain shot remains held outside the learner
-player because it does not make the taught mechanism clear at phone width. No
-lesson body, quiz, narration, audio, species, farming figure, video registration
-or `PLAN_VERSION` changed. This is a technical and source check, not Rory,
-farmer, learner, practitioner or fluent isiZulu approval. Farm Finance is outside
-this pass.
+**Media decision — 23 September 2026:** Replace only slide 14's still with the
+static comparison below. The one-output Flow rain shot remains held outside the
+learner player because it does not make the taught mechanism clear at phone
+width. The original check made no lesson, quiz, narration or audio changes.
+
+**English correction — 24 September 2026:** Rory authorized a source-backed
+correction to Soil Health L3. Slide 14 narration now says that when rain hits
+mulch instead of bare soil, much raindrop energy is dissipated, and limits the
+diagram to that surface-impact idea. The lesson and slide 18 distinguish
+raindrop damage to bare soil from soil carried away where water runs over the
+field. The quiz rationale makes the same distinction. The closing claim now
+says cover crops, mulch and organic matter can help hold soil in place.
+Leachate is defined as liquid that drains naturally from a worm bin; the
+existing edible-plant safety caution remains. The matching English clips for
+slides 14, 17 and 18 were regenerated with `en-ZA-LukeNeural` at `-12%`; word
+boundaries matched each supplied script, each clip decoded, and the rebuilt
+20-slide `full.mp3` decoded. Recorded hashes and durations are in
+[`soil-health-corrected-audio.json`](../studies-illustrated-release/soil-health-corrected-audio.json).
+These are automated checks, not a listening or fluent isiZulu review. The
+existing slide-14 static still already expresses the conditional mechanism, so
+no slide art changed. No species, farming figure, video registration or
+`PLAN_VERSION` changed.
 
 ## Current five-slide lesson
 
@@ -68,11 +83,12 @@ static replacement below does not register the movie or add a poster.
 
 ## Static comparison still — V1 clarity replacement
 
-The protected English narration remains: “Compare bare soil with mulched soil.
-Watch how the mulch protects topsoil when a South African summer storm brings
-intense rain.” The paired still clarifies that comparison but does not simulate
-a storm or show water movement beyond surface impact. Its conditional caption is
-limited to a mechanism supported by USDA NRCS [Soil Health: Principle 1 — Soil
+The corrected English narration says: “When rain hits mulch instead of bare
+soil, much of the raindrop energy is dissipated. This diagram shows that
+surface-impact idea only; it does not predict how water will move at a
+particular site.” The paired still clarifies the comparison but does not
+simulate a storm or show water movement beyond surface impact. Its conditional
+caption is limited to a mechanism supported by USDA NRCS [Soil Health: Principle 1 — Soil
 Armor](https://www.nrcs.usda.gov/state-offices/north-dakota/soil-health-principle-1-of-4-soil-armor):
 when rainfall hits cover rather than bare soil, much of the raindrop energy is
 dissipated. NRCS's [Mulching practice standard](https://www.nrcs.usda.gov/sites/default/files/2022-09/Mulching_CPS_484_Oct_2017.pdf)
@@ -109,7 +125,10 @@ readability, listening or practitioner review.
 
 [USDA NRCS soil-armor guidance](https://www.nrcs.usda.gov/state-offices/north-dakota/soil-health-principle-1-of-4-soil-armor)
 supports surface cover dissipating raindrop energy and helping reduce wind and
-water erosion and evaporation. Its [mulching practice
+water erosion and evaporation. Its [water erosion guidance](https://www.nrcs.usda.gov/sites/default/files/2023-01/Understanding-Soil-Risks-and-Hazards.pdf)
+describes erosion as particle detachment and transport, including raindrop
+splash and surface flow. That supports separating surface impact from the
+conditional transport of loosened soil. Its [mulching practice
 standard](https://www.nrcs.usda.gov/sites/default/files/2022-09/Mulching_CPS_484_Oct_2017.pdf)
 also says material, site and application matter: excessively thick or tightly
 packed mulch can create soggy conditions or keep rain from reaching soil. The
@@ -119,20 +138,9 @@ review](https://www.fao.org/4/x5546e/x5546e05.htm) supports the lesson's
 conditional bacterial and field-setting language for legume cover crops; the
 rain shot does not demonstrate nitrogen fixation. [University of Georgia's
 vermicomposting guidance](https://fieldreport.caes.uga.edu/publications/B1596-01/vermicomposting-basics-for-gardens-landscapes-farms/)
-distinguishes intentionally brewed worm tea from naturally draining bin
-leachate, which can contain harmful anaerobic bacteria or pathogens and is not
-recommended for foliar use. The lesson's conservative edible-plant caution is
-retained; the rain shot says nothing about worm-bin safety.
-
-**Protected wording holds for a coordinated authorised correction:** Quiz 1's
-rationale in `lib/course-modules.ts` says winter wind and spring rain “both
-strip topsoil directly.” Rain impact can damage the soil surface; water erosion
-requires loosened soil to be carried away, such as by runoff. A narrower
-rationale would distinguish winter wind erosion from spring rain damage and
-conditional runoff transport. The closing claim that cover crops, mulch and
-organic matter “keep soil in place” should say they **help** hold it in place.
-Quiz 2's leachate rationale calls it drainage “from unfinished material”; bin
-leachate is drainage from a worm bin and need not come only from unfinished
-material. The correct cautious action remains. These protected body/quiz
-changes are proposals, not edits. English-first scope remains; the old isiZulu
-draft is unpublished and needs fluent farming review before any release claim.
+defines worm leachate as liquid that drains naturally from a vermicomposting
+bin and distinguishes it from prepared worm tea. It warns against use on
+edible plants because naturally draining leachate may contain harmful
+organisms. The English lesson retains its conservative caution. The isiZulu
+draft remains unpublished and needs fluent farming review before any release
+claim.

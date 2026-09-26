@@ -341,7 +341,7 @@ export default function ReportDocView({
         </div>
       )}
 
-      <p style={{ fontSize: 10.5, color: '#9A8268', marginTop: 12, marginBottom: 0 }}>
+      <p style={{ fontSize: 10.5, color: '#755942', marginTop: 12, marginBottom: 0 }}>
         This local skeleton is available immediately. Generate the full report to enrich each section with site-specific detail.
       </p>
     </div>

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Settings, AlertTriangle, ChevronUp, Plus } from 'lucide-react';
+import { Settings, AlertTriangle, ChevronUp, Plus, Palette } from 'lucide-react';
 import AddSheet from '@/components/AddSheet';
 import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSettled, pageCrashGuard } from '@/lib/crash-loop';
@@ -21,12 +21,14 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -56,6 +58,10 @@ export default function Home() {
 
 function HomeInner() {
   const { t, lang } = useLanguage();
+  // Simple / All tools (lib/app-level.ts): only used here to reduce the "+ Add" catalog to
+  // its everyday items (lib/add-actions.ts SIMPLE_ADD_ACTION_IDS); the map chrome's own
+  // Simple wiring lives in components/Map.tsx.
+  const simple = useAppLevel() === 'simple';
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -107,7 +113,9 @@ function HomeInner() {
       import('@/components/ReportView').then(open, async () => {
         const retry = await appConfirm({
           title: t('reportsOfflineTitle'),
-          message: t('reportsOfflineMessage'),
+          message: lang === 'zu'
+            ? `${t('reportsOfflineMessage')}\n${t('reportsOfflineZuluDraftNotice')}\n\nEnglish source: ${translate('en', 'reportsOfflineMessage')}`
+            : t('reportsOfflineMessage'),
           confirmLabel: t('reportsOfflineRetry'),
           cancelLabel: t('reportsOfflineClose'),
         });
@@ -115,7 +123,7 @@ function HomeInner() {
       });
     };
     attempt();
-  }, [appConfirm, t]);
+  }, [appConfirm, t, lang]);
 
   const handleViewReport = useCallback((r: SavedReport) => {
     withReportChunk(() => {
@@ -188,7 +196,7 @@ function HomeInner() {
   const [showPeople, setShowPeople] = useState(false);
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
-  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; source?: string } | null>(null);
   // Design-on-map overlay: the map now owns its own "My design" toggle (a labels-pill chip
   // inside components/Map.tsx, ON by default when a design exists), so the old page-level
   // showDesign/designPresent pair and the floating "Show design" button are gone.
@@ -282,7 +290,9 @@ function HomeInner() {
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`);
+      const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+        headers: await paidApiHeaders(),
+      });
       if (!res.ok) throw new Error(`${res.status}`);
       const json = await res.json();
       if (request !== locationRequest.current) return;
@@ -399,6 +409,20 @@ function HomeInner() {
         handlePlaceSelect({ name: main.name, id: main.id });
         handleLocationSelect(main.lat, main.lon);
         timer = setTimeout(() => setJumpTo({ lat: main.lat, lon: main.lon }), 800);
+      } else {
+        // No saved site to survey yet — used to set openSurvey anyway, which DataPanel
+        // silently ignores without an activePlaceId, so the "Garden Survey" menu tap did
+        // nothing at all. Tell the farmer what to do instead.
+        appConfirm({
+          title: lang === 'zu'
+            ? `${t('openSurveyNoSiteTitleZuDraft')} — ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'openSurveyNoSiteTitle')}`
+            : t('openSurveyNoSiteTitle'),
+          message: lang === 'zu'
+            ? `${t('openSurveyNoSiteMessageZuDraft')}\n\nUnreviewed isiZulu draft. English source: ${translate('en', 'openSurveyNoSiteMessage')}`
+            : t('openSurveyNoSiteMessage'),
+          confirmLabel: lang === 'zu' ? t('openSurveyNoSiteConfirmZuDraft') : t('openSurveyNoSiteConfirm'),
+        });
+        return undefined;
       }
     }
     setOpenSurvey(true);
@@ -523,7 +547,7 @@ function HomeInner() {
         />
       )}
 
-      <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
 
         {/* ── Header ────────────────────────────── */}
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
@@ -532,8 +556,8 @@ function HomeInner() {
           className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-hidden"
           style={{
             height: 60,
-            background: '#FFFEFA',
-            borderBottom: '1px solid #E2D8C4',
+            background: 'var(--bg-1)',
+            borderBottom: '1px solid var(--border)',
             WebkitOverflowScrolling: 'touch',
           }}
         >
@@ -542,8 +566,8 @@ function HomeInner() {
 
           <BrandLogo />
 
-          <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: '#E2D8C4', opacity: 0.5 }} />
-          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: '#94876F' }}>{t('tagline')}</span>
+          <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
+          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
@@ -555,19 +579,27 @@ function HomeInner() {
           <Link
             href={selected ? `/design?lat=${selected.lat.toFixed(5)}&lon=${selected.lon.toFixed(5)}` : '/design'}
             className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
-            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+            style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
-            <span aria-hidden>🎨</span> <span>{t('designStudioLabel')}</span>
+            <Palette size={15} aria-hidden />
+            <span className={lang === 'zu' ? 'flex flex-col leading-tight' : undefined}>
+              <span>{t('designStudioLabel')}</span>
+              {lang === 'zu' && (
+                <small lang="en" style={{ fontSize: 12, fontWeight: 500, opacity: 0.78 }}>
+                  {t('designStudioZuluDraftBadge')} · English: Design Studio
+                </small>
+              )}
+            </span>
           </Link>
           {buildInfo?.sha && (
             <div
-              title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+              title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}`}
               className="hidden items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
               style={{
                 minHeight: 30,
                 borderColor: 'rgba(31,77,43,0.2)',
                 background: 'rgba(31,77,43,0.04)',
-                color: '#1F4D2B',
+                color: 'var(--color-forest-800)',
                 fontSize: 12,
                 fontWeight: 800,
                 letterSpacing: 0.2,
@@ -596,8 +628,8 @@ function HomeInner() {
             style={{
               width: 40, height: 40,
               background: 'rgba(226,216,196,0.35)',
-              border: '1px solid #E2D8C4',
-              color: '#5C5040',
+              border: '1px solid var(--border)',
+              color: 'var(--text-secondary)',
               cursor: 'pointer',
             }}
           >
@@ -605,7 +637,7 @@ function HomeInner() {
           </button>
         </header>
 
-        {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'#f2f7f2',borderBottom:'1px solid #cbd9cc',fontSize:14}}>
+        {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'var(--bg-1)',borderBottom:'1px solid var(--border)',fontSize:14}}>
           <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : 'Choose a site for your report') : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : 'Opening your site report')}</strong>
           <p style={{margin:'6px 0'}}>{loading ? (lang === 'zu' ? 'Kulayishwa izimo zendawo ekhethiwe…' : 'Loading the selected site’s conditions…') : (lang === 'zu' ? 'Sesha indawo noma thepha kuyo emephini. Umbiko wokuhlaziywa kwendawo uzovuleka uma isilungile.' : 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.')}</p>
           {error && <p role="alert">{error}</p>}
@@ -631,12 +663,12 @@ function HomeInner() {
           <div className="flex-1 relative min-w-0">
             {mapHeld ? (
               <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
-                style={{ background: '#E9E4D3' }}>
-                <AlertTriangle size={22} style={{ color: '#C07A1E' }} />
-                <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                style={{ background: 'var(--bg-2)' }}>
+                <AlertTriangle size={22} style={{ color: 'var(--gold)' }} />
+                <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
                   {t('mapHeldTitle')}
                 </div>
-                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', maxWidth: 420 }}>
+                <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 420 }}>
                   {t('mapHeldBody')}
                 </div>
                 <button
@@ -694,7 +726,7 @@ function HomeInner() {
             onPointerDown={startPanelResize}
             className="hidden lg:flex items-center justify-center flex-shrink-0 group"
             title="Drag to resize the panel"
-            style={{ width: 8, cursor: 'col-resize', background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: 8, cursor: 'col-resize', background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <div style={{ width: 3, height: 36, borderRadius: 3, background: 'rgba(92,80,64,0.25)' }} className="group-hover:bg-stone-400 transition-colors" />
           </div>
@@ -702,9 +734,10 @@ function HomeInner() {
           {/* ── Desktop side panel (md+) ── */}
           <div
             className="hidden lg:flex flex-shrink-0 overflow-hidden flex-col"
-            style={{ width: panelWidth, background: '#FFFEFA', borderLeft: '1px solid #E2D8C4' }}
+            style={{ width: panelWidth, background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <DataPanel
+              surveyViewport="desktop"
               data={data}
               loading={loading}
               coords={selected}
@@ -798,8 +831,8 @@ function HomeInner() {
               bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
               height: sheetOpen ? '85dvh' : 0,
               maxHeight: '90dvh',
-              background: '#E4DCC6',
-              borderTop: '1px solid #E2D8C4',
+              background: 'var(--bg-0)',
+              borderTop: '1px solid var(--border)',
               borderRadius: '20px 20px 0 0',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
               // While a finger is on the grabber the sheet tracks it with no transition, so it
@@ -824,9 +857,9 @@ function HomeInner() {
             >
               <div
                 className="rounded-full"
-                style={{ width: 40, height: 4, background: '#E2D8C4', opacity: 0.7 }}
+                style={{ width: 40, height: 4, background: 'var(--border)', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: '#8C7A62', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
                 {t('tapToClose')}
               </span>
             </button>
@@ -834,6 +867,7 @@ function HomeInner() {
             {/* Panel content — scrolls inside the sheet */}
             <div className="flex-1 overflow-hidden flex flex-col min-h-0">
               <DataPanel
+                surveyViewport="mobile"
                 data={data}
                 loading={loading}
                 coords={selected}
@@ -879,6 +913,7 @@ function HomeInner() {
         surface="map"
         onClose={() => setAddOpen(false)}
         onPick={handleAddPick}
+        simple={simple}
       />
     </>
   );

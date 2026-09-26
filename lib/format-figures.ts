@@ -9,7 +9,7 @@
 export function randLabel(amount: number): string {
   if (!Number.isFinite(amount)) return 'R0';
   const rounded = Math.round(amount);
-  const body = Math.abs(rounded).toLocaleString('en-ZA').replace(/ |,/g, ' ');
+  const body = numberLabel(Math.abs(rounded));
   return `${rounded < 0 ? '−' : ''}R${body}`;
 }
 
@@ -44,4 +44,37 @@ export function randTick(amount: number): string {
 export function kgTotalLabel(kg: number): string {
   if (!Number.isFinite(kg)) return '0 kg';
   return `${Math.round(kg).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} kg`;
+}
+
+/**
+ * '86 400' — a plain number with space-grouped thousands, identical on the server and in every
+ * browser.
+ *
+ * THE BUG THIS EXISTS FOR. 82 call sites rendered figures with a bare `n.toLocaleString()`, which
+ * formats in the RUNTIME's default locale — Node's on the server, the browser's on the client. On
+ * /survey that produced a real, visible hydration failure: React logged "Text content did not
+ * match. Server: 86 400, Client: 86,400" and the rain figure changed under the farmer after load.
+ * A number that is the whole point of the screen cannot flicker.
+ *
+ * Pinning `toLocaleString('en-ZA')` is not the fix, and this file's header already says why: it
+ * emits U+00A0, which breaks a spreadsheet paste, and its output still differs between ICU builds
+ * so the two renders can still disagree. {@link kgTotalLabel}, `formatZar` in price-book.ts,
+ * `formatInvoiceZar` in invoice-document.ts and `group()` in app/network/page.tsx had each
+ * independently landed on regex grouping for exactly that reason. This is that rule, once, for
+ * every plain figure — so there is one place to change if the house convention ever moves.
+ *
+ * Fractional digits pass through with a period, which is what the browser was already rendering
+ * for the handful of non-integer call sites. Money keeps its own formatters: cents are a comma in
+ * this app (`formatInvoiceZar`), and unifying the decimal mark across measurements and currency is
+ * a product decision, not a formatting one.
+ */
+export function numberLabel(n: number, maximumFractionDigits = 3): string {
+  if (!Number.isFinite(n)) return '—';
+  const sign = n < 0 ? '-' : '';
+  const abs = Math.abs(n);
+  const factor = 10 ** Math.max(0, Math.min(20, Math.trunc(maximumFractionDigits)));
+  const rounded = Math.round(abs * factor) / factor;
+  const [whole, frac] = rounded.toString().split('.');
+  const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return `${sign}${grouped}${frac ? `.${frac}` : ''}`;
 }

@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MoreVertical, Pencil, Star, Trash2, Check } from 'lucide-react';
 import { savePlace, deletePlace, setMainSiteId, getMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 
 const GOLD = '#C07A1E';
 const FOREST = '#1F4D2B';
@@ -18,7 +18,7 @@ const BORDER = '#E2D8C4';
 const DANGER = '#C0531E';
 
 export default function SiteManageMenu({ place }: { place: SavedPlace }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<'menu' | 'rename' | 'confirm'>('menu');
   const [name, setName] = useState(place.name);
@@ -49,6 +49,13 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   function doSetMain() { setMainSiteId(place.id); close(); }
   function doDelete() { deletePlace(place.id); close(); }
 
+  // Keep the English action beside its draft translation because this button permanently
+  // removes the selected saved site and its locally stored design data.
+  const deleteLabel = lang === 'zu' ? `${t('deleteSite')} (${translate('en', 'deleteSite')})` : t('deleteSite');
+  const deleteConfirm = lang === 'zu'
+    ? `${t('deleteSiteConfirm')} / ${translate('en', 'deleteSiteConfirm')}`
+    : t('deleteSiteConfirm');
+
   const rowStyle: React.CSSProperties = {
     display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
     minHeight: 44, padding: '0 12px', borderRadius: 9, border: 'none', background: 'transparent',
@@ -61,7 +68,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   };
   const btnGhost: React.CSSProperties = {
     minHeight: 40, padding: '0 12px', borderRadius: 9, border: `1px solid ${BORDER}`, cursor: 'pointer',
-    background: '#FFFEFA', color: MUTED, fontSize: 13.5, fontWeight: 600,
+    background: 'var(--bg-1)', color: MUTED, fontSize: 13.5, fontWeight: 600,
   };
 
   return (
@@ -85,7 +92,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
           role="menu"
           style={{
             position: 'absolute', right: 0, top: '100%', marginTop: 6, zIndex: 60, width: 232,
-            background: '#FFFEFA', border: `1px solid ${BORDER}`, borderRadius: 12,
+            background: 'var(--bg-1)', border: `1px solid ${BORDER}`, borderRadius: 12,
             boxShadow: '0 10px 30px rgba(32,25,15,0.18)', padding: 6,
           }}
         >
@@ -100,7 +107,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
                 {isMain && <Check size={15} style={{ color: GOLD, marginLeft: 'auto' }} />}
               </button>
               <button type="button" style={{ ...rowStyle, color: DANGER }} onClick={() => setMode('confirm')}>
-                <Trash2 size={16} style={{ color: DANGER, flexShrink: 0 }} /> {t('deleteSite')}
+                <Trash2 size={16} style={{ color: DANGER, flexShrink: 0 }} /> {deleteLabel}
               </button>
             </>
           )}
@@ -124,9 +131,9 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
           {mode === 'confirm' && (
             <div style={{ padding: 8 }}>
-              <div style={{ fontSize: 13.5, color: INK, marginBottom: 10, lineHeight: 1.4, fontFamily: 'var(--font-display)' }}>{t('deleteSiteConfirm')}</div>
+              <div style={{ fontSize: 13.5, color: INK, marginBottom: 10, lineHeight: 1.4, fontFamily: 'var(--font-display)' }}>{deleteConfirm}</div>
               <div style={{ display: 'flex', gap: 6 }}>
-                <button type="button" style={{ ...btnPrimary, background: DANGER }} onClick={doDelete}><Trash2 size={14} /> {t('deleteSite')}</button>
+                <button type="button" style={{ ...btnPrimary, background: DANGER }} onClick={doDelete}><Trash2 size={14} /> {deleteLabel}</button>
                 <button type="button" style={btnGhost} onClick={() => setMode('menu')}>{t('cancelBtn')}</button>
               </div>
             </div>

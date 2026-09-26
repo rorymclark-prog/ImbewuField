@@ -12,8 +12,16 @@ import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
 import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
+import { loadCropPlan } from '@/lib/crop-plan';
 import { getCropArt } from '@/lib/crop-art';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
+import { APP_HEADER_INSET } from '@/lib/app-header';
+import { useAppLevel } from '@/lib/app-level';
+
+// Simple / All tools (lib/app-level.ts): a short list to fall back to when a farmer has no saved
+// crop plan yet to draw "their own crops" from — common South African smallholder staples that
+// pricedCropList (checked in tests/farm-gate-prices.test.ts) is known to price by default.
+const SIMPLE_COMMON_CROP_KEYS = ['maize', 'tomatoes', 'cabbage', 'onions', 'potato', 'carrots', 'swiss-chard', 'dry-beans'];
 
 /**
  * A standalone screen a farmer can open DURING a negotiation: pick a crop with a tap (no typing —
@@ -24,15 +32,30 @@ import { useLanguage } from '@/lib/i18n';
  * the confidence badge that keeps an estimate from reading as a confirmed fact.
  */
 export default function PricesPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  // Simple / All tools: Simple opens on the farmer's own planted crops (or a short common list
+  // when there is no saved plan yet) instead of the full price book; "All crops" discloses the
+  // rest without leaving Simple. The pick-a-crop control and the price screen behind it are the
+  // same ones both modes use — nothing here is a separate flow.
+  const simple = useAppLevel() === 'simple';
+  const [showAllSimple, setShowAllSimple] = useState(false);
   const [overrides, setOverrides] = useState<Record<string, CropPrice>>({});
+  const [ownCropKeys, setOwnCropKeys] = useState<Set<string>>(new Set());
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
-  // Farmer price corrections live in localStorage (lib/crop-prices.ts), so this can only be read
-  // client-side, after mount — same pattern as every other priceFor() caller in this app.
-  useEffect(() => setOverrides(loadCropPriceOverrides()), []);
+  // Farmer price corrections and the crop plan both live in localStorage, so this can only be
+  // read client-side, after mount — same pattern as every other priceFor() caller in this app.
+  useEffect(() => {
+    setOverrides(loadCropPriceOverrides());
+    setOwnCropKeys(new Set(loadCropPlan().plantings.map((p) => p.cropKey)));
+  }, []);
 
   const crops = useMemo(() => pricedCropList(overrides), [overrides]);
+  const simpleCrops = useMemo(() => {
+    const own = crops.filter((crop) => ownCropKeys.has(crop.key));
+    return own.length > 0 ? own : crops.filter((crop) => SIMPLE_COMMON_CROP_KEYS.includes(crop.key));
+  }, [crops, ownCropKeys]);
+  const visibleCrops = simple && !showAllSimple ? simpleCrops : crops;
   const selected = crops.find((crop) => crop.key === selectedKey) ?? null;
 
   return (
@@ -41,19 +64,24 @@ export default function PricesPage() {
           components/BackButton.tsx and tests/back-control.test.ts. */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
+        style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</span>
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="flex-1" />
-        <LessonLink id="prices:overview" label={t('pricesLearn')} />
+        {!simple && <LessonLink id="prices:overview" label={t('pricesLearn')} />}
         <SettingsButton />
       </header>
 
       <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+        {lang === 'zu' && (
+          <p role="note" className="rounded-xl px-3 py-2 mb-3 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+            {t('pricesZuluDraftNotice')}
+          </p>
+        )}
         <style jsx global>{`
           .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
           .imf-price-crop img, .imf-price-crop > span:first-child { transition: transform 220ms cubic-bezier(.16,1,.3,1); }
@@ -74,10 +102,10 @@ export default function PricesPage() {
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
-              {t('pricesChooseCrop')}
+              {lang === 'zu' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></> : t('pricesChooseCrop')}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
-              {crops.map((crop) => (
+              {visibleCrops.map((crop) => (
                 <button
                   key={crop.key}
                   type="button"
@@ -106,10 +134,23 @@ export default function PricesPage() {
                 </button>
               ))}
             </div>
+            {/* Disclosure: the short list above is farmer's-own-crops-or-common-staples; the full
+                price book stays one tap away rather than gone. Reuses the existing "All crops"
+                label CropPriceDetail's own back button already carries. */}
+            {simple && !showAllSimple && visibleCrops.length < crops.length && (
+              <button
+                type="button"
+                onClick={() => setShowAllSimple(true)}
+                className="font-sans font-semibold"
+                style={{ marginTop: 14, minHeight: 44, padding: '4px 0', fontSize: 13.5, color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                {t('priceAllCrops')}
+              </button>
+            )}
           </div>
           {selected && (
             <div key={selected.key} className={`${workspace.priceDetail} imf-price-detail-enter`}>
-              <CropPriceDetail crop={selected} onChangeCrop={() => setSelectedKey(null)} />
+              <CropPriceDetail crop={selected} onChangeCrop={() => setSelectedKey(null)} simple={simple} />
             </div>
           )}
         </div>

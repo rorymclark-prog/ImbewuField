@@ -58,8 +58,14 @@ the §0 desktop targets).
 
 - **Type** — Newsreader (display, headings & numerals) + Public Sans (UI & body).
   Scale: Display 32 · Title 24 · Body 16 · Small 14 · Overline 11 (uppercase, 700).
-- **Palette** — Forest `#1F4D2B`, Ochre `#C07A1E`, Water `#235E86`, Paper `#F7F2E9`,
-  Card `#FBF6EC`, Ink `#20190F`, Ink-muted `#5C5040`, Ink-faint `#8C7A62`, Hairline `#E2D8C4`.
+- **Palette** — Forest `#1F4D2B`, Ochre `#C07A1E`, Water `#235E86`, Paper `#E4DCC6` (the
+  "Option 1b contrast" value this file records below, not the `#F7F2E9` this line used to name),
+  Card `#FBF6EC`, Ink `#20190F`, Ink-muted `#5C5040`, Ink-faint `#755942`, Hairline `#E2D8C4`.
+  **Ink-faint is `#755942`, not the `#8C7A62` it used to be** — that value measured 3.02:1 on the
+  page, 4.10:1 on a card and 3.36:1 on an inset, failing 4.5:1 on every surface it is painted on
+  (`docs/CODEX-QUEUE.md` flagged the card case and it went unfixed). Ochre `#C07A1E` is a FILL
+  ONLY: as text it is 2.54:1 on the page, so ochre text is `#7A4408` (`--gold-dim`) and an ochre
+  fill under white type is `#9A6018`. Leaf `#A8D88A` is a fill only — 1.2:1 as text.
 - **Lima** — the field-guide persona, woven through every screen; context-aware,
   advises but never takes control. "Lima" = "to cultivate" (Nguni).
 - **No emoji in UI** — real drawn symbols / Lucide icons only.

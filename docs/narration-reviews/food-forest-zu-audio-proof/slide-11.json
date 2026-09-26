@@ -1,0 +1,278 @@
+{
+  "seconds": 40.608,
+  "bytes": 243648,
+  "audioSha256": "fb8c6e7ba3fde974aed83c7750dc3b149e3c73c5c8be7d9019f0dbfb947ab428",
+  "fullDecode": "pass",
+  "wordBoundaryAvailable": true,
+  "textMatch": true,
+  "wordBoundaries": [
+    {
+      "text": "Izibonelo",
+      "offset": 1460410,
+      "duration": 7386250
+    },
+    {
+      "text": "zokuqala",
+      "offset": 9272910,
+      "duration": 7102080
+    },
+    {
+      "text": "zifaka",
+      "offset": 16375000,
+      "duration": 5397910
+    },
+    {
+      "text": "i-pecan",
+      "offset": 22056660,
+      "duration": 6676250
+    },
+    {
+      "text": "i-walnut",
+      "offset": 30579580,
+      "duration": 6818330
+    },
+    {
+      "text": "ne-indigenous",
+      "offset": 38107910,
+      "duration": 9375000
+    },
+    {
+      "text": "fig",
+      "offset": 47625000,
+      "duration": 3693330
+    },
+    {
+      "text": "i-apple",
+      "offset": 52596660,
+      "duration": 6392080
+    },
+    {
+      "text": "i-pear",
+      "offset": 60693330,
+      "duration": 5823750
+    },
+    {
+      "text": "i-plum",
+      "offset": 68505830,
+      "duration": 5823750
+    },
+    {
+      "text": "i-black",
+      "offset": 76034160,
+      "duration": 5255830
+    },
+    {
+      "text": "mulberry",
+      "offset": 81573750,
+      "duration": 5397910
+    },
+    {
+      "text": "ne-loquat",
+      "offset": 87539580,
+      "duration": 7528330
+    },
+    {
+      "text": "i-rosemary",
+      "offset": 97198750,
+      "duration": 9090830
+    },
+    {
+      "text": "i-Wild",
+      "offset": 108278330,
+      "duration": 5965830
+    },
+    {
+      "text": "Medlar",
+      "offset": 114670410,
+      "duration": 4545410
+    },
+    {
+      "text": "i-Cape",
+      "offset": 121630830,
+      "duration": 4971660
+    },
+    {
+      "text": "gooseberry",
+      "offset": 126744160,
+      "duration": 7244160
+    },
+    {
+      "text": "ne-Barbados",
+      "offset": 134556660,
+      "duration": 7954580
+    },
+    {
+      "text": "cherry",
+      "offset": 142653330,
+      "duration": 3835410
+    },
+    {
+      "text": "Lezi",
+      "offset": 156926250,
+      "duration": 3977080
+    },
+    {
+      "text": "akuzona",
+      "offset": 161471660,
+      "duration": 6250000
+    },
+    {
+      "text": "izincomo",
+      "offset": 168005830,
+      "duration": 7102080
+    },
+    {
+      "text": "ezisebenza",
+      "offset": 175534160,
+      "duration": 8096660
+    },
+    {
+      "text": "kuzo",
+      "offset": 183772910,
+      "duration": 3692910
+    },
+    {
+      "text": "zonke",
+      "offset": 187465830,
+      "duration": 4545410
+    },
+    {
+      "text": "izindawo",
+      "offset": 192153330,
+      "duration": 7244160
+    },
+    {
+      "text": "Hlola",
+      "offset": 209482910,
+      "duration": 3551250
+    },
+    {
+      "text": "isitshalo",
+      "offset": 213744160,
+      "duration": 7386250
+    },
+    {
+      "text": "ngasinye",
+      "offset": 221272910,
+      "duration": 5681660
+    },
+    {
+      "text": "ngokuphathelene",
+      "offset": 226954580,
+      "duration": 9517080
+    },
+    {
+      "text": "nesithwathwa",
+      "offset": 236471660,
+      "duration": 8664580
+    },
+    {
+      "text": "umhlabathi",
+      "offset": 247409160,
+      "duration": 9375000
+    },
+    {
+      "text": "ubukhulu",
+      "offset": 258630830,
+      "duration": 7386250
+    },
+    {
+      "text": "esizofinyelela",
+      "offset": 266443330,
+      "duration": 10653330
+    },
+    {
+      "text": "kubo",
+      "offset": 277238750,
+      "duration": 3693330
+    },
+    {
+      "text": "nohlu",
+      "offset": 281073750,
+      "duration": 4545410
+    },
+    {
+      "text": "lwendawo",
+      "offset": 285619160,
+      "duration": 6250000
+    },
+    {
+      "text": "olugunyaziwe",
+      "offset": 292579580,
+      "duration": 12357910
+    },
+    {
+      "text": "Qhubeka",
+      "offset": 315022910,
+      "duration": 5255830
+    },
+    {
+      "text": "ulandela",
+      "offset": 320988750,
+      "duration": 6534160
+    },
+    {
+      "text": "imingcele",
+      "offset": 327806660,
+      "duration": 6107910
+    },
+    {
+      "text": "ekhona",
+      "offset": 334340830,
+      "duration": 5681660
+    },
+    {
+      "text": "yezomthetho",
+      "offset": 340022910,
+      "duration": 8522500
+    },
+    {
+      "text": "neyephrojekthi",
+      "offset": 348545410,
+      "duration": 10227080
+    },
+    {
+      "text": "ungatshali",
+      "offset": 361329580,
+      "duration": 8096660
+    },
+    {
+      "text": "isitshalo",
+      "offset": 369710410,
+      "duration": 7102080
+    },
+    {
+      "text": "ngokubuka",
+      "offset": 376954580,
+      "duration": 6392080
+    },
+    {
+      "text": "isithombe",
+      "offset": 383630830,
+      "duration": 6392080
+    },
+    {
+      "text": "kuphela",
+      "offset": 390165000,
+      "duration": 6250000
+    }
+  ],
+  "humanListeningReview": false,
+  "module": "food-forest",
+  "lesson": "food-forest-l2",
+  "language": "zu",
+  "slide": 11,
+  "voice": "zu-ZA-ThandoNeural",
+  "rate": "-12%",
+  "sourceFile": "source-text/slide-11.txt",
+  "sourceSha256": "d309aacfe8c2ec8ae8f2bc3586249180c76fce5c4bf5c5c7da9f6a4d5dc8bb22",
+  "scriptFile": "docs/narration/food-forest.zu.md",
+  "scriptSha256": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+  "englishSourceFile": "docs/narration/food-forest.en.md",
+  "englishSourceSha256": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+  "lessonSourceFile": "lib/course-modules.ts",
+  "lessonSourceSha256": "a822b4267e91933a6b2eccace7df5d4c2df99f0aaafc97e77278836b4b46b786",
+  "generatedAt": "2026-09-24T14:09:01.538394+00:00",
+  "reviewStatus": "pending-fluent-isiZulu-and-local-farming-review",
+  "revalidatedAt": "2026-09-24T14:09:01.538344+00:00"
+}

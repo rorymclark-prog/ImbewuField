@@ -86,7 +86,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         value={adding ? '__add__' : selected}
         onChange={(event) => choose(event.target.value)}
         className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
       >
         <option value="">{label('Choose a crop', 'Khetha isilimo')}</option>
         <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
@@ -134,7 +134,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             }}
             placeholder={label('Type the crop name', 'Thayipha igama lesilimo')}
             className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
           />
           <button
             type="button"
@@ -143,7 +143,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             className="rounded-lg px-3 py-2 text-xs font-display font-semibold"
             style={{
               background: newName.trim() ? '#1F4D2B' : '#E2D8C4',
-              border: 'none', color: newName.trim() ? '#fff' : '#8C7A62',
+              border: 'none', color: newName.trim() ? '#fff' : '#755942',
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >

@@ -1,268 +1,215 @@
-REVIEW UPDATE — 20 September 2026: English factual corrections affect slides 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19. This translation and its old audio are stale. Reconcile with the corrected English before fluent review and recording; do not publish this draft.
-
-**Ikhasi 1 — Impilo Yomhlabathi Ne-Compost (Slide 1 — Soil Health & Composting)**
-
+**Ikhasi 1 — Impilo Yomhlabathi Ne-Compost**
 
 Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.
 
-Uyindawo ephilayo ondla izitshalo, ubambe amanzi, futhi uthwale isivuno sakho.
+Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.
 
-Kule module, uzofunda ukufunda umhlabathi, ukwenza i-compost ephephile, ukuvikela umhlabathi ongenalutho, nokusebenzisa ama-cover crops nama-worm farms.
-
----
-
-**Ikhasi 2 — Kungani Lokhu Kubalulekile (Slide 2 — Why This Matters)**
-
-Ukutshala uhlobo olulodwa njalo, ukuklaba ngokweqile, noma ukushisa izinsalela zezitshalo kushiya umhlabathi uncike kumanyolo othengiwe ukuze ukhiqize noma yini.
-
-Lapho impilo yomhlabathi isilahlekile, umhlabathi uba mhlophe, uqine, futhi kube nzima ukuwulima.
-
-I-compost, i-mulch, ama-cover crops, nama-worm farms kungakha kabusha umhlabathi ophilayo emapulazini amancane aseNingizimu Afrika.
+Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza i-compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm.
 
 ---
 
-**Ikhasi 3 — Imiphumela Yokufunda (Slide 3 — Learning Outcomes)**
+**Ikhasi 2 — Kungani Lokhu Kubalulekile**
 
-Uzofunda ukubona umhlabathi ophilayo nowonakele.
+Isimo somhlabathi sithinta izimpande, amanzi nesivuno.
 
-Uzosebenzisa i-jar test ukuze ubone ukuthi umhlabathi wakho uningi ngesihlabathi, nge-silt, noma ngobumba.
+Ukushiya umhlabathi ungenalutho ngokuphindaphindiwe, ukuwucinanisa nokuncipha kwezinto eziphilayo kungawulimaza. Umbala wodwa awuchazi konke.
 
-Uzokwenza i-compost ephephile, ulungise inqwaba emanzi, uvikele umhlabathi ongenalutho, futhi usebenzise ama-cover crops ne-leachate yama-worm farms ngokuhlakanipha.
-
----
-
-**Ikhasi 4 — Umhlabathi Uyaphila (Slide 4 — Soil Is Alive)**
-
-Ithisipuni elilodwa lomhlabathi ongaphezulu ophilayo linezidalwa eziningi ukudlula abantu abaseMhlabeni.
-
-Amagciwane nesikhunta kucubungula izakhamzimba ukuze zisetshenziswe izitshalo.
-
-Imicu yesikhunta engaphansi ihambisa izakhamzimba phakathi kwezitshalo. Imigudu yezibungu iwuphawu olubonakalayo lomhlabathi ongaphezulu ophilayo.
-
-Ukutshala uhlobo olulodwa njalo, ukuklaba ngokweqile, nokushisa izinsalela zezitshalo kungayisusa le mpilo.
+Bheka umhlabathi wakho, bese ukhetha izindlela zokuwuvikela nokuwuthuthukisa.
 
 ---
 
-**Ikhasi 5 — Buka: Bheka Umhlabathi (Slide 5 — Watch: Look at the Soil)**
+**Ikhasi 3 — Imiphumela Yokufunda**
 
-Qhathanisa umhlabathi ongaphezulu omnyama nophilayo nomhlabathi ophaphathekile noqinile.
+Bheka izimpawu eziningana zesimo somhlabathi.
 
-Bheka imigudu yezibungu, uqaphele umehluko wephunga: imvula noma amakhowe uma uphila, ubumuncu noma lutho uma wonakele.
+Sebenzisa ibhodlela ukuze uhlole ukuthungwa komhlabathi, kodwa uqaphele imingcele yalolu vivinyo.
 
----
-
-**Ikhasi 6 — Hlola Umhlabathi Nge-Jar Test (Slide 6 — Test Your Soil with a Jar)**
-
-Gcwalisa ibhodlela ingxenye eyodwa kwezintathu ngomhlabathi, uligcwalise ngamanzi, bese ufaka iconsi lensipho yokugeza izitsha.
-
-Nyakazisa ibhodlela, bese uliyeka lihlale usuku lonke.
-
-Isihlabathi sihlala phansi kuqala, i-silt ilandele, kanti ubumba luhlala luntanta isikhathi eside.
-
-Lezi zingqimba zikubonisa uhlobo lomhlabathi ngaphandle kwemishini ekhethekile.
+Nakekela inqwaba ye-compost, vikela umhlabathi ongenalutho, futhi uhlukanise ama-worm castings noketshezi oluphuma emgqonyeni wezikelemu.
 
 ---
 
-**Ikhasi 7 — Funda Izingqimba ZaseJar (Slide 7 — Read the Jar Layers)**
+**Ikhasi 4 — Umhlabathi Uyaphila**
 
-Isihlabathi esiningi phansi, namanzi afiphele anombala wobumba phezulu, kusho ukuthi umhlabathi unesihlabathi esiningi.
+Umhlabathi unezinhlobo eziningi zezinto eziphilayo. Amagciwane nesikhunta kusiza ukubolisa izinto eziphilayo nokujikeleza kwezakhamzimba.
 
-Umhlabathi onesihlabathi ukhipha amanzi ngokushesha futhi ubamba amanzi amancane ezimpandeni.
+Ezinye izinhlobo zesikhunta zisiza izimpande zimunce izakhamzimba. Imigudu yezibungu ingasiza amanzi nomoya kungene emhlabathini.
 
-Sebenzisa i-mulch eningi, futhi ufake izinto zemvelo njalo.
-
-Lokhu kunciphisa ukulahleka kwamanzi futhi kusize umhlabathi uwagcine ezungeze izitshalo ezikhulayo.
+Bheka izimpande, ukwakheka komhlabathi nokuhamba kwamanzi, kanye nezinto eziphilayo ozibonayo emhlabathini.
 
 ---
 
-**Ikhasi 8 — Umhlabathi Owonakele Uyabuyiseka (Slide 8 — Degraded Soil Can Recover)**
+**Ikhasi 5 — Buka: Bheka Umhlabathi**
 
-Umhlabathi ophaphathekile, oqinile, ongenazo izibungu nonuka ubumuncu awulona nje uhlobo lomhlabathi olungashintshi.
+Bhekisisa lezi zibonelo ezimbili zomhlabathi.
 
-Ukulinywa njalo, ukusetshenziswa kwamakhemikhali, noma ukushiswa kubulele iningi lempilo yomhlabathi.
+Okokuqala, bheka ukwakheka kwawo. Ensimini, thinta ucezu olunomswakama ubone ukuthi luphuka kanjani.
 
-Lokhu kuyakhuthaza, ngoba umhlabathi ophilayo ungakhiwa kabusha nge-compost, i-mulch, nokuwuphatha ngobumnene.
+Bheka izimpande nezikhala ezizizungezile.
 
----
+Bheka okumboze umhlabathi phezulu. Esinye isibonelo simbozwe nge-mulch exegayo.
 
-**Ikhasi 9 — I-Compost Yondla Umhlabathi (Slide 9 — Compost Feeds the Soil)**
-
-I-compost yizinto zemvelo esezibolile.
-
-Yakha kabusha isakhiwo somhlabathi futhi yondle izidalwa ezisiza izitshalo zikhule.
-
-Inqwaba eshisayo iba i-compost esingasetshenziswa emasontweni amane kuya kwayisithupha eKZN efudumele nenomswakama.
-
-E-Highveld epholile, ithatha amasonto ayisishiyagalombili kuya kwayishumi nambili.
+Sebenzisa izimpawu eziningana ndawonye. Umbala wodwa awukutsheli impilo yomhlabathi. Hlola umswakama, ukukhula kwezitshalo nokungena kwamanzi emhlabathini.
 
 ---
 
-**Ikhasi 10 — Buka: Yakha Inqwaba Ye-Compost (Slide 10 — Watch: Build the Compost Heap)**
+**Ikhasi 6 — Hlola Ukuthungwa Komhlabathi Ngebhodlela**
 
-Yakha inqwaba usebenzisa i-browns eyomile ne-greens entsha.
+Faka umhlabathi namanzi embizeni yengilazi ecacile, ufake nenani elincane le-detergent efanele yokuhlakaza izinhlayiya zomhlabathi. Yivale uyinyakazise, bese uyishiya inganyakazi.
 
-Gcina izendlalelo zimanzi, zingabi manzi ngokweqile, ukuze kungene umoya futhi izinto ezidilizayo zisebenze.
+Isihlabathi sihlala phansi kuqala. I-silt ilandela; ubumba lungahlala luntanta isikhathi eside.
 
----
-
-**Ikhasi 11 — Linganisa I-Browns Ne-Greens (Slide 11 — Balance Browns and Greens)**
-
-Beka ama-browns angamasentimitha angama-20 kuya kwangama-30 kuzo zonke i-greens ezingamasentimitha ama-5 kuya kwayi-10.
-
-I-greens eningi yenza inqwaba ibe manzi, ishelele, futhi inuke i-ammonia.
-
-Ama-browns amaningi agcina inqwaba ibanda izinyanga.
-
-Ukulingana okufanele kunika inqwaba ukudla, umoya, nokushisa okwanele ukuze ibole.
+Lolu wuvivinyo lokufunda olulinganiselwe. Izigaxa nobumba olungakahlali phansi kungakudukisa. Uma kudingeka ukwazi ukuthungwa komhlabathi ngokunembile, sebenzisa ilabhorethri yomhlabathi.
 
 ---
 
-**Ikhasi 12 — Gcina I-Compost Iphephile (Slide 12 — Keep the Compost Safe)**
+**Ikhasi 7 — Funda Izingqimba Zasebhodleleni Ngokucophelela**
 
-Khomba izinga lokushisa eliphakathi kwenqwaba elingu-55 kuya ku-65°C.
+Ungqimba olujiyile lwesihlabathi ngaphansi kwamanzi afiphele alukakutsheli izilinganiso zokugcina. Ezinye izinhlayiya ezincane kungenzeka zisantanta.
 
-Lokhu kusheshisa ukubola futhi kubulala iningi lembewu yokhula namagciwane abangela izifo.
+Qhathanisa izingqimba esezihlale phansi, futhi uzwe nokuthungwa komhlabathi osensimini.
 
-Ungafaki inyama, ubisi, ukudla okuphekiwe, izitshalo ezigulayo, noma umhlabathi onezinsalela ze-herbicide ehlala isikhathi eside.
-
-Lezi zinto zingenza i-compost eqediwe ingaphephi epulazini.
+Bhala lokho okubonayo nalokho okungakaqinisekiswa. Ungancomi indlela yokunisela noma yokwelapha umhlabathi ngebhodlela elilodwa kuphela.
 
 ---
 
-**Ikhasi 13 — Gcina Ama-Pod E-Wattle Ngaphandle (Slide 13 — Keep Wattle Pods Out)**
+**Ikhasi 8 — Hlola Ngaphambi Kokwelapha**
 
-Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost.
+Ukucinana komhlabathi, ukungaphumi kahle kwamanzi nokuncipha kwezinto eziphilayo kunganciphisa ukukhula kwezimpande nokuphila komhlabathi.
 
-Igobolondo lawo eliqinile lembewu lisinda ekushiseni okuvamile kwe-compost, bese lisabalalisa i-wattle nge-compost eqediwe.
+Umbala ophaphathekile noma izibungu ezimbalwa akufakazeli ukuthi amakhemikhali abulale umhlabathi. Umsebenzi wezibungu nawo uyashintsha kuye ngomswakama nenkathi yonyaka.
 
-Amagxolo e-wattle wodwa aphephile ukuwafaka, nakuba ebola kancane.
-
-Phendula inqwaba njalo ezinsukwini ezinhlanu kuya kweziyisikhombisa, uyigcine imanzi, ingabi manzi ngokweqile.
+Bheka amaphethini ezindaweni ezahlukene zensimu. Hlola umlando wokunakekela, ukuphuma kwamanzi nokukhula kwezitshalo ngaphambi kokukhetha ikhambi.
 
 ---
 
-**Ikhasi 14 — Buka: Umhlabathi Ongenalutho Ne-Mulch (Slide 14 — Watch: Bare Soil and Mulch)**
+**Ikhasi 9 — I-Compost Yondla Umhlabathi**
 
-Qhathanisa umhlabathi ongenalutho nomhlabathi one-mulch.
+I-compost yizinto eziphilayo ezibolile ngaphansi kwezimo ezilawulwayo.
 
-Bheka ukuthi i-mulch iwuvikela kanjani umhlabathi ongaphezulu lapho isiphepho sasehlobo saseNingizimu Afrika siletha imvula enamandla.
+I-compost esilungile ingathuthukisa ukwakheka komhlabathi futhi ifake izakhamzimba kuwo.
 
----
-
-**Ikhasi 15 — I-Mulch Ivikela Umhlabathi (Slide 15 — Mulch Protects the Ground)**
-
-Sabalalisa ungqimba lwe-straw, utshani obomile, noma ama-wood chips olungamasentimitha ama-5 kuya kwayi-10 emhlabathini ongenalutho.
-
-I-mulch inciphisa kakhulu ukuguguleka komhlabathi futhi igcine umhlabathi upholile ngamazinga ambalwa ehlobo.
-
-Ezinsukwini ezishisayo e-Highveld, yehlisa izinga lokushisa lomhlabathi lifike ku-10°C.
-
-Iphinde icindezele ukhula futhi yondle impilo yomhlabathi njengoba ibola.
+Isikhathi sokuthi i-compost ilunge siyashintsha kuye ngezinto ezifakiwe, umswakama, umoya nokushisa. Igama lesifundazwe noma inani elinqunyiwe lamasonto akusho ukuthi i-compost isilungile.
 
 ---
 
-**Ikhasi 16 — Ama-Cover Crops Phakathi Kwezinkathi (Slide 16 — Cover Crops Between Seasons)**
+**Ikhasi 10 — Buka: Yakha Inqwaba Ye-Compost**
 
-Ama-cover crops avikela umhlabathi lapho isivuno esikhulu singakhuli.
+Yakha inqwaba ngama-browns omile nama-greens amasha.
 
-E-Highveld, tshala ama-oats noma ama-lupins emva kokuvuna ummbila, ukuze amboze umhlabathi phakathi nezinyanga zesithwathwa.
-
-Zigawule uzihlanganise nomhlabathi ngaphambi kokutshala kwentwasahlobo.
-
-EKZN, i-sunn hemp ikhula ngokushesha ehlobo, kanti i-cowpea ibopha i-nitrogen futhi ibekezelela isikhathi esomile sasekuqaleni kwehlobo e-Lowveld.
+Gcina izingqimba zimanzi kodwa zingacwili, ukuze kungene umoya futhi izinto ezibolisa inqwaba zisebenze.
 
 ---
 
-**Ikhasi 17 — Ama-Worm Farms Enza Ukudla Kwezimpande (Slide 17 — Worm Farms Make Root Feed)**
+**Ikhasi 11 — Linganisa Ama-Browns Nama-Greens**
 
-Ama-worm farms aguqula izinsalela zasekhishini zibe ama-castings anomsoco emasontweni amathathu kuya kwamane.
+Hlanganisa ama-browns omile nama-greens amasha. Gwema izingqimba eziwugqinsi nezimanzi ezivimba umoya.
 
-I-liquid leachate ingumanyolo onamandla.
+Uma inqwaba iba bushelelezi ngokushelela noma inuka kakhulu i-ammonia, faka ama-browns omile bese uyiphendula.
 
-Yixube namanzi ngesilinganiso esingu-1:10 ngaphambi kokuyisebenzisa njengokudla kwezimpande.
-
-I-leachate engaxutshiwe igxile ngokwanele ukushisa izimpande zezitshalo esikhundleni sokuzondla.
+Hlola umswakama nomoya njengoba inqwaba ishintsha; iresiphi eyodwa ayifaneli zonke izingxube zezinto.
 
 ---
 
-**Ikhasi 18 — Vikela Umhlabathi Unyaka Wonke (Slide 18 — Protect Soil All Year)**
+**Ikhasi 12 — Ukushisa Kukodwa Akufakazeli Ukuphepha**
 
-Insimu yase-Highveld eshiywe ingenalutho emva kokuvuna ummbila ibhekana nezingozi ezimbili ezinkulu.
+Ukuthi indawo emaphakathi nenqwaba iyashisa akufakazeli ukuthi yonke ingxenye yayo ithole ukwelashwa. Isikhathi, izinga lokushisa nendlela yokuphatha konke kubalulekile.
 
-Umoya wasebusika ungathwala umhlabathi ongaphezulu owomile.
+Ungafaki inyama, ubisi nemikhiqizo yobisi, izitshalo ezigulayo, indle yezilwane ezifuywayo noma izinto ezingcolile kule ndlela elula yasekhaya.
 
-Isiphepho sokuqala esinamandla sentwasahlobo sishaya umhlabathi ongenalutho futhi sonakalise isakhiwo sawo.
-
-Ama-cover crops, i-mulch, nezinto zemvelo kugcina umhlabathi usendaweni futhi kusize uhlale uphila.
+Ungacabangi ukuthi ukwenza i-compost ekhaya kuqeda yonke imbewu yokhula noma zonke izinto eziphilayo ezibangela izifo. Uma kudingeka ukuhlanzwa kwe-compost, sebenzisa inqubo eyamukelekile.
 
 ---
 
-**Ikhasi 19 — Umsebenzi Wepulazini (Slide 19 — Field Assignment)**
+**Ikhasi 13 — Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle**
 
-Khetha indawo osebenza kuyo epulazini, bese uhlola umhlabathi.
+Gcina ama-pod embewu ye-wattle ngaphandle kwenqwaba ye-compost. Inqwaba evamile ingase ingayenzi yonke imbewu ingasakwazi ukuhluma.
 
-Yimba umgodi ongu-30 cm, uqophe umbala, iphunga, isakhiwo, nemigudu yezibungu.
+Sebenzisa izinto ezihlanzekile kuphela, ezingakaze zelashwe. Amagxolo abola kancane; igama lawo lodwa aliqinisekisi ukuthi awangcolisiwe.
 
-Yenza i-jar test ngomhlabathi, amanzi, nethonsi lensipho yokugeza izitsha.
-
-Bhala ukuthi isihlabathi, i-silt, noma ubumba kubonakala kuningi, nokuthi lokho kusho ukuthini ngokunisela.
+Hlola inqwaba, uyiphendule lapho idinga umoya owengeziwe noma ukuxutshwa. Yigcine inomswakama, ingagcwali amanzi.
 
 ---
 
-**Ikhasi 20 — Isenzo Sasepulazini (Slide 20 — Field Action)**
+**Ikhasi 14 — Buka: Umhlabathi Ongenalutho Ne-Mulch**
 
-Qala isenzo esisodwa sokwakha umhlabathi esikule module.
+Qhathanisa umhlabathi ongenalutho nomhlabathi ombozwe nge-mulch.
 
-Mboza umhlabathi ongenalutho nge-mulch, qala inqwaba ye-compost elinganiselayo, tshala i-cover crop efanele, noma lungisa i-worm farm.
+Uma imvula ishaya i-mulch esikhundleni sokushaya umhlabathi ongenalutho, ingxenye enkulu yamandla amaconsi emvula ingadamba. Lo mdwebo ukhombisa lo mbono wokushaya kwemvula kuphela; awusho ukuthi amanzi azongena, azogeleza noma azogcinwa kanjani endaweni ethile.
 
-Uma i-compost yakho inuka i-ammonia futhi ishelele, faka i-carbon eyomile njenge-straw bese uphendula inqwaba.
+---
+
+**Ikhasi 15 — I-Mulch Ivikela Umhlabathi**
+
+Mboza umhlabathi ongenalutho nge-mulch ehlanzekile nefanele, njenge-straw, utshani obomile noma ama-wood chips.
+
+I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwemvula futhi icindezele ukhula.
+
+Yigcine ingathinti iziqu zezihlahla nezitshalo. Hlola umswakama ngaphansi kwayo bese ulungisa ungqimba. I-mulch eningi ayihlali ingcono.
+
+---
+
+**Ikhasi 16 — Izitshalo Zokumboza Umhlabathi Phakathi Kwezilimo**
+
+Izitshalo zokumboza umhlabathi zingawuvikela phakathi kwezilimo eziyinhloko. Khetha ngokwesimo sezulu sendawo, amanzi atholakalayo nesitshalo esizolandela.
+
+Izibonelo ezikulesi sifundo zifaka ama-oats, ama-lupins, i-sunn hemp ne-cowpea. Hlola ukuthi zifanele yini indawo yakho ngaphambi kokuzihlwanyela.
+
+Izitshalo zomndeni wama-legume zidinga amagciwane afanele nezimo zokukhula ezifanele ukuze zibophe i-nitrogen. Izakhamzimba ezinsaleleni zazo zitholakala njengoba lezo zinsalela zibola.
+
+---
+
+**Ikhasi 17 — Ama-Worm Castings Noketshezi Oluphuma Emgqonyeni**
+
+Amapulazi ezikelemu angaguqula izinsalela zokudla ezifanele nezinto zokulala kwezikelemu zibe ama-castings. Hlola umgqomo; ungalindeli usuku oluqondile lokuvuna.
+
+Uketshezi oluphuma ngokwemvelo emgqonyeni wezikelemu lubizwa nge-leachate. Alufani netiye lezikelemu elilungiswe ngendlela ethile.
+
+I-leachate ingaba nezinto eziphilayo noma ezinye izinto eziyingozi. Ungayisebenzisi ezitshalweni ezidliwayo futhi ungacabangi ukuthi ukuyixuba namanzi kuyenza iphephe.
+
+---
+
+**Ikhasi 18 — Vikela Umhlabathi Unyaka Wonke**
+
+Insimu yase-Highveld eshiywe ingenalutho ngemva kokuvuna ummbila ibhekana nezingozi ezimbili ezinkulu.
+
+Umoya wasebusika ungathwala umhlabathi ongaphezulu owomile uwususe.
+
+Isiphepho sokuqala esinamandla sentwasahlobo singashaya umhlabathi ongenalutho silimaze ingaphezulu lawo nokwakheka kwawo. Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe awususe.
+
+Izitshalo zokumboza umhlabathi, i-mulch nezinto zemvelo zingasiza ukubamba umhlabathi endaweni yawo futhi ziwusize uhlale uphila.
+
+---
+
+**Ikhasi 19 — Umsebenzi Wensimu**
+
+Hlola umhlabathi endaweni osebenza kuyo. Bhala umbala, ukwakheka, izimpande, umswakama nanoma yimiphi imigudu yezibungu.
+
+Qhathanisa nenye indawo, ubhale ngesimo sezulu sakamuva nangendlela indawo ebiphethwe ngayo.
+
+Zama ukuhlola ngebhodlela. Bhala ukuthi yini okubonakala sengathi iyavela, yini engakaqinisekiswa, nokuthi ukuhlolwa kwelabhorethri noma iseluleko somuntu wendawo onguchwepheshe kungasiza yini.
+
+---
+
+**Ikhasi 20 — Isenzo Sasepulazini**
+
+Qala isenzo esisodwa sokwakha umhlabathi esikule modyuli.
+
+Mboza umhlabathi ongenalutho nge-mulch, qala inqwaba ye-compost elinganiselayo, hlwanyela isitshalo sokumboza esifanele, noma lungisa i-worm farm.
+
+Uma i-compost yakho inuka i-ammonia futhi ishelela, faka izinto ezomile ezine-carbon njenge-straw bese uphendula inqwaba.
 
 Yakha impilo yomhlabathi kancane kancane.
 
-## Notes for the Human Reviewer
+## Okusalindele ukubuyekezwa
 
-**This is a draft translation only. It must be read by a first-language isiZulu speaker who
-farms before this script goes anywhere near a learner.** Nothing here has been reviewed by a
-person.
+- Qinisekisa ukuthi amagama abolekiwe afana no-`i-mulch`, `i-leachate`, `ama-worm castings`, `ama-legume`, `i-nitrogen`, `ama-browns`, `ama-greens` namagama ezitshalo ajwayelekile kubalimi abakhuluma isiZulu.
+- Hlola ukuthi imibandela ethi “ingasiza”, “ingase” nokuthi “uma amanzi egeleza” ihlala icacile.
+- Qinisekisa ukuthi i-leachate ihlukanisiwe netiye lezikelemu futhi ayethulwa njengomanyolo ophephile noma osebenzisekayo ezitshalweni ezidliwayo.
+- Qinisekisa ukuthi i-jar test ibizwa ngokuthi umsebenzi wokufunda olinganiselwe, futhi ayiniki isinqumo sokunisela noma sokwelapha.
+- Umuntu okhuluma isiZulu njengolimi lwasekhaya futhi onolwazi lokulima kusadingeka abuyekeze ulimi nokufaneleka kwezolimo. Akukho kubuyekezwa komuntu noma ukuvunywa okufunwayo kuleli phakethe.
 
-It was written to match `docs/narration/soil-health.en.md` slide for slide — 20 isiZulu blocks
-against 20 English ones — so the deck and the narration cannot drift apart.
+## TERMS NEEDING REVIEW
 
-**The instruction was to BORROW, never to coin.** An earlier isiZulu draft in this course invented
-22 agronomic terms and is still blocked from recording because of it, so where no everyday isiZulu
-word exists the English word was kept and carried on an isiZulu noun-class prefix instead. Those
-borrowings are listed below — they are the first thing to check, because a borrowing that a farmer
-would not actually say out loud is the same failure as a coined term:
+**UNREVIEWED DRAFT AUDIO. Fluent review pending.** This narration remains labelled as a draft. It does not certify translation or pronunciation, and no human listening, learner, farmer, practitioner, crop or legal approval is claimed.
 
-- `ama-browns`
-- `ama-castings`
-- `ama-cover`
-- `ama-lupins`
-- `ama-oats`
-- `ama-pod`
-- `ama-wood`
-- `i-ammonia`
-- `i-browns`
-- `i-carbon`
-- `i-compost`
-- `i-cover`
-- `i-cowpea`
-- `i-greens`
-- `i-jar`
-- `i-mulch`
-- `i-nitrogen`
-- `i-silt`
-- `i-sunn`
-- `i-wattle`
-- `i-worm`
-
-Please also confirm:
-
-- The register is ordinary spoken farming isiZulu — the words a KwaZulu-Natal farmer uses aloud,
-  not written or academic isiZulu.
-- Every number and every plant or animal name matches the English script. Nothing was to be added,
-  and no species may be named that the English does not name.
-- Nothing addresses a room. The learner is alone on a phone; there is no group and no facilitator.
-
-When the review is done, correct the script and delete this appendix. Deleting the appendix without
-doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
+A fluent isiZulu speaker with local farming experience should check spoken phrasing for “soil structure,” “silt,” “leachate,” “runoff,” “cover crop” and the mixed-language terms “compost,” “mulch,” “worm castings” and “nitrogen.” Confirm that the safety cautions on slides 6–8 and 14–18 sound clear and do not imply fixed timing, guaranteed outcomes, a single diagnostic sign, or that worm-bin liquid is safe for edible plants.

@@ -1,6 +1,6 @@
 # Plant Selection & Guilds L3 — isiZulu full review draft
 
-**Status: UNREVIEWED DRAFT — REVIEW ONLY; NOT APPROVED FOR LEARNERS, RECORDING OR PUBLICATION.**
+**Status: UNREVIEWED DRAFT — learner-visible with a persistent draft label; not fluent, farming or listening approved.**
 
 Scope: `plant-guilds-l3`, “Build a Guild and Adjust It as It Grows.” This source-paired packet contains the current English lesson body, key points and both quiz questions with every option, correct answer index and rationale. It is a translation proposal, not fluent certification or planting advice.
 

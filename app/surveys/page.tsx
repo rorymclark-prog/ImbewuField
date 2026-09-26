@@ -12,9 +12,11 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { useAuth } from '@/lib/auth';
+import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import {
   createSurvey,
+  updateSurveyIsiZuluLabels,
   listSurveys,
   addSurveyResponse,
   countSurveyResponses,
@@ -22,6 +24,7 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
@@ -55,6 +58,51 @@ const SAMPLE_SURVEYS: Survey[] = [
   },
 ];
 
+// Only these built-in demonstration records have paired AI draft text. Live organization copy
+// stays exactly as authored, and the English option strings remain the stored response values.
+const SAMPLE_SURVEY_ZU_DRAFTS: Record<string, { title?: string; questions?: Record<string, string>; options?: Record<string, string> }> = {
+  'sample-1': {
+    title: 'Ukuhlola phakathi nesizini',
+    questions: {
+      sq1: 'Ingabe usuvunile kule sizini?',
+      sq2: 'Udayise cishe ngokungakanani?',
+    },
+    options: {
+      'Nothing yet': 'Akukho okwamanje',
+      'Under R500': 'Ngaphansi kuka-R500',
+      'R500–2000': 'Phakathi kuka-R500 no-R2000',
+      'Over R2000': 'Ngaphezulu kuka-R2000',
+    },
+  },
+  'sample-2': {
+    title: 'Ukuhlola ukutholakala kwamanzi',
+    questions: {
+      sq3: 'Ingabe unokuthola amanzi okuthembekile esivandeni sakho?',
+      sq4: 'Yimuphi umthombo wakho omkhulu wamanzi?',
+      sq5: 'Ingabe zikhona izinselelo zamanzi ofuna ukusitshela ngazo?',
+    },
+    options: {
+      Municipal: 'Amanzi kamasipala',
+      Borehole: 'I-borehole',
+      'Rain tank': 'Ithangi lemvula',
+      'River / stream': 'Umfula / umfudlana',
+    },
+  },
+};
+
+function showSampleDraft(survey: Survey, source: string, draft: string | undefined, lang: string) {
+  return lang === 'zu' && survey.id.startsWith('sample-') && draft ? `${draft} / ${source}` : source;
+}
+
+function showSurveyLabel(source: string, zulu: string | undefined, lang: string) {
+  return lang === 'zu' && zulu?.trim() ? `${zulu.trim()} / ${source}` : source;
+}
+
+function showSurveyText(survey: Survey, source: string, sampleDraft: string | undefined, zulu: string | undefined, lang: string) {
+  const sampleText = showSampleDraft(survey, source, sampleDraft, lang);
+  return sampleText === source ? showSurveyLabel(source, zulu, lang) : sampleText;
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeQuestionId(i: number) {
@@ -62,14 +110,20 @@ function makeQuestionId(i: number) {
 }
 
 const STAFF_ROLES = new Set(['ngo', 'admin']);
+// Verified bug: surveys are answered by farmers and students (or a signed-out participant during
+// the sample tour) — mentor and funder accounts are neither, but used to fall through to this
+// same "answer this survey" flow as a farmer, with nothing stopping them submitting a response.
+const ANSWER_ROLES = new Set(['farmer', 'student']);
 
 // ─── Staff: survey builder ────────────────────────────────────────────────────
 
 interface DraftQuestion {
   _key: string;
   text: string;
+  text_zu: string;
   type: SurveyQType;
   options: string[];
+  options_zu: string[];
 }
 
 function QuestionBuilder({
@@ -83,20 +137,25 @@ function QuestionBuilder({
 }) {
   const { lang } = useLanguage();
   function setType(t: SurveyQType) {
-    onChange({ ...q, type: t, options: t === 'choice' ? ['', ''] : [] });
+    onChange({ ...q, type: t, options: t === 'choice' ? ['', ''] : [], options_zu: t === 'choice' ? ['', ''] : [] });
   }
   function setOption(idx: number, val: string) {
     const opts = [...q.options];
     opts[idx] = val;
     onChange({ ...q, options: opts });
   }
+  function setOptionZu(idx: number, val: string) {
+    const opts = [...q.options_zu];
+    opts[idx] = val;
+    onChange({ ...q, options_zu: opts });
+  }
   function addOption() {
     if (q.options.length >= 4) return;
-    onChange({ ...q, options: [...q.options, ''] });
+    onChange({ ...q, options: [...q.options, ''], options_zu: [...q.options_zu, ''] });
   }
   function removeOption(idx: number) {
     if (q.options.length <= 2) return;
-    onChange({ ...q, options: q.options.filter((_, i) => i !== idx) });
+    onChange({ ...q, options: q.options.filter((_, i) => i !== idx), options_zu: q.options_zu.filter((_, i) => i !== idx) });
   }
 
   const TYPE_OPTS: { v: SurveyQType; label: string }[] = [
@@ -106,7 +165,7 @@ function QuestionBuilder({
   ];
 
   return (
-    <div className="rounded-2xl p-3.5 space-y-2.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-3.5 space-y-2.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="flex gap-2 items-start">
         <input
           value={q.text}
@@ -114,17 +173,28 @@ function QuestionBuilder({
           placeholder={localUi('Question text...', 'Umbhalo wombuzo...', lang)}
           aria-label={localUi('Question text', 'Umbhalo wombuzo', lang)}
           className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none"
-          style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
         <button
           onClick={onRemove}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.05)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'pointer' }}
+          style={{ width: 44, height: 44, background: 'rgba(32,25,15,0.05)', border: '1px solid var(--border)', color: 'var(--text-muted)', cursor: 'pointer' }}
           aria-label={localUi('Remove question', 'Susa umbuzo', lang)}
         >
           <X size={14} />
         </button>
       </div>
+
+      {lang === 'zu' && (
+        <input
+          value={q.text_zu}
+          onChange={(e) => onChange({ ...q, text_zu: e.target.value })}
+          placeholder="Umbhalo wesiZulu (uyazikhethela)"
+          aria-label="Umbhalo wesiZulu wombuzo (uyazikhethela)"
+          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+        />
+      )}
 
       {/* Type selector */}
       <div className="flex gap-1.5 flex-wrap">
@@ -137,7 +207,7 @@ function QuestionBuilder({
               className="px-2.5 py-1 rounded-full font-display text-xs font-semibold"
               style={{
                 background: on ? '#1F4D2B' : 'rgba(31,77,43,0.07)',
-                color: on ? '#EAF3E2' : '#1F4D2B',
+                color: on ? '#EAF3E2' : 'var(--color-forest-800)',
                 border: `1px solid ${on ? '#1F4D2B' : 'rgba(31,77,43,0.2)'}`,
                 cursor: 'pointer',
               }}
@@ -159,10 +229,25 @@ function QuestionBuilder({
                 onChange={(e) => setOption(i, e.target.value)}
                 placeholder={`Option ${i + 1}`}
                 className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
-                style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
+              {lang === 'zu' && (
+                <input
+                  value={q.options_zu[i] ?? ''}
+                  onChange={(e) => setOptionZu(i, e.target.value)}
+                  placeholder={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
+                  aria-label={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
+                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                  style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+                />
+              )}
               {q.options.length > 2 && (
-                <button onClick={() => removeOption(i)} aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)} style={{ color: '#8C7A62', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <button
+                  onClick={() => removeOption(i)}
+                  aria-label={localUi(`Remove option ${i + 1}`, `Susa impendulo ${i + 1}`, lang)}
+                  className="flex items-center justify-center flex-shrink-0"
+                  style={{ width: 44, height: 44, color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}
+                >
                   <X size={12} />
                 </button>
               )}
@@ -172,7 +257,7 @@ function QuestionBuilder({
             <button
               onClick={addOption}
               className="flex items-center gap-1.5 text-xs font-display font-semibold"
-              style={{ color: '#C07A1E', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
+              style={{ color: 'var(--gold-dim)', background: 'none', border: 'none', cursor: 'pointer', padding: '2px 0' }}
             >
               <Plus size={12} /> {localUi('Add option', 'Engeza impendulo ongakhetha kuyo', lang)}
             </button>
@@ -188,9 +273,10 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
   const { profile } = useAuth();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [titleZu, setTitleZu] = useState('');
   const [orgName, setOrgName] = useState(profile?.full_name ?? '');
   const [questions, setQuestions] = useState<DraftQuestion[]>([
-    { _key: 'init0', text: '', type: 'yesno', options: [] },
+    { _key: 'init0', text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] },
   ]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -198,7 +284,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
   function addQuestion() {
     const idx = questions.length;
-    setQuestions((prev) => [...prev, { _key: makeQuestionId(idx), text: '', type: 'yesno', options: [] }]);
+    setQuestions((prev) => [...prev, { _key: makeQuestionId(idx), text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] }]);
   }
   function updateQuestion(i: number, updated: DraftQuestion) {
     setQuestions((prev) => prev.map((q, j) => (j === i ? updated : q)));
@@ -223,22 +309,27 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
     const finalQs: SurveyQuestion[] = validQs.map((q, i) => ({
       id: makeQuestionId(i),
       text: q.text.trim(),
+      ...(q.text_zu.trim() ? { text_zu: q.text_zu.trim() } : {}),
       type: q.type,
-      options: q.type === 'choice' ? q.options.filter((o) => o.trim()) : [],
+      options: q.type === 'choice' ? q.options.flatMap((o) => o.trim() ? [o.trim()] : []) : [],
+      ...(q.type === 'choice' && q.options.some((o) => o.trim())
+        ? { options_zu: q.options.flatMap((o, index) => o.trim() ? [q.options_zu[index]?.trim() ?? ''] : []) }
+        : {}),
     }));
-    await createSurvey({ org_name: orgName.trim(), title: title.trim(), questions: finalQs });
+    await createSurvey({ org_name: orgName.trim(), title: title.trim(), ...(titleZu.trim() ? { title_zu: titleZu.trim() } : {}), questions: finalQs });
     setSaving(false);
     setSaved(true);
     setTitle('');
+    setTitleZu('');
     setOrgName(profile?.full_name ?? '');
-    setQuestions([{ _key: makeQuestionId(0), text: '', type: 'yesno', options: [] }]);
+    setQuestions([{ _key: makeQuestionId(0), text: '', text_zu: '', type: 'yesno', options: [], options_zu: [] }]);
     setTimeout(() => { setSaved(false); setOpen(false); onCreated(); }, 1800);
   }
 
   const canSend = title.trim() && orgName.trim() && questions.some((q) => q.text.trim());
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
@@ -248,16 +339,16 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
       >
         <div className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 34, height: 34, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.25)' }}>
-          <Plus size={16} style={{ color: '#C07A1E' }} strokeWidth={1.8} />
+          <Plus size={16} style={{ color: 'var(--gold-dim)' }} strokeWidth={1.8} />
         </div>
-        <span className="flex-1 font-display font-semibold text-sm" style={{ color: '#20190F' }}>{localUi('New survey', 'Inhlolovo entsha', lang)}</span>
+        <span className="flex-1 font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{localUi('New survey', 'Inhlolovo entsha', lang)}</span>
         {open
-          ? <ChevronUp size={15} style={{ color: '#8C7A62' }} />
-          : <ChevronDown size={15} style={{ color: '#8C7A62' }} />}
+          ? <ChevronUp size={15} style={{ color: 'var(--text-muted)' }} />
+          : <ChevronDown size={15} style={{ color: 'var(--text-muted)' }} />}
       </button>
 
       {open && (
-        <div className="px-4 pb-4 space-y-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <div className="px-4 pb-4 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="pt-3 space-y-2">
             <input
               value={title}
@@ -265,19 +356,29 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               placeholder={localUi('Survey title...', 'Isihloko senhlolovo...', lang)}
               aria-label={localUi('Survey title', 'Isihloko senhlolovo', lang)}
               className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
-              style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+              style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
+            {lang === 'zu' && (
+              <input
+                value={titleZu}
+                onChange={(e) => setTitleZu(e.target.value)}
+                placeholder="Isihloko ngesiZulu (uyazikhethela)"
+                aria-label="Isihloko senhlolovo ngesiZulu (uyazikhethela)"
+                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+              />
+            )}
             <input
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
               placeholder={localUi('Organisation name...', 'Igama lenhlangano...', lang)}
               aria-label={localUi('Organisation name', 'Igama lenhlangano', lang)}
               className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
-              style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+              style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
           </div>
 
-          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
+          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
             {localUi('Questions', 'Imibuzo', lang)}
           </div>
 
@@ -295,13 +396,13 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
           <button
             onClick={addQuestion}
             className="flex items-center gap-2 font-display text-sm font-semibold"
-            style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
           >
             <Plus size={14} strokeWidth={1.8} /> {localUi('Add question', 'Engeza umbuzo', lang)}
           </button>
 
           {sampleNote && (
-            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#C07A1E', border: '1px solid rgba(192,122,30,0.2)' }}>
+            <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.2)' }}>
               {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
             </p>
           )}
@@ -332,9 +433,100 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
 // ─── Staff: existing survey card ──────────────────────────────────────────────
 
-function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }) {
+function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () => void }) {
+  const [titleZu, setTitleZu] = useState(survey.title_zu ?? '');
+  const [questionsZu, setQuestionsZu] = useState(() => survey.questions.map((q) => ({
+    id: q.id,
+    text_zu: q.text_zu ?? '',
+    options_zu: q.options.map((_, index) => q.options_zu?.[index] ?? ''),
+  })));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState(false);
+
+  async function saveLabels() {
+    setSaving(true);
+    setError(false);
+    try {
+      await updateSurveyIsiZuluLabels(survey.id, {
+        source_title: survey.title,
+        title_zu: titleZu,
+        questions: questionsZu.map((q, index) => ({
+          ...q,
+          source_text: survey.questions[index].text,
+          source_options: survey.questions[index].options,
+        })),
+      });
+      setSaved(true);
+      onSaved();
+    } catch {
+      setError(true);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="mt-3 pt-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
+      <div className="space-y-1">
+        <div className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{localUi('English source', 'Umthombo wesiNgisi', 'zu')}: {survey.title}</div>
+        <input
+          value={titleZu}
+          onChange={(e) => setTitleZu(e.target.value)}
+          placeholder="Isihloko senhlolovo ngesiZulu"
+          aria-label={`Isihloko ngesiZulu: ${survey.title}`}
+          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none"
+          style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+        />
+      </div>
+
+      {survey.questions.map((question, questionIndex) => (
+        <div key={question.id} className="space-y-2 rounded-xl p-3" style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid var(--border)' }}>
+          <div className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>{localUi('English question', 'Umbuzo wesiNgisi', 'zu')}: {question.text}</div>
+          <input
+            value={questionsZu[questionIndex]?.text_zu ?? ''}
+            onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex ? { ...q, text_zu: e.target.value } : q))}
+            placeholder="Umbuzo ngesiZulu"
+            aria-label={`Umbuzo ngesiZulu: ${question.text}`}
+            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+            style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+          />
+          {question.options.map((option, optionIndex) => (
+            <div key={`${question.id}-option-${optionIndex}`} className="space-y-1">
+              <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{localUi('English choice', 'Impendulo yesiNgisi', 'zu')}: {option}</div>
+              <input
+                value={questionsZu[questionIndex]?.options_zu[optionIndex] ?? ''}
+                onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex
+                  ? { ...q, options_zu: q.options_zu.map((value, i) => i === optionIndex ? e.target.value : value) }
+                  : q))}
+                placeholder="Impendulo ngesiZulu"
+                aria-label={`Impendulo ngesiZulu: ${option}`}
+                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+
+      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>Izimpendulo esezithunyelwe zihlala zinjalo.</p>
+      {error && <p role="alert" className="text-xs" style={{ color: 'var(--orange)' }}>Ayikwazanga ukulondoloza. Hlola ukuxhumana kwakho bese uzama futhi.</p>}
+      <button
+        onClick={saveLabels}
+        disabled={saving}
+        className="w-full py-2.5 rounded-xl font-display font-semibold text-sm"
+        style={{ background: '#1F4D2B', color: '#EAF3E2', border: 'none', cursor: saving ? 'wait' : 'pointer' }}
+      >
+        {saving ? 'Iyalondoloza…' : saved ? 'Kulondoloziwe' : 'Londoloza amagama esiZulu'}
+      </button>
+    </div>
+  );
+}
+
+function StaffSurveyCard({ survey, isLive, canEditLabels, onSaved }: { survey: Survey; isLive: boolean; canEditLabels: boolean; onSaved: () => void }) {
   const { lang } = useLanguage();
   const [responseCount, setResponseCount] = useState<number | null>(null);
+  const [editingLabels, setEditingLabels] = useState(false);
 
   useEffect(() => {
     if (!isLive) { setResponseCount(Math.floor(Math.random() * 12)); return; }
@@ -345,22 +537,36 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
   }, [survey.id, isLive]);
 
   return (
-    <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl px-4 py-3.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
-          <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
+          <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
+          <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 ? (lang === 'zu' ? '' : 's') : ''}
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full"
           style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.18)' }}>
-          <ClipboardList size={11} style={{ color: '#1F4D2B' }} strokeWidth={1.8} />
-          <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>
+          <ClipboardList size={11} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.8} />
+          <span className="font-display font-semibold text-xs" style={{ color: 'var(--color-forest-800)' }}>
             {responseCount === null ? '—' : responseCount} {localUi('response', 'impendulo', lang)}{responseCount !== 1 && lang !== 'zu' ? 's' : ''}
           </span>
         </div>
       </div>
+      {lang === 'zu' && isLive && canEditLabels && (
+        <>
+          <button
+            type="button"
+            onClick={() => setEditingLabels((open) => !open)}
+            aria-expanded={editingLabels}
+            className="mt-3 text-xs font-display font-semibold"
+            style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
+            {editingLabels ? 'Vala ukuhlela' : 'Faka noma ubuyekeze amagama esiZulu'}
+          </button>
+          {editingLabels && <SurveyLabelEditor survey={survey} onSaved={onSaved} />}
+        </>
+      )}
     </div>
   );
 }
@@ -379,31 +585,45 @@ function FarmerSurveyCard({
   onAnswered: (id: string) => void;
 }) {
   const { lang } = useLanguage();
+  // Simple / All tools (Settings → "How much to show", lib/app-level.ts). The survey BUILDER
+  // above is a staff tool and stays untouched — this only simplifies what a farmer answering a
+  // survey sees: drop the question-count metadata, use bigger answer targets, and one plain
+  // "Send answers" action.
+  const simple = useAppLevel() === 'simple';
   const [open, setOpen] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(answered);
+  const [submitError, setSubmitError] = useState(false);
 
   function setAnswer(qid: string, val: string) {
     setAnswers((prev) => ({ ...prev, [qid]: val }));
+    setSubmitError(false);
   }
 
   const allAnswered = survey.questions.every((q) => answers[q.id] !== undefined && answers[q.id] !== '');
 
   async function handleSubmit() {
-    if (!allAnswered) return;
+    if (!allAnswered || submitting) return;
     setSubmitting(true);
-    if (isLive) {
-      await addSurveyResponse(survey.id, answers);
+    setSubmitError(false);
+    try {
+      if (isLive) {
+        await addSurveyResponse(survey.id, answers);
+      }
+      setSubmitted(true);
+      setOpen(false);
+      onAnswered(survey.id);
+    } catch {
+      // Leave the farmer's entered answers in place so they can retry after reconnecting.
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
-    setSubmitted(true);
-    setOpen(false);
-    onAnswered(survey.id);
   }
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <button
         onClick={() => { if (!submitted) setOpen((o) => !o); }}
         disabled={submitted}
@@ -411,29 +631,31 @@ function FarmerSurveyCard({
         style={{ background: 'transparent', border: 'none', cursor: submitted ? 'default' : 'pointer' }}
       >
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold text-sm truncate" style={{ color: '#20190F' }}>{survey.title}</div>
-          <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>
-            {localUi('From', 'Kuvela ku', lang)} {survey.org_name} &middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}
+          <div className="font-display font-semibold text-sm break-words" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, survey.title, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.title, survey.title_zu, lang)}</div>
+          <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+            {localUi('From', 'Kuvela ku', lang)} {survey.org_name}
+            {/* Simple hides the question-count metadata — a farmer answering does not need it. */}
+            {!simple && <>&middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
           </div>
         </div>
         {submitted ? (
           <div className="flex items-center gap-1.5 flex-shrink-0 px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.25)' }}>
-            <Check size={12} style={{ color: '#1F4D2B' }} strokeWidth={2} />
-            <span className="font-display font-semibold text-xs" style={{ color: '#1F4D2B' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
+            <Check size={12} style={{ color: 'var(--color-forest-800)' }} strokeWidth={2} />
+            <span className="font-display font-semibold text-xs" style={{ color: 'var(--color-forest-800)' }}>{localUi('Answered', 'Kuphenduliwe', lang)}</span>
           </div>
         ) : open ? (
-          <ChevronUp size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
+          <ChevronUp size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
         ) : (
-          <ChevronDown size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />
+          <ChevronDown size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
         )}
       </button>
 
       {open && !submitted && (
-        <div className="px-4 pb-4 space-y-4" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <div className="px-4 pb-4 space-y-4" style={{ borderTop: '1px solid var(--border)' }}>
           {survey.questions.map((q) => (
             <div key={q.id} className="pt-3 space-y-2">
-              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{q.text}</div>
+              <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, q.text, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.questions?.[q.id], q.text_zu, lang)}</div>
 
               {q.type === 'yesno' && (
                 <div className="flex gap-2">
@@ -444,15 +666,17 @@ function FarmerSurveyCard({
                         key={v}
                         onClick={() => setAnswer(q.id, v)}
                         aria-pressed={on}
-                        className="flex-1 py-2.5 rounded-xl font-display font-semibold text-sm"
+                        className={simple ? 'flex-1 py-4 rounded-xl font-display font-semibold text-base' : 'flex-1 py-2.5 rounded-xl font-display font-semibold text-sm'}
                         style={{
-                          background: on ? '#1F4D2B' : '#fff',
-                          color: on ? '#EAF3E2' : '#20190F',
-                          border: `1px solid ${on ? '#1F4D2B' : '#D8CBB2'}`,
+                          background: on ? '#1F4D2B' : 'var(--color-surface)',
+                          color: on ? '#EAF3E2' : 'var(--text-primary)',
+                          border: `1px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`,
                           cursor: 'pointer',
                         }}
                       >
-                        {localUi(v, v === 'Yes' ? 'Yebo' : 'Cha', lang)}
+                        {lang === 'zu' && survey.id.startsWith('sample-')
+                          ? showSampleDraft(survey, v, v === 'Yes' ? 'Yebo' : 'Cha', lang)
+                        : lang === 'zu' ? `${v === 'Yes' ? 'Yebo' : 'Cha'} / ${v}` : v}
                       </button>
                     );
                   })}
@@ -461,25 +685,25 @@ function FarmerSurveyCard({
 
               {q.type === 'choice' && (
                 <div className="space-y-1.5">
-                  {q.options.map((opt) => {
+                  {q.options.map((opt, optionIndex) => {
                     const on = answers[q.id] === opt;
                     return (
                       <button
                         key={opt}
                         onClick={() => setAnswer(q.id, opt)}
                         aria-pressed={on}
-                        className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left"
+                        className={simple ? 'w-full flex items-center gap-3 px-4 py-4 rounded-xl text-left' : 'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left'}
                         style={{
-                          background: on ? 'rgba(31,77,43,0.08)' : '#fff',
-                          border: `1px solid ${on ? '#1F4D2B' : '#D8CBB2'}`,
+                          background: on ? 'rgba(31,77,43,0.08)' : 'var(--color-surface)',
+                          border: `1px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`,
                           cursor: 'pointer',
                         }}
                       >
                         <div className="flex items-center justify-center rounded-full flex-shrink-0"
-                          style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : '#C9BBA1'}`, background: on ? '#1F4D2B' : 'transparent' }}>
+                          style={{ width: 18, height: 18, border: `1.5px solid ${on ? '#1F4D2B' : 'var(--border-strong)'}`, background: on ? '#1F4D2B' : 'transparent' }}>
                           {on && <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#EAF3E2' }} />}
                         </div>
-                        <span className="font-sans text-sm" style={{ color: '#20190F' }}>{opt}</span>
+                        <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{showSurveyText(survey, opt, SAMPLE_SURVEY_ZU_DRAFTS[survey.id]?.options?.[opt], q.options_zu?.[optionIndex], lang)}</span>
                       </button>
                     );
                   })}
@@ -494,11 +718,19 @@ function FarmerSurveyCard({
                   aria-label={localUi('Your answer', 'Impendulo yakho', lang)}
                   rows={3}
                   className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }}
+                  style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
             </div>
           ))}
+
+          {submitError && (
+            <p role="alert" className="text-sm font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(154,52,18,0.08)', color: 'var(--orange)', border: '1px solid rgba(154,52,18,0.25)' }}>
+              {lang === 'zu'
+                ? 'Izimpendulo zakho zisekhona. Asikwazanga ukuzithumela. Hlola uxhumano lwakho bese uthepha okuthi Thumela futhi. / Your answers are still here. We could not submit them. Check your connection and tap Submit again.'
+                : 'Your answers are still here. We could not submit them. Check your connection and tap Submit again.'}
+            </p>
+          )}
 
           <button
             onClick={handleSubmit}
@@ -512,7 +744,9 @@ function FarmerSurveyCard({
             }}
           >
             {submitting ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} strokeWidth={1.8} />}
-            {submitting ? localUi('Submitting...', 'Kuyathunyelwa...', lang) : localUi('Submit', 'Thumela', lang)}
+            {submitting
+              ? localUi('Submitting...', 'Kuyathunyelwa...', lang)
+              : simple ? localUi('Send answers', 'Thumela izimpendulo', lang) : localUi('Submit', 'Thumela', lang)}
           </button>
         </div>
       )}
@@ -529,6 +763,9 @@ export default function SurveysPage() {
   const isLive = isBackendConfigured();
 
   const isStaff = role !== null && STAFF_ROLES.has(role);
+  // null covers both "not signed in" (the sample tour's participant preview) and a role still
+  // resolving on first render — the page's own !loading guard above handles the latter.
+  const canAnswer = role === null || ANSWER_ROLES.has(role);
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [respondedIds, setRespondedIds] = useState<Set<string>>(new Set());
@@ -561,35 +798,37 @@ export default function SurveysPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={APP_HEADER_STYLE}
       >
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
         <div className="flex-1" />
-        <LessonLink id="surveys:overview" label="Learn" />
+        <LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />
         <SettingsButton />
       </header>
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
         {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-            Imibuzo nezimpendulo zokukhetha kuboniswa njengoba kubhalwe umdali wenhlolovo.
+          <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+            {lang === 'zu'
+              ? 'ISIZULU DRAFT — Built-in demonstration text is an unreviewed AI draft. For live surveys, an organisation may enter isiZulu labels; they appear beside the exact English text and have not been independently reviewed. Ask the survey creator before submitting if anything is unclear. / UHLAKA LWESIZULU — Umbhalo wezibonelo owakhelwe ngaphakathi uwuhlaka lwe-AI olungakabuyekezwa. Kuhlolovo olubukhoma, inhlangano ingafaka amagama esiZulu; aboniswa eduze kombhalo wesiNgisi oqondile futhi awabuyekezwanga ngokuzimela. Buza umdali wenhlolovo uma kukhona okungacacile ngaphambi kokuthumela.'
+              : ''}
           </p>
         )}
 
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
-          <ClipboardList size={16} style={{ color: '#1F4D2B' }} strokeWidth={1.7} />
-          <h1 className="font-display font-bold text-lg leading-tight" style={{ color: '#20190F', letterSpacing: '-0.01em' }}>
-            {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang)}
+          <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
+          <h1 className="font-display font-bold text-lg leading-tight" style={{ color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+            {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
         </div>
 
@@ -600,23 +839,23 @@ export default function SurveysPage() {
 
             {fetching ? (
               <div className="flex justify-center py-8">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               </div>
             ) : surveys.length === 0 ? (
-              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
-                <p className="font-display text-sm" style={{ color: '#5C5040' }}>
+              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <p className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {localUi('No surveys yet. Build the first one above.', 'Azikho izinhlolovo okwamanje. Yakha eyokuqala ngenhla.', lang)}
                 </p>
               </div>
             ) : (
               <>
-                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.08em' }}>
+                <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                   {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
                 <div className="space-y-3">
                   {surveys.map((s) => (
-                    <StaffSurveyCard key={s.id} survey={s} isLive={isLive} />
+                    <StaffSurveyCard key={s.id} survey={s} isLive={isLive} canEditLabels={s.created_by === user?.uid} onSaved={load} />
                   ))}
                 </div>
               </>
@@ -624,17 +863,18 @@ export default function SurveysPage() {
           </>
         )}
 
-        {/* Farmer / other view */}
-        {!isStaff && (
+        {/* Farmer / student view — the only accounts a survey is meant to be answered by,
+            besides a signed-out participant in the sample tour (role === null). */}
+        {!isStaff && canAnswer && (
           <>
             {fetching ? (
               <div className="flex justify-center py-8">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               </div>
             ) : surveys.length === 0 ? (
-              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <ClipboardList size={26} style={{ color: '#8C7A62', margin: '0 auto 8px' }} strokeWidth={1.5} />
-                <p className="font-display text-sm" style={{ color: '#5C5040' }}>
+              <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
+                <p className="font-display text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {localUi('No surveys available right now.', 'Azikho izinhlolovo ezitholakalayo okwamanje.', lang)}
                 </p>
               </div>
@@ -654,8 +894,23 @@ export default function SurveysPage() {
           </>
         )}
 
+        {/* Verified bug: mentor and funder accounts are neither staff (the builder) nor who a
+            survey is meant to be answered by — they used to fall through to the same answer
+            flow as a farmer, with nothing stopping them submitting a response. */}
+        {!isStaff && !canAnswer && (
+          <div className="rounded-2xl px-4 py-8 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <ClipboardList size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 8px' }} strokeWidth={1.5} />
+            <p className="font-display text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
+              {localUi('Surveys are answered by farmers and students', 'Izinhlolovo ziphendulwa abalimi nabafundi', lang)}
+            </p>
+            <p className="font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {localUi('Your organisation’s survey builder is available to NGO staff.', 'Ukwakha inhlolovo yenhlangano yakho kutholakala kubasebenzi be-NGO.', lang)}
+            </p>
+          </div>
+        )}
+
         {!isLive && (
-          <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
+          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
             {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
           </p>
         )}

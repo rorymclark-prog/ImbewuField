@@ -975,6 +975,36 @@ test('cross-org isolation matrix: surveys and survey_responses', async () => {
   // Cross-organisation survey creation is now refused; covered below with the MEL access tests.
 });
 
+test('survey_responses: create is restricted to the roles a survey is meant for', async () => {
+  // Surveys are answered by farmers and students. Verified bug: mentor (and, by the same gap,
+  // ngo/funder/admin) accounts had no role check stopping them from writing a response for
+  // themselves, matching the client-side bug fixed on app/surveys/page.tsx.
+  const farmerADb = env.authenticatedContext(FARMER_A).firestore();
+  await assertSucceeds(setDoc(doc(farmerADb, 'survey_responses', `${FARMER_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: FARMER_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+
+  const mentorADb = env.authenticatedContext(MENTOR_A).firestore();
+  await assertFails(setDoc(doc(mentorADb, 'survey_responses', `${MENTOR_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: MENTOR_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+
+  const staffADb = env.authenticatedContext(STAFF_A).firestore();
+  await assertFails(setDoc(doc(staffADb, 'survey_responses', `${STAFF_A}-survey-a`), {
+    survey_id: 'survey-a', profile_id: STAFF_A, org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+
+  // A profile saved before roles were stored has no role field. Reading it must not lock an older
+  // farmer out of answering: a missing role counts as 'farmer', the role every sign-up creates.
+  await env.withSecurityRulesDisabled(async (c) => {
+    await setDoc(doc(c.firestore(), 'profiles', 'legacy-no-role'), { org_id: ORG_A, full_name: 'Legacy farmer', language: 'en' });
+  });
+  const legacyDb = env.authenticatedContext('legacy-no-role').firestore();
+  await assertSucceeds(setDoc(doc(legacyDb, 'survey_responses', 'legacy-no-role-survey-a'), {
+    survey_id: 'survey-a', profile_id: 'legacy-no-role', org_id: ORG_A, answers: {}, created_at: '2026-08-29T00:00:00.000Z',
+  }));
+});
+
 test('cross-org isolation matrix: course_progress', async () => {
   const staffADb = env.authenticatedContext(STAFF_A).firestore();
   const staffBDb = env.authenticatedContext(STAFF_B).firestore();
@@ -1240,4 +1270,140 @@ test('training evidence, logos and attendance require the server projection, eve
       await assertFails(setDoc(ref,{published:true,attendance:[{name:'Private person'}]}));
     }
   }
+});
+// ═══ Contact messages & replies (contact org-scope fix, 2026-08-29) ═════════════════════════════
+// contact_messages/contact_replies had NO match block at all — default deny, the feature dead in
+// production — and the tempting one-line fix (allow read by recipient bucket) is exactly the
+// cross-org leak the query-scale audit flagged: 'mentor' is ONE bucket name shared by every org
+// on the platform. These tests pin the org-scoped design: a message belongs to its sender's org,
+// the mentor/organisation buckets open only inside that org, and the pre-fix query shape
+// (recipient with no org term) is proven DENIED so the latent leak can never quietly come back.
+
+const MSG_A_MENTOR = 'contact-msg-a-mentor';
+const MSG_B_MENTOR = 'contact-msg-b-mentor';
+const MSG_A_ORGBUCKET = 'contact-msg-a-orgbucket';
+const MSG_SUPPORT = 'contact-msg-support';
+const REPLY_A = 'contact-reply-a';
+
+function contactMsg(fromUid: string, orgId: string | null, recipient: string) {
+  return {
+    from_uid: fromUid, from_name: fromUid, org_id: orgId, recipient,
+    subject: 'water tank', body: 'the tank by the kraal is leaking', status: 'unread',
+    created_at: '2026-08-29T08:00:00.000Z',
+  };
+}
+
+// Idempotent — each contact test re-seeds so the status-update test cannot bleed into the others.
+async function seedContactFixtures() {
+  await env.withSecurityRulesDisabled(async (context) => {
+    const db = context.firestore();
+    await Promise.all([
+      setDoc(doc(db, 'contact_messages', MSG_A_MENTOR), contactMsg(FARMER_A, ORG_A, 'mentor')),
+      setDoc(doc(db, 'contact_messages', MSG_B_MENTOR), contactMsg(FARMER_B, ORG_B, 'mentor')),
+      setDoc(doc(db, 'contact_messages', MSG_A_ORGBUCKET), contactMsg(FARMER_A, ORG_A, 'organisation')),
+      setDoc(doc(db, 'contact_messages', MSG_SUPPORT), contactMsg(FARMER_A, ORG_A, 'support')),
+      setDoc(doc(db, 'contact_replies', REPLY_A), {
+        message_id: MSG_A_MENTOR, for_uid: FARMER_A, reply_body: 'coming Tuesday to look at it',
+        replied_at: '2026-08-29T09:00:00.000Z', replied_by_name: MENTOR_A, recipient_label: 'mentor',
+      }),
+    ]);
+  });
+}
+
+test('contact: a farmer sends with their own uid and org; spoofed org, foreign uid, invalid bucket or born-read are refused', async () => {
+  await seedContactFixtures();
+  const farmerDb = env.authenticatedContext(FARMER_A).firestore();
+  await assertSucceeds(setDoc(doc(farmerDb, 'contact_messages', 'contact-send-ok'), contactMsg(FARMER_A, ORG_A, 'mentor')));
+  await assertFails(setDoc(doc(farmerDb, 'contact_messages', 'contact-send-spoof-org'), contactMsg(FARMER_A, ORG_B, 'mentor')));
+  await assertFails(setDoc(doc(farmerDb, 'contact_messages', 'contact-send-foreign-uid'), contactMsg(FARMER_B, ORG_A, 'mentor')));
+  await assertFails(setDoc(doc(farmerDb, 'contact_messages', 'contact-send-bad-bucket'), contactMsg(FARMER_A, ORG_A, 'everyone')));
+  await assertFails(setDoc(doc(farmerDb, 'contact_messages', 'contact-send-born-read'), { ...contactMsg(FARMER_A, ORG_A, 'mentor'), status: 'read' }));
+  const orglessDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertFails(setDoc(doc(orglessDb, 'contact_messages', 'contact-send-orgless-mentor'),
+    contactMsg(PLATFORM_ADMIN, null, 'mentor')));
+  await assertSucceeds(setDoc(doc(orglessDb, 'contact_messages', 'contact-send-orgless-support'),
+    contactMsg(PLATFORM_ADMIN, null, 'support')));
+});
+
+test('contact: mentors read only their own org\'s mentor bucket — and never the bucket without the org term', async () => {
+  await seedContactFixtures();
+  const mentorA = env.authenticatedContext(MENTOR_A).firestore();
+  await assertSucceeds(getDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR)));
+  await assertSucceeds(getDocs(query(collection(mentorA, 'contact_messages'),
+    where('recipient', '==', 'mentor'), where('org_id', '==', ORG_A))));
+  // The pre-fix client query shape: recipient only. If this ever starts passing, the platform is
+  // back to one shared mentor inbox across every organisation.
+  await assertFails(getDocs(query(collection(mentorA, 'contact_messages'), where('recipient', '==', 'mentor'))));
+  await assertFails(getDoc(doc(mentorA, 'contact_messages', MSG_B_MENTOR)));
+  const mentorB = env.authenticatedContext(MENTOR_B).firestore();
+  await assertFails(getDocs(query(collection(mentorB, 'contact_messages'),
+    where('recipient', '==', 'mentor'), where('org_id', '==', ORG_A))));
+});
+
+test('contact: the organisation bucket opens for same-org ngo staff only — not mentors, not cross-org staff', async () => {
+  await seedContactFixtures();
+  const staffA = env.authenticatedContext(STAFF_A).firestore();
+  await assertSucceeds(getDoc(doc(staffA, 'contact_messages', MSG_A_ORGBUCKET)));
+  await assertSucceeds(getDocs(query(collection(staffA, 'contact_messages'),
+    where('recipient', '==', 'organisation'), where('org_id', '==', ORG_A))));
+  const mentorA = env.authenticatedContext(MENTOR_A).firestore();
+  await assertFails(getDoc(doc(mentorA, 'contact_messages', MSG_A_ORGBUCKET)));
+  const staffB = env.authenticatedContext(STAFF_B).firestore();
+  await assertFails(getDoc(doc(staffB, 'contact_messages', MSG_A_ORGBUCKET)));
+});
+
+test('contact: the sender reads their own message back; the platform admin reads any bucket including support', async () => {
+  await seedContactFixtures();
+  const farmerA = env.authenticatedContext(FARMER_A).firestore();
+  await assertSucceeds(getDoc(doc(farmerA, 'contact_messages', MSG_A_MENTOR)));
+  const farmerB = env.authenticatedContext(FARMER_B).firestore();
+  await assertFails(getDoc(doc(farmerB, 'contact_messages', MSG_A_MENTOR)));
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'contact_messages', MSG_B_MENTOR)));
+  await assertSucceeds(getDoc(doc(adminDb, 'contact_messages', MSG_SUPPORT)));
+});
+
+test('contact: inbox updates may change status only, inside the org — the sender cannot touch a sent message', async () => {
+  await seedContactFixtures();
+  const mentorA = env.authenticatedContext(MENTOR_A).firestore();
+  await assertSucceeds(updateDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR), { status: 'read' }));
+  await assertFails(updateDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR), { status: 'read', body: 'rewritten after the fact' }));
+  await assertFails(updateDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR), { org_id: ORG_B }));
+  await assertFails(updateDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR), { status: 'vanished' }));
+  const mentorB = env.authenticatedContext(MENTOR_B).firestore();
+  await assertFails(updateDoc(doc(mentorB, 'contact_messages', MSG_A_MENTOR), { status: 'read' }));
+  const farmerA = env.authenticatedContext(FARMER_A).firestore();
+  await assertFails(updateDoc(doc(farmerA, 'contact_messages', MSG_A_MENTOR), { status: 'unread' }));
+  await assertFails(deleteDoc(doc(mentorA, 'contact_messages', MSG_A_MENTOR)));
+});
+
+test('contact replies: same-org staff/mentor only, addressed to the message\'s own sender only; farmers read only their own', async () => {
+  await seedContactFixtures();
+  const mentorA = env.authenticatedContext(MENTOR_A).firestore();
+  const reply = {
+    message_id: MSG_A_MENTOR, for_uid: FARMER_A, reply_body: 'seen it, bring the spanner',
+    replied_at: '2026-08-29T10:00:00.000Z', replied_by_name: MENTOR_A, recipient_label: 'mentor',
+  };
+  await assertSucceeds(setDoc(doc(mentorA, 'contact_replies', 'contact-reply-ok'), reply));
+  await assertFails(setDoc(doc(mentorA, 'contact_replies', 'contact-reply-misaddressed'), { ...reply, for_uid: FARMER_B }));
+  await assertFails(setDoc(doc(mentorA, 'contact_replies', 'contact-reply-ghost'), { ...reply, message_id: 'no-such-message' }));
+  await assertFails(setDoc(doc(mentorA, 'contact_replies', 'contact-reply-other-bucket'), {
+    ...reply, message_id: MSG_A_ORGBUCKET, recipient_label: 'organisation',
+  }));
+  await assertFails(setDoc(doc(mentorA, 'contact_replies', 'contact-reply-false-label'), {
+    ...reply, recipient_label: 'organisation',
+  }));
+  const staffA = env.authenticatedContext(STAFF_A).firestore();
+  await assertFails(setDoc(doc(staffA, 'contact_replies', 'contact-reply-mentor-bucket'), reply));
+  const mentorB = env.authenticatedContext(MENTOR_B).firestore();
+  await assertFails(setDoc(doc(mentorB, 'contact_replies', 'contact-reply-crossorg'), reply));
+  const farmerA = env.authenticatedContext(FARMER_A).firestore();
+  await assertFails(setDoc(doc(farmerA, 'contact_replies', 'contact-reply-from-farmer'), reply));
+  await assertSucceeds(getDoc(doc(farmerA, 'contact_replies', REPLY_A)));
+  await assertSucceeds(getDocs(query(collection(farmerA, 'contact_replies'), where('for_uid', '==', FARMER_A))));
+  const farmerB = env.authenticatedContext(FARMER_B).firestore();
+  await assertFails(getDoc(doc(farmerB, 'contact_replies', REPLY_A)));
+  // The platform admin answers the support bucket regardless of org.
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(setDoc(doc(adminDb, 'contact_replies', 'contact-reply-support'), { ...reply, message_id: MSG_SUPPORT, recipient_label: 'support' }));
 });

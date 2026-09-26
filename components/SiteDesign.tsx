@@ -46,20 +46,20 @@ function renderDesign(text: string) {
   return text.split('\n').map((line, i) => {
     if (!line.trim()) return null;
     if (line.startsWith('## ')) {
-      return <h4 key={i} className="text-sm font-display font-semibold mt-4 mb-1.5" style={{ color: '#9E5C08' }}>{line.replace('## ', '')}</h4>;
+      return <h4 key={i} className="text-sm font-display font-semibold mt-4 mb-1.5" style={{ color: 'var(--gold)' }}>{line.replace('## ', '')}</h4>;
     }
     if (line.startsWith('### ')) {
-      return <h5 key={i} className="text-xs font-display font-semibold mt-2.5 mb-1" style={{ color: '#1F4D2B' }}>{line.replace('### ', '')}</h5>;
+      return <h5 key={i} className="text-xs font-display font-semibold mt-2.5 mb-1" style={{ color: 'var(--color-forest-800)' }}>{line.replace('### ', '')}</h5>;
     }
     if (line.startsWith('- ') || line.startsWith('• ')) {
       return (
-        <div key={i} className="flex gap-2 text-xs font-display leading-relaxed my-0.5" style={{ color: '#20190F' }}>
-          <span style={{ color: '#1F4D2B', flexShrink: 0 }}>›</span>
+        <div key={i} className="flex gap-2 text-xs font-display leading-relaxed my-0.5" style={{ color: 'var(--text-primary)' }}>
+          <span style={{ color: 'var(--color-forest-800)', flexShrink: 0 }}>›</span>
           <span>{line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}</span>
         </div>
       );
     }
-    return <p key={i} className="text-xs font-display leading-relaxed my-1" style={{ color: '#5C5040' }}>{line.replace(/\*\*/g, '')}</p>;
+    return <p key={i} className="text-xs font-display leading-relaxed my-1" style={{ color: 'var(--text-secondary)' }}>{line.replace(/\*\*/g, '')}</p>;
   });
 }
 
@@ -145,15 +145,15 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       )}
 
       {!locationData && (
-        <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: '#9A8268', background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: 'var(--text-muted)', background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
           Select a location on the map to open the Design Studio for it.
         </p>
       )}
 
-      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: '#9A8268', borderTop: '1px solid #E2D8C4' }}>
+      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
         Sketch → AI Design
       </div>
-      <p className="text-xs font-display leading-relaxed" style={{ color: '#9A8268' }}>
+      <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-muted)' }}>
         Upload a hand-drawn plan of your land (or a photo of one). Claude reads it and lays out a permaculture design on your sketch, using this site&apos;s climate, soil, sun and wind.
       </p>
 
@@ -163,17 +163,17 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
-        style={{ background: '#F5F0E8', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : '#E2D8C4'}` }}
+        style={{ background: 'var(--bg-2)', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : '#E2D8C4'}` }}
       >
         <input ref={inputRef} type="file" accept="image/*" className="hidden"
           onChange={(e) => processFile(e.target.files?.[0])} />
         {preview ? (
-          <img src={preview} alt="sketch" className="max-h-40 mx-auto rounded-lg" style={{ border: '1px solid #E2D8C4' }} />
+          <img src={preview} alt="sketch" className="max-h-40 mx-auto rounded-lg" style={{ border: '1px solid var(--border)' }} />
         ) : (
           <div>
-            <PenLine size={22} className="mx-auto mb-1.5" style={{ color: '#1F4D2B' }} />
-            <p className="text-xs font-display" style={{ color: '#9A8268' }}>Drop your site sketch here or click to upload</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
+            <PenLine size={22} className="mx-auto mb-1.5" style={{ color: 'var(--color-forest-800)' }} />
+            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Drop your site sketch here or click to upload</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
           </div>
         )}
       </div>
@@ -183,12 +183,12 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <div className="flex gap-2">
           <select value={language} onChange={(e) => setLanguage(e.target.value)}
             className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none cursor-pointer"
-            style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#20190F' }}>
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
             {LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
           <button onClick={() => setTone(tone === 'simple' ? 'professional' : 'simple')}
             className="px-2.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center gap-1.5"
-            style={{ background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             {tone === 'simple' ? <><Sprout size={14} /> Simple</> : <><GraduationCap size={14} /> Detailed</>}
           </button>
         </div>
@@ -199,14 +199,14 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <button onClick={generate} disabled={loading || !locationData}
           className="w-full py-2 rounded-xl text-xs font-display font-semibold transition-all"
           style={loading
-            ? { background: '#E2D8CB', border: '1px solid #E2D8C4', color: '#9A8268' }
-            : { background: 'rgba(158,92,8,0.12)', border: '1px solid rgba(158,92,8,0.4)', color: '#9E5C08' }}>
+            ? { background: '#E2D8CB', border: '1px solid var(--border)', color: 'var(--text-muted)' }
+            : { background: 'rgba(158,92,8,0.12)', border: '1px solid rgba(158,92,8,0.4)', color: 'var(--gold)' }}>
           {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site…</span> : <span className="flex items-center justify-center gap-1.5"><PencilRuler size={14} /> Generate design</span>}
         </button>
       )}
 
       {photoAnalysis && (
-        <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#5C5040' }}>
+        <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--text-secondary)' }}>
           <Check size={13} /> Your photo analysis will be used in the design
         </div>
       )}

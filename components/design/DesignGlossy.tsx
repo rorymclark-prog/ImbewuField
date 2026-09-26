@@ -4,6 +4,7 @@
 // the app owns factual geometry, placed features, labels and sheet chrome. Satellite
 // Overlay remains the explicit model-authored comparison/rollback style.
 
+import { numberLabel } from '@/lib/format-figures';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
@@ -165,6 +166,7 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import styles from './DesignGlossy.module.css';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
@@ -7587,16 +7589,16 @@ function roofHarvestFooterLines(
   }, 0);
 
   const lines = [
-    `Roof catchment traced: ${Math.round(roofM2).toLocaleString()} m²`,
-    `Annual rainfall: ${Math.round(rainfallMm as number).toLocaleString()} mm`,
+    `Roof catchment traced: ${numberLabel(Math.round(roofM2))} m²`,
+    `Annual rainfall: ${numberLabel(Math.round(rainfallMm as number))} mm`,
     `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
-    `Harvestable: ~${Math.round(harvestL).toLocaleString()} L a year`,
+    `Harvestable: ~${numberLabel(Math.round(harvestL))} L a year`,
   ];
   // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
   // size in its name contributes nothing, so a total built from those would understate the storage
   // and make it look inadequate.
   if (storedL > 0) {
-    lines.push(`Storage placed: ${Math.round(storedL).toLocaleString()} L`);
+    lines.push(`Storage placed: ${numberLabel(Math.round(storedL))} L`);
     lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
   }
   return lines;
@@ -11632,6 +11634,7 @@ export default function DesignGlossy({
   onImportPhoto,
 }: DesignGlossyProps) {
   const { t } = useLanguage();
+  const simple = useAppLevel() === 'simple';
   const { user: renderUser } = useAuth();
   const [approvedRenderUid, setApprovedRenderUid] = useState<string | null>(null);
   useEffect(() => {
@@ -15299,6 +15302,7 @@ export default function DesignGlossy({
             <h1>{t('designGlossyPreviewTitle')}</h1>
             <p>{t('designGlossyPreviewHelp')}</p>
           </div>
+          {!simple && (
           <div className={styles.contextStrip} aria-label={t('designGlossyCurrentSettings')}>
             <div className={styles.contextCell}>
               <span className={styles.contextLabel}>{t('designGlossyPlanSetShort')}</span>
@@ -15313,7 +15317,9 @@ export default function DesignGlossy({
               <span className={styles.contextValue}>{selectedStyleLabel}</span>
             </div>
           </div>
+          )}
           <div className={styles.headerActions}>
+            {!simple && (
             <button
               type="button"
               className={styles.iconButton}
@@ -15323,6 +15329,7 @@ export default function DesignGlossy({
             >
               <Images size={17} />
             </button>
+            )}
             <button
               type="button"
               className={styles.primaryButton}
@@ -15413,6 +15420,8 @@ export default function DesignGlossy({
             imported photo, which read as the option having been removed. It is always present now;
             without a photo it OPENS THE IMPORTER instead of selecting, because selecting it would
             render the satellite under a pill that says "Your photo". See lib/sheet-underlay.ts. */}
+        {!simple && (
+        <>
         <WorkflowHeading number={2} title="Underlay" />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           {underlayOptions.map((key) => {
@@ -15481,10 +15490,12 @@ export default function DesignGlossy({
                 : 'High redraws your map at 1.5× resolution for printing'}
           </span>
         </div>
+        </>
+        )}
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
             selected sheet actually has coded plants, so it appears on Planting and disappears on
             Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
-        {sheetHasPlantCodes && (
+        {sheetHasPlantCodes && !simple && (
           <>
           <WorkflowHeading number={3} title="Plant labels" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -15512,7 +15523,7 @@ export default function DesignGlossy({
             accurate). Shown in AI mode on a design LAYER (03–07) and now also on Sector (02),
             whose AI render is a restyle with the measured bearings composited on top; Site (01) and
             Phasing (08) render exact-only, so neither needs a Style. */}
-        {aiLayerMode && (
+        {aiLayerMode && !simple && (
         <>
         <WorkflowHeading number={4} title={t('designGlossyStyle')} />
         <div style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
@@ -15601,7 +15612,7 @@ export default function DesignGlossy({
       </div>
 
       <section className={compact ? undefined : styles.mapStage} aria-label={t('designGlossyMapPreview')}>
-      {!compact && (
+      {!compact && !simple && (
         <div className={styles.stageToolbar}>
           <div className={styles.stageTabs} role="group" aria-label={t('designGlossyPreviewScope')}>
             <button
@@ -15623,7 +15634,7 @@ export default function DesignGlossy({
           </div>
         </div>
       )}
-      {stageScope === 'saved' && !compact ? (
+      {stageScope === 'saved' && !compact && !simple ? (
         <div className={styles.savedGalleryStage}>
           <div className={styles.savedGalleryHeader}>
             <div>
@@ -15932,7 +15943,7 @@ export default function DesignGlossy({
 
         {/* More options comes after the finish controls: settings that change cost or the batch
             must never make the farmer scroll past the two primary ways to make this sheet. */}
-        {!compact && (
+        {!compact && !simple && (
         <div style={{ order: 3, borderRadius: 14, border: '1px solid rgba(0,0,0,0.14)' }}>
           <button
             type="button"
@@ -16007,10 +16018,15 @@ export default function DesignGlossy({
         <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
           {/* The engine determines which account is charged, so it sits beside the finish that
               spends money. Quality belongs here too: it changes that same paid render. */}
+          {!simple && (
+          <>
           {aiRenderOn && selectedSheet && <WorkflowHeading number={5} title={`${t('designGlossyEngine')} & ${t('designGlossyQuality')}`} />}
           {aiRenderOn && selectedSheet && enginePicker}
           {aiRenderOn && selectedSheet && qualityPicker}
-          {selectedSheet && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
+          </>
+          )}
+          {selectedSheet && !simple && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
+          {selectedSheet && simple && <WorkflowHeading number={2} title={t('designGlossyFinishHeading')} />}
           {selectedSheet ? (
           // TWO finishes, always: Exact Canvas (free, instant) and AI Polished (one paid render —
           // the model paints the map artwork, the app locks your labels, legend, boundary, title,
@@ -16046,6 +16062,8 @@ export default function DesignGlossy({
                 {t('designGlossyExactCanvasHint')}
               </span>
             </button>
+            {!simple && (
+            <>
             {aiRenderOn && (<button
               type="button"
               onClick={() => runLockedPolishFlow('hybrid')}
@@ -16107,6 +16125,8 @@ export default function DesignGlossy({
               </span>
             </button>
             )}
+            </>
+            )}
           </div>
           ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 10 }}>
@@ -16158,7 +16178,7 @@ export default function DesignGlossy({
           )}
         </div>
 
-        {selectedSheet && (
+        {selectedSheet && !simple && (
           <details style={{ order: 2, border: '1px solid rgba(31,77,43,0.24)', borderRadius: 12, background: 'rgba(31,77,43,0.06)', padding: '0 12px' }}>
             <summary style={{ padding: '10px 0', color: DARK, fontSize: 12.5, fontWeight: 800, cursor: 'pointer' }}>
               {t('designGlossyHowFinishesWork')}
@@ -16170,6 +16190,7 @@ export default function DesignGlossy({
           </details>
         )}
 
+        {!simple && (
         <div style={{ order: 4, fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
@@ -16187,6 +16208,7 @@ export default function DesignGlossy({
             </>
           )}
         </div>
+        )}
         {!visibleResultImage && !lockedPolishStage && gallery.length > 0 && (
           <button
             onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
@@ -16258,6 +16280,7 @@ export default function DesignGlossy({
                 {t('designGlossyManage')}
               </button>
             </div>
+            {!simple && (
             <label className={styles.sitePicker}>
               <span className={styles.sitePickerLabel}>
                 <MapPin size={14} aria-hidden /> {t('designGlossySavedMapsSite')}
@@ -16272,6 +16295,7 @@ export default function DesignGlossy({
                 ))}
               </select>
             </label>
+            )}
             {gallery.length === 0 ? (
               <p className={styles.emptySaved}>
                 {t('designGlossyNoSavedRail')}
@@ -16313,6 +16337,7 @@ export default function DesignGlossy({
               </div>
             )}
           </section>
+          {!simple && (
           <section className={styles.railSection}>
             <div className={styles.railHeader}>
               <h2>{t('designGlossyExportSummary')}</h2>
@@ -16338,6 +16363,7 @@ export default function DesignGlossy({
               <div className={styles.summaryRow}><span>{t('designGlossyThisSheet')}</span><strong>{galleryViewItem?.label ?? (stageResultImage ? selectedSheet?.label : '—')}</strong></div>
             </div>
           </section>
+          )}
         </aside>
       )}
 
@@ -16375,7 +16401,7 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#7A4408' /* fixed PAPER sheet, so the fixed ochre-text hex, not the theme var */ }}>
                 {exportMode
                   ? `${exportSel.size} selected · ${gallerySiteName}`
                   : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
@@ -16394,7 +16420,7 @@ export default function DesignGlossy({
               <button
                 onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16489,7 +16515,7 @@ export default function DesignGlossy({
                   </div>
                 </div>
               ) : gallery.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#9A8268', margin: 0 }}>{t('designGlossyNoSaved')}</p>
+                <p style={{ fontSize: 13, color: '#755942', margin: 0 }}>{t('designGlossyNoSaved')}</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
@@ -16549,7 +16575,7 @@ export default function DesignGlossy({
                               style={{
                                 display: 'flex', width: '100%', height: '100%', alignItems: 'center',
                                 justifyContent: 'center', padding: 6, textAlign: 'center',
-                                background: '#EDE7DB', color: '#9A8268', fontSize: 10, fontWeight: 700,
+                                background: '#EDE7DB', color: '#755942', fontSize: 10, fontWeight: 700,
                                 lineHeight: 1.25,
                               }}
                             >
@@ -16649,7 +16675,7 @@ export default function DesignGlossy({
                           <button
                             onClick={() => void exportSelection('share')}
                             disabled={exportSel.size === 0 || exportBusy}
-                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#9A8268', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#755942', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
                           >
                             <Share2 size={15} /> {t('designShare')}
                           </button>
@@ -16664,7 +16690,7 @@ export default function DesignGlossy({
                     </div>
                   )}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
+                    <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#755942', margin: 0 }}>
                       {storageWarning ?? t('designGlossySavedOnDevice')}
                     </p>
                     <button

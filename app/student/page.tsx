@@ -13,7 +13,7 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
 import BrandLogo from '@/components/BrandLogo';
 import LimaBar from '@/components/LimaBar';
 import SettingsButton from '@/components/SettingsButton';
@@ -44,6 +44,8 @@ import {
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -58,10 +60,18 @@ const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
 /** Curriculum position, fixed. The list below re-orders to put assigned work first, but
  *  "module 7" must keep meaning the same module whichever order it is shown in. */
 const MODULE_NUMBER = new Map(COURSE_MODULES.map((m, i) => [m.id, i + 1] as const));
+const COURSE_MODULE_BY_ID = new Map(COURSE_MODULES.map((m) => [m.id, m] as const));
+
+/** unlockReason's title resolver — the localised module title, not the English one baked into
+ *  COURSE_MODULES (lib/course-gating.ts's unlockReason is pure and knows nothing of lang). */
+function localisedModuleTitle(moduleId: string, lang: string): string {
+  const mod = COURSE_MODULE_BY_ID.get(moduleId);
+  return mod ? resolveCourseModulePresentation(mod, lang).title : 'the previous module';
+}
 
 const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border: string }> = {
   overdue:    { fg: '#B03A2E', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
-  'due-soon': { fg: '#C07A1E', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
+  'due-soon': { fg: '#7A4408', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
   open:       { fg: '#235E86', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
   done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
@@ -95,9 +105,27 @@ function localisedUnlockReason(text: string | null, lang: string, t: (key: strin
   return text;
 }
 
+const ZULU_MEDIA_LANGUAGE_NOTICES = {
+  bothEnglish: {
+    zu: 'Amaslayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.',
+    en: 'The slides and audio for this module are still in English. Written lessons may be in isiZulu, but that does not translate this media.',
+  },
+  slidesEnglish: {
+    zu: 'Amaslayidi ale mojuli asesiNgisini; umsindo uyatholakala ngesiZulu.',
+    en: 'The slides for this module are still in English; audio is available in isiZulu.',
+  },
+  audioEnglish: {
+    zu: 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.',
+    en: 'The audio for this module is still in English; slides are available in isiZulu.',
+  },
+} as const;
+
 // ── Quiz question ────────────────────────────────────────────────────────────
 
-function QuizQuestion({ q, options, correct, rationale }: { q: string; options: string[]; correct: number; rationale?: string }) {
+function QuizQuestion({ q, options, correct, rationale, englishSource }: {
+  q: string; options: string[]; correct: number; rationale?: string;
+  englishSource?: { q: string; options: string[]; rationale?: string };
+}) {
   const { t } = useLanguage();
   const [selected, setSelected] = useState<number | null>(null);
   const revealed = selected !== null;
@@ -105,6 +133,7 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
       <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
+      {englishSource && englishSource.q !== q && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -136,6 +165,7 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
             >
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
+              {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
@@ -150,8 +180,11 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
       </div>
       {revealed && rationale && (
         <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
-          <Lightbulb size={13} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
-          <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>{rationale}</p>
+          <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
+          <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+            <p>{rationale}</p>
+            {englishSource?.rationale && englishSource.rationale !== rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
+          </div>
         </div>
       )}
     </div>
@@ -160,8 +193,13 @@ function QuizQuestion({ q, options, correct, rationale }: { q: string; options: 
 
 // ── Lesson accordion panel ───────────────────────────────────────────────────
 
-function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }: {
-  lesson: Lesson; color: string; moduleId: string; lang: string;
+function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJumpToLesson }: {
+  lesson: Lesson; color: string;
+  /** Text-safe variant of `color` — ochre (design) reads at 2.54:1 as text (CLAUDE.md), so the
+   *  panel's readable text (Key points heading, related-lesson buttons) uses this instead of
+   *  `color`, which stays for fills/borders/icons. */
+  textColor: string;
+  moduleId: string; lang: string;
   /** True for exactly one render after a "related lessons" jump targets this lesson — see
    *  jumpToLesson() below. A one-way switch: it opens the panel, but going false again never
    *  closes it back up. */
@@ -175,8 +213,14 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
   const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
-  const presentation = resolveLearnerLessonPresentation(lesson, lang === 'zu' ? 'zu' : 'en');
+  const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
+  const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
+  const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+    lessonContent.infographicAlt !== lesson.infographicAlt
+    ? lessonContent.infographicAlt
+    : undefined;
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -213,11 +257,13 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                 {t('studentZuluLessonEnglishBadge')}
               </span>
             )}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : 'AI draft · review pending'}</span>}
+            {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>English lesson</span>}
           </span>
         </span>
         {open
-          ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
-          : <ChevronDown size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+          ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0 }} />
+          : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0 }} />}
       </button>
 
       {open && (
@@ -232,6 +278,9 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
+          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -274,27 +323,46 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
           {/* Infographic — a diagram frames the reading, so it sits after audio, before body */}
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
-              <LessonInfographic url={lesson.infographicUrl!} alt={lesson.infographicAlt!} />
+              <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
+              {infographicAltDraft && (
+                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                  <p lang={lang} className="text-sm">{infographicAltDraft}</p>
+                  <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
+                </div>
+              )}
             </div>
           )}
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {lessonContent.body.split('\n\n').map((para, i) => (
-              <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-                {para}
-              </p>
-            ))}
+            {regionalDraft && lessonContent.body === lesson.body ? (
+              <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
+                <p className="font-semibold">Exact English source</p>
+                <p><span className="font-semibold">Title:</span> {lesson.title}</p>
+                {lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
+              </div>
+            ) : (
+              <>
+                {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
+                {lessonContent.body.split('\n\n').map((para, i) => (
+                  <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                    {para}
+                  </p>
+                ))}
+                {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+              </>
+            )}
           </div>
 
           {/* Key points */}
           <div className="rounded-xl p-4 space-y-2" style={{ background: `${color}0C`, border: `1px solid ${color}20` }}>
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color }}>{t('studentKeyPoints')}</p>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: textColor }}>{t('studentKeyPoints')}</p>
             <ul className="space-y-1.5">
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -310,21 +378,21 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
               style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
             >
-              <Video size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <Video size={14} style={{ color: '#755942', flexShrink: 0 }} />
               <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
                 {t('studentFacilitatorVideo')}
               </span>
-              <ExternalLink size={12} style={{ color: '#8C7A62', flexShrink: 0 }} />
+              <ExternalLink size={12} style={{ color: '#755942', flexShrink: 0 }} />
             </a>
           )}
 
           {/* Quiz */}
           <div className="space-y-3">
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
               {t('studentCheckUnderstanding')}
             </p>
             {lessonContent.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} />
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={regionalDraft ? lesson.quiz[i] : undefined} />
             ))}
           </div>
 
@@ -332,7 +400,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               above rather than rendered as a dead button. */}
           {related.length > 0 && (
             <div className="space-y-2">
-              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#8C7A62' }}>
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
                 {t('studentRelatedLessons')}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -342,7 +410,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                     type="button"
                     onClick={() => onJumpToLesson(rl.id)}
                     className="px-3 py-1.5 rounded-full text-xs font-sans font-medium text-left transition-colors"
-                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color, cursor: 'pointer' }}
+                    style={{ background: `${color}0F`, border: `1px solid ${color}30`, color: textColor, cursor: 'pointer' }}
                   >
                     {rl.title}
                   </button>
@@ -434,12 +502,13 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
                 key={item}
                 type="button"
                 onClick={() => toggleCheck(item)}
+                aria-pressed={isChecked}
                 className="w-full flex items-center gap-2.5 text-left px-3 py-2 rounded-lg transition-colors"
                 style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : '#E2D8C4'}` }}
               >
                 {isChecked
                   ? <CheckCircle size={15} style={{ color, flexShrink: 0 }} />
-                  : <Circle size={15} style={{ color: '#8C7A62', flexShrink: 0 }} />}
+                  : <Circle size={15} style={{ color: '#755942', flexShrink: 0 }} />}
                 <span className="font-sans text-sm" style={{ color: '#3A3020' }}>{item}</span>
               </button>
             );
@@ -473,7 +542,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
         style={{ background: '#FFFEFA', border: `1px dashed ${voiceFile ? color : '#E2D8C4'}` }}
       >
-        <Mic size={16} style={{ color: voiceFile ? color : '#8C7A62', flexShrink: 0 }} />
+        <Mic size={16} style={{ color: voiceFile ? color : '#755942', flexShrink: 0 }} />
         <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
           {voiceFile ? t('studentVoiceAdded').replace('{name}', voiceFile.name) : t('studentVoiceOptional')}
         </span>
@@ -488,7 +557,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
         style={{
           background: canSubmit ? color : 'rgba(226,216,196,0.6)',
-          color: canSubmit ? '#FFFEFA' : '#8C7A62',
+          color: canSubmit ? '#FFFEFA' : '#755942',
           cursor: canSubmit ? 'pointer' : 'not-allowed',
         }}
       >
@@ -498,7 +567,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       </button>
 
       {existing && (
-        <p className="font-sans text-xs text-center" style={{ color: '#8C7A62' }}>
+        <p className="font-sans text-xs text-center" style={{ color: '#755942' }}>
           {t('studentAlreadySubmitted')}
         </p>
       )}
@@ -516,6 +585,11 @@ export default function StudentPage() {
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
+  // Simple / All tools (lib/app-level.ts). All tools is this screen exactly as it always was;
+  // Simple hides the production-readiness badges, the offline quality picker, the dual
+  // overdue/due-soon counts, the redundant category chip and shrinks the progress hero — see the
+  // Study — Simple mode track brief.
+  const simple = useAppLevel() === 'simple';
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [assignments, setAssignments] = useState<CourseAssignment[]>([]);
@@ -654,6 +728,10 @@ export default function StudentPage() {
 
   const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
   const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
+  // Content-QA info, not a farmer or student decision — truly staff-only (mentor/ngo/funder/
+  // admin), unlike the Simple/All tools items above. Gated on both: staff still lose it if they
+  // themselves choose Simple, but a student's own default of All tools must never surface it.
+  const isStaff = isStaffRole(gatingCtx.role);
 
   const submissionByModule = useMemo(() => {
     const m = new Map<string, CourseSubmission>();
@@ -667,14 +745,14 @@ export default function StudentPage() {
   if (isLive && (loading || !user) && !isSampleMode()) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
         </header>
         <main className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: '#5C5040' }}>
             <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: '#1F4D2B' }} />
-            <span>{lang === 'zu' ? 'Sicela ulinde…' : 'Loading your account…'}</span>
+            <span>{lang === 'zu' ? 'Sicela ulinde… Please wait while your account loads.' : 'Loading your account…'}</span>
           </div>
         </main>
       </div>
@@ -684,7 +762,7 @@ export default function StudentPage() {
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
           <MenuButton /><BackButton fallback="/home" />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -698,7 +776,7 @@ export default function StudentPage() {
               <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
             </div>
             <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{t('studentPortalTitle')}</p>
-            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
               {t('studentPortalBody')}
             </p>
             <button
@@ -733,7 +811,7 @@ export default function StudentPage() {
 
   return (
     <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: '#EEEBDD' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
@@ -748,6 +826,30 @@ export default function StudentPage() {
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
             style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
             {t('studentZuluCourseLanguageNote')}
+            {' '}
+            <span className="block mt-1">
+              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
+            </span>
+          </p>
+        )}
+        {lang === 'st' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
+            <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
+          </p>
+        )}
+        {lang === 'ts' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
+            <span lang="en">/ Unreviewed Xitsonga draft.</span>
+          </p>
+        )}
+        {lang === 've' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="en">{t('studentTshivendaUiDraftNotice')}</span>
           </p>
         )}
         {/* Progress hero */}
@@ -794,10 +896,10 @@ export default function StudentPage() {
           <div className="flex-1 min-w-0">
             <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: '#20190F' }}>
               {fetching
-                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili…' : 'Loading progress…'
+                ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
                 : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
-            {!fetching && (
+            {!fetching && !simple && (
               <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
                 {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
               </div>
@@ -807,15 +909,17 @@ export default function StudentPage() {
                 {t('studentProgressError')}
               </div>
             )}
-            {pct < 100 && totalMins > 0 && (
+            {/* Simple: the ring plus the one headline above is the whole stat — the remaining-time
+                chip and practitioner badge below are All tools only. */}
+            {!simple && pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
-                <Clock size={12} style={{ color: '#8C7A62' }} />
-                <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                <Clock size={12} style={{ color: '#755942' }} />
+                <span className="font-sans text-xs" style={{ color: '#755942' }}>
                   ~{formatDuration(totalMins, t)} {t('studentRemaining')}
                 </span>
               </div>
             )}
-            {pct === 100 && (
+            {!simple && pct === 100 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
                 <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
@@ -837,24 +941,44 @@ export default function StudentPage() {
                 {t('studentAssignmentSetByMentor')}
               </span>
             </div>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-              {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
-              {assignSummary.overdue > 0 && ' '}
-              {assignSummary.overdue > 0 && (
-                <span style={{ color: '#B03A2E', fontWeight: 600 }}>
-                  {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
-                </span>
-              )}
-              {assignSummary.dueSoon > 0 && ' '}
-              {assignSummary.dueSoon > 0 && (
-                <span style={{ color: '#C07A1E', fontWeight: 600 }}>
-                  {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
-                </span>
-              )}
-            </p>
-            <p className="font-sans text-xs mt-1.5" style={{ color: '#8C7A62' }}>
-              {t('studentAssignmentsOrder')}
-            </p>
+            {simple ? (
+              // One urgency line: the done count and whichever is more pressing, overdue beating
+              // due-soon — not the dual overdue-then-due-soon counts stacked in All tools.
+              <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                {(assignSummary.overdue > 0 || assignSummary.dueSoon > 0) && ' '}
+                {assignSummary.overdue > 0 ? (
+                  <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                    {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                  </span>
+                ) : assignSummary.dueSoon > 0 ? (
+                  <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                    {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                  </span>
+                ) : null}
+              </p>
+            ) : (
+              <>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                  {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
+                  {assignSummary.overdue > 0 && ' '}
+                  {assignSummary.overdue > 0 && (
+                    <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                      {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
+                    </span>
+                  )}
+                  {assignSummary.dueSoon > 0 && ' '}
+                  {assignSummary.dueSoon > 0 && (
+                    <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                      {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
+                    </span>
+                  )}
+                </p>
+                <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
+                  {t('studentAssignmentsOrder')}
+                </p>
+              </>
+            )}
           </div>
         )}
 
@@ -884,10 +1008,13 @@ export default function StudentPage() {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
             const color = CATEGORY_COLORS[mod.category];
+            // Text-safe variant — ochre (design) is a fill, not a text colour (CLAUDE.md); every
+            // spot below that paints readable text (not a background/border/icon) uses this one.
+            const textColor = CATEGORY_TEXT_COLORS[mod.category];
             const isExpanded = expandedModuleId === mod.id;
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
-            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today), lang, t) : null;
+            const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
@@ -911,7 +1038,7 @@ export default function StudentPage() {
             // mod.lessons), and there's no expand control to reach it with. No "Mark done"
             // toggle either, so a locked module can't be cheated past by ticking it directly.
             if (!unlocked) {
-              const reason = unlockReason(mod.id, gatingCtx);
+              const reason = unlockReason(mod.id, gatingCtx, (id) => localisedModuleTitle(id, lang));
               return (
                 <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
                   style={{ border: '1px solid #DEDCCE' }}>
@@ -925,14 +1052,14 @@ export default function StudentPage() {
                         <span className={`font-display ${styles.moduleTitle}`}>
                           {modulePresentation.title}
                         </span>
-                        {lang === 'zu' && (
+                        {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                           <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : 'English module')}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                          style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
+                          style={{ background: `${color}10`, color: textColor, border: `1px solid ${color}20` }}>
                           {t(CATEGORY_LABEL_KEYS[mod.category])}
                         </span>
                       </div>
@@ -969,17 +1096,23 @@ export default function StudentPage() {
                     aria-expanded={isExpanded}
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
-                    {lang === 'zu' && (
+                    {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                       <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')}
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : 'English module')}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
-                      <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
-                        {t(CATEGORY_LABEL_KEYS[mod.category])}
-                      </span>
+                      {simple ? (
+                        // A colour dot carries the same category cue as the text chip below,
+                        // without repeating a word next to "Continue here" a farmer doesn't need.
+                        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0, marginTop: 4 }} />
+                      ) : (
+                        <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={{ background: color + '18', color: textColor, border: `1px solid ${color}30` }}>
+                          {t(CATEGORY_LABEL_KEYS[mod.category])}
+                        </span>
+                      )}
                       {isCurrent && (
                         <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
@@ -993,19 +1126,21 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      <span
-                        title={readinessTitle}
-                        className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={contentComplete
-                          ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
-                          : { background: 'rgba(32,25,15,0.05)', color: '#8C7A62', border: '1px solid #E2D8C4' }}
-                      >
-                      {readiness?.text === 'Fully built'
-                        ? t('studentReadinessComplete')
-                        : readiness?.text === 'Narrated slides'
-                          ? t('studentReadinessNarrated')
-                          : t('studentReadinessLessons')}
-                      </span>
+                      {!simple && isStaff && (
+                        <span
+                          title={readinessTitle}
+                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          style={contentComplete
+                            ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
+                            : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
+                        >
+                        {readiness?.text === 'Fully built'
+                          ? t('studentReadinessComplete')
+                          : readiness?.text === 'Narrated slides'
+                            ? t('studentReadinessNarrated')
+                            : t('studentReadinessLessons')}
+                        </span>
+                      )}
                       {state && state !== 'done' && (
                         <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                           style={{
@@ -1026,30 +1161,32 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {modulePresentation.description}
                     </p>
+                    {(lang === 'st' || lang === 'ts' || lang === 've') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
-                        <Clock size={11} style={{ color: '#8C7A62' }} />
-                        <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins, t)}</span>
+                        <Clock size={11} style={{ color: '#755942' }} />
+                        <span className="font-mono text-xs" style={{ color: '#755942' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
                           <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
-                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : t('studentAudio')}
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
                       {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
                         <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
+                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Slides: English</span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                          <span className="font-sans text-xs" style={{ color: '#755942' }}>
                             {mod.lessons.length} {mod.lessons.length === 1 ? t('studentLessonOne') : t('studentLessons')}
                           </span>
                           {isExpanded
-                            ? <ChevronUp size={11} style={{ color: '#8C7A62' }} />
-                            : <ChevronDown size={11} style={{ color: '#8C7A62' }} />}
+                            ? <ChevronUp size={11} style={{ color: '#755942' }} />
+                            : <ChevronDown size={11} style={{ color: '#755942' }} />}
                         </div>
                       )}
                     </div>
@@ -1060,6 +1197,7 @@ export default function StudentPage() {
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
                     aria-label={done ? t('studentMarkNotDone') : t('studentMarkComplete')}
+                    aria-pressed={done}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
@@ -1093,11 +1231,14 @@ export default function StudentPage() {
                     {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-                        {(!zuluSlidesReady && !zuluAudioReady)
-                          ? 'Izilayidi nomsindo wale mojuli kusekhona ngesiNgisi. Izifundo ezibhaliwe zingaba ngesiZulu, kodwa lokho akuguquli le midiya.'
-                          : !zuluSlidesReady
-                            ? 'Izilayidi zale mojuli kusekhona ngesiNgisi; umsindo uyatholakala ngesiZulu.'
-                            : 'Umsindo wale mojuli usekhona ngesiNgisi; izilayidi ziyatholakala ngesiZulu.'}
+                        {(() => {
+                          const notice = !zuluSlidesReady && !zuluAudioReady
+                            ? ZULU_MEDIA_LANGUAGE_NOTICES.bothEnglish
+                            : !zuluSlidesReady
+                              ? ZULU_MEDIA_LANGUAGE_NOTICES.slidesEnglish
+                              : ZULU_MEDIA_LANGUAGE_NOTICES.audioEnglish;
+                          return <><span>{notice.zu}</span><span className="block mt-1">{notice.en}</span></>;
+                        })()}
                       </p>
                     )}
                     {narrationReviewPending(mod.id, lang) && (
@@ -1130,7 +1271,7 @@ export default function StudentPage() {
                         />
                       </div>
                     ) : null}
-                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#8C7A62' }}>
+                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#755942' }}>
                       {t('studentLessonsLabel')}
                     </p>
                     {mod.lessons.map((lesson) => (
@@ -1138,6 +1279,7 @@ export default function StudentPage() {
                         key={lesson.id}
                         lesson={lesson}
                         color={color}
+                        textColor={textColor}
                         moduleId={mod.id}
                         lang={lang}
                         autoOpen={jumpToLessonId === lesson.id}
@@ -1159,7 +1301,7 @@ export default function StudentPage() {
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
                       <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
-                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color }}>
+                      <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
                         {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
                       {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
@@ -1196,12 +1338,12 @@ export default function StudentPage() {
           <div className="flex items-center gap-2 mb-2">
             {capstoneUnlocked
               ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
-              : <Lock size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />}
-            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#8C7A62' }}>
+              : <Lock size={14} style={{ color: '#755942', flexShrink: 0 }} />}
+            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#755942' }}>
               {t('studentCapstone')}
             </span>
           </div>
-          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
+          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#755942' }}>
             {capstoneUnlocked
               ? t('studentCapstoneComplete')
               : t('studentCapstoneLocked').replace('{count}', String(TOTAL_MODULES))}
@@ -1216,6 +1358,18 @@ export default function StudentPage() {
         </div>
         </details>
 
+        {simple ? (
+          // Two plain links — the full preview cards below (image, intro paragraph, nested card)
+          // are an All tools companion for a facilitator, not a farmer's next tap.
+          <div className={styles.coursePreviews}>
+            <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentDesignPreviewSimpleLabel')}</strong><span>{t('studentDesignPreviewCardTitle')}</span></span>
+            </OfflinePageLink>
+            <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
+              <span><strong className="font-display">{t('studentFinancePreviewSimpleLabel')}</strong><span>{t('studentFinancePreviewCardTitle')}</span></span>
+            </OfflinePageLink>
+          </div>
+        ) : (
         <div className={styles.coursePreviews}>
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
@@ -1245,6 +1399,15 @@ export default function StudentPage() {
           </OfflinePageLink>
         </details>
         </div>
+        )}
+
+        <div className={styles.coursePreviews}>
+          <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
+              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
+              <em>Open the two-day course →</em></span>
+          </Link>
+        </div>
 
         <LimaBar />
 
@@ -1258,7 +1421,9 @@ export default function StudentPage() {
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span><em>{t('studentAppGuideAction')}</em></span>
+            {/* Simple: the card itself is the "read the guide" link — the identical "Read the
+                guide · English →" line does not need to repeat once per card (14 times). */}
+            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
 
@@ -1283,7 +1448,7 @@ export default function StudentPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
+          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
             {t('studentProgressFirebase')}
           </p>
         )}

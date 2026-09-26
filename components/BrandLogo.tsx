@@ -43,7 +43,7 @@ export default function BrandLogo({ icon: _icon }: { icon?: string } = {}) {
       </div>
       <span
         className="hidden sm:inline font-display font-semibold"
-        style={{ color: '#20190F', fontSize: '18px', letterSpacing: '-0.01em' }}
+        style={{ color: 'var(--text-primary)', fontSize: '18px', letterSpacing: '-0.01em' }}
       >
         ImbewuField
       </span>

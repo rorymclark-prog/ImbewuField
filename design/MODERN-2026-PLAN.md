@@ -15,8 +15,15 @@ which every later spec pass is a one-file edit.
 canvas/print draw colours move to a JS `lib/palette.ts` constant instead, never `var()`.
 
 ## Locked decisions (from the lanes)
-- **forest #1F4D2B = the sole interactive accent** (buttons/focus/active). **ochre #C07A1E demoted**
-  to status-warning + seasonal only. Text/entities never wear the brand as decoration.
+- ~~**forest #1F4D2B = the sole interactive accent** (buttons/focus/active). **ochre #C07A1E demoted**
+  to status-warning + seasonal only.~~ **NOT ADOPTED — CLAUDE.md governs: ochre #C07A1E is the
+  primary CTA.** This line was a planning decision that the code never took up, and leaving the two
+  documents disagreeing is worse than either answer: an audit of the farmer screens had to guess
+  which was authoritative, and a future reader could "fix" the shipped ochre CTAs back to forest on
+  the strength of the word *locked*. What DID survive the contrast work is narrower and still holds:
+  **ochre is a fill, never text** — as text it measures 2.54:1 on paper, so ochre text is `#7A4408`
+  (`--gold-dim`) and an ochre fill under white type is `#9A6018`. Reopening forest-vs-ochre is a
+  design decision for Rory, not a tidy-up. Text/entities never wear the brand as decoration.
 - **Type: KEEP Newsreader** (the almanac serif is the anti-SaaS differentiator) + Public Sans
   (400/600/700). Add serif-tuned display scale (−0.015/−0.02em) + `tabular-nums` on all data. No mono.
 - **Warm shadows** — card throw is forest-tinted `rgba(22,56,32,.14)`, never slate/blue-grey.

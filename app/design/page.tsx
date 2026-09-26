@@ -14,6 +14,7 @@ import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, mar
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
+import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
@@ -28,6 +29,7 @@ import {
 import { readLocalFarmShapes, MAP_STATE_EVENT } from '@/lib/map-sync';
 import { pickWinner, pushDesignCanvas, reconcileDesignCanvas, subscribeDesignCanvasLive } from '@/lib/design-canvas-sync';
 import { useAuth } from '@/lib/auth';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import {
   computeCanvasFrame,
   contentCountOf,
@@ -145,6 +147,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import {
   DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
@@ -207,7 +210,7 @@ const STEP_BTN: CSSProperties = {
   border: '1px solid rgba(192,122,30,0.4)',
   borderRadius: 6,
   background: '#FFFDF7',
-  color: '#C07A1E',
+  color: '#7A4408',
   cursor: 'pointer',
   fontSize: 10,
   lineHeight: 1,
@@ -231,8 +234,10 @@ const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
+// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
+// and icon strokes (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = '#7A4408';
 const DARK = '#0B120B';
-
 const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
 /** How far Snap will reach when its normal, deliberately-short reach finds nothing. Four metres
@@ -545,14 +550,14 @@ function EmptyState() {
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: '#94876F' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 11.5, color: '#755942' }}>{p.biome}</span>
                   )}
                 </span>
                 <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
-          <p style={{ fontSize: 12.5, color: '#94876F', maxWidth: 340 }}>
+          <p style={{ fontSize: 12.5, color: '#755942', maxWidth: 340 }}>
             {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
           </p>
         </>
@@ -584,9 +589,12 @@ function EmptyState() {
 }
 
 function DesignStudioInner() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const tr = (en: string, zu: string) => isZulu ? zu : en;
+  // Simple / All tools (lib/app-level.ts). Farmers default to Simple: one fixed layout, the
+  // guided wizard steps, and no expert chrome. All tools is this screen exactly as it was.
+  const simple = useAppLevel() === 'simple';
   const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
   const params = useSearchParams();
@@ -689,7 +697,7 @@ function DesignStudioInner() {
     return () => window.clearTimeout(settled);
   }, [baseHeavyDone, safeMode.key]);
 
-  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
+  const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; source?: string } | null>(null);
   useEffect(() => {
     let cancelled = false;
     fetch('/api/build-info', { cache: 'no-store' })
@@ -1085,14 +1093,18 @@ function DesignStudioInner() {
     try { window.localStorage.removeItem(DISMISSED_KEY); } catch { /* non-fatal */ }
   }, []);
 
-  const topShow = topVisibility(topStop);
-  const rawBottomShow = bottomVisibility(bottomStop);
+  // Simple has no chrome ladder and no per-section dismiss — one fixed layout, everything shown,
+  // so a farmer who never touches the handle or a × still sees the whole toolset every visit.
+  const effectiveTopStop: TopStop = simple ? 'full' : topStop;
+  const effectiveBottomStop: BottomStop = simple ? 'full' : bottomStop;
+  const topShow = topVisibility(effectiveTopStop);
+  const rawBottomShow = bottomVisibility(effectiveBottomStop);
   const bottomShow = {
     ...rawBottomShow,
-    droneTools: rawBottomShow.droneTools && !dismissed.includes('droneTools'),
-    droneEntry: rawBottomShow.droneEntry && !dismissed.includes('droneTools'),
-    shortcuts: rawBottomShow.shortcuts && !dismissed.includes('shortcuts'),
-    stepBar: rawBottomShow.stepBar && !dismissed.includes('stepGuide'),
+    droneTools: rawBottomShow.droneTools && (simple || !dismissed.includes('droneTools')),
+    droneEntry: rawBottomShow.droneEntry && (simple || !dismissed.includes('droneTools')),
+    shortcuts: rawBottomShow.shortcuts && (simple || !dismissed.includes('shortcuts')),
+    stepBar: rawBottomShow.stepBar && (simple || !dismissed.includes('stepGuide')),
   };
   // Kept so the existing phone auto-collapse effect and every other read still work unchanged.
   const chromeCollapsed = !topShow.wizard;
@@ -1101,6 +1113,7 @@ function DesignStudioInner() {
   // tappable) instead of the prev/next mini-nav; nothing about step semantics changes, it is
   // the same setStep the arrows call.
   const [cardsUi, setCardsUi] = useState(DEFAULT_UI_VERSION === 'cards');
+  const [phoneActionsOpen, setPhoneActionsOpen] = useState(false);
   useEffect(() => {
     const sync = () => setCardsUi(uiVersion() === 'cards');
     sync();
@@ -1124,6 +1137,14 @@ function DesignStudioInner() {
   const isPhone = usePhoneViewport();
   const [desktopPanelLayout, setDesktopPanelLayout] = useState<DesktopPanelLayout>(DEFAULT_DESKTOP_PANEL_LAYOUT);
   const [workspaceMode, setWorkspaceMode] = useState<DesignWorkspaceMode>(DEFAULT_DESIGN_WORKSPACE_MODE);
+  // Simple has no workspace-layout picker and no panel-width drag handles — one fixed layout at
+  // the sensible defaults, whatever a farmer's stored All-tools preference happens to be.
+  const effectiveWorkspaceMode: DesignWorkspaceMode = simple ? DEFAULT_DESIGN_WORKSPACE_MODE : workspaceMode;
+  const effectiveDesktopPanelLayout: DesktopPanelLayout = simple ? DEFAULT_DESKTOP_PANEL_LAYOUT : desktopPanelLayout;
+  // The Layers panel (the full layer-visibility matrix) never renders in Simple, so the canvas
+  // reserves no gutter for it there — only the curated Elements panel still docks.
+  const elementsReservedPx = reservedDesktopPanelSpace(effectiveWorkspaceMode, effectiveDesktopPanelLayout.elements);
+  const layersReservedPx = simple ? 0 : reservedDesktopPanelSpace(effectiveWorkspaceMode, effectiveDesktopPanelLayout.layers);
   useEffect(() => {
     try { setDesktopPanelLayout(restoreDesktopPanelLayout(window.localStorage.getItem(DESIGN_PANEL_LAYOUT_KEY))); }
     catch { /* default panel widths keep the canvas useful when storage is unavailable */ }
@@ -1256,10 +1277,12 @@ function DesignStudioInner() {
     const controller = new AbortController();
     setLocationData(readCachedLocationData(lat, lon));
 
-    fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
-      cache: 'no-store',
-      signal: controller.signal,
-    })
+    paidApiHeaders()
+      .then((headers) => fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+        cache: 'no-store',
+        signal: controller.signal,
+        headers,
+      }))
       .then(async (res) => {
         if (!res.ok) throw new Error(`Location analysis failed (${res.status})`);
         return res.json() as Promise<LocationData>;
@@ -1717,12 +1740,12 @@ function DesignStudioInner() {
         const next = updater(prev);
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
-        setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+        setSaveError(stamped ? null : t('designStorageFull'));
         // Hold the STAMPED state so the next edit counts rev up from what was actually saved.
         return stamped ?? next;
       });
     },
-    [],
+    [t],
   );
 
   // "Import your own photo" (Base step) — apply the farmer's calibrated photo as the base image
@@ -2112,15 +2135,15 @@ function DesignStudioInner() {
   // place (see applyCustomBase), so the farm keeps its size on the satellite exactly as drawn.
   const deleteCustomBase = useCallback(async () => {
     const proceed = await appConfirm({
-      message: 'Remove your photo and go back to the satellite view?\n\nYour design is not affected.',
-      confirmLabel: 'Remove photo',
+      message: t('designPhotoRemoveConfirm'),
+      confirmLabel: t('designPhotoRemove'),
       destructive: true,
     });
     if (!proceed) return;
     customBaseSourceRef.current = null;
     revertToSatellite();
     handleChange((prev) => ({ ...prev, customBase: null }));
-  }, [handleChange, revertToSatellite, appConfirm]);
+  }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);
@@ -2146,10 +2169,10 @@ function DesignStudioInner() {
       // silently stopped persisting — exactly the lie the CanvasSaveError/saveError plumbing
       // exists to prevent everywhere else.
       setSaved(!!stamped);
-      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+      setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, []);
+  }, [t]);
 
   const handleRedo = useCallback(() => {
     setSaved(false);
@@ -2170,10 +2193,10 @@ function DesignStudioInner() {
       // Mirror of handleUndo's fix above — a redo is a save like any other and must not claim
       // "Saved" when persistCanvasState just reported it couldn't write.
       setSaved(!!stamped);
-      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
+      setSaveError(stamped ? null : t('designStorageFull'));
       return stamped ?? popped;
     });
-  }, []);
+  }, [t]);
 
   // Delete whatever is selected (one or many items/zones/lines) — palette Delete + keyboard.
   const onDeleteSelected = selectedIds.length
@@ -2988,6 +3011,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
 
   return (
     <div
@@ -3027,7 +3051,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           href="/farmer"
           aria-label={tr('Back to map', 'Buyela kumephu')}
           style={{
-            display: 'flex',
+            display: isPhone && canvasState ? 'none' : 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             width: 44,
@@ -3077,7 +3101,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
             aria-label={tr("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi')}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
+              display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
               border: '1px solid rgba(31,77,43,0.20)', background: PAPER, color: GREEN,
               fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
@@ -3093,7 +3117,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             aria-label={tr('Print / Export plan set', 'Phrinta / Khipha isethi yohlelo')}
             title={tr('Print / Export — export your exact maps as a PDF plan set or PNGs', 'Phrinta / Khipha — khipha amamephu akho abe yi-PDF noma amafayela e-PNG')}
             style={{
-              display: 'inline-flex',
+              display: isPhone ? 'none' : 'inline-flex',
               alignItems: 'center',
               gap: 6,
               minHeight: 32,
@@ -3110,9 +3134,20 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <Printer size={15} /> {tr('Print / Export', 'Phrinta / Khipha')}
           </button>
         )}
+        {isPhone && canvasState && (
+          <button
+            type="button"
+            aria-expanded={phoneActionsOpen}
+            aria-controls="design-studio-more-actions"
+            onClick={() => setPhoneActionsOpen((open) => !open)}
+            style={{ flexShrink: 0, minHeight: 44, padding: '0 12px', borderRadius: 12, border: '1px solid #D8D0BB', background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}
+          >
+            {tr('More', 'Okunye')}
+          </button>
+        )}
         {buildInfo?.sha && !isPhone && (
           <div
-            title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
+            title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}`}
             style={{
               display: 'none',
               alignItems: 'center',
@@ -3147,6 +3182,39 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         </div>
       </header>
 
+      {isPhone && canvasState && (
+        <div id="design-studio-more-actions" hidden={!phoneActionsOpen} style={{ padding: '10px 14px', borderBottom: '1px solid #E2D8C4', background: PAPER }}>
+          <div role="group" aria-label={tr('Other Studio actions', 'Ezinye izenzo zesitudiyo')} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <Link href="/farmer" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
+              {tr('Back to map', 'Buyela kumephu')}
+            </Link>
+            <Link href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
+              {tr('Crop plan', 'Uhlelo lwezitshalo')}
+            </Link>
+            {frame && <button type="button" onClick={() => { setPhoneActionsOpen(false); setPrintOpen(true); }} style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
+              {tr('Print / Export', 'Phrinta / Khipha')}
+            </button>}
+            {canvasState.step !== 'glossy' && (
+              <button
+                type="button"
+                onClick={() => {
+                  setPhoneActionsOpen(false);
+                  setPreviewFilter(canvasState.step === 'water' ? 'water'
+                    : canvasState.step === 'earthworks' ? 'earthworks'
+                    : canvasState.step === 'zones' ? 'zones'
+                    : canvasState.step === 'planting' ? 'planting'
+                    : canvasState.step === 'structures' ? 'structures' : 'all');
+                }}
+                aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
+                style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}
+              >
+                <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* SAFE MODE (lib/crash-loop.ts). Amber, not red: nothing is broken and nothing is lost —
           the farmer's whole design is on screen and every measurement is its real value. Only the
           background photograph is missing, and only for this load. The button puts it back. */}
@@ -3167,14 +3235,16 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         >
           <span style={{ fontWeight: 600 }}>
             {safeMode.reason === 'requested'
-              ? 'Light mode — your design is here, without the background photo.'
-              : `The app kept closing on this design${(() => {
+              ? tr('Light mode — your design is here, without the background photo.', 'Imodi elula — idizayini yakho ilapha, ngaphandle kwesithombe sangemuva.')
+              : `${tr('The app kept closing on this design', 'Uhlelo beluvala njalo kule dizayini')}${(() => {
                   // The one-word note the dead load left behind (lib/crash-loop.ts). To the
                   // farmer it reads as plain honesty; in a screenshot it tells whoever is
-                  // debugging WHICH step was in flight when iOS killed the page.
+                  // debugging WHICH step was in flight when iOS killed the page. The phase note
+                  // itself stays in English on purpose — it is a debugging breadcrumb, not
+                  // farmer-facing instruction.
                   const phase = lastCrashPhase(window.localStorage, safeMode.key);
-                  return phase ? ` — last time while ${phase}` : '';
-                })()}, so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.`}
+                  return phase ? `${tr(' — last time while ', ' — okokugcina ngenkathi ')}${phase}` : '';
+                })()}${tr(', so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.', ', ngakho luvule ngaphandle kwesithombe sangemuva. Konke okudwebile kulapha, futhi izilinganiso zakho azishintshanga.')}`}
           </span>
           <button
             type="button"
@@ -3191,7 +3261,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               cursor: 'pointer',
             }}
           >
-            Try the photo again
+            {tr('Try the photo again', 'Zama isithombe futhi')}
           </button>
         </div>
       )}
@@ -3208,8 +3278,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             fontWeight: 600,
           }}
         >
-          {saveError} Your cached glossy renders are the usual culprit — they’ve been cleared
-          automatically; if this persists, clear this site’s data.
+          {saveError} {tr(
+            'Your cached glossy renders are the usual culprit — they’ve been cleared automatically; if this persists, clear this site’s data.',
+            'Imifanekiso ye-glossy egciniwe ivamise ukuba yimbangela — isusiwe ngokuzenzakalela; uma lokhu kuqhubeka, sula idatha yale sayithi.',
+          )}
         </div>
       )}
 
@@ -3267,11 +3339,24 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           ~half the screen). Collapsed: a one-line step nav + "Show steps"; expanded: a
           quiet "More space" that folds the auto-design bar + wizard away. */}
       {canvasState && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none', background: PAPER, position: isPhone && topShow.stepNav ? 'sticky' : undefined, top: isPhone && topShow.stepNav ? 54 : undefined, zIndex: isPhone && topShow.stepNav ? 19 : undefined }}>
           {!isPhone && (
             <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto' }}>
               <CardsStepper step={canvasState.step} onStep={setStep} />
             </div>
+          )}
+          {isPhone && (
+            <label style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: '1 1 auto', color: GREEN, fontSize: 12, fontWeight: 800 }}>
+              <span style={{ flexShrink: 0 }}>{tr('Design views', 'Izingxenye zomklamo')}</span>
+              <select
+                aria-label={tr('Choose a design view', 'Khetha ingxenye yomklamo')}
+                value={canvasState.step}
+                onChange={(event) => { setPhoneActionsOpen(false); setStep(event.target.value as WizardStep); }}
+                style={{ flex: '1 1 auto', minWidth: 0, maxWidth: '100%', minHeight: 44, padding: '0 6px', border: '1px solid #B9CCB4', borderRadius: 10, background: PAPER, color: GREEN, fontSize: 13, fontWeight: 700 }}
+              >
+                {STEP_ORDER.map((step, index) => <option key={step} value={step}>{String(index + 1).padStart(2, '0')} · {stepName(step)}</option>)}
+              </select>
+            </label>
           )}
           {!cardsUi && chromeCollapsed && (() => {
             const idx = STEP_ORDER.indexOf(canvasState.step);
@@ -3287,8 +3372,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   <ChevronLeft size={16} />
                 </button>
                 <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
-                  {isZulu ? ({ base: 'Isisekelo', sector: 'Umkhakha', water: 'Amanzi', earthworks: 'Imisebenzi yomhlaba', zones: 'Izindawo', planting: 'Ukutshala', structures: 'Izakhiwo', review: 'Buyekeza', glossy: 'Umklamo oqediwe' } as Record<typeof canvasState.step, string>)[canvasState.step] : STEP_LABELS[canvasState.step]}
-                  <span style={{ color: '#9A8268', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
+                  {stepName(canvasState.step)}
+                  <span style={{ color: '#755942', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
                 </span>
                 <button type="button" aria-label={tr('Next step', 'Isinyathelo esilandelayo')} disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
                   <ChevronRight size={16} />
@@ -3296,38 +3381,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               </>
             );
           })()}
-          {/* Phone-only: the header renders its own Preview map button on wider screens
-              (hidden there on phones), so without this gate a desktop user saw the same
-              button twice — once in the header, once here at the end of the steps strip,
-              where it also read like a tenth step. One button per viewport. */}
-          {isPhone && canvasState.step !== 'glossy' && (
-            <button
-              type="button"
-              onClick={() =>
-                setPreviewFilter(
-                  canvasState.step === 'water'
-                    ? 'water'
-                    : canvasState.step === 'earthworks'
-                    ? 'earthworks'
-                    : canvasState.step === 'zones'
-                      ? 'zones'
-                      : canvasState.step === 'planting'
-                        ? 'planting'
-                        : canvasState.step === 'structures'
-                          ? 'structures'
-                          : 'all',
-                )
-              }
-              aria-label={tr('Preview map and choose a plan sheet', 'Buka imephu kusengaphambili bese ukhetha ishidi lohlelo')}
-              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 44, padding: '0 4px' }}
-            >
-              <ImageIcon size={15} /> {tr('Preview map', 'Buka imephu')}
-            </button>
-          )}
+          {!simple && (
           <span style={{ marginLeft: 'auto' }}>
             {/* THE TOP HANDLE. Was a two-state "More space" toggle, which could reclaim the wizard
                 and nothing else — there was no way to get to just the map. Now a ladder: full →
-                slim → hidden, one tap at a time, wrapping back. */}
+                slim → hidden, one tap at a time, wrapping back. Simple has no ladder — one fixed
+                layout, so this control does not exist there. */}
             <ChromeHandle
               stop={topStop}
               stops={TOP_STOPS}
@@ -3336,6 +3395,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               label={tr('Show or hide the steps and header', 'Bonisa noma fihla izinyathelo nesihloko')}
             />
           </span>
+          )}
           <button
             type="button"
             onClick={() => setTopStop((c) => (c === 'full' ? 'slim' : 'full'))}
@@ -3355,11 +3415,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           flex: 1,
           position: 'relative',
           minHeight: canvasState?.step === 'glossy' ? 'calc(100dvh - 132px)' : '45dvh',
-          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements),
-          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers),
+          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : elementsReservedPx,
+          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : layersReservedPx,
         }}
       >
-        {!isPhone && canvasState?.step !== 'glossy' && (
+        {!isPhone && !simple && canvasState?.step !== 'glossy' && (
           <div
             role="group"
             aria-label={tr('Workspace layout', 'Ukuhlelwa kwendawo yokusebenza')}
@@ -3514,8 +3574,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               selectedIds={selectedIds}
               onSelect={handleSelect}
               onSelectMany={handleSelectMany}
-              additiveSelect={multiSelectMode}
-              onToggleAdditive={() => setMultiSelectMode((m) => !m)}
+              additiveSelect={!simple && multiSelectMode}
+              onToggleAdditive={simple ? undefined : () => setMultiSelectMode((m) => !m)}
               onCalibrateScale={onCalibrateScale}
               onEditItem={setEditItemId}
               onToolChange={handleSetTool}
@@ -3588,6 +3648,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             site={site}
             houseXY={houseXY}
             lastChangeId={canvasState.updatedAt}
+            simple={simple}
           />
         )}
       </div>
@@ -3613,7 +3674,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 color: DARK,
               }}
             >
-              <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
+              <ImageIcon size={15} style={{ flexShrink: 0, color: GOLD_DIM }} />
               {/* Three honest grounds for the same plan. Blank is the paper version: it removes
                   only imagery and carries the active m/px with it, so a farmer can compare their
                   working map with the sheet without their areas silently changing. */}
@@ -3760,27 +3821,27 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               <button
                 type="button"
                 onClick={() => setShowPhotoImport(true)}
-                style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+                style={{ border: 'none', background: 'transparent', color: GOLD_DIM, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
                 {designBaseMode(canvasState) === 'photo'
-                  ? 'Adjust photo'
-                  : basePhotoControls(canvasState).hasPhoto ? 'Use a different photo' : 'Use your own aerial photo'}
+                  ? t('designPhotoAdjust')
+                  : basePhotoControls(canvasState).hasPhoto ? t('designPhotoUseDifferent') : t('designPhotoUseAerial')}
               </button>
               {/* Destructive, so it is quiet, last in the row, and asks first. */}
               {basePhotoControls(canvasState).hasPhoto && (
                 <button
                   type="button"
                   onClick={deleteCustomBase}
-                  title="Remove your photo and go back to the satellite. Your design is not affected."
+                  title={t('designPhotoRemoveTitle')}
                   style={{ border: 'none', background: 'transparent', color: '#B53A3A', fontWeight: 600, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
                 >
-                  Remove photo
+                  {t('designPhotoRemove')}
                 </button>
               )}
               {/* Hides the STRIP, not the photo — "Remove photo" beside it is the one that
                   touches the design, which is why that one is red and asks first and this one is
-                  a grey ×. */}
-              <SectionClose onClick={() => hideSection('droneTools')} what="the photo controls" />
+                  a grey ×. Simple has no per-section dismiss — one fixed layout. */}
+              {!simple && <SectionClose onClick={() => hideSection('droneTools')} what="the photo controls" />}
             </div>
           ) : (
             /* Was a dashed, small-text row sitting in a stack of similar-looking dashed hint rows,
@@ -3792,7 +3853,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <button
               type="button"
               onClick={() => setShowPhotoImport(true)}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '8px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.12)', color: OCHRE, cursor: 'pointer', textAlign: 'left' }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '8px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.12)', color: GOLD_DIM, cursor: 'pointer', textAlign: 'left' }}
             >
               <ImageIcon size={18} style={{ flexShrink: 0 }} />
               <span style={{ flex: 1, lineHeight: 1.3 }}>
@@ -3829,6 +3890,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               : null)
             : null}
           initialMPerPx={canvasState?.useCustomBase ? canvasState.customBase?.mPerPx ?? null : null}
+          simple={simple}
         />
       )}
 
@@ -3847,7 +3909,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             </span>
             <ChevronRight size={16} style={{ flexShrink: 0 }} />
           </button>
-          <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />
+          {!simple && <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />}
         </div>
       )}
 
@@ -3877,15 +3939,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
         <div style={isPhone ? undefined : {
           position: 'fixed',
-          left: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements) + 8,
-          right: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers) + 8,
+          left: elementsReservedPx + 8,
+          right: layersReservedPx + 8,
           bottom: 10,
           zIndex: 16,
           maxWidth: 560,
           margin: '0 auto',
         }}>
           <StepGuideLazy
-            onHide={() => hideSection('stepGuide')}
+            onHide={simple ? undefined : () => hideSection('stepGuide')}
             step={canvasState.step}
             state={canvasState}
             ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
@@ -4065,7 +4127,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <DesignPalette
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
-          hiddenSections={{ count: dismissed.length, onRestore: showAllSections }}
+          hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
           step={canvasState.step}
           mode={designMode}
           tool={tool}
@@ -4103,9 +4165,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onVisibilityChange: setLayerElementVisibility,
           }}
           desktopAside={!isPhone}
-          desktopPanelLayout={desktopPanelLayout}
-          onDesktopPanelWidthChange={setDesktopPanelWidth}
-          workspaceMode={workspaceMode}
+          desktopPanelLayout={effectiveDesktopPanelLayout}
+          onDesktopPanelWidthChange={simple ? undefined : setDesktopPanelWidth}
+          workspaceMode={effectiveWorkspaceMode}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
@@ -4130,6 +4192,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           // apple/pear/plum/olive chips on a subtropical coast.
           siteBiome={site?.biome}
           siteMinTempC={plantingColdMinimum(locationData?.climate)}
+          simple={simple}
         />
       )}
 
@@ -4138,7 +4201,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {canvasState && frame && previewFilter && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: PAPER, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid #E2D8C4', flexShrink: 0 }}>
-            <ImageIcon size={18} color={OCHRE} />
+            <ImageIcon size={18} color={GOLD_DIM} />
             <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>{tr('Preview map', 'Buka imephu')}</span>
             <button
               type="button"
@@ -4214,6 +4277,7 @@ function ItemEditSheet({
   onDelete: () => void;
   onSave: (patch: ItemEditPatch) => void;
 }) {
+  const { t } = useLanguage();
   const def = ELEMENTS_BY_ID[item.defId];
   const isRect = def?.shape === 'rect';
   const isGate = item.defId === 'gate';
@@ -4318,7 +4382,7 @@ function ItemEditSheet({
         </label>
 
         <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
-          Status
+          {t('designStatus')}
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as ElementStatus)}
@@ -4332,14 +4396,14 @@ function ItemEditSheet({
               color: DARK,
             }}
           >
-            <option value="proposed">Part of my design</option>
-            <option value="existing">Already here</option>
+            <option value="proposed">{t('designStatusProposed')}</option>
+            <option value="existing">{t('designStatusExisting')}</option>
           </select>
         </label>
 
         <div style={{ display: 'flex', gap: 10 }}>
           <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
-            {isGate ? 'Gate length (m)' : isRect ? 'Width (m)' : 'Size (m)'}
+            {isGate ? t('designElementGateLength') : isRect ? t('designElementWidth') : t('designElementSize')}
             <input
               type="number"
               inputMode="decimal"

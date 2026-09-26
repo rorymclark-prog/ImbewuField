@@ -124,6 +124,16 @@ const ROUTE_COST_CLASS: Record<string, CostClass> = {
   'ai-render/poll': 'poll',
   'network/farmers': 'data',
   'network/orgs': 'data',
+  // Mapbox terrain-RGB tiles, metered per tile — a bill of a different colour from the model
+  // spend the 'ai' band prices, but the same shape of ceiling.
+  contours: 'data',
+  // OpenStreetMap Overpass proxy — no cost to this app, but a shared upstream quota. Generous on
+  // purpose so a signed-out map user panning around never notices it.
+  'site-features': 'poll',
+  // The Atlas's global data layer: one request fans out into NASA POWER, ISRIC, an elevation
+  // API and SANBI — no model spend, but four third-party calls per pin, the same shape of cost
+  // as the network reads above.
+  'location-data': 'data',
 };
 
 /** '/api/ai-render/poll' and 'ai-render/poll' are the same route. Compare one spelling. */
