@@ -93,7 +93,8 @@ test('Tshivenda Water Harvesting presents only its labelled title draft and keep
   for (const [index, lesson] of source.lessons.entries()) {
     const draft = TSHIVENDA_WATER_HARVESTING_DRAFT.lessons[index];
     const presentation = resolveLearnerLessonPresentation(lesson, 've');
-    assert.equal(presentation.status, 'draft', lesson.id);
+    assert.equal(presentation.status, index < 3 ? 'draft' : 'english-fallback',
+      `${lesson.id}: report a draft only while at least one source-paired field is translated`);
     assert.equal(presentation.content.title, draft.title.reviewStatus === 'hold'
       ? lesson.title : draft.title.tshivendaDraft, `${lesson.id}: only explicitly drafted titles change`);
     assert.equal(presentation.content.body, lesson.body, `${lesson.id}: safety instruction remains English`);
@@ -128,10 +129,8 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
 
   const translated = new Map([
     ['module.title', 'Mutakalo wa Mavu na U Ita Khomposo (Composting)'],
-    ['module.description', 'Fhaṱani mavu a re na vhutshilo nga khomposo (compost), tshifukedzi (mulch), zwiliṅwa zwa u fukedza (cover crops) na mabodo a zwivhungu (worm farms).'],
     ['lessons[0].title', 'U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe'],
     ['lessons[1].title', 'U Ita na U Shumisa Khomposo (Compost)'],
-    ['lessons[2].title', 'Tshifukedzi (Mulching) na Zwiliṅwa zwa u Fukedza (Cover Crops): U Tsireledza na U Fhaṱa Mavu'],
   ]);
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   let heldFields = 0;
@@ -150,14 +149,14 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
   };
 
   checkPair(draft.title, source.title, 'module.title', true);
-  checkPair(draft.description, source.description, 'module.description', true);
+  checkPair(draft.description, source.description, 'module.description');
   for (const [index, lesson] of source.lessons.entries()) {
     const paired = draft.lessons[index];
     const path = `lessons[${index}]`;
     assert.equal(paired.id, lesson.id);
     if (lesson.infographicAlt) checkPair(paired.infographicAlt!, lesson.infographicAlt, `${path}.infographicAlt`);
     else assert.equal(paired.infographicAlt, undefined);
-    checkPair(paired.title, lesson.title, `${path}.title`, true);
+    checkPair(paired.title, lesson.title, `${path}.title`, index < 2);
     checkPair(paired.body, lesson.body, `${path}.body`);
     assert.deepEqual(paired.body.tshivendaDraft.split('\n\n'), lesson.body.split('\n\n'), `${path}: preserve paragraph boundaries`);
     assert.equal(paired.keyPoints.length, lesson.keyPoints.length);
@@ -181,9 +180,30 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
     }
   }
 
-  assert.equal(heldFields, 54, 'hold every illustration description, body, key point and quiz field');
-  assert.equal(resolveCourseModulePresentation(source, 've').status, 'english-fallback',
-    'review data alone must not expose this module in Study before explicit wiring');
+  assert.equal(heldFields, 56, 'hold the module summary, L3 title and every illustration description, body, key point and quiz field');
+
+  const modulePresentation = resolveCourseModulePresentation(source, 've');
+  assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
+  assert.equal(modulePresentation.title, draft.title.tshivendaDraft);
+  assert.equal(modulePresentation.description, source.description,
+    'technical module summary stays exact English until its terms are checked');
+  for (const [index, lesson] of source.lessons.entries()) {
+    const presentation = resolveLearnerLessonPresentation(lesson, 've');
+    const paired = draft.lessons[index];
+    assert.equal(presentation.status, index < 2 ? 'draft' : 'english-fallback',
+      `${lesson.id}: status only claims a draft when at least one field is translated`);
+    assert.equal(presentation.content.title, paired.title.tshivendaDraft, `${lesson.id}: show the paired title draft`);
+    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: hold farming instructions in exact English`);
+    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: hold safety summaries in exact English`);
+    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: keep questions and answers in exact English`);
+    assert.equal(presentation.content.infographicAlt, lesson.infographicAlt,
+      `${lesson.id}: hold image description in exact English`);
+
+    assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
+      'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);
+  }
+  assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} changed` }, 've').status,
+    'english-fallback', 'changed module source withdraws the card draft');
 });
 
 test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated and preserves the planting safeguards', () => {
