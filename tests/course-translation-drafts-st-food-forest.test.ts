@@ -51,6 +51,22 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
     checkPair(lesson.body, original.body, `${path}.body`);
     assert.equal(lesson.body.sesothoDraft.split('\n\n').length, original.body.split('\n\n').length,
       `${path}.body: keep paragraph boundaries`);
+    if (original.id === 'food-forest-l1') {
+      const sourceParagraphs = original.body.split('\n\n');
+      const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
+      assert.equal(lesson.body.reviewStatus, 'machine-draft');
+      const translatedParagraphs = new Map([
+        [0, 'Moru wa tlhaho o tlatsa sebaka ho tloha makaleng a hodimo ho isa metsong.'],
+        [1, 'Dimela tse fapaneng di sebedisa kganya le mongobo tse fumanehang boemong ba tsona.'],
+        [7, 'Mohlala wa pele wa Highveld o kenyelletsa Wild Fig kapa pecan tse hodimo ho lemon, naartjie le black mulberry.'],
+        [8, 'Mohlala oo o beha Cape gooseberry le Wild Medlar mmoho le vegetables, wild garlic, sweet potato le granadilla.'],
+        [11, 'Ha dimela di ntse di hola, moriti le masalla a makgasi di fetola maemo a ka tlase ho tsona.'],
+      ]);
+      for (const [index, expected] of translatedParagraphs) assert.equal(draftParagraphs[index], expected);
+      sourceParagraphs.forEach((paragraph, index) => {
+        if (!translatedParagraphs.has(index)) assert.equal(draftParagraphs[index], paragraph, `Food Forest L1 paragraph ${index + 1} stays English`);
+      });
+    }
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: keep key-point count/order`);
     for (const [pointIndex, point] of lesson.keyPoints.entries()) {
       checkPair(point, original.keyPoints[pointIndex], `${path}.keyPoints[${pointIndex}]`);
@@ -74,7 +90,6 @@ test('Food Forest Sesotho draft preserves every source, plant safeguard and quiz
   assert.deepEqual(holds, [
     'lessons[0] food-forest-l1.infographicAlt',
     'lessons[0] food-forest-l1.title',
-    'lessons[0] food-forest-l1.body',
     'lessons[0] food-forest-l1.quiz[0].rationale',
     'lessons[0] food-forest-l1.quiz[1].rationale',
     'lessons[1] food-forest-l2.body',
