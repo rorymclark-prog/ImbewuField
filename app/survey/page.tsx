@@ -25,9 +25,28 @@ import { deliverFile } from '@/lib/file-delivery';
 import { useLanguage } from '@/lib/i18n';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 
+// Machine-draft shell labels stay beside their English source until a fluent Sesotho reviewer
+// checks them. Farming questions and plan text use separate functions and remain English in Sesotho.
+const ST_SURVEY_UI_DRAFT: Record<string, string> = {
+  'Garden Survey': 'Patlisiso ya Tsimu',
+  Learn: 'Ithute',
+  Print: 'Hatisa',
+  'Building…': 'E ntse e aha…',
+  'Your garden': 'Jarata ya hao',
+  'Survey for': 'Patlisiso ya',
+  'No parcel yet': 'Ha ho setsha ha jwale',
+  Back: 'Morao',
+  Continue: 'Tswela pele',
+  'See my plan': 'Bona moralo wa ka',
+};
+
 function localUi(en: string, zu: string, lang: string) {
-  return lang === 'zu' ? zu : en;
+  if (lang === 'zu') return zu;
+  const sesothoDraft = lang === 'st' ? ST_SURVEY_UI_DRAFT[en] : undefined;
+  return sesothoDraft ? `${sesothoDraft} / ${en}` : en;
 }
+
+const SESOTHO_SURVEY_DRAFT_NOTICE = 'Moralo wa UI wa Sesotho. Tsebiso ena le mabitso a ka tlase a hlahisitswe ke AI mme ha a so hlahlojwe ke motho ya buang Sesotho ka thello. Senyesemane se bontshitswe pela moralo o mong le o mong. Dipotso tsohle le moralo wa jarete di dula di le ka Senyesemane; di hlahlobe pele o sebedisa moralo ona.';
 
 // These proposals stay beside the English source until a first-language farmer reviewer accepts them.
 function surveyDraft(en: string, zu: string, lang: string) {
@@ -307,6 +326,13 @@ function SurveyInner() {
           {lang === 'zu' && (
             <p role="note" className="mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
               Unreviewed isiZulu draft. Check the paired English before using this plan. Crop names, figures and “Side-dress with compost tea” remain English. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esihambisana naso ngaphambi kokusebenzisa lolu hlelo. Amagama ezitshalo, izinombolo nomsebenzi othi “Side-dress with compost tea” kuse ngesiNgisi.
+            </p>
+          )}
+
+          {lang === 'st' && (
+            <p role="note" className="mb-4 rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+              <span lang="st">{SESOTHO_SURVEY_DRAFT_NOTICE}</span>{' / '}
+              <span lang="en">Sesotho UI draft. This notice and the labels below are AI-generated and have not been reviewed by a fluent Sesotho speaker. English is shown beside each draft. All questions and the garden plan remain in English; check them before using this plan.</span>
             </p>
           )}
 
@@ -619,7 +645,8 @@ function SurveyInner() {
           )}
 
           {/* ── Nav buttons ── */}
-          <div className="no-print flex gap-2 mt-6">
+          {/* Reserve room for Lima's fixed lower-left button; it covered Back on phone screens. */}
+          <div className="no-print flex gap-2 mt-6 pl-16 sm:pl-0">
             {step > 0 && step <= 5 && (
               <button onClick={() => setStep((s) => Math.max(0, s - 1))}
                 className="flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-sm font-display font-semibold"
