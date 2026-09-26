@@ -78,6 +78,11 @@ function TitleSheet({ image, eyebrow, title, subtitle, full }: { image: string |
         <h2 className="font-display" style={{ fontSize: full ? '38pt' : '30pt', lineHeight: 1.1, margin: 0, fontWeight: 600 }}>{title}</h2>
         {subtitle && <p style={{ fontSize: '13pt', lineHeight: 1.45, margin: '6mm 0 0', maxWidth: '150mm' }}>{subtitle}</p>}
       </div>
+      {full && (
+        <p style={{ position: 'absolute', inset: 'auto 0 0', margin: 0, padding: '5mm 18mm', background: image ? 'rgba(255,254,250,.94)' : FOREST, fontSize: '11pt', fontWeight: 600 }}>
+          Compiled by Rory Clark · Imbewu Yoshintso NPC
+        </p>
+      )}
     </section>
   );
 }

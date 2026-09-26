@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '2d36e455', changes: [
+    "The Permaculture Manual book cover now shows Rory Clark's name in every language.",
+  ] },
   { when: '26 September 2026', sha: '64c8257c', changes: [
     'The update guide pairs Sesotho and Tshivenda draft controls with English.',
     'Vegetables lesson 3 pairs two Tshivenda drafts with English.',
