@@ -6,6 +6,7 @@ import { SESOTHO_SOIL_HEALTH_DRAFT } from './course-translation-drafts-st-soil-h
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-st-vegetables-staples.ts';
 import { SESOTHO_FOOD_FOREST_DRAFT } from './course-translation-drafts-st-food-forest.ts';
 import { SESOTHO_PLANT_GUILDS_DRAFT } from './course-translation-drafts-st-plant-guilds.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-st-market-community.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
@@ -84,7 +85,7 @@ export interface CourseModulePresentation {
 }
 
 const REGIONAL_MODULE_DRAFTS = {
-  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT],
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
   ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT],
 };
@@ -104,7 +105,7 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       module.durationMins === draft.sourceMetadata.durationMins &&
       module.category === draft.sourceMetadata.category) {
       const moduleDraft = draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT |
-        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
+        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof SESOTHO_MARKET_COMMUNITY_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
         typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT |
         typeof TSHIVENDA_WATER_HARVESTING_DRAFT;
       const title = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
