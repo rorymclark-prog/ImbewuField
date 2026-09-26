@@ -54,7 +54,7 @@ test('the twelve-month strip and season-view cards read the per-theme tokens', (
   );
   assert.match(
     CROPPLAN,
-    /color: on \? '#EAF3E2' : n > 0 \? '#1F4D2B' : 'var\(--text-muted\)'/,
+    /color: on \? '#EAF3E2' : n > 0 \? 'var\(--color-forest-800\)' : 'var\(--text-muted\)'/,
     'the month-strip zero-job count must read --text-muted',
   );
   assert.match(

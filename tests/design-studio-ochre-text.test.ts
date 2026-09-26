@@ -4,11 +4,14 @@
 // Four Design Studio files painted a text or icon-stroke colour directly with ochre or a
 // hard-coded imitation of its "dim" text variant instead of the theme-aware var(--gold-dim):
 // components/design/DesignGlossy.tsx (a saved-maps gallery header, literal #9E5C08 — earth
-// light's own --gold fill value, reused as text), components/design/SectorSummary.tsx and
-// components/design/TankCalculator.tsx (both defined a GOLD_DIM constant hard-coded to the earth
-// light hex #7A4408 instead of the token), and components/design/StepGuide.tsx (the collapsed
+// light's own --gold fill value, reused as text) and components/design/StepGuide.tsx (the collapsed
 // step-guide bar's done-count label and its chevron painted directly with the per-step accent,
 // which is literal ochre for three of the nine wizard steps).
+//
+// The gallery header, SectorSummary.tsx and TankCalculator.tsx sit on the fixed PAPER constant
+// (#FFFEFA) in every theme, so they keep the fixed ochre-text hex #7A4408. var(--gold-dim) there
+// would turn into dark mode's #B49040 on near-white paper, about 2.6:1. StepGuide's label sits on
+// var(--bg-1), which does follow the theme, so it reads var(--gold-dim).
 //
 // This only pins the TEXT/icon fix — the fill and border uses in these same files (STEP_ACCENT's
 // badge/header-band fills, SectorSummary's and TankCalculator's OCHRE constant) are correctly left
@@ -24,15 +27,17 @@ const SECTOR_SUMMARY = readFileSync(new URL('../components/design/SectorSummary.
 const TANK_CALCULATOR = readFileSync(new URL('../components/design/TankCalculator.tsx', import.meta.url), 'utf8');
 const STEP_GUIDE = readFileSync(new URL('../components/design/StepGuide.tsx', import.meta.url), 'utf8');
 
-test('DesignGlossy.tsx\'s gallery header label reads --gold-dim, not the hard-coded --gold hex', () => {
-  assert.doesNotMatch(DESIGN_GLOSSY, /color: '#9E5C08'/, 'the gallery header label reverted to a hard-coded ochre hex');
-  assert.match(DESIGN_GLOSSY, /color: 'var\(--gold-dim\)' \}\}>/);
+test('DesignGlossy.tsx\'s gallery header label reads the ochre-text hex, not the --gold fill hex', () => {
+  assert.doesNotMatch(DESIGN_GLOSSY, /color: '#9E5C08'/, 'the gallery header label reverted to the ochre fill hex');
+  // Fixed PAPER sheet, so the fixed text hex; the theme var would go pale on it in dark mode.
+  assert.match(DESIGN_GLOSSY, /fontWeight: 700, color: '#7A4408' \/\* fixed PAPER sheet/);
 });
 
-test('SectorSummary.tsx and TankCalculator.tsx route their ochre-text constant through the theme token', () => {
+test('SectorSummary.tsx and TankCalculator.tsx keep the fixed ochre-text hex on their fixed PAPER card', () => {
   for (const [label, src] of [['SectorSummary.tsx', SECTOR_SUMMARY], ['TankCalculator.tsx', TANK_CALCULATOR]] as const) {
-    assert.doesNotMatch(src, /GOLD_DIM = '#7A4408'/, `${label}'s GOLD_DIM constant reverted to a hard-coded hex`);
-    assert.match(src, /GOLD_DIM = 'var\(--gold-dim\)'/, `${label}'s GOLD_DIM constant must route through var(--gold-dim)`);
+    assert.match(src, /const PAPER = '#FFFEFA'/, `${label} no longer paints a fixed PAPER card — revisit whether GOLD_DIM can follow the theme`);
+    assert.match(src, /GOLD_DIM = '#7A4408'/, `${label}'s GOLD_DIM must stay #7A4408 while the card is fixed PAPER`);
+    assert.doesNotMatch(src, /GOLD_DIM = 'var\(--gold-dim\)'/, `${label}: dark mode's --gold-dim is ~2.6:1 on the fixed PAPER card`);
     // The sibling OCHRE constant is a deliberate literal fill/border — left untouched.
     assert.match(src, /OCHRE = '#C07A1E'/, `${label}'s OCHRE fill constant must stay a literal hex`);
   }

@@ -52,6 +52,28 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-26 (swarm wave 5 — audit leftovers: language honesty, icons, crop planner theme)
+- **Owner decisions (Rory, 26 Sep):** no extra sign-in — the public map data routes (contours,
+  site-features, location-data) stay open behind their existing rate limits and REQUIRE_API_AUTH
+  stays off for them. Mentors keep defaulting to All tools. A partly-translated-language notice
+  is approved.
+- **Merged (four swarm PRs, one integration PR):** Language notice (#662: `lib/lang-coverage.ts`
+  counts keys a locale renders differently from English; under 95% shows "Partly in English"
+  in the Settings picker plus a note for the active language; Xitsonga keeps its draft notice).
+  Design Studio isiZulu (#660: resume-gave-up banner in isiZulu, print-preview failures logged;
+  the other audit items were already fixed). Crop planner theme (#661: planner chrome on theme
+  tokens, clamp() headings, ochre text via --gold-dim, white-on-ochre banner #9A6018). Icons
+  (#663: Design Studio chrome, line tools, canvas handles and facilitator print page picker on
+  Lucide; unreachable ProWizard removed — `designMode` is the constant 'guided').
+- **Integrator fix:** SectorSummary, TankCalculator and the Glossy saved-maps header paint the
+  fixed PAPER constant in every theme, so their ochre text stays #7A4408 (dark mode's --gold-dim
+  is ~2.6:1 on it); the crop-plan month count now reads --color-forest-800 on the themed card.
+- **Dead taps track:** nothing to change — all six items were already fixed on main (spot-checked
+  the facilitator print disable, /assessments BackButton and the sign-up auth-code map).
+- **Checks:** tsc clean; the five new tests plus design-simple, theme-token, facilitator-print and
+  release-notes gates pass locally.
+- **Cost:** about $34 of Sonnet across the five tracks.
+
 ### 2026-09-25 (swarm wave 4 — Simple mode for the rest of the app)
 - **Merged (six swarm PRs, one integration PR):** Design Studio Preview & Export (#644: Simple
   keeps choose-a-sheet and Finish as step 2; underlay, plant labels, style, AI layers, All sheets

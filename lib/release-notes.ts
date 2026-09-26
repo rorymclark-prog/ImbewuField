@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '89d44f5f', changes: [
+    'Settings marks languages that are still partly shown in English.',
+    'Design Studio buttons and the element list use clear icons instead of emoji.',
+    'The crop planner follows dark mode and reads larger on computers.',
+    'The facilitator print page picks its pages with icons instead of emoji.',
+    'One more Design Studio warning is now in isiZulu.',
+  ], tour: [
+    { title: 'Language honesty', where: 'Settings → Language', href: '/home',
+      detail: 'Languages still being translated show "Partly in English" under their name.' },
+    { title: 'Icons in the Design Studio', where: 'Design Studio → element list', href: '/design',
+      detail: 'Line tools, the ruler and base-map switch now use the same icons as the rest of the app.' },
+  ] },
   { when: '26 September 2026', sha: 'b544cb47', changes: [
     'Sesotho Study shows a marked Chickens lesson draft beside English.',
     'Animal care, manure advice and quiz answers stay in English for review.',

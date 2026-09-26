@@ -16401,7 +16401,7 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--gold-dim)' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#7A4408' /* fixed PAPER sheet, so the fixed ochre-text hex, not the theme var */ }}>
                 {exportMode
                   ? `${exportSel.size} selected · ${gallerySiteName}`
                   : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}

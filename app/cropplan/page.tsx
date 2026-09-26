@@ -430,7 +430,7 @@ export default function CropPlanPage() {
                         cursor: 'pointer',
                       }}>
                       <span className="font-sans font-semibold" style={{ fontSize: 12, color: on ? '#EAF3E2' : 'var(--text-secondary)' }}>{label}</span>
-                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{n}</span>
+                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{n}</span>
                     </button>
                   );
                 })}
