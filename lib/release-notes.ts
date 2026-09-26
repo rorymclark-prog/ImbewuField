@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '8eff6427', changes: [
+    'Introduction to Permaculture shows its marked Tshivenda draft beside English.',
+    'Two uncertain lesson phrases and the wet-season minimum stay in English.',
+    'Slides and narration remain English.',
+  ], tour: [
+    { title: 'Compare the Introduction draft', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; held wording appears in English beside the marked draft.' },
+  ] },
   { when: '26 September 2026', sha: '719f440b', changes: [
     'Food Forest lesson 2 shows a marked Tshivenda heading draft beside English.',
     'Farming advice, plant lists and quizzes remain in English for review.',
