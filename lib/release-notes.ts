@@ -44,9 +44,12 @@ export interface UpdateTourStop {
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '27 September 2026', sha: 'f746e30c', changes: [
     'Soil Health lesson 1 shows six Tshivenda soil-concept drafts beside English.',
+    'Soil Health lesson 1 pairs five Sesotho soil-life drafts with English.',
   ], tour: [
     { title: 'Check the Tshivenda Soil Health concepts', where: 'Study → Soil Health & Composting', href: '/student',
       detail: 'Choose Tshivenda and open lesson 1. The jar exercise, diagnosis advice, key points and quizzes remain in English beside the six marked concept drafts.' },
+    { title: 'Check the Sesotho Soil Health draft', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1. Compare the five marked soil-life sentences with the English source; jar, water and treatment guidance remains English.' },
   ] },
   { when: '27 September 2026', sha: 'd21b20fe', changes: [
     'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
