@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '08b8052d', changes: [
+    'Plant Guilds lessons 2 and 3 show short Xitsonga concept drafts beside English.',
+  ], tour: [
+    { title: 'Check the Plant Guilds drafts', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Xitsonga and open lessons 2 and 3. Lesson 1, farming guidance, species details, quizzes, slides and narration remain English.' },
+  ] },
   { when: '26 September 2026', sha: '6849c3f2', changes: [
     'Food Forest L1 pairs five Sesotho draft sentences with the English source.',
   ], tour: [
