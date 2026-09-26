@@ -141,7 +141,7 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "How to Save Seed: Dry and Wet Methods",
-        "sesothoDraft": "Mokgwa wa ho Boloka Peo: Mekgwa e Ommeng le e Metsi (Dry and Wet Methods)",
+        "sesothoDraft": "Mokgwa wa ho Boloka Peo: Mekgwa e Omileng le e Metsi (Dry and Wet Methods)",
         "reviewStatus": "machine-draft"
       },
       "body": {

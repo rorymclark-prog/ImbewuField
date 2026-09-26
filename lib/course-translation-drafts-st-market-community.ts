@@ -18,18 +18,18 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
   language: 'st',
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'business' },
-  title: machineDraft('Market Gardening & Community', 'Temo ea Marakeng le Sechaba'),
+  title: machineDraft('Market Gardening & Community', 'Temo ya Marakeng le Setjhaba'),
   description: hold('Record-keeping, selling surplus and building local food networks.'),
   lessons: [
     {
       id: 'market-community-l1',
       infographicAlt: machineDraft(
         'A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.',
-        'Leqephe le bonolo la lirekoto le nang le mela le likholomo tsa se kotutsoeng le moo se ileng teng, pel\'a qubu ea lihlahisoa tse kotutsoeng.',
+        'Leqephe le bonolo la direkoto le nang le mela le dikholomo tsa se kotutsweng le moo se ileng teng, pela qubu ya dihlahiswa tse kotutsweng.',
       ),
       title: machineDraft(
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
-        'Ho Boloka Lirekoto: Ho Tseba Hantle Seo Polasi ea Hao e se Hlahisang',
+        'Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang',
       ),
       // Paragraphs 1–4 and 7–8 are proposed. Paragraph 5–6 and 9–17 stay in English
       // because the unit wording and downstream yield, finance, and timing claims need review.
@@ -54,14 +54,14 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.',
         ].join('\n\n'),
         [
-          'Kotulo e ka fepa lelapa, ea rekisoa, ea arolelanoa, kapa ea senyeha (ea lahleha).',
-          'Ho rekota litsela tsena tse fapaneng tsa tšebeliso ho u thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.',
-          'Sebelisa leseli leo ho sireletsa lijo tsa lelapa le ho etsa liqeto tse betere tsa khoebo.',
-          "Ngola fatše kotulo e 'ngoe le e 'ngoe hang ha e etsahala.",
+          'Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).',
+          'Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.',
+          'Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.',
+          "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
           'Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.',
           'Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.',
-          'U se ke ua itšetleha ka mohopolo qetellong ea sehla.',
-          'Sehla se le seng sa lirekoto se araba lipotso tse sebetsang.',
+          'O se ke wa itshetleha ka mohopolo qetellong ya sehla.',
+          'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.',
           'Which crops give the best yield per bed? Which return the most for each hour of work?',
           'Which crops use more seeds, water, and compost than they return?',
           'The record also shows which months leave the household buying food.',
@@ -76,7 +76,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
       keyPoints: [
         machineDraft(
           'Record harvest amounts and destinations separately from cash',
-          'Rekota bongata ba kotulo le moo e eang teng ka thoko ho chelete',
+          'Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete',
         ),
         hold('Include production and selling costs when assessing a price'),
         hold('Label worked examples; use your actual costs for decisions'),

@@ -54,59 +54,59 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
   ),
   description: pair(
     "Ethics, principles and patterns — the foundation for everything else you will build.",
-    "Melao ea boitshwaro (ethics), melao-motheo le mekhoa (patterns) — motheo oa tsohle tseo u tla li haha.",
+    "Melao ya boitshwaro (ethics), melao-motheo le mekgwa (patterns) — motheo wa tsohle tseo o tla di haha.",
   ),
   lessons: [
     {
       id: "intro-permaculture-l1",
       infographicAlt: pair(
         "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
-        "Melao e meraro ea boitshwaro e le liserekela tse tharo tse kopaneng tsa boholo bo lekanang: letsoho le tšoereng mobu bakeng sa Tlhokomelo ea Lefatše (Earth Care), batho ba babeli bakeng sa Tlhokomelo ea Batho (People Care), le seroto se fetang lipakeng tsa matsoho bakeng sa Karolelano e Lokileng (Fair Share).",
+        "Melao e meraro ya boitshwaro e le diserekela tse tharo tse kopaneng tsa boholo bo lekanang: letsoho le tshwereng mobu bakeng sa Tlhokomelo ya Lefatshe (Earth Care), batho ba babedi bakeng sa Tlhokomelo ya Batho (People Care), le seroto se fetang dipakeng tsa matsoho bakeng sa Karolelano e Lokileng (Fair Share).",
       ),
       title: pair(
         "The Three Ethics: Earth Care, People Care, Fair Share",
-        "Melao e Meraro ea Boitshwaro: Tlhokomelo ea Lefatše, Tlhokomelo ea Batho, Karolelano e Lokileng",
+        "Melao e Meraro ya Boitshwaro: Tlhokomelo ya Lefatshe, Tlhokomelo ya Batho, Karolelano e Lokileng",
       ),
       body: pair(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "Permaculture e ipapisitse le melao e meraro ea boitshwaro. Tlhokomelo ea Lefatše (Earth Care) e bolela ho nka mobu, metsi, limela le liphoofolo e le litsamaiso tse phelang tse lokelang ho sireletsoa, eseng lisebelisoa tse lokelang ho feletsoa. Tlhokomelo ea Batho (People Care) e bolela hore litlhoko tsa lelapa la hao li tla pele, ebe ho latela tsa sechaba sa heno. Karolelano e Lokileng (Fair Share) e bolela ho nka feela seo u se hlokang le ho khutlisetsa se setseng (surplus) — lipeo, lijo, metsi, tsebo — morao ka har'a tsamaiso.\n\nTseena hase mehopolo feela e sa tšoareheng. Molemi ea rekisang lehe le meroho e meng le e meng empa a sa siele tafole ea lelapa letho o tlola Tlhokomelo ea Batho. Sechaba se teratang sediba se arolelanoang se tlola Karolelano e Lokileng.\n\nMelao ea boitshwaro e bohlokoa hobane e u thusa ho etsa liqeto ha ho se na buka ea melao — moahelani ea kopang ho fula likhomo ka mor'a komello, kapa moroallo o senyang li-swale tsa hao. Harelletsa tsena tse tharo tseleng eo u nahanang ka eona pele u haha eng kapa eng fatše.",
+        "Permaculture e ipapisitse le melao e meraro ya boitshwaro. Tlhokomelo ya Lefatshe (Earth Care) e bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng disebediswa tse lokelang ho feletswa. Tlhokomelo ya Batho (People Care) e bolela hore ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno. Karolelano e Lokileng (Fair Share) e bolela ho nka feela seo o se hlokang le ho kgutlisetsa se setseng (surplus) — dipeo, dijo, metsi, tsebo — morao ka hara tsamaiso.\n\nTsena hase mehopolo feela e sa tshwareheng. Molemi ya rekisang lehe le meroho e meng le e meng empa a sa siele tafole ya lelapa letho o tlola Tlhokomelo ya Batho. Setjhaba se teratang sediba se arolelanwang se tlola Karolelano e Lokileng.\n\nMelao ya boitshwaro e bohlokwa hobane e o thusa ho etsa diqeto ha ho se na buka ya melao — moahelani ya kopang ho fula dikgomo ka mora komello, kapa morwallo o senyang mekero (swales) ya hao. Harelletsa tsena tse tharo tseleng eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
       ),
       keyPoints: [
         pair(
           "Earth Care: protect soil, water, and biodiversity",
-          "Tlhokomelo ea Lefatše: sireletsa mobu, metsi, le mefuta-futa ea lintho tse phelang (biodiversity)",
+          "Tlhokomelo ya Lefatshe: sireletsa mobu, metsi, le mefuta-futa ya dintho tse phelang (biodiversity)",
         ),
         pair(
           "People Care: your family's needs come before market production",
-          "Tlhokomelo ea Batho: litlhoko tsa lelapa la hao li tla pele ho lihlahisoa tse eang 'marakeng",
+          "Tlhokomelo ya Batho: ditlhoko tsa lelapa la hao di tla pele ho dihlahiswa tse yang mmarakeng",
         ),
         pair(
           "Fair Share: return surplus to the system — seeds, water, food, knowledge",
-          "Karolelano e Lokileng: khutlisetsa tse setseng ka har'a tsamaiso — lipeo, metsi, lijo, tsebo",
+          "Karolelano e Lokileng: kgutlisetsa tse setseng ka hara tsamaiso — dipeo, metsi, dijo, tsebo",
         ),
         pair(
           "Ethics guide decisions when there's no rulebook",
-          "Melao ea boitshwaro e tataisa liqeto ha ho se na buka ea melao",
+          "Melao ya boitshwaro e tataisa diqeto ha ho se na buka ya melao",
         ),
       ],
       quiz: [
         {
           question: pair(
             "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "Molemi o rekisa poone (maize) eohle ea hae e setseng empa ha a boloke letho bakeng sa ho etsa manyolo a litlama (composting) kapa ho boloka lipeo. Ke ofe molao oa boitshwaro oo a o tlolang haholo?",
+            "Molemi o rekisa poone (maize) yohle ya hae e setseng empa ha a boloke letho bakeng sa ho etsa kompose (composting) kapa ho boloka dipeo. Ke ofe molao wa boitshwaro oo a o tlolang haholo?",
           ),
           options: [
             pair(
               "Earth Care only",
-              "Tlhokomelo ea Lefatše feela",
+              "Tlhokomelo ya Lefatshe feela",
             ),
             pair(
               "People Care only",
-              "Tlhokomelo ea Batho feela",
+              "Tlhokomelo ya Batho feela",
             ),
             pair(
               "Fair Share — he returns nothing to the system",
-              "Karolelano e Lokileng — ha a khutlisetse letho tsamaisong",
+              "Karolelano e Lokileng — ha a kgutlisetse letho tsamaisong",
             ),
             pair(
               "All three equally",
@@ -116,36 +116,36 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
           sourceCorrectIndex: 2,
           rationale: pair(
             "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle.",
-            "Karolelano e Lokileng e bolela ho khutlisa karolo ea seo u se nkang — e le peo, compost, kapa lijo bakeng sa ba bang. Ho rekisa tsohle le ho se boloke letho morao ho roba potoloho eo.",
+            "Karolelano e Lokileng e bolela ho kgutlisa karolo ya seo o se nkang — e le peo, kompose, kapa dijo bakeng sa ba bang. Ho rekisa tsohle le ho se boloke letho morao ho roba potoloho eo.",
           ),
         },
         {
           question: pair(
             "Your borehole serves your household. Neighbours ask for water too. Which action best reflects all three ethics?",
-            "Borehole ea hao e sebeletsa ntlo ea hao. Baahelani le bona ba kopa metsi. Ke ketso efe e bontšang hantle melao e meraro ea boitshwaro?",
+            "Borehole ya hao e sebeletsa ntlo ya hao. Baahelani le bona ba kopa metsi. Ke ketso efe e bontshang hantle melao e meraro ya boitshwaro?",
           ),
           options: [
             pair(
               "Sell access to the highest bidder",
-              "Rekisa phihlello ho motho ea lefang chelete e ngata ka ho fetisisa",
+              "Rekisa phihlello ho motho ya lefang tjhelete e ngata ka ho fetisisa",
             ),
             pair(
               "Keep all the borehole water for a larger irrigation area",
-              "Boloka metsi 'ohle a borehole bakeng sa sebaka se seholo sa nosetso",
+              "Boloka metsi ohle a borehole bakeng sa sebaka se seholo sa nosetso",
             ),
             pair(
               "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
-              "Fumana hore na ho arolelana ho lumelletsoe le hore na borehole e ka khona ho sebeletsa basebelisi bohle. Ke hona feela u lumellanang ka mokhoa oa ho arolelana ka toka le ho lula u lekola bophahamo ba metsi.",
+              "Fumana hore na ho arolelana ho dumelletswe le hore na borehole e ka kgona ho sebeletsa basebedisi bohle. Ke hona feela o dumellanang ka mokgwa wa ho arolelana ka toka le ho dula o lekola bophahamo ba metsi.",
             ),
             pair(
               "Cap the borehole to preserve groundwater only",
-              "Koala borehole ka sekoahelo e le ho boloka feela metsi a ka tlas'a lefatše",
+              "Kwala borehole ka sekwahelo e le ho boloka feela metsi a ka tlasa lefatshe",
             ),
           ],
           sourceCorrectIndex: 2,
           rationale: pair(
             "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
-            "Pele fumana hore na ke tšebeliso efe ea metsi e lumelletsoeng le hore na mohloli o ka khona ho sebeletsa basebelisi bohle ntle le ho nka ho hoholo. Haeba ho arolelana ho lumelletsoe mme metsi a lekane, lumellanang ka mokhoa oa ho arolelana ka toka. Ho lula u lekola ho u thusa ho hlokomela liphetoho; ha ho fane ka tumello ea ho nka metsi a mangata.",
+            "Pele fumana hore na ke tshebediso efe ya metsi e dumelletsweng le hore na mohlodi o ka kgona ho sebeletsa basebedisi bohle ntle le ho nka ho hoholo. Haeba ho arolelana ho dumelletswe mme metsi a lekane, dumellanang ka mokgwa wa ho arolelana ka toka. Ho dula o lekola ho o thusa ho hlokomela diphetoho; ha ho fane ka tumello ya ho nka metsi a mangata.",
           ),
         },
       ],
@@ -154,91 +154,91 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
       id: "intro-permaculture-l2",
       infographicAlt: pair(
         "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
-        "Melao-motheo ea moralo e leshome le metso e 'meli e hlophisitsoeng e le likarolo ho potoloha semela se senyenyane se bohareng, e 'ngoe le e 'ngoe e bontšitsoe e le setšoantšo se bonolo — leihlo bakeng sa ho shebella, lerotholi bakeng sa ho tšoara metsi, letsatsi bakeng sa matla, le selikalikoe bakeng sa ho khutlisetsa litšila.",
+        "Melao-motheo ya moralo e leshome le metso e mmedi e hlophisitsweng e le dikarolo ho potoloha semela se senyenyane se bohareng, e nngwe le e nngwe e bontshitswe e le setshwantsho se bonolo — leihlo bakeng sa ho shebella, lerothodi bakeng sa ho tshwara metsi, letsatsi bakeng sa matla, le sedikadikwe bakeng sa ho kgutlisetsa ditshila.",
       ),
       title: pair(
         "Twelve Principles: Designing with Nature",
-        "Melao-motheo e Leshome le Metso e 'Meli: Ho Rala le Tlhaho",
+        "Melao-motheo e Leshome le Metso e Mmedi: Ho Rala le Tlhaho",
       ),
       body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "David Holmgren o ile a hlahisa melao-motheo ea moralo e leshome le metso e 'meli ho Essence of Permaculture. Bill Mollison le David Holmgren ba qalile khopolo ea permaculture hammoho. Lintlha tse tharo tse sebetsang tsa ho qala bakeng sa thuto ena ke: sheba 'me u sebelisane (observe and interact) — shebella mobu oa hao nakong ea sehla se feletseng pele u etsa mesebetsi e meholo ea mobu; tšoara le ho boloka matla (catch and store energy) — hlokomela pula, letsatsi le biomass pele li tloha setšeng sa hao; le ho sebelisa mathoko le ho ananela tse ka thoko (use edges and value the marginal) — mohala oa terata kapa mothinya o pel'a tselana e ka ba sebaka se loketseng sa ho shebella.\n\nTse ling tse lokelang ho tsejoa: u se ke ua hlahisa litšila (produce no waste — masalla a fetoha compost, compost e fetoha mobu), sebelisa litharollo tse nyane le tse liehang (use small and slow solutions — emere e ka nosetsa jarete ntle le motlakase), le ho sebelisa le ho ananela mefuta-futa (use and value diversity). Tšenyo ea sefako holim'a poone (maize) e itšetlehile ka sefefo le boemo ba kholo ea lijalo.\n\nKhetha melao-motheo e 'meli kapa e meraro e buang le bothata ba hao bo boholo ka ho fetisisa 'me u e sebelise ka thata. Tse ling li tla hlaka ha u ntse u tsoela pele.",
+        "David Holmgren o ile a hlahisa melao-motheo ya moralo e leshome le metso e mmedi ho Essence of Permaculture. Bill Mollison le David Holmgren ba qadile kgopolo ya permaculture hammoho. Dintlha tse tharo tse sebetsang tsa ho qala bakeng sa thuto ena ke: sheba mme o sebedisane (observe and interact) — shebella mobu wa hao nakong ya sehla se feletseng pele o etsa mesebetsi e meholo ya mobu; tshwara le ho boloka matla (catch and store energy) — hlokomela pula, letsatsi le biomass pele di tloha setsheng sa hao; le ho sebedisa mathoko le ho ananela tse ka thoko (use edges and value the marginal) — mohala wa terata kapa mothinya o pela tselana e ka ba sebaka se loketseng sa ho shebella.\n\nTse ding tse lokelang ho tsejwa: o se ke wa hlahisa ditshila (produce no waste — masalla a fetoha kompose, kompose e fetoha mobu), sebedisa ditharollo tse nyane le tse diehang (use small and slow solutions — emere e ka nosetsa jarete ntle le motlakase), le ho sebedisa le ho ananela mefuta-futa (use and value diversity). Tshenyo ya sefako hodima poone (maize) e itshetlehile ka sefefo le boemo ba kgolo ya dijalo.\n\nKgetha melao-motheo e mmedi kapa e meraro e buang le bothata ba hao bo boholo ka ho fetisisa mme o e sebedise ka thata. Tse ding di tla hlaka ha o ntse o tswela pele.",
       ),
       keyPoints: [
         pair(
           "Observe your land for a full season before major earthworks",
-          "Shebella naha ea hao sehla se feletseng pele u etsa mesebetsi e meholo ea mobu",
+          "Shebella naha ya hao sehla se feletseng pele o etsa mesebetsi e meholo ya mobu",
         ),
         pair(
           "Catch and store rain, sun, and biomass before they leave your property",
-          "Tšoara le ho boloka pula, letsatsi, le biomass pele li tloha setšeng sa hao",
+          "Tshwara le ho boloka pula, letsatsi, le biomass pele di tloha setsheng sa hao",
         ),
         pair(
           "Edges and margins can be useful places to observe what grows well",
-          "Mathoko le libaka tse ka thoko e ka ba libaka tse sebetsang tsa ho shebella se melang hantle",
+          "Mathoko le dibaka tse ka thoko e ka ba dibaka tse sebetsang tsa ho shebella se melang hantle",
         ),
         pair(
           "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Tšenyo ea sefako holim'a poone (maize) e itšetlehile ka sefefo le boemo ba kholo ea lijalo",
+          "Tshenyo ya sefako hodima poone (maize) e itshetlehile ka sefefo le boemo ba kgolo ya dijalo",
         ),
       ],
       quiz: [
         {
           question: pair(
             "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
-            "Molemi o batla ho cheka li-swale ho kotula metsi a pula. O lokela ho etsa eng pele, a latela 'sheba 'me u sebelisane' (observe and interact)?",
+            "Molemi o batla ho tjheka mekero (swales) ho kotula metsi a pula. O lokela ho etsa eng pele, a latela 'sheba mme o sebedisane' (observe and interact)?",
           ),
           options: [
             pair(
               "Dig immediately after the first good rain",
-              "Cheka hang-hang ka mor'a pula ea pele e ntle",
+              "Tjheka hang-hang ka mora pula ya pele e ntle",
             ),
             pair(
               "Watch where water flows and pools across at least one wet season",
-              "Shebella moo metsi a phallang teng le moo a bokellanang teng bonyane nakong ea sehla se le seng sa lipula",
+              "Shebella moo metsi a phallang teng le moo a bokellanang teng bonyane nakong ya sehla se le seng sa dipula",
             ),
             pair(
               "Copy a neighbour's swale layout",
-              "Kopitsa moralo oa li-swale tsa moahelani",
+              "Kopitsa moralo wa mekero ya moahelani",
             ),
             pair(
               "Assume the same swale design fits every site",
-              "Nka hore moralo o tšoanang oa swale o lekana sebaka se seng le se seng",
+              "Nka hore moralo o tshwanang wa mokero (swale) o lekana sebaka se seng le se seng",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Sehla sa lipula se bontša ho fetang sefefo se le seng, empa tlhokomelo ke mohato oa pele feela. Hlahloba mobu, mothinya oa lefatše (slope), drainage le tsela e bolokehileng ea metsi a phallang ho feta tekano le moeletsi ea koetlisitsoeng oa lehae pele u cheka.",
+            "Sehla sa dipula se bontsha ho fetang sefefo se le seng, empa tlhokomelo ke mohato wa pele feela. Hlahloba mobu, letswapo (slope), drainage le tsela e bolokehileng ya metsi a phallang ho feta tekano le moeletsi ya kwetlisitsweng wa lehae pele o tjheka.",
           ),
         },
         {
           question: pair(
             "Which layout best applies 'integrate rather than segregate'?",
-            "Ke moralo ofe o sebelisang hantle 'kopanya ho e-na le ho arola' (integrate rather than segregate)?",
+            "Ke moralo ofe o sebedisang hantle 'kopanya ho e na le ho arola' (integrate rather than segregate)?",
           ),
           options: [
             pair(
               "Chickens penned far from the garden",
-              "Likhoho tse koaletsoeng hole le serapa",
+              "Dikgoho tse kwaletsweng hole le serapa",
             ),
             pair(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Serapa, lifate tsa litholoana le lesaka la likhoho (chicken run) tse hlophisitsoeng e le hore likhoho li sebelise jarete e se nang letho ka mor'a kotulo, ebe molemi o hlahloba tsamaiso e bolokehileng pele lijalo tse jeoang li khutla",
+              "Serapa, difate tsa ditholwana le lesaka la dikgoho (chicken run) tse hlophisitsweng e le hore dikgoho di sebedise jarete e se nang letho ka mora kotulo, ebe molemi o hlahloba tsamaiso e bolokehileng pele dijalo tse jewang di kgutla",
             ),
             pair(
               "Separate paddocks for each crop",
-              "Likotoana tse arohaneng bakeng sa sejalo ka seng",
+              "Dikotwana tse arohaneng bakeng sa sejalo ka seng",
             ),
             pair(
               "All animals kept off the cultivated zone",
-              "Liphoofolo tsohle li behelloa ka thoko ho sebaka se lengoang",
+              "Diphoofolo tsohle di behellwa ka thoko ho sebaka se lengwang",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "Kopanyo e etsa hore karolo ka 'ngoe e sebeletse baahisani ba eona — mona, likhoho li hloekisa likokoanyana 'me li eketsa menontsha ho e-na le ho lula feela ka lesakeng le sa sisinyeheng. Manyolo a macha a ka jara likokoana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele lijalo tse jeoang li khutla.",
+            "Kopanyo e etsa hore karolo ka nngwe e sebeletse baahisani ba yona — mona, dikgoho di hlwekisa dikokwanyana mme di eketsa menontsha ho e na le ho dula feela ka lesakeng le sa sisinyeheng. Manyolo a matjha a ka jara dikokwana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele dijalo tse jewang di kgutla.",
           ),
         },
       ],
@@ -247,91 +247,91 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
       id: "intro-permaculture-l3",
       infographicAlt: pair(
         "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
-        "Masale a phatlaletseng ho tloha ntlong ho ea kantle. Lesale le haufi haholo le monyako le hlokomeloa letsatsi le leng le le leng; lesale ka leng le fetang kantle le eteloa ka sewelo 'me le siuoa le hlaha le ho feta.",
+        "Masale a phatlaletseng ho tloha ntlong ho ya kantle. Lesale le haufi haholo le monyako le hlokomelwa letsatsi le leng le le leng; lesale ka leng le fetang kantle le etelwa ka sewelo mme le siuwa le hlaha le ho feta.",
       ),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
-        "Libaka (Zones) le Makala (Sectors): Ho Hlophisa Polasi ea Hao ka Matla",
+        "Dibaka (Zones) le Makala (Sectors): Ho Hlophisa Polasi ya Hao ka Matla",
       ),
       body: pair(
         "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
-        "Libaka (zones) le makala (sectors) li u thusa ho fokotsa mosebetsi o senyehang. Libaka li tloha ho 0 ho ea ho 5 ho latela hore na u li etela hangata hakae. Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo 'me e tšoere tseo u li kholang khafetsa — litlama (herbs), meroho ea salate. Zone 2 ke serapa se seholo le lesaka la likhoho (chicken run), tse eteloang hanngoe kapa habeli ka letsatsi. Zone 3 ke tšimo e kholo, e eteloang beke le beke. Zone 4 ke sebaka se batlang se le hlaha — lifate tsa litholoana le furu tse hlokang tlhokomelo ea sewelo. Zone 5 e siiloe e le hlaha.\n\nMakala (sectors) ke matla a tsoang kantle — letsatsi, moea, pula, moroallo, mollo. Shebella moo moea o matla o tsoang teng polasing ea hao. Litlaleho tsa seteishene sa boemo ba leholimo se haufi li ka u thusa ho hlahloba tsela ea moea. Shebella moo metsi a pula a kenang teng le moo a phallang ho pholletsa le naha ea hao. Thala metsu bakeng sa seo u se hlokomelang.\n\nThala libaka le makala pampiring 'me u na le sebopeho sa motheo (skeleton) sa moralo oa hao.",
+        "Dibaka (zones) le makala (sectors) di o thusa ho fokotsa mosebetsi o senyehang. Dibaka di tloha ho 0 ho ya ho 5 ho latela hore na o di etela hangata hakae. Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e tshwere tseo o di kgolang kgafetsa — ditlama (herbs), meroho ya salate. Zone 2 ke serapa se seholo le lesaka la dikgoho (chicken run), tse etelwang hanngwe kapa habedi ka letsatsi. Zone 3 ke tshimo e kgolo, e etelwang beke le beke. Zone 4 ke sebaka se batlang se le hlaha — difate tsa ditholwana le furu tse hlokang tlhokomelo ya sewelo. Zone 5 e siilwe e le hlaha.\n\nMakala (sectors) ke matla a tswang kantle — letsatsi, moya, pula, morwallo, mollo. Shebella moo moya o matla o tswang teng polasing ya hao. Ditlaleho tsa seteishene sa boemo ba lehodimo se haufi di ka o thusa ho hlahloba tsela ya moya. Shebella moo metsi a pula a kenang teng le moo a phallang ho pholletsa le naha ya hao. Thala metsu bakeng sa seo o se hlokomelang.\n\nThala dibaka le makala pampiring mme o na le sebopeho sa motheo (skeleton) sa moralo wa hao.",
       ),
       keyPoints: [
         pair(
           "In this example, Zone 1 near the house holds often-picked herbs",
-          "Mohlaleng ona, Zone 1 e haufi le ntlo e tšoere litlama tse kholoang khafetsa",
+          "Mohlaleng ona, Zone 1 e haufi le ntlo e tshwere ditlama tse kgolwang kgafetsa",
         ),
         pair(
           "Zones organise labour by how often you need to visit",
-          "Libaka li hlophisa mosebetsi ho latela hore na u lokela ho etela hangata hakae",
+          "Dibaka di hlophisa mosebetsi ho latela hore na o lokela ho etela hangata hakae",
         ),
         pair(
           "Sectors map incoming sun, wind, rainwater, flood and fire",
-          "Makala a etsa 'mmapa oa letsatsi le kenang, moea, metsi a pula, moroallo le mollo",
+          "Makala a etsa mmapa wa letsatsi le kenang, moya, metsi a pula, morwallo le mollo",
         ),
         pair(
           "A simple sketch of zones and sectors is enough to start designing",
-          "Setšoantšo se bonolo sa libaka le makala se lekane ho qala ho rala",
+          "Setshwantsho se bonolo sa dibaka le makala se lekane ho qala ho rala",
         ),
       ],
       quiz: [
         {
           question: pair(
             "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "U lema litlama ho Zone 3, tšimo e kholo e hole le ntlo. See se baka bothata bofe?",
+            "O lema ditlama ho Zone 3, tshimo e kgolo e hole le ntlo. See se baka bothata bofe?",
           ),
           options: [
             pair(
               "Herbs grow too large",
-              "Litlama li hōla haholo ho feta tekano",
+              "Ditlama di hola haholo ho feta tekano",
             ),
             pair(
               "The extra walk may mean you pick or check them less often",
-              "Ho tsamaea ho eketsehileng ho ka bolela hore u li khola kapa u li hlahloba ka sewelo",
+              "Ho tsamaya ho eketsehileng ho ka bolela hore o di kgola kapa o di hlahloba ka sewelo",
             ),
             pair(
               "Herbs cross-pollinate with main crops",
-              "Litlama li tsoakana peo (cross-pollinate) le lijalo tse kholo",
+              "Ditlama di tswakana peo (cross-pollinate) le dijalo tse kgolo",
             ),
             pair(
               "Zone 3 gets too much sun for herbs",
-              "Zone 3 e fumana letsatsi le lengata haholo bakeng sa litlama",
+              "Zone 3 e fumana letsatsi le lengata haholo bakeng sa ditlama",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "Beha sejalo seo u se kholang khafetsa haufi le tselana ea letsatsi le letsatsi. Jarete e hole e eketsa ho tsamaea 'me e ka hlahlojoa ka sewelo.",
+            "Beha sejalo seo o se kgolang kgafetsa haufi le tselana ya letsatsi le letsatsi. Jarete e hole e eketsa ho tsamaya mme e ka hlahlojwa ka sewelo.",
           ),
         },
         {
           question: pair(
             "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
-            "U hlokomela moea o senyang o tsoang leboea-bophirima (north-west) polasing ea Highveld. Sesireletsi sa moea (windbreak) se lokela ho kena kae?",
+            "O hlokomela moya o senyang o tswang leboya-bophirima (north-west) polasing ya Highveld. Sesireletsi sa moya (windbreak) se lokela ho kena kae?",
           ),
           options: [
             pair(
               "South-east boundary",
-              "Moeling oa boroa-bochabela (south-east)",
+              "Moeding wa borwa-botjhabela (south-east)",
             ),
             pair(
               "North-west boundary, between the wind and the crops",
-              "Moeling oa leboea-bophirima (north-west), lipakeng tsa moea le lijalo",
+              "Moeding wa leboya-bophirima (north-west), dipakeng tsa moya le dijalo",
             ),
             pair(
               "Centre of the property",
-              "Bohareng ba setša",
+              "Bohareng ba setsha",
             ),
             pair(
               "Windbreaks aren't needed since winds are seasonal",
-              "Lisireletsi tsa moea ha li hlokahale kaha meea ke ea linako tsa selemo",
+              "Disireletsi tsa moya ha di hlokahale kaha meya ke ya dinako tsa selemo",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-            "Sesireletsi sa moea se sebetsa ka ho ema lipakeng tsa mohloli oa moea le seo se ka se senyang — kahoo se sebakeng seo moea o hlileng o tsoang ho sona.",
+            "Sesireletsi sa moya se sebetsa ka ho ema dipakeng tsa mohlodi wa moya le seo se ka se senyang — kahoo se sebakeng seo moya o hlileng o tswang ho sona.",
           ),
         },
       ],

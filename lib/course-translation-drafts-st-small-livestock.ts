@@ -17,7 +17,7 @@ export const SESOTHO_SMALL_LIVESTOCK_DRAFT: SesothoCourseModuleDraft = {
   title: machineDraft('Small Livestock Integration', 'Kopanyo ya Diphoofolo tse Nyenyane'),
   description: machineDraft(
     'Chickens, ducks and bees as system components — not afterthoughts.',
-    'Dikgogo, madada le dinotshe jwalo ka dikarolo tsa tsamaiso — e seng dintho tse hopolwang kamorao.',
+    'Dikgoho, matata le dinotshi jwalo ka dikarolo tsa tsamaiso — e seng dintho tse hopolwang kamorao.',
   ),
   lessons: [{
     id: 'small-livestock-l1',
@@ -26,7 +26,7 @@ export const SESOTHO_SMALL_LIVESTOCK_DRAFT: SesothoCourseModuleDraft = {
     ),
     title: machineDraft(
       'Chickens in the System: Pest Control, Fertility, and Food',
-      'Dikgogo Tsamaisong: Taolo ya Disenyi, Monono, le Dijo',
+      'Dikgoho Tsamaisong: Taolo ya Disenyi, Monono, le Dijo',
     ),
     // The first draft mistranslated garden bed as a sleeping bed and bedding as rubbish.
     // Keep those sentences and every animal-care and manure instruction in English.
