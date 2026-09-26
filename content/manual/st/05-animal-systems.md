@@ -112,7 +112,7 @@ Ho ka nka nako le tahlehelo e itseng pele o haha ntlo kapa lesaka le tsamaiswang
 
 Dikgoho di na le thuso serapeng, empa di boetse di hohla dimela tse nyane le mulch. Di sutise ka ho latellana: tlohela sehlopha se sebetse bethe ya serapa nako e itseng (ka mohlala ka mora kotulo), ebe o di kgutlisetsa ho tsamaya ka bolokolohi kapa lebaleng la tsona ho fihlela bethe ya serapa e latelang e itokisitse.
 
-> **Ela hloko:** Dipolasing tse kgolo tsa kgwebo, hangata dintlha tsa melomo ya dikgoho di a kutwa ho fokotsa ho lwana. Permaculture e leka ho thibela ho lwana ka tsela e nngwe: ka ho fa dikgoho sebaka se lekaneng, dijo tse fapaneng le bophelo ba tlhaho.
+> **Hlokomela:** Dipolasing tse kgolo tsa kgwebo, hangata dintlha tsa melomo ya dikgoho di a kutwa ho fokotsa ho lwana. Permaculture e leka ho thibela ho lwana ka tsela e nngwe: ka ho fa dikgoho sebaka se lekaneng, dijo tse fapaneng le bophelo ba tlhaho.
 
 ### Dikgoho dife?
 
@@ -189,7 +189,7 @@ Dikolobe ke diphoofolo tse ratang ho ba le tse ding mme di thaba haholo ha di na
 
 ## Matata
 
-> **Ela hloko:** "Ha o na bothata ba dikgofu, o na le kgaello ya matata." Polelo ena hangata e bolelwa hore ke ya Bill Mollison.
+> **Hlokomela:** "Ha o na bothata ba dikgofu, o na le kgaello ya matata." Polelo ena hangata e bolelwa hore ke ya Bill Mollison.
 
 Matata a phela hantle polasing ya permaculture mme ke phoofolo e ntle ya Zone 2. Ha a hohle fatshe jwaloka dikgoho, ka hona a senya mulch hanyane. O ka a tlohela a tsamaye serapeng sa difate tsa ditholwana, le serapeng sa meroho ka mora kotulo. A hlokomele haufi le dimela tse nyane, hobane a ka di hata kapa a di ja.
 
@@ -211,7 +211,7 @@ Matata a phela hantle polasing ya permaculture mme ke phoofolo e ntle ya Zone 2.
 
 Matata a ka lerata, ka hona a ka nna a se ke a loka diserapeng tsa toropong tse nang le baahisani ba haufi. Muscovy e fapane: e kgutsitse haholo, mme tse tona boholo di a hwasa feela.
 
-> **Ela hloko:** Mefutana e mengata ya matata a ruuwang, jwaloka Pekin, runner le Khaki Campbell, e tswa ho **mallard**. Mallard ke mofuta o hlaselang naha o ngotsweng lenaneng (listed invasive species) Afrika Borwa (Category 2 ho ya ka NEMBA), hobane o tswalana le matata a naha a tlhaho a kang letata le molomo o mosehla (yellow-billed duck) mme o a beha kotsing. Boloka matata a kwaletswe ka terata, hole le dinoka, matamo le mehlaba (wetlands), mme o se ke wa a dumella ho ba a naha. Botsa ofisi ya porofense ya paballo ya tlhaho (provincial conservation office) hore na o hloka tumello (permit) bakeng sa matata ao o a ruang. Muscovy ke mofuta o mong o arohaneng.
+> **Hlokomela:** Mefutana e mengata ya matata a ruuwang, jwaloka Pekin, runner le Khaki Campbell, e tswa ho **mallard**. Mallard ke mofuta o hlaselang naha o ngotsweng lenaneng (listed invasive species) Afrika Borwa (Category 2 ho ya ka NEMBA), hobane o tswalana le matata a naha a tlhaho a kang letata le molomo o mosehla (yellow-billed duck) mme o a beha kotsing. Boloka matata a kwaletswe ka terata, hole le dinoka, matamo le mehlaba (wetlands), mme o se ke wa a dumella ho ba a naha. Botsa ofisi ya porofense ya paballo ya tlhaho (provincial conservation office) hore na o hloka tumello (permit) bakeng sa matata ao o a ruang. Muscovy ke mofuta o mong o arohaneng.
 
 ## Dinotshi
 
@@ -364,7 +364,7 @@ Dimela tsena di ka fepa diphoofolo, ebang ka ho fula, e le furu e kutwang e iset
 | Sweet thorn (*Vachellia karroo*) | 7–12 m | Se lokisa naetrojene; dikgapetla le makgasi di jewa ke diphoofolo; sekgomaretsi (gum) |
 | Large sourplum (*Ximenia caffra*) | 5–7 m | Ditholwana tse nang le vitamin C e ngata; terata ya dimela |
 
-> **Ela hloko:** English oak ha e yo mananeng a Afrika Borwa a mefuta e hlaselang naha (invasive species), empa e ile ya hasana haufi le dinoka Kapa Bophirima. O se ke wa e lema haufi le melapo kapa mehlaba (wetlands). Difate tsa tlhaho tse tafoleng ena ke kgetho e betere hohle moo di holang hantle.
+> **Hlokomela:** English oak ha e yo mananeng a Afrika Borwa a mefuta e hlaselang naha (invasive species), empa e ile ya hasana haufi le dinoka Kapa Bophirima. O se ke wa e lema haufi le melapo kapa mehlaba (wetlands). Difate tsa tlhaho tse tafoleng ena ke kgetho e betere hohle moo di holang hantle.
 
 ## Dintlha tsa bohlokwa
 

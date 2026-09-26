@@ -164,7 +164,7 @@ Ho na le mekgwa e mengata ya ho lema dijalo tsa sehlooho. Mokgwa o molemo ka ho 
 6. **Fetola dijalo.** O se ke wa lema sejalo se tshwanang sebakeng se le seng selemo le selemo.
 7. **Phomotsa naha.** Ka mora dihla tse mmalwa, tlohela tshimo e phomole ka tlasa dijalo tse sireletsang mobu kapa makgulo.
 
-> **Ela hloko:** Dinawa ke dijo tsa letsatsi le letsatsi dikarolong tse ngata tsa Afrika. Rwanda le Burundi, motho ka mong o ja ka karolelano dinawa tse ka bang 27–31 kg ka selemo, e leng bongata bo phahameng ka ho fetisisa lefatsheng.
+> **Hlokomela:** Dinawa ke dijo tsa letsatsi le letsatsi dikarolong tse ngata tsa Afrika. Rwanda le Burundi, motho ka mong o ja ka karolelano dinawa tse ka bang 27–31 kg ka selemo, e leng bongata bo phahameng ka ho fetisisa lefatsheng.
 
 ## Dintlha tsa bohlokwa
 

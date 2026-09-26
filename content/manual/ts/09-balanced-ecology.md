@@ -80,7 +80,7 @@ Makhwati ya ntumbuluko ma funengeta ehansi ka 1% wa Afrika-Dzonga. Ma kula ntsen
 
 Eka tindhawu leti, ndzilo na ku risa i xiphemu xa ndlela leyi maendlelo ya ntumbuluko ma tshamaka ma hanye kahle ha yona. Loko ndzilo wu siveriwa naswona ku risiwa ku tlula mpimo, madyelo ya byanyi na savanna swi nga tala hi swihlahla swa mitwa. Leswi swi vuriwa **ku nghenelela ka swihlahla (bush encroachment)**. Se ku hangalakile eka tihekitara to tlula 7 wa timiliyoni ta Afrika-Dzonga naswona ku hunguta madyelo na mati.
 
-> **Xiya:** Ku byala mirhi eka madyelo ya byanyi ya ntumbuluko kumbe eka fynbos a swi "antswisi" wona. Swi lovisa ntumbuluko lowu hanyaka swin'we lowu kumekaka hi ku tika, lowu humesaka mati. Byala mirhi erhendzeleni ka muti wa wena na le khwatini ra wena ra swakudya, kambe tshika nhova ya ntumbuluko leyi nga emisaveni ya wena yi tshama yi ri madyelo ya byanyi, savanna kumbe fynbos.
+> **Xitsundzuxo:** Ku byala mirhi eka madyelo ya byanyi ya ntumbuluko kumbe eka fynbos a swi "antswisi" wona. Swi lovisa ntumbuluko lowu hanyaka swin'we lowu kumekaka hi ku tika, lowu humesaka mati. Byala mirhi erhendzeleni ka muti wa wena na le khwatini ra wena ra swakudya, kambe tshika nhova ya ntumbuluko leyi nga emisaveni ya wena yi tshama yi ri madyelo ya byanyi, savanna kumbe fynbos.
 
 ### Ku tirhisa ku landzelelana ka swimilana epurasini ra wena
 

@@ -59,7 +59,7 @@ Misava yi endliwe hi swiphemu swa timinerali swa vukulu byo hambana, swin'we na 
 - Yi nun'hwela kahle, ku fana na misava ya le khwatini.
 - Misava yo hlangana i misava leyinene ku tlula hinkwayo eka matsavu yo tala. Hi ku famba ka nkarhi, hi khompositi na xifunengeto, u nga tshinelisa misava ya sava kumbe ya vumba eka misava yo hlangana.
 
-> **Xiya:** A wu nge swi koti ku cinca muxaka wa misava ya wena, kambe u nga cinca **ndlela leyi misava yi hlanganeke ha yona (structure)** na swilo swa ntumbuluko leswi boleke leswi nga eka yona. Swilo swa ntumbuluko leswi boleke i nhlamulo eka misava ya sava ni ya vumba.
+> **Xitsundzuxo:** A wu nge swi koti ku cinca muxaka wa misava ya wena, kambe u nga cinca **ndlela leyi misava yi hlanganeke ha yona (structure)** na swilo swa ntumbuluko leswi boleke leswi nga eka yona. Swilo swa ntumbuluko leswi boleke i nhlamulo eka misava ya sava ni ya vumba.
 
 ## Ku kambela misava ya wena
 
@@ -121,7 +121,7 @@ Loko u dyondza misava ya wena, languta na le rhendzeleni u tsala leswi u swi von
 
 Ndlela leyinene ku tlula hinkwato yo tiva pH ya wena i ku kambela misava. U nga xava xikambelo xo olova xa pH, kumbe u rhumela xiphemu xa misava eka laboratori ya misava. Vutisa hofisi ya vatirhi va vurimi va mfumo kumbe ntlawa wa varimi (co-operative) wa le kusuhi leswaku u xi rhumela kwihi.
 
-> **Xiya:** Tilaboratori ta Afrika-Dzonga ti tala ku vika **pH (KCl)**. Mpimo lowu hi ntolovelo wu le hansi hi kwalomu ka 0.5 ku ya eka 1 ku tlula pH leyi pimiweke hi mati. pH (KCl) ya le hansi ka kwalomu ka 4.5 yi vula leswaku misava yi na asidi yo tala ngopfu eka swibyariwa swo tala. Xiviko xa laboratori xi ta tlhela xi kombisa "acid saturation" (asidi leyi teleke emisaveni) naswona xi ta ku byela leswaku u engetela layimi yo fika kwihi.
+> **Xitsundzuxo:** Tilaboratori ta Afrika-Dzonga ti tala ku vika **pH (KCl)**. Mpimo lowu hi ntolovelo wu le hansi hi kwalomu ka 0.5 ku ya eka 1 ku tlula pH leyi pimiweke hi mati. pH (KCl) ya le hansi ka kwalomu ka 4.5 yi vula leswaku misava yi na asidi yo tala ngopfu eka swibyariwa swo tala. Xiviko xa laboratori xi ta tlhela xi kombisa "acid saturation" (asidi leyi teleke emisaveni) naswona xi ta ku byela leswaku u engetela layimi yo fika kwihi.
 
 Ku lulamisa misava leyi nga na asidi, engetela layimi ya vurimi kumbe layimi ya dolomite, u landzelela ndzayo ya laboratori. Ku engetela khompositi na swona swa pfuna, hikuva yi sirhelela misava eka ku cinca lokukulu ka pH.
 
@@ -158,7 +158,7 @@ Monyolo wa rihlaza:
 4. Wu tshike ehenhla ka misava wu va xifunengeto (**chop and drop**, "tsema u wisela ehansi"), kumbe u wu cela switsongo u wu nghenisa eka 10 ku ya eka 15 cm ya le henhla ya misava.
 5. Rindza mavhiki ya 3 ku ya eka 4 u nga si byala kumbe ku rhurhisela eka mubhedhi. Leswi swi nyika swiphemu swa rihlaza nkarhi wo bola. Loko ku titimela, rindza nkarhi wo leha switsongo.
 
-> **Ndzayo:** Loko u byala ximilana xa muxaka wa tinyawa ensin'wini ro sungula, xava **rhizobium inoculant** (phawuda ya tibakteriya leti pfunaka ta timitsu) leyi faneleke eka muxavisi wa wena wa mbewu, u yi hlanganisa na mbewu u nga si byala. Ximilana xi ta endla naytirojini yo tala.
+> **Xiletelo:** Loko u byala ximilana xa muxaka wa tinyawa ensin'wini ro sungula, xava **rhizobium inoculant** (phawuda ya tibakteriya leti pfunaka ta timitsu) leyi faneleke eka muxavisi wa wena wa mbewu, u yi hlanganisa na mbewu u nga si byala. Ximilana xi ta endla naytirojini yo tala.
 
 ### Monyolo wa rihlaza eka Afrika-Dzonga
 
@@ -178,7 +178,7 @@ Eka tindhawu leti mpfula yi nako hi ximumu, byala monyolo wa rihlaza wa ximumu k
 
 Swimilana swin'wana leswi hi swi vitanaka nhova, ku fana na clover, na swona i monyolo wa rihlaza lowunene. Ematshan'weni yo swi tsuvula u swi cukumeta, swi tseme swi nga si veka mbewu, u swi tshika ehenhla ka misava kumbe u swi engetela eka khompositi.
 
-> **Xiya:** Swimilana swin'wana leswi xavisiwaka tanihi "green manure" kumbe "soil builders" ematikweni mambe i swimilana swa matiko mambe leswi hangalakaka (invasive alien plants) leswi tivisiweke eAfrika-Dzonga. Mexican sunflower (*Tithonia diversifolia*), lexi xi tala ku bumabumeriwa eka tibuku ta permaculture, i ximilana lexi hangalakaka xa Category 1b ehansi ka NEMBA: swi lwisana na nawu ku xi byala kumbe ku xi xavisa. U nga xi tirhisi. Kambela ximilana xin'wana na xin'wana lexi u nga xi tiviki eka hofisi ya vatirhi va vurimi va mfumo ya le kusuhi u nga si xi byala.
+> **Xitsundzuxo:** Swimilana swin'wana leswi xavisiwaka tanihi "green manure" kumbe "soil builders" ematikweni mambe i swimilana swa matiko mambe leswi hangalakaka (invasive alien plants) leswi tivisiweke eAfrika-Dzonga. Mexican sunflower (*Tithonia diversifolia*), lexi xi tala ku bumabumeriwa eka tibuku ta permaculture, i ximilana lexi hangalakaka xa Category 1b ehansi ka NEMBA: swi lwisana na nawu ku xi byala kumbe ku xi xavisa. U nga xi tirhisi. Kambela ximilana xin'wana na xin'wana lexi u nga xi tiviki eka hofisi ya vatirhi va vurimi va mfumo ya le kusuhi u nga si xi byala.
 
 ## Ndlela ya 2: Vulongo bya swifuwo
 
@@ -234,7 +234,7 @@ Misava, swivungu na swimilana hinkwaswo swi rhandza xifunengeto. Xifunengeto:
 3. Hlayisa xifunengeto xi ri kwalomu ka 5 cm ekule na mintsonga ya matsavu, na kwalomu ka 10 cm ekule na mintsonga ya mirhi. Xifunengeto lexi hlengeletiweke xi namarhela eka mintsonga xi yi hlayisa yi tsakamile, naswona xi nga endla leswaku yi bola.
 4. Engetela xifunengeto loko xi ri karhi xi bola.
 
-> **Ndzayo:** Xifunengeto xo oma xa tihunyi ku fana na swiphemu swa tihunyi kumbe ntsumbu wa mapulanka (sawdust) xi teka naytirojini ehenhla ka misava loko xi bola. Xi tirhise etindleleni na le rhendzeleni ka mirhi, ku nga ri eka swimilana leswintshwa swa matsavu, kumbe u veka nkumba wo onda wa vulongo kumbe khompositi ehansi ka xona.
+> **Xiletelo:** Xifunengeto xo oma xa tihunyi ku fana na swiphemu swa tihunyi kumbe ntsumbu wa mapulanka (sawdust) xi teka naytirojini ehenhla ka misava loko xi bola. Xi tirhise etindleleni na le rhendzeleni ka mirhi, ku nga ri eka swimilana leswintshwa swa matsavu, kumbe u veka nkumba wo onda wa vulongo kumbe khompositi ehansi ka xona.
 
 ### Ku funengeta hi makhadibodo (sheet mulching)
 
@@ -392,7 +392,7 @@ Xava swivungu swa khompositi endhawini yo fuya swivungu, endhawini yo kurisa swi
 - **Vulongo bya swivungu** (vermicompost). Khompositi yo olova, ya ntima, leyi noneke leyi teleke hi swakudya swa swimilana na vutomi bya misava. Vulongo bya swivungu byi na swakudya swa swimilana swo tala leswi swimilana swi nga swi tirhisaka ku tlula misava kumbe masalela lama byi humeke eka wona. Byi tirhise ehenhla ka misava erhendzeleni ka swimilana, u byi hlanganisa na misava ya swimilana leswintshwa, kumbe u engetela voko rin'we eka mugodi wun'wana na wun'wana wo byala.
 - **Mati ya swivungu (worm tea).** Vanhu vo tala va ma vitana "murhundzu wa swivungu" kumbe "tiya ya swivungu", kambe hakunene i mati lama hundzeke endhawini yo fuya swivungu ma teka swakudya swa swimilana eka vulongo bya swivungu na le ka swakudya leswi bolaka. I swakudya swa mati leswi pfunaka.
 
-> **Ndzayo:** Hunguta matimba ya mati ya swivungu hi ku engetela kwalomu ka swiphemu swa 10 swa mati, ku kondza ma fana na tiya yo olova. Ma chele emisaveni erhendzeleni ka swimilana. Loko mati lawa ma nun'hwela ku biha kumbe ku bola, ndhawu ya wena yo fuya swivungu yi tsakamile ngopfu. Mati wolawo ma tirhise ntsena enhulwini wa khompositi kumbe eka swiluva na mirhi, ku nga ri eka matsavu.
+> **Xiletelo:** Hunguta matimba ya mati ya swivungu hi ku engetela kwalomu ka swiphemu swa 10 swa mati, ku kondza ma fana na tiya yo olova. Ma chele emisaveni erhendzeleni ka swimilana. Loko mati lawa ma nun'hwela ku biha kumbe ku bola, ndhawu ya wena yo fuya swivungu yi tsakamile ngopfu. Mati wolawo ma tirhise ntsena enhulwini wa khompositi kumbe eka swiluva na mirhi, ku nga ri eka matsavu.
 
 ### Mixaka ya tindhawu to fuya swivungu
 

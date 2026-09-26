@@ -96,7 +96,7 @@ Mintanga yo xavisa yi tolovelekile emisaveni hinkwayo, ku katsa na le Dzongeni k
 - **Ntsengo wa le hansi wo sungula.** Ndhawu leyitsongo na switirhisiwa swa voko a swi durhi ku sungula ku fana na purasi lerikulu leri tirhisaka timichini.
 - **Nyika ku hambana-hambana.** Varimi vo xavisa lava humelelaka hi ntolovelo va xavisa swilo swo tala: matsavu, mihandzu, mihandzu leyitsongo (berries), matandza, vulombe, nyama kumbe masi. Van'wana va engetela nkoka hi ku endla jamu, matsavu lama hlayisiweke hi vhinika (pickles), mihandzu leyi omisiweke na swilo swin'wana.
 
-> **Ndzayo:** Loko u nga si byala swo xavisa, vulavula na vaxavi va wena. Kuma leswi va swi lavaka, hi ku tala kwihi, kangani na hi nxavo wihi. Byalela makete leyi u yi tivaka, ku nga ri leyi u tshembaka leswaku yi ta va kona.
+> **Xiletelo:** Loko u nga si byala swo xavisa, vulavula na vaxavi va wena. Kuma leswi va swi lavaka, hi ku tala kwihi, kangani na hi nxavo wihi. Byalela makete leyi u yi tivaka, ku nga ri leyi u tshembaka leswaku yi ta va kona.
 
 ## 4. Ntanga wa swibyariwa swa nkoka (Zone 3)
 
@@ -164,7 +164,7 @@ Ku na tindlela to tala to byala swibyariwa swa nkoka. Ndlela leyinene eka wena y
 6. **Hundzuluxa swibyariwa.** U nga byali xibyariwa lexi fanaka endhawini yin'we lembe na lembe.
 7. **Wiselisa misava.** Endzhaku ka tinguva ti nga ri tingani, tshika nsimu yi wisa yi funengetiwile hi swimilana swo funengeta misava kumbe hi madyelo.
 
-> **Xiyisisa:** Tinyawa i swakudya swa siku na siku eka swiphemu swo tala swa Afrika. Le Rwanda na le Burundi, munhu un'wana na un'wana u dya kwalomu ka 27–31 kg wa tinyawa hi lembe hi ku ringanisa, ku nga ku tala ku tlula hinkwako emisaveni.
+> **Xitsundzuxo:** Tinyawa i swakudya swa siku na siku eka swiphemu swo tala swa Afrika. Le Rwanda na le Burundi, munhu un'wana na un'wana u dya kwalomu ka 27–31 kg wa tinyawa hi lembe hi ku ringanisa, ku nga ku tala ku tlula hinkwako emisaveni.
 
 ## Tinhla ta nkoka
 
