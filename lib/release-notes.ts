@@ -42,12 +42,11 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: 'a303c744', changes: [
+  { when: '26 September 2026', sha: '584a8a11', changes: [
     'The Sesotho sample chooser pairs its marked draft copy with English.',
-  ] },
-  { when: '26 September 2026', sha: '5b259cfe', changes: [
     'Community, Contact and the first-run welcome now follow dark mode.',
     'The privacy consent screen reads clearly in every theme.',
+    'Consent choices show English beside unreviewed isiZulu, Sesotho and Tshivenda.',
   ], tour: [
     { title: 'Visit the community', where: 'Community', href: '/community',
       detail: 'Posts, buttons and errors now use your theme colours.' },
