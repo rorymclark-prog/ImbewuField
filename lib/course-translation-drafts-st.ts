@@ -1,4 +1,4 @@
-/** Unpublished, source-paired Sesotho course draft. This file is review data only. */
+/** Source-paired Sesotho review draft; selected fields are learner-visible with English source. */
 export type SesothoDraftReviewStatus = 'machine-draft' | 'hold';
 
 export interface SesothoSourcePair {
@@ -40,6 +40,12 @@ const pair = (sourceEnglish: string, sesothoDraft: string): SesothoSourcePair =>
   reviewStatus: 'machine-draft',
 });
 
+const hold = (sourceEnglish: string): SesothoSourcePair => ({
+  sourceEnglish,
+  sesothoDraft: sourceEnglish,
+  reviewStatus: 'hold',
+});
+
 export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
   id: "intro-permaculture",
   language: 'st',
@@ -67,9 +73,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "The Three Ethics: Earth Care, People Care, Fair Share",
         "Melao e Meraro ea Boitshwaro: Tlhokomelo ea Lefatše, Tlhokomelo ea Batho, Karolelano e Lokileng",
       ),
-      body: pair(
+      body: hold(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "Permaculture e ipapisitse le melao e meraro ea boitshwaro. Tlhokomelo ea Lefatše (Earth Care) e bolela ho nka mobu, metsi, limela le liphoofolo e le litsamaiso tse phelang tse lokelang ho sireletsoa, eseng lisebelisoa tse lokelang ho feletsoa. Tlhokomelo ea Batho (People Care) e bolela hore litlhoko tsa lelapa la hao li tla pele, ebe ho latela tsa sechaba sa heno. Karolelano e Lokileng (Fair Share) e bolela ho nka feela seo u se hlokang le ho khutlisetsa se setseng (surplus) — lipeo, lijo, metsi, tsebo — morao ka har'a tsamaiso.\n\nTseena hase mehopolo feela e sa tšoareheng. Molemi ea rekisang lehe le meroho e meng le e meng empa a sa siele tafole ea lelapa letho o tlola Tlhokomelo ea Batho. Sechaba se teratang sediba se arolelanoang se tlola Karolelano e Lokileng.\n\nMelao ea boitshwaro e bohlokoa hobane e u thusa ho etsa liqeto ha ho se na buka ea melao — moahelani ea kopang ho fula likhomo ka mor'a komello, kapa moroallo o senyang li-swale tsa hao. Harelletsa tsena tse tharo tseleng eo u nahanang ka eona pele u haha eng kapa eng fatše.",
       ),
       keyPoints: [
         pair(

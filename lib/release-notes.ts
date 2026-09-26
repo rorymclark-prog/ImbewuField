@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '9fad460', changes: [
+    'Sesotho ethics lesson keeps its explanation in English for review.',
+  ], tour: [
+    { title: 'Check the three ethics lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1; the three-paragraph ethics explanation is held in English beside the unreviewed draft fields.' },
+  ] },
   { when: '26 September 2026', sha: '436b4055', changes: [
     'Sesotho Water Harvesting keeps ambiguous level-contour wording in English for review.',
     'Sesotho Student labels now show a review notice on the welcome card.',
