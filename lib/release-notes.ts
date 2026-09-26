@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'a46473ba', changes: [
+    'Farm Finance course titles, lessons and worksheet questions now have isiZulu drafts; assignment due dates show month names in your language.',
+  ] },
   { when: '26 September 2026', sha: 'df531de7', changes: [
     'The old unused site-password page is gone; sign-in is the only way in.',
   ] },
