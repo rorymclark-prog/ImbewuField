@@ -5,13 +5,14 @@
 - Language: Sesotho (`st`); intended initial audience includes QwaQwa / Maluti-a-Phofung.
 - Scope: one Foundation module, `intro-permaculture`, with three lessons and the module title/description.
 - Drafted with Agy `gemini-3.8-flash-low` in non-interactive print mode; independent content spot review by Agy `gemini-3.1-pro-low`.
-- This is machine draft material. No fluent Sesotho speaker or local farming reviewer has approved it. Learner wiring follows in a separate PR and must retain a visible draft label and the exact English source.
+- This is machine draft material. No fluent Sesotho speaker or local farming reviewer has approved it. The lesson is learner-visible with a draft label and exact English source; held fields render in English.
 - Exact English source, Sesotho candidate, and copied answer indexes are stored as paired records in `lib/course-translation-drafts-st.ts`.
 - No narration or audio is included.
 
 ## Holds and review notes
 
-- **Publication hold:** all strings remain machine drafts pending fluent Sesotho and local farming review.
+- **Intro L1 body hold:** all three paragraphs now render as exact English. An independent Agy Pro Low check of the existing live Sesotho candidate found material meaning and grammar problems in each paragraph: `lisebelisoa` suggested tools rather than resources, cattle grazing was expressed without the farmer's causative action, and the closing instruction said to bundle rather than build the ethics into decisions. Its “living systems” and swale terms also need local reviewer attention. The candidate text retained below is historical review material, not current learner wording.
+- **Publication status:** remaining translated fields are unreviewed machine drafts pending fluent Sesotho and local farming review.
 - The first Flash Low candidate for Lesson 1 quiz question 1 repeated wording around “composting”. It was discarded. A narrowly scoped Flash Low revision removes the repetition and keeps `(maize)` as an exact source-name check; Pro Low rechecked this field against the English meaning.
 - Pro Low’s complete spot review of the current module candidate reported matching source meaning, preserved answer indexes, no number/species findings and no non-Latin script. This is AI review only, not linguistic or agricultural approval.
 
@@ -419,6 +420,16 @@ Option 3
 **Sesotho AI draft rationale:**
 
 > Kopanyo e etsa hore karolo ka 'ngoe e sebeletse baahisani ba eona — mona, likhoho li hloekisa likokoanyana 'me li eketsa menontsha ho e-na le ho lula feela ka lesakeng le sa sisinyeheng. Manyolo a macha a ka jara likokoana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele lijalo tse jeoang li khutla.
+
+### Fields held in English after the 26 September audit
+
+Agy Gemini 3.8 Flash Low and an independent Agy Gemini 3.1 Pro Low check found material scope and safety ambiguities. The learner now sees the exact English source for these fields; their Sesotho candidates remain in this packet for review only:
+
+- `intro-permaculture-l2.body`: the bucket example changes one garden bed (`bed`) to a whole garden (`jarete`), implying a larger watering area. The body also renders “apply them hard” as `u e sebelise ka thata`, which may mean applying the principles with difficulty or harshly.
+- `intro-permaculture-l2.quiz[0].rationale`: `mothinya oa lefatše` means a curve or bend and does not clearly say land slope. The rationale is shown in English before anyone uses it to assess a site for swales.
+- `intro-permaculture-l2.quiz[1].options[1]`: the keyed correct option changes “one empty bed” after harvest to “an empty garden”. The English option preserves the intended limited area for chickens and keeps the crop-safety sequence clear.
+
+The question, remaining answer options, key points and Quiz 2 rationale remain source-paired machine drafts. This model-to-model audit is not fluent Sesotho, learner, practitioner or local-farming approval.
 
 ## Lesson 3: `intro-permaculture-l3`
 

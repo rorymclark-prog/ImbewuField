@@ -1,4 +1,4 @@
-/** Unpublished, source-paired Sesotho course draft. This file is review data only. */
+/** Source-paired Sesotho review draft; selected fields are learner-visible with English source. */
 export type SesothoDraftReviewStatus = 'machine-draft' | 'hold';
 
 export interface SesothoSourcePair {
@@ -40,6 +40,12 @@ const pair = (sourceEnglish: string, sesothoDraft: string): SesothoSourcePair =>
   reviewStatus: 'machine-draft',
 });
 
+const hold = (sourceEnglish: string): SesothoSourcePair => ({
+  sourceEnglish,
+  sesothoDraft: sourceEnglish,
+  reviewStatus: 'hold',
+});
+
 export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
   id: "intro-permaculture",
   language: 'st',
@@ -67,9 +73,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "The Three Ethics: Earth Care, People Care, Fair Share",
         "Melao e Meraro ya Boitshwaro: Tlhokomelo ya Lefatshe, Tlhokomelo ya Batho, Karolelano e Lokileng",
       ),
-      body: pair(
+      body: hold(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "Permaculture e ipapisitse le melao e meraro ya boitshwaro. Tlhokomelo ya Lefatshe (Earth Care) e bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng disebediswa tse lokelang ho feletswa. Tlhokomelo ya Batho (People Care) e bolela hore ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno. Karolelano e Lokileng (Fair Share) e bolela ho nka feela seo o se hlokang le ho kgutlisetsa se setseng (surplus) — dipeo, dijo, metsi, tsebo — morao ka hara tsamaiso.\n\nTsena hase mehopolo feela e sa tshwareheng. Molemi ya rekisang lehe le meroho e meng le e meng empa a sa siele tafole ya lelapa letho o tlola Tlhokomelo ya Batho. Setjhaba se teratang sediba se arolelanwang se tlola Karolelano e Lokileng.\n\nMelao ya boitshwaro e bohlokwa hobane e o thusa ho etsa diqeto ha ho se na buka ya melao — moahelani ya kopang ho fula dikgomo ka mora komello, kapa morwallo o senyang mekero (swales) ya hao. Harelletsa tsena tse tharo tseleng eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
       ),
       keyPoints: [
         pair(
@@ -160,9 +165,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "Twelve Principles: Designing with Nature",
         "Melao-motheo e Leshome le Metso e Mmedi: Ho Rala le Tlhaho",
       ),
-      body: pair(
+      body: hold(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "David Holmgren o ile a hlahisa melao-motheo ya moralo e leshome le metso e mmedi ho Essence of Permaculture. Bill Mollison le David Holmgren ba qadile kgopolo ya permaculture hammoho. Dintlha tse tharo tse sebetsang tsa ho qala bakeng sa thuto ena ke: sheba mme o sebedisane (observe and interact) — shebella mobu wa hao nakong ya sehla se feletseng pele o etsa mesebetsi e meholo ya mobu; tshwara le ho boloka matla (catch and store energy) — hlokomela pula, letsatsi le biomass pele di tloha setsheng sa hao; le ho sebedisa mathoko le ho ananela tse ka thoko (use edges and value the marginal) — mohala wa terata kapa mothinya o pela tselana e ka ba sebaka se loketseng sa ho shebella.\n\nTse ding tse lokelang ho tsejwa: o se ke wa hlahisa ditshila (produce no waste — masalla a fetoha kompose, kompose e fetoha mobu), sebedisa ditharollo tse nyane le tse diehang (use small and slow solutions — emere e ka nosetsa jarete ntle le motlakase), le ho sebedisa le ho ananela mefuta-futa (use and value diversity). Tshenyo ya sefako hodima poone (maize) e itshetlehile ka sefefo le boemo ba kgolo ya dijalo.\n\nKgetha melao-motheo e mmedi kapa e meraro e buang le bothata ba hao bo boholo ka ho fetisisa mme o e sebedise ka thata. Tse ding di tla hlaka ha o ntse o tswela pele.",
       ),
       keyPoints: [
         pair(
@@ -207,9 +211,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair(
+          rationale: hold(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Sehla sa dipula se bontsha ho fetang sefefo se le seng, empa tlhokomelo ke mohato wa pele feela. Hlahloba mobu, letswapo (slope), drainage le tsela e bolokehileng ya metsi a phallang ho feta tekano le moeletsi ya kwetlisitsweng wa lehae pele o tjheka.",
           ),
         },
         {
@@ -222,9 +225,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
               "Chickens penned far from the garden",
               "Dikgoho tse kwaletsweng hole le serapa",
             ),
-            pair(
+            hold(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Serapa, difate tsa ditholwana le lesaka la dikgoho (chicken run) tse hlophisitsweng e le hore dikgoho di sebedise jarete e se nang letho ka mora kotulo, ebe molemi o hlahloba tsamaiso e bolokehileng pele dijalo tse jewang di kgutla",
             ),
             pair(
               "Separate paddocks for each crop",

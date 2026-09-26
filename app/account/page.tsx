@@ -9,6 +9,7 @@ import AccountAccess from '@/components/AccountAccess';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
+import { resizeFileForUpload } from '@/lib/site-evidence';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
@@ -88,9 +89,8 @@ export default function AccountPage() {
   async function handleSignOut() {
     setSigningOut(true);
     await signOutUser();
-    // /gate is the old site-wide password wall, disabled in middleware — sending a
-    // signed-out user there dead-ends them. /login is the real Firebase auth entry
-    // (and is already what this page uses for the unauthenticated redirect above).
+    // /login is the real Firebase auth entry (and is already what this page uses for
+    // the unauthenticated redirect above). The old /gate password wall is deleted.
     router.push('/login');
   }
 
@@ -113,7 +113,7 @@ export default function AccountPage() {
     if (!file) return;
     setPhotoUploading(true);
     try {
-      const url = await uploadPhoto(file, 'avatars');
+      const url = await uploadPhoto(await resizeFileForUpload(file), 'avatars');
       if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
     } finally {
       setPhotoUploading(false);

@@ -42,6 +42,92 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'df531de7', changes: [
+    'The old unused site-password page is gone; sign-in is the only way in.',
+  ] },
+  { when: '26 September 2026', sha: '5dfc19f5', changes: [
+    'Profile photos are made smaller before upload, so they send faster on slow signal.',
+    'Simple view hides the staff-only readiness badge, video quality picker and Calendar link.',
+    'The remove buttons on evidence photos and documents are easier to tap.',
+  ], tour: [
+    { title: 'Change your profile photo', where: 'Account → Profile photo', href: '/account',
+      detail: 'Pick a large phone photo; it uploads as a smaller copy.' },
+  ] },
+  { when: '26 September 2026', sha: '4bda1cd6', changes: [
+    'Sesotho Study marks the Market lesson picture description in Sesotho.',
+  ], tour: [
+    { title: 'Check the Market picture description', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked picture description with its English source.' },
+  ] },
+  { when: '26 September 2026', sha: '4ed38dcb', changes: [
+    'Tshivenda learners can compare selling costs and losses in a marked Market lesson draft.',
+  ], tour: [
+    { title: 'Check the Tshivenda selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; compare the marked cost-and-loss point with its English source. Other lesson guidance remains in English.' },
+  ] },
+  { when: '26 September 2026', sha: '1fd3f582', changes: [
+    'Sale labels now show draft isiZulu beside the exact English source.',
+  ], tour: [
+    { title: 'Check the draft sale labels', where: 'Records → Sold', href: '/records',
+      detail: 'Choose isiZulu, open Sold and compare each proposed label with its English source.' },
+  ] },
+  { when: '26 September 2026', sha: '7425ed0f', changes: [
+    'Sesotho learners can read a marked draft about comparing selling costs and losses.',
+  ], tour: [
+    { title: 'Check the selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; compare its cost-and-loss key point with the English source. Other lesson guidance remains in English.' },
+  ] },
+  { when: '26 September 2026', sha: '66d3c94b', changes: [
+    'Sesotho drafts now explain Market surplus and household food records.',
+  ], tour: [
+    { title: 'Check the Market Gardening draft', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked module description and household food-record sentence with their English source.' },
+  ] },
+  { when: '26 September 2026', sha: '9186ec9', changes: [
+    'Sesotho Introduction lesson 2 keeps unclear swale and bed wording in English.',
+  ], tour: [
+    { title: 'Check the principles lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; the explanation, slope rationale and chicken-bed answer stay in English for review.' },
+  ] },
+  { when: '26 September 2026', sha: 'fa7843ab', changes: [
+    'Tshivenda Food Forest habitat wording stays in English for review.',
+  ], tour: [
+    { title: 'Check the food forest lesson', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; the heading is marked as a machine draft, while the body and quizzes remain in English.' },
+  ] },
+  { when: '26 September 2026', sha: '9fad460', changes: [
+    'Sesotho ethics lesson keeps its explanation in English for review.',
+  ], tour: [
+    { title: 'Check the three ethics lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1; the three-paragraph ethics explanation is held in English beside the unreviewed draft fields.' },
+  ] },
+  { when: '26 September 2026', sha: '436b4055', changes: [
+    'Sesotho Water Harvesting keeps ambiguous level-contour wording in English for review.',
+    'Sesotho Student labels now show a review notice on the welcome card.',
+  ], tour: [
+    { title: 'Check the swale lesson', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1; the diagram description, contour guidance and paired quiz wording remain in English.' },
+    { title: 'Check the Sesotho welcome card', where: 'Welcome', href: '/home',
+      detail: 'Choose Sesotho and compare the marked welcome labels with their English source.' },
+  ] },
+  { when: '26 September 2026', sha: '7180296e', changes: [
+    'Soil Health keeps compost guidance in English for Sesotho review.',
+  ], tour: [
+    { title: 'Check the compost lesson', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; its compost guidance remains in English for review.' },
+  ] },
+  { when: '26 September 2026', sha: '719f440b', changes: [
+    'Tshivenda Introduction keeps uncertain advice and the wet-season minimum in English.',
+    'Tshivenda Food Forest and Sesotho Bees add marked draft text beside English.',
+    'These lessons still use English slides and narration.',
+  ], tour: [
+    { title: 'Compare the Introduction wording', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; uncertain wording remains in English.' },
+    { title: 'Compare the Food Forest draft', where: 'Study → Food Forest', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2 to compare the heading and habitat sentence with English.' },
+    { title: 'Compare the Bees draft', where: 'Study → Small Livestock', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2 to compare the heading and pollen sentence with English.' },
+  ] },
   { when: '26 September 2026', sha: '89d44f5f', changes: [
     'Settings marks languages that are still partly shown in English.',
     'Design Studio buttons and the element list use clear icons instead of emoji.',

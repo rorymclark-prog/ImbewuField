@@ -22,7 +22,9 @@ test('the Tshivenda Introduction draft stays paired to the English Study source'
     if (pair.reviewStatus === 'hold') assert.equal(pair.tshivendaDraft, english, `${path}: held text must remain exact English`);
     assert.deepEqual(placeholders(pair.tshivendaDraft), placeholders(english), `${path}: placeholders must be preserved`);
     assert.deepEqual(digitTokens(pair.tshivendaDraft), digitTokens(english), `${path}: numeric figures must be preserved`);
-    if (/\bmaize\b/i.test(english)) assert.match(pair.tshivendaDraft, /\(maize\)/i, `${path}: retain source crop identity`);
+    if (/\bmaize\b/i.test(english) && pair.reviewStatus === 'machine-draft') {
+      assert.match(pair.tshivendaDraft, /\(maize\)/i, `${path}: retain source crop identity in translated text`);
+    }
   };
 
   checkPair(draft.title, source.title, 'module.title');

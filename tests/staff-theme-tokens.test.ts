@@ -89,7 +89,7 @@ for (const file of FILES) {
         ? `Found hard-coded hex colour(s) that bypass the theme system:\n` +
           offenders.map((o) => `  line ${o.line}: ${o.hex}  —  ${o.text}`).join('\n') +
           `\nRoute these through the matching var(--...) token instead (see app/globals.css / ` +
-          `app/gate/page.tsx), or add a justified entry to ALLOWED_HEX in this test.`
+          `app/login/page.tsx), or add a justified entry to ALLOWED_HEX in this test.`
         : undefined,
     );
   });

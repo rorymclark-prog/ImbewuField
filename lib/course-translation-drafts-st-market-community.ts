@@ -1,4 +1,4 @@
-/** Unreviewed, source-paired Sesotho learner draft for the first Market lesson. */
+/** Unreviewed, source-paired Sesotho learner draft for selected Market lesson fields. */
 import type { SesothoCourseModuleDraft, SesothoSourcePair } from './course-translation-drafts-st.ts';
 
 const machineDraft = (sourceEnglish: string, sesothoDraft: string): SesothoSourcePair => ({
@@ -19,7 +19,10 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'business' },
   title: machineDraft('Market Gardening & Community', 'Temo ya Marakeng le Setjhaba'),
-  description: hold('Record-keeping, selling surplus and building local food networks.'),
+  description: machineDraft(
+    'Record-keeping, selling surplus and building local food networks.',
+    'Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.',
+  ),
   lessons: [
     {
       id: 'market-community-l1',
@@ -31,8 +34,8 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         'Record-Keeping: Knowing What Your Farm Is Actually Producing',
         'Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang',
       ),
-      // Paragraphs 1–4 and 7–8 are proposed. Paragraph 5–6 and 9–17 stay in English
-      // because the unit wording and downstream yield, finance, and timing claims need review.
+      // Paragraphs 1–4, 7–8 and 11 are proposed. Ambiguous units and downstream
+      // yield, cost, pricing and timing claims stay in English for review.
       body: machineDraft(
         [
           'A harvest can feed the household, be sold, be shared, or be lost.',
@@ -64,7 +67,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           'Sehla se le seng sa direkoto se araba dipotso tse sebetsang.',
           'Which crops give the best yield per bed? Which return the most for each hour of work?',
           'Which crops use more seeds, water, and compost than they return?',
-          'The record also shows which months leave the household buying food.',
+          'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.',
           'Before setting a price, record production, packing and selling costs, including labour and transport.',
           'Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.',
           'Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.',
@@ -104,6 +107,61 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           ],
           sourceCorrectIndex: 1,
           rationale: hold('Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.'),
+        },
+      ],
+    },
+    {
+      id: 'market-community-l2',
+      infographicAlt: machineDraft(
+        'Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.',
+        'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.',
+      ),
+      title: hold('Selling Surplus: Where to Sell and How to Price'),
+      body: hold([
+        'Ask what the customer needs: product, quantity, quality, delivery and payment date.',
+        'Compare market fees, transport, packing and unsold produce as well as the selling price.',
+        'Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.',
+        'Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.',
+        'A box scheme supplies a regular selection to agreed customers.',
+        'Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.',
+        'Start from what you can reliably supply and what customers want.',
+        'Check the costs and household food needs before promising regular boxes.',
+        'Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.',
+        'If production changes from week to week, avoid promising a fixed delivery you cannot supply.',
+        'Offer the surplus you have and agree clear terms with customers.',
+        'Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.',
+      ].join('\n\n')),
+      keyPoints: [
+        hold('Agree product, quantity, quality, delivery and payment'),
+        machineDraft(
+          'Compare costs and losses as well as selling price',
+          'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso',
+        ),
+        hold('Promise regular boxes only when supply and customer terms support them'),
+        hold('Check market rules and describe growing practices honestly'),
+      ],
+      quiz: [
+        {
+          question: hold('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?'),
+          options: [
+            hold('A formal market stall needing consistent weekly supply'),
+            hold('A box scheme needing the same produce weekly'),
+            hold('An informal market or neighbour sales with no fixed commitment'),
+            hold('A daily-delivery school contract'),
+          ],
+          sourceCorrectIndex: 2,
+          rationale: hold("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has."),
+        },
+        {
+          question: hold('How can agreed regular orders help a grower plan?'),
+          options: [
+            hold('Box customers always pay more per kilogram'),
+            hold('Box schemes let you charge extra for packaging'),
+            hold('Committed subscription income lets you plan production around real demand instead of growing speculatively'),
+            hold('Box schemes avoid tax obligations'),
+          ],
+          sourceCorrectIndex: 2,
+          rationale: hold('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.'),
         },
       ],
     },

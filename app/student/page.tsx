@@ -45,7 +45,7 @@ import {
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
-import { useAppLevel } from '@/lib/app-level';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -217,6 +217,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const lessonContent = presentation.content;
   const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+    lessonContent.infographicAlt !== lesson.infographicAlt
+    ? lessonContent.infographicAlt
+    : undefined;
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -320,6 +324,13 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
+              {infographicAltDraft && (
+                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                  <p lang={lang} className="text-sm">{infographicAltDraft}</p>
+                  <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
+                </div>
+              )}
             </div>
           )}
 
@@ -717,6 +728,10 @@ export default function StudentPage() {
 
   const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
   const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
+  // Content-QA info, not a farmer or student decision — truly staff-only (mentor/ngo/funder/
+  // admin), unlike the Simple/All tools items above. Gated on both: staff still lose it if they
+  // themselves choose Simple, but a student's own default of All tools must never surface it.
+  const isStaff = isStaffRole(gatingCtx.role);
 
   const submissionByModule = useMemo(() => {
     const m = new Map<string, CourseSubmission>();
@@ -1111,7 +1126,7 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      {!simple && (
+                      {!simple && isStaff && (
                         <span
                           title={readinessTitle}
                           className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"

@@ -1,4 +1,4 @@
-/** Unreviewed, source-paired Tshivenda Food Forest L1 learner draft. */
+/** Unreviewed, source-paired Tshivenda Food Forest L1–L2 learner drafts. */
 import type { TshivendaCourseModuleDraft, TshivendaSourcePair } from './course-translation-drafts-ve.ts';
 
 const pair = (sourceEnglish: string, tshivendaDraft: string, reviewStatus: TshivendaSourcePair['reviewStatus'] = 'machine-draft'): TshivendaSourcePair => ({
@@ -86,6 +86,61 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
         ],
         sourceCorrectIndex: 1,
         rationale: hold('Shade and suitable mulch can reduce surface evaporation. Plant water demand and establishment needs still require attention.'),
+      },
+    ],
+  }, {
+    id: 'food-forest-l2',
+    infographicAlt: hold(
+      'A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.',
+    ),
+    title: pair(
+      'Species Selection for South African Food Forests',
+      'U Nanga Lushaka lwa Zwimela zwa Daka ḽa Zwiḽiwa ḽa Afrika Tshipembe',
+    ),
+    body: hold(
+      [
+        'Check local rainfall, frost, heat, soil and water availability before choosing plants.',
+        'Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.',
+        'A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.',
+        'The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.',
+        'This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.',
+        'Keep existing legal and project restrictions in force. Do not plant from a picture alone.',
+        'The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.',
+        'Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.',
+        'Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.',
+        'Locally appropriate indigenous plants can support habitat as part of the design.',
+        'Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.',
+        'Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.',
+      ].join('\n\n'),
+    ),
+    keyPoints: [
+      hold('Match each plant and variety to the actual site'),
+      hold('Check identity, safe use and current local restrictions'),
+      hold('A regional example is not approval for every species on its list'),
+      hold('Use locally appropriate indigenous plants and protect existing natural habitat'),
+    ],
+    quiz: [
+      {
+        question: hold('A grower wants to plant a young mango where hard frost occurs. What risk needs attention?'),
+        options: [
+          hold('It thrives — the position offsets frost'),
+          hold('It fruits early from the temperature swings'),
+          hold("It's likely killed or badly damaged by frost, especially as a young tree"),
+          hold('It survives with heavy mulch but needs annual replacement'),
+        ],
+        sourceCorrectIndex: 2,
+        rationale: hold('Young mango can be damaged by frost. Check actual site conditions and reliable local guidance rather than assuming a sheltered spot removes the risk.'),
+      },
+      {
+        question: hold('Why include locally appropriate indigenous plants in a design?'),
+        options: [
+          hold('They always yield more food per square metre'),
+          hold('They can support local habitat, pollinators and other wildlife'),
+          hold('Every introduced species is illegal'),
+          hold('They never need establishment care'),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: hold('Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.'),
       },
     ],
   }],

@@ -26,14 +26,15 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
   const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   const placeholders = (text: string) => text.match(/\{[^{}]+\}/g) ?? [];
-  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string) => {
+  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string, status: 'machine-draft' | 'hold' = 'machine-draft') => {
     assert.equal(pair.sourceEnglish, english, `${path}: paired English source must match course-modules.ts byte for byte`);
     assert.ok(pair.sesothoDraft.trim(), `${path}: machine draft must not omit this source field`);
-    assert.equal(pair.reviewStatus, 'machine-draft', `${path}: human review has not happened`);
+    assert.equal(pair.reviewStatus, status, `${path}: review state must match the field decision`);
+    if (status === 'hold') assert.equal(pair.sesothoDraft, english, `${path}: held guidance must remain exact English`);
     assert.doesNotMatch(pair.sesothoDraft, nonLatin, `${path}: draft must remain Latin script`);
     assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: placeholders must be preserved`);
     assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: numeric figures must be preserved`);
-    if (/\bmaize\b/i.test(english)) {
+    if (status === 'machine-draft' && /\bmaize\b/i.test(english)) {
       assert.match(pair.sesothoDraft, /\(maize\)/i, `${path}: keep the exact crop name beside its Sesotho rendering`);
     }
   };
@@ -53,7 +54,8 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image alt text`);
     }
     checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`);
+    checkPair(lesson.body, original.body, `${path}.body`,
+      ['intro-permaculture-l1', 'intro-permaculture-l2'].includes(original.id) ? 'hold' : 'machine-draft');
     assert.equal(lesson.body.sourceEnglish.split('\n\n').length, lesson.body.sesothoDraft.split('\n\n').length,
       `${path}.body: paragraph structure must stay aligned for review`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
@@ -67,14 +69,59 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       checkPair(question.question, english.q, `${questionPath}.question`);
       assert.equal(question.options.length, english.options.length, `${questionPath}: option count/order must match`);
       for (const [optionIndex, option] of question.options.entries()) {
-        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`);
+        const holdUnsafeL2Bed = original.id === 'intro-permaculture-l2' && questionIndex === 1 && optionIndex === 1;
+        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`,
+          holdUnsafeL2Bed ? 'hold' : 'machine-draft');
       }
       assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must remain unchanged`);
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
         `${questionPath}: correct answer must still point to the exact English correct option`);
-      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
+      const holdUnsafeL2Slope = original.id === 'intro-permaculture-l2' && questionIndex === 0;
+      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`,
+        holdUnsafeL2Slope ? 'hold' : 'machine-draft');
     }
   }
+});
+
+test('a Sesotho learner sees exact English for the held ethics body', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')?.lessons[0];
+  assert.ok(source);
+  const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons[0];
+  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.sesothoDraft, source.body);
+  const presentation = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, source.body);
+  assert.notEqual(presentation.content.title, source.title);
+});
+
+test('Sesotho Introduction L2 holds unclear bed scale and slope wording in English for learners', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture');
+  assert.ok(sourceModule);
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l2');
+  assert.ok(source);
+  const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(draft);
+
+  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.sesothoDraft, source.body);
+  assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
+  assert.equal(draft.quiz[0].rationale.sourceEnglish, source.quiz[0].rationale);
+  assert.equal(draft.quiz[0].rationale.sesothoDraft, source.quiz[0].rationale);
+  assert.equal(draft.quiz[1].options[1].reviewStatus, 'hold');
+  assert.equal(draft.quiz[1].options[1].sourceEnglish, source.quiz[1].options[1]);
+  assert.equal(draft.quiz[1].options[1].sesothoDraft, source.quiz[1].options[1]);
+  assert.equal(draft.quiz[1].sourceCorrectIndex, source.quiz[1].correct);
+
+  const presentation = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, source.body);
+  assert.equal(presentation.content.quiz[0].rationale, source.quiz[0].rationale);
+  assert.equal(presentation.content.quiz[1].options[source.quiz[1].correct], source.quiz[1].options[source.quiz[1].correct]);
+  assert.equal(presentation.content.quiz[1].correct, source.quiz[1].correct);
+  assert.notEqual(presentation.content.title, source.title);
 });
 
 test('Sesotho seed labels cannot change seed-saving instructions or quiz answers before review', () => {
@@ -139,9 +186,10 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   assert.deepEqual(draft.sourceMetadata, { durationMins: sourceModule.durationMins, category: sourceModule.category });
   assert.equal(draft.title.sourceEnglish, sourceModule.title);
   assert.equal(draft.description.sourceEnglish, sourceModule.description);
-  assert.equal(draft.description.sesothoDraft, sourceModule.description);
-  assert.equal(draft.description.reviewStatus, 'hold');
-  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1']);
+  assert.equal(draft.description.sesothoDraft,
+    'Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.');
+  assert.equal(draft.description.reviewStatus, 'machine-draft');
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1', 'market-community-l2']);
 
   const lesson = draft.lessons[0];
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
@@ -150,12 +198,14 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  for (const index of [4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16]) {
+  for (const index of [4, 5, 8, 9, 11, 12, 13, 14, 15, 16]) {
     assert.equal(draftParagraphs[index], sourceParagraphs[index], `held source paragraph ${index + 1} must remain exact English`);
   }
-  for (const index of [0, 1, 2, 3, 6, 7]) {
+  for (const index of [0, 1, 2, 3, 6, 7, 10]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
   }
+  assert.equal(draftParagraphs[10],
+    'Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.');
 
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
   assert.deepEqual(lesson.keyPoints.slice(1).map(point => [point.sesothoDraft, point.reviewStatus]),
@@ -178,7 +228,7 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const modulePresentation = resolveCourseModulePresentation(sourceModule, 'st');
   assert.equal(modulePresentation.status, 'draft');
   assert.equal(modulePresentation.title, draft.title.sesothoDraft);
-  assert.equal(modulePresentation.description, sourceModule.description);
+  assert.equal(modulePresentation.description, draft.description.sesothoDraft);
 
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
   assert.equal(presentation.status, 'draft');
@@ -190,4 +240,51 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
   assert.equal(stalePresentation.status, 'english-fallback', 'changed English source must withdraw a stale review draft');
   assert.equal(stalePresentation.content.body, changedSource.body);
+});
+
+test('Sesotho Market L2 shows the cost comparison draft while held selling advice stays English', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
+  assert.ok(sourceLesson);
+  const lesson = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === sourceLesson.id);
+  assert.ok(lesson);
+
+  assert.equal(lesson.body.reviewStatus, 'hold');
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
+  assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
+  assert.equal(lesson.infographicAlt?.sesothoDraft,
+    'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.');
+  assert.equal(lesson.title.reviewStatus, 'hold');
+  assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+  assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.equal(lesson.keyPoints[1].sesothoDraft, 'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso');
+  for (const index of [0, 2, 3]) {
+    assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
+    assert.equal(lesson.keyPoints[index].sesothoDraft, sourceLesson.keyPoints[index]);
+  }
+
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].sesothoDraft);
+  assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
+  assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.infographicAlt, lesson.infographicAlt?.sesothoDraft);
+  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+
+  const changedSource = {
+    ...sourceLesson,
+    keyPoints: sourceLesson.keyPoints.map((point, index) => index === 1 ? `${point} ` : point),
+  };
+  const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
+  assert.equal(stalePresentation.status, 'english-fallback');
+  assert.deepEqual(stalePresentation.content.keyPoints, changedSource.keyPoints);
+
+  const changedAltSource = { ...sourceLesson, infographicAlt: `${sourceLesson.infographicAlt} ` };
+  const staleAltPresentation = resolveLearnerLessonPresentation(changedAltSource, 'st');
+  assert.equal(staleAltPresentation.status, 'english-fallback');
+  assert.equal(staleAltPresentation.content.infographicAlt, changedAltSource.infographicAlt);
 });

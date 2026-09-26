@@ -1,4 +1,4 @@
-/** Unpublished, source-paired Tshivenda course draft. This file is review data only. */
+/** Source-paired Tshivenda machine draft. The learner UI shows it with its exact English source. */
 export type TshivendaDraftReviewStatus = 'machine-draft' | 'hold';
 
 export interface TshivendaSourcePair {
@@ -166,9 +166,8 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         "Twelve Principles: Designing with Nature",
         "Maitele a Fumi na Mavhili: U Fhaṱa na Mupo",
       ),
-      body: pair(
+      body: hold(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "David Holmgren o vhea maitele a fumi na mavhili a mufhaṱo kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Zwiṅwe zwipiḓa zwiraru zwi no vhulunga mushumo zwa u thoma kha iyi ngudo ndi: sedzani nahone ni shumisane (observe and interact) — sedzani mavu aṋu kha tshifhinga tshoṱhe tsha khalaṅwaha musi ni sa athu ita mishumo mihulwane ya mavu; farani nahone ni vhulunge maanḓa (catch and store energy) — ṱhogomelani mvula, ḓuvha na biomass musi zwi sa athu bva tshitentsini tshaṋu; nahone shumisani magumo nahone ni dzhiele nṱha zwitoko zwa thungo (use edges and value the marginal) — muvhedzi wa lufhenḓe kana dindi tsini ha bando zwi nga vha fhethu hu no vhuedza ha u sedza.\n\nZwiṅwe zwine zwa fanela u ḓivhiwa: ni songo bveledza malaṱwa (produce no waste — masalela a vha khomposo, khomposo ya vha mavu), shumisani thandululo ṱhukhu na dzi no ya nga zwiṱuku (use small and slow solutions — bakiti ḽi nga sheledza ndima hu si na muḓagasi), nahone shumisani na u dzhiela nṱha u fhambana ha zwimela (use and value diversity). Tshenyo ya tshifhango kha mavhele (maize) i bva kha dumbu na vhuimo ha u aluwa ha zwimela.\n\nNangani maitele mavhili kana mararu ane a amba na thaidzo yaṋu khulwanesa nahone ni a shumise nga maanḓa. Zwo salaho zwi ḓo ḓi-vhonadza musi ni tshi khou bvela phanḓa.",
       ),
       keyPoints: [
         pair(
@@ -199,9 +198,8 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
               "Dig immediately after the first good rain",
               "Bwani nga u ṱavhanya nga murahu ha mvula ya u ranga yavhuḓi",
             ),
-            pair(
+            hold(
               "Watch where water flows and pools across at least one wet season",
-              "Sedzani he maḓi a elela hone na he a kuvhangana hone lwa khalaṅwaha nthihi ya mvula",
             ),
             pair(
               "Copy a neighbour's swale layout",

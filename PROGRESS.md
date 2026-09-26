@@ -29,7 +29,7 @@ must provision — not buildable from code alone).
 ### What's live
 - **Auth** — email/password + Google sign-in + password reset + change-password +
   profile photo. Firebase env is set in the Vercel project; Auth authorized domains
-  include the vercel.app domains + localhost. (Site gate via `SITE_PASSWORD` env.)
+  include the vercel.app domains + localhost. (The old `SITE_PASSWORD` site gate was deleted 2026-09-26.)
 - **Roles** — five: farmer · mentor · student · ngo · funder (+admin). Mentor merges
   the old supervisor + trainer. Task-first home; roles behind a quiet "Dashboards" link.
 - **Map** (`/farmer`) — search/analyse, draw land boundary + water storage (reticle
@@ -89,6 +89,31 @@ must provision — not buildable from code alone).
   - Confirm that the ACT (2014) "used with permission" and the UNDP/RVCC origin cover an app
     edition.
   - Check the "not found as listed" NEMBA rows against the gazette PDF (the proxy blocked it).
+### 2026-09-26 (gate deleted)
+- **Rory: "yes delete the gate".** Removed `app/gate/page.tsx`, `app/api/gate/route.ts` and
+  `tests/gate-guard.test.ts`; dropped `/gate` from ChatWidget's exclusions and `NO_FLOATING_BACK`,
+  and pointed the tests that anchored on it at `/login`. `middleware.ts` notes where to restore
+  it from git history. The optional `SITE_PASSWORD` env var is now unused (left in Vercel — not
+  touched from here).
+
+### 2026-09-26 (swarm wave 6 — lighter pages, less clutter, tap targets, API guard)
+- **Merged (four swarm PRs, one integration PR):** Perf (#668: profile photos on /account and
+  ProfileSheet go through `resizeFileForUpload` before upload; the lazy release-notes import,
+  weather cache and Portfolio next/link were already done). Clutter (#669: `isStaffRole` in
+  `lib/app-level-core.ts`; the Study readiness badge and the offline quality picker are staff-only
+  and hidden in Simple; /calendar left the Simple nav). Tap targets (#673: EvidenceSheet photo and
+  document remove buttons reach 44×44; the other four items were already fixed). API guard (#670).
+- **API guard finding:** the open map routes (contours, site-features, location-data) were
+  ALREADY rate-limited per IP by `guardPaidApiRequest` (data 20/hr anon, 300/hr signed in), and
+  the contour cache key already snaps to the DEM grid. The only real gap was `/api/gate`: it now
+  allows 10 attempts per 10 minutes per IP and compares with `crypto.timingSafeEqual`. Deleting
+  the unused gate was blocked by the session safeguard, so it was hardened instead —
+  `middleware.ts` routes nothing to /gate; deleting it is Rory's call.
+- **Not touched:** MyRecords produce photos still upload unresized (next wave).
+- **Farm Finance isiZulu track:** hit the session limit without pushing; relaunched, lands as 6b.
+- **Checks:** tsc clean; the four new tests plus student-simple, nav-simple-track, app-level,
+  nav-menu-links, test-registry/manifest and theme-token gates pass (53/53).
+- **Cost:** about $20 of Sonnet so far (including the failed first isiZulu run).
 
 ### 2026-09-26 (swarm wave 5 — audit leftovers: language honesty, icons, crop planner theme)
 - **Owner decisions (Rory, 26 Sep):** no extra sign-in — the public map data routes (contours,
@@ -638,6 +663,6 @@ passed; the walkthrough still found two bugs, both older than this branch.
 ---
 
 ## Auth / passwords (operational)
-- **Site gate:** controlled by the `SITE_PASSWORD` env var on Vercel (ask the owner for the value; not committed here).
+- **Site gate:** deleted 2026-09-26 (`/gate` + `/api/gate`). `SITE_PASSWORD` in Vercel is now unused and can be removed.
 - **Account auth:** Firebase email/password (enabled) + Google. To enable the Google button end-to-end, the owner enables **Google** as a sign-in provider in Firebase Console → Authentication → Sign-in method (email/password is already on; authorized domains are set).
 - **Env:** managed via GitHub repo secrets → pushed to the Vercel project by `.github/workflows/set-vercel-env.yml` (`gh workflow run set-vercel-env.yml`). Never commit `.env*`.
