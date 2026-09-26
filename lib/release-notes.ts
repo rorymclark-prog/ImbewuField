@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'b081886c', changes: [
+    'Sesotho Study shows a marked Record-Keeping draft beside its English source.',
+    'The price example, crop advice and quiz remain in English for review.',
+    'English answers held for review appear once in the quiz.',
+  ], tour: [
+    { title: 'Compare the Record-Keeping draft', where: 'Study', href: '/student',
+      detail: 'Choose Sesotho, then open Market Gardening lesson 1 to compare the draft and English.' },
+  ] },
   { when: '26 September 2026', sha: '8a9abb4e', changes: [
     'Garden Survey isiZulu pairs sun, tank and growing-space labels with English.',
     'Plan quantities and the English source recommendation stay unchanged.',

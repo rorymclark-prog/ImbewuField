@@ -133,7 +133,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
       <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
-      {englishSource && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
+      {englishSource && englishSource.q !== q && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -165,7 +165,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
             >
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
-              {englishSource && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
+              {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
@@ -183,7 +183,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
           <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
           <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
             <p>{rationale}</p>
-            {englishSource?.rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
+            {englishSource?.rationale && englishSource.rationale !== rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
           </div>
         </div>
       )}
@@ -351,7 +351,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>

@@ -4,6 +4,9 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
 import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-st-seeds-sovereignty.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 
 test('the Sesotho Foundation draft retains exact paired source and complete course content shape', () => {
   const source = COURSE_MODULES.find(module => module.id === SESOTHO_INTRO_PERMACULTURE_DRAFT.id);
@@ -122,4 +125,69 @@ test('Sesotho seed labels cannot change seed-saving instructions or quiz answers
       checkHold(question.rationale, originalQuestion.rationale);
     });
   }
+});
+
+test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance in English', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l1');
+  assert.ok(sourceLesson);
+  const draft = SESOTHO_MARKET_COMMUNITY_DRAFT;
+
+  assert.equal(draft.language, 'st');
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.deepEqual(draft.sourceMetadata, { durationMins: sourceModule.durationMins, category: sourceModule.category });
+  assert.equal(draft.title.sourceEnglish, sourceModule.title);
+  assert.equal(draft.description.sourceEnglish, sourceModule.description);
+  assert.equal(draft.description.sesothoDraft, sourceModule.description);
+  assert.equal(draft.description.reviewStatus, 'hold');
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1']);
+
+  const lesson = draft.lessons[0];
+  assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  const sourceParagraphs = sourceLesson.body.split('\n\n');
+  const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  for (const index of [4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16]) {
+    assert.equal(draftParagraphs[index], sourceParagraphs[index], `held source paragraph ${index + 1} must remain exact English`);
+  }
+  for (const index of [0, 1, 2, 3, 6, 7]) {
+    assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
+  }
+
+  assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+  assert.deepEqual(lesson.keyPoints.slice(1).map(point => [point.sesothoDraft, point.reviewStatus]),
+    sourceLesson.keyPoints.slice(1).map(point => [point, 'hold']));
+  assert.equal(lesson.quiz.length, sourceLesson.quiz.length);
+  lesson.quiz.forEach((question, questionIndex) => {
+    const original = sourceLesson.quiz[questionIndex];
+    assert.equal(question.sourceCorrectIndex, original.correct);
+    assert.equal(question.question.sesothoDraft, original.q);
+    assert.equal(question.question.reviewStatus, 'hold');
+    assert.equal(question.rationale.sesothoDraft, original.rationale);
+    assert.equal(question.options.length, original.options.length);
+    question.options.forEach((option, optionIndex) => {
+      assert.equal(option.sourceEnglish, original.options[optionIndex]);
+      assert.equal(option.sesothoDraft, original.options[optionIndex]);
+      assert.equal(option.reviewStatus, 'hold');
+    });
+  });
+
+  const modulePresentation = resolveCourseModulePresentation(sourceModule, 'st');
+  assert.equal(modulePresentation.status, 'draft');
+  assert.equal(modulePresentation.title, draft.title.sesothoDraft);
+  assert.equal(modulePresentation.description, sourceModule.description);
+
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, lesson.body.sesothoDraft);
+  assert.deepEqual(presentation.content.keyPoints.slice(1), sourceLesson.keyPoints.slice(1));
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+
+  const changedSource = { ...sourceLesson, body: `${sourceLesson.body} ` };
+  const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
+  assert.equal(stalePresentation.status, 'english-fallback', 'changed English source must withdraw a stale review draft');
+  assert.equal(stalePresentation.content.body, changedSource.body);
 });
