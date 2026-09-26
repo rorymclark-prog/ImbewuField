@@ -24,9 +24,9 @@ import { useSyncExternalStore } from 'react';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import type { UserRole } from '@/lib/db/types';
-import { defaultAppLevel, isAppLevel, type AppLevel } from '@/lib/app-level-core';
+import { defaultAppLevel, isAppLevel, isStaffRole, type AppLevel } from '@/lib/app-level-core';
 
-export { defaultAppLevel, type AppLevel };
+export { defaultAppLevel, isStaffRole, type AppLevel };
 
 export const APP_LEVEL_KEY = 'imbewu_app_level_v1';
 export const APP_LEVEL_EVENT = 'imbewu-app-level-changed';

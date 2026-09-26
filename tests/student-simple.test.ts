@@ -24,15 +24,23 @@ test('/student reads the Simple / All tools switch', () => {
   assert.match(STUDENT_SOURCE, /const simple = useAppLevel\(\) === 'simple';/);
 });
 
-test('Simple hides the production-readiness badge; All tools keeps it', () => {
+test('the readiness badge is truly staff-only: gated on Simple AND role, never shown to a farmer or student', () => {
+  // Content-QA info, not a Simple/All tools density choice — a student defaults to All tools
+  // (lib/app-level-core.ts), so gating on !simple alone would still show it to every student.
+  assert.match(STUDENT_SOURCE, /import \{ useAppLevel, isStaffRole \} from '@\/lib\/app-level';/);
+  assert.match(STUDENT_SOURCE, /const isStaff = isStaffRole\(gatingCtx\.role\);/);
   const badge = STUDENT_SOURCE.slice(STUDENT_SOURCE.indexOf('HOW FINISHED THIS MODULE IS'));
-  assert.match(badge, /\{!simple && \(/, 'the readiness badge must be gated on Simple');
-  assert.match(badge, /studentReadinessComplete/, 'the readiness label itself must still exist for All tools');
+  assert.match(badge, /\{!simple && isStaff && \(/, 'the readiness badge must be gated on Simple AND staff role');
+  assert.match(badge, /studentReadinessComplete/, 'the readiness label itself must still exist for staff in All tools');
 });
 
-test('Simple hides the OfflineDownload Standard/Higher quality picker; farmers still get Standard by default', () => {
+test('the OfflineDownload Standard/Higher quality picker is staff-only; farmers and students always get Standard silently', () => {
+  // Facilitator/funder tool, not a Simple/All tools density choice — a student or farmer who
+  // switches to All tools (or is a student defaulting to it) must still never see this picker.
   assert.match(OFFLINE_DOWNLOAD_SOURCE, /const simple = useAppLevel\(\) === 'simple';/);
-  assert.match(OFFLINE_DOWNLOAD_SOURCE, /hasHigher && !busy && phase !== 'done' && !simple && \(/);
+  assert.match(OFFLINE_DOWNLOAD_SOURCE, /import \{ useRoleNavigation \} from '@\/lib\/use-role-navigation';/);
+  assert.match(OFFLINE_DOWNLOAD_SOURCE, /const isStaff = isStaffRole\(navigationRole\);/);
+  assert.match(OFFLINE_DOWNLOAD_SOURCE, /hasHigher && !busy && phase !== 'done' && !simple && isStaff && \(/);
   assert.match(OFFLINE_DOWNLOAD_SOURCE, /useState<PackQuality>\('standard'\)/, 'quality must still default to standard');
 });
 

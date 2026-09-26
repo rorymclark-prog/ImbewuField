@@ -52,6 +52,25 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-26 (swarm wave 6 — lighter pages, less clutter, tap targets, API guard)
+- **Merged (four swarm PRs, one integration PR):** Perf (#668: profile photos on /account and
+  ProfileSheet go through `resizeFileForUpload` before upload; the lazy release-notes import,
+  weather cache and Portfolio next/link were already done). Clutter (#669: `isStaffRole` in
+  `lib/app-level-core.ts`; the Study readiness badge and the offline quality picker are staff-only
+  and hidden in Simple; /calendar left the Simple nav). Tap targets (#673: EvidenceSheet photo and
+  document remove buttons reach 44×44; the other four items were already fixed). API guard (#670).
+- **API guard finding:** the open map routes (contours, site-features, location-data) were
+  ALREADY rate-limited per IP by `guardPaidApiRequest` (data 20/hr anon, 300/hr signed in), and
+  the contour cache key already snaps to the DEM grid. The only real gap was `/api/gate`: it now
+  allows 10 attempts per 10 minutes per IP and compares with `crypto.timingSafeEqual`. Deleting
+  the unused gate was blocked by the session safeguard, so it was hardened instead —
+  `middleware.ts` routes nothing to /gate; deleting it is Rory's call.
+- **Not touched:** MyRecords produce photos still upload unresized (next wave).
+- **Farm Finance isiZulu track:** hit the session limit without pushing; relaunched, lands as 6b.
+- **Checks:** tsc clean; the four new tests plus student-simple, nav-simple-track, app-level,
+  nav-menu-links, test-registry/manifest and theme-token gates pass (53/53).
+- **Cost:** about $20 of Sonnet so far (including the failed first isiZulu run).
+
 ### 2026-09-26 (swarm wave 5 — audit leftovers: language honesty, icons, crop planner theme)
 - **Owner decisions (Rory, 26 Sep):** no extra sign-in — the public map data routes (contours,
   site-features, location-data) stay open behind their existing rate limits and REQUIRE_API_AUTH

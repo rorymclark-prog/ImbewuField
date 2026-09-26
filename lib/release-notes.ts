@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '5dfc19f5', changes: [
+    'Profile photos are made smaller before upload, so they send faster on slow signal.',
+    'Simple view hides the staff-only readiness badge, video quality picker and Calendar link.',
+    'The remove buttons on evidence photos and documents are easier to tap.',
+  ], tour: [
+    { title: 'Change your profile photo', where: 'Account → Profile photo', href: '/account',
+      detail: 'Pick a large phone photo; it uploads as a smaller copy.' },
+  ] },
   { when: '26 September 2026', sha: '4bda1cd6', changes: [
     'Sesotho Study marks the Market lesson picture description in Sesotho.',
   ], tour: [
