@@ -86,11 +86,14 @@ const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','
  *  valid BCP-47 primary subtags). Was hard-coded to MONTHS_EN for every language but isiZulu —
  *  a farmer reading Afrikaans, Sesotho or any of the other nine languages still saw English
  *  month names. Intl carries real CLDR data for several of these (zu, xh, af, st, nso, tn) and
- *  falls back to English for the others, which is the same fallback the old hard-coded table
+ *  falls back to English for the others (pinned explicitly below), which is the same fallback the old hard-coded table
  *  gave everyone except isiZulu — so this can only add coverage, never remove it. */
 function monthAbbrev(monthIndex: number, lang: string): string {
   try {
-    return new Intl.DateTimeFormat(lang, { month: 'short' }).format(new Date(2000, monthIndex, 1));
+    // An unsupported tag falls back to the *runtime's* default locale (a German browser would
+    // print German months), not English — so check support first and pin English ourselves.
+    const locale = Intl.DateTimeFormat.supportedLocalesOf([lang]).length ? lang : 'en';
+    return new Intl.DateTimeFormat(locale, { month: 'short' }).format(new Date(2000, monthIndex, 1));
   } catch {
     return MONTHS_EN[monthIndex] ?? '';
   }

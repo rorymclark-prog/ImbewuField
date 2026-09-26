@@ -150,7 +150,10 @@ test('assignment due dates localise the month abbreviation itself, not just the 
   // language goes through Intl.DateTimeFormat(lang, ...), so this must not regress to a
   // hard-coded per-language table again.
   assert.match(COURSE_ASSIGNMENTS_SOURCE, /function monthAbbrev\(monthIndex: number, lang: string\)/);
-  assert.match(COURSE_ASSIGNMENTS_SOURCE, /new Intl\.DateTimeFormat\(lang, \{ month: 'short' \}\)/);
+  assert.match(COURSE_ASSIGNMENTS_SOURCE, /new Intl\.DateTimeFormat\(locale, \{ month: 'short' \}\)/);
+  // An unsupported tag (siSwati, isiNdebele, Tshivenda, Xitsonga in most ICU builds) must fall back
+  // to English, not to the browser's own default locale.
+  assert.match(COURSE_ASSIGNMENTS_SOURCE, /Intl\.DateTimeFormat\.supportedLocalesOf\(\[lang\]\)\.length \? lang : 'en'/);
   assert.doesNotMatch(COURSE_ASSIGNMENTS_SOURCE, /const MONTHS_ZU/, 'a per-language hard-coded month table should not come back');
   assert.match(COURSE_ASSIGNMENTS_SOURCE, /export function formatDue\(due_at: string \| null, today: string, lang: string = 'en'\)/);
   assert.match(STUDENT_SOURCE, /formatDue\(assignment\.due_at, today, lang\)/);
