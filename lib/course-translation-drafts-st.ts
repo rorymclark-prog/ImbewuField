@@ -165,9 +165,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "Twelve Principles: Designing with Nature",
         "Melao-motheo e Leshome le Metso e 'Meli: Ho Rala le Tlhaho",
       ),
-      body: pair(
+      body: hold(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "David Holmgren o ile a hlahisa melao-motheo ea moralo e leshome le metso e 'meli ho Essence of Permaculture. Bill Mollison le David Holmgren ba qalile khopolo ea permaculture hammoho. Lintlha tse tharo tse sebetsang tsa ho qala bakeng sa thuto ena ke: sheba 'me u sebelisane (observe and interact) — shebella mobu oa hao nakong ea sehla se feletseng pele u etsa mesebetsi e meholo ea mobu; tšoara le ho boloka matla (catch and store energy) — hlokomela pula, letsatsi le biomass pele li tloha setšeng sa hao; le ho sebelisa mathoko le ho ananela tse ka thoko (use edges and value the marginal) — mohala oa terata kapa mothinya o pel'a tselana e ka ba sebaka se loketseng sa ho shebella.\n\nTse ling tse lokelang ho tsejoa: u se ke ua hlahisa litšila (produce no waste — masalla a fetoha compost, compost e fetoha mobu), sebelisa litharollo tse nyane le tse liehang (use small and slow solutions — emere e ka nosetsa jarete ntle le motlakase), le ho sebelisa le ho ananela mefuta-futa (use and value diversity). Tšenyo ea sefako holim'a poone (maize) e itšetlehile ka sefefo le boemo ba kholo ea lijalo.\n\nKhetha melao-motheo e 'meli kapa e meraro e buang le bothata ba hao bo boholo ka ho fetisisa 'me u e sebelise ka thata. Tse ling li tla hlaka ha u ntse u tsoela pele.",
       ),
       keyPoints: [
         pair(
@@ -212,9 +211,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair(
+          rationale: hold(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Sehla sa lipula se bontša ho fetang sefefo se le seng, empa tlhokomelo ke mohato oa pele feela. Hlahloba mobu, mothinya oa lefatše (slope), drainage le tsela e bolokehileng ea metsi a phallang ho feta tekano le moeletsi ea koetlisitsoeng oa lehae pele u cheka.",
           ),
         },
         {
@@ -227,9 +225,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
               "Chickens penned far from the garden",
               "Likhoho tse koaletsoeng hole le serapa",
             ),
-            pair(
+            hold(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Serapa, lifate tsa litholoana le lesaka la likhoho (chicken run) tse hlophisitsoeng e le hore likhoho li sebelise jarete e se nang letho ka mor'a kotulo, ebe molemi o hlahloba tsamaiso e bolokehileng pele lijalo tse jeoang li khutla",
             ),
             pair(
               "Separate paddocks for each crop",

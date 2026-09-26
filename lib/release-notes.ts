@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '9186ec9', changes: [
+    'Sesotho Introduction lesson 2 keeps unclear swale and bed wording in English.',
+  ], tour: [
+    { title: 'Check the principles lesson', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; the explanation, slope rationale and chicken-bed answer stay in English for review.' },
+  ] },
   { when: '26 September 2026', sha: 'fa7843ab', changes: [
     'Tshivenda Food Forest habitat wording stays in English for review.',
   ], tour: [

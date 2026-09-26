@@ -34,7 +34,7 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
     assert.doesNotMatch(pair.sesothoDraft, nonLatin, `${path}: draft must remain Latin script`);
     assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: placeholders must be preserved`);
     assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: numeric figures must be preserved`);
-    if (/\bmaize\b/i.test(english)) {
+    if (status === 'machine-draft' && /\bmaize\b/i.test(english)) {
       assert.match(pair.sesothoDraft, /\(maize\)/i, `${path}: keep the exact crop name beside its Sesotho rendering`);
     }
   };
@@ -54,7 +54,8 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image alt text`);
     }
     checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`, original.id === 'intro-permaculture-l1' ? 'hold' : 'machine-draft');
+    checkPair(lesson.body, original.body, `${path}.body`,
+      ['intro-permaculture-l1', 'intro-permaculture-l2'].includes(original.id) ? 'hold' : 'machine-draft');
     assert.equal(lesson.body.sourceEnglish.split('\n\n').length, lesson.body.sesothoDraft.split('\n\n').length,
       `${path}.body: paragraph structure must stay aligned for review`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
@@ -68,12 +69,16 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       checkPair(question.question, english.q, `${questionPath}.question`);
       assert.equal(question.options.length, english.options.length, `${questionPath}: option count/order must match`);
       for (const [optionIndex, option] of question.options.entries()) {
-        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`);
+        const holdUnsafeL2Bed = original.id === 'intro-permaculture-l2' && questionIndex === 1 && optionIndex === 1;
+        checkPair(option, english.options[optionIndex], `${questionPath}.options[${optionIndex}]`,
+          holdUnsafeL2Bed ? 'hold' : 'machine-draft');
       }
       assert.equal(question.sourceCorrectIndex, english.correct, `${questionPath}: answer index must remain unchanged`);
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
         `${questionPath}: correct answer must still point to the exact English correct option`);
-      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
+      const holdUnsafeL2Slope = original.id === 'intro-permaculture-l2' && questionIndex === 0;
+      checkPair(question.rationale, english.rationale, `${questionPath}.rationale`,
+        holdUnsafeL2Slope ? 'hold' : 'machine-draft');
     }
   }
 });
@@ -88,6 +93,34 @@ test('a Sesotho learner sees exact English for the held ethics body', () => {
   const presentation = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, source.body);
+  assert.notEqual(presentation.content.title, source.title);
+});
+
+test('Sesotho Introduction L2 holds unclear bed scale and slope wording in English for learners', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'intro-permaculture');
+  assert.ok(sourceModule);
+  const source = sourceModule.lessons.find(lesson => lesson.id === 'intro-permaculture-l2');
+  assert.ok(source);
+  const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons.find(lesson => lesson.id === source.id);
+  assert.ok(draft);
+
+  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.sesothoDraft, source.body);
+  assert.equal(draft.quiz[0].rationale.reviewStatus, 'hold');
+  assert.equal(draft.quiz[0].rationale.sourceEnglish, source.quiz[0].rationale);
+  assert.equal(draft.quiz[0].rationale.sesothoDraft, source.quiz[0].rationale);
+  assert.equal(draft.quiz[1].options[1].reviewStatus, 'hold');
+  assert.equal(draft.quiz[1].options[1].sourceEnglish, source.quiz[1].options[1]);
+  assert.equal(draft.quiz[1].options[1].sesothoDraft, source.quiz[1].options[1]);
+  assert.equal(draft.quiz[1].sourceCorrectIndex, source.quiz[1].correct);
+
+  const presentation = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, source.body);
+  assert.equal(presentation.content.quiz[0].rationale, source.quiz[0].rationale);
+  assert.equal(presentation.content.quiz[1].options[source.quiz[1].correct], source.quiz[1].options[source.quiz[1].correct]);
+  assert.equal(presentation.content.quiz[1].correct, source.quiz[1].correct);
   assert.notEqual(presentation.content.title, source.title);
 });
 

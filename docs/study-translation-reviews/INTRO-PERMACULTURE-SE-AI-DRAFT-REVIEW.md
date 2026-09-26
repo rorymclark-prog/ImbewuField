@@ -421,6 +421,16 @@ Option 3
 
 > Kopanyo e etsa hore karolo ka 'ngoe e sebeletse baahisani ba eona — mona, likhoho li hloekisa likokoanyana 'me li eketsa menontsha ho e-na le ho lula feela ka lesakeng le sa sisinyeheng. Manyolo a macha a ka jara likokoana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele lijalo tse jeoang li khutla.
 
+### Fields held in English after the 26 September audit
+
+Agy Gemini 3.8 Flash Low and an independent Agy Gemini 3.1 Pro Low check found material scope and safety ambiguities. The learner now sees the exact English source for these fields; their Sesotho candidates remain in this packet for review only:
+
+- `intro-permaculture-l2.body`: the bucket example changes one garden bed (`bed`) to a whole garden (`jarete`), implying a larger watering area. The body also renders “apply them hard” as `u e sebelise ka thata`, which may mean applying the principles with difficulty or harshly.
+- `intro-permaculture-l2.quiz[0].rationale`: `mothinya oa lefatše` means a curve or bend and does not clearly say land slope. The rationale is shown in English before anyone uses it to assess a site for swales.
+- `intro-permaculture-l2.quiz[1].options[1]`: the keyed correct option changes “one empty bed” after harvest to “an empty garden”. The English option preserves the intended limited area for chickens and keeps the crop-safety sequence clear.
+
+The question, remaining answer options, key points and Quiz 2 rationale remain source-paired machine drafts. This model-to-model audit is not fluent Sesotho, learner, practitioner or local-farming approval.
+
 ## Lesson 3: `intro-permaculture-l3`
 
 **English infographic alt text:**
