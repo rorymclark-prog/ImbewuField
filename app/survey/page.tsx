@@ -281,9 +281,13 @@ function SurveyInner() {
     true;
 
   const sunLabel = SUN_OPTS.find((s) => s.v === sun)?.label.toLowerCase() ?? 'full sun';
+  const sunLabelZu = SUN_OPTS.find((s) => s.v === sun)?.zu.toLowerCase() ?? 'ilanga eligcwele';
   const tanksPhrase = resources.includes('rain-tanks') ? `${tanks} tank${tanks > 1 ? 's' : ''}` : 'no tanks yet';
+  const tanksPhraseZu = resources.includes('rain-tanks')
+    ? tanks === 1 ? `ithangi elingu-${tanks}` : `amathangi angu-${tanks}`
+    : 'awekho amathangi okwamanje';
   const planSuggestionEn = `Lima: From ${known.ha} ha · ${sunLabel} · ${tanksPhrase}, I suggest ${beds} beds at 1.2 m × 8 m. Adjust the count, then save your plan.`;
-  const planSuggestionZu = `Lima: Ngokusekelwe ku-${known.ha} ha · ${sunLabel} · ${tanksPhrase}, ngiphakamisa imibhede engu-${beds} engu-1.2 m × 8 m. Lungisa isibalo, bese ugcina uhlelo lwakho.`;
+  const planSuggestionZu = `Lima: Ngokusekelwe ku-${known.ha} ha · ${sunLabelZu} · ${tanksPhraseZu}, ngiphakamisa imibhede engu-${beds} engu-1.2 m × 8 m. Lungisa isibalo, bese ugcina uhlelo lwakho.`;
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -514,7 +518,7 @@ function SurveyInner() {
               <div className="rounded-2xl px-4 py-3 flex items-center justify-between" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div>
                   <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{beds} {lang === 'zu' ? 'imibhede / beds' : 'beds'}</div>
-                  <div className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{(beds * BED_M2).toFixed(1)} m² total growing space</div>
+                  <div className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>{(beds * BED_M2).toFixed(1)} m² {planDraft('total growing space', 'yonke indawo yokutshala', lang)}</div>
                 </div>
                 <div className="flex items-center gap-2 rounded-full px-1 py-1" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.12)' }}>
                   <button onClick={() => setBeds((b) => Math.max(1, b - 1))} aria-label={localUi('Remove one bed', 'Yehlisa umbhede owodwa', lang)} className="flex items-center justify-center rounded-full" style={{ width: 28, height: 28, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}><Minus size={14} /></button>
@@ -542,7 +546,7 @@ function SurveyInner() {
                 <div className="text-xs font-sans uppercase tracking-widest" style={{ color: 'var(--gold)', letterSpacing: '0.1em' }}>{surveyDraft('Garden plan', 'Uhlelo lwengadi', lang)}</div>
                 <h1 className="font-display font-bold text-2xl mt-0.5" style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>{beds} {lang === 'zu' ? 'imibhede / beds' : 'beds'} · {(beds * BED_M2).toFixed(1)} m²</h1>
                 <p className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
-                  {known.ha} ha · {planDraft(sunLabel, SUN_OPTS.find((s) => s.v === sun)?.zu, lang)} · {tanksPhrase}{goal ? ` · ${lang === 'zu' ? 'umgomo / goal' : 'goal'}: ${planDraft(GOALS.find((g) => g.v === goal)!.label.toLowerCase(), GOALS.find((g) => g.v === goal)?.zu.toLowerCase(), lang)}` : ''}
+                  {known.ha} ha · {planDraft(sunLabel, SUN_OPTS.find((s) => s.v === sun)?.zu, lang)} · {planDraft(tanksPhrase, tanksPhraseZu, lang)}{goal ? ` · ${lang === 'zu' ? 'umgomo / goal' : 'goal'}: ${planDraft(GOALS.find((g) => g.v === goal)!.label.toLowerCase(), GOALS.find((g) => g.v === goal)?.zu.toLowerCase(), lang)}` : ''}
                 </p>
               </div>
 

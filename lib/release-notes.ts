@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '8a9abb4e', changes: [
+    'Garden Survey isiZulu pairs sun, tank and growing-space labels with English.',
+    'Plan quantities and the English source recommendation stay unchanged.',
+  ], tour: [
+    { title: 'Compare Garden Survey status labels', where: 'Garden Survey', href: '/survey',
+      detail: 'Choose isiZulu and step through the survey to compare the plan summary with English.' },
+  ] },
   { when: '26 September 2026', sha: '40ee1e48', changes: [
     'Sesotho Garden Survey shell drafts show English sources; farming text stays English.',
     'The Garden Survey Back control has space beside the floating Lima button on phones.',
