@@ -4,11 +4,11 @@
 
 Umhlabathi uyisiqalo sayo yonke ingadi nepulazi. Umhlabathi ophilile ukhulisa izitshalo eziphilile, bese izitshalo eziphilile zondla izilwane nabantu abaphilile. Ku-permaculture sithi: **ondla umhlabathi, hhayi isitshalo.**
 
-Umhlabathi wakheka kancane kakhulu. Idwala liqhekeka libe yizingcezu ezincane ngenxa yelanga, imvula, isithwathwa nezimpande. Izitshalo, izilwane, isikhunta nezinto eziphilayo ezincane kakhulu (**ama-micro-organism**, izidalwa ezincane kakhulu ukuba zibonwe ngeso) zengeza amaqabunga afile, izimpande nobulongwe, bese kancane kancane zikuguqule kube **izinto eziphilayo ezibolayo** (organic matter) ezimnyama nezinomvundo. Kungathatha amakhulu eminyaka, kwesinye isikhathi kuze kufike eminyakeni engu-1 000, ukuze kwakheke umhlabathi ongu-1 cm kuphela. Imvula nomoya kungawukhukhula noma kuwuphephule lowo mhlabathi esiphephweni esisodwa. Yingakho kufanele siwuvikele.
+Umhlabathi wakheka kancane kakhulu. Idwala liqhekeka libe yizingcezu ezincane ngenxa yelanga, imvula, isithwathwa nezimpande. Izitshalo, izilwane, isikhunta nezinto eziphilayo ezincane kakhulu (**ama-micro-organism**, izidalwa ezincane kakhulu ukuba zibonwe ngeso) zengeza amaqabunga afile, izimpande nobulongwe, bese kancane kancane zikuguqule kube **i-organic matter** (izinto eziphilayo ezibolayo) emnyama nenomvundo. Kungathatha amakhulu eminyaka, kwesinye isikhathi kuze kufike eminyakeni engu-1 000, ukuze kwakheke umhlabathi ongu-1 cm kuphela. Imvula nomoya kungawukhukhula noma kuwuphephule lowo mhlabathi esiphephweni esisodwa. Yingakho kufanele siwuvikele.
 
-Izitshalo ezinezimpande ezijulile, njengezihlahla nezitshalo ezine-**taproot** ende (impande eyodwa ewugqinsi ehlela ngqo phansi), zifinyelela emhlabathini ojulile. Zithatha amanzi namaminerali lapho, bese kuthi uma amaqabunga azo ewa futhi ebola, amanye alawo maminerali agcine esemhlabathini ongaphezulu.
+Izitshalo ezinezimpande ezijulile, njengezihlahla nezitshalo ezine-**taproot** ende (impande eyodwa ewugqinsi ehlela ngqo phansi), zifinyelela emhlabathini ojulile. Zithatha amanzi namaminerali lapho, bese kuthi uma amaqabunga azo ewa futhi ebola, amanye alawo maminerali agcine **ese-topsoil** (ungqimba oluphezulu lomhlabathi).
 
-Umhlabathi ophilile uyaphila. Isandla esisodwa somhlabathi siqukethe izigidi eziningi zamagciwane, isikhunta nezinye izidalwa ezincane. Zibolisa izinto ezifile futhi zikhulule izakhamzimba ezidingwa yizitshalo. Uma umhlabathi umbozwe futhi ungaphazanyiswa, izinto eziphilayo ezibolayo zanda kancane kancane, umhlabathi ujule futhi ube nomvundo omningi.
+Umhlabathi ophilile uyaphila. Isandla esisodwa somhlabathi siqukethe izigidi eziningi zamagciwane, isikhunta nezinye izidalwa ezincane. Zibolisa izinto ezifile futhi zikhulule izakhamzimba ezidingwa yizitshalo. Uma umhlabathi umbozwe futhi ungaphazanyiswa, i-organic matter yanda kancane kancane, umhlabathi ujule futhi ube nomvundo omningi.
 
 Njengomlimi, umhlabathi wakho uyingcebo yakho ebaluleke kunazo zonke. Wazi kahle. Wumbe, wubheke, wuthinte futhi uwuhogele.
 
@@ -19,16 +19,16 @@ Uma umba umgodi ojulile noma ubheka eceleni kwendlela esikiwe noma kwesiwa (dong
 | Ungqimba | Luyini |
 |---|---|
 | Amaqabunga awileyo | Amaqabunga afile nezinsalela zezitshalo ezingaphezulu, eziqala ukubola. |
-| A: Umhlabathi ongaphezulu | Imvamisa luwungqimba olumnyama kakhulu. Luqukethe iningi lezinto eziphilayo ezibolayo, izimpande nezidalwa zomhlabathi. Yilapho umvundo uhlala khona. Luvame ukujula ngo-10 kuya ku-30 cm kuphela. |
-| B: Umhlabathi ongaphansi | Lunombala okhanyayo, lunezinto eziphilayo ezibolayo ezimbalwa. Ubumba, insimbi namaminerali afana ne-calcium ne-magnesium ageza ehla evela phezulu kuvame ukuqoqeka lapha. Izimpande ezijulile zithatha amanzi nezakhamzimba kulolu ngqimba. |
+| A: I-topsoil | Imvamisa luwungqimba olumnyama kakhulu. Luqukethe iningi le-organic matter, izimpande nezidalwa zomhlabathi. Yilapho umvundo uhlala khona. Luvame ukujula ngo-10 kuya ku-30 cm kuphela. |
+| B: Umhlabathi ongaphansi | Lunombala okhanyayo, lune-organic matter encane. Ubumba, insimbi namaminerali afana ne-calcium ne-magnesium ageza ehla evela phezulu kuvame ukuqoqeka lapha. Izimpande ezijulile zithatha amanzi nezakhamzimba kulolu ngqimba. |
 | C: Idwala eliqhekekile | Idwala lomsuka eliqhekekile elixube nomhlabathi omncane. Kunempilo encane kakhulu. |
 | R: Idwala eliqinile | Idwala eliqinile ngokuphelele. |
 
-Umhlabathi ongaphezulu ojulile nomnyama uyisibonakaliso esihle. Umhlabathi ongaphezulu ubamba amanzi kahle ngoba unezinto eziphilayo ezibolayo eziningi, futhi unokwakheka okuvuthulukayo okunezikhala eziningi ezincane zomoya namanzi. Ngaphandle kwezidalwa zomhlabathi, umhlabathi ulahlekelwa umvundo wawo ngokushesha.
+I-topsoil ejulile nemnyama iyisibonakaliso esihle. I-topsoil ibamba amanzi kahle ngoba ine-organic matter eningi, futhi inokwakheka okuvuthulukayo okunezikhala eziningi ezincane zomoya namanzi. Ngaphandle kwezidalwa zomhlabathi, umhlabathi ulahlekelwa umvundo wawo ngokushesha.
 
 ## Uhlobo lwezinhlayiya zomhlabathi: isihlabathi, i-silt, ubumba nomhlabathi oxubile
 
-Umhlabathi wakhiwe yizinhlayiya zamaminerali ezinobukhulu obuhlukene, kanye nezinto eziphilayo ezibolayo, umoya namanzi. Ukuxubana kobukhulu bezinhlayiya kubizwa ngokuthi **uhlobo lwezinhlayiya zomhlabathi** (soil texture).
+Umhlabathi wakhiwe yizinhlayiya zamaminerali ezinobukhulu obuhlukene, kanye ne-organic matter, umoya namanzi. Ukuxubana kobukhulu bezinhlayiya kubizwa ngokuthi **uhlobo lwezinhlayiya zomhlabathi** (soil texture).
 
 - **Isihlabathi** yizinhlayiya ezinkulu kunazo zonke. Siyahwaqa uma usithinta.
 - **I-silt** (izinhlayiya ezincane kakhulu kunesihlabathi) inobukhulu obuphakathi. Ibushelelezi futhi ithambile njengofulawa noma i-talcum powder.
@@ -39,8 +39,8 @@ Umhlabathi wakhiwe yizinhlayiya zamaminerali ezinobukhulu obuhlukene, kanye nezi
 - Uyavuthuluka futhi kulula ukuwumba. Uyahwaqa futhi uyahlakazeka esandleni sakho.
 - Amanzi adlula kuwo ngokushesha, ngakho uyoma masinya.
 - Ubamba izakhamzimba ezimbalwa, ngoba zigezwa zehle namanzi.
-- Imvamisa unombala okhanyayo futhi unezinto eziphilayo ezibolayo ezimbalwa.
-- Wuthuthukise ngokufaka i-compost (umquba owenziwe ngezinsalela zezitshalo ezibolile) eningi, umquba wezilwane ne-mulch. Izinto eziphilayo ezibolayo zisiza umhlabathi onesihlabathi ukuthi ubambe amanzi nezakhamzimba njengesipontshi.
+- Imvamisa unombala okhanyayo futhi une-organic matter encane.
+- Wuthuthukise ngokufaka **i-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) eningi, umquba wezilwane **ne-mulch** (isembozo somhlabathi). I-organic matter isiza umhlabathi onesihlabathi ukuthi ubambe amanzi nezakhamzimba njengesipontshi.
 
 ### Umhlabathi wobumba
 
@@ -49,17 +49,17 @@ Umhlabathi wakhiwe yizinhlayiya zamaminerali ezinobukhulu obuhlukene, kanye nezi
 - Ubamba amanzi amaningi nezakhamzimba, kodwa amanzi adlula kuwo kancane. Umhlabathi wobumba ungagcwala amanzi, ube nomoya omncane kakhulu wezimpande.
 - Uyaqhekeka uma womile futhi wenze uqweqwe oluqinile phezulu.
 - Umhlabathi wobumba ungaba bomvu, nsundu, phuzi, mpunga noma mnyama. Umbala uvela kakhulu ensimbini nasendleleni amanzi aphuma ngayo emhlabathini, hhayi obumbeni ngokwalo. Amabala ampunga noma aluhlaza okwesibhakabhaka ampunga avame ukusho ukuthi umhlabathi uhlala umanzi isikhathi eside.
-- Wuthuthukise ngokufaka i-compost ne-mulch, nangokungahambi phezu kwawo noma ungawumbi uma umanzi. Izinto eziphilayo ezibolayo zenza ubumba luvuthuluke ukuze umoya namanzi kudlule kulo.
+- Wuthuthukise ngokufaka i-compost ne-mulch, nangokungahambi phezu kwawo noma ungawumbi uma umanzi. I-organic matter yenza ubumba luvuthuluke ukuze umoya namanzi kudlule kulo.
 
 ### Umhlabathi oxubile (loam)
 
-- Ingxube yesihlabathi, i-silt nobumba, imvamisa enezinto eziphilayo ezibolayo ezanele.
+- Ingxube yesihlabathi, i-silt nobumba, imvamisa ene-organic matter eyanele.
 - Umnyama, uthambile futhi uyavuthuluka. Uhlangana kancane uma uwucindezela kodwa uhlakazeka kalula.
 - Amanzi aphuma kahle kuwo kodwa ubamba namanzi nezakhamzimba okwanele.
 - Unephunga elimnandi lomhlabathi.
 - Umhlabathi oxubile ungcono kunayo yonke eminingi yemifino. Ngokuhamba kwesikhathi, nge-compost nange-mulch, ungasondeza umhlabathi onesihlabathi noma wobumba ekubeni ngumhlabathi oxubile.
 
-> **Qaphela:** Awukwazi ukushintsha uhlobo lwezinhlayiya zomhlabathi wakho, kodwa ungashintsha **ukwakheka komhlabathi** (structure) nezinto zawo eziphilayo ezibolayo. Izinto eziphilayo ezibolayo ziyimpendulo kokubili umhlabathi onesihlabathi nowobumba.
+> **Qaphela:** Awukwazi ukushintsha uhlobo lwezinhlayiya zomhlabathi wakho, kodwa ungashintsha **ukwakheka komhlabathi** (structure) ne-organic matter yawo. I-organic matter iyimpendulo kokubili umhlabathi onesihlabathi nowobumba.
 
 ## Ukuhlola umhlabathi wakho
 
@@ -92,7 +92,7 @@ Ukuhlola umhlabathi ebhodleleni kukhombisa ukuthi kungakanani isihlabathi, i-sil
 6. Ngemva **komzuzu ongu-1**, maka ukuphakama kongqimba olungezansi eceleni kwebhodlela. Lesi **yisihlabathi**.
 7. Ngemva **kwamahora ama-2**, maka phezulu kongqimba olulandelayo. Le **yi-silt**.
 8. Ngemva **kwezinsuku ezi-1 kuya kwezi-2**, lapho amanzi esecace kakhulu, maka ungqimba olungaphezulu. Lolu **wubumba**. Umhlabathi onobumba obuningi kakhulu ungathatha isonto noma ngaphezulu ukuze amanzi acace.
-9. Noma yini entantayo phezulu yizinto eziphilayo ezibolayo.
+9. Noma yini entantayo phezulu yi-organic matter.
 10. Linganisa ungqimba ngalunye bese uluqhathanisa nokuphakama kwawo wonke umhlabathi osebhodleleni.
 
 Umhlabathi oxubile unesihlabathi esingaba ngu-40%, i-silt engaba ngu-40% nobumba obungaba ngu-20%. Uma ngaphezu kwengxenye yomhlabathi osebhodleleni kuyisihlabathi, unomhlabathi onesihlabathi. Uma ungqimba lobumba luwugqinsi futhi amanzi ehlala esaluvilo izinsuku, unomhlabathi wobumba.
@@ -101,7 +101,7 @@ Umhlabathi oxubile unesihlabathi esingaba ngu-40%, i-silt engaba ngu-40% nobumba
 
 Uma ufunda ngomhlabathi wakho, bheka nasezindaweni eziwuzungezile bese ubhala phansi:
 
-- Umhlabathi unambala muni? Umhlabathi omnyama uvame ukuba nezinto eziphilayo ezibolayo eziningi.
+- Umhlabathi unambala muni? Umhlabathi omnyama uvame ukuba ne-organic matter eningi.
 - Yiziphi izitshalo ezimila kuwo ngokwemvelo? Izitshalo zixoxa indaba. Isibonelo, amakhwane nemihlanga akhombisa umhlabathi omanzi.
 - Umhlabathi wenziwe ngaliphi idwala? Bheka amatshe afana ne-sandstone, i-shale, i-granite noma i-basalt (idwala elimnyama lentabamlilo, elivame ukutholakala eLesotho nasoKhahlamba).
 - Unephunga elinjani? Umhlabathi ophilile unephunga elimnandi lomhlabathi. Iphunga elimuncu noma elibolile lingasho ukuthi umhlabathi ugcwele amanzi.
@@ -131,64 +131,64 @@ Ukulungisa umhlabathi omuncu, faka umcako wezolimo (agricultural lime) noma i-do
 - **Wondle.** Faka i-compost, umquba wezilwane ne-mulch njalo ukuze izidalwa zomhlabathi zibe nokudla.
 - **Buyisela izinsalela zezitshalo.** Buyisela izinsalela zezitshalo emhlabathini noma enqwabeni ye-compost esikhundleni sokuzishisa.
 - **Tshala izinhlobo eziningi zezitshalo.** Izitshalo ezahlukene zinezimpande ezahlukene ezijulile ngokwehlukana, futhi zondla izidalwa zomhlabathi ezahlukene.
-- **Mba kancane.** Njalo uma umba noma ulima ngegeja, ubhidliza ukwakheka komhlabathi futhi ushise izinto eziphilayo ezibolayo. Xegisa umhlabathi ngemfologo esikhundleni sokuwuphendula.
+- **Mba kancane.** Njalo uma umba noma ulima ngegeja, ubhidliza ukwakheka komhlabathi futhi ushise i-organic matter. Xegisa umhlabathi ngemfologo esikhundleni sokuwuphendula.
 - **Ungahambi phezu kwemibhede etshaliwe**, ikakhulukazi uma umhlabathi umanzi. Sebenzisa izindlela.
-- **Yekela umhlabathi uphumule.** Tshala izitshalo zokuvundisa umhlabathi noma ushiye umbhede umbozwe yi-mulch isizini eyodwa.
+- **Yekela umhlabathi uphumule.** Tshala **i-green manure** (izitshalo ezitshalwa bese zimbelwa emhlabathini ukuze ziwondle) noma ushiye umbhede umbozwe yi-mulch isizini eyodwa.
 
-Kunezindlela ezinhlanu eziyinhloko zokwakha umvundo womhlabathi: izitshalo zokuvundisa umhlabathi, umquba wezilwane, i-mulch, i-compost nemisundu.
+Kunezindlela ezinhlanu eziyinhloko zokwakha umvundo womhlabathi: i-green manure, umquba wezilwane, i-mulch, i-compost nemisundu.
 
-## Indlela 1: Izitshalo zokuvundisa umhlabathi (green manure)
+## Indlela 1: I-green manure
 
-**Izitshalo zokuvundisa umhlabathi** (green manure) yisitshalo osihlwanyelela ukondla umhlabathi, hhayi ukuvuna. Uyasitshala, usisike ngaphambi kokuba sithele imbewu, bese usibuyisela emhlabathini.
+**I-green manure** yisitshalo osihlwanyelela ukondla umhlabathi, hhayi ukuvuna. Uyasitshala, usisike ngaphambi kokuba sithele imbewu, bese usibuyisela emhlabathini.
 
-Izitshalo zokuvundisa umhlabathi:
+Izitshalo ze-green manure:
 
-- zimboza umhlabathi ongenalutho futhi ziwuvikele ekugugulekeni
-- zengeza izinto eziphilayo ezibolayo uma zibola
-- zengeza i-nitrogen, uma kuyi-**legume** (izitshalo zohlobo lukabhontshisi noluphizi). Amagciwane asemaqhubwaneni amancane (**ama-nodule**) asezimpandeni ze-legume athatha i-nitrogen emoyeni ayenze itholakale ezitshalweni
-- zihlephula umhlabathi oqinile ngezimpande zazo. Izitshalo eziningi zokuvundisa umhlabathi zinezimpande ezijulile ezifinyelela emhlabathini ongaphansi
+- zimboza umhlabathi ongenalutho futhi ziwuvikele **ku-erosion** (ukukhukhuleka komhlabathi)
+- zengeza i-organic matter uma zibola
+- zengeza i-nitrogen, uma **kuyi-legume** (izitshalo zohlobo lukabhontshisi noluphizi). Amagciwane asemaqhubwaneni amancane (**ama-nodule**) asezimpandeni ze-legume athatha i-nitrogen emoyeni ayenze itholakale ezitshalweni
+- zihlephula umhlabathi oqinile ngezimpande zazo. Izitshalo eziningi ze-green manure zinezimpande ezijulile ezifinyelela emhlabathini ongaphansi
 - ziminyanisa ukhula
 - zondla izinyosi nezinye izinambuzane eziwusizo uma ziqhakaza.
 
-### Indlela yokusebenzisa izitshalo zokuvundisa umhlabathi
+### Indlela yokusebenzisa i-green manure
 
-1. Hlwanyela izitshalo zokuvundisa umhlabathi ziminyene embhedeni ongawusebenzisi, noma phakathi kwezitshalo.
+1. Hlwanyela izitshalo ze-green manure ziminyene embhedeni ongawusebenzisi, noma phakathi kwezitshalo.
 2. Ziyeke zikhule zize ziqale ukuqhakaza. Yilapho zinamaqabunga amaningi ne-nitrogen eningi.
 3. Zisike ngaphambi kokuba zithele imbewu. Zisike zibe yizingcezu ezincane ngesipede noma ngesikela sotshani (slasher).
-4. Noma uzishiye phezulu njenge-mulch (**ukusika uyeke phansi**, chop and drop), noma uzimbele kancane ku-10 kuya ku-15 cm womhlabathi ongaphezulu.
+4. Noma uzishiye phezulu njenge-mulch (**i-chop and drop**, ukusika uyeke phansi), noma uzimbele kancane ku-10 kuya ku-15 cm womhlabathi ongaphezulu.
 5. Linda amasonto ama-3 kuya kwama-4 ngaphambi kokuhlwanyela noma ukutshala embhedeni. Lokhu kunika izinto eziluhlaza isikhathi sokubola. Uma kubanda, linda isikhathi eside kancane.
 
 > **Icebiso:** Uma utshala i-legume ensimini okokuqala, thenga **i-rhizobium inoculant** efanele (impuphu yamagciwane abopha i-nitrogen ezimpandeni) kumthengisi wakho wembewu bese uyixuba nembewu ngaphambi kokuhlwanyela. Isitshalo sizokwenza i-nitrogen eningi.
 
-### Izitshalo zokuvundisa umhlabathi zaseNingizimu ne-Afrika
+### Ama-green manure aseNingizimu ne-Afrika
 
 | Isizini | Isitshalo | Amanothi |
 |---|---|---|
 | Ihlobo | I-sunn hemp (*Crotalaria juncea*) | I-legume. Ikhula ngokushesha futhi ide, inezimpande ezijulile. Amaqabunga amaningi. |
 | Ihlobo | I-cowpea (*Vigna unguiculata*) | I-legume. Iyakwazi ukumelana nokushisa nesomiso. Ungadla namaqabunga nobhontshisi bayo. |
-| Ihlobo | I-lablab (*Lablab purpureus*) | I-legume. Isitshalo esinwabayo esimelana nesomiso. Ukudla okuhle kwemfuyo. |
+| Ihlobo | I-lablab (*Lablab purpureus*) | I-legume. Isitshalo esinwabayo esimelana nesomiso. **I-fodder** (ukudla kwemfuyo) enhle. |
 | Ihlobo | I-velvet bean (*Mucuna pruriens*) | I-legume. Isembozo esisinda kakhulu esiminyanisa ukhula. Amakhasi ayo anoboya obuluma, ngakho gqoka amagilavu. |
 | Ihlobo | I-buckwheat (*Fagopyrum esculentum*) | Akuyona i-legume. Ikhula ngokushesha kakhulu, iqhakaza ngemva kwamasonto angu-6 cishe. Izinyosi ziyayithanda. |
-| Ubusika | I-oats (*Avena sativa*) | Uhlobo lokusanhlamvu. Izinto eziphilayo ezibolayo eziningi. Ivame ukuhlwanyelwa ne-vetch. |
+| Ubusika | I-oats (*Avena sativa*) | Uhlobo lokusanhlamvu. I-organic matter eningi. Ivame ukuhlwanyelwa ne-vetch. |
 | Ubusika | I-vetch (izinhlobo ze-*Vicia*) | I-legume. Umngane omuhle we-oats. |
 | Ubusika | I-lupin (*Lupinus angustifolius*) | I-legume enezimpande ezijulile. Ifanele umhlabathi onesihlabathi nomuncu. Ungayidli imbewu. |
 | Ubusika | I-fodder radish (*Raphanus sativus*) | I-taproot ende ehlephula umhlabathi oqinile. |
 
-Ezindaweni ezithola imvula ehlobo, hlwanyela izitshalo zokuvundisa umhlabathi zasehlobo kusukela cishe ngo-Okthoba kuya kuJanuwari. ENtshonalanga Kapa ethola imvula ebusika, noma lapho ungakwazi ukunisela khona, hlwanyela izitshalo zokuvundisa umhlabathi zasebusika ekwindla (uMashi kuya kuMeyi).
+Ezindaweni ezithola imvula ehlobo, hlwanyela izitshalo ze-green manure zasehlobo kusukela cishe ngo-Okthoba kuya kuJanuwari. ENtshonalanga Kapa ethola imvula ebusika, noma lapho ungakwazi ukunisela khona, hlwanyela izitshalo ze-green manure zasebusika ekwindla (uMashi kuya kuMeyi).
 
-Ezinye izitshalo esizibiza ngokuthi ukhula, njenge-clover, nazo zingizitshalo ezinhle zokuvundisa umhlabathi. Esikhundleni sokuzihlakula uzilahle, zisike ngaphambi kokuba zithele imbewu bese uzishiya emhlabathini noma uzifake ku-compost.
+Ezinye izitshalo esizibiza ngokuthi ukhula, njenge-clover, nazo zingama-green manure amahle. Esikhundleni sokuzihlakula uzilahle, zisike ngaphambi kokuba zithele imbewu bese uzishiya emhlabathini noma uzifake ku-compost.
 
-> **Qaphela:** Ezinye izitshalo ezithengiswa phesheya njenge-"green manure" noma "izakhi zomhlabathi" zimenyezelwe njengezitshalo zangaphandle ezihlaselayo eNingizimu Afrika. I-Mexican sunflower (*Tithonia diversifolia*), evame ukunconywa ezincwadini ze-permaculture, iyisitshalo esihlaselayo se-Category 1b ngaphansi kwe-NEMBA: akuvumelekile ngokomthetho ukuyitshala noma ukuyithengisa. Ungayisebenzisi. Hlola noma yisiphi isitshalo ongasazi kumeluleki wezolimo wendawo ngaphambi kokusitshala.
+> **Qaphela:** Ezinye izitshalo ezithengiswa phesheya njenge-"green manure" noma "izakhi zomhlabathi" zimenyezelwe **njengama-invasive species** (izitshalo zangaphandle ezisakazeka zingalawuleki) eNingizimu Afrika. I-Mexican sunflower (*Tithonia diversifolia*), evame ukunconywa ezincwadini ze-permaculture, iyi-invasive species ye-Category 1b ngaphansi kwe-NEMBA: akuvumelekile ngokomthetho ukuyitshala noma ukuyithengisa. Ungayisebenzisi. Hlola noma yisiphi isitshalo ongasazi kumeluleki wezolimo wendawo ngaphambi kokusitshala.
 
 ## Indlela 2: Umquba wezilwane
 
-Umquba wezilwane wengeza izinto eziphilayo ezibolayo nezakhamzimba zezitshalo, ikakhulukazi i-nitrogen. Uphinde wondle izidalwa zomhlabathi. Umquba wezinkomo, wezimvu, wezimbuzi, wamahhashi, wonogwaja nowezinkukhu yonke ingasetshenziswa.
+Umquba wezilwane wengeza i-organic matter nezakhamzimba zezitshalo, ikakhulukazi i-nitrogen. Uphinde wondle izidalwa zomhlabathi. Umquba wezinkomo, wezimvu, wezimbuzi, wamahhashi, wonogwaja nowezinkukhu yonke ingasetshenziswa.
 
 - **Umquba wezinkukhu** unamandla kunayo yonke. Umquba wezinkukhu omusha ungashisa izimpande zezitshalo, ngakho njalo wenze i-compost kuqala.
 - **Umquba wezinkomo, wezimbuzi, wezimvu, wamahhashi nowonogwaja** mncane amandla, kodwa usenawo amagciwane uma usemusha.
 - Izinkukhu nezinye izilwane ezise-**chicken tractor** (ihhoko elihambayo, bheka isahluko sezinhlelo zezilwane) zisabalalisa umquba wazo ngqo emibhedeni ephumulayo.
 
-Kungcono ukwenza umquba wezilwane ube yi-**compost** ngaphambi kokuwusebenzisa emifinweni. Ukwenza i-compost kubulala amagciwane amaningi nembewu yokhula, kuvimbe umquba ukuthi ushise izitshalo, futhi kuwuguqule ube yi-**humus** evuthulukayo (umhlabathi omnyama obolile kahle).
+Kungcono ukwenza umquba wezilwane ube **yi-compost** ngaphambi kokuwusebenzisa emifinweni. Ukwenza i-compost kubulala amagciwane amaningi nembewu yokhula, kuvimbe umquba ukuthi ushise izitshalo, futhi kuwuguqule ube **yi-humus** evuthulukayo (umhlabathi omnyama obolile kahle).
 
 > **Ukuphepha: ukusebenzisa umquba wezilwane ezitshalweni zokudla**
 >
@@ -256,12 +256,12 @@ Ikhadibhodi liminyanisa utshani futhi libola kancane kancane. Imisundu ingena ng
 
 **Indawo yokutshala i-mulch** (mulch bank) yindawo etshalwe izitshalo ezikhula ngokushesha ozisika njalo ukuze uthole i-mulch ne-compost. Iwusizo kakhulu lapho umhlabathi umpofu noma ugugulekile futhi zingekho izinto ezanele ze-mulch. Indawo yokutshala i-mulch ingaphinde:
 
-- isebenze njengesivikela-moya
+- isebenze **njenge-windbreak** (umugqa wezihlahla ovimba umoya)
 - inike izinambuzane eziwusizo indawo yokuhlala
 - ibambe umhlabathi namanzi emthambekeni
 - ikunike izinto eziningi ze-mulch ne-compost.
 
-Izitshalo ezinhle zendawo yokutshala i-mulch zifaka utshani bomdabu obufana notshani bokufulela (*Hyparrhenia hirta*), i-red grass (*Themeda triandra*) ne-weeping love grass (*Eragrostis curvula*); utshani be-vetiver obungenambewu futhi obungahlaseli (*Chrysopogon zizanioides*) bemigqa ye-contour emithambekeni; i-pigeon pea (*Cajanus cajan*); nezihlahlana zomdabu ezihluma kabusha ngemva kokusikwa, njenge-Cape honeysuckle (*Tecoma capensis*) ne-sand olive (*Dodonaea viscosa*).
+Izitshalo ezinhle zendawo yokutshala i-mulch zifaka utshani bomdabu obufana notshani bokufulela (*Hyparrhenia hirta*), i-red grass (*Themeda triandra*) ne-weeping love grass (*Eragrostis curvula*); utshani be-vetiver obungenambewu futhi obungeyona i-invasive species (*Chrysopogon zizanioides*) bemigqa **ye-contour** (imigqa esezingeni elifanayo lokuphakama) emithambekeni; i-pigeon pea (*Cajanus cajan*); nezihlahlana zomdabu ezihluma kabusha ngemva kokusikwa, njenge-Cape honeysuckle (*Tecoma capensis*) ne-sand olive (*Dodonaea viscosa*).
 
 Izincwadi eziningi zithi izitshalo ezinezimpande ezijulile ezibizwa ngokuthi "dynamic accumulator" zikhipha amaminerali akhethekile ukuze kuzuze i-compost yakho. Ubufakazi besayensi balokhu buncane kakhulu. Ukubaluleka kwangempela kwendawo yokutshala i-mulch yinani elikhulu lezinto eziphilayo eyikhiqizayo.
 
@@ -290,7 +290,7 @@ I-compost idinga izinto ezine: **ama-browns**, **ama-greens**, **umoya** kanye *
 | Amaqabunga omile | Ukhula oluluhlaza (olungenambewu) |
 | Iziqu zommbila, eziqoshiwe | Amakhasi emifino nezithelo |
 | Ikhadibhodi namaphephandaba adabuliwe | Umquba wezilwane |
-| Amazenge ezihlahla ne-sawdust (kancane) | Amaqabunga aluhlaza nezitshalo zokuvundisa umhlabathi |
+| Amazenge ezihlahla ne-sawdust (kancane) | Amaqabunga aluhlaza nezitshalo ze-green manure |
 
 - Ama-greens amaningi kakhulu: inqwaba iba manzi, ishelele futhi inuke i-ammonia. Engeza ama-browns.
 - Ama-browns amaningi kakhulu: inqwaba ihlala ipholile futhi ibola kancane kakhulu. Engeza ama-greens noma umquba.
@@ -313,7 +313,7 @@ I-compost idinga izinto ezine: **ama-browns**, **ama-greens**, **umoya** kanye *
 >
 > Izimpande zotshani obunwabayo obufana ne-couch grass (uqamu). Qala uzicwilise ebhakedeni lamanzi amasonto ambalwa.
 >
-> Izitshalo ezihlaselayo ezinembewu, ongase uzisabalalise epulazini lakho lonke.
+> Ama-invasive species anembewu, ongase uwasabalalise epulazini lakho lonke.
 >
 > Ukhuni olwelashiwe, olupendiwe noma olupholishiwe, umlotha wamalahle nomlotha wama-briquette. Umlotha omncane wezinkuni nje ulungile.
 >
@@ -370,33 +370,33 @@ Imisundu (earthworms) ingabasizi abahle kakhulu engadini. Iyakwazi:
 
 - ukudonsela amaqabunga afile ne-mulch ngaphansi emhlabathini
 - ukumba imihubhe engenisa umoya namanzi emhlabathini futhi isize izimpande zikhule zijule
-- ukudla umhlabathi nezinto eziphilayo ezibolayo, ishiye **ama-castings** (indle yemisundu). Ama-castings abopha umhlabathi ube yizigaxana ezincane eziyisibonakaliso somhlabathi ophilile
+- ukudla umhlabathi ne-organic matter, ishiye **ama-castings** (indle yemisundu). Ama-castings abopha umhlabathi ube yizigaxana ezincane eziyisibonakaliso somhlabathi ophilile
 - ukwenza izakhamzimba zibe lula ukuthi zisetshenziswe yizitshalo.
 
 Imisundu eminingi esipedeni esisodwa somhlabathi iyisibonakaliso sokuthi umhlabathi wakho uphilile. Yikhuthaze ngokugcina umhlabathi umbozwe yi-mulch, ngokufaka i-compost, ngokumba kancane nangokungasebenzisi ushevu.
 
 ### Imisundu ye-compost
 
-Epulazini lemisundu (worm farm) udinga **imisundu ye-compost** (composting worms) ekhethekile. Le misundu ihlala emaqabungeni abolayo, emqubeni nase-compost, hhayi ekujuleni komhlabathi. Idla kakhulu, izala ngokushesha futhi ijabule ebhokisini eliminyene.
+**Ku-worm farm** (ipulazi lemisundu) udinga **imisundu ye-compost** (composting worms) ekhethekile. Le misundu ihlala emaqabungeni abolayo, emqubeni nase-compost, hhayi ekujuleni komhlabathi. Idla kakhulu, izala ngokushesha futhi ijabule ebhokisini eliminyene.
 
 - **I-red wiggler** (*Eisenia fetida*) ngumsundu we-compost ovame kakhulu eNingizimu Afrika. Ubekezelela kangcono amakhaza nokushisa.
 - **I-African nightcrawler** (*Eudrilus eugeniae*) inkulu futhi isebenza ngokushesha ezindaweni ezifudumele, kodwa ayenzi kahle ebusika obubandayo.
 - **I-Indian blue worm** (*Perionyx excavatus*) nayo isetshenziswa ezindaweni ezifudumele.
 
-Thenga imisundu ye-compost epulazini lemisundu, e-nursery noma kumlimi wemvelo (organic). **Ungasebenzisi imisundu oyimbe engadini yakho.** Imisundu yasengadini ihlala emhlabathini futhi ngeke iphile noma izale kahle epulazini lemisundu.
+Thenga imisundu ye-compost ku-worm farm, e-nursery noma kumlimi wemvelo (organic). **Ungasebenzisi imisundu oyimbe engadini yakho.** Imisundu yasengadini ihlala emhlabathini futhi ngeke iphile noma izale kahle ku-worm farm.
 
 **I-vermicomposting** kusho ukusebenzisa imisundu ukuguqula izinsalela zezinto eziphilayo zibe yi-compost. Ukufuya imisundu kuthandwa abalimi abancane nabalimi bemvelo, futhi abanye abalimi bathengisa imisundu, ama-castings noketshezi lwemisundu.
 
-### Okutholayo epulazini lemisundu
+### Okutholayo ku-worm farm
 
 - **Ama-castings** (indle yemisundu, vermicompost). I-compost ecolekile, emnyama, enomvundo omningi egcwele izakhamzimba nezidalwa zomhlabathi. Ama-castings anezakhamzimba eziningi ezitholakala kalula ezitshalweni kunomhlabathi noma izinsalela avela kuzo. Wasebenzise phezulu emhlabathini ozungeze izitshalo, uwaxube nomhlabathi wezithombo, noma ufake isandla esisodwa emgodini ngamunye wokutshala.
-- **I-leachate** (uketshezi oluphuma epulazini lemisundu). Abantu abaningi baluthi "umchamo wemisundu" noma "itiye lemisundu", kodwa empeleni angamanzi adlule epulazini athatha izakhamzimba kuma-castings nasekudleni okubolayo. Kungumanyolo owuketshezi owusizo.
+- **I-leachate** (uketshezi oluphuma ku-worm farm). Abantu abaningi baluthi "umchamo wemisundu" noma "**worm tea**", kodwa empeleni angamanzi adlule epulazini athatha izakhamzimba kuma-castings nasekudleni okubolayo. Kungumanyolo owuketshezi owusizo.
 
 > **Icebiso:** Hlambulula i-leachate ngamanzi angaba izingxenye ezingu-10, ize ibukeke njengetiye elibuthaka. Yithele emhlabathini ozungeze izitshalo. Uma i-leachate inuka kabi noma inuka ukubola, ipulazi lakho limanzi kakhulu. Leyo i-leachate yisebenzise enqwabeni ye-compost kuphela noma ezimbalini nasezihlahleni, hhayi emifinweni.
 
-### Izinhlobo zamapulazi emisundu
+### Izinhlobo zama-worm farm
 
-Ipulazi lemisundu liyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi lemisundu, elivikelekile ezinkukhwini, ezinyonini, ezintuthwaneni nasezivukuzini. Sebenzisa lokho onakho.
+I-worm farm iyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi lemisundu, elivikelekile ezinkukhwini, ezinyonini, ezintuthwaneni nasezivukuzini. Sebenzisa lokho onakho.
 
 - **Ubhavu omdala noma umkhombe wokuphuzisa.** Wuphakamise ngezitini, uphakame kancane ngakolunye uhlangothi, imbobo yokuphuma amanzi ibe ngasohlangothini oluphansi ukuze uketshezi luthele ebhakedeni. Faka ungqimba lwamatshe phansi, bese ubeka indwangu yomthunzi phezu kwamatshe. Faka umbhede wemisundu nemisundu. Mboza ngengubo endala noma ngesaka le-hessian nangocwecwe lukathayela ukuze kuvikeleke elangeni nasemvuleni.
 - **Amakhreyithi noma iziqukathi ezibekwe phezu kwezinye.** Beka amakhreyithi epulasitiki amathathu, amabhakede noma amabhokisi alingana ngobukhulu phezu kwamanye. Lolu wuhlelo olulula kakhulu lokuvuna.
@@ -412,7 +412,7 @@ Ipulazi lemisundu liyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi
 - **Ukudla.** Izinsalela ezincane zasekhishini nezasengadini, ezifakwa njalo.
 - **Ukuphuma kwamanzi.** Izimbobo zokukhipha uketshezi olweqile.
 
-### Indlela yokwakha ipulazi lemisundu elinezitezi
+### Indlela yokwakha i-worm farm enezitezi
 
 1. Thola amakhreyithi epulasitiki amathathu, amabhokisi noma amabhakede alingana ngobukhulu, ajule cishe ngo-20 kuya ku-30 cm. Iziqukathi ezinombala omnyama zingcono.
 2. **Isiqukathi esingezansi** siqoqa uketshezi. Ungenzi izimbobo phansi kwaso. Uma ukwazi, faka umpompi omncane eduze nangaphansi, noma usibeke phezu kwesitsha.
@@ -429,7 +429,7 @@ Ipulazi lemisundu liyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi
 13. Thulula isiqukathi, bese usisebenzisa njengesiqukathi esisha esingaphezulu ngokulandelayo. Qhubeka ushintshanisa ngale ndlela.
 14. Khipha uketshezi esiqukathini esingezansi njalo ngemva kwezinsuku ezimbalwa. Ungaluyeki lugcwale luminze imisundu.
 
-Njengoba imisundu izala, uzothola **amaqanda emisundu** (cocoons) amancane amise okukalamula embhedeni wayo. Ngalinye lichamusela imisundu emincane eminingana. Uma ipulazi lakho seligcwele imisundu, ungakhipha izandla ezimbalwa zemisundu nombhede wayo ukuze uqale ipulazi elisha lemisundu noma uyifake enqwabeni ye-compost esipholayo. Njalo shiya eminingi ngemuva.
+Njengoba imisundu izala, uzothola **amaqanda emisundu** (cocoons) amancane amise okukalamula embhedeni wayo. Ngalinye lichamusela imisundu emincane eminingana. Uma ipulazi lakho seligcwele imisundu, ungakhipha izandla ezimbalwa zemisundu nombhede wayo ukuze uqale i-worm farm entsha noma uyifake enqwabeni ye-compost esipholayo. Njalo shiya eminingi ngemuva.
 
 ### Ukondla imisundu yakho
 
@@ -462,11 +462,11 @@ Ucwaningo lokuthi itiye le-compost liyazisiza yini izitshalo aluvumelani. I-leac
 ## Amaphuzu amqoka
 
 - Umhlabathi uyaphila futhi wakheka kancane kakhulu. Wuvikele: wugcine umbozwe, mba kancane futhi ungalokothi uwushiye ungenalutho.
-- Funda uhlobo lwezinhlayiya zomhlabathi wakho ngokuhlola ngokuthinta nangokuhlola ebhodleleni. Umhlabathi onesihlabathi nowobumba yomibili ithuthukiswa ngokufaka izinto eziphilayo ezibolayo.
+- Funda uhlobo lwezinhlayiya zomhlabathi wakho ngokuhlola ngokuthinta nangokuhlola ebhodleleni. Umhlabathi onesihlabathi nowobumba yomibili ithuthukiswa ngokufaka i-organic matter.
 - Iningi lemifino likhula kahle kakhulu uma i-pH icishe ibe ngu-6 kuya ku-7. Ukuhlolwa komhlabathi kukutshela ukuthi udinga umcako yini.
-- Tshala izitshalo zokuvundisa umhlabathi, ikakhulukazi ama-legume, bese uzisika ngaphambi kokuba zithele imbewu. Ungalokothi utshale isitshalo esihlaselayo esisohlwini njenge-Mexican sunflower.
+- Tshala izitshalo ze-green manure, ikakhulukazi ama-legume, bese uzisika ngaphambi kokuba zithele imbewu. Ungalokothi utshale i-invasive species esohlwini njenge-Mexican sunflower.
 - Yenza umquba wezilwane ube yi-compost ngaphambi kokuwusebenzisa ezitshalweni zokudla. Shiya okungenani izinyanga ezi-4 phakathi kokufaka umquba ongaphekiwe nokuvuna izitshalo ezidliwa zingaphekiwe. Ungalokothi usebenzise indle yabantu, yezinja noma yamakati, noma umquba wezingulube ongaphekiwe, engadini yokudla.
 - Faka i-mulch ejule ngo-5 kuya ku-10 cm, uyigcine iqhelile eziqwini.
 - Inqwaba ye-compost eshisayo idinga ama-browns, ama-greens, umoya namanzi, ifinyelela ku-55 kuya ku-65 °C, iphendulwa uma iphola, futhi ilunga ngemva kwezinyanga ezi-2 kuya kwezi-3 cishe.
-- Epulazini lemisundu, sebenzisa imisundu ye-compost njengama-red wiggler (*Eisenia fetida*), hhayi imisundu yasengadini. Yigcine emthunzini, imanzi futhi yondliwe ngezinsalela ezincane zemifino.
+- Ku-worm farm, sebenzisa imisundu ye-compost njengama-red wiggler (*Eisenia fetida*), hhayi imisundu yasengadini. Yigcine emthunzini, imanzi futhi yondliwe ngezinsalela ezincane zemifino.
 - Hlambulula i-leachate cishe ngo-1 ku-10 bese uyithela emhlabathini, hhayi emifinweni enamaqabunga edliwa ingaphekiwe.

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Printer } from 'lucide-react';
 import ManualHeader from '@/components/manual/ManualHeader';
 import LanguageSwitch from '@/components/manual/LanguageSwitch';
 import { MANUAL_CHAPTERS, MANUAL_LANGS, isManualLang, manualUi } from '@/lib/manual';
@@ -62,6 +62,9 @@ export default function ManualContentsPage({ params }: { params: { lang: string 
             </li>
           ))}
         </ol>
+        <Link href={`/manual/${lang}/book`} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 48, marginTop: 24, padding: '10px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-1)', color: 'var(--text-primary)', fontWeight: 600 }}>
+          <Printer size={18} aria-hidden />{ui.book}
+        </Link>
         <p style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--text-secondary)', marginTop: 32 }}>{ui.credit}</p>
       </main>
     </div>

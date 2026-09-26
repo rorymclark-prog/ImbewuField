@@ -1,6 +1,6 @@
 # Isingeniso
 
-Le ncwadi iyisiqondiso esisebenzayo se-permaculture (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside) sabalimi abancane nabalimi basemizini eNingizimu ne-Afrika. Yaqala ukubhalwa njengencwadi yesifundo sokuqeqeshwa nge-permaculture esithatha izinsuku ezinhlanu. Ungayisebenzisa kanye nesifundo, noma uyisebenzise wedwa.
+Le ncwadi iyisiqondiso esisebenzayo **se-permaculture** (indlela yokulima nokuhlala esebenzisana nemvelo, ehlala isikhathi eside) sabalimi abancane nabalimi basemizini eNingizimu ne-Afrika. Yaqala ukubhalwa njengencwadi yesifundo sokuqeqeshwa nge-permaculture esithatha izinsuku ezinhlanu. Ungayisebenzisa kanye nesifundo, noma uyisebenzise wedwa.
 
 Inhloso ukukusiza ukuba uqale uhambo lwakho lwe-permaculture. Le ncwadi ikuhambisa ezisekelweni zokuklama nge-permaculture, nokuthi uhlele kanjani ingadi noma ipulazi lakho, ukuze umsebenzi wakho nezinsiza zakho kufike kude. Ikhuluma futhi ngokwakha umhlabathi, ukuvunwa kwamanzi, izilwane, izihlahla nokulawula izinambuzane ngendlela yemvelo. Izindlela eziningi zazo ungazisebenzisa khona manjalo ukuze uthuthukise ukuvunda nesivuno sengadi yakho.
 
@@ -19,7 +19,7 @@ Izingxenye zale ncwadi zithathwe encwadini ye-African Conservation Trust (ACT) e
 ## Indlela yokusebenzisa le ncwadi
 
 - **Funda isahluko esisodwa ngesikhathi.** Isahluko ngasinye siyazimela. Qala ngesahluko 1 (Iyini i-permaculture?) nesahluko 2 (Ukuhlela ipulazi lakho). Zichaza imibono ezakhelwa phezu kwayo ezinye izahluko.
-- **Zama into eyodwa, bese kulandela enye.** Khetha indlela eyodwa ongayenza kule sizini, njengenqwaba ye-compost noma umbhede ofakwe i-mulch. Buka ukuthi isebenza kanjani ngaphambi kokuthi wengeze okunye.
+- **Zama into eyodwa, bese kulandela enye.** Khetha indlela eyodwa ongayenza kule sizini, njengenqwaba **ye-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) noma umbhede ofakwe **i-mulch** (isembozo somhlabathi sotshani obomile noma amaqabunga). Buka ukuthi isebenza kanjani ngaphambi kokuthi wengeze okunye.
 - **Bheka amabhokisi.** Amabhokisi abhalwe ukuthi **Ukuphepha** akuxwayisa ngezingozi zangempela kubantu, ezilwaneni noma emvelweni. Wafunde njalo. Amabhokisi abhalwe ukuthi **Icebiso** noma **Qaphela** anikeza usizo olwengeziwe.
 - **Hlola "Amaphuzu amqoka".** Isahluko ngasinye siphela ngohlu olufushane lwemibono esemqoka. Lusebenzise ukuze uphinde ufunde, noma uchazele abanye ngesahluko.
 - **Kulungise kufane nendawo yakho.** INingizimu ne-Afrika inezimo zezulu eziningi. Ingxenye enkulu yangaphakathi kweNingizimu Afrika ithola imvula ehlobo, ibe nobusika obubandayo nobomile, imvamisa kube nesithwathwa eHighveld. INtshonalanga Kapa ithola imvula eningi ebusika. Shintsha izikhathi zokutshala zihambisane nenkathi yemvula yakini, futhi ubuze abalimi bendawo nabeluleki bezolimo bendawo ukuthi yini esebenzayo endaweni yakini.

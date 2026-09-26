@@ -686,3 +686,106 @@ One test assertion was updated to follow the corrected leachate sentence
   - `lib/course-audio.ts`: slide titles.
   - `lib/locales/nr.ts` (isiNdebele) copies several of the fixed zu errors, for example *Imikhawulo*, *Umvundo* and the *insightLowSoilCarbon* / *insightGoodSoilCarbon* texts, and `ss.ts` / `xh.ts` repeat the soil-carbon texts.
 - The glossary's first-use explanation for compost, *umquba owenziwe ngezinsalela zezitshalo ezibolile*, still uses *umquba*. A reviewer should confirm that this does not blur compost with manure. (check)
+
+## Kept in English (26 Sep 2026)
+
+Rory's decision: the 66 technical words in the "Word" column of `content/manual/en/12-glossary.md`
+(the file has 67 rows) stay in **English** in the isiZulu manual too. This section overrides the
+isiZulu terms in the tables above for these words. The new chapter `content/manual/zu/12-glossary.md`
+explains them all; the Word column there is English, unchanged.
+
+How they are written in chapters 00 to 11:
+
+- The English root never changes. The isiZulu prefix is joined with a hyphen: *i-swale* / *ama-swale*,
+  *i-mulch*, *i-greywater*, *ama-predator*. Other forms follow the same rule: *nge-mulch*,
+  *ku-worm farm*, *ye-compost*, *engama-annual*, *eyi-nitrogen fixer*, *ese-topsoil*.
+- New concords follow the loan's class (class 9 *i-*, plural class 6 *ama-*). Verbs, relatives and
+  object markers in the same sentence were changed to match (for example *amanzi asetshenzisiwe
+  ... angaba* became *i-greywater ... ingaba*, and *isivikela-moya ... sisebenza* became
+  *i-windbreak ... isebenza*).
+- First use in a chapter: bold, prefix included, then a short isiZulu explanation in brackets, e.g.
+  `**i-biomass** (izinto zezitshalo ezikhulayo, njengamaqabunga namagatsha)`. Where the sentence
+  itself defines the word (as the English does), the definition does the job. Later uses: plain.
+- Headings, list items, callouts and tables are unchanged in number; only words changed.
+
+| English word | Written as | isiZulu phrase(s) replaced | Chapters |
+|---|---|---|---|
+| Animal tractor | i-animal tractor / ama-animal tractor | ogandaganda abayizilwane; ugandaganda oyisilwane (heading). *i-chicken tractor* kept as the alias | 01, 05, 07 |
+| Annual | i-annual / ama-annual; -yi-annual, -ngama-annual | isitshalo (izitshalo) sonyaka owodwa; esonyaka owodwa; imifino yonyaka owodwa; ukhula lonyaka | 02, 04, 05, 06, 09 |
+| Appropriate technology | i-appropriate technology | ubuchwepheshe obufanele | 11 |
+| Berm | i-berm / ama-berm | already *i-berm (udonga lomhlabathi)*; nothing new replaced | 07 |
+| Biodiversity | i-biodiversity | ukwehlukahlukana kwezinto eziphilayo (also in the NEMBA "biodiversity law") | 02, 09 |
+| Biogas digester | i-biogas digester / ama-biogas digester | already English | 11 |
+| Biomass | i-biomass | amaqabunga namagatsha amaningi (biomass) | 05, 06, 11 |
+| Biosecurity | i-biosecurity | ukuvikela izifo | 05 |
+| Blackwater | i-blackwater | amanzi asendlini yangasese | 07 |
+| Canopy | i-canopy | uphahla (lwesihlahla); uphahla lwezihlahla eziqala ukumila | 03, 06 |
+| Carbon to nitrogen ratio | — | not used as a term in the zu chapters (ch 8 gives the 25–30 : 1 numbers in words) | — |
+| Catchment | i-catchment / ama-catchment | indawo yokuqoqa amanzi; izindawo zokuqoqwa kwamanzi | 01, 02, 07 |
+| Chop and drop | i-chop and drop | sika uyeke phansi; ukusika uyeke phansi; ngendlela ethi "sika uyeke phansi" | 06, 08 |
+| Climate change | i-climate change | ukushintsha kwesimo sezulu | 01, 03, 07, 11 |
+| Companion planting | i-companion planting | ukuxuba izitshalo | 10 |
+| Compost | i-compost | already English; the old first-use gloss *umquba owenziwe ngezinsalela zezitshalo ezibolile* replaced by *izinsalela zezitshalo ezibolile ezondla umhlabathi* | all |
+| Contour | i-contour / ama-contour; imigqa ye-contour | already English | 01, 02, 04, 07, 08 |
+| Coppicing | i-coppicing | ukusika isihlahla phansi ukuze sihlume kabusha; izihlahla ezisikwa phansi; uhluma kahle uma usikwe phansi | 02, 05, 06 |
+| Crop rotation | i-crop rotation | ukushintshanisa izitshalo; ukushintshanisa (as a noun) | 04, 10 |
+| Double-reach bed | ama-double-reach bed; "Double reach" | imibhede ephakanyisiwe efinyelelwa ezinhlangothini zombili; "ukufinyelela ezinhlangothini zombili" | 07 |
+| Drip irrigation | i-drip irrigation | ukunisela ngamaconsi | 04, 07 |
+| Ecosystem | i-ecosystem / ama-ecosystem | uhlelo lwemvelo; izinhlelo zemvelo (only where the English says ecosystem); imisebenzi yemvelo (ecosystem services, ch 5) | 01, 05, 09, 10 |
+| Edge | i-edge / ama-edge | umphetho; imiphetho (the ecological sense only) | 01, 06 |
+| Erosion | i-erosion | ukuguguleka (komhlabathi); ukugugulekeni | 01, 02, 03, 05, 06, 07, 08, 09 |
+| Firebreak | i-firebreak / ama-firebreak | umzila (imizila) wokuvimba umlilo | 03, 06, 09 |
+| First-flush diverter | i-first-flush diverter | i-diverter yamanzi okuqala | 07 |
+| Fodder | i-fodder | ukudla kwemfuyo (only where the English says fodder; *ukudla kwemfuyo* meaning grazing is kept) | 01, 03, 05, 06, 08, 09 |
+| Food forest | i-food forest / ama-food forest | already English; *(ihlathi lokudla)* kept as the first-use gloss, dropped later | all that use it |
+| Frost pocket | i-frost pocket / ama-frost pocket | umgodi wesithwathwa; imigodi yesithwathwa | 03, 04, 06 |
+| Grafting | i-grafting | zixhunyelwa (first use, ch 6). Adjectives *esixhunyelwe* / *ezixhunyelwe* (grafted) left in isiZulu | 06 |
+| Green manure | i-green manure / ama-green manure; izitshalo ze-green manure | izitshalo zokuvundisa umhlabathi | 05, 06, 07, 08, 09 |
+| Greywater | i-greywater | amanzi asetshenzisiwe (greywater) | 01, 02, 07 |
+| Groundcover | i-groundcover / ama-groundcover | izitshalo ezimboza umhlabathi; simboza umhlabathi; amboza umhlabathi | 05, 06, 07, 09 |
+| Guild | i-guild / ama-guild | already English | 01, 03 |
+| Habitat | i-habitat / ama-habitat | indawo yokuhlala; izindawo zokuhlala (yezilwane) | 01, 06, 07, 09, 10 |
+| Humus | i-humus | already English | 08 |
+| Indigenous | — (kept *-omdabu*) | **not replaced**: *zomdabu / omdabu* is the everyday word every reader knows | — |
+| Infiltration | i-infiltration | izitsha zokungenisa amanzi → izitsha ze-infiltration | 07 |
+| Invasive species | i-invasive species / ama-invasive species | izitshalo (izinhlobo) ezihlaselayo; isitshalo esihlaselayo; ezingahlaseli; ahlaselayo | 01, 02, 03, 05, 06, 07, 08, 09, 10 |
+| Keyhole bed | ama-keyhole bed | imibhede emise okwembobo kakhiye | 01, 07 |
+| Legume | i-legume / ama-legume | already English | most |
+| Microclimate | i-microclimate / ama-microclimate | isimo sezulu sendawo encane; izimo zezulu zezindawo ezincane | 03, 06 |
+| Mulch | i-mulch | already English | all |
+| Nitrogen fixer | ama-nitrogen fixer; -yi-nitrogen fixer | izitshalo (izihlahla) ezibopha i-nitrogen; sibopha / ibopha i-nitrogen (table cells). The process name *ukubopha i-nitrogen* (nitrogen fixing) is kept | 06, 09 |
+| Organic matter | i-organic matter | izinto eziphilayo ezibolayo (only where the English says organic matter; "organic material" left) | 07, 08, 10 |
+| Perennial | i-perennial / ama-perennial | izitshalo ezihlala iminyaka eminingi; esihlala iminyaka eminingi; ehlala iminyaka | 03, 04, 05, 06, 09 |
+| Permaculture | i-permaculture | already English; explained in ch 0 and 1 only | all |
+| pH | i-pH | already English | 08 |
+| Pollinator | ama-pollinator | izinambuzane ezithutha impova | 05, 10 |
+| Predator | ama-predator | izilwane ezidla izinambuzane; izilwane ezizingelayo; izilwane ezizizingelayo. "Predatory bugs/wasps" (*izinambuzane / imiviyana ezizingelayo*) left | 04, 05, 09, 10 |
+| Rocket stove | i-rocket stove / ama-rocket stove | already English | 11 |
+| Rootstock | i-rootstock / ama-rootstock | isisekelo (izisekelo) sezimpande | 06 |
+| Runoff | i-runoff | amanzi agelezayo; isilinganiso samanzi agelezayo → isilinganiso se-runoff | 01, 02, 07 |
+| Sector | i-sector / ama-sector | already English | 02, 03 |
+| Slurry | i-slurry | already English | 11 |
+| Solar dryer | i-solar dryer / ama-solar dryer | isomisi selanga; izomisi zelanga | 11 |
+| Succession | i-succession | ukulandelana kwezitshalo (emvelweni) | 06, 09 |
+| Swale | i-swale / ama-swale | umsele wokubamba amanzi; imisele yokubamba amanzi (swales) | 01, 02, 03, 07 |
+| Thermal mass | i-thermal mass | izinto ezigcina ukushisa (thermal mass) | 03, 11 |
+| Topsoil | i-topsoil | umhlabathi ongaphezulu (only where the English says topsoil; "the top 15 cm" left) | 03, 06, 07, 08 |
+| Trap crop | i-trap crop / ama-trap crop | isitshalo sokuheha izinambuzane; izitshalo zokuheha izinambuzane. The ch 6 "trap plant" row left | 10 |
+| Understorey | — | not used as a term in the zu chapters | — |
+| Windbreak | i-windbreak / ama-windbreak | isivikela-moya; izivikela-moya | 01, 03, 05, 06, 08, 09 |
+| Wonder bag | i-wonder bag | already English | 11 |
+| Worm farm | i-worm farm / ama-worm farm | ipulazi lemisundu; amapulazi emisundu (the short *ipulazi* "the farm" inside ch 8 is kept) | 05, 08 |
+| Worm tea | i-worm tea | itiye lemisundu | 05, 08 |
+| Zone | i-zone / ama-zone | already English | 02, 04, 05, 06, 07, 09, 10, 11 |
+
+Left in isiZulu on purpose (check with the reviewer):
+
+- **Indigenous**: *-omdabu* (*izitshalo zomdabu*) is kept everywhere. It is the ordinary word, and a
+  loan would need awkward concords (*ezingama-indigenous*).
+- Verbs are kept: *uguguleka* (erodes), *ushintshanise* (rotate), *zithutha impova* (pollinate),
+  *ixhunyelwe* (grafted). Only the nouns became English.
+- *Ukudla kwemfuyo* meaning **grazing** (ch 9, ch 5 table notes), *indawo yokuhlala* meaning "a place
+  to live / a home" where the English does not say habitat, *uphahla* meaning a roof, *emaphethelweni*
+  meaning the physical edge of a bed or field, *amanzi agelezayo* meaning flowing water (ch 11), and
+  "organic material" (*izinto eziphilayo ezibolayo*) where the English does not say organic matter.
+- Permaculture is not re-explained after chapters 0 and 1, because it is the subject of the whole manual.

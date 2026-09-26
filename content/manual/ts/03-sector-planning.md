@@ -22,7 +22,7 @@ Mepe wa ti-sector wu komba tlhelo leri matimba man'wana na man'wana ma taka hi r
 3. Eka matimba man'wana na man'wana, dirowa xiphemu lexi sukaka etlhelweni leri ma taka hi rona. Xikombiso, dirowa moya wo hisa naswona wo oma wa vuxika tanihi xiphemu lexi sukaka en'walungu-vupeladyambu.
 4. Tsala nguva ekusuhi na xiphemu xin'wana na xin'wana, hikuva matimba yo tala ma cinca hi ku ya hi minguva.
 
-Endzhaku ka sweswo, eka matimba man'wana na man'wana, teka xiboho loko u lava ku ma amukela, ku ma sivela kumbe ku ma kongomisa. Eka ndhawu yo hisa u nga ha lava ku pfumelela moya wo titimela wu nghena endlwini. Eka ndhawu yin'wana u nga ha fanela ku sivela moya wo titimela wa matimba. Ku hlela ti-sector swi ku pfuna ku veka swisivela-moya na tindlela to sivela ndzilo (firebreaks), ku hlayisa swilo leswinene swo swi languta swi pfulekile, na ku tirhisa kahle dyambu ra vuxika.
+Endzhaku ka sweswo, eka matimba man'wana na man'wana, teka xiboho loko u lava ku ma amukela, ku ma sivela kumbe ku ma kongomisa. Eka ndhawu yo hisa u nga ha lava ku pfumelela moya wo titimela wu nghena endlwini. Eka ndhawu yin'wana u nga ha fanela ku sivela moya wo titimela wa matimba. Ku hlela ti-sector swi ku pfuna ku veka **ti-windbreak** (tilayini ta mirhi leti sivelaka moya) na **ti-firebreak** (tindlela to sivela ndzilo), ku hlayisa swilo leswinene swo swi languta swi pfulekile, na ku tirhisa kahle dyambu ra vuxika.
 
 ## Ku kuma n'walungu
 
@@ -53,7 +53,7 @@ Moya wu nga onha purasi ra wena. Wu nga:
 - omisa misava na swimilana,
 - tshova swibyariwa na mirhi,
 - onha miako,
-- hungutela misava ya le henhla,
+- hungutela **topsoil** (misava ya le henhla),
 - hangalasa mindzilo hi ku hatlisa.
 
 Moya wu nga tlhela wu pfuna. Wu nga pompa mati hi windmill (xitirhisiwa lexi hundzuluxiwaka hi moya) naswona wu endla gezi hi wind turbine. Moya wo titimela wu nga titimelisa yindlu ya wena hi ximumu. Swimilana swin'wana, ku fana na mavele na byanyi byo tala, swi tshembele moya ku rhwala pollen ya swona (mpupu wa swiluva).
@@ -79,7 +79,7 @@ Ti-cold front i swidzedze leswi taka hi le lwandle edzongeni-vupeladyambu. A ti 
 3. Vutisa vaakelani na vanhu lavakulu leswaku i mimoya yihi leyi bihaka ngopfu, na leswaku yi hunga rini.
 4. Thya moya wun'wana na wun'wana hi tlhelo leri wu taka hi rona. Moya wa n'walungu-vupeladyambu wu huma en'walungu-vupeladyambu.
 5. Dirowa moya wun'wana na wun'wana wa nkoka eka mepe wa wena wa ti-sector, u ri na nguva ya wona.
-6. Byala swisivela-moya u tsemakanya ndlela ya mimoya leyi onhaka (vona ndzima ya 6).
+6. Byala ti-windbreak u tsemakanya ndlela ya mimoya leyi onhaka (vona ndzima ya 6).
 
 ## Ndzilo
 
@@ -101,35 +101,35 @@ Loko maxelo ma ya ma hisa naswona ma oma, vativi va sayense va languterile masik
 - Ndzilo wu tsutsuma hi ku hatlisa ngopfu loko wu khandziya ku ri na loko wu rhelela. Anakanya hi fosforo: loko yi khomiwile nhloko ya yona yi languta ehansi, yi pfurha hi ku hatlisa ngopfu. Nawu wo olova lowu tolovelekeke i leswaku rivilo ra ndzilo ri andza kambirhi eka tidigiri tin'wana na tin'wana ta 10 ta ku khandziya ka ndhawu yo rhelela. Eka ndhawu leyi rhelelaka hi tidigiri ta 20, ndzilo wu nga hangalaka hi ku hatlisa kwalomu ka minkarhi ya mune ku tlula eka misava leyi nga ringanaka.
 - Hikwalaho yindlu leyi nga ehenhla ka ndhawu yo rhelela ngopfu leyi nga na byanyi yi le khombyeni lerikulu. Veka swisirheleli swa wena swa ndzilo etlhelweni ra le hansi na le tlhelweni leri mindzilo hi ntolovelo yi taka hi rona.
 
-Loko u dizayina hi ku langutela ndzilo, sirhelela swilo swa nkoka ngopfu ku sungula: vanhu na yindlu, kutani swifuwo, makhele, swakudya swa swifuwo leswi hlayisiweke na khwati ra swakudya.
+Loko u dizayina hi ku langutela ndzilo, sirhelela swilo swa nkoka ngopfu ku sungula: vanhu na yindlu, kutani swifuwo, makhele, swakudya swa swifuwo leswi hlayisiweke na **food forest** (mirhi na swimilana swa swakudya leswi byariweke ku fana na khwati).
 
 ### Tindlela to hunguta khombo ra ndzilo
 
 1. **Hunguta leswi pfurhaka.** Eka sector ya ndzilo na ku rhendzela miako, tsema byanyi byi va byi komile, kukula matluka lama omeke u tlhela u susa tihunyi leti feke. Hlayisa tihunyi, byanyi byo oma bya swifuwo (hay) na byanyi byo pfuleta ekule na yindlu.
-2. **Endla tindlela to sivela ndzilo.** Ndlela yo sivela ndzilo (firebreak) i xiphemu xa misava lexi basisiweke eka swilo leswi nga pfurhaka. Mapatu, misava leyi rimiweke, madamu na swidziva na swona swi nga tirha tanihi tindlela to sivela ndzilo. Vona xiyenge xa nawu laha hansi.
+2. **Endla ti-firebreak.** Firebreak i xiphemu xa misava lexi basisiweke eka swilo leswi nga pfurhaka. Mapatu, misava leyi rimiweke, madamu na swidziva na swona swi nga tirha tanihi ti-firebreak. Vona xiyenge xa nawu laha hansi.
 3. **Byala swimilana swa rihlaza leswi tiyelaka ndzilo.** A ku na ximilana lexi nga pfurhiki nikatsongo, kambe swimilana leswi nga na matluka lama tikeke naswona ma tsakamile, leswi nga na mafurha kumbe resin yitsongo, swi pfurha hi ku nonoka. Swikombiso leswinene swa Afrika Dzonga i aloe, spekboom (*Portulacaria afra*), *Cotyledon*, vygies (*Delosperma* na swimilana leswi yelanaka na swona), sour fig (*Carpobrotus edulis*), bietou (*Osteospermum moniliferum*) na num-num (mixaka ya *Carissa*). Hlawula leswi fanelaka maxelo ya wena, hikuva swin'wana, ku fana na spekboom, a swi tiyeli xirhami xa matimba.
-4. **Hlayisa mirhi leyi pfurhaka hi ku olova ekule na miako.** Mirhi ya phayini, ya gum na ya wattle yi na mafurha kumbe resin naswona yi pfurha hi matimba. Yo tala ya yona i swimilana swa matiko mambe leswi hangalakaka (invasive alien plants) leswi nga eka nxaxamelo.
+4. **Hlayisa mirhi leyi pfurhaka hi ku olova ekule na miako.** Mirhi ya phayini, ya gum na ya wattle yi na mafurha kumbe resin naswona yi pfurha hi matimba. Yo tala ya yona i **invasive species** (swimilana swa matiko mambe leswi hangalakaka) leswi nga eka nxaxamelo.
 5. **Hlayisa mati ma lunghekile.** Va na thanki ya mati, phayiphi kumbe swihahatelo kusuhi na yindlu, swin'we na swibi swa ndzilo (fire beaters) kumbe xifafazeli lexi rhwariwaka enkolweni (knapsack sprayer).
-6. **Nyika xilo xin'we mintirho yo tala.** Ntanga wa le kusuhi na yindlu kumbe ntanga wa mirhi ya mihandzu lowu cheletiwaka, lowu rhendzeleke yindlu, wu tirha tanihi xisirheleli xa rihlaza. Layini ya swimilana leswi tiyelaka ndzilo yi nga tlhela yi tirha tanihi xisivela-moya. Vutisa Fire Protection Association ya wena loko yi hlayiwa tanihi ndlela yo sivela ndzilo leyi amukelekaka hi nawu.
+6. **Nyika xilo xin'we mintirho yo tala.** Ntanga wa le kusuhi na yindlu kumbe ntanga wa mirhi ya mihandzu lowu cheletiwaka, lowu rhendzeleke yindlu, wu tirha tanihi xisirheleli xa rihlaza. Layini ya swimilana leswi tiyelaka ndzilo yi nga tlhela yi tirha tanihi windbreak. Vutisa Fire Protection Association ya wena loko yi hlayiwa tanihi firebreak leyi amukelekaka hi nawu.
 
 ### Nawu: National Veld and Forest Fire Act (101 of 1998) (nawu wa mindzilo ya nhova na ya makhwati)
 
 Nawu lowu wu tirha eka vini va misava eAfrika Dzonga. Loko u rima eka misava ya vaaki kumbe leyi u yi hirheke, vutisa n'wini wa yona, huvo ya ndhavuko kumbe Fire Protection Association ya laha kusuhi leswaku i mani loyi a nga ni vutihlamuleri.
 
-- **Tindlela to sivela ndzilo.** Loko ndzilo wa nhova wu nga sungula, wu pfurha kumbe wu hangalaka wu suka emisaveni ya wena, u fanele ku lunghiselela no hlayisa ndlela yo sivela ndzilo etlhelweni ra wena ra ndzilakano na muakelani un'wana na un'wana. Vaakelani va nga pfumelelana ku veka ndlela yo sivela ndzilo endhawini yin'wana.
-- **Leswi ndlela yo sivela ndzilo yi faneleke ku va swona.** Yi fanele ku anama no leha swinene leswaku ku va ni ntshembo lowu twisisekaka wa leswaku yi ta yimisa ndzilo. A yi fanelanga ku vanga ku kukuriwa ka misava. Yi fanele ku va yi nga ri na swilo swo tala leswi nga rhwalaka ndzilo wu yi tsemakanya. Nawu a wu vekanga ku anama kun'we loku nga cinciki, hikwalaho vutisa Fire Protection Association ya wena leswaku i ku anama kwihi loku tolovelekeke endhawini ya wena.
-- **Ku hisa ndlela yo sivela ndzilo.** Ringeta ku pfumelelana na vaakelani va wena hi siku. Loko mi nga pfumelelani, nyika vaakelani va wena na Fire Protection Association xitiviso lexi tsariweke xa masiku ya 14 hi xitsongo. Hisa ntsena loko khombo ra ndzilo ri pfumelela.
+- **Ti-firebreak.** Loko ndzilo wa nhova wu nga sungula, wu pfurha kumbe wu hangalaka wu suka emisaveni ya wena, u fanele ku lunghiselela no hlayisa firebreak etlhelweni ra wena ra ndzilakano na muakelani un'wana na un'wana. Vaakelani va nga pfumelelana ku veka firebreak endhawini yin'wana.
+- **Leswi firebreak yi faneleke ku va swona.** Yi fanele ku anama no leha swinene leswaku ku va ni ntshembo lowu twisisekaka wa leswaku yi ta yimisa ndzilo. A yi fanelanga ku vanga **erosion** (ku kukuriwa ka misava). Yi fanele ku va yi nga ri na swilo swo tala leswi nga rhwalaka ndzilo wu yi tsemakanya. Nawu a wu vekanga ku anama kun'we loku nga cinciki, hikwalaho vutisa Fire Protection Association ya wena leswaku i ku anama kwihi loku tolovelekeke endhawini ya wena.
+- **Ku hisa firebreak.** Ringeta ku pfumelelana na vaakelani va wena hi siku. Loko mi nga pfumelelani, nyika vaakelani va wena na Fire Protection Association xitiviso lexi tsariweke xa masiku ya 14 hi xitsongo. Hisa ntsena loko khombo ra ndzilo ri pfumelela.
 - **Switsundzuxo swa khombo ra ndzilo.** South African Weather Service (ndzawulo ya maxelo) yi humesa mpimo wa khombo ra ndzilo (fire danger rating). Loko khombo ra ndzilo ri vekiwile ri ri ehenhla kumbe ri ri ehenhla ngopfu (extreme) endhawini ya wena, i nandzu ku hlanganisa kumbe ku tirhisa ndzilo ehandle.
 - **Va u lunghekile ku lwa na ndzilo.** U fanele ku va na switirhisiwa, swiambalo swo sirhelela na vanhu lava leteriweke lava lavekaka ku tima ndzilo. Loko u nga ri kona, vanhu lava tshembekaka va fanele ku va kusuhi leswaku va lwa na ndzilo naswona va tsundzuxa vaakelani va wena na Fire Protection Association.
 - **Ti-Fire Protection Association.** Leyi i mintlawa ya vini va misava lava tirhaka swin'we ku sivela na ku lwa na mindzilo ya nhova. I vutlhari ku joyina. Loko ndzilo wu hangalaka wu suka emisaveni ya wena kutani munhu a ku yisa ekhoto, khoto yi teka leswaku a wu vonelelanga (negligent) handle ka loko u kombisa leswi nga riki swona. Leswi a swi tirhi eka swirho swa Fire Protection Association.
 
-> **Vuhlayiseki:** U nga tshuki u hisa ndlela yo sivela ndzilo u ri wexe, hi siku leri hisaka kumbe leri nga na moya, kumbe loko khombo ra ndzilo ri ri ehenhla. Va na vanhu, mati na swibi swa ndzilo leswi ringaneke swi lunghekile. Kuma ndzetelo eka Fire Protection Association ya wena kumbe eka nongonoko wa Working on Fire ku sungula.
+> **Vuhlayiseki:** U nga tshuki u hisa firebreak u ri wexe, hi siku leri hisaka kumbe leri nga na moya, kumbe loko khombo ra ndzilo ri ri ehenhla. Va na vanhu, mati na swibi swa ndzilo leswi ringaneke swi lunghekile. Kuma ndzetelo eka Fire Protection Association ya wena kumbe eka nongonoko wa Working on Fire ku sungula.
 
 ## Ku vonakala ka dyambu
 
 Swimilana swi lava ku vonakala ka dyambu leswaku swi kula. Matsavu na mihandzu yo tala swi lava tiawara ta tsevu hi xitsongo ta dyambu leri kongomeke hi siku. Dyambu ra nimixo ri ni nkoka ngopfu. Eka tindhawu to hisa ngopfu, ndzhuti wutsongo hi nindzhenga wa pfuna.
 
-Swimilana swi nga tlhela swi kuma dyambu ro tala ku tlula mpimo. Matluka na mihandzu, xikombiso matamatisi na pepere, swi nga hisiwa hi dyambu. Misava leyi nga funengetiwangiki eka dyambu ra matimba yi hisa ngopfu naswona yi oma, kutani leswi swi onha swihanyi swa le misaveni. Swivungu swa misava swi nghena ehansi ngopfu kumbe swi fa. Hlayisa misava yi funengetekile hi xifunengeto (mulch) kumbe hi swimilana, u tirhisa lapi ra ndzhuti (shade cloth) kumbe swimilana swo leha laha dyambu ri hisaka ngopfu kona.
+Swimilana swi nga tlhela swi kuma dyambu ro tala ku tlula mpimo. Matluka na mihandzu, xikombiso matamatisi na pepere, swi nga hisiwa hi dyambu. Misava leyi nga funengetiwangiki eka dyambu ra matimba yi hisa ngopfu naswona yi oma, kutani leswi swi onha swihanyi swa le misaveni. Swivungu swa misava swi nghena ehansi ngopfu kumbe swi fa. Hlayisa misava yi funengetekile hi **mulch** (xifunengeto xa byanyi byo oma kumbe matluka) kumbe hi swimilana, u tirhisa lapi ra ndzhuti (shade cloth) kumbe swimilana swo leha laha dyambu ri hisaka ngopfu kona.
 
 ### Ku tlakuka ka dyambu
 
@@ -147,7 +147,7 @@ Nimixo na nindzhenga, tindzhuti ti leha ngopfu ku tlula ku leha loku ka nhlikanh
 ### Ku tirhisa dyambu
 
 - **Mirhi na swimilana leswi khandziyaka leswi hluvulaka matluka hi vuxika (deciduous)** swi lahla matluka ya swona hi vuxika. Swi byale etlhelweni ra n'walungu ra yindlu leswaku swi nyika ndzhuti hi ximumu na dyambu hi vuxika. Swikombiso i madiriva (grape vines), figi, white stinkwood (*Celtis africana*) na wild pear (*Dombeya rotundifolia*).
-- **Swilo leswi hlayisaka ku hisa (thermal mass).** Switina, maribye, misava na mati swi nwa ku hisa nhlikanhi kutani swi ku humesa nivusiku. Swi veke laha dyambu ra vuxika ri nga swi fikelelaka kona, xikombiso endzhaku ka mafasitere lama languteke en'walungu.
+- **Thermal mass (swilo leswi hlayisaka ku hisa).** Switina, maribye, misava na mati swi nwa ku hisa nhlikanhi kutani swi ku humesa nivusiku. Swi veke laha dyambu ra vuxika ri nga swi fikelelaka kona, xikombiso endzhaku ka mafasitere lama languteke en'walungu.
 - **Xiphemu xa lwangu lexi humaka ehandle ka rirhangu (eave).** Etlhelweni ra n'walungu ra yindlu, endla leswaku xiphemu lexi xa lwangu xi anama swinene ku sirhelela mafasitere eka dyambu ra ximumu leri nga ehenhla, kambe xi koma swinene ku pfumelela dyambu ra vuxika leri nga ehansi ri vonakala ri nghena.
 - **Mafasitere lama languteke evupeladyambu** ma pfumelela dyambu ro hisa ra nindzhenga ri nghena. Eka tindhawu to hisa, ma endle matsongo kumbe u ma nyika ndzhuti.
 
@@ -183,12 +183,12 @@ Byala swimilana leswi rhandzaka dyambu ku fana na matamatisi ekusuhi na rirhangu
 
 Tindlela to endla maxelo lamanene ya tindhawu titsongo eka tindhawu leti titimelaka:
 
-- **Aka eka bandi yo kufumela (thermal belt).** Hi vusiku lebyi nga riki na mapapa naswona byi nga riki na moya, moya wo titimela wu khuluka wu rhelela ku fana na mati kutani wu hlengeletana eminkoveni. Tindhawu leti to titimela ti vuriwa swikhele swa xirhami (frost pockets). Bandi leyi nga exikarhi ka ndhawu yo rhelela yi tshama yi kufumela. Leyi i bandi yo kufumela. Aka yindlu ya wena u tlhela u byala swibyariwa leswi nga tiyeliki xirhami kona, ku nga ri ehansi ka nkova.
+- **Aka eka bandi yo kufumela (thermal belt).** Hi vusiku lebyi nga riki na mapapa naswona byi nga riki na moya, moya wo titimela wu khuluka wu rhelela ku fana na mati kutani wu hlengeletana eminkoveni. Tindhawu leti to titimela ti vuriwa **ti-frost pocket** (swikhele swa xirhami). Bandi leyi nga exikarhi ka ndhawu yo rhelela yi tshama yi kufumela. Leyi i bandi yo kufumela. Aka yindlu ya wena u tlhela u byala swibyariwa leswi nga tiyeliki xirhami kona, ku nga ri ehansi ka nkova.
 - **Byala mirhi ehenhla.** Layini ya mirhi ehenhla ka yindlu yi nonokisa moya wo titimela lowu khulukaka wu rhelela nivusiku, yi tlhela yi wu hambukisa.
 - **Tirhisa mati.** Hambi xidziva xitsongo kumbe thanki ekusuhi na yindlu swi pfuna ku ringanisa mahiselo.
 - **Languteta tiyindlu en'walungu** leswaku ti kuma dyambu ra vuxika.
 - **Tirhisa swimilana leswi hluvulaka matluka hi vuxika** ku kuma ndzhuti hi ximumu na dyambu hi vuxika.
-- **Tirhisa ku hisa ka khompositi.** Nhulu wa khompositi endzeni ka thanele ya plastiki wu humesa ku hisa hi vuxika.
+- **Tirhisa ku hisa ka compost (thyaka ra swimilana leri bolaka).** Nhulu wa compost endzeni ka thanele ya plastiki wu humesa ku hisa hi vuxika.
 - **Tirhisa swimilana ku titimelisa.** Hi ximumu, swimilana swi titimelisa moya lowu swi rhendzeleke hi ndzhuti wa swona na mati lawa swi ma humesaka.
 
 ### Mahiselo na mixaka ya maxelo
@@ -203,7 +203,7 @@ Maxelo ya ntiyiso ya tropical i laha hambi n'hweti leyi titimelaka ngopfu yi nga
 
 Swikombiso: avokhado, vanana, manga, litchi, phapayi (paw-paw), macadamia, kofi, custard apple na citrus (orenji, naartjie, lamula). Citrus yi tlhela yi mila kahle eka tindhawu to tala leti nga na vuxika lebyi nga titimeliki ngopfu.
 
-> **Xitsundzuxo:** Guava, purple granadilla (*Passiflora edulis*) na tree tomato (*Solanum betaceum*) i swimilana swa matiko mambe leswi hangalakaka (invasive alien plants) leswi nga eka nxaxamelo wa NEMBA (2020) eka swifundzankulu swo hlayanyana, ku katsa KwaZulu-Natal, Eastern Cape, Limpopo na Mpumalanga. White mulberry (*Morus alba*) yi le ka nxaxamelo eAfrika Dzonga hinkwaro. Kambela milawu ya xifundzankulu xa wena u nga si swi byala. Black mulberry (*Morus nigra*) a yi le ka nxaxamelo.
+> **Xitsundzuxo:** Guava, purple granadilla (*Passiflora edulis*) na tree tomato (*Solanum betaceum*) i invasive species leswi nga eka nxaxamelo wa NEMBA (2020) eka swifundzankulu swo hlayanyana, ku katsa KwaZulu-Natal, Eastern Cape, Limpopo na Mpumalanga. White mulberry (*Morus alba*) yi le ka nxaxamelo eAfrika Dzonga hinkwaro. Kambela milawu ya xifundzankulu xa wena u nga si swi byala. Black mulberry (*Morus nigra*) a yi le ka nxaxamelo.
 
 ### Maxelo ya xikarhi (temperate)
 
@@ -231,7 +231,7 @@ Hydrology i dyondzo ya mati emisaveni ya wena: laha ma humaka kona, ndlela leyi 
 - mpfula ya ndhawu ya wena: nguva ya mpfula na mpfula ya ntolovelo hi lembe,
 - ndlela leyi misava ya wena yi humesaka mati ha yona kahle na mati lamanyingi lawa yi nga ma khomaka,
 - mati lamanyingi lawa u nga ma hlengeletaka eka malwangu na eka tindhawu tin'wana leti tiyeke,
-- leswi ku cinca ka maxelo (climate change) ku languteriweke ku swi endla eka mpfula ya ndhawu ya wena.
+- leswi **climate change** (ku cinca ka maxelo) yi languteriweke ku swi endla eka mpfula ya ndhawu ya wena.
 
 Ku hlayela mati lawa lwangu ri nga ma hlengeletaka: 1 mm wa mpfula eka mitara yin'we ya sikwere ya lwangu yi nyika litara yin'we ya mati. Xikombiso, lwangu ra mitara ya sikwere ya 50 endhawini leyi nga na mpfula ya 500 mm hi lembe ri nga hlengeleta ku ya fika eka 25,000 wa tilitara hi lembe, loko ku susiwa mati man'wana lama lahlekaka.
 
@@ -258,24 +258,24 @@ Loko moya wu omile ngopfu, swimilana swi nga ganga handle ka leswaku ku vumbeka 
 Sirhelela swimilana swa wena vuxika byi nga si sungula. Swi antswa ku hatlisa ku ri na ku hlwela.
 
 1. **Funengeta swimilana hi vusiku bya xirhami** hi lapi ra xirhami (frost cloth), mashiti ya khale, byanyi byo oma kumbe matlhokwa. Swifunengeto leswi fikaka emisaveni swi hlayisa ku hisa ko tala ka misava. Swi suse nimixo.
-2. **Sirhelela ntanga.** Xisivela-moya kumbe lufenisi leri hanyaka leri rhendzeleke ntanga ri sivela moya wo titimela. Siya ndhawu leyi pfulekeke etlhelweni ra le hansi leswaku moya wo titimela wu ta humelela wu nga pfaleleki entangeni.
+2. **Sirhelela ntanga.** Windbreak kumbe lufenisi leri hanyaka leri rhendzeleke ntanga ri sivela moya wo titimela. Siya ndhawu leyi pfulekeke etlhelweni ra le hansi leswaku moya wo titimela wu ta humelela wu nga pfaleleki entangeni.
 3. **Kongomisa moya wo titimela wu rhendzela ntanga.** Byala lufenisi leri hanyaka leri nga ni xivumbeko xa nsimbhi ya xikondzo xa hanci (horseshoe) etlhelweni ra le henhla, laha ku pfulekeke ku languteke ehansi.
 4. **Endla swiphasi swa dyambu.** Rirhangu leri languteke en'walungu, khurhana ra misava kumbe lufenisi leri hanyaka leri gombonyokeke swi khoma dyambu naswona swi hlayisa moya wo kufumela.
 5. **Hlayisa ku hisa.** Maribye, switina kumbe madiramu ya mati lama rhendzeleke swimilana swi nwa ku hisa nhlikanhi kutani swi ku humesa nivusiku.
-6. **Byala mirhi yo sirhelela (nurse trees).** Xiyenge xa ehenhla (canopy) xo vevuka xa mirhi yo rhanga (pioneer) leyi nga hanyiki nkarhi wo leha xi sirhelela mirhi leyintshwa ya mihandzu na swimilana swin'wana leswi nga tiyeliki eka xirhami.
-7. **Funengeta misava hi vukheta.** Xifunengeto (mulch) xi sirhelela timitsu na swihanyi swa le misaveni hi vuxika. Kambe xifunengeto xi tlhela xi sivela misava ku humesa ku hisa loku yi ku hlayiseke nivusiku, hikwalaho swimilana swo koma ngopfu leswi nga tiyeliki swi nga kuma xirhami xo tala ehenhla ka xifunengeto xo tiya. Eka mibhedhi leyi xirhami xi welaka eka yona hi ku olova, cheleta misava siku ri nga si fika vusiku bya xirhami, hikuva misava leyi tsakameke yi hlayisa ku hisa ko tala.
-8. **Tirhisa mintlawa ya swimilana (guilds).** Mintlawa ya swimilana leswi kurisiwaka swin'we swi sirhelelana (vona ndzima ya 6).
+6. **Byala mirhi yo sirhelela (nurse trees).** **Canopy** (xiyenge xa ehenhla xa mirhi) yo vevuka ya mirhi yo rhanga (pioneer) leyi nga hanyiki nkarhi wo leha yi sirhelela mirhi leyintshwa ya mihandzu na swimilana swin'wana leswi nga tiyeliki eka xirhami.
+7. **Veka mulch hi vukheta.** Mulch yi sirhelela timitsu na swihanyi swa le misaveni hi vuxika. Kambe mulch yi tlhela yi sivela misava ku humesa ku hisa loku yi ku hlayiseke nivusiku, hikwalaho swimilana swo koma ngopfu leswi nga tiyeliki swi nga kuma xirhami xo tala ehenhla ka mulch yo tiya. Eka mibhedhi leyi xirhami xi welaka eka yona hi ku olova, cheleta misava siku ri nga si fika vusiku bya xirhami, hikuva misava leyi tsakameke yi hlayisa ku hisa ko tala.
+8. **Tirhisa ti-guild (mintlawa ya swimilana).** Mintlawa ya swimilana leswi kurisiwaka swin'we swi sirhelelana (vona ndzima ya 6).
 
-## Ku cinca ka maxelo
+## Climate change
 
-Ku cinca ka maxelo (climate change) i ku cinca ka nkarhi wo leha eka mavumbeko ya maxelo, eka ndhawu yin'we kumbe emisaveni hinkwayo. Ku cinca loku ku tisa mahiselo ya le henhla, ku cinca ka mpfula, maxelo lama tlulaka mpimo na mati lamatsongo. Leswi swi nga onha misava, swi hunguta ntshovelo wa mapurasi naswona swi tisa ndlala na ku pfumaleka ka mati. I rin'we ra makhombo lamakulu ngopfu eka vurimi namuntlha.
+Climate change i ku cinca ka nkarhi wo leha eka mavumbeko ya maxelo, eka ndhawu yin'we kumbe emisaveni hinkwayo. Ku cinca loku ku tisa mahiselo ya le henhla, ku cinca ka mpfula, maxelo lama tlulaka mpimo na mati lamatsongo. Leswi swi nga onha misava, swi hunguta ntshovelo wa mapurasi naswona swi tisa ndlala na ku pfumaleka ka mati. I rin'we ra makhombo lamakulu ngopfu eka vurimi namuntlha.
 
 ### Leswi humelelaka eDzongeni ra Afrika
 
 - Dzonga ra Afrika ri kufumela hi ku hatlisa ku tlula ntolovelo wa misava hinkwayo. Swiphemu swin'wana swa le ndzeni ka Afrika Dzonga swi kufumele kwalomu ka kambirhi hi ku hatlisa ku tlula ntolovelo wa misava hinkwayo.
 - Masiku yo hisa ngopfu na tinguva to hisa ngopfu (heatwaves) swi tolovelekile ngopfu, naswona vusiku lebyi titimelaka byi hungutekile. Vativi va sayense va languterile leswaku leswi swi ta ya emahlweni.
 - Madyandza lama onhaka swibyariwa na nhova ma languteriwile ku tolovelekile ngopfu eDzongeni ra Afrika loko misava yi ya yi kufumela.
-- Ku cinca ka maxelo ku endlile leswaku dyandza ra Kapa (Cape Town) ra 2015 ku ya eka 2017 ri va ni ku koteka kwalomu ka minkarhi yinharhu ku tlula.
+- Climate change yi endlile leswaku dyandza ra Kapa (Cape Town) ra 2015 ku ya eka 2017 ri va ni ku koteka kwalomu ka minkarhi yinharhu ku tlula.
 - Masiku yo tala ya khombo lerikulu ra ndzilo ma languteriwile.
 
 ### Ku dizayina hi ku langutela maxelo lama cincaka
@@ -283,19 +283,19 @@ Ku cinca ka maxelo (climate change) i ku cinca ka nkarhi wo leha eka mavumbeko y
 Eka permaculture hi hlelela maxelo lama cincacincaka na makhombo. Tindlela to aka matimba yo pfuka (resilience):
 
 - Byala swibyariwa swo tala swo hambana, leswaku ku tsandzeka ka xin'we ku nga ku onhi hinkwaswo.
-- Hlawula swimilana leswi kotaka swiyimo swo hambana-hambana, ku katsa na swimilana swa ndhavuko.
-- Kurisa swimilana leswi hanyaka malembe yo tala (perennials): mirhi, swihlahla na swimilana swin'wana leswi hanyaka minguva yo tala.
+- Hlawula swimilana leswi kotaka swiyimo swo hambana-hambana, ku katsa na swimilana swa **indigenous** (swa ndhavuko).
+- Kurisa **ti-perennial** (swimilana leswi hanyaka malembe yo tala): mirhi, swihlahla na swimilana swin'wana leswi hanyaka minguva yo tala.
 - Fuya mixaka ya ndhavuko ya swifuwo leyi tiyeke, ku fana na tihuku ta xintu, timbuti na tihomu ta Nguni.
-- Byala swisivela-moya u tlhela u hlayisa mati leswaku u sirhelelekile eka maxelo lama tlulaka mpimo.
-- Hlayisa misava yi funengetekile hi swimilana swo funengeta misava (cover crops) na xifunengeto.
-- Pfuna mpfula ku nghena emisaveni hi swisele (swales), xifunengeto na swimilana leswi funengetaka misava.
+- Byala ti-windbreak u tlhela u hlayisa mati leswaku u sirhelelekile eka maxelo lama tlulaka mpimo.
+- Hlayisa misava yi funengetekile hi swimilana swo funengeta misava (cover crops) na mulch.
+- Pfuna mpfula ku nghena emisaveni hi **ti-swale** (migodi leyi khomaka mpfula), mulch na swimilana leswi funengetaka misava.
 - Hlayisa swakudya leswi tlulaka (surplus) hi ku swi omisa, ku swi endla pickle, na ku endla jamu na chutney.
 - Hlayisa mbewu ya wena leswaku yi tolovelana na swiyimo swa laha kaya, u tlhela u avelana mbewu hi bangi ya mbewu ya vaaki (community seed bank).
 - Tirhisa ku risa loku hleriweke (planned grazing): fambisa swifuwo nkarhi na nkarhi u tlhela u nyika nhova nkarhi wo wisa no pfuka.
 
 > **Vuhlayiseki:** Ku pfalela swakudya leswi nga riki na asidi yo tala, ku fana na tinyawa, marhanga, matsavu man'wana kumbe nyama, eswibyeni kaya swi nga vanga botulism, chefu ya swakudya leyi dlayaka, handle ka loko ku tirhisiwa ndlela leyi kamberiweke. Endla pickle ya matsavu hi vhinigara leyi ringaneke, endla jamu hi mihandzu, kumbe u omisa swakudya swa wena ematshan'weni ya sweswo. Landzelela ndlela yo sweka (recipe) leyi kamberiweke.
 
-Makhombo ku fana na tindhambi, madyandza, mindzilo, swidzedze swa matimba na swidzedze swa tropical (tropical cyclones) swi nga onha rifuwo naswona swi dlaya swifuwo na vanhu. Ku cinca ka maxelo ku endla leswaku swin'wana swa swona, ngopfu tinguva to hisa ngopfu, madyandza na maxelo ya mindzilo, swi humelela hi ku tala kumbe swi biha ngopfu eDzongeni ra Afrika. Swi hlelele: u nga aki eka tindhawu leti tindhambi ti fikaka kona (flood plains), hlayisa tindlela to sivela ndzilo na mati swi lunghekile, naswona u hlayisa swakudya, mbewu na swakudya swa swifuwo swa nkarhi wo tika.
+Makhombo ku fana na tindhambi, madyandza, mindzilo, swidzedze swa matimba na swidzedze swa tropical (tropical cyclones) swi nga onha rifuwo naswona swi dlaya swifuwo na vanhu. Climate change yi endla leswaku swin'wana swa swona, ngopfu tinguva to hisa ngopfu, madyandza na maxelo ya mindzilo, swi humelela hi ku tala kumbe swi biha ngopfu eDzongeni ra Afrika. Swi hlelele: u nga aki eka tindhawu leti tindhambi ti fikaka kona (flood plains), hlayisa ti-firebreak na mati swi lunghekile, naswona u hlayisa swakudya, mbewu na **fodder** (swakudya swa swifuwo) ya nkarhi wo tika.
 
 ## Tinhla ta nkoka
 
@@ -304,9 +304,9 @@ Makhombo ku fana na tindhambi, madyandza, mindzilo, swidzedze swa matimba na swi
 - Dyondza mimoya ya laha kaya: berg winds, ti-cold front, moya wa dzonga-vuxa wa Kapa na mimoya ya August hinkwayo yi tisa ndzilo kumbe ku titimela.
 - Nguva ya mindzilo i vuxika na masungulo ya ximumu eka tindhawu leti mpfula yi naka hi ximumu, na ximumu eWestern Cape.
 - Ndzilo wu tsutsuma hi ku hatlisa ngopfu loko wu khandziya; veka swisirheleli swa ndzilo etlhelweni ra le hansi na le ka sector ya ndzilo.
-- Hi ku ya hi nawu, vini va misava va fanele ku hlayisa tindlela to sivela ndzilo, ku nyika xitiviso xa masiku ya 14 va nga si ti hisa naswona va nga hisi loko khombo ra ndzilo ri ri ehenhla. Joyina Fire Protection Association ya wena.
+- Hi ku ya hi nawu, vini va misava va fanele ku hlayisa ti-firebreak, ku nyika xitiviso xa masiku ya 14 va nga si ti hisa naswona va nga hisi loko khombo ra ndzilo ri ri ehenhla. Joyina Fire Protection Association ya wena.
 - Dyambu ra vuxika ri le hansi en'walungu; hlayisa tlhelo ra n'walungu ra mibhedhi na tiyindlu ri pfulekele rona.
 - Afrika Dzonga hinkwaro kwalomu ri kuma mpfula hi ximumu; Western Cape yi kuma mpfula hi vuxika; tiko hinkwaro ri omile.
 - Moya wo titimela wu hlengeletana eka tindhawu ta le hansi; aka u tlhela u byala swibyariwa leswi nga tiyeliki xirhami eka bandi yo kufumela.
 - Kambela NEMBA u nga si byala guava, granadilla, tree tomato kumbe mulberry.
-- Dzonga ra Afrika ri kufumela hi ku hatlisa; hlelela ku hisa, dyandza na ndzilo hi ku hambana-hambana, swimilana leswi hanyaka malembe yo tala, ku funengeta misava na ku hlayisa mati na mbewu.
+- Dzonga ra Afrika ri kufumela hi ku hatlisa; hlelela ku hisa, dyandza na ndzilo hi ku hambana-hambana, ti-perennial, ku funengeta misava na ku hlayisa mati na mbewu.

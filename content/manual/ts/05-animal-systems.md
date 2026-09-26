@@ -12,10 +12,10 @@ Swiharhi, swa nhova na swa le kaya, swi nyika mimpfuno yo tala:
 - **Ku lawula swimilana.** Swiharhi leswi dyaka byanyi swi hlayisa byanyi na nhova swi komile.
 - **Ku lunghisa misava.** Swiharhi leswi khathaleriwaka kahle swi nga pfuna ku vuyisa misava leyi onhakeke.
 - **Swilo leswi swi swi humesaka.** Nyama, matandza, masi, voya, tinsiva na vulombe.
-- **Mimpfuno ya ntumbuluko** (ecosystem services). Tinyoxi ti hluvukisa swiluva swa swibyariwa (pollinate); tidada na tihuku ti dya swivungu swo onha.
+- **Mimpfuno ya ecosystem** (mimpfuno leyi ntumbuluko lowu hanyaka swin'we wu yi nyikaka). Tinyoxi ti hluvukisa swiluva swa swibyariwa (pollinate); tidada na tihuku ti dya swivungu swo onha.
 - **Ku tirhisa thyaka nakambe.** Swiharhi swi hundzula masalela ya swakudya na mihandzu leyi boleke swi va vulongo. Tinguluve leti pfumeleriwaka ku nghena entangeni wa mirhi ya mihandzu nkarhi wutsongo ti basisa mihandzu leyi weleke.
 - **Ku aka misava.** Swiharhi swi vuyisela swakudya swa swimilana (nutrients) emisaveni naswona swi hetisa rhendzeleko wa swakudya leswi.
-- **Monyolo wa mati.** Tindhawu to fuya swivungu swa misava (worm farms) ti humesa mati lama teleke hi swakudya swa swimilana ("mati ya swivungu", worm tea).
+- **Monyolo wa mati.** **Ti-worm farm** (tindhawu to fuya swivungu) ti humesa mati lama teleke hi swakudya swa swimilana (**worm tea**, "mati ya swivungu").
 - **Ku tsema rhendzeleko wa swivungu swo onha.** Tihuku leti landzaka tihomu ti kokorha vulongo naswona ti dya swivungu swa tinhongana (fly larvae).
 - **Ku koka na ku rhwala.** Timbhongolo, tihanci na tinkabi swi koka tipulawu na tikaritsi.
 - **Vuhlayiseki.** Timbyana, hambi ku ri tihansi (geese), ti ku tsundzuxa loko vanhu lava u nga va tiviki va ta.
@@ -31,13 +31,13 @@ Xiharhi xin'wana na xin'wana, ku katsa na vanhu, xi khumba ndhawu leyi xi tshama
 
 Hlawula mixaka ya swiharhi leyi fambelanaka na maxelo ya ka n'wina na swilaveko swa wena. Tanihi leswi maxelo ma yaka ma nga ha vhumbheki, i vutlhari ku hlawula swiharhi leswi tiyeke leswi kotaka ku tiyisela swiyimo swo hambana-hambana.
 
-## Swivala leswi fambaka (animal tractors)
+## Ti-animal tractor
 
-**Xivala lexi fambaka** (animal tractor) i xivala lexi rhurhisiwaka, kumbe ndhawu leyi nga na lufenisi leri rhurhisiwaka, laha swiharhi ku fana na tihuku, tidada, tikalikuni (turkeys), tihansi (geese), tinguluve kumbe timbuti swi endlaka ntirho lowu pfunaka. Swi nyika vulongo, swi kokorha, swi dya byanyi naswona swi cela hilaha swi endlaka hakona hi ntumbuluko, hikwalaho swi basisa, swi lulamisa naswona swi hlayisa swiphemu swa purasi. Loko ndhawu yin'we yi herile, u rhurhisela xivala eka leyi landzelaka.
+**Animal tractor** (xivala lexi fambaka) i xivala lexi rhurhisiwaka, kumbe ndhawu leyi nga na lufenisi leri rhurhisiwaka, laha swiharhi ku fana na tihuku, tidada, tikalikuni (turkeys), tihansi (geese), tinguluve kumbe timbuti swi endlaka ntirho lowu pfunaka. Swi nyika vulongo, swi kokorha, swi dya byanyi naswona swi cela hilaha swi endlaka hakona hi ntumbuluko, hikwalaho swi basisa, swi lulamisa naswona swi hlayisa swiphemu swa purasi. Loko ndhawu yin'we yi herile, u rhurhisela xivala eka leyi landzelaka.
 
-Swivala leswi fambaka swi pfuna swiharhi na swona. Swi swi sirhelela eka swiharhi leswi swi dyaka (predators), swi swi nyika swakudya swo hambana-hambana, misava leyintshwa na nkarhi wo hanya hi ndlela ya ntumbuluko.
+Ti-animal tractor ti pfuna swiharhi na swona. Ti swi sirhelela eka **ti-predator** (swiharhi leswi swi dyaka), ti swi nyika swakudya swo hambana-hambana, misava leyintshwa na nkarhi wo hanya hi ndlela ya ntumbuluko.
 
-Swi tirhisiwa ku:
+Ti tirhisiwa ku:
 
 - basisa na ku nonisa mibhedhi exikarhi ka swibyariwa
 - basisa ehansi ka mirhi ya mihandzu
@@ -45,9 +45,9 @@ Swi tirhisiwa ku:
 - lulamisa ndhawu ya xidziva (tinguluve ti cela no tiyisa misava)
 - basisa misava leyi teleke hi swihlahla na nhova
 
-Xivala lexi fambaka xi nga va xivumbeko xo olova xa timhandzi (frame) lexi pfaleke, lexi funengetiweke hi nete ya wayara (wire mesh), lexi akiweke hi swilo swa le vhengeleni ra switirhisiwa. Xi nga tlhela xi va lexi pfulekeke, xi tirhisa lufenisi ra gezi leri rhurhisiwaka.
+Animal tractor yi nga va xivumbeko xo olova xa timhandzi (frame) lexi pfaleke, lexi funengetiweke hi nete ya wayara (wire mesh), lexi akiweke hi swilo swa le vhengeleni ra switirhisiwa. Yi nga tlhela yi va leyi pfulekeke, yi tirhisa lufenisi ra gezi leri rhurhisiwaka.
 
-Swivala swo hambana leswi fambaka swi tirha kahle loko swi landzelelana. Xikombiso, rhurhisela tihuku endhawini endzhaku ka tinguluve, timbuti kumbe tihomu: tihuku ti kokorha vulongo byi nghena emisaveni naswona ti dya swivungu swa tinhongana.
+Ti-animal tractor to hambana ti tirha kahle loko ti landzelelana. Xikombiso, rhurhisela tihuku endhawini endzhaku ka tinguluve, timbuti kumbe tihomu: tihuku ti kokorha vulongo byi nghena emisaveni naswona ti dya swivungu swa tinhongana.
 
 ## Tihuku
 
@@ -57,7 +57,7 @@ Tihuku kumbexana i swiharhi swa nkoka swinene eka Zone 1 na Zone 2. Ti tsongo, a
 
 Tihuku i **swiharhi leswi dyaka hinkwaswo** (omnivores): ti dya swakudya swa swimilana na swa swiharhi. Swakudya leswi hanyisaka swi katsa:
 
-- **Phurotheni** (protein), leyi humaka eka swivungwana, swivungu na swimilana swa muxaka wa tinyawa (legumes) ku fana na tinyawa (leti swekiweke) na mbewu ya pigeon pea
+- **Phurotheni** (protein), leyi humaka eka swivungwana, swivungu na **ti-legume** (swimilana swa muxaka wa tinyawa) ku fana na tinyawa (leti swekiweke) na mbewu ya pigeon pea
 - **Matimba**, lama humaka eka swibyariwa swa timbewu ku fana na mavele, mabele, koroni (wheat) na barley
 - **Swa rihlaza**, leswi humaka eka byanyi, nhova na swimilana swin'wana
 - **Khalisiyamu** (calcium) leswaku makhoko ya matandza ma tiya, leyi humaka eka makhoko ya oyster lama pfotlosiweke, maribyana ya limestone kumbe makhoko ya matandza lama omisiweke naswona ma pfotlosiwile
@@ -69,14 +69,14 @@ Huku leyi tshikelaka yi dya kwalomu ka 110–140 g wa swakudya hi siku naswona y
 
 **Swakudya leswi xaviweke.** Saka ra swakudya swa xibindzu swa tihuku leti tshikelaka (layer) kumbe swo kurisa (grower) ri ringanisiwile naswona ri olovisa ntirho, kambe ri durha. Mavele na soya swo tala leswi byariwaka eAfrika Dzonga swi cinciwile tijini (genetically modified, GM), naswona swakudya leswi xaviweke hi ntolovelo swi na hinkwaswo swimbirhi. Varimi van'wana va permaculture va hlawula ku papalata swakudya swa GM.
 
-**Swakudya leswi byariweke ekaya.** U nga hunguta ntsengo wa swakudya hi swivala leswi fambaka swa tihuku, hi ku hundzuluxa tihuku exikarhi ka swivala swo hambana, na hi ku byala xiphemu xa swakudya swa tona. Tihuku leti famba-fambaka ti ntshunxekile (free-range) naswona ti dya swa rihlaza swo tala na swivungwana hi ntolovelo ti tshikela matandza lama nga na xitshopani (yolk) lexi tsindziyeke kumbe xa oranji. Swakudya leswi byariweke ekaya swi fanele ku ringanisiwa na swona: tihuku leti phameriwaka timbewu ntsena ti tshikela matandza ma nga ri mangani. Loko matandza ma hunguteka, engetela swakudya swa phurotheni kumbe swakudya swin'wana swa tihuku leti tshikelaka leswi xaviweke.
+**Swakudya leswi byariweke ekaya.** U nga hunguta ntsengo wa swakudya hi ti-chicken tractor, hi ku hundzuluxa tihuku exikarhi ka swivala swo hambana, na hi ku byala xiphemu xa swakudya swa tona. Tihuku leti famba-fambaka ti ntshunxekile (free-range) naswona ti dya swa rihlaza swo tala na swivungwana hi ntolovelo ti tshikela matandza lama nga na xitshopani (yolk) lexi tsindziyeke kumbe xa oranji. Swakudya leswi byariweke ekaya swi fanele ku ringanisiwa na swona: tihuku leti phameriwaka timbewu ntsena ti tshikela matandza ma nga ri mangani. Loko matandza ma hunguteka, engetela swakudya swa phurotheni kumbe swakudya swin'wana swa tihuku leti tshikelaka leswi xaviweke.
 
 ### Swakudya swa mahala epurasini
 
 - Masalela ya swakudya: makhoko ya matsavu, xinkwa xa khale na timbewu ta khale
 - Swivungu swo onha swa le ntangeni: ti-slug (slugs), tisinayele (snails), swivungu swa le misaveni (grubs) na matluka lama funengetiweke hi aphid
-- Xifunengeto (mulch): byanyi lebyi tsemiweke kumbe matluka lama hlengeletiweke hi reki swi rhwala swivungwana leswitsongo na mbewu ya nhova
-- Nhulu wa khompositi (ti tshike ti kokorha ehandle ka wona)
+- **Mulch** (xifunengeto): byanyi lebyi tsemiweke kumbe matluka lama hlengeletiweke hi reki swi rhwala swivungwana leswitsongo na mbewu ya nhova
+- Nhulu wa **compost** (thyaka leri bolaka) — ti tshike ti kokorha ehandle ka wona
 - Swa rihlaza swa madyelo na nhova
 - Swiluva swa dyambu (sunflowers) leswi byariweke etlhelweni ra masimu; hayeka tinhloko leti vupfeke leswaku swinyenyani swi ti tsontsa
 - Swivungwana leswi nga eka vulongo bya tihomu na swiharhi swin'wana leswikulu
@@ -98,19 +98,19 @@ Tihuku ti lava yindlu leyi hlayisekeke nivusiku.
 - **Mabokisi ya ku tshikela** (nest boxes): tihuku leti tshikelaka ti lava bokisi ra ku tshikela leri miyeleke naswona ri nga ni munyama. Endla bokisi rin'wana na rin'wana ri anama kwalomu ka 30 cm, ri enta 30 cm naswona ri leha 30 cm, u nyika kwalomu ka bokisi rin'we eka tihuku ta mune kumbe ta ntlhanu. Mabokisi ya khale ya mapulanga ya mihandzu ma tirha kahle, kumbe u ma aka hi mapulanga. Ma andlale hi byanyi lebyi tengeke byo oma, mahlanga kumbe swiphemu swa mapulanga leswi phahliweke (wood shavings).
 - **Ku nghena ka moya lowuntshwa** (ventilation): moya wu fanele ku khuluka endzeni ka yindlu, kambe ku nga vi na moya lowu titimelaka lowu hungelaka tihuku nivusiku.
 
-### Swiharhi leswi dyaka tihuku (predators)
+### Ti-predator
 
-Etindhawini ta le makaya, swiharhi leswi dyaka swin'wana hi ntolovelo i xiphiqo lexikulu swinene. Tinyoka, timongoose, tinsimba (genets), tikati ta nhova, timbyana, makondlo na swinyenyani leswi dyaka swin'wana (birds of prey) hinkwaswo swi teka tihuku na tihukwana.
+Etindhawini ta le makaya, ti-predator hi ntolovelo i xiphiqo lexikulu swinene. Tinyoka, timongoose, tinsimba (genets), tikati ta nhova, timbyana, makondlo na swinyenyani leswi dyaka swin'wana (birds of prey) hinkwaswo swi teka tihuku na tihukwana.
 
-- Pfalela tihuku endzeni ka yindlu leyi hlayisekeke leyi swiharhi leswi dyaka swin'wana swi nga kotiki ku nghena eka yona vusiku byin'wana na byin'wana.
+- Pfalela tihuku endzeni ka yindlu leyi hlayisekeke leyi ti-predator ti nga kotiki ku nghena eka yona vusiku byin'wana na byin'wana.
 - Tirhisa nete ya wayara leyi tiyeke leyi nga na timbhovo letitsongo, naswona u yi celela ehansi kumbe u yi petsa u yi langutisa ehandle eku heleni ka yona ehansi, leswaku swiharhi swi nga koti ku cela swi hundza ehansi ka yona.
 - Sirhelela tihukwana eka xivala lexi funengetiweke ehenhla.
 
-Swi nga teka nkarhi naswona u nga lahlekeriwa hi tihuku tin'wana loko u nga si aka yindlu ya tihuku kumbe xivala lexi fambaka lexi faneleke. Languta tidizayini leti varimi van'wana va laha kaya va ti tirhisaka hi ku humelela.
+Swi nga teka nkarhi naswona u nga lahlekeriwa hi tihuku tin'wana loko u nga si aka yindlu ya tihuku kumbe chicken tractor leyi faneleke. Languta tidizayini leti varimi van'wana va laha kaya va ti tirhisaka hi ku humelela.
 
 ### Ku hundzuluxa tihuku entangeni
 
-Tihuku ti pfuna entangeni, kambe ti tlhela ti kokorha swimilana leswintshwa na xifunengeto. Ti rhurhise hi ku landzelelana: tshika ntlawa wu tirha eka mubhedhi nkarhi lowu vekiweke (xikombiso endzhaku ka ntshovelo), kutani u ti vuyisela eku famba-fambeni ti ntshunxekile kumbe exivaleni xa tona ku fikela loko mubhedhi lowu landzelaka wu lunghekile.
+Tihuku ti pfuna entangeni, kambe ti tlhela ti kokorha swimilana leswintshwa na mulch. Ti rhurhise hi ku landzelelana: tshika ntlawa wu tirha eka mubhedhi nkarhi lowu vekiweke (xikombiso endzhaku ka ntshovelo), kutani u ti vuyisela eku famba-fambeni ti ntshunxekile kumbe exivaleni xa tona ku fikela loko mubhedhi lowu landzelaka wu lunghekile.
 
 > **Xitsundzuxo:** Eka tipurasi letikulu ta xibindzu, hi ntolovelo tihuku ti tsemiwa makumu ya milomo ya tona leswaku ti nga lwi ngopfu. Permaculture yi ringeta ku sivela ku lwa hi ndlela yin'wana, hi ku nyika tihuku ndhawu yo ringana, swakudya swo hambana-hambana na vutomi bya ntumbuluko.
 
@@ -118,7 +118,7 @@ Tihuku ti pfuna entangeni, kambe ti tlhela ti kokorha swimilana leswintshwa na x
 
 Hlawula muxaka lowu ku nyikaka leswi u swi lavaka: matandza, nyama kumbe hinkwaswo swimbirhi.
 
-**Mixaka ya ndhavuko na ya laha kaya** yi fuyiwile eDzongeni ka Afrika hi switukulwana swo tala. Yi tiyile, yi fambelana na swiyimo swa laha kaya, yi tiva ku tilavela swakudya naswona i vamanana lavanene. Yi kula hi ku nonoka naswona hi ntolovelo yi tshikela matandza ma nga ri mangani ku tlula tihuku ta xibindzu ta hybrid. Mixaka leyi tiviwaka ya Afrika Dzonga yi katsa:
+**Mixaka ya indigenous (ya ndhavuko) na ya laha kaya** yi fuyiwile eDzongeni ka Afrika hi switukulwana swo tala. Yi tiyile, yi fambelana na swiyimo swa laha kaya, yi tiva ku tilavela swakudya naswona i vamanana lavanene. Yi kula hi ku nonoka naswona hi ntolovelo yi tshikela matandza ma nga ri mangani ku tlula tihuku ta xibindzu ta hybrid. Mixaka leyi tiviwaka ya Afrika Dzonga yi katsa:
 
 - **Potchefstroom Koekoek**
 - **Venda**
@@ -140,7 +140,7 @@ Vuvabyi byi nga herisa ntlawa hinkwawo wa tihuku hi masiku ma nga ri mangani.
 2. **Phindha.** Nsirhelelo wa hela. Hi ntolovelo mintlawa ya le makaya yi joviwa nakambe kwalomu ka tin'hweti tinharhu tin'wana na tin'wana. Landzelela swiletelo leswi nga eka murhi wo sivela na switsundzuxo swa mutirhi wa rihanyo ra swifuwo wa laha kaya kumbe dokodela wa swifuwo wa mfumo (state veterinarian).
 3. **Vika.** Newcastle disease i **vuvabyi lebyi lawuriwaka** (controlled disease) hi ku ya hi Animal Diseases Act (Act 35 of 1984) (Nawu wa Mavabyi ya Swiharhi). Loko tihuku ta wena to tala ti vabya kumbe ti fa hi xitshuketa, swi vike eka dokodela wa swifuwo wa mfumo loyi a nga ekusuhi hi ku hatlisa.
 
-**Vusirheleri** (biosecurity: mikhuva leyi sivelaka mavabyi ku nghena) lebyinene bya siku na siku:
+**Biosecurity** (mikhuva leyi sivelaka mavabyi ku nghena) leyinene ya siku na siku:
 
 - Hlayisa tihuku letintshwa ti ri ekule na ntlawa wa wena mavhiki mambirhi ku ya eka manharhu loko u nga si ti hlanganisa, u languta swikombiso swa vuvabyi.
 - U nga pfumeleli swinyenyani swa nhova ku avelana swakudya na mati ya tihuku ta wena.
@@ -158,7 +158,7 @@ Tihuku ti na nongoloko lowu tiyeke wa vukulu, lowu vitaniwaka **nongoloko wa ku 
 
 ## Tinguluve
 
-Tinguluve ti nga pfuna swinene, ngopfu-ngopfu entangeni wa mirhi ya mihandzu, ekhwatini ra swakudya (food forest: mirhi, swihlahla na swimilana swa swakudya leswi byariweke swin'we ku fana na khwati) na le misaveni leyi nga lulamisiwangiki. Ti fambelana na Zone 2, 3 na 4, naswona ti tshama kahle na swiharhi swin'wana.
+Tinguluve ti nga pfuna swinene, ngopfu-ngopfu entangeni wa mirhi ya mihandzu, eka **food forest** (mirhi, swihlahla na swimilana swa swakudya leswi byariweke swin'we ku fana na khwati) na le misaveni leyi nga lulamisiwangiki. Ti fambelana na Zone 2, 3 na 4, naswona ti tshama kahle na swiharhi swin'wana.
 
 ### Leswi tinguluve ti swi dyaka
 
@@ -166,14 +166,14 @@ Tinguluve ti dya swakudya swa mixaka yo tala. Eka purasi leri nga na swilo swo h
 
 > **Vuhlayiseki:** I ku tlula nawu eAfrika Dzonga ku phamela tinguluve masalela ya swakudya lama humaka etikhixini, etihotela, etirhesiturente kumbe etindhawini leti fanaka (leswi vitaniwaka **swill**), handle ka loko ma vilisiwile awara yin'we kumbe ku tlula. Nyama ya nguluve leyi nga swekiwangiki kumbe leyi nga vupfangiki kahle, na masalela man'wana ya nyama, swi nga rhwala **African swine fever** (fivhara ya tinguluve ya Afrika), vuvabyi bya tinguluve lebyi dlayaka, lebyi nga riki na murhi wo byi horisa kumbe murhi wo byi sivela. Phamela tinguluve masalela ya matsavu na ya ntanga lama humaka epurasini ra wena, na timbewu kumbe swakudya leswi xaviweke.
 
-### Swivala leswi fambaka swa tinguluve (pig tractors)
+### Ti-animal tractor ta tinguluve (pig tractors)
 
 Tinguluve i "vabasisi vo sungula" lavanene swinene va misava leyi nga lulamisiwangiki.
 
 - Veka tinguluve endzeni ka lufenisi ra gezi leri rhurhisiwaka, eka ndhawu leyi teleke hi swihlahla na nhova, kwalomu ka vhiki rin'we. Ti ta tsuvula swimilana ti basisa ndhawu ku tlula xifosholo kumbe foroko rin'wana na rin'wana.
 - Leswaku ti cela, ti tshike ti rhanga ti dya swimilana swo tala leswi nga ehenhla ka misava, u tlhela u tiyisisa leswaku misava yi tsakamile. Tinguluve a ti nge celi loko ku ri na swakudya swo tala ehenhla.
-- Entangeni wa mirhi ya mihandzu na le khwatini ra swakudya, tinguluve ti dya mihandzu leyi weleke, swin'we na swivungu swa tinhongana ta mihandzu (fruit-fly larvae) leswi nga endzeni ka yona. Leswi swi pfuna ku tsema rhendzeleko wa tinhongana ta mihandzu.
-- Landzelisa tinguluve hi xivala lexi fambaka xa tihuku leswaku tihuku ti hangalasa vulongo bya tona.
+- Entangeni wa mirhi ya mihandzu na le ka food forest, tinguluve ti dya mihandzu leyi weleke, swin'we na swivungu swa tinhongana ta mihandzu (fruit-fly larvae) leswi nga endzeni ka yona. Leswi swi pfuna ku tsema rhendzeleko wa tinhongana ta mihandzu.
+- Landzelisa tinguluve hi chicken tractor leswaku tihuku ti hangalasa vulongo bya tona.
 
 ### Ku pfalela tinguluve
 
@@ -191,7 +191,7 @@ Tinguluve i swiharhi leswi rhandzaka ku va swin'we, naswona ti tsaka swinene lok
 
 > **Xitsundzuxo:** "A wu na xiphiqo xa tisinayele, u pfumala tidada." Xivuriso lexi hakanyingi xi vuriwaka xi vuriwile hi Bill Mollison.
 
-Tidada ti hanya kahle epurasini ra permaculture naswona i xiharhi lexinene xa Zone 2. A ti kokorhi ku fana na tihuku, hikwalaho a ti onhi xifunengeto ngopfu. U nga ti tshika ti famba-famba entangeni wa mirhi ya mihandzu, na le ntangeni wa matsavu endzhaku ka ntshovelo. Ti xiyisise loko ti ri ekusuhi na swimilana leswintshwa, hikuva ti nga swi kandziya kumbe ti swi dya.
+Tidada ti hanya kahle epurasini ra permaculture naswona i xiharhi lexinene xa Zone 2. A ti kokorhi ku fana na tihuku, hikwalaho a ti onhi mulch ngopfu. U nga ti tshika ti famba-famba entangeni wa mirhi ya mihandzu, na le ntangeni wa matsavu endzhaku ka ntshovelo. Ti xiyisise loko ti ri ekusuhi na swimilana leswintshwa, hikuva ti nga swi kandziya kumbe ti swi dya.
 
 ### Leswi tidada ti swi nyikaka
 
@@ -203,7 +203,7 @@ Tidada ti hanya kahle epurasini ra permaculture naswona i xiharhi lexinene xa Zo
 
 ### Leswi tidada ti swi lavaka
 
-- **Nsirhelelo eka swiharhi leswi dyaka swin'wana**, ngopfu-ngopfu nivusiku, ku fana na tihuku.
+- **Nsirhelelo eka ti-predator**, ngopfu-ngopfu nivusiku, ku fana na tihuku.
 - **Mati lama entsaka ku ringana leswaku ti nghenisa nhloko hinkwayo.** Tidada ti lava ku hlantswa swakudya leswi nghenaka etimbhovweni ta nhompfu na le matihlweni ya tona. Beseni kumbe bakiti leri entsaka ri ringanela tidada to tala; a ti lavi xidziva.
 - **Mati lamantshwa nkarhi na nkarhi.** Tidada ti thyakisa mati ya tona hi ku hatlisa. Ma cince nkarhi na nkarhi. Mati lama thyakeke i monyolo wa mati lowunene eka mirhi ya mihandzu na le ka swibyariwa leswi swekiwaka swi nga si dyiwa.
 
@@ -211,19 +211,19 @@ Tidada ti hanya kahle epurasini ra permaculture naswona i xiharhi lexinene xa Zo
 
 Tidada ti nga va na huwa, hikwalaho ti nga ha fambelani na mintanga ya le madorobeni laha vaakelani va nga ekusuhi. Ti-Muscovy ti hambanile: ti miyerile swinene, naswona leti ta xinuna ti tala ku humesa rito ra "sss" ntsena (hiss).
 
-> **Xitsundzuxo:** Mixaka yo tala ya tidada ta le kaya, ku fana na Pekin, runner na Khaki Campbell, yi huma eka **mallard**. Mallard i muxaka lowu hangalakaka (invasive) lowu nga eka nxaxamelo eAfrika Dzonga (Category 2 hi ku ya hi NEMBA), hikuva wu tswalana na tidada ta nhova ta ndhavuko ku fana na yellow-billed duck, naswona wu ti veka ekhombyeni. Hlayisa tidada endzeni ka lufenisi, ekule na minambu, madamu na tindhawu leti tsakamaka minkarhi hinkwayo (wetlands), naswona u nga tshuki u ti tshika ti hundzuka ta nhova. Vutisa ehofisini ya vuhlayisi bya ntumbuluko ya xifundzankulu xa ka n'wina loko u lava pemiti ya tidada leti u ti fuyaka. Muscovy i muxaka wo hambana.
+> **Xitsundzuxo:** Mixaka yo tala ya tidada ta le kaya, ku fana na Pekin, runner na Khaki Campbell, yi huma eka **mallard**. Mallard i **invasive species** (muxaka lowu hangalakaka) lowu nga eka nxaxamelo eAfrika Dzonga (Category 2 hi ku ya hi NEMBA), hikuva wu tswalana na tidada ta nhova ta indigenous ku fana na yellow-billed duck, naswona wu ti veka ekhombyeni. Hlayisa tidada endzeni ka lufenisi, ekule na minambu, madamu na tindhawu leti tsakamaka minkarhi hinkwayo (wetlands), naswona u nga tshuki u ti tshika ti hundzuka ta nhova. Vutisa ehofisini ya vuhlayisi bya ntumbuluko ya xifundzankulu xa ka n'wina loko u lava pemiti ya tidada leti u ti fuyaka. Muscovy i muxaka wo hambana.
 
 ## Tinyoxi
 
 Tinyoxi ti ni nkoka swinene emintangeni na le mintangeni ya mirhi ya mihandzu hikuva ti **hluvukisa swiluva** (pollinate): ti rhwala pollen ti yi yisa eka xiluva xin'wana ku ya eka xin'wana, leswaku mihandzu na mbewu swi kota ku vumbeka. Mihandzu yo tala, matsavu, timbewu ta mafurha (oil seeds) na tinati swi nyika ntshovelo lowukulu naswona lowunene loko tinyoxi ti swi endzela.
 
-Emisaveni hinkwayo, kwalomu ka swiphemu swinharhu eka mune swa swibyariwa swa swakudya swa nkoka swi vuyeriwa hi ku hluvukisiwa hi swiharhi, naswona swibyariwa leswi swi endla kwalomu ka xiphemu xin'we eka swinharhu xa ntshovelo hinkwawo wa swibyariwa. Swibyariwa leswikulu swa timbewu (mavele, koroni, rhayisi na mabele) swi hluvukisiwa hi moya, ku nga ri hi tinyoxi. Kambe mihandzu na matsavu yo tala lama hi nyikaka tivhitamini swi titshege hi swivungwana leswi pfunaka swiluva ku veka mihandzu (pollinators).
+Emisaveni hinkwayo, kwalomu ka swiphemu swinharhu eka mune swa swibyariwa swa swakudya swa nkoka swi vuyeriwa hi ku hluvukisiwa hi swiharhi, naswona swibyariwa leswi swi endla kwalomu ka xiphemu xin'we eka swinharhu xa ntshovelo hinkwawo wa swibyariwa. Swibyariwa leswikulu swa timbewu (mavele, koroni, rhayisi na mabele) swi hluvukisiwa hi moya, ku nga ri hi tinyoxi. Kambe mihandzu na matsavu yo tala lama hi nyikaka tivhitamini swi titshege hi **ti-pollinator** (swivungwana leswi rhwalaka pollen).
 
 ### Phamela tinyoxi
 
 Tinyoxi ti endzela kwalomu ka xiluva xin'wana na xin'wana lexi nga na nectar kumbe pollen. Ringeta ku va na swimilana leswi hlukaka entangeni wa wena eka nguva yin'wana na yin'wana.
 
-- Byala malufenisi lama hanyaka (hedges) lama nga na swiluva hi swihlahla na mirhi ya ndhavuko, ku fana na karee (*Searsia lancea*) na sweet thorn (*Vachellia karroo*).
+- Byala malufenisi lama hanyaka (hedges) lama nga na swiluva hi swihlahla na mirhi ya indigenous, ku fana na karee (*Searsia lancea*) na sweet thorn (*Vachellia karroo*).
 - Swimilana swa aloe swi hluka hi vuxika, loko swimilana swin'wana swo tala swi nga hluki.
 - Mirhi yo nun'hwela ku fana na lavender, rosemary, borage na rocket, na mirhi ya mihandzu na swihlahla swa tibheri (berry bushes), hinkwaswo swi phamela tinyoxi.
 
@@ -308,37 +308,37 @@ Un'wana na un'wana loyi a tshameke a va na xiendlo xo biha endzhaku ka ku lumiwa
 ### Va munghana wa tinyoxi
 
 - Tshika ku tirhisa swifafazelo swa tinhongana na swivungwana.
-- Byala swiluva swo tala, ngopfu-ngopfu swa ndhavuko.
+- Byala swiluva swo tala, ngopfu-ngopfu swa indigenous.
 - Loko u boheka ku fafazela, tirhisa murhi lowu nga riki na matimba ngopfu, fafazela madyambu swinene loko tinyoxi ti nga hahi, naswona u nga tshuki u fafazela swiluva leswi pfulekeke.
 - Veka ndyelo leyi nga entsangiki ya mati leyi nga na maribye kumbe timhandzi endzeni ka yona, leswaku tinyoxi ti kota ku tshama ti nwa ti nga nweli.
 - Siya xiphemu xa byanyi bya nhova na nhova leswaku swi hluka.
 
-## Swimilana swa swakudya swa swifuwo (fodder)
+## Swimilana swa fodder
 
-Swimilana leswi swi nga phamela swifuwo: hi ku swi dya emadyelweni, tanihi swakudya leswi tsemiwaka swi rhwariwa swi yisiwa eka swifuwo (cut-and-carry), tanihi byanyi byo oma (hay) kumbe silage, kumbe tanihi matluka ya mirhi (browse) na makhoko ya timbewu (pods). Swo tala swa swona swi tlhela swi antswisa misava kumbe swi phamela tinyoxi. Ku leha loku nyikiweke i ka kwalomu.
+Swimilana leswi swi nga phamela swifuwo: hi ku swi dya emadyelweni, tanihi **fodder** (swakudya swa swifuwo) leyi tsemiwaka yi rhwariwa yi yisiwa eka swifuwo (cut-and-carry), tanihi byanyi byo oma (hay) kumbe silage, kumbe tanihi matluka ya mirhi (browse) na makhoko ya timbewu (pods). Swo tala swa swona swi tlhela swi antswisa misava kumbe swi phamela tinyoxi. Ku leha loku nyikiweke i ka kwalomu.
 
-### Swimilana swo funengeta misava na swibyariwa swa masimu
+### Ti-groundcover (swimilana swo funengeta misava) na swibyariwa swa masimu
 
 | Ximilana | Muxaka | Matirhiselo |
 |---|---|---|
-| Turnip (*Brassica rapa*) | Xibyariwa xa timitsu xa lembe rin'we | Swakudya swa vuxika swa tinyimpfu na tihomu; madyelo ya tinguluve |
-| Chicory (*Cichorium intybus*) | Ximilana lexi hanyaka malembe yo tala, rimitsu lerikulu leri nghenaka ehansi swinene (taproot) | Madyelo; xi kula hi nguva yo titimela |
-| Italian ryegrass (*Lolium multiflorum*) | Byanyi bya lembe rin'we kumbe lebyi hanyaka nkarhi wutsongo | Madyelo ya vuxika, byanyi byo oma na silage |
-| Sweet lupin (*Lupinus albus*) | Ximilana xa muxaka wa tinyawa (legume) xa lembe rin'we, rimitsu lerikulu leri nghenaka ehansi | Timbewu na madyelo; xi tirha kahle loko xi hundzuluxiwa na swibyariwa swa timbewu |
-| Lucerne (*Medicago sativa*) | Ximilana xa muxaka wa tinyawa lexi hanyaka malembe yo tala | Byanyi byo oma, silage na swakudya leswi tsemiwaka swi rhwariwa, leswi nga na swakudya swo tala swinene |
-| Fodder radish (*Raphanus sativus*) | Xa lembe rin'we | Swakudya swa swifuwo leswi byariwaka hi ndzhenga; rimitsu lerikulu ri olovisa misava |
-| Rye (*Secale cereale*) | Xibyariwa xa timbewu xa vuxika xa lembe rin'we | Madyelo ya vuxika na xibyariwa xo funengeta misava (cover crop) |
-| White clover (*Trifolium repens*) | Ximilana xa muxaka wa tinyawa lexi hanyaka malembe yo tala, lexi nga lehiki | Madyelo, xi nyika misava naytirojini, swakudya swa tinyoxi |
-| Broad bean (*Vicia faba*) | Ximilana xa muxaka wa tinyawa xa lembe rin'we | Byanyi byo oma, silage na monyolo wa rihlaza (green manure) loko xi hundzuluxiwa na swibyariwa swa timbewu |
-| Cowpea (*Vigna unguiculata*) | Ximilana xa muxaka wa tinyawa xa lembe rin'we | Matluka na misinya leyi khandziyaka swi phameriwa swi ri swintshwa, tanihi byanyi byo oma kumbe tanihi silage |
-| Vetiver (*Chrysopogon zizanioides*), ntsena mixaka leyi nga tswaliki mbewu (sterile) | Byanyi lebyi hanyaka malembe yo tala, lebyi milaka byi hlanganile hi swirhundzu | Ku sivela ku kukuriwa ka misava, xifunengeto; matluka lamantshwa tanihi swakudya swo engetela |
+| Turnip (*Brassica rapa*) | Xibyariwa xa timitsu xa **annual** (xa lembe rin'we) | Swakudya swa vuxika swa tinyimpfu na tihomu; madyelo ya tinguluve |
+| Chicory (*Cichorium intybus*) | Ximilana xa **perennial** (lexi hanyaka malembe yo tala), rimitsu lerikulu leri nghenaka ehansi swinene (taproot) | Madyelo; xi kula hi nguva yo titimela |
+| Italian ryegrass (*Lolium multiflorum*) | Byanyi bya annual kumbe lebyi hanyaka nkarhi wutsongo | Madyelo ya vuxika, byanyi byo oma na silage |
+| Sweet lupin (*Lupinus albus*) | Legume ya annual, rimitsu lerikulu leri nghenaka ehansi | Timbewu na madyelo; yi tirha kahle eka **crop rotation** (ku rhurhisa swibyariwa) na swibyariwa swa timbewu |
+| Lucerne (*Medicago sativa*) | Legume ya perennial | Byanyi byo oma, silage na fodder leyi tsemiwaka yi rhwariwa, leyi nga na swakudya swo tala swinene |
+| Fodder radish (*Raphanus sativus*) | Annual | Fodder leyi byariwaka hi ndzhenga; rimitsu lerikulu ri olovisa misava |
+| Rye (*Secale cereale*) | Xibyariwa xa timbewu xa vuxika xa annual | Madyelo ya vuxika na xibyariwa xo funengeta misava (cover crop) |
+| White clover (*Trifolium repens*) | Legume ya perennial leyi nga lehiki | Madyelo, yi nyika misava naytirojini, swakudya swa tinyoxi |
+| Broad bean (*Vicia faba*) | Legume ya annual | Byanyi byo oma, silage na **green manure** (swimilana leswi byariwaka ku dyisa misava) eka crop rotation na swibyariwa swa timbewu |
+| Cowpea (*Vigna unguiculata*) | Legume ya annual | Matluka na misinya leyi khandziyaka swi phameriwa swi ri swintshwa, tanihi byanyi byo oma kumbe tanihi silage |
+| Vetiver (*Chrysopogon zizanioides*), ntsena mixaka leyi nga tswaliki mbewu (sterile) | Byanyi bya perennial, lebyi milaka byi hlanganile hi swirhundzu | Ku sivela **erosion** (ku kukuriwa ka misava), mulch; matluka lamantshwa tanihi swakudya swo engetela |
 
 ### Swihlahla
 
 | Ximilana | Muxaka | Matirhiselo |
 |---|---|---|
-| Pigeon pea (*Cajanus cajan*) | Xihlahla lexi hanyaka nkarhi wutsongo, xi chava xirhami | Matluka na makhoko ya timbewu i swakudya swa swifuwo leswi nga na phurotheni yo tala; mbewu ya tihuku |
-| Sunn hemp (*Crotalaria juncea*) | Ximilana xa muxaka wa tinyawa xa lembe rin'we xa ximumu | Monyolo wa rihlaza (xi rime u xi nghenisa emisaveni kumbe u xi tsema u xi endla xifunengeto) |
+| Pigeon pea (*Cajanus cajan*) | Xihlahla lexi hanyaka nkarhi wutsongo, xi chava xirhami | Matluka na makhoko ya timbewu i fodder leyi nga na phurotheni yo tala; mbewu ya tihuku |
+| Sunn hemp (*Crotalaria juncea*) | Legume ya annual ya ximumu | Green manure (yi rime u yi nghenisa emisaveni kumbe u yi tsema u yi endla mulch) |
 
 ### Mirhi
 
@@ -347,29 +347,29 @@ Swimilana leswi swi nga phamela swifuwo: hi ku swi dya emadyelweni, tanihi swaku
 | Torchwood (*Balanites maughamii*) | 15–20 m | Mafurha ya mbewu lama dyiwaka, tihunyi |
 | Pride-of-De Kaap (*Bauhinia galpinii*) | 3–5 m | Lufenisi leri hanyaka; wu koka swiharhi swa nhova |
 | False olive (*Buddleja saligna*) | 4–12 m | Mapulanga; wu koka tiphaphatana |
-| Carob (*Ceratonia siliqua*), a hi wa ndhavuko | 5–10 m | Makhoko ya timbewu i swakudya leswinene swa swifuwo; wu tiyisela dyandza; xisivela-moya |
-| Bluebush (*Diospyros lycioides*) | 3–7 m | Mihandzu leyi dyiwaka, swilo swa ntumbuluko swo tala (biomass) |
+| Carob (*Ceratonia siliqua*), a hi wa indigenous | 5–10 m | Makhoko ya timbewu i fodder leyinene; wu tiyisela dyandza; **windbreak** (layini ya mirhi leyi sivelaka moya) |
+| Bluebush (*Diospyros lycioides*) | 3–7 m | Mihandzu leyi dyiwaka, **biomass** (swilo swa swimilana leswi kulaka) |
 | Puzzle bush (*Ehretia rigida*) | 5–12 m | Matluka lama dyiwaka hi swifuwo (browse); wu koka swinyenyani |
 | Blue guarri (*Euclea crispa*) | 8–20 m | Mihandzu leyi dyiwaka, mapulanga lama pfunaka |
 | Cross-berry (*Grewia occidentalis*) | 6–10 m | Mihandzu leyi dyiwaka |
 | Ouhout (*Leucosidea sericea*) | 6–9 m | Tihunyi, tipali ta lufenisi; murhi wo rhanga (pioneer) lowu tiyiselaka xirhami |
-| Wild olive (*Olea europaea* subsp. *cuspidata*) | 8–14 m | Tihunyi; wu tiyile; wu mila kahle nakambe loko wu tsemiwile (coppices) |
+| Wild olive (*Olea europaea* subsp. *cuspidata*) | 8–14 m | Tihunyi; wu tiyile; wu tirha kahle eka **coppicing** (ku tsemiwa leswaku wu hluma nakambe) |
 | African wattle (*Peltophorum africanum*) | 9–14 m | Wu kula hi ku hatlisa; tihunyi; ndzhuti |
-| English oak (*Quercus robur*), a hi wa ndhavuko | 10–20 m | Timbewu ta wona (acorns) ta tinguluve; mapulanga |
+| English oak (*Quercus robur*), a hi wa indigenous | 10–20 m | Timbewu ta wona (acorns) ta tinguluve; mapulanga |
 | River willow (*Salix mucronata*) | ku fika eka 12 m | Wu tiyisa maribuwa ya swinambyana |
 | Thorn pear (*Scolopia zeyheri*) | 7–20 m | Wu koka swiharhi swa nhova |
 | Karee (*Searsia lancea*) | kwalomu ka 7 m | Lufenisi leri hanyaka; wu koka tinyoxi; wu khoma misava; wu tiyisela xirhami |
 | Common hook-thorn (*Senegalia caffra*) | 12–18 m | Lufenisi leri hanyaka, tihunyi; wu koka swiharhi swa nhova |
-| Silver cluster-leaf (*Terminalia sericea*) | 10–16 m | Tihunyi, swilo swa ntumbuluko swo tala (biomass) |
+| Silver cluster-leaf (*Terminalia sericea*) | 10–16 m | Tihunyi, biomass |
 | Sweet thorn (*Vachellia karroo*) | 7–12 m | Wu nyika misava naytirojini; makhoko ya timbewu na matluka i swakudya swa swifuwo (browse); gamu (gum) |
 | Large sourplum (*Ximenia caffra*) | 5–7 m | Mihandzu leyi nga na vhitamini C yo tala; lufenisi leri hanyaka |
 
-> **Xitsundzuxo:** English oak a wu nghenanga eka nxaxamelo wa swimilana leswi hangalakaka (invasive) wa Afrika Dzonga, kambe wu hangalakile ekusuhi na minambu eWestern Cape. U nga wu byali ekusuhi na swinambyana kumbe tindhawu leti tsakamaka minkarhi hinkwayo (wetlands). Mirhi ya ndhavuko leyi nga eka tafula leri i yona leyi faneleke ku hlawuriwa hinkwako laha yi kulaka kahle.
+> **Xitsundzuxo:** English oak a wu nghenanga eka nxaxamelo wa invasive species wa Afrika Dzonga, kambe wu hangalakile ekusuhi na minambu eWestern Cape. U nga wu byali ekusuhi na swinambyana kumbe tindhawu leti tsakamaka minkarhi hinkwayo (wetlands). Mirhi ya indigenous leyi nga eka tafula leri i yona leyi faneleke ku hlawuriwa hinkwako laha yi kulaka kahle.
 
 ## Tinhla ta nkoka
 
 - Languta swilaveko swa xiharhi xin'wana na xin'wana, leswi xi swi humesaka na mikhuva ya xona, kutani u swi hlanganisa na swiphemu swin'wana swa purasi.
-- Swivala leswi fambaka swi rhurhisa swiharhi eka misava leswaku vulongo, ku kokorha na ku cela ka swona swi endla ntirho lowu pfunaka.
+- Ti-animal tractor ti rhurhisa swiharhi eka misava leswaku vulongo, ku kokorha na ku cela ka swona swi endla ntirho lowu pfunaka.
 - Tihuku ti lava swakudya leswi ringanisiweke, mati lama tengeke, maribyana na khalisiyamu, yindlu leyi hlayisekeke, 15–20 cm wa mhandzi eka huku yin'wana na yin'wana na bokisi rin'we ra ku tshikela eka tihuku ta mune kumbe ta ntlhanu.
 - Mixaka ya laha kaya ku fana na Koekoek, Venda, Ovambo, Naked Neck na Boschveld yi tiyile; tihuku ta xibindzu ta hybrid ti tshikela ku tlula kambe ti lava ku khathaleriwa ngopfu.
 - Jova tihuku eka Newcastle disease, u phindha nkarhi na nkarhi, hlayisa tihuku letintshwa ti ri ekule ku sungula, naswona u vika ku fa hi xitshuketa eka dokodela wa swifuwo wa mfumo.

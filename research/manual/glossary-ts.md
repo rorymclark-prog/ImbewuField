@@ -874,3 +874,81 @@ Claude cleaned up the Xitsonga app wording on 2026-09-26. This is still a **mach
 - "Misava na mulch a swi dlai" → "Misava na xifunengeto (mulch) a swi dlai"
 - Removed the 14 `holds` entries for `water-harvesting-l1` title, infographicAlt, body[0]–body[7], keyPoints[0] and keyPoints[2] (two entries each for the key points).
 
+
+## Kept in English (26 Sep 2026)
+
+Rory's decision (26 Sep 2026, `research/manual/KEEP-ENGLISH.md`): the words in the "Word" column of `content/manual/en/12-glossary.md` stay in **English** in the Xitsonga manual too. For these words this section **overrides** the table rows above and the "explain on first use" rule at the top of this file: the English word is written in bold the first time it appears in a chapter, followed by a short Xitsonga explanation in brackets, for example **ti-swale** (migodi leyi khomaka mpfula); later in the same chapter only the English word is used. The Xitsonga Glossary chapter is `content/manual/ts/12-glossary.md`.
+
+Grammar used: a kept word is treated as a class 9 noun in the singular (*swale yi*, *leyi*, *ya*, *yona*) and takes the prefix **ti-** in the plural (*ti-swale ti*, *leti*, *ta*, *tona*). The English root is never changed. Where the replaced local phrase was in another noun class (for example *xisele / swisele*, *xifunengeto*, *khwati ra swakudya*, *ntumbuluko lowu hanyaka swin'we*, *swilo swa ntumbuluko leswi boleke*, *monyolo wa rihlaza*, *xisivela-moya*), the verb and adjective concords in the sentence were changed to match. Machine draft: a fluent speaker should check the concords.
+
+| English word (kept) | Form used in the manual | Local phrase(s) replaced | Chapters |
+|---|---|---|---|
+| Animal tractor | animal tractor / ti-animal tractor; *chicken tractor* | xivala lexi fambaka, swivala leswi fambaka, swiharhi tanihi (ti)thirakitara, xivala lexi fambaka xa tihuku | 01, 05, 06, 07, 08 |
+| Annual | annual / ti-annual | ximilana / swimilana / swibyariwa xa / swa lembe rin'we; "Xa lembe rin'we" in tables | 02, 04, 05, 06, 09 |
+| Appropriate technology | appropriate technology | thekinoloji leyi faneleke | 11 |
+| Berm | berm / ti-berm | khurhana ra misava | 07 |
+| Biodiversity | biodiversity | ku hambana-hambana ka swihanyi | 02, 09 |
+| Biogas digester | biogas digester, digester / ti-digester | xiendli (xa gasi ya vulongo), swiendli | 11 |
+| Biomass | biomass | matluka na marhavi (biomass), swilo swa ntumbuluko swo tala (biomass), matimba ya swimilana na thyaka ra swifuwo | 05, 06, 11 |
+| Biosecurity | biosecurity | vusirheleri | 05 |
+| Blackwater | blackwater | mati ya xihambukelo | 07 |
+| Canopy | canopy / ti-canopy | xiyenge xa ehenhla (xa mirhi), xihloko xa matluka, swihloko swa matluka | 03, 06 |
+| Carbon to nitrogen ratio | (not used as a term in chapters 00–11) | none; ch. 8 explains the ratio in words | — |
+| Catchment | catchment / ti-catchment | ndhawu yo hlengeleta mati, tindhawu to hlengeleta mati | 01, 02, 07 |
+| Chop and drop | chop and drop | "tsema u siya ehansi", "tsema u wisela ehansi" | 06, 08 |
+| Climate change | climate change | ku cinca ka maxelo | 01, 03, 07, 11 |
+| Companion planting | companion planting | ku byala swimilana leswi pfunanaka | 10 |
+| Compost | compost | khompositi, monyolo wa khompositi (compost heap = nhulu wa compost) | 00–11 |
+| Contour | contour / ti-contour | khanthura, tikhanthura, layini ya khanthura | 01, 02, 04, 07, 08 |
+| Coppicing | coppicing | ku tsemela ehansi, mirhi leyi tsemiwaka leswaku yi mila hi vuntshwa, mahlumela lama tsemeriweke ehansi | 02, 05, 06 |
+| Crop rotation | crop rotation | ku hundzuluxa swibyariwa, ku hundzuluxa | 04, 05, 10 |
+| Double-reach bed | double-reach bed / ti-double-reach bed | mubhedhi lowu fikeleriwaka hi matlhelo mambirhi | 07 |
+| Drip irrigation | drip irrigation, drip | ku cheleta hi mathonsi, (tiphayiphi ta) mathonsi | 04, 07 |
+| Ecosystem | ecosystem / ti-ecosystem | ntumbuluko lowu hanyaka swin'we | 01, 05, 09, 10 |
+| Edge | edge / ti-edge | ndzilakano / mindzilakano (only where it meant an ecological edge; farm boundaries stay *mindzilakano*) | 01, 06, 09 |
+| Erosion | erosion | ku kukuriwa ka misava (noun only; verb forms such as *yi kukuriwa* were kept) | 01–09 |
+| Firebreak | firebreak / ti-firebreak | ndlela yo sivela ndzilo, tindlela to sivela ndzilo | 03, 06, 09 |
+| First-flush diverter | first-flush diverter | none (already English) | 07 |
+| Fodder | fodder | swakudya swa swifuwo (only where the English says fodder) | 01, 03, 05, 06, 08, 09 |
+| Food forest | food forest / ti-food forest | khwati ra swakudya, makhwati ya swakudya | 01, 02, 03, 05, 06, 07, 09 |
+| Frost pocket | frost pocket / ti-frost pocket | xikhele xa xirhami, swikhele swa xirhami | 03, 04, 06 |
+| Grafting | grafting | ku hlanganisa (mirhi) (grafting) | 06 |
+| Green manure | green manure | monyolo wa rihlaza | 05, 06, 07, 08, 09 |
+| Greywater | greywater | mati lama tirhisiweke | 01, 02, 07 |
+| Groundcover | groundcover / ti-groundcover | swimilana swo funengeta misava (where the English says ground cover; *cover crop* was kept local) | 05, 06, 07, 09 |
+| Guild | guild / ti-guild | ntlawa / mintlawa ya swimilana | 01, 03 |
+| Habitat | habitat / ti-habitat | ndhawu yo tshama (ya swiharhi), tindhawu to tshama | 01, 06, 07, 09, 10 |
+| Humus | humus | misava ya ntima leyi noneke | 08 |
+| Indigenous | indigenous (*swimilana swa indigenous*, *Wa indigenous*) | ya / swa / xa / wa ndhavuko | 01–03, 05–10 |
+| Infiltration | infiltration (*swikhele swa infiltration*) | swikhele swo nghenisa mati | 07 |
+| Invasive species | invasive species / ti-invasive species | swimilana swa matiko mambe leswi hangalakaka (invasive alien plants), ximilana / mixaka leyi hangalakaka (invasive) | 01, 02, 03, 05–10 |
+| Keyhole bed | keyhole bed / ti-keyhole bed | mibhedhi ya keyhole | 07 |
+| Legume | legume / ti-legume | swimilana swa muxaka wa tinyawa, ximilana xa muxaka wa tinyawa, "Xa muxaka wa tinyawa" in tables | 01, 04–10 |
+| Microclimate | microclimate / ti-microclimate | maxelo ya ndhawu leyitsongo | 06 |
+| Mulch | mulch | xifunengeto (verb *ku funengeta* sometimes became *ku veka mulch*) | 00–10 |
+| Nitrogen fixer | nitrogen fixer / ti-nitrogen fixer | swimilana / mirhi leyi nyikaka misava naytirojini | 06, 09 |
+| Organic matter | organic matter | swilo swa ntumbuluko leswi boleke | 07, 08, 10 |
+| Perennial | perennial / ti-perennial | swimilana leswi hanyaka malembe yo tala, "Xi hanya malembe yo tala" in tables | 03, 04, 05, 06, 09 |
+| Permaculture | permaculture | none (already English) | all |
+| pH | pH | none (already English) | 08 |
+| Pollinator | ti-pollinator | swivungwana leswi pfunaka swiluva ku veka mihandzu (pollinators) | 05, 10 |
+| Predator | predator / ti-predator | swiharhi leswi dyaka swin'wana (predators) | 04, 05, 09, 10 |
+| Rocket stove | rocket stove / ti-rocket stove | xitofu xa rocket, switofu swa rocket | 11 |
+| Rootstock | rootstock / ti-rootstock | xiphemu xa timitsu (rootstock) | 06 |
+| Runoff | runoff | mati lama khulukaka (only where the English says runoff) | 01, 02, 07 |
+| Sector | sector / ti-sector | none (already a loan) | 02, 03 |
+| Slurry | slurry | none (already English) | 11 |
+| Solar dryer | solar dryer / ti-solar dryer | xiomisi xa dyambu, swiomisi swa dyambu | 11 |
+| Succession | succession | ku landzelelana ka swimilana | 06, 09 |
+| Swale | swale / ti-swale | xisele, swisele | 01, 02, 03, 07 |
+| Thermal mass | thermal mass | swilo leswi hlayisaka ku hisa | 03, 11 |
+| Topsoil | topsoil | misava ya le henhla | 03, 06, 07, 08 |
+| Trap crop | trap crop / ti-trap crop | ximilana xo phasa swivungu, swimilana swo phasa swivungu | 06, 10 |
+| Understorey | (not used in chapters 00–11) | none | — |
+| Windbreak | windbreak / ti-windbreak | xisivela-moya, swisivela-moya | 01, 03, 05, 06, 08, 09 |
+| Wonder bag | wonder bag | saka ro sweka (wonder bag) | 11 |
+| Worm farm | worm farm / ti-worm farm | ndhawu yo fuya swivungu (swa misava), tindhawu to fuya swivungu | 05, 08 |
+| Worm tea | worm tea | mati ya swivungu | 05, 08 |
+| Zone | zone / ti-zone | none (already a loan) | 02, 11 |
+
+Left in Xitsonga on purpose (not glossary uses, or an everyday word is clearer): verb forms (*ku kukuriwa*, *ku hluvukisa swiluva* for "pollinate", *ku funengeta misava* for "cover the soil"); *swimilana swo funengeta misava (cover crops)*; "edge" in the everyday sense (edge of a bed, field or roof: *ematlhelweni*, *nhlelo*, *makumu*); "very invasive weeds" such as kikuyu in ch. 7 (*nhova leyi hangalakaka ngopfu*, aggressive weeds rather than a listed species); *tihuku ta xintu* (indigenous chickens, ch. 3); *varimi va ndhavuko* (Indigenous farmers of the Americas, ch. 10); *vutshunguri bya xintu* and *matirhiselo ya ndhavuko* (traditional medicine and use); "predatory" as an adjective (*ti-bug leti dyaka swin'wana*); *mati lama khulukaka* where it means flowing water, not runoff (ch. 11); the brand name *Wonderbag*.

@@ -1,6 +1,6 @@
 # Mathomo
 
-Bugu ino ndi nyendedzi ya u shuma nga zwanḓa ya permaculture (vhulimi ha tshoṱhe vhu tevhelaho mupo), ya vhalimi vhaṱuku na vhalimi vha mudini kha Tshipembe tsha Afrika. Yo thoma u ṅwalwa sa bugu ya ngudo ya permaculture ya maḓuvha maṱanu. Ni nga i shumisa khathihi na ngudo, kana ni nga i shumisa ni noṱhe.
+Bugu ino ndi nyendedzi ya u shuma nga zwanḓa ya **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo), ya vhalimi vhaṱuku na vhalimi vha mudini kha Tshipembe tsha Afrika. Yo thoma u ṅwalwa sa bugu ya ngudo ya permaculture ya maḓuvha maṱanu. Ni nga i shumisa khathihi na ngudo, kana ni nga i shumisa ni noṱhe.
 
 Ndivho ndi u ni thusa u thoma lwendo lwaṋu lwa permaculture. Bugu ino i ni funza zwa mutheo zwa u pulana nga permaculture na nḓila ya u dzudzanya ngade kana bulasi yaṋu, uri mushumo na zwiko zwaṋu zwi swike kule. I dovha ya amba nga ha u fhaṱa mavu, u kuvhanganya maḓi, zwipuka, miri na u lwisana na zwikukumi nga nḓila ya mupo. Nḓila nnzhi dza idzi ni nga dzi shumisa zwino-zwino u khwinisa u nona ha mavu na khaṋo ya ngade yaṋu.
 
@@ -19,7 +19,7 @@ Zwiṅwe zwipiḓa zwa bugu ino zwo dzhiiwa kha bugu ya African Conservation Tru
 ## Nḓila ya u shumisa bugu ino
 
 - **Vhalani ndima nthihi nga tshifhinga.** Ndima iṅwe na iṅwe i a ḓiimela. Thomani nga Ndima ya 1 (Permaculture ndi mini?) na Ndima ya 2 (U pulana bulasi yaṋu). Dzi ṱalutshedza mihumbulo ine ndima dziṅwe dza fhaṱela khayo.
-- **Lingani tshithu tshithihi, ni kone u ya kha tshi tevhelaho.** Nangani nḓila nthihi ine na nga i ita kha ino khalaṅwaha, sa mulundu wa khomposo (compost heap) kana ndima yo fukedzwaho nga tshifukedzi (mulch). Sedzani uri i shuma hani phanḓa ha u engedza zwiṅwe.
+- **Lingani tshithu tshithihi, ni kone u ya kha tshi tevhelaho.** Nangani nḓila nthihi ine na nga i ita kha ino khalaṅwaha, sa mulundu wa **compost** (malaṱwa a zwimela o vholaho a nontshisaho mavu) kana ndima yo fukedzwaho nga **mulch** (tshifukedzi tsha mahatsi o omaho kana maṱari). Sedzani uri i shuma hani phanḓa ha u engedza zwiṅwe.
 - **Ṱoḓani mabokisi.** Mabokisi o swaywaho nga **Tsireledzo** a ni sevhedza nga ha khombo dza vhukuma kha vhathu, zwipuka kana mupo. Ni a vhale tshifhinga tshoṱhe. Mabokisi o swaywaho nga **Tsevhedzo** kana **Ḓivhani** a ṋea thuso ya u engedza.
 - **Sedzani "Zwithu zwa ndeme".** Ndima iṅwe na iṅwe i fhela nga mutevhe mupfufhi wa mihumbulo mihulwane. U shumiseni u dovholola, kana u ṱalutshedza vhaṅwe ndima yeneyo.
 - **Lugiselani fhethu haṋu.** Tshipembe tsha Afrika tshi na mitsho minzhi. Vhunzhi ha vhukati ha Afrika Tshipembe vhu wana mvula nga tshilimo nahone vhu na vhuria vhu rotholaho vhu omaho, lunzhi hu na tshando (frost) kha Highveld. Kapa Vhukovhela (Western Cape) i wana vhunzhi ha mvula yayo nga vhuria. Shandukisani zwifhinga zwa u zwala u ya nga tshifhinga tshaṋu tsha mvula, nahone ni vhudzise vhalimi vha henefho na vhaeletshedzi vha zwa vhulimi uri ndi zwifhio zwine zwa shuma fhethu haṋu.

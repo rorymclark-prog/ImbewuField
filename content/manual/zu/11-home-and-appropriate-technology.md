@@ -1,4 +1,4 @@
-# Ikhaya elisimeme: i-Zone 0 nobuchwepheshe obufanele
+# Ikhaya elisimeme: i-Zone 0 ne-appropriate technology
 
 ## Ikhaya liyi-Zone 0
 
@@ -9,15 +9,15 @@ Cabanga ngekhaya:
 - elakhiwe ngezinto zendawo, njengobumba olutholakala eduze noma izingodo ezivela ehlathini elincane lendawo, ezingashintshwa uma seziguga
 - elaklanyelwe isimo sezulu sakho, ukuze lihlale lifudumele ebusika futhi lipholile ehlobo, lingadingi kakhulu ukufudunyezwa noma ukupholiswa
 - elenza ugesi walo ohlanzekile ngamaphaneli elanga, ukuze izibani zihlale zikhanya nalapho ugesi ovamile unqamuka
-- elenza igesi yokupheka ngomquba wezilwane ku-biogas digester (ithangi elivalekile elenza igesi yokupheka ngobulongwe)
+- elenza igesi yokupheka ngomquba wezilwane **ku-biogas digester** (ithangi elivalekile elenza igesi yokupheka ngobulongwe)
 - elibamba amanzi emvula emathangini nasemachibini, agcinwe anele ukudlula inkathi yokoma uma esetshenziswa ngokucophelela
-- elisebenzisa obunye ubuchwepheshe obuningi obulula ukwehlisa izindleko, ukubamba amandla amahhala nokwakha ukuqina ezikhathini ezinzima nasekushintsheni kwesimo sezulu
+- elisebenzisa obunye ubuchwepheshe obuningi obulula ukwehlisa izindleko, ukubamba amandla amahhala nokwakha ukuqina ezikhathini ezinzima **naku-climate change** (ukushintsha kwesimo sezulu)
 
 Awudingi ukwenza konke lokhu ngasikhathi sinye. Isinyathelo ngasinye esincane songa imali futhi senza umndeni uphephe kakhudlwana.
 
-## Ubuchwepheshe obufanele
+## I-appropriate technology
 
-Ubuchwepheshe obufanele (appropriate technology) busho amathuluzi nemishini elula, emincane, ethi:
+**I-appropriate technology** (ubuchwepheshe obufanele) isho amathuluzi nemishini elula, emincane, ethi:
 
 - ifanele abantu abayisebenzisayo namasiko abo
 - ingakhiwa, isetshenziswe futhi ilungiswe ngamakhono nangezinto zendawo
@@ -32,7 +32,7 @@ ENingizimu ne-Afrika ilanga liba **ngasenyakatho**. Liphezulu esibhakabhakeni eh
 - Beka amakamelo amakhulu okuhlala namafasitela amaningi ohlangothini olusenyakatho, ukuze angenise ilanga elifudumele lasebusika.
 - Yakha uphahla oluphumela ngaphandle (eaves) noma i-pergola (uhlaka lwezinsika olumbozwe yizitshalo ezikhuphukayo) ngaphezu kwamafasitela asenyakatho. Kuvimba ilanga eliphezulu lasehlobo kodwa kuvumele ilanga eliphansi lasebusika lingene.
 - Amafasitela asentshonalanga makabe mancane, ngoba ilanga lantambama ehlobo lishisisa indlu kakhulu.
-- Izinto ezisindayo njengamatshe, izitini, ubumba naphansi kukakhonkolo zigcina ukushisa kwasemini bese zikukhipha ebusuku. Lokhu kubizwa ngokuthi i-thermal mass (izinto ezigcina ukushisa).
+- Izinto ezisindayo njengamatshe, izitini, ubumba naphansi kukakhonkolo zigcina ukushisa kwasemini bese zikukhipha ebusuku. Lokhu kubizwa ngokuthi **i-thermal mass** (izinto ezigcina ukushisa).
 - Isilingi esine-insulation (into evimba ukushisa ukuthi kungadluli) sigcina ukushisa ngaphakathi ebusika futhi sikuvimbe ngaphandle ehlobo.
 - Tshala izihlahla ezihlubula amaqabunga ebusika noma izitshalo ezikhuphukayo ngasenyakatho nangasentshonalanga, ukuze zenze umthunzi ehlobo futhi zivumele ilanga lingene ebusika.
 
@@ -40,14 +40,14 @@ ENingizimu ne-Afrika ilanga liba **ngasenyakatho**. Liphezulu esibhakabhakeni eh
 
 Amandla avuselelekayo (ahlanzekile) avela emithonjeni yemvelo ehlala ibuyiselwa njalo, njengokukhanya kwelanga, umoya namanzi agelezayo.
 
-Amalahle etshe (coal) ahlukile. Ayinsiza engavuselelekiyo: uma eseshisiwe, aphelile, futhi ngelinye ilanga ayophela nya. Iningi likagesi waseNingizimu Afrika lisavela eziteshini zikagesi ezishisa amalahle etshe. Ukushisa amalahle etshe kungcolisa umoya, kunomthelela emvuleni ene-asidi futhi kukhipha i-carbon dioxide eningi kakhulu, eqhuba ukushintsha kwesimo sezulu.
+Amalahle etshe (coal) ahlukile. Ayinsiza engavuselelekiyo: uma eseshisiwe, aphelile, futhi ngelinye ilanga ayophela nya. Iningi likagesi waseNingizimu Afrika lisavela eziteshini zikagesi ezishisa amalahle etshe. Ukushisa amalahle etshe kungcolisa umoya, kunomthelela emvuleni ene-asidi futhi kukhipha i-carbon dioxide eningi kakhulu, eqhuba i-climate change.
 
 Izinhlobo eziyinhloko zamandla avuselelekayo yilezi:
 
 - amandla elanga (avela elangeni)
 - amandla amanzi (hydropower, avela emanzini agelezayo)
 - amandla omoya
-- i-biomass (amandla avela ezitshalweni nasemfucuzeni yezilwane, njengezinkuni ne-biogas)
+- **i-biomass** (amandla avela ezitshalweni nasemfucuzeni yezilwane, njengezinkuni ne-biogas)
 
 ## Amandla elanga
 
@@ -72,7 +72,7 @@ Ugesi ungagcinwa kumabhethri ukuze usetshenziswe ebusuku.
 
 **Izinhlelo ezinkulu** zingasebenzisa ifriji, i-TV noma ikhompyutha. Amaphaneli elanga enza ugesi we-direct current (DC), kodwa iningi lezinto zikagesi zasendlini lisebenzisa i-alternating current (AC), ngakho uhlelo olukhulu ludinga i-inverter (umshini oguqula i-DC ibe yi-AC).
 
-Sebenzisa ugesi welanga ngokuhlakanipha. Ama-geyser kagesi, amaketela, izifudumezi nezitofu zikagesi kusebenzisa ugesi omningi, ngakho ukukusebenzisa ngelanga kudinga uhlelo olukhulu nolubizayo. Kushibhile ukugcinela ugesi welanga izibani, amafriji, omakhalekhukhwini, amakhompyutha nama-TV, bese ufudumeza amanzi futhi upheke ngobunye ubuchwepheshe obuhlanzekile: ama-geyser elanga, ama-heat pump, i-biogas, izitofu zelanga, izikhwama ezigcina ukushisa nama-rocket stove.
+Sebenzisa ugesi welanga ngokuhlakanipha. Ama-geyser kagesi, amaketela, izifudumezi nezitofu zikagesi kusebenzisa ugesi omningi, ngakho ukukusebenzisa ngelanga kudinga uhlelo olukhulu nolubizayo. Kushibhile ukugcinela ugesi welanga izibani, amafriji, omakhalekhukhwini, amakhompyutha nama-TV, bese ufudumeza amanzi futhi upheke ngobunye ubuchwepheshe obuhlanzekile: ama-geyser elanga, ama-heat pump, i-biogas, izitofu zelanga, izikhwama ezigcina ukushisa **nama-rocket stove** (izitofu zezinkuni ezisebenzisa izinkuni ezimbalwa).
 
 > **Ukuphepha:** Noma yini enkulu kunesethi yezibani exhunywa ngepulaki kumele ifakwe ngumuntu oqeqeshelwe ugesi (qualified electrician), okufanele akunike i-Certificate of Compliance (isitifiketi esikhombisa ukuthi umsebenzi uhambisana nemithetho). Uhlelo oluxhunywe kugesi kamasipala noma we-Eskom kumele luvunywe futhi lubhaliswe kumasipala wakho noma e-Eskom ngaphambi kokuba luvulwe. Amabhethri agcina amandla amaningi: wagcine endaweni eyomile, engena umoya, kude nezingane. Amabhethri e-lead-acid akhipha igesi evuthayo lapho eshajwa, ngakho ungalokothi ubheme noma wenze izinhlansi eduze kwawo. Thenga amabhethri e-lithium kuphela uma enohlelo olufanele lokulawula ibhethri olwakhelwe ngaphakathi (battery management system).
 
@@ -134,11 +134,11 @@ Ngakho izinga lokudla livame ukuba libi, futhi kungenzeka kungahlanzeki. Ungenza
 5. Kungenise endlini ebusuku noma ukumboze kahle, ukuze amazolo angakumanzisi.
 6. Phendula izingcezu kanye noma kabili ngosuku.
 
-### Isomisi selanga
+### I-solar dryer
 
-Isomisi selanga (solar dryer) yibhokisi elomisa ukudla ngokushisa kwelanga. Sishesha futhi sihlanzekile kunokomisa elangeni ngaphandle. Singenziwa ekhaya ngezinto ezilula noma sithengwe ngentengo efanele. Singaba silula, njengohlaka lwebhokisi lokhuni olumbozwe ngepulasitiki ebonisayo, noma siqine kakhudlwana, njengohlaka lwensimbi olunepulasitiki ebonisayo noma ingilazi, namathileyi endwangu yomthunzi noma enetha.
+**I-solar dryer** (isomisi selanga) yibhokisi elomisa ukudla ngokushisa kwelanga. Ishesha futhi ihlanzekile kunokomisa elangeni ngaphandle. Ingenziwa ekhaya ngezinto ezilula noma ithengwe ngentengo efanele. Ingaba ilula, njengohlaka lwebhokisi lokhuni olumbozwe ngepulasitiki ebonisayo, noma iqine kakhudlwana, njengohlaka lwensimbi olunepulasitiki ebonisayo noma ingilazi, namathileyi endwangu yomthunzi noma enetha.
 
-Ezinye izomisi zelanga zidlulisa umoya ofudumele emathileyini. Ezinye ziyibhokisi elishisayo elingenawo umoya omningi ohambayo. Ukuhamba komoya kuyasiza: kususa umswakama.
+Amanye ama-solar dryer adlulisa umoya ofudumele emathileyini. Amanye ayibhokisi elishisayo elingenawo umoya omningi ohambayo. Ukuhamba komoya kuyasiza: kususa umswakama.
 
 Ukudla kome ngokwanele nini?
 
@@ -154,7 +154,7 @@ Gcina ukudla okomisiwe ezitsheni ezihlanzekile ezingangenisi moya, endaweni epho
 
 ## Ukupheka ngokugcina ukushisa: i-wonder bag
 
-Isitofu sokugcina ukushisa (heat-retention cooker) yisikhwama noma ibhokisi elivikelwe ekuphumeni kokushisa, eligcina ibhodwe elishisayo lishisa amahora amaningi. Esaziwa kakhulu yi-Wonderbag, eyasungulwa eNingizimu Afrika: i-wonder bag, isikhwama esigcina ukushisa, ukudla kuqhubeke kuzivuthela ngaphandle komlilo. Ungazenzela nebhokisi lotshani ("hay box") ngebhokisi noma ngobhasikidi ogcwaliswe ngotshani obomile, ngezingubo ezindala noma ngemicamelo.
+Isitofu sokugcina ukushisa (heat-retention cooker) yisikhwama noma ibhokisi elivikelwe ekuphumeni kokushisa, eligcina ibhodwe elishisayo lishisa amahora amaningi. Esaziwa kakhulu yi-Wonderbag, eyasungulwa eNingizimu Afrika: **i-wonder bag** (isikhwama esigcina ukushisa, ukudla kuqhubeke kuzivuthela ngaphandle komlilo). Ungazenzela nebhokisi lotshani ("hay box") ngebhokisi noma ngobhasikidi ogcwaliswe ngotshani obomile, ngezingubo ezindala noma ngemicamelo.
 
 Isebenza kanje: ubilisa ukudla esitofini, bese ufaka ibhodwe, livaliwe ngesivalo salo, ngqo esikhwameni bese usivala. Ukushisa okuvalelwe ngaphakathi kuqhubeka nokupheka ukudla kancane amahora amaningana, ngaphandle kokubasa okwengeziwe. Kungonga izinkuni eziningi, igesi, upharafini noma ugesi, futhi uma kushiswa izinto zokubasa ezimbalwa kusho intuthu encane endlini.
 
@@ -197,7 +197,7 @@ I-biogas iyigesi yokubasa eyenziwa lapho amagciwane ebolisa imfucuza ephilayo, n
 
 I-biogas ngokuvamile iyi-methane engu-50 kuya ku-70% cishe, okuyigesi evuthayo. Iningi elisele yi-carbon dioxide, kanye nezinye izigesi ezincane, kuhlanganise ne-hydrogen sulphide, enuka njengamaqanda abolile.
 
-I-digester iguqula imfucuza ibe amandla. Igesi ingasetshenziselwa ukupheka, ukukhanyisa, noma, ezinhlelweni ezinkulu, ukwenza ugesi. Emzini, ukupheka kuyindlela ewusizo kakhulu yokuyisebenzisa. Uketshezi oluphuma ku-digester, olubizwa ngokuthi i-slurry noma i-digestate, luwumanyolo omuhle.
+I-digester iguqula imfucuza ibe amandla. Igesi ingasetshenziselwa ukupheka, ukukhanyisa, noma, ezinhlelweni ezinkulu, ukwenza ugesi. Emzini, ukupheka kuyindlela ewusizo kakhulu yokuyisebenzisa. Uketshezi oluphuma ku-digester, olubizwa ngokuthi **i-slurry** noma i-digestate, luwumanyolo omuhle.
 
 Ama-digester angathengwa esenziwe ngomumo, noma akhiwe ngezinto ezitholakala esitolo sezinto zokwakha (hardware), njengamathangi epulasitiki, amapayipi nezixhumi. Kumele angangenisi moya nhlobo.
 
@@ -214,12 +214,12 @@ Amagciwane asebenza kangcono uma i-digester ifudumele, cishe ku-30 kuya ku-38 °
 
 > **Ukuphepha:** Ungalokothi ungene ku-digester, emgodini noma ethangini, ngisho noma lingenalutho. Kungaba ne-hydrogen sulphide, igesi enoshevu, ne-carbon dioxide, engashiyi umoya wokuphefumula. Abantu bake bafa bezama ukuhlenga abanye. Mboza imigodi yokungenisa neyokukhipha, futhi ugcine izingane kude nayo.
 
-> **Ukuphepha:** I-slurry isenamagciwane, ikakhulukazi uma ivela endleni yabantu noma yezingulube. Yenze i-compost noma uyiyeke ime amasonto ambalwa ngaphambi kokuyisebenzisa. Yisebenzise ezihlahleni zezithelo, emmbileni nasezitshalweni eziphekwayo. Ungayifaki emifinweni enamaqabunga noma kwezinye izitshalo ezidliwa ziluhlaza. Gqoka amagilavu futhi ugeze izandla zakho ngemva kokuyiphatha.
+> **Ukuphepha:** I-slurry isenamagciwane, ikakhulukazi uma ivela endleni yabantu noma yezingulube. Yenze **i-compost** (yixube nezinsalela zezitshalo uyiyeke ibole kahle enqwabeni) noma uyiyeke ime amasonto ambalwa ngaphambi kokuyisebenzisa. Yisebenzise ezihlahleni zezithelo, emmbileni nasezitshalweni eziphekwayo. Ungayifaki emifinweni enamaqabunga noma kwezinye izitshalo ezidliwa ziluhlaza. Gqoka amagilavu futhi ugeze izandla zakho ngemva kokuyiphatha.
 
 ## Amaphuzu amqoka
 
 - Ikhaya liyi-Zone 0, inkaba yomklamo we-permaculture.
-- Ubuchwepheshe obufanele bulula, abubizi, futhi bungakhiwa bulungiswe ngamakhono endawo.
+- I-appropriate technology ilula, ayibizi, futhi ingakhiwa ilungiswe ngamakhono endawo.
 - Klama indlu ngokulandela ilanga: eNingizimu ne-Afrika, amafasitela amakhulu namaphaneli elanga abheka enyakatho.
 - Sebenzisa ugesi welanga ezibanini, komakhalekhukhwini nasemafrijini. Fudumeza amanzi futhi upheke ngama-geyser elanga, i-biogas, izitofu zelanga, izikhwama ezigcina ukushisa nama-rocket stove.
 - Amaphaneli elanga nezinhlelo ezixhunywe kugesi ovamile kumele zifakwe ngumuntu oqeqeshelwe ugesi futhi zibhaliswe lapho kudingeka khona. Ezindaweni ezinesithwathwa, sebenzisa i-geyser yelanga engaqondile (indirect).

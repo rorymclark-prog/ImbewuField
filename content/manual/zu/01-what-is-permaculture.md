@@ -8,7 +8,7 @@ Leli gama laqanjwa maphakathi nawo-1970 ngabantu ababili base-Australia, **uBill
 
 ## Izincazelo
 
-UBill Mollison wachaza i-permaculture ngokuthi "ukuklama nokunakekela ngamabomu izinhlelo zemvelo ezikhiqiza ukudla, ezinokwehlukahlukana, ukuzinza nokuqina kwezinhlelo zemvelo zangempela".
+UBill Mollison wachaza i-permaculture ngokuthi "ukuklama nokunakekela ngamabomu **ama-ecosystem** (izitshalo, izilwane nezidalwa zomhlabathi ezihlala ndawonye nomhlabathi, amanzi nomoya) akhiqiza ukudla, anokwehlukahlukana, ukuzinza nokuqina kwama-ecosystem angempela".
 
 Ngamazwi alula: i-permaculture iyindlela yokuhlela nokuqhuba ipulazi noma ingadi ukuze lisebenze njengemvelo. Ihlathi noma idlelo lemvelo linezinhlobo eziningi zezitshalo nezilwane (**ukwehlukahlukana**), liyaqhubeka unyaka nonyaka (**ukuzinza**), futhi liyavuseleleka ngemva kwesomiso, umlilo noma umonakalo (**ukuqina**). Ipulazi le-permaculture lihlose ukwenza okufanayo, kodwa futhi lipha abantu ukudla.
 
@@ -18,8 +18,8 @@ I-permaculture ixhumanisa umhlaba, amanzi, izitshalo, izilwane nabantu ukuze ing
 
 Imindeni eminingi eNingizimu ne-Afrika incike emhlabeni ukuze ithole ukudla nemali. Yiyo futhi esengozini kakhulu yizinkinga ezimbili ezinkulu.
 
-- **Ukushintsha kwesimo sezulu.** Abalimi sebeyabona izinsuku ezishisa kakhulu, imvula okunzima ukuyiqagela, izomiso ezinde nezivunguvungu ezinamandla nezikhukhula eziningi. Iningi labalimi abancane lincike emvuleni hhayi ekuniseleni, ngakho lezi zinguquko zibashaya kakhulu.
-- **Ukonakala komhlaba.** Uma umhlabathi ushiywa ungenalutho, udliwa kakhulu yimfuyo, noma ulinywa emithambekeni ewumqansa, imvula nomoya kuyawukhukhula kuwuphephule. Ucwaningo lukhombisa ukuthi ukuguguleka komhlabathi sekuthinte ngaphezu kuka-70% womhlaba waseNingizimu Afrika. ELesotho, lapho le ncwadi yaqala khona ukubhalwa, nakhona kunokuguguleka okukhulu komhlabathi neziwa (dongas).
+- **I-climate change** (ukushintsha kwesimo sezulu okubangelwa yimisebenzi yabantu). Abalimi sebeyabona izinsuku ezishisa kakhulu, imvula okunzima ukuyiqagela, izomiso ezinde nezivunguvungu ezinamandla nezikhukhula eziningi. Iningi labalimi abancane lincike emvuleni hhayi ekuniseleni, ngakho lezi zinguquko zibashaya kakhulu.
+- **Ukonakala komhlaba.** Uma umhlabathi ushiywa ungenalutho, udliwa kakhulu yimfuyo, noma ulinywa emithambekeni ewumqansa, imvula nomoya kuyawukhukhula kuwuphephule. Ucwaningo lukhombisa ukuthi **i-erosion** (ukukhukhuleka komhlabathi ngamanzi noma ngumoya) isithinte ngaphezu kuka-70% womhlaba waseNingizimu Afrika. ELesotho, lapho le ncwadi yaqala khona ukubhalwa, nakhona kune-erosion enkulu neziwa (dongas).
 
 INingizimu Afrika futhi iyizwe elomile. Ngokwesilinganiso ithola cishe imvula engu-450 mm ngonyaka, okucishe kube yingxenye yesilinganiso somhlaba wonke esingaba ngu-860 mm. Lonke iconsi libalulekile.
 
@@ -33,7 +33,7 @@ I-permaculture ingaphezu kweqoqo lezindlela zokulima. Ngokusebenzisana eduze nom
 
 Umuzi nepulazi le-permaculture kunganikeza ukudla unyaka wonke, amathangi namachibi agcwele amanzi emvula, nezingadi ezigcwele impilo. Kusiza umndeni ukuthi usuke ekuphileni nje uye ekuphileni kahle, futhi wabelane ngalokho nabanye.
 
-- **Impilo engcono nokudla okunomsoco.** Ungatshala izinhlobo eziningi zemifino emisha, izithelo, ama-legume (izitshalo zohlobo lukabhontshisi) nokusanhlamvu ngaphandle kwezibulali-zinambuzane nezibulali-khula ezinamakhemikhali ayingozi. Ukudla okwehlukahlukene kungukudla okunempilo kakhulu.
+- **Impilo engcono nokudla okunomsoco.** Ungatshala izinhlobo eziningi zemifino emisha, izithelo, **ama-legume** (izitshalo zohlobo lukabhontshisi) nokusanhlamvu ngaphandle kwezibulali-zinambuzane nezibulali-khula ezinamakhemikhali ayingozi. Ukudla okwehlukahlukene kungukudla okunempilo kakhulu.
 - **Imibono emisha nogqozi.** I-permaculture ikusiza ubone ukuxhumana phakathi kwezingxenye ezahlukene zepulazi lakho, nokuthi ungakusebenzisa kanjani ukuze kukuzuzise.
 - **Umsebenzi onenjongo.** Abantu abaningi bathola injongo yangempela ekunakekeleni umhlaba.
 - **Imali nokonga.** Ukukhiqiza imikhiqizo eminingi ehlukene kwenza imali yomndeni ingabi sengozini kakhulu: uma isitshalo esisodwa sehluleka, ezinye zisavuna. Uchitha imali encane kwizinto ozithengayo, futhi ungathengisa okusele noma wenyuse inani lakho (isibonelo ngokukomisa, ngokukufaka emabhodleleni noma ngokukucubungula).
@@ -54,7 +54,7 @@ Ukunakekela abantu kusho ukuhlangabezana nezidingo zabantu — ukudla, amanzi, i
 
 UMhlaba unezinsiza ezinomkhawulo. Ukwabelana ngokulinganayo (okuvame ukubizwa ngokuthi **fair share**) kusho ukunciphisa esikusebenzisayo, nokwabelana ngokusele kithina — ukudla, imbewu, isikhathi, amakhono nemali — ukuze kubuyele ekunakekeleni uMhlaba nabantu.
 
-Uma sinakekela uMhlaba nabantu bawo futhi sabelana ngokulinganayo, siqala futhi ukubhekana nezinkinga ezinkulu ezifana nobumpofu, indlala nokuguguleka komhlabathi. Zonke izinhlobo zokuphila zinelungelo lokuba khona, ngakho njengabaklami be-permaculture sisebenzela ukuvikela nokusekela impilo kuzo zonke izinhlobo zayo.
+Uma sinakekela uMhlaba nabantu bawo futhi sabelana ngokulinganayo, siqala futhi ukubhekana nezinkinga ezinkulu ezifana nobumpofu, indlala ne-erosion. Zonke izinhlobo zokuphila zinelungelo lokuba khona, ngakho njengabaklami be-permaculture sisebenzela ukuvikela nokusekela impilo kuzo zonke izinhlobo zayo.
 
 > **Qaphela:** "Imvelo ayenzi lutho ngaphandle kwenjongo." — U-Aristotle, isazi sefilosofi samaGreki. Ku-permaculture sifuna injongo nomsebenzi wayo yonke ingxenye yohlelo.
 
@@ -87,15 +87,15 @@ Ku-permaculture sibamba futhi sigcine amandla nezinsiza ngesikhathi kusekuningi,
 
 Izibonelo:
 
-- Ngenkathi yokukhula, lapho ilanga linamandla kakhulu, sibamba amandla elanga ngezitshalo — imifino, izithelo, amantongomane, izinkuni, ukudla kwemfuyo nenyama.
-- Uma lina, bamba ugcine amanzi emathangini, emachibini nasemhlabathini uqobo (isibonelo nge-mulch nangemisele yokubamba amanzi (swales)).
+- Ngenkathi yokukhula, lapho ilanga linamandla kakhulu, sibamba amandla elanga ngezitshalo — imifino, izithelo, amantongomane, izinkuni, **i-fodder** (ukudla kwemfuyo) nenyama.
+- Uma lina, bamba ugcine amanzi emathangini, emachibini nasemhlabathini uqobo (isibonelo **nge-mulch** (isembozo somhlabathi) **nangama-swale** (imisele ebamba amanzi emvula)).
 - Omisa, faka emabhodleleni noma ulondoloze imifino nezithelo ezeqile ukuze uzisebenzise ngesikhathi lapho ukudla okusha kuyindlala.
 
 ### 3. Thola isivuno
 
 Isisho: *Awukwazi ukusebenza uma isisu singenalutho.*
 
-Yenza isikhathi nomsebenzi wakho kube nomphumela. **Isivuno** yinoma yini ewusizo ekhiqizwa wuhlelo lwakho: ukudla, ukudla kwemfuyo, izinkuni, indawo yokukhosela, ukufudumala, umuthi, imbewu noma imali.
+Yenza isikhathi nomsebenzi wakho kube nomphumela. **Isivuno** yinoma yini ewusizo ekhiqizwa wuhlelo lwakho: ukudla, i-fodder, izinkuni, indawo yokukhosela, ukufudumala, umuthi, imbewu noma imali.
 
 Ezinye izivuno zithatha iminyaka. Isihlahla sezithelo singathatha iminyaka eminingana ngaphambi kokuthi sithele. Ngakho hlela inhlanganisela yezivuno ezisheshayo nezephuzayo, ukuze uhlale unokuthile okukhombisa umsebenzi nezinsiza ozifakayo manje. Siklama ngamabomu ukuze kube nokusele — okwanele umndeni wethu, izitshalo nezilwane, okokwabelana nomakhelwane nokuthengisa.
 
@@ -109,7 +109,7 @@ Izibonelo:
 
 ### 4. Zilawule, wamukele nalokho okufundiswa yimiphumela
 
-Izinhlelo zemvelo ziyazilinganisela zona ngokwazo. Ehlathini noma edlelweni elinempilo, asikho isitshalo noma isilwane esisodwa esibusa isikhathi eside. Abantu, nokho, bavame ukuthatha okuningi kakhulu kunalokho abakudingayo. Ukusebenzisa kwethu izinsiza ngokweqile kuyimbangela enkulu yokushintsha kwesimo sezulu nokulahleka kwezitshalo nezilwane.
+Izinhlelo zemvelo ziyazilinganisela zona ngokwazo. Ehlathini noma edlelweni elinempilo, asikho isitshalo noma isilwane esisodwa esibusa isikhathi eside. Abantu, nokho, bavame ukuthatha okuningi kakhulu kunalokho abakudingayo. Ukusebenzisa kwethu izinsiza ngokweqile kuyimbangela enkulu ye-climate change nokulahleka kwezitshalo nezilwane.
 
 Lesi simiso sicela ukuba **sibeke imikhawulo** — siphile impilo elula futhi singathathi okungaphezu kwalokho esikudingayo — ukuze izingane zethu zizuze umhlaba onempilo.
 
@@ -126,19 +126,19 @@ Izibonelo:
 
 ### 5. Sebenzisa futhi wazise izinsiza ezivuselelekayo
 
-Bheka emvelweni ukuze uthole izinto esizidingayo. Izitshalo, izilwane, ukukhanya kwelanga, umoya nemvula kuyazivuselela. Izinsiza ezingavuseleleki ezifana nophethiloli, udizili nomanyolo wamakhemikhali zisetshenziswa kanye bese ziyaphela, ziyabiza, futhi ukushiswa kukaphethiloli, udizili namalahle kwandisa ukushintsha kwesimo sezulu.
+Bheka emvelweni ukuze uthole izinto esizidingayo. Izitshalo, izilwane, ukukhanya kwelanga, umoya nemvula kuyazivuselela. Izinsiza ezingavuseleleki ezifana nophethiloli, udizili nomanyolo wamakhemikhali zisetshenziswa kanye bese ziyaphela, ziyabiza, futhi ukushiswa kukaphethiloli, udizili namalahle kwandisa i-climate change.
 
-Izitshalo nezilwane zingasinika amafutha nomanyolo, futhi zisisize ekulawuleni izinambuzane, ukhula, umlilo nokuguguleka, ekubuyiseleni izakhamzimba emhlabathini nasekuxegiseni umhlabathi. Zingathatha isikhundla sogandaganda, semishini yokusika utshani nesemishini yokugunda utshani eshisa amafutha.
+Izitshalo nezilwane zingasinika amafutha nomanyolo, futhi zisisize ekulawuleni izinambuzane, ukhula, umlilo ne-erosion, ekubuyiseleni izakhamzimba emhlabathini nasekuxegiseni umhlabathi. Zingathatha isikhundla sogandaganda, semishini yokusika utshani nesemishini yokugunda utshani eshisa amafutha.
 
 Kuthatha isikhathi ukwakha lezi zinsiza eziphilayo, ngakho kubone njengotshalo-mali lwesikhathi eside. Ngokuhamba kwesikhathi zizozanda futhi ziziqhubekele ngokwazo.
 
 Izibonelo:
 
-- **Ogandaganda abayizilwane (animal tractors).** Izinkukhu nezingulube ngokwemvelo ziyaphenya futhi zimbe zifuna izikelemu, izimpande nezinambuzane. Zigcine izinsuku ezimbalwa endaweni ebiyelwe egcwele ukhula, zizoyihlanza ukhula futhi ziwuvundise umhlabathi, ulungele ukutshalwa.
+- **Ama-animal tractor** (izilwane ezisebenza esikhundleni sikagandaganda). Izinkukhu nezingulube ngokwemvelo ziyaphenya futhi zimbe zifuna izikelemu, izimpande nezinambuzane. Zigcine izinsuku ezimbalwa endaweni ebiyelwe egcwele ukhula, zizoyihlanza ukhula futhi ziwuvundise umhlabathi, ulungele ukutshalwa.
 - **Umanyolo ovela ezilwaneni.** Izilwane zidla izitshalo bese zibuyisela izakhamzimba emhlabathini ngomquba wazo. Umquba wezilwane nomquba owuketshezi (itiye lomquba) kondla izitshalo zasengadini.
-- **Uthango oluphilayo nezivikela-moya.** Uthango lwezitshalo eziwusizo ezingahlaseli lunikeza indawo yokukhosela, ukudla kwemfuyo nezinkuni ngaphandle kwamafutha noma ucingo.
+- **Uthango oluphilayo nama-windbreak** (imigqa yezihlahla evimba umoya). Uthango lwezitshalo eziwusizo ezingewona **ama-invasive species** (izitshalo zangaphandle ezisakazeka zingalawuleki) lunikeza indawo yokukhosela, i-fodder nezinkuni ngaphandle kwamafutha noma ucingo.
 
-> **Ukuphepha:** Umquba wezilwane omusha ungaba namagciwane abangela ukugula okukhulu. Wenze i-compost kahle ngaphambi kokuwusebenzisa ezitshalweni ezidliwa ziluhlaza, ezifana nolethisi, isipinashi namakhambi. Uma usebenzisa umquba ongakabolwa, wugqibe emhlabathini okungenani izinyanga ezi-4 (izinsuku eziyi-120) ngaphambi kokuvuna izitshalo ezithinta umhlabathi. Geza izandla zakho ngemva kokuphatha umquba. Gcina izingulube othangweni oluqinile ukuze zingaphunyukeli ezitshalweni zomakhelwane.
+> **Ukuphepha:** Umquba wezilwane omusha ungaba namagciwane abangela ukugula okukhulu. Wenze **i-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi) kahle ngaphambi kokuwusebenzisa ezitshalweni ezidliwa ziluhlaza, ezifana nolethisi, isipinashi namakhambi. Uma usebenzisa umquba ongakabolwa, wugqibe emhlabathini okungenani izinyanga ezi-4 (izinsuku eziyi-120) ngaphambi kokuvuna izitshalo ezithinta umhlabathi. Geza izandla zakho ngemva kokuphatha umquba. Gcina izingulube othangweni oluqinile ukuze zingaphunyukeli ezitshalweni zomakhelwane.
 
 ### 6. Ungachithi lutho
 
@@ -151,22 +151,22 @@ Umthetho omuhle uthi: **cabanga kabusha, nciphisa, lungisa, phinda usebenzise, g
 Izibonelo:
 
 - **Izinsalela zasekhishini.** Amaxolo, izikhumba nezinsalela zemifino ziwukudla okuhle kwezikelemu futhi ziyingxenye ebalulekile "eluhlaza" (ecebile nge-nitrogen) enqwabeni ye-compost.
-- **Utshani obugunyiwe.** Busebenzise njenge-mulch (isembozo somhlabathi) ezungeze izithombo ukuze umhlabathi uhlale upholile futhi umanzi, kuvinjwe ukhula, futhi kungezwe kancane izakhamzimba njengoba bubola. Busakaze ngezingqimba ezincane, noma ubuyeke bome kuqala, ngoba ungqimba olujiyile lotshani obusha luyanamathelana futhi lushise. Ungasebenzisi utshani obugunywe ezingadini zotshani ezifafazwe ngezibulali-khula.
-- **Amanzi asetshenzisiwe (greywater).** Esikhundleni sokulahla amanzi okuwasha nawokugeza, wasebenzise ukunisela izihlahla zezithelo nezitshalo zokuhlobisa. Sebenzisa insipho nempuphu yokuwasha ethambile, ebolayo emvelweni futhi enosawoti omncane.
+- **Utshani obugunyiwe.** Busebenzise njenge-mulch ezungeze izithombo ukuze umhlabathi uhlale upholile futhi umanzi, kuvinjwe ukhula, futhi kungezwe kancane izakhamzimba njengoba bubola. Busakaze ngezingqimba ezincane, noma ubuyeke bome kuqala, ngoba ungqimba olujiyile lotshani obusha luyanamathelana futhi lushise. Ungasebenzisi utshani obugunywe ezingadini zotshani ezifafazwe ngezibulali-khula.
+- **I-greywater** (amanzi asetshenzisiwe okuwasha nokugeza). Esikhundleni sokulahla amanzi okuwasha nawokugeza, wasebenzise ukunisela izihlahla zezithelo nezitshalo zokuhlobisa. Sebenzisa insipho nempuphu yokuwasha ethambile, ebolayo emvelweni futhi enosawoti omncane.
 
-> **Ukuphepha:** Amanzi asetshenzisiwe angaba namagciwane. Sebenzisa amanzi aphuma kubhavu, eshaweni nasesitsheni sokugeza izandla esikhundleni samanzi asekhishini, anamafutha futhi agcwele amagciwane. Ungalokothi usebenzise amanzi okuwasha amanabukeni. Thela amanzi asetshenzisiwe emhlabathini noma ku-mulch ezungeze izihlahla, hhayi emaqabungeni, futhi ungalokothi uwathele emifinweni edliwa iluhlaza, efana nolethisi nesipinashi. Ungawayeki amile emaxhaphozini, futhi ungawasebenzisi uma kukhona emndenini ogula yisisu. Nisela ngamanzi ahlanzekile ngezikhathi ezithile ukuze ugeze usawoti.
+> **Ukuphepha:** I-greywater ingaba namagciwane. Sebenzisa amanzi aphuma kubhavu, eshaweni nasesitsheni sokugeza izandla esikhundleni samanzi asekhishini, anamafutha futhi agcwele amagciwane. Ungalokothi usebenzise amanzi okuwasha amanabukeni. Thela i-greywater emhlabathini noma ku-mulch ezungeze izihlahla, hhayi emaqabungeni, futhi ungalokothi uyithele emifinweni edliwa iluhlaza, efana nolethisi nesipinashi. Ungayiyeki imile emaxhaphozini, futhi ungayisebenzisi uma kukhona emndenini ogula yisisu. Nisela ngamanzi ahlanzekile ngezikhathi ezithile ukuze ugeze usawoti.
 
 ### 7. Klama kusukela kumaphethini uye emininingwaneni
 
 Imvelo igcwele amaphethini — ukwahlukana kwamagatsha omfula noma esihlahla, ukujikeleza kwegobolondo lomnenke, indlela amanzi ahlala egelezela ngayo phansi emthambekeni. Ku-permaculture sizama ukuthola iphethini engcono kakhulu yendawo yethu kuqala, bese kuthi emva kwalokho sigcwalise imininingwane.
 
-Qala ngesithombe esikhulu: ukuma komhlaba (imithambeka nama-contour awo), lapho amanzi evela khona nalapho aya khona (**indawo yokuqoqa amanzi** — catchment), nesimo sezulu. Dweba iphethini enkulu yomklamo wakho ngokusekelwe kulokhu. Bese uthola imininingwane, njengokuthi yiziphi izitshalo eziya kumuphi umbhede. UBill Mollison wayebona iphethini ibaluleke kangangokuthi wayinika isahluko sonke encwadini yakhe ethi *Permaculture: A Designers' Manual* (1988).
+Qala ngesithombe esikhulu: ukuma komhlaba (imithambeka **nama-contour** awo, okuyimigqa esezingeni elifanayo lokuphakama), lapho amanzi evela khona nalapho aya khona (**i-catchment**, okuyindawo amanzi emvula agelezela kuyo), nesimo sezulu. Dweba iphethini enkulu yomklamo wakho ngokusekelwe kulokhu. Bese uthola imininingwane, njengokuthi yiziphi izitshalo eziya kumuphi umbhede. UBill Mollison wayebona iphethini ibaluleke kangangokuthi wayinika isahluko sonke encwadini yakhe ethi *Permaculture: A Designers' Manual* (1988).
 
-Ungaboleka futhi amaphethini emvelo ngqo: izindlela ezigwegwa kancane njengomfula, noma imibhede yengadi emise okwesipiliyali noma okwembobo kakhiye. Buka ukuma kwezinto ezikuzungezile ukuze uthole imibono.
+Ungaboleka futhi amaphethini emvelo ngqo: izindlela ezigwegwa kancane njengomfula, noma imibhede yengadi emise okwesipiliyali, noma **ama-keyhole bed** (imibhede eyindilinga enendlela emise okwembobo kakhiye). Buka ukuma kwezinto ezikuzungezile ukuze uthole imibono.
 
 Izibonelo:
 
-- Sebenzisa **imigqa ye-contour** yomhlaba wakho (imigqa ehamba ezingeni elifanayo emthambekeni) ukwakha imisebenzi yomhlabathi, efana **nomsele wokubamba amanzi (swale)** — umsele ombiwa ulandela i-contour ukuze ubambe futhi umunce amanzi agelezayo. I-contour iyiphethini; i-swale iyimininingwane.
+- Sebenzisa **imigqa ye-contour** yomhlaba wakho (imigqa ehamba ezingeni elifanayo emthambekeni) ukwakha imisebenzi yomhlabathi, efana **ne-swale** — umsele ombiwa ulandela i-contour ukuze ubambe futhi umunce **i-runoff** (amanzi emvula ageleza phezu komhlaba). I-contour iyiphethini; i-swale iyimininingwane.
 - Landela umzila welanga unyaka wonke. ENingizimu ne-Afrika ilanga lisenyakatho, futhi liphansi ebusika. Beka izitshalo, izihlahla nezakhiwo lapho zizothola khona ilanga ezilidingayo.
 - Buka imijikelezo ekuzungezile, njengezinkathi zonyaka nemvula. Qaphela ukuthi zithinta kanjani izitshalo nezilwane, futhi uhlele ukutshala kwakho nokunakekela izilwane ngokuhambisana nazo.
 
@@ -183,7 +183,7 @@ Kunjalo nangabantu. Imiphakathi inamandla kakhulu uma wonke umuntu ebamba iqhaza
 Izibonelo:
 
 - Dala izindawo eziphephile lapho izingane nabantu abadala bengasiza futhi bafunde engadini.
-- Hlanganisa izihlahla, izitshalo nezilwane (**agroforestry**) ukuze ngayinye inikeze ezinye imikhiqizo nosizo lwayo. Isibonelo, izihlahla zinikeza umthunzi nokudla kwemfuyo, izilwane zinikeza umquba, izitshalo zinikeza ukudla nezinsalela zezitshalo zezilwane.
+- Hlanganisa izihlahla, izitshalo nezilwane (**agroforestry**) ukuze ngayinye inikeze ezinye imikhiqizo nosizo lwayo. Isibonelo, izihlahla zinikeza umthunzi ne-fodder, izilwane zinikeza umquba, izitshalo zinikeza ukudla nezinsalela zezitshalo zezilwane.
 - Dala **ama-guild** (iqembu lezitshalo ezisizanayo) — amaqembu ezitshalo ezikhula kahle ndawonye futhi zisizane ekulawuleni izinambuzane, ekuvundiseni, ngomthunzi noma ngokusekelana.
 
 ### 9. Sebenzisa izixazululo ezincane nezihamba kancane
@@ -220,20 +220,20 @@ Izibonelo:
 - Londoloza imbewu ezitshalweni zakho ezingcono kakhulu nezinempilo kakhulu isizini ngayinye. Eminyakeni ezayo imbewu yakho izojwayela izimo zendawo yakini, futhi ukulondoloza ezitshalweni eziningi kuyigcina yehlukahlukene ngokofuzo.
 - Fuya izilwane ezisizanayo. Isibonelo, izinkukhu ezilandela izinkomo ziyaphenya kubulongwe, zibusakaze futhi zidle izibungu zezimpukane.
 
-### 11. Sebenzisa imiphetho, wazise nezindawo eziseceleni
+### 11. Sebenzisa ama-edge, wazise nezindawo eziseceleni
 
-**Umphetho** yindawo lapho izindawo ezimbili zemvelo ezihlukene zihlangana khona — isibonelo, lapho ichibi lihlangana nomhlaba owomile, noma lapho ihlathi lihlangana nedlelo. Imiphetho ivame ukuba matasa kakhulu, ikhiqize kakhulu futhi ibe yikhaya lezinhlobo eziningi zezitshalo nezilwane kunanoma iyiphi yalezo zindawo iyodwa. Ithola izinzuzo zezinhlangothi zombili futhi ivakashelwa yizidalwa ezivela kuzo zombili.
+**I-edge** (umphetho) yindawo lapho izindawo ezimbili zemvelo ezihlukene zihlangana khona — isibonelo, lapho ichibi lihlangana nomhlaba owomile, noma lapho ihlathi lihlangana nedlelo. Ama-edge avame ukuba matasa kakhulu, akhiqize kakhulu futhi abe yikhaya lezinhlobo eziningi zezitshalo nezilwane kunanoma iyiphi yalezo zindawo iyodwa. Athola izinzuzo zezinhlangothi zombili futhi avakashelwa yizidalwa ezivela kuzo zombili.
 
 > **Qaphela:** "Lapho izinto zihlangana khona yilapho kwenzeka izehlakalo ezithakazelisa kakhulu. Lezi zivame ukuba yizingxenye zohlelo ezibaluleke kakhulu, ezehlukahlukene kakhulu nezikhiqiza kakhulu." — David Holmgren
 
-**Izindawo eziseceleni** — amakhona, uthango, izindonga, amawa amade nezindawo ezimanzi ezivame ukunganakwa — nazo zingakhiqiza. Lesi simiso sisisebenzisa ngokwengeza izitshalo eziwusizo nezindawo zokuhlala zezilwane emaphethelweni nasezindaweni eziseceleni.
+**Izindawo eziseceleni** — amakhona, uthango, izindonga, amawa amade nezindawo ezimanzi ezivame ukunganakwa — nazo zingakhiqiza. Lesi simiso sisisebenzisa ngokwengeza izitshalo eziwusizo **nama-habitat** (amakhaya emvelo ezitshalo nezilwane) kuma-edge nasezindaweni eziseceleni.
 
 Izibonelo:
 
 - Tshala uthango oluphilayo lwezitshalo zomdabu emaphethelweni amasimu. Isibonelo, umqokolo (*Dovyalis caffra*) wenza uthango olunameva oluthela izithelo, kanti i-Cape honeysuckle (*Tecoma capensis*) ne-plumbago (*Plumbago auriculata*) kuheha izinyoni nezinambuzane eziwusizo.
-- Yenza izindlela ezihamba phakathi kwezindawo ezimbili zokutshala, njenge-food forest (ihlathi lokudla) nengadi yemifino, ukuze ukwazi ukunakekela zombili ngesikhathi esisodwa.
+- Yenza izindlela ezihamba phakathi kwezindawo ezimbili zokutshala, **njenge-food forest** (ihlathi lokudla) nengadi yemifino, ukuze ukwazi ukunakekela zombili ngesikhathi esisodwa.
 - Beka izibaya zezilwane eduze nezindawo zezitshalo ukuze zombili zabelane ngokukhiqizwayo. Isibonelo, ukhula nezitshalo ezilimele ezivela engadini zinganikwa izinkukhu, bese umquba wazo ubuyela engadini.
-- Tshala ukudla ezindongeni nasothangweni (**ukulima ngokuphakama**, vertical gardening). Ubhontshisi okhuphukayo, ukhukhamba namaselwa kuguqula umphetho ongasetshenziswa ube yindawo ekhiqizayo.
+- Tshala ukudla ezindongeni nasothangweni (**ukulima ngokuphakama**, vertical gardening). Ubhontshisi okhuphukayo, ukhukhamba namaselwa kuguqula i-edge engasetshenziswa ibe yindawo ekhiqizayo.
 
 ### 12. Yamukela ushintsho ngobuhlakani futhi usabele kulo
 
@@ -255,8 +255,8 @@ Izibonelo:
 
 - I-permaculture isho "ezolimo ezihlala njalo" kanye "nesiko elihlala njalo": ukulima nokuphila ngezindlela ezihlala isikhathi eside.
 - Leli gama laqanjwa maphakathi nawo-1970 nguBill Mollison noDavid Holmgren; incwadi yabo ethi *Permaculture One* yaphuma ngo-1978.
-- I-permaculture iklama amapulazi asebenza njengezinhlelo zemvelo: ehlukahlukene, azinzile futhi aqinile.
-- Isiza abalimi baseNingizimu ne-Afrika ukuthi babhekane nesomiso, ukushintsha kwesimo sezulu nokuguguleka komhlabathi, kuyilapho ithuthukisa ukudla, impilo nemali.
+- I-permaculture iklama amapulazi asebenza njengama-ecosystem emvelo: ehlukahlukene, azinzile futhi aqinile.
+- Isiza abalimi baseNingizimu ne-Afrika ukuthi babhekane nesomiso, i-climate change ne-erosion, kuyilapho ithuthukisa ukudla, impilo nemali.
 - Izimiso zokuziphatha ezintathu yilezi: ukunakekela uMhlaba, ukunakekela abantu, nokwabelana ngokulinganayo.
-- Izimiso eziyishumi nambili zikaDavid Holmgren yilezi: bheka futhi ufunde ngokusebenzelana nomhlaba; bamba ugcine amandla; thola isivuno; zilawule, wamukele nalokho okufundiswa yimiphumela; sebenzisa futhi wazise izinsiza ezivuselelekayo; ungachithi lutho; klama kusukela kumaphethini uye emininingwaneni; hlanganisa kunokuhlukanisa; sebenzisa izixazululo ezincane nezihamba kancane; sebenzisa futhi wazise ukwehlukahlukana; sebenzisa imiphetho, wazise nezindawo eziseceleni; yamukela ushintsho ngobuhlakani futhi usabele kulo.
+- Izimiso eziyishumi nambili zikaDavid Holmgren yilezi: bheka futhi ufunde ngokusebenzelana nomhlaba; bamba ugcine amandla; thola isivuno; zilawule, wamukele nalokho okufundiswa yimiphumela; sebenzisa futhi wazise izinsiza ezivuselelekayo; ungachithi lutho; klama kusukela kumaphethini uye emininingwaneni; hlanganisa kunokuhlukanisa; sebenzisa izixazululo ezincane nezihamba kancane; sebenzisa futhi wazise ukwehlukahlukana; sebenzisa ama-edge, wazise nezindawo eziseceleni; yamukela ushintsho ngobuhlakani futhi usabele kulo.
 - Qala kancane, ubheke ngokucophelela, futhi uvumele umhlaba ukuthi ukufundise.

@@ -7,7 +7,7 @@ Umklamo omuhle wenza izinto ezimbili:
 - Ukhipha konke okungenziwa ngumhlaba.
 - Ufeza izidingo eziningi ngangokunokwenzeka zayo yonke ingxenye yohlelo: izitshalo, izilwane, amanzi, izakhiwo nabantu.
 
-Lesi sahluko sichaza izinyathelo ezintathu zokuhlela: ukuhlola indawo, ukuhlela ama-zone nokuhlela umthambeka. Isinyathelo sesine, ukuhlela ama-sector, sisesahlukweni esilandelayo.
+Lesi sahluko sichaza izinyathelo ezintathu zokuhlela: ukuhlola indawo, ukuhlela **ama-zone** (izindawo ezihlelwe ngokuthi uzivakashela kangaki) nokuhlela umthambeka. Isinyathelo sesine, ukuhlela **ama-sector** (amandla emvelo angena endaweni — ilanga, umoya, umlilo, amanzi), sisesahlukweni esilandelayo.
 
 ## Isinyathelo 1: Ukuhlola indawo
 
@@ -17,7 +17,7 @@ Ngaphambi kokuthi ushintshe noma yini, thola konke ongakwazi ngomhlaba:
 
 - **Umlando:** ukuthi umhlaba wawusetshenziswa kanjani ngaphambili, nokuthi yini eyayikhula kuwo.
 - **Isimo sezulu:** imvula, isithwathwa, ukushisa nomoya.
-- **Izinsiza ezisendaweni noma eduze kwayo:** amanzi, umhlabathi, umquba wezilwane, i-mulch, izinto zokwakha nabantu abangasiza.
+- **Izinsiza ezisendaweni noma eduze kwayo:** amanzi, umhlabathi, umquba wezilwane, **i-mulch** (isembozo somhlabathi), izinto zokwakha nabantu abangasiza.
 - **Izimakethe:** lapho ungathengisa khona lokho okutshalayo.
 
 ### Buka umhlaba
@@ -41,7 +41,7 @@ Imephu eyisisekelo ngumdwebo wendawo yakho yonke njengoba ibonakala uma uyibuka 
 - ukuthi ingxenye ngayinye isetshenziswa kanjani manje, isibonelo insimu, idlelo lemvelo (veld) noma ingadi,
 - amanzi: iziphethu, imifudlana, imithombo ejulile (boreholes), amathangi, omcebo nezindawo ezimanzi,
 - izihlahla ezinkulu nezindawo ezinamatshe,
-- imigqa ye-contour uma unayo. Umugqa we-contour (umugqa ohamba ezingeni elifanayo emthambekeni) uxhumanisa amaphuzu asekuphakameni okufanayo.
+- imigqa **ye-contour** uma unayo. Umugqa we-contour (umugqa ohamba ezingeni elifanayo emthambekeni) uxhumanisa amaphuzu asekuphakameni okufanayo.
 
 Ungayithola kuphi imephu:
 
@@ -59,8 +59,8 @@ Dweba imephu yakho ngesikali. Isibonelo, u-1 cm ephepheni angamela u-1 m emhlaba
 Amanzi yinto ebaluleke kakhulu okufanele uyihlelele. Isahluko 7 siwachaza ngokuningiliziwe.
 
 1. Thola izibalo zemvula endaweni yakho. Iningi leNingizimu Afrika lithola imvula yalo ehlobo. INtshonalanga Kapa ithola iningi lemvula yayo ebusika.
-2. Buka indawo yokuqoqa amanzi (catchment). Lona ngumhlaba ongaphezu kowakho othululela amanzi emhlabeni wakho.
-3. Bheka amanzi agelezayo (runoff): amanzi agobhoza phezu komhlabathi ngemva kwemvula. Bheka futhi izimpawu zamanzi agelezayo akudala, njengeziwa, izindawo ezingenalutho nomhlabathi okhukhulekile. Amanzi agelezayo athwala umhlabathi nezakhamzimba ozifake kuwo.
+2. Buka **i-catchment** (indawo yokuqoqa amanzi). Lona ngumhlaba ongaphezu kowakho othululela amanzi emhlabeni wakho.
+3. Bheka **i-runoff** (amanzi agobhoza phezu komhlabathi ngemva kwemvula). Bheka futhi izimpawu ze-runoff yakudala, njengeziwa, izindawo ezingenalutho nomhlabathi okhukhulekile. I-runoff ithwala umhlabathi nezakhamzimba ozifake kuwo.
 4. Bhala phansi izindawo zokugcina amanzi onazo manje, nezindawo ongafaka kuzo amathangi, amachibi noma amadamu.
 5. Bhala phansi imithombo yakho yamanzi yokwesekela: umthombo ojulile, umfula, isiphethu noma umcebo kamasipala.
 6. Phawula ezindaweni ezomile kakhulu nezimanzi kakhulu emephini yakho.
@@ -79,7 +79,7 @@ Umthambeka uvame ukunikezwa njengephesenti. Ukutshela ukuthi umhlaba wehla amami
 | 20% | 1 m ku-5 m | cishe 11° | Umthetho waseNingizimu Afrika udinga imvume ebhaliwe ukuze ulime |
 | 32% | 1 m cishe ku-3 m | cishe 18° | Kugcine kunezihlahla noma utshani obuhlala njalo |
 
-> **Qaphela:** Ngaphansi kwe-Conservation of Agricultural Resources Act (43 of 1983) (uMthetho Wokongiwa Kwezinsiza Zezolimo), udinga imvume ebhaliwe evela eMnyangweni Wezolimo ngaphambi kokuthi ulime umhlaba onomthambeka ongaphezu kuka-20%. Kwezinye izindawo ezisengozini yokuguguleka ezibalwe emithethweni, umkhawulo ungu-12%. Buza umeluleki wezolimo wendawo.
+> **Qaphela:** Ngaphansi kwe-Conservation of Agricultural Resources Act (43 of 1983) (uMthetho Wokongiwa Kwezinsiza Zezolimo), udinga imvume ebhaliwe evela eMnyangweni Wezolimo ngaphambi kokuthi ulime umhlaba onomthambeka ongaphezu kuka-20%. Kwezinye izindawo ezisengozini **ye-erosion** (ukukhukhuleka komhlabathi ngamanzi noma ngumoya) ezibalwe emithethweni, umkhawulo ungu-12%. Buza umeluleki wezolimo wendawo.
 
 Uma umhlaba wakho uwumqansa, hlela ama-terrace (izitebhisi zomhlabathi) noma imibhede ye-contour. UBill Mollison, omunye wabasunguli be-permaculture, weluleka ukuthi imithambeka engaphezu kwama-degree angaba ngu-18 (cishe u-32%) kufanele ihlale imbozwe yizihlahla ezihlala njalo ukuze kuvikelwe umhlabathi. Khumbula lokhu uma ukhetha umhlaba ozowuthenga noma owuqasha.
 
@@ -99,17 +99,17 @@ Noma ungasebenza kangakanani, ngeke ushintshe lapho ilanga liphuma khona, ngakho
 
 Imigwaqo nezindlela cishe kuhlala njalo. Uma sezakhiwe, kunzima ukuzihambisa. Phawula yonke imigwaqo nezindlela ezikhona emephini yakho eyisisekelo.
 
-Uma uhlela izindlela ezintsha noma imigwaqo, yenze ihambe ngokomugqa we-contour. Indlela ehamba nge-contour ingaba udonga lomsele wokubamba amanzi (swale). I-swale ngumsele ombiwa ngokomugqa we-contour ukuze ubambe amanzi emvula (bheka isahluko 7). Lokhu kuvuna amanzi, kunciphisa amanzi agelezayo futhi kusiza ukulawula ukuguguleka. Yenza indlela ngayinye yehle kancane kakhulu ukuze imvula igobhozele ku-swale noma emgodini wesihlahla, ingagelezi yehle ngendlela.
+Uma uhlela izindlela ezintsha noma imigwaqo, yenze ihambe ngokomugqa we-contour. Indlela ehamba nge-contour ingaba udonga **lwe-swale**. I-swale ngumsele ombiwa ngokomugqa we-contour ukuze ubambe amanzi emvula (bheka isahluko 7). Lokhu kuvuna amanzi, kunciphisa i-runoff futhi kusiza ukulawula i-erosion. Yenza indlela ngayinye yehle kancane kakhulu ukuze imvula igobhozele ku-swale noma emgodini wesihlahla, ingagelezi yehle ngendlela.
 
 ## Isinyathelo 2: Ukuhlela ama-zone
 
-Ukuhlela ama-zone (izindawo ezihlelwe ngokuthi uzivakashela kangaki) kubeka ingxenye ngayinye yepulazi ngokuthi uyidinga kangaki. Izinto ozivakashela nsuku zonke zibekwa eduze kakhulu nendlu. Izinto ozivakashela kancane zibekwa kude. Lokhu kukongela ukuhamba, isikhathi namandla.
+Ukuhlela ama-zone kubeka ingxenye ngayinye yepulazi ngokuthi uyidinga kangaki. Izinto ozivakashela nsuku zonke zibekwa eduze kakhulu nendlu. Izinto ozivakashela kancane zibekwa kude. Lokhu kukongela ukuhamba, isikhathi namandla.
 
 | I-zone | Iyini | Uyivakashela kangaki | Izibonelo |
 |---|---|---|---|
 | 0 | Indlu | Ngaso sonke isikhathi | Ikhishi, isitolo sembewu, amathangi amanzi emvula asendlini |
-| 1 | Eduze nje kwendlu | Nsuku zonke, kaningi | Ingadi yasekhaya eseduze nekhishi, amakhambi, indawo yokukhulisela izithombo, i-compost, izilwane ezincane, amachibi amancane |
-| 2 | Eduze nendlu | Cishe nsuku zonke | I-food forest exubile, izihlahla zezithelo, ingadi yemifino enkulu, izinkukhu, izitshalo eziyisisekelo |
+| 1 | Eduze nje kwendlu | Nsuku zonke, kaningi | Ingadi yasekhaya eseduze nekhishi, amakhambi, indawo yokukhulisela izithombo, **i-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi), izilwane ezincane, amachibi amancane |
+| 2 | Eduze nendlu | Cishe nsuku zonke | **I-food forest** (ihlathi lokudla) exubile, izihlahla zezithelo, ingadi yemifino enkulu, izinkukhu, izitshalo eziyisisekelo |
 | 3 | Indawo enkulu yokulima | Masonto onke, noma uma kudingeka | Izitshalo zasensimini nezezimakethe, insimu enkulu yezithelo, amadlelo, amachibi ezinhlanzi, amadamu |
 | 4 | Yasendle kancane, enakekelwa kancane | Ngezikhathi ezithile | Ihlathi elincane lezinkuni, izigxobo nemapulangwe, amadlelo, amadamu amakhulu |
 | 5 | Yasendle | Kuyaqabukela, ukuze ubheke futhi ufunde | Idlelo lemvelo, ihlanze noma ihlathi elishiyelwe izilwane zasendle |
@@ -118,7 +118,7 @@ Ukuhlela ama-zone (izindawo ezihlelwe ngokuthi uzivakashela kangaki) kubeka ingx
 
 I-Zone 1 yi-zone ematasa kunazo zonke. Inika isivuno esikhulu kakhulu endaweni encane kakhulu. Uyinakekela ngokuseduze, uchitha isikhathi esiningi kuyo futhi uvuna kuyo kaningi. Inezinhlobo eziningi kakhulu zezitshalo nezilwane.
 
-- Imifino yonyaka owodwa nemifino enamaqabunga oyikha kaningi.
+- Imifino **engama-annual** (ephila isizini eyodwa kuphela) nemifino enamaqabunga oyikha kaningi.
 - Amakhambi nezitshalo zokwelapha ozisebenzisa nsuku zonke ekhishini.
 - Izihlahla zezithelo ezincane noma ezifushane.
 - Izilwane ezincane ezifana nezigwaca, ama-guinea pig nonogwaja.
@@ -128,9 +128,9 @@ I-Zone 1 yi-zone ematasa kunazo zonke. Inika isivuno esikhulu kakhulu endaweni e
 
 ### I-Zone 2
 
-I-Zone 2 ikude kakhulu nendlu, inkulu futhi ayidingi ukunakekelwa okuningi kangako. Uyivakashela cishe nsuku zonke ukuze wondle izinkukhu, uqoqe amaqanda futhi ukhe izithelo nemifino evunwa isikhathi eside. I-food forest (ihlathi lokudla) lapha linezinhlobo eziningi. Ezindaweni ezibandayo lingafaka izihlahla ezisikwa phansi ukuze zihlume kabusha (coppicing) zibe yizinkuni. Lokhu kusho ukusika isihlahla sibe yisiphunzi esiphansi ukuze sihlume izigxobo ezintsha.
+I-Zone 2 ikude kakhulu nendlu, inkulu futhi ayidingi ukunakekelwa okuningi kangako. Uyivakashela cishe nsuku zonke ukuze wondle izinkukhu, uqoqe amaqanda futhi ukhe izithelo nemifino evunwa isikhathi eside. I-food forest lapha inezinhlobo eziningi. Ezindaweni ezibandayo ingafaka izihlahla **ze-coppicing** zibe yizinkuni. Lokhu kusho ukusika isihlahla sibe yisiphunzi esiphansi ukuze sihlume izigxobo ezintsha.
 
-> **Qaphela:** Ungatshali i-black wattle (uwatela), i-Port Jackson, i-leucaena noma ama-gum (izinhlobo eziningi ze-*Eucalyptus*) ukuze uthole izinkuni. Zisohlwini lwezitshalo ezihlaselayo ngaphansi komthetho waseNingizimu Afrika wokwehlukahlukana kwezinto eziphilayo (NEMBA, 2020), futhi ukuzitshala kuvinjelwe noma kudinga imvume. Izihlahla zomdabu ezifana nomunga (sweet thorn, *Vachellia karroo*), i-karee (*Searsia lancea*) nomnqumo wasendle (wild olive, *Olea europaea* subsp. *africana*) zinganika izinkuni, izigxobo nesiphephelo.
+> **Qaphela:** Ungatshali i-black wattle (uwatela), i-Port Jackson, i-leucaena noma ama-gum (izinhlobo eziningi ze-*Eucalyptus*) ukuze uthole izinkuni. Zisohlwini **lwama-invasive species** (izitshalo zangaphandle ezisakazeka zingalawuleki) ngaphansi komthetho waseNingizimu Afrika **we-biodiversity** (ukwehlukahlukana kwezinto eziphilayo) (NEMBA, 2020), futhi ukuzitshala kuvinjelwe noma kudinga imvume. Izihlahla zomdabu ezifana nomunga (sweet thorn, *Vachellia karroo*), i-karee (*Searsia lancea*) nomnqumo wasendle (wild olive, *Olea europaea* subsp. *africana*) zinganika izinkuni, izigxobo nesiphephelo.
 
 ### I-Zone 3
 
@@ -162,13 +162,13 @@ Ukuhlela umthambeka kusho ukubuka umhlaba wakho ngasohlangothini bese uzibuza: n
 Le ndlela ilandela isibonelo sikaBill Mollison sokuhlela umthambeka:
 
 - **Amanzi aphezulu.** Beka amadamu, amathangi nezindawo zokuqoqa amanzi ngaphezu kwendlu nengadi. Amandla okudonsela phansi abe esehambisa amanzi, futhi awudingi iphampu kagesi. Yonke imitha eyi-10 yokuphakama inika cishe i-bar engu-1 yomfutho wamanzi.
-- **Izihlahla emithambekeni ewumqansa engenhla.** Izihlahla ezihlala njalo emhlabeni owumqansa zehlisa ijubane lamanzi agelezayo, zisiza amanzi angene emhlabathini futhi zibambe umhlabathi.
-- **Sebenza ngokomugqa we-contour.** Imibhede, izindlela nama-swale ahamba nge-contour anciphisa ukuguguleka futhi agcina amanzi emhlabathini.
+- **Izihlahla emithambekeni ewumqansa engenhla.** Izihlahla ezihlala njalo emhlabeni owumqansa zehlisa ijubane le-runoff, zisiza amanzi angene emhlabathini futhi zibambe umhlabathi.
+- **Sebenza ngokomugqa we-contour.** Imibhede, izindlela nama-swale ahamba nge-contour anciphisa i-erosion futhi agcina amanzi emhlabathini.
 - **I-compost nezindlu zezilwane zibheke phansi.** Yakha izinqwaba ze-compost nezindlu zezilwane iminyango yazo ibheke ezansi. Khona-ke ungehlisela i-compost nomquba wezilwane engadini usizwa ngumthambeka.
 - **Vikela amanzi akho okuphuza.** Gcina umquba wezilwane, i-compost nezibaya zezilwane kude, nangezansi, kwemithombo ejulile, imithombo neziphethu.
-- **Amanzi asetshenzisiwe ehlele ezihlahleni.** Vumela amanzi asetshenzisiwe (greywater) avela endlini ageleze ngamandla okudonsela phansi aye kuma-swale noma emigodini yezihlahla engezansi kwendlu.
+- **I-greywater ehlele ezihlahleni.** Vumela **i-greywater** (amanzi asetshenzisiwe okuwasha nokugeza) evela endlini igeleze ngamandla okudonsela phansi iye kuma-swale noma emigodini yezihlahla engezansi kwendlu.
 
-> **Ukuphepha:** Amanzi asetshenzisiwe angaba namagciwane. Ungasebenzisi amanzi asekhishini noma amanzi okuwasha amanabukeni emifinweni edliwa iluhlaza, efana nolethisi nesipinashi. Thumela amanzi asetshenzisiwe ezihlahleni nakwezinye izitshalo ezingxenye zazo ezidliwayo zingawathinti. Isahluko 7 sichaza amanzi asetshenzisiwe ngokuningiliziwe.
+> **Ukuphepha:** I-greywater ingaba namagciwane. Ungasebenzisi amanzi asekhishini noma amanzi okuwasha amanabukeni emifinweni edliwa iluhlaza, efana nolethisi nesipinashi. Thumela i-greywater ezihlahleni nakwezinye izitshalo ezingxenye zazo ezidliwayo zingayithinti. Isahluko 7 sichaza i-greywater ngokuningiliziwe.
 
 ## Amaphuzu amqoka
 
@@ -178,5 +178,5 @@ Le ndlela ilandela isibonelo sikaBill Mollison sokuhlela umthambeka:
 - ENingizimu Afrika ilanga lisenyakatho, ngakho imithambeka ebheke enyakatho nasempumalanga ifudumele kakhulu futhi ingcono ezitshalweni eziningi.
 - Imithambeka engaphezu kuka-12% idinga ukuvikelwa komhlabathi; ukulima umhlaba onomthambeka ongaphezu kuka-20% (12% kwezinye izindawo) kudinga imvume ebhaliwe.
 - Ama-zone 0 kuya ku-5 abeka izinto ngokuthi uzivakashela kangaki: izinto zansuku zonke eduze nendlu, izinto ozivakashela kancane kude.
-- Ungatshali izihlahla ezihlaselayo ezisohlwini, njenge-black wattle noma ama-gum, ukuze uthole izinkuni; sebenzisa izihlahla zomdabu esikhundleni salokho.
-- Beka izindawo zokugcina amanzi phezulu futhi usebenzise amandla okudonsela phansi; gcina umquba wezilwane kude namanzi okuphuza; sebenzisa amanzi asetshenzisiwe kuphela ezihlahleni nasezitshalweni ezingadliwa ziluhlaza.
+- Ungatshali izihlahla ezingama-invasive species ezisohlwini, njenge-black wattle noma ama-gum, ukuze uthole izinkuni; sebenzisa izihlahla zomdabu esikhundleni salokho.
+- Beka izindawo zokugcina amanzi phezulu futhi usebenzise amandla okudonsela phansi; gcina umquba wezilwane kude namanzi okuphuza; sebenzisa i-greywater kuphela ezihlahleni nasezitshalweni ezingadliwa ziluhlaza.

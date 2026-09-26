@@ -12,7 +12,7 @@ Ezindaweni ezibanda kakhulu inkathi yokulima imfushane, futhi isithwathwa sasebu
 
 ### Vikela izitshalo esithwathwa
 
-Umoya obandayo usinda. Ebusuku obuthule nobucwebile ugeleza wehle emthambekeni njengamanzi, uqoqane ezindaweni eziphansi. Lezi zindawo zibizwa ngokuthi **yimigodi yesithwathwa** (frost pockets).
+Umoya obandayo usinda. Ebusuku obuthule nobucwebile ugeleza wehle emthambekeni njengamanzi, uqoqane ezindaweni eziphansi. Lezi zindawo zibizwa ngokuthi **ama-frost pocket** (izindawo eziphansi lapho kuqoqeka khona umoya obandayo nesithwathwa).
 
 - Ungawuvaleli umoya obandayo ngezindonga, izakhiwo noma uthango oluphilayo oluminyene ohlangothini oluphezulu lwengadi yakho. Shiya isikhala phansi ukuze umoya obandayo uqhubeke ugeleza wehle udlule.
 - Tshala izitshalo ezingasibekezeleli isithwathwa phezulu emthambekeni, hhayi phansi esigodini.
@@ -30,7 +30,7 @@ Ithanele lepulasitiki noma indlu yezitshalo (greenhouse) igcina izitshalo zifudu
 Ngaphambi kokuthi uqale, qiniseka ukuthi lokho okwakhayo yikho ngempela okufunayo. Yiba neqiniso ngokuthi **isikhathi**, **imali** **nentshisekelo** onakho ngokulima kungakanani.
 
 1. Yenza **ukuhlola indlela ophila ngayo** okulula (lifestyle audit). Bhala phansi ukuthi ungayinika ingadi amahora amangaki ngesonto, ukuthi ufunani kuyo (ukudla komndeni, imali, noma kokubili) nokuthi ungayisebenzisa malini.
-2. Uma unesikhathi esincane, gcina uhlelo lulula. Tshala izitshalo eziningi **ezihlala iminyaka eminingi** (perennials) — izitshalo eziphila iminyaka eminingi, njengezihlahla zezithelo, amakhambi ne-asparagus — futhi wonge umsebenzi ngamathuluzi afana nokunisela ngamaconsi nesikhathi sompompi (tap timer).
+2. Uma unesikhathi esincane, gcina uhlelo lulula. Tshala **ama-perennial** amaningi (izitshalo eziphila iminyaka eminingi, njengezihlahla zezithelo, amakhambi ne-asparagus) futhi wonge umsebenzi ngamathuluzi afana **ne-drip irrigation** (ukunisela ngamaconsi) nesikhathi sompompi (tap timer).
 3. Uma ufuna ukulimela imali futhi unesikhathi, amandla nezinsiza, ingadi enkulu nesebenza kakhulu ingakufanela.
 
 Klama izingadi zakho ukuze zihambisane nezimpendulo zakho. Ingadi enkulu ongakwazi ukuyinakekela izoshesha ibe ingadi egcwele ukhula, echithekile.
@@ -48,11 +48,11 @@ Tshala izitshalo ozikha nsuku zonke:
 - otamatisi abancane (cherry tomatoes)
 - amakhambi owasebenzisa ekuphekeni, njenge-parsley, i-coriander, u-anyanisi omncane (spring onions) ne-thyme
 
-Iningi lezitshalo lapha **yizitshalo zonyaka owodwa** (annuals) — eziphila isizini eyodwa kuphela — kanye namakhambi ambalwa ahlala iminyaka.
+Iningi lezitshalo lapha **ngama-annual** (izitshalo eziphila isizini eyodwa kuphela), kanye namakhambi ambalwa angama-perennial.
 
 ### Tshala uminyanise, unakekele eduze
 
-Ingadi yasekhaya itshalwa iminyene kakhulu, kusetshenziswa yonke indawo, kokubili phansi naphezulu (isibonelo ubhontshisi osothangweni noma ezisekelweni). Ngemitha eyisikwele ngayinye iyona ekhiqiza kakhulu kunazo zonke izingadi zakho, ngakho idinga nokunakekelwa okukhulu kakhulu. Ukuhlakula, ukuhlwanyela, ukutshala, ukufaka i-mulch (isembozo somhlabathi), ukuvuna, ukulawula izinambuzane ezilimaza izitshalo nokondla umhlabathi konke kuyingxenye yomsebenzi wansuku zonke.
+Ingadi yasekhaya itshalwa iminyene kakhulu, kusetshenziswa yonke indawo, kokubili phansi naphezulu (isibonelo ubhontshisi osothangweni noma ezisekelweni). Ngemitha eyisikwele ngayinye iyona ekhiqiza kakhulu kunazo zonke izingadi zakho, ngakho idinga nokunakekelwa okukhulu kakhulu. Ukuhlakula, ukuhlwanyela, ukutshala, ukufaka **i-mulch** (isembozo somhlabathi), ukuvuna, ukulawula izinambuzane ezilimaza izitshalo nokondla umhlabathi konke kuyingxenye yomsebenzi wansuku zonke.
 
 ### Yenze ibe wusizo futhi ibe yinhle
 
@@ -66,11 +66,11 @@ Uyivakashela kancane kunengadi yasekhaya, mhlawumbe kanye ngosuku noma njalo ezi
 
 ### Indlela ehlelwe ngayo
 
-- Tshala izinhlobo eziningi zezitshalo ndawonye. Engeza izinto ezisiza ukulawula izinambuzane, njengechibi elincane (lamaxoxo nezinye izilwane ezidla izinambuzane) nezitshalo ezinezimbali ezihehe izinambuzane eziwusizo.
+- Tshala izinhlobo eziningi zezitshalo ndawonye. Engeza izinto ezisiza ukulawula izinambuzane, njengechibi elincane lamaxoxo namanye **ama-predator** (izilwane ezidla izinambuzane), nezitshalo ezinezimbali ezihehe izinambuzane eziwusizo.
 - Hlela imibhede yokutshala ecacile enezindlela phakathi kwayo. Emthambekeni, yenza imibhede nezindlela zilandele **umugqa we-contour** (umugqa ohamba ezingeni elifanayo emthambekeni), ukuze amanzi angene emhlabathini kunokuba ageleze ahambe.
 - Ngoba indawo inkulu, akudingeki uzungeze imibhede. Vele uyilungise kabusha ngesandla izikhathi ezimbalwa ngonyaka.
 
-Umsebenzi usemningi: ukususa izifafazi noma ukuhlola amapayipi okunisela ngamaconsi, ukufaka i-mulch, ukufaka i-compost (umquba owenziwe ngezinsalela zezitshalo ezibolile), ukulawula izinambuzane, ukuhlakula, nokuhlwanyela imbewu njalo noma ukutshala izithombo.
+Umsebenzi usemningi: ukususa izifafazi noma ukuhlola amapayipi e-drip irrigation, ukufaka i-mulch, ukufaka **i-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi), ukulawula izinambuzane, ukuhlakula, nokuhlwanyela imbewu njalo noma ukutshala izithombo.
 
 Amathanele amakhulu epulasitiki, izindlu zezitshalo namathanele endwangu yomthunzi (shade-net) omndeni nawo angaphakathi ku-Zone 2, eduze nengadi yemifino.
 
@@ -84,7 +84,7 @@ Ingadi yemifino enkulu etshalwa ikakhulukazi ukuze kuthengiswe ivame ukubizwa **
 
 Ingadi yezimakethe ihlelwa ukuze ikhiqize okuningi ngangokunokwenzeka ngomsebenzi omncane ochithekayo.
 
-- Tshala uhlobo lwemifino olulodwa embhedeni ngamunye. Lokhu kwenza ukuhlwanyela, ukuvuna neminye imisebenzi kushesha. Shintsha isitshalo embhedeni ngamunye isizini ngesizini (ukushintshanisa izitshalo).
+- Tshala uhlobo lwemifino olulodwa embhedeni ngamunye. Lokhu kwenza ukuhlwanyela, ukuvuna neminye imisebenzi kushesha. Shintsha isitshalo embhedeni ngamunye isizini ngesizini (**i-crop rotation**).
 - Tshala uminyanise emibhedeni elungiswe kahle, ene-compost eyanele. Ukutshala uminyanise kunikeza ukudla okuningi ngemitha eyisikwele futhi kwenza umthunzi ovimbela ukhula.
 - Sebenzisa amathuluzi alula onga isikhathi, njengomshini wokuhlwanyela oqhutshwa ngesandla (push-seeder) ne-**broadfork** (imfologo ebanzi enezibambo ezimbili ethambisa umhlabathi ngaphandle kokuwuphendula). Ipulazi elikhulu lingasebenzisa ugandaganda omncane onamasondo amabili ohanjwa ngemuva kwawo (walk-behind tractor) ukulima kancane nokugunda izitshalo zokumboza umhlabathi.
 
@@ -169,7 +169,7 @@ Kunezindlela eziningi zokutshala izitshalo eziyisisekelo. Engcono kakhulu kuwe i
 ## Amaphuzu amqoka
 
 - Yazi isimo sezulu sakho: imvula yasehlobo engaphakathi kwezwe, imvula yasebusika eNtshonalanga Kapa, izindawo eziphansi nogu olungenaso isithwathwa.
-- Vumela umoya obandayo ugeleze wehle; gcina izitshalo ezingasibekezeleli isithwathwa ziphume emigodini yesithwathwa.
+- Vumela umoya obandayo ugeleze wehle; gcina izitshalo ezingasibekezeleli isithwathwa ziphume kuma-frost pocket.
 - Hlela izingadi ukuze zihambisane nesikhathi, imali nentshisekelo onakho ngempela.
 - Ingadi yasekhaya (i-Zone 1): incane, iminyene, imifino namakhambi ansuku zonke, eduze kakhulu nekhishi.
 - Ingadi yemifino (i-Zone 2): izitshalo ezinkulu, imibhede nezindlela ezilandela i-contour.

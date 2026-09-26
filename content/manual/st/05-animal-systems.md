@@ -12,10 +12,10 @@ Diphoofolo, tsa naha le tse ruuwang, di fana ka melemo e mengata:
 - **Ho laola dimela.** Diphoofolo tse fulang di boloka jwang le mefoka e le mekgutshwane.
 - **Ho lokisa naha.** Diphoofolo tse hlokomelwang hantle di ka thusa ho busetsa naha e senyehileng boemong bo botle.
 - **Dihlahiswa.** Nama, mahe, lebese, boya, masiba le mahe a dinotshi.
-- **Ditshebeletso tsa tlhaho.** Dinotshi di tsamaisa phofo ya dipalesa ya dijalo (pollination); matata le dikgoho di ja disenyi.
+- **Ditshebeletso tsa ecosystem** (ditshebeletso tseo tlhaho e re fang tsona). Dinotshi di tsamaisa phofo ya dipalesa ya dijalo (pollination); matata le dikgoho di ja disenyi.
 - **Ho sebedisa ditshila hape.** Diphoofolo di fetola masalla a kitjhene le ditholwana tse bodileng hore e be manyolo. Dikolobe tse kenngwang serapeng sa difate tsa ditholwana nakwana di hlwekisa ditholwana tse weleng.
 - **Ho aha mobu.** Diphoofolo di kgutlisetsa phepo mobung mme di phethela potoloho ya phepo.
-- **Monontsha o metsi.** Dipolasi tsa diboko di hlahisa metsi a nang le phepo e ngata ("worm tea").
+- **Monontsha o metsi.** **Di-worm farm** (dipolasi tsa diboko) di hlahisa **worm tea** (metsi a nang le phepo e ngata).
 - **Ho kgaola potoloho ya disenyi.** Dikgoho tse latelang dikgomo di hohla bolokwe mme di ja diboko tsa dintsintsi (fly larvae).
 - **Ho hula le ho tsamaisa.** Ditonki, dipere le dipholo di hula mehoma le dikariki.
 - **Tshireletso.** Dintja, esita le di-goose (geese), di o lemosa ha ho tla batho bao o sa ba tsebeng.
@@ -31,11 +31,11 @@ Phoofolo e nngwe le e nngwe, ho kenyeletswa le batho, e ama tikoloho ya yona. Re
 
 Kgetha mefuta le mefutana (breeds) ya diphoofolo e loketseng boemo ba lehodimo ba hao le ditlhoko tsa hao. Jwalo ka ha boemo ba lehodimo bo eba thata ho bo lebella esale pele, ho bohlale ho kgetha diphoofolo tse matla tse mamellang maemo a mangata a fapaneng.
 
-## Diphoofolo tse sebetsang jwaloka terekere (animal tractors)
+## Di-animal tractor
 
 **Animal tractor** ke lesaka le tsamaiswang, kapa sebaka se kampetsweng ka terata se sutiswang, moo diphoofolo tse kang dikgoho, matata, dikalakune (turkeys), di-goose (geese), dikolobe kapa dipodi di etsang mosebetsi o molemo. Di ntsha manyolo, di hohla fatshe, di fula mme di tjheka jwalo ka ha di etsa ka tlhaho, mme ka tsela ena di hlwekisa, di lokisa mme di hlokomela dikarolo tsa polasi. Ha sebaka se seng se phethilwe, o sutisetsa lesaka sebakeng se latelang.
 
-Diphoofolo tse sebetsang jwaloka terekere le tsona di thuseha. Di sireletseha ho diphoofolo tse di tsomang (predators), di fumana dijo tse fapaneng, mobu o motjha le monyetla wa ho phela ka tlhaho.
+Diphoofolo tse ka hara animal tractor le tsona di thuseha. Di sireletseha ho **di-predator** (diphoofolo tse di tsomang), di fumana dijo tse fapaneng, mobu o motjha le monyetla wa ho phela ka tlhaho.
 
 Di ka sebediswa ho:
 
@@ -47,7 +47,7 @@ Di ka sebediswa ho:
 
 Lesaka lena le ka ba foreimi e bonolo e kwetsweng, e kwahetsweng ka terata ya letlooa (wire mesh), e hahilweng ka disebediswa tse rekwang lebenkeleng la disebediswa tsa kaho. Le ka boela la buleha, ho sebediswa terata ya motlakase e sutiswang.
 
-Mefuta e fapaneng ya diphoofolo tse sebetsang jwaloka terekere e sebetsa hantle ha e latellana. Ka mohlala, isa dikgoho sebakeng ka mora dikolobe, dipodi kapa dikgomo: dikgoho di hohla manyolo di a kenya mobung mme di ja diboko tsa dintsintsi.
+Mefuta e fapaneng ya di-animal tractor e sebetsa hantle ha e latellana. Ka mohlala, isa dikgoho sebakeng ka mora dikolobe, dipodi kapa dikgomo: dikgoho di hohla manyolo di a kenya mobung mme di ja diboko tsa dintsintsi.
 
 ## Dikgoho
 
@@ -57,7 +57,7 @@ Mohlomong dikgoho ke diphoofolo tsa bohlokwa ka ho fetisisa bakeng sa Zone 1 le 
 
 Dikgoho di **ja tsohle** (omnivores): di ja dijo tsa dimela le tsa diphoofolo. Dijo tse phetseng hantle di kenyeletsa:
 
-- **Protheine** (protein), e tswang ho dikokonyana, diboko le dimela tsa dinawa tse kang dinawa (tse phehilweng) le peo ya pigeon pea
+- **Protheine** (protein), e tswang ho dikokonyana, diboko le **di-legume** (dimela tsa dinawa) tse kang dinawa (tse phehilweng) le peo ya pigeon pea
 - **Matla**, a tswang ho dijothollo tse kang poone, mabele, koro le harese
 - **Meroho e metala**, e tswang ho jwang, mefoka le dimela tse ding
 - **Khalsiamo** (calcium) bakeng sa dikgaketla tse matla tsa mahe, e tswang ho dikgaketla tsa oyster tse sithilweng, majwana a kalaka (limestone grit) kapa dikgaketla tsa mahe tse omisitsweng tse sithilweng
@@ -69,14 +69,14 @@ Kgoho e behelang mahe e ja hoo e ka bang 110–140 g ya dijo ka letsatsi, mme e 
 
 **Dijo tse rekwang.** Mokotla wa dijo tsa dikgoho tse behelang (layer feed) kapa tsa dikgoho tse holang (grower feed) o na le phepo e leka-lekaneng ebile o bonolo, empa o bitsa tjhelete. Boholo ba poone le soya tse lengwang Afrika Borwa di fetotswe ka mekgwa ya saense ya dijeni (genetically modified, GM), mme hangata dijo tse rekwang di na le tsona ka bobedi. Balemi ba bang ba permaculture ba kgetha ho qoba dijo tsa GM.
 
-**Dijo tse lengwang hae.** O ka fokotsa ditjeho tsa dijo ka ho sebedisa masaka a dikgoho a tsamaiswang (chicken tractors), ka ho fetola mabala ao di fulang ho ona, le ka ho lema karolo ya dijo tsa tsona. Dikgoho tse tsamayang ka bolokolohi (free-ranging) tse jang meroho e metala le dikokonyana tse ngata hangata di behela mahe a nang le bosehla (yolk) bo tshehla bo tebileng kapa bo mmala wa lamunu. Dijo tse lengwang hae le tsona di tlameha ho leka-lekana: dikgoho tse fepuwang dijothollo feela di tla behela mahe a fokolang. Haeba mahe a fokotseha, eketsa dijo tse nang le protheine kapa dijo tse rekwang tsa dikgoho tse behelang.
+**Dijo tse lengwang hae.** O ka fokotsa ditjeho tsa dijo ka ho sebedisa di-animal tractor tsa dikgoho (chicken tractors), ka ho fetola mabala ao di fulang ho ona, le ka ho lema karolo ya dijo tsa tsona. Dikgoho tse tsamayang ka bolokolohi (free-ranging) tse jang meroho e metala le dikokonyana tse ngata hangata di behela mahe a nang le bosehla (yolk) bo tshehla bo tebileng kapa bo mmala wa lamunu. Dijo tse lengwang hae le tsona di tlameha ho leka-lekana: dikgoho tse fepuwang dijothollo feela di tla behela mahe a fokolang. Haeba mahe a fokotseha, eketsa dijo tse nang le protheine kapa dijo tse rekwang tsa dikgoho tse behelang.
 
 ### Dijo tsa mahala polasing
 
 - Masalla a kitjhene: makgapetla a meroho, bohobe bo sa lokang le dijothollo tsa kgale
 - Disenyi tsa serapa: dikgofu tse se nang kgaketla (slugs), dikgofu (snails), diboko tsa mobu (grubs) le makgasi a tletseng di-aphid
 - Mulch: jwang bo kutilweng kapa makgasi a bokeletsweng a na le dikokonyana tse nyane le dipeo tsa mefoka
-- Qubu ya kompose (compost) (di tlohele di hohle kantle ho yona)
+- Qubu ya **compost** (manyolo a bodileng) (di tlohele di hohle kantle ho yona)
 - Meroho e metala ya makgulo le mefoka
 - Sonobolomo (sunflowers) e lengwang mathokong a masimo; fanyeha dihlooho tse butswitseng hore dinonyana di di kope
 - Dikokonyana tse bolokweng ba dikgomo le diphoofolo tse ding tse kgolo
@@ -98,15 +98,15 @@ Dikgoho di hloka ntlo e sireletsehileng bosiu.
 - **Mabokose a dihlaha** (nest boxes): dikgoho tse behelang di hloka lebokose la sehlaha le kgutsitseng, le lefifi. Etsa lebokose ka leng hore le be bophara ba hoo e ka bang 30 cm, botebo ba 30 cm le bophahamo ba 30 cm, mme o fane ka hoo e ka bang lebokose le le leng bakeng sa dikgoho tse nne kapa tse hlano. Mabokose a kgale a lepolanka a ditholwana a sebetsa hantle, kapa o a hahe ka mapolanka. A ale ka jwang bo hlwekileng bo omileng, jwang bo omileng ba koro (straw) kapa dikgapetla tsa patsi (wood shavings).
 - **Moya o kenang:** moya o tlameha ho phalla ka hara ntlo, empa ntle le hore moya o batang o foke hodima dikgoho bosiu.
 
-### Diphoofolo tse jang dikgoho (predators)
+### Di-predator
 
-Dibakeng tsa mahaeng, diphoofolo tse jang dikgoho hangata ke bothata bo boholo ka ho fetisisa. Dinoha, dimongoose, di-genet, dikatse tsa naha, dintja, dikgoto le dinonyana tse tsomang (birds of prey) kaofela di nka dikgoho le ditsuonyana.
+Dibakeng tsa mahaeng, di-predator hangata ke bothata bo boholo ka ho fetisisa. Dinoha, dimongoose, di-genet, dikatse tsa naha, dintja, dikgoto le dinonyana tse tsomang (birds of prey) kaofela di nka dikgoho le ditsuonyana.
 
-- Kwalla dikgoho ntlong e sireletsehileng, eo diphoofolo tse di jang di sa kgoneng ho kena ho yona, bosiu bo bong le bo bong.
+- Kwalla dikgoho ntlong e sireletsehileng, eo di-predator di sa kgoneng ho kena ho yona, bosiu bo bong le bo bong.
 - Sebedisa terata ya letlooa e matla e nang le masoba a manyenyane, mme o e pate mobung kapa o e mene ho ya ka ntle ka tlase, e le hore diphoofolo di se ke tsa tjheka ka tlasa yona.
 - Sireletsa ditsuonyana lebaleng le kwahetsweng kahodimo.
 
-Ho ka nka nako le tahlehelo e itseng pele o haha ntlo kapa lesaka le tsamaiswang la dikgoho le nepahetseng. Sheba meralo eo balemi ba bang ba lehae ba e sebedisang ka katleho.
+Ho ka nka nako le tahlehelo e itseng pele o haha ntlo kapa animal tractor ya dikgoho e nepahetseng. Sheba meralo eo balemi ba bang ba lehae ba e sebedisang ka katleho.
 
 ### Ho potoloha dikgoho serapeng
 
@@ -140,7 +140,7 @@ Lefu le ka bolaya mohlape (flock) wohle ka matsatsi a mmalwa.
 2. **Pheta.** Tshireletso e a fela. Mehlape ya motse hangata e entwa hape hoo e ka bang kgwedi tse ding le tse ding tse tharo. Latela ditaelo tse hodima moento le keletso ya setsebi sa bophelo bo botle ba diphoofolo (animal health technician) sa heno kapa ngaka ya diphoofolo ya mmuso (state veterinarian).
 3. **Tlaleha.** Lefu la Newcastle ke **lefu le laolwang ke molao** (controlled disease) ho ya ka Animal Diseases Act (Act 35 of 1984, Molao wa Mafu a Diphoofolo). Haeba dikgoho tsa hao tse ngata di kula kapa di shwa ka tshohanyetso, le tlalehe ho ngaka ya diphoofolo ya mmuso e haufi le wena hanghang.
 
-Mekgwa e metle ya letsatsi le letsatsi ya **tshireletso kgahlanong le mafu** (biosecurity: mekgwa e thibelang mafu hore a se ke a kena):
+Mekgwa e metle ya letsatsi le letsatsi ya **biosecurity** (tshireletso kgahlanong le mafu: mekgwa e thibelang mafu hore a se ke a kena):
 
 - Arohanya dikgoho tse ntjha le mohlape wa hao dibeke tse pedi ho isa ho tse tharo pele o di kopanya, mme o shebe matshwao a ho kula.
 - O se ke wa dumella dinonyana tsa naha ho arolelana dijo le metsi a dikgoho tsa hao.
@@ -158,7 +158,7 @@ Dikgoho di na le tatellano e matla ya maemo, e bitswang **pecking order** (tatel
 
 ## Dikolobe
 
-Dikolobe di ka ba le thuso e kgolo, haholoholo diserapeng tsa difate tsa ditholwana, merung ya dijo (food forests) le naheng e sa lokiswang. Di loketse Zone 2, 3 le 4 mme di phela hantle le diphoofolo tse ding.
+Dikolobe di ka ba le thuso e kgolo, haholoholo diserapeng tsa difate tsa ditholwana, ho **di-food forest** (meru ya dijo) le naheng e sa lokiswang. Di loketse Zone 2, 3 le 4 mme di phela hantle le diphoofolo tse ding.
 
 ### Seo dikolobe di se jang
 
@@ -166,14 +166,14 @@ Dikolobe di ja mefuta e mengata ya dijo. Polasing e nang le dintho tse fapaneng 
 
 > **Polokeho:** Ho kgahlanong le molao Afrika Borwa ho fepa dikolobe masalla a dijo a tswang dikitjheneng, dihoteleng, direstoranteng kapa dibakeng tse tshwanang le tseo (a bitswang **swill**) ntle le haeba a bedisitswe bonyane hora e le nngwe. Masalla a nama ya kolobe le nama e nngwe e tala kapa e sa butswang hantle a ka jara **African swine fever** (feberu ya dikolobe ya Afrika), lefu le bolayang la dikolobe le se nang pheko kapa moento. Fepa dikolobe masalla a meroho le a serapa a tswang polasing ya hao, le dijothollo kapa dijo tse rekwang.
 
-### Dikolobe tse sebetsang jwaloka terekere (pig tractors)
+### Dikolobe e le animal tractor (pig tractors)
 
 Dikolobe ke "dihlwekisi tsa pele" tse ntle haholo tsa naha e sa lokiswang.
 
 - Kenya dikolobe ka hara terata ya motlakase e sutiswang sebakeng se meletsweng ke dimela nako e ka bang beke, mme di tla ntsha dimela ka metso le ho hlwekisa sebaka hantle ho feta kharafu kapa fereko efe kapa efe.
 - E le hore di tjheke, di tlohele di je boholo ba dimela tse kahodimo ho mobu pele, mme o etse bonnete ba hore mobu o kolobile. Dikolobe di ke ke tsa tjheka haeba ho na le dijo tse ngata kahodimo.
-- Dirapeng tsa difate tsa ditholwana le merung ya dijo, dikolobe di ja ditholwana tse weleng, mmoho le diboko tsa dintsintsi tsa ditholwana (fruit-fly larvae) tse ka hare ho tsona. Sena se thusa ho kgaola potoloho ya dintsintsi tsa ditholwana.
-- Latela dikolobe ka lesaka le tsamaiswang la dikgoho (chicken tractor) ho hasanya manyolo a tsona.
+- Dirapeng tsa difate tsa ditholwana le ho di-food forest, dikolobe di ja ditholwana tse weleng, mmoho le diboko tsa dintsintsi tsa ditholwana (fruit-fly larvae) tse ka hare ho tsona. Sena se thusa ho kgaola potoloho ya dintsintsi tsa ditholwana.
+- Latela dikolobe ka animal tractor ya dikgoho (*chicken tractor*) ho hasanya manyolo a tsona.
 
 ### Ho boloka dikolobe di kwaletswe
 
@@ -203,7 +203,7 @@ Matata a phela hantle polasing ya permaculture mme ke phoofolo e ntle ya Zone 2.
 
 ### Seo matata a se hlokang
 
-- **Tshireletso ho diphoofolo tse a jang**, haholoholo bosiu, jwaloka dikgoho.
+- **Tshireletso ho di-predator**, haholoholo bosiu, jwaloka dikgoho.
 - **Metsi a tebileng hoo a ka kenyang hlooho yohle.** Matata a hloka ho hlatswa dijo di tswe dinkong le mahlong a ona. Beisene kapa emere e tebileng e lekane bakeng sa matata a mangata; ha a hloke letangwana.
 - **Metsi a matjha hangata.** Matata a etsa hore metsi a ona a be ditshila kapele. A fetole hangata. Metsi a ditshila ke monontsha o metsi o motle bakeng sa difate tsa ditholwana le dijalo tse phehwang pele di jewa.
 
@@ -211,13 +211,13 @@ Matata a phela hantle polasing ya permaculture mme ke phoofolo e ntle ya Zone 2.
 
 Matata a ka lerata, ka hona a ka nna a se ke a loka diserapeng tsa toropong tse nang le baahisani ba haufi. Muscovy e fapane: e kgutsitse haholo, mme tse tona boholo di a hwasa feela.
 
-> **Hlokomela:** Mefutana e mengata ya matata a ruuwang, jwaloka Pekin, runner le Khaki Campbell, e tswa ho **mallard**. Mallard ke mofuta o hlaselang naha o ngotsweng lenaneng (listed invasive species) Afrika Borwa (Category 2 ho ya ka NEMBA), hobane o tswalana le matata a naha a tlhaho a kang letata le molomo o mosehla (yellow-billed duck) mme o a beha kotsing. Boloka matata a kwaletswe ka terata, hole le dinoka, matamo le mehlaba (wetlands), mme o se ke wa a dumella ho ba a naha. Botsa ofisi ya porofense ya paballo ya tlhaho (provincial conservation office) hore na o hloka tumello (permit) bakeng sa matata ao o a ruang. Muscovy ke mofuta o mong o arohaneng.
+> **Hlokomela:** Mefutana e mengata ya matata a ruuwang, jwaloka Pekin, runner le Khaki Campbell, e tswa ho **mallard**. Mallard ke **invasive species** (mofuta o tswang kantle o hlaselang naha) e ngotsweng lenaneng Afrika Borwa (Category 2 ho ya ka NEMBA), hobane o tswalana le matata a naha a tlhaho a kang letata le molomo o mosehla (yellow-billed duck) mme o a beha kotsing. Boloka matata a kwaletswe ka terata, hole le dinoka, matamo le mehlaba (wetlands), mme o se ke wa a dumella ho ba a naha. Botsa ofisi ya porofense ya paballo ya tlhaho (provincial conservation office) hore na o hloka tumello (permit) bakeng sa matata ao o a ruang. Muscovy ke mofuta o mong o arohaneng.
 
 ## Dinotshi
 
 Dinotshi di bohlokwa haholo diserapeng le diserapeng tsa difate tsa ditholwana hobane di **tsamaisa phofo** ya dipalesa (pollinate): di jara phofo (pollen) ho tloha palesa e nngwe ho ya ho e nngwe e le hore ditholwana le peo di kgone ho hlaha. Ditholwana, meroho, dipeo tsa oli le dinate tse ngata di fana ka kotulo e kgolo le e betere ha dinotshi di di etela.
 
-Lefatsheng ka bophara, hoo e ka bang dikarolo tse tharo ho tse nne tsa dijalo tse ka sehloohong tsa dijo di rua molemo ho tsamaiso ya phofo e etswang ke diphoofolo, mme dijalo tsena di etsa hoo e ka bang karolo e le nngwe ho tse tharo ya tlhahiso yohle ya dijalo. Dijothollo tse kgolo tsa sehlooho (poone, koro, raese le mabele) di tsamaiswa phofo ke moya, e seng ke dinotshi, empa boholo ba ditholwana le meroho e re fang divithamine bo itshetlehile ka ditsamaisi tsa phofo (pollinators).
+Lefatsheng ka bophara, hoo e ka bang dikarolo tse tharo ho tse nne tsa dijalo tse ka sehloohong tsa dijo di rua molemo ho tsamaiso ya phofo e etswang ke diphoofolo, mme dijalo tsena di etsa hoo e ka bang karolo e le nngwe ho tse tharo ya tlhahiso yohle ya dijalo. Dijothollo tse kgolo tsa sehlooho (poone, koro, raese le mabele) di tsamaiswa phofo ke moya, e seng ke dinotshi, empa boholo ba ditholwana le meroho e re fang divithamine bo itshetlehile ka **di-pollinator** (diphoofolo tse tsamaisang phofo).
 
 ### Fepa dinotshi
 
@@ -317,28 +317,28 @@ Mang kapa mang ya kileng a ba le karabelo e mpe ho longweng ke notshi ha a a lok
 
 Dimela tsena di ka fepa diphoofolo, ebang ka ho fula, e le furu e kutwang e isetswa diphoofolo (cut-and-carry), e le furu e omisitsweng (hay) kapa silage (furu e bolokilweng e sa le metsi), kapa e le makgasi le dikgapetla tsa difate (pods) tseo diphoofolo di di jang. Tse ngata di boetse di ntlafatsa mobu kapa di fepa dinotshi. Bophahamo ke ba hoo e ka bang feela.
 
-### Dimela tse kwahelang mobu le dijalo tsa masimo
+### Di-groundcover (dimela tse kwahelang mobu) le dijalo tsa masimo
 
 | Semela | Mofuta | Tshebediso |
 |---|---|---|
-| Turnip (*Brassica rapa*) | Sejalo sa metso sa sehla se le seng | Dijo tsa mariha tsa dinku le dikgomo; makgulo a dikolobe |
-| Chicory (*Cichorium intybus*) | Setlama se phelang dilemo tse ngata, se nang le motso o moholo o tebileng | Makgulo a ho fula; se hola nakong e phodileng ya selemo |
-| Italian ryegrass (*Lolium multiflorum*) | Jwang ba sehla se le seng kapa bo phelang nako e kgutshwane | Makgulo a mariha, furu e omisitsweng le silage |
-| Sweet lupin (*Lupinus albus*) | Semela sa dinawa sa sehla se le seng, se nang le motso o moholo o tebileng | Dijothollo le makgulo; se molemo ha se lengwa ka tatellano le dijothollo |
-| Lusene (lucerne, *Medicago sativa*) | Semela sa dinawa se phelang dilemo tse ngata | Furu e omisitsweng e nang le phepo e ngata haholo, silage le furu e kutwang e isetswa diphoofolo |
-| Fodder radish (*Raphanus sativus*) | Semela sa sehla se le seng | Furu e jalwang hwetla; motso o motenya o hlephisa mobu |
-| Rye (*Secale cereale*) | Sejothollo sa mariha sa sehla se le seng | Makgulo a mariha le sejalo se sireletsang mobu |
-| White clover (*Trifolium repens*) | Semela sa dinawa se sekgutshwane se phelang dilemo tse ngata | Makgulo, se lokisa naetrojene, dijo tsa dinotshi |
-| Broad bean (*Vicia faba*) | Semela sa dinawa sa sehla se le seng | Furu e omisitsweng, silage le manyolo a matala (green manure) ha se lengwa ka tatellano le dijothollo |
-| Cowpea (*Vigna unguiculata*) | Semela sa dinawa sa sehla se le seng | Makgasi le methapo di fepuwa di sa le tala, kapa e le furu e omisitsweng kapa silage |
-| Vetiver (*Chrysopogon zizanioides*), mefuta e sa hlahiseng peo (sterile) feela | Jwang bo phelang dilemo tse ngata bo melang ka dihlopha | Ho thibela kgoholeho ya mobu, mulch; makgasi a manyane e le tlatsetso ya dijo |
+| Turnip (*Brassica rapa*) | Sejalo sa metso sa **annual** (se phelang sehla se le seng) | Dijo tsa mariha tsa dinku le dikgomo; makgulo a dikolobe |
+| Chicory (*Cichorium intybus*) | Setlama sa **perennial** (se phelang dilemo tse ngata), se nang le motso o moholo o tebileng | Makgulo a ho fula; se hola nakong e phodileng ya selemo |
+| Italian ryegrass (*Lolium multiflorum*) | Jwang ba annual kapa bo phelang nako e kgutshwane | Makgulo a mariha, furu e omisitsweng le silage |
+| Sweet lupin (*Lupinus albus*) | Legume ya annual, e nang le motso o moholo o tebileng | Dijothollo le makgulo; se molemo ha se lengwa ka tatellano le dijothollo |
+| Lusene (lucerne, *Medicago sativa*) | Legume ya perennial | Furu e omisitsweng e nang le phepo e ngata haholo, silage le furu e kutwang e isetswa diphoofolo |
+| Fodder radish (*Raphanus sativus*) | Semela sa annual | Furu e jalwang hwetla; motso o motenya o hlephisa mobu |
+| Rye (*Secale cereale*) | Sejothollo sa mariha sa annual | Makgulo a mariha le sejalo se sireletsang mobu |
+| White clover (*Trifolium repens*) | Legume e kgutshwane ya perennial | Makgulo, se lokisa naetrojene, dijo tsa dinotshi |
+| Broad bean (*Vicia faba*) | Legume ya annual | Furu e omisitsweng, silage le **green manure** (manyolo a matala) ha se lengwa ka tatellano le dijothollo |
+| Cowpea (*Vigna unguiculata*) | Legume ya annual | Makgasi le methapo di fepuwa di sa le tala, kapa e le furu e omisitsweng kapa silage |
+| Vetiver (*Chrysopogon zizanioides*), mefuta e sa hlahiseng peo (sterile) feela | Jwang ba perennial bo melang ka dihlopha | Ho thibela **erosion** (kgoholeho ya mobu), mulch; makgasi a manyane e le tlatsetso ya dijo |
 
 ### Dihlahla
 
 | Semela | Mofuta | Tshebediso |
 |---|---|---|
 | Pigeon pea (*Cajanus cajan*) | Sehlahla se phelang nako e kgutshwane, se sa mamelleng serame | Makgasi le dikgapetla ke furu e nang le protheine e ngata; dipeo bakeng sa dikgoho |
-| Sunn hemp (*Crotalaria juncea*) | Semela sa dinawa sa lehlabula sa sehla se le seng | Manyolo a matala (se kenye mobung kapa o se kute e be mulch) |
+| Sunn hemp (*Crotalaria juncea*) | Legume ya lehlabula ya annual | Green manure (se kenye mobung kapa o se kute e be mulch) |
 
 ### Difate
 
@@ -347,13 +347,13 @@ Dimela tsena di ka fepa diphoofolo, ebang ka ho fula, e le furu e kutwang e iset
 | Torchwood (*Balanites maughamii*) | 15–20 m | Oli ya peo e jewang, patsi |
 | Pride-of-De Kaap (*Bauhinia galpinii*) | 3–5 m | Terata e phelang; se hohela diphoofolo tsa naha |
 | False olive (*Buddleja saligna*) | 4–12 m | Mapolanka; se hohela dirurubele |
-| Carob (*Ceratonia siliqua*), ha se sa tlhaho | 5–10 m | Dikgapetla ke furu e ntle; se mamella komello; sesireletsi sa moya |
+| Carob (*Ceratonia siliqua*), ha se sa tlhaho | 5–10 m | Dikgapetla ke furu e ntle; se mamella komello; **windbreak** (sesireletsi sa moya) |
 | Bluebush (*Diospyros lycioides*) | 3–7 m | Ditholwana tse jewang, biomass |
 | Puzzle bush (*Ehretia rigida*) | 5–12 m | Makgasi a jewang ke diphoofolo (browse); se hohela dinonyana |
 | Blue guarri (*Euclea crispa*) | 8–20 m | Ditholwana tse jewang, mapolanka a nang le thuso |
 | Cross-berry (*Grewia occidentalis*) | 6–10 m | Ditholwana tse jewang |
 | Ouhout (*Leucosidea sericea*) | 6–9 m | Patsi, dikota tsa terata; semela sa pele (pioneer) se mamellang serame |
-| Mohlware (wild olive, *Olea europaea* subsp. *cuspidata*) | 8–14 m | Patsi; se matla; se mela hape hantle ha se kutilwe (coppices) |
+| Mohlware (wild olive, *Olea europaea* subsp. *cuspidata*) | 8–14 m | Patsi; se matla; se mela hape hantle ka **coppicing** (ha se pongwa haufi le fatshe) |
 | African wattle (*Peltophorum africanum*) | 9–14 m | Se hola kapele; patsi; moriti |
 | English oak (*Quercus robur*), ha se sa tlhaho | 10–20 m | Ditholwana tsa sona (acorns) bakeng sa dikolobe; mapolanka |
 | River willow (*Salix mucronata*) | ho fihla ho 12 m | Se tiisa mabopo a melapo |
@@ -364,12 +364,12 @@ Dimela tsena di ka fepa diphoofolo, ebang ka ho fula, e le furu e kutwang e iset
 | Sweet thorn (*Vachellia karroo*) | 7–12 m | Se lokisa naetrojene; dikgapetla le makgasi di jewa ke diphoofolo; sekgomaretsi (gum) |
 | Large sourplum (*Ximenia caffra*) | 5–7 m | Ditholwana tse nang le vitamin C e ngata; terata ya dimela |
 
-> **Hlokomela:** English oak ha e yo mananeng a Afrika Borwa a mefuta e hlaselang naha (invasive species), empa e ile ya hasana haufi le dinoka Kapa Bophirima. O se ke wa e lema haufi le melapo kapa mehlaba (wetlands). Difate tsa tlhaho tse tafoleng ena ke kgetho e betere hohle moo di holang hantle.
+> **Hlokomela:** English oak ha e yo mananeng a Afrika Borwa a invasive species, empa e ile ya hasana haufi le dinoka Kapa Bophirima. O se ke wa e lema haufi le melapo kapa mehlaba (wetlands). Difate tsa tlhaho tse tafoleng ena ke kgetho e betere hohle moo di holang hantle.
 
 ## Dintlha tsa bohlokwa
 
 - Sheba ditlhoko, dihlahiswa le boitshwaro ba phoofolo ka nngwe, mme o di hokele le dikarolo tse ding tsa polasi.
-- Diphoofolo tse sebetsang jwaloka terekere di tsamaisa diphoofolo naheng e le hore manyolo, ho hohla fatshe le ho tjheka ha tsona di etse mosebetsi o molemo.
+- Di-animal tractor di tsamaisa diphoofolo naheng e le hore manyolo, ho hohla fatshe le ho tjheka ha tsona di etse mosebetsi o molemo.
 - Dikgoho di hloka dijo tse leka-lekaneng, metsi a hlwekileng, majwana (grit) le khalsiamo, ntlo e sireletsehileng, 15–20 cm ya thupa ya ho robala ka nngwe le lebokose le le leng la sehlaha bakeng sa dikgoho tse nne kapa tse hlano.
 - Mefutana ya lehae e kang Koekoek, Venda, Ovambo, Naked Neck le Boschveld e matla; dikgoho tsa hybrid tsa kgwebo di behela haholo empa di hloka tlhokomelo e ngata.
 - Enta kgahlanong le lefu la Newcastle, o phete kamehla, o arohanye dikgoho tse ntjha qalong, mme o tlalehe mafu a tshohanyetso ho ngaka ya diphoofolo ya mmuso.

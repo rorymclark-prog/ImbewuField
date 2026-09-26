@@ -2,7 +2,7 @@
 
 ## Tsela e fapaneng ya ho nahana ka disenyi
 
-Ho permaculture re laola disenyi ka tsela eo tlhaho e di laolang ka yona. "Sesenyi" hase sera seo re lokelang ho se fedisa. Ke karolo ya tikoloho ya tlhaho (ecosystem) kaofela, e leng dimela, diphoofolo, mobu le metsi tse phelang di sebetsa mmoho. Disenyi ke dijo tsa diphoofolo tse di laolang: dinonyana, dihwaswa, mekgodutswane, dikgo, di-ladybird le mabobi a manyane. Ha re bolaya disenyi tsohle, re boetse re siya bathusi bana ba se na dijo, mme tsamaiso kaofela e fetoha e sa tsitsang.
+Ho permaculture re laola disenyi ka tsela eo tlhaho e di laolang ka yona. "Sesenyi" hase sera seo re lokelang ho se fedisa. Ke karolo ya **ecosystem** (tikoloho ya tlhaho) kaofela, e leng dimela, diphoofolo, mobu le metsi tse phelang di sebetsa mmoho. Disenyi ke dijo tsa diphoofolo tse di laolang: dinonyana, dihwaswa, mekgodutswane, dikgo, di-ladybird le mabobi a manyane. Ha re bolaya disenyi tsohle, re boetse re siya bathusi bana ba se na dijo, mme tsamaiso kaofela e fetoha e sa tsitsang.
 
 Ho hlaha ha disenyi tse ngata ka tshohanyetso hangata ke letshwao la hore ho na le ntho e sa lekalekaneng serapeng. Mohlala, mobu o ka ba o fokola, dimela di ka ba di hatellwa ke komello, kapa ho ka ba le sejalo se le seng se sengata haholo sebakeng se le seng. Mehato e potlakileng ya tlhaho (organic) e ka fokotsa tshenyo hona jwale. Empa nakong e telele re tlameha ho phekola sesosa, e seng feela matshwao.
 
@@ -16,14 +16,14 @@ Temo ya indasteri hangata e sebedisa dibolayadisenyi tsa dikhemikhale (pesticide
 
 Ho fafatsa tjhefo hangata ho baka potoloho ya disenyi tse ntseng di eketseha:
 
-1. Tjhefo e bolaya disenyi, empa e boetse e bolaya dikokonyana tse jang disenyi (dibatana tse jang disenyi, predators).
-2. Disenyi di ikatisa kapele haholo ho feta dibatana tse di jang.
+1. Tjhefo e bolaya disenyi, empa e boetse e bolaya dikokonyana tse jang disenyi (**di-predator**, diphoofolo tse jang disenyi).
+2. Disenyi di ikatisa kapele haholo ho feta di-predator tse di jang.
 3. Disenyi di kgutla pele, mme jwale ha ho letho le ka di jang.
 4. Molemi o fafatsa hape, mme bothata bo a mpefala. Disenyi tse ngata di boetse di qetella di sa bolawe ke tjhefo eo (di e hanyetsa).
 
 Pele ho temo ya dikhemikhale ho ne ho se na lentswe la temo ya "organic" (ya tlhaho), hobane temo yohle e ne e le ya tlhaho. Mekgwa e mengata ya kgale ya ho laola disenyi e ntse e sebetsa le kajeno. E thusa haholo ha serapa se setjha sa permaculture se ntse se thehwa, pele tekatekano ya sona ya tlhaho e hola.
 
-Kgaolong e fetileng re shebile kamoo re ka hahang tikoloho ya tlhaho e phetseng hantle, e nang le mefutafuta. Ena ke leano la bohlokwa ka ho fetisisa la nako e telele. Kgaolo ena e sheba mekgwa e sebetsang ya ho sireletsa dijalo, haholo meroho.
+Kgaolong e fetileng re shebile kamoo re ka hahang ecosystem e phetseng hantle, e nang le mefutafuta. Ena ke leano la bohlokwa ka ho fetisisa la nako e telele. Kgaolo ena e sheba mekgwa e sebetsang ya ho sireletsa dijalo, haholo meroho.
 
 ## Mekgwa ya tlhaho ya ho laola disenyi
 
@@ -31,15 +31,15 @@ Disebediswa tse ka sehloohong ke tsena:
 
 - **Mefutafuta ya dimela.** Kopanya dimela tse ngata tse fapaneng ho ena le ho lema dibaka tse kgolo tsa sejalo se le seng.
 - **Mobu o phetseng hantle.** Dimela tse matla mobung o nonneng di hanela disenyi hantle (bona Kgaolo ya 8).
-- **Dijalo tsa leraba (trap crops, dijalo tse nehelwang disenyi).** Lema semela seo sesenyi se se ratang ho feta sejalo sa hao sa dijo, e le hore se hlasele sona.
-- **Ho lema dimela tse thusanang (companion planting).** Lema mmoho dimela tse thusanang.
-- **Phetolo ya dijalo (crop rotation).** O se ke wa lema lelapa le le leng la dijalo bethe ya serapa e le nngwe selemo le selemo.
-- **Di-inoculant tsa mobu.** Tsena ke dihlahiswa tse kenyang ditshedi tse phelang tse thusang mobung kapa peong, mohlala dibaktheria tsa rhizobium bakeng sa dinawa le matokomane, kapa kompose (compost) e ntle.
-- **Dibatana tsa tlhaho tse jang disenyi.** Fa dinonyana, dihwaswa, mekgodutswane, dinoha le dikokonyana tse jang tse ding sebaka sa ho dula.
-- **Dikgoho le matata.** Kamora kotulo, kapa ka hara lesaka le tsamaiswang (bona Kgaolo ya 5), di ja dikgofu tse nang le tse se nang dikgaketla, le dikokonyana. Di se ke tsa atamela dimela tse nyane, hobane di a di fata.
+- **Di-trap crop** (dijalo tsa leraba, tse nehelwang disenyi). Lema semela seo sesenyi se se ratang ho feta sejalo sa hao sa dijo, e le hore se hlasele sona.
+- **Companion planting** (ho lema dimela tse thusanang). Lema mmoho dimela tse thusanang.
+- **Crop rotation** (phetolo ya dijalo). O se ke wa lema lelapa le le leng la dijalo bethe ya serapa e le nngwe selemo le selemo.
+- **Di-inoculant tsa mobu.** Tsena ke dihlahiswa tse kenyang ditshedi tse phelang tse thusang mobung kapa peong, mohlala dibaktheria tsa rhizobium bakeng sa dinawa le matokomane, kapa **compost** (manyolo a bodileng) e ntle.
+- **Di-predator tsa tlhaho.** Fa dinonyana, dihwaswa, mekgodutswane, dinoha le dikokonyana tse jang tse ding sebaka sa ho dula.
+- **Dikgoho le matata.** Kamora kotulo, kapa ka hara **animal tractor** (lesaka le tsamaiswang, bona Kgaolo ya 5), di ja dikgofu tse nang le tse se nang dikgaketla, le dikokonyana. Di se ke tsa atamela dimela tse nyane, hobane di a di fata.
 - **Temo e kopantsweng (intercropping).** Lema dijalo tse pedi kapa ho feta bethe ya serapa e le nngwe ka nako e le nngwe.
 - **Marako a dihlahla (hedges) le diterata.** Di sireletsa serapa ho diphoofolo le moya.
-- **Sebaka sa naha (Zone 5).** Siya lebanta la dimela tsa tlhaho e le lehae la diphoofolo tsa naha le dibatana tse jang disenyi.
+- **Sebaka sa naha (Zone 5).** Siya lebanta la dimela tsa tlhaho e le lehae la diphoofolo tsa naha le di-predator.
 - **Difafatsi tse entsweng hae.** Di sebedise feela e le tsela ya ho qetela, bakeng sa dijalo tse itseng.
 
 ## Disenyi ke eng?
@@ -90,7 +90,7 @@ Seo o lokelang ho se etsa:
 1. Pshatla dihlopha tse nyane ka menwana, kapa o di hlatswe ka metsi a fafatswang ka matla.
 2. Sireletsa di-ladybird, di-hoverfly (dintsintsi tse tshwanang le dinotshi), di-lacewing (dikokonyana tse tala tse nang le mapheo a sesane) le mabobi a manyane a parasite (parasitic wasps, a behelang mahe ka hara disenyi). Di ja di-aphid kapa di behela mahe a tsona ka hara tsona. Sehlopha sa di-aphid se fetohileng se sootho mme se omeletse jwaloka pampiri hangata se bolailwe ke mabobi a parasite, kahoo se tlohele.
 3. Laola bohlwa (bona ka tlase), hobane bohlwa bo sireletsa di-aphid ho dira tsa tsona.
-4. Lema di-nasturtium haufi e le sejalo sa leraba, mme o tlose makgasi a nasturtium a tletseng di-aphid.
+4. Lema di-nasturtium haufi e le trap crop, mme o tlose makgasi a nasturtium a tletseng di-aphid.
 5. Qoba manyolo a diphoofolo a matjha a mangata kapa manyolo a naetrojene. Kgolo e bonolo, e potlakileng, ya makgasi a mangata e hohela di-aphid.
 
 ### Diboko tse kgaolang dimela (cutworms)
@@ -167,7 +167,7 @@ Seo o lokelang ho se etsa:
 
 Dikgofu ke diphoofolo tse nang le mmele o bonolo tse fumanwang dibakeng tse mongobo. Dikgofu tsa snail di jara kgaketla e entsweng haholo ka khalsiamo (calcium). Di ja makgasi, mme di baka tahlehelo ya nnete ha di le ngata kapa ha di ja dimela tse nyane.
 
-Mulch le dintho tse ding tsa tlhaho tse bolang haufi le dijalo di ka di hohela, hobane di boloka mobu o le mongobo mme di di fa dijo le setshabelo. Mofuta wa mulch o bohlokwa: mulch e mahwashwa, e omileng, e hwahwang ha e di hohele haholo jwaloka dintho tse metsi, tse bonolo.
+Mulch le **organic matter** (dintho tsa tlhaho tse bolang) e nngwe haufi le dijalo di ka di hohela, hobane di boloka mobu o le mongobo mme di di fa dijo le setshabelo. Mofuta wa mulch o bohlokwa: mulch e mahwashwa, e omileng, e hwahwang ha e di hohele haholo jwaloka dintho tse metsi, tse bonolo.
 
 Seo o lokelang ho se etsa:
 
@@ -212,7 +212,7 @@ Seo o lokelang ho se etsa ka dikgoto tsa mobu:
 
 1. Ala letlowa la terata le matla ka tlase ho dibethe tsa serapa tse phahamisitsweng, kapa ka tlase ho dikoti tsa ho lema dimela tsa bohlokwa.
 2. Lema dibolobo le difate tse nyane ka hara diqoqo tsa letlowa la terata.
-3. Kgothaletsa dinoha tsa mole (mole snakes), diphooko le dibatana tse ding tsa tlhaho.
+3. Kgothaletsa dinoha tsa mole (mole snakes), diphooko le di-predator tse ding tsa tlhaho.
 4. O se ke wa sebedisa tjhefo. Dikgoto tsa mobu tse jeleng tjhefo di ka bolaya diphooko, dinoha, dintja le dikatse tse di jang.
 
 ### Dinoko le diphoofolo tse ding
@@ -221,23 +221,23 @@ Dinoko di fata metso le metso e metenya (tubers) mme di ebola makgapetla a difat
 
 ## Kamoo o ka laolang disenyi ka teng: mohato ka mohato
 
-Taolo ya disenyi ka tlhaho e sebedisa ditsamaiso tsa tlhaho. Mohlala, dibatana tse jang disenyi tsa dijalo di ka re fokotsetsa palo ya disenyi. Latela mehato ena ka tatellano:
+Taolo ya disenyi ka tlhaho e sebedisa ditsamaiso tsa tlhaho. Mohlala, di-predator tsa disenyi tsa dijalo di ka re fokotsetsa palo ya disenyi. Latela mehato ena ka tatellano:
 
 1. **Shebella.** Hlahloba dijalo hangata mme o nke kgato kapele.
-2. **Kgothaletsa dibatana tse jang disenyi.** Di fe dijo, metsi le setshabelo.
+2. **Kgothaletsa di-predator.** Di fe dijo, metsi le setshabelo.
 3. **Tlosa disenyi ka letsoho.** Kga diboko tse senyang, dikgofu le di-beetle.
 4. **Sebedisa dithibelo.** Letlowa, lesela la moriti, masale (collars) le diterata di thibela disenyi hore di se ke tsa kena.
 5. **Fafatsa feela e le tsela ya ho qetela.** Sebedisa difafatsi tse entsweng hae kapa dihlahiswa tsa tlhaho (organic) tse ngodisitsweng, ka hloko, mme feela dimeleng tse di hlokang.
 
 Ho ka nka dihla tse mmalwa hore tekatekano ya tlhaho e hlahe, ho ya ka sebaka le kamoo serapa se neng se hlokomelwa ka teng pele. Ha re ntse re qoba ditjhefo mme re eketsa mefutafuta, tekatekano e tla kapele.
 
-Kgaolong ya 9 re bone kamoo dipalesa, matangwana, diqubu tsa majwe le dikutu tsa difate di etsang mahae a ditshedi tse ngata ka teng. Tsena di hohela dinonyana, dihwaswa, mekgodutswane, mabobi a manyane (a sa kotsing ho batho), di-praying mantis, di-ladybird, dikgo le tse ding. Molao o bonolo: lema dimela tse ngata tse fapaneng mme o etse mahae a mangata a fapaneng (habitats), mme dibatana tse ngata tse molemo tse fapaneng di tla tla ho o thusa.
+Kgaolong ya 9 re bone kamoo dipalesa, matangwana, diqubu tsa majwe le dikutu tsa difate di etsang mahae a ditshedi tse ngata ka teng. Tsena di hohela dinonyana, dihwaswa, mekgodutswane, mabobi a manyane (a sa kotsing ho batho), di-praying mantis, di-ladybird, dikgo le tse ding. Molao o bonolo: lema dimela tse ngata tse fapaneng mme o etse **di-habitat** (mahae) tse ngata tse fapaneng, mme di-predator tse ngata tse molemo tse fapaneng di tla tla ho o thusa.
 
 Dibaka tse kgolo tsa sejalo se le seng (temo ya sejalo se le seng, monoculture) di etsa hore ho be bonolo haholo hore disenyi di fumane dijo tsa tsona mme di ate. Ho kopanya dijalo, le ho kenyeletsa ditlama tse nkgang haholo le dimela tse nang le makgasi a mahwashwa kapa a boya, ho etsa hore ho be thata hore disenyi di fumane seo di se batlang.
 
-## Kgothaletsa dibatana tse jang disenyi
+## Kgothaletsa di-predator
 
-Serapa sa dijo se phetseng hantle se hloka dibatana tsa tlhaho tse jang disenyi. Dibatana tse ngata hangata di bolela disenyi tse fokolang.
+Serapa sa dijo se phetseng hantle se hloka di-predator tsa tlhaho. Di-predator tse ngata hangata di bolela disenyi tse fokolang.
 
 - **Maobu (chameleons) le mekgodutswane** a ja dikokonyana. A ipata hara mafika le majwe a futhumetseng serapeng.
 - **Dihwaswa (frogs le toads)** di ja dikgofu le dikokonyana tse ngata haholo. Di hloka sebaka se mongobo kapa letangwana le lenyane hore di phele le ho ikatisa.
@@ -252,29 +252,29 @@ Serapa sa dijo se phetseng hantle se hloka dibatana tsa tlhaho tse jang disenyi.
 
 > **Keletso:** Hase di-ladybird tsohle tseo e leng metswalle. Boholo ba di-ladybird tse benyang di ja di-aphid. Empa di-ladybird tse ding tse lamunu tse sa benyeng, tse nang le matheba a mangata a matsho le mokokotlo o nang le boya hanyane, le ditshwinyana tsa tsona tse tshehla tse meutlwa, di ja makgasi a mekopu, ditapole le dijalo tse amanang le tsona. Ithute ho di kgetholla.
 
-## Ho lema dimela tse thusanang (companion planting)
+## Companion planting
 
-Ho lema dimela tse thusanang ho bolela ho lema mmoho dijalo, dipalesa le ditlama tse fapaneng e le hore di thusane. Ho etsa temo ya mefuta e mengata (polyculture), e leng dijalo tse ngata tse holang sebakeng se le seng.
+Companion planting e bolela ho lema mmoho dijalo, dipalesa le ditlama tse fapaneng e le hore di thusane. Ho etsa temo ya mefuta e mengata (polyculture), e leng dijalo tse ngata tse holang sebakeng se le seng.
 
 Batho ba lemile dijalo mmoho ka nako e telele haholo. Kwana (China), balemi ba lemile mofuta o monyane wa fern o phaphamalang metsing, *Azolla*, masimong a raese a metsi ka makgolo a dilemo, hobane o kenya naetrojene metsing le mobung. Dinaheng tsa Amerika, balemi ba matswallwa ba ne ba lema poone, dinawa le mokopu (squash) mmoho, e le tsamaiso e tsejwang e le "dikgaitsedi tse tharo" (three sisters). Poone e fa dinawa seo di ka palamang ho sona, dinawa di kenya naetrojene mobung, mme makgasi a maholo a mokopu a etsa moriti fatshe mme a hatella mefoka.
 
-> **Hlokomela:** O se ke wa kenya *Azolla filiculoides* matamong kapa matangwaneng Afrika Borwa. Ke semela se tswang kantle se hlaselang naha (invasive) se ngotsweng lenaneng ho ya ka molao wa naha.
+> **Hlokomela:** O se ke wa kenya *Azolla filiculoides* matamong kapa matangwaneng Afrika Borwa. Ke **invasive species** (semela se tswang kantle se hlaselang naha) e ngotsweng lenaneng ho ya ka molao wa naha.
 
-Ho lema dimela tse thusanang ho ka thusa ka:
+Companion planting e ka thusa ka:
 
 - **Taolo ya disenyi.** Dimela tse ding di kgelosa, di ferekanya kapa di leleka disenyi.
-- **Ho tsamaisa phofo ya dipalesa (pollination).** Dipalesa di hohela dinotshi le dikokonyana tse ding tse tsamaisang phofo ya dipalesa (pollinators) bakeng sa sejalo sa hao se ka sehloohong.
-- **Ho fepa dibatana tse jang disenyi.** Dipalesa di fa di-hoverfly, mabobi a parasite le bathusi ba bang lero la dipalesa le phofo.
+- **Ho tsamaisa phofo ya dipalesa (pollination).** Dipalesa di hohela dinotshi le **di-pollinator** tse ding (dikokonyana tse tsamaisang phofo ya dipalesa) bakeng sa sejalo sa hao se ka sehloohong.
+- **Ho fepa di-predator.** Dipalesa di fa di-hoverfly, mabobi a parasite le bathusi ba bang lero la dipalesa le phofo.
 - **Ho sebedisa sebaka hantle.** Dijalo tse nang le botebo bo fapaneng ba metso kapa lebelo le fapaneng la ho hola di arolelana bethe ya serapa e le nngwe, mohlala di-radish tse holang kapele pakeng tsa lettuce kapa dihwete tse holang butle.
 - **Tshehetso.** Poone e ka tshehetsa dinawa tse palamang.
 
-> **Hlokomela:** Mantswe a mangata a mabapi le ho lema dimela tse thusanang a tswa boiphihlelong ba balemi ba diserapa mme ha a so ka a lekwa ka saense. A mang a tshehetswa hantle, jwaloka dijalo tsa leraba, dipalesa bakeng sa dibatana tse jang disenyi le dikgaitsedi tse tharo. A mang a bolelwa feela ke balemi. A leke, o shebelle ka hloko mme o boloke seo se sebetsang serapeng sa hao.
+> **Hlokomela:** Mantswe a mangata a mabapi le companion planting a tswa boiphihlelong ba balemi ba diserapa mme ha a so ka a lekwa ka saense. A mang a tshehetswa hantle, jwaloka di-trap crop, dipalesa bakeng sa di-predator le dikgaitsedi tse tharo. A mang a bolelwa feela ke balemi. A leke, o shebelle ka hloko mme o boloke seo se sebetsang serapeng sa hao.
 
-### Mekgwa ya ho lema dimela tse thusanang
+### Mekgwa ya companion planting
 
-**Temo ya mefuta e mengata (polycultures).** Ho lema motswako wa dijalo ho tshehetsa ditshedi tse ngata tsa mobu le dibatana tse ngata tse jang disenyi, mme ho etsa hore ho be thata hore disenyi di fumane dijo tsa tsona. Ha nako e ntse e tsamaya sena se thusa serapa ho laola disenyi tsa sona ka bosona.
+**Temo ya mefuta e mengata (polycultures).** Ho lema motswako wa dijalo ho tshehetsa ditshedi tse ngata tsa mobu le di-predator tse ngata, mme ho etsa hore ho be thata hore disenyi di fumane dijo tsa tsona. Ha nako e ntse e tsamaya sena se thusa serapa ho laola disenyi tsa sona ka bosona.
 
-**Dijalo tsa leraba (trap crops).** Dimela tse ding di hohela sesenyi ho feta sejalo sa hao se ka sehloohong. Di leme haufi le sejalo e le hore sesenyi se di hlasele ho ena le sejalo. Mohlala, di-aphid hangata di rata di-nasturtium ho feta khabetjhe, broccoli le cauliflower. Lema di-nasturtium ka thoko ho bethe ya serapa. Ha makgasi a tsona a tlala di-aphid, kga makgasi ao mme o a fe dikgoho tsa hao, kapa o a senye. Sejalo sa leraba se sebetsa feela haeba o se hlahloba mme o tlosa disenyi. Ho seng jwalo se fetoha sebaka seo disenyi di ikatisang ho sona.
+**Di-trap crop.** Dimela tse ding di hohela sesenyi ho feta sejalo sa hao se ka sehloohong. Di leme haufi le sejalo e le hore sesenyi se di hlasele ho ena le sejalo. Mohlala, di-aphid hangata di rata di-nasturtium ho feta khabetjhe, broccoli le cauliflower. Lema di-nasturtium ka thoko ho bethe ya serapa. Ha makgasi a tsona a tlala di-aphid, kga makgasi ao mme o a fe dikgoho tsa hao, kapa o a senye. Trap crop e sebetsa feela haeba o e hlahloba mme o tlosa disenyi. Ho seng jwalo e fetoha sebaka seo disenyi di ikatisang ho sona.
 
 **Dimela tse patang monko.** Dimela tse ding di na le monko o matla o ka patang monko wa sejalo seo sesenyi se se batlang. Mohlala, balemi ba diserapa ba lema dieie ho potoloha le pakeng tsa dihwete ho di sireletsa ho carrot fly (ntsintsi ya dihwete). Dipatlisiso tse entsweng Engelane di fumane hore sena se sebetsa feela ha dimela tsa eie di le ngata haholo ho feta dihwete, mme feela ha dieie di sa le nyane mme di na le makgasi a mangata, e seng ha di se di qala ho etsa dihlooho.
 
@@ -282,7 +282,7 @@ Ho lema dimela tse thusanang ho ka thusa ka:
 
 **Dimela tse ferekanyang sebopeho.** Dikokonyana tse ngata tse senyang di fumana semela sa tsona sa dijo ka sebopeho, mmala le monko wa sona. Bethe ya serapa e nang le dibopeho le mebala e mengata e fapaneng e ka etsa hore sena se be thata, mme disenyi tse ding di a feta.
 
-**Dimela tse hohelang dibatana tse jang disenyi.** Dimela tse ding di hohela dikokonyana tse laolang disenyi. Mabobi a manyenyane a parasite, mohlala, a ja lero la dipalesa le phofo mme a behela mahe a ona ka hara diboko tse senyang le di-aphid. Dimela tse nang le dipalesa tse ngata tse nyane, jwaloka yarrow, dill, coriander le dihwete le parsley tse thunyang, di a fepa hantle. Tlohela ditlama le meroho e mmalwa e thunye bethe ya serapa e nngwe le e nngwe.
+**Dimela tse hohelang di-predator.** Dimela tse ding di hohela dikokonyana tse laolang disenyi. Mabobi a manyenyane a parasite, mohlala, a ja lero la dipalesa le phofo mme a behela mahe a ona ka hara diboko tse senyang le di-aphid. Dimela tse nang le dipalesa tse ngata tse nyane, jwaloka yarrow, dill, coriander le dihwete le parsley tse thunyang, di a fepa hantle. Tlohela ditlama le meroho e mmalwa e thunye bethe ya serapa e nngwe le e nngwe.
 
 ## Dimela tse ka lelekang disenyi
 
@@ -291,7 +291,7 @@ Tafole e ka tlase e bontsha dimela tseo balemi ba di sebedisang ho leleka diseny
 | Semela | Seo balemi ba se bolelang | Seo bopaki bo se bolelang |
 |---|---|---|
 | Marigold ya France le ya Afrika (*Tagetes patula*, *T. erecta*) | Di-whitefly le di-aphid tse fokolang; di-nematode tsa metso tse fokolang | E fokoditse di-whitefly hodima ditamati diteko tse entsweng ka hara di-greenhouse. E thibela di-nematode tsa root-knot feela ha e lengwa e teteane e le sejalo se sireletsang mobu (cover crop) dikgwedi tse 2 ho isa ho tse 4 pele ho sejalo sa meroho, e seng ha e le dimela tse mmalwa tse hasantsweng. |
-| Nasturtium | E hohela di-aphid hole le meroho | E sebetsa e le sejalo sa leraba haeba makgasi a nang le di-aphid a tloswa. |
+| Nasturtium | E hohela di-aphid hole le meroho | E sebetsa e le trap crop haeba makgasi a nang le di-aphid a tloswa. |
 | Basil | Dintsintsi, di-thrips le di-whitefly tse fokolang haufi le ditamati | Phello e nyane ho di-thrips le di-whitefly diteko tse ding. |
 | Eie, konofolo, chives, di-leek | Di sireletsa dihwete le dikhabetjhe ka ho pata monko wa tsona | E fokolang. E hloka dimela tse ngata tsa lelapa la eie, mme e sebetsa hantle ha di sa le nyane. |
 | Mint le spearmint | Bohlwa, di-aphid le dirurubele tsa khabetjhe tse fokolang | Ke dipolelo tsa balemi feela. Mint e ata kapele: e leme ka pitseng kapa ka thineng. |
@@ -332,7 +332,7 @@ Dipalesa di fepa dikokonyana tse laolang disenyi. Lema motswako wa dimela tse th
 | Pincushion flower (*Scabiosa* ya tlhaho) | Di-hoverfly, dintsintsi tsa tachinid, dinotshi |
 | Di-everlasting tsa tlhaho (*Helichrysum*) | Mabobi le dintsintsi tsa parasite, dikgo |
 
-> **Hlokomela:** Cosmos hase semela se hlaselang naha se ngotsweng lenaneng Afrika Borwa, empa e ata habonolo ka hara naha (veld) le mahlakoreng a ditsela. Kgaola dihlooho tsa dipalesa pele di lahla peo haeba o dula haufi le naha ya jwang ya tlhaho. Goldenrod, tansy, sweet Annie le calliopsis tse lenaneng la kgale di tlohetswe hobane di ka fetoha mefoka, mme semela se amanang haufi le calliopsis (*Coreopsis lanceolata*) ke semela se hlaselang naha se ngotsweng lenaneng.
+> **Hlokomela:** Cosmos hase invasive species e ngotsweng lenaneng Afrika Borwa, empa e ata habonolo ka hara naha (veld) le mahlakoreng a ditsela. Kgaola dihlooho tsa dipalesa pele di lahla peo haeba o dula haufi le naha ya jwang ya tlhaho. Goldenrod, tansy, sweet Annie le calliopsis tse lenaneng la kgale di tlohetswe hobane di ka fetoha mefoka, mme semela se amanang haufi le calliopsis (*Coreopsis lanceolata*) ke invasive species e ngotsweng lenaneng.
 
 ## Baahisane ba molemo le ba sa lokang
 
@@ -409,16 +409,16 @@ Balemi ba bang ba diserapa ba inela koae, koae ya nko (snuff) kapa masalla a dis
 
 > **Polokeho:** Le ka mohla o se ke wa etsa difafatsi ka koae, ditholwana tsa syringa, moonflower (*Datura*) kapa dimela tse ding tse tjhefo. Haeba motho a kwenya sefafatsi sefe kapa sefe sa serapa, eya tliliniking hang-hang mme o nke botlolo o tsamaye le yona.
 
-## Phetolo ya dijalo
+## Crop rotation
 
-Phetolo ya dijalo (crop rotation) ho bolela ho fetola sejalo se lengwang sebakeng se le seng sa mobu ho tloha sehleng se seng ho ya ho se latelang. Temong ya tlhaho (organic), phetolo ke e nngwe ya ditsela tse kgolo tsa ho thibela disenyi le mafu.
+Crop rotation e bolela ho fetola sejalo se lengwang sebakeng se le seng sa mobu ho tloha sehleng se seng ho ya ho se latelang. Temong ya tlhaho (organic), crop rotation ke e nngwe ya ditsela tse kgolo tsa ho thibela disenyi le mafu.
 
 Haeba o lema sejalo se le seng sebakeng se le seng selemo le selemo:
 
 - mobu o lahlehelwa ke phepo e tshwanang nako le nako
 - disenyi le mafu a phelang mobung a a eketseha, mme a fetela ho tloha sehleng se seng ho ya ho se latelang
 
-Ho fetola dijalo ho kgaola potoloho ya bophelo ya disenyi le mafu, ho fa mobu nako ya ho iphodisa, mme ho sebedisa naetrojene eo dimela tsa dinawa (legumes) di e siyang.
+Ho fetola dijalo ho kgaola potoloho ya bophelo ya disenyi le mafu, ho fa mobu nako ya ho iphodisa, mme ho sebedisa naetrojene eo **di-legume** (dimela tsa lelapa la dinawa) di e siyang.
 
 Ho na le ditsela tse pedi tse kgolo tsa ho rala phetolo.
 
@@ -426,11 +426,11 @@ Ho na le ditsela tse pedi tse kgolo tsa ho rala phetolo.
 
 Dimela tsa lelapa le le leng hangata di hloka phepo e tshwanang mme di tshwarwa ke disenyi le mafu a tshwanang. Kahoo re fetisetsa lelapa le leng le le leng bethe ya serapa e ntjha sehla se seng le se seng, mme re ema bonyane dilemo tse tharo, kapa ho molemo le ho feta tse nne, pele lelapa leo le kgutlela bethe ya serapa e le nngwe.
 
-Kenyeletsa sejalo sa dinawa (lelapa la dinawa) bonyane hang dihleng tse nne. Phetolo e bonolo ya dibethe tse nne tsa serapa e ka ba:
+Kenyeletsa legume (lelapa la dinawa) bonyane hang dihleng tse nne. Phetolo e bonolo ya dibethe tse nne tsa serapa e ka ba:
 
 1. **Selemo sa 1:** lelapa la khabetjhe (mohlala khabetjhe)
 2. **Selemo sa 2:** lelapa la sehwete kapa dijalo tsa metso (mohlala dihwete)
-3. **Selemo sa 3:** dimela tsa dinawa (mohlala dinawa)
+3. **Selemo sa 3:** di-legume (mohlala dinawa)
 4. **Selemo sa 4:** lelapa la eie (mohlala dieie)
 
 Mokgwa ona o sebetsa hantle ho balemi ba kgwebo ba lemang mofuta o le mong wa meroho bethe ya serapa e nngwe le e nngwe.
@@ -442,7 +442,7 @@ Mokgwa ona o sebetsa hantle ho balemi ba kgwebo ba lemang mofuta o le mong wa me
 | Lelapa la sehwete (Apiaceae) | Dihwete, seleri, parsley, coriander, dill |
 | Lelapa la beteruti le theepe (Amaranthaceae) | Swiss chard, beteruti, sepinatjhe, theepe (imifino, morogo) |
 | Lelapa la mokopu (Cucurbitaceae) | Dikomkomere, mekopu, butternut, di-squash, makatapane (melons), mahapu |
-| Lelapa la dinawa (Fabaceae) | Dierekisi, dinawa, dinawa tsa dikgomo (cowpeas), matokomane, ditloo (jugo beans, Bambara groundnuts), dinawa tsa soya |
+| Lelapa la legume kapa la dinawa (Fabaceae) | Dierekisi, dinawa, dinawa tsa dikgomo (cowpeas), matokomane, ditloo (jugo beans, Bambara groundnuts), dinawa tsa soya |
 | Lelapa la eie (Amaryllidaceae) | Dieie, di-leek, konofolo, dieie tse tala (spring onions), chives |
 | Lelapa la jwang (Poaceae) | Poone, poone e monate (sweetcorn), mabele, leotsa (millet) |
 | Malapa a mang | Lettuce (lelapa la daisy), patata (lelapa la morning-glory), okra (lelapa la hibiscus), asparagus |
@@ -455,26 +455,26 @@ Hape re ka arola dijalo ho ya ka hore di nka phepo e kae mobung:
 
 - **Dijalo tse jang haholo (heavy feeders)** di hloka mobu o nonneng. Mehlala: khabetjhe, broccoli, cauliflower, poone, ditamati, ditapole, mekopu le butternut.
 - **Dijalo tse jang hanyane kapa ka tekano (medium and light feeders)** di hloka phepo e nyane. Mehlala: lettuce, Swiss chard, dihwete, beteruti, dieie, konofolo le di-radish.
-- **Dijalo tse hahang mobu** ke dimela tsa dinawa: dinawa, dierekisi, dinawa tsa dikgomo (cowpeas), matokomane le dinawa tse bophara (broad beans). Dibaktheria tse ka hara makukuno a manyane (nodules) metsong ya tsona di nka naetrojene moyeng mme di e etsa hore e fumanehe ho dimela.
+- **Dijalo tse hahang mobu** ke di-legume: dinawa, dierekisi, dinawa tsa dikgomo (cowpeas), matokomane le dinawa tse bophara (broad beans). Dibaktheria tse ka hara makukuno a manyane (nodules) metsong ya tsona di nka naetrojene moyeng mme di e etsa hore e fumanehe ho dimela.
 
 Phetolo e bonolo ya mehato e meraro ke ena:
 
-1. Lema dijalo tse jang haholo kamora sejalo sa dinawa, kapa kamora ho kenya kompose kapa manyolo a diphoofolo a mangata.
+1. Lema dijalo tse jang haholo kamora legume, kapa kamora ho kenya compost kapa manyolo a diphoofolo a mangata.
 2. Ebe o lema dijalo tse jang hanyane.
-3. Ebe o lema dimela tsa dinawa ho aha mobu hape, mme o qale hape.
+3. Ebe o lema di-legume ho aha mobu hape, mme o qale hape.
 
 Sena se thibela hore phepo e tshwanang e fele sehla se seng le se seng. Se boetse se loketse dibethe tsa serapa tse kopantsweng tse nang le dijalo tse mmalwa (temo e kopantsweng, intercropping). Kgetha sehlopha sa dimela tse thusanang karolong e nngwe le e nngwe, mme o fetise sehlopha seo ka phetolo ya mehato e 3 kapa e 4.
 
-> **Hlokomela:** Boholo ba naetrojene eo dimela tsa dinawa di e lokisang bo ya dipeong tsa tsona. Ha o kotula dinawa tse omileng kapa matokomane, boholo ba yona bo tswa tshimong. Ho fepa mobu, siya metso ka hara mobu mme o kgutlisetse makgasi le dikutu bethe ya serapa kapa qubung ya kompose.
+> **Hlokomela:** Boholo ba naetrojene eo di-legume di e lokisang bo ya dipeong tsa tsona. Ha o kotula dinawa tse omileng kapa matokomane, boholo ba yona bo tswa tshimong. Ho fepa mobu, siya metso ka hara mobu mme o kgutlisetse makgasi le dikutu bethe ya serapa kapa qubung ya compost.
 
 ## Dintlha tsa bohlokwa
 
-- Disenyi ke karolo ya tikoloho ya tlhaho. Ho hlaha ha tsona ka bongata ke letshwao la hore ho na le ntho e sa lekalekaneng: phekola sesosa, e seng matshwao feela.
-- Difafatsi tsa tjhefo di bolaya dibatana tse jang disenyi hammoho le disenyi, mme hangata di mpefatsa mathata a disenyi.
+- Disenyi ke karolo ya ecosystem. Ho hlaha ha tsona ka bongata ke letshwao la hore ho na le ntho e sa lekalekaneng: phekola sesosa, e seng matshwao feela.
+- Difafatsi tsa tjhefo di bolaya di-predator hammoho le disenyi, mme hangata di mpefatsa mathata a disenyi.
 - Hlahloba dijalo tsa hao habedi ka beke, tseba disenyi kapele, mme o di tlose ka letsoho moo o ka kgonang.
 - Ithute disenyi tse kgolo tsa sebaka sa heno: di-aphid, diboko tse kgaolang dimela, African bollworm, diamond-back moth, fall armyworm, dintsintsi tsa ditholwana, dikgofu le dikgoto tsa mobu.
-- Kgothaletsa dibatana tse jang disenyi ka dipalesa, metsi, mulch, majwe le sebaka sa naha.
-- Ho lema dimela tse thusanang ho a thusa, empa mantswe a mangata ke dipolelo tsa balemi feela. Dijalo tsa leraba le dipalesa bakeng sa dibatana tse jang disenyi di na le bopaki bo matla ka ho fetisisa.
+- Kgothaletsa di-predator ka dipalesa, metsi, mulch, majwe le sebaka sa naha.
+- Companion planting e a thusa, empa mantswe a mangata ke dipolelo tsa balemi feela. Di-trap crop le dipalesa bakeng sa di-predator di na le bopaki bo matla ka ho fetisisa.
 - Arola dijalo tsa lelapa le le leng, mme o fetole malapa e le hore ho se le leng le kgutlelang bethe ya serapa e le nngwe pele ho dilemo tse tharo ho isa ho tse nne.
 - Sebedisa difafatsi tse entsweng hae feela e le tsela ya ho qetela, rwala ditlelafo le sesireletsi sa mahlo, mme o fafatse mantsiboya hole le dipalesa.
 - Le ka mohla o se ke wa etsa kapa wa sebedisa sefafatsi sa koae (nicotine).

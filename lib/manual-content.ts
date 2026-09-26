@@ -5,7 +5,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import {
-  MANUAL_CHAPTERS, chapterTitle, readingMinutes, type ManualChapter, type ManualLang,
+  MANUAL_CHAPTERS, chapterTitle, readingMinutes, type ManualChapter, type ManualFigure, type ManualLang,
 } from '@/lib/manual';
 
 const ROOT = path.join(process.cwd(), 'content', 'manual');
@@ -37,4 +37,12 @@ export function chapterIndex(lang: ManualLang): ChapterEntry[] {
     out.push({ slug, title: chapterTitle(md), minutes: readingMinutes(md), translated: own !== null });
   }
   return out;
+}
+
+/** content/manual/figures.json, minus any entry whose image file is not in public/ yet. */
+export function manualFigures(): ManualFigure[] {
+  const file = path.join(ROOT, 'figures.json');
+  if (!existsSync(file)) return [];
+  const all = JSON.parse(readFileSync(file, 'utf8')) as ManualFigure[];
+  return all.filter((f) => existsSync(path.join(process.cwd(), 'public', f.src.replace(/^\//, ''))));
 }
