@@ -73,6 +73,7 @@
 | vertical gardening | ukulima ngokuphakama (vertical gardening) | Coined for principle 11. (check) |
 | Safety: / Tip: / Note: (callout labels) | Ukuphepha: / Icebiso: / Qaphela: | Used in every chapter. (check) |
 | Key points (chapter summary heading) | Amaphuzu amqoka | Used in every chapter. (check) |
+| Warning: (callout label) | Isexwayiso: | Ch. 8, 9. (check) |
 | Southern Africa / South Africa | iNingizimu ne-Afrika / iNingizimu Afrika | Keep the two apart: *iNingizimu ne-Afrika* is the region. |
 
 ## 2. Planning the farm: site, zones and sectors
@@ -163,6 +164,30 @@
 | micro-jet spray irrigation | ukunisela ngokufafaza okuncane (micro-jet) | Explain on first use. (check) |
 | sprinkler | isifafazi | In app: zu.ts. |
 | hosepipe / pipe | ipayipi | In app: zu.ts. |
+| earthworks | imisebenzi yomhlabathi (earthworks) | Ch 7. Explain on first use: *ukulolonga umhlaba — ukumba, ukuhambisa nokunqwabelanisa umhlabathi*. (check) |
+| runoff coefficient | isilinganiso samanzi agelezayo (runoff coefficient) | Ch 7. Explain on first use. (check) |
+| infiltration basin | isitsha sokungenisa amanzi (infiltration basin) | Ch 7. Short form *isitsha* (pl. *izitsha*); tree basin = *isitsha sesihlahla*. (check) |
+| net-and-pan system | uhlelo lwe-net-and-pan (inetha nezitsha) | Ch 7. Loan. (check) |
+| hügelkultur | i-hügelkultur | Ch 7. Loan word, explained in text. |
+| diversion drain / diversion mound | umsele wokuphambukisa amanzi / indunduma yokuphambukisa amanzi | Ch 7. (check) |
+| living sponge (soil) | isipontshi esiphilayo | Ch 7. |
+| leaf screen | inetha lokuvimba amaqabunga | Ch 7. |
+| gully (erosion) | umsele omkhulu wokuguguleka (donga) | Ch 7. Avoid bare *udonga* here — it also means "wall". (check) |
+| groundwater / water table | amanzi angaphansi komhlaba / izinga lamanzi angaphansi komhlaba | Ch 7. |
+| watercourse | umzila wamanzi (watercourse) | Ch 7. |
+| wetland | ixhaphozi (pl. amaxhaphozi) | Ch 7. |
+| General Authorisation (National Water Act) | i-General Authorisation (imvume ejwayelekile) | Ch 7. Keep the English legal name. (check) |
+| licence / permit | ilayisense / imvume (permit) | Ch 7. |
+| bedrock | idwala eliqinile elingaphansi (bedrock) | Ch 7. (check) |
+| drippers (drip emitters) | izinconsi (drippers) | Ch 7. (check) |
+| filter | isihlungi | Ch 7. |
+| impact sprinkler | isifafazi esijikelezayo esishaya (impact sprinkler) | Ch 7. Descriptive. (check) |
+| grease trap | isicupho samafutha (grease trap) | Ch 7. (check) |
+| nappies | amanabukeni | Ch 7. |
+| bilharzia (schistosomiasis) | i-bilharzia (isichenene) | Ch 7. (check *isichenene*) |
+| mosquito | umiyane (pl. imiyane) | Ch 7. |
+| dragonfly | ujekamanzi (pl. ojekamanzi) | Ch 7. (check) |
+| bird droppings | indle yezinyoni | Ch 7. |
 
 ## 5. Beds, ground preparation and planting
 
@@ -198,6 +223,23 @@
 | trellis / plant support | izisekelo | In app: calendar. |
 | shade cloth | indwangu yomthunzi | In app: calendar. |
 | tunnel / greenhouse | ithanele / indlu yezitshalo | In app: zu.ts. |
+| pit bed (round pit filled with organic matter) | umbhede womgodi (pit bed) | Ch 7. Distinct from a sunken bed (*umbhede ocwile phansi*), which Ch 7 treats separately. (check) |
+| banana circle | indilinga kabhanana (banana circle) | Ch 7. (check) |
+| trench bed | umbhede womsele (trench bed) | Ch 7. (check) |
+| sheet mulching / lasagne bed | ukumboza umhlabathi ngezingqimba (sheet mulching) | Ch 7. (check) |
+| soil solarisation | ukushisisa umhlabathi ngelanga (solarisation) | Ch 7. (check) |
+| tarping (occultation) | ukumboza nge-tarp (tarping) | Ch 7. *i-tarp* / *i-tarpaulin* loan. (check) |
+| stale seedbed | umbhede ohlanzekile olindile (stale seedbed) | Ch 7. (check) |
+| plough pan | i-plough pan (ungqimba oluqinile ngaphansi kokulima) | Ch 7. (check) |
+| ripper / chisel plough / subsoiler | i-ripper / i-chisel plough / i-subsoiler | Ch 7. Loan words. |
+| two-wheel tractor / rotavator | ugandaganda wamasondo amabili / i-rotavator (isilimi esijikelezayo) | Ch 7. (check) |
+| animal tractor | i-animal tractor | Ch 7. See also *i-chicken tractor* in section 10. |
+| lifestyle audit | ukuhlola indlela ophila ngayo (lifestyle audit) | ch. 4. (check) |
+| broadfork | i-broadfork (imfologo ebanzi enezibambo ezimbili) | Loan word. ch. 4. |
+| vine cuttings (sweet potato) | izingcezu zemicu (vine cuttings) | ch. 4. (check) |
+| ridge (planting ridge) | umgqa ophakanyisiwe (ridge) | ch. 4. (check) |
+| retail / wholesale price | intengo yokuthengisa ngqo (retail) / intengo yokuthengisa ngobuningi (wholesale) | ch. 4. (check) |
+| hybrid (seed or breed) | i-hybrid (pl. ama-hybrid) | Loan word. ch. 4, 5. |
 
 ## 6. Soil and soil building
 
@@ -243,6 +285,17 @@
 | worm castings | ama-castings (indle yemisundu) | Course uses loan *ama-castings*. (check) |
 | worm leachate | i-leachate (uketshezi oluphuma emgqonyeni wemisundu) | In app: course. Not the same as brewed worm tea (*itiye lemisundu*). |
 | biochar | i-biochar | Loan word. In app: zu.ts. |
+| soil profile | isimo sezingqimba zomhlabathi (soil profile) | Coined for ch. 8. (check) |
+| soil texture | uhlobo lwezinhlayiya zomhlabathi (soil texture) | Coined for ch. 8. Keep apart from *ukwakheka komhlabathi* (structure). (check) |
+| taproot | i-taproot (impande eyodwa ewugqinsi ehlela ngqo phansi) | Loan word, explained on first use. Ch. 8. (check) |
+| micro-organisms | ama-micro-organism (izidalwa ezincane kakhulu ukuba zibonwe ngeso) | Loan word. Ch. 8, 9. (check) |
+| feel test / ribbon test | ukuhlola ngokuthinta (ukuhlola ngeribhoni) | Ch. 8. (check) |
+| agricultural lime | umcako wezolimo | Ch. 8. (check) |
+| sheet mulching | ukumboza ngamaphepha (sheet mulching) | Ch. 8. (check) |
+| mulch bank | indawo yokutshala i-mulch (mulch bank) | Ch. 8. (check) |
+| hot compost heap | inqwaba ye-compost eshisayo | Ch. 8. |
+| composting worms | imisundu ye-compost (composting worms) | Ch. 8. Species names kept as loans: *ama-red wiggler*, *i-African nightcrawler*. (check) |
+| worm bedding / worm cocoons | umbhede wemisundu / amaqanda emisundu (cocoons) | Ch. 8. (check) |
 
 ## 7. Trees and the food forest
 
@@ -276,6 +329,25 @@
 | fence | uthango | In app: zu.ts. |
 | fodder / animal feed | ukudla kwemfuyo | In app: zu.ts. |
 | grazing / pasture | amadlelo | In app: zu.ts, course. |
+| perennial (plant) | isitshalo esihlala iminyaka eminingi (perennial) | Descriptive. Explain on first use. (check) |
+| annual (plant) | isitshalo sonyaka owodwa | Descriptive: lives one season. (check) |
+| deciduous / evergreen | -hlubula amaqabunga ebusika / -hlala luhlaza | Descriptive. Chapter 6. (check) |
+| chop and drop | ukusika uyeke phansi (chop and drop) | Descriptive. Explain on first use. (check) |
+| rootstock | isisekelo sezimpande (rootstock) | Chapter 6. (check) |
+| graft union | indawo yokuxhumela (graft union) | Chapter 6. (check) |
+| inoculant (legume) | i-inoculant (impuphu yamagciwane abopha i-nitrogen) | Loan word. Explain on first use. (check) |
+| root ball | isigaxa sezimpande (root ball) | Chapter 6. (check) |
+| subsoil | umhlabathi ongaphansi (subsoil) | Chapter 6. (check) |
+| biomass | i-biomass (amaqabunga namagatsha) | Loan word. (check) |
+| chill requirement | isidingo samakhaza (chill requirement) | Chapter 6. (check) |
+| frost pocket | umgodi wesithwathwa (frost pocket) | Chapter 6. (check) |
+| alley cropping | ukutshala phakathi kwemigqa yezihlahla (alley cropping) | Chapter 6. (check) |
+| shelter belt | ibhande lezihlahla lokuvikela (shelter belt) | Chapter 6. (check) |
+| plant nursery | inkulisa (nursery) | Chapter 6. (check) |
+| veld / natural grassland | idlelo lemvelo (veld) / utshani bemvelo (grassland) | Chapter 6. (check) |
+| wetland | ixhaphozi (pl. amaxhaphozi) | |
+| protected tree / permit | isihlahla esivikelwe ngumthetho / imvume (permit) | Chapter 6. (check) |
+| Chapter 6 isiZulu tree names | umunga (*Vachellia karroo*), umtholo (*Senegalia caffra*), umkhamba (*V. sieberiana*), umgwenya, umthoma, umbhaba, umphafa, umqokolo, umthunduluka, umneyi, isibhaha, umhlonyane, inkalane, imbuya, icishamlilo, inkomfe, iselwa, utshwala-bezinyoni (*Leonotis*), uchwasha, umdakane, iphahla, umklele, umshekisane, umsiphane, umtshitshi, umnqumo wasendle, umsehle, umsonti, umnyezane, amangwe, isiqalaba (king protea), isitshalo seqanda (brinjal) | Used with the English common name in brackets. All (check) — especially umtholo, umkhamba, isiqalaba, isitshalo seqanda. |
 | veld / the bush | endle | ch. 1 ("walk the veld"). (check) |
 | Kei apple | umqokolo (*Dovyalis caffra*) | ch. 1. (check) |
 | aloe | inhlaba (pl. izinhlaba) | ch. 1. (check) |
@@ -300,6 +372,23 @@
 | disease / fungal disease | isifo / izifo zesikhunta | In app: zu.ts, calendar. |
 | bacteria / germs | amagciwane | In app: course. |
 | fungi | isikhunta | In app: course. |
+| ecology | i-ecology (isayensi yemvelo) | Loan word, explained on first use. Ch. 9. (check) |
+| food chain | uchungechunge lokudla (food chain) | Ch. 9. (check) |
+| ecological pyramid | iphiramidi yempilo | Ch. 9. (check) |
+| producers / consumers / decomposers | abakhiqizi / abadli / ababolisi | Ch. 9. (check) |
+| ecosystem services | izinsizakalo zemvelo (ecosystem services) | Ch. 9. (check) |
+| biosphere | i-biosphere (yonke impilo esemhlabeni) | Loan word. Ch. 9. (check) |
+| grassland (biome) | amadlelo otshani bemvelo (grassland) | Ch. 9. Plural form of *utshani bemvelo* above. (check) |
+| savanna / fynbos / shrubland | i-savanna (bushveld) / i-fynbos / izihlahlana (shrubland) | Loan words. Ch. 9. (check) |
+| bush encroachment | ukuminyana kwezihlahla zameva (bush encroachment) | Coined for ch. 9. (check) |
+| niche | i-niche (umsebenzi odinga ukwenziwa) | Loan word. Ch. 9. (check) |
+| polyculture | ukutshala izinhlobo eziningi ndawonye (polyculture) | Coined for ch. 9. (check) |
+| owl / barn owl / owl box | isikhova (pl. izikhova) / ibhokisi lezikhova | Ch. 9. |
+| dragonfly | uzekamanzi (pl. ozekamanzi) | Ch. 9. (check) |
+| toad / tadpole / mosquito | iselesele / ishobana / umiyane | Ch. 9. (check) |
+| rats and mice / rat poison | amagundane nezimpuku / ushevu wamagundane | Ch. 9. |
+| snake / scorpion / eagle / jackal | inyoka / ufezela / ukhozi / impungushe | Ch. 9. |
+| black wattle | uwatela (black wattle) | Ch. 9. Listed invader. (check) |
 
 ## 9. Natural pest control
 
@@ -361,6 +450,33 @@
 | swarm / colony | iqoqo lezinyosi / ikoloni | In app: course. |
 | animal health adviser / vet | umeluleki wezempilo yezilwane / udokotela wezilwane | Course uses *umeluleki wezilwane*. |
 | internal worms (parasites) | izikelemu / izimuncagazi | In app: course. |
+| omnivore | isilwane esidla konke (omnivore) | ch. 5. |
+| gizzard | inhlonhlo (gizzard) | ch. 5. (check) |
+| grit (for poultry) | amatshana (grit) | ch. 5. (check) |
+| laying hen / rooster / chick | isikhukhukazi esizalayo / iqhude / ichwane (pl. amachwane) | ch. 5. |
+| roost / perch | insika yokulala (roost) | ch. 5. (check) |
+| nest box | ibhokisi lesidleke | ch. 5. |
+| dust bath | ukugeza othulini | ch. 5. (check) |
+| predators (of livestock) | izilwane ezizingelayo | ch. 5. Not the same as predators of pests (*izilwane ezidla izinambuzane*). |
+| mongoose / genet / wild cat | uchakide / insimba / impaka | ch. 5. Not *ingwe* (leopard). (check) |
+| pecking order | ukuthi ngubani ophezulu (pecking order) | ch. 5. (check) |
+| Newcastle disease | isifo i-Newcastle | ch. 5. |
+| to vaccinate / vaccine | ukugonya / umgomo (pl. imigomo) | ch. 5. |
+| biosecurity | ukuvikela izifo (biosecurity) | ch. 5. Explain on first use. (check) |
+| state veterinarian | udokotela wezilwane kahulumeni (state veterinarian) | ch. 5. |
+| animal health technician | umsizi wezempilo yezilwane (animal health technician) | ch. 5. (check) |
+| swill | i-swill | Loan word. ch. 5: kitchen/hotel food waste fed to pigs. |
+| African swine fever | i-African swine fever (umkhuhlane wezingulube wase-Afrika) | ch. 5. (check) |
+| electric fence | uthango lukagesi | ch. 5. |
+| Muscovy duck / mallard | i-Muscovy / i-mallard | Loan words. ch. 5. |
+| beeswax | ingcina (wax) | ch. 5. (check) |
+| honeycomb | ikhekheba (pl. amakhekheba) | ch. 5. (check) |
+| sting / the sting (barb) | ukutinyelwa / udosi | ch. 5. (check *udosi*) |
+| anaphylaxis | i-anaphylaxis (ukungezwani okukhulu komzimba) | ch. 5. Explain on first use. |
+| smoker (beekeeping) | isishisi sentuthu (smoker) | ch. 5. (check) |
+| varroa mite / American foulbrood | i-varroa mite / i-American foulbrood (AFB) | Loan words. ch. 5. |
+| hay / silage | utshani obomisiwe (hay) / i-silage | ch. 5. (check) |
+| cut-and-carry fodder | ukudla okusikwayo kuthwalelwe izilwane (cut-and-carry) | ch. 5. (check) |
 
 ## 11. Home zone and appropriate technology
 
@@ -420,6 +536,13 @@
 | lemon | ulamula | In app: course. |
 | pawpaw | uphopho | |
 | peach | ipentshisi | |
+| cassava | umdumbula (cassava) | ch. 4. (check) |
+| pearl millet | unyawothi (pearl millet) | ch. 4. (check) |
+| jugo bean / Bambara groundnut | izindlubu (jugo bean) | ch. 4. |
+| wheat / barley / oats | ukolweni / ibhali / i-oats | ch. 4. (check *ibhali*) |
+| watermelon / gourd | ikhabe / iselwa | ch. 4. |
+| turnip | itheniphu | ch. 5. (check) |
+| lucerne | i-lucerne | Loan word. ch. 5. |
 
 ## 13. Tools
 
