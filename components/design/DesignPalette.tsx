@@ -38,21 +38,31 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import {
+  BedDouble,
   Bird,
+  Cable,
+  Check,
   ChevronDown,
   ChevronRight,
+  Droplet,
   Droplets,
   Eye,
   EyeOff,
   Fence,
+  Footprints,
+  HelpCircle,
   House,
   Layers3,
+  Leaf,
   Map,
   Mountain,
+  Paintbrush,
+  Pencil,
   Pickaxe,
   Route,
   Satellite,
   Shapes,
+  ShowerHead,
   Sprout,
   Square,
   SquareCheckBig,
@@ -60,6 +70,10 @@ import {
   Sun,
   Tag,
   Warehouse,
+  Waves,
+  Wind,
+  X,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -316,15 +330,35 @@ const DARK = '#0B120B';
 // per-step one. "Show all" always reaches the complete catalogue this list is drawn from.
 const SIMPLE_STARTER_ELEMENT_IDS = new Set(['jojo_1000', 'tap_point', 'raised_bed', 'veg_bed', 'tree_other', 'chicken_coop']);
 
-const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string }> = [
-  { id: 'swale', labelKey: 'designPaletteLineSwale', icon: '〰️' },
-  { id: 'fence', labelKey: 'designPaletteLineFence', icon: '🚧' },
-  { id: 'path', labelKey: 'designPaletteLinePath', icon: '🥾' },
-  { id: 'pipe', labelKey: 'designPaletteLinePipe', icon: '🧵' },
-  { id: 'drip', labelKey: 'designPaletteLineDrip', icon: '💧' },
-  { id: 'greywater', labelKey: 'designPaletteLineGreywater', icon: '🚿' },
-  { id: 'windbreak', labelKey: 'designPaletteLineWindbreak', icon: '🌬️' },
+const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; Icon: LucideIcon }> = [
+  { id: 'swale', labelKey: 'designPaletteLineSwale', Icon: Waves },
+  { id: 'fence', labelKey: 'designPaletteLineFence', Icon: Fence },
+  { id: 'path', labelKey: 'designPaletteLinePath', Icon: Footprints },
+  { id: 'pipe', labelKey: 'designPaletteLinePipe', Icon: Cable },
+  { id: 'drip', labelKey: 'designPaletteLineDrip', Icon: Droplet },
+  { id: 'greywater', labelKey: 'designPaletteLineGreywater', Icon: ShowerHead },
+  { id: 'windbreak', labelKey: 'designPaletteLineWindbreak', Icon: Wind },
 ];
+
+// The palette chip and hint tooltip fall back to this when an element has no `art` (only
+// tree_guava today — see lib/design-elements.ts). Reuses the exact category → icon pairing
+// LAYER_TOGGLES already draws on below, so a category never reads as two different symbols on
+// the same screen. `def.icon` (the emoji field) stays untouched: DesignCanvas.tsx's placed-item
+// symbol and DesignGlossy.tsx/DesignPrint.tsx's printed-sheet glyphs draw it straight onto the
+// map/plan sheet, which is map-canvas artwork, not app chrome.
+const CATEGORY_ICON: Record<DesignElementDef['category'], LucideIcon> = {
+  water: Droplets,
+  earthworks: Pickaxe,
+  structure: Warehouse,
+  growing: Sprout,
+  animal: Bird,
+  access: Route,
+};
+
+function CategoryFallbackIcon({ category, size }: { category: DesignElementDef['category']; size: number }) {
+  const Icon = CATEGORY_ICON[category];
+  return <Icon size={size} aria-hidden />;
+}
 
 // Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
 // draw tool to record a real built/ground feature. Order = the plot itself first (boundary),
@@ -1466,7 +1500,7 @@ export default function DesignPalette({
                   whiteSpace: 'nowrap',
                 }}
               >
-                <span aria-hidden>🌱</span>
+                <Sprout size={13} aria-hidden />
                 <span>{placeSpeciesId ? 'Species picked' : 'Pick species'}</span>
               </button>
               {speciesPickerOpen && speciesAnchor && typeof document !== 'undefined' && createPortal(
@@ -2028,7 +2062,7 @@ export default function DesignPalette({
                     One slider drives both: an icon and its name read as a single mark. */}
                 {textScaleControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '6px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🔍 {t('designPaletteSymbolSize')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><ZoomIn size={13} aria-hidden />{t('designPaletteSymbolSize')}</span>
                     <input
                       type="range"
                       min={MIN_MAP_TEXT_SCALE}
@@ -2052,7 +2086,7 @@ export default function DesignPalette({
                     the drawing be over the land. */}
                 {areaFillControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, padding: '6px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🖌️ {t('designPaletteAreaFill')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><Paintbrush size={13} aria-hidden />{t('designPaletteAreaFill')}</span>
                     <span style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', border: `1px solid ${GREEN}`, flexShrink: 0 }}>
                       {(['hatch', 'tint'] as AreaFillStyle[]).map((style) => {
                         const on = areaFillControl.value.style === style;
@@ -2095,7 +2129,7 @@ export default function DesignPalette({
                     is a wash you want out of the way, a canopy is a thing you are counting. */}
                 {areaFillControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '2px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🌿 {t('designPalettePlantFill')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><Leaf size={13} aria-hidden />{t('designPalettePlantFill')}</span>
                     <input
                       type="range"
                       min={MIN_AREA_FILL_OPACITY}
@@ -2339,7 +2373,7 @@ export default function DesignPalette({
                 ? { width: artSize, height: artSize, objectFit: 'contain' }
                 : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
-              <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+              <CategoryFallbackIcon category={def.category} size={cardsUi ? 30 : guided ? 16 : 13} />
             )}
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || (desktopAside && workspaceMode !== 'tray') ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
@@ -2436,7 +2470,7 @@ export default function DesignPalette({
               flexShrink: 0, cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{lk.icon}</span>
+            <lk.Icon size={guided ? 16 : 13} aria-hidden />
             <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
           </button>
         );
@@ -2647,16 +2681,16 @@ export default function DesignPalette({
               <button
                 type="button"
                 onClick={() => setWindPicking((v) => !v)}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✏️ {t('designPaletteChange')}
+                <Pencil size={13} aria-hidden /> {t('designPaletteChange')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✕ {t('designPaletteClear')}
+                <X size={13} aria-hidden /> {t('designPaletteClear')}
               </button>
             </div>
           </>
@@ -2677,24 +2711,24 @@ export default function DesignPalette({
                     windControl.onSet({ prevailingFrom: label, recordedAt: new Date().toISOString() });
                     setWindPicking(false);
                   }}
-                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: guided ? 12.5 : 11.5 }}
+                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: guided ? 12.5 : 11.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
                 >
-                  ✅ {t('designPaletteConfirm')}
+                  <Check size={13} aria-hidden /> {t('designPaletteConfirm')}
                 </button>
               )}
               <button
                 type="button"
                 onClick={() => setWindPicking((v) => !v)}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✏️ {t(windControl.regional ? 'designPaletteChange' : 'designPaletteSetDirection')}
+                <Pencil size={13} aria-hidden /> {t(windControl.regional ? 'designPaletteChange' : 'designPaletteSetDirection')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                🤷 {t('designPaletteNotSure')}
+                <HelpCircle size={13} aria-hidden /> {t('designPaletteNotSure')}
               </button>
             </div>
           </>
@@ -2826,7 +2860,7 @@ export default function DesignPalette({
                 fontSize: guided ? 13.5 : 12,
               }}
             >
-              <span>{lk.icon}</span>
+              <lk.Icon size={16} aria-hidden />
               <span>{t(lk.labelKey)}</span>
             </button>
           );
@@ -2883,8 +2917,13 @@ export default function DesignPalette({
         </button>
         {hintDef ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <div>
-              {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+              {hintDef.art ? (
+                <img src={hintDef.art} alt="" aria-hidden style={{ width: 18, height: 18, objectFit: 'contain', flexShrink: 0, marginTop: 1 }} />
+              ) : (
+                <CategoryFallbackIcon category={hintDef.category} size={15} />
+              )}
+              <span><strong>{hintDef.name}:</strong> {hintDef.tip}</span>
             </div>
             <LessonLink id={`element:${hintDef.id}`} label={t('designPaletteLearnAbout')} />
           </div>
@@ -2963,8 +3002,8 @@ export default function DesignPalette({
     );
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, padding: '8px 0', borderBottom: '1px solid rgba(11,18,11,0.14)', flexShrink: 0 }}>
-        <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
-          🛏️ {t('designPaletteBedBlock')}
+        <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          <BedDouble size={13} aria-hidden /> {t('designPaletteBedBlock')}
         </span>
         {field(t('designPaletteBedLength'), spec.bedLengthM, 'bedLengthM', { step: 0.5, min: 0.2, max: 200 })}
         {field(t('designPaletteBedWidth'), spec.bedWidthM, 'bedWidthM', { step: 0.1, min: 0.2, max: 200 })}
