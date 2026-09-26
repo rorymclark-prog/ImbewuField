@@ -32,8 +32,12 @@ interface NavDrawerProps {
 // (canSeeNavLink / canSeeWorkspaceLink) still apply on top of this in both modes. Matched by the
 // exact href string, not the base path — '/farmer' (Farm map) and '/farmer?openSurvey=1' (Garden
 // Survey, hidden in Simple) share a base path but are different rows.
+// '/calendar' (Planting Calendar) is deliberately left out: it duplicates '/facilitator/crops'
+// (Bed-by-Bed Crop Plan) as a second nav door into crop planning, which a farmer new to
+// smartphones does not need — it stays a real row in Farm Tools for All tools and reachable by
+// direct link (app/calendar/page.tsx itself is untouched).
 const SIMPLE_NAV_HREFS = new Set([
-  '/home', '/farmer', '/records', '/facilitator/crops', '/calendar',
+  '/home', '/farmer', '/records', '/facilitator/crops',
   '/journal', '/student', '/contact', '/design', '/account',
 ]);
 

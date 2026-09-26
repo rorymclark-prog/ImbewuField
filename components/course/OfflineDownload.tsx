@@ -9,7 +9,8 @@ import {
   CACHE_CHANGED_EVENT,
 } from '@/lib/offline-cache';
 import { useLanguage } from '@/lib/i18n-context';
-import { useAppLevel } from '@/lib/app-level';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
 
 /**
  * Take a module — or the whole course — home.
@@ -42,6 +43,10 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // below is a facilitator/funder tool for a projector, not a decision a farmer on metered data
   // needs to make; `quality` still defaults to 'standard' either way.
   const simple = useAppLevel() === 'simple';
+  // Truly staff-only (mentor/ngo/funder/admin), not a Simple/All tools density choice — a
+  // student or farmer who switches to All tools must still never see this, only its own default.
+  const { navigationRole } = useRoleNavigation();
+  const isStaff = isStaffRole(navigationRole);
   const [packs, setPacks] = useState<OfflinePack[]>([]);
   const [phase, setPhase] = useState<Phase>('checking');
   const [doneFiles, setDoneFiles] = useState(0);
@@ -229,7 +234,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           higher option says who it is for — a farmer scanning this should be able to tell in one
           read that it is not the one for them. Hidden entirely when the module has no
           higher-quality files, rather than offering a choice that changes nothing. */}
-      {hasHigher && !busy && phase !== 'done' && !simple && (
+      {hasHigher && !busy && phase !== 'done' && !simple && isStaff && (
         <div role="group" aria-label={t('offlineDownloadQuality')} className="flex flex-wrap items-center gap-1.5">
           {([
             { key: 'standard' as PackQuality, name: t('offlineQualityStandard'), note: t('offlineQualityStandardNote'), size: standardBytes },
