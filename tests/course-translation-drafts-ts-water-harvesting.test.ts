@@ -4,12 +4,41 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { XITSONGA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ts-food-forest.ts';
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/course-translation-drafts-ts.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
+
+test('Food Forest Xitsonga draft keeps species caution and crop care exact English', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'food-forest');
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons[0];
+  const draftLesson = XITSONGA_FOOD_FOREST_DRAFT.lessons[0];
+  assert.equal(draftLesson.id, sourceLesson.id);
+  assert.equal(draftLesson.title.sourceEnglish, sourceLesson.title);
+  assert.equal(draftLesson.title.reviewStatus, 'hold');
+  assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
+  assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
+  assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
+  assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
+  const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  assert.equal(shown.status, 'draft');
+  assert.equal(shown.content.title, sourceLesson.title);
+  assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
+  assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+  const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
+  const shownParagraphs: string[] = shown.content.body.split('\n\n');
+  assert.equal(shownParagraphs.length, sourceParagraphs.length);
+  for (const [index, paragraph] of sourceParagraphs.entries()) {
+    if ([0, 1, 7, 8, 11].includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
+    else assert.equal(shownParagraphs[index], paragraph);
+  }
+  assert.equal(resolveLearnerLessonPresentation({ ...sourceLesson, body: `${sourceLesson.body} Changed.` }, 'ts').status,
+    'english-fallback');
+});
 
 test('Xitsonga Market drafts change only descriptive lesson text and keep decisions and quizzes in English', () => {
   const market = COURSE_MODULES.find(module => module.id === 'market-community');

@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'd3ccaece', changes: [
+    'Food Forest L1 and Seeds L1 show short Xitsonga and Tshivenda drafts.',
+  ], tour: [
+    { title: 'Check the Study drafts', where: 'Study → Food Forest and Seeds', href: '/student',
+      detail: 'Choose Xitsonga for Food Forest or Tshivenda for Seeds. Check the English source beside each unreviewed draft; slides and narration remain English.' },
+  ] },
   { when: '26 September 2026', sha: '0b6ac2c3', changes: [
     'Market lessons 1 and 3 show short Xitsonga and Tshivenda drafts beside English.',
   ], tour: [

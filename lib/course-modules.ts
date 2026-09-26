@@ -771,7 +771,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "seeds-sovereignty-l1",
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
-        infographicAlt: "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
+        infographicAlt: "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
         title: "Why Seed Saving Matters",
         body: "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
         keyPoints: [
