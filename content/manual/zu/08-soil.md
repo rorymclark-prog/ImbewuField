@@ -155,10 +155,10 @@ Izitshalo zokuvundisa umhlabathi:
 1. Hlwanyela izitshalo zokuvundisa umhlabathi ziminyene embhedeni ongawusebenzisi, noma phakathi kwezitshalo.
 2. Ziyeke zikhule zize ziqale ukuqhakaza. Yilapho zinamaqabunga amaningi ne-nitrogen eningi.
 3. Zisike ngaphambi kokuba zithele imbewu. Zisike zibe yizingcezu ezincane ngesipede noma ngesikela sotshani (slasher).
-4. Noma uzishiye phezulu njenge-mulch (**sika uwise**, chop and drop), noma uzimbele kancane ku-10 kuya ku-15 cm womhlabathi ongaphezulu.
+4. Noma uzishiye phezulu njenge-mulch (**ukusika uyeke phansi**, chop and drop), noma uzimbele kancane ku-10 kuya ku-15 cm womhlabathi ongaphezulu.
 5. Linda amasonto ama-3 kuya kwama-4 ngaphambi kokuhlwanyela noma ukutshala embhedeni. Lokhu kunika izinto eziluhlaza isikhathi sokubola. Uma kubanda, linda isikhathi eside kancane.
 
-> **Icebo:** Uma utshala i-legume ensimini okokuqala, thenga **i-rhizobium inoculant** efanele (impushana yamagciwane ezimpande awusizo) kumthengisi wakho wembewu bese uyixuba nembewu ngaphambi kokuhlwanyela. Isitshalo sizokwenza i-nitrogen eningi.
+> **Icebiso:** Uma utshala i-legume ensimini okokuqala, thenga **i-rhizobium inoculant** efanele (impuphu yamagciwane abopha i-nitrogen ezimpandeni) kumthengisi wakho wembewu bese uyixuba nembewu ngaphambi kokuhlwanyela. Isitshalo sizokwenza i-nitrogen eningi.
 
 ### Izitshalo zokuvundisa umhlabathi zaseNingizimu ne-Afrika
 
@@ -234,7 +234,7 @@ Umhlabathi, imisundu nezitshalo konke kuyayithanda i-mulch. I-mulch:
 3. Gcina i-mulch iqhelile cishe ngo-5 cm eziqwini zemifino futhi cishe ngo-10 cm eziqwini zezihlahla. I-mulch enqwabelene eziqwini izigcina zimanzi futhi ingenza zibole.
 4. Engeza i-mulch njengoba ibola.
 
-> **Icebo:** I-mulch eyomile yokhuni njengamazenge ezihlahla noma i-sawdust (izinhlayiya zokhuni ezisaha) isebenzisa i-nitrogen ephezulu emhlabathini uma ibola. Yisebenzise ezindleleni nasezihlahleni kunasezithombweni zemifino, noma ufake ungqimba oluncane lomquba noma i-compost ngaphansi kwayo.
+> **Icebiso:** I-mulch eyomile yokhuni njengamazenge ezihlahla noma i-sawdust (izinhlayiya zokhuni ezisaha) isebenzisa i-nitrogen ephezulu emhlabathini uma ibola. Yisebenzise ezindleleni nasezihlahleni kunasezithombweni zemifino, noma ufake ungqimba oluncane lomquba noma i-compost ngaphansi kwayo.
 
 ### Ukumboza ngamaphepha (sheet mulching)
 
@@ -356,11 +356,11 @@ Ungafaka emanzini imikhiqizo yama-micro-organism asebenzayo (effective micro-org
 
 Ungasebenzisi i-compost engakalungi. I-compost ebole ngengxenye ithatha i-nitrogen emhlabathini ukuze iqedele ukubola, futhi izitshalo zakho zizophenduka zibe phuzi zikhule kancane.
 
-Uma ufaka izikelemu ezibomvu ze-compost (red wigglers, bheka ngezansi) enqwabeni esipholayo, ziqedela umsebenzi futhi zenze i-compost ibe nomvundo omningi nakakhulu. Zifake kuphela uma inqwaba isipholile, ngaphandle kwalokho ukushisa kuzozibulala.
+Uma ufaka imisundu ye-compost ebizwa ngokuthi ama-red wiggler (bheka ngezansi) enqwabeni esipholayo, iqedela umsebenzi futhi yenze i-compost ibe nomvundo omningi nakakhulu. Yifake kuphela uma inqwaba isipholile, ngaphandle kwalokho ukushisa kuzoyibulala.
 
 Sebenzisa i-compost esilungile phakathi nezinyanga ezimbalwa. Yigcine imbozwe, ukuze imvula ingageza izakhamzimba futhi ilanga lingayomisi.
 
-## Indlela 5: Imisundu nokufuya izikelemu
+## Indlela 5: Imisundu nokufuya imisundu
 
 > "Kungangabazeka ukuthi zikhona yini ezinye izilwane eziningi eziye zadlala indima ebaluleke kangaka emlandweni womhlaba njengalezi zidalwa eziphansi." UCharles Darwin, ebhala ngemisundu ngo-1881.
 
@@ -370,76 +370,76 @@ Imisundu (earthworms) ingabasizi abahle kakhulu engadini. Iyakwazi:
 
 - ukudonsela amaqabunga afile ne-mulch ngaphansi emhlabathini
 - ukumba imihubhe engenisa umoya namanzi emhlabathini futhi isize izimpande zikhule zijule
-- ukudla umhlabathi nezinto eziphilayo ezibolayo, ishiye **indle yezikelemu** (castings). Indle yezikelemu ibopha umhlabathi ube yizigaxana ezincane eziyisibonakaliso somhlabathi ophilile
+- ukudla umhlabathi nezinto eziphilayo ezibolayo, ishiye **ama-castings** (indle yemisundu). Ama-castings abopha umhlabathi ube yizigaxana ezincane eziyisibonakaliso somhlabathi ophilile
 - ukwenza izakhamzimba zibe lula ukuthi zisetshenziswe yizitshalo.
 
 Imisundu eminingi esipedeni esisodwa somhlabathi iyisibonakaliso sokuthi umhlabathi wakho uphilile. Yikhuthaze ngokugcina umhlabathi umbozwe yi-mulch, ngokufaka i-compost, ngokumba kancane nangokungasebenzisi ushevu.
 
-### Izikelemu ze-compost
+### Imisundu ye-compost
 
-Epulazini lezikelemu (worm farm) udinga **izikelemu ze-compost** (composting worms) ezikhethekile. Lezi zikelemu zihlala emaqabungeni abolayo, emqubeni nase-compost, hhayi ekujuleni komhlabathi. Zidla kakhulu, zizala ngokushesha futhi zijabule ebhokisini eliminyene.
+Epulazini lemisundu (worm farm) udinga **imisundu ye-compost** (composting worms) ekhethekile. Le misundu ihlala emaqabungeni abolayo, emqubeni nase-compost, hhayi ekujuleni komhlabathi. Idla kakhulu, izala ngokushesha futhi ijabule ebhokisini eliminyene.
 
-- **I-red wiggler** (*Eisenia fetida*) yisikelemu se-compost esivame kakhulu eNingizimu Afrika. Sibekezelela kangcono amakhaza nokushisa.
+- **I-red wiggler** (*Eisenia fetida*) ngumsundu we-compost ovame kakhulu eNingizimu Afrika. Ubekezelela kangcono amakhaza nokushisa.
 - **I-African nightcrawler** (*Eudrilus eugeniae*) inkulu futhi isebenza ngokushesha ezindaweni ezifudumele, kodwa ayenzi kahle ebusika obubandayo.
 - **I-Indian blue worm** (*Perionyx excavatus*) nayo isetshenziswa ezindaweni ezifudumele.
 
-Thenga izikelemu ze-compost epulazini lezikelemu, e-nursery noma kumlimi wemvelo (organic). **Ungasebenzisi imisundu oyimbe engadini yakho.** Imisundu yasengadini ihlala emhlabathini futhi ngeke iphile noma izale kahle epulazini lezikelemu.
+Thenga imisundu ye-compost epulazini lemisundu, e-nursery noma kumlimi wemvelo (organic). **Ungasebenzisi imisundu oyimbe engadini yakho.** Imisundu yasengadini ihlala emhlabathini futhi ngeke iphile noma izale kahle epulazini lemisundu.
 
-**I-vermicomposting** kusho ukusebenzisa izikelemu ukuguqula izinsalela zezinto eziphilayo zibe yi-compost. Ukufuya izikelemu kuthandwa abalimi abancane nabalimi bemvelo, futhi abanye abalimi bathengisa izikelemu, indle yezikelemu noketshezi lwezikelemu.
+**I-vermicomposting** kusho ukusebenzisa imisundu ukuguqula izinsalela zezinto eziphilayo zibe yi-compost. Ukufuya imisundu kuthandwa abalimi abancane nabalimi bemvelo, futhi abanye abalimi bathengisa imisundu, ama-castings noketshezi lwemisundu.
 
-### Okutholayo epulazini lezikelemu
+### Okutholayo epulazini lemisundu
 
-- **Indle yezikelemu** (vermicompost). I-compost ecolekile, emnyama, enomvundo omningi egcwele izakhamzimba nezidalwa zomhlabathi. Indle yezikelemu inezakhamzimba eziningi ezitholakala kalula ezitshalweni kunomhlabathi noma izinsalela eyavela kuzo. Yisebenzise phezulu emhlabathini ezungeze izitshalo, uyixube nomhlabathi wezithombo, noma ufake isandla esisodwa emgodini ngamunye wokutshala.
-- **Uketshezi lwepulazi lezikelemu** (i-leachate). Abantu abaningi baluthi "umchamo wezikelemu" noma "itiye lezikelemu", kodwa empeleni angamanzi adlule epulazini athatha izakhamzimba endleni yezikelemu nasekudleni okubolayo. Kungumanyolo owuketshezi owusizo.
+- **Ama-castings** (indle yemisundu, vermicompost). I-compost ecolekile, emnyama, enomvundo omningi egcwele izakhamzimba nezidalwa zomhlabathi. Ama-castings anezakhamzimba eziningi ezitholakala kalula ezitshalweni kunomhlabathi noma izinsalela avela kuzo. Wasebenzise phezulu emhlabathini ozungeze izitshalo, uwaxube nomhlabathi wezithombo, noma ufake isandla esisodwa emgodini ngamunye wokutshala.
+- **I-leachate** (uketshezi oluphuma epulazini lemisundu). Abantu abaningi baluthi "umchamo wemisundu" noma "itiye lemisundu", kodwa empeleni angamanzi adlule epulazini athatha izakhamzimba kuma-castings nasekudleni okubolayo. Kungumanyolo owuketshezi owusizo.
 
-> **Icebo:** Hlambulula uketshezi lwepulazi lezikelemu ngamanzi angaba izingxenye ezingu-10, luze lubukeke njengetiye elibuthaka. Luthele emhlabathini ozungeze izitshalo. Uma uketshezi lunuka kabi noma lunuka ukubola, ipulazi lakho limanzi kakhulu. Lolo ketshezi lusebenzise enqwabeni ye-compost kuphela noma ezimbalini nasezihlahleni, hhayi emifinweni.
+> **Icebiso:** Hlambulula i-leachate ngamanzi angaba izingxenye ezingu-10, ize ibukeke njengetiye elibuthaka. Yithele emhlabathini ozungeze izitshalo. Uma i-leachate inuka kabi noma inuka ukubola, ipulazi lakho limanzi kakhulu. Leyo i-leachate yisebenzise enqwabeni ye-compost kuphela noma ezimbalini nasezihlahleni, hhayi emifinweni.
 
-### Izinhlobo zamapulazi ezikelemu
+### Izinhlobo zamapulazi emisundu
 
-Ipulazi lezikelemu liyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi lezikelemu, elivikelekile ezinkukhwini, ezinyonini, ezintuthwaneni nasezivukuzini. Sebenzisa lokho onakho.
+Ipulazi lemisundu liyikhaya nje eliphephile, elinomthunzi, eliphuma kahle amanzi lemisundu, elivikelekile ezinkukhwini, ezinyonini, ezintuthwaneni nasezivukuzini. Sebenzisa lokho onakho.
 
-- **Ubhavu omdala noma umkhombe wokuphuzisa.** Wuphakamise ngezitini, uphakame kancane ngakolunye uhlangothi, imbobo yokuphuma amanzi ibe ngasohlangothini oluphansi ukuze uketshezi luthele ebhakedeni. Faka ungqimba lwamatshe phansi, bese ubeka indwangu yomthunzi phezu kwamatshe. Faka umbhede wezikelemu nezikelemu. Mboza ngengubo endala noma ngesaka le-hessian nangocwecwe lukathayela ukuze kuvikeleke elangeni nasemvuleni.
+- **Ubhavu omdala noma umkhombe wokuphuzisa.** Wuphakamise ngezitini, uphakame kancane ngakolunye uhlangothi, imbobo yokuphuma amanzi ibe ngasohlangothini oluphansi ukuze uketshezi luthele ebhakedeni. Faka ungqimba lwamatshe phansi, bese ubeka indwangu yomthunzi phezu kwamatshe. Faka umbhede wemisundu nemisundu. Mboza ngengubo endala noma ngesaka le-hessian nangocwecwe lukathayela ukuze kuvikeleke elangeni nasemvuleni.
 - **Amakhreyithi noma iziqukathi ezibekwe phezu kwezinye.** Beka amakhreyithi epulasitiki amathathu, amabhakede noma amabhokisi alingana ngobukhulu phezu kwamanye. Lolu wuhlelo olulula kakhulu lokuvuna.
 - **Amathayi abekwe phezu kwamanye.** Beka amathayi phezu kwesisekelo esiqinile, njengesilabhu kakhonkolo noma ucwecwe lwensimbi phezu kwezitini, nendlela yokuthi uketshezi luphume. Wasebenzise njengamakhreyithi, futhi njalo ubeke isivalo phezulu. Amathayi amnyama ashisa kakhulu elangeni, ngakho wagcine emthunzini ophelele.
 
-### Okudingwa yizikelemu
+### Okudingwa yimisundu
 
-- **Umthunzi.** Izikelemu zifa ngokushesha elangeni eliqondile nasekushiseni. Ama-red wiggler enza kahle kakhulu phakathi kuka-15 no-25 °C cishe. Ngaphezu kuka-30 kuya ku-35 °C cishe ayafa. Uma kushisa, gcina ipulazi emthunzini omkhulu bese wengeza isaka elimanzi phezulu. Ezindaweni ezibandayo, hambisa ipulazi uliyise endaweni evikelekile ebusika.
-- **Umswakama.** Izikelemu ziphefumula ngesikhumba sazo, ngakho umbhede wazo kufanele uhlale umanzi, njengesipontshi esikhanyiwe. Kodwa zizominza uma umanzi kakhulu.
+- **Umthunzi.** Imisundu ifa ngokushesha elangeni eliqondile nasekushiseni. Ama-red wiggler enza kahle kakhulu phakathi kuka-15 no-25 °C cishe. Ngaphezu kuka-30 kuya ku-35 °C cishe ayafa. Uma kushisa, gcina ipulazi emthunzini omkhulu bese wengeza isaka elimanzi phezulu. Ezindaweni ezibandayo, hambisa ipulazi uliyise endaweni evikelekile ebusika.
+- **Umswakama.** Imisundu iphefumula ngesikhumba sayo, ngakho umbhede wayo kufanele uhlale umanzi, njengesipontshi esikhanyiwe. Kodwa izominza uma umanzi kakhulu.
 - **Umoya.** Yenza izimbobo zomoya ezinhlangothini nasesivalweni sepulazi.
-- **Ubumnyama.** Izikelemu zigwema ukukhanya. Gcina ipulazi limbozwe.
-- **Umbhede wezikelemu.** Ikhaya lokuhlala, njengekhadibhodi elidabuliwe, amaphephandaba, amaqabunga omile, utshani obomile nomquba obole kahle.
+- **Ubumnyama.** Imisundu igwema ukukhanya. Gcina ipulazi limbozwe.
+- **Umbhede wemisundu.** Ikhaya lokuhlala, njengekhadibhodi elidabuliwe, amaphephandaba, amaqabunga omile, utshani obomile nomquba obole kahle.
 - **Ukudla.** Izinsalela ezincane zasekhishini nezasengadini, ezifakwa njalo.
 - **Ukuphuma kwamanzi.** Izimbobo zokukhipha uketshezi olweqile.
 
-### Indlela yokwakha ipulazi lezikelemu elinezitezi
+### Indlela yokwakha ipulazi lemisundu elinezitezi
 
 1. Thola amakhreyithi epulasitiki amathathu, amabhokisi noma amabhakede alingana ngobukhulu, ajule cishe ngo-20 kuya ku-30 cm. Iziqukathi ezinombala omnyama zingcono.
 2. **Isiqukathi esingezansi** siqoqa uketshezi. Ungenzi izimbobo phansi kwaso. Uma ukwazi, faka umpompi omncane eduze nangaphansi, noma usibeke phezu kwesitsha.
-3. **Eziqukathini ezimbili ezingaphezulu**, bhoboza izimbobo eziningi ezincane (cishe u-5 mm) phansi, ukuze uketshezi lwehle futhi izikelemu zikwazi ukukhuphuka. Yenza izimbobo zomoya ezimbalwa ezincane eduze naphezulu ezinhlangothini.
+3. **Eziqukathini ezimbili ezingaphezulu**, bhoboza izimbobo eziningi ezincane (cishe u-5 mm) phansi, ukuze uketshezi lwehle futhi imisundu ikwazi ukukhuphuka. Yenza izimbobo zomoya ezimbalwa ezincane eduze naphezulu ezinhlangothini.
 4. Beka isitaki phezu kwezitini endaweni enomthunzi.
 5. Beka isiqukathi esingezansi phansi. Beka isiqukathi sokuqala sokusebenza phezu kwaso.
-6. Gcwalisa isiqukathi sokusebenza cishe izingxenye ezimbili kwezintathu **ngombhede wezikelemu**: ikhadibhodi noma amaphephandaba adabuliwe, amaqabunga omile notshani obomile obucwiliswe emanzini bakhanywa, kanye nomquba obole kahle nesandla esisodwa somhlabathi wasengadini noma i-compost. Kuxube kahle.
-7. Faka izikelemu zakho. Qala okungenani ngo-250 kuya ku-500 g wezikelemu (amakhulu ambalwa kuya cishe enkulungwaneni). Uma unesandla esisodwa kuphela, ipulazi lizothatha izinyanga eziningi ukuze liqale ukusebenza.
-8. Mboza umbhede wezikelemu ngesaka elimanzi, ikhadibhodi noma ungqimba oluwugqinsi lwamaphephandaba, bese uvala isivalo noma umboze ngendwangu yomthunzi ukuze uvimbe izinyoni nezinkukhu.
-9. Linda izinsuku ezimbalwa, bese uqala ukuzondla (bheka ngezansi).
-10. Uma isiqukathi sokusebenza sesigcwele indle yezikelemu emnyama, imvamisa ngemva kwezinyanga ezi-2 kuya kwezi-4, beka isiqukathi sesithathu phezulu. Faka umbhede omusha nokudla kuso. Kufanele sithinte indle yezikelemu engezansi.
-11. Emasontweni ambalwa alandelayo, izikelemu zizokhuphukela esiqukathini esisha zifuna ukudla.
-12. Khipha isiqukathi esingezansi, manje esesiyindle yezikelemu kakhulu. Cosha noma yiziphi izikelemu ozibonayo uzibuyisele. Sebenzisa indle yezikelemu engadini yakho.
+6. Gcwalisa isiqukathi sokusebenza cishe izingxenye ezimbili kwezintathu **ngombhede wemisundu**: ikhadibhodi noma amaphephandaba adabuliwe, amaqabunga omile notshani obomile obucwiliswe emanzini bakhanywa, kanye nomquba obole kahle nesandla esisodwa somhlabathi wasengadini noma i-compost. Kuxube kahle.
+7. Faka imisundu yakho. Qala okungenani ngo-250 kuya ku-500 g wemisundu (amakhulu ambalwa kuya cishe enkulungwaneni). Uma unesandla esisodwa kuphela, ipulazi lizothatha izinyanga eziningi ukuze liqale ukusebenza.
+8. Mboza umbhede wemisundu ngesaka elimanzi, ikhadibhodi noma ungqimba oluwugqinsi lwamaphephandaba, bese uvala isivalo noma umboze ngendwangu yomthunzi ukuze uvimbe izinyoni nezinkukhu.
+9. Linda izinsuku ezimbalwa, bese uqala ukuyondla (bheka ngezansi).
+10. Uma isiqukathi sokusebenza sesigcwele ama-castings amnyama, imvamisa ngemva kwezinyanga ezi-2 kuya kwezi-4, beka isiqukathi sesithathu phezulu. Faka umbhede omusha nokudla kuso. Kufanele sithinte ama-castings angezansi.
+11. Emasontweni ambalwa alandelayo, imisundu izokhuphukela esiqukathini esisha ifuna ukudla.
+12. Khipha isiqukathi esingezansi, manje esesiyama-castings kakhulu. Cosha noma yimiphi imisundu oyibonayo uyibuyisele. Sebenzisa ama-castings engadini yakho.
 13. Thulula isiqukathi, bese usisebenzisa njengesiqukathi esisha esingaphezulu ngokulandelayo. Qhubeka ushintshanisa ngale ndlela.
-14. Khipha uketshezi esiqukathini esingezansi njalo ngemva kwezinsuku ezimbalwa. Ungaluyeki lugcwale luminze izikelemu.
+14. Khipha uketshezi esiqukathini esingezansi njalo ngemva kwezinsuku ezimbalwa. Ungaluyeki lugcwale luminze imisundu.
 
-Njengoba izikelemu zizala, uzothola **amaqanda ezikelemu** (cocoons) amancane amise okukalamula embhedeni wazo. Ngalinye lichamusela izikelemu ezincane eziningana. Uma ipulazi lakho seligcwele izikelemu, ungakhipha izandla ezimbalwa zezikelemu nombhede wazo ukuze uqale ipulazi elisha lezikelemu noma uzifake enqwabeni ye-compost esipholayo. Njalo shiya eziningi ngemuva.
+Njengoba imisundu izala, uzothola **amaqanda emisundu** (cocoons) amancane amise okukalamula embhedeni wayo. Ngalinye lichamusela imisundu emincane eminingana. Uma ipulazi lakho seligcwele imisundu, ungakhipha izandla ezimbalwa zemisundu nombhede wayo ukuze uqale ipulazi elisha lemisundu noma uyifake enqwabeni ye-compost esipholayo. Njalo shiya eminingi ngemuva.
 
-### Ukondla izikelemu zakho
+### Ukondla imisundu yakho
 
 - Qala kancane. Faka ukudla okuncane, bese wengeza okunye kuphela uma okuningi kokudla kokugcina sekudliwe.
-- Uma ipulazi selimi kahle, izikelemu zingadla ukudla okufika cishe engxenyeni yesisindo sazo ngosuku. Isibonelo, u-1 kg wezikelemu ungadla izinsalela ezifika cishe ku-500 g ngosuku.
+- Uma ipulazi selimi kahle, imisundu ingadla ukudla okufika cishe engxenyeni yesisindo sayo ngosuku. Isibonelo, u-1 kg wemisundu ungadla izinsalela ezifika cishe ku-500 g ngosuku.
 - Qoba noma uchoboze ukudla kube yizingcezu ezincane. Kubola ngokushesha.
-- Gqiba ukudla ngaphansi kombhede wezikelemu, ekhoneni elihlukile ngaso sonke isikhathi. Lokhu kuxosha izimpukane zezithelo.
-- Engeza isandla esisodwa sombhede owomile (iphepha elidabuliwe noma amaqabunga omile) njalo uma uzondla, ukuze ulondoloze ukulingana.
+- Gqiba ukudla ngaphansi kombhede wemisundu, ekhoneni elihlukile ngaso sonke isikhathi. Lokhu kuxosha izimpukane zezithelo.
+- Engeza isandla esisodwa sombhede owomile (iphepha elidabuliwe noma amaqabunga omile) njalo uma uyondla, ukuze ulondoloze ukulingana.
 
-| Izikelemu ziyakuthanda | Izikelemu azikuthandi |
+| Imisundu iyakuthanda | Imisundu ayikuthandi |
 |---|---|
 | Amakhasi emifino nezithelo | U-anyanisi, ugalikhi nopelepele |
 | Amaqabunga etiye nezinsalela zekhofi | Amakhasi amaningi ezithelo ezifana nolamula |
@@ -449,15 +449,15 @@ Njengoba izikelemu zizala, uzothola **amaqanda ezikelemu** (cocoons) amancane am
 | Amaqabunga nezinto zezitshalo ezithambile | Ukudla okuningi kakhulu ngasikhathi sinye |
 | Isinkwa esidala, esincane | Amanzi amaningi kakhulu |
 
-Izikelemu futhi azithandi ilanga eliqondile, ukushisa, isithwathwa nokuphazanyiswa kaningi.
+Imisundu futhi ayithandi ilanga eliqondile, ukushisa, isithwathwa nokuphazanyiswa kaningi.
 
 ### Itiye le-compost
 
-Abanye abalimi bacwilisa indle yezikelemu noma i-compost emanzini, bampompela umoya ngompompi we-aquarium, bese befaka i-molasses encane. I-molasses yondla ama-micro-organism (hhayi izikelemu). Okuphumayo kubizwa ngokuthi **itiye le-compost** (compost tea).
+Abanye abalimi bacwilisa ama-castings noma i-compost emanzini, bampompela umoya ngompompi we-aquarium, bese befaka i-molasses encane. I-molasses yondla ama-micro-organism (hhayi imisundu). Okuphumayo kubizwa ngokuthi **itiye le-compost** (compost tea).
 
-Ucwaningo lokuthi itiye le-compost liyazisiza yini izitshalo aluvumelani. Uketshezi lwepulazi lezikelemu oluhlanjululwe nje, noma indle yezikelemu embelwe emhlabathini, kulula futhi kusebenza kahle.
+Ucwaningo lokuthi itiye le-compost liyazisiza yini izitshalo aluvumelani. I-leachate ehlanjululwe nje, noma ama-castings embelwe emhlabathini, kulula futhi kusebenza kahle.
 
-> **Ukuphepha:** Ukufaka i-molasses noma ushukela etiyeni le-compost kungenza amagciwane ayingozi afana ne-*E. coli* ne-*Salmonella* ande, ikakhulukazi uma i-compost yayinomquba wezilwane. Ungalifafazi itiye le-compost noma uketshezi lwezikelemu emaqabungeni emifino ezodliwa ingaphekiwe, futhi ungalokothi ukwenze eduze nesikhathi sokuvuna. Kunalokho, kuthele emhlabathini.
+> **Ukuphepha:** Ukufaka i-molasses noma ushukela etiyeni le-compost kungenza amagciwane ayingozi afana ne-*E. coli* ne-*Salmonella* ande, ikakhulukazi uma i-compost yayinomquba wezilwane. Ungalifafazi itiye le-compost noma i-leachate emaqabungeni emifino ezodliwa ingaphekiwe, futhi ungalokothi ukwenze eduze nesikhathi sokuvuna. Kunalokho, kuthele emhlabathini.
 
 ## Amaphuzu amqoka
 
@@ -468,5 +468,5 @@ Ucwaningo lokuthi itiye le-compost liyazisiza yini izitshalo aluvumelani. Uketsh
 - Yenza umquba wezilwane ube yi-compost ngaphambi kokuwusebenzisa ezitshalweni zokudla. Shiya okungenani izinyanga ezi-4 phakathi kokufaka umquba ongaphekiwe nokuvuna izitshalo ezidliwa zingaphekiwe. Ungalokothi usebenzise indle yabantu, yezinja noma yamakati, noma umquba wezingulube ongaphekiwe, engadini yokudla.
 - Faka i-mulch ejule ngo-5 kuya ku-10 cm, uyigcine iqhelile eziqwini.
 - Inqwaba ye-compost eshisayo idinga ama-browns, ama-greens, umoya namanzi, ifinyelela ku-55 kuya ku-65 °C, iphendulwa uma iphola, futhi ilunga ngemva kwezinyanga ezi-2 kuya kwezi-3 cishe.
-- Epulazini lezikelemu, sebenzisa izikelemu ze-compost njengama-red wiggler (*Eisenia fetida*), hhayi imisundu yasengadini. Zigcine emthunzini, zimanzi futhi zondliwe ngezinsalela ezincane zemifino.
-- Hlambulula uketshezi lwepulazi lezikelemu cishe ngo-1 ku-10 bese uluthela emhlabathini, hhayi emifinweni enamaqabunga edliwa ingaphekiwe.
+- Epulazini lemisundu, sebenzisa imisundu ye-compost njengama-red wiggler (*Eisenia fetida*), hhayi imisundu yasengadini. Yigcine emthunzini, imanzi futhi yondliwe ngezinsalela ezincane zemifino.
+- Hlambulula i-leachate cishe ngo-1 ku-10 bese uyithela emhlabathini, hhayi emifinweni enamaqabunga edliwa ingaphekiwe.

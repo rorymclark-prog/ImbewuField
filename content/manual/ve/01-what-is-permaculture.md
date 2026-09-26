@@ -25,7 +25,7 @@ Afrika Tshipembe ndi shango ḽo omaho. Nga vhukati ḽi wana mvula i ṱoḓaho
 
 Musi shango ḽi tshi xelelwa nga mavu na maḓi aḽo, ḽi nga si tsha kona u ḽisa vhathu vha dzulaho khaḽo, nahone miṱa i kombetshedzwa u ṱuwa. Zwiga zwa u sevhedza zwo no vha hone. Ri nga si bvele phanḓa ri tshi lima nga nḓila ya kale yo fanaho.
 
-Permaculture i ri ṋea mmebe na zwishumiswa zwa u shandukisa hezwi. I ri funza u tsireledza mavu, u fara na u vhulunga mvula, u lima zwiliṅwa zwa tshaka nnzhi, na u shuma na mupo, hu si u lwa nawo. I ri thusa u vha tshipiḓa tsha thandululo.
+Permaculture i ri ṋea mmapa na zwishumiswa zwa u shandukisa hezwi. I ri funza u tsireledza mavu, u fara na u vhulunga mvula, u lima zwiliṅwa zwa tshaka nnzhi, na u shuma na mupo, hu si u lwa nawo. I ri thusa u vha tshipiḓa tsha thandululo.
 
 ## Zwivhuya zwa permaculture
 
