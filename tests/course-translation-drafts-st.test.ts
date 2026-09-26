@@ -26,10 +26,11 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
   const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   const placeholders = (text: string) => text.match(/\{[^{}]+\}/g) ?? [];
-  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string) => {
+  const checkPair = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string, path: string, status: 'machine-draft' | 'hold' = 'machine-draft') => {
     assert.equal(pair.sourceEnglish, english, `${path}: paired English source must match course-modules.ts byte for byte`);
     assert.ok(pair.sesothoDraft.trim(), `${path}: machine draft must not omit this source field`);
-    assert.equal(pair.reviewStatus, 'machine-draft', `${path}: human review has not happened`);
+    assert.equal(pair.reviewStatus, status, `${path}: review state must match the field decision`);
+    if (status === 'hold') assert.equal(pair.sesothoDraft, english, `${path}: held guidance must remain exact English`);
     assert.doesNotMatch(pair.sesothoDraft, nonLatin, `${path}: draft must remain Latin script`);
     assert.deepEqual(placeholders(pair.sesothoDraft), placeholders(english), `${path}: placeholders must be preserved`);
     assert.deepEqual(numberTokens(pair.sesothoDraft), numberTokens(english), `${path}: numeric figures must be preserved`);
@@ -53,7 +54,7 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent image alt text`);
     }
     checkPair(lesson.title, original.title, `${path}.title`);
-    checkPair(lesson.body, original.body, `${path}.body`);
+    checkPair(lesson.body, original.body, `${path}.body`, original.id === 'intro-permaculture-l1' ? 'hold' : 'machine-draft');
     assert.equal(lesson.body.sourceEnglish.split('\n\n').length, lesson.body.sesothoDraft.split('\n\n').length,
       `${path}.body: paragraph structure must stay aligned for review`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
@@ -75,6 +76,19 @@ test('the Sesotho Foundation draft retains exact paired source and complete cour
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
     }
   }
+});
+
+test('a Sesotho learner sees exact English for the held ethics body', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')?.lessons[0];
+  assert.ok(source);
+  const draft = SESOTHO_INTRO_PERMACULTURE_DRAFT.lessons[0];
+  assert.equal(draft.body.reviewStatus, 'hold');
+  assert.equal(draft.body.sourceEnglish, source.body);
+  assert.equal(draft.body.sesothoDraft, source.body);
+  const presentation = resolveLearnerLessonPresentation(source, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.body, source.body);
+  assert.notEqual(presentation.content.title, source.title);
 });
 
 test('Sesotho seed labels cannot change seed-saving instructions or quiz answers before review', () => {

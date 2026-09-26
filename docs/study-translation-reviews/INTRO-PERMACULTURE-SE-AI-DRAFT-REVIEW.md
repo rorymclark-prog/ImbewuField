@@ -5,13 +5,14 @@
 - Language: Sesotho (`st`); intended initial audience includes QwaQwa / Maluti-a-Phofung.
 - Scope: one Foundation module, `intro-permaculture`, with three lessons and the module title/description.
 - Drafted with Agy `gemini-3.8-flash-low` in non-interactive print mode; independent content spot review by Agy `gemini-3.1-pro-low`.
-- This is machine draft material. No fluent Sesotho speaker or local farming reviewer has approved it. Learner wiring follows in a separate PR and must retain a visible draft label and the exact English source.
+- This is machine draft material. No fluent Sesotho speaker or local farming reviewer has approved it. The lesson is learner-visible with a draft label and exact English source; held fields render in English.
 - Exact English source, Sesotho candidate, and copied answer indexes are stored as paired records in `lib/course-translation-drafts-st.ts`.
 - No narration or audio is included.
 
 ## Holds and review notes
 
-- **Publication hold:** all strings remain machine drafts pending fluent Sesotho and local farming review.
+- **Intro L1 body hold:** all three paragraphs now render as exact English. An independent Agy Pro Low check of the existing live Sesotho candidate found material meaning and grammar problems in each paragraph: `lisebelisoa` suggested tools rather than resources, cattle grazing was expressed without the farmer's causative action, and the closing instruction said to bundle rather than build the ethics into decisions. Its “living systems” and swale terms also need local reviewer attention. The candidate text retained below is historical review material, not current learner wording.
+- **Publication status:** remaining translated fields are unreviewed machine drafts pending fluent Sesotho and local farming review.
 - The first Flash Low candidate for Lesson 1 quiz question 1 repeated wording around “composting”. It was discarded. A narrowly scoped Flash Low revision removes the repetition and keeps `(maize)` as an exact source-name check; Pro Low rechecked this field against the English meaning.
 - Pro Low’s complete spot review of the current module candidate reported matching source meaning, preserved answer indexes, no number/species findings and no non-Latin script. This is AI review only, not linguistic or agricultural approval.
 
