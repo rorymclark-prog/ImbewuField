@@ -68,6 +68,26 @@ test('Simple shows the Design/Finance companion previews as two plain links', ()
   );
 });
 
+test('regional Study infographic machine drafts show their English source beside the image', () => {
+  const start = STUDENT_SOURCE.indexOf('{hasInfographic && (');
+  const end = STUDENT_SOURCE.indexOf('{/* Body */}', start);
+  assert.ok(start >= 0 && end > start, 'the infographic block must remain present before the lesson body');
+  const infographic = STUDENT_SOURCE.slice(start, end);
+
+  assert.match(STUDENT_SOURCE,
+    /const infographicAltDraft = regionalDraft && lessonContent\.infographicAlt &&\s+lessonContent\.infographicAlt !== lesson\.infographicAlt/,
+    'only a regional draft that differs from the exact source needs a visible caption');
+  assert.match(infographic,
+    /LessonInfographic url=\{lesson\.infographicUrl!\} alt=\{lessonContent\.infographicAlt \?\? lesson\.infographicAlt!\}/,
+    'the translated description must remain the image alt text');
+  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : 'Tshivenda'\} image description/,
+    'the visible caption must identify the unreviewed language draft');
+  assert.match(infographic, /<p lang=\{lang\} className="text-sm">\{infographicAltDraft\}<\/p>/,
+    'the translated description must also be visible to sighted learners');
+  assert.match(infographic, /Exact English source:<\/span> \{lesson\.infographicAlt\}/,
+    'the caption must show the exact English source beside the draft');
+});
+
 test('Simple labels each companion link clearly, with its one-line description as secondary text', () => {
   const simpleLinksAt = STUDENT_SOURCE.indexOf('// Two plain links');
   assert.ok(simpleLinksAt > 0);

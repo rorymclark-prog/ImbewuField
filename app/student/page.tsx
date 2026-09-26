@@ -217,6 +217,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const lessonContent = presentation.content;
   const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+    lessonContent.infographicAlt !== lesson.infographicAlt
+    ? lessonContent.infographicAlt
+    : undefined;
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -320,6 +324,13 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
+              {infographicAltDraft && (
+                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                  <p lang={lang} className="text-sm">{infographicAltDraft}</p>
+                  <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
+                </div>
+              )}
             </div>
           )}
 

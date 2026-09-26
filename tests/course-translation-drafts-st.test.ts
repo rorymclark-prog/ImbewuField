@@ -252,6 +252,10 @@ test('Sesotho Market L2 shows the cost comparison draft while held selling advic
 
   assert.equal(lesson.body.reviewStatus, 'hold');
   assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
+  assert.equal(lesson.infographicAlt?.reviewStatus, 'machine-draft');
+  assert.equal(lesson.infographicAlt?.sesothoDraft,
+    'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.');
   assert.equal(lesson.title.reviewStatus, 'hold');
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
   assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
@@ -267,6 +271,7 @@ test('Sesotho Market L2 shows the cost comparison draft while held selling advic
   assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].sesothoDraft);
   assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
   assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.infographicAlt, lesson.infographicAlt?.sesothoDraft);
   assert.equal(presentation.content.body, sourceLesson.body);
   assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
 
@@ -277,4 +282,9 @@ test('Sesotho Market L2 shows the cost comparison draft while held selling advic
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
   assert.equal(stalePresentation.status, 'english-fallback');
   assert.deepEqual(stalePresentation.content.keyPoints, changedSource.keyPoints);
+
+  const changedAltSource = { ...sourceLesson, infographicAlt: `${sourceLesson.infographicAlt} ` };
+  const staleAltPresentation = resolveLearnerLessonPresentation(changedAltSource, 'st');
+  assert.equal(staleAltPresentation.status, 'english-fallback');
+  assert.equal(staleAltPresentation.content.infographicAlt, changedAltSource.infographicAlt);
 });

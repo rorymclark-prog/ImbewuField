@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '4bda1cd6', changes: [
+    'Sesotho Study marks the Market lesson picture description in Sesotho.',
+  ], tour: [
+    { title: 'Check the Market picture description', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked picture description with its English source.' },
+  ] },
   { when: '26 September 2026', sha: '4ed38dcb', changes: [
     'Tshivenda learners can compare selling costs and losses in a marked Market lesson draft.',
   ], tour: [
