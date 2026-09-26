@@ -29,7 +29,7 @@ must provision — not buildable from code alone).
 ### What's live
 - **Auth** — email/password + Google sign-in + password reset + change-password +
   profile photo. Firebase env is set in the Vercel project; Auth authorized domains
-  include the vercel.app domains + localhost. (Site gate via `SITE_PASSWORD` env.)
+  include the vercel.app domains + localhost. (The old `SITE_PASSWORD` site gate was deleted 2026-09-26.)
 - **Roles** — five: farmer · mentor · student · ngo · funder (+admin). Mentor merges
   the old supervisor + trainer. Task-first home; roles behind a quiet "Dashboards" link.
 - **Map** (`/farmer`) — search/analyse, draw land boundary + water storage (reticle
@@ -626,6 +626,6 @@ passed; the walkthrough still found two bugs, both older than this branch.
 ---
 
 ## Auth / passwords (operational)
-- **Site gate:** controlled by the `SITE_PASSWORD` env var on Vercel (ask the owner for the value; not committed here).
+- **Site gate:** deleted 2026-09-26 (`/gate` + `/api/gate`). `SITE_PASSWORD` in Vercel is now unused and can be removed.
 - **Account auth:** Firebase email/password (enabled) + Google. To enable the Google button end-to-end, the owner enables **Google** as a sign-in provider in Firebase Console → Authentication → Sign-in method (email/password is already on; authorized domains are set).
 - **Env:** managed via GitHub repo secrets → pushed to the Vercel project by `.github/workflows/set-vercel-env.yml` (`gh workflow run set-vercel-env.yml`). Never commit `.env*`.
