@@ -18,6 +18,11 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import {
+  SITE_SURVEY_WELCOME_DRAFTS,
+  resolveSiteSurveyWelcomeDraft,
+  type SiteSurveyWelcomeField,
+} from '@/lib/site-survey-welcome-drafts';
 
 const i18nSource = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 const surveySource = readFileSync(new URL('../components/SiteSurveySheet.tsx', import.meta.url), 'utf8');
@@ -531,6 +536,82 @@ test('SiteSurveySheet no longer hard-codes its former English literals', () => {
   const autoFillHelper = surveySource.slice(surveySource.indexOf('function AutoFillNote'), surveySource.indexOf('function SoilSwatch'));
   assert.doesNotMatch(autoFillHelper, /Auto-filled from your traced shapes/, 'AutoFillNote regressed to a hard-coded literal');
   assert.doesNotMatch(surveySource, /placeholder=\{placeholder \?\? 'e\.g\. 120'\}/, 'NumInput default placeholder regressed to a hard-coded literal');
+});
+
+const welcomeEnglish: Record<SiteSurveyWelcomeField, string> = {
+  fieldNotebook: 'Your field notebook',
+  welcomeTitle: 'A good plan starts with your land.',
+  shortTitle: 'Short & simple',
+  fullTitle: 'Comprehensive',
+  fiveSections: '5 sections + review',
+  sevenSections: '7 sections + review',
+  begin: 'Start survey',
+  continue: 'Continue survey',
+};
+
+test('Sesotho welcome labels pair unreviewed machine drafts with exact English and keep mode counts held', () => {
+  const expectedDrafts: Partial<Record<SiteSurveyWelcomeField, string>> = {
+    fieldNotebook: 'Buka ya masimo ya hao',
+    welcomeTitle: 'Moralo o motle o qala ka sebaka sa hao.',
+    shortTitle: 'E kgutshwane ebile e bonolo',
+    fullTitle: 'E felletseng',
+    begin: 'Thomani tlhahlobo',
+    continue: 'Tswelang pele ka tlhahlobo',
+  };
+
+  for (const field of Object.keys(welcomeEnglish) as SiteSurveyWelcomeField[]) {
+    const pair = resolveSiteSurveyWelcomeDraft(field, 'st');
+    assert.ok(pair, `${field} should have a Sesotho presentation`);
+    assert.equal(pair.sourceEnglish, welcomeEnglish[field]);
+    if (expectedDrafts[field]) {
+      assert.equal(pair.reviewStatus, 'machine-draft');
+      assert.equal(pair.draft, expectedDrafts[field]);
+    } else {
+      assert.equal(pair.reviewStatus, 'hold');
+      assert.equal(pair.draft, welcomeEnglish[field]);
+    }
+  }
+});
+
+test('Tshivenda drafts only the notebook and start CTA while uncertain welcome labels stay English', () => {
+  const expectedDrafts: Partial<Record<SiteSurveyWelcomeField, string>> = {
+    fieldNotebook: 'Bugu ya tsimuni yaṋu',
+    begin: 'Thomani tsedzuluso',
+  };
+
+  for (const field of Object.keys(welcomeEnglish) as SiteSurveyWelcomeField[]) {
+    const pair = resolveSiteSurveyWelcomeDraft(field, 've');
+    assert.ok(pair, `${field} should have a Tshivenda presentation`);
+    assert.equal(pair.sourceEnglish, welcomeEnglish[field]);
+    if (expectedDrafts[field]) {
+      assert.equal(pair.reviewStatus, 'machine-draft');
+      assert.equal(pair.draft, expectedDrafts[field]);
+    } else {
+      assert.equal(pair.reviewStatus, 'hold');
+      assert.equal(pair.draft, welcomeEnglish[field]);
+    }
+  }
+});
+
+test('welcome drafts fall back outside Sesotho and Tshivenda and show sources only for machine drafts', () => {
+  for (const language of ['en', 'zu', 'xh', 'ts']) {
+    assert.equal(resolveSiteSurveyWelcomeDraft('fieldNotebook', language), null, `${language} must not receive this draft set`);
+  }
+  assert.match(surveySource, /if \(pair\.reviewStatus === 'hold'\) return <>\{pair\.sourceEnglish\}<\/>/);
+  assert.match(surveySource, /<small lang="en">English: \{pair\.sourceEnglish\}<\/small>/);
+  assert.match(surveySource, /welcome labels are unreviewed drafts\. English appears beside each machine draft; held labels remain in English/);
+  assert.match(surveySource, /RegionalWelcomeCopy language=\{lang\} field="welcomeTitle"/);
+  assert.match(surveySource, /RegionalWelcomeCopy language=\{lang\} field=\{dirty \|\| existing \? 'continue' : 'begin'\}/);
+});
+
+test('welcome registry preserves exact English source pairs and represents holds without duplication', () => {
+  for (const [field, english] of Object.entries(welcomeEnglish) as [SiteSurveyWelcomeField, string][]) {
+    for (const language of ['st', 've'] as const) {
+      const entry = SITE_SURVEY_WELCOME_DRAFTS[field][language];
+      assert.equal(entry.sourceEnglish, english, `${language}.${field} source drifted`);
+      if (entry.reviewStatus === 'hold') assert.equal(entry.draft, english, `${language}.${field} hold must stay exact English`);
+    }
+  }
 });
 
 test('the accessible modal semantics a11y-modal-semantics.test.ts depends on survive the rewiring', () => {
