@@ -3,21 +3,23 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 // design-03: SpeciesPicker.tsx (the Planting step's "Plant Catalog") already called t() for its
-// close button, but the header, the biome-filtered/broad-reach note, the honesty banner, the size
-// line and the use-tag chips were literal English with no t() call at all. Guard the fix: chrome
-// text goes through t()/translatedSpeciesSection/translatedSpeciesUse, while plant common and
-// botanical names (per-species data, not app chrome) stay untouched.
+// close button. Another swarm track (already on main) translated the header, the
+// biome-filtered/broad-reach note and the honesty banner (speciesPicker* keys, lib/i18n-pending.ts).
+// This guards the rest of the same defect that track's fix didn't reach: section names, the
+// "m h × m w" size line and the use-tag chips were still literal English. Plant common and
+// botanical names (per-species data, not app chrome) stay untouched either way.
 
 const SOURCE = readFileSync(new URL('../components/design/SpeciesPicker.tsx', import.meta.url), 'utf8');
 
 test('SpeciesPicker chrome is translated, not hard-coded English', () => {
   assert.match(SOURCE, /\buseLanguage\(\)/, 'SpeciesPicker must read the active language context');
-  assert.match(SOURCE, /t\('designSpeciesPickerTitle'\)/, 'the "Plant Catalog" header must be translated');
-  assert.match(SOURCE, /t\('designSpeciesFilteredForBiome'\)/, 'the "Filtered for X biome" note must be translated');
-  assert.match(SOURCE, /t\('designSpeciesBroadReach'\)/, 'the "Showing broad-reach species" note must be translated');
-  assert.match(SOURCE, /t\('designSpeciesBroadReachSection'\)/, 'the broad-reach section heading must be translated');
-  assert.match(SOURCE, /t\('designSpeciesReviewNote'\)/, 'the agronomist-review honesty banner must be translated');
-  assert.match(SOURCE, /t\('designSpeciesFrostHidden'\)/, 'the frost-hidden note must be translated');
+  assert.match(SOURCE, /t\('speciesPickerTitle'\)/, 'the "Plant Catalog" header must be translated');
+  assert.match(SOURCE, /t\('speciesPickerFilteredFor'\)/, 'the "Filtered for X biome" note must be translated');
+  assert.match(SOURCE, /t\('speciesPickerBroadReach'\)/, 'the "Showing broad-reach species" note must be translated');
+  assert.match(SOURCE, /t\('speciesPickerBroadReachSection'\)/, 'the broad-reach section heading must be translated');
+  assert.match(SOURCE, /t\('speciesPickerNoteLabel'\)/, 'the agronomist-review honesty banner label must be translated');
+  assert.match(SOURCE, /t\('speciesPickerNoteBody'\)/, 'the agronomist-review honesty banner body must be translated');
+  assert.match(SOURCE, /t\('speciesPickerFrostNote'\)/, 'the frost-hidden note must be translated');
   assert.match(SOURCE, /translatedSpeciesSection\(t, sec\.section\)/, 'section names must resolve through translatedSpeciesSection');
   assert.match(SOURCE, /translatedSpeciesUse\(t, u\)/, 'use tags must resolve through translatedSpeciesUse');
   assert.match(SOURCE, /formatDesignTranslation\(t\('designSpeciesSize'\)/, 'the "m h × m w" size line must be a translated, interpolated template');
@@ -25,8 +27,6 @@ test('SpeciesPicker chrome is translated, not hard-coded English', () => {
   // The defect this guards against: these exact hard-coded English literals.
   assert.doesNotMatch(SOURCE, /<h3[^>]*>Plant Catalog<\/h3>/, 'header regressed to hard-coded English');
   assert.doesNotMatch(SOURCE, /Filtered for \$\{siteBiomeName\} biome/, 'biome-filtered note regressed to a raw template literal');
-  assert.doesNotMatch(SOURCE, /'Showing broad-reach species'/, 'broad-reach note regressed to a hard-coded string outside t()');
-  assert.doesNotMatch(SOURCE, /Not yet agronomist-reviewed\. Use as a starting point\./, 'honesty banner regressed to hard-coded English');
   assert.doesNotMatch(SOURCE, /\{s\.matureHeightM\}m h × \{s\.matureWidthM\}m w/, 'size line regressed to a raw template literal');
 });
 
