@@ -22,6 +22,14 @@ const dict: Dict = {
   tabMap: 'Mmapa',
   tabFinance: 'Masheleni',
   tabAccount: 'Akhaunthu',
+  // Farmer recovery copy is an unreviewed machine draft; the screen keeps the English source visible.
+  mapHeldTitle: 'Mmapa wo ima lwa tshifhinganyana',
+  mapHeldBody: 'This page closed unexpectedly a few times in a row. Ngauralo mmapa wo imiswa lwa tshifhinganyana uri ni kone u dzhena hafhu kha app. Mivhigo yaṋu, zwifanyiso na fhethu haṋu zwi kha ḓi shuma afho fhasi.',
+  mapHeldLoad: 'Laisani mmapa',
+  reportsOfflineTitle: 'Mivhigo i ṱoḓa inthanethe lwa u thoma',
+  reportsOfflineMessage: 'Tshipiḓa itshi tsha app a tshi athu vhulungwa kha founu yaṋu, nahone a hu na inthanethe zwino. Tshi vuleni luthihi musi inthanethe i hone; nga murahu tshi ḓo shuma ni si na inthanethe.',
+  reportsOfflineRetry: 'Lingedzani hafhu',
+  reportsOfflineClose: 'Valani',
   // Study navigation labels are machine drafts; the page keeps an English review notice visible.
   studentMyStudies: 'Ngudo dzanga',
   studentLearnPracticeGrow: 'Gudani · ḓiḓowedzeni · aluwani',
