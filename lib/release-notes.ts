@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'b544cb47', changes: [
+    'Sesotho Study shows a marked Chickens lesson draft beside English.',
+    'Animal care, manure advice and quiz answers stay in English for review.',
+    'The chicken-pen picture description now says only what is visible.',
+  ], tour: [
+    { title: 'Compare the Chickens draft', where: 'Study', href: '/student',
+      detail: 'Choose Sesotho, then open Small Livestock lesson 1 to compare the draft and English.' },
+  ] },
   { when: '26 September 2026', sha: '909246b1', changes: [
     'Tshivenda Study shows a marked Food Forest layer draft beside English.',
     'Species, care guidance and quiz answers stay in English for review.',
