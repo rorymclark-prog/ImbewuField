@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '4ed38dcb', changes: [
+    'Tshivenda learners can compare selling costs and losses in a marked Market lesson draft.',
+  ], tour: [
+    { title: 'Check the Tshivenda selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; compare the marked cost-and-loss point with its English source. Other lesson guidance remains in English.' },
+  ] },
   { when: '26 September 2026', sha: '1fd3f582', changes: [
     'Sale labels now show draft isiZulu beside the exact English source.',
   ], tour: [

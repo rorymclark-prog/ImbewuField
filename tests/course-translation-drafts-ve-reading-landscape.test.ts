@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 
 test('Reading the Landscape Tshivenda draft stays paired to every exact Study source field', () => {
   const draft = TSHIVENDA_READING_LANDSCAPE_DRAFT;
@@ -76,4 +78,44 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'lessons[3] reading-landscape-l4.keyPoints[2]',
     'lessons[3] reading-landscape-l4.quiz[1].options[1]',
   ], 'uncertain wording stays held until checked by a fluent Tshivenda speaker');
+});
+
+test('Tshivenda Market L2 shows only the checked cost comparison draft and falls back if its source changes', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
+  assert.ok(sourceLesson);
+  const lesson = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons[0];
+
+  assert.equal(lesson.id, sourceLesson.id);
+  assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.equal(lesson.title.reviewStatus, 'hold');
+  assert.equal(lesson.title.tshivendaDraft, sourceLesson.title);
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.body.reviewStatus, 'hold');
+  assert.equal(lesson.body.tshivendaDraft, sourceLesson.body);
+  assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+  assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.equal(lesson.keyPoints[1].tshivendaDraft, 'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.');
+  for (const index of [0, 2, 3]) {
+    assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
+    assert.equal(lesson.keyPoints[index].tshivendaDraft, sourceLesson.keyPoints[index]);
+  }
+  assert.deepEqual(lesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
+
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].tshivendaDraft);
+  assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
+  assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+
+  const changedSource = {
+    ...sourceLesson,
+    keyPoints: sourceLesson.keyPoints.map((point, index) => index === 1 ? `${point} ` : point),
+  };
+  const stalePresentation = resolveLearnerLessonPresentation(changedSource, 've');
+  assert.equal(stalePresentation.status, 'english-fallback');
+  assert.deepEqual(stalePresentation.content.keyPoints, changedSource.keyPoints);
 });
