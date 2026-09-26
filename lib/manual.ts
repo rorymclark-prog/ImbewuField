@@ -48,6 +48,7 @@ export const MANUAL_CHAPTERS = [
   '09-balanced-ecology',
   '10-natural-pest-control',
   '11-home-and-appropriate-technology',
+  '12-glossary',
 ] as const;
 export type ManualChapter = (typeof MANUAL_CHAPTERS)[number];
 
@@ -69,6 +70,8 @@ export interface ManualUi {
   draftNotice: string;
   credit: string;
   minutes: string;
+  /** Link to /manual/<lang>/book, the printable whole-book page. */
+  book: string;
 }
 
 const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs };
@@ -213,4 +216,45 @@ export function blockShape(blocks: Block[]): string[] {
     if (b.type === 'table') return `table:${b.rows.length}x${b.head.length}`;
     return b.type;
   });
+}
+
+// ── Figures ────────────────────────────────────────────────────────────────────────────────────
+//
+// Pictures are NOT written into the chapter Markdown: content/manual/figures.json lists each one
+// with the chapter it belongs to and the section (the Nth "## " heading, counted from 0) it
+// follows. Every language shares one structure, so a figure lands in the same place in all five
+// languages without anyone editing five chapter files — and replacing a picture (Rory is making
+// new ones in ChatGPT over time) is just overwriting public/manual/figures/<id>.<ext>.
+
+export interface ManualFigure {
+  /** Stable slot name, also the image file name: public/manual/figures/<id>.<ext>. */
+  id: string;
+  chapter: ManualChapter;
+  /** Index of the "## " section the figure follows (0 = first section); -1 = before the first section. */
+  section: number;
+  /** Public path of the image, e.g. /manual/figures/07-swale.jpg. */
+  src: string;
+  width: number;
+  height: number;
+  /** Caption per language; English is required and is the fallback. */
+  caption: Partial<Record<ManualLang, string>> & { en: string };
+  /** Shown under the caption, e.g. "Photo: Imbewu" or "Reproduced with permission: …". */
+  credit?: string;
+}
+
+export function figureCaption(figure: ManualFigure, lang: ManualLang): { text: string; lang: ManualLang } {
+  const own = figure.caption[lang];
+  return own && own.trim() ? { text: own, lang } : { text: figure.caption.en, lang: 'en' };
+}
+
+/** Figures for one chapter, grouped by the section they follow. */
+export function figuresBySection(figures: ManualFigure[], chapter: ManualChapter): Map<number, ManualFigure[]> {
+  const out = new Map<number, ManualFigure[]>();
+  for (const figure of figures) {
+    if (figure.chapter !== chapter) continue;
+    const list = out.get(figure.section) ?? [];
+    list.push(figure);
+    out.set(figure.section, list);
+  }
+  return out;
 }
