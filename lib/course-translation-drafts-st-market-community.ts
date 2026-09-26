@@ -112,8 +112,9 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
     },
     {
       id: 'market-community-l2',
-      infographicAlt: hold(
+      infographicAlt: machineDraft(
         'Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.',
+        'Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.',
       ),
       title: hold('Selling Surplus: Where to Sell and How to Price'),
       body: hold([

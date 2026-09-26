@@ -220,6 +220,7 @@ export function resolveLearnerLessonPresentation(
     body: lesson.body,
     keyPoints: lesson.keyPoints,
     quiz: lesson.quiz,
+    infographicAlt: lesson.infographicAlt,
   };
   if (language === 'st' || language === 'ts' || language === 've') {
     const draft = REGIONAL_LESSON_DRAFTS[language].flatMap(module => module.lessons)
