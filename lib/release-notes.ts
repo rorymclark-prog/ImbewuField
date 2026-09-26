@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 September 2026', sha: '8580f9dd', changes: [
+  { when: '26 September 2026', sha: '436b4055', changes: [
     'Sesotho Water Harvesting keeps ambiguous level-contour wording in English for review.',
     'Sesotho Student labels now show a review notice on the welcome card.',
   ], tour: [
