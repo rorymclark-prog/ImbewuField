@@ -860,3 +860,112 @@ The pinned titles in `tests/course-translation-drafts-ve-water-harvesting.test.t
 - `homeGreeting` "Ndi masiari, {name}" means "good afternoon"; kept, but a time-neutral greeting may be better. (check)
 - Drafts still use "tshitentsi" (plot/stand) where the glossary prefers "fhethu"; left because changing it needs concord changes through long texts.
 - Drafts leave "canopy", "ground cover", "root crops", "climbers" in English inside Tshivenḓa sentences (drafts-ve-food-forest).
+
+## Kept in English (26 Sep 2026)
+
+Rory's decision (see `research/manual/KEEP-ENGLISH.md`): the 67 words in the "Word" column of
+`content/manual/en/12-glossary.md` stay in **English** in the Tshivenḓa manual, explained in the new
+chapter `content/manual/ve/12-glossary.md`. **This supersedes the Tshivenḓa term given for these words in
+the tables above** (those rows are now the short explanation that goes in brackets on first use).
+Machine pass, **not reviewed by a fluent speaker**.
+
+How it is written in chapters 00–11:
+
+- First use in a chapter: **English word** in bold + a short Tshivenḓa explanation in brackets, e.g.
+  `**compost** (zwithu zwo vholaho zwi nontshisaho mavu)`, `**dzi-swale** (migero ya u fara maḓi a mvula)`.
+  Later uses: the English word alone.
+- Grammar: the English word is treated as a class 9 noun (no prefix; concords *i-/ya/yo*, e.g. *mulch i
+  tsireledza*, *swale yo lingana*) and takes **dzi-** with a hyphen in the plural (class 10; concords
+  *dzi-/dza/dzo*, e.g. *dzi-swale dzi fara runoff*). Concords were changed where the old local noun was in
+  another class (*tshifukedzi tshi* → *mulch i*, *mukubo u* → *swale i*, *mikubo i* → *dzi-swale dzi*,
+  *zwipuka zwi ḽaho zwiṅwe zwi* → *dzi-predator dzi*). The English root is never changed.
+- Chapter titles and headings use the English word without brackets; the explanation goes on the first
+  use in the body text.
+
+| English word (kept) | Tshivenḓa phrase(s) replaced | Chapters |
+|---|---|---|
+| Animal tractor | danga ḽi pfukiswaho; madanga a pfukiswaho; danga ḽa khuhu ḽi pfukiswaho (→ chicken tractor) | 01, 05, 06, 07, 08, 10 |
+| Annual | zwimela zwa ṅwaha muthihi; tsha ṅwaha muthihi (tables) | 02, 04, 05, 06, 09 |
+| Appropriate technology | thekhinolodzhi yo teaho | 11 |
+| Berm | ṱhanga ya mavu; ṱhanga (of a swale) | 07 |
+| Biodiversity | u fhambana ha zwitshili | 02, 09 |
+| Biogas digester | tshibveledzi tsha biogas; tshibveledzi; zwibveledzi | 11 |
+| Biomass | maṱari na maṱavhi manzhi | 05, 06 (11: loan already used, now bold) |
+| Biosecurity | tsireledzo ya mutakalo | 05 |
+| Blackwater | maḓi a thoilethe | 07 |
+| Canopy | maṱavhi a nṱha (a fukaho ḓaka) | 03, 06 |
+| Carbon to nitrogen ratio | (ratio given only as numbers; term added with gloss *ndinganyo ya khaboni na naiṱirodzheni*) | 08 |
+| Catchment | fhethu ha u kuvhanganya maḓi | 01, 02, 07 |
+| Chop and drop | u rema na u laṱela fhasi | 06, 08 |
+| Climate change | tshanduko ya kilima | 01, 03, 07, 11 |
+| Companion planting | u ṱavha zwimela zwi thusanaho | 10 |
+| Compost | khomposo | 00–11 (all except 12) |
+| Contour | mutalo / mitalo ya vhuimo vhuthihi | 01, 02, 04, 07, 08 |
+| Coppicing | u rema muri tsini na mavu; u rema muri u sia tshitumbu; u ṱumbula musi wo remiwa | 02, 05, 06 |
+| Crop rotation | u reidzana ha zwiliṅwa; u reidzana (noun) | 04, 10 |
+| Double-reach bed | ndima ine ya swikelelwa u bva kha thungo mbili | 07 |
+| Drip irrigation | u sheledza nga matonsi; matonsi (table) | 04, 07 |
+| Ecosystem | sisiteme ya mupo; sisiteme dza mupo | 01, 06, 09, 10 |
+| Edge | magumo (where it names the permaculture idea) | 01, 06 |
+| Erosion | u khukhulwa ha mavu | 01, 02, 05, 06, 07, 08, 09 |
+| Firebreak | tshithivhela-mulilo; zwithivhela-mulilo | 03, 06, 09 |
+| First-flush diverter | tshibvisi tsha maḓi a u thoma | 07 |
+| Fodder | zwiḽiwa zwa zwifuwo | 01, 03, 05, 06, 08, 09 |
+| Food forest | ḓaka ḽa zwiḽiwa; maḓaka a zwiḽiwa | 01, 02, 03, 05, 06, 07, 09 |
+| Frost pocket | mulindi wa tshando; milindi ya tshando | 03, 04, 06 |
+| Grafting | u ṱumanya (grafted) | 06 |
+| Green manure | zwimela zwa u nontshisa mavu | 05, 06, 07, 08, 09 |
+| Greywater | maḓi o shumiswaho | 01, 02, 07 |
+| Groundcover | zwimela zwi fukedzaho mavu | 03, 05, 06, 07, 09 |
+| Guild | zwigwada zwa zwimela; tshigwada tsha zwimela | 01, 03 |
+| Habitat | vhudzulo ha zwipuka na zwimela; vhudzulo | 01, 07, 09, 10 |
+| Humus | humasi | 08 |
+| Indigenous | — (left local, see below) | — |
+| Infiltration | u dzhena ha maḓi mavuni; mabeseni a u dzhenisa maḓi (→ mabeseni a infiltration) | 02, 07 |
+| Invasive species | zwimela zwi phaḓaladzeaho zwi tshinyadzaho (invasive plants); tshaka / lushaka lu phaḓaladzeaho | 02, 03, 05, 06, 07, 08, 09, 10 |
+| Keyhole bed | tshikhala tsha khii; ndima dza tshivhumbeo tsha khii | 01, 07 |
+| Legume | zwimela zwa lushaka lwa nawa; tshimela tsha lushaka lwa nawa | 01, 04, 05, 06, 07, 08, 09, 10 |
+| Microclimate | mutsho wa fhethu huṱuku; mitsho ya fhethu huṱuku | 03, 06 |
+| Mulch | tshifukedzi; zwifukedzi | 00–08, 10 |
+| Nitrogen fixer | zwimela / miri i engedzaho naiṱirodzheni | 06, 09 |
+| Organic matter | zwithu zwa mupo zwo vholaho | 07, 08, 10 |
+| Perennial | zwimela zwi tshilaho miṅwaha minzhi; tshi tshila miṅwaha minzhi (tables) | 03, 04, 05, 06, 09 |
+| Permaculture | (already English; now bold with gloss on first use) | 00, 01, 04, 05, 07, 08, 09, 10, 11 |
+| pH | (already English; no change) | — |
+| Pollinator | zwipuka zwi phaḓaladzaho mupfumbu | 05 |
+| Predator | zwipuka zwi ḽaho zwiṅwe | 04, 05, 09, 10 |
+| Rocket stove | tshiṱofu tsha rokhethe; zwiṱofu zwa rokhethe | 11 |
+| Rootstock | midzi ya fhasi | 06 |
+| Runoff | maḓi a elelaho nṱha ha mavu; maḓi a elelaho | 01, 02, 07 |
+| Sector | sekithara | 02, 03 |
+| Slurry | (already English; now bold on first use) | 11 |
+| Solar dryer | tshiomisi tsha ḓuvha; zwiomisi zwa ḓuvha | 11 |
+| Succession | tshanduko ya zwimela nga tshifhinga | 06, 09 |
+| Swale | mukubo; mikubo | 01, 02, 03, 07 |
+| Thermal mass | zwithu zwi vhulungaho mufhiso | 03 (11: already English, now bold) |
+| Topsoil | mavu a nṱha | 03, 06, 07, 08 |
+| Trap crop | tshimela / zwimela zwa u kokodza zwikukumi | 06, 10 |
+| Understorey | — (the chapters never use the word; ch. 6's layer 2 is "small trees") | — |
+| Windbreak | tshithivhela-muya; zwithivhela-muya | 01, 03, 05, 06, 08, 09 |
+| Wonder bag | mukhwama wa u fhedzisa u bika; mikhwama ya u vhulunga mufhiso | 11 |
+| Worm farm | bodo ḽa zwivhungu; mabodo a zwivhungu | 05, 08 |
+| Worm tea | maḓi a zwivhungu | 05, 08 |
+| Zone | zoune; Zoune | 02, 04, 05, 06, 07, 09, 10, 11 |
+
+Left in Tshivenḓa on purpose (check):
+
+- **Indigenous → *sialala*** everywhere: an everyday word ("of the tradition / of this land") that the app
+  already uses (*miri ya sialala*, `ve.ts`), not a coined phrase.
+- **Edge → *magumo*** in the name of principle 11 (*Shumisani magumo nahone ni dzhiele nṱha zwa thungo*),
+  which is the app's principle title, and where *magumo* simply means "the edges of a field / of Zone 2".
+- **Predator:** *zwikukumi zwi ḽaho zwiṅwe* (predatory insects), *zwiṋoni zwi ḽaho zwiṅwe* (birds of prey)
+  and *wasepe / nzhinzhi zwi ḽaho zwiṅwe* are left descriptive.
+- Plain uses of the verbs *u khukhulwa* (to be eroded), *u reidzana / u reidzanya* (to rotate) and
+  *u engedza naiṱirodzheni* (to add nitrogen) are left; only the noun terms were replaced.
+- Not the glossary word, so left: *tshumelo dza mupo (ecosystem services)*, *tshikalo tsha u elela
+  (runoff coefficient)*, *fhethu ho ṱumanywaho (graft union)*, *ṱhanga dza mavu* for general earth banks
+  (ch. 7, "walls or banks"), *mavu a nṱha a Lesotho* (= the highlands, not topsoil), *tshifukedzi tsha
+  tshifhaṱuwo* (a bee veil, ch. 5), *zwifukedzi* for frost covers (ch. 3), *mavu a si na tshifukedzi*
+  (bare soil, ch. 3), *u kuvhanganya maḓi a mvula* (water harvesting), *Lushaka lwa nawa (Fabaceae)*
+  as a plant-family name (ch. 10), *mukhwama* for a plain bag or oven bag.
+- *Wonderbag* (brand name) kept as written in ch. 11.
