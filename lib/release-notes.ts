@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'a46473ba', changes: [
+    'Sesotho Study keeps seed terms in English and marks two general lesson headings as drafts.',
+  ], tour: [
+    { title: 'Check the Seeds and Seed Sovereignty labels', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho. The module title and L2 Dry and Wet Methods remain English. L1 and L3 use marked general headings; open-pollinated and F1 hybrid remain in the English lesson source.' },
+  ] },
   { when: '26 September 2026', sha: 'df531de7', changes: [
     'The old unused site-password page is gone; sign-in is the only way in.',
   ] },

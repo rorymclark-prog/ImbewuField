@@ -8,6 +8,7 @@ import { SESOTHO_FOOD_FOREST_DRAFT } from './course-translation-drafts-st-food-f
 import { SESOTHO_PLANT_GUILDS_DRAFT } from './course-translation-drafts-st-plant-guilds.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-st-market-community.ts';
 import { SESOTHO_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-st-small-livestock.ts';
+import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-st-seeds-sovereignty.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
@@ -87,7 +88,7 @@ export interface CourseModulePresentation {
 }
 
 const REGIONAL_MODULE_DRAFTS = {
-  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT],
+  st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT, SESOTHO_SEEDS_SOVEREIGNTY_DRAFT],
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT],
   ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT],
 };
@@ -107,16 +108,19 @@ export function resolveCourseModulePresentation(module: CourseModule, language: 
       module.durationMins === draft.sourceMetadata.durationMins &&
       module.category === draft.sourceMetadata.category) {
       const moduleDraft = draft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT |
-        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof SESOTHO_MARKET_COMMUNITY_DRAFT | typeof SESOTHO_SMALL_LIVESTOCK_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
+        typeof SESOTHO_FOOD_FOREST_DRAFT | typeof SESOTHO_PLANT_GUILDS_DRAFT | typeof SESOTHO_MARKET_COMMUNITY_DRAFT | typeof SESOTHO_SMALL_LIVESTOCK_DRAFT | typeof SESOTHO_SEEDS_SOVEREIGNTY_DRAFT | typeof XITSONGA_INTRO_PERMACULTURE_DRAFT |
         typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT |
         typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT;
-      const title = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
+      const title = moduleDraft.title.reviewStatus === 'hold' ? module.title : language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).title.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).title.xitsongaDraft :
           (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT).title.tshivendaDraft;
-      const description = language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).description.sesothoDraft :
+      const description = moduleDraft.description.reviewStatus === 'hold' ? module.description : language === 'st' ? (moduleDraft as typeof SESOTHO_INTRO_PERMACULTURE_DRAFT).description.sesothoDraft :
         language === 'ts' ? (moduleDraft as typeof XITSONGA_INTRO_PERMACULTURE_DRAFT).description.xitsongaDraft :
           (moduleDraft as typeof TSHIVENDA_INTRO_PERMACULTURE_DRAFT | typeof TSHIVENDA_READING_LANDSCAPE_DRAFT | typeof TSHIVENDA_WATER_HARVESTING_DRAFT | typeof TSHIVENDA_FOOD_FOREST_DRAFT).description.tshivendaDraft;
-      return { title, description, status: 'draft' };
+      const heldSesothoSeedsCard = language === 'st' && draft.id === 'seeds-sovereignty' &&
+        moduleDraft.title.reviewStatus === 'hold' && moduleDraft.description.reviewStatus === 'hold';
+      const status = heldSesothoSeedsCard ? 'english-fallback' : 'draft';
+      return { title, description, status };
     }
   }
   return { title: module.title, description: module.description, status: 'english-fallback' };
