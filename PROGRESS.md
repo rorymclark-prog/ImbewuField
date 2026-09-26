@@ -39,7 +39,7 @@ must provision — not buildable from code alone).
 - **Lima Vision** (`/vision`) — photo → Claude estimates crop + yield + weeks, or weighs a harvest.
 - **Crop Planner** (`/plan`) — crops with bed quantities → projected plants/kg.
 - **Crop Plan** (`/cropplan`) — Day/Week/Month/Season task scheduler.
-- **Garden Survey** (`/survey`) — 5-step wizard → Lima-sized beds → 6-week plan + print.
+- ~~**Garden Survey** (`/survey`)~~ deleted 2026-09-26 (orphaned) — was a 5-step wizard → Lima-sized beds → 6-week plan + print.
 - **Calendar** (`/calendar`) — SA planting calendar, filtered to your crops.
 - **Field Journal** (`/journal`) · **Report** (ReportView, AI, print/share).
 - **Finances** (`/finances`) — Money in/out logging (+ **scan a till slip** OCR);

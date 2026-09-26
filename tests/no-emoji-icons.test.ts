@@ -36,7 +36,6 @@ const ROUTES = [
   'app/facilitator/crops/page.tsx',
   'app/exchange/page.tsx',
   'app/prices/page.tsx',
-  'app/survey/page.tsx',
   'app/vision/page.tsx',
 ];
 

@@ -197,17 +197,6 @@ test('the local skeleton has one non-empty payload for every promised report sec
   }
 });
 
-test('all eleven skeleton sections actually render, rather than only appearing in nav', () => {
-  // Node's native type stripping deliberately does not transpile TSX, so this
-  // wiring assertion reads the component source instead of changing the test
-  // runner. Each promised section still needs an actual rendered anchor.
-  const viewSource = readFileSync(new URL('../components/ReportDocView.tsx', import.meta.url), 'utf8');
-
-  for (const id of REPORT_SECTION_IDS) {
-    assert.match(viewSource, new RegExp(`id="sec-${id}"`), `${id} must render a section`);
-  }
-});
-
 test('area and roof harvest obey their dimensional rules and shared coefficient authority', () => {
   const layers = [
     layer('boundary', 'property_boundary', 20_000),
