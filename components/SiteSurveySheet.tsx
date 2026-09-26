@@ -949,7 +949,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               <div style={{ background: 'rgba(31,77,43,0.05)', borderRadius: 11, padding: '4px', border: '1px solid rgba(31,77,43,0.15)', marginBottom: 8 }}>
                 <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--brand)', padding: '6px 10px' }}>
                   <Camera size={14} aria-hidden />
-                  {lang === 'zu' ? 'Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.' : t('photoTip')}
+                  {lang === 'zu' ? <SurveyZuluDraftPair english="Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.">{t('photoTip')}</SurveyZuluDraftPair> : t('photoTip')}
                 </div>
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}
