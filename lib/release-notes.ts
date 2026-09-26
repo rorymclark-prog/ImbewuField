@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'dc434017', changes: [
+    'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
+    'Vegetables & Staple Crops lesson 3 shows a short Xitsonga concept draft.',
+  ], tour: [
+    { title: 'Check the Tshivenda Food Forest drafts', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda and open lessons 2 and 3. Compare the newly marked body sentences with English; the selected species, water, legal and other care guidance remains English.' },
+    { title: 'Check the staple-crop concept draft', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Xitsonga and open lesson 3. Seven concept sentences show as a machine draft; the full staple-count sentence, crop-specific advice, species claims, key points and quizzes remain English.' },
+  ] },
   { when: '27 September 2026', sha: '48ee66d1', changes: [
     'Food Forest lessons 2 and 3 pair six Sesotho body drafts with English.',
   ], tour: [
