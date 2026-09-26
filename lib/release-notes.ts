@@ -43,7 +43,10 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '26 September 2026', sha: 'a46473ba', changes: [
-    'Farm Finance course titles, lessons and worksheet questions now have isiZulu drafts; assignment due dates show month names in your language.',
+    'Farm Finance lessons and worksheets now have isiZulu drafts; due dates use your language.',
+  ], tour: [
+    { title: 'Read Farm Finance in isiZulu', where: 'Study → Farm Finance', href: '/student/finance',
+      detail: 'Switch the app to isiZulu and open a lesson; draft translations are marked.' },
   ] },
   { when: '26 September 2026', sha: 'df531de7', changes: [
     'The old unused site-password page is gone; sign-in is the only way in.',
