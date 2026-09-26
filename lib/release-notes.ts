@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '66d3c94b', changes: [
+    'Sesotho drafts now explain Market surplus and household food records.',
+  ], tour: [
+    { title: 'Check the Market Gardening draft', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and compare the marked module description and household food-record sentence with their English source.' },
+  ] },
   { when: '26 September 2026', sha: '9186ec9', changes: [
     'Sesotho Introduction lesson 2 keeps unclear swale and bed wording in English.',
   ], tour: [
