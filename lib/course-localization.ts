@@ -13,6 +13,7 @@ import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-st-
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ts.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ts-water-harvesting.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ts-market-community.ts';
+import { XITSONGA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ts-food-forest.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ve-water-harvesting.ts';
@@ -20,6 +21,7 @@ import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT } from './course-translation-draf
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ve-food-forest.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ve-soil-health.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ve-market-community.ts';
+import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ve-seeds-sovereignty.ts';
 
 export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts' | 've';
 export type CourseTranslationStatus =
@@ -177,8 +179,8 @@ const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: Regional
   st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT, SESOTHO_SEEDS_SOVEREIGNTY_DRAFT],
   // Release one source-paired Water lesson at a time; the remaining review data is not learner copy yet.
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT,
-    { lessons: XITSONGA_WATER_HARVESTING_DRAFT.lessons.slice(0, 1) }, XITSONGA_MARKET_COMMUNITY_DRAFT],
-  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT],
+    { lessons: XITSONGA_WATER_HARVESTING_DRAFT.lessons.slice(0, 1) }, XITSONGA_FOOD_FOREST_DRAFT, XITSONGA_MARKET_COMMUNITY_DRAFT],
+  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT],
 };
 
 function regionalPair(pair: RegionalPair, source: string, language: RegionalLanguage): string | null {

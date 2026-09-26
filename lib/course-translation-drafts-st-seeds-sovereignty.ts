@@ -23,8 +23,8 @@ export const SESOTHO_SEEDS_SOVEREIGNTY_DRAFT: SesothoCourseModuleDraft = {
     {
       "id": "seeds-sovereignty-l1",
       "infographicAlt": {
-        "sourceEnglish": "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
-        "sesothoDraft": "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
+        "sourceEnglish": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+        "sesothoDraft": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
         "reviewStatus": "hold"
       },
       "title": {
