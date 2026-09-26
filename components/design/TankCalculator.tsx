@@ -13,7 +13,40 @@ import { useEffect, useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, Droplets } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { computeTankSizing } from '@/lib/tank-sizing';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
+
+type TankChromeKey =
+  | 'designTankTitle'
+  | 'designTankNeedRain'
+  | 'designTankRoofArea'
+  | 'designTankDailyUse'
+  | 'designTankEnterValues'
+  | 'designTankZuluDraftNotice';
+
+function TankChromeText({ name, sourceBlock = false }: { name: TankChromeKey; sourceBlock?: boolean }) {
+  const { t, lang } = useLanguage();
+  if (lang !== 'zu') return t(name);
+
+  return (
+    <>
+      <span lang="zu">{t(name)}</span>
+      <span
+        lang="en"
+        style={{
+          display: sourceBlock ? 'block' : 'inline',
+          marginTop: sourceBlock ? 2 : 0,
+          fontSize: 10.5,
+          fontWeight: 400,
+          lineHeight: 1.25,
+          color: '#5C5040',
+        }}
+      >
+        {!sourceBlock && ' · '}
+        English source: {translate('en', name)}
+      </span>
+    </>
+  );
+}
 
 // Studio palette (kept in sync with StepGuide.tsx) + the water-layer accent.
 const PAPER = '#FFFEFA';
@@ -61,7 +94,7 @@ export default function TankCalculator({
   dailyUseL,
   onDailyUseLChange,
 }: TankCalculatorProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = useState(true);
   const [roofArea, setRoofArea] = useState(DEFAULT_ROOF_M2);
   const [dailyUse, setDailyUse] = useState(dailyUseL ?? 0);
@@ -103,21 +136,31 @@ export default function TankCalculator({
           }}
         >
           <Droplets size={15} color={BLUE} style={{ flexShrink: 0 }} />
-          <span style={{ fontSize: 12.5, fontWeight: 800, flex: 1 }}>{t('designTankTitle')}</span>
+          <span style={{ fontSize: 12.5, fontWeight: 800, flex: 1 }}>
+            <TankChromeText name="designTankTitle" />
+          </span>
           {open ? <ChevronUp size={16} color={BLUE} /> : <ChevronDown size={16} color={BLUE} />}
         </button>
 
         {open && (
           <div style={{ padding: '8px 10px 10px' }}>
+            {lang === 'zu' && (
+              <div
+                role="note"
+                style={{ marginBottom: 8, padding: '6px 8px', borderRadius: 7, background: '#FFF5D6', border: '1px solid #E9CC76', fontSize: 10.5, lineHeight: 1.35, color: '#704B08' }}
+              >
+                <TankChromeText name="designTankZuluDraftNotice" sourceBlock />
+              </div>
+            )}
             {!hasRain ? (
               <div style={{ fontSize: 12, lineHeight: 1.45, color: 'rgba(11,18,11,0.7)' }}>
-                {t('designTankNeedRain')}
+                <TankChromeText name="designTankNeedRain" sourceBlock />
               </div>
             ) : (
               <>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <label style={{ flex: 1 }}>
-                    <span style={labelStyle}>{t('designTankRoofArea')}</span>
+                    <span style={labelStyle}><TankChromeText name="designTankRoofArea" sourceBlock /></span>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -128,7 +171,7 @@ export default function TankCalculator({
                     />
                   </label>
                   <label style={{ flex: 1 }}>
-                    <span style={labelStyle}>{t('designTankDailyUse')}</span>
+                    <span style={labelStyle}><TankChromeText name="designTankDailyUse" sourceBlock /></span>
                     <input
                       type="number"
                       inputMode="numeric"
@@ -169,7 +212,7 @@ export default function TankCalculator({
                   </div>
                 ) : (
                   <div style={{ marginTop: 9, fontSize: 12, color: GOLD_DIM, fontWeight: 700 }}>
-                    {t('designTankEnterValues')}
+                    <TankChromeText name="designTankEnterValues" sourceBlock />
                   </div>
                 )}
               </>

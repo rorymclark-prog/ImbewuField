@@ -397,6 +397,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designTankDailyUse: 'Daily use (ℓ)',
   designTankMethod: 'From this site’s 30-yr rainfall, 0.80 roof runoff. A typical year — size up for drought.',
   designTankEnterValues: 'Enter a roof area and daily use to size your tanks.',
+  designTankZuluDraftNotice: 'Unreviewed isiZulu draft. Read the English source beside each label and prompt; the sizing method remains in English.',
   // 9 sheets now (was 8): Earthworks (05) split out of Water as its own sheet, renumbering
   // Planting/Structures/Whole/Phasing up one each — see lib/glossy-filters.ts.
   designGlossyPlanSet: 'Your plan set · 9 sheets (01–09)',

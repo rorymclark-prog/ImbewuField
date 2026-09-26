@@ -147,7 +147,11 @@ Sector overlay and summary:
 
 Tank calculator:
 `designTankTitle`, `designTankNeedRain`, `designTankRoofArea`, `designTankDailyUse`,
-`designTankMethod`, `designTankEnterValues`.
+`designTankMethod`, `designTankEnterValues`, `designTankZuluDraftNotice`.
+
+The tank card now shows marked, source-paired isiZulu drafts for its title, rain prompt, two
+field labels, and blank-input prompt. The technical sizing method remains in English pending
+fluent isiZulu and local farming review.
 
 Glossy-plan UI chrome and status/error copy:
 `designGlossyPlanSet`, `designGlossySheetNumber`, `designGlossySheet`,
