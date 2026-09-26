@@ -9,6 +9,7 @@ import AccountAccess from '@/components/AccountAccess';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
+import { resizeFileForUpload } from '@/lib/site-evidence';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
@@ -113,7 +114,7 @@ export default function AccountPage() {
     if (!file) return;
     setPhotoUploading(true);
     try {
-      const url = await uploadPhoto(file, 'avatars');
+      const url = await uploadPhoto(await resizeFileForUpload(file), 'avatars');
       if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
     } finally {
       setPhotoUploading(false);
