@@ -52,6 +52,13 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-26 (gate deleted)
+- **Rory: "yes delete the gate".** Removed `app/gate/page.tsx`, `app/api/gate/route.ts` and
+  `tests/gate-guard.test.ts`; dropped `/gate` from ChatWidget's exclusions and `NO_FLOATING_BACK`,
+  and pointed the tests that anchored on it at `/login`. `middleware.ts` notes where to restore
+  it from git history. The optional `SITE_PASSWORD` env var is now unused (left in Vercel — not
+  touched from here).
+
 ### 2026-09-26 (swarm wave 6 — lighter pages, less clutter, tap targets, API guard)
 - **Merged (four swarm PRs, one integration PR):** Perf (#668: profile photos on /account and
   ProfileSheet go through `resizeFileForUpload` before upload; the lazy release-notes import,
