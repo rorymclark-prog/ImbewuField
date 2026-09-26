@@ -44,7 +44,6 @@ export interface UpdateTourStop {
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '26 September 2026', sha: '0aae9c6e', changes: [
     'Vegetables lesson 3 pairs two Tshivenda drafts with English.',
-    'The permaculture manual adds pictures and a glossary for key English farming terms.',
   ], tour: [
     { title: 'Check the staple crops lesson', where: 'Study → Vegetables and Staple Crops', href: '/student',
       detail: 'Choose Tshivenda and open lesson 3; only two concept paragraphs are draft text, with the complete English source shown below.' },
