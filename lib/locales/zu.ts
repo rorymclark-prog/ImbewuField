@@ -663,6 +663,7 @@ const dict: Dict = {
   designPhotoRemoveConfirm: 'Susa isithombe sakho bese ubuyela ekubukeni kwesathelayithi?\n\nIdizayini yakho ayithinteki.\n\nRemove your photo and go back to the satellite view?\n\nYour design is not affected.',
   designPhotoRemoveTitle: 'Susa isithombe sakho bese ubuyela kusathelayithi. Idizayini yakho ayithinteki. Remove your photo and go back to the satellite. Your design is not affected.',
   designStorageFull: 'Indawo yokugcina igcwele — idizayini yakho AYIGCINWA. Khulula isikhala, bese uvula idizayini futhi.\n\nStorage full — your design is NOT being saved. Free up space, then re-open.',
+  designGlossyResumeGaveUp: 'Umfanekiso wakho we-AI usuqediwe, kodwa ukuwuvula bekuvala njalo uhlelo, ngakho uhlelo selumisile ukuzivula ngokwalo. Ungaqhubeka nokuklama. Ukuze uwuthole, setha Ikhwalithi Yokwenza ibe ku-Standard bese ukhiqiza futhi, noma uvule le dizayini kukhompyutha.\n\nYour AI render finished, but opening it kept crashing the app, so the app has stopped reopening it automatically. You can keep designing. To collect it, set Render quality to Standard and generate again, or open this design on a computer.',
   designPhotoAdjust: 'Lungisa isithombe',
   designPhotoUseDifferent: 'Sebenzisa esinye isithombe',
   designPhotoUseAerial: 'Sebenzisa esakho isithombe sasemoyeni',

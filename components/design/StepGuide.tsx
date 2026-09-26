@@ -48,6 +48,18 @@ const STEP_ACCENT: Record<WizardStep, string> = {
   glossy: '#C07A1E',
 };
 
+// Ochre (#C07A1E) is a FILL, not a text/icon colour — 2.54:1 on paper. STEP_ACCENT's fill/border
+// uses (the collapsed bar's border, the layer badge and header band fills) keep the plain accent;
+// this is the same map with the three ochre steps swapped for the theme-aware --gold-dim, for the
+// two spots (the doneCount label and its chevron) that paint text/icon directly on the themed card
+// background rather than sitting on one of those fills.
+const STEP_ACCENT_TEXT: Record<WizardStep, string> = {
+  ...STEP_ACCENT,
+  sector: 'var(--gold-dim)',
+  zones: 'var(--gold-dim)',
+  glossy: 'var(--gold-dim)',
+};
+
 const COLLAPSE_KEY = 'imbewu_stepguide_collapsed_v1';
 const skipsKey = (siteId: string) =>
   activeAccountLocalStorageKey(`imbewu_stepguide_skips_${siteId}`);
@@ -158,6 +170,7 @@ export default function StepGuide({
 
   const stepLabel = translatedDesignStepLabel(t, step);
   const accent = STEP_ACCENT[step];
+  const accentText = STEP_ACCENT_TEXT[step];
   const idx = STEP_ORDER.indexOf(step);
   const nextLabel = idx >= 0 && idx < STEP_ORDER.length - 1
     ? translatedDesignStepLabel(t, STEP_ORDER[idx + 1])
@@ -211,13 +224,13 @@ export default function StepGuide({
             <Compass size={14} />
             {stepLabel}
           </span>
-          <span style={{ fontSize: 11.5, fontWeight: 700, color: accent, flexShrink: 0 }}>
+          <span style={{ fontSize: 11.5, fontWeight: 700, color: accentText, flexShrink: 0 }}>
             {doneCount}/{subSteps.length}
           </span>
           <span style={{ fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
             {allResolved ? t(DESIGN_CHROME_KEYS.guideAllDone) : current?.title}
           </span>
-          <ChevronDown size={16} color={accent} style={{ flexShrink: 0 }} />
+          <ChevronDown size={16} color={accentText} style={{ flexShrink: 0 }} />
         </button>
         {/* Two different closes, deliberately: the bar itself expands/collapses the checklist,
             this × folds the whole band away when the farmer wants the screen for the map. */}

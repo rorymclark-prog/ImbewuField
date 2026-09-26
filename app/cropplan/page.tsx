@@ -53,16 +53,18 @@ type View = 'month' | 'season';
 // weeding task (those are field observations, not dated work), so those three
 // rows are here for type completeness and cannot render today.
 const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprout; color: string; short: string }> = {
-  prep:               { Icon: ClipboardList, color: '#5C4F3C', short: 'Prep' },
+  prep:               { Icon: ClipboardList, color: 'var(--text-secondary)', short: 'Prep' },
   sow:                { Icon: Sprout,        color: 'var(--color-forest-800)', short: 'Sow' },
   transplant:         { Icon: Leaf,          color: 'var(--color-forest-700)', short: 'Transplant' },
   mulch:              { Icon: Layers,        color: 'var(--color-forest-700)', short: 'Mulch' },
-  harvest:            { Icon: Leaf,          color: 'var(--gold)', short: 'Harvest' },
-  'terminate-cover':  { Icon: Scissors,      color: '#5C4F3C', short: 'Cut down' },
-  'weed-early':       { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
-  'weed-mid':         { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
+  // --gold-dim, not --gold: this icon sits in a soft-tinted chip, not an ochre fill, so it reads
+  // as text/stroke (see app/calendar's SeasonIcon for the same rule).
+  harvest:            { Icon: Leaf,          color: 'var(--gold-dim)', short: 'Harvest' },
+  'terminate-cover':  { Icon: Scissors,      color: 'var(--text-secondary)', short: 'Cut down' },
+  'weed-early':       { Icon: Scissors,      color: 'var(--text-secondary)', short: 'Weed' },
+  'weed-mid':         { Icon: Scissors,      color: 'var(--text-secondary)', short: 'Weed' },
 };
-const FALLBACK_META = { Icon: ClipboardList, color: '#5C4F3C', short: 'Task' };
+const FALLBACK_META = { Icon: ClipboardList, color: 'var(--text-secondary)', short: 'Task' };
 function actionMeta(task: BoardTask) { return (task.action && ACTION_META[task.action]) || FALLBACK_META; }
 
 const ACTION_DRAFT_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
@@ -319,7 +321,7 @@ export default function CropPlanPage() {
       {mounted && savedPlantings === 0 && (
         <div
           className="flex-shrink-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
-          style={{ background: '#C07A1E', borderBottom: '1px solid rgba(32,25,15,0.15)' }}
+          style={{ background: '#9A6018', borderBottom: '1px solid rgba(32,25,15,0.15)' }} /* ochre fill under white type — #9A6018 per CLAUDE.md, not the 3.5:1 #C07A1E */
         >
           <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
             <Sparkles size={14} />
@@ -388,10 +390,10 @@ export default function CropPlanPage() {
               deleted, a crop with no verified timings, and an already-growing crop
               whose picking months have all passed. */}
           {planYieldsNothing && (
-            <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: 'var(--bg-1)', border: '1px solid #C07A1E' }}>
-              <AlertCircle size={18} style={{ color: 'var(--gold)', flexShrink: 0, marginTop: 2 }} />
+            <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--gold-dim)' }}>
+              <AlertCircle size={18} style={{ color: 'var(--gold-dim)', flexShrink: 0, marginTop: 2 }} />
               <div>
-                <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
+                <div className="font-display font-semibold mb-1" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
                   {ui('Your crop plan is not producing any jobs', 'Uhlelo lwakho lwezitshalo alukhiqizi imisebenzi')}
                 </div>
                 <p className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -423,12 +425,12 @@ export default function CropPlanPage() {
                       aria-current={on ? 'true' : undefined}
                       className="rounded-lg py-1.5 flex flex-col items-center justify-center"
                       style={{
-                        background: on ? '#1F4D2B' : '#FFFEFA',
-                        border: `1px solid ${on ? '#1F4D2B' : isNow ? '#1F4D2B' : '#E2D8C4'}`,
+                        background: on ? '#1F4D2B' : 'var(--bg-1)',
+                        border: `1px solid ${on ? '#1F4D2B' : isNow ? '#1F4D2B' : 'var(--border)'}`,
                         cursor: 'pointer',
                       }}>
-                      <span className="font-sans font-semibold" style={{ fontSize: 12, color: on ? '#EAF3E2' : '#5C5040' }}>{label}</span>
-                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : '#755942' }}>{n}</span>
+                      <span className="font-sans font-semibold" style={{ fontSize: 12, color: on ? '#EAF3E2' : 'var(--text-secondary)' }}>{label}</span>
+                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{n}</span>
                     </button>
                   );
                 })}
@@ -479,11 +481,11 @@ export default function CropPlanPage() {
                 return (
                   <button key={m} onClick={() => { setCursorMonth(m); setView('month'); }}
                     className="w-full text-left rounded-2xl px-4 py-3.5"
-                    style={{ background: 'var(--bg-1)', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                    style={{ background: 'var(--bg-1)', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : 'var(--border)'}`, cursor: 'pointer' }}>
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
-                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
-                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'rgba(226,216,196,0.6)', color: 'var(--text-secondary)' }}>
+                      <span className="font-display font-semibold" style={{ fontSize: 'clamp(16px, 1.2vw, 18px)', color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
+                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--brand-soft)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
+                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)' }}>
                         {n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}
                       </span>
                     </div>

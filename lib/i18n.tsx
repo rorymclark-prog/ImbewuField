@@ -35,7 +35,7 @@ export const APP_LANGS = [
 // eagerly below (it is the default locale and the fallback for every other one, needed
 // synchronously before we even know which language the farmer wants); the other ten live in
 // lib/locales/<code>.ts and are fetched as small async chunks on demand via loadLocale().
-const T_en: Dict = {
+export const T_en: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...LEARNER_UI_ENGLISH,
   completionScoreAria: 'Site setup completeness',
@@ -57,6 +57,8 @@ const T_en: Dict = {
   welcomeSub: 'Smart permaculture planning for South African land.',
   pickLang: 'Choose your language',
   pickLangSub: 'You can change it any time from the top bar.',
+  langPartialTag: 'Partly in English',
+  langPartialActiveNote: 'Some of {lang} is still shown in English while translation continues.',
   start: 'Start',
   heroSub: 'Tap anywhere in South Africa to get a full permaculture plan for your land.',
   // Farmer-page crash guard (lib/crash-loop.ts) — English-only for now; t() falls back.
@@ -1651,6 +1653,13 @@ export async function loadLocale(code: string): Promise<void> {
   if (LOADED[code]) return;
   const mod = (await import(`./locales/${code}`)) as { default: Dict };
   LOADED[code] = mod.default;
+}
+
+// A locale's full dictionary once loadLocale() has resolved it — English before that, for callers
+// (lib/lang-coverage.ts) that compare a locale against T_en and want a safe default rather than
+// undefined while the chunk is still in flight.
+export function getLoadedDict(code: string): Dict {
+  return LOADED[code] ?? LOADED.en;
 }
 
 // Look up a string in any language (used by onboarding to preview before committing). Reads

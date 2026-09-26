@@ -27,7 +27,8 @@ const DARK = '#20190F';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E'; // STEP_ACCENT.sector
 // Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// (CLAUDE.md); keep OCHRE itself for fills and borders.
+// (CLAUDE.md); keep OCHRE itself for fills and borders. A literal, not var(--gold-dim): this card
+// paints the fixed PAPER constant in every theme, and dark mode's --gold-dim (#B49040) is ~2.6:1 on it.
 const GOLD_DIM = '#7A4408';
 const DOT_SUN = '#F7C97E';
 const DOT_WIND = '#E08A2C';
