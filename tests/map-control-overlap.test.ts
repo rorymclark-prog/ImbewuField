@@ -54,7 +54,7 @@ test('the pages that hand the corner to something else still opt out entirely', 
   assert.match(widget, /pathname\.startsWith\('\/home'\)/);
   assert.match(widget, /pathname\.startsWith\('\/design'\)/);
   // /farmer must NOT be added to that list — the map is where Lima is most wanted.
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
   const skipBlock = widget.slice(skipAt, skipAt + 260);
   assert.doesNotMatch(skipBlock, /\/farmer/, 'Lima should move on the map, not disappear from it');
 });
@@ -76,7 +76,7 @@ test('Lima\'s launcher stays off the crop plan\'s content — by leaving the ove
   // not sit on the crop plan's content — only the mechanism that satisfies it.
   const widget = source('../components/ChatWidget.tsx');
 
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
   assert.ok(skipAt > 0, 'the exclusion block moved; rewrite this test rather than deleting it');
   const skipBlock = widget.slice(skipAt, widget.indexOf(') return null;', skipAt));
   assert.match(

@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'df531de7', changes: [
+    'The old unused site-password page is gone; sign-in is the only way in.',
+  ] },
   { when: '26 September 2026', sha: '5dfc19f5', changes: [
     'Profile photos are made smaller before upload, so they send faster on slow signal.',
     'Simple view hides the staff-only readiness badge, video quality picker and Calendar link.',
