@@ -49,6 +49,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Check the staple crops lesson', where: 'Study → Vegetables and Staple Crops', href: '/student',
       detail: 'Choose Tshivenda and open lesson 3; only two concept paragraphs are draft text, with the complete English source shown below.' },
   ] },
+  { when: '26 September 2026', sha: '3968cb43', changes: [
+    'The Permaculture Manual now shows the handbook photos beside the text.',
+    'Hard words like swale and compost stay in English; the new Glossary explains them.',
+    'You can print or save the whole manual as one book in your language.',
+  ], tour: [
+    { title: 'Open the manual', where: 'Manual', href: '/manual',
+      detail: 'Pick your language, open a chapter to see the photos, or tap "Print or save the whole book".' },
+  ] },
   { when: '26 September 2026', sha: '2e24930b', changes: [
     'Sesotho and Tshivenda Study show more course and offline save labels.',
   ], tour: [
