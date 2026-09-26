@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'd21b20fe', changes: [
+  { when: '27 September 2026', sha: 'dc434017', changes: [
     'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
     'Vegetables & Staple Crops lesson 3 shows a short Xitsonga concept draft.',
   ], tour: [
