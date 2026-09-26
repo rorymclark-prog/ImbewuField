@@ -1246,7 +1246,7 @@ const dict: Dict = {
   updateGuideOpenPage: 'Vula leli khasi',
   updateGuideArrived: 'Usekulesi khasi. Buka izwe elikuzungezile.',
   updateGuidePrevious: 'Okwedlule',
-  updateGuideNext: 'Isibuyekezo esilandelayo',
+  updateGuideNext: 'Isinyathelo esilandelayo',
   updateGuideFinish: 'Qeda uhambo',
   updateGuideStop: 'Yima',
   tourOnboardingCta: 'Zama isibonelo · imizuzu engu-15',

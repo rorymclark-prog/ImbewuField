@@ -46,6 +46,12 @@ const dict: Dict = {
   studentSaveModule: 'Vhulungani {title} kha founu iyi',
   studentContinueHere: 'Bvelani phanḓa hafha',
   studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.',
+  // Short update-guide controls are machine drafts; the guide displays their exact English source.
+  updateGuideContinue: 'Bvelani phanḓa na nyendedzi · {index}/{total}',
+  updateGuideOfferTitle: 'Ni khou ṱoḓa u vhona zwe zwa shanduka?',
+  updateGuideNotNow: 'Hu si zwino',
+  updateGuideOpenPage: 'Vulani siaṱari iḽi',
+  updateGuideFinish: 'Fhedzani nyendedzi',
   toolbarMinButton: 'Wanani mavu aṋu',
   toolbarHeader: 'Wanani mavu aṋu',
   toolbarHideButton: 'Dzumbani',
