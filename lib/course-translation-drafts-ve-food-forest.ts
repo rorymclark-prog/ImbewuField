@@ -1,4 +1,4 @@
-/** Unreviewed, source-paired Tshivenda Food Forest L1–L2 learner drafts. */
+/** Unreviewed, source-paired Tshivenda Food Forest L1–L3 learner drafts. */
 import type { TshivendaCourseModuleDraft, TshivendaSourcePair } from './course-translation-drafts-ve.ts';
 
 const pair = (sourceEnglish: string, tshivendaDraft: string, reviewStatus: TshivendaSourcePair['reviewStatus'] = 'machine-draft'): TshivendaSourcePair => ({
@@ -97,7 +97,7 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
       'Species Selection for South African Food Forests',
       'U Nanga Lushaka lwa Zwimela zwa Daka ḽa Zwiḽiwa ḽa Afrika Tshipembe',
     ),
-    body: hold(
+    body: pair(
       [
         'Check local rainfall, frost, heat, soil and water availability before choosing plants.',
         'Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.',
@@ -109,6 +109,20 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
         'Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.',
         'Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.',
         'Locally appropriate indigenous plants can support habitat as part of the design.',
+        'Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.',
+        'Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.',
+      ].join('\n\n'),
+      [
+        'Check local rainfall, frost, heat, soil and water availability before choosing plants.',
+        'Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.',
+        'A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.',
+        'The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.',
+        'This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.',
+        'Keep existing legal and project restrictions in force. Do not plant from a picture alone.',
+        'The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.',
+        'Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.',
+        'Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.',
+        'Zwimela zwa mupo (indigenous plants) zwi teaho fhethu zwi nga tikedza habitat sa tshipiḓa tsha design.',
         'Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.',
         'Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.',
       ].join('\n\n'),
@@ -141,6 +155,72 @@ export const TSHIVENDA_FOOD_FOREST_DRAFT: TshivendaCourseModuleDraft = {
         ],
         sourceCorrectIndex: 1,
         rationale: hold('Choose plants for the local ecosystem and their role. This does not establish a universal percentage or remove the need to check suitability.'),
+      },
+    ],
+  }, {
+    id: 'food-forest-l3',
+    infographicAlt: hold(
+      'The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.',
+    ),
+    title: hold('Establishing a Food Forest: Observe and Adjust'),
+    body: pair(
+      [
+        'Start by checking the site, water supply and care available. Protect exposed soil early.',
+        'Temporary support plants may provide shelter and useful cut material where appropriate.',
+        'Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.',
+        'Begin with an area you can water and maintain. Check existing vegetation before clearing.',
+        'Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.',
+        'Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.',
+        'Watch how shade, roots and available water affect neighbouring plants.',
+        'Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.',
+        'Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.',
+        'Choose a planting opportunity when soil moisture and expected weather support establishment.',
+        'Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.',
+        'Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.',
+      ].join('\n\n'),
+      [
+        'Start by checking the site, water supply and care available. Protect exposed soil early.',
+        'Temporary support plants may provide shelter and useful cut material where appropriate.',
+        'Main trees na lower layers zwi nga ḓiswa musi nyimele dzi tshi tendela. Ground cover need not wait until the end; avoid plants competing with young trees.',
+        'Begin with an area you can water and maintain. Check existing vegetation before clearing.',
+        'Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.',
+        'Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.',
+        'Watch how shade, roots and available water affect neighbouring plants.',
+        'Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.',
+        'Prune or thin support plants when needed, using methods suited to each species. Clean cuttings dzo teaho dzi nga dovha dza shumiswa sa mulch. Do not wait for a fixed year if competition is already harming plants.',
+        'Choose a planting opportunity when soil moisture and expected weather support establishment.',
+        'Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.',
+        'Check young plants after planting. Tshifhinga tsha harvest na outside inputs zwi bva kha species, fhethu na ndondolo; a hu na fifth-year result ine ya khwaṱhisedzwa.',
+      ].join('\n\n'),
+    ),
+    keyPoints: [
+      hold('Protect exposed soil early'),
+      hold('Plan the sequence around conditions and available care'),
+      hold('Check root-zone moisture even during the rainy season'),
+      hold('Manage competition as it develops; harvest dates are not guaranteed'),
+    ],
+    quiz: [
+      {
+        question: hold('A farmer puts plain cardboard under suitable mulch where grass is growing. What can it help do?'),
+        options: [
+          hold('Creating a moisture barrier that blocks water from the soil'),
+          hold('Block light and help suppress grass while it breaks down; check for regrowth'),
+          hold("Providing a stable base so wood chips don't shift"),
+          hold('Reflecting heat upward to warm the soil'),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: hold('Cardboard under suitable mulch can block light and reduce grass growth. Existing grass may regrow, so check the area. Keep water able to enter the soil and mulch clear of trunks.'),
+      },
+      {
+        question: hold('When should a grower consider pruning or thinning temporary support plants?'),
+        options: [
+          hold('Only on a fixed anniversary'),
+          hold('When observed competition requires it, using methods suited to the species'),
+          hold('As soon as any leaf falls'),
+          hold('Never, because support plants cannot compete'),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: hold('Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.'),
       },
     ],
   }],

@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'd21b20fe', changes: [
+    'Food Forest lessons 2 and 3 pair four Tshivenda concept sentences with English.',
+  ], tour: [
+    { title: 'Check the Tshivenda Food Forest drafts', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda and open lessons 2 and 3. Compare the newly marked body sentences with English; the selected species, water, legal and other care guidance remains English.' },
+  ] },
   { when: '27 September 2026', sha: '48ee66d1', changes: [
     'Food Forest lessons 2 and 3 pair six Sesotho body drafts with English.',
   ], tour: [

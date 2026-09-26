@@ -214,8 +214,8 @@ test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated
   assert.equal(draft.language, 've');
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
-  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['food-forest-l1', 'food-forest-l2'],
-    'only the bounded L1 and L2 learner drafts are included');
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['food-forest-l1', 'food-forest-l2', 'food-forest-l3'],
+    'only the bounded L1, L2 and L3 learner drafts are included');
 
   const lesson = source.lessons.find(item => item.id === 'food-forest-l1');
   assert.ok(lesson, 'the canonical L1 must remain available');
