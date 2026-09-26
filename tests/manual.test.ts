@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
-  MANUAL_CHAPTERS, MANUAL_LANGS, blockShape, chapterTitle, manualUi, parseInline, parseManual,
+  MANUAL_CHAPTERS, MANUAL_LANGS, MANUAL_LANG_NAMES, blockShape, chapterTitle, isManualLang, manualUi, parseInline, parseManual,
 } from '@/lib/manual';
 
 // THE PERMACULTURE MANUAL (app/manual). Chapter text is Markdown in content/manual/<lang>/, written
@@ -95,6 +95,25 @@ test('UI strings: English complete, translated languages complete, placeholders 
     }
     assert.ok(own.minutes.includes('{n}'), `${lang}/ui.json "minutes" must keep the {n} placeholder`);
   }
+});
+
+test('paused Xitsonga manual drafts stay on disk but are excluded from public routes and pickers', () => {
+  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've']);
+  assert.deepEqual(Object.keys(MANUAL_LANG_NAMES), MANUAL_LANGS);
+  assert.equal(isManualLang('ts'), false, 'the route guard must reject /manual/ts');
+
+  const pausedDrafts = readdirSync(path.join(ROOT, 'content', 'manual', 'ts')).filter(name => name.endsWith('.md'));
+  assert.ok(pausedDrafts.length >= 12, 'the existing Xitsonga chapter drafts remain on disk');
+  assert.ok(existsSync(file('ts', '00-introduction')), 'the introduction draft remains available for later review');
+  assert.ok(existsSync(path.join(ROOT, 'content', 'manual', 'ts', 'ui.json')));
+
+  // Both dynamic routes use this allowlist for static params and reject unknown languages.
+  const contentsRoute = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', 'page.tsx'), 'utf8');
+  const chapterRoute = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', '[slug]', 'page.tsx'), 'utf8');
+  assert.match(contentsRoute, /dynamicParams = false/);
+  assert.match(contentsRoute, /MANUAL_LANGS\.map\(\(lang\) => \(\{ lang \}\)\)/);
+  assert.match(chapterRoute, /dynamicParams = false/);
+  assert.match(chapterRoute, /MANUAL_LANGS\.flatMap\(/);
 });
 
 test('the menu links to the manual', () => {
