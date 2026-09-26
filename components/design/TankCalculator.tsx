@@ -20,9 +20,9 @@ const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
-// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// (CLAUDE.md); keep OCHRE itself for fills and borders.
-const GOLD_DIM = '#7A4408';
+// Ochre is a FILL — as text on paper it measures 2.54:1. var(--gold-dim) is the theme-aware dim
+// variant for text (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = 'var(--gold-dim)';
 const BLUE = '#3E8FBF'; // STEP_ACCENT.water
 
 const DEFAULT_ROOF_M2 = 80;

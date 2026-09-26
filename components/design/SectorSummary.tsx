@@ -26,9 +26,9 @@ const PAPER = '#FFFEFA';
 const DARK = '#20190F';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E'; // STEP_ACCENT.sector
-// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// (CLAUDE.md); keep OCHRE itself for fills and borders.
-const GOLD_DIM = '#7A4408';
+// Ochre is a FILL — as text on paper it measures 2.54:1. var(--gold-dim) is the theme-aware dim
+// variant for text (CLAUDE.md); keep OCHRE itself for fills and borders.
+const GOLD_DIM = 'var(--gold-dim)';
 const DOT_SUN = '#F7C97E';
 const DOT_WIND = '#E08A2C';
 const DOT_FIRE = '#D64A2A';
