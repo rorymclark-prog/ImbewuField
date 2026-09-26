@@ -16,7 +16,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
   },
   "description": {
     "sourceEnglish": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
-    "sesothoDraft": "Tokiso ya dilae, temo e tlatsanang ka tatelano, dijalo tsa sehlooho le taolo ya disenyi — mosebetsi wa letsatsi le letsatsi wa ho lema dijo.",
+    "sesothoDraft": "Tokiso ya dibethe tsa serapa, temo e tlatsanang ka tatelano, dijalo tsa sehlooho le taolo ya disenyi — mosebetsi wa letsatsi le letsatsi wa ho lema dijo.",
     "reviewStatus": "machine-draft"
   },
   "lessons": [
@@ -24,12 +24,12 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       "id": "vegetables-staples-l1",
       "infographicAlt": {
         "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
-        "sesothoDraft": "Lae e phahamisitsweng e bophara bo ka bang dimithara tse 1.2, e nang le ditsela mahlakoreng ka bobedi, e le hore motho a kgone ho fihlela bohareng ho tswa lehlakoreng lefe kapa lefe ntle le ho hata mobung o lemang le ka mohla.",
+        "sesothoDraft": "Bethe ya serapa e phahamisitsweng e bophara bo ka bang dimithara tse 1.2, e nang le ditsela mahlakoreng ka bobedi, e le hore motho a kgone ho fihlela bohareng ho tswa lehlakoreng lefe kapa lefe ntle le ho hata mobung o lemang le ka mohla.",
         "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Preparing and Planting Your Beds",
-        "sesothoDraft": "Ho Lokisa le ho Lema Dilae tsa Hao",
+        "sesothoDraft": "Ho Lokisa le ho Lema Dibethe tsa serapa tsa Hao",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -40,12 +40,12 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
-          "sesothoDraft": "Boloka dilae di le bophara ba 1-1.2m e le hore o se ke wa hloka ho hata sebakeng sa temo le ka mohla",
+          "sesothoDraft": "Boloka dibethe tsa serapa di le bophara ba 1-1.2m e le hore o se ke wa hloka ho hata sebakeng sa temo le ka mohla",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
-          "sesothoDraft": "Hlahloba ho katana le phallo ya metsi pele o kgetha temo e tebileng; o se ke wa sebetsa mobu o mongobo wa letsopa",
+          "sesothoDraft": "Hlahloba ho kitlana le phallo ya metsi pele o kgetha temo e tebileng; o se ke wa sebetsa mobu o mongobo wa letsopa",
           "reviewStatus": "machine-draft"
         },
         {
@@ -63,23 +63,23 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            "sesothoDraft": "Ke hobaneng ha o lokela ho boloka lae ya meroho e le bophara ba 1-1.2m ho e na le e pharaletseng ho feta moo?",
+            "sesothoDraft": "Ke hobaneng ha o lokela ho boloka bethe ya serapa ya meroho e le bophara ba 1-1.2m ho e na le e pharaletseng ho feta moo?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Wider beds get too much sun",
-              "sesothoDraft": "Dilae tse pharaletseng di fumana letsatsi le lengata haholo",
+              "sesothoDraft": "Dibethe tsa serapa tse pharaletseng di fumana letsatsi le lengata haholo",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
-              "sesothoDraft": "O ka fihlela bohareng ho tswa lehlakoreng lefe kapa lefe ntle le ho hata hodima sebaka sa temo, ho qoba ho katana ha mobu",
+              "sesothoDraft": "O ka fihlela bohareng ho tswa lehlakoreng lefe kapa lefe ntle le ho hata hodima sebaka sa temo, ho qoba ho kitlana ha mobu",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Narrow beds drain better in all conditions",
-              "sesothoDraft": "Dilae tse tshesane di tsholola metsi hantle maemong wohle",
+              "sesothoDraft": "Dibethe tsa serapa tse tshesane di tsholola metsi hantle maemong ohle",
               "reviewStatus": "machine-draft"
             },
             {
@@ -91,7 +91,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
-            "sesothoDraft": "Ho hata hodima mobu o lemang ho a o kata mme ho senya metso — lae eo o ka e fihlelang bohareng ho tswa mahlakoreng ka bobedi e bolela hore ha o na ho hloka ho etsa jwalo le ka mohla.",
+            "sesothoDraft": "Ho hata hodima mobu o lemang ho a o kitlanya mme ho senya metso — bethe ya serapa eo o ka e fihlelang bohareng ho tswa mahlakoreng ka bobedi e bolela hore ha o na ho hloka ho etsa jwalo le ka mohla.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -119,14 +119,14 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Peppers, which are slow to germinate",
-              "sesothoDraft": "Pelepele, e liehang ho mela",
+              "sesothoDraft": "Pelepele, e diehang ho mela",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
-            "sesothoDraft": "Dinawa le dijalo tse ding tse potlakang, tse nang le metso e bonolo ha di hole hantle ka mora ho tshwenngwa ke ho hlomjwa — ho di jala thwii ka laeng ho qoba tshitiso eo ka botlalo.",
+            "sesothoDraft": "Dinawa le dijalo tse ding tse potlakang, tse nang le metso e bonolo ha di hole hantle ka mora ho tshwenngwa ke ho hlomjwa — ho di jala thwii ka betheng ya serapa ho qoba tshitiso eo ka botlalo.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -136,7 +136,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       "id": "vegetables-staples-l2",
       "infographicAlt": {
         "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
-        "sesothoDraft": "Lae e le nngwe mahleng a mararo: sejalo se potlakang se a kotulwa, jwale jalo e ntjha e kenngwa pela sejalo se diehang se ntseng se hola, e le hore lae e se ke ya dula e se na letho.",
+        "sesothoDraft": "Bethe ya serapa e le nngwe mahleng a mararo: sejalo se potlakang se a kotulwa, jwale jalo e ntjha e kenngwa pela sejalo se diehang se ntseng se hola, e le hore bethe ya serapa e se ke ya dula e se na letho.",
         "reviewStatus": "machine-draft"
       },
       "title": {
@@ -146,7 +146,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Succession planting is a calendar habit, not a special crop.\n\nChoose something your household actually eats often. Then sow a small amount of it, again and again.\n\nPlant a short row every two to three weeks.\n\nLess waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.\n\nSeparate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.\n\nWhich fast crop could you sow in small batches? Decide on one, and start it this week.\n\nHere's what it looks like in practice.\n\nSow one. Then two to three weeks later, sow two. Then sow three. Then sow four.\n\nWith suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.\n\nTwo to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.\n\nWatch what your own garden does, and adjust the interval. That observation is the skill.\n\nIntercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.\n\nThe Three Sisters is an example from Indigenous farming traditions in the Americas.\n\nMaize gives height and structure.\n\nBeans climb the maize, and store as protein.\n\nPumpkin spreads across the ground, shading the soil and holding moisture.\n\nTiming matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThe plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nA household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nDon't copy somebody else's calendar. Name your own months first.\n\nWrite them down. Then choose the crop and the sowing date that puts food into that gap.\n\nThat's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
-        "sesothoDraft": "Temo e latellanang ke mokgwa wa almanaka, eseng sejalo se kgethehileng.\n\nKgetha ntho eo ba lelapa la hao ba hlileng ba e jang kgafetsa. Ebe o jala e nyane ya yona, khafetsa le hape.\n\nJala mola o mokgutshwane dibeke dingwe le dingwe tse pedi ho isa ho tse tharo.\n\nTshenyo e fokolang nakong ya ha di le ngata haholo. Dijo tse foreshe ka nako e telele. Mme mosebetsi o a arohana hohle sehleng ho e na le ho wela hodima hao kaofela ka nako e le nngwe.\n\nDijalo tse arohaneng di ka fokotsa kotsi ya ho lahlehelwa ke tsohle hang-hang. Ha di netefatse kotulo haeba maemo a thata a tswela pele.\n\nKe sejalo sefe se potlakang seo o ka se jalang ka dihlopha tse nyane? Etsa qeto ka se le seng, mme o se qale bekeng ena.\n\nKe sena seo e shebahalang ka teng tshebetsong.\n\nJala ya pele. Ebe dibeke tse pedi ho isa ho tse tharo hamorao, o jala ya bobedi. Ebe o jala ya boraro. Ebe o jala ya bone.\n\nKa nako e nepahetseng ya sejalo, dikotulo di ka qala ho kopana. Sehlopha sa pele ha se na ho dula se lokile kamehla ka nako ya jalo ya bone.\n\nDibeke tse pedi ho isa ho tse tharo ke morethetho wa ho qala, eseng molao. Sejalo sa mahlaku sa sehla se batang se ka nka nako e telele. Mofuthu o ka potlakisa dintho, kapa wa baka ho hloleha.\n\nSheba se etsahalang jareteng ya hao, mme o fetole nako ya kgefutso. Pono eo ke bokgoni.\n\nTemo e kopantsweng ha se feela ho pitlaganya dimela tse fapaneng mmoho. Semela ka seng se hloka mosebetsi, le sebaka se lekaneng sa ho o etsa.\n\nKgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matswallo a Amerika (Indigenous farming traditions in the Americas).\n\nPoone e fana ka bophahamo le sebopeho.\n\nDinawa di hlwella pooneng, mme di bolokeha jwalo ka protheine.\n\nMopotse o nama fatshe, o etsa moriti mobung le ho boloka mongobo.\n\nNako e bohlokwa. Hlahisa poone pele, e le hore e be matla a lekaneng ho jara dinawa ha di qala ho hlwella.\n\nDimela di ntse di ka qothisana lehlokoa. Di fe sebaka se loketseng, metsi le lesedi. Dinawa di tlama naeterojene ka baktheriya ya metso, empa o se ke wa nahana hore di fepa poone hang-hang; phepo e matlakaleng a setseng e lokollwa nakong ya ha a bola.\n\nLelapa le ka ba le nako ya sekgeo sa tlala (hungry gap): dibeke tseo ka tsona dijo tse bolokilweng di fellang pele kotulo e latelang e loka.\n\nYa hao e ka tla ka mora hore poone e bolokilweng e fele. E ka tla pele meroho ya mariha e loka. E ka tla nakong ya komello ha metsi a lekanyetsa jarete.\n\nO se ke wa kopitsa almanaka ya motho e mong. Reha dikgwedi tsa hao pele.\n\nDi ngole fatshe. Ebe o kgetha sejalo le letsatsi la ho jala le kenyang dijo sekgeong seo.\n\nEo ke thero e qalellang morao, mme ke phapang dipakeng tsa jarete e shebahalang e hlahisa le lelapa le jang.",
+        "sesothoDraft": "Temo e latellanang ke mokgwa wa almanaka, eseng sejalo se kgethehileng.\n\nKgetha ntho eo ba lelapa la hao ba hlileng ba e jang kgafetsa. Ebe o jala e nyane ya yona, kgafetsa le hape.\n\nJala mola o mokgutshwane dibeke dingwe le dingwe tse pedi ho isa ho tse tharo.\n\nTshenyo e fokolang nakong ya ha di le ngata haholo. Dijo tse foreshe ka nako e telele. Mme mosebetsi o a arohana hohle sehleng ho e na le ho wela hodima hao kaofela ka nako e le nngwe.\n\nDijalo tse arohaneng di ka fokotsa kotsi ya ho lahlehelwa ke tsohle hang-hang. Ha di netefatse kotulo haeba maemo a thata a tswela pele.\n\nKe sejalo sefe se potlakang seo o ka se jalang ka dihlopha tse nyane? Etsa qeto ka se le seng, mme o se qale bekeng ena.\n\nKe sena seo e shebahalang ka teng tshebetsong.\n\nJala ya pele. Ebe dibeke tse pedi ho isa ho tse tharo hamorao, o jala ya bobedi. Ebe o jala ya boraro. Ebe o jala ya bone.\n\nKa nako e nepahetseng ya sejalo, dikotulo di ka qala ho kopana. Sehlopha sa pele ha se na ho dula se lokile kamehla ka nako ya jalo ya bone.\n\nDibeke tse pedi ho isa ho tse tharo ke morethetho wa ho qala, eseng molao. Sejalo sa mahlaku sa sehla se batang se ka nka nako e telele. Mofuthu o ka potlakisa dintho, kapa wa baka ho hloleha.\n\nSheba se etsahalang jareteng ya hao, mme o fetole nako ya kgefutso. Pono eo ke bokgoni.\n\nTemo e kopantsweng ha se feela ho pitlaganya dimela tse fapaneng mmoho. Semela ka seng se hloka mosebetsi, le sebaka se lekaneng sa ho o etsa.\n\nKgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matswallo a Amerika (Indigenous farming traditions in the Americas).\n\nPoone e fana ka bophahamo le sebopeho.\n\nDinawa di hlwella pooneng, mme di bolokeha jwalo ka protheine.\n\nMokopu o nama fatshe, o etsa moriti mobung le ho boloka mongobo.\n\nNako e bohlokwa. Hlahisa poone pele, e le hore e be matla a lekaneng ho jara dinawa ha di qala ho hlwella.\n\nDimela di ntse di ka qothisana lehlokwa. Di fe sebaka se loketseng, metsi le lesedi. Dinawa di tlama naetrojene ka baktheriya ya metso, empa o se ke wa nahana hore di fepa poone hang-hang; phepo e matlakaleng a setseng e lokollwa nakong ya ha a bola.\n\nLelapa le ka ba le nako ya sekgeo sa tlala (hungry gap): dibeke tseo ka tsona dijo tse bolokilweng di fellang pele kotulo e latelang e loka.\n\nYa hao e ka tla ka mora hore poone e bolokilweng e fele. E ka tla pele meroho ya mariha e loka. E ka tla nakong ya komello ha metsi a lekanyetsa jarete.\n\nO se ke wa kopitsa almanaka ya motho e mong. Reha dikgwedi tsa hao pele.\n\nDi ngole fatshe. Ebe o kgetha sejalo le letsatsi la ho jala le kenyang dijo sekgeong seo.\n\nEo ke thero e qalellang morao, mme ke phapang dipakeng tsa jarete e shebahalang e hlahisa le lelapa le jang.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -210,7 +210,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
-            "sesothoDraft": "Ke neng moo naeterojene e setseng matlakaleng a sejalo sa dinawa e ka fumanwang ke dimela tse ding?",
+            "sesothoDraft": "Ke neng moo naetrojene e setseng matlakaleng a sejalo sa dinawa e ka fumanwang ke dimela tse ding?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -226,7 +226,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Only when pumpkin leaves shade them",
-              "sesothoDraft": "Feela ha mahlaku a mopotse a a etsetsa moriti",
+              "sesothoDraft": "Feela ha mahlaku a mokopu a a etsetsa moriti",
               "reviewStatus": "machine-draft"
             },
             {
@@ -238,7 +238,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
-            "sesothoDraft": "Dinawa di tlama naeterojene ka baktheriya e nepahetseng ya metso. Naeterojene e matlakaleng a tsona e lokollwa ka ho bola; ho lema dinawa pela poone ha ho netefatse phepo ya hang-hang.",
+            "sesothoDraft": "Dinawa di tlama naetrojene ka baktheriya e nepahetseng ya metso. Naetrojene e matlakaleng a tsona e lokollwa ka ho bola; ho lema dinawa pela poone ha ho netefatse phepo ya hang-hang.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -269,7 +269,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
-          "sesothoDraft": "Dinawa ke sejalo sa bohlokwa sa protheine — se hlahisang haholo, se bolokehang, ebile se tlama naeterojene",
+          "sesothoDraft": "Dinawa ke sejalo sa bohlokwa sa protheine — se hlahisang haholo, se bolokehang, ebile se tlama naetrojene",
           "reviewStatus": "machine-draft"
         },
         {
@@ -279,7 +279,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
-          "sesothoDraft": "Amadumbe (taro) ke sejalo sa setso sa sehlooho se sa sebedisweng ka botlalo se loketseng mobu o mongobo haholoanyane wa KZN le wa mabopong",
+          "sesothoDraft": "Amadumbe (taro) ke sejalo sa setso sa sehlooho se sa sebedisweng ka botlalo se loketseng mobu o mongobo haholwanyane wa KZN le wa mabopong",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -315,7 +315,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
-            "sesothoDraft": "Peo e bolokilweng ho tswa ho F1 hybrid e ka mela, empa moloko o latelang o ka fapana. Mofuta o tsitsitseng wa open-pollinated o nang le taolo ya tsamaiso ya peo o ka tshepahalang haholoanyane ha ho bolokwa peo.",
+            "sesothoDraft": "Peo e bolokilweng ho tswa ho F1 hybrid e ka mela, empa moloko o latelang o ka fapana. Mofuta o tsitsitseng wa open-pollinated o nang le taolo ya tsamaiso ya peo o ka tshepahalang haholwanyane ha ho bolokwa peo.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -405,7 +405,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "An improvised stronger mixture",
-              "sesothoDraft": "Motswako o itlhametsweng o matla haholoanyane",
+              "sesothoDraft": "Motswako o itlhametsweng o matla haholwanyane",
               "reviewStatus": "machine-draft"
             },
             {

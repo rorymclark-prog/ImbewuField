@@ -859,6 +859,7 @@ export const T_en: Dict = {
   navFieldJournal: 'Field Journal',
   navTaskPlanner: 'Task Planner',
   navPlantingCalendar: 'Planting Calendar',
+  navManual: 'Permaculture Manual',
   navGardenSurvey: 'Garden Survey',
   openSurveyNoSiteTitle: 'Save a site first',
   openSurveyNoSiteMessage: 'The garden survey belongs to a saved site. Tap a spot on the map and save it, then open the survey from there.',
