@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '5b259cfe', changes: [
+    'Community, Contact and the first-run welcome now follow dark mode.',
+    'The privacy consent screen reads clearly in every theme.',
+  ], tour: [
+    { title: 'Visit the community', where: 'Community', href: '/community',
+      detail: 'Posts, buttons and errors now use your theme colours.' },
+    { title: 'Send us a message', where: 'Contact', href: '/contact',
+      detail: 'The contact form now reads clearly in dark mode.' },
+  ] },
   { when: '26 September 2026', sha: 'd4029ab6', changes: [
     'The Garden Survey camera tip shows its isiZulu draft beside the English source.',
   ] },
