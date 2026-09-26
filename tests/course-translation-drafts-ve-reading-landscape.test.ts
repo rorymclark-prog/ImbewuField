@@ -2,11 +2,44 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import type { Lesson } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ve-small-livestock.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
+
+test('Tshivenda Market lesson drafts retain exact English guidance around short descriptive drafts', () => {
+  const market = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(market);
+  assert.deepEqual(TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.map(lesson => lesson.id),
+    ['market-community-l1', 'market-community-l3', 'market-community-l2']);
+  for (const lessonId of ['market-community-l1', 'market-community-l3']) {
+    const source: Lesson | undefined = market.lessons.find(lesson => lesson.id === lessonId);
+    const draft = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === lessonId);
+    assert.ok(source);
+    assert.ok(draft);
+    assert.equal(draft.title.sourceEnglish, source.title);
+    assert.equal(draft.body.sourceEnglish, source.body);
+    assert.equal(draft.infographicAlt?.sourceEnglish, source.infographicAlt);
+    assert.deepEqual(draft.keyPoints.map(point => point.tshivendaDraft), source.keyPoints);
+    assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
+    const shown = resolveLearnerLessonPresentation(source, 've');
+    assert.equal(shown.status, 'draft');
+    assert.deepEqual(shown.content.quiz, source.quiz);
+    assert.deepEqual(shown.content.keyPoints, source.keyPoints);
+    const originalParagraphs: string[] = source.body.split('\n\n');
+    const shownParagraphs: string[] = shown.content.body.split('\n\n');
+    assert.equal(shownParagraphs.length, originalParagraphs.length);
+    const translatedIndex = lessonId === 'market-community-l1' ? 0 : 9;
+    for (const [index, paragraph] of originalParagraphs.entries()) {
+      if (index === translatedIndex) assert.notEqual(shownParagraphs[index], paragraph);
+      else assert.equal(shownParagraphs[index], paragraph);
+    }
+    assert.equal(resolveLearnerLessonPresentation({ ...source, body: `${source.body} Changed.` }, 've').status,
+      'english-fallback');
+  }
+});
 
 test('Reading the Landscape Tshivenda draft stays paired to every exact Study source field', () => {
   const draft = TSHIVENDA_READING_LANDSCAPE_DRAFT;
@@ -124,7 +157,8 @@ test('Tshivenda Market L2 shows only the checked cost comparison draft and falls
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
   assert.ok(sourceLesson);
-  const lesson = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons[0];
+  const lesson = TSHIVENDA_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === sourceLesson.id);
+  assert.ok(lesson);
 
   assert.equal(lesson.id, sourceLesson.id);
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);

@@ -1,13 +1,47 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import type { Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/course-translation-drafts-ts.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
+
+test('Xitsonga Market drafts change only descriptive lesson text and keep decisions and quizzes in English', () => {
+  const market = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(market);
+  assert.deepEqual(XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.map(lesson => lesson.id),
+    ['market-community-l1', 'market-community-l3']);
+
+  for (const draftLesson of XITSONGA_MARKET_COMMUNITY_DRAFT.lessons) {
+    const sourceLesson: Lesson | undefined = market.lessons.find(lesson => lesson.id === draftLesson.id);
+    assert.ok(sourceLesson);
+    assert.equal(draftLesson.title.sourceEnglish, sourceLesson.title);
+    assert.equal(draftLesson.body.sourceEnglish, sourceLesson.body);
+    assert.equal(draftLesson.infographicAlt?.sourceEnglish, sourceLesson.infographicAlt);
+    assert.deepEqual(draftLesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+    assert.deepEqual(draftLesson.keyPoints.map(point => point.xitsongaDraft), sourceLesson.keyPoints);
+    assert.deepEqual(draftLesson.quiz.map(question => question.sourceCorrectIndex), sourceLesson.quiz.map(question => question.correct));
+    const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+    assert.equal(shown.status, 'draft');
+    assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
+    assert.deepEqual(shown.content.keyPoints, sourceLesson.keyPoints);
+    const sourceParagraphs: string[] = sourceLesson.body.split('\n\n');
+    const draftParagraphs: string[] = shown.content.body.split('\n\n');
+    assert.equal(draftParagraphs.length, sourceParagraphs.length);
+    const translatedIndex = draftLesson.id === 'market-community-l1' ? 0 : 9;
+    for (const [index, paragraph] of sourceParagraphs.entries()) {
+      if (index === translatedIndex) assert.notEqual(draftParagraphs[index], paragraph);
+      else assert.equal(draftParagraphs[index], paragraph);
+    }
+    const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body} Changed.` };
+    assert.equal(resolveLearnerLessonPresentation(changedSource, 'ts').status, 'english-fallback');
+  }
+});
 
 test('only Water lesson one is shown as a Xitsonga learner draft while earthwork quiz answers remain English', () => {
   const module = resolveCourseModulePresentation(source, 'ts');
