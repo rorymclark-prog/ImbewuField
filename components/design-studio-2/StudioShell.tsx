@@ -322,7 +322,7 @@ export default function StudioShell() {
         }
       `}</style>
       <IdentityBar
-        siteName="Ubhejane Crèche"
+        siteName="Sample garden"
         onUndo={handleUndo}
         onRedo={handleRedo}
         canUndo={past.length > 0}
