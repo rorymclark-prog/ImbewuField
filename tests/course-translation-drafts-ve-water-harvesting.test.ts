@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
+import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
@@ -183,4 +184,89 @@ test('Soil Health Tshivenda review data stays source-paired and holds every inst
   assert.equal(heldFields, 54, 'hold every illustration description, body, key point and quiz field');
   assert.equal(resolveCourseModulePresentation(source, 've').status, 'english-fallback',
     'review data alone must not expose this module in Study before explicit wiring');
+});
+
+test('Tshivenda Food Forest L1 draft keeps only bounded teaching text translated and preserves the planting safeguards', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'food-forest');
+  assert.ok(source, 'Food Forest must remain paired to the canonical English module');
+  const draft = TSHIVENDA_FOOD_FOREST_DRAFT;
+  assert.equal(draft.reviewStatus, 'machine-draft');
+  assert.equal(draft.language, 've');
+  assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
+  assert.equal(draft.sourceMetadata.category, source.category);
+  assert.equal(draft.lessons.length, 1, 'only the requested L1 learner draft is included');
+  assert.equal(draft.lessons[0].id, 'food-forest-l1');
+
+  const lesson = source.lessons.find(item => item.id === 'food-forest-l1');
+  assert.ok(lesson, 'the canonical L1 must remain available');
+  const lessonDraft = draft.lessons[0];
+  const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string) => {
+    assert.equal(pair.sourceEnglish, english, `${path}: keep the canonical English beside its draft`);
+    assert.ok(pair.tshivendaDraft.trim(), `${path}: keep a draft or exact-English hold`);
+    if (pair.reviewStatus === 'hold') assert.equal(pair.tshivendaDraft, english, `${path}: hold must remain exact English`);
+    else assert.equal(pair.reviewStatus, 'machine-draft', `${path}: unreviewed wording must remain labelled`);
+  };
+
+  checkPair(draft.title, source.title, 'module.title');
+  checkPair(draft.description, source.description, 'module.description');
+  checkPair(lessonDraft.title, lesson.title, 'lesson.title');
+  assert.ok(lesson.infographicAlt);
+  assert.ok(lessonDraft.infographicAlt);
+  checkPair(lessonDraft.infographicAlt, lesson.infographicAlt, 'lesson.infographicAlt');
+  assert.doesNotMatch(lesson.infographicAlt, /root crops|seven layers/i,
+    'the actual diagram shows woody roots and overlapping heights, not identifiable root crops or seven countable layers');
+  assert.equal(lessonDraft.infographicAlt.reviewStatus, 'hold',
+    'the corrected image description needs a new Tshivenda translation');
+  checkPair(lessonDraft.body, lesson.body, 'lesson.body');
+  const originalParagraphs = lesson.body.split('\n\n');
+  const draftParagraphs = lessonDraft.body.tshivendaDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, 13, 'the body keeps all thirteen original paragraph boundaries');
+  for (const index of [0, 2, 3, 4, 5, 6]) {
+    assert.notEqual(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} carries its machine draft`);
+  }
+  for (const index of [1, 7, 8, 9, 10, 11, 12]) {
+    assert.equal(draftParagraphs[index], originalParagraphs[index], `paragraph ${index + 1} stays exact English`);
+  }
+  assert.equal(lessonDraft.keyPoints.length, lesson.keyPoints.length);
+  for (const [index, point] of lessonDraft.keyPoints.entries()) {
+    checkPair(point, lesson.keyPoints[index], `keyPoints[${index}]`);
+    assert.equal(point.reviewStatus, index === 0 ? 'machine-draft' : 'hold');
+  }
+  assert.equal(lessonDraft.quiz.length, lesson.quiz.length);
+  for (const [index, question] of lessonDraft.quiz.entries()) {
+    const originalQuestion: (typeof lesson.quiz)[number] = lesson.quiz[index];
+    checkPair(question.question, originalQuestion.q, `quiz[${index}].question`);
+    assert.equal(question.options.length, originalQuestion.options.length);
+    for (const [optionIndex, option] of question.options.entries()) {
+      checkPair(option, originalQuestion.options[optionIndex], `quiz[${index}].options[${optionIndex}]`);
+    }
+    assert.equal(question.sourceCorrectIndex, originalQuestion.correct, `quiz[${index}]: retain source answer index`);
+    assert.equal(question.options[question.sourceCorrectIndex].sourceEnglish, originalQuestion.options[originalQuestion.correct]);
+    checkPair(question.rationale, originalQuestion.rationale, `quiz[${index}].rationale`);
+  }
+
+  const sensitiveEnglish = [
+    'Wild Fig', 'pecan', 'lemon', 'naartjie', 'black mulberry', 'Cape gooseberry', 'Wild Medlar',
+    'wild garlic', 'sweet potato', 'granadilla', 'local restrictions', 'frost tolerance', 'fixed birthday',
+  ];
+  for (const term of sensitiveEnglish) {
+    assert.ok(lessonDraft.body.tshivendaDraft.includes(term), `source-sensitive content remains present: ${term}`);
+  }
+
+  const modulePresentation = resolveCourseModulePresentation(source, 've');
+  assert.equal(modulePresentation.status, 'draft');
+  assert.equal(modulePresentation.title, draft.title.tshivendaDraft);
+  assert.equal(modulePresentation.description, draft.description.tshivendaDraft);
+  const learnerPresentation = resolveLearnerLessonPresentation(lesson, 've');
+  assert.equal(learnerPresentation.status, 'draft');
+  assert.equal(learnerPresentation.content.title, lessonDraft.title.tshivendaDraft);
+  assert.equal(learnerPresentation.content.body, lessonDraft.body.tshivendaDraft);
+  assert.equal(learnerPresentation.content.keyPoints[0], lessonDraft.keyPoints[0].tshivendaDraft);
+  assert.deepEqual(learnerPresentation.content.keyPoints.slice(1), lesson.keyPoints.slice(1));
+  assert.deepEqual(learnerPresentation.content.quiz, lesson.quiz, 'all quiz fields stay English');
+  assert.equal(learnerPresentation.content.infographicAlt, lessonDraft.infographicAlt.tshivendaDraft);
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
+    'english-fallback', 'a changed English source withdraws the whole paired lesson draft');
+  assert.equal(resolveCourseModulePresentation({ ...source, description: `${source.description} changed` }, 've').status,
+    'english-fallback', 'a changed module source withdraws its paired card draft');
 });

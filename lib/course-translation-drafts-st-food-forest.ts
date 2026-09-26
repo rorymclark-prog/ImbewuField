@@ -23,9 +23,9 @@ export const SESOTHO_FOOD_FOREST_DRAFT: SesothoCourseModuleDraft = {
     {
       "id": "food-forest-l1",
       "infographicAlt": {
-        "sourceEnglish": "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
-        "sesothoDraft": "Moru oa lijo o bontšitsoeng ho tloha lehlakoreng, o bontša mekhahlelo e supileng e hlophisitsoeng ho tloha lifateng tse telele tsa canopy ho theosa ka lifate tse nyane, lihlahla, litlama le limela tse koahelang mobu, ka lijalo tsa metso ka tlas'a mobu le semela se hloang kutung ea sefate. Khanya ea letsatsi e fihla tlaase lipakeng tsa mekhahlelo.",
-        "reviewStatus": "machine-draft"
+        "sourceEnglish": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
+        "sesothoDraft": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
+        "reviewStatus": "hold"
       },
       "title": {
         "sourceEnglish": "The Seven Layers: How a Forest Feeds Itself",
