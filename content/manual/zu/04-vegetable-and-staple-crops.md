@@ -30,7 +30,7 @@ Ithanele lepulasitiki noma indlu yezitshalo (greenhouse) igcina izitshalo zifudu
 Ngaphambi kokuthi uqale, qiniseka ukuthi lokho okwakhayo yikho ngempela okufunayo. Yiba neqiniso ngokuthi **isikhathi**, **imali** **nentshisekelo** onakho ngokulima kungakanani.
 
 1. Yenza **ukuhlola indlela ophila ngayo** okulula (lifestyle audit). Bhala phansi ukuthi ungayinika ingadi amahora amangaki ngesonto, ukuthi ufunani kuyo (ukudla komndeni, imali, noma kokubili) nokuthi ungayisebenzisa malini.
-2. Uma unesikhathi esincane, gcina uhlelo lulula. Tshala izitshalo eziningi **ezihlala iminyaka** (perennials) — izitshalo eziphila iminyaka eminingi, njengezihlahla zezithelo, amakhambi ne-asparagus — futhi wonge umsebenzi ngamathuluzi afana nokunisela ngamaconsi nesikhathi sompompi (tap timer).
+2. Uma unesikhathi esincane, gcina uhlelo lulula. Tshala izitshalo eziningi **ezihlala iminyaka eminingi** (perennials) — izitshalo eziphila iminyaka eminingi, njengezihlahla zezithelo, amakhambi ne-asparagus — futhi wonge umsebenzi ngamathuluzi afana nokunisela ngamaconsi nesikhathi sompompi (tap timer).
 3. Uma ufuna ukulimela imali futhi unesikhathi, amandla nezinsiza, ingadi enkulu nesebenza kakhulu ingakufanela.
 
 Klama izingadi zakho ukuze zihambisane nezimpendulo zakho. Ingadi enkulu ongakwazi ukuyinakekela izoshesha ibe ingadi egcwele ukhula, echithekile.
@@ -48,7 +48,7 @@ Tshala izitshalo ozikha nsuku zonke:
 - otamatisi abancane (cherry tomatoes)
 - amakhambi owasebenzisa ekuphekeni, njenge-parsley, i-coriander, u-anyanisi omncane (spring onions) ne-thyme
 
-Iningi lezitshalo lapha **yizitshalo zenkathi eyodwa** (annuals) — eziphila isizini eyodwa kuphela — kanye namakhambi ambalwa ahlala iminyaka.
+Iningi lezitshalo lapha **yizitshalo zonyaka owodwa** (annuals) — eziphila isizini eyodwa kuphela — kanye namakhambi ambalwa ahlala iminyaka.
 
 ### Tshala uminyanise, unakekele eduze
 
