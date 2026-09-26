@@ -189,7 +189,7 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   assert.equal(draft.description.sesothoDraft,
     'Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.');
   assert.equal(draft.description.reviewStatus, 'machine-draft');
-  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1']);
+  assert.deepEqual(draft.lessons.map(lesson => lesson.id), ['market-community-l1', 'market-community-l2']);
 
   const lesson = draft.lessons[0];
   assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
@@ -240,4 +240,41 @@ test('Sesotho Market L1 keeps uncertain record units, finance, and quiz guidance
   const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
   assert.equal(stalePresentation.status, 'english-fallback', 'changed English source must withdraw a stale review draft');
   assert.equal(stalePresentation.content.body, changedSource.body);
+});
+
+test('Sesotho Market L2 shows the cost comparison draft while held selling advice stays English', () => {
+  const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
+  assert.ok(sourceModule);
+  const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l2');
+  assert.ok(sourceLesson);
+  const lesson = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons.find(item => item.id === sourceLesson.id);
+  assert.ok(lesson);
+
+  assert.equal(lesson.body.reviewStatus, 'hold');
+  assert.equal(lesson.body.sourceEnglish, sourceLesson.body);
+  assert.equal(lesson.title.reviewStatus, 'hold');
+  assert.equal(lesson.title.sourceEnglish, sourceLesson.title);
+  assert.deepEqual(lesson.keyPoints.map(point => point.sourceEnglish), sourceLesson.keyPoints);
+  assert.equal(lesson.keyPoints[1].reviewStatus, 'machine-draft');
+  assert.equal(lesson.keyPoints[1].sesothoDraft, 'Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso');
+  for (const index of [0, 2, 3]) {
+    assert.equal(lesson.keyPoints[index].reviewStatus, 'hold');
+    assert.equal(lesson.keyPoints[index].sesothoDraft, sourceLesson.keyPoints[index]);
+  }
+
+  const presentation = resolveLearnerLessonPresentation(sourceLesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.keyPoints[1], lesson.keyPoints[1].sesothoDraft);
+  assert.equal(presentation.content.keyPoints[0], sourceLesson.keyPoints[0]);
+  assert.equal(presentation.content.keyPoints[2], sourceLesson.keyPoints[2]);
+  assert.equal(presentation.content.body, sourceLesson.body);
+  assert.deepEqual(presentation.content.quiz, sourceLesson.quiz);
+
+  const changedSource = {
+    ...sourceLesson,
+    keyPoints: sourceLesson.keyPoints.map((point, index) => index === 1 ? `${point} ` : point),
+  };
+  const stalePresentation = resolveLearnerLessonPresentation(changedSource, 'st');
+  assert.equal(stalePresentation.status, 'english-fallback');
+  assert.deepEqual(stalePresentation.content.keyPoints, changedSource.keyPoints);
 });

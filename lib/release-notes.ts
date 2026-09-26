@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '7425ed0f', changes: [
+    'Sesotho learners can read a marked draft about comparing selling costs and losses.',
+  ], tour: [
+    { title: 'Check the selling lesson', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2; compare its cost-and-loss key point with the English source. Other lesson guidance remains in English.' },
+  ] },
   { when: '26 September 2026', sha: '66d3c94b', changes: [
     'Sesotho drafts now explain Market surplus and household food records.',
   ], tour: [
