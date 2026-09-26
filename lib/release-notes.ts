@@ -42,6 +42,18 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '719f440b', changes: [
+    'Tshivenda Introduction keeps uncertain advice and the wet-season minimum in English.',
+    'Tshivenda Food Forest and Sesotho Bees add marked draft text beside English.',
+    'These lessons still use English slides and narration.',
+  ], tour: [
+    { title: 'Compare the Introduction wording', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2; uncertain wording remains in English.' },
+    { title: 'Compare the Food Forest draft', where: 'Study → Food Forest', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 2 to compare the heading and habitat sentence with English.' },
+    { title: 'Compare the Bees draft', where: 'Study → Small Livestock', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2 to compare the heading and pollen sentence with English.' },
+  ] },
   { when: '26 September 2026', sha: '89d44f5f', changes: [
     'Settings marks languages that are still partly shown in English.',
     'Design Studio buttons and the element list use clear icons instead of emoji.',

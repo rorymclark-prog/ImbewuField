@@ -165,3 +165,58 @@ test('Sesotho chicken lesson preserves animal-care and manure guidance beside a 
   assert.deepEqual(resolveDeckLang(source.id, 'st'), { lang: 'en', exact: false });
   assert.deepEqual(resolveNarrationLang(source.id, 'st'), { lang: 'en', exact: false });
 });
+
+test('Sesotho bee lesson drafts only reviewed terms and keeps care, rules and quizzes in English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'small-livestock');
+  assert.ok(source);
+  const lesson = source.lessons.find(item => item.id === 'small-livestock-l2');
+  assert.ok(lesson);
+  const draft = SESOTHO_SMALL_LIVESTOCK_DRAFT.lessons.find(item => item.id === lesson.id);
+  assert.ok(draft, 'the L2 source-paired draft must be present');
+
+  const checkHold = (pair: { sourceEnglish: string; sesothoDraft: string; reviewStatus: string }, english: string) => {
+    assert.equal(pair.sourceEnglish, english, 'every field keeps its exact English source');
+    assert.equal(pair.sesothoDraft, english, 'uncertain or practical guidance remains exact English');
+    assert.equal(pair.reviewStatus, 'hold');
+  };
+
+  assert.equal(draft.id, lesson.id);
+  checkHold(draft.infographicAlt!, lesson.infographicAlt!);
+  assert.equal(draft.title.sourceEnglish, lesson.title);
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
+  assert.equal(draft.title.sesothoDraft,
+    'Linotsi: Ho Tsamaisa Phofo ea Lipalesa, Mahe a Linotsi le Kamano ea Lintho Tlhahong');
+  assert.equal(draft.body.sourceEnglish, lesson.body);
+  assert.equal(draft.body.reviewStatus, 'machine-draft');
+  const sourceParagraphs = lesson.body.split('\n\n');
+  const draftParagraphs = draft.body.sesothoDraft.split('\n\n');
+  assert.equal(draftParagraphs.length, sourceParagraphs.length);
+  assert.equal(draftParagraphs[0],
+    'Linotši le likokoanyana tse ling li jara phofshoana ea lipalesa pakeng tsa lipalesa. ' +
+    sourceParagraphs[0].slice('Honeybees and other insects carry pollen between flowers. '.length),
+    'only the nonprocedural pollen-transfer sentence is drafted; its qualified crop claims stay exact English');
+  assert.deepEqual(draftParagraphs.slice(1), sourceParagraphs.slice(1),
+    'bee movement rules, hive care, pesticides, registration and swarm inspection stay exact English');
+  assert.equal(draft.keyPoints.length, lesson.keyPoints.length);
+  draft.keyPoints.forEach((point, index) => checkHold(point, lesson.keyPoints[index]));
+  assert.equal(draft.quiz.length, lesson.quiz.length);
+  draft.quiz.forEach((question, index) => {
+    const original = lesson.quiz[index];
+    assert.equal(question.sourceCorrectIndex, original.correct);
+    checkHold(question.question, original.q);
+    assert.equal(question.options.length, original.options.length);
+    question.options.forEach((option, optionIndex) => checkHold(option, original.options[optionIndex]));
+    checkHold(question.rationale, original.rationale);
+  });
+
+  const presentation = resolveLearnerLessonPresentation(lesson, 'st');
+  assert.equal(presentation.status, 'draft');
+  assert.equal(presentation.content.title, draft.title.sesothoDraft);
+  assert.equal(presentation.content.body, draft.body.sesothoDraft);
+  assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints);
+  assert.deepEqual(presentation.content.quiz, lesson.quiz);
+  assert.equal(resolveLearnerLessonPresentation(source.lessons.find(item => item.id === 'small-livestock-l3')!, 'st').status,
+    'english-fallback', 'the unpaired L3 must remain in English');
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
+    'english-fallback', 'changed source text withdraws the complete paired draft');
+});

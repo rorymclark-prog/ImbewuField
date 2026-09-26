@@ -6,7 +6,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
 
-test('Tshivenda Introduction Study keeps source pairs, held flood and compass wording, and source drift visible', () => {
+test('Tshivenda Introduction Study keeps source pairs, held L2 semantic risks and L3 flood/compass wording visible', () => {
   const draft = TSHIVENDA_INTRO_PERMACULTURE_DRAFT;
   const module = COURSE_MODULES.find(candidate => candidate.id === draft.id);
   assert.ok(module, 'the draft module must exist in the canonical Study course');
@@ -45,6 +45,22 @@ test('Tshivenda Introduction Study keeps source pairs, held flood and compass wo
     'the held compass question must stay English');
   assert.equal(finalPresentation.content.quiz[1].options[1], finalSourceLesson.quiz[1].options[1],
     'the held compass option must stay English');
+
+  const principleSource = module.lessons[1];
+  const principleDraft = draft.lessons[1];
+  const principlePresentation = resolveLearnerLessonPresentation(principleSource, 've');
+  assert.equal(principleDraft.body.reviewStatus, 'hold');
+  assert.equal(principleDraft.body.tshivendaDraft, principleSource.body,
+    'the body stays whole and exact English because two phrases materially drifted');
+  assert.equal(principlePresentation.content.body, principleSource.body,
+    'the body hold must reach the learner unchanged');
+  assert.equal(principleDraft.quiz[0].sourceCorrectIndex, principleSource.quiz[0].correct,
+    'the source answer index stays unchanged when a distractor is held');
+  assert.equal(principleDraft.quiz[0].options[1].reviewStatus, 'hold');
+  assert.equal(principleDraft.quiz[0].options[1].tshivendaDraft, principleSource.quiz[0].options[1],
+    'the option keeps the minimum wet-season qualifier in exact English');
+  assert.equal(principlePresentation.content.quiz[0].options[1], principleSource.quiz[0].options[1],
+    'the held timeframe option must reach the learner unchanged');
 
   assert.equal(resolveCourseModulePresentation({ ...module, title: `${module.title} changed` }, 've').status,
     'english-fallback', 'changed module source must invalidate the card draft');
