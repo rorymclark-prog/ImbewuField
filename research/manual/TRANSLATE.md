@@ -9,6 +9,9 @@ You are given a LANGUAGE code (zu, st, ve or ts) and a list of chapter SLUGS.
 2. If `content/manual/<LANGUAGE>/01-what-is-permaculture.md` exists, skim it to match register, and
    reuse EXACTLY its wording for the fixed labels: the callout labels (**Safety:** / **Tip:** /
    **Note:**), the "## Key points" heading, and the names of the ethics and 12 principles.
+2b. RESUMING: an earlier run may have been interrupted. If `content/manual/<LANGUAGE>/<SLUG>.md`
+   already exists, read it: keep the finished parts (check them against the English), then continue
+   from where it stops and complete the chapter. Do not start over unless the partial text is bad.
 3. For each SLUG translate `content/manual/en/<SLUG>.md` → `content/manual/<LANGUAGE>/<SLUG>.md`.
    - Keep the Markdown structure identical: same headings in the same order, same number of list
      items, same callouts (each "> " line, including "> - " bullet lines), same table rows and
