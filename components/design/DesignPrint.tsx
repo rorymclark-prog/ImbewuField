@@ -393,6 +393,9 @@ export default function DesignPrint({ state, frame, refLayers, site, placeName, 
     renderPage(state, frame, refLayers, site, placeName ?? 'Your design', first, optsFor())
       .then((cv) => { if (!cancelled) { setPreviewUrl(cv.toDataURL('image/jpeg', 0.85)); setBusy(null); } })
       .catch((e) => {
+        // eslint-disable-next-line no-console -- surfaced to the farmer via previewErr below, but
+        // also logged so whoever debugs a report of "the preview is blank" has the real cause.
+        console.error('Design Studio print preview failed to render', e);
         if (cancelled) return;
         setPreviewUrl(null);
         setBusy(null);
