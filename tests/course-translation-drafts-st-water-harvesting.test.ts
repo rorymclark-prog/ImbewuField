@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 test('Water Harvesting Sesotho draft preserves exact sources, safety holds and quiz indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');
@@ -49,6 +50,7 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
     if (original.infographicAlt) {
       assert.ok(lesson.infographicAlt, `${path}: infographic alt must be paired`);
       checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`);
+      if (lesson.infographicAlt.reviewStatus === 'hold') holds.push(`${path}.infographicAlt`);
     } else {
       assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent infographic text`);
     }
@@ -77,11 +79,24 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
       assert.equal(question.options[question.sourceCorrectIndex]?.sourceEnglish, english.options[english.correct],
         `${questionPath}: correct option must still point to the exact source answer`);
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
+      if (question.rationale.reviewStatus === 'hold') holds.push(`${questionPath}.rationale`);
     }
   }
   assert.deepEqual(holds, [
+    'lessons[0] water-harvesting-l1.infographicAlt',
     'lessons[0] water-harvesting-l1.body',
+    'lessons[0] water-harvesting-l1.keyPoints[0]',
+    'lessons[0] water-harvesting-l1.quiz[0].question',
+    'lessons[0] water-harvesting-l1.quiz[0].rationale',
     'lessons[0] water-harvesting-l1.quiz[1].question',
     'lessons[3] water-harvesting-l4.body',
-  ], 'only the two reviewed uncertain safety passages remain held');
+  ], 'ambiguous contour and other reviewed safety wording must remain exact English');
+
+  const swaleSource = source.lessons[0];
+  const visible = resolveLearnerLessonPresentation(swaleSource, 'st');
+  assert.equal(visible.status, 'draft');
+  assert.equal(visible.content.infographicAlt, swaleSource.infographicAlt);
+  assert.equal(visible.content.keyPoints[0], swaleSource.keyPoints[0]);
+  assert.equal(visible.content.quiz[0].q, swaleSource.quiz[0].q);
+  assert.equal(visible.content.quiz[0].rationale, swaleSource.quiz[0].rationale);
 });
