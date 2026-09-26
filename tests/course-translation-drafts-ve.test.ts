@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
+import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 test('the Tshivenda Introduction draft stays paired to the English Study source', () => {
   const draft = TSHIVENDA_INTRO_PERMACULTURE_DRAFT;
@@ -103,4 +104,48 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
     assert.ok(english.includes(`${key}: '${expectedEnglish}'`), `${key}: preserve the exact English fallback`);
   }
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
+});
+
+test('Vegetables L3 Tshivenda review data pairs one concept sentence and keeps practical text held', async () => {
+  const module = COURSE_MODULES.find(candidate => candidate.id === vegetablesL3Draft.moduleId);
+  assert.ok(module, 'the review pair must point to a canonical module');
+  const lesson = module.lessons.find(candidate => candidate.id === vegetablesL3Draft.lessonId);
+  assert.ok(lesson, 'the review pair must point to the canonical Vegetables L3 lesson');
+
+  assert.equal(vegetablesL3Draft.language, 've');
+  assert.equal(vegetablesL3Draft.reviewStatus, 'machine-draft');
+  assert.equal(vegetablesL3Draft.bodyConcept.reviewStatus, 'machine-draft');
+  assert.equal(vegetablesL3Draft.bodyConcept.sourceEnglish,
+    lesson.body.split('\n\n')[vegetablesL3Draft.bodyConcept.paragraphIndex],
+    'the English source must exactly match the selected canonical paragraph');
+  assert.ok(vegetablesL3Draft.bodyConcept.tshivendaDraft.trim(), 'the review packet needs its marked draft text');
+  assert.match(vegetablesL3Draft.bodyConcept.tshivendaDraft, /\[staple\]/,
+    'retain the uncertain food-security term in English inside the machine draft');
+  assert.doesNotMatch(vegetablesL3Draft.bodyConcept.tshivendaDraft, /\d|maize|beans|sweet potato|amadumbe/i,
+    'the concept draft must not add figures or crop/species names');
+
+  assert.deepEqual(vegetablesL3Draft.exactEnglishHoldPaths, [
+    'title',
+    'infographicAlt',
+    'body paragraphs 2 onward',
+    'keyPoints',
+    'quiz questions, options, and rationales',
+  ]);
+  assert.equal(lesson.title, 'Staple Crops: Maize, Beans, and Root Vegetables');
+  assert.equal(lesson.keyPoints.length, 4);
+  assert.equal(lesson.quiz.length, 2);
+  assert.deepEqual(lesson.quiz.map(question => question.correct), [1, 1]);
+
+  const { readFileSync } = await import('node:fs');
+  const localization = readFileSync(new URL('../lib/course-localization.ts', import.meta.url), 'utf8');
+  const moduleDrafts = readFileSync(new URL('../lib/course-module-translation-drafts.ts', import.meta.url), 'utf8');
+  assert.doesNotMatch(localization, /TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT/,
+    'review data must not appear in learner lesson wiring');
+  assert.doesNotMatch(moduleDrafts, /TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT/,
+    'review data must not appear in learner module-card wiring');
+
+  const packet = readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-STAPLES-L3-VE-AI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
+  assert.ok(packet.includes(vegetablesL3Draft.bodyConcept.sourceEnglish), 'the review packet must show the exact source');
+  assert.ok(packet.includes(vegetablesL3Draft.bodyConcept.tshivendaDraft), 'the review packet must show the exact machine draft');
+  assert.match(packet, /not wired into Study and not learner-visible/);
 });
