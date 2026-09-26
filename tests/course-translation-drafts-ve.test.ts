@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
+import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as learnerVegetablesDraft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 test('the Tshivenda Introduction draft stays paired to the English Study source', () => {
   const draft = TSHIVENDA_INTRO_PERMACULTURE_DRAFT;
@@ -103,4 +104,50 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
     assert.ok(english.includes(`${key}: '${expectedEnglish}'`), `${key}: preserve the exact English fallback`);
   }
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
+});
+
+test('Vegetables L3 shows only two unreviewed concepts beside exact English and keeps farming answers in English', async () => {
+  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  const { resolveCourseModulePresentation } = await import('../lib/course-module-translation-drafts.ts');
+  const module = COURSE_MODULES.find(candidate => candidate.id === vegetablesL3Draft.moduleId);
+  assert.ok(module);
+  const lesson = module.lessons.find(candidate => candidate.id === vegetablesL3Draft.lessonId);
+  assert.ok(lesson);
+  const paragraphs = lesson.body.split('\n\n');
+  const draftLesson = learnerVegetablesDraft.lessons[0];
+  assert.equal(paragraphs[0], vegetablesL3Draft.bodyConcept.sourceEnglish);
+  assert.equal(paragraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.sourceEnglish);
+  assert.equal(draftLesson.body.sourceEnglish, lesson.body, 'source drift must invalidate the entire learner draft');
+  const shown = resolveLearnerLessonPresentation(lesson, 've');
+  assert.equal(shown.status, 'draft');
+  const translated = shown.content.body.split('\n\n');
+  assert.equal(translated.length, paragraphs.length);
+  assert.equal(translated[0], vegetablesL3Draft.bodyConcept.tshivendaDraft);
+  assert.equal(translated[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.tshivendaDraft);
+  paragraphs.forEach((paragraph, index) => {
+    if (index !== 0 && index !== 12) assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
+  });
+  assert.equal(shown.content.title, lesson.title);
+  assert.equal(shown.content.infographicAlt, lesson.infographicAlt);
+  assert.deepEqual(shown.content.keyPoints, lesson.keyPoints);
+  assert.deepEqual(shown.content.quiz, lesson.quiz, 'quiz wording, order, rationales and correct indexes stay exact English');
+  assert.equal(learnerVegetablesDraft.title.sourceEnglish, module.title);
+  assert.equal(learnerVegetablesDraft.description.sourceEnglish, module.description);
+  assert.equal(learnerVegetablesDraft.sourceMetadata.durationMins, module.durationMins);
+  assert.equal(learnerVegetablesDraft.sourceMetadata.category, module.category);
+  const card = resolveCourseModulePresentation(module, 've');
+  assert.equal(card.status, 'english-fallback');
+  assert.equal(card.title, module.title);
+  assert.equal(card.description, module.description);
+  assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} changed` }, 've').status, 'english-fallback');
+  assert.equal(resolveCourseModulePresentation({ ...module, description: `${module.description} changed` }, 've').status, 'english-fallback');
+  const { readFileSync } = await import('node:fs');
+  const page = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
+  assert.match(page, /Unreviewed Tshivenda AI draft/);
+  assert.match(page, /lesson\.body\.split\('\\n\\n'\)/, 'the learner view must show every exact English body paragraph');
+  const packet = readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-STAPLES-L3-VE-AI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
+  assert.ok(packet.includes(vegetablesL3Draft.bodyConcept.sourceEnglish));
+  assert.ok(packet.includes(vegetablesL3Draft.bodyConcept.tshivendaDraft));
+  assert.ok(packet.includes(vegetablesL3Draft.secondBodyConcept.sourceEnglish));
+  assert.ok(packet.includes(vegetablesL3Draft.secondBodyConcept.tshivendaDraft));
 });

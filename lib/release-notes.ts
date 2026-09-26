@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: 'efefba38', changes: [
+    'Vegetables lesson 3 pairs two Tshivenda drafts with English.',
+  ], tour: [
+    { title: 'Check the staple crops lesson', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 3; only two concept paragraphs are draft text, with the complete English source shown below.' },
+  ] },
   { when: '26 September 2026', sha: '2e24930b', changes: [
     'Sesotho and Tshivenda Study show more course and offline save labels.',
   ], tour: [
