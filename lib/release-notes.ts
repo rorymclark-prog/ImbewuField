@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '0432721e', changes: [
+    'Tshivenda learners can read a marked Small Livestock module description.',
+  ], tour: [
+    { title: 'Check the livestock module card', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Tshivenda and compare the marked module description with its English source. Lesson titles and guidance remain English.' },
+  ] },
   { when: '26 September 2026', sha: 'c48e3971', changes: [
     'Farm Finance lessons and worksheets now have isiZulu drafts; due dates use your language.',
   ], tour: [
