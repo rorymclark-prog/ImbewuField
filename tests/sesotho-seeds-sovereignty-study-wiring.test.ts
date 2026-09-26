@@ -68,8 +68,11 @@ test('Sesotho seed lesson labels are paired drafts and every teaching field stay
     'the lesson label remains visibly marked as pending review');
   assert.match(STUDENT_PAGE, /Unreviewed \{lang === 'st' \? 'Sesotho'[\s\S]*?Exact English source is shown alongside the lesson and answers\. Slides and narration remain in English\./,
     'learners are told the English lesson and media are still the reference');
-  assert.match(STUDENT_PAGE, /modulePresentation\.status === 'draft' \? `\$\{lang === 've' \? 'Tshivenda ' : ''\}AI draft · review pending` : 'English module'/,
-    'an all-English module card is visibly identified as English');
+  // Seeds is wholly English; the Vegetables card alone names its single drafted lesson.
+  assert.ok(STUDENT_PAGE.includes("mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'"),
+    'other all-English cards, including Seeds, retain the English module badge');
+  assert.equal(STUDENT_PAGE.split("mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'").length - 1, 2,
+    'locked and unlocked cards both describe the one Tshivenda lesson draft narrowly');
   assert.match(STUDENT_PAGE, /<p className="font-semibold">Exact English source<\/p>\s*<p><span className="font-semibold">Title:<\/span> \{lesson\.title\}<\/p>/,
     'the lesson title appears with its exact English source');
 });

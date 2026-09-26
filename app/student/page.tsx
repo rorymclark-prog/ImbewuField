@@ -1055,7 +1055,7 @@ export default function StudentPage() {
                         {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                           <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : 'English module')}
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1099,7 +1099,7 @@ export default function StudentPage() {
                     {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                       <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : 'English module')}
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
