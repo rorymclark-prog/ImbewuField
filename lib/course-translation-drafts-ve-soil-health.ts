@@ -16,8 +16,8 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
   },
   "description": {
     "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
-    "tshivendaDraft": "Fhaṱani mavu a re na vhutshilo nga khomposo (compost), tshifukedzi (mulch), zwiliṅwa zwa u fukedza (cover crops) na mabodo a zwivhungu (worm farms).",
-    "reviewStatus": "machine-draft"
+    "tshivendaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
+    "reviewStatus": "hold"
   },
   "lessons": [
     {
@@ -253,8 +253,8 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "title": {
         "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
-        "tshivendaDraft": "Tshifukedzi (Mulching) na Zwiliṅwa zwa u Fukedza (Cover Crops): U Tsireledza na U Fhaṱa Mavu",
-        "reviewStatus": "machine-draft"
+        "tshivendaDraft": "Mulching and Cover Crops: Protecting and Building Soil",
+        "reviewStatus": "hold"
       },
       "body": {
         "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
