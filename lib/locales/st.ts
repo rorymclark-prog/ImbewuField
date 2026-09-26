@@ -57,6 +57,7 @@ const dict: Dict = {
   studentStudyOffline: 'Ithute ntle le marang-rang',
   studentSaveBeforeSignal: 'Boloka dithuto fonong ena pele o tswa moo marang-rang a leng teng',
   studentSaveAvailable: 'Boloka dithuto tse fumanehang fonong ena',
+  studentSaveModule: 'Boloka {title} fonong ena',
   studentYourCourse: 'Thupelo ya hao',
   studentModule: 'Mojule {number}',
   studentModules: 'dimojule',
