@@ -354,6 +354,7 @@ export const DESIGN_STUDIO_REST_KEYS = {
   tankDailyUse: 'designTankDailyUse',
   tankMethod: 'designTankMethod',
   tankEnterValues: 'designTankEnterValues',
+  tankZuluDraftNotice: 'designTankZuluDraftNotice',
 
   glossyPlanSet: 'designGlossyPlanSet',
   glossySheetNumber: 'designGlossySheetNumber',

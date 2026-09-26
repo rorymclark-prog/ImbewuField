@@ -3017,6 +3017,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     <div
       style={{
         minHeight: '100dvh',
+        // The app shell locks body scrolling. On a phone the Water guide extends below the map,
+        // so give this page its own scroll container to reach the tank calculator above the palette.
+        height: isPhone && canvasState?.step === 'water' ? '100dvh' : undefined,
+        overflowY: isPhone && canvasState?.step === 'water' ? 'auto' : undefined,
         width: '100%',
         maxWidth: '100vw',
         overflowX: 'hidden',
@@ -3937,7 +3941,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* bottomShow.stepBar was computed and then never read — the guide was the one band the
           ladder promised to fold and didn't. It is on the ladder now, and carries its own ×. */}
       {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
-        <div style={isPhone ? undefined : {
+        <div style={isPhone ? {
+          // The fixed mobile palette covers the end of the Water guide. Leave room to scroll
+          // its tank calculator above the palette instead of hiding the prompt and source text.
+          marginBottom: canvasState.step === 'water' ? 260 : 0,
+        } : {
           position: 'fixed',
           left: elementsReservedPx + 8,
           right: layersReservedPx + 8,

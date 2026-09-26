@@ -56,6 +56,31 @@ test('isiZulu Design Palette action drafts keep their exact English source and t
   }
 });
 
+test('isiZulu tank-card drafts show their exact English source and leave sizing method in English', () => {
+  const pairedKeys = [
+    'designTankTitle',
+    'designTankNeedRain',
+    'designTankRoofArea',
+    'designTankDailyUse',
+    'designTankEnterValues',
+    'designTankZuluDraftNotice',
+  ] as const;
+  const tank = readFileSync(new URL('../components/design/TankCalculator.tsx', import.meta.url), 'utf8');
+
+  for (const key of pairedKeys) {
+    assert.notEqual(zuLocale[key], DESIGN_STUDIO_ENGLISH_PENDING[key], `${key} must have a distinct isiZulu draft`);
+  }
+  assert.equal(zuLocale.designTankMethod, DESIGN_STUDIO_ENGLISH_PENDING.designTankMethod,
+    'the technical sizing method stays in English pending fluent and local farming review');
+  assert.match(tank, /if \(lang !== 'zu'\) return t\(name\)/, 'other languages keep their current source copy');
+  assert.match(tank, /<span lang="zu">\{t\(name\)\}<\/span>/, 'draft text is tagged as isiZulu');
+  assert.match(tank, /<span\s+lang="en"[\s\S]*?English source: \{translate\('en', name\)\}/,
+    'each isiZulu draft is paired with its canonical English source');
+  assert.match(tank, /fontSize: 10\.5/, 'English source remains readable in the phone layout');
+  assert.match(tank, /\{t\('designTankMethod'\)\}/, 'the existing technical sizing method stays unchanged');
+  assert.match(tank, /name="designTankZuluDraftNotice"/, 'learners are told the isiZulu wording is an unreviewed draft');
+});
+
 test('every Design Studio chrome key exists in every language slot instead of silently falling back', () => {
   // The pending English source text for every unreviewed Design Studio key now lives in one
   // place — lib/i18n-pending.ts — imported by lib/i18n.tsx (English) and by every
@@ -171,6 +196,10 @@ test('every remaining Design Studio surface reads UI chrome from the active lang
       'utf8',
     );
     assert.match(source, /\buseLanguage\(\)/, `${component} is still detached from the active locale`);
+    if (component === 'TankCalculator') {
+      assert.match(source, /<TankChromeText name="designTankTitle"/, 'TankCalculator does not resolve its representative chrome key at render time');
+      continue;
+    }
     assert.match(
       source,
       new RegExp(`t\\(['"]${representativeKeys[component]}['"]\\)`),
