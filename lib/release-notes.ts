@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 September 2026', sha: '8d909f55', changes: [
+    'The Tshivenda sample chooser pairs marked draft labels with their English source.',
+  ], tour: [
+    { title: 'Choose a practice view', where: 'Samples', href: '/samples',
+      detail: 'The Tshivenda chooser marks its draft labels and keeps the English source beside them.' },
+  ] },
   { when: '26 September 2026', sha: '5f0e75e6', changes: [
     'The Sesotho sample chooser pairs its marked draft copy with English.',
     'Community, Contact and the first-run welcome now follow dark mode.',
