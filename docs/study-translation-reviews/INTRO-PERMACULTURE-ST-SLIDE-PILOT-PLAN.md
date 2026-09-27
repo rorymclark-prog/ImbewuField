@@ -1,6 +1,6 @@
 # Sesotho intro-permaculture slide pilot plan
 
-Status: planning only. No Sesotho slide copy has been authored or approved, no narration is included, and no slide assets have been generated.
+Status: source-paired review pilot. The provisional Sesotho packet at `docs/narration/intro-permaculture.st.paired-draft.json` is unreviewed machine text. It is not an approved learner deck or narration script. The optional renderer has generated local review images, but no Sesotho slide assets or narration have been registered in the app.
 
 ## Finding
 
@@ -10,9 +10,9 @@ The app already has a Sesotho intro-permaculture review packet and visibly paire
 
 ## Safe pilot shape
 
-Use the existing numbered English source at `docs/narration/intro-permaculture.en.md` as the immutable source. After a Sesotho draft is supplied for review, create `docs/narration/intro-permaculture.st.md` with exactly 22 numbered records. Each record must retain the exact English slide heading and source paragraphs beside a clearly labeled provisional Sesotho heading and draft paragraphs. Missing or held target copy stays visibly marked as an English hold; do not paraphrase or silently omit a source fact, condition, number, or species. This file must carry a prominent machine-draft / not reviewed warning.
+Use the existing numbered English source at `docs/narration/intro-permaculture.en.md` as the immutable source. The paired JSON packet contains exactly 22 numbered records. Each record retains the exact English heading and source paragraphs beside a provisional Sesotho heading and draft paragraphs. Missing or held target copy is explicitly marked as an English hold; no source fact, condition, number, or species is silently omitted. The packet carries an unreviewed machine-draft status. Its present 42 draft paragraphs and 46 English holds are review data, not a complete Sesotho teaching script.
 
-The current generator cannot create that layout without a change. Extend `scripts/make-lesson-slides.mjs` to parse the paired records and render an English source column next to a Sesotho draft column, with persistent `SESOTHO DRAFT — NOT REVIEWED` status on every image. Keep current English and isiZulu parsing unchanged. A paired-record count and exact-source comparison should fail closed if any source heading/body differs from the English script or any slide is missing/duplicated. Keep the English source readable at phone width; if two columns fail that check, use vertically stacked source/draft panels or stop the pilot rather than shrinking type until it is unreadable.
+The generator now has an opt-in `--paired-draft` path. It checks all 22 records against the English script before rendering and uses vertically stacked Sesotho and exact-English panels with an unreviewed banner. The English and isiZulu paths remain unchanged. Its local images are text-only reviewer proofs: they omit the illustrated deck's teaching images. Do not register them as the learner deck until visual teaching parity is restored and all 22 images are checked in the actual phone player.
 
 ## Manifest and player changes
 
@@ -31,4 +31,4 @@ The current generator cannot create that layout without a change. Extend `script
 
 ## Cost and scope
 
-After the paired draft text is prepared, rendering 22 static slides with the existing local Pillow workflow is modest: it uses local CPU and writes 22 images, with no paid AI render and no voice generation. The bilingual images will be larger than English-only stills, so measure their actual total before release and let learners choose before downloading. This pilot plan itself has generated no media and made no paid call.
+Rendering the 22 reviewer proofs uses local Pillow only, with no paid AI render or voice generation. The first local PNG proof set is about 6.7 MB and is not in the learner app. Measure any later deck's actual transfer size before release and let learners choose before downloading it.
