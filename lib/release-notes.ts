@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '83b0e6e3', changes: [
+    'Introduction lesson 3 has source-paired Sesotho draft slides and a footpath zones example.',
+  ], tour: [
+    { title: 'Try the Sesotho zones lesson', where: 'Study → Introduction to Permaculture → lesson 3', href: '/student',
+      detail: 'Choose Sesotho and open lesson 3. Slides 15–22 show marked drafts and exact English holds. The zones picture follows a footpath instead of circles; it is only an example. Narration remains English and needs an explicit choice.' },
+  ] },
   { when: '27 September 2026', sha: '276a7874', changes: [
     'Introduction lesson 2 has source-paired Sesotho draft slides.',
   ], tour: [

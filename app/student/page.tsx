@@ -278,7 +278,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
-          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides pair Sesotho drafts and English holds with exact English source. Narration remains English.' : 'Slides and narration remain in English.'}</div>}
           {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
           {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
           {hasAudio && (
@@ -1180,7 +1180,7 @@ export default function StudentPage() {
                       )}
                       {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
                         {lang === 'st' && mod.id === 'intro-permaculture'
-                          ? 'Slides: Sesotho AI draft (lessons 1–2); English later'
+                          ? 'Slides: Sesotho AI draft + English source'
                           : 'Slides: English'}
                       </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
