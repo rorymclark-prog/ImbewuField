@@ -20,7 +20,12 @@ export function englishSlideRecords(raw) {
   });
 }
 
+const PAIRED_DRAFT_LANGUAGES = new Set(['st', 'ts']);
+
 export function validatePairedDraft(draft, source, language = 'st') {
+  if (!PAIRED_DRAFT_LANGUAGES.has(language)) {
+    throw new Error(`Paired draft language is unsupported: ${language}`);
+  }
   if (!draft || typeof draft !== 'object' || Array.isArray(draft)) throw new Error('Paired draft must be a JSON object');
   if (draft.language !== language) throw new Error(`Paired draft language must be ${language}`);
   if (draft.sourceLanguage !== 'en') throw new Error('Paired draft sourceLanguage must be en');
@@ -49,7 +54,7 @@ export function validatePairedDraft(draft, source, language = 'st') {
         throw new Error(`Paired draft slide ${slide.n} ${location}: review status is missing or invalid`);
       }
       if (part.status === 'draft' && (typeof part.text !== 'string' || !part.text.trim())) {
-        throw new Error(`Paired draft slide ${slide.n} ${location}: Sesotho draft text is missing`);
+        throw new Error(`Paired draft slide ${slide.n} ${location}: target draft text is missing`);
       }
       if (part.status === 'draft' && part.text.trim() === english) {
         throw new Error(`Paired draft slide ${slide.n} ${location}: unchanged English needs an explicit hold`);

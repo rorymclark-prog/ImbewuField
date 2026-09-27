@@ -7,8 +7,8 @@ import { join } from 'node:path';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
-const completeHold = () => ({
-  language: 'st', sourceLanguage: 'en', reviewStatus: 'unreviewed',
+const completeHold = (language = 'st') => ({
+  language, sourceLanguage: 'en', reviewStatus: 'unreviewed',
   slides: source.map((english) => ({
     n: english.n, english: structuredClone(english),
     target: { heading: { status: 'english-hold' }, body: english.body.map(() => ({ status: 'english-hold' })) },
@@ -22,6 +22,20 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(source[0].body.length, 4);
   assert.ok(source.every((slide) => slide.body.every((paragraph: string) => paragraph !== '---' && !paragraph.includes('[pause]'))));
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
+});
+
+test('standard written Xitsonga uses the same exact source and paragraph pairing as Sesotho', () => {
+  const draft = completeHold('ts');
+  assert.equal(validatePairedDraft(draft, source, 'ts').length, source.length);
+  const lastSlide = draft.slides.at(-1)!;
+  const lastTargetParagraph = lastSlide.target.body.at(-1)!;
+  lastTargetParagraph.status = 'draft';
+  lastTargetParagraph.text = 'Draft copy';
+  const validated = validatePairedDraft(draft, source, 'ts');
+  assert.equal(validated.at(-1)!.target.body.at(-1)!.text, 'Draft copy');
+  lastSlide.english.body[lastSlide.english.body.length - 1] += ' Changed.';
+  assert.throws(() => validatePairedDraft(draft, source, 'ts'), /English body differs/);
+  assert.throws(() => validatePairedDraft(completeHold('xh'), source, 'xh'), /language is unsupported/);
 });
 
 test('a changed source sentence or heading blocks the entire paired draft', () => {
@@ -52,7 +66,7 @@ test('a target needs a declared unreviewed status and full draft copy or an expl
   draft.slides[0].target.body[1] = {};
   assert.throws(() => validatePairedDraft(draft, source), /paragraph 2: review status is missing/);
   draft.slides[0].target.body[1] = { status: 'draft' };
-  assert.throws(() => validatePairedDraft(draft, source), /paragraph 2: Sesotho draft text is missing/);
+  assert.throws(() => validatePairedDraft(draft, source), /paragraph 2: target draft text is missing/);
   draft.slides[0].target.body[1] = { status: 'english-hold', text: 'Hidden translation' };
   assert.throws(() => validatePairedDraft(draft, source), /must not masquerade/);
   draft.slides[0].target.body[1] = { status: 'english-hold' };
@@ -97,6 +111,32 @@ test('the paired layout preflights all 22 full source records without writing me
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     assert.match(result.stdout, /validated 22 source-paired slides; no images written/);
+    assert.equal(existsSync(output), false);
+  } finally {
+    rmSync(temp, { recursive: true, force: true });
+  }
+});
+
+test('the CLI preflights Xitsonga paired drafts and rejects unsupported paired languages', () => {
+  const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-language-'));
+  try {
+    const json = join(temp, 'draft.json');
+    writeFileSync(json, JSON.stringify(completeHold('ts')));
+    const output = join(temp, 'slides');
+    const supported = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'ts', output,
+        '--paired-draft', json, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(supported.status, 0, supported.stderr);
+    assert.match(supported.stdout, /validated 22 source-paired slides/);
+    assert.equal(existsSync(output), false);
+
+    const unsupported = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'xh', output,
+        '--paired-draft', json, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.notEqual(unsupported.status, 0);
+    assert.match(unsupported.stderr, /supports st and ts/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });

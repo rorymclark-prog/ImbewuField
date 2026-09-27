@@ -13,10 +13,10 @@
 // USAGE
 //   node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]
 //   node scripts/make-lesson-slides.mjs seeds-sovereignty zu
-//   node scripts/make-lesson-slides.mjs intro-permaculture st OUT --paired-draft draft.json --validate-only
-//   node scripts/make-lesson-slides.mjs intro-permaculture st OUT --paired-draft draft.json --paired-art art.json
+//   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --validate-only
+//   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --paired-art art.json
 //   art.json: {"10":"docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg"}
-//   draft.json: {"language":"st","sourceLanguage":"en","reviewStatus":"unreviewed",
+//   draft.json: {"language":"ts","sourceLanguage":"en","reviewStatus":"unreviewed",
 //     "slides":[{"n":1,"english":{"heading":"...","body":["..."]},
 //       "target":{"heading":{"status":"draft","text":"..."},
 //                 "body":[{"status":"draft","text":"..."}]}}]}
@@ -60,8 +60,8 @@ if (!moduleId || !lang) {
   process.exit(1);
 }
 
-if (pairedPath && (lang !== 'st' || sourcePath || brandingPath || overridesPath || imagesDir)) {
-  throw new Error('--paired-draft supports st and the authored English source only, without art or branding overrides');
+if (pairedPath && (!['st', 'ts'].includes(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
+  throw new Error('--paired-draft supports st and ts with the authored English source only, without art or branding overrides');
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
@@ -73,7 +73,7 @@ if (!existsSync(scriptPath)) {
 
 const raw = readFileSync(scriptPath, 'utf8');
 const pairedSlides = pairedPath
-  ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw))
+  ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw), lang)
   : null;
 const pairedArt = pairedArtPath ? JSON.parse(readFileSync(pairedArtPath, 'utf8')) : {};
 if (!pairedArt || typeof pairedArt !== 'object' || Array.isArray(pairedArt)) {
@@ -270,6 +270,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
+PAIRED_LANGUAGE = {'st': 'SESOTHO', 'ts': 'XITSONGA'}.get(cfg.get('lang'), 'TARGET LANGUAGE')
 W, H = (1440, 5400) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
@@ -429,7 +430,7 @@ if PAIRED:
         image = Image.new('RGB', (W, H), PAPER)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
-        draw.text((96, 75), 'SESOTHO AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
+        draw.text((96, 75), PAIRED_LANGUAGE + ' AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
         art_label = ('IMBEWUFIELD ILLUSTRATION · ENGLISH SOURCE BELOW'
                      if pair['n'] in cfg.get('pairedArtSlides', []) else 'ILLUSTRATED ENGLISH SOURCE SLIDE')
         draw.text((96, 220), art_label, font=F_PAIR_LABEL, fill=AMBER)
@@ -441,7 +442,7 @@ if PAIRED:
         target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
         target_body = [(source if part['status'] == 'english-hold' else part['text'])
                        for source, part in zip(pair['english']['body'], target['body'])]
-        draw_panel(draw, 'SESOTHO · RUST TEXT = ENGLISH HOLD' if held else 'SESOTHO · AI DRAFT',
+        draw_panel(draw, PAIRED_LANGUAGE + ' · RUST TEXT = ENGLISH HOLD' if held else PAIRED_LANGUAGE + ' · AI DRAFT',
                    target_heading, target_body, 1070, 3060, target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
                    pair['english']['body'], 3090, 5080, source_plan)
