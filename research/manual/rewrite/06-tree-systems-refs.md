@@ -1,0 +1,29 @@
+# References — 06-tree-systems
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust. https://projectafrica.com/
+- Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
+- Maezumi, S. Y. et al. (2018). *The legacy of 4,500 years of polyculture agroforestry in the eastern Amazon*. Nature Plants 4. https://www.nature.com/articles/s41477-018-0205-y
+- Veldman, J. W. et al. (2015). *Where Tree Planting and Forest Expansion are Bad for Biodiversity and Ecosystem Services*. BioScience 65(10), 1011–1018. https://academic.oup.com/bioscience/article/65/10/1011/245863
+- Invasive Species South Africa (n.d.). *NEMBA Alien and Invasive Species Regulations and Lists*. invasives.org.za. https://invasives.org.za/nemba-alien-and-invasive-species-regulations-and-lists/
+- Invasive Species South Africa (n.d.). *Kikuyu grass (Pennisetum clandestinum)*. invasives.org.za. https://www.invasives.org.za/legislation/item/729-kikuyu-grass-pennisetum-cladestinum
+- SIZA (n.d.). *Break the cycle of illegal windbreaks*. Sustainability Initiative of South Africa. https://siza.co.za/break-the-cycle-of-illegal-windbreaks/
+- ARC Plant Protection Research (n.d.). *Legal obligations regarding invasive alien plants in South Africa*. Agricultural Research Council. https://www.arc.agric.za/arc-ppri/weeds/Pages/Legal-Obligations-Regarding-Invasive-Alien-Plants-in-South-Africa.aspx
+- HLEM (n.d.). *Casuarina cunninghamiana* and *Morus alba* species pages. hlem.co.za. https://hlem.co.za/invasives/casuarina_cunninghamiana.html ; https://hlem.co.za/invasives/morus_alba.html
+- SANBI (n.d.). *Buddleja saligna*. PlantZAfrica. https://pza.sanbi.org/buddleja-saligna
+- SANBI (n.d.). *Searsia lancea*. PlantZAfrica. https://pza.sanbi.org/searsia-lancea
+- SANBI (n.d.). *Leonotis leonurus*. PlantZAfrica. https://pza.sanbi.org/leonotis-leonurus
+- SANBI (n.d.). *Protea cynaroides*. PlantZAfrica. https://pza.sanbi.org/protea-cynaroides
+- SANBI (n.d.). *Leucosidea sericea*. PlantZAfrica. https://pza.sanbi.org/leucosidea-sericea
+- Scientific Reports (2020). *The genetic legacy of fragmentation and overexploitation in the threatened medicinal African pepper-bark tree, Warburgia salutaris*. Nature Portfolio. https://www.nature.com/articles/s41598-020-76654-6
+- SANBI (n.d.). *Warburgia salutaris*. Red List of South African Plants. https://redlist.sanbi.org/species.php?species=925-2
+- South African Journal of Botany (2024). *Endemic darling or global change menace? A review of the woody encroacher Leucosidea sericea on the eastern Great Escarpment of southern Africa*. Elsevier. https://www.sciencedirect.com/science/article/abs/pii/S0254629924005453
+- IntechOpen (n.d.). *Vachellia (Acacia) karroo Communities in South Africa: An Overview*. IntechOpen. https://www.intechopen.com/chapters/56901
+- South African Avocado Growers' Association (n.d.). *SA Avocado Industry Overview*. avocado.co.za. https://avocado.co.za/sa-avocado-industry-overview/
+- University of California ANR (n.d.). *Cold Tolerant Avocado Varieties?* Topics in Subtropics blog. https://ucanr.edu/blog/topics-subtropics/article/cold-tolerant-avocado-varieties
+- USDA National Agroforestry Center (n.d.). *Windbreak Density: Rules of Thumb for Design*. Agroforestry Notes 36. https://www.fs.usda.gov/nac/assets/documents/agroforestrynotes/an36w03.pdf
+- Iowa State University Extension (n.d.). *How large of a hole should be dug when planting a tree?* Yard and Garden. https://yardandgarden.extension.iastate.edu/faq/how-large-hole-should-be-dug-when-planting-tree
+- Penn State Extension (n.d.). *Mulching Landscape Trees*. https://extension.psu.edu/mulching-landscape-trees
+- Arbor Day Foundation (n.d.). *How to Properly Water Your Trees*. https://www.arborday.org/perspectives/how-properly-water-your-trees
+- University of Minnesota Extension (n.d.). *Inoculating garden legumes*. https://extension.umn.edu/yard-and-garden-news/inoculating-garden-legumes
+- Vetiver Grass SA (n.d.). *Vetiver grass FAQ*. vetiver.co.za. https://www.vetiver.co.za/vetiver-grass-faq/
