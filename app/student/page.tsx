@@ -25,7 +25,7 @@ import DeckPlayer from '@/components/course/DeckPlayer';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
-import { hasDeck, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
+import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
@@ -1018,6 +1018,9 @@ export default function StudentPage() {
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
+            const deck = deckFor(mod.id);
+            const regionalDraftSlides = Boolean(deck?.slideLanguages.includes(lang) &&
+              deck.slides.some(slide => !deck.missingSlides?.[lang]?.includes(slide.slide)));
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
@@ -1179,8 +1182,8 @@ export default function StudentPage() {
                         <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
                       {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
-                        {lang === 'st' && mod.id === 'intro-permaculture'
-                          ? 'Slides: Sesotho AI draft + English source'
+                        {regionalDraftSlides
+                          ? `Slides: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang]} AI draft + English source`
                           : 'Slides: English'}
                       </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
