@@ -1,10 +1,17 @@
-# Course 1 · Grow Food, Grow Strong — 5-day farmer course
+# Course 1 · Grow Food, Grow Strong — farmer course
+
+> **Five days plus a sixth.** Days 1–5 were written 25 September 2026. **Day 6 (animals
+> in the garden)** was added 26 September 2026 to close the one app module the five days
+> omitted entirely — `small-livestock`. Day 6 can be run as a sixth consecutive day, or as
+> a standalone follow-up day weeks later; nothing in Days 1–5 depends on it.
+> **Day 6 Session 3 must be signed off by a state veterinarian before it is taught.**
 
 **For:** participants in agroecology / food-security programmes of the ACT·SEF type — new and
 experienced smallholders, youth (18–35) starting out, gogos and household gardeners, community
 and school garden members. Mixed literacy. Mixed languages.
 **Class size:** 20–30 learners (25 is ideal), in groups of 5. **Two facilitators** per course.
 **Hours:** 09:00–16:00, five consecutive days, plus a Day 0 preparation day for facilitators.
+Day 6 is a further full day, run consecutively or scheduled later.
 **Venue:** a hall, church, school or lapa with **a piece of land beside it** (at least
 20 m × 20 m, ideally with a gentle slope and a roof nearby). The land becomes the course
 demonstration garden and stays with the community.
@@ -25,6 +32,14 @@ By the end of Day 5 every learner can:
 9. **Keep** a simple money in / money out and harvest record.
 10. **Present** their own 90-day garden plan to their group.
 
+And, if Day 6 is run:
+
+11. **Say** what any animal on their land eats, gives and needs, and **move** a floorless
+    pen before the ground goes bare.
+12. **Recognise** a sick bird, **separate** it, and **name and reach** the person they
+    report it to.
+13. **Choose** a safe hive site and **say** what the law requires of a beekeeper.
+
 And they take home: their own seedling tray, a bag of saved seed, their garden map and 90-day
 plan, a record book, and a certificate of attendance.
 
@@ -44,7 +59,7 @@ plan, a record book, and a certificate of attendance.
 
 Contact time ≈ 5 h 40 min a day. Heavy digging is always before lunch.
 
-## The five days
+## The days
 
 | Day | Theme | S1 (poster lesson) | S2 (big practical) | S3 | S4 (my garden) |
 |---|---|---|---|---|---|
@@ -53,12 +68,13 @@ Contact time ≈ 5 h 40 min a day. Heavy digging is always before lunch.
 | **3** | **Living soil** | Soil is alive: hand tests (squeeze, jar, smell, worm count) | Beds that hold water: build a trench bed (one per group) | Build a compost heap (one per group) + liquid manure drum | Worm farm + green manures; soil plan for my garden |
 | **4** | **Plants that feed us** | Seedlings: mix, trays, sowing, hardening | Plant out the beds to a planting plan and spacing + transplanting | Healthy garden, fewer pests: the ladder; make a natural spray | Crop rotation, companions, food-forest layers & fruit-tree pit; planting plan for my garden |
 | **5** | **Seed, food and money** | Save your seed: dry & wet, store, germination test; seed swap | Eat the rainbow: family plate, a year of colour; harvest, weigh & record; garden handover | 13:15–14:05 Money in, money out: records and pricing | 14:05 My 90-day plan · 14:45 quiz + evaluation · 15:15 certificate ceremony |
+| **6** | **Animals in the garden** | What each animal gives and needs | Build a chicken tractor and move it | ⚑ Keeping the flock alive (Newcastle disease, everyday flock care) | Bees: a safe site and the law · my animal plan |
 
 Day files: [day-0](day-0-preparation.md) · [day-1](day-1.md) · [day-2](day-2.md) ·
-[day-3](day-3.md) · [day-4](day-4.md) · [day-5](day-5.md)
+[day-3](day-3.md) · [day-4](day-4.md) · [day-5](day-5.md) · [day-6](day-6.md)
 Also: [posters](posters.md) · [slides](slides.md) · [media](media.md) · [resources](resources.md)
 
-## The poster wall (21 posters, A1)
+## The poster wall (25 posters, A1)
 
 | ID | Poster | Day |
 |---|---|---|
@@ -83,6 +99,13 @@ Also: [posters](posters.md) · [slides](slides.md) · [media](media.md) · [reso
 | F-P19 | Eat the rainbow — the family plate | 5 |
 | F-P20 | Money in, money out | 5 |
 | F-P21 | My 90-day garden plan | 5 |
+| F-P22 | What each animal gives and needs | 6 |
+| F-P23 | Move the pen before the ground goes bare | 6 |
+| F-P24 | ⚑ A sick bird — look, separate, report | 6 |
+| F-P25 | A safe place for a hive | 6 |
+
+**F-P22 to F-P25 have no isiZulu yet** and F-P24's wording needs veterinary sign-off, so
+none of the four is ready to print. They are listed in `i18n/zu.json` under `_untranslated`.
 
 ## Delivery rhythm for facilitator teams
 
@@ -102,5 +125,6 @@ Also: [posters](posters.md) · [slides](slides.md) · [media](media.md) · [reso
 - **Course 4 (Farmer Money)** goes deep on Day 5 Session 3.
 - **Course 5 (AI Literacy)** can follow on for learners with smartphones.
 - The app modules `intro-permaculture`, `reading-landscape`, `water-harvesting`,
-  `soil-health`, `vegetables-staples`, `seeds-sovereignty`, `food-forest`,
-  `market-community` cover the same ground for learners who want to revise on a phone.
+  `soil-health`, `vegetables-staples`, `seeds-sovereignty`, `plant-guilds`, `food-forest`,
+  `market-community` and — with Day 6 — `small-livestock` cover the same ground for
+  learners who want to revise on a phone. That is now all ten app modules.

@@ -1,6 +1,10 @@
 {
   "_lang": "zu",
   "_status": "DRAFT — machine-assisted; must be read back by a first-language isiZulu speaker who farms before printing",
+  "_untranslated": {
+    "_note": "Posters added with Day 6 on 2026-09-26. No isiZulu has been written for these — deliberately, because the drafts in this file are already machine-assisted and awaiting first-language review, and adding more would deepen that backlog. F-P24 additionally needs veterinary sign-off on its English before it is translated.",
+    "posters": ["F-P22", "F-P23", "F-P24", "F-P25"]
+  },
   "posters": {
     "F-P01": {"headline": "Indlela esifunda ngayo ndawonye", "labels": ["Isivumelwano sethu", "Sayina lapha"], "question": ""},
     "F-P02": {"headline": "Izindlela ezintathu zokunakekela", "labels": ["Nakekela umhlaba: inhlabathi, amanzi, impilo", "Nakekela abantu: umndeni kuqala", "Yabelana: nika okusele", "Konke kokuthathu ndawonye"], "question": "Yikuphi osukwenza kakade?"},
