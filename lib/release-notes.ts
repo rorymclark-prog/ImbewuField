@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'c56fc768', changes: [
+    'Small Livestock lesson 3 pairs a Sesotho animal-needs checklist with English.',
+  ], tour: [
+    { title: 'Check the Sesotho livestock checklist', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Sesotho and open lesson 3. Compare the checklist with the English source; manure hygiene, tick and parasite advice, quizzes, slides and narration remain English.' },
+  ] },
   { when: '27 September 2026', sha: '922191da', changes: [
     'Introduction lesson 1 pairs three Sesotho ethics concepts with English.',
     'Vegetables lesson 3 pairs six more Tshivenda resilience concepts with English.',
