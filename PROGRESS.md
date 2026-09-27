@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-09-27 (Permaculture Manual — second edition in Rory's voice)
+- **What:** the English manual rewritten in Rory's teaching voice (`research/manual/VOICE.md`,
+  from his Style Engine) and cut from 55,370 to 37,858 words (print: 257 → 149 A4 pages). Every
+  chapter opens with WHY, lists what the reader will be able to do, has one hands-on "Try it",
+  a short Key points list and a forward-looking close. SA words throughout (morogo, mielies,
+  veld, pikmatok). Brief: `research/manual/REWRITE.md`.
+- **Warnings and law out of the chapters:** Safety boxes, legal sections and "consult / check
+  with" lines removed (callouts 94 → 13, none warnings); a handful of life-safety facts stay as
+  plain steps. Everything else is one paragraph in the new **chapter 13 Notes and references**,
+  with 278 references grouped by chapter.
+- **Accuracy:** second fact-check pass appended to every `research/manual/factcheck/*.md`;
+  overlap check against the source handbook found no copied runs.
+- **Translations:** isiZulu, Sesotho, Tshivenḓa and Xitsonga re-translated from the new English
+  (`research/manual/RETRANSLATE.md`); Xitsonga stays paused. Machine drafts for fluent review.
+- **Pictures:** 41 re-mapped to new sections; 8 captions reworded; `CODEX-IMAGE-BRIEF.md` §4.D has
+  prompts to replace every photo with one uniform AI-illustrated set.
+- **For Rory:** `research/manual/FIELD-STORIES.md` — 52 story slots; nothing invented.
+
 ### 27 Sep 2026 — Monthly AI allowance + value models
 - New `lib/ai-budget.ts` + `lib/metered-ai.ts`: every Claude call in app/api goes through one metered
   client. €3/person/month (env `AI_MONTHLY_CAP_EUR`), priced from real usage, ledger in Firestore
