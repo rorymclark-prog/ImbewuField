@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: '656a7c38', changes: [
+  { when: '27 September 2026', sha: 'e0af86ae', changes: [
     'Food Forest lesson 1 now has two source-paired Xitsonga draft slides.',
   ], tour: [
     { title: 'Compare the Food Forest draft', where: 'Study → Food Forest Design → lesson 1', href: '/student',
