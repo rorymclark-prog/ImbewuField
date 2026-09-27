@@ -106,7 +106,7 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
-test('Vegetables L3 shows only two unreviewed concepts beside exact English and keeps farming answers in English', async () => {
+test('Vegetables L3 shows eight bounded concept sentences and keeps farming answers in English', async () => {
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const { resolveCourseModulePresentation } = await import('../lib/course-module-translation-drafts.ts');
   const module = COURSE_MODULES.find(candidate => candidate.id === vegetablesL3Draft.moduleId);
@@ -117,15 +117,35 @@ test('Vegetables L3 shows only two unreviewed concepts beside exact English and 
   const draftLesson = learnerVegetablesDraft.lessons[0];
   assert.equal(paragraphs[0], vegetablesL3Draft.bodyConcept.sourceEnglish);
   assert.equal(paragraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.sourceEnglish);
+  assert.equal(vegetablesL3Draft.additionalBodyConcepts.length, 6);
   assert.equal(draftLesson.body.sourceEnglish, lesson.body, 'source drift must invalidate the entire learner draft');
+  assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
   const shown = resolveLearnerLessonPresentation(lesson, 've');
   assert.equal(shown.status, 'draft');
   const translated = shown.content.body.split('\n\n');
   assert.equal(translated.length, paragraphs.length);
   assert.equal(translated[0], vegetablesL3Draft.bodyConcept.tshivendaDraft);
   assert.equal(translated[vegetablesL3Draft.secondBodyConcept.paragraphIndex], vegetablesL3Draft.secondBodyConcept.tshivendaDraft);
+  const expectedParagraphs = [...paragraphs];
+  expectedParagraphs[vegetablesL3Draft.bodyConcept.paragraphIndex] = vegetablesL3Draft.bodyConcept.tshivendaDraft;
+  expectedParagraphs[vegetablesL3Draft.secondBodyConcept.paragraphIndex] = vegetablesL3Draft.secondBodyConcept.tshivendaDraft;
+  for (const concept of vegetablesL3Draft.additionalBodyConcepts) {
+    assert.equal(paragraphs[concept.paragraphIndex].split(concept.sourceEnglish).length - 1, 1,
+      `source paragraph ${concept.paragraphIndex + 1}: selected sentence occurs once`);
+    expectedParagraphs[concept.paragraphIndex] = expectedParagraphs[concept.paragraphIndex]
+      .replace(concept.sourceEnglish, concept.tshivendaDraft);
+  }
+  assert.deepEqual(translated, expectedParagraphs,
+    'preserve both existing drafts and every other body sentence exactly, including counts and crop guidance');
+  assert.equal(translated[2],
+    'Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Two or more give you options when weather or pests hit.',
+    'translate only the first paragraph-3 sentence; preserve the count-based benefit in English');
+  assert.equal(translated[14], paragraphs[14], 'keep the two-or-more staples benefit in English');
+  assert.equal(translated[15], paragraphs[15], 'keep water, soil, seasons and protection claims in English');
   paragraphs.forEach((paragraph, index) => {
-    if (index !== 0 && index !== 12) assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
+    if (![0, 1, 2, 11, 12, 13].includes(index)) {
+      assert.equal(translated[index], paragraph, `paragraph ${index + 1} stays English`);
+    }
   });
   assert.equal(shown.content.title, lesson.title);
   assert.equal(shown.content.infographicAlt, lesson.infographicAlt);
@@ -150,4 +170,8 @@ test('Vegetables L3 shows only two unreviewed concepts beside exact English and 
   assert.ok(packet.includes(vegetablesL3Draft.bodyConcept.tshivendaDraft));
   assert.ok(packet.includes(vegetablesL3Draft.secondBodyConcept.sourceEnglish));
   assert.ok(packet.includes(vegetablesL3Draft.secondBodyConcept.tshivendaDraft));
+  for (const concept of vegetablesL3Draft.additionalBodyConcepts) {
+    assert.ok(packet.includes(concept.sourceEnglish), `review packet includes source: ${concept.sourceEnglish}`);
+    assert.ok(packet.includes(concept.tshivendaDraft), `review packet includes draft: ${concept.tshivendaDraft}`);
+  }
 });

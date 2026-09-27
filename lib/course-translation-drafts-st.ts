@@ -73,8 +73,9 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "The Three Ethics: Earth Care, People Care, Fair Share",
         "Melao e Meraro ya Boitshwaro: Tlhokomelo ya Lefatshe, Tlhokomelo ya Batho, Karolelano e Lokileng",
       ),
-      body: hold(
+      body: pair(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+        "Permaculture e itshetlehile ka melao e meraro ya boitshwaro. Tlhokomelo ya Lefatshe (Earth Care) e bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela. Tlhokomelo ya Batho (People Care) e bolela hore ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
       ),
       keyPoints: [
         pair(
