@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
@@ -37,6 +37,17 @@ test('standard written Xitsonga uses the same exact source and paragraph pairing
   lastSlide.english.body[lastSlide.english.body.length - 1] += ' Changed.';
   assert.throws(() => validatePairedDraft(draft, source, 'ts'), /English body differs/);
   assert.throws(() => validatePairedDraft(completeHold('xh'), source, 'xh'), /language is unsupported/);
+});
+
+test('Tshivenda source pairing uses its native visible label and the same exact source checks', () => {
+  const draft = completeHold('ve');
+  assert.equal(pairedDraftLanguageLabel('st'), 'SESOTHO');
+  assert.equal(pairedDraftLanguageLabel('ts'), 'XITSONGA');
+  assert.equal(pairedDraftLanguageLabel('ve'), 'TSHIVENḒA');
+  assert.equal(validatePairedDraft(draft, source, 've').length, source.length);
+  draft.language = 'ts';
+  assert.throws(() => validatePairedDraft(draft, source, 've'), /language must be ve/);
+  assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
 test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its current English narration', () => {
@@ -159,7 +170,7 @@ test('the paired layout preflights all 22 full source records without writing me
   }
 });
 
-test('the CLI preflights Xitsonga paired drafts and rejects unsupported paired languages', () => {
+test('the CLI preflights all supported paired languages and rejects unsupported languages', () => {
   const temp = mkdtempSync(join(tmpdir(), 'imbewu-paired-language-'));
   try {
     const json = join(temp, 'draft.json');
@@ -173,12 +184,22 @@ test('the CLI preflights Xitsonga paired drafts and rejects unsupported paired l
     assert.match(supported.stdout, /validated 22 source-paired slides/);
     assert.equal(existsSync(output), false);
 
+    const veDraft = join(temp, 've-draft.json');
+    writeFileSync(veDraft, JSON.stringify(completeHold('ve')));
+    const tshivenda = spawnSync(process.execPath,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 've', output,
+        '--paired-draft', veDraft, '--validate-only'],
+      { cwd: process.cwd(), encoding: 'utf8' });
+    assert.equal(tshivenda.status, 0, tshivenda.stderr);
+    assert.match(tshivenda.stdout, /validated 22 source-paired slides/);
+    assert.equal(existsSync(output), false);
+
     const unsupported = spawnSync(process.execPath,
       ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'xh', output,
         '--paired-draft', json, '--validate-only'],
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(unsupported.status, 0);
-    assert.match(unsupported.stderr, /supports st and ts/);
+    assert.match(unsupported.stderr, /supports st, ts and ve/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });
