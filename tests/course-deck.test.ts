@@ -452,12 +452,15 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
     assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
       'the full-image viewer must allow a portrait slide to scroll at readable width');
     assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
+      'play-through must wait until the learner chooses a source voice');
     assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
     const english = view.root.findAllByType('button').find(button => button.children.join('') === 'English source narration')!;
     assert.equal(english.props['aria-pressed'], false);
 
     act(() => english.props.onClick());
     assert.equal(english.props['aria-pressed'], true);
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
     assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.jpg$/, 'choosing a voice must not replace the picture');
     assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);

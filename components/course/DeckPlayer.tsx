@@ -276,10 +276,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     //
     // It doubles as the browser's autoplay unlock: a tap on Next is a user gesture, so the same
     // <audio> element is permitted to play from here on.
-    setRunning(true);
+    setRunning(Boolean(audioForCurrent));
     setChromeVisible(true);
     setIndex((i) => Math.min(total - 1, Math.max(0, i + delta)));
-  }, [total]);
+  }, [total, audioForCurrent]);
 
   // Moving on stops the previous slide's narration. Two voices at once is worse than silence, and
   // on a slow connection the old clip can otherwise still be arriving when the new one starts.
@@ -665,11 +665,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         <button
           className={styles.playControl}
           onClick={() => setRunning((on) => !on)}
+          disabled={!audio}
           aria-label={t(running ? 'courseDeckStopAria' : 'courseDeckPlayAria')}
           style={{
             display: 'flex', alignItems: 'center', gap: 7, padding: '9px 15px', borderRadius: 10,
             border: 'none', background: running ? '#8A4B2A' : GREEN, color: '#fff',
-            fontWeight: 700, fontSize: 13, cursor: 'pointer', flexShrink: 0,
+            fontWeight: 700, fontSize: 13, cursor: audio ? 'pointer' : 'not-allowed', flexShrink: 0,
+            opacity: audio ? 1 : 0.55,
           }}
         >
           <span aria-hidden style={{ fontSize: 12 }}>{running ? '■' : '▶'}</span>
