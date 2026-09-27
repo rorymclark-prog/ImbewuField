@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '3a3c87ad', changes: [
+    'Introduction adds Tshivenda and Xitsonga draft orientation slides beside English.',
+  ], tour: [
+    { title: 'Read the next Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and compare slides 2 and 3 with the exact English source. Technical design and farming wording still appears in English where the draft is uncertain; regional narration is not yet available.' },
+  ] },
   { when: '27 September 2026', sha: '3fe77759', changes: [
     'Introduction now has Tshivenda and Xitsonga draft ethics slides beside English.',
   ], tour: [

@@ -3,12 +3,12 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1, 4, 5 and 6: orientation/reflection and ethics label openings only. Unreviewed machine candidates; exact English source remains visible.",
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible.",
     "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
-    "holds": "All examples, site and crop advice, money and work claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English."
+    "holds": "Unverified spade wording, the land-works-with-you contrast, all examples, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English."
   },
   "reviewNotes": [
-    "A fluent standard written Xitsonga speaker should check the dig/plot wording, register, ethics term and named labels before classroom reliance.",
+    "A fluent standard written Xitsonga speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
     "This is provisional standard written Xitsonga for a Shangani-speaking group; comprehension has not been established."
   ],
   "slides": [
@@ -60,14 +60,18 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ha yini leswi swi ri swa nkoka",
+          "provenance": "new-unreviewed-machine-draft; source paired"
         },
         "body": [
           {
             "status": "english-hold"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ntirho wo tala eka purasi leritsongo a hi ku byala kumbe ku tshovela. I ku famba, ku rhwala ni ku lulamisa leswi vekiweke endhawini leyi hoxeke.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"
@@ -92,11 +96,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swikongomelo swa dyondzo",
+          "provenance": "new-unreviewed-machine-draft; source paired"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko modulu lowu wu hela, u ta kota ku endla swilo swinharhu.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "status": "english-hold"

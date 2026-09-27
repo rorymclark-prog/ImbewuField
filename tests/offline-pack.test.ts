@@ -200,12 +200,12 @@ test('Sesotho intro lessons download all paired images and keep English source a
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
 });
 
-test('Tshivenda and Xitsonga Introduction downloads include draft stills and English fallback', () => {
+test('Tshivenda and Xitsonga Introduction downloads include orientation stills and English fallback', () => {
   for (const lang of ['ve', 'ts']) {
     const pack = offlinePack('intro-permaculture', lang);
     assert.deepEqual(pack.missing, []);
     const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-    for (const n of ['01', '04', '05', '06']) {
+    for (const n of ['01', '02', '03', '04', '05', '06']) {
       assert.ok(slides.includes(`/course-decks/intro-permaculture/${lang}/slide-${n}.webp`));
     }
     assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-07.jpg'));

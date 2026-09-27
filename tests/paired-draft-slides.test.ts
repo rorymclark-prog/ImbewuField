@@ -55,7 +55,7 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
-test('regional Introduction ethics frames keep all farming examples and decisions in exact English', () => {
+test('regional Introduction orientation and ethics frames hold uncertain farming and design claims in English', () => {
   for (const lang of ['ve', 'ts']) {
     const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
@@ -63,14 +63,18 @@ test('regional Introduction ethics frames keep all farming examples and decision
     const drafted = slides.flatMap((slide: any) => slide.target.body
       .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
       .filter(Boolean));
-    assert.deepEqual(drafted, ['1:1', '1:4', '4:1', '5:1', '6:1']);
+    assert.deepEqual(drafted, ['1:1', '1:4', '2:2', '3:1', '4:1', '5:1', '6:1']);
     assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
-      .map((slide: any) => slide.n), [4, 5, 6]);
+      .map((slide: any) => slide.n), lang === 've' ? [2, 4, 5, 6] : [2, 3, 4, 5, 6]);
+    for (const p of [0, 2, 3]) assert.equal(slides[1].target.body[p].status, 'english-hold',
+      `slide 2 ${lang}: the spade, land-work contrast and work question need a local check`);
+    for (const part of slides[2].target.body.slice(1)) assert.equal(part.status, 'english-hold',
+      `slide 3 ${lang}: ethics, principles, zones and sectors must remain English`);
     for (const n of [4, 5, 6]) {
       assert.ok(slides[n - 1].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
         `slide ${n} ${lang}: examples, care advice and reflection questions must remain English`);
     }
-    for (const n of [2, 3, 7, 8]) {
+    for (const n of [7, 8]) {
       assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
         `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
     }
