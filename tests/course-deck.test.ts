@@ -16,7 +16,7 @@ import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
-const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress' };";
+const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
 test('sound-off learners get the complete current script, including its final instruction', () => {
@@ -416,6 +416,72 @@ test('Water playback respects language gaps, download choice and the whole clear
       assert.match(view.root.findByType('audio').props.src, /slide-15.mp3$/, 'advance exactly one slide once both finish');
     } finally { act(() => view.unmount()); }
   }
+});
+
+test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
+  // The first lesson has real source-paired portrait frames. A single language state used to
+  // switch both image and voice to English on this path; later lessons still fall back by slide.
+  const deck = COURSE_DECKS['intro-permaculture'];
+  assert.ok(deck.slideLanguages.includes('st'));
+  assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
+  for (let slide = 1; slide <= 8; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
+  assert.equal(slideImageUrl('intro-permaculture', 'st', 9), null);
+  assert.equal(animationUrls('intro-permaculture', 4, 'st'), null,
+    'the English animation poster must not cover the paired Sesotho ethics frame');
+
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'st' })); });
+  try {
+    const picture = () => view.root.findAllByType('img')[0];
+    const imageCanvas = () => picture().parent!;
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/);
+    assert.equal(imageCanvas().props.style.aspectRatio, 1440 / 5400, 'portrait text must not be shrunk into a widescreen frame');
+    const stage = view.root.findByProps({ className: 'slideStage' });
+    assert.equal(stage.props.style.overflow, 'auto', 'a tall paired slide needs its own scroll area so controls stay visible');
+    assert.equal(stage.props.style.maxHeight, 'min(65vh, 600px)');
+    assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
+      'the full-image viewer must allow a portrait slide to scroll at readable width');
+    assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
+      'play-through must wait until the learner chooses a source voice');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Sesotho AI draft.*Ha ho modumo wa Sesotho/);
+    const english = view.root.findAllByType('button').find(button => button.children.join('').includes('English source narration'))!;
+    assert.equal(english.props['aria-pressed'], false);
+
+    act(() => english.props.onClick());
+    assert.equal(english.props['aria-pressed'], true);
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);
+
+    act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-02\.webp$/, 'page turns keep the selected slide language');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
+  } finally { act(() => view.unmount()); }
+
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
+  try {
+    const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
+    act(() => zulu.props.onClick());
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.jpg$/,
+      'the existing English and isiZulu switch still changes the slides');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
+      'the existing English and isiZulu switch still changes the narration');
+    assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 16 / 9);
+  } finally { act(() => view.unmount()); }
 });
 
 test('deck arrows change slides only while the deck itself has plain-key focus', async () => {

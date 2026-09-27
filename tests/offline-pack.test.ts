@@ -188,6 +188,18 @@ test('a pack carries whatever the player will actually show, including any fallb
   }
 });
 
+test('Sesotho intro lesson downloads its draft images and honest English fallback', () => {
+  const pack = offlinePack('intro-permaculture', 'st');
+  assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 8);
+  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-08.webp'));
+  assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-09.jpg'));
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
+});
+
 test('both languages of the finished module are whole — no slide falls back', () => {
   // Seeds is the module being shown to people as the finished sample. A farmer reading isiZulu
   // should not meet an English slide in it.
