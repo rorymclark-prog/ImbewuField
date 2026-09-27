@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '6cbd8602', changes: [
+    'Soil Health opens with four Sesotho draft slides beside English.',
+  ], tour: [
+    { title: 'Compare the Soil Health drafts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open slides 1 to 4. Their limited Sesotho drafts are visibly unreviewed and paired with exact English; remaining slides and narration stay English.' },
+  ] },
   { when: '27 September 2026', sha: '8fa5017', changes: [
     'Whole-year plans no longer stack new crops on beds already growing.',
     'Cold-interior plans no longer sow tender crops that frost would kill.',
