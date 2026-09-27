@@ -782,3 +782,91 @@ with the hyphenated prefix *di-* and concord *di/tse* ("di-swale tse", "di-legum
 - **Climate** without "change" (boemo ba lehodimo), "a changing climate" (boemo ba lehodimo bo
   fetohang) and "As the climate gets hotter" were left, since the term is "climate change".
 - **Carbon to nitrogen ratio** and **Understorey** do not appear as terms in chapters 00 to 11.
+
+## Second edition (27 Sep 2026)
+
+Chapters 00 to 11 and the new chapter 13 (`13-notes-and-references`) were re-translated from the
+rewritten English (`research/manual/REWRITE.md`, Rory's voice). Chapter 12 (Glossary) was not
+changed. The "Kept in English" rules above still apply: first use of a glossary word in a chapter
+is bold English with a short Sesotho gloss (or with the English sentence's own definition
+translated), later uses plain English. Machine draft for fluent-speaker review, as before; items
+marked **(check)** are the least sure.
+
+**Recurring chapter phrases**
+
+| English | Sesotho | Notes |
+|---|---|---|
+| By the end of this chapter you will be able to: | Qetellong ya kgaolo ena o tla kgona ho: | Used in every chapter; list items start with a bare verb (Bala, Rala, Kgetha ...). |
+| Try it (end-of-chapter activity) | Leka sena | Section heading in every chapter; also "Leka sena" in ch. 00 step 2 and ch. 07. |
+| Notes and references (ch. 13 title) | Dintlha le mehlodi | |
+| Safety and the law | Polokeho le molao | ch. 13 section. |
+| References | Mehlodi | ch. 13 section. Chapter headings there are "Kgaolo ya N: <Sesotho title>". |
+| Worked example | Mohlala o sebeditsweng | ch. 07. |
+
+**New terms**
+
+| English | Sesotho | Notes |
+|---|---|---|
+| base map | mmapa wa motheo (base map) | ch. 02. |
+| aspect | Aspect (lehlakore leo naha e le shebileng) | ch. 02 heading keeps the Sesotho phrase with "(aspect)". |
+| sector map | mmapa wa di-sector | ch. 03. |
+| wind vane / windsock | sesupa-moya / windsock | ch. 03. **(check)** |
+| fire beaters | dibetli tsa mollo | ch. 03. **(check)** |
+| knapsack sprayer | sefafatsi se jarwang mokokotlong | ch. 03. |
+| match (for fire) | thupana ya mollo (match) | ch. 03. **(check)** |
+| lifestyle audit | tlhahlobo ya bophelo | ch. 04. **(check)** |
+| cut and come again | ho kga mme e mele hape | ch. 04. |
+| broadfork | broadfork | ch. 04. Loan word, explained in the sentence. |
+| quail | dikwekwe | ch. 02. **(check)** |
+| omnivore | diphoofolo tse jang tsohle (omnivores) | ch. 05, as in the tables above. |
+| stinger (bee) | lemao la notshi (sting) | ch. 05. **(check)** Descriptive ("the bee's needle"). |
+| layers / broilers | layers / broilers | ch. 05. Kept English, with "bakeng sa mahe / bakeng sa nama". |
+| micro-organisms | micro-organisms | ch. 08. Loan word, explained as "dintho tse ngata tse nyane tse phelang". |
+| soil profile | soil profile (setshwantsho sa mekgahlelo ya mobu) | ch. 08. |
+| taproot | motso o moholo o tebileng (taproot) | ch. 08. |
+| soil texture / soil structure | texture, structure (sebopeho sa mobu) | ch. 08. Kept English as in the source; *sebopeho* alone would not separate the two. **(check)** |
+| ribbon test / jar test | teko ya lebanta / teko ya nkgo | ch. 08. |
+| nodules | nodules (mafitonyana a metso) | ch. 08, ch. 10. Glossary above had *mafito a metso*. |
+| rhizobium inoculant | rhizobium inoculant (phofo ya dibaktheria tse thusang tsa metso) | ch. 08. |
+| mulch bank | mulch bank | ch. 08. English, explained in the sentence. |
+| castings | castings (mantle a diboko) / worm castings | ch. 08. |
+| bedding (worm farm) | bedding (bethe ya diboko) | ch. 08. **(check)** Not *bethe ya serapa*. |
+| cocoons (worm eggs) | dikhokhono | ch. 08. **(check)** |
+| plough pan | plough pan | ch. 07. Loan word. |
+| ripper / chisel plough / two-wheel tractor / rotavator | di-ripper, di-chisel plough, terekere ya mabidi a mabedi, rotavator | ch. 07. |
+| sheet mulching | Sheet mulching (dibethe tsa lasagne) | ch. 07, 08. English now, glossary phrase above used as the explanation. |
+| solarisation / tarping | Solarisation (ho futhumatsa mobu ka letsatsi) / Tarping (ho kwahela ka tarp) | ch. 07. |
+| stale seedbed | stale seedbed (bethe e hlwekisitsweng pele) | ch. 07. |
+| sunken beds | dibethe tse tebileng (sunken beds) | ch. 07. Replaces "bethe ya serapa e tebileng". |
+| trench bed / pit bed | bethe ya foro (trench bed) / bethe ya sekoti (pit bed) | ch. 07. |
+| banana circle | Banana circle (sedikadikwe sa dibanana) | ch. 07. |
+| infiltration basin | sekotlolo sa infiltration (pl. dikotlolo tsa infiltration) | ch. 07. "Infiltration" is kept English. |
+| diversion mound | lepoho le kgelosang metsi (diversion mound) | ch. 07. Glossary above had *lerakwana le kgelosang metsi*; either works. **(check)** |
+| runoff coefficient | runoff coefficient (palo ya phallo) | ch. 07. Kept English inside the formula so the maths reads the same as the English. |
+| volume (of a pond) | Volume / bongata ba metsi | ch. 07 formula keeps "Volume". |
+| micro-sprinklers / impact sprinklers | difafatsi tse nyane (micro-sprinklers) / difafatsi tse otlang (impact sprinklers) | ch. 07. |
+| ecology | Ecology (thuto ya tikoloho ya tlhaho) | ch. 09. The chapter title keeps "tikoloho ya tlhaho". |
+| producers / consumers / decomposers | bahlahisi / baji / babodisi | ch. 09. **(check)** |
+| bush encroachment | bush encroachment (ho tetebala ha dihlahla) | ch. 09. |
+| polyculture | di-polyculture | ch. 09. Loan word, explained in the sentence. |
+| sap suckers / plant eaters | tse monyang lero / tse jang dimela | ch. 10. |
+| mealybug, scale insect, whitefly, thrips, red spider mite, nematode | di-mealybug, di-scale insect, di-whitefly, di-thrips, di-red spider mite, di-nematode | ch. 10. Loan words; no common Sesotho names known to the drafter. |
+| hoverfly / lacewing / ground beetle / earwig | di-hoverfly / di-lacewing / di-ground beetle / di-earwig | ch. 10. |
+| rat lungworm | rat lungworm (seboko se senyane se phelang ka ditweba) | ch. 10. |
+| sooty mould | hlobo e ntsho (sooty mould) | ch. 10, as in the table above. |
+| inverter | inverter | ch. 11. |
+| indirect solar geyser | geyser e sa otlolohang (indirect) | ch. 11. **(check)** |
+| aflatoxin | aflatoxin (chefo ya sebete) | ch. 11. |
+| blanching | ho qwedisa ka metsing a belang nakwana (blanching) | ch. 11. |
+| samp | setampa | ch. 11. |
+| electrician | setsebi sa motlakase | ch. 13. |
+
+**Act names (ch. 13).** Kept in English as published, each followed once by a short Sesotho gloss:
+National Water Act (molao wa naha wa metsi); Conservation of Agricultural Resources Act (molao o
+sireletsang mobu le naha ya temo); National Veld and Forest Fire Act (molao wa mollo wa naha le
+meru); NEMBA Alien and Invasive Species Lists (manane a molao a mefuta e tswang kantle e hlaselang
+naha); National Forests Act (molao wa naha wa meru). Every reference line was copied unchanged.
+
+**Left as Rory's words (for the reviewer).** *morogo* was kept as written in the English (Sesotho
+*moroho* would sit very close to *meroho*, "vegetables", used throughout); *pikmatok* was kept; *veld*
+is "naha ya tlhaho"; *mielies* are "poone". Switch *morogo* → *moroho* if the reviewer prefers.

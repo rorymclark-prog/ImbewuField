@@ -1,182 +1,136 @@
 # Ho rala polasi kapa lehae la hao
 
-Permaculture ke mokgwa wa ho rala (design). O ka lema dijo hoo e batlang e le hohle, empa moralo o motle o o bolokela nako, tjhelete le matla. O o fa polasi e hlahisang ditshila tse nyane, mme mobu wa yona o nona ho feta selemo le selemo.
+O ka lema dijo hoo e batlang e le kae kapa kae. Empa serapa se sebakeng se fosahetseng se o bitsa letsatsi le letsatsi: dikgato tse eketsehileng ho ya pompong, mekotla e eketsehileng ya metsi e nyolohang leralleng, mobu o hoholwang ke sefefo se seng le se seng. Moralo o motle o boloka nako, tjhelete le matla, mme polasi e nona ho feta selemo se seng le se seng.
 
-Moralo o motle o etsa dintho tse pedi:
+**Permaculture** (mokgwa wa ho rala polasi le lehae o sebetsang le tlhaho) ke mokgwa wa ho rala. E ntsha bokgoni bohle ba naha mme e fihlela ditlhoko tsa dimela, diphoofolo, metsi, meaho le batho mmoho. Balemi ba banyane ba ruileng ka ho fetisisa hangata hase bona ba nang le naha e kgolo.
 
-- O ntsha bokgoni bohle ba naha.
-- O fihlela ditlhoko tse ngata kamoo ho ka kgonehang tsa karolo ka nngwe ya tsamaiso: dimela, diphoofolo, metsi, meaho le batho.
+**Qetellong ya kgaolo ena o tla kgona ho:**
 
-Kgaolo ena e bua ka mehato e meraro ya ho rala: tlhahlobo ya setsha (site assessment), moralo wa di-Zone (zone planning) le moralo wa letswapo (slope planning). Mohato wa bone, moralo wa **di-sector** (matla a tswang kantle a amang naha ya hao, jwaloka moya le mollo), o kgaolong e latelang.
+- Taka mmapa wa motheo wa naha ya hao mme o tshwaye se seng se le teng
+- Bala setsha sa hao bakeng sa metsi, letswapo, lehlakore leo naha e le shebileng le ho fihlella
+- Arola naha ya hao ka di-zone, e le hore dintho tseo o di etelang letsatsi le letsatsi di be haufi le lehae
+- Sebedisa letswapo e le hore matla a ho hohela fatshe a o tsamaisetse metsi, compost le manyolo
+
+Moralo wa di-sector, mohato wa bone, o latela kgaolong e latelang.
 
 ## Mohato wa 1: Tlhahlobo ya setsha
 
-### Bokella tlhahisoleseding
+Phoso pampiring ha e bitse letho ho e lokisa. Phoso fatshe e bitsa mofufutso. Kahoo ithute naha pele o e fetola.
 
-Pele o fetola letho, batlisisa ka hohle kamoo o ka kgonang ka teng ka naha ya hao:
+### Bokella le ho shebella
 
-- **Nalane:** kamoo naha e neng e sebediswa ka teng pele, le hore ho ne ho hola eng ho yona.
-- **Boemo ba lehodimo:** pula, serame, mocheso le moya.
-- **Mehlodi e setsheng kapa haufi le sona:** metsi, mobu, manyolo a diphoofolo, mulch, thepa ya ho aha le batho ba ka o thusang.
-- **Mebaraka:** moo o ka rekisang seo o se lemang teng.
+Fumana hore na naha e ne e sebediswa jwang pele; pula ya yona, serame, mocheso le moya; se hodima yona kapa se haufi le yona (metsi, manyolo, mulch, thepa ya ho haha, bathusi); le moo o ka rekisang seo o se lemang teng.
 
-### Shebella naha
+Ebe o tsamaya naheng hangata, ka kelello e bulehileng, mme o se ke wa etsa qeto kapele haholo. Batla:
 
-Tsamaya naheng ya hao hangata, o bulehile kelellong. O se ke wa potlakela ho etsa qeto. Batla:
+- moo metsi a pula a phallang teng kamora sefefo, le moo a bokellanang teng
+- kamoo difate di sekametseng kapa di bopilweng ke moya kateng
+- ke diphoofolo dife tse tshelang naha
+- ke dibaka dife tse futhumetseng, tse batang, tse metsi kapa tse omileng.
 
-- moo metsi a pula a phallang teng kamora sefefo, le moo a bokellanang teng,
-- kamoo difate di sekametseng kapa di bopilweng ke moya ka teng,
-- diphoofolo tse tsamayang naheng ya hao,
-- dibaka tse futhumetseng, tse batang, tse metsi kapa tse omileng.
-
-Ho shebella ha ho fele. Sehla ka seng le sefefo ka seng di o ruta ntho e ntjha. Ha o shebella nako e telele, diqeto tsa hao di tla ba betere.
+Sehla se seng le se seng le sefefo se seng le se seng di o ruta ntho e ntjha.
 
 ### Taka mmapa wa motheo
 
-Mmapa wa motheo (base map) ke setshwantsho sa setsha sa hao kaofela jwaloka ha se bonwa ho tloha hodimo. Bontsha:
+**Mmapa wa motheo** (base map) ke setshwantsho sa setsha sa hao se bonwang ho tswa hodimo. Bontsha:
 
-- meedi le diterata,
-- ditsela, ditselana le dikgoro,
-- ntlo, matlo a polokelo (sheds), masaka le meaho e meng,
-- kamoo karolo ka nngwe e sebediswang kajeno, mohlala tshimo, naha ya tlhaho (veld) kapa serapa,
-- metsi: didiba, melatswana, diborehole, ditanka, dipompo le dibaka tse metsi,
-- difate tse kgolo le dibaka tse nang le majwe,
-- mela ya contour haeba o na le yona. Mola wa contour o kopanya dintlha tse bophahamong bo lekanang.
+- meedi, diterata, ditsela, ditselana le dikgoro
+- ntlo, mashede, masaka le meaho e meng
+- kamoo karolo ka nngwe e sebediswang kateng jwale: tshimo, naha ya tlhaho kapa serapa
+- metsi: diliba, melatswana, diliba tse tjhekilweng (boreholes), ditanka, dipompo le dibaka tse metsi
+- difate tse kgolo le dibaka tse nang le majwe
+- mela ya **contour** haeba o na le yona. Mola wa contour o kopanya dintlha tse bophahamong bo le bong.
 
-Moo o ka fumanang mmapa teng:
-
-- Masepala wa heno o ka nna wa ba le mmapa wa setsha sa hao.
-- O ka hatisa setshwantsho sa sathalaete mahala (mohlala ho tswa ho Google Earth) mme wa se latela ka pene.
-- Dimmapa tsa mmuso tsa sebopeho sa naha (topographic maps) tsa sekala sa 1:50 000 di bontsha mela ya contour ya Afrika Borwa kaofela.
-- Bakeng sa setsha se senyane, o ka metha ka tepi ya ho metha mme wa taka mmapa wa hao.
-
-Taka mmapa wa hao ka sekala (to scale). Mohlala, 1 cm pampiring e ka emela 1 m fatshe. Rula ya sekala (scale ruler) e o thusa ho metha le ho rala ka nepo.
+Kopitsa setshwantsho sa sathalaete sa mahala (mohlala ho tswa Google Earth), kapa bakeng sa setsha se senyane metha ka tepi mme o itakele. Dimmapa tsa mmuso tsa topographic tsa 1:50 000 di kwahela Afrika Borwa kaofela, di na le di-contour tse 20 m ho tloha ho e nngwe: di bontsha sebopeho se seholo sa naha, e seng dikoti tse nyane. Taka ka sekala, mohlala 1 cm pampiring bakeng sa 1 m fatshe.
 
 ## Seo o lokelang ho se sheba setsheng sa hao
 
 ### Metsi
 
-Metsi ke ntho ya bohlokwa ka ho fetisisa eo o lokelang ho e ralla. Kgaolo ya 7 e bua ka ona ka botlalo.
+Metsi ke ntho ya pele eo o lokelang ho e ralla (kgaolo ya 7 e bua ka ona ka botlalo).
 
-1. Fumana dipalo tsa pula tsa sebaka sa heno. Boholo ba Afrika Borwa bo fumana pula hlabula. Kapa Bophirima (Western Cape) e fumana boholo ba pula ya yona mariha.
-2. Sheba **catchment** (sebaka se bokellang metsi). Ena ke naha e ka hodimo ho ya hao, e tsholollelang metsi naheng ya hao.
-3. Batla **runoff** (metsi a phallang): metsi a phallang hodima mobu kamora pula. Batla hape matshwao a runoff ya kgale, jwaloka dikgohlo, dibaka tse se nang jwang le mobu o hoholehileng. Runoff e hohola mobu le phepo eo o e kentseng ho wona.
-4. Ngola polokelo ya metsi eo o nang le yona hona jwale, le dibaka moo o ka ekeletsang ditanka, matangwana kapa matamo.
-5. Ngola mehlodi ya hao ya metsi ya ha ho hlokahala (back-up): borehole, noka, sediba kapa pompo ya masepala.
-6. Tshwaya mmapeng wa hao dibaka tse omileng haholo le tse metsi haholo.
-7. Nahana kamoo o tla nosetsa dimela tse nyane tse sa tswa hlongwa ka boiteko bo bonyane, le kamoo o ka sebedisang metsi a fokolang.
+1. Fumana pula ya sebaka sa heno. Boholo ba Afrika Borwa bo fumana pula hlabula; Kapa Bophirima e e fumana mariha.
+2. Sheba **catchment** (sebaka se bokellang metsi): naha e ka hodima ya hao e tsholetsang metsi naheng ya hao.
+3. Batla **runoff**, metsi a pula a phallang hodima mobu ho ena le ho kena, le matshwao a wona a kgale: dikgohlo, dibaka tse se nang letho le mobu o hoholehileng. Runoff e jara mobu le phepo eo o e kentseng.
+4. Tshwaya polokelo ya metsi eo o nang le yona, dibaka moo ditanka, matangwana kapa matamo a ka yang teng, le mehlodi ya hao ya thuso: borehole, noka, sediba kapa pompo.
+5. Tshwaya dibaka tse omileng haholo le tse metsi haholo, mme o rale kamoo o tla nosetsa dimela tse nyane kateng ka boitekitso bo bonyenyane.
 
 ### Sebopeho sa naha le letswapo
 
-Setsha se setle ka ho fetisisa ke letswapo le bonolo le tsholollang metsi hantle, le shebileng letsatsi. Naha e thellang haholo e thata ho e sebetsa mme mobu wa yona o hoholeha habonolo.
+Setsha se molemo ka ho fetisisa ke letswapo le bonolo, le tsholang metsi hantle, le shebileng letsatsi. Naha e thellang e thata ho e sebetsa mme e na le **erosion** (kgoholeho ya mobu): mobu o hoholwang ke metsi.
 
-Letswapo hangata le fanwa ka phesente. Le o bolella hore naha e theoha dimitara tse kae ho dimitara tse 100. Mohlala, haeba naha e theoha 1 m ho 10 m, letswapo ke 10%.
+Letswapo hangata le fanwa e le peresente: ho theoha ho 100 m. Ho theoha ha 1 m ho 10 m ke letswapo la 10%.
 
-| Letswapo | Ho theoha | Engele | Se bolelang |
+| Letswapo | Ho theoha | Sekhutlo | Se bolela eng |
 |---|---|---|---|
-| 5% | 1 m ho 20 m | e ka bang 3° | Ho bonolo bakeng sa diserapa le masimo |
-| 12% | 1 m ho e ka bang 8 m | e ka bang 7° | Sireletsa mobu ka dibethe tsa serapa tse latelang contour, mela ya jwang kapa methati (terraces) |
-| 20% | 1 m ho 5 m | e ka bang 11° | Molao wa Afrika Borwa o hloka tumello e ngotsweng pele o lema |
-| 32% | 1 m ho e ka bang 3 m | e ka bang 18° | E boloke e le ka tlasa difate kapa jwang ka ho sa feleng |
+| 5% | 1 m ho 20 m | hoo e ka bang 3° | Ho bonolo bakeng sa diserapa le masimo |
+| 12% | 1 m ho hoo e ka bang 8 m | hoo e ka bang 7° | Sireletsa mobu ka dibethe tsa contour, mela ya jwang kapa methati |
+| 32% | 1 m ho hoo e ka bang 3 m | hoo e ka bang 18° | Boloka ka tlasa difate kapa jwang bo sa feleng |
 
-> **Hlokomela:** Ho ya ka Conservation of Agricultural Resources Act (43 of 1983) (Molao wa Paballo ya Mehlodi ya Temo), o hloka tumello e ngotsweng ho tswa Lefapheng la Temo pele o lema naha e thellang ho feta 20%. Dibakeng tse ding tse kotsing ya **erosion** (kgoholeho ya mobu), tse ngotsweng melawaneng (regulations), moedi ke 12%. Botsa moeletsi wa temo.
+Bill Mollison, e mong wa bathehi ba permaculture, o eleditse hore matswapo a thellang ho feta hoo e ka bang di-degree tse 18 a bolokwe ka tlasa difate tse sa feleng. Hopola sena ha o kgetha naha eo o tla e reka kapa o e hira.
 
-Haeba naha ya hao e thellang, rala methati kapa dibethe tsa serapa tse latelang contour. Bill Mollison, e mong wa bathehi ba permaculture, o eleditse hore matswapo a thellang ho feta dikgato tse ka bang 18 (e ka bang 32%) a lokela ho dula a kwahetswe ke difate ka ho sa feleng ho sireletsa mobu. Hopola sena ha o kgetha naha eo o tla e reka kapa wa e hira.
+### Lehlakore leo naha e le shebileng (aspect)
 
-Haeba o ka fumana mmapa wa sebopeho sa naha, kopitsa mela ya wona ya contour mmapeng wa hao wa motheo. E o thusa ho etsa qeto ya hore tshebediso ka nngwe ya naha le polokelo ka nngwe ya metsi di behwe kae.
+**Aspect** ke lehlakore leo letswapo kapa moaho o le shebileng. Afrika Borwa letsatsi le ka leboya, kahoo:
 
-### Lehlakore leo naha e shebileng ho lona (aspect)
+- **Matswapo a shebileng leboya le botjhabela** a fumana letsatsi le lengata mme a futhumala kapele. A molemo ka ho fetisisa bakeng sa boholo ba dijalo.
+- **Matswapo a shebileng bophirima** a fumana letsatsi le tjhesang la thapama, le ka tjhesang dimela hlabula.
+- **Matswapo a shebileng borwa** a pholile mme a na le moriti mariha. A loketse difate, mme dibakeng tse omileng a dula a le mongobo nako e telele.
 
-Aspect ke lehlakore leo letswapo kapa moaho o shebileng ho lona. Karolong e ka borwa ya lefatshe (Southern Hemisphere) letsatsi le karolong e ka leboya ya lehodimo, ka hona:
+Ha ho mosebetsi o ka fetolang moo letsatsi le tjhabang teng. Sheba moo difate le meaho di lahlelang meriti ya tsona teng; meriti ya mariha e telele haholo (kgaolo ya 3).
 
-- **Matswapo a shebileng leboya le botjhabela** ke a matle ka ho fetisisa bakeng sa dijalo tse ngata. A fumana letsatsi haholo mme a futhumala kapele hoseng.
-- **Matswapo a shebileng bophirima** a fumana letsatsi le tjhesang la thapama. Sena se ka tjhesa dimela hlabula.
-- **Matswapo a shebileng borwa** a pholile mme a na le moriti o mongata, haholoholo mariha ha meriti e le telele. A loketse difate. Dibakeng tse omileng a boela a dula a le mongobo nako e telele.
+### Ho fihlella
 
-Ha ho mosebetsi o ka fetolang moo letsatsi le tjhabang teng, ka hona rala hantle. Sheba moo difate le meaho e haufi e hlahisang meriti ya yona teng. Mariha meriti e telele haholo ho feta hlabula. Kgaolo ya 3 e hlalosa diengele tsa letsatsi.
+Ditsela le ditselana di batla di sa fele. Tsamaisa tse ntjha ho latela contour. Tselana e latelang contour e ka etsa lebopo la **swale**, foro e tjhekwang ho latela contour ho tshwara metsi a pula (kgaolo ya 7). Fa tselana ka nngwe sekgeo se bonolo haholo sa ho theoha, e le hore pula e tsholohele ka hara swale kapa besine ya sefate ho ena le ho phalla tseleng.
 
-### Ho fihlella (access)
+## Mohato wa 2: Moralo wa di-zone
 
-Ditsela le ditselana di batla di le teng ka ho sa feleng. Ha di se di entswe, ho thata ho di tlosa. Tshwaya ditsela le ditselana tsohle tse teng mmapeng wa hao wa motheo.
-
-Ha o rala ditselana kapa ditsela tse ntjha, di etse di latele contour. Tselana e latelang contour e ka etsa lebopo la **swale** (mokero). Swale ke foro e tjhekwang ho latela contour ho tshwara metsi a pula (bona kgaolo ya 7). Sena se kotula metsi, se fokotsa runoff mme se thusa ho laola erosion. Fa tselana ka nngwe letswapo le lenyane haholo e le hore pula e phallele ho swale kapa besineng ya sefate, mme e se ke ya phalla ka hara tselana.
-
-## Mohato wa 2: Moralo wa di-Zone
-
-Moralo wa di-Zone o beha karolo ka nngwe ya polasi ho ya ka hore o hloka ho e etela hangata hakae. Zone ke sebaka se arotsweng ho ya ka hore o se etela hangata hakae. Dintho tseo o di etelang letsatsi le letsatsi di behwa haufi haholo le ntlo. Dintho tseo o di etelang ka seoelo di behwa hole. Sena se o bolokela ho tsamaya, nako le matla.
+Hore o tsamaya hole hakae ho etsa qeto ya seo o se hlokomelang. Serapa se qetellong se a lebalwa; serapa se pela monyako wa kitjhene se a nosetswa. Moralo wa di-zone o arola polasi ka **di-zone** (dikarolo) ho ya ka hore o di etela hangata hakae: dintho tsa letsatsi le letsatsi haufi le ntlo, dintho tse etelwang ka seoelo hole.
 
 | Zone | Ke eng | O e etela hangata hakae | Mehlala |
 |---|---|---|---|
-| 0 | Ntlo | Ka nako tsohle | Kitjhene, polokelo ya peo, ditanka tsa metsi a pula tse ntlong |
-| 1 | Hang-hang pela ntlo | Letsatsi le letsatsi, hangata makgetlo a mangata | Serapa sa kitjhene, ditlama, kereche ya dimela tse nyane, **compost** (manyolo a bodileng), diphoofolo tse nyane, matangwana a manyane |
-| 2 | Haufi le ntlo | Matsatsi a mangata | **Food forest** (moru wa dijo) e kopaneng, difate tsa ditholwana, serapa se seholo sa meroho, dikgoho, dijalo tsa sehlooho |
-| 3 | Sebaka se seholo sa temo | Beke le beke, kapa ha ho hlokahala | Dijalo tsa masimo le tsa mmaraka, serapa se seholo sa difate tsa ditholwana, makgulo, matangwana a ditlhapi, matamo |
-| 4 | Naha e batlang e le ya tlhaho, e tsamaiswang hanyane | Ka nako tse ding | Sebaka sa difate sa patsi, dithupa le lepolanka, makgulo, matamo a maholo |
-| 5 | Naha ya tlhaho | Ka seoelo, ho shebella le ho ithuta | Naha ya tlhaho (veld), dihlahla kapa moru o tlohelletsweng diphoofolo tsa naha |
+| 0 | Ntlo | Nako yohle | Kitjhene, polokelo ya peo, ditanka tsa ntlo |
+| 1 | Pela ntlo hantle | Letsatsi le letsatsi, hangata makgetlo a mangata | Serapa sa kitjhene, ditlama, kereche ya dimela, compost, diphoofolo tse nyane |
+| 2 | Haufi le ntlo | Matsatsi a mangata | Food forest, difate tsa ditholwana, dikgoho, dijalo tsa sehlooho |
+| 3 | Sebaka se seholo sa temo | Beke le beke, kapa ha ho hlokahala | Dijalo tsa tshimo le tsa mmaraka, serapa sa difate tsa ditholwana, makgulo, matamo |
+| 4 | Naha e batlang e le ya tlhaho, e laolwang hanyane | Ka dinako tse ding | Moru wa patsi, makgulo |
+| 5 | Naha ya tlhaho | Ka seoelo, ho shebella le ho ithuta | Naha ya tlhaho kapa moru |
 
-### Zone 1
+**Zone 1** e fana ka kotulo e kgolo ka ho fetisisa ho tswa sebakeng se senyane ka ho fetisisa. Beha mona meroho ya **annual** (dimela tse phelang sehla se le seng) le morogo oo o o kgang hangata, ditlama tsa kitjhene, difate tsa ditholwana tse kgutshwane, diphoofolo tse nyane tse kang dikwekwe le mebutla, le dipolokelo tse nyane tsa metsi. Kwahela tanka le sediba se seng le se seng, mme o kwalle kapa o kwahele matangwana, e le hore ho se be le ngwana ya ka wela ka hare.
 
-Zone 1 ke yona e nang le mosebetsi o mongata ka ho fetisisa. E fana ka kotulo e kgolo ka ho fetisisa sebakeng se senyane ka ho fetisisa. O e hlokomela haufi-ufi, o qeta nako e ngata ka ho fetisisa ho yona mme o kotula ho yona hangata. E na le mefutafuta e meholo ka ho fetisisa ya dimela le diphoofolo.
+**Zone 2** e kgolo mme e sebetswa hanyane. **Food forest** ya yona (serapa se lenngweng ka mekgahlelo jwaloka moru wa tlhaho) e ka kenyeletsa difate tsa **coppicing**: ho poma sefate ho fihla kutung e tlase e le hore se hlahise dithupa tse ntjha. Bakeng sa patsi le dithupa, lema mooka (*Vachellia karroo*), sefate sa **tlhaho** (se holang ka tlhaho mona), ho ena le wattle kapa gum, tse hasanang nahang ya tlhaho le melatswaneng.
 
-- Meroho ya **annual** (e phelang sehla se le seng feela) le meroho ya makgasi eo o e kgang hangata.
-- Ditlama le dimela tsa meriana tseo o di sebedisang letsatsi le letsatsi kitjheneng.
-- Difate tsa ditholwana tse nyane kapa tse kgutshwane (dwarf).
-- Diphoofolo tse nyane tse kang dikgwale (quail), di-guinea pig le mebutla.
-- Dipolokelo tse nyane tsa metsi: ditanka tsa metsi a pula le matangwana a manyane.
+**Zone 3** e na le diphoofolo, dijalo tsa tshimo le matamo a polasi. **Zone 4** e fana ka makgulo, patsi le lepolanka. **Zone 5** ke naha ya tlhaho e siuwang e le jwalo, setshabelo sa dinonyana le dikokonyana tse thusang ho laola disenyi. E etele ho shebella, ho ithuta le ho bokella dijo tsa naha ka hloko.
 
-> **Polokeho:** Ngwana e monyane a ka qwela metsing a disentimitara tse mmalwa feela. Kwahela tanka e nngwe le e nngwe le sediba se seng le se seng, mme o kwalle matangwana ka terata kapa o a kwahele.
-
-### Zone 2
-
-Zone 2 e hole hanyane le ntlo, e kgolo mme ha e hloke tlhokomelo e ngata jwaloka Zone 1. O e etela matsatsi a mangata ho fepa dikgoho, ho bokella mahe le ho kga ditholwana le meroho e kotulwang nako e telele. Food forest mona e na le mefuta e mengata. Dibakeng tse batang o ka kenyeletsa difate tse etswang **coppicing** (tse pongwang haufi le fatshe) bakeng sa patsi. Coppicing e bolela ho poma sefate ho fihla kutung e kgutshwane haufi le fatshe, e le hore se mele dithupa tse ntjha.
-
-> **Hlokomela:** O se ke wa lema black wattle, Port Jackson, leucaena kapa difate tsa gum (mefuta e mengata ya *Eucalyptus*) bakeng sa patsi. Ke **invasive species** (dimela tse tswang kantle tse hlaselang naha), tse ngotsweng lenaneng ho ya ka molao wa Afrika Borwa wa **biodiversity**, e leng mefutafuta ya dintho tse phelang (NEMBA, 2020), mme ho di lema ho a thibelwa kapa ho hloka tumello (permit). Difate tsa tlhaho tse kang mooka (sweet thorn, *Vachellia karroo*), karee (*Searsia lancea*) le mohlware (wild olive, *Olea europaea* subsp. *africana*) di ka fana ka patsi, dithupa le sesireletso.
-
-### Zone 3
-
-Zone 3 e kgolo ho feta Zone 2. Diphoofolo tse kgolo di fula makgulong mona. E boetse e na le meroho ya mmaraka le dijalo tsa masimo, le food forest e kgolo, e bonolo, e nang le mefuta e fokolang ho feta ya Zone 2. Polokelo ya metsi e ka ba kgolo, jwaloka matamo a polasi.
-
-### Zone 4
-
-Zone 4 ke ya meru ya polasi le makgulo: patsi, dithupa le lepolanka. E ka ba kgolo haholo, mme o e tsamaisa hanyane feela.
-
-### Zone 5
-
-Zone 5 ke naha ya tlhaho e tlohelletsweng diphoofolo tsa naha. Ke setshabelo sa dimela le diphoofolo, ho kenyeletsa dinonyana le dikokonyana tse thusang ho laola disenyi. E etele ho shebella, ho ithuta le ho bokella dijo tsa naha ka hloko.
-
-### Di-Zone naheng ya nnete
-
-Ha se setsha se seng le se seng se nang le sebaka sa di-Zone tsohle.
-
-- Setsha sa toropong sa dimitara-sekwere tse ka bang 1,000 (kotara ya acre) se na le sebaka sa Zone 1, le dikotwana tse nyane tsa di-Zone tse ding. Mohlala, sekhutlo se ka lengwa bakeng sa dinonyana le dikokonyana e le Zone 5 e nyane haholo.
-- Setsha se seholo sa mahaeng se ka tshwara Zone 2, 3 le 4, esita le meru e itseng.
-- Ke dithoto tse kgolo haholo feela tse nang le Zone 5 ya nnete.
-- Naheng ya setjhaba (communal land), Zone 4 le 5 e ka ba makgulo a arolelanwang kapa naha ya tlhaho (veld).
-
-Di-Zone ha se didikadikwe tse makgethe. Letswapo, aspect, metsi le ditselana di di kobela dibopehong tse ding. Taka mmapa wa di-Zone hodima mmapa wa hao wa motheo. O tla o thusa ho etsa qeto ya hore karolo ka nngwe ya polasi e behwe kae.
+Hase setsha se seng le se seng se nang le sebaka sa di-zone tsohle. Setsha sa toropong sa hoo e ka bang 1 000 square metres (kotara ya acre) se na le sebaka sa Zone 1 le dikotwana tsa tse ding; khutlo e siuwang bakeng sa dinonyana le dikokonyana ke Zone 5 e nyane haholo. Nahang ya setjhaba, Zone 4 le 5 e ka ba makgulo kapa naha ya tlhaho e arolelanwang. Mme di-zone hase didikadikwe tse makgethe: letswapo, metsi le ditsela di di kobela dibopehong tse ding.
 
 ## Mohato wa 3: Moralo wa letswapo
 
-Moralo wa letswapo o bolela ho sheba naha ya hao ho tloha lehlakoreng mme o ipotse: ke kae thabeng? Haeba o sebedisa letswapo hantle, matla a ho hohela fatshe (gravity) a o etsetsa boholo ba mosebetsi. Sheba setshwantsho sa naha ya hao ho tloha lehlakoreng ho etsa qeto ya hore o beha kae matamo, ditanka tsa metsi, ditsela, diforo tsa ho tsholla metsi (drains) le ditsela tsa ho kgelosa metsi (diversions).
+Metsi a phalla ho theosa mahala. Moralo wa letswapo, ho latela mokgwa wa Bill Mollison, o bolela ho sheba naha ya hao ho tswa lehlakoreng mme o botse: ke kae leralleng? Sebedisa letswapo hantle mme matla a ho hohela fatshe a jara.
 
-Mokgwa ona o latela mohlala wa Bill Mollison wa moralo wa letswapo:
+- **Metsi hodimo.** Beha matamo le ditanka ka hodima ntlo le serapa, mme matla a ho hohela fatshe a tsamaise metsi ntle le pompo. Metha e nngwe le e nngwe e 10 ya bophahamo e fana ka kgatello (pressure) e ka bang 1 bar.
+- **Difate matswapong a ka hodimo a thellang** di diehisa runoff, di thusa metsi ho kena mobung mme di tshwara mobu.
+- **Dibethe tsa serapa, ditsela le di-swale ho latela contour** di boloka metsi naheng.
+- **Diqubu tsa compost le matlo a diphoofolo a bulehela ho theosa,** e le hore compost le manyolo di theohele serapeng.
+- **Metsi a ho nwa a dula a hlwekile.** Boloka manyolo, compost le masaka a diphoofolo ka tlase, le hole haholo, ho di-borehole, diliba le metsi a tswang fatshe.
+- **Greywater e theohela difateng.** **Greywater**, metsi a sebedisitsweng a ho hlatswa, a bate le a disinki, a phalla ka matla a ho hohela fatshe ho ya dibesineng tsa difate tse nang le mulch kapa di-swale tse ka tlase ho ntlo, le ka mohla e seng hodima morogo kapa meroho e meng eo o e jang e le tala (kgaolo ya 7).
 
-- **Metsi hodimo.** Beha matamo, ditanka le di-catchment ka hodimo ho ntlo le serapa. Gravity e tla tsamaisa metsi, mme ha o hloke pompo ya motlakase. Dimitara tse ding le tse ding tse 10 tsa bophahamo di fana ka kgatello ya metsi (water pressure) e ka bang 1 bar.
-- **Difate matswapong a ka hodimo a thellang.** Difate tse dulang ka ho sa feleng naheng e thellang di diehisa runoff, di thusa metsi ho kena mobung mme di tshwara mobu.
-- **Sebetsa ho latela contour.** Dibethe tsa serapa, ditselana le di-swale tse latelang contour di fokotsa erosion mme di boloka metsi ka hara naha.
-- **Compost le matlo a diphoofolo di shebile tlase.** Aha diqubu tsa compost le matlo a diphoofolo di bulehela tlase letswapong. Jwale o ka theosetsa compost le manyolo a diphoofolo serapeng ka thuso ya letswapo.
-- **Sireletsa metsi a hao a ho nwa.** Boloka manyolo a diphoofolo, compost le masaka a diphoofolo hole, le ka tlase, ho diborehole, didiba le mehlodi ya metsi.
-- **Greywater** (metsi a ditshila a malapeng) **e theohela difateng.** Tlohela metsi a sebedisitsweng ka tlung a phallele ka gravity ho di-swale kapa dibesineng tsa difate tse ka tlase ho ntlo.
+## Leka sena
 
-> **Polokeho:** Greywater e ka tshwara dikokwanahloko. O se ke wa sebedisa metsi a kitjhene kapa metsi a ho hlatswa dinapi merohong e jewang e le tala, jwaloka lettuce le sepinatjhe. Isa greywater difateng le dimeleng tse ding tseo dikarolo tsa tsona tse jewang di sa ameng metsi ao. Kgaolo ya 7 e hlalosa greywater ka botlalo.
+Qala mmapa wa hao wa motheo bekeng ena.
+
+1. Fumana setshwantsho sa sathalaete se hatisitsweng sa naha ya hao, kapa leqephe le leholo la pampiri. Tshwaya leboya.
+2. Tsamaya meedi. Taka mathoko, meaho, ditselana, dipompo, ditanka le difate tse kgolo.
+3. Kamora pula e latelang e ntle, tsamaya naheng hape. Tshwaya ka metsu moo metsi a phallang teng le moo a bokellanang teng.
+4. Tshwaya dibaka tse futhumetseng, tse batang, tse metsi le tse omileng.
+5. Ka letsatsi le le leng, bala leeto le leng le le leng leo o le etsang sebakeng ka seng: pompo, dikgoho, serapa, qubu ya patsi.
+6. Ka pentshele, taka di-zone tse sa nepahalang hantle hodima mmapa. Na sebaka seo o se etelang haholo se haufi ka ho fetisisa le ntlo?
 
 ## Dintlha tsa bohlokwa
 
-- Shebella naha ya hao ho pholletsa le dihla pele o etsa diphetoho tse kgolo.
-- Taka mmapa wa motheo o bontshang meedi, meaho, metsi, ditsela, tshebediso ya naha le mela ya contour.
-- Hlahloba metsi, letswapo, aspect le ho fihlella setsheng sa hao.
-- Afrika Borwa letsatsi le ka leboya, ka hona matswapo a shebileng leboya le botjhabela ke a futhumetseng ka ho fetisisa mme a loketse dijalo tse ngata.
-- Matswapo a fetang 12% a hloka tshireletso ya mobu; ho lema naha e thellang ho feta 20% (12% dibakeng tse ding) ho hloka tumello e ngotsweng.
-- Zone 0 ho isa ho 5 di beha dintho ho ya ka hore o di etela hangata hakae: dintho tsa letsatsi le letsatsi haufi le ntlo, tseo o di etelang ka seoelo hole.
-- O se ke wa lema difate tsa invasive species tse ngotsweng lenaneng, tse kang black wattle kapa difate tsa gum, bakeng sa patsi; sebedisa difate tsa tlhaho.
-- Beha dipolokelo tsa metsi hodimo mme o sebedise gravity; boloka manyolo a diphoofolo hole le metsi a ho nwa; sebedisa greywater difateng feela le dimeleng tse sa jeweng di le tala.
+- Shebella naha ya hao dihleng tsohle, mme o kenye seo o se bonang mmapeng wa motheo.
+- Bala setsha sa hao bakeng sa metsi, letswapo, aspect le ho fihlella. Matswapo a shebileng leboya le botjhabela ke ona a futhumetseng ka ho fetisisa.
+- Di-zone tsa 0 ho isa ho 5 di beha dintho ho ya ka hore o di etela hangata hakae.
+- Beha metsi hodimo mme o dumelle matla a ho hohela fatshe ho a tsamaisa. Boloka manyolo hole le metsi a ho nwa, le greywater hole le meroho e jewang e le tala.
+
+Boloka mmapa wa hao leboteng mme o eketse ho wona sehla se seng le se seng. Ka mora dilemo tse mmalwa e tla ba buka e nang le thuso ka ho fetisisa ka naha ya hao.
