@@ -273,8 +273,13 @@ test('Sesotho bee lesson drafts only reviewed terms and keeps care, rules and qu
   assert.equal(presentation.content.body, draft.body.sesothoDraft);
   assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints);
   assert.deepEqual(presentation.content.quiz, lesson.quiz);
-  assert.equal(resolveLearnerLessonPresentation(source.lessons.find(item => item.id === 'small-livestock-l3')!, 'st').status,
-    'english-fallback', 'the unpaired L3 must remain in English');
+  const l3Source = source.lessons.find(item => item.id === 'small-livestock-l3');
+  assert.ok(l3Source);
+  const l3Draft = SESOTHO_SMALL_LIVESTOCK_DRAFT.lessons.find(item => item.id === l3Source.id);
+  assert.ok(l3Draft);
+  assert.equal(resolveLearnerLessonPresentation(l3Source, 'st').status, 'draft',
+    'L3 now shows only its source-paired observation checklist as a labelled draft');
+  assert.equal(l3Draft.body.sourceEnglish, l3Source.body);
   assert.equal(resolveLearnerLessonPresentation({ ...lesson, body: `${lesson.body} Changed.` }, 'st').status,
     'english-fallback', 'changed source text withdraws the complete paired draft');
 });

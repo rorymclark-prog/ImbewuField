@@ -116,5 +116,46 @@ export const SESOTHO_SMALL_LIVESTOCK_DRAFT: SesothoCourseModuleDraft = {
         rationale: hold('Crowding can encourage swarming, but it is not the only cause. Inspection guides the response; adding space is not a guaranteed cure.'),
       },
     ],
+  }, {
+    id: 'small-livestock-l3',
+    infographicAlt: hold(
+      'Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.',
+    ),
+    title: hold('Integrating Livestock Cycles: Nutrients Moving Through the Farm'),
+    // Keep nutrient, manure, tick and parasite instructions in English; only the observation checklist is drafted.
+    body: machineDraft(
+      "Some nutrients can return to the growing area in compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops. Bought feed brings nutrients into the farm, while food and other products carry nutrients away. Keep track of feed bought in and food sold or taken home. Scraps alone may not meet the animals' needs.\n\nGuinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or livestock from ticks or tick-borne disease. Check animals and follow a local animal-health plan.\n\nFor each animal, ask: what can it eat here? What useful things does it produce? What else does it need? Include water, suitable feed, shelter, fencing and daily care.\n\nChickens following goats are not a proven replacement for goat worm control. Grazing management can help, but goats still need health checks and a parasite plan from a veterinary or animal-health adviser. Do not stop treatment because chickens have visited the grazing camp.",
+      "Some nutrients can return to the growing area in compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops. Bought feed brings nutrients into the farm, while food and other products carry nutrients away. Keep track of feed bought in and food sold or taken home. Scraps alone may not meet the animals' needs.\n\nGuinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or livestock from ticks or tick-borne disease. Check animals and follow a local animal-health plan.\n\nBakeng sa phoofolo ka nngwe, botsa: e ka ja eng mona? E hlahisa dintho dife tse molemo? E hloka eng hape? Kenyelletsa metsi, dijo tse e loketseng, bodulo, terata le tlhokomelo ya letsatsi le letsatsi.\n\nChickens following goats are not a proven replacement for goat worm control. Grazing management can help, but goats still need health checks and a parasite plan from a veterinary or animal-health adviser. Do not stop treatment because chickens have visited the grazing camp.",
+    ),
+    keyPoints: [
+      hold('Use suitable farm resources while meeting the full needs of each animal'),
+      hold('Guinea fowl foraging does not replace tick checks or an animal-health plan'),
+      hold('Ask what each animal eats, produces and needs, including any bought inputs'),
+      hold('Do not replace goat worm control with chickens following the herd'),
+    ],
+    quiz: [
+      {
+        question: hold('A farmer keeps guinea fowl. How should she manage ticks on her livestock?'),
+        options: [
+          hold('Stop checking livestock because birds are present'),
+          hold('Keep checking animals and follow a local animal-health plan'),
+          hold('Assume ducks remove every tick'),
+          hold('Treat every animal without checking the problem or getting advice'),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: hold('Birds may eat ticks, but that does not establish reliable protection from ticks or the diseases they carry.'),
+      },
+      {
+        question: hold('Chickens have foraged behind the goats. What should the farmer do about goat worms?'),
+        options: [
+          hold('Continue health checks and the parasite plan agreed with an animal-health adviser'),
+          hold('Stop all worm checks because chickens were present'),
+          hold('Assume chicken manure kills every worm egg'),
+          hold('Assume moving the herd always makes treatment unnecessary'),
+        ],
+        sourceCorrectIndex: 0,
+        rationale: hold('Chickens are not a proven replacement for goat worm control. Grazing management and animal-health checks must work together.'),
+      },
+    ],
   }],
 };
