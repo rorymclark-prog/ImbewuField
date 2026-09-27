@@ -304,7 +304,10 @@ test('a starter never spends a second staple course on one plot', () => {
     { ...FILL_ANSWERS, cropKeys: ['potato', 'dry-beans', 'swiss-chard'] },
     'summer', FILL_BEDS, FILL_CYCLE, [], 1, 2026,
   );
-  assert.deepEqual(coursesOn(fill.starters, 'plot-1'), ['pulse']);
+  // One course, whichever wins. Since the 2026-09-27 frost gate, January dry
+  // beans (field through May frost before harvest) are no longer a hard-frost
+  // sow month, so the course is now the tuber — the point is that it is ONE.
+  assert.equal(coursesOn(fill.starters, 'plot-1').length, 1);
 });
 
 test("a winter-cover starter leaves the plot's food course still to spend (anti-over-fix guard)", () => {
