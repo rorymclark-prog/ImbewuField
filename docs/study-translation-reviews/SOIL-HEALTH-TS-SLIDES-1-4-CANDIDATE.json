@@ -1,0 +1,585 @@
+{
+  "language": "ts",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "provenance": {
+    "newDrafts": "Slides 1 and 2, first sentence only. These are new machine-draft proposals, not present in the existing Xitsonga course draft.",
+    "reusedDrafts": "Slide 4, second full narration paragraph, copied exactly from lib/course-translation-drafts-ts-soil-health.ts.",
+    "holds": "All other headings and narration remain English. Slide 4 paragraph 1 is held as a whole because its other sentence makes a technical microbiology and nutrient-cycling claim."
+  },
+  "reviewNotes": [
+    "Slide 1 uses the broad word “Misava” for soil/ground; a fluent Xitsonga reviewer should check that the sentence is natural and preserves the source distinction.",
+    "Slide 2 “Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo” is a new machine draft of a general orientation claim; confirm the terms for soil condition and harvest in the intended written variety.",
+    "Slide 4 preserves “some” as “tin’wana” and “can help” as “ti nga pfuna.” “Ku tswonga nutrients” may be awkward or imprecise for root nutrient uptake. “Fungi,” “nutrients,” and “Worm channels” remain English technical vocabulary; check them with a fluent Xitsonga and soil-science reviewer.",
+    "All translated paragraphs are complete Xitsonga-syntax candidates; no English-hold sentence is embedded inside a paragraph marked draft. English remains exact and complete alongside every target field.",
+    "No Xitsonga fluency, comprehension, or local soil-science approval is claimed."
+  ],
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Soil Health & Composting",
+        "body": [
+          "Soil is more than the ground under your feet.",
+          "It is a living place that feeds crops, holds water, and carries your harvest.",
+          "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Misava a hi leswi nga ehansi ka milenge ya wena ntsena.",
+            "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Soil condition affects roots, water and the harvest.",
+          "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+          "Observe your soil, then choose ways to protect and improve it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo.",
+            "provenance": "new-machine-draft; proposed for review; not present in the existing Xitsonga course draft"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Look for several clues about soil condition.",
+          "Use a jar to explore soil texture, while recognising its limits.",
+          "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Soil Is Alive",
+        "body": [
+          "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+          "Look at roots, soil structure and water movement as well as visible soil life."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "draft",
+            "text": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+            "provenance": "full paragraph reused from lib/course-translation-drafts-ts-soil-health.ts; both source sentences are paired",
+            "segments": [
+              {
+                "sourceEnglish": "Some fungi help roots take up nutrients.",
+                "xitsongaDraft": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients.",
+                "provenance": "reused existing exact source pair"
+              },
+              {
+                "sourceEnglish": "Worm channels can help water and air enter soil.",
+                "xitsongaDraft": "Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+                "provenance": "reused existing exact source pair"
+              }
+            ]
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read Your Soil",
+        "body": [
+          "Look closely at these two soil examples.",
+          "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+          "Look at the roots and the spaces around them.",
+          "Look at the surface cover. Loose mulch covers one example.",
+          "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Explore Soil Texture with a Jar",
+        "body": [
+          "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read the Jar Carefully",
+        "body": [
+          "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "Compare the settled layers and feel the soil in the field.",
+          "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Investigate Before You Treat",
+        "body": [
+          "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Compost Feeds the Soil",
+        "body": [
+          "Compost is organic matter broken down under managed conditions.",
+          "Finished compost can improve soil structure and contribute nutrients.",
+          "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Build the Compost Heap",
+        "body": [
+          "Build the heap with dry browns and fresh greens.",
+          "Keep the layers moist, not wet, so air and decomposers can work."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Balance Browns and Greens",
+        "body": [
+          "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+          "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Heat Alone Is Not a Safety Check",
+        "body": [
+          "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Keep Seed Pods and Contaminants Out",
+        "body": [
+          "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Watch: Bare Soil and Mulch",
+        "body": [
+          "Compare bare soil with mulched soil.",
+          "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Mulch Protects the Ground",
+        "body": [
+          "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Cover Crops Between Seasons",
+        "body": [
+          "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Worm Castings and Liquid Drainage",
+        "body": [
+          "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Soil All Year",
+        "body": [
+          "A Highveld field left bare after the maize harvest faces two main risks.",
+          "Winter wind can carry away dry topsoil.",
+          "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+          "Compare another spot and note recent weather and management.",
+          "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Start one soil-building action from this module.",
+          "Cover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.",
+          "If your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.",
+          "Build soil life step by step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          },
+          {
+            "status": "english-hold"
+          }
+        ]
+      }
+    }
+  ]
+}
