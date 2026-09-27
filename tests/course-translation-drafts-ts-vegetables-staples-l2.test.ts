@@ -81,13 +81,15 @@ test('Vegetables & Staple Crops L2 keeps sowing-risk and harvest uncertainty exa
   assert.equal(localizedParagraphs[4], sourceParagraphs[4]);
 });
 
-test('Vegetables & Staple Crops L2 source drift and other lessons fall back to English', () => {
+test('Vegetables & Staple Crops L2 source drift and undrafted lessons fall back to English', () => {
   const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body}\nChanged.` };
   const changed = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(changed.status, 'english-fallback');
   assert.equal(changed.content.body, changedSource.body);
 
-  for (const lesson of sourceModule.lessons.filter(lesson => lesson.id !== sourceLesson.id)) {
+  assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l3')!, 'ts').status,
+    'draft', 'L3 is separately source-paired in this combined batch');
+  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
     const shown = resolveLearnerLessonPresentation(lesson, 'ts');
     assert.equal(shown.status, 'english-fallback');
     assert.equal(shown.content.body, lesson.body);

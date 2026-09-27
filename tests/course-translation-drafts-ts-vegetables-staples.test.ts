@@ -69,13 +69,15 @@ test('Vegetables & Staple Crops L3 shows seven source-paired resilience sentence
   assert.deepEqual(shown.content.quiz, sourceLesson.quiz);
 });
 
-test('Vegetables & Staple Crops L3 source drift and other lesson sources fall back to English', () => {
+test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fall back to English', () => {
   const changedSource: Lesson = { ...sourceLesson, body: `${sourceLesson.body}\nChanged.` };
   const shown = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(shown.status, 'english-fallback');
   assert.equal(shown.content.body, changedSource.body);
 
-  for (const lesson of sourceModule.lessons.filter(lesson => lesson.id !== sourceLesson.id)) {
+  assert.equal(resolveLearnerLessonPresentation(sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!, 'ts').status,
+    'draft', 'L2 is separately source-paired in this combined batch');
+  for (const lesson of sourceModule.lessons.filter(lesson => !['vegetables-staples-l2', 'vegetables-staples-l3'].includes(lesson.id))) {
     const other = resolveLearnerLessonPresentation(lesson, 'ts');
     assert.equal(other.status, 'english-fallback');
     assert.equal(other.content.body, lesson.body);

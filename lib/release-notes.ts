@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'f746e30c', changes: [
+  { when: '27 September 2026', sha: 'fde0423b', changes: [
     'Soil Health lesson 1 shows six Tshivenda soil-concept drafts beside English.',
     'Soil Health lesson 1 pairs five Sesotho soil-life drafts with English.',
     'Vegetables & Staple Crops lesson 2 pairs four Xitsonga concept sentences with English.',
