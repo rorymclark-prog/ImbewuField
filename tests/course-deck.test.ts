@@ -544,6 +544,7 @@ test('regional Market and Tshivenda vegetables decks fall back to English for ev
     ['market-community', 'ts', [2, 18]],
     ['vegetables-staples', 'st', [1, 2, 8, 9]],
     ['vegetables-staples', 've', [12, 14]],
+    ['soil-health', 'st', [1, 2, 3, 4]],
     ['soil-health', 'ts', [1, 2]],
   ];
   for (const [moduleId, language, authored] of cases) {

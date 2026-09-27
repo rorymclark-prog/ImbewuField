@@ -271,10 +271,13 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    slideLanguages: ['en', 'zu', 'ts'],
-    slideFormatsByLanguage: { ts: 'webp' },
-    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
-    missingSlides: { ts: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
+    slideLanguages: ['en', 'zu', 'st', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: {
+      st: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
