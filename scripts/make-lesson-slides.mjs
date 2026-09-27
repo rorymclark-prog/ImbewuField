@@ -13,6 +13,12 @@
 // USAGE
 //   node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]
 //   node scripts/make-lesson-slides.mjs seeds-sovereignty zu
+//   node scripts/make-lesson-slides.mjs intro-permaculture st OUT --paired-draft draft.json --validate-only
+//   draft.json: {"language":"st","sourceLanguage":"en","reviewStatus":"unreviewed",
+//     "slides":[{"n":1,"english":{"heading":"...","body":["..."]},
+//       "target":{"heading":{"status":"draft","text":"..."},
+//                 "body":[{"status":"draft","text":"..."}]}}]}
+//   Each target heading/paragraph can instead be {"status":"english-hold"}.
 //
 // Then assemble the video with the narration already in the repo:
 //   node scripts/build-lesson-video.mjs seeds-sovereignty zu ~/Downloads/seeds-sovereignty-zu-slides
@@ -25,6 +31,7 @@ import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { englishSlideRecords, validatePairedDraft } from './paired-draft-slides.mjs';
 
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
@@ -32,11 +39,15 @@ const imagesDir = imgFlag >= 0 && argv[imgFlag + 1] ? resolve(argv[imgFlag + 1].
 const overrideFlag = argv.indexOf('--art-overrides');
 const brandingFlag = argv.indexOf('--branding');
 const sourceFlag = argv.indexOf('--source');
+const pairedFlag = argv.indexOf('--paired-draft');
+const validateOnly = argv.includes('--validate-only');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
 const sourcePath = sourceFlag >= 0 ? resolve(argv[sourceFlag + 1]) : null;
-const skipped = new Set(['--images', '--art-overrides', '--branding', '--source']);
-const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag].filter((i) => i >= 0).map((i) => i + 1));
+const pairedPath = pairedFlag >= 0 && argv[pairedFlag + 1] ? resolve(argv[pairedFlag + 1]) : null;
+if (pairedFlag >= 0 && !pairedPath) throw new Error('--paired-draft requires a JSON file');
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--validate-only']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
@@ -44,15 +55,22 @@ if (!moduleId || !lang) {
   process.exit(1);
 }
 
-const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${lang}.md`));
+if (pairedPath && (lang !== 'st' || sourcePath || brandingPath || overridesPath || imagesDir)) {
+  throw new Error('--paired-draft supports st and the authored English source only, without art or branding overrides');
+}
+if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
+const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${pairedPath ? 'en' : lang}.md`));
 if (!existsSync(scriptPath)) {
   console.error(`\n  ✗ no narration script at ${scriptPath}\n`);
   process.exit(1);
 }
 
 const raw = readFileSync(scriptPath, 'utf8');
+const pairedSlides = pairedPath
+  ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw))
+  : null;
 const artPlanPath = resolve('docs/course-deck-art.json');
-const artPlan = existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
+const artPlan = !pairedSlides && existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
 const artOverrides = overridesPath && existsSync(overridesPath) ? JSON.parse(readFileSync(overridesPath, 'utf8')) : {};
 Object.assign(artPlan, artOverrides);
 for (const art of Object.values(artPlan)) {
@@ -134,7 +152,7 @@ function bullets(paras) {
 }
 
 const outDir = resolve((outRaw || join(homedir(), 'Downloads', `${moduleId}-${lang}-slides`)).replace(/^~/, homedir()));
-mkdirSync(outDir, { recursive: true });
+if (!pairedSlides) mkdirSync(outDir, { recursive: true });
 
 // Slide 1's own heading is literally "Isihloko (Title)" — a structural marker, not a title anyone
 // wants on screen. The real module name lives in the script's H1, e.g.
@@ -210,6 +228,8 @@ writeFileSync(
     artPlan,
     lessonArt,
     moduleNumber,
+    pairedSlides,
+    validateOnly,
     footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
     branding,
   }),
@@ -221,7 +241,8 @@ import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
-W, H = 1920, 1080
+PAIRED = cfg.get('pairedSlides')
+W, H = (1440, 3400) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
 # measured against — warm paper, forest green for anything structural, ochre for the small
@@ -288,6 +309,93 @@ def wrap(draw, text, fnt, maxw):
             cur = w
     if cur: lines.append(cur)
     return lines
+
+def paired_lines(draw, text, fnt, maxw, slide_n):
+    lines = wrap(draw, text, fnt, maxw)
+    if any(draw.textlength(line, font=fnt) > maxw for line in lines):
+        raise ValueError('slide %d has a word wider than its paired panel' % slide_n)
+    return lines
+
+if PAIRED:
+    F_PAIR_TITLE = font(SERIF_B, 76)
+    F_PAIR_BODY = font(SANS, 58)
+    F_PAIR_LABEL = font(SANS_B, 43)
+    F_PAIR_STATUS = font(SANS_B, 48)
+
+    def panel_plan(draw, heading, body, top, bottom, n):
+        width = W - 192
+        heading_lines = paired_lines(draw, heading, F_PAIR_TITLE, width, n)
+        if len(heading_lines) > 2:
+            raise ValueError('slide %d heading needs more than two lines' % n)
+        y = top + 120 + len(heading_lines) * 92 + 22
+        paragraphs = []
+        for para in body:
+            lines = paired_lines(draw, para, F_PAIR_BODY, width, n)
+            paragraphs.append(lines)
+            y += len(lines) * 66 + 12
+        if y > bottom - 48:
+            raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size' %
+                             (n, y - top, bottom - 48 - top))
+        return heading_lines, paragraphs
+
+    # Measure the complete deck before writing any image. A partial deck can look complete
+    # enough to register by mistake, especially when its remaining source claims are hidden.
+    probe = ImageDraw.Draw(Image.new('RGB', (W, H), PAPER))
+    paired_plans = []
+    for pair in PAIRED:
+        target = pair['target']
+        held = target['heading']['status'] == 'english-hold' or any(
+            part['status'] == 'english-hold' for part in target['body'])
+        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
+        target_body = [(source if part['status'] == 'english-hold' else part['text'])
+                       for source, part in zip(pair['english']['body'], target['body'])]
+        paired_plans.append((
+            panel_plan(probe, target_heading, target_body, 210, 1690, pair['n']),
+            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 1720, 3200, pair['n']),
+            held,
+        ))
+
+    def draw_panel(draw, label, heading, body, top, bottom, plan, target=None):
+        draw.rounded_rectangle([64, top, W - 64, bottom], radius=26, fill=(255, 252, 246), outline=RULE, width=4)
+        draw.text((96, top + 32), label, font=F_PAIR_LABEL, fill=AMBER)
+        heading_lines, paragraphs = plan
+        y = top + 120
+        title_color = RUST if target and target['heading']['status'] == 'english-hold' else GREEN
+        for line in heading_lines:
+            draw.text((96, y), line, font=F_PAIR_TITLE, fill=title_color)
+            y += 92
+        y += 22
+        for index, lines in enumerate(paragraphs):
+            color = RUST if target and target['body'][index]['status'] == 'english-hold' else INK
+            for line in lines:
+                draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
+                y += 66
+            y += 12
+
+    if cfg.get('validateOnly'):
+        print('  validated %d source-paired slides; no images written' % len(PAIRED))
+        sys.exit(0)
+    if os.path.isdir(cfg['outDir']) and os.listdir(cfg['outDir']):
+        raise ValueError('paired draft output directory must be empty to avoid stale slides')
+    os.makedirs(cfg['outDir'], exist_ok=True)
+    for pair, (target_plan, source_plan, held) in zip(PAIRED, paired_plans):
+        image = Image.new('RGB', (W, H), PAPER)
+        draw = ImageDraw.Draw(image)
+        draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
+        draw.text((96, 75), 'SESOTHO AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
+        target = pair['target']
+        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
+        target_body = [(source if part['status'] == 'english-hold' else part['text'])
+                       for source, part in zip(pair['english']['body'], target['body'])]
+        draw_panel(draw, 'SESOTHO · RUST TEXT = ENGLISH HOLD' if held else 'SESOTHO · AI DRAFT',
+                   target_heading, target_body, 210, 1690, target_plan, target)
+        draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
+                   pair['english']['body'], 1720, 3200, source_plan)
+        draw.text((96, 3280), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, 3280), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+        image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
+        print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
+    sys.exit(0)
 
 total = len(cfg['slides'])
 MODNUM = cfg.get('moduleNumber') or 0
@@ -497,5 +605,5 @@ try {
   console.error(`\n  ✗ slide rendering failed:\n${err.stderr || err.message}\n`);
   process.exit(1);
 }
-console.log(`\n  ✓ ${outDir}\n`);
-console.log(`  Next:  node scripts/build-lesson-video.mjs ${moduleId} ${lang} ${outDir}\n`);
+console.log(validateOnly ? '\n  ✓ paired draft validated without images\n' : `\n  ✓ ${outDir}\n`);
+if (!pairedSlides) console.log(`  Next:  node scripts/build-lesson-video.mjs ${moduleId} ${lang} ${outDir}\n`);
