@@ -59,18 +59,49 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
 // or those farmers' tasks silently vanish.
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
+function usableBed(bed: PlanBed): boolean {
+  return typeof bed.id === 'string' && bed.id.length > 0
+    && Number.isFinite(bed.areaM2) && bed.areaM2 > 0
+    && (bed.minDimM === undefined || (Number.isFinite(bed.minDimM) && bed.minDimM > 0));
+}
+
+/** Beds from one or more Design Studio canvases, unioned and de-duplicated by
+ *  id (first occurrence wins). A null canvas (no Studio design at that site)
+ *  contributes nothing, same as bedsFromDesignCanvas(null) === []. */
+function unionCanvasBeds(canvases: (DesignCanvasState | null)[]): PlanBed[] {
+  const seen = new Set<string>();
+  const beds: PlanBed[] = [];
+  for (const c of canvases) {
+    for (const bed of bedsFromDesignCanvas(c).filter(usableBed)) {
+      if (seen.has(bed.id)) continue;
+      seen.add(bed.id);
+      beds.push(bed);
+    }
+  }
+  return beds;
+}
+
 /** Same source priority as the crop planner: main-site Studio, legacy canvas, virtual fallback. */
 export function taskBoardBeds(
   canvas: DesignCanvasState | null,
   facilitator: FacilitatorDesignState | null,
 ): PlanBed[] {
-  const usable = (bed: PlanBed) =>
-    typeof bed.id === 'string' && bed.id.length > 0
-    && Number.isFinite(bed.areaM2) && bed.areaM2 > 0
-    && (bed.minDimM === undefined || (Number.isFinite(bed.minDimM) && bed.minDimM > 0));
-  const canvasBeds = bedsFromDesignCanvas(canvas).filter(usable);
+  return taskBoardBedsAcrossPlaces([canvas], facilitator);
+}
+
+/** taskBoardBeds, generalised to several sites' canvases at once — the Task
+ *  Planner's bed universe is every saved place's Studio canvas unioned
+ *  together (main site first), not just the main site's. Facilitator/virtual
+ *  fallback still only fires once, globally, when NONE of the canvases have
+ *  usable beds — so a farmer with a real canvas at their main site never
+ *  gets its beds duplicated alongside a stale facilitator-state fallback. */
+export function taskBoardBedsAcrossPlaces(
+  canvases: (DesignCanvasState | null)[],
+  facilitator: FacilitatorDesignState | null,
+): PlanBed[] {
+  const canvasBeds = unionCanvasBeds(canvases);
   if (canvasBeds.length > 0) return canvasBeds;
-  const facilitatorBeds = computeDesignBeds(facilitator).filter(usable);
+  const facilitatorBeds = computeDesignBeds(facilitator).filter(usableBed);
   return facilitatorBeds.length > 0 ? facilitatorBeds : [VIRTUAL_BED];
 }
 
@@ -196,16 +227,23 @@ export function loadCropBoardTasks(completedIds: Set<string>): BoardTask[] {
 }
 
 /** Shared bed/planting resolution behind loadCropBoardTasks and
- *  loadCropBoardYear — same main-site Studio → legacy canvas → virtual-bed
- *  fallback either way. `savedPlantings` is the UNFILTERED count straight off
- *  the stored plan, so a screen can tell "no plan at all" apart from "a plan
- *  whose plantings all sit on beds that no longer exist". */
+ *  loadCropBoardYear — beds are unioned across EVERY saved place's Design
+ *  Studio canvas (main site first, so a colliding id resolves in its favour),
+ *  not just the main site's: a planting on a bed at a non-main saved place
+ *  used to be silently dropped from the Task Planner because only the main
+ *  site's canvas was ever consulted. `savedPlantings` is the UNFILTERED count
+ *  straight off the stored plan, so a screen can tell "no plan at all" apart
+ *  from "a plan whose plantings all sit on beds that no longer exist". */
 function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedPlantings: number } {
-  const main = resolveMainSite(loadPlaces());
-  const canvas = main && Number.isFinite(main.lat) && Number.isFinite(main.lon)
-    ? loadCanvasState(designSiteIdFromLocation({ lat: main.lat, lon: main.lon } as LocationData))
-    : null;
-  const beds = taskBoardBeds(canvas, loadFacilitatorState());
+  const places = loadPlaces();
+  const main = resolveMainSite(places);
+  // Main site first — dedup in unionCanvasBeds keeps its bed on an id
+  // collision, and it stays the "primary" source when ordering matters.
+  const ordered = main ? [main, ...places.filter((p) => p.id !== main.id)] : places;
+  const canvases = ordered
+    .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+    .map((p) => loadCanvasState(designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData)));
+  const beds = taskBoardBedsAcrossPlaces(canvases, loadFacilitatorState());
   const bedIds = new Set(beds.map((b) => b.id));
   const saved = loadCropPlan().plantings;
   const plantings = saved.filter((p) => bedIds.has(p.bedId));

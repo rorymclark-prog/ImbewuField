@@ -73,6 +73,6 @@ test('the calendar page it links to renders real content on its own', () => {
   // is wrapped in try/catch and falls back to showing everything — no required props,
   // no auth gate, no site selection needed before something useful is on screen.
   const page = read('../app/calendar/page.tsx');
-  assert.match(page, /const CROPS: CropRow\[\] = \[/, 'the calendar must ship its own crop data, not expect it from a prop');
+  assert.match(page, /const CROP_BASE: \{[^}]*\}\[\] = \[/, 'the calendar must ship its own crop data, not expect it from a prop');
   assert.match(page, /catch \{ \/\* ignore \*\/ \}/, 'the localStorage read must degrade gracefully with no saved planner crops');
 });
