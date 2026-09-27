@@ -17,6 +17,8 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
 import { useAppLevel } from '@/lib/app-level';
+import { useTrainingAccess } from '@/lib/training-access';
+import { canOpenTrainingRoute } from '@/lib/app-access';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
@@ -40,6 +42,7 @@ interface NavDrawerProps {
 const SIMPLE_NAV_HREFS = new Set([
   '/home', '/farmer', '/records', '/facilitator/crops',
   '/journal', '/student', '/manual', '/contact', '/design', '/account',
+  '/access',
 ]);
 
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
@@ -51,6 +54,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
   const { role } = useAuth();
+  const { access } = useTrainingAccess();
   const { navigationRole, sample } = useRoleNavigation();
   const simple = useAppLevel() === 'simple';
   const pageLesson = ({ '/home': 'home:overview', '/farmer': 'map:overview',
@@ -120,6 +124,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
         { href: '/mentor',      Icon: Users,         label: t('homeRoleMentorLabel') },
         { href: '/ngo',         Icon: BarChart3,     label: t('navNGODashboard') },
+        ...(['ngo', 'admin'].includes(role ?? '') ? [{ href: '/access', Icon: Users, label: ui('Course access', 'Ukufinyelela esifundweni') }] : []),
         { href: '/funder',      Icon: Building2,     label: t('homeRoleFunderLabel') },
         { href: '/design',      Icon: Palette,       label: t('navDesignStudio') },
       ],
@@ -244,7 +249,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             items: section.items.filter(({ href }) =>
               (sample || canSeeNavLink(role, href)) &&
               canSeeWorkspaceLink(navigationRole, href) &&
-              (!simple || SIMPLE_NAV_HREFS.has(href))),
+              (!simple || SIMPLE_NAV_HREFS.has(href)) &&
+              (sample || canOpenTrainingRoute(access, href))),
           }))
             // A section whose every link was filtered out must go too, heading and all —
             // otherwise a farmer gets an "ORGANISATION" label with nothing beneath it, which

@@ -1407,3 +1407,35 @@ test('contact replies: same-org staff/mentor only, addressed to the message\'s o
   const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
   await assertSucceeds(setDoc(doc(adminDb, 'contact_replies', 'contact-reply-support'), { ...reply, message_id: MSG_SUPPORT, recipient_label: 'support' }));
 });
+
+test('only an ACT people manager can stage learner tools and a study learner cannot write money records', async () => {
+  const learner = 'act-training-learner';
+  await env.withSecurityRulesDisabled(async (context) => {
+    await profile(context.firestore(), learner, 'student', 'org-1');
+  });
+  const learnerDb = env.authenticatedContext(learner).firestore();
+  const actDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  const otherDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  const mentorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
+  const accessRef = (db: Firestore) => doc(db, 'app_access', learner);
+  const access = (tier: string, features: string[] = []) => ({
+    tier, features, org_id: 'org-1', updated_by: NGO_SAME_ORG, updated_at: '2026-09-27T00:00:00.000Z',
+  });
+
+  // No grant retains existing access, while a participant cannot assign themselves one.
+  await assertSucceeds(setDoc(doc(learnerDb, 'production_logs', `${learner}-legacy`), logData(learner, 'org-1', 'production_logs')));
+  await assertFails(setDoc(accessRef(learnerDb), { ...access('full'), updated_by: learner }));
+  await assertFails(setDoc(accessRef(otherDb), { ...access('study'), updated_by: NGO_OTHER_ORG }));
+  await assertFails(setDoc(accessRef(mentorDb), { ...access('study'), updated_by: LINKED_MENTOR }));
+
+  await assertSucceeds(setDoc(accessRef(actDb), access('study')));
+  await assertSucceeds(getDoc(accessRef(learnerDb)));
+  await assertFails(setDoc(doc(learnerDb, 'production_logs', `${learner}-blocked`), logData(learner, 'org-1', 'production_logs')));
+  await assertSucceeds(setDoc(doc(learnerDb, 'course_progress', `${learner}-m1`), {
+    profile_id: learner, org_id: 'org-1', module: 'm1', done: true,
+  }));
+  await assertFails(setDoc(accessRef(actDb), { ...access('pilot', ['money_records']), org_id: 'org-2' }));
+  await assertSucceeds(setDoc(accessRef(actDb), access('pilot', ['money_records'])));
+  await assertSucceeds(setDoc(doc(learnerDb, 'production_logs', `${learner}-pilot`), logData(learner, 'org-1', 'production_logs')));
+  await assertFails(setDoc(accessRef(otherDb), { ...access('full'), updated_by: NGO_OTHER_ORG }));
+});

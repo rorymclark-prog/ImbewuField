@@ -44,6 +44,8 @@ import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, se
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
 import { useAppLevel } from '@/lib/app-level';
+import { useTrainingAccess } from '@/lib/training-access';
+import { hasTrainingFeature, type AccessFeature } from '@/lib/app-access';
 import WeatherWidget from '@/components/WeatherWidget';
 
 // Map app lang codes to BCP 47 locale codes for date formatting.
@@ -672,5 +674,26 @@ function HomeLandingInner() {
 }
 
 export default function HomeLanding() {
+  const { access } = useTrainingAccess();
+  const { lang } = useLanguage();
+  const zu = lang === 'zu';
+  if (access && access.tier !== 'full') {
+    const tools: { feature: AccessFeature; href: string; label: string }[] = [
+      { feature: 'planning', href: '/facilitator/crops', label: zu ? 'Ukuhlela izitshalo' : 'Crop planning' },
+      { feature: 'field_records', href: '/journal', label: zu ? 'Ijenali yepulazi' : 'Field journal' },
+      { feature: 'money_records', href: '/records', label: zu ? 'Amarekhodi emali nokukhiqiza' : 'Money and production records' },
+      { feature: 'design', href: '/farmer', label: zu ? 'Imephu nokuklama ipulazi' : 'Farm map and design' },
+      { feature: 'community', href: '/exchange', label: zu ? 'Ukuxhumana nabanye' : 'Exchange' },
+    ];
+    return <main style={{ maxWidth: 640, margin: '0 auto', padding: 24, overflowY: 'auto', height: '100vh' }}>
+      <h1 style={{ fontSize: 28, fontWeight: 700 }}>{zu ? 'Isifundo sakho' : 'Your course'}</h1>
+      <p style={{ margin: '12px 0 22px' }}>{zu ? 'Qhubeka ufunda ngemva kwesifundo. Umqeqeshi uzokwethula amanye amathuluzi uma sekufanele uwasebenzise.' : 'Keep learning after the course. Your facilitator will introduce additional tools when you are ready to use them.'}</p>
+      <nav aria-label={zu ? 'Izingxenye zesifundo' : 'Course areas'} style={{ display: 'grid', gap: 12 }}>
+        <Link href="/student">{zu ? 'Izifundo' : 'Studies and lessons'} →</Link>
+        <Link href="/manual">{zu ? 'Incwadi ye-Permaculture' : 'Permaculture manual'} →</Link>
+        {tools.filter((tool) => hasTrainingFeature(access, tool.feature)).map((tool) => <Link key={tool.feature} href={tool.href}>{tool.label} →</Link>)}
+      </nav>
+    </main>;
+  }
   return <HomeLandingInner />;
 }
