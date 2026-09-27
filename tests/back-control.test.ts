@@ -29,10 +29,8 @@ test('tab-bar destinations and auth gates never get one', () => {
   for (const path of ['/', '/home', '/farmer', '/records', '/account']) {
     assert.equal(floatingBackAllowed(path), false, `${path} is a top-level destination`);
   }
-  // A gate exists to be answered, not walked around.
-  for (const path of ['/login', '/gate']) {
-    assert.equal(floatingBackAllowed(path), false, `${path} is a gate`);
-  }
+  // Sign-in exists to be answered, not walked around.
+  assert.equal(floatingBackAllowed('/login'), false, '/login is a gate');
   // The Design Studio draws its own arrow in its title bar.
   assert.equal(floatingBackAllowed('/design'), false);
 });

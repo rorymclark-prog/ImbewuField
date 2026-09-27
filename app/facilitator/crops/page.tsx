@@ -139,20 +139,20 @@ function HarvestShareRow({
 }) {
   return (
     <div style={{ marginBottom: 7 }}>
-      <div className="flex items-center justify-between gap-2 font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-        <span className="font-sans" style={{ color: '#20190F' }}>
+      <div className="flex items-center justify-between gap-2 font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
+        <span className="font-sans" style={{ color: 'var(--text-primary)' }}>
           {cropKey ? <CropIcon cropKey={cropKey} icon={icon ?? '🌱'} size={20} /> : null} {name}
         </span>
         <span className="font-mono flex-shrink-0" style={{ fontVariantNumeric: 'tabular-nums' }}>{children}</span>
       </div>
       {share !== null && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
-          <div style={{ flex: 1, height: 8, background: '#EFE9DA', borderRadius: 4, overflow: 'hidden' }}>
+          <div style={{ flex: 1, height: 8, background: 'var(--bg-2)', borderRadius: 4, overflow: 'hidden' }}>
             {/* Floor of 2% so a real but tiny crop still draws something. The
                 number beside it is the honest figure; the bar is the glance. */}
             <div style={{ width: `${Math.max(2, Math.round((relative ?? share) * 100))}%`, height: '100%', background: '#5B8F4E', borderRadius: '0 4px 4px 0' }} />
           </div>
-          <span className="font-mono flex-shrink-0" style={{ fontSize: 11, color: '#755942', fontVariantNumeric: 'tabular-nums', minWidth: 30, textAlign: 'right' }}>
+          <span className="font-mono flex-shrink-0" style={{ fontSize: 11, color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums', minWidth: 30, textAlign: 'right' }}>
             {Math.round(share * 100)}%
           </span>
         </div>
@@ -177,7 +177,7 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
   const { lang } = useLanguage();
   const groups = groupTasksByAction(tasks);
   if (groups.length === 0) {
-    return <div className="font-sans" style={{ fontSize: 12.5, color: '#755942' }}>{cropUi(lang, 'Nothing due.', 'Akukho okumele kwenziwe okwamanje.')}</div>;
+    return <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing due.', 'Akukho okumele kwenziwe okwamanje.')}</div>;
   }
   return (
     <div className="space-y-2">
@@ -192,36 +192,36 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
           ? group.crops[0].detail
           : null;
         return (
-          <div key={group.action} className="rounded-xl" style={{ background: '#F8F4EA', border: '1px solid #EAE2D0', padding: '7px 9px' }}>
+          <div key={group.action} className="rounded-xl" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', padding: '7px 9px' }}>
             <div className="flex items-baseline gap-1.5">
               {(() => { const ActionIcon = TASK_ACTION_ICON[group.action]; return <ActionIcon size={14} aria-hidden style={{ flexShrink: 0 }} />; })()}
-              <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{group.label}</span>
-              <span className="font-mono" style={{ fontSize: 10.5, color: '#755942' }}>
+              <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{group.label}</span>
+              <span className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
                 {group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}
               </span>
             </div>
             {shared && (
-              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4 }}>{shared}</div>
+              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4 }}>{shared}</div>
             )}
             <div className={shared ? 'space-y-1' : 'space-y-1.5 mt-1'}>
               {group.crops.map((row) => (
                 <div key={`${row.cropKey}-${row.bedLabels[0]}`}>
                   <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
-                    <span className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>
+                    <span className="font-sans font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
                       <CropIcon cropKey={row.cropKey} icon={row.icon} size={16} /> {row.cropName}
                     </span>
                     {row.bedLabels.map((bed) => (
                       <span
                         key={bed}
                         className="font-sans"
-                        style={{ fontSize: 10.5, color: '#1F4D2B', background: '#E4EEDF', border: '1px solid #CBDDC2', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
+                        style={{ fontSize: 10.5, color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
                       >
                         {bed}
                       </span>
                     ))}
                   </div>
                   {!shared && row.detail && (
-                    <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
+                    <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
                   )}
                 </div>
               ))}
@@ -349,15 +349,15 @@ const VISIBLE_BUYING_MONTHS = 3;
 function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNow: boolean }) {
   return (
     <div>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : '#20190F' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : 'var(--text-primary)' }}>
         {monthLabel(monthGroup.month)}{isNow ? ' · this month' : ''}
       </div>
       <div className="space-y-2">
         {monthGroup.items.map((item) => (
-          <div key={`${item.cropKey}-${item.sowMonth}`} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
-            <div className="flex items-center justify-between font-sans gap-2" style={{ fontSize: 13, color: '#5C5040' }}>
+          <div key={`${item.cropKey}-${item.sowMonth}`} className="pb-2" style={{ borderBottom: '1px solid var(--border)' }}>
+            <div className="flex items-center justify-between font-sans gap-2" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
               <span><CropIcon cropKey={item.cropKey} icon={item.icon} size={14} /> {item.cropName}</span>
-              <span className="font-mono text-right" style={{ color: '#20190F' }}>
+              <span className="font-mono text-right" style={{ color: 'var(--text-primary)' }}>
                 {item.quantityStatus === 'spacing-confirmation-required'
                   ? 'confirm spacing first'
                   : item.quantityStatus === 'packet-rate-required'
@@ -369,7 +369,7 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
                         : `~${numberLabel(item.count)} ${item.unit} positions`}
               </span>
             </div>
-            <div className="font-sans mt-0.5 flex items-start gap-1" style={{ fontSize: 11, color: '#755942', lineHeight: 1.4 }}>
+            <div className="font-sans mt-0.5 flex items-start gap-1" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>
               <SeedBadge transplant={item.transplant} />
               <span>{item.note}{item.bedLabels.length > 0 ? ` · for ${item.bedLabels.join(', ')}` : ''}</span>
             </div>
@@ -534,13 +534,13 @@ function SiteCard({
 
   const inner = (
     <>
-      <div style={{ borderBottom: '1px solid #E2D8C4', background: '#F6F1E6' }}>
+      <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
         {plan ? (
           <MiniPlanPlate plan={plan} />
         ) : (
           <div
             className="flex items-center justify-center font-sans"
-            style={{ aspectRatio: '8 / 5', fontSize: 11.5, color: '#755942' }}
+            style={{ aspectRatio: '8 / 5', fontSize: 11.5, color: 'var(--text-muted)' }}
           >
             No map traced for this one
           </div>
@@ -548,11 +548,11 @@ function SiteCard({
       </div>
       <div className="px-3 py-2.5 flex flex-col" style={{ gap: 2 }}>
         <div className="flex items-baseline justify-between gap-2">
-          <span className="font-display font-semibold truncate" style={{ fontSize: 14, color: '#20190F' }}>{title}</span>
-          <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: '#755942' }}>›</span>
+          <span className="font-display font-semibold truncate" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{title}</span>
+          <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>›</span>
         </div>
-        <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{parts.join(' · ')}</span>
-        <span className="font-sans" style={{ fontSize: 10.5, color: '#755942' }}>
+        <span className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>{parts.join(' · ')}</span>
+        <span className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
           {source}{tag ? ` · ${tag}` : ''}
         </span>
       </div>
@@ -560,8 +560,8 @@ function SiteCard({
   );
 
   const style = {
-    background: '#FFFEFA',
-    border: '1px solid #E2D8C4',
+    background: 'var(--bg-1)',
+    border: '1px solid var(--border)',
     borderRadius: 14,
     overflow: 'hidden',
     textAlign: 'left' as const,
@@ -1433,15 +1433,14 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
 
   return (
-    // EVERY surface on this screen is a hard-coded light one (#E4DCC6 paper,
-    // #FFFEFA cards, #FFFFFF rows) — none of them read a theme token. But text
-    // colour was left to inherit, and body's inherited colour IS a theme token:
-    // in Earth Dark `--color-ink` is #EEE4D0, a pale cream. So on a dark theme
-    // every child that did not name its own colour rendered pale cream on white
-    // — the Auto-suggest crop names were invisible. Pinning the ink at the root
-    // fixes all of them at once and, unlike colouring the 31 light containers
-    // one by one, cannot be regressed by the next child someone adds.
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6', color: '#20190F' }}>
+    // Every surface on this screen now reads the per-theme tokens (--bg-0 page,
+    // --bg-1 cards, --bg-2 insets) instead of the hard-coded light hex this screen
+    // used to carry, so earth/slate and light/dark all resolve correctly. Text
+    // colour is still pinned at the root rather than left to inherit: a child that
+    // names no colour of its own falls back to var(--text-primary) here rather than
+    // whatever the body happens to inherit, so it can't go invisible the way the
+    // Auto-suggest crop names once did against a dark theme.
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
       {/* AUTOSAVE FAILED — above the header, because everything below it is now unsaved work.
           It stays until a later autosave succeeds; there is no dismiss, since dismissing it would
           not save anything and the farmer would be back to believing the plan is stored. */}
@@ -1456,7 +1455,7 @@ function FacilitatorCropsPageInner() {
         </div>
       )}
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <RegisterInFlowBack />
         <MenuButton />
         <Link
@@ -1464,7 +1463,7 @@ function FacilitatorCropsPageInner() {
           aria-label={cropUi(lang, 'Home', 'Ikhaya')}
           title={cropUi(lang, 'Home', 'Ikhaya')}
           className="flex-shrink-0 flex items-center justify-center rounded-xl"
-          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', textDecoration: 'none' }}
+          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', color: 'var(--text-secondary)', textDecoration: 'none' }}
         >
           <Home size={16} strokeWidth={1.7} />
         </Link>
@@ -1473,7 +1472,7 @@ function FacilitatorCropsPageInner() {
             href={designHref}
             aria-label={cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}
           >
             ‹ {cropUi(lang, 'Back to design', 'Umklamo')}
           </Link>
@@ -1482,7 +1481,7 @@ function FacilitatorCropsPageInner() {
           <button
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', cursor: 'pointer' }}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer' }}
             title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
           >
             ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
@@ -1495,13 +1494,13 @@ function FacilitatorCropsPageInner() {
           <Link
             href="/facilitator/crops?switch=1"
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}
             title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
           >
             ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
           </Link>
         )}
-        <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
+        <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
           <button
             onClick={() => setSwitchingSite(true)}
@@ -1509,15 +1508,15 @@ function FacilitatorCropsPageInner() {
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
-              <span className="font-sans truncate" style={{ fontSize: 11, color: '#755942', maxWidth: 220 }}>{designTitle}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+              <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>{designTitle}</span>
             </div>
-            <ChevronDown size={13} style={{ color: '#755942', flexShrink: 0 }} />
+            <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
-            <span className="font-sans truncate" style={{ fontSize: 11, color: '#755942', maxWidth: 220 }}>
+            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+            <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
               {canvasSite ? cropUi(lang, 'Beds from your Design Studio map', 'Imibhede esemephini ye-Design Studio') : designTitle}
             </span>
           </div>
@@ -1530,9 +1529,9 @@ function FacilitatorCropsPageInner() {
             title={cropUi(lang, 'Check the beds and plots this plan is using — count, sizes and where they came from', 'Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo')}
             style={{
               fontSize: 12, cursor: 'pointer',
-              background: showBedCheck ? '#1F4D2B' : '#F5F0E8',
-              color: showBedCheck ? '#F7F2E9' : '#5C5040',
-              border: `1px solid ${showBedCheck ? '#1F4D2B' : '#E2D8C4'}`,
+              background: showBedCheck ? '#1F4D2B' : 'var(--bg-2)',
+              color: showBedCheck ? '#F7F2E9' : 'var(--text-secondary)',
+              border: `1px solid ${showBedCheck ? '#1F4D2B' : 'var(--border)'}`,
             }}
           >
             <Ruler size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {beds.filter((b) => b.kind !== 'plot').length} beds{beds.some((b) => b.kind === 'plot') ? ` · ${beds.filter((b) => b.kind === 'plot').length} plots` : ''}
@@ -1543,7 +1542,7 @@ function FacilitatorCropsPageInner() {
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
-            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}
+            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · satellite records for this site
           </span>
@@ -1551,19 +1550,19 @@ function FacilitatorCropsPageInner() {
           <span
             className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
             title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
-            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}
+            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.18)' }}
           >
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> {patternMeta.label} · nearest reference: {region.name} (fallback)
           </span>
         ) : (
-          <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: '#F5F0E8', color: '#755942', border: '1px solid #E2D8C4' }}>
+          <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}>
             <patternMeta.Icon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> No site set · assuming {patternMeta.label.toLowerCase()}
           </span>
         ))}
       </header>
 
       {lang === 'zu' && (
-        <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: '#FFF8E8', borderBottom: '1px solid rgba(154,96,24,0.3)', color: '#5C5040', fontSize: 12, lineHeight: 1.45 }}>
+        <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
         </div>
       )}
@@ -1572,10 +1571,10 @@ function FacilitatorCropsPageInner() {
           Reads the SAME beds array the plan itself uses, so what it lists is by
           construction what the engine plans over — no separate lookup to drift. */}
       {showBedCheck && beds.length > 0 && (
-        <div className="flex-shrink-0 px-4 py-3" style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
-          <div className="font-sans mb-2" style={{ fontSize: 11.5, color: '#5C5040' }}>
+        <div className="flex-shrink-0 px-4 py-3" style={{ background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+          <div className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
             This plan grows on{' '}
-            <strong style={{ color: '#20190F' }}>
+            <strong style={{ color: 'var(--text-primary)' }}>
               {beds.filter((b) => b.kind !== 'plot').length} bed{beds.filter((b) => b.kind !== 'plot').length === 1 ? '' : 's'}
               {beds.some((b) => b.kind === 'plot') ? ` and ${beds.filter((b) => b.kind === 'plot').length} staple plot${beds.filter((b) => b.kind === 'plot').length === 1 ? '' : 's'}` : ''}
             </strong>{' '}
@@ -1587,7 +1586,7 @@ function FacilitatorCropsPageInner() {
               <span
                 key={b.id}
                 className="font-mono inline-flex items-center gap-1 px-2 py-1 rounded-lg"
-                style={{ fontSize: 11, color: '#20190F', background: '#FFFEFA', border: `1px solid ${b.kind === 'plot' ? '#E0CD9E' : '#E2D8C4'}` }}
+                style={{ fontSize: 11, color: 'var(--text-primary)', background: 'var(--bg-1)', border: `1px solid ${b.kind === 'plot' ? 'rgba(192,122,30,0.35)' : 'var(--border)'}` }}
               >
                 {b.kind === 'plot' ? <Wheat size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> : <Sprout size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />} {b.label} · {b.areaM2.toFixed(1)} m²
                 {b.minDimM !== undefined ? ` · ${b.minDimM.toFixed(1)}m wide` : ''}
@@ -1599,25 +1598,25 @@ function FacilitatorCropsPageInner() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <span className="font-display text-sm" style={{ color: '#755942' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
+          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
         </div>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
           <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
             <div className="flex items-start justify-between gap-3">
-              <h1 className="font-display font-semibold" style={{ fontSize: 19, color: '#20190F', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
+              <h1 className="font-display font-semibold" style={{ fontSize: 'clamp(19px, 1.7vw, 23px)', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')}</h1>
               {chosenDesignId !== null && (
                 <button
                   onClick={() => setSwitchingSite(false)}
                   aria-label={cropUi(lang, 'Cancel', 'Khansela')}
                   className="flex-shrink-0 flex items-center justify-center rounded-full"
-                  style={{ width: 28, height: 28, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                  style={{ width: 28, height: 28, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
                 >
                   <X size={14} />
                 </button>
               )}
             </div>
-            <p className="font-sans mb-4" style={{ fontSize: 13, color: '#5C5040' }}>
+            <p className="font-sans mb-4" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
               {/* Zero IS reachable — arriving with ?switch=1 opens the picker before any
                   design exists — and "0 saved designs. Each one is drawn…" was nonsense
                   in exactly the moment a farmer most needs telling what to do next. */}
@@ -1661,7 +1660,7 @@ function FacilitatorCropsPageInner() {
             <button
               onClick={() => chooseSite('local')}
               className="w-full mt-3 px-4 py-3 rounded-xl text-left font-sans transition-all"
-              style={{ background: 'transparent', border: '1px dashed #C7BCA6', color: '#755942', fontSize: 13 }}
+              style={{ background: 'transparent', border: '1px dashed var(--border)', color: 'var(--text-muted)', fontSize: 13 }}
             >
               {cropUi(lang, 'Or use the design already open on this device', 'Noma sebenzisa umklamo ovuliwe kule divayisi')}
             </button>
@@ -1673,9 +1672,9 @@ function FacilitatorCropsPageInner() {
         <div className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             {useVirtual && designBeds.length === 0 && (
-              <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+              <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
-                <Link href={designHref} style={{ color: '#1F4D2B', textDecoration: 'underline' }}>{cropUi(lang, 'Place real beds on the Planting step', 'Faka imibhede yangempela esigabeni sokuTshala')}</Link> {cropUi(lang, 'to replace it.', 'ukuze uwushintshe.')}
+                <Link href={designHref} style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>{cropUi(lang, 'Place real beds on the Planting step', 'Faka imibhede yangempela esigabeni sokuTshala')}</Link> {cropUi(lang, 'to replace it.', 'ukuze uwushintshe.')}
               </div>
             )}
 
@@ -1684,7 +1683,7 @@ function FacilitatorCropsPageInner() {
                 className="flex items-center gap-2 mb-3 px-3 py-2 rounded-xl"
                 style={{ background: 'rgba(179,58,58,0.06)', border: '1px solid rgba(179,58,58,0.3)' }}
               >
-                <span className="font-sans flex-1" style={{ fontSize: 13, color: '#20190F' }}>
+                <span className="font-sans flex-1" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                   Clear all {plantings.length} planting{plantings.length > 1 ? 's' : ''} from every bed? You can undo once right after.
                 </span>
                 <button
@@ -1697,7 +1696,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={() => setConfirmingClear(false)}
                   className="px-4 py-2 rounded-xl font-display font-semibold flex-shrink-0"
-                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
                 >
                   Keep
                 </button>
@@ -1715,7 +1714,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={undoLastChange}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
-                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
                   title={cropUi(lang, 'Undo the last change to this plan', 'Buyisela emuva ushintsho lokugcina kulolu hlelo')}
                 >
                   <Undo2 size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Undo', 'Buyisela emuva')}
@@ -1725,7 +1724,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
-                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
+                  style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
                   title={cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')}
                 >
                   <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
@@ -1747,14 +1746,14 @@ function FacilitatorCropsPageInner() {
                 turns that wrapper into the sticky row's containing block
                 instead of the page — so the header would scroll away with
                 the body instead of freezing, exactly the bug this fixes. */}
-            <div className="rounded-2xl mb-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+            <div className="rounded-2xl mb-5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
               {/* Month header row — sticky top so it stays visible past many
                   bed rows; the Bed-label cell below keeps its own
                   sticky-left independently, so both axes pin correctly. */}
               <div
                 className="flex"
                 style={{
-                  borderBottom: '1px solid #D8CDB4',
+                  borderBottom: '1px solid var(--border-strong)',
                   position: 'sticky',
                   // top:0, not 52. The 56px page header is a FLEX SIBLING of the
                   // scroll container, not an overlay inside it, so the scrollport
@@ -1765,10 +1764,10 @@ function FacilitatorCropsPageInner() {
                   // Above every mark in the body (the tallest is the transplant
                   // chip at 2) with headroom, so nothing can paint over the row.
                   zIndex: 5,
-                  // Warm paper, not the card's own #FFFEFA: frozen chrome has to
+                  // Warm paper, not the card's own var(--bg-1): frozen chrome has to
                   // read as chrome. With both the same colour there was nothing
                   // to tell a farmer this row was pinned rather than scrolled to.
-                  background: '#F5F0E8',
+                  background: 'var(--bg-2)',
                   // Content passes underneath, so say so.
                   boxShadow: '0 6px 12px -6px rgba(32,25,15,0.28)',
                   borderTopLeftRadius: 16,
@@ -1777,8 +1776,8 @@ function FacilitatorCropsPageInner() {
               >
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: '#F5F0E8', borderRight: '1px solid #D8CDB4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
-                  <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-2)', borderRight: '1px solid var(--border-strong)', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                  <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropUi(lang, 'Bed', 'Umbhede')}</span>
                 </div>
                 <div
                   ref={monthHeaderScrollRef}
@@ -1793,17 +1792,17 @@ function FacilitatorCropsPageInner() {
                         to tell the settled year from the one being filled.
                         Spans are derived from DISPLAY_MONTHS, not two 12s, so
                         widening the window doesn't silently mislabel it. */}
-                    <div className="flex" style={{ borderBottom: '1px solid #EDE7DB' }}>
+                    <div className="flex" style={{ borderBottom: '1px solid var(--bg-2)' }}>
                       <div
                         className="font-sans uppercase tracking-widest"
-                        style={{ flex: 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: '#5F735F', background: 'rgba(31,77,43,0.05)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                        style={{ flex: 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.05)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                       >
                         {IDEAL_PLAN_COPY.yearOneBand}
                       </div>
                       {DISPLAY_MONTHS > 12 && (
                         <div
                           className="font-sans uppercase tracking-widest"
-                          style={{ flex: DISPLAY_MONTHS - 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: '#755942', borderLeft: '2px solid #C4A46A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                          style={{ flex: DISPLAY_MONTHS - 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: 'var(--text-muted)', borderLeft: '2px solid #C4A46A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                         >
                           {IDEAL_PLAN_COPY.yearTwoBand}
                         </div>
@@ -1815,9 +1814,9 @@ function FacilitatorCropsPageInner() {
                         key={i}
                         className="text-center font-sans"
                         style={{
-                          minWidth: 0, padding: '8px 2px', fontSize: 11,
+                          minWidth: 0, padding: '8px 2px', fontSize: 'clamp(12px, 0.85vw, 13px)',
                           fontWeight: i === 0 ? 700 : 500,
-                          color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#755942',
+                          color: i === 0 ? '#1F4D2B' : i >= 12 ? 'var(--text-muted)' : 'var(--text-muted)',
                           background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
                           // A month label repeats every 12 columns (no year field
                           // anywhere in this data model) — a visible seam at the
@@ -1868,7 +1867,7 @@ function FacilitatorCropsPageInner() {
                 <button
                   onClick={() => openPicker(beds[0].id)}
                   className="w-full py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                  style={{ fontSize: 14, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#1F4D2B', cursor: 'pointer' }}
+                  style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}
                 >
                   <Plus size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Add a crop', 'Engeza isilimo')}
                 </button>
@@ -1877,25 +1876,25 @@ function FacilitatorCropsPageInner() {
 
             {!simple && (
             <>
-            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
+            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
-                style={{ fontWeight: 600, color: '#9A6018', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
+                style={{ fontWeight: 600, color: 'var(--gold)', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
               >
                 <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> check / transplant
               </span>{' '}
               marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month;
               if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.
               <details className="mt-1.5">
-                <summary className="font-sans" style={{ cursor: 'pointer', color: '#5C5040', fontWeight: 600 }}>
+                <summary className="font-sans" style={{ cursor: 'pointer', color: 'var(--text-secondary)', fontWeight: 600 }}>
                   How the two-year timeline works (↻, faded bars, rotation)
                 </summary>
                 <div className="mt-1">
-                  ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
+                  ↻ marks where year two begins. The timeline shows <strong style={{ color: 'var(--text-secondary)' }}>two full years</strong> — pan
                   sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
                   year, so year two is that same cycle coming round again, drawn <em>faded</em> to say so: it is what
                   these beds do if nothing changes, not a second year you have decided on.{' '}
-                  <strong style={{ color: '#5C5040' }}>Rotate crops</strong> only avoids immediate same-family
+                  <strong style={{ color: 'var(--text-secondary)' }}>Rotate crops</strong> only avoids immediate same-family
                   sequences inside this annual plan and after a crop marked as already growing. A sound multi-year
                   rotation needs dated records from earlier seasons; this screen does not store or invent them.
                 </div>
@@ -1924,20 +1923,20 @@ function FacilitatorCropsPageInner() {
 
             {/* Tasks + harvest */}
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><ClipboardList size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Tasks', 'Imisebenzi')}</div>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><ClipboardList size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Tasks', 'Imisebenzi')}</div>
                 {([[currentMonth, currentTasks], [nextMonth, nextTasks]] as [number, CropTask[]][]).map(([m, t], idx) => (
                   <div key={m} className="mb-2.5">
-                    <div className="font-display font-semibold flex items-baseline gap-2 mb-1" style={{ fontSize: 13.5, color: '#20190F' }}>
+                    <div className="font-display font-semibold flex items-baseline gap-2 mb-1" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
                       {monthLabel(m)}
-                      <span className="font-sans" style={{ fontSize: 10, color: '#755942', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                      <span className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                         {idx === 0 ? 'this month' : 'next month'}
                       </span>
                     </div>
                     <TaskList tasks={t} />
                   </div>
                 ))}
-                <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: '#7A4A12', lineHeight: 1.45, background: '#FFF8E8', border: '1px solid rgba(154,96,24,0.3)' }}>
+                <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: 'var(--gold-dim)', lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(154,96,24,0.3)' }}>
                   {SUCCESSION_TIMING_GUIDANCE}
                 </div>
                 <button
@@ -1947,11 +1946,11 @@ function FacilitatorCropsPageInner() {
                 >
                   <Share2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Share tasks', 'Yabelana ngemisebenzi')}
                 </button>
-                <div style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
+                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 8 }}>
                   <button
                     onClick={() => setShowLookingAhead((v) => !v)}
                     className="font-sans uppercase tracking-widest w-full flex items-center justify-between"
-                    style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                   >
                     <span>{cropUi(lang, 'Looking ahead', 'Okulandelayo')}</span>
                     <span>{showLookingAhead ? '▾' : '▸'}</span>
@@ -1965,7 +1964,7 @@ function FacilitatorCropsPageInner() {
                         if (t.length === 0) return null;
                         return (
                           <div key={i} className="mb-2">
-                            <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: '#20190F' }}>
+                            <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
                               {monthLabel(m)}{i >= 12 ? ' (next year)' : ''}
                             </div>
                             <TaskList tasks={t} />
@@ -1973,17 +1972,17 @@ function FacilitatorCropsPageInner() {
                         );
                       })}
                       {allTasks.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'No plantings yet — tap + crop on a bed above.', 'Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.')}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'No plantings yet — tap + crop on a bed above.', 'Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.')}</div>
                       )}
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="flex items-center justify-between mb-2 gap-2">
-                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}><Salad size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Harvest total — conservative benchmark</div>
-                  <div className="flex rounded-lg overflow-hidden flex-shrink-0" style={{ border: '1px solid #E2D8C4' }}>
+                  <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Salad size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Harvest total — conservative benchmark</div>
+                  <div className="flex rounded-lg overflow-hidden flex-shrink-0" style={{ border: '1px solid var(--border)' }}>
                     {(['crop', 'bed'] as const).map((v) => (
                       <button
                         key={v}
@@ -1992,7 +1991,7 @@ function FacilitatorCropsPageInner() {
                         style={{
                           fontSize: 11, padding: '3px 9px', cursor: 'pointer',
                           background: harvestBoxView === v ? '#1F4D2B' : 'transparent',
-                          color: harvestBoxView === v ? '#FFFEFA' : '#5C5040',
+                          color: harvestBoxView === v ? 'var(--bg-1)' : 'var(--text-secondary)',
                         }}
                       >
                         {v === 'crop' ? cropUi(lang, 'By crop', 'Ngesilimo') : cropUi(lang, 'By bed', 'Ngombhede')}
@@ -2000,21 +1999,21 @@ function FacilitatorCropsPageInner() {
                     ))}
                   </div>
                 </div>
-                <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: '#1F4D2B' }}>
+                <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: 'var(--color-forest-800)' }}>
                   {hasAreaConflict ? (
                     <span style={{ fontSize: 18 }}>Resolve overlapping bed space</span>
                   ) : hasKnownYield && totalYieldKg !== null ? (
-                    <>{totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#755942' }}>kg across active and planned crop cycles</span></>
+                    <>{totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-muted)' }}>kg across active and planned crop cycles</span></>
                   ) : unknownYieldNames.length > 0 ? (
                     <span style={{ fontSize: 18 }}>No verified kg total</span>
                   ) : coverCropNames.length > 0 ? (
                     <span style={{ fontSize: 18 }}>No food-yield total</span>
                   ) : (
-                    <>0.0 <span style={{ fontSize: 14, fontWeight: 500, color: '#755942' }}>kg · no crops to plant</span></>
+                    <>0.0 <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-muted)' }}>kg · no crops to plant</span></>
                   )}
                 </div>
                 {!hasAreaConflict && hasKnownYield && planYieldBenchmark.kgPerM2 !== null && (
-                  <div className="mb-2" style={{ fontSize: 12, color: '#755942' }}>
+                  <div className="mb-2" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                     {planYieldBenchmark.kgPerM2.toFixed(2)} kg/m² across {planYieldBenchmark.growingAreaM2.toFixed(1)} m² of growing space — a density figure for comparing plans, not a yield promise
                   </div>
                 )}
@@ -2027,12 +2026,12 @@ function FacilitatorCropsPageInner() {
                         will not reason about — so the headline says only the
                         thing all three have in common, and each row states its
                         own reason underneath. */}
-                    <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#A83A2C', lineHeight: 1.45 }}>
+                    <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: 'var(--orange)', lineHeight: 1.45 }}>
                       No kg or value total is shown because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.
                     </div>
                     {areaConflictDetails.map((conflict) => (
                       <div key={conflict.bedId} className="mb-1.5">
-                        <div className="font-display font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{conflict.bedLabel}</div>
+                        <div className="font-display font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{conflict.bedLabel}</div>
                         {conflict.plantings.map((row) => {
                           const planting = plantings.find((p) => p.id === row.plantingId);
                           const span = monthSpanLabel(row.months);
@@ -2051,15 +2050,15 @@ function FacilitatorCropsPageInner() {
                               disabled={!planting}
                               className="w-full flex items-center justify-between font-sans text-left rounded-lg px-2 py-1 mt-0.5"
                               style={{
-                                fontSize: 12, color: '#5C5040', background: '#FBF3F0',
-                                border: '1px solid #E8CFC7', cursor: planting ? 'pointer' : 'default',
+                                fontSize: 12, color: 'var(--text-secondary)', background: 'rgba(184,58,40,0.06)',
+                                border: '1px solid rgba(184,58,40,0.25)', cursor: planting ? 'pointer' : 'default',
                               }}
                             >
                               <span>
                                 <CropIcon cropKey={row.cropKey} icon={cropByKey(row.cropKey)?.icon ?? '🌱'} size={14} /> {row.cropName}
-                                {detail ? <span style={{ color: '#755942' }}> · {detail}</span> : null}
+                                {detail ? <span style={{ color: 'var(--text-muted)' }}> · {detail}</span> : null}
                               </span>
-                              <span className="font-sans" style={{ fontSize: 11, color: '#A83A2C' }}>Open ›</span>
+                              <span className="font-sans" style={{ fontSize: 11, color: 'var(--orange)' }}>Open ›</span>
                             </button>
                           );
                         })}
@@ -2068,23 +2067,23 @@ function FacilitatorCropsPageInner() {
                   </div>
                 )}
                 {hasKnownYield && (
-                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#755942' }}>
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
                     Conservative mapped-area comparison for one cycle of each active or planned planting; no loss allowance or within-month picking curve is applied here. A finished one-off crop is not repeated into a later year.
                   </div>
                 )}
                 {unknownYieldNames.length > 0 && (
-                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018', lineHeight: 1.45 }}>
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--gold)', lineHeight: 1.45 }}>
                     Excludes {unknownYieldNames.join(', ')}: no verified kg/m² benchmark is available, so the app does not turn those crops into zero or invent a total.
                   </div>
                 )}
                 {coverCropNames.length > 0 && (
-                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#7A5B24', lineHeight: 1.45 }}>
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--gold-dim)', lineHeight: 1.45 }}>
                     {coverCropNames.join(', ')} {coverCropNames.length === 1 ? 'is a' : 'are'} soil-cover crop{coverCropNames.length === 1 ? '' : 's'}, recorded as 0 food kg rather than counted as harvest.
                   </div>
                 )}
 
                 {totalYieldKg !== null && totalYieldKg > 0 && (
-                  <div className="font-sans mb-1.5" style={{ fontSize: 10.5, color: '#755942', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                  <div className="font-sans mb-1.5" style={{ fontSize: 10.5, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
                     Bar length compares crops · % is share of the {totalYieldKg.toFixed(1)} kg above
                   </div>
                 )}
@@ -2100,7 +2099,7 @@ function FacilitatorCropsPageInner() {
                           share={shareOfHarvest(kg)}
                           relative={relativeTo(kg, biggestCropKg)}
                         >
-                          <span style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
+                          <span style={{ color: 'var(--text-primary)' }}>{kg.toFixed(1)} kg</span>
                         </HarvestShareRow>
                       ))}
                       {[...new Set(unknownYieldPlantings.map((planting) => planting.cropKey))].map((cropKey) => {
@@ -2108,7 +2107,7 @@ function FacilitatorCropsPageInner() {
                         if (!crop) return null;
                         return (
                           <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
-                            <span style={{ color: '#9A6018' }}>not verified</span>
+                            <span style={{ color: 'var(--gold)' }}>not verified</span>
                           </HarvestShareRow>
                         );
                       })}
@@ -2117,29 +2116,29 @@ function FacilitatorCropsPageInner() {
                         if (!crop) return null;
                         return (
                           <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
-                            <span style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
+                            <span style={{ color: 'var(--gold-dim)' }}>soil cover · 0 food kg</span>
                           </HarvestShareRow>
                         );
                       })}
                       {plantings.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
                   ) : (
                     <>
                       {yieldByBed.map(({ bed, kg, unknownNames, coverNames }) => (
                         <HarvestShareRow key={bed.id} name={bed.label} share={kg > 0 ? shareOfHarvest(kg) : null} relative={kg > 0 ? relativeTo(kg, biggestBedKg) : null}>
-                          <span className="text-right" style={{ color: '#20190F', display: 'inline-block' }}>
+                          <span className="text-right" style={{ color: 'var(--text-primary)', display: 'inline-block' }}>
                             {kg > 0 && `${kg.toFixed(1)} kg known`}
                             {kg > 0 && unknownNames.length > 0 && <br />}
-                            {unknownNames.length > 0 && <span style={{ color: '#9A6018' }}>{unknownNames.join(', ')} not verified</span>}
+                            {unknownNames.length > 0 && <span style={{ color: 'var(--gold)' }}>{unknownNames.join(', ')} not verified</span>}
                             {(kg > 0 || unknownNames.length > 0) && coverNames.length > 0 && <br />}
-                            {coverNames.length > 0 && <span style={{ color: '#7A5B24' }}>{coverNames.join(', ')} soil cover</span>}
+                            {coverNames.length > 0 && <span style={{ color: 'var(--gold-dim)' }}>{coverNames.join(', ')} soil cover</span>}
                           </span>
                         </HarvestShareRow>
                       ))}
                       {plantings.length === 0 && (
-                        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')}</div>
                       )}
                     </>
                   )}
@@ -2162,9 +2161,9 @@ function FacilitatorCropsPageInner() {
 
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
-                <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.4 }}>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
+                <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {/* The subtitle must not promise which month comes first:
                       buildBuyingSchedule drops months with nothing to buy, so
                       the first block is frequently a later one. The month
@@ -2181,8 +2180,8 @@ function FacilitatorCropsPageInner() {
                     <BuyingMonthBlock key={monthGroup.month} monthGroup={monthGroup} isNow={monthGroup.month === currentMonth} />
                   ))}
                   {buyingSchedule.length > VISIBLE_BUYING_MONTHS && (
-                    <details className="rounded-xl px-3 py-2" style={{ border: '1px solid #E2D8C4', background: '#FBF6EC' }}>
-                      <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B', cursor: 'pointer' }}>
+                    <details className="rounded-xl px-3 py-2" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}>
+                      <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                         {/* The schedule is a ROLLING twelve months from this
                             one (rollingMonths), so for any plan opened after
                             about March "later in the year" named the wrong
@@ -2197,14 +2196,14 @@ function FacilitatorCropsPageInner() {
                     </details>
                   )}
                   {buyingSchedule.length === 0 && (
-                    <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Nothing new to buy yet.</div>
+                    <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing new to buy yet.</div>
                   )}
                 </div>
                 <details className="mt-2">
-                  <summary className="font-sans" style={{ fontSize: 11, color: '#755942', cursor: 'pointer' }}>
+                  <summary className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', cursor: 'pointer' }}>
                     What these quantities do and do not cover
                   </summary>
-                  <p className="font-mono mt-1" style={{ fontSize: 10, color: '#755942' }}>
+                  <p className="font-mono mt-1" style={{ fontSize: 10, color: 'var(--text-muted)' }}>
                     Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities
                     or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is
                     not inferred from mature spacing: use the packet&apos;s crop-specific direct-sowing rate and germination
@@ -2214,16 +2213,16 @@ function FacilitatorCropsPageInner() {
                 </details>
               </div>
 
-              <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Year ahead', 'Unyaka ozayo')}</div>
+              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Year ahead', 'Unyaka ozayo')}</div>
                 {yearReport.length > 0 ? (
                   <div className="space-y-2">
                     {yearReport.map((line, i) => (
-                      <p key={i} className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>{line}</p>
+                      <p key={i} className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{line}</p>
                     ))}
                   </div>
                 ) : (
-                  <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Add some plantings to see a year-ahead summary.</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add some plantings to see a year-ahead summary.</div>
                 )}
               </div>
             </div>
@@ -2243,7 +2242,7 @@ function FacilitatorCropsPageInner() {
               // tap — rather than the claim going behind it too.
               summary="Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources."
             >
-              <p className="font-sans mb-2" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+              <p className="font-sans mb-2" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                 Yield points use the conservative end of published commercial KZN benchmarks where that crop is
                 listed. They compare plans; they do not predict this household&apos;s harvest. The warm/light-frost
                 windows, spacing and duration use the official tables where those tables cover the crop; catalog
@@ -2258,12 +2257,12 @@ function FacilitatorCropsPageInner() {
                 heuristic, not proof of a global maximum or of a physical row layout. Commercial ranking is fresh
                 weight per crop cycle; it is not profit, nutrition or evidence of buyer demand.
               </p>
-              <p className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.55 }}>
+              <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
                 Official KZN DARD tables:{' '}
-                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>yield benchmarks</a>,{' '}
-                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>sowing and establishment</a>,{' '}
-                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>growing and picking periods</a>, and{' '}
-                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/successional_cropping.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>succession limits and farmer choice</a>.
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>yield benchmarks</a>,{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>sowing and establishment</a>,{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>growing and picking periods</a>, and{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/successional_cropping.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>succession limits and farmer choice</a>.
               </p>
             </DisclosureCard>
 
@@ -2275,7 +2274,7 @@ function FacilitatorCropsPageInner() {
               <OrganicGuideCard />
             </div>
 
-            <div className="font-sans mt-4 text-center mx-auto" style={{ fontSize: 11, color: '#755942', lineHeight: 1.5, maxWidth: 820 }}>
+            <div className="font-sans mt-4 text-center mx-auto" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5, maxWidth: 820 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
             </>
@@ -2364,7 +2363,7 @@ function FacilitatorCropsPageInner() {
 
 export default function FacilitatorCropsPage() {
   return (
-    <Suspense fallback={<div style={{ minHeight: '100dvh', background: '#FBF7EF' }} />}>
+    <Suspense fallback={<div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }} />}>
       <FacilitatorCropsPageInner />
     </Suspense>
   );
@@ -2378,8 +2377,8 @@ function EmptyState({ onVirtual, designHref }: { onVirtual: () => void; designHr
     <div className="flex-1 flex items-center justify-center px-6">
       <div className="text-center" style={{ maxWidth: 360 }}>
         <div><Sprout size={40} aria-hidden style={{ color: 'var(--color-forest-700)' }} /></div>
-        <div className="font-display font-semibold mt-2" style={{ fontSize: 18, color: '#20190F' }}>{cropUi(lang, 'No beds designed yet', 'Ayikho imibhede eklanyiwe okwamanje')}</div>
-        <p className="font-sans mt-1.5" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.5 }}>
+        <div className="font-display font-semibold mt-2" style={{ fontSize: 'clamp(18px, 1.5vw, 21px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'No beds designed yet', 'Ayikho imibhede eklanyiwe okwamanje')}</div>
+        <p className="font-sans mt-1.5" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
           {cropUi(lang, 'Place veg beds on the Planting step first — then come back here to plan what goes in them.', 'Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.')}
         </p>
         <Link
@@ -2393,7 +2392,7 @@ function EmptyState({ onVirtual, designHref }: { onVirtual: () => void; designHr
           <button
             onClick={onVirtual}
             className="font-sans underline"
-            style={{ fontSize: 13, color: '#755942', background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{ fontSize: 13, color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer' }}
           >
             or plan without a map — use one 10 m² bed
           </button>
@@ -2425,7 +2424,7 @@ function CropStorageLine({ crop }: { crop: CropDef }) {
             href={crop.storageSourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: '#1F4D2B', textDecoration: 'underline' }}
+            style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}
           >
             source
           </a>
@@ -2454,10 +2453,10 @@ function MonthAvailabilityDetail({
   const fresh = items.filter((item) => item.status === 'fresh');
   const stored = items.filter((item) => item.status === 'stored');
   return (
-    <div className="rounded-xl p-3 mt-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-xl p-3 mt-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between gap-2 mb-1.5">
-        <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{monthLabel(month)}</div>
-        <button onClick={onClose} aria-label={cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942', padding: 0 }}>
+        <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month)}</div>
+        <button onClick={onClose} aria-label={cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
           <X size={14} />
         </button>
       </div>
@@ -2466,13 +2465,13 @@ function MonthAvailabilityDetail({
           other crop this panel knows nothing — it must not claim the pantry
           is empty, only that it has nothing sourced to report. */}
       {items.length === 0 && (
-        <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
+        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
       )}
       {fresh.length > 0 && (
         <div className="mb-2">
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: '#755942', letterSpacing: '0.08em' }}>Ready to pick</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Ready to pick</div>
           {fresh.map((item) => (
-            <div key={item.cropKey} className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5 }}>
+            <div key={item.cropKey} className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               <CropIcon cropKey={item.cropKey} icon={item.icon} size={13} /> {item.name}
             </div>
           ))}
@@ -2480,16 +2479,16 @@ function MonthAvailabilityDetail({
       )}
       {stored.length > 0 && (
         <div>
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: '#755942', letterSpacing: '0.08em' }}>From store</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From store</div>
           {stored.map((item) => {
             const crop = cropByKey(item.cropKey);
             return (
               <div key={item.cropKey} className="mb-1.5">
-                <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5 }}>
+                <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                   <CropIcon cropKey={item.cropKey} icon={item.icon} size={13} /> {item.name}
                 </div>
                 {crop && (
-                  <div className="font-sans" style={{ fontSize: 11, color: '#755942', lineHeight: 1.45 }}>
+                  <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
                     <CropStorageLine crop={crop} />
                   </div>
                 )}
@@ -2522,12 +2521,12 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
   return (
     <div className="flex flex-col gap-2">
       {warnings.length > 0 && (
-        <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: '#8A5210' }}>
+        <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: 'var(--gold-dim)' }}>
           {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
         </div>
       )}
       {choices.length > 0 && (
-        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
           <summary style={{ cursor: 'pointer' }}>What the planner chose, bed by bed ({choices.length})</summary>
           <ul className="flex flex-col gap-1 pt-1.5" style={{ listStyle: 'disc', paddingInlineStart: 26 }}>
             {choices.map((n, i) => <li key={i}>{n.text}</li>)}
@@ -2535,7 +2534,7 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
         </details>
       )}
       {gaps.length > 0 && (
-        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
           <summary style={{ cursor: 'pointer' }}>
             {/* Count BEDS, deduped: one bed can be named by two gap notes (a
                 stranded-bed note plus a grouped rest one), and summing bedIds
@@ -2556,7 +2555,7 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
         </details>
       )}
       {basis.length > 0 && (
-        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#755942' }}>
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
           <summary style={{ cursor: 'pointer' }}>{PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
           <div className="flex flex-col gap-1.5 pt-1.5">
             {basis.map((n, i) => <div key={i}>{n.text}</div>)}
@@ -2578,9 +2577,9 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
  */
 function AcceptedPlanNotesCard({ notes, generatedAt }: { notes: PlanNote[]; generatedAt: number }) {
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}><Compass size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Why this plan chose what it chose</div>
-      <p className="font-sans mb-3 mt-0.5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.4 }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Compass size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Why this plan chose what it chose</div>
+      <p className="font-sans mb-3 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
         From the plan suggested in {planNotesDateLabel(generatedAt)}. Anything you have changed by hand since is not
         described here.
       </p>
@@ -2612,7 +2611,7 @@ function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
       {/* Undo the card padding and reserve the same bed-label gutter. The
           plot, labels and calendar then have identical edges and scroll range. */}
       <div style={{ display: 'flex', minWidth: GRID_MIN_WIDTH }}>
-        <div aria-hidden="true" style={{ width: BED_LABEL_WIDTH, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: '#FFFEFA' }} />
+        <div aria-hidden="true" style={{ width: BED_LABEL_WIDTH, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: 'var(--bg-1)' }} />
         <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
       </div>
     </div>
@@ -2664,7 +2663,7 @@ function MonthLineChart({
           <path d={areaPath} fill={color} opacity={0.15} />
           <path d={linePath} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
           {points.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r={4} fill={(dotColor ?? defaultDotColor)(p.v)} stroke="#FBF6EC" strokeWidth={1.5}>
+            <circle key={i} cx={p.x} cy={p.y} r={4} fill={(dotColor ?? defaultDotColor)(p.v)} stroke="var(--bg-1)" strokeWidth={1.5}>
               {tooltipFor?.(i) && <title>{tooltipFor(i)}</title>}
             </circle>
           ))}
@@ -2672,10 +2671,10 @@ function MonthLineChart({
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
             <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}>
-              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#755942', marginTop: 4 }}>
+              <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
-              <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : '#20190F', marginTop: 2 }}>
+              <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : 'var(--text-primary)', marginTop: 2 }}>
                 {formatLabel(values[i])}
               </div>
             </div>
@@ -2753,11 +2752,11 @@ function FoodAvailabilityChart({
   const BAR_MAX_H = 128;
 
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}><UtensilsCrossed size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Food, field &amp; value</div>
-      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><UtensilsCrossed size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Food, field &amp; value</div>
+      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
         {([['availability', 'Availability'], ['utilization', 'Field utilization'], ['value', 'Plan-cycle value']] as [FoodValueMode, string][]).map(([nextMode, label]) => (
-          <button key={nextMode} onClick={() => setMode(nextMode)} className="font-sans font-semibold" style={{ fontSize: 11.5, padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer', background: mode === nextMode ? '#1F4D2B' : 'transparent', color: mode === nextMode ? '#F7F2E9' : '#5C5040' }}>
+          <button key={nextMode} onClick={() => setMode(nextMode)} className="font-sans font-semibold" style={{ fontSize: 11.5, padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer', background: mode === nextMode ? '#1F4D2B' : 'transparent', color: mode === nextMode ? '#F7F2E9' : 'var(--text-secondary)' }}>
             {label}
           </button>
         ))}
@@ -2765,14 +2764,14 @@ function FoodAvailabilityChart({
 
       {mode !== 'value' && (
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <div className="inline-flex rounded-full p-0.5" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+          <div className="inline-flex rounded-full p-0.5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {([['established', 'An established year'], ['fromToday', 'From today']] as ['established' | 'fromToday', string][]).map(([nextYearMode, label]) => (
-              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? '#5C5040' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : '#5C5040' }}>
+              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? 'var(--text-secondary)' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : 'var(--text-secondary)' }}>
                 {label}
               </button>
             ))}
           </div>
-          <span className="font-sans" style={{ fontSize: 11, color: '#755942', lineHeight: 1.4 }}>
+          <span className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>
             {yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Follows the planting calendar from today; existing and one-off crops appear only in their own season.'}
           </span>
         </div>
@@ -2780,14 +2779,14 @@ function FoodAvailabilityChart({
 
       {mode === 'availability' && (
         <>
-          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
             Fresh-picking windows only. Storage appears only with sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
           </p>
           {isAvailabilityEmpty ? (
-            <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Add a planting with verified timing to see availability.</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add a planting with verified timing to see availability.</div>
           ) : (
             <>
-              <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
+              <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
               </div>
@@ -2820,17 +2819,17 @@ function FoodAvailabilityChart({
                           aria-expanded={openMonth === i}
                           aria-label={`${MONTHS_SHORT[m - 1]}${i >= 12 ? ', next year' : ''} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
                           className="crop-availability-month"
-                          style={{ display: 'block', width: '100%', background: openMonth === i ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
+                          style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
                           {/* The bar's own number, on the bar. The icon rows
                               below say WHICH crops; without this you had to
                               count them to learn how many, which is the one
                               thing the bar height is there to tell you. */}
-                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, color: total === 0 ? '#C9BFA8' : '#20190F' }}>
+                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, color: total === 0 ? 'var(--text-muted)' : 'var(--text-primary)' }}>
                             {total === 0 ? '–' : total}
                           </div>
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                            {total === 0 ? <div style={{ width: '68%', height: 3, background: '#E2D8C4', borderRadius: 2 }} /> : (
+                            {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
                               <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '68%', display: 'flex', flexDirection: 'column', gap: split ? GAP : 0 }}>
                                 {/* Rounded at the data end only — the top of the
                                     column, away from the baseline it grows off. */}
@@ -2839,7 +2838,7 @@ function FoodAvailabilityChart({
                               </div>
                             )}
                           </div>
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#755942', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
                           <div style={{ fontSize: 18, minHeight: 22, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', marginTop: 2 }}>
                             {fresh.map((item, idx) => (
                               <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
@@ -2872,43 +2871,43 @@ function FoodAvailabilityChart({
 
       {mode === 'utilization' && (
         <>
-          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.4 }}>
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
             Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.
           </p>
           <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
-            <MonthLineChart monthOrder={monthOrder} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : '#20190F')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+            <MonthLineChart monthOrder={monthOrder} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : 'var(--text-primary)')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
           </CropMonthViewport>
         </>
       )}
 
       {mode === 'value' && (
         <>
-          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#755942', lineHeight: 1.45 }}>
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
             What-if value for the saved plan&apos;s crop-cycle benchmark totals. It is not a monthly cashflow forecast, annual profit, live market quote or harvest promise. Default prices are an editable South African snapshot from {PRICE_SNAPSHOT_MONTHS}; confirm a real buyer and current local price before planting for sale.
           </p>
-          <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-            {(['retail', 'wholesale'] as const).map((priceMode) => <button key={priceMode} onClick={() => setValuePriceMode(priceMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: valuePriceMode === priceMode ? '#5C5040' : 'transparent', color: valuePriceMode === priceMode ? '#F7F2E9' : '#5C5040' }}>{priceMode === 'retail' ? 'Direct retail' : 'Wholesale'}</button>)}
+          <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+            {(['retail', 'wholesale'] as const).map((priceMode) => <button key={priceMode} onClick={() => setValuePriceMode(priceMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: valuePriceMode === priceMode ? 'var(--text-secondary)' : 'transparent', color: valuePriceMode === priceMode ? '#F7F2E9' : 'var(--text-secondary)' }}>{priceMode === 'retail' ? 'Direct retail' : 'Wholesale'}</button>)}
           </div>
-          {plantings.length === 0 ? <div className="font-sans" style={{ fontSize: 12, color: '#755942' }}>Add plantings before building a value scenario.</div> : yieldBenchmark.areaConflictBedLabels.length > 0 ? (
-            <div className="font-sans rounded-xl p-3" style={{ fontSize: 12, color: '#A83A2C', lineHeight: 1.45, background: '#FFF6F3', border: '1px solid rgba(168,58,44,0.25)' }}>
+          {plantings.length === 0 ? <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add plantings before building a value scenario.</div> : yieldBenchmark.areaConflictBedLabels.length > 0 ? (
+            <div className="font-sans rounded-xl p-3" style={{ fontSize: 12, color: 'var(--orange)', lineHeight: 1.45, background: 'rgba(184,58,40,0.06)', border: '1px solid rgba(168,58,44,0.25)' }}>
               No value subtotal is calculated because {yieldBenchmark.areaConflictBedLabels.join(', ')} {yieldBenchmark.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Resolve the bed layout first.
             </div>
           ) : (
-            <div className="rounded-xl p-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-              <div className="flex items-center justify-between mb-1"><span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>% sold (rest kept at home)</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.sellPercent}%</span></div>
+            <div className="rounded-xl p-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+              <div className="flex items-center justify-between mb-1"><span className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>% sold (rest kept at home)</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.sellPercent}%</span></div>
               <input aria-label="Percent sold" type="range" min={0} max={100} value={cashflowSettings.sellPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, sellPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#1F4D2B' }} />
-              <div className="flex items-center justify-between mb-1 mt-2"><span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>% loss or underperformance</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.lossPercent}%</span></div>
+              <div className="flex items-center justify-between mb-1 mt-2"><span className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>% loss or underperformance</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.lossPercent}%</span></div>
               <input aria-label="Percent loss" type="range" min={0} max={100} value={cashflowSettings.lossPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, lossPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#B33A3A' }} />
               {/* The 25% starting position and this 10-50% context come from CSIR (2021)
                   9% production + 18.3% post-harvest ≈ 25.6% cumulative, FAO Food Loss Index
                   fruit & veg 25.4%, and Molelekoa et al. (2025) 25.15% measured on 3,115
                   tomatoes across 8 SA smallholder farms — triangulation with shared data
                   ancestry, not three independent lines. */}
-              <div className="font-sans mt-1" style={{ fontSize: 11, color: '#755942', lineHeight: 1.45 }}>
+              <div className="font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
                 Typical South African smallholder losses run 10–50%. A home garden eaten within the week is often around 15%; far from a market, or in a first season, 35–50% is common.
               </div>
-              <div className="mt-3 pt-3" style={{ borderTop: '1px dashed #E2D8C4' }}>
-                <label className="font-sans flex items-center gap-2" style={{ fontSize: 11.5, color: '#5C5040' }}>
+              <div className="mt-3 pt-3" style={{ borderTop: '1px dashed var(--border)' }}>
+                <label className="font-sans flex items-center gap-2" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
                   <span>Household size (optional, context only)</span>
                   <input
                     aria-label="Household size for the eating guideline"
@@ -2916,7 +2915,7 @@ function FoodAvailabilityChart({
                     value={householdSizeGuideline}
                     onChange={(event) => setHouseholdSizeGuideline(event.target.value)}
                     className="font-mono rounded-lg px-2 py-1"
-                    style={{ width: 64, fontSize: 12, border: '1px solid #E2D8C4', background: '#FFFFFF', color: '#20190F' }}
+                    style={{ width: 64, fontSize: 12, border: '1px solid var(--border)', background: 'var(--bg-1)', color: 'var(--text-primary)' }}
                   />
                 </label>
                 {(() => {
@@ -2927,7 +2926,7 @@ function FoodAvailabilityChart({
                   const n = Math.floor(Number(householdSizeGuideline));
                   const valid = Number.isFinite(n) && n >= 1 && n <= 30;
                   return (
-                    <div className="font-sans mt-1" style={{ fontSize: 11, color: '#755942', lineHeight: 1.45 }}>
+                    <div className="font-sans mt-1" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
                       {valid
                         ? `A household of ${n} typically eats about ${n} × 88 ≈ ${Math.round((n * 88) / 10) * 10} kg of vegetables a year (South African dietary guidelines: 240 g per person per day). A household of 4 ≈ 350 kg. This is an eating guideline covering all food sources — garden and shops together — not a planting target; it does not change your plan.`
                         : 'A household of N typically eats about N × 88 kg of vegetables a year (South African dietary guidelines: 240 g per person per day). A household of 4 ≈ 350 kg. This is an eating guideline covering all food sources, not a planting target — it does not change your plan.'}
@@ -2936,12 +2935,12 @@ function FoodAvailabilityChart({
                 })()}
               </div>
               {!assumptionsConfirmed ? (
-                <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#9A6018' }}>Not calculated yet: the sliders start at typical placeholders (100% sold, 25% loss), not an estimate for your farm. Review both assumptions first.</div>
+                <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                  <div className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--gold)' }}>Not calculated yet: the sliders start at typical placeholders (100% sold, 25% loss), not an estimate for your farm. Review both assumptions first.</div>
                   <button onClick={() => onCashflowSettingsChange({ ...cashflowSettings, confirmed: true })} className="font-display font-semibold rounded-lg px-3 py-2" style={{ fontSize: 12.5, color: '#F7F2E9', background: '#1F4D2B', border: 'none', cursor: 'pointer' }}>Use these assumptions</button>
                 </div>
               ) : (
-                <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
                   {yieldBenchmark.growingAreaM2 > 0 && (
                     // Prominent by request (2026-08-22, Rory: "where oh where is my
                     // production score metric!!!! R/m2!"). Cash + home-use value
@@ -2951,7 +2950,7 @@ function FoodAvailabilityChart({
                     // uses, so the two density figures are directly comparable.
                     <div className="rounded-xl p-3 mb-3" style={{ background: '#1F4D2B' }}>
                       <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#B9CDB4' }}>Production score</div>
-                      <div className="font-mono font-bold" style={{ fontSize: 28, color: '#F7F2E9' }}>
+                      <div className="font-mono font-bold" style={{ fontSize: 'clamp(28px, 2.4vw, 34px)', color: '#F7F2E9' }}>
                         R{numberLabel(Math.round((cashIncome + homeValue) / yieldBenchmark.growingAreaM2))}
                         <span style={{ fontSize: 13, fontWeight: 500, color: '#B9CDB4' }}> /m² this plan cycle</span>
                       </div>
@@ -3052,32 +3051,32 @@ function FoodAvailabilityChart({
                       </div>
                     </div>
                   )}
-                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#755942' }}>Known benchmark subtotal for this plan cycle</div>
-                  <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{numberLabel(Math.round(cashIncome))} <span style={{ fontSize: 12, fontWeight: 500, color: '#755942' }}>cash scenario</span></div>
-                  <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.35 }}>{cashflowSettings.sellPercent}% of harvest sold, priced at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} rates (change the price toggle above to switch).</div>
+                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)' }}>Known benchmark subtotal for this plan cycle</div>
+                  <div className="font-mono font-bold" style={{ fontSize: 20, color: 'var(--color-forest-800)' }}>R{numberLabel(Math.round(cashIncome))} <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--text-muted)' }}>cash scenario</span></div>
+                  <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.35 }}>{cashflowSettings.sellPercent}% of harvest sold, priced at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} rates (change the price toggle above to switch).</div>
                   {homeValue > 0.5 && (
                     <>
-                      <div className="font-mono mt-1.5" style={{ fontSize: 13, color: '#5C5040' }}>+ R{numberLabel(Math.round(homeValue))} <span style={{ fontSize: 11.5, color: '#755942' }}>home-use replacement-value scenario</span></div>
-                      <div className="font-sans" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.35 }}>The {100 - cashflowSettings.sellPercent}% kept at home — always valued at retail, whichever price toggle is selected above, because retail is the price you'd otherwise pay to replace it.</div>
+                      <div className="font-mono mt-1.5" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>+ R{numberLabel(Math.round(homeValue))} <span style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>home-use replacement-value scenario</span></div>
+                      <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.35 }}>The {100 - cashflowSettings.sellPercent}% kept at home — always valued at retail, whichever price toggle is selected above, because retail is the price you'd otherwise pay to replace it.</div>
                     </>
                   )}
                 </div>
               )}
-              {(yieldBenchmark.unknownYieldCrops.length > 0 || unpricedBenchmarkCrops.length > 0) && <div className="font-sans mt-2" style={{ fontSize: 11, color: '#9A6018', lineHeight: 1.4 }}>Subtotal excludes {[...new Set([...yieldBenchmark.unknownYieldCrops, ...unpricedBenchmarkCrops])].join(', ')} because a verified yield or usable per-kg price is missing.</div>}
+              {(yieldBenchmark.unknownYieldCrops.length > 0 || unpricedBenchmarkCrops.length > 0) && <div className="font-sans mt-2" style={{ fontSize: 11, color: 'var(--gold)', lineHeight: 1.4 }}>Subtotal excludes {[...new Set([...yieldBenchmark.unknownYieldCrops, ...unpricedBenchmarkCrops])].join(', ')} because a verified yield or usable per-kg price is missing.</div>}
             </div>
           )}
           {pricedCropKeys.length > 0 && (
-            <div className="mt-3" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
-              <button onClick={() => setEditingPrices((open) => !open)} className="font-sans underline" style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}>{editingPrices ? 'Hide price assumptions' : '️ Review and edit price assumptions'}</button>
+            <div className="mt-3" style={{ borderTop: '1px solid var(--border)', paddingTop: 8 }}>
+              <button onClick={() => setEditingPrices((open) => !open)} className="font-sans underline" style={{ fontSize: 11.5, color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer' }}>{editingPrices ? 'Hide price assumptions' : '️ Review and edit price assumptions'}</button>
               {editingPrices && <div className="mt-2 space-y-2">{pricedCropKeys.map((cropKey) => {
                 const crop = cropByKey(cropKey);
                 const price = priceFor(cropKey, priceOverrides);
                 if (!crop || !price) return null;
-                return <div key={cropKey} className="font-sans rounded-lg p-2" style={{ fontSize: 12, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                  <div className="flex items-center justify-between mb-1"><span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : '#9A6018' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
+                return <div key={cropKey} className="font-sans rounded-lg p-2" style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                  <div className="flex items-center justify-between mb-1"><span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : 'var(--gold)' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
                   <div className="flex flex-wrap gap-2">
-                    <label>Retail R <input type="number" min="0.01" step="0.01" value={price.retailPerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
-                    <label>Wholesale R <input type="number" min="0.01" step="0.01" value={price.wholesalePerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
+                    <label>Retail R <input type="number" min="0.01" step="0.01" value={price.retailPerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid var(--border)', borderRadius: 4 }} /> /kg</label>
+                    <label>Wholesale R <input type="number" min="0.01" step="0.01" value={price.wholesalePerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid var(--border)', borderRadius: 4 }} /> /kg</label>
                   </div>
                 </div>;
               })}</div>}
@@ -3104,7 +3103,7 @@ function DisclosureCard({ title, summary, children }: {
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
@@ -3112,10 +3111,10 @@ function DisclosureCard({ title, summary, children }: {
         style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
       >
         <span>
-          <span className="font-display font-semibold block" style={{ fontSize: 15, color: '#20190F' }}>{title}</span>
-          <span className="font-sans block mt-0.5" style={{ fontSize: 11.5, color: '#755942', lineHeight: 1.4 }}>{summary}</span>
+          <span className="font-display font-semibold block" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>{title}</span>
+          <span className="font-sans block mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>{summary}</span>
         </span>
-        <span style={{ fontSize: 14, color: '#5C5040' }}>{open ? '▾' : '▸'}</span>
+        <span style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{open ? '▾' : '▸'}</span>
       </button>
       {open && <div className="mt-3">{children}</div>}
     </div>
@@ -3128,17 +3127,17 @@ function RotationExplanationCard() {
       title="Rotate by botanical family"
       summary="Which crops count as relatives, and why that is not the same as a food group."
     >
-      <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+      <p className="font-sans mb-3" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
         Food groups describe what a household eats; rotation follows plant relatives that share pests and
         diseases. With &quot;Rotate crops&quot; on, Auto-suggest avoids an immediate repeat of the same family — for
         example potato after tomato, or beetroot after Swiss chard. It does not prescribe a universal sequence.
         The ARC crop-rotation manual treats rotation as a multi-season decision, so keep earlier-season records too.{' '}
-        <a href="https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Climate%20Smart%20Production%20Types/Manual/Microsoft%20Word%20-%20CA%20Crop%20rotation%20Manual.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Read the ARC manual</a>.
+        <a href="https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Climate%20Smart%20Production%20Types/Manual/Microsoft%20Word%20-%20CA%20Crop%20rotation%20Manual.pdf" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>Read the ARC manual</a>.
       </p>
-      <div className="font-sans" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.55 }}>
+      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
         {Object.entries(ROTATION_FAMILY_META).map(([family, meta]) => {
           const names = CROPS.filter((crop) => rotationFamilyOf(crop) === family).map((crop) => crop.name).join(', ');
-          return <div key={family}><strong style={{ color: '#20190F' }}>{meta.label}:</strong> {names}</div>;
+          return <div key={family}><strong style={{ color: 'var(--text-primary)' }}>{meta.label}:</strong> {names}</div>;
         })}
       </div>
     </DisclosureCard>
@@ -3151,9 +3150,9 @@ function RotationExplanationCard() {
 function OrganicGuideCard() {
   const [openSection, setOpenSection] = useState<'feed' | 'protect' | null>(null);
   return (
-    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}><Leaf size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> Growing organically</div>
-      <p className="font-sans mb-2" style={{ fontSize: 12, color: '#755942', lineHeight: 1.5 }}>
+    <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Leaf size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> Growing organically</div>
+      <p className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
         This plan does not prescribe a fertiliser or pesticide programme. Soil condition, the diagnosed problem,
         the exact crop and the current South African label all matter; ask a local extension officer or qualified adviser where possible.
       </p>
@@ -3161,19 +3160,19 @@ function OrganicGuideCard() {
       <button
         onClick={() => setOpenSection((s) => (s === 'feed' ? null : 'feed'))}
         className="w-full flex items-center justify-between font-display font-semibold"
-        style={{ fontSize: 13, color: '#20190F', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
+        style={{ fontSize: 13, color: 'var(--text-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
       >
         <span><Wheat size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> Feeding your crops</span><span>{openSection === 'feed' ? '▾' : '▸'}</span>
       </button>
       {openSection === 'feed' && (
-        <div className="space-y-2 pb-2 mb-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+        <div className="space-y-2 pb-2 mb-2" style={{ borderBottom: '1px solid var(--border)' }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             <strong>Check before adding:</strong> look at drainage, soil condition and prior amendments. Use a soil or compost analysis where accessible and local advice before deciding whether an amendment is needed. The app does not turn a generic crop name into a compost, manure, lime or fertiliser rate.
           </p>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             <strong>Legumes can support a following crop:</strong> dry beans, green beans, peas, broad beans and groundnuts are useful rotation crops. This planner avoids immediate family repeats; it does not calculate a fertiliser credit.
           </p>
-          <p className="font-sans" style={{ fontSize: 11, color: '#755942', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>
             If you use a commercial input, check the current product label and your certifier&apos;s current rules. “Organic” does not establish a safe dose or prove that a product suits this soil.
           </p>
         </div>
@@ -3182,24 +3181,24 @@ function OrganicGuideCard() {
       <button
         onClick={() => setOpenSection((s) => (s === 'protect' ? null : 'protect'))}
         className="w-full flex items-center justify-between font-display font-semibold"
-        style={{ fontSize: 13, color: '#20190F', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
+        style={{ fontSize: 13, color: 'var(--text-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0' }}
       >
         <span><Bug size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> Protecting your crops</span><span>{openSection === 'protect' ? '▾' : '▸'}</span>
       </button>
       {openSection === 'protect' && (
         <div className="space-y-2">
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             <strong>Observe and record:</strong> note the affected crop, symptoms, which part of the plant is damaged and how the problem changes. Confirm the pest, disease or nutrient problem before treating it; similar symptoms can need different responses.
           </p>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             <strong>Use the least hazardous suitable response:</strong> after a sound diagnosis, consider appropriate sanitation, barriers, removal or other non-chemical controls. This app does not claim that a named companion plant controls a pest.
           </p>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-primary)', lineHeight: 1.5 }}>
             <strong>If an agricultural remedy is needed in South Africa:</strong> use only a product currently registered for the exact crop and problem. Follow its current label for dose, protective equipment, re-entry, pre-harvest interval, storage and disposal. Never infer safety from “natural” or “organic.”
           </p>
-          <p className="font-sans" style={{ fontSize: 11, color: '#755942', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.5 }}>
             Check the Department of Agriculture&apos;s{' '}
-            <a href="https://www.nda.gov.za/index.php/publication/616-registered-products" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>current registered-products lists</a>{' '}
+            <a href="https://www.nda.gov.za/index.php/publication/616-registered-products" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>current registered-products lists</a>{' '}
             and the label on the product in hand. Nothing in this crop plan automatically schedules a spray.
           </p>
         </div>
@@ -3227,25 +3226,25 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
   ));
 
   return (
-    <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: bed.kind === 'plot' ? '#FBF6EC' : '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
-        <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
+    <div className="flex" style={{ borderBottom: '1px solid var(--border)' }}>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: bed.kind === 'plot' ? 'var(--bg-1)' : 'var(--bg-1)', borderRight: '1px solid var(--border)', padding: '10px 10px' }}>
+        <div className="font-display font-semibold" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
           {bed.label}
           {bed.kind === 'plot' && (
             <span
               className="font-sans font-semibold uppercase"
               title="A staple plot from your Design Studio map — one field crop at full area; multi-year rotation needs dated records"
-              style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#7A5B24', background: '#F0E4C8', border: '1px solid #E0CD9E', borderRadius: 6, padding: '1px 5px', marginLeft: 5, verticalAlign: 'middle' }}
+              style={{ fontSize: 8.5, letterSpacing: '0.06em', color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.15)', border: '1px solid rgba(192,122,30,0.35)', borderRadius: 6, padding: '1px 5px', marginLeft: 5, verticalAlign: 'middle' }}
             >
               <Wheat size={10} aria-hidden style={{ display: 'inline', verticalAlign: '-1px' }} /> plot
             </span>
           )}
         </div>
-        <div className="font-mono" style={{ fontSize: 11, color: '#755942' }}>{bed.areaM2.toFixed(1)} m²</div>
+        <div className="font-mono" style={{ fontSize: 'clamp(11px, 0.85vw, 12.5px)', color: 'var(--text-muted)' }}>{bed.areaM2.toFixed(1)} m²</div>
         {bedGroups.length > 0 && (!simple || bedGroups.length === 1) && (
           <div
             className="font-sans"
-            style={{ fontSize: 10, color: '#5C5040', marginTop: 3, lineHeight: 1.3 }}
+            style={{ fontSize: 10, color: 'var(--text-secondary)', marginTop: 3, lineHeight: 1.3 }}
             title={bedGroups.map((g) => FOOD_GROUP_META[g].label).join(', ')}
           >
             {bedGroups.map((g, i) => {
@@ -3268,7 +3267,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
               key={i}
               style={{
                 minWidth: 0,
-                borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid #EDE7DB' : 'none',
+                borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid var(--bg-2)' : 'none',
                 borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
                 background: i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
               }}
@@ -3283,7 +3282,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
             <button
               onClick={onAddCrop}
               className="font-sans"
-              style={{ fontSize: 12, color: '#1F4D2B', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
+              style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.3)', borderRadius: 8, padding: '3px 10px', cursor: 'pointer' }}
             >
               + crop
             </button>
@@ -3433,7 +3432,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             className="font-sans"
             style={{
               position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
-              fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA',
+              fontSize: 9, fontWeight: 700, color: 'var(--gold)', background: 'var(--bg-1)',
               border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
               opacity: isYearTwo(seg) ? 0.5 : 1,
@@ -3499,31 +3498,31 @@ function CropPickerModal({
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl"
-        style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
-        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
-          <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
+          <span className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
             {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : cropUi(lang, 'Add a crop', 'Engeza isilimo')}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
             <X size={18} />
           </button>
         </div>
 
         {!crop ? (
           <div className="p-4">
-            <div className="flex items-center gap-2 rounded-xl px-3 py-2 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-              <Search size={14} style={{ color: '#755942' }} />
+            <div className="flex items-center gap-2 rounded-xl px-3 py-2 mb-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+              <Search size={14} style={{ color: 'var(--text-muted)' }} />
               <input
                 autoFocus
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
                 placeholder={cropUi(lang, 'Search crops…', 'Sesha izitshalo…')}
                 className="flex-1 font-sans outline-none bg-transparent"
-                style={{ fontSize: 14, color: '#20190F' }}
+                style={{ fontSize: 14, color: 'var(--text-primary)' }}
               />
             </div>
-            <p className="font-sans mb-2" style={{ fontSize: 11, color: '#755942', lineHeight: 1.4 }}>
+            <p className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>
               Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.
             </p>
             <div className="space-y-1">
@@ -3534,7 +3533,7 @@ function CropPickerModal({
                   <div
                     key={c.key}
                     className="w-full flex items-center gap-1 pl-2.5 pr-1.5 py-2 rounded-xl"
-                    style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+                    style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
                   >
                     <button
                       onClick={() => onPick(c)}
@@ -3544,13 +3543,13 @@ function CropPickerModal({
                       <CropIcon cropKey={c.key} icon={c.icon} size={20} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</span>
+                          <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{c.name}</span>
                           <SeedBadge transplant={!!c.transplant} />
                           {isSpaceHungry(c) && <span title="Space-hungry — wants its own bed" style={{ display: 'inline-flex', alignItems: 'center' }}><Ruler size={12} aria-hidden /></span>}
                         </div>
                         <div className="flex gap-0.5 mt-1">
                           {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                            <span key={m} style={{ width: 6, height: 6, borderRadius: 2, background: windowMonths.includes(m) ? '#3F7A3C' : '#E2D8C4' }} />
+                            <span key={m} style={{ width: 6, height: 6, borderRadius: 2, background: windowMonths.includes(m) ? '#3F7A3C' : 'var(--border)' }} />
                           ))}
                         </div>
                       </div>
@@ -3566,14 +3565,14 @@ function CropPickerModal({
                 );
               })}
               {filtered.length === 0 && (
-                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: '#755942' }}>{cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)}</div>
+                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)}</div>
               )}
             </div>
           </div>
         ) : (
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
-              <button onClick={onBack} className="font-sans" style={{ fontSize: 12, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+              <button onClick={onBack} className="font-sans" style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
                 ‹ {cropUi(lang, 'Back to list', 'Buyela ohlwini')}
               </button>
               <button
@@ -3587,12 +3586,12 @@ function CropPickerModal({
             <div className="flex items-center gap-1.5 mb-2">
               <SeedBadge transplant={!!crop.transplant} large />
               {isSpaceHungry(crop) && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-sans" style={{ fontSize: 11, background: 'rgba(192,122,30,0.12)', color: '#9A6018', border: '1px solid rgba(192,122,30,0.3)' }}>
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-sans" style={{ fontSize: 11, background: 'rgba(192,122,30,0.12)', color: 'var(--gold)', border: '1px solid rgba(192,122,30,0.3)' }}>
                   <Ruler size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> space-hungry
                 </span>
               )}
             </div>
-            <div className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5 }}>
+            <div className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               {sowingInstruction(crop)}
               {crop.timingVerified === false
                 ? ' · exact sow-to-finish timing is not verified'
@@ -3601,41 +3600,41 @@ function CropPickerModal({
               {crop.note}
             </div>
             {isSpaceHungry(crop) && (
-              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 <Ruler size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {crop.name} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.
               </div>
             )}
-            <label className="block my-4 font-sans text-sm" style={{ color: '#244b34' }}>
+            <label className="block my-4 font-sans text-sm" style={{ color: 'var(--text-primary)' }}>
               Variety / cultivar (optional)
-              <input value={variety} onChange={e => onVariety(e.target.value)} maxLength={120} placeholder="Name on your seed packet" className="block w-full mt-2 rounded-lg border p-3" style={{ background: 'white', color: '#244b34' }} />
+              <input value={variety} onChange={e => onVariety(e.target.value)} maxLength={120} placeholder="Name on your seed packet" className="block w-full mt-2 rounded-lg border p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }} />
               <span className="block mt-1">Leave blank if you have not chosen one. Timing remains the crop’s general guidance.</span>
             </label>
             {crop.varieties && crop.varieties.length > 0 && (
               <div className="mb-3">
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>Variety guidance</div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Variety guidance</div>
                 <div className="space-y-1.5">
                   {crop.varieties.map((v, i) => (
-                    <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-                      <div className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>{v.name}</div>
-                      <div className="font-mono" style={{ fontSize: 10.5, color: '#755942', marginBottom: 2 }}>Best for: {v.bestFor}</div>
-                      <div className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>{v.note}</div>
+                    <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                      <div className="font-sans font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>{v.name}</div>
+                      <div className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginBottom: 2 }}>Best for: {v.bestFor}</div>
+                      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{v.note}</div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
             {crop.timingVerified === false && (
-              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 This legacy record can be kept or removed, but it cannot be rescheduled until a source-backed local duration is available.
               </div>
             )}
             {crop.timingVerified === false ? (
-              <div className="font-sans mb-3" style={{ fontSize: 12, color: '#5C5040' }}>
-                Recorded sowing: <strong style={{ color: '#20190F' }}>{monthLabel(month)}</strong> · finish timing: <strong style={{ color: '#20190F' }}>confirm locally</strong>
+              <div className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                Recorded sowing: <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(month)}</strong> · finish timing: <strong style={{ color: 'var(--text-primary)' }}>confirm locally</strong>
               </div>
             ) : (
               <>
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>Sow month</div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Sow month</div>
                 <div className="grid grid-cols-6 gap-1.5 mb-1.5">
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
                     const inWindow = crop.sowMonths[pattern].includes(m);
@@ -3648,7 +3647,7 @@ function CropPickerModal({
                         style={{
                           fontSize: 12,
                           background: selected ? '#1F4D2B' : inWindow ? 'rgba(63,122,60,0.12)' : 'rgba(192,122,30,0.12)',
-                          color: selected ? '#F7F2E9' : inWindow ? '#1F4D2B' : '#9A6018',
+                          color: selected ? '#F7F2E9' : inWindow ? '#1F4D2B' : 'var(--gold)',
                           border: selected ? 'none' : `1px solid ${inWindow ? 'rgba(63,122,60,0.3)' : 'rgba(192,122,30,0.35)'}`,
                           cursor: 'pointer',
                         }}
@@ -3658,28 +3657,28 @@ function CropPickerModal({
                     );
                   })}
                 </div>
-                <div className="font-sans mb-1.5" style={{ fontSize: 12, color: '#5C5040' }}>
-                  {crop.transplant ? 'Conservative harvest window' : 'Harvest window'}: <strong style={{ color: '#20190F' }}>
+                <div className="font-sans mb-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                  {crop.transplant ? 'Conservative harvest window' : 'Harvest window'}: <strong style={{ color: 'var(--text-primary)' }}>
                     {(() => {
                       const start = harvestMonthForCrop(month, crop);
                       const end = harvestEndMonthForCrop(month, crop);
                       return start === end ? monthLabel(start) : `${monthLabel(start)}–${monthLabel(end)}`;
                     })()}
                   </strong>
-                  {crop.transplant && <> · check/transplant when ready <strong style={{ color: '#20190F' }}>{monthLabel(bedEntryMonth(month, crop))}–{monthLabel(latestBedEntryMonth(month, crop))}</strong></>}
+                  {crop.transplant && <> · check/transplant when ready <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(bedEntryMonth(month, crop))}–{monthLabel(latestBedEntryMonth(month, crop))}</strong></>}
                 </div>
               </>
             )}
             {crop.transplant && (
-              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#755942' }}>{TRANSPLANT_NURSERY_GUIDANCE}</div>
+              <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{TRANSPLANT_NURSERY_GUIDANCE}</div>
             )}
             {crop.timingVerified !== false && !crop.sowMonths[pattern].includes(month) && (
-              <div className="font-sans mb-3" style={{ fontSize: 11, color: '#9A6018' }}><TriangleAlert size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Outside the usual sowing window for this region — still allowed.</div>
+              <div className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--gold)' }}><TriangleAlert size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Outside the usual sowing window for this region — still allowed.</div>
             )}
 
-            <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>{isPlot ? 'How much of the plot?' : 'How much of the bed?'}</div>
+            <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{isPlot ? 'How much of the plot?' : 'How much of the bed?'}</div>
             {isPlot ? (
-              <div className="font-sans mb-2 px-2.5 py-2 rounded-lg" style={{ fontSize: 11.5, color: '#5C5040', background: '#FBF6EC', border: '1px solid #E0CD9E' }}>
+              <div className="font-sans mb-2 px-2.5 py-2 rounded-lg" style={{ fontSize: 11.5, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid rgba(192,122,30,0.35)' }}>
                 <Wheat size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> The whole plot — a staple plot grows one field crop at a time and rotates to a
                 different botanical family in a later rotation, so there are no half-shares here.
               </div>
@@ -3693,9 +3692,9 @@ function CropPickerModal({
                       className="font-sans font-semibold rounded-lg py-1.5"
                       style={{
                         fontSize: 11.5,
-                        background: fraction === f.value ? '#1F4D2B' : '#F5F0E8',
-                        color: fraction === f.value ? '#F7F2E9' : '#5C5040',
-                        border: `1px solid ${fraction === f.value ? '#1F4D2B' : '#E2D8C4'}`,
+                        background: fraction === f.value ? '#1F4D2B' : 'var(--bg-2)',
+                        color: fraction === f.value ? '#F7F2E9' : 'var(--text-secondary)',
+                        border: `1px solid ${fraction === f.value ? '#1F4D2B' : 'var(--border)'}`,
                         cursor: 'pointer',
                       }}
                     >
@@ -3709,12 +3708,12 @@ function CropPickerModal({
               // gardening judgement, so it's a one-time opt-in rather than
               // offered unprompted on every crop (same reasoning as vines
               // defaulting to "grow elsewhere"). Once enabled it stays on.
-              <div className="flex items-center justify-between mb-2 px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-                <span className="font-sans font-semibold" style={{ fontSize: 12, color: '#5C5040' }}>Whole bed</span>
+              <div className="flex items-center justify-between mb-2 px-2.5 py-2 rounded-lg" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                <span className="font-sans font-semibold" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Whole bed</span>
                 <button
                   onClick={onEnableBedSharing}
                   className="font-sans underline"
-                  style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}
+                  style={{ fontSize: 11.5, color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
                   Split this bed (intercrop or stagger a succession)?
                 </button>
@@ -3726,7 +3725,7 @@ function CropPickerModal({
                 feedback at all. Plain words first, arithmetic in brackets after —
                 this screen is read by farmers, not by a spreadsheet. */}
             {overlapWarning && crop && (
-              <div className="font-sans mb-2" style={{ fontSize: 11.5, color: '#9A6018', lineHeight: 1.45 }}>
+              <div className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--gold)', lineHeight: 1.45 }}>
                 {/* A staple plot reaches this too — "+ crop" is unconditional on
                     every row, and two whole-plot crops in the same months is
                     exactly the double-booking a plot most needs told about. So
@@ -3741,7 +3740,7 @@ function CropPickerModal({
                 {isPlot ? null : (
                   <>
                     {' '}
-                    <span style={{ color: '#755942' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>
                       (Together they need {Math.round(overlapWarning.totalFraction * 100)}% of the bed.)
                     </span>
                   </>
@@ -3750,7 +3749,7 @@ function CropPickerModal({
             )}
 
             {hasUnverifiedTiming && (
-              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
+              <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--gold)' }}>
                 {/* "the space check above" is only a real reference when the
                     overlap warning actually rendered — with no overlap it
                     pointed at nothing on screen. */}
@@ -3761,7 +3760,7 @@ function CropPickerModal({
               </div>
             )}
 
-            <label className="flex items-center gap-2 font-sans mb-3 cursor-pointer" style={{ fontSize: 13, color: '#5C5040' }}>
+            <label className="flex items-center gap-2 font-sans mb-3 cursor-pointer" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
               <input type="checkbox" checked={existing} onChange={(e) => onExisting(e.target.checked)} style={{ accentColor: '#1F4D2B' }} />
               This is already growing (not a new planting)
             </label>
@@ -3770,7 +3769,7 @@ function CropPickerModal({
               onClick={onConfirm}
               disabled={crop.timingVerified === false}
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
-              style={{ fontSize: 14, background: crop.timingVerified === false ? '#D8D3C9' : '#1F4D2B', color: crop.timingVerified === false ? '#81796D' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
+              style={{ fontSize: 14, background: crop.timingVerified === false ? 'var(--bg-2)' : '#1F4D2B', color: crop.timingVerified === false ? 'var(--text-muted)' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
             >
               {isEditing ? cropUi(lang, 'Save changes', 'Londoloza izinguquko / Save changes') : existing ? cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade') : cropUi(lang, 'Add to bed', 'Engeza embhedeni')}
             </button>
@@ -3810,30 +3809,30 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
       <div
         className="rounded-2xl p-4"
         // Long transplant and storage notes pushed Edit below a phone's screen with no way to scroll.
-        style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 300, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto', overscrollBehavior: 'contain', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-start justify-between mb-2">
-          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
+          <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}>
             <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
             <X size={16} />
           </button>
         </div>
-        <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
+        <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: 'var(--color-forest-800)' }}>
           {fractionLabel(planting.areaFraction ?? 1)} bed{genuinelyIntercropped ? ' — intercropped' : ''}
         </div>
         {genuinelyIntercropped && (
-          <p className="font-sans mb-2" style={{ fontSize: 11, color: '#755942' }}>
+          <p className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
             Sharing this bed with another crop at the same time. The kilogram comparison uses each crop&apos;s allocated area only; no generic intercropping bonus or penalty is invented.
           </p>
         )}
         {planting.existing && (
-          <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: '#5C5040' }}>
+          <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: 'var(--text-secondary)' }}>
             {planting.inNursery ? 'Trays sown — not yet planted out' : 'Already growing'}
           </div>
         )}
-        <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+        <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
           <div>{crop.timingVerified === false
             ? `Recorded sowing: ${monthLabel(planting.sowMonth)} · finish timing not verified`
             : `Sow ${monthLabel(planting.sowMonth)} → ${isCoverCrop ? 'cut or roll down' : 'harvest'} ${harvestLabel}`}</div>
@@ -3844,7 +3843,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           <CropStorageLine crop={crop} />
           <div>{crop.note}</div>
         </div>
-        <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>
+        <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: 'var(--color-forest-800)' }}>
           {hasPlanningYield(crop)
             ? `≈ ${yieldKg.toFixed(1)} kg benchmark`
             : crop.yieldKgPerM2 === 0
@@ -3853,21 +3852,21 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
         </div>
         {confirmingRemove ? (
           <div className="space-y-2">
-            <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040' }}>
+            <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>
               Remove {crop.name}? To choose another crop yourself, cancel and use Edit.
             </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setConfirmingRemove(false)}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
-                style={{ fontSize: 13, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                style={{ fontSize: 13, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}
               >
                 {cropUi(lang, 'Cancel', 'Khansela')}
               </button>
               <button
                 onClick={onRemove}
                 className="flex-1 font-display font-semibold rounded-xl py-2"
-                style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
+                style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: 'var(--orange)', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
               >
                 {cropUi(lang, 'Remove crop', 'Susa isilimo / Remove crop')}
               </button>
@@ -3885,7 +3884,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             <button
               onClick={() => setConfirmingRemove(true)}
               className="flex-1 font-display font-semibold rounded-xl py-2"
-              style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
+              style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: 'var(--orange)', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
             >
               {cropUi(lang, 'Remove', 'Susa / Remove')}
             </button>
@@ -3952,8 +3951,8 @@ function AutoSuggestModal({
   const { lang } = useLanguage();
   const [cropSearch, setCropSearch] = useState('');
   const tileStyle = (active: boolean): CSSProperties => ({
-    background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#F7F2E9' : '#5C5040',
-    border: `1px solid ${active ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer',
+    background: active ? '#1F4D2B' : 'var(--bg-1)', color: active ? '#F7F2E9' : 'var(--text-secondary)',
+    border: `1px solid ${active ? '#1F4D2B' : 'var(--border)'}`, cursor: 'pointer',
   });
   const cropChoices = CROPS
     .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)))
@@ -3964,13 +3963,13 @@ function AutoSuggestModal({
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(20,16,10,0.35)' }} />
       <div
         className="rounded-2xl"
-        style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
+        style={{ position: 'relative', width: '100%', maxWidth: 480, maxHeight: '86vh', overflowY: 'auto', background: 'var(--bg-1)', border: '1px solid var(--border)', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
-        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
-          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: '#20190F' }}>
+        <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 1 }}>
+          <span className="font-display font-semibold inline-flex items-center gap-1.5" style={{ fontSize: 16, color: 'var(--text-primary)' }}>
             <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {phase === 'questions' ? 'Auto-suggest a plan' : 'Suggested plan'}
           </span>
-          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#755942' }}>
+          <button onClick={onClose} aria-label={cropUi(lang, 'Close', 'Vala')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
             <X size={18} />
           </button>
         </div>
@@ -3978,7 +3977,7 @@ function AutoSuggestModal({
         {phase === 'questions' ? (
           <div className="p-4 space-y-4">
             <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>What's the main reason you're growing this year?</div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>What's the main reason you're growing this year?</div>
               <div className="space-y-1.5">
                 {GOAL_OPTIONS.map((o) => (
                   <button key={o.key} onClick={() => onGoal(o.key)} className="w-full text-left px-3 py-2 rounded-xl transition-all" style={tileStyle(goal === o.key)}>
@@ -3991,7 +3990,7 @@ function AutoSuggestModal({
 
             {goal !== 'family' && (
               <div>
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>How many crops do you want to focus on selling?</div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>How many crops do you want to focus on selling?</div>
                 <div className="grid grid-cols-3 gap-1.5">
                   {[1, 2, 3].map((n) => (
                     <button key={n} onClick={() => onFocusCount(n)} className="py-1.5 rounded-lg text-center font-display font-semibold transition-all" style={{ ...tileStyle(focusCount === n), fontSize: 12.5 }}>
@@ -4002,13 +4001,13 @@ function AutoSuggestModal({
               </div>
             )}
 
-            <details className="rounded-xl px-3 py-2.5" style={{ border: '1px solid #E2D8C4', background: '#FFFEFA' }}>
-              <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B', cursor: 'pointer' }}>
+            <details className="rounded-xl px-3 py-2.5" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}>
+              <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 Optional: change the recommended crop mix
               </summary>
               <div className="mt-3 space-y-3">
             <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                 Filter crop types (optional)
               </div>
               <div className="grid grid-cols-2 gap-1.5">
@@ -4022,7 +4021,7 @@ function AutoSuggestModal({
                   );
                 })}
               </div>
-              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#755942' }}>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
                 {groups.length === 0
                   ? 'No type filter: the crop list below shows every crop. Crops without enough local evidence stay selectable for manual review but are not auto-scheduled.'
                   : `${groups.length} of ${ALL_GROUPS.length} selected.`}
@@ -4030,7 +4029,7 @@ function AutoSuggestModal({
             </div>
 
             <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                 Only use these exact crops (optional)
               </div>
               <input
@@ -4038,27 +4037,27 @@ function AutoSuggestModal({
                 onChange={(event) => setCropSearch(event.target.value)}
                 placeholder="Search crops, e.g. maize or tomatoes"
                 className="w-full font-sans rounded-lg px-2.5 py-2"
-                style={{ fontSize: 12.5, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}
+                style={{ fontSize: 12.5, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
               />
               <div className="flex gap-2 my-2">
-                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...cropChoices.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
-                <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}>Clear</button>
+                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...cropChoices.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid var(--brand-soft-2)', color: 'var(--color-forest-800)', background: 'var(--brand-soft)' }}>Select all shown</button>
+                <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-1)' }}>Clear</button>
               </div>
-              <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid #E2D8C4', background: '#FFFFFF' }}>
+              <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid var(--border)', background: 'var(--bg-1)' }}>
                 {cropChoices.map((crop) => {
                   const schedulable = hasVerifiedSchedule(crop);
                   const hasYieldBenchmark = hasAutomaticPlanningBasis(crop);
                   return (
-                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: 'pointer' }}>
+                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid var(--border)', cursor: 'pointer' }}>
                       <input type="checkbox" checked={cropKeys.includes(crop.key)} onChange={() => onToggleCrop(crop.key)} />
                       <span style={{ flex: 1, display: 'inline-flex', alignItems: 'center', gap: 4 }}><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
-                      {schedulable && !hasYieldBenchmark && <span style={{ fontSize: 9.5, color: '#9A6018' }}>no yield estimate</span>}
-                      {!schedulable && <span style={{ fontSize: 9.5, color: '#9A6018' }}>selected for manual review</span>}
+                      {schedulable && !hasYieldBenchmark && <span style={{ fontSize: 9.5, color: 'var(--gold)' }}>no yield estimate</span>}
+                      {!schedulable && <span style={{ fontSize: 9.5, color: 'var(--gold)' }}>selected for manual review</span>}
                     </label>
                   );
                 })}
               </div>
-              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A6018', lineHeight: 1.4 }}>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: 'var(--gold)', lineHeight: 1.4 }}>
                 Every crop can be ticked. Crops with verified field timing and establishment can be scheduled; a crop still missing those facts remains selected for manual review and is not silently replaced. “No yield estimate” leaves kilograms and value blank rather than guessing.
               </p>
               {cropKeys.length > 0 && (
@@ -4067,14 +4066,14 @@ function AutoSuggestModal({
                     const crop = cropByKey(key);
                     if (!crop) return null;
                     return (
-                      <button key={key} onClick={() => onToggleCrop(key)} className="font-sans rounded-full px-2 py-1" style={{ fontSize: 11, color: '#1F4D2B', background: 'rgba(31,77,43,0.09)', border: '1px solid rgba(31,77,43,0.22)', cursor: 'pointer' }}>
+                      <button key={key} onClick={() => onToggleCrop(key)} className="font-sans rounded-full px-2 py-1" style={{ fontSize: 11, color: 'var(--color-forest-800)', background: 'rgba(31,77,43,0.09)', border: '1px solid rgba(31,77,43,0.22)', cursor: 'pointer' }}>
                         <CropIcon cropKey={crop.key} icon={crop.icon} size={12} /> {crop.name} ×
                       </button>
                     );
                   })}
                 </div>
               )}
-              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#755942' }}>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
                 {cropKeys.length
                   ? (goal === 'commercial'
                     ? 'Only these crops will be used. Commercial mode compares conservative fresh-weight kg/m² per crop cycle where a supported sowing slot fits; it is not profit, nutrition, buyer demand or proof of a global annual maximum.'
@@ -4086,7 +4085,7 @@ function AutoSuggestModal({
             </details>
 
             <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>How do you want your harvests spread out?</div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>How do you want your harvests spread out?</div>
               <div className="grid grid-cols-2 gap-1.5">
                 {RHYTHM_OPTIONS.map((o) => (
                   <button key={o.key} onClick={() => onRhythm(o.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(rhythm === o.key)}>
@@ -4098,7 +4097,7 @@ function AutoSuggestModal({
             </div>
 
             <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#755942', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.timingHeading}</div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.timingHeading}</div>
               <div className="grid grid-cols-2 gap-1.5">
                 {TIMING_OPTIONS.map((o) => (
                   <button key={o.key} onClick={() => onPlanTiming(o.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(planTiming === o.key)}>
@@ -4108,18 +4107,18 @@ function AutoSuggestModal({
                 ))}
               </div>
               {planTiming === 'idealYear' && hasCurrentPlantings && (
-                <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.4 }}>
+                <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {IDEAL_PLAN_COPY.fullPlanHint}
                 </p>
               )}
             </div>
 
-            <div className="rounded-xl px-3 py-2.5" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
-              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>Climate used automatically</div>
-              <div className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B' }}>
+            <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>Climate used automatically</div>
+              <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)' }}>
                 {(() => { const PatternIcon = PATTERN_META[pattern].Icon; return <PatternIcon size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />; })()} {PATTERN_META[pattern].label}
               </div>
-              <p className="font-mono mt-1" style={{ fontSize: 10.5, color: '#687768', lineHeight: 1.4 }}>
+              <p className="font-mono mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                 {climateSource === 'site'
                   ? 'Derived from satellite climate records for this site. You do not need to choose a rainfall type.'
                   : climateSource === 'reference'
@@ -4177,7 +4176,7 @@ function AutoSuggestModal({
             <button
               onClick={() => onReliableIrrigation(!reliableIrrigation)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
-              style={reliableIrrigation ? tileStyle(true) : { ...tileStyle(false), background: '#FFF8E8', border: '1px solid #C07A1E' }}
+              style={reliableIrrigation ? tileStyle(true) : { ...tileStyle(false), background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.35)' }}
             >
               <span style={{ display: 'inline-flex', alignItems: 'center' }}>{reliableIrrigation ? <Droplets size={16} aria-hidden /> : <Circle size={16} aria-hidden />}</span>
               <span>
@@ -4197,21 +4196,21 @@ function AutoSuggestModal({
               const driest = siteClimate ? driestMonths(siteClimate.monthlyRainMm, 3) : [];
               if (driest.length === 0) return null;
               return (
-                <div className="rounded-xl px-3 py-2.5" style={{ background: '#F3F6FA', border: '1px solid #C2CEDC' }}>
-                  <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#5D6B7C', letterSpacing: '0.08em' }}>Your driest months</div>
-                  <p className="font-sans" style={{ fontSize: 12, color: '#3E4A57', lineHeight: 1.45 }}>
+                <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(28,90,158,0.08)', border: '1px solid rgba(28,90,158,0.3)' }}>
+                  <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--blue)', letterSpacing: '0.08em' }}>Your driest months</div>
+                  <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
                     This site gets about {driest.map((m) => Math.round(m.rainMm)).join(' / ')} mm of rain
                     in {driest.map((m) => monthLabel(m.month)).join(' / ')} — its three driest months
                     (satellite record for this location).
                   </p>
-                  <p className="font-sans mt-1" style={{ fontSize: 12, color: '#3E4A57', lineHeight: 1.45 }}>
+                  <p className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
                     “Reliable irrigation” means your water, not the rain, carries every crop through months like these.
                   </p>
                 </div>
               );
             })()}
 
-            <p className="font-mono" style={{ fontSize: 10.5, color: '#755942', lineHeight: 1.45 }}>
+            <p className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.45 }}>
               {allowMixedCropsInBed
                 ? 'Auto-suggest will use only full, half, third or quarter-bed sections. It does not claim a globally maximum plan or invent an exact row layout.'
                 : 'Whole-bed mode is on. Short blank periods can remain between full-bed crop cycles because the planner will not overlap two different crops in one bed.'}
@@ -4238,8 +4237,8 @@ function AutoSuggestModal({
                     className="w-full font-display font-semibold rounded-xl py-2.5"
                     style={{
                       fontSize: 14,
-                      background: canGenerate ? '#1F4D2B' : '#D8D3C9',
-                      color: canGenerate ? '#F7F2E9' : '#81796D',
+                      background: canGenerate ? '#1F4D2B' : 'var(--bg-2)',
+                      color: canGenerate ? '#F7F2E9' : 'var(--text-muted)',
                       border: 'none',
                       cursor: canGenerate ? 'pointer' : 'not-allowed',
                     }}
@@ -4247,7 +4246,7 @@ function AutoSuggestModal({
                     {generating ? IDEAL_PLAN_COPY.busyLabel : <><Sparkles size={14} aria-hidden /> Suggest a plan</>}
                   </button>
                   {blockers.map((line) => (
-                    <p key={line} className="font-sans mt-1.5" style={{ fontSize: 12, color: '#9A6018', lineHeight: 1.45 }}>{line}</p>
+                    <p key={line} className="font-sans mt-1.5" style={{ fontSize: 12, color: 'var(--gold)', lineHeight: 1.45 }}>{line}</p>
                   ))}
                 </>
               );
@@ -4256,7 +4255,7 @@ function AutoSuggestModal({
         ) : (
           <div className="p-4 space-y-3">
             {!result || result.plantings.length === 0 ? (
-              <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+              <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
                 Nothing fit this time — your beds may already be full, or the exact crops you picked have no supported slot that fits. Review the climate choice or crop list, or check "Waiting for their sowing window" below.
               </p>
             ) : (
@@ -4272,10 +4271,10 @@ function AutoSuggestModal({
                     .join(', ');
                   const transitionOnly = idealMeta.firstYearZeroFreshMonths
                     .filter((month) => !idealMeta.best.score.zeroFreshMonths.includes(month));
-                  const line = { fontSize: 11.5, color: '#3E5240', lineHeight: 1.45 } as const;
+                  const line = { fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.45 } as const;
                   return (
-                    <div className="rounded-xl px-3 py-2.5 mb-2 space-y-1" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
-                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.twoYearHeading}</div>
+                    <div className="rounded-xl px-3 py-2.5 mb-2 space-y-1" style={{ background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)' }}>
+                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--color-forest-800)', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.twoYearHeading}</div>
                       <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.twoYearLine}</p>
                       <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.fullBedsLine}</p>
                       <p className="font-sans" style={line}>
@@ -4321,7 +4320,7 @@ function AutoSuggestModal({
                     </div>
                   );
                 })()}
-                <p className="font-sans mb-2" style={{ fontSize: 13, color: '#5C5040' }}>{result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} suggested:</p>
+                <p className="font-sans mb-2" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} suggested:</p>
                 <div className="space-y-1 mb-2">
                   {result.plantings.map((p) => {
                     const crop = cropByKey(p.cropKey);
@@ -4329,16 +4328,16 @@ function AutoSuggestModal({
                     const h = harvestMonthForCrop(p.sowMonth, crop);
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
-                      <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
+                      <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                           <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)
                           {typeof p.once === 'string' && (
-                            <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#5F735F', background: '#F5F8F3', border: '1px solid #B9C9B9', borderRadius: 6, padding: '1px 5px' }}>
+                            <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 6, padding: '1px 5px' }}>
                               {IDEAL_PLAN_COPY.starterBadge}
                             </span>
                           )}
                         </span>
-                        <span style={{ color: '#755942', textAlign: 'right' }}>
+                        <span style={{ color: 'var(--text-muted)', textAlign: 'right' }}>
                           {crop.transplant
                             ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`
                             : `sow ${monthLabel(p.sowMonth)} → ${crop.yieldKgPerM2 === 0 ? 'cut/roll down' : 'harvest'} ${monthLabel(h)}`}
@@ -4351,9 +4350,9 @@ function AutoSuggestModal({
             )}
             {result && result.notes.length > 0 && <PlanNoteGroups notes={result.notes} />}
             {result && result.laterThisYear.length > 0 && (
-              <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 11.5, color: '#20190F' }}>{PLAN_NOTES_PANEL_COPY.laterHeading}</div>
-                <div className="mb-1" style={{ fontSize: 10.5, color: '#755942' }}>
+              <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+                <div className="font-display font-semibold" style={{ fontSize: 11.5, color: 'var(--text-primary)' }}>{PLAN_NOTES_PANEL_COPY.laterHeading}</div>
+                <div className="mb-1" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
                   {PLAN_NOTES_PANEL_COPY.laterSubtitle}
                 </div>
                 {/* The sentence is written in lib (LaterThisYearEntry.text) so
@@ -4371,7 +4370,7 @@ function AutoSuggestModal({
               </div>
             )}
             <div className="flex gap-2 pt-1">
-              <button onClick={onBackToQuestions} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+              <button onClick={onBackToQuestions} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                 ‹ {cropUi(lang, 'Back', 'Buyela')}
               </button>
               {result && result.plantings.length > 0 && (
@@ -4379,7 +4378,7 @@ function AutoSuggestModal({
                   Add {result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} to my plan
                 </button>
               )}
-              <button onClick={onClose} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
+              <button onClick={onClose} className="px-3 py-2 rounded-xl font-mono transition-all" style={{ fontSize: 12, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                 {cropUi(lang, 'Discard', 'Lahla / Discard')}
               </button>
             </div>

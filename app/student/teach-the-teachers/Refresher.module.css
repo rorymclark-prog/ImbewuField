@@ -1,0 +1,42 @@
+.page { height: 100dvh; overflow-y: auto; background: #f8f5ec; color: #253828; }
+/* The global draggable Lima launcher sits over the left edge of lesson copy on a phone.
+   This reading page already links to the app exercises where Lima remains available. */
+.page ~ :global(button[aria-label^="Open Lima"]) { display: none; }
+.header { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 10px max(16px, env(safe-area-inset-left)); background: #fffdf7; border-bottom: 1px solid #ded8c6; }
+.header > a { color: #1f4d2b; font-weight: 700; text-decoration: none; }
+.header > span { margin-left: auto; color: #605a4f; font-size: 13px; }
+.main { width: min(100%, 820px); margin: 0 auto; padding: 20px 16px 80px; }
+.hero, .panel, .day, .notice { border: 1px solid #dfd8c7; border-radius: 20px; background: #fffdf7; }
+.hero { padding: clamp(24px, 6vw, 48px); background: linear-gradient(145deg, #eaf1e2, #fffdf7 70%); }
+.eyebrow { margin: 0 0 10px; color: #7a4c19; font: 700 12px/1.4 system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.hero h1 { margin: 0; color: #1f4d2b; font: 700 clamp(36px, 8vw, 62px)/1.05 Georgia, serif; }
+.lead { max-width: 620px; color: #354236; font-size: clamp(17px, 3vw, 21px); line-height: 1.5; }
+.heroLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.heroLinks a, .footer a { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 14px; border-radius: 12px; background: #1f4d2b; color: #fffdf7; font-weight: 700; text-decoration: none; }
+.notice { margin: 16px 0; padding: 18px 20px; border-color: #ddb986; background: #fff5e7; line-height: 1.55; }
+.panel, .day { margin-top: 16px; padding: clamp(20px, 4vw, 30px); scroll-margin-top: 20px; }
+.panel h2, .day h2 { margin: 0 0 12px; color: #1f4d2b; font: 700 clamp(25px, 5vw, 35px)/1.15 Georgia, serif; }
+.panel p, .panel li { line-height: 1.55; }
+.panel li + li { margin-top: 8px; }
+.panel > a { display: inline-flex; align-items: center; min-height: 44px; color: #1f4d2b; font-weight: 700; text-underline-offset: 3px; }
+.moduleList { columns: 2; column-gap: 28px; }
+.moduleList li { break-inside: avoid; }
+.dayHeading { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+.dayHeading > span { flex: 0 0 auto; border-radius: 999px; padding: 7px 11px; background: #1f4d2b; color: #fffdf7; font-weight: 700; }
+.dayHeading p { margin: 0; line-height: 1.5; }
+.sessions { display: grid; gap: 10px; }
+.session { border: 1px solid #dcd6c5; border-radius: 14px; background: #fff; overflow: hidden; }
+.session summary { display: flex; gap: 14px; align-items: center; min-height: 52px; padding: 11px 16px; cursor: pointer; font-weight: 700; list-style-position: inside; }
+.session summary::marker { color: #1f4d2b; }
+.session[open] summary { background: #edf3e8; border-bottom: 1px solid #dcd6c5; }
+.time { color: #6a4a1f; font: 700 12px/1.35 system-ui, sans-serif; min-width: 80px; }
+.sessionBody { padding: 16px; line-height: 1.55; }
+.sessionBody p { margin: 0 0 12px; }
+.sessionBody ol { padding-left: 22px; }
+.sessionBody li + li { margin-top: 8px; }
+.appTask { margin: 16px 0; padding: 16px; border-left: 4px solid #1f4d2b; border-radius: 0 12px 12px 0; background: #f3f7ef; }
+.appTask p { margin-bottom: 10px; }
+.appTask a { display: inline-flex; align-items: center; min-height: 44px; color: #1f4d2b; font-weight: 700; text-underline-offset: 3px; }
+.footer { display: grid; gap: 12px; justify-items: start; margin-top: 20px; color: #655d50; font-size: 13px; line-height: 1.5; }
+@media (max-width: 480px) { .header > span { display: none; } .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; } .moduleList { columns: 1; } }
+@media print { .header, .heroLinks, .appTask a, .footer a { display: none; } .page { height: auto; overflow: visible; background: white; } .main { width: 100%; padding: 0; } .hero, .panel, .day, .notice { box-shadow: none; } .session { break-inside: avoid; } .session > .sessionBody { display: block !important; } }

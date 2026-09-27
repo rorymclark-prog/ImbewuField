@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { X, Camera, Check, Loader2, User } from 'lucide-react';
 import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
+import { resizeFileForUpload } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 
 const ROLE_LABEL: Record<string, string> = {
@@ -202,7 +203,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
       if (!file) return;
       setUploading(true);
       try {
-        const url = await uploadProfilePhoto(file);
+        const url = await uploadProfilePhoto(await resizeFileForUpload(file));
         setPhotoUrl(url);
       } finally {
         setUploading(false);

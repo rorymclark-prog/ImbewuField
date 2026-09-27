@@ -29,7 +29,7 @@ must provision — not buildable from code alone).
 ### What's live
 - **Auth** — email/password + Google sign-in + password reset + change-password +
   profile photo. Firebase env is set in the Vercel project; Auth authorized domains
-  include the vercel.app domains + localhost. (Site gate via `SITE_PASSWORD` env.)
+  include the vercel.app domains + localhost. (The old `SITE_PASSWORD` site gate was deleted 2026-09-26.)
 - **Roles** — five: farmer · mentor · student · ngo · funder (+admin). Mentor merges
   the old supervisor + trainer. Task-first home; roles behind a quiet "Dashboards" link.
 - **Map** (`/farmer`) — search/analyse, draw land boundary + water storage (reticle
@@ -39,7 +39,7 @@ must provision — not buildable from code alone).
 - **Lima Vision** (`/vision`) — photo → Claude estimates crop + yield + weeks, or weighs a harvest.
 - **Crop Planner** (`/plan`) — crops with bed quantities → projected plants/kg.
 - **Crop Plan** (`/cropplan`) — Day/Week/Month/Season task scheduler.
-- **Garden Survey** (`/survey`) — 5-step wizard → Lima-sized beds → 6-week plan + print.
+- ~~**Garden Survey** (`/survey`)~~ deleted 2026-09-26 (orphaned) — was a 5-step wizard → Lima-sized beds → 6-week plan + print.
 - **Calendar** (`/calendar`) — SA planting calendar, filtered to your crops.
 - **Field Journal** (`/journal`) · **Report** (ReportView, AI, print/share).
 - **Finances** (`/finances`) — Money in/out logging (+ **scan a till slip** OCR);
@@ -51,6 +51,214 @@ must provision — not buildable from code alone).
 ---
 
 ## Build Log (newest first)
+
+### 27 Sep 2026 — Monthly AI allowance + value models
+- New `lib/ai-budget.ts` + `lib/metered-ai.ts`: every Claude call in app/api goes through one metered
+  client. €3/person/month (env `AI_MONTHLY_CAP_EUR`), priced from real usage, ledger in Firestore
+  `ai_spend` (server-only rule). Over the cap → cheap model until the 1st, never blocked.
+- Guests: €0.05/day per hashed IP (`AI_GUEST_DAILY_EUR`) on the cheap model, then a sign-in reply (429).
+- No Firestore Admin credentials → 1.5 s-capped read, then an in-memory per-instance ledger (partial,
+  like the rate limiter). Account page shows "AI this month" via `/api/ai-allowance`.
+- Models: main → Sonnet 5 ($2/$10), deep → Opus 5 (same price as before); thinking kept off and
+  max_tokens ×1.3 for the new tokenizer. Gemini 3.8 Flash from the research is NOT wired yet —
+  needs a GEMINI_API_KEY and the side-by-side comparison the research asks for.
+
+### 26 Sep 2026 — Wave 9 (final): last theme leftovers (#706)
+- Community, community profile, Contact, PopiaConsent, Onboarding and login now paint with theme
+  tokens instead of hardcoded forest/paper/error hexes (Google logo colours kept).
+- New guard `tests/theme-leftovers.test.ts` stops these files regressing. Closes the audit backlog.
+
+### 26 Sep 2026 — Wave 8: mentor screens i18n + translator hand-off (#699)
+- FieldTeams, MemberAccessPreview and PeoplePanel route visible text through t() (new MENTOR_ENGLISH_PENDING; FieldTeams' inline isiZulu drafts moved to lib/locales/zu.ts). Exported funder report text stays English on purpose.
+- `npm run i18n:pending` writes docs/translation/pending-isizulu.csv (group,key,english,isizulu) for a translator; README explains how to bring it back into zu.ts. Test fails if the CSV is stale.
+- Guard: tests/mentor-screens-i18n.test.ts, tests/pending-translations-csv.test.ts.
+
+### 2026-09-26 (Permaculture Manual — pictures, printable book, English terms + glossary)
+- **Pictures:** 73 of the original handbook photos/diagrams (`public/manual/figures/<id>.jpg`,
+  10 MB, ≤1400px) placed per section via `content/manual/figures.json` (captions in all five
+  languages). Two or more in a section render as a grid (1 column on phones, 2 from 560px and in
+  print). 22 more slots (replacements for photos with private faces, sesbania or third-party
+  art, plus captioned figures the handbook never had as images) are listed but hidden until a
+  file with that name exists — ChatGPT prompts in `research/manual/COVER-PROMPTS.md`. Picture
+  inventory and verdicts: `research/manual/FIGURES.md`. Tests check ids, sections, file size
+  and that the JPEG dimensions match the JSON.
+- **Book:** `/manual/<lang>/book` — cover, imprint, contents, a title page per chapter, A4 print
+  CSS. Cover/chapter art is optional, text-free, and dropped in `public/manual/covers/`
+  (`cover.jpg`, `chapter-00.jpg` … `chapter-12.jpg`); titles are overlaid per language.
+  `node scripts/build-manual-pdfs.mjs [baseUrl] [lang…]` prints the PDFs to `output/manual/`.
+- **English terms:** the 67 technical words (swale, berm, compost, mulch, food forest …) stay in
+  English in zu/st/ve/ts with the language's prefix and a short gloss on first use per chapter;
+  new chapter 12 Glossary in all five languages. (Xitsonga stays on disk but is off the public
+  routes since #697 paused it; the PDF script defaults to the four public languages.) Record per language in `glossary-<lang>.md`.
+- **Fix:** the manual routes check `public/` at build time, which made file tracing pack all of
+  `public/` into their serverless function (540 MB). `outputFileTracingExcludes` in
+  `next.config.mjs` keeps it out.
+- **Still to check before publishing:** sources of 5 images and consent for 4 (listed in
+  FIGURES.md); all non-English text is a machine draft for fluent-speaker review.
+
+### 2026-09-26 (swarm wave 7 — last audit leftovers; three unused pages deleted)
+- **Deleted (owner-approved):** the orphaned `/survey` Garden Survey wizard (+ `lib/survey-pdf.ts`),
+  `components/ReportDocView.tsx`, and the unlinked `/design-studio-2` scaffold (+ `components/design-studio-2/`,
+  `lib/design-studio-2-storage.ts`, `lib/preview-export.ts`) with their tests. `lib/design-studio-shell.ts`
+  and `lib/report-doc.ts` stay (still read by live modules/tests). ~4,600 lines removed.
+- **Dead code (#693):** duplicate `app/student/guides/{invoices,sales}` pages removed (`[guide]` serves them);
+  the `'pro'` DesignMode and ~86 always-true `guided ?` ternaries in `DesignPalette.tsx` folded (output unchanged).
+- **Photos + labels (#694):** `MyRecords.tsx` produce photos go through `resizeFileForUpload`; SpeciesPicker
+  section names, size line and use tags go through `t()` (English pending, no isiZulu coined); DesignPrint's
+  on-screen sheet picker uses `labelKey` while the printed title stays English by design (existing test).
+  `FieldTeams.tsx` left English — the whole mentor screen has no i18n yet; full localisation is a separate job.
+- **Tests:** `species-picker-i18n`, `design-print-sheet-labels`; `profile-photo-resize` covers MyRecords.
+
+### 2026-09-26 (Permaculture Manual — fact-checked edition in five languages; locale clean-up)
+- **What:** Rory's *RVCC Permaculture Gardening Handbook* (UNDP / Government of Lesotho project,
+  2020–21) is now the in-app **Permaculture Manual** at `/manual`, listed under Farm tools and in
+  Simple mode. It has 12 chapters (~53,500 English words) plus machine-draft isiZulu, Sesotho,
+  Tshivenḓa and Xitsonga for every chapter.
+- **English edition:** every chapter is fact-checked and rewritten for SA smallholders. The
+  per-chapter change logs with sources are in `research/manual/factcheck/`. The main corrections:
+  - NEMBA invasives removed (beefwood, American elder, guava, granadilla, *Tithonia*…).
+  - Law added or corrected: National Water Act, Veld and Forest Fire Act, CARA slope limits
+    (replacing the source's 18%), beekeeper registration and AFB, Newcastle disease, swill feeding.
+  - The roof-harvest arithmetic is fixed.
+  - Safety boxes added: tobacco spray, biogas, CO, wonder bag, manure, greywater.
+  - Succession no longer implies grassland or fynbos "should" become forest.
+  - Figures are not yet in the reader; their captions are logged per chapter so they can be added.
+- **Reader:** `content/manual/<lang>/<slug>.md` is read at build time, so every chapter is a static
+  page (`app/manual/[lang]/[slug]`).
+  - `lib/manual.ts` is a strict Markdown-subset parser with no HTML passthrough.
+  - A machine-translation notice and English fallback appear per chapter, with a language switch.
+  - `tests/manual.test.ts` checks that every translation keeps the English structure (headings,
+    list items, Safety boxes, table rows).
+- **Translations:** the brief and fixed rules are in `research/manual/STYLE.md` and `TRANSLATE.md`.
+  The glossaries are `research/manual/glossary-{zu,st,ve,ts}.md`, with uncertain terms marked
+  "(check)". Callout labels are one per meaning in each language.
+- **Locale clean-up** (glossary-driven; each glossary ends with an "App clean-up log"):
+  - Xitsonga: ~180 strings in `ts.ts` were siSwati/isiZulu/Sepedi.
+  - Tshivenḓa: ~185 strings in `ve.ts` were not Tshivenḓa, and roles were mistranslated.
+  - Sesotho: Lesotho → SA orthography, and compost said "dung" / "manure that kills".
+  - isiZulu: compost, frost, sector and contour terms made consistent.
+  - All four: menu label for the manual.
+- **Checks:** tsc clean and `next build` green. The full `npm test` has 9 failures that are
+  identical on `main` (auth transition/guest migration, course-deck playback, product-tour,
+  public-route-ssr, venue-location, saved-reports relabel).
+- **Needs Rory / people:**
+  - Fluent-speaker review of all four languages.
+  - Confirm that the ACT (2014) "used with permission" and the UNDP/RVCC origin cover an app
+    edition.
+  - Check the "not found as listed" NEMBA rows against the gazette PDF (the proxy blocked it).
+### 2026-09-26 (swarm wave 6b — Farm Finance in isiZulu)
+- **Finance track retry (PR #689).** New `lib/course-finance-i18n.ts` holds source-paired isiZulu
+  drafts for the Farm Finance course: `financeZu(map, id, liveEnglish)` only returns the draft while
+  its stored English still equals the live English, so an edited lesson falls back to English
+  instead of showing a stale translation. `components/studies/FinanceZu.tsx` renders the drafts plus
+  a "draft translation" badge/notice; wired into the course page, lesson reader, project worksheet,
+  CourseSyllabus (title/blurb widened to ReactNode) and the mentor course list.
+- **Due-date months via Intl.** `lib/course-assignments.ts` `monthAbbrev` now formats with
+  `Intl.DateTimeFormat`, checking `supportedLocalesOf` first — an unsupported tag (ss/nr/ve/ts)
+  would otherwise fall back to the *browser's* locale (German months in Vienna), so it pins English.
+- Tests: new `tests/course-finance-zu.test.ts`; `tests/student-simple.test.ts` pins the
+  supported-locale check.
+
+### 2026-09-26 (gate deleted)
+- **Rory: "yes delete the gate".** Removed `app/gate/page.tsx`, `app/api/gate/route.ts` and
+  `tests/gate-guard.test.ts`; dropped `/gate` from ChatWidget's exclusions and `NO_FLOATING_BACK`,
+  and pointed the tests that anchored on it at `/login`. `middleware.ts` notes where to restore
+  it from git history. The optional `SITE_PASSWORD` env var is now unused (left in Vercel — not
+  touched from here).
+
+### 2026-09-26 (swarm wave 6 — lighter pages, less clutter, tap targets, API guard)
+- **Merged (four swarm PRs, one integration PR):** Perf (#668: profile photos on /account and
+  ProfileSheet go through `resizeFileForUpload` before upload; the lazy release-notes import,
+  weather cache and Portfolio next/link were already done). Clutter (#669: `isStaffRole` in
+  `lib/app-level-core.ts`; the Study readiness badge and the offline quality picker are staff-only
+  and hidden in Simple; /calendar left the Simple nav). Tap targets (#673: EvidenceSheet photo and
+  document remove buttons reach 44×44; the other four items were already fixed). API guard (#670).
+- **API guard finding:** the open map routes (contours, site-features, location-data) were
+  ALREADY rate-limited per IP by `guardPaidApiRequest` (data 20/hr anon, 300/hr signed in), and
+  the contour cache key already snaps to the DEM grid. The only real gap was `/api/gate`: it now
+  allows 10 attempts per 10 minutes per IP and compares with `crypto.timingSafeEqual`. Deleting
+  the unused gate was blocked by the session safeguard, so it was hardened instead —
+  `middleware.ts` routes nothing to /gate; deleting it is Rory's call.
+- **Not touched:** MyRecords produce photos still upload unresized (next wave).
+- **Farm Finance isiZulu track:** hit the session limit without pushing; relaunched, lands as 6b.
+- **Checks:** tsc clean; the four new tests plus student-simple, nav-simple-track, app-level,
+  nav-menu-links, test-registry/manifest and theme-token gates pass (53/53).
+- **Cost:** about $20 of Sonnet so far (including the failed first isiZulu run).
+
+### 2026-09-26 (swarm wave 5 — audit leftovers: language honesty, icons, crop planner theme)
+- **Owner decisions (Rory, 26 Sep):** no extra sign-in — the public map data routes (contours,
+  site-features, location-data) stay open behind their existing rate limits and REQUIRE_API_AUTH
+  stays off for them. Mentors keep defaulting to All tools. A partly-translated-language notice
+  is approved.
+- **Merged (four swarm PRs, one integration PR):** Language notice (#662: `lib/lang-coverage.ts`
+  counts keys a locale renders differently from English; under 95% shows "Partly in English"
+  in the Settings picker plus a note for the active language; Xitsonga keeps its draft notice).
+  Design Studio isiZulu (#660: resume-gave-up banner in isiZulu, print-preview failures logged;
+  the other audit items were already fixed). Crop planner theme (#661: planner chrome on theme
+  tokens, clamp() headings, ochre text via --gold-dim, white-on-ochre banner #9A6018). Icons
+  (#663: Design Studio chrome, line tools, canvas handles and facilitator print page picker on
+  Lucide; unreachable ProWizard removed — `designMode` is the constant 'guided').
+- **Integrator fix:** SectorSummary, TankCalculator and the Glossy saved-maps header paint the
+  fixed PAPER constant in every theme, so their ochre text stays #7A4408 (dark mode's --gold-dim
+  is ~2.6:1 on it); the crop-plan month count now reads --color-forest-800 on the themed card.
+- **Dead taps track:** nothing to change — all six items were already fixed on main (spot-checked
+  the facilitator print disable, /assessments BackButton and the sign-up auth-code map).
+- **Checks:** tsc clean; the five new tests plus design-simple, theme-token, facilitator-print and
+  release-notes gates pass locally.
+- **Cost:** about $34 of Sonnet across the five tracks.
+
+### 2026-09-25 (swarm wave 4 — Simple mode for the rest of the app)
+- **Merged (six swarm PRs, one integration PR):** Design Studio Preview & Export (#644: Simple
+  keeps choose-a-sheet and Finish as step 2; underlay, plant labels, style, AI layers, All sheets
+  and the saved-maps rail stay in All tools). Farm map (#641: Simple keeps finding land, boundary
+  tracing, a two-item Add (tree, tank), basemap switch and locate-me; contours, terrain/3D, HD
+  imagery, the edit-engine picker, printing, elevation and Labels are All tools only — Simple
+  always uses the big-handle editor without touching the stored preference). Community board,
+  messages and profiles (#642, with more isiZulu). Crop plan + Prices (#643). Lima Vision + Field
+  Journal (#640). Account + survey answering (#639). Each track added a source-level test.
+- **Checks:** tsc clean; the six new tests plus design-simple, app-level, theme-token and
+  release-notes gates pass locally; no new hex or emoji in the convention scan.
+- **Cost:** about $31 of Sonnet across the six tracks (~20 min each).
+
+### 2026-09-25 (swarm wave 2b/3 — money charts dark, Exchange/Study polish, staff theme, lighter notes)
+- **Merged (four swarm PRs, one integration PR):** money charts (#619: CashflowChart,
+  FinanceGraphs, AreaReturnCards, ComingUpHarvests on theme tokens; sample-mode pending invoice
+  links now live in the in-memory sandbox, never real storage). Exchange & Study (#616: numbers
+  shown once, "How the exchange works" collapsed in Simple, one back control, named course links
+  in Study Simple). Staff theme (#618: Mentor / Surveys / Funder + two map-page hairlines on theme
+  tokens). Report + notes (#617: the Köppen/BRU technical footnote hidden in Simple and put
+  through tr() in All tools; PWAUpdateNotifier and UpdateGuide import lib/release-notes lazily, so
+  the 2,500-line changelog leaves the shared layout bundle).
+- **Integrator fix:** UpdateGuide's lazy import gets a quiet catch for an offline tap.
+- **Ops:** the swarm hit the account's five-hour usage limit at ~07:00 and the container restart
+  held work until 11:30; the two stalled tracks were relaunched and all four finished in ~25 min
+  (about $26 of Sonnet in total). A parallel translation stream (isiZulu / Sesotho / Xitsonga
+  drafts) merged ~24 PRs to main meanwhile; integrations merge main in and keep both sides.
+- **Still open:** Design Studio surfaces on theme tokens (design-08) and its emoji element
+  catalogue (design-02); dead routes (/survey, /gate, /design-studio-2); the owner decisions
+  listed under wave 1b (public data routes vs REQUIRE_API_AUTH, mentors' default level).
+
+### 2026-09-25 (swarm wave 1b — Design Studio + People screens in Simple, dark-mode fixes)
+- **Merged (four swarm PRs, one integration PR):** Design Studio Simple (#585: curated element
+  palette with Show all, one top Lima tip, guided base-photo line-up, Print → one "Save my plan" +
+  Share; Layers / workspace layouts / multi-select / align stay in All tools; live-preview errors
+  now shown with a retry; ochre text → #7A4408 on the studio's fixed light surface). People +
+  Atlas (#582: Contact / Community / map popup isiZulu, Field Journal fonts, dark-mode tokens on
+  Community / Contact / Atlas / Example, board and profile photos resized to 1200px before upload,
+  Simple for Contact / profile crops / Feedback, `/api/location-data` rate-limited). First-run
+  Onboarding + POPIA consent follow the theme (#586). Records polish (#587: 44px edit/delete,
+  isiZulu lender-export strings, theme reds/ambers). Crop planner (#588: `/facilitator/crops`
+  surfaces, text and borders on theme tokens; clamp() type for headings, month labels, beds and
+  the R/m² figure, so desktop is no longer phone-sized).
+- **Integrator fix:** the POPIA step-2 button put white 15px type on #C07A1E (3.5:1); now
+  #9A6018 (5.2:1), per the ochre rule.
+- **Open, for the owner:** `/api/contours`, `/api/site-features` and now `/api/location-data`
+  sit behind `guardPaidApiRequest`, so with REQUIRE_API_AUTH=1 they would refuse signed-out
+  callers: guests drawing a farm would lose contours / OSM features / climate, and the public
+  Atlas would stop answering. Decide alongside the REQUIRE_API_AUTH switch (a public-data guard
+  that stays rate-limited but never requires sign-in is one option).
+- **Still running:** money-chart dark mode (relaunched as `swarm/money-charts-dark-v2`), Exchange
+  & Study polish.
 
 ### 2026-09-25 (swarm wave 1 — Simple mode across the farmer screens + 17 verified fixes)
 - **How:** an app-wide code audit (9 Sonnet auditors, one per area, each followed by a Sonnet
@@ -543,6 +751,6 @@ passed; the walkthrough still found two bugs, both older than this branch.
 ---
 
 ## Auth / passwords (operational)
-- **Site gate:** controlled by the `SITE_PASSWORD` env var on Vercel (ask the owner for the value; not committed here).
+- **Site gate:** deleted 2026-09-26 (`/gate` + `/api/gate`). `SITE_PASSWORD` in Vercel is now unused and can be removed.
 - **Account auth:** Firebase email/password (enabled) + Google. To enable the Google button end-to-end, the owner enables **Google** as a sign-in provider in Firebase Console → Authentication → Sign-in method (email/password is already on; authorized domains are set).
 - **Env:** managed via GitHub repo secrets → pushed to the Vercel project by `.github/workflows/set-vercel-env.yml` (`gh workflow run set-vercel-env.yml`). Never commit `.env*`.

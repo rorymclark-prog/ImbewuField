@@ -2,7 +2,9 @@
 //
 // SCOPE: this is the reference-shell phase (feature/design-studio-2). It builds the chrome
 // (toolbar/stepper/panel/bottom-bar/palette) and fully wires ONE sheet — Water — as the
-// pattern the other 8 sheets follow later. See app/design-studio-2/page.tsx for the route.
+// pattern the other 8 sheets follow later. The app/design-studio-2 route that rendered it was
+// deleted on 2026-09-26; the icons and water-palette data here are still read by
+// lib/design-studio-shell-icons.ts → lib/element-art-2.ts and tests/water-palette-greywater.test.ts.
 //
 // SINGLE-SOURCE-OF-TRUTH RULE (the whole reason this file is shaped the way it is): every
 // number, id, label and default below is either (a) read live from lib/design-elements.ts's

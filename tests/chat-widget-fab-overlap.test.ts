@@ -25,7 +25,7 @@ test('Studies and task guides keep Lima available without covering the reading',
 test('/funder and /ngo are excluded — same class as /partners, not a farmer route', () => {
   const widget = source('../components/ChatWidget.tsx');
 
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
   assert.ok(skipAt > 0, 'the exclusion block moved; this test needs rewriting rather than deleting');
   // Sliced to the real end of the condition, not a fixed 400 characters: the exclusion list grew
   // past that window when the five measured-collision routes were added, and a length guess
@@ -94,7 +94,7 @@ test('/invoice raises the FAB clear of the Share PDF / Print row at the bottom o
 
   // /invoice must not be in the exclusion list — a single button row is a repositioning problem,
   // not a whole-page one, and invoicing is exactly the kind of thing Lima should be askable about.
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
   // Sliced to the real end of the condition, not a fixed 400 characters: the exclusion list grew
   // past that window when the five measured-collision routes were added, and a length guess
   // failing as the list grows reads as "/ngo stopped being excluded", which was not true.
@@ -132,7 +132,7 @@ const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
 test('every route that drops the floating FAB mounts LimaBar in its place', () => {
   const widget = source('../components/ChatWidget.tsx');
 
-  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipAt = widget.indexOf("pathname.startsWith('/login')");
   assert.ok(skipAt > 0, 'the exclusion block moved; this test needs rewriting rather than deleting');
   const skipBlock = widget.slice(skipAt, widget.indexOf(') return null;', skipAt) + ') return null;'.length);
 

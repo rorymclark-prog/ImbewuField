@@ -38,6 +38,8 @@ const mapSource = readFileSync(new URL('../components/Map.tsx', import.meta.url)
 const tipsSource = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
 const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
 const studentPageSource = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
+const homeHeroCardSource = readFileSync(new URL('../components/home/HomeHeroCard.tsx', import.meta.url), 'utf8');
+const sesothoUiReviewSource = readFileSync(new URL('../docs/study-translation-reviews/SESOTHO-STUDENT-WELCOME-UI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
 
 const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
 
@@ -183,6 +185,13 @@ const SESOTHO_STUDY_HOLD_KEYS = [
   'studentMarkComplete',
 ] as const;
 
+const SESOTHO_SAFE_UI_DRAFT_KEYS = [
+  'studentAppGuidesHeading',
+  'studentAppGuidesTitle',
+  'studentOpenDesignStudio',
+  'welcomeShowExample',
+] as const;
+
 function dictionaryString(block: string, key: string): string | undefined {
   return block.match(new RegExp(`^\\s{2}${key}: '([^']*)',?$`, 'm'))?.[1];
 }
@@ -222,6 +231,33 @@ test('a QwaQwa learner sees Latin-script Sesotho drafts and English for held stu
   assert.match(studentPageSource, /t\('studentSesothoUiDraftNoticeSource'\)/, 'the notice must show its exact English source');
   assert.match(studentPageSource, /<span lang="st">\{t\('studentSesothoUiDraftNotice'\)\}<\/span>/, 'the Sesotho notice must expose its language to assistive technology');
   assert.match(studentPageSource, /<span lang="en"[^>]*>English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}<\/span>/, 'the paired English source must expose its language');
+});
+
+test('the small Sesotho Student and Welcome draft keeps its English sources and visible review notice', () => {
+  const enStart = i18nSource.indexOf('const T_en: Dict = {');
+  const enEnd = i18nSource.indexOf('\n};', enStart);
+  const english = i18nSource.slice(enStart, enEnd);
+  const sesotho = readFileSync(new URL('../lib/locales/st.ts', import.meta.url), 'utf8');
+  const nonLatin = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\s]/u;
+
+  for (const key of SESOTHO_SAFE_UI_DRAFT_KEYS) {
+    const source = dictionaryString(english, key);
+    const draft = dictionaryString(sesotho, key);
+    assert.ok(source, `${key} must retain its English source`);
+    assert.ok(draft, `${key} must have its marked Sesotho UI draft`);
+    assert.notEqual(draft, source, `${key} must not silently show English`);
+    assert.doesNotMatch(draft, nonLatin, `${key} must use Latin script`);
+    assert.deepEqual(draft.match(/\{[^{}]+\}/g) ?? [], source.match(/\{[^{}]+\}/g) ?? [],
+      `${key} must preserve any runtime placeholders`);
+    assert.ok(sesothoUiReviewSource.includes(`| \`${key}\` | ${source} | ${draft} |`),
+      `${key} must keep its exact source and draft in the review packet`);
+  }
+
+  assert.match(homeHeroCardSource, /lang === 'st'/, 'Welcome must show its notice for Sesotho');
+  assert.match(homeHeroCardSource, /t\('studentSesothoUiDraftNotice'\)/, 'Welcome must identify the text as an unreviewed Sesotho draft');
+  assert.match(homeHeroCardSource, /English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}/,
+    'Welcome must show the exact English source of its draft notice');
+  assert.match(sesothoUiReviewSource, /No human fluent review has been completed/);
 });
 
 test('the Design Studio pill, Details/Results toggle, and close controls read from t(), not hard-coded English', () => {

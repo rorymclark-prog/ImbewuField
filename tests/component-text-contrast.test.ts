@@ -62,7 +62,6 @@ const ROUTES = [
   'app/calendar/page.tsx',
   'app/cropplan/page.tsx',
   'app/plan/page.tsx',
-  'app/survey/page.tsx',
   'app/invoice/page.tsx',
   'app/account/page.tsx',
   'app/vision/page.tsx',

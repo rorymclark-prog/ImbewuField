@@ -6,10 +6,11 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, Calendar, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints, BookOpen,
 } from 'lucide-react';
 import { exitSampleMode } from '@/lib/sample-mode';
-import { useLanguage } from '@/lib/i18n';
+import { accessibleSourceLabel } from '@/lib/accessible-label';
+import { translate, useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
@@ -32,9 +33,13 @@ interface NavDrawerProps {
 // (canSeeNavLink / canSeeWorkspaceLink) still apply on top of this in both modes. Matched by the
 // exact href string, not the base path — '/farmer' (Farm map) and '/farmer?openSurvey=1' (Garden
 // Survey, hidden in Simple) share a base path but are different rows.
+// '/calendar' (Planting Calendar) is deliberately left out: it duplicates '/facilitator/crops'
+// (Bed-by-Bed Crop Plan) as a second nav door into crop planning, which a farmer new to
+// smartphones does not need — it stays a real row in Farm Tools for All tools and reachable by
+// direct link (app/calendar/page.tsx itself is untouched).
 const SIMPLE_NAV_HREFS = new Set([
-  '/home', '/farmer', '/records', '/facilitator/crops', '/calendar',
-  '/journal', '/student', '/contact', '/design', '/account',
+  '/home', '/farmer', '/records', '/facilitator/crops',
+  '/journal', '/student', '/manual', '/contact', '/design', '/account',
 ]);
 
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
@@ -96,15 +101,16 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // the DataPanel survey via lib/site-survey.ts — the two stores never meet.
         // /farmer?openSurvey=1 is the same deep link app/home/page.tsx already uses
         // for its "Do the site survey" nudge, so the menu now lands where the score
-        // actually reads. /survey (app/survey/page.tsx) is untouched and now orphaned
-        // from the menu — it may still be bookmarked; merging the two survey stores
-        // is a product decision, not made here.
+        // actually reads. The orphaned /survey wizard was deleted on 2026-09-26.
         { href: '/farmer?openSurvey=1', Icon: LayoutGrid, label: t('navGardenSurvey') },
         // Otherwise unreachable: no tab, no card on /home, no link from /plan
         // or /cropplan pointed here — the 12-month SA planting grid existed
         // but no farmer could ever tap their way to it.
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
+        // The fact-checked Permaculture Manual (app/manual) in English, isiZulu, Sesotho,
+        // and Tshivenḓa — reading, not a tool, but it is where a farmer looks things up.
+        { href: '/manual',   Icon: BookOpen,     label: t('navManual') },
       ],
     },
     {
@@ -201,7 +207,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </div>
           <button
             onClick={onClose}
-            aria-label={t('navCloseMenu')}
+            aria-label={accessibleSourceLabel(lang, t('navCloseMenu'), translate('en', 'navCloseMenu'))}
             style={{
               background: 'var(--bg-2)', border: '1px solid var(--border)',
               borderRadius: 8, padding: 7, cursor: 'pointer', color: 'var(--text-secondary)',
@@ -211,6 +217,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             <X size={18} strokeWidth={1.8} />
           </button>
         </div>
+
+        {isZulu && (
+          <p role="note" lang="en" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
+            <strong>ISIZULU MACHINE DRAFT.</strong> Navigation wording has not been reviewed by a fluent isiZulu speaker.
+          </p>
+        )}
 
         <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
           {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre

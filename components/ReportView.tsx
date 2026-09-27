@@ -41,6 +41,7 @@ import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/
 import { REPORT_ZU } from '@/lib/report-localisation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
+import { useAppLevel } from '@/lib/app-level';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -293,6 +294,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [cropMapMonth, setCropMapMonth] = useState(0);
   const [includeCropWorkingPlan, setIncludeCropWorkingPlan] = useState(false);
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
+  const simple = useAppLevel() === 'simple';
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const displayError = (message: string) => {
@@ -1239,20 +1241,31 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {/* Coords */}
-              <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · Köppen {d.climate.koppen} ({d.climate.koppenDesc}) ·
-                {d.rainfall.pattern} rainfall · {d.rainfall.wetSeason} wet / {d.rainfall.drySeason} dry ·
-                {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
-              </div>
-
-              {d.bru && (
-                // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
-                // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
-                // here reads as a second, conflicting rainfall claim for a non-expert reader.
-                <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                  {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
-                  Zone name &ldquo;{d.bru.nearestBrg}&rdquo; is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.
+              {simple ? (
+                <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                  {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E
                 </div>
+              ) : (
+                <>
+                  <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({d.climate.koppenDesc}) ·
+                    {' '}{d.rainfall.pattern} {tr('rainfall', 'imvula')} · {d.rainfall.wetSeason} {tr('wet', 'manzi')} / {d.rainfall.drySeason} {tr('dry', 'omile')} ·
+                    {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
+                  </div>
+
+                  {d.bru && (
+                    // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
+                    // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
+                    // here reads as a second, conflicting rainfall claim for a non-expert reader.
+                    <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                      {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
+                      {' '}{tr(
+                        `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
+                        `Igama lesigodi elithi "${d.bru.nearestBrg}" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.`
+                      )}
+                    </div>
+                  )}
+                </>
               )}
             </div>
 

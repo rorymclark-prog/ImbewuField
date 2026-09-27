@@ -26,6 +26,7 @@
 
 import type { RainPattern } from '@/lib/crop-catalog';
 import { classifyKoppen, rainPatternFor } from '@/lib/koppen-global';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 export interface SiteClimate {
   /** The planner's rainfall pattern, derived from this site's own monthly climate. */
@@ -136,7 +137,9 @@ export async function resolveSiteClimate(lat: number, lon: number): Promise<Site
   if (!Number.isFinite(lat) || lat < -90 || lat > 90
       || !Number.isFinite(lon) || lon < -180 || lon > 180) return null;
   try {
-    const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`);
+    const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
+      headers: await paidApiHeaders(),
+    });
     if (!res.ok) return null;
     const json: unknown = await res.json();
     const derived = siteClimateFromLocationData(json, lat);

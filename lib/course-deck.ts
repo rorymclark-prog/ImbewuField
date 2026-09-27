@@ -52,6 +52,10 @@ export interface DeckSlide {
 export interface ModuleDeck {
   /** Languages with their OWN rendered slides. Others fall back — see resolveDeckLang. */
   slideLanguages: string[];
+  /** Use a compact format only for an explicitly registered language; old decks stay JPEG. */
+  slideFormatsByLanguage?: Record<string, 'jpg' | 'webp'>;
+  /** Rendered still dimensions may differ by language; width divided by height. */
+  slideAspectRatioByLanguage?: Record<string, number>;
   /**
    * Slides a language is missing, by slide number.
    *
@@ -182,7 +186,9 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // The three locally drawn Introduction clips await Rory's visual clearance.
 const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
-  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8 },
+  // The Sesotho proof carries the source illustration and paired text on the still. Showing the
+  // English animation poster instead would hide both language panels on the ethics draft slides.
+  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
@@ -227,7 +233,14 @@ const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'market-community': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: {
+      st: [1, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20],
+    },
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
   },
   'small-livestock': {
@@ -235,15 +248,33 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    // Unreviewed concept drafts only: every absent frame falls back to the full English slide.
+    missingSlides: {
+      st: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [1, 2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: {
+      st: [3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+      ve: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 16, 17, 18],
+      ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18],
+    },
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'ts'],
+    slideFormatsByLanguage: { ts: 'webp' },
+    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
+    missingSlides: { ts: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
@@ -251,7 +282,15 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames pair unreviewed drafts or explicit English holds with exact English.
+    // The narration remains English and needs a separate, explicit voice choice.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: {
+      ve: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+      ts: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
@@ -315,7 +354,8 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   if (!deck || !deck.slideLanguages.includes(lang)) return null;
   if (!deck.slides.some((s) => s.slide === slide)) return null;
   if (deck.missingSlides?.[lang]?.includes(slide)) return null;
-  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.jpg`;
+  const format = deck.slideFormatsByLanguage?.[lang] ?? 'jpg';
+  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${format}`;
 }
 
 /**

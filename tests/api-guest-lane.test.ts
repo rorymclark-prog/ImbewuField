@@ -221,7 +221,7 @@ test('the routes deliberately left off the list are still off it', () => {
   for (const route of [
     'image-producer', 'ai-render', 'ai-render/poll',
     'auto-design', 'design-detect', 'design-review', 'suggest-zones-ai', 'tree-id',
-    'network/farmers', 'network/orgs',
+    'network/farmers', 'network/orgs', 'location-data',
   ]) {
     assert.equal(GUEST_LANE_ROUTES.has(route), false, `${route} was added to the guest lane`);
   }

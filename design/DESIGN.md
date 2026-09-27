@@ -109,7 +109,7 @@ planting calendar → bill of quantities).
 - **Invoice builder** at `/invoice` (linked from Finances) — bill-to + line items
   (crop · qty · unit · price) → live preview → print (A4). Seq in `imbewu_invoice_seq`.
   Print reuses the ReportView `@media print` / `.no-print` pattern (frame 32 pt 2)
-- **Garden Survey** at `/survey` (home quick-action) — 5-step wizard (land known
+- **Garden Survey** at `/survey` (**deleted 2026-09-26** — orphaned; the site survey lives in the farm map's DataPanel) — 5-step wizard (land known
   from map → sun & slope → resources → goal → confirm beds), Lima sizes the beds
   (1.2 m × 8 m), then a six-week establishment plan you can slide + print. Saves
   to `imbewu_garden_survey`; beds seed from the planner crops (frame 29)

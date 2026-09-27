@@ -10,7 +10,7 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Eye, EyeOff, CopyCheck } from 'lucide-react';
+import { Camera, Check, Eye, EyeOff, CopyCheck, Move, Pencil, Ruler, Satellite, Square, Sun, X } from 'lucide-react';
 import type { CanvasFrame, DesignBaseMode, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, parseSwaleWidthM, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
@@ -1961,7 +1961,7 @@ export default function DesignCanvas({
     if (!effective || effective.provenance !== 'observed on site') return null;
     const recorded = new Date(state.localWind.recordedAt);
     const when = Number.isFinite(recorded.getTime()) ? recorded.toLocaleDateString() : null;
-    return `✓ Wind confirmed on site: ${effective.fromLabel}${when ? ` (recorded ${when})` : ''}`;
+    return `Wind confirmed on site: ${effective.fromLabel}${when ? ` (recorded ${when})` : ''}`;
   }, [sectorModel, state.localWind]);
 
   // GROUND LABEL DE-COLLISION. Ground features nest, so their centroids sit almost on top of each
@@ -3025,9 +3025,7 @@ export default function DesignCanvas({
                       style={{ cursor: 'pointer' }}
                     >
                       <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fill="#FBF6EC">
-                        ✕
-                      </text>
+                      <X x={-worldPx(6)} y={-worldPx(6)} width={worldPx(12)} height={worldPx(12)} color="#FBF6EC" strokeWidth={2.6} aria-hidden />
                     </g>
                   </>
                 )}
@@ -3352,9 +3350,7 @@ export default function DesignCanvas({
                         style={{ cursor: 'pointer' }}
                       >
                         <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
-                        <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fill="#FBF6EC">
-                          ✕
-                        </text>
+                        <X x={-worldPx(6)} y={-worldPx(6)} width={worldPx(12)} height={worldPx(12)} color="#FBF6EC" strokeWidth={2.6} aria-hidden />
                       </g>
                     )}
                   </>
@@ -3713,9 +3709,7 @@ export default function DesignCanvas({
                 >
                   <circle r={itemActionHitR} fill="transparent" pointerEvents="fill" />
                   <circle r={itemActionR} fill="#4EA6D8" stroke="#FBF6EC" strokeWidth={itemActionStrokeW} pointerEvents="none" />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={itemActionFont} fill="#FBF6EC" pointerEvents="none">
-                    ✎
-                  </text>
+                  <Pencil x={-itemActionFont / 2} y={-itemActionFont / 2} width={itemActionFont} height={itemActionFont} color="#FBF6EC" strokeWidth={2.2} pointerEvents="none" aria-hidden />
                 </g>
               )}
               {isSelected && interactive && (
@@ -3726,9 +3720,7 @@ export default function DesignCanvas({
                 >
                   <circle r={itemActionHitR} fill="transparent" pointerEvents="fill" />
                   <circle r={itemActionR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={itemActionStrokeW} pointerEvents="none" />
-                  <text textAnchor="middle" dominantBaseline="central" fontSize={itemActionFont} fill="#FBF6EC" pointerEvents="none">
-                    ✕
-                  </text>
+                  <X x={-itemActionFont / 2} y={-itemActionFont / 2} width={itemActionFont} height={itemActionFont} color="#FBF6EC" strokeWidth={2.4} pointerEvents="none" aria-hidden />
                 </g>
               )}
               {/* Resize handle (bottom-right corner) + rotate knob (top edge) — both attach to
@@ -3740,7 +3732,7 @@ export default function DesignCanvas({
                       <title>Drag to move gate</title>
                       <circle r={chrome(22)} fill="transparent" />
                       <circle r={chrome(16)} fill="#1F4D2B" stroke="#FFFFFF" strokeWidth={chrome(1.5)} pointerEvents="none" />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={chrome(19)} fill="#FFFFFF" pointerEvents="none">✥</text>
+                      <Move x={-chrome(11)} y={-chrome(11)} width={chrome(22)} height={chrome(22)} color="#FFFFFF" strokeWidth={2} pointerEvents="none" aria-hidden />
                     </g>
                   )}
                   {!isGate && <>
@@ -4318,8 +4310,13 @@ export default function DesignCanvas({
             fontWeight: 600,
             textAlign: 'center',
             pointerEvents: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 4,
           }}
         >
+          {effectiveWindNote && <Check size={12} aria-hidden />}
           {effectiveWindNote ?? sectorModel.dataNotes[0]}
         </div>
       )}
@@ -4384,7 +4381,7 @@ export default function DesignCanvas({
             cursor: 'pointer',
           }}
         >
-          ☀️
+          <Sun size={18} aria-hidden />
         </button>
       )}
 
@@ -4429,7 +4426,7 @@ export default function DesignCanvas({
           fontSize: 17,
         }}
       >
-        <span aria-hidden>📏</span>
+        <Ruler size={17} aria-hidden />
       </button>
 
       {/* SATELLITE ⇄ BLANK on every farm; photo becomes the middle stop after upload. Blank
@@ -4461,7 +4458,7 @@ export default function DesignCanvas({
             fontSize: 17,
           }}
         >
-          <span aria-hidden>{basePhoto.mode === 'photo' ? '🚁' : basePhoto.mode === 'blank' ? '▤' : '🛰️'}</span>
+          {basePhoto.mode === 'photo' ? <Camera size={17} aria-hidden /> : basePhoto.mode === 'blank' ? <Square size={17} aria-hidden /> : <Satellite size={17} aria-hidden />}
         </button>
       )}
       {/* One-line coaching while measuring — without it the tool looks broken until the second

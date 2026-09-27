@@ -1,5 +1,15 @@
 # IsiZulu app readiness — 23 September 2026
 
+## Sales entry labels — 26 September
+
+The Sold page in My Records now shows a proposed isiZulu draft for its sale heading,
+invoice links, short explanation and quick-entry disclosure. Each draft line displays
+its exact English source, with a notice that no fluent speaker has reviewed it. The
+[Agy draft and independent Pro back-check](ISIZULU-RECORD-SALES-UI-REVIEW-2026-09-26.md)
+records the wording and remaining review points. The sale form, invoice destinations,
+money, saved records and access rules are unchanged. This is an interface draft, not
+fluent or local approval.
+
 ## Calendar and task planner follow-up — 25 September
 
 The Planting Calendar now displays its month labels through the device's

@@ -2,6 +2,7 @@
 
 import { numberLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
+import { resizeFileForUpload } from '@/lib/site-evidence';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
@@ -65,6 +66,17 @@ import {
 function recordsUi(lang: string, english: string, isiZulu: string, paired = false): string {
   if (lang !== 'zu') return english;
   return paired ? `${english} — ${isiZulu}` : isiZulu;
+}
+
+/** Keep the English control label visible until this transactional copy has fluent review. */
+function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: string; isiZulu: string }) {
+  if (lang !== 'zu') return <>{english}</>;
+  return (
+    <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
+      <span lang="zu">{isiZulu}</span>
+      <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
+    </span>
+  );
 }
 
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
@@ -288,7 +300,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     try {
       let photo_url: string | null = null;
       if (form.photoFile) {
-        photo_url = await uploadPhoto(form.photoFile, 'produce');
+        const resized = await resizeFileForUpload(form.photoFile);
+        photo_url = await uploadPhoto(resized, 'produce');
       }
       await addProduction({
         crop,
@@ -408,7 +421,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
@@ -577,7 +590,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: '#C0531E' }}>
+          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
             {form.error}
           </p>
         )}
@@ -966,7 +979,7 @@ function CreditPackCard({
       setError(
         err instanceof CreditPackSampleModeError
           ? err.message
-          : 'Could not build the document. Please try again.',
+          : recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.'),
       );
     } finally {
       setLoading(false);
@@ -1028,11 +1041,11 @@ function CreditPackCard({
           {loading ? (
             <>
               <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
-              Building document…
+              {recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}
             </>
           ) : (
             <>
-              <Landmark size={14} /> Export records for a lender
+              <Landmark size={14} /> {recordsUi(lang, 'Export records for a lender', 'Khipha amarekhodi kumbolekisi')}
             </>
           )}
         </button>
@@ -1040,7 +1053,7 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: '#C0531E' }}>
+        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
           {error}
         </p>
       )}
@@ -1267,7 +1280,7 @@ export default function MyRecords({
       {loadError && !dataLoading && (
         <div
           className="flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5"
-          style={{ background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
+          style={{ background: 'color-mix(in srgb, var(--orange) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 25%, transparent)' }}
         >
           <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--orange)' }}>
             {t('myRecordsLoadError')}
@@ -1360,15 +1373,16 @@ export default function MyRecords({
              same page, below this component. ── */}
       {showSold && (
         <Card accent="#315939">
-          <SectionLabel>{recordsUi(lang, 'Record a sale', 'Rekhoda ukuthengisa')}</SectionLabel>
-          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Create an invoice to keep the buyer, produce, quantity and payment together.', 'Dala i-invoyisi ukuze ugcine umthengi, umkhiqizo, inani nenkokhelo ndawonye.', true)}</p>
+          {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
+          <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
+          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>
           <div className="flex flex-wrap gap-2">
-            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />{recordsUi(lang, 'New sale & invoice', 'Ukuthengisa okusha ne-invoyisi')}</Link>
-            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>{recordsUi(lang, 'Past sale / paper invoice', 'Ukuthengisa kwangaphambilini / i-invoyisi yephepha')}<ArrowRight size={16} /></Link>
+            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} /><RecordZuluDraft lang={lang} english="New sale & invoice" isiZulu="Ukuthengisa okusha ne-invoyisi" /></Link>
+            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Past sale / paper invoice" isiZulu="Ukuthengisa kwangaphambilini / i-invoyisi yephepha" /><ArrowRight size={16} /></Link>
           </div>
-          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>{recordsUi(lang, 'Already logged this sale? Use Create invoice on its row below to keep one record.', 'Usuvele ukuqophile lokhu kuthengisa? Sebenzisa okuthi Dala i-invoyisi emgqeni wako ngezansi ukuze kuhlale kuyirekhodi elilodwa.', true)}</p>
+          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}><RecordZuluDraft lang={lang} english="Already logged this sale? Use Create invoice on its row below to keep one record." isiZulu="Usuvele ukuqophile lokhu kuthengisa? Sebenzisa u-Dala i-invoyisi emgqeni wako ongezansi ukuze ugcine irekhodi elilodwa." /></p>
           <details className="mt-3">
-            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>{recordsUi(lang, 'Quick sale entry', 'Faka ukuthengisa ngokushesha')}</summary>
+            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Quick sale entry" isiZulu="Ukufaka ukuthengisa okusheshayo" /></summary>
             <LogSaleForm onSaved={handleSaved} />
           </details>
         </Card>

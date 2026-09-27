@@ -16,7 +16,7 @@ import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
-const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress' };";
+const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
 test('sound-off learners get the complete current script, including its final instruction', () => {
@@ -415,6 +415,151 @@ test('Water playback respects language gaps, download choice and the whole clear
       else { videoDevice.ended = true; act(() => clip.props.onEnded()); }
       assert.match(view.root.findByType('audio').props.src, /slide-15.mp3$/, 'advance exactly one slide once both finish');
     } finally { act(() => view.unmount()); }
+  }
+});
+
+test('new regional orientation and ethics stills stay visible while unauthored Introduction frames use English', () => {
+  for (const lang of ['ve', 'ts']) {
+    const deck = COURSE_DECKS['intro-permaculture'];
+    assert.ok(deck.slideLanguages.includes(lang));
+    assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
+    for (const slide of [1, 2, 3, 4, 5, 6]) {
+      assert.ok(onDisk(slideImageUrl('intro-permaculture', lang, slide)!));
+      assert.match(slideImageFor('intro-permaculture', lang, slide)!.url, new RegExp(`/${lang}/slide-0${slide}\\.webp$`));
+    }
+    assert.equal(animationUrls('intro-permaculture', 4, lang), null,
+      'the old animation poster must not hide the paired ethics slide');
+    assert.match(slideImageFor('intro-permaculture', lang, 7)!.url, /intro-permaculture\/en\/slide-07\.jpg$/);
+  }
+});
+
+test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
+  // Every frame has a source-paired portrait. A single language state used to switch both image
+  // and voice to English on this path, so opting into English voice must keep the draft pictures.
+  const deck = COURSE_DECKS['intro-permaculture'];
+  assert.ok(deck.slideLanguages.includes('st'));
+  assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
+  for (let slide = 1; slide <= 22; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
+  assert.equal(animationUrls('intro-permaculture', 4, 'st'), null,
+    'the English animation poster must not cover the paired Sesotho ethics frame');
+
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'st' })); });
+  try {
+    const picture = () => view.root.findAllByType('img')[0];
+    const imageCanvas = () => picture().parent!;
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/);
+    assert.equal(imageCanvas().props.style.aspectRatio, 1440 / 5400, 'portrait text must not be shrunk into a widescreen frame');
+    const stage = view.root.findByProps({ className: 'slideStage' });
+    assert.equal(stage.props.style.overflow, 'auto', 'a tall paired slide needs its own scroll area so controls stay visible');
+    assert.equal(stage.props.style.maxHeight, 'min(65vh, 600px)');
+    assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
+      'the full-image viewer must allow a portrait slide to scroll at readable width');
+    assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
+      'play-through must wait until the learner chooses a source voice');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Sesotho AI draft.*Ha ho modumo wa Sesotho/);
+    const english = view.root.findAllByType('button').find(button => button.children.join('').includes('English source narration'))!;
+    assert.equal(english.props['aria-pressed'], false);
+
+    act(() => english.props.onClick());
+    assert.equal(english.props['aria-pressed'], true);
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);
+
+    act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+    assert.match(picture().props.src, /intro-permaculture\/st\/slide-02\.webp$/, 'page turns keep the selected slide language');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
+  } finally { act(() => view.unmount()); }
+
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
+  try {
+    const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
+    act(() => zulu.props.onClick());
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.jpg$/,
+      'the existing English and isiZulu switch still changes the slides');
+    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
+      'the existing English and isiZulu switch still changes the narration');
+    assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 16 / 9);
+  } finally { act(() => view.unmount()); }
+});
+
+test('only source-paired Xitsonga Food Forest frames replace the English slide', () => {
+  const deck = COURSE_DECKS['food-forest'];
+  assert.ok(deck.slideLanguages.includes('ts'));
+  for (const slide of deck.slides) {
+    const selected = slideImageFor('food-forest', 'ts', slide.slide);
+    assert.ok(selected);
+    if (slide.slide === 4 || slide.slide === 8) {
+      assert.equal(selected.lang, 'ts');
+      assert.match(selected.url, /\/food-forest\/ts\/slide-(04|08)\.webp$/);
+      assert.ok(onDisk(selected.url));
+    } else {
+      assert.equal(selected.lang, 'en', `slide ${slide.slide} must show English until paired copy exists`);
+    }
+  }
+});
+
+test('regional Food Forest and Xitsonga vegetables decks expose only authored paired frames', () => {
+  const cases: [string, string, number[]][] = [
+    ['food-forest', 'st', [4, 8]],
+    ['food-forest', 've', [4, 6]],
+    ['vegetables-staples', 'ts', [13, 14]],
+  ];
+  for (const [moduleId, language, authored] of cases) {
+    const deck = COURSE_DECKS[moduleId];
+    assert.ok(deck.slideLanguages.includes(language));
+    for (const slide of deck.slides) {
+      const selected = slideImageFor(moduleId, language, slide.slide);
+      assert.ok(selected);
+      if (authored.includes(slide.slide)) {
+        assert.equal(selected.lang, language);
+        assert.match(selected.url, new RegExp(`/course-decks/${moduleId}/${language}/slide-\\d{2}\\.webp$`));
+        assert.ok(onDisk(selected.url), `missing paired image ${selected.url}`);
+      } else {
+        assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} must retain its complete English source`);
+      }
+    }
+  }
+});
+
+test('regional Market and Tshivenda vegetables decks fall back to English for every unauthored frame', () => {
+  const cases: [string, string, number[]][] = [
+    ['market-community', 'st', [2, 5, 6]],
+    ['market-community', 've', [2, 3]],
+    ['market-community', 'ts', [2, 18]],
+    ['vegetables-staples', 'st', [1, 2, 8, 9]],
+    ['vegetables-staples', 've', [12, 14]],
+    ['soil-health', 'ts', [1, 2]],
+  ];
+  for (const [moduleId, language, authored] of cases) {
+    const deck = COURSE_DECKS[moduleId];
+    assert.ok(deck.slideLanguages.includes(language));
+    for (const slide of deck.slides) {
+      const selected = slideImageFor(moduleId, language, slide.slide);
+      assert.ok(selected);
+      if (authored.includes(slide.slide)) {
+        assert.equal(selected.lang, language);
+        assert.match(selected.url, new RegExp(`/course-decks/${moduleId}/${language}/slide-\\d{2}\\.webp$`));
+        assert.ok(onDisk(selected.url));
+      } else {
+        assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} needs full English fallback`);
+      }
+    }
   }
 });
 

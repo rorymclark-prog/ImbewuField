@@ -65,6 +65,21 @@ test('?openSurvey=1 tells a farmer with no saved site to save one first, instead
     'the no-site branch must not still flag the survey open — DataPanel would silently ignore it');
 });
 
+test('a saved-site survey stays open when location data is unavailable in sample mode', () => {
+  const surveyElement = DATA_PANEL.indexOf('const siteSurveySheet = surveySheetOpen && activePlaceId ? (');
+  assert.ok(surveyElement >= 0, 'the survey sheet must be prepared before data-dependent early returns');
+  const emptyState = DATA_PANEL.slice(DATA_PANEL.indexOf('if (!data && !loading) return'), DATA_PANEL.indexOf('if (loading && !data) return'));
+  const loadingState = DATA_PANEL.slice(DATA_PANEL.indexOf('if (loading && !data) return'), DATA_PANEL.indexOf('if (!data) return null;'));
+  assert.match(emptyState, /<EmptyState \/>[\s\S]*siteSurveySheet/,
+    'a 401 empty state must still render the requested survey for its saved place');
+  assert.match(loadingState, /<Skeleton \/>[\s\S]*siteSurveySheet/,
+    'the survey must remain available while the saved place has no local data yet');
+  assert.match(DATA_PANEL.slice(surveyElement, surveyElement + 450), /placeId=\{activePlaceId\}[\s\S]*coords=\{coords\}/,
+    'the survey must use the selected saved place and its coordinates without an API response');
+  assert.match(DATA_PANEL, /onSaved=\{\(\) => \{ setSurveySheetOpen\(false\); if \(data\) openPhotoOrReport\(\); \}\}/,
+    'saving a survey without location data closes it without opening a report that depends on that data');
+});
+
 test('the Design Studio pill and the survey photo tip use Lucide icons, not emoji', () => {
   assert.doesNotMatch(FARMER_PAGE, /aria-hidden>🎨</, 'the palette emoji is still in the Design Studio pill');
   assert.match(FARMER_PAGE, /<Palette size=\{15\} aria-hidden \/>/, 'the Design Studio pill must use the Lucide Palette icon');

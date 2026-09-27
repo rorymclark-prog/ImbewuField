@@ -52,7 +52,7 @@ test('BackButton is still the widely-shared control this guard assumes it is', (
     '../app/journal/page.tsx', '../app/records/page.tsx', '../app/cropplan/page.tsx',
     '../app/network/page.tsx', '../app/vision/page.tsx', '../app/updates/page.tsx',
     '../app/funder/page.tsx', '../app/surveys/page.tsx', '../app/ngo/page.tsx',
-    '../app/atlas/page.tsx', '../app/survey/page.tsx', '../app/invoice/page.tsx',
+    '../app/atlas/page.tsx', '../app/invoice/page.tsx',
   ];
   const stillImports = importers.filter((rel) => {
     try {

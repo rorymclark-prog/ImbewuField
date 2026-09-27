@@ -32,9 +32,11 @@ test('a deep link to Reports survives having no site yet', () => {
 
   // ORDER IS THE BUG. The hatch is worthless below the empty-state return.
   const hatch = panel.indexOf('wantsSavedReports(tab, forcedTab)');
-  const empty = panel.indexOf('if (!data && !loading) return <EmptyState />;');
+  const empty = panel.indexOf('if (!data && !loading) return');
   assert.ok(hatch > 0 && empty > 0, 'expected both the hatch and the empty-state return');
   assert.ok(hatch < empty, 'the Reports hatch must run BEFORE the map empty state, not after it');
+  assert.match(panel.slice(empty, empty + 100), /<EmptyState \/>[\s\S]*siteSurveySheet/,
+    'the map empty state must retain a saved-site survey opened from the deep link');
 
   // And the Farm hatch it was modelled on must still be there — same class, same fix.
   assert.match(panel, /wantsFarmRecords\(tab, forcedTab\)/);

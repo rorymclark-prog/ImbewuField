@@ -12,7 +12,7 @@ import { translate, useLanguage } from '@/lib/i18n';
  * actually a rough estimate is the one failure mode worse than showing no number at all, so the
  * confidence badge is not a footnote here.
  */
-export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onChangeCrop: () => void }) {
+export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: PricedCrop; onChangeCrop: () => void; simple?: boolean }) {
   const { t, lang } = useLanguage();
   const { price } = crop;
   const sourced = price.confidence === 'sourced';
@@ -70,12 +70,16 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
           {lang === 'zu' ? <><span className="block">{t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span><span className="block mt-1" style={{ fontSize: 11, fontWeight: 500 }}>{translate('en', sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}</span></> : t(sourced ? 'priceConfidenceSourced' : 'priceConfidenceEstimate')}
         </span>
       </div>
-      <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
-        {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
-        {lang === 'zu'
-          ? <>{t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}<span className="block mt-1">{translate('en', 'priceUpdatedCheckToday').replace('{date}', pricedDate)}</span></>
-          : t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
-      </div>
+      {/* Methodology/freshness footnote — the confidence badge above already carries the safety-
+          critical "is this a real price" signal, so Simple drops just this source-date line. */}
+      {!simple && (
+        <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
+          {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
+          {lang === 'zu'
+            ? <>{t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}<span className="block mt-1">{translate('en', 'priceUpdatedCheckToday').replace('{date}', pricedDate)}</span></>
+            : t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
+        </div>
+      )}
 
       <div style={{ width: '100%', marginTop: 22, display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div style={{ background: 'var(--color-forest-800)', borderRadius: 24, padding: '22px 18px' }}>

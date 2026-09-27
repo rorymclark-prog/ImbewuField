@@ -134,8 +134,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "intro-permaculture-l3",
-        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
-        infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
+        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+        infographicAlt: "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
         body: "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [
@@ -771,7 +771,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "seeds-sovereignty-l1",
         infographicUrl: "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
-        infographicAlt: "Two seed packets. Seed from the first grows into five identical plants. Seed saved from hybrid plants grows into five different, uneven ones.",
+        infographicAlt: "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
         title: "Why Seed Saving Matters",
         body: "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
         keyPoints: [
@@ -1012,7 +1012,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "food-forest-l1",
         "infographicUrl": "/course-images/food-forest/food-forest-l1.jpg",
-        "infographicAlt": "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
+        "infographicAlt": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
         "title": "The Seven Layers: How a Forest Feeds Itself",
         "body": "An indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThink of tall canopy, smaller trees, shrubs and herbaceous plants.\n\nGround cover protects the surface, root crops grow below it, and climbers use suitable supports.\n\nThe heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.\n\nThe original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nIt places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.\n\nTreat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.\n\nYoung plants need establishment care: moisture checks, weed control and protection from damage.\n\nAs plants grow, shade and leaf litter change conditions below them.\n\nCheck competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
         "keyPoints": [
@@ -1133,7 +1133,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         id: "small-livestock-l1",
         infographicUrl: "/course-images/small-livestock/small-livestock-l1.jpg",
-        infographicAlt: "A moveable chicken pen shown in two positions along a strip of ground, with an arrow showing it being moved on. The ground it has left is scratched over and enriched.",
+        infographicAlt: "An illustration of a wheeled chicken pen shown in two positions along a strip of ground. An arrow points right; three chickens stand in the pen on the right, and a darker scratched patch lies between the two positions.",
         title: "Chickens in the System: Pest Control, Fertility, and Food",
         body: "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
         keyPoints: [
@@ -1253,7 +1253,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "market-community-l1",
         "infographicUrl": "/course-images/market-community/market-community-l1.jpg",
-        "infographicAlt": "A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.",
+        "infographicAlt": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
         "title": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
         "body": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
         "keyPoints": [
@@ -1327,7 +1327,7 @@ export const COURSE_MODULES: CourseModule[] = [
       {
         "id": "market-community-l3",
         "infographicUrl": "/course-images/market-community/market-community-l3.jpg",
-        "infographicAlt": "Five small farms linked to a shared collection point for their separate harvests.",
+        "infographicAlt": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
         "title": "Building Community Food Networks: Strength in Numbers",
         "body": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
         "keyPoints": [

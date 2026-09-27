@@ -35,13 +35,19 @@ import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
-const INK = '#20190F';
-const MUTED = '#5C5040';
-const FAINT = '#5d5143';
-const HAIRLINE = '#E2D8C4';
-const IN = '#1F4D2B';      // money in — the app's forest green
-const OUT = '#C07A1E';     // money out — the ochre used for costs everywhere else
+const INK = 'var(--text-primary)';
+const MUTED = 'var(--text-secondary)';
+const FAINT = 'var(--text-muted)';
+const HAIRLINE = 'var(--border)';
+const IN = '#1F4D2B';      // money in — the app's forest green. A fill/border colour only:
+                            // paired everywhere with a fixed white label, so it stays constant.
+const OUT = '#C07A1E';     // money out — the ochre used for costs everywhere else. Fill only.
 const RUN = '#235E86';     // the running total: a third hue, so it is never read as a third bar
+// The same two hues, but for TEXT: ochre and this forest green both fail contrast as text
+// (CLAUDE.md: "ochre text is #7A4408"), and the raw forest green measures ~1.9:1 on a dark
+// card. These follow the theme instead of the fixed fill colours above.
+const IN_TEXT = 'var(--color-forest-800)';
+const OUT_TEXT = 'var(--gold-dim)';
 
 const WINDOWS = [6, 12, 24];
 
@@ -152,8 +158,8 @@ export default function CashflowChart({
       {header}
 
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label={`${text('In', 'Ingenayo')}, ${series.windowMonths} ${text('months', 'izinyanga')}`} value={randLabel(series.totalInZar)} tone={IN} />
-        <Figure label={text('Out', 'Ephumayo')} value={randLabel(series.totalOutZar)} tone={OUT} />
+        <Figure label={`${text('In', 'Ingenayo')}, ${series.windowMonths} ${text('months', 'izinyanga')}`} value={randLabel(series.totalInZar)} tone={IN_TEXT} />
+        <Figure label={text('Out', 'Ephumayo')} value={randLabel(series.totalOutZar)} tone={OUT_TEXT} />
         <Figure
           label={series.totalNetZar < 0 ? text('Cash shortfall', 'Imali esilelayo') : text('Cash surplus', 'Imali esele')}
           value={randLabel(series.totalNetZar)}
@@ -171,7 +177,7 @@ export default function CashflowChart({
 
       <ClipNote months={series.months} lang={lang} />
 
-      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         <IsiZuluDraftSource className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang}
           english="The lower band is the running total across these months only, starting from zero — not a bank balance."
           zulu="Ibhendi engezansi ibonisa isamba esiqhubekayo salezi zinyanga kuphela, siqala kuziro — akusona isaldo yasebhange." />
@@ -259,14 +265,14 @@ function Panels({
         {maxIn > 0 && (
           <>
             <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-            <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">{randTick(maxIn)}</text>
+            <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(maxIn)}</text>
           </>
         )}
-        <text x={PAD.left - 4} y={zeroY + 2.5} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">R0</text>
+        <text x={PAD.left - 4} y={zeroY + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>R0</text>
         {maxOut > 0 && (
           <>
             <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + BARS_H} y2={PAD.top + BARS_H} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-            <text x={PAD.left - 4} y={PAD.top + BARS_H + 2.5} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">{randTick(maxOut)}</text>
+            <text x={PAD.left - 4} y={PAD.top + BARS_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(maxOut)}</text>
           </>
         )}
 
@@ -294,20 +300,20 @@ function Panels({
         <path d={runPath} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
         {runMax > 0 && (
-          <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" fill={FAINT} fontFamily="monospace">{randTick(runMax)}</text>
+          <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(runMax)}</text>
         )}
         {runMin < 0 && (
-          <text x={PAD.left - 4} y={runTop + RUN_H} textAnchor="end" fontSize="6.5" fill={FAINT} fontFamily="monospace">{randTick(runMin)}</text>
+          <text x={PAD.left - 4} y={runTop + RUN_H} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(runMin)}</text>
         )}
 
         {/* Month labels, and a year mark wherever the axis crosses into January. */}
         {months.map((m, i) => (
           <g key={`x-${m.key}`}>
             {showLabel(i) && (
-              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" fill={FAINT} fontFamily="monospace">{m.label}</text>
+              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.label}</text>
             )}
             {(m.month === 1 || i === 0) && (
-              <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" fill="#B8AC96" fontFamily="monospace">{m.year}</text>
+              <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.year}</text>
             )}
           </g>
         ))}
@@ -357,7 +363,7 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
   }
   if (cutEnglish.length === 0) return null;
   return (
-    <div className="px-4 py-2" style={{ borderTop: '1px solid #F0E9DA' }}>
+    <div className="px-4 py-2" style={{ borderTop: '1px solid var(--border)' }}>
       <div className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
         {lang === 'zu' ? (
           <IsiZuluDraftSource lang={lang} zulu={`Amanani aphezulu kunendawo yawo eshadini anqanyulwe ophawini ukuze ezinye izinyanga zihlale zibonakala: ${cutZulu.join('; ')}.`}
@@ -371,7 +377,7 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
 function Readout({ month, lang }: { month: FinanceMonthPoint; lang: string }) {
   const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
   return (
-    <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid #F0E9DA` }}>
+    <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid ${HAIRLINE}` }}>
       <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{month.longLabel}</span>
       {month.hasRecords ? (
         <>

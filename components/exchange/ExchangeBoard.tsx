@@ -283,7 +283,7 @@ export default function ExchangeBoard() {
         />
       )}
 
-      {guideVisible && <ExchangeGuide variant="intro" onPost={() => { setShowForm(true); setShowGuide(false); }} />}
+      {guideVisible && <ExchangeGuide variant="intro" simple={simple} onPost={() => { setShowForm(true); setShowGuide(false); }} />}
 
       {/* Offering / wanted */}
       <div className="flex gap-1.5">

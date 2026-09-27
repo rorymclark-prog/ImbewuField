@@ -1,6 +1,7 @@
 'use client';
 
-import { Handshake, Leaf, Package, ShoppingBasket, Sprout, Wrench } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, Handshake, Leaf, Package, ShoppingBasket, Sprout, Wrench } from 'lucide-react';
 import { EX } from './theme';
 import { useLanguage } from '@/lib/i18n';
 import { ExchangeSourceCopy } from './ExchangeCopy';
@@ -20,13 +21,16 @@ import { ExchangeSourceCopy } from './ExchangeCopy';
 export default function ExchangeGuide({
   variant,
   onPost,
+  simple = false,
 }: {
   variant: 'board-empty' | 'intro';
   onPost: () => void;
+  simple?: boolean;
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const tx = (en: string, dz: string) => zu ? dz : en;
+  const [expanded, setExpanded] = useState(false);
   const examples: Array<{ icon: typeof Leaf; label: string; example: string }> = [
     { icon: Leaf, label: tx('Seed', 'Imbewu'), example: tx('Two kilos of sugar bean seed off last season', 'Amakhilogremu amabili embewu kabhontshisi kashukela wesizini edlule') },
     { icon: Sprout, label: tx('Seedlings', 'Izithombo'), example: tx('A tray of tomato seedlings hardened off and ready', 'Ithileyi lezithombo zikatamatisi eseziqinile futhi sezilungele ukutshalwa') },
@@ -41,22 +45,17 @@ export default function ExchangeGuide({
     tx('Add your nearest town so people can see roughly how far away you are.', 'Faka idolobha eliseduze nawe ukuze abantu babone ibanga elilinganiselwe.'),
   ];
 
-  return (
-    <div
-      className="rounded-2xl"
-      style={{
-        background: EX.card,
-        border: `1px solid ${EX.border}`,
-        padding: variant === 'board-empty' ? '28px 20px' : '20px',
-      }}
-    >
-      <div className="flex items-center gap-2.5" style={{ marginBottom: 10 }}>
-        <Handshake size={20} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />
-        <h2 className="font-display font-bold" style={{ fontSize: 17, color: EX.ink, margin: 0 }}>
-          {variant === 'board-empty' ? tx('Nothing on the board yet', 'Akukho lutho ebhodini okwamanje') : tx('What the exchange is for', 'Ukuhwebelana kusebenzelani')}
-        </h2>
-      </div>
+  const heading = (
+    <div className="flex items-center gap-2.5" style={{ marginBottom: 10 }}>
+      <Handshake size={20} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />
+      <h2 className="font-display font-bold" style={{ fontSize: 17, color: EX.ink, margin: 0 }}>
+        {variant === 'board-empty' ? tx('Nothing on the board yet', 'Akukho lutho ebhodini okwamanje') : tx('What the exchange is for', 'Ukuhwebelana kusebenzelani')}
+      </h2>
+    </div>
+  );
 
+  const body = (
+    <>
       <p className="font-sans" style={{ fontSize: 13.5, lineHeight: 1.6, color: EX.muted, margin: '0 0 16px' }}>
         {tx('The exchange is where farmers find each other. Seed that would otherwise sit in a bucket, seedlings from someone who over-sowed, a surplus you cannot sell in your own village, a tool that stands idle six days a week — all of it is worth more to a farmer twenty kilometres away than it is to you. List what you have, or say what you are looking for, and sort the board by who is nearest.', 'Indawo yokuhwebelana isiza abalimi batholane. Imbewu ebingahlala ebhakedeni, izithombo eziningi kunesidingo, umkhiqizo ongakwazi ukuwuthengisa endaweni yakini, noma ithuluzi elihlala lingasetshenziswa izinsuku eziyisithupha ngesonto — konke kungaba wusizo komunye umlimi oqhele ngo-20 km kunakuwe. Faka lokho onakho noma usho okufunayo, bese uhlela ibhodi ngokusondelana.')}
       </p>
@@ -125,6 +124,55 @@ export default function ExchangeGuide({
           {zu ? <ExchangeSourceCopy en="A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet." zu="Isikhangiso osifakayo sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona okwamanje." /> : 'A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet — see “What this preview does not do” at the bottom of the board.'}
         </p>
       </div>
+    </>
+  );
+
+  // Simple: the intro variant used to open with the full "what the exchange is for" explainer —
+  // paragraph, four examples, a four-step how-to — every time a farmer hadn't posted yet, pushing
+  // the listings and "Post" further down the screen. Collapsed behind a closed-by-default
+  // disclosure, it is still one tap away but no longer the first thing in the way. The true empty
+  // board (variant="board-empty") keeps explaining itself outright in both modes — there is
+  // nothing else on the screen to reach past.
+  if (simple && variant === 'intro') {
+    return (
+      <div className="rounded-2xl" style={{ background: EX.card, border: `1px solid ${EX.border}` }}>
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="flex items-center gap-2.5 font-display font-semibold"
+          style={{
+            width: '100%',
+            minHeight: 44,
+            padding: '12px 20px',
+            background: 'transparent',
+            border: 'none',
+            textAlign: 'left',
+            cursor: 'pointer',
+            fontSize: 14,
+            color: EX.ink,
+          }}
+        >
+          <Handshake size={18} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />
+          <span style={{ flex: 1 }}>{tx('How the exchange works', 'Ukuhwebelana kusebenza kanjani')}</span>
+          {expanded ? <ChevronUp size={16} style={{ color: EX.faint, flexShrink: 0 }} /> : <ChevronDown size={16} style={{ color: EX.faint, flexShrink: 0 }} />}
+        </button>
+        {expanded && <div style={{ padding: '0 20px 20px' }}>{body}</div>}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="rounded-2xl"
+      style={{
+        background: EX.card,
+        border: `1px solid ${EX.border}`,
+        padding: variant === 'board-empty' ? '28px 20px' : '20px',
+      }}
+    >
+      {heading}
+      {body}
     </div>
   );
 }

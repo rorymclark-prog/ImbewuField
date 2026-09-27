@@ -122,6 +122,12 @@ Print/export chrome:
 `designPrintPreviewAlt`, `designPrintSelectSheet`, `designPrintShareError`,
 `designPrintPngError`, `designPrintPdfError`.
 
+On-screen sheet-picker names only (never the title painted onto the exported PDF/PNG, which
+must stay a fixed language regardless of the app's locale):
+`designPrintSheetBase`, `designPrintSheetSector`, `designPrintSheetZones`,
+`designPrintSheetWater`, `designPrintSheetEarthworks`, `designPrintSheetPlanting`,
+`designPrintSheetStructures`, `designPrintSheetAll`, `designPrintSheetImplementation`.
+
 Lesson chrome:
 `designLessonHeading`, `designLessonClose`, `designLessonPrinciple`,
 `designLessonTryThis`, `designLessonCourse`, `designLessonDraft`.
@@ -141,7 +147,11 @@ Sector overlay and summary:
 
 Tank calculator:
 `designTankTitle`, `designTankNeedRain`, `designTankRoofArea`, `designTankDailyUse`,
-`designTankMethod`, `designTankEnterValues`.
+`designTankMethod`, `designTankEnterValues`, `designTankZuluDraftNotice`.
+
+The tank card now shows marked, source-paired isiZulu drafts for its title, rain prompt, two
+field labels, and blank-input prompt. The technical sizing method remains in English pending
+fluent isiZulu and local farming review.
 
 Glossy-plan UI chrome and status/error copy:
 `designGlossyPlanSet`, `designGlossySheetNumber`, `designGlossySheet`,
@@ -175,6 +185,20 @@ Glossy-plan UI chrome and status/error copy:
 `designGlossyMissingHybrid`, `designGlossyStartingPolish`, `designGlossyPolishing`,
 `designGlossyRefreshing`, `designGlossyLostConnection`, `designGlossyAssembleError`,
 `designGlossyRenderIncomplete`, `designGlossyReconnecting`.
+
+Species picker (Plant Catalog) size line, section names and use tags — the chrome (title,
+biome/broad-reach note, honesty banner) is the `speciesPicker*` keys above this doc doesn't track
+individually. Plant common and botanical names are per-species data (lib/species-palette.ts), not
+app chrome — they are not in this list and must not be machine-translated:
+`designSpeciesSize`, `designSpeciesSectionIndigenousFruit`,
+`designSpeciesSectionExoticFruitNuts`, `designSpeciesSectionLargeTrees`,
+`designSpeciesSectionMediumTrees`, `designSpeciesSectionSmallTreesShrubs`,
+`designSpeciesSectionShrubs`, `designSpeciesSectionGroundcovers`,
+`designSpeciesSectionClimbers`, `designSpeciesUseFood`, `designSpeciesUseNitrogenFixer`,
+`designSpeciesUsePollinator`, `designSpeciesUseHabitat`, `designSpeciesUseShade`,
+`designSpeciesUseWindbreak`, `designSpeciesUseFodder`, `designSpeciesUseMulch`,
+`designSpeciesUseLivingFence`, `designSpeciesUseErosionControl`, `designSpeciesUseMedicinal`,
+`designSpeciesUseTimber`, `designSpeciesUseGroundcover`.
 
 Affected language slots: `af`, `zu`, `xh`, `st`, `nso`, `tn`, `ts`, `ve`, `ss`, and `nr`.
 English (`en`) is the source text.

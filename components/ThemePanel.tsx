@@ -6,8 +6,9 @@ import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } fr
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
-import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import { APP_LANGS, useLanguage, translate, loadLocale, T_en, getLoadedDict } from '@/lib/i18n';
 import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
+import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
@@ -64,6 +65,30 @@ export default function ThemePanel({ open, onClose }: Props) {
   const zu = lang === 'zu';
   const panelRef = useRef<HTMLDivElement>(null);
   const level = useAppLevel();
+
+  // How much of each language is actually translated, so a language that is still mostly
+  // English says so instead of looking finished. Computed from the real dictionaries (see
+  // lib/lang-coverage.ts) once every locale chunk has loaded — the same up-front prefetch
+  // components/Onboarding.tsx already does for its own language-pick screen.
+  const [langCoverage, setLangCoverage] = useState<Record<string, LangCoverage>>({});
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    Promise.all(APP_LANGS.map((l) => loadLocale(l.code))).then(() => {
+      if (cancelled) return;
+      // English is the source dictionary itself, so it is complete by definition — coverageOf()
+      // compares a locale's translated wording against English and would (correctly) read a
+      // dictionary compared against itself as 0% translated, not 100%.
+      const next: Record<string, LangCoverage> = {};
+      for (const l of APP_LANGS) {
+        if (l.code === 'en') continue;
+        next[l.code] = coverageOf(T_en, getLoadedDict(l.code));
+      }
+      setLangCoverage(next);
+    });
+    return () => { cancelled = true; };
+  }, [open]);
+  const isPartialLang = (code: string) => code !== 'en' && langCoverage[code] !== undefined && !langCoverage[code].complete;
   const LEVELS: { key: AppLevel; label: string; desc: string }[] = [
     { key: 'simple', label: zu ? 'Okulula' : 'Simple', desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : 'The main jobs only. Best when you are starting out.' },
     { key: 'full', label: zu ? 'Wonke amathuluzi' : 'All tools', desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : 'Everything, including every planning and money tool.' },
@@ -198,25 +223,32 @@ export default function ThemePanel({ open, onClose }: Props) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {APP_LANGS.map((l) => {
                 const active = l.code === lang;
+                const partial = isPartialLang(l.code);
                 return (
-                  <button
-                    key={l.code}
-                    onClick={() => setLang(l.code)}
-                    aria-pressed={active}
-                    style={{
-                      minHeight: 46, padding: '10px 12px', borderRadius: 8,
-                      border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
-                      background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
-                      color: active ? 'var(--emerald)' : 'var(--text-secondary)',
-                      fontSize: 14, fontWeight: active ? 700 : 500,
-                      fontFamily: 'var(--font-display)', cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
-                      transition: 'all 0.15s ease',
-                    }}
-                  >
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.native}</span>
-                    {active && <Check size={15} style={{ flexShrink: 0 }} />}
-                  </button>
+                  <div key={l.code} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <button
+                      onClick={() => setLang(l.code)}
+                      aria-pressed={active}
+                      style={{
+                        minHeight: 46, padding: '10px 12px', borderRadius: 8,
+                        border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
+                        background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
+                        color: active ? 'var(--emerald)' : 'var(--text-secondary)',
+                        fontSize: 14, fontWeight: active ? 700 : 500,
+                        fontFamily: 'var(--font-display)', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.native}</span>
+                      {active && <Check size={15} style={{ flexShrink: 0 }} />}
+                    </button>
+                    {partial && (
+                      <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
+                        {translate(l.code, 'langPartialTag')}
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
@@ -224,6 +256,11 @@ export default function ThemePanel({ open, onClose }: Props) {
               <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
                 <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
                 <span lang="en">/ Unreviewed Xitsonga draft.</span>
+              </p>
+            )}
+            {lang !== 'ts' && isPartialLang(lang) && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                {translate(lang, 'langPartialActiveNote').replace('{lang}', APP_LANGS.find((l) => l.code === lang)?.native ?? lang)}
               </p>
             )}
           </div>

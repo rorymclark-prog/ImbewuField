@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 // AI Auto-Design — ONE vision call that plans the WHOLE farm. The model REASONS over the real
 // satellite plot + the farmer's questionnaire answers and returns INTENT only (per-element
@@ -86,6 +87,9 @@ export async function POST(req: NextRequest) {
   if (!client) {
     return NextResponse.json({ error: 'ANTHROPIC_API_KEY not configured' }, { status: 502 });
   }
+  const metered = await meteredAi(req, auth, '/api/auto-design', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
 
   const plotW = imgW && mPerPx ? Math.round(imgW * mPerPx) : null;
   const plotH = imgH && mPerPx ? Math.round(imgH * mPerPx) : null;
@@ -165,9 +169,9 @@ Anchor every element at a REAL feature you can see in the image. Keep every rati
     const timeout = setTimeout(() => controller.abort(), 55_000);
     let msg;
     try {
-      msg = await client.messages.create(
+      msg = await ai.messages.create(
         {
-          model: 'claude-opus-4-8', // most advanced reasoning for the whole-farm spatial judgement
+          model: AI_MODELS.deep, // most advanced reasoning for the whole-farm spatial judgement
           max_tokens: 2000,
           messages: [
             {

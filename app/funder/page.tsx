@@ -33,7 +33,7 @@ const FUNDER_ALL_VIEWS = new Set<FunderView>(['evidence', 'reports', 'cohort', '
 
 function DashboardLoading({ cohort = false }: { cohort?: boolean }) {
   const { lang } = useLanguage();
-  return <div className="flex-1 flex items-center justify-center" style={{ color: '#755942' }}>
+  return <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
     <span className="text-sm font-display">{tr(lang, cohort ? 'Loading the cohort…' : 'Loading dashboard…', cohort ? 'Kusalayishwa iqembu…' : 'Kusalayishwa ideshibhodi…')}</span>
   </div>;
 }
@@ -95,7 +95,7 @@ export default function FunderPage() {
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
           <p className="text-sm font-display font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{tr(lang, 'This is the Funder area', 'Le yindawo yabaxhasi')}</p>
-          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>{tr(lang, 'This dashboard is for funders and administrators.', 'Le deshibhodi ingeyabaxhasi nabaphathi.')}</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'This dashboard is for funders and administrators.', 'Le deshibhodi ingeyabaxhasi nabaphathi.')}</p>
         </div>
       </div>
     );
@@ -109,7 +109,7 @@ export default function FunderPage() {
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border)', opacity: 0.5 }} />
-        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: '#5C5040' }}>{tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}</h1>
+        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}</h1>
         {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
             and only falls back to its sample gardens when there is no backend configured, so the
             label now tracks that same condition — no backend, or sample mode. A permanent "demo" badge on real programme
@@ -119,13 +119,13 @@ export default function FunderPage() {
             a configured backend with no signed-in caller is still sample data. Two badges saying
             it at once, from two different tests, is how they end up disagreeing. */}
         {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
         )}
         <div className="flex-1" />
         <Link
           href="/network"
           className="text-xs font-display hidden sm:block"
-          style={{ color: '#2F6F9E', textDecoration: 'none', marginRight: 4 }}
+          style={{ color: 'var(--blue)', textDecoration: 'none', marginRight: 4 }}
         >
           {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
         </Link>
@@ -161,8 +161,8 @@ export default function FunderPage() {
               minHeight: 44,
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? '#1F4D2B' : '#506158',
-              borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
+              color: view === key ? 'var(--color-forest-800)' : 'var(--text-secondary)',
+              borderBottom: view === key ? '2px solid var(--color-forest-800)' : '2px solid transparent',
               marginBottom: -1,
             }}
           >
@@ -172,7 +172,7 @@ export default function FunderPage() {
         ))}
       </DashboardTabs>
 
-      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#5C5040' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
         <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>

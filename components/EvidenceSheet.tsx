@@ -275,11 +275,17 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   <button
                     onClick={() => handleRemove(ev.id)}
                     aria-label={`Remove ${ev.name || 'photo'}`}
+                    className="u-tap-target"
                     style={{
                       position: 'absolute', top: 3, right: 3, background: 'rgba(45,37,25,0.75)',
                       border: 'none', borderRadius: 5, width: 20, height: 20, cursor: 'pointer',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}
+                      // Painted square stays 20x20 so the thumbnail isn't visually crowded; the
+                      // invisible hit area grows to the 44px floor, more into the photo (bottom/
+                      // left, empty space) than into the 7px grid gap (top/right, to avoid
+                      // reaching into the next thumbnail's own hit area).
+                      '--tap-inset': '-6px -6px -18px -18px',
+                    } as React.CSSProperties}
                   >
                     <X size={11} color="#fff" />
                   </button>
@@ -317,7 +323,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                       </div>
                     )}
                   </div>
-                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 4 }}>
+                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Trash2 size={14} />
                   </button>
                 </div>

@@ -7,14 +7,14 @@ import styles from './FinanceCourse.module.css';
 
 export interface SyllabusLesson {
   id: string;
-  title: string;
+  title: ReactNode;
 }
 
 export interface SyllabusUnit {
   id: string;
   number: number;
-  title: string;
-  blurb?: string;
+  title: ReactNode;
+  blurb?: ReactNode;
   lessons: SyllabusLesson[];
   /** Numbering the unit's <ol> should continue from — e.g. Farm Finance runs 1–24 across all
    *  eight units rather than restarting at 1 in each card. Omit to restart at 1 (the design

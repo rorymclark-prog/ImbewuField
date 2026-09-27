@@ -47,6 +47,7 @@ import { getFirebase } from '@/lib/firebase/init';
 import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+import { useAppLevel } from '@/lib/app-level';
 
 
 
@@ -336,6 +337,11 @@ interface Props {
 // (single plant)" is kept distinct from a guild-planting banana circle
 // concept (that's a FacilitatorCanvas-only element) — this just names the
 // species at a single 🌳 tree marker.
+// Simple mode's on-map element palette: the same two point elements the reduced "+ Add"
+// catalog offers directly on the map (a tree and a water tank) — every other element type
+// (borehole, beehive, compost, gate, nursery, tap, pond/dam) stays reachable in All tools.
+const SIMPLE_ELEMENT_TYPES: SiteElementType[] = ['tree', 'jojo_tank'];
+
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
@@ -344,6 +350,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const { t, lang } = useLanguage();
   const { user } = useAuth();
   const isPhone = usePhoneViewport();
+  // Simple / All tools (lib/app-level.ts). Simple keeps finding/choosing land, tracing the
+  // boundary, a reduced Add menu, the satellite/map basemap switch, locate-me and the site
+  // panel opener; it hides the expert map chrome (contours, terrain/3D, HD imagery, the
+  // native/custom edit-engine picker, printing, the elevation readout and the Labels overlay
+  // pill). All tools is the map exactly as it was.
+  const simple = useAppLevel() === 'simple';
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -1276,11 +1288,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setEditingFeatureId(featureId);
   }, [ensureDraw]);
 
-  // Router: the ✎ Edit buttons call this; it picks the chosen engine.
+  // Router: the ✎ Edit buttons call this; it picks the chosen engine. Simple mode always uses
+  // the big-handle custom engine — the native/Mapbox-tool picker is an expert control hidden
+  // there (see `simple` above) — without touching the farmer's stored engine preference, so
+  // switching back to All tools restores whatever they had chosen.
   const startEdit = useCallback((featureId: string, type: 'site' | 'water') => {
-    if (editEngine === 'native') startNativeEdit(featureId);
+    if (!simple && editEngine === 'native') startNativeEdit(featureId);
     else startReticleEdit(featureId, type);
-  }, [editEngine, startNativeEdit, startReticleEdit]);
+  }, [editEngine, simple, startNativeEdit, startReticleEdit]);
 
   // Custom-engine corner dragging via raw pointer events — grabs INSTANTLY (no
   // tap-and-hold delay that the library's built-in marker drag has on touch).
@@ -3036,7 +3051,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           });
           return (
           <div className="flex gap-1.5 flex-wrap font-sans">
-            <button onClick={()=>setCanvasOnly(!canvasOnly)} className="transition-all" style={chip(offlineCanvas)}>{t('mapOfflineCanvas')}</button>
+            {!simple && <button onClick={()=>setCanvasOnly(!canvasOnly)} className="transition-all" style={chip(offlineCanvas)}>{t('mapOfflineCanvas')}</button>}
             {(['satellite-streets-v12', 'outdoors-v12'] as const).map((s, i) => (
               <button key={s} onClick={() => {setCanvasOnly(false);setStyle(s);}} className="transition-all" style={chip(style === s)}>
                 {style === s && <Check size={13} strokeWidth={2.4} />}{[t('layerToggleSatellite'), t('layerToggleTopo')][i]}
@@ -3044,21 +3059,26 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             ))}
             {/* Hidden without a key: the layer cannot draw, and a toggle that visibly does nothing
                 is worse than no toggle. See the Source below for why the key is required. */}
-            {ARCGIS_API_KEY && (
+            {!simple && ARCGIS_API_KEY && (
               <button onClick={() => setHdImagery(!hdImagery)}
                 title={t('mapLayerHDTitle')}
                 className="transition-all" style={chip(hdImagery)}>
                 {hdImagery && <Check size={13} strokeWidth={2.4} />}{t('layerToggleHD')}
               </button>
             )}
+            {!simple && (
             <button onClick={() => setContours(!contours)} className="transition-all" style={chip(contours)}>
               {contours && <Check size={13} strokeWidth={2.4} />}{t('layerToggleContours')}
             </button>
+            )}
+            {!simple && (
             <button onClick={() => setHillshade(!hillshade)}
               title={t('mapLayerReliefTitle')}
               className="transition-all" style={chip(hillshade)}>
               <Mountain size={13} strokeWidth={1.9} />{t('layerToggleRelief')}
             </button>
+            )}
+            {!simple && (
             <button
               onClick={() => {
                 const next = !terrain3d;
@@ -3075,12 +3095,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="transition-all" style={chip(terrain3d)}>
               <Box size={13} strokeWidth={1.9} />{t('layerToggle3D')}
             </button>
+            )}
           </div>
           );
         })()}
 
         {/* Heads-up: 3D tilts the map and can stop you zooming in close enough to draw */}
-        {layersOpen && show3dWarning && (
+        {!simple && layersOpen && show3dWarning && (
           <div className="rounded-lg font-mono"
             style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
               color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
@@ -3088,7 +3109,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
 
-        {layersOpen && (
+        {!simple && layersOpen && (
           <div>
             <div style={{ fontSize: 11, fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.45)', marginBottom: 8, paddingLeft: 2 }}>
               {t('editToolSectionLabel')}
@@ -3156,6 +3177,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </button>
 
           {/* Print a clean base map (no hatch) for the farmer to sketch on by hand */}
+          {!simple && (
           <button onClick={printBaseMap}
             title={lang === 'zu'
               ? `${t('mapPrintBaseTitle')}\nEnglish source: ${translate('en', 'mapPrintBaseTitle')}`
@@ -3167,6 +3189,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             }}>
             <Printer size={18} strokeWidth={1.8} style={{ color: MAP_COLOR_BOUNDARY_FILL }} /> {t('printBaseMapButton')}
           </button>
+          )}
 
           {/* ── Places section — collapsible ── */}
           <div className="w-full">
@@ -3241,8 +3264,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             )}
           </div>
 
-          {/* Drawing in progress */}
-          {activeDraw && (
+          {/* Drawing in progress — native edit-engine only; Simple locks to the custom engine. */}
+          {!simple && activeDraw && (
             <>
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-sans"
                 style={activeDraw === 'water'
@@ -3259,8 +3282,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </>
           )}
 
-          {/* Vertex editing */}
-          {editingFeatureId && !activeDraw && (
+          {/* Vertex editing — native edit-engine only; Simple locks to the custom engine. */}
+          {!simple && editingFeatureId && !activeDraw && (
             <>
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-sans"
                 style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.4)', color: 'var(--gold)', minHeight: 32, fontSize: 11 }}>
@@ -3323,6 +3346,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </div>
               </button>
               {/* Toggle row — sits below section header, wraps on narrow panels */}
+              {!simple && (
               <div className="flex flex-wrap items-center gap-0.5 pl-4 pb-1">
                 <button onClick={() => setShowFeatures((v) => !v)}
                   className="flex items-center gap-1 active:scale-95 transition-all"
@@ -3359,6 +3383,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   </button>
                 )}
               </div>
+              )}
               {sectionParcels && (
                 <>
                   {visibleSiteFeatures.length > 0 ? (
@@ -3531,9 +3556,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </button>
               {sectionElements && (
                 <div className="w-full flex flex-col gap-1.5 mt-1.5">
-                  {/* Palette — tap an icon to arm reticle-drop mode for that element type */}
+                  {/* Palette — tap an icon to arm reticle-drop mode for that element type.
+                      Simple shows only the tree/water-tank pair the reduced Add menu also
+                      offers; every other element type stays reachable in All tools. */}
                   <div className="flex flex-wrap gap-1.5">
-                    {ELEMENT_TYPES.map((type) => {
+                    {(simple ? SIMPLE_ELEMENT_TYPES : ELEMENT_TYPES).map((type) => {
                       const meta = getElementMeta(type);
                       return (
                         <button key={type} onClick={() => setDroppingElement(type)}
@@ -3620,7 +3647,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         </div>
 
         {/* Elevation readout */}
-        {hoverElevation !== null && (
+        {!simple && hoverElevation !== null && (
           <div className="flex items-center gap-2 pt-1" style={{ borderTop: '1px solid rgba(234,243,226,0.1)' }}>
             <Mountain size={12} style={{ color: 'rgba(234,243,226,0.5)' }} />
             <span className="text-xs font-sans" style={{ color: 'rgba(234,243,226,0.55)' }}>elev</span>
@@ -3703,7 +3730,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* `toolsPillShowing` mirrors the "Find your land" button's own render condition above
           (!pinDraw && !editPin && !activeDraw && toolbarMin && !guided). Derived rather than
           guessed, so the two cannot drift apart and start overlapping again. */}
-      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0 || designPresent) && (() => {
+      {!simple && toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0 || designPresent) && (() => {
         const toolsPillShowing = !activeDraw && !guided;
         return (
         <div className="absolute flex items-center gap-1 font-sans transition-all"

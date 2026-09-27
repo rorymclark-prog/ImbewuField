@@ -71,7 +71,7 @@ export const COURSE_IMAGE_BRIEFS: CourseImageBrief[] = [
 
   { lessonId: 'intro-permaculture-l1', moduleId: 'intro-permaculture', subject: 'Three linked circles of equal size, each holding one icon: a hand cupping soil, two simple human figures, and a basket passing between two pairs of hands. Equal weight, none dominant.' },
   { lessonId: 'intro-permaculture-l2', moduleId: 'intro-permaculture', subject: 'A wheel of twelve simple icon segments around a central seedling: an eye for observation, a droplet for catching water, a sun for energy, a loop arrow for waste returning. Icons only.' },
-  { lessonId: 'intro-permaculture-l3', moduleId: 'intro-permaculture', subject: 'Concentric rings spreading out from a small house: the nearest ring intensely tended, each ring outward progressively wilder. Rings clearly separated, no plant detail.' },
+  { lessonId: 'intro-permaculture-l3', moduleId: 'intro-permaculture', subject: 'One illustrated smallholder site with a house, garden, chickens, field, tree area and wilder river edge connected by a winding footpath. Mark example visit zones 0 to 5 along the path; avoid concentric rings or fixed boundaries.' },
 
   { lessonId: 'reading-landscape-l1', moduleId: 'reading-landscape', subject: 'A hillside from the side with arrows showing rain running downslope, pooling in a hollow, and soaking in where the ground flattens. Water in blue, ground in earth tones.' },
   { lessonId: 'reading-landscape-l2', moduleId: 'reading-landscape', subject: 'A slope in cross-section with the sun in the NORTH sky and shadows falling SOUTH behind a building and a tree canopy. North marked with an arrow.' },

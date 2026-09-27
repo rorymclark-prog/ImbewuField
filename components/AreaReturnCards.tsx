@@ -14,14 +14,14 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
   const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const result = useMemo(() => buildAreaReturns(beds, sales, expenses, invoices, period, now), [beds, sales, expenses, invoices, period, now]);
   const rand = (n: number) => `R ${numberLabel(n, 2)}`;
-  return <section aria-label={text('Returns per growing area', 'Imali etholwa endaweni yokulima')} className="record-paper my-6 rounded-2xl border p-5" style={{ background: 'var(--bg-1)', borderColor: '#d2c7b5', color: '#263b2d' }}>
+  return <section aria-label={text('Returns per growing area', 'Imali etholwa endaweni yokulima')} className="record-paper my-6 rounded-2xl border p-5" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
     <div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="font-display text-xl font-semibold">{text('What your growing space returns', 'Imali etholwa endaweni yakho yokulima')}</h2><span className="text-sm">{period === 'month' ? text('This month', 'Le nyanga') : period === 'season' ? text('This season', 'Le sizini') : text('This calendar year', 'Lo nyaka wekhalenda')} · {now.getFullYear()}</span></div>
     <IsiZuluDraftSource className="text-sm mt-2 mb-4" lang={lang}
       english="Recorded sales minus assigned costs, per mapped m². Compare the same period and area over time."
       zulu="Imali etholwe ngokuthengisa okurekhodiwe kususwe izindleko ezabelwe leyo ndawo, ngemitha-skwele ebalwe emephini. Qhathanisa inkathi nendawo efanayo ngokuhamba kwesikhathi." />
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">{result.cards.map(card => <article key={card.key} className="rounded-xl border p-4" style={{ background: '#f1ede3', borderColor: '#d2c7b5' }}>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">{result.cards.map(card => <article key={card.key} className="rounded-xl border p-4" style={{ background: 'var(--bg-2)', borderColor: 'var(--border)' }}>
       <h3 className="text-sm font-semibold">{text(({ vegetables: 'Vegetable beds', staples: 'Staple plots', combined: 'Combined' })[card.key], ({ vegetables: 'Imibhede yemifino', staples: 'Amasimu ezitshalo eziyisisekelo', combined: 'Kuhlanganisiwe' })[card.key])}</h3>
-      <p className="text-3xl font-display font-semibold my-3" style={{ color: card.contributionPerM2 !== null && card.contributionPerM2 < 0 ? '#9a312b' : '#245d35' }}>{loading ? '…' : card.contributionPerM2 === null ? '—' : rand(card.contributionPerM2)} <span className="text-sm">/m²</span></p>
+      <p className="text-3xl font-display font-semibold my-3" style={{ color: card.contributionPerM2 !== null && card.contributionPerM2 < 0 ? 'var(--danger)' : 'var(--color-forest-800)' }}>{loading ? '…' : card.contributionPerM2 === null ? '—' : rand(card.contributionPerM2)} <span className="text-sm">/m²</span></p>
       <p className="text-xs">{numberLabel(card.areaM2)} m² {text('mapped', 'ebalazweni')} · {card.entries} {text('assigned entries', 'okufakiwe okwabelwe indawo')}</p>
       {!loading && <p className="text-xs mt-2">{card.entries ? `${rand(card.sales)} ${text('sales', 'okudayisiwe')} · ${rand(card.costs)} ${text('costs', 'izindleko')}` : text('Assign sales and costs to see a result.', 'Yabela okudayisiwe nezindleko ukuze ubone umphumela.')}</p>}
     </article>)}</div>

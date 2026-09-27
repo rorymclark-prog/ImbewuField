@@ -299,3 +299,15 @@ export function resizeForStorage(file: File, maxPx = 400): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
+
+/**
+ * The same resize as resizeForStorage, but handed back as a File rather than a data URL — for
+ * callers that upload to Cloud Storage (lib/db/queries.ts's uploadPhoto) instead of embedding the
+ * result inline. Community board posts and profile photos were the two upload paths still sending
+ * whatever resolution the phone's camera produced, often several megabytes, over mobile data.
+ */
+export async function resizeFileForUpload(file: File, maxPx = 1200): Promise<File> {
+  const dataUrl = await resizeForStorage(file, maxPx);
+  const blob = await (await fetch(dataUrl)).blob();
+  return new File([blob], file.name, { type: blob.type || file.type });
+}

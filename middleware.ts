@@ -4,9 +4,10 @@ import { NextResponse } from 'next/server';
 // The shared-password wall is off — every request passes straight through.
 // (Rory asked for it gone during prototyping, 2026-07-03.)
 //
-// To turn the wall back on, restore the gate body below (git history has the
-// full version) so it checks `process.env.SITE_PASSWORD` and the `pm_ok`
-// cookie, redirecting misses to `/gate`.
+// The /gate page and /api/gate route were deleted on 2026-09-26 (Rory: "yes
+// delete the gate"). Restoring the wall means restoring all three from git
+// history — this body, app/gate/page.tsx and app/api/gate/route.ts (the last
+// version rate-limited guesses and compared in constant time).
 
 // ── Design/farmer crash rescue: DISABLED ─────────────────────────────────────
 // The server-side crash rescue (count page opens in a cookie, redirect a crash

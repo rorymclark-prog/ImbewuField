@@ -9,7 +9,7 @@ import Screenshot from '@/components/partners/Screenshot';
 // Public showcase page for NGOs and funders — "the place an organisation lands to see what the
 // app does and get it onto phones" (Rory, briefing this page). Deliberately outside the signed-in
 // app shell:
-//   • No semantic header tag — same convention app/login and app/gate already use for pages the
+//   • No semantic header tag — same convention app/login already uses for pages the
 //     drawer menu must not open into (see tests/menu-button-coverage.test.ts's own comment on
 //     this). A plain top bar div covers the branding job without claiming a menu door that would
 //     just dump an anonymous visitor into a sign-in wall.

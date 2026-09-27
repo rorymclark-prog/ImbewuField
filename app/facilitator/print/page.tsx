@@ -16,6 +16,9 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Pencil, Printer, Droplets, ChevronDown } from 'lucide-react';
+// Separate from the toolbar import above (tests/facilitator-print-fixes.test.ts pins that one
+// line exactly) — these are for LAYER_ICON's screen-only per-layer print checkboxes below.
+import { Check, Compass, Footprints, House, MapPin, Sprout, Warehouse, type LucideIcon } from 'lucide-react';
 import type {
   ElType, LineKind, SectorKind, LayerId,
   FacItem, FacLine, FacSector, FacilitatorDesignState,
@@ -69,6 +72,16 @@ const LINES: Record<LineKind, { label: string; icon: string; color: string; dash
   driveway:  { label: 'Driveway',   icon: '🚗', color: '#8A7F6B', dash: [],     width: 2.5 },
   patio:     { label: 'Patio',      icon: '▦', color: '#B08A5A', dash: [],     width: 2.5 },
   waterbody: { label: 'Dam / pond', icon: '🌊', color: '#3E7BB0', dash: [],     width: 2.5 },
+};
+
+// Lucide equivalent for the per-layer PAGE CHECKBOXES in the screen-only print-toolbar (hidden by
+// `.print-toolbar { display: none }` under @media print — see the <style> above). CATALOG.icon/
+// LINES.icon are deliberately untouched: tests/facilitator-print-fixes.test.ts already records
+// that those, and the boqRows/existingRows built from them, are the printed map's own legend/key
+// and keep their emoji on purpose, same as the `{cat.icon}` burned onto the plan drawing itself.
+const LAYER_ICON: Record<LayerId, LucideIcon> = {
+  base: MapPin, existing: House, sectors: Compass, water: Droplets,
+  access: Footprints, structures: Warehouse, planting: Sprout, review: Check,
 };
 
 const SECTOR_LABELS: Record<SectorKind, { label: string; icon: string; color: string }> = {
@@ -735,7 +748,7 @@ export default function FacilitatorPrintPage() {
               {c.layersPresent.map((lid) => (
                 <label key={lid} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
                   <input type="checkbox" checked={enabledPages[lid] ?? true} onChange={() => togglePage(lid)} />
-                  {LAYERS[lid].icon} {LAYERS[lid].name}
+                  {(() => { const LayerIcon = LAYER_ICON[lid]; return <LayerIcon size={12} aria-hidden />; })()} {LAYERS[lid].name}
                 </label>
               ))}
             </>

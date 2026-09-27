@@ -46,23 +46,12 @@ test('a failed report save cannot be reported as success', () => {
   );
 });
 
-test('the garden survey no longer swallows a storage refusal', () => {
-  const src = read('app', 'survey', 'page.tsx');
-  const save = src.slice(src.indexOf('function save()'), src.indexOf('const TOTAL'));
-  assert.ok(!/catch \{ \/\* ignore \*\/ \}/.test(save), 'the survey save swallows its error again');
-  assert.ok(save.includes('setSaveFailed(true)'), 'a failed survey save records nothing');
-  const failIdx = save.indexOf('setSaveFailed(true)');
-  const okIdx = save.indexOf('setSaved(true)');
-  assert.ok(failIdx > 0 && okIdx > failIdx, 'the failure branch must precede the success branch');
-  assert.ok(save.slice(failIdx, okIdx).includes('return'), 'a failed save still reaches setSaved(true)');
-});
-
-test('both failure states are sticky, not a toast that clears itself', () => {
-  // A farmer who looked away for two seconds would never learn the work was lost, so neither
-  // failure may be wrapped in the setTimeout that clears the success confirmations.
+test('the save-failure state is sticky, not a toast that clears itself', () => {
+  // A farmer who looked away for two seconds would never learn the work was lost, so the
+  // failure may not be wrapped in the setTimeout that clears the success confirmation.
+  // (The garden-survey half of this pair went with app/survey, deleted 2026-09-26.)
   for (const [label, src] of [
     ['ReportView', read('components', 'ReportView.tsx')],
-    ['survey', read('app', 'survey', 'page.tsx')],
   ] as const) {
     assert.ok(
       !/setTimeout\(\(\) => setSaveFailed\(false\)/.test(src),

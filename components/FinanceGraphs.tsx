@@ -49,14 +49,18 @@ import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
-const INK = '#20190F';
-const MUTED = '#5C5040';
-const FAINT = '#5d5143';
-const HAIRLINE = '#E2D8C4';
-const SOLD = '#1F4D2B';    // the forest green used for money in, for the same reason
+const INK = 'var(--text-primary)';
+const MUTED = 'var(--text-secondary)';
+const FAINT = 'var(--text-muted)';
+const HAIRLINE = 'var(--border)';
+const SOLD = '#1F4D2B';    // the forest green used for money in, for the same reason. A
+                            // fill/border colour only: paired everywhere with a fixed white
+                            // label, so it stays constant — see SOLD_TEXT below for text.
 const KEPT = '#C4A46A';    // gold — lighter by ~40 L*, so the split survives greyscale
 const SHORT = '#B33A3A';   // sold beyond what the picking log accounts for
 const BENCH = '#E3D8C0';   // the plan's benchmark: present, recessive, never the hero
+// SOLD as TEXT: the raw fill measures ~1.9:1 on a dark card, so text follows the theme instead.
+const SOLD_TEXT = 'var(--color-forest-800)';
 
 type View = 'measured' | 'plan';
 const WINDOWS = [6, 12, 24];
@@ -195,7 +199,7 @@ function OrchardToggle({ on, onChange, lang }: { on: boolean; onChange: (next: b
         fontWeight: on ? 600 : 400,
         border: `1px solid ${on ? SOLD : HAIRLINE}`,
         background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
-        color: on ? SOLD : FAINT,
+        color: on ? SOLD_TEXT : FAINT,
         cursor: 'pointer',
       }}
     >
@@ -259,7 +263,7 @@ function MeasuredView({
         </p>
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu} />
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
-          style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
+          style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {lang === 'zu' ? 'Rekhoda isivuno' : 'Log a harvest'}
         </Link>
       </div>
@@ -306,7 +310,7 @@ function MeasuredView({
     <>
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
         <Figure label={lang === 'zu' ? `Okuvunyiwe, izinyanga ezingu-${series.windowMonths}` : `Picked, ${series.windowMonths} months`} value={kgLabel(series.totalProducedKg)} tone={INK} />
-        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD} />
+        <Figure label={lang === 'zu' ? 'Okudayisiwe' : 'Sold'} value={kgLabel(series.totalSoldKg)} tone={SOLD_TEXT} />
         {/* Null is not zero: when the window sold more than it logged picking, the
             difference is a missing record, not food that stayed on the farm. */}
         {series.totalKeptKg === null
@@ -319,8 +323,8 @@ function MeasuredView({
           aria-label={lang === 'zu' ? `Amakhilogremu avunyiwe ngenyanga ezinyangeni ezingu-${n}, ahlukaniswe ngokudayisiwe nokusele epulazini.` : `Kilograms picked each month for ${n} months, split into sold and kept on the farm.`}>
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + PLOT_H} y2={PAD.top + PLOT_H} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">{Math.round(maxKg)}</text>
-          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" fill={FAINT} fontFamily="monospace">0</text>
+          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{Math.round(maxKg)}</text>
+          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>0</text>
 
           {months.map((m, i) => {
             const x = cx(i) - barW / 2;
@@ -354,7 +358,7 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`x-${m.key}`}>
               {showLabel(i) && (
-                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" fill={FAINT} fontFamily="monospace">{m.label}</text>
+                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.label}</text>
               )}
             </g>
           ))}
@@ -375,7 +379,7 @@ function MeasuredView({
         </svg>
       </div>
 
-      <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid #F0E9DA' }}>
+      <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid var(--border)' }}>
         <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{selected.longLabel}</span>
         {selected.hasRecords ? (
           <>
@@ -390,7 +394,7 @@ function MeasuredView({
         )}
       </div>
 
-      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         {(series.excludedProducedKg > 0 || series.excludedSoldKg > 0) && (
           /* Picked and sold said separately, because the card's own figures are separate and their
              sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
@@ -441,7 +445,7 @@ function PlanView({ plan, source, wide, orchard, lang }: {
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={reason} zulu={reasonZulu} />
         <Link href={source.origin === 'none' ? '/design' : '/facilitator/crops'}
           className="inline-block mt-2.5 font-sans font-semibold"
-          style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
+          style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {lang === 'zu' ? (source.origin === 'none' ? 'Vula i-Design Studio' : 'Vula uhlelo lwezitshalo') : (source.origin === 'none' ? 'Open the Design Studio' : 'Open the crop plan')}
         </Link>
       </div>
@@ -481,13 +485,13 @@ function PlanView({ plan, source, wide, orchard, lang }: {
               label={lang === 'zu' ? `ngemva kwesilinganiso sokulahleka esingu-${Math.round(plan.lossPercent)}%` : `after your ${Math.round(plan.lossPercent)}% loss allowance`} value="" />
           : (
             <Link href="/facilitator/crops" className="font-sans"
-              style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
+              style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
               <IsiZuluDraftSource lang={lang} english="Set your loss allowance to mark it on these bars" zulu="Faka isilinganiso sakho sokulahleka ukuze usibone kule migqa." />
             </Link>
           )}
       </div>
 
-      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+      <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: 'var(--bg-2)' }}>
         {/* Deliberately does NOT repeat the names: `offPlanNames` below already lists them, and on
             a farm with fruit trees this paragraph and that one would otherwise say the same word
             twice, three lines apart. This one carries the reason; that one carries the list. */}
@@ -533,7 +537,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
           title={lang === 'zu' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
           {lang === 'zu'
             ? <>Kuvunyiwe {kgLabel(row.harvestedKg)} · isilinganiso {kgLabel(row.benchmarkKg)}</>
-            : <>{kgLabel(row.harvestedKg)} <span style={{ color: '#B8AC96' }}>of {kgLabel(row.benchmarkKg)}</span></>}
+            : <>{kgLabel(row.harvestedKg)} <span style={{ color: 'var(--text-muted)' }}>of {kgLabel(row.benchmarkKg)}</span></>}
         </span>
       </div>
 

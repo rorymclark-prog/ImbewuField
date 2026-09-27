@@ -38,21 +38,31 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import {
+  BedDouble,
   Bird,
+  Cable,
+  Check,
   ChevronDown,
   ChevronRight,
+  Droplet,
   Droplets,
   Eye,
   EyeOff,
   Fence,
+  Footprints,
+  HelpCircle,
   House,
   Layers3,
+  Leaf,
   Map,
   Mountain,
+  Paintbrush,
+  Pencil,
   Pickaxe,
   Route,
   Satellite,
   Shapes,
+  ShowerHead,
   Sprout,
   Square,
   SquareCheckBig,
@@ -60,6 +70,10 @@ import {
   Sun,
   Tag,
   Warehouse,
+  Waves,
+  Wind,
+  X,
+  ZoomIn,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -124,11 +138,12 @@ export type { WaterInfrastructureLayer } from '@/lib/design-layer-membership';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
 export type PlantingSublayerVisibility = Record<PlantingSublayer, boolean>;
 
-export type DesignMode = 'guided' | 'pro';
+// PRO mode was removed (see DesignWizard.tsx) — 'guided' is the only mode left reachable.
+export type DesignMode = 'guided';
 
 export interface DesignPaletteProps {
   step: WizardStep;
-  mode: DesignMode;
+  mode?: DesignMode;
   tool: ToolKind;
   setTool: (t: ToolKind) => void;
   placeDefId: string | null;
@@ -298,6 +313,10 @@ export interface DesignPaletteProps {
   /** Sections the farmer closed one at a time with their ×. The count rides beside the handle so
    *  "where did it go" is answered on screen instead of from memory. */
   hiddenSections?: { count: number; onRestore: () => void };
+  /** Simple / All tools (lib/app-level.ts). Simple hides the Layers panel (the full layer-
+   *  visibility matrix + per-element-type eye toggles), multi-select, Tidy/Snap/Clean up, and
+   *  shows only a curated starter set of the element palette per step (with "Show all"). */
+  simple?: boolean;
 }
 
 const GOLD = '#F7C97E';
@@ -305,15 +324,42 @@ const GREEN = '#1F4D2B';
 const PAPER = '#FFFEFA';
 const DARK = '#0B120B';
 
-const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string }> = [
-  { id: 'swale', labelKey: 'designPaletteLineSwale', icon: '〰️' },
-  { id: 'fence', labelKey: 'designPaletteLineFence', icon: '🚧' },
-  { id: 'path', labelKey: 'designPaletteLinePath', icon: '🥾' },
-  { id: 'pipe', labelKey: 'designPaletteLinePipe', icon: '🧵' },
-  { id: 'drip', labelKey: 'designPaletteLineDrip', icon: '💧' },
-  { id: 'greywater', labelKey: 'designPaletteLineGreywater', icon: '🚿' },
-  { id: 'windbreak', labelKey: 'designPaletteLineWindbreak', icon: '🌬️' },
+// Simple's starter set — the handful of elements a first-time farmer reaches for most: a tank and
+// a tap (water), a raised bed (earthworks/planting), a veg bed and a tree (planting), a chicken
+// coop (structures). The active-layer filter already scopes these to whichever step is current
+// (tank/tap only appear with the Water layer on, etc.), so one shared list stands in for a
+// per-step one. "Show all" always reaches the complete catalogue this list is drawn from.
+const SIMPLE_STARTER_ELEMENT_IDS = new Set(['jojo_1000', 'tap_point', 'raised_bed', 'veg_bed', 'tree_other', 'chicken_coop']);
+
+const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; Icon: LucideIcon }> = [
+  { id: 'swale', labelKey: 'designPaletteLineSwale', Icon: Waves },
+  { id: 'fence', labelKey: 'designPaletteLineFence', Icon: Fence },
+  { id: 'path', labelKey: 'designPaletteLinePath', Icon: Footprints },
+  { id: 'pipe', labelKey: 'designPaletteLinePipe', Icon: Cable },
+  { id: 'drip', labelKey: 'designPaletteLineDrip', Icon: Droplet },
+  { id: 'greywater', labelKey: 'designPaletteLineGreywater', Icon: ShowerHead },
+  { id: 'windbreak', labelKey: 'designPaletteLineWindbreak', Icon: Wind },
 ];
+
+// The palette chip and hint tooltip fall back to this when an element has no `art` (only
+// tree_guava today — see lib/design-elements.ts). Reuses the exact category → icon pairing
+// LAYER_TOGGLES already draws on below, so a category never reads as two different symbols on
+// the same screen. `def.icon` (the emoji field) stays untouched: DesignCanvas.tsx's placed-item
+// symbol and DesignGlossy.tsx/DesignPrint.tsx's printed-sheet glyphs draw it straight onto the
+// map/plan sheet, which is map-canvas artwork, not app chrome.
+const CATEGORY_ICON: Record<DesignElementDef['category'], LucideIcon> = {
+  water: Droplets,
+  earthworks: Pickaxe,
+  structure: Warehouse,
+  growing: Sprout,
+  animal: Bird,
+  access: Route,
+};
+
+function CategoryFallbackIcon({ category, size }: { category: DesignElementDef['category']; size: number }) {
+  const Icon = CATEGORY_ICON[category];
+  return <Icon size={size} aria-hidden />;
+}
 
 // Ground-feature chips shown on the Base ("what is here") step — each arms the polygon
 // draw tool to record a real built/ground feature. Order = the plot itself first (boundary),
@@ -424,20 +470,20 @@ function selectionRing(active: boolean): React.CSSProperties {
     : { border: '1px solid rgba(0,0,0,0.15)', boxShadow: 'none' };
 }
 
-function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties {
+function toolButtonStyle(active: boolean): React.CSSProperties {
   // These are compact drafting shortcuts, not the primary guided actions. Their full names remain
   // in accessible labels/tooltips, while the smaller squares return a complete catalog column to
   // the map instead of turning four glyphs into a second toolbar-sized panel.
   return {
-    minHeight: guided ? 40 : 34,
-    minWidth: guided ? 40 : 34,
-    padding: guided ? '0 8px' : '0 6px',
+    minHeight: 40,
+    minWidth: 40,
+    padding: '0 8px',
     borderRadius: 9,
     ...selectionRing(active),
     background: active ? GREEN : PAPER,
     color: active ? PAPER : DARK,
     fontWeight: 600,
-    fontSize: guided ? 13 : 12,
+    fontSize: 13,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -476,7 +522,6 @@ const PHONE_SHEET_EXPANDED_MAX = '62dvh';
 
 export default function DesignPalette({
   step,
-  mode,
   tool,
   setTool,
   placeDefId,
@@ -523,6 +568,7 @@ export default function DesignPalette({
   bottomStop,
   hiddenSections,
   onBottomStopChange,
+  simple = false,
 }: DesignPaletteProps) {
   const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -601,6 +647,10 @@ export default function DesignPalette({
     };
   }, [speciesPickerOpen]);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Simple's curated element palette. "Show all" is a per-visit choice, not a saved preference —
+  // it resets on the next step so a farmer never has to remember they widened it three steps ago.
+  const [showAllElements, setShowAllElements] = useState(false);
+  useEffect(() => { setShowAllElements(false); }, [step]);
   // Expanded rows belong to the Layers UI, not the saved design. A parent eye still answers the
   // broad question (show Water at all); opening the row reveals the finer presentation switches
   // without spending permanent panel height on them. Water is the first real child matrix. The
@@ -875,7 +925,6 @@ export default function DesignPalette({
     };
   }, [elementsFloatPos]);
 
-  const guided = mode === 'guided';
   const hiddenLayerCount = LAYER_TOGGLES.filter((lt) => !activeLayers[lt.key]).length;
 
   // Tools are no longer gated behind a separate Pro switch. The current step still provides the
@@ -919,13 +968,18 @@ export default function DesignPalette({
     groupRank(a) - groupRank(b) ||
     Number(elementSuitsClimate(b.id, siteClimates, siteMinTempC)) - Number(elementSuitsClimate(a.id, siteClimates, siteMinTempC));
   const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
+  const simpleStarterCatalog = orderedCatalog.filter((def) => SIMPLE_STARTER_ELEMENT_IDS.has(def.id));
+  // Never leave the palette empty: a layer combination with nothing curated in it falls back to
+  // the full list rather than hiding every element with no way to place one.
+  const showAllElementsEffective = showAllElements || simpleStarterCatalog.length === 0;
+  const displayedCatalog = simple && !showAllElementsEffective ? simpleStarterCatalog : orderedCatalog;
 
   // Re-measure whenever the strip's CONTENTS change (step change, layer toggle) — not just on
   // scroll. A layer toggle can take the row from overflowing to fitting, and a stale fade would
   // then point at nothing. Also re-measure when the phone sheet opens/closes, since the strip is
   // unmounted while the sheet is collapsed (see renderElementCatalog's caller) and remounts with
   // a fresh, unmeasured scrollLeft.
-  useEffect(syncStripEnd, [syncStripEnd, orderedCatalog.length, showElementCatalog, sheetOpen]);
+  useEffect(syncStripEnd, [syncStripEnd, displayedCatalog.length, showElementCatalog, sheetOpen]);
 
   const hintDef = hintDefId ? catalog.find((d) => d.id === hintDefId) : null;
   const armedDef = placeDefId ? ELEMENT_CATALOG.find((d) => d.id === placeDefId) : null;
@@ -1063,13 +1117,13 @@ export default function DesignPalette({
       <>
         {/* Tool row: Select · Undo · Delete (scrolls) + Layers pinned right (always visible, so
             it can never fall off the bottom of the page). */}
-        <div style={{ display: 'flex', gap: guided ? 10 : 6, alignItems: 'center', paddingBottom: 2 }}>
-          <div style={{ display: 'flex', gap: guided ? 10 : 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center', paddingBottom: 2 }}>
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}>
           <button
             type="button"
             title={toolGlyph(t('designPaletteSelect')).full}
             aria-label={toolGlyph(t('designPaletteSelect')).full}
-            style={toolButtonStyle(tool === 'select', guided)}
+            style={toolButtonStyle(tool === 'select')}
             onClick={() => {
               setTool('select');
               setHintDefId(null);
@@ -1079,7 +1133,7 @@ export default function DesignPalette({
           </button>
           <button
             type="button"
-            style={{ ...toolButtonStyle(false, guided), opacity: canUndo ? 1 : 0.4, cursor: canUndo ? 'pointer' : 'default' }}
+            style={{ ...toolButtonStyle(false), opacity: canUndo ? 1 : 0.4, cursor: canUndo ? 'pointer' : 'default' }}
             onClick={onUndo}
             disabled={!canUndo}
           
@@ -1089,7 +1143,7 @@ export default function DesignPalette({
           </button>
           <button
             type="button"
-            style={{ ...toolButtonStyle(false, guided), opacity: canRedo ? 1 : 0.4, cursor: canRedo ? 'pointer' : 'default' }}
+            style={{ ...toolButtonStyle(false), opacity: canRedo ? 1 : 0.4, cursor: canRedo ? 'pointer' : 'default' }}
             onClick={onRedo}
             disabled={!canRedo}
           
@@ -1101,7 +1155,7 @@ export default function DesignPalette({
             type="button"
             aria-label={toolGlyph(t('designPaletteDuplicate')).full}
             style={{
-              ...toolButtonStyle(false, guided),
+              ...toolButtonStyle(false),
               opacity: onDuplicateSelected ? 1 : 0.4,
               cursor: onDuplicateSelected ? 'pointer' : 'default',
             }}
@@ -1114,12 +1168,14 @@ export default function DesignPalette({
           {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
               has no ring/polyline to simplify, and a multi-selection has no single shape to preview
               — see onTidySelected's doc comment in DesignPaletteProps). Tapping this only OPENS the
-              preview on the canvas; it never itself edits the design. */}
+              preview on the canvas; it never itself edits the design. Simple has no Tidy/Snap/
+              Clean up — expert geometry tools, not part of the guided flow. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteTidy')).full}
             style={{
-              ...toolButtonStyle(false, guided),
+              ...toolButtonStyle(false),
               opacity: onTidySelected ? 1 : 0.4,
               cursor: onTidySelected ? 'pointer' : 'default',
             }}
@@ -1129,13 +1185,15 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteTidy')).glyph}
           </button>
+          )}
           {/* Snap to neighbour — offered for one or more selected rings, provided at least one can
               move. A selected boundary stays unchanged and is called out in the preview. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteSnap')).full}
             style={{
-              ...toolButtonStyle(false, guided),
+              ...toolButtonStyle(false),
               opacity: onSnapSelected ? 1 : 0.4,
               cursor: onSnapSelected ? 'pointer' : 'default',
             }}
@@ -1145,14 +1203,16 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteSnap')).glyph}
           </button>
+          )}
           {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected. See
               onCleanupSelected's doc comment in DesignPaletteProps. Tapping this only OPENS the
               preview on the canvas; it never itself edits the design. */}
+          {!simple && (
           <button
             type="button"
             aria-label={toolGlyph(t('designPaletteCleanup')).full}
             style={{
-              ...toolButtonStyle(false, guided),
+              ...toolButtonStyle(false),
               opacity: onCleanupSelected ? 1 : 0.4,
               cursor: onCleanupSelected ? 'pointer' : 'default',
             }}
@@ -1162,6 +1222,7 @@ export default function DesignPalette({
           >
             {toolGlyph(t('designPaletteCleanup')).glyph}
           </button>
+          )}
           {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
               polyline deliberately has NO angle control here: a polyline has no single angle, and
               "rotating" one would mean rewriting every saved point, not turning one number. That is
@@ -1169,23 +1230,23 @@ export default function DesignPalette({
           {angleControl && (
             <div
               style={{
-                minHeight: guided ? 52 : 44,
+                minHeight: 52,
                 alignItems: 'center',
                 gap: 5,
                 flexShrink: 0,
-                padding: guided ? '0 12px' : '0 10px',
+                padding: '0 12px',
                 borderRadius: 10,
                 border: '1px solid rgba(0,0,0,0.15)',
                 background: PAPER,
                 color: DARK,
                 fontWeight: 600,
-                fontSize: guided ? 14.5 : 13,
+                fontSize: 14.5,
               }}
             >
-              <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>
+              <span aria-hidden style={{ fontSize: 13 }}>
                 ∠
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteAngle')}</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>{t('designPaletteAngle')}</span>
               <input
                 // Uncontrolled + keyed on the committed value: typing never round-trips through
                 // parent state per keystroke (no mid-typing canvas jumps), but the field still picks
@@ -1218,18 +1279,18 @@ export default function DesignPalette({
                 }}
                 style={{
                   width: 44,
-                  minHeight: guided ? 34 : 28,
+                  minHeight: 34,
                   border: '1px solid rgba(0,0,0,0.18)',
                   borderRadius: 7,
                   background: PAPER,
                   color: DARK,
-                  fontSize: guided ? 13.5 : 12,
+                  fontSize: 13.5,
                   fontWeight: 700,
                   textAlign: 'center',
                   padding: '2px 2px',
                 }}
               />
-              <span style={{ fontSize: guided ? 13 : 11.5 }}>°</span>
+              <span style={{ fontSize: 13 }}>°</span>
             </div>
           )}
           {/* Size — grows/shrinks EVERY selected item in place (multi-select friendly, unlike the
@@ -1238,24 +1299,24 @@ export default function DesignPalette({
           {sizeControl && (
             <div
               style={{
-                minHeight: guided ? 52 : 44,
+                minHeight: 52,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 5,
                 flexShrink: 0,
-                padding: guided ? '0 12px' : '0 10px',
+                padding: '0 12px',
                 borderRadius: 10,
                 border: '1px solid rgba(0,0,0,0.15)',
                 background: PAPER,
                 color: DARK,
                 fontWeight: 600,
-                fontSize: guided ? 14.5 : 13,
+                fontSize: 14.5,
               }}
             >
-              <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>
+              <span aria-hidden style={{ fontSize: 13 }}>
                 ⤢
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteSize')}</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>{t('designPaletteSize')}</span>
               {([['−', 0.9, t('designPaletteSizeDown')], ['+', 1.1, t('designPaletteSizeUp')]] as const).map(([glyph, factor, title]) => (
                 <button
                   key={glyph}
@@ -1264,13 +1325,13 @@ export default function DesignPalette({
                   aria-label={title}
                   onClick={() => sizeControl.onScale(factor)}
                   style={{
-                    width: guided ? 38 : 32,
-                    minHeight: guided ? 34 : 28,
+                    width: 38,
+                    minHeight: 34,
                     border: '1px solid rgba(0,0,0,0.18)',
                     borderRadius: 7,
                     background: PAPER,
                     color: DARK,
-                    fontSize: guided ? 16 : 14,
+                    fontSize: 16,
                     fontWeight: 700,
                     cursor: 'pointer',
                   }}
@@ -1286,7 +1347,7 @@ export default function DesignPalette({
                 ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
               ] as const).filter(([dim]) => !sizeControl.lengthOnly || dim === 'wM').map(([dim, committed, label, title]) => (
                 <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-                  <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{label}</span>
+                  <span style={{ fontSize: 12, opacity: 0.75 }}>{label}</span>
                   <input
                     key={`${dim}:${committed ?? 'mixed'}`}
                     defaultValue={committed != null ? String(+committed.toFixed(2)) : ''}
@@ -1316,12 +1377,12 @@ export default function DesignPalette({
                     }}
                     style={{
                       width: 52,
-                      minHeight: guided ? 34 : 28,
+                      minHeight: 34,
                       border: '1px solid rgba(0,0,0,0.18)',
                       borderRadius: 7,
                       background: PAPER,
                       color: DARK,
-                      fontSize: guided ? 13.5 : 12,
+                      fontSize: 13.5,
                       fontWeight: 700,
                       textAlign: 'center',
                       padding: '2px 2px',
@@ -1329,7 +1390,7 @@ export default function DesignPalette({
                   />
                 </span>
               ))}
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>m</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>m</span>
             </div>
           )}
           {/* A swale is a traced route, not a resizeable rectangle. Its length is therefore a
@@ -1339,26 +1400,26 @@ export default function DesignPalette({
           {swaleControl && (
             <div
               style={{
-                minHeight: guided ? 52 : 44,
+                minHeight: 52,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 5,
                 flexShrink: 0,
-                padding: guided ? '0 12px' : '0 10px',
+                padding: '0 12px',
                 borderRadius: 10,
                 border: '1px solid rgba(0,0,0,0.15)',
                 background: PAPER,
                 color: DARK,
                 fontWeight: 600,
-                fontSize: guided ? 14.5 : 13,
+                fontSize: 14.5,
               }}
             >
-              <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>⌇</span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteLineSwale')}</span>
-              <span title={t('designPaletteSwaleLengthTitle')} style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
+              <span aria-hidden style={{ fontSize: 13 }}>⌇</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>{t('designPaletteLineSwale')}</span>
+              <span title={t('designPaletteSwaleLengthTitle')} style={{ fontSize: 12, opacity: 0.75, whiteSpace: 'nowrap' }}>
                 {formatDesignTranslation(t('designPaletteSwaleLength'), { length: swaleControl.lengthM.toFixed(1) })}
               </span>
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{t('designPaletteWidth')}</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>{t('designPaletteWidth')}</span>
               <input
                 // Uncontrolled + keyed follows the same commit-only rule as Size: no half-typed
                 // value reaches saved state, while undo, reload and another selected swale remount
@@ -1383,18 +1444,18 @@ export default function DesignPalette({
                 }}
                 style={{
                   width: 74,
-                  minHeight: guided ? 34 : 28,
+                  minHeight: 34,
                   border: '1px solid rgba(0,0,0,0.18)',
                   borderRadius: 7,
                   background: PAPER,
                   color: DARK,
-                  fontSize: guided ? 13.5 : 12,
+                  fontSize: 13.5,
                   fontWeight: 700,
                   textAlign: 'center',
                   padding: '2px 2px',
                 }}
               />
-              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>m</span>
+              <span style={{ fontSize: 12, opacity: 0.75 }}>m</span>
             </div>
           )}
           <button
@@ -1402,7 +1463,7 @@ export default function DesignPalette({
             title={toolGlyph(t('designPaletteDelete')).full}
             aria-label={toolGlyph(t('designPaletteDelete')).full}
             style={{
-              ...toolButtonStyle(false, guided),
+              ...toolButtonStyle(false),
               opacity: onDeleteSelected ? 1 : 0.4,
               cursor: onDeleteSelected ? 'pointer' : 'default',
               borderColor: onDeleteSelected ? '#B53A3A' : 'rgba(0,0,0,0.15)',
@@ -1423,7 +1484,7 @@ export default function DesignPalette({
                 onClick={() => setSpeciesPickerOpen((v) => !v)}
                 aria-expanded={speciesPickerOpen}
                 style={{
-                  minHeight: guided ? 40 : 32,
+                  minHeight: 40,
                   padding: '4px 12px',
                   borderRadius: 16,
                   border: '1px solid rgba(0,0,0,0.15)',
@@ -1438,7 +1499,7 @@ export default function DesignPalette({
                   whiteSpace: 'nowrap',
                 }}
               >
-                <span aria-hidden>🌱</span>
+                <Sprout size={13} aria-hidden />
                 <span>{placeSpeciesId ? 'Species picked' : 'Pick species'}</span>
               </button>
               {speciesPickerOpen && speciesAnchor && typeof document !== 'undefined' && createPortal(
@@ -1512,7 +1573,9 @@ export default function DesignPalette({
 
           {/* Layers — pinned right of the tool row, always on screen. A desktop aside has room
               below the button, so its panel opens down; the phone sheet opens up over the map.
-              Its own cap is scrollable, rather than allowing either edge to leave the viewport. */}
+              Its own cap is scrollable, rather than allowing either edge to leave the viewport.
+              Simple has no layer-visibility matrix at all — one fixed set of layers, all shown. */}
+          {!simple && (
           <div style={{ position: 'relative', flexShrink: 0, display: desktopAside && !isPhone ? 'contents' : undefined }}>
             <button
               ref={layersButtonRef}
@@ -1521,7 +1584,7 @@ export default function DesignPalette({
               aria-expanded={layersOpen}
               style={{
                 display: desktopAside && !isPhone ? 'none' : 'inline-flex',
-                minHeight: guided ? 40 : 32,
+                minHeight: 40,
                 padding: '4px 12px',
                 borderRadius: 16,
                 border: '1px solid rgba(0,0,0,0.15)',
@@ -1541,7 +1604,7 @@ export default function DesignPalette({
                 <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
               )}
             </button>
-            {((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
+            {!simple && ((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
               /* TWO layers of box on purpose. The outer carries position, width
                  and chrome and NEVER scrolls; the inner scrolls the rows. The
                  width-resize handle used to live inside a single scrolling box,
@@ -1998,7 +2061,7 @@ export default function DesignPalette({
                     One slider drives both: an icon and its name read as a single mark. */}
                 {textScaleControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '6px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🔍 {t('designPaletteSymbolSize')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><ZoomIn size={13} aria-hidden />{t('designPaletteSymbolSize')}</span>
                     <input
                       type="range"
                       min={MIN_MAP_TEXT_SCALE}
@@ -2022,7 +2085,7 @@ export default function DesignPalette({
                     the drawing be over the land. */}
                 {areaFillControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, padding: '6px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🖌️ {t('designPaletteAreaFill')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><Paintbrush size={13} aria-hidden />{t('designPaletteAreaFill')}</span>
                     <span style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', border: `1px solid ${GREEN}`, flexShrink: 0 }}>
                       {(['hatch', 'tint'] as AreaFillStyle[]).map((style) => {
                         const on = areaFillControl.value.style === style;
@@ -2065,7 +2128,7 @@ export default function DesignPalette({
                     is a wash you want out of the way, a canopy is a thing you are counting. */}
                 {areaFillControl && (
                   <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '2px 2px 0' }}>
-                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🌿 {t('designPalettePlantFill')}</span>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}><Leaf size={13} aria-hidden />{t('designPalettePlantFill')}</span>
                     <input
                       type="range"
                       min={MIN_AREA_FILL_OPACITY}
@@ -2099,10 +2162,12 @@ export default function DesignPalette({
                   </div>
                 )}
               </div>
-                {desktopAside && !isPhone && workspaceMode !== 'tray' && (
+                {desktopAside && !isPhone && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
                   /* Child of the NON-scrolling outer (see the comment above) so
                      nothing clips it. Straddles the edge — 7px inside, 7px out —
-                     so there's a real target on both sides of the border. */
+                     so there's a real target on both sides of the border. Simple has no
+                     panel-width control — a caller that omits onDesktopPanelWidthChange gets
+                     no drag handle at all, not just a dead one. */
                   <div
                     role="separator"
                     aria-label="Drag to resize the Layers panel"
@@ -2117,6 +2182,7 @@ export default function DesignPalette({
               </div>
             )}
           </div>
+          )}
         </div>
       </>
     );
@@ -2216,7 +2282,7 @@ export default function DesignPalette({
     const cardMetrics = elementCardMetrics(desktopElementColumns);
     return (
       <>
-      {orderedCatalog.map((def) => {
+      {displayedCatalog.map((def) => {
         // …or it IS the thing you have selected on the map (selectedIdentity).
         const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
         const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates, siteMinTempC);
@@ -2277,8 +2343,8 @@ export default function DesignPalette({
               opacity: suited ? 1 : 0.45,
             } : {
               position: 'relative',
-              minHeight: guided ? 44 : 34,
-              padding: guided ? '4px 10px' : '3px 8px',
+              minHeight: 44,
+              padding: '4px 10px',
               borderRadius: 9,
               ...selectionRing(active),
               background: active ? GREEN : PAPER,
@@ -2304,15 +2370,15 @@ export default function DesignPalette({
             {def.art ? (
               <img src={def.art} alt="" aria-hidden style={cardsUi
                 ? { width: artSize, height: artSize, objectFit: 'contain' }
-                : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
+                : { width: 30, height: 30, objectFit: 'contain' }} />
             ) : (
-              <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+              <CategoryFallbackIcon category={def.category} size={cardsUi ? 30 : 16} />
             )}
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || (desktopAside && workspaceMode !== 'tray') ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
-              <span style={{ fontSize: cardsUi ? 11.5 : guided ? 11.5 : 10, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
-              <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 11.5, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
+              <span style={{ fontSize: cardsUi ? 10 : 9.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                 {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
               {checkFrost && <span style={{ fontSize: 9, fontWeight: 700, color: active ? GOLD : '#9A5E12' }}>{t('designPaletteFrostCheck')}</span>}
@@ -2325,7 +2391,7 @@ export default function DesignPalette({
             <span
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
-                color: '#6B6355', fontSize: guided ? 9.5 : 9, fontWeight: 700,
+                color: '#6B6355', fontSize: 9.5, fontWeight: 700,
                 letterSpacing: '0.07em', textTransform: 'uppercase', whiteSpace: 'nowrap',
                 // Two shapes, one node, because both shells render this same array (see the
                 // comment on elementChipNodes). Where the chips WRAP, the heading takes a line of
@@ -2339,7 +2405,7 @@ export default function DesignPalette({
               }}
             >
               {!chipsWrap && (
-                <span aria-hidden style={{ width: 1, height: guided ? 24 : 20, background: 'rgba(0,0,0,0.14)' }} />
+                <span aria-hidden style={{ width: 1, height: 24, background: 'rgba(0,0,0,0.14)' }} />
               )}
               {PLANTING_GROUP_LABEL[heading]}
               {chipsWrap && (
@@ -2365,8 +2431,8 @@ export default function DesignPalette({
             type="button"
             onClick={() => pickArea('staple_garden')}
             style={{
-              minHeight: guided ? 44 : 34,
-              padding: guided ? '4px 10px' : '3px 8px',
+              minHeight: 44,
+              padding: '4px 10px',
               borderRadius: 9,
               ...selectionRing(active),
               background: active ? GREEN : PAPER,
@@ -2376,7 +2442,7 @@ export default function DesignPalette({
             }}
           >
             <span aria-hidden style={{ width: 12, height: 12, borderRadius: 3, flexShrink: 0, background: feat.color, border: '1px solid rgba(11,18,11,0.3)' }} />
-            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{feat.label}</span>
+            <span style={{ fontSize: 11.5, fontWeight: 600, whiteSpace: 'nowrap' }}>{feat.label}</span>
           </button>
         );
       })()}
@@ -2393,8 +2459,8 @@ export default function DesignPalette({
             type="button"
             onClick={() => pickLine(lk.id)}
             style={{
-              minHeight: guided ? 44 : 34,
-              padding: guided ? '4px 10px' : '3px 8px',
+              minHeight: 44,
+              padding: '4px 10px',
               borderRadius: 9,
               ...selectionRing(active),
               background: active ? GREEN : PAPER,
@@ -2403,11 +2469,35 @@ export default function DesignPalette({
               flexShrink: 0, cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{lk.icon}</span>
-            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
+            <lk.Icon size={16} aria-hidden />
+            <span style={{ fontSize: 11.5, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
           </button>
         );
       })}
+      {/* Simple's escape hatch — the curated set is a starting point, never a ceiling. Resets to
+          curated on the next step (see the showAllElements effect above). */}
+      {simple && !showAllElementsEffective && simpleStarterCatalog.length < orderedCatalog.length && (
+        <button
+          type="button"
+          onClick={() => setShowAllElements(true)}
+          style={{
+            minHeight: 44,
+            padding: '4px 12px',
+            borderRadius: 9,
+            border: '1px dashed rgba(31,77,43,0.45)',
+            background: 'transparent',
+            color: GREEN,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            flexShrink: 0,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>{t('designPaletteShowAllElements')}</span>
+        </button>
+      )}
       </>
     );
   }
@@ -2452,7 +2542,7 @@ export default function DesignPalette({
           onScroll={syncStripEnd}
           style={desktopAside && workspaceMode !== 'tray'
             ? { display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 6 }
-            : scrollStripStyle(guided ? 10 : 6)}
+            : scrollStripStyle(10)}
         >
           {/* Pop the chips out into the draggable panel. Lives at the HEAD of the strip so it is
               reachable without scrolling — the thing you reach for when the row is too long is the
@@ -2464,9 +2554,9 @@ export default function DesignPalette({
             aria-label={t('designPaletteFloatLabel')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
-              minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
+              minHeight: 44, padding: '0 9px', borderRadius: 9,
               border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
-              fontSize: guided ? 12 : 11, fontWeight: 600, cursor: 'pointer',
+              fontSize: 12, fontWeight: 600, cursor: 'pointer',
               // In card mode the strip's rows are ~130px tall; a control stretched to that
               // height reads as a card with no picture. Centre the two head controls instead.
               alignSelf: cardsUi ? 'center' : undefined,
@@ -2480,9 +2570,9 @@ export default function DesignPalette({
               title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}${frostScreenActive ? ` ${t('designPaletteFrostHidden')}` : ''}`}
               style={{
                 display: 'inline-flex', alignItems: 'center', flexShrink: 0,
-                minHeight: guided ? 44 : 34, padding: '0 8px', borderRadius: 9,
+                minHeight: 44, padding: '0 8px', borderRadius: 9,
                 border: '1px dashed rgba(0,0,0,0.18)', color: '#6B6355',
-                fontSize: guided ? 12 : 11, cursor: 'help',
+                fontSize: 12, cursor: 'help',
               }}
             >
               {frostScreenActive ? t('designPaletteFrostRisk') : 'ⓘ'}
@@ -2523,7 +2613,7 @@ export default function DesignPalette({
           orchard / cleared ground that's already on site (filled labelled areas). */
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>
-        <div style={scrollStripStyle(guided ? 10 : 6)}>
+        <div style={scrollStripStyle(10)}>
           {GROUND_FEATURE_KINDS.map((kind) => {
             const gf = GROUND_FEATURES[kind];
             const active = (areaFeature === kind && tool === 'zone') || selectedIdentity?.feature === kind;
@@ -2533,8 +2623,8 @@ export default function DesignPalette({
                 type="button"
                 onClick={() => pickArea(kind)}
                 style={{
-                  minHeight: guided ? 52 : 44,
-                  padding: guided ? '8px 14px' : '6px 12px',
+                  minHeight: 52,
+                  padding: '8px 14px',
                   borderRadius: 10,
                   ...selectionRing(active),
                   background: active ? GREEN : PAPER,
@@ -2545,7 +2635,7 @@ export default function DesignPalette({
                   flexShrink: 0,
                   cursor: 'pointer',
                   fontWeight: 600,
-                  fontSize: guided ? 13.5 : 12,
+                  fontSize: 13.5,
                 }}
               >
                 <span
@@ -2590,16 +2680,16 @@ export default function DesignPalette({
               <button
                 type="button"
                 onClick={() => setWindPicking((v) => !v)}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: 44, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✏️ {t('designPaletteChange')}
+                <Pencil size={13} aria-hidden /> {t('designPaletteChange')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: 44, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✕ {t('designPaletteClear')}
+                <X size={13} aria-hidden /> {t('designPaletteClear')}
               </button>
             </div>
           </>
@@ -2620,30 +2710,30 @@ export default function DesignPalette({
                     windControl.onSet({ prevailingFrom: label, recordedAt: new Date().toISOString() });
                     setWindPicking(false);
                   }}
-                  style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: guided ? 12.5 : 11.5 }}
+                  style={{ minHeight: 44, padding: '0 12px', borderRadius: 10, border: `2px solid ${GOLD}`, background: GREEN, color: PAPER, cursor: 'pointer', fontWeight: 700, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
                 >
-                  ✅ {t('designPaletteConfirm')}
+                  <Check size={13} aria-hidden /> {t('designPaletteConfirm')}
                 </button>
               )}
               <button
                 type="button"
                 onClick={() => setWindPicking((v) => !v)}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: 44, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                ✏️ {t(windControl.regional ? 'designPaletteChange' : 'designPaletteSetDirection')}
+                <Pencil size={13} aria-hidden /> {t(windControl.regional ? 'designPaletteChange' : 'designPaletteSetDirection')}
               </button>
               <button
                 type="button"
                 onClick={() => { windControl.onSet(null); setWindPicking(false); }}
-                style={{ minHeight: guided ? 44 : 36, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: guided ? 12.5 : 11.5 }}
+                style={{ minHeight: 44, padding: '0 12px', borderRadius: 10, border: '1px solid rgba(0,0,0,0.15)', background: PAPER, color: DARK, cursor: 'pointer', fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 5 }}
               >
-                🤷 {t('designPaletteNotSure')}
+                <HelpCircle size={13} aria-hidden /> {t('designPaletteNotSure')}
               </button>
             </div>
           </>
         )}
         {windPicking && (
-          <div style={scrollStripStyle(guided ? 10 : 6)}>
+          <div style={scrollStripStyle(10)}>
             {COMPASS16_ORDER.map((dir) => {
               const active = windControl.observation?.prevailingFrom === dir;
               return (
@@ -2655,8 +2745,8 @@ export default function DesignPalette({
                     setWindPicking(false);
                   }}
                   style={{
-                    minHeight: guided ? 44 : 36,
-                    minWidth: guided ? 44 : 36,
+                    minHeight: 44,
+                    minWidth: 44,
                     padding: '0 8px',
                     borderRadius: 10,
                     ...selectionRing(active),
@@ -2665,7 +2755,7 @@ export default function DesignPalette({
                     flexShrink: 0,
                     cursor: 'pointer',
                     fontWeight: 700,
-                    fontSize: guided ? 12.5 : 11,
+                    fontSize: 12.5,
                   }}
                 >
                   {dir}
@@ -2685,8 +2775,8 @@ export default function DesignPalette({
          Zone 0 at one edge and Zone 5 at the other; stack the six choices in reading order.
          The phone bottom sheet keeps its compact horizontal strip. */
       <div style={desktopAside
-        ? { display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, width: '100%' }
-        : scrollStripStyle(guided ? 10 : 6)}>
+        ? { display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }
+        : scrollStripStyle(10)}>
         {/* .map(Number) is load-bearing, not tidying. Object.keys returns STRINGS, and the old
             `as unknown as Array<0|1|2|3|4|5>` cast asserted otherwise without changing anything,
             so `z` was '3' at runtime. That stayed invisible because it was self-consistent:
@@ -2711,8 +2801,8 @@ export default function DesignPalette({
               aria-pressed={active}
               onClick={() => pickZone(z)}
               style={{
-                minHeight: guided ? 52 : 44,
-                padding: guided ? '8px 16px' : '6px 12px',
+                minHeight: 52,
+                padding: '8px 16px',
                 borderRadius: 10,
                 ...selectionRing(active),
                 background: def.color,
@@ -2726,11 +2816,11 @@ export default function DesignPalette({
                 flexShrink: 0,
                 cursor: 'pointer',
                 fontWeight: 700,
-                fontSize: guided ? 13.5 : 12,
+                fontSize: 13.5,
               }}
             >
               <span>{z}</span>
-              <span style={{ fontWeight: 500, fontSize: guided ? 12.5 : 11 }}>{def.label}</span>
+              <span style={{ fontWeight: 500, fontSize: 12.5 }}>{def.label}</span>
             </button>
           );
         })}
@@ -2745,7 +2835,7 @@ export default function DesignPalette({
     if (showElementCatalog) return null;
     return (
       /* Water/Structures step: compact line-kind chips row */
-      <div style={scrollStripStyle(guided ? 10 : 6)}>
+      <div style={scrollStripStyle(10)}>
         {lineChipsForStep.map((lk) => {
           const active = (lineKind === lk.id && tool === 'line') || selectedIdentity?.lineKind === lk.id;
           return (
@@ -2754,8 +2844,8 @@ export default function DesignPalette({
               type="button"
               onClick={() => pickLine(lk.id)}
               style={{
-                minHeight: guided ? 52 : 44,
-                padding: guided ? '8px 16px' : '6px 12px',
+                minHeight: 52,
+                padding: '8px 16px',
                 borderRadius: 10,
                 ...selectionRing(active),
                 background: active ? GREEN : PAPER,
@@ -2766,10 +2856,10 @@ export default function DesignPalette({
                 flexShrink: 0,
                 cursor: 'pointer',
                 fontWeight: 600,
-                fontSize: guided ? 13.5 : 12,
+                fontSize: 13.5,
               }}
             >
-              <span>{lk.icon}</span>
+              <lk.Icon size={16} aria-hidden />
               <span>{t(lk.labelKey)}</span>
             </button>
           );
@@ -2826,8 +2916,13 @@ export default function DesignPalette({
         </button>
         {hintDef ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <div>
-              {hintDef.icon} <strong>{hintDef.name}:</strong> {hintDef.tip}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+              {hintDef.art ? (
+                <img src={hintDef.art} alt="" aria-hidden style={{ width: 18, height: 18, objectFit: 'contain', flexShrink: 0, marginTop: 1 }} />
+              ) : (
+                <CategoryFallbackIcon category={hintDef.category} size={15} />
+              )}
+              <span><strong>{hintDef.name}:</strong> {hintDef.tip}</span>
             </div>
             <LessonLink id={`element:${hintDef.id}`} label={t('designPaletteLearnAbout')} />
           </div>
@@ -2897,7 +2992,7 @@ export default function DesignPalette({
           // can never sit there looking committed.
           onBlur={() => setDraft((d) => ({ ...d, [key]: undefined }))}
           style={{
-            width: 46, minHeight: guided ? 40 : 34, padding: '3px 5px', borderRadius: 8,
+            width: 46, minHeight: 40, padding: '3px 5px', borderRadius: 8,
             border: '1px solid rgba(0,0,0,0.2)', background: PAPER, color: DARK,
             fontSize: 13, fontWeight: 700, fontVariantNumeric: 'tabular-nums',
           }}
@@ -2906,8 +3001,8 @@ export default function DesignPalette({
     );
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, padding: '8px 0', borderBottom: '1px solid rgba(11,18,11,0.14)', flexShrink: 0 }}>
-        <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap' }}>
-          🛏️ {t('designPaletteBedBlock')}
+        <span style={{ fontSize: 11.5, fontWeight: 800, color: DARK, alignSelf: 'center', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+          <BedDouble size={13} aria-hidden /> {t('designPaletteBedBlock')}
         </span>
         {field(t('designPaletteBedLength'), spec.bedLengthM, 'bedLengthM', { step: 0.5, min: 0.2, max: 200 })}
         {field(t('designPaletteBedWidth'), spec.bedWidthM, 'bedWidthM', { step: 0.1, min: 0.2, max: 200 })}
@@ -2920,7 +3015,7 @@ export default function DesignPalette({
           style={{
             // Matches the element chips beside it. At 52 this button was the tallest thing in the
             // panel and dragged the whole row's height up with it for no extra reachability.
-            minHeight: guided ? 44 : 36, padding: '0 14px', borderRadius: 10, flexShrink: 0,
+            minHeight: 44, padding: '0 14px', borderRadius: 10, flexShrink: 0,
             // Armed IS selected — the block is about to land on the next tap, which is the one
             // state in this palette with a consequence, so it wears the same unmistakable ring.
             ...selectionRing(armed),
@@ -3007,7 +3102,7 @@ export default function DesignPalette({
             guarantee and Select/Undo/Delete stay one tap away even collapsed. Its own content is
             bounded by construction (a single non-wrapping horizontal strip), so it never needs an
             explicit height cap. */}
-        <div style={{ padding: '0 12px', display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, flexShrink: 0 }}>
+        <div style={{ padding: '0 12px', display: 'flex', flexDirection: 'column', gap: 10, flexShrink: 0 }}>
           {renderToolRow()}
         </div>
         {sheetOpen && <div style={{ padding: '0 12px', flexShrink: 0 }}>{renderBedBlock()}</div>}
@@ -3017,7 +3112,7 @@ export default function DesignPalette({
               padding: '0 12px calc(8px + env(safe-area-inset-bottom))',
               display: 'flex',
               flexDirection: 'column',
-              gap: guided ? 10 : 6,
+              gap: 10,
               overflowY: 'auto',
               WebkitOverflowScrolling: 'touch',
               // minHeight:0 is load-bearing: without it a column flex child defaults to
@@ -3043,7 +3138,7 @@ export default function DesignPalette({
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: guided ? 10 : 6,
+        gap: 10,
         fontFamily: 'inherit',
         ...(desktopAside
           ? workspaceMode === 'tray'
@@ -3137,10 +3232,10 @@ export default function DesignPalette({
           cap plus overflow-y:auto stays here as a safety net for an unusually short desktop
           window. Scoped to start AFTER the tool row on purpose: the Layers popover owns its own
           scroll cap and must not inherit this clipping region. */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
-      {desktopAside && workspaceMode !== 'tray' && (
+      {desktopAside && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
         <div
           role="separator"
           aria-label="Drag to resize the Elements panel"

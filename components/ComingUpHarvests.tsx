@@ -148,8 +148,8 @@ export default function ComingUpHarvests({
         <Figure label={text('Expected to pick', 'Isivuno esilinganisiwe')} value={kgLabel(book.totalKg)} />
         {value.confirmed ? (
           <>
-            <Figure label={text('If sold', 'Uma sithengisiwe')} value={rand(value.cash)} tone="#1F4D2B" />
-            {value.home > 0 && <Figure label={text('Kept at home, at shop prices', 'Okugcinelwe ekhaya, ngenani lesitolo')} value={rand(value.home)} tone="#5C5040" />}
+            <Figure label={text('If sold', 'Uma sithengisiwe')} value={rand(value.cash)} tone="var(--color-forest-800)" />
+            {value.home > 0 && <Figure label={text('Kept at home, at shop prices', 'Okugcinelwe ekhaya, ngenani lesitolo')} value={rand(value.home)} tone="var(--text-secondary)" />}
           </>
         ) : (
           <Link
@@ -183,7 +183,7 @@ export default function ComingUpHarvests({
   );
 }
 
-function Figure({ label, value, tone = '#20190F' }: { label: string; value: string; tone?: string }) {
+function Figure({ label, value, tone = 'var(--text-primary)' }: { label: string; value: string; tone?: string }) {
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
@@ -195,7 +195,7 @@ function Figure({ label, value, tone = '#20190F' }: { label: string; value: stri
 function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth; open: boolean; onToggle: () => void; lang: string }) {
   const empty = month.harvests.length === 0;
   return (
-    <div style={{ borderBottom: '1px solid #F0E9DA' }}>
+    <div style={{ borderBottom: '1px solid var(--border)' }}>
       <button
         type="button"
         onClick={empty ? undefined : onToggle}
@@ -213,7 +213,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
         </span>
         <span className="flex items-center gap-1.5 flex-shrink-0">
           {/* An em-dash, not "0 kg": nothing starting is not a harvest of nothing. */}
-          <span className="font-mono" style={{ fontSize: 13, color: empty ? '#B8AC96' : '#20190F' }}>
+          <span className="font-mono" style={{ fontSize: 13, color: empty ? 'var(--text-muted)' : 'var(--text-primary)' }}>
             {empty ? '—' : kgLabel(month.kg)}
           </span>
           {!empty && (
@@ -280,7 +280,7 @@ function Exclusions({
   }
   if (lines.length === 0) return null;
   return (
-    <div className="px-4 py-2.5" style={{ borderTop: '1px solid var(--border)', background: '#FBF7EF' }}>
+    <div className="px-4 py-2.5" style={{ borderTop: '1px solid var(--border)', background: 'var(--bg-2)' }}>
       {lines.map((line) => (
         <IsiZuluDraftSource key={line.english} className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }} lang={lang}
           english={line.english} zulu={line.zulu} />

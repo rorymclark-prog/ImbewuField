@@ -12,7 +12,7 @@ import { ArrowRight, X } from 'lucide-react';
 import SpeakButton from '@/components/SpeakButton';
 import { useLanguage, translate } from '@/lib/i18n';
 import {
-  ADD_ACTIONS, ADD_GROUP_ORDER, ADD_GROUP_LABEL_KEYS, runsOnSurface,
+  ADD_ACTIONS, ADD_GROUP_ORDER, ADD_GROUP_LABEL_KEYS, SIMPLE_ADD_ACTION_IDS, runsOnSurface,
   type AddAction,
 } from '@/lib/add-actions';
 
@@ -21,6 +21,9 @@ export interface AddSheetProps {
   surface: 'map' | 'studio';
   onClose: () => void;
   onPick: (action: AddAction) => void;   // caller executes or deep-links
+  // Simple / All tools (lib/app-level.ts). Simple shows only SIMPLE_ADD_ACTION_IDS; omitted or
+  // false renders every row, unchanged from before this prop existed.
+  simple?: boolean;
 }
 
 const FOREST = '#1F4D2B';
@@ -28,7 +31,7 @@ const INK = '#20190F';
 const INK_MUTED = '#7A6E58';
 const OCHRE = '#C07A1E';
 
-export default function AddSheet({ open, surface, onClose, onPick }: AddSheetProps) {
+export default function AddSheet({ open, surface, onClose, onPick, simple }: AddSheetProps) {
   const { t, lang } = useLanguage();
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -126,7 +129,8 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
         {/* Grouped rows — scrolls inside the sheet */}
         <div className="flex-1 overflow-y-auto px-3 py-3" style={{ overscrollBehavior: 'contain' }}>
           {ADD_GROUP_ORDER.map((group) => {
-            const actions = ADD_ACTIONS.filter((a) => a.group === group);
+            const actions = ADD_ACTIONS.filter((a) => a.group === group)
+              .filter((a) => !simple || SIMPLE_ADD_ACTION_IDS.includes(a.id));
             if (actions.length === 0) return null;
             return (
               <div key={group} className="mb-3">

@@ -646,6 +646,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     }
   }
 
+  // The site survey is local to the saved place and can work without location analysis. Keep
+  // it outside the data-dependent panel body so the map's empty/error state cannot swallow a
+  // survey opened from a saved site (sample mode intentionally cannot fetch location-data).
+  const siteSurveySheet = surveySheetOpen && activePlaceId ? (
+    <SiteSurveySheet
+      placeId={activePlaceId}
+      coords={coords}
+      annualRainfallMm={data?.rainfall.annual}
+      onSaved={() => { setSurveySheetOpen(false); if (data) openPhotoOrReport(); }}
+      onClose={() => setSurveySheetOpen(false)}
+    />
+  ) : null;
+
   // One-tap save of the current location (prominent, vs the Places tab form).
   const quickSavePlace = async () => {
     if (!data || !coords) return;
@@ -728,8 +741,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       </div>
     );
   }
-  if (!data && !loading) return <EmptyState />;
-  if (loading && !data) return <Skeleton />;
+  if (!data && !loading) return <><EmptyState />{siteSurveySheet}</>;
+  if (loading && !data) return <><Skeleton />{siteSurveySheet}</>;
   if (!data) return null;
 
   const bColor = BIOME_COLORS[data.biome.code] ?? '#6BA84F';
@@ -1907,15 +1920,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       )}
 
       {/* ── Site survey sheet ── */}
-      {surveySheetOpen && activePlaceId && (
-        <SiteSurveySheet
-          placeId={activePlaceId}
-          coords={coords}
-          annualRainfallMm={data?.rainfall.annual}
-          onSaved={() => { setSurveySheetOpen(false); openPhotoOrReport(); }}
-          onClose={() => setSurveySheetOpen(false)}
-        />
-      )}
+      {siteSurveySheet}
 
       {/* ── Pre-report photo prompt ── */}
       {photoPromptOpen && (

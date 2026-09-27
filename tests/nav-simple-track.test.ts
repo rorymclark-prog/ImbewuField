@@ -31,7 +31,7 @@ test('NavDrawer reads Simple / All tools and filters its rows by it, on top of r
   // The Simple allow-list keeps the core jobs and nothing else — checked as a set, not a
   // sequence, since it is written as one across the file.
   const CORE_HREFS = [
-    '/home', '/farmer', '/records', '/facilitator/crops', '/calendar',
+    '/home', '/farmer', '/records', '/facilitator/crops',
     '/journal', '/student', '/contact', '/design', '/account',
   ];
   for (const href of CORE_HREFS) {
@@ -47,7 +47,7 @@ test('NavDrawer reads Simple / All tools and filters its rows by it, on top of r
 test('organisation, expert and marketing rows are named as hidden from Simple, not carried into its allow-list', () => {
   const HIDDEN_FROM_SIMPLE = [
     '/reports', '/atlas', '/network', '/exchange', '/community',
-    '/cropplan', '/farmer?openSurvey=1', '/vision',
+    '/cropplan', '/farmer?openSurvey=1', '/vision', '/calendar',
     '/surveys', '/assessments', '/mentor', '/ngo', '/funder',
     '/offline', '/samples', '/samples/gardens', '/feedback', '/updates',
   ];
@@ -62,7 +62,7 @@ test('organisation, expert and marketing rows are named as hidden from Simple, n
 test('All tools is unaffected — every row NavDrawer offered before still exists, unfiltered by default', () => {
   // A quick canary that the item arrays themselves were not pruned, only filtered at render time.
   for (const href of ['/reports', '/atlas', '/network', '/exchange', '/cropplan',
-    '/farmer?openSurvey=1', '/vision', '/surveys', '/assessments', '/mentor', '/ngo', '/funder',
+    '/farmer?openSurvey=1', '/vision', '/calendar', '/surveys', '/assessments', '/mentor', '/ngo', '/funder',
     '/offline', '/samples', '/samples/gardens', '/feedback', '/updates']) {
     assert.match(NAV_DRAWER, new RegExp(`href: '${href.replace(/[/?=]/g, '\\$&')}'`),
       `${href} must still be a real row in NavDrawer — Simple hides it at render time, it does not remove it`);

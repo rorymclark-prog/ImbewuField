@@ -187,6 +187,12 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
         <HeroEntranceStyle />
+        {lang === 'st' && (
+          <p role="note" className="font-sans" style={{ background: '#FFF5D6', border: '1px solid #E9CC76', color: '#704B08', borderRadius: 12, padding: '8px 10px', fontSize: 12, lineHeight: 1.45, marginBottom: 14 }}>
+            <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
+            <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
+          </p>
+        )}
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>

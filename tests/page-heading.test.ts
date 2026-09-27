@@ -16,8 +16,8 @@ import test from 'node:test';
 // heading and is not one. A previous pass fixed six of them and the claim "every page has an h1"
 // was made on the strength of those six; it was wrong, and nothing was watching. Hence this file.
 //
-// WHY IT FOLLOWS IMPORTS. A page is often a thin wrapper — app/design-studio-2/preview/page.tsx is
-// one line, `export { default } from '@/components/design-studio-2/PreviewExport'`. Reading only
+// WHY IT FOLLOWS IMPORTS. A page is often a thin wrapper — one line like
+// `export { default } from '@/components/SomeScreen'`. Reading only
 // page.tsx would call that a failure and push someone to add a second, duplicate heading. So the
 // check asks the real question: starting at the route, is an <h1> reachable through the
 // first-party modules it pulls in?

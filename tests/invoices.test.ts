@@ -215,6 +215,35 @@ test('repeated sample invoice linking retains one original sale and rejects stal
   } finally { exitSampleMode(); }
 });
 
+test('sample mode never writes a pending invoice-sale link into real storage, and exiting leaves no trace', async () => {
+  const { local } = installBrowser();
+  const { enterSampleMode, exitSampleMode, getSandboxPendingInvoiceLinks } = await import('../lib/sample-mode.ts');
+  assert.equal(enterSampleMode(), true);
+  try {
+    const doc = linkedInvoice();
+    assert.equal(stageInvoiceSaleLink(doc), true);
+    assert.equal(loadPendingInvoiceLinks()[0]?.id, doc.id, 'the staged link must read back while sampling');
+    assert.equal(
+      getSandboxPendingInvoiceLinks()[0]?.id, doc.id,
+      'the link must land in the typed sample sandbox, like every other invoice accessor',
+    );
+    assert.equal(
+      local.getItem('imbewu_invoice_pending_links'), null,
+      'sample mode must never write the pending link into the device\'s real localStorage',
+    );
+    assert.equal(clearPendingInvoiceLink(doc.id), true);
+    assert.deepEqual(loadPendingInvoiceLinks(), []);
+    assert.equal(local.getItem('imbewu_invoice_pending_links'), null);
+  } finally {
+    exitSampleMode();
+  }
+  assert.deepEqual(loadPendingInvoiceLinks(), [], 'exiting sample mode must leave no pending link behind');
+  assert.equal(
+    local.getItem('imbewu_invoice_pending_links'), null,
+    'exiting sample mode must never have touched real storage',
+  );
+});
+
 test('customers are trimmed, deduplicated without case, and malformed storage is ignored', () => {
   const { local } = installBrowser();
   local.setItem('imbewu_invoice_customers', JSON.stringify([

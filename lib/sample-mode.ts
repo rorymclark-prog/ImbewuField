@@ -55,6 +55,7 @@ interface SampleSandbox {
   expenses: ExpenseLog[];
   production: ProductionLog[];
   invoices: SavedInvoice[];
+  pendingInvoiceLinks: SavedInvoice[];
   customers: Customer[];
   letterhead: SellerLetterhead;
   products: Product[];
@@ -84,6 +85,9 @@ function freshSandbox(): SampleSandbox {
     expenses: finance.expenses,
     production: finance.production,
     invoices: finance.invoices,
+    // No pending sale-invoice links in the seeded demo book — they only ever exist
+    // transiently between a farmer staging a link and the ledger write confirming it.
+    pendingInvoiceLinks: [],
     customers: finance.customers,
     letterhead: buildDemoLetterhead(),
     products: finance.products,
@@ -365,6 +369,8 @@ export function deleteSandboxProduction(id: string): void {
 /* ── Invoices ─────────────────────────────────────────────────────────── */
 export function getSandboxInvoices(): SavedInvoice[] { return ensure().invoices; }
 export function setSandboxInvoices(list: SavedInvoice[]): void { ensure().invoices = list; }
+export function getSandboxPendingInvoiceLinks(): SavedInvoice[] { return ensure().pendingInvoiceLinks; }
+export function setSandboxPendingInvoiceLinks(list: SavedInvoice[]): void { ensure().pendingInvoiceLinks = list; }
 export function getSandboxLetterhead(): SellerLetterhead { return ensure().letterhead; }
 export function setSandboxLetterhead(value: SellerLetterhead): void { ensure().letterhead = value; }
 export function getSandboxCustomers(): Customer[] { return ensure().customers; }

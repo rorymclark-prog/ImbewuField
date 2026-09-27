@@ -137,7 +137,6 @@ test('every converted surface asks through useAppConfirm', () => {
     'app/design/page.tsx',              // delete drone photo
     'app/community/profile/page.tsx',   // delete community profile
     'components/SiteSurveySheet.tsx',   // discard questionnaire answers
-    'components/design-studio-2/PreviewExport.tsx', // delete saved map
     'components/SavedPlaces.tsx',       // duplicate-site guard (form save)
     'components/Map.tsx',               // duplicate-site guard (pin save)
     'components/DataPanel.tsx',         // duplicate-site guard (one-tap save)

@@ -1,13 +1,13 @@
 // The sign-in screen didn't follow the app's Light/Dark/Auto theme. `lib/theme.tsx` sets
 // `data-theme` and toggles a `dark` class, and the rest of the app reads CSS custom properties
 // (`var(--color-ink)`, `var(--color-surface)`, `var(--border)` and friends) so those roles flip
-// with the theme. `app/login/page.tsx` and `app/gate/page.tsx` — the two screens every user must
+// with the theme. `app/login/page.tsx` (and the since-deleted `app/gate/page.tsx`) — the screens every user must
 // pass through before the theme system can even apply to anything else — were written almost
 // entirely in hard-coded hex instead: a farmer whose phone was in dark mode got a blazing white
 // card with dark-on-dark text at the one screen everyone hits first.
 //
 // This is a flat text scan, not a render test: it can't see contrast, only source. It guards the
-// specific regression — a literal hex colour creeping back into these two files — by asserting
+// specific regression — a literal hex colour creeping back into this file — by asserting
 // every `background`/`border`/`color`/`stroke`/Tailwind-ring hex in them is one of a short,
 // named allowlist. Anything else fails loudly with the offending line, rather than silently
 // reintroducing a colour that can't respond to `data-theme`/`.dark`.
@@ -27,7 +27,6 @@ import { fileURLToPath } from 'node:url';
 
 const FILES = [
   '../app/login/page.tsx',
-  '../app/gate/page.tsx',
 ].map((p) => fileURLToPath(new URL(p, import.meta.url)));
 
 // Google's own brand-colour swatches (components/GoogleIcon in login/page.tsx) — never themed.

@@ -113,7 +113,9 @@ export default function AppConfirmProvider({ children }: { children: React.React
             onClick={(e) => e.stopPropagation()}
             className="font-sans"
             style={{
-              width: '100%', maxWidth: 360, borderRadius: 16, padding: '18px 18px 14px',
+              // Source-paired recovery copy can exceed a short phone viewport; keep both choices reachable.
+              width: '100%', maxWidth: 360, maxHeight: 'calc(100dvh - 32px)', overflowY: 'auto',
+              borderRadius: 16, padding: '18px 18px 14px',
               background: 'var(--bg-1)', border: '1px solid var(--border)',
               boxShadow: '0 12px 40px rgba(0,0,0,0.28)', color: 'var(--text-primary)',
             }}

@@ -145,7 +145,7 @@ public/course-images/food-forest/food-forest-l3.jpg
 public/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg
 public/course-images/intro-permaculture/intro-permaculture-l1.jpg
 public/course-images/intro-permaculture/intro-permaculture-l2.jpg
-public/course-images/intro-permaculture/intro-permaculture-l3.jpg
+public/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg
 public/course-images/market-community/market-community-l1.jpg
 public/course-images/market-community/market-community-l2.jpg
 public/course-images/market-community/market-community-l3.jpg

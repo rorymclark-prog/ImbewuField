@@ -11,6 +11,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -90,12 +91,16 @@ export default function VisionPage() {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const t = (en: string, isiZulu: string) => zu ? isiZulu : en;
+  const simple = useAppLevel() === 'simple';
   const [mode, setMode] = useState<Mode>('crop');
   const [preview, setPreview] = useState<string | null>(null);
   const [imagePayload, setImagePayload] = useState<{ data: string; mediaType: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<LimaResult | null>(null);
   const [networkError, setNetworkError] = useState<string | null>(null);
+  // Simple starts every new answer collapsed — the confidence readout is technical detail a
+  // farmer can open, not something the plain-words answer needs by default.
+  const [showDetail, setShowDetail] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -110,6 +115,7 @@ export default function VisionPage() {
     setMode(m);
     setResult(null);
     setNetworkError(null);
+    setShowDetail(false);
   }
 
   const handleFile = useCallback((file: File) => {
@@ -120,6 +126,7 @@ export default function VisionPage() {
     setPreview(url);
     setResult(null);
     setNetworkError(null);
+    setShowDetail(false);
 
     // Read base64 via FileReader (browser-only — safe inside event callback)
     const reader = new FileReader();
@@ -138,6 +145,7 @@ export default function VisionPage() {
     setLoading(true);
     setResult(null);
     setNetworkError(null);
+    setShowDetail(false);
 
     try {
       const res = await fetch('/api/lima-vision', {
@@ -347,11 +355,21 @@ export default function VisionPage() {
                         ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? 'week' : 'weeks'} {t('to harvest', 'kuze kuvunwe')}
                       </div>
                     </div>
-                    <ConfidencePill level={cropResult.confidence} zu={zu} />
+                    {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
                     <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
+                    {simple && !showDetail && (
+                      <button
+                        type="button"
+                        onClick={() => setShowDetail(true)}
+                        className="font-sans text-xs font-semibold underline"
+                        style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                      >
+                        {t('More detail', 'Imininingwane engeziwe')}
+                      </button>
+                    )}
                   </div>
                 )}
 
@@ -363,11 +381,21 @@ export default function VisionPage() {
                         ~{weighResult.estimatedKg} kg
                       </div>
                     </div>
-                    <ConfidencePill level={weighResult.confidence} zu={zu} />
+                    {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
                     <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>
+                    {simple && !showDetail && (
+                      <button
+                        type="button"
+                        onClick={() => setShowDetail(true)}
+                        className="font-sans text-xs font-semibold underline"
+                        style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                      >
+                        {t('More detail', 'Imininingwane engeziwe')}
+                      </button>
+                    )}
                   </div>
                 )}
               </div>

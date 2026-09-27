@@ -12,8 +12,7 @@ import test from 'node:test';
 // unmoved, and was told to do the survey again. The fix repoints the menu entry
 // to /farmer?openSurvey=1 — the same deep link app/home/page.tsx already uses for
 // its own "Do the site survey" nudge (see STEP_ACTIONS.survey there), so the menu
-// and the score now agree. /survey itself is untouched: it may still be bookmarked,
-// and merging the two survey stores is a product decision, not a menu fix.
+// and the score now agree. The orphaned /survey wizard itself was deleted on 2026-09-26.
 //
 // (2) app/calendar/page.tsx — a maintained seasonal planting calendar — had no
 // entry anywhere in the app. It now sits in Farm Tools beside Field Journal and

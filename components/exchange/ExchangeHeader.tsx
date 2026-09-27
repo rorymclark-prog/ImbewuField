@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Handshake } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -15,9 +14,6 @@ export default function ExchangeHeader() {
   return (
     <header className="flex items-center gap-3 px-4" style={{ height: 56, borderBottom: `1px solid ${EX.border}`, background: EX.card }}>
       <MenuButton /><BackButton fallback="/home" />
-      <Link href="/home" aria-label={zu ? 'Emuva' : 'Back'} style={{ display: 'flex', alignItems: 'center', color: EX.muted, textDecoration: 'none' }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
-      </Link>
       <Handshake size={17} aria-hidden style={{ flexShrink: 0 }} />
       <div style={{ minWidth: 0 }}>
         <h1 className="font-display font-bold" style={{ fontSize: 14, color: EX.ink, margin: 0, lineHeight: 1.2, whiteSpace: 'nowrap' }}>{zu ? 'Ukuhwebelana kwabalimi' : 'Farmer exchange'}</h1>

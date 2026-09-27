@@ -25,7 +25,7 @@ import DeckPlayer from '@/components/course/DeckPlayer';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
-import { hasDeck, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
+import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
@@ -45,7 +45,7 @@ import {
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
-import { useAppLevel } from '@/lib/app-level';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
   foundation: 'studentCategoryFoundation',
@@ -133,7 +133,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
       <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
-      {englishSource && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
+      {englishSource && englishSource.q !== q && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -165,7 +165,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
             >
               <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
-              {englishSource && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
+              {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
                 <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
               )}
@@ -183,7 +183,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
           <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
           <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
             <p>{rationale}</p>
-            {englishSource?.rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
+            {englishSource?.rationale && englishSource.rationale !== rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
           </div>
         </div>
       )}
@@ -215,8 +215,12 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
   const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
-  const regionalDraft = (lang === 'st' || lang === 'ts') && presentation.status === 'draft';
-  const regionalFallback = (lang === 'st' || lang === 'ts') && presentation.status === 'english-fallback';
+  const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
+  const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+    lessonContent.infographicAlt !== lesson.infographicAlt
+    ? lessonContent.infographicAlt
+    : undefined;
   const hasAudio = lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
@@ -253,7 +257,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                 {t('studentZuluLessonEnglishBadge')}
               </span>
             )}
-            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>AI draft · review pending</span>}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : 'AI draft · review pending'}</span>}
             {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>English lesson</span>}
           </span>
         </span>
@@ -274,8 +278,9 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {t('studentZuluLessonEnglishFallbackNotice')}
             </div>
           )}
-          {regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides pair Sesotho drafts and English holds with exact English source. Narration remains English.' : 'Slides and narration remain in English.'}</div>}
           {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
+          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -319,17 +324,35 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
           {hasInfographic && (
             <div className={hasAudio ? '' : 'pt-4'}>
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
+              {infographicAltDraft && (
+                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                  <p lang={lang} className="text-sm">{infographicAltDraft}</p>
+                  <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
+                </div>
+              )}
             </div>
           )}
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {lessonContent.body.split('\n\n').map((para, i) => (
-              <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
-                {para}
-              </p>
-            ))}
-            {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+            {regionalDraft && lessonContent.body === lesson.body ? (
+              <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
+                <p className="font-semibold">Exact English source</p>
+                <p><span className="font-semibold">Title:</span> {lesson.title}</p>
+                {lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
+              </div>
+            ) : (
+              <>
+                {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
+                {lessonContent.body.split('\n\n').map((para, i) => (
+                  <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                    {para}
+                  </p>
+                ))}
+                {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+              </>
+            )}
           </div>
 
           {/* Key points */}
@@ -339,7 +362,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -705,6 +728,10 @@ export default function StudentPage() {
 
   const currentId = useMemo(() => currentModuleId(gatingCtx), [gatingCtx]);
   const capstoneUnlocked = useMemo(() => isCapstoneUnlocked(gatingCtx), [gatingCtx]);
+  // Content-QA info, not a farmer or student decision — truly staff-only (mentor/ngo/funder/
+  // admin), unlike the Simple/All tools items above. Gated on both: staff still lose it if they
+  // themselves choose Simple, but a student's own default of All tools must never surface it.
+  const isStaff = isStaffRole(gatingCtx.role);
 
   const submissionByModule = useMemo(() => {
     const m = new Map<string, CourseSubmission>();
@@ -817,6 +844,12 @@ export default function StudentPage() {
             style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
             <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
             <span lang="en">/ Unreviewed Xitsonga draft.</span>
+          </p>
+        )}
+        {lang === 've' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            <span lang="en">{t('studentTshivendaUiDraftNotice')}</span>
           </p>
         )}
         {/* Progress hero */}
@@ -985,6 +1018,9 @@ export default function StudentPage() {
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
+            const deck = deckFor(mod.id);
+            const regionalDraftSlides = Boolean(deck?.slideLanguages.includes(lang) &&
+              deck.slides.some(slide => !deck.missingSlides?.[lang]?.includes(slide.slide)));
 
             // Browsing permission is independent of production readiness and earned progress.
             const contentComplete = isModuleComplete_Content(mod.id);
@@ -1019,10 +1055,10 @@ export default function StudentPage() {
                         <span className={`font-display ${styles.moduleTitle}`}>
                           {modulePresentation.title}
                         </span>
-                        {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
+                        {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                           <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1063,10 +1099,10 @@ export default function StudentPage() {
                     aria-expanded={isExpanded}
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
-                    {(lang === 'zu' || lang === 'st' || lang === 'ts') && (
+                    {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
                       <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? 'AI draft · review pending' : 'English module')}
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
@@ -1093,7 +1129,7 @@ export default function StudentPage() {
                           half-built or the finished one is mistaken for the standard. The
                           in-progress wording says what IS there — the lessons are real and
                           readable today; it is the narration and slides that are still coming. */}
-                      {!simple && (
+                      {!simple && isStaff && (
                         <span
                           title={readinessTitle}
                           className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1128,7 +1164,7 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {modulePresentation.description}
                     </p>
-                    {(lang === 'st' || lang === 'ts') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
+                    {(lang === 'st' || lang === 'ts' || lang === 've') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: '#755942' }} />
@@ -1138,14 +1174,18 @@ export default function StudentPage() {
                         <div className="flex items-center gap-1">
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
                           <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
-                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts') ? 'Audio: English' : t('studentAudio')}
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
                       {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
                         <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
-                      {(lang === 'st' || lang === 'ts') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Slides: English</span>}
+                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
+                        {regionalDraftSlides
+                          ? `Slides: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang]} AI draft + English source`
+                          : 'Slides: English'}
+                      </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#755942' }}>
@@ -1330,10 +1370,10 @@ export default function StudentPage() {
           // are an All tools companion for a facilitator, not a farmer's next tap.
           <div className={styles.coursePreviews}>
             <OfflinePageLink href="/student/design" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentDesignPreviewCardTitle')}</strong></span>
+              <span><strong className="font-display">{t('studentDesignPreviewSimpleLabel')}</strong><span>{t('studentDesignPreviewCardTitle')}</span></span>
             </OfflinePageLink>
             <OfflinePageLink href="/student/finance" className={styles.coursePreviewLink}>
-              <span><strong className="font-display">{t('studentFinancePreviewCardTitle')}</strong></span>
+              <span><strong className="font-display">{t('studentFinancePreviewSimpleLabel')}</strong><span>{t('studentFinancePreviewCardTitle')}</span></span>
             </OfflinePageLink>
           </div>
         ) : (
@@ -1367,6 +1407,14 @@ export default function StudentPage() {
         </details>
         </div>
         )}
+
+        <div className={styles.coursePreviews}>
+          <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
+            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
+              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
+              <em>Open the two-day course →</em></span>
+          </Link>
+        </div>
 
         <LimaBar />
 

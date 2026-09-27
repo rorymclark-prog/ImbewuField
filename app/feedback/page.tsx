@@ -6,6 +6,7 @@ import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode } from '@/lib/sample-mode';
 import { feedbackText,validFeedback,type FeedbackInput } from '@/lib/product-feedback';
@@ -14,11 +15,14 @@ import styles from '@/components/SampleExperience.module.css';
 
 type Ticket={id:string;title:string;kind:string;details:string;createdAt:string;role:string;sample:boolean;path:string};
 export default function FeedbackPage(){
-  const {user,role}=useAuth();const {lang}=useLanguage();const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState('/'),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
+  const {user,role}=useAuth();const {lang}=useLanguage();const simple=useAppLevel()==='simple';const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState('/'),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
   const label=(en:string,zu:string)=>lang==='zu'?zu:en;
   // Keep exact English visible for decisions about sending personal information.
   const paired=(en:string,zu:string)=>lang==='zu'?`${zu} / ${en}`:en;
   const [id,setId]=useState('');
+  // Simple has no separate Title field, so the single "Tell us" box drives both — the title is
+  // just the start of what was typed, silently kept valid for validFeedback's 3-char floor.
+  function tellUs(value:string){setDetails(value);setTitle(value.trim().slice(0,160)||'Feedback');setId('');}
   function input():FeedbackInput{const key=id||crypto.randomUUID();if(!id)setId(key);return {id:key,kind,title,details,path,sample:isSampleMode()};}
   async function send(){if(!user||!agree||busy||receipt)return;const data=input();if(!validFeedback(data)){setError(paired('Add a title, details and a page path without a query or personal information.','Faka isihloko, imininingwane nendlela yekhasi engenawo umbuzo noma imininingwane yomuntu siqu.'));return;}setBusy(true);setError('');try{
     const response=await fetch('/api/product-feedback',{method:'POST',headers:{...await paidApiHeaders(user),'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.saved)throw Error(result.error||'Delivery not confirmed.');setReceipt(result.reference);
@@ -34,11 +38,13 @@ export default function FeedbackPage(){
       <p>{paired('Saved in the private developer inbox. Reference:','Kulondolozwe ebhokisini eliyimfihlo lomthuthukisi. Inombolo yokubhekisela:')} {receipt}</p>
       <button onClick={()=>{setReceipt('');setId('');setTitle('');setDetails('');setAgree(false);}}>{label('Write another','Bhala okunye')}</button>
     </section>:<form onSubmit={e=>{e.preventDefault();void send();}} className={styles.card}><fieldset disabled={busy} style={{minWidth:0}}>
+      {simple?<label>{label('Tell us','Sitshele')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>tellUs(e.target.value)}/></label>:<>
       <label>{label('What would you like to send?','Ufuna ukuthumela ini?')}<select value={kind} onChange={e=>setKind(e.target.value as 'bug'|'feature')}>
         <option value="bug">{label('Report a bug','Bika inkinga')}</option><option value="feature">{label('Request a feature','Cela isici esisha')}</option>
       </select></label>
       <label>{label('Title','Isihloko')}<input required minLength={3} maxLength={160} value={title} onChange={e=>{setTitle(e.target.value);setId('');}}/></label>
       <label>{kind==='bug'?label('What did you do, what happened, and what did you expect?','Wenzeni, kwenzekeni, futhi ubulindeleni?'):label('What would you like to do, and why would it help?','Ufuna ukwenzani, futhi kungasiza ngani?')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>{setDetails(e.target.value);setId('');}}/></label>
+      </>}
       <label>{label('App page (optional)','Ikhasi lohlelo (ungalikhetha)')}<input value={path} maxLength={200} placeholder="/mentor" onChange={e=>{setPath(e.target.value||'/');setId('');}}/></label>
       <p className={styles.meta}>{paired('Only the form, your account identifier and organisation/role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, isihlonzi se-akhawunti yakho, inhlangano nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
       <label className={styles.check}><input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)}/>{paired('Send this feedback to the real developer inbox, including from a practice view.','Thumela lo mbiko ebhokisini langempela lomthuthukisi, ngisho nasendaweni yokuzijwayeza.')}</label>

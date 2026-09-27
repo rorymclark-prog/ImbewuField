@@ -24,24 +24,24 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l1",
       "infographicAlt": {
         "sourceEnglish": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
-        "xitsongaDraft": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Xifaniso xa miehleketo xa xisele (swale) lexi ringaneke eka khanthura, xi tsemakanyiwile exikarhi, xi ri na khurhana ra misava (berm) ehansi ka xona. Miseve yi komba mati lama khulukaka ma nonoka naswona ma hangalaka; ku nghena ka mati emisaveni swi titshege hi misava na ndhawu.",
+        "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Swales and Berms: Slowing Water on the Slope",
-        "xitsongaDraft": "Swales and Berms: Slowing Water on the Slope",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Swisele (swales) na Makhurhana ya Misava (berms): Ku Nonokisa Mati eNdhawini yo Rhelela",
+        "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
-        "xitsongaDraft": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
-        "reviewStatus": "hold"
+        "xitsongaDraft": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku man'wana ma nghena emisaveni leyi faneleke. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke misava ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka misava yo rhelela ngopfu, leyi tsakameke kumbe leyi nga tiyangiki. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+        "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
-          "xitsongaDraft": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Xisele lexi ringaneke eka khanthura xi nga khoma mati lama khulukaka leswaku ma nghena emisaveni eka ndhawu leyi faneleke; swisele swin'wana swi lava ku rhelela loku dizayiniweke na ndlela leyi hlayisekeke yo humesa mati",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Keep good ground cover and plan a safe overflow",
@@ -50,8 +50,8 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Assess soil, drainage, slope and storm flow before digging",
-          "xitsongaDraft": "Assess soil, drainage, slope and storm flow before digging",
-          "reviewStatus": "hold"
+          "xitsongaDraft": "Kambela misava, ku humesa mati, ku rhelela na ku khuluka ka mati ya xidzedze u nga si cela",
+          "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "A concept picture is not a construction design",
@@ -248,17 +248,17 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l3",
       "infographicAlt": {
         "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        "xitsongaDraft": "Mpfula yi khuluka ehenhla ka lwangu yi nghena eka gavhu kutani yi rhelela hi phayiphi yi nghena etangini, laha ku nga na first-flush diverter leyitsongo leyi hambanaka na phayiphi tangi ri nga si fikeleleka ku lahla mati yo sungula lama thyakeke.",
+        "xitsongaDraft": "Mpfula yi khuluka ehenhla ka lwangu yi nghena eka gatara kutani yi rhelela hi phayiphi yi nghena ethankini, laha ku nga na first-flush diverter leyitsongo leyi hambanaka na phayiphi thanki yi nga si fikeleleka ku lahla mati yo sungula lama thyakeke.",
         "reviewStatus": "machine-draft"
       },
       "title": {
         "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
-        "xitsongaDraft": "Matangi ya Mati ya Mpfula na ku Hlengeleta eLwangwini: Ku Hlengeleta na ku Sirhelela Mati",
+        "xitsongaDraft": "Tithanki ta Mati ya Mpfula na ku Hlengeleta eLwangwini: Ku Hlengeleta na ku Sirhelela Mati",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa tangi.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tekela enhlokweni mati lama hundzaka gavhu, lama hambukisiwaka kumbe lama halakaka loko tangi ri tele.\n\nNtsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta va na mati yo tanihi kwihi hi nkarhi wa dyandza. Pimanisa mati lama nga kona na mitirho leyi u yi kunguhataka.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nSayizi ya tangi yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi ya dyandza.\n\nTsala mitirho leyi kunguhatiweke kutani u ringanisa xilaveko ku suka eka tirhekhodo ta wena n'wini. Pimanisa sweswo na mati lama kumekaka hi tinguva hinkwato.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka. Vito ra phurovhinse ntsena a ri nge ku byeli sayizi ya tangi leyi u yi lavaka.\n\nHlayisa tangi ri funengetiwile, sefa tindhawu leti pfulekeke ku sivela switsotswana, naswona u hlayisa lwangu, tigavhu na diverter. Hlayisa mati ya mpfula ma hambanile na tiphayiphi ta mati yo nwa.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tekela enhlokweni mati lama hundzaka gatara, lama hambukisiwaka kumbe lama halakaka loko thanki yi tele.\n\nNtsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta va na mati yo tanihi kwihi hi nkarhi wa dyandza. Pimanisa mati lama nga kona na mitirho leyi u yi kunguhataka.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nSayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi ya dyandza.\n\nTsala mitirho leyi kunguhatiweke kutani u ringanisa xilaveko ku suka eka tirhekhodo ta wena n'wini. Pimanisa sweswo na mati lama kumekaka hi tinguva hinkwato.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka. Vito ra phurovhinse ntsena a ri nge ku byeli sayizi ya thanki leyi u yi lavaka.\n\nHlayisa thanki yi funengetiwile, sefa tindhawu leti pfulekeke ku sivela switsotswana, naswona u hlayisa lwangu, tigatara na diverter. Hlayisa mati ya mpfula ma hambanile na tiphayiphi ta mati yo nwa.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
         "reviewStatus": "hold"
       },
       "keyPoints": [
@@ -287,7 +287,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "What information is needed to choose a rainwater tank?",
-            "xitsongaDraft": "Hi vuxokoxoko bahi lebyi lavekaka ku hlawula tangi ra mati ya mpfula?",
+            "xitsongaDraft": "Hi vuxokoxoko bahi lebyi lavekaka ku hlawula thanki ya mati ya mpfula?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -308,21 +308,21 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Only the price of the biggest available tank",
-              "xitsongaDraft": "Ntsena nxavo wa tangi lerikulu ngopfu leri kumekaka",
+              "xitsongaDraft": "Ntsena nxavo wa thanki leyikulu ngopfu leyi kumekaka",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            "xitsongaDraft": "Ku kunguhatela tangi swi fanele swi pimanisa mati lama tirhisekaka na xilaveko eka minkarhi ya mpfula na ya dyandza. Sayizi yin'we leyi pimiweke ya xifundzha a yi nge swi koti sweswo.",
+            "xitsongaDraft": "Ku kunguhatela thanki swi fanele swi pimanisa mati lama tirhisekaka na xilaveko eka minkarhi ya mpfula na ya dyandza. Sayizi yin'we leyi pimiweke ya xifundzha a yi nge swi koti sweswo.",
             "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
-            "xitsongaDraft": "Ha yini first-flush diverter yi ri ya nkoka hambi ku ri eka mati ya tangi lama tirhiseriwaka ku cheleta ntsena?",
+            "xitsongaDraft": "Ha yini first-flush diverter yi ri ya nkoka hambi ku ri eka mati ya thanki lama tirhiseriwaka ku cheleta ntsena?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -343,7 +343,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "It stops the tank overfilling in storms",
-              "xitsongaDraft": "Yi sivela tangi ku tala ngopfu hi minkarhi ya swidzedze",
+              "xitsongaDraft": "Yi sivela thanki ku tala ngopfu hi minkarhi ya swidzedze",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -360,7 +360,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "id": "water-harvesting-l4",
       "title": {
         "sourceEnglish": "Greywater: Check Before Reuse",
-        "xitsongaDraft": "Greywater: Kamba u nga si Tirhisa Nakambe",
+        "xitsongaDraft": "Mati lama Tirhisiweke (greywater): Kamba u nga si ma Tirhisa Nakambe",
         "reviewStatus": "machine-draft"
       },
       "body": {
@@ -371,7 +371,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "keyPoints": [
         {
           "sourceEnglish": "Water sources and greywater guidance can differ",
-          "xitsongaDraft": "Swihlovo swa mati na swiletelo swa greywater swi nga hambana",
+          "xitsongaDraft": "Swihlovo swa mati na swiletelo swa mati lama tirhisiweke (greywater) swi nga hambana",
           "reviewStatus": "machine-draft"
         },
         {
@@ -381,7 +381,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Soil and mulch do not disinfect wastewater",
-          "xitsongaDraft": "Misava na mulch a swi dlai switsongwatsongwana ematini lama thyakeke",
+          "xitsongaDraft": "Misava na xifunengeto (mulch) a swi dlai switsongwatsongwana ematini lama thyakeke",
           "reviewStatus": "machine-draft"
         },
         {
@@ -470,90 +470,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "field": "description",
       "sourceText": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
       "reason": "The central instruction “slow, spread and sink every drop” is technical and idiomatic; keep the full source exact until a fluent reviewer confirms the wording."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "title",
-      "sourceText": "Swales and Berms: Slowing Water on the Slope",
-      "reason": "Earthwork terms “swale” and “berm” need a verified Xitsonga equivalent."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "infographicAlt",
-      "sourceText": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
-      "reason": "The contour-swale cross-section and infiltration terms need verified Xitsonga technical wording."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[0]",
-      "sourceText": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[1]",
-      "sourceText": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[2]",
-      "sourceText": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[3]",
-      "sourceText": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[4]",
-      "sourceText": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[5]",
-      "sourceText": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[6]",
-      "sourceText": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "body[7]",
-      "sourceText": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
-      "reason": "Swale and berm earthworks, overflow design, slope stability and receiving-water claims are technical and site-specific; keep the lesson exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "keyPoints[0]",
-      "sourceText": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
-      "reason": "Agy returned this field unchanged; keep the exact English source until reviewed."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "keyPoints[0]",
-      "sourceText": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
-      "reason": "The contour, infiltration, slope and storm-flow wording is technical; retain exact English pending fluent agronomic review."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "keyPoints[2]",
-      "sourceText": "Assess soil, drainage, slope and storm flow before digging",
-      "reason": "Agy returned this field unchanged; keep the exact English source until reviewed."
-    },
-    {
-      "lessonId": "water-harvesting-l1",
-      "field": "keyPoints[2]",
-      "sourceText": "Assess soil, drainage, slope and storm flow before digging",
-      "reason": "The contour, infiltration, slope and storm-flow wording is technical; retain exact English pending fluent agronomic review."
     },
     {
       "lessonId": "water-harvesting-l1",
