@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
-import { logAiUsage } from '@/lib/ai-cost';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -147,6 +147,9 @@ type AllowedMediaType = typeof ALLOWED_MEDIA_TYPES[number];
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/chat');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/chat', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   let body: any;
   try {
     body = await req.json();
@@ -210,8 +213,8 @@ export async function POST(req: NextRequest) {
   const CACHE_MIN_CHARS = 4000; // ~1k tokens, the smallest prefix the model will cache
   const cacheableSystem = system.length >= CACHE_MIN_CHARS;
 
-  const stream = await client.messages.stream({
-    model: 'claude-sonnet-4-6',
+  const stream = await ai.messages.stream({
+    model: AI_MODELS.main,
     max_tokens: 1500,
     system: cacheableSystem
       ? [{ type: 'text' as const, text: system, cache_control: { type: 'ephemeral' as const } }]
@@ -232,16 +235,7 @@ export async function POST(req: NextRequest) {
         controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
       } finally {
         controller.close();
-        // Usage arrives on the final message, which only exists once the stream has drained — so it
-        // is read here rather than beside the create() call. Never allowed to affect the response:
-        // the farmer's answer has already been delivered by this point, and a metrics failure must
-        // not surface as an error on a reply that worked.
-        try {
-          const final = await stream.finalMessage();
-          logAiUsage('chat', 'claude-sonnet-4-6', final.usage, image?.data ? 'with image' : undefined);
-        } catch {
-          // Deliberately silent: cost telemetry is never worth breaking a delivered answer for.
-        }
+        // Usage is priced, logged and added to the person's allowance by lib/metered-ai.ts.
       }
     },
   });

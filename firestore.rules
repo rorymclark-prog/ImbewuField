@@ -625,6 +625,10 @@ service cloud.firestore {
 
     // Per-user daily render quota, written ONLY by the Admin-SDK worker. Readable by the owner so
     // the UI can show "N of your daily renders left"; never client-writable.
+    // Per-person monthly AI spend (lib/ai-budget.ts), written ONLY by the Admin SDK. The Account
+    // page reads it through /api/ai-allowance, so the browser never touches it directly.
+    match /ai_spend/{docId} { allow read, write: if false; }
+
     match /render_usage/{docId} {
       allow read:  if signedIn() && docId.split('_')[0] == request.auth.uid;
       allow write: if false;
