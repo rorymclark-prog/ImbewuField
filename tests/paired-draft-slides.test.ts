@@ -38,6 +38,16 @@ test('standard written Xitsonga uses the same exact source and paragraph pairing
   assert.throws(() => validatePairedDraft(completeHold('xh'), source, 'xh'), /language is unsupported/);
 });
 
+test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its current English narration', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'ts');
+  const drafted = slides.flatMap((slide: any) => slide.target.body
+    .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean));
+  assert.deepEqual(drafted, ['4:1', '4:2', '8:2']);
+});
+
 test('a changed source sentence or heading blocks the entire paired draft', () => {
   const changed = completeHold();
   changed.slides[3].english.body[1] += ' Water every day.';

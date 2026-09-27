@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '656a7c38', changes: [
+    'Food Forest lesson 1 now has two source-paired Xitsonga draft slides.',
+  ], tour: [
+    { title: 'Compare the Food Forest draft', where: 'Study → Food Forest Design → lesson 1', href: '/student',
+      detail: 'Choose Xitsonga and open slides 4 and 8. Three concept sentences are marked as unreviewed drafts beside exact English. Other slides and all narration remain English; select English source audio to listen.' },
+  ] },
   { when: '27 September 2026', sha: 'fd50fb6d', changes: [
     'Introduction lesson 3 now shows a footpath zones example in the lesson card.',
   ], tour: [
