@@ -47,6 +47,7 @@ export const MANUAL_CHAPTERS = [
   '10-natural-pest-control',
   '11-home-and-appropriate-technology',
   '12-glossary',
+  '13-notes-and-references',
 ] as const;
 export type ManualChapter = (typeof MANUAL_CHAPTERS)[number];
 

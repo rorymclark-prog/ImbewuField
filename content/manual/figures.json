@@ -2,16 +2,12 @@
   {
     "id": "00-handbook-collage",
     "chapter": "00-introduction",
-    "section": 0,
+    "section": 1,
     "src": "/manual/figures/00-handbook-collage.jpg",
     "width": 880,
     "height": 880,
     "caption": {
-      "en": "Scenes from the handbook's project gardens: maize, fruit, mulched beds, a home run on solar power and a harvest of vegetables.",
-      "zu": "Izithombe zezingadi zephrojekthi yale ncwadi: ummbila, izithelo, imibhede ene-mulch, indlu esebenzisa amandla elanga nesivuno semifino.",
-      "st": "Ditshwantsho tsa diserapa tsa projeke ya bukana ena: poone, ditholwana, dibethe tsa serapa tse nang le mulch, ntlo e sebedisang matla a letsatsi le kotulo ya meroho.",
-      "ve": "Zwifanyiso zwa ngade dza phurojeke ya bugu iyi: mavhele, mitshelo, ndima dzi re na mulch, nnḓu i shumisaho maanḓa a ḓuvha na khaṋo ya miroho.",
-      "ts": "Swifaniso swa mintanga ya phurojeke ya buku leyi: mavele, mihandzu, mibhedhi leyi nga na mulch, yindlu leyi tirhisaka matimba ya dyambu na ntshovelo wa matsavu."
+      "en": "Permaculture gardens at work: maize, fruit, mulched beds, a home run on solar power and a harvest of vegetables."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
@@ -290,7 +286,7 @@
   {
     "id": "05-chicken-needs-yields",
     "chapter": "05-animal-systems",
-    "section": 1,
+    "section": 0,
     "src": "/manual/figures/05-chicken-needs-yields.jpg",
     "width": 937,
     "height": 639,
@@ -306,7 +302,7 @@
   {
     "id": "05-poultry-tractors",
     "chapter": "05-animal-systems",
-    "section": 2,
+    "section": 1,
     "src": "/manual/figures/05-poultry-tractors.jpg",
     "width": 1160,
     "height": 545,
@@ -322,7 +318,7 @@
   {
     "id": "05-chicken-tractor",
     "chapter": "05-animal-systems",
-    "section": 2,
+    "section": 1,
     "src": "/manual/figures/05-chicken-tractor.jpg",
     "width": 680,
     "height": 602,
@@ -338,7 +334,7 @@
   {
     "id": "05-poultry-netting-energiser",
     "chapter": "05-animal-systems",
-    "section": 2,
+    "section": 1,
     "src": "/manual/figures/05-poultry-netting-energiser.jpg",
     "width": 666,
     "height": 960,
@@ -354,7 +350,7 @@
   {
     "id": "05-pigs-windfall-fruit",
     "chapter": "05-animal-systems",
-    "section": 4,
+    "section": 3,
     "src": "/manual/figures/05-pigs-windfall-fruit.jpg",
     "width": 683,
     "height": 512,
@@ -370,7 +366,7 @@
   {
     "id": "05-pig-tractor",
     "chapter": "05-animal-systems",
-    "section": 4,
+    "section": 3,
     "src": "/manual/figures/05-pig-tractor.jpg",
     "width": 652,
     "height": 489,
@@ -386,7 +382,7 @@
   {
     "id": "05-pig-cleared-ground",
     "chapter": "05-animal-systems",
-    "section": 4,
+    "section": 3,
     "src": "/manual/figures/05-pig-cleared-ground.jpg",
     "width": 649,
     "height": 633,
@@ -402,7 +398,7 @@
   {
     "id": "05-muscovy-ducks",
     "chapter": "05-animal-systems",
-    "section": 5,
+    "section": 4,
     "src": "/manual/figures/05-muscovy-ducks.jpg",
     "width": 1280,
     "height": 544,
@@ -418,7 +414,7 @@
   {
     "id": "05-hive-on-tyres",
     "chapter": "05-animal-systems",
-    "section": 6,
+    "section": 5,
     "src": "/manual/figures/05-hive-on-tyres.jpg",
     "width": 720,
     "height": 1280,
@@ -439,11 +435,7 @@
     "width": 833,
     "height": 596,
     "caption": {
-      "en": "A subtropical food forest in Durban, seen from above: bananas, a young fruit tree, shrubs and groundcover, with no bare soil.",
-      "zu": "I-food forest yendawo efudumele eThekwini, ibonwa phezulu: ubhanana, isihlahla sezithelo esisencane, izihlahlana ne-groundcover, futhi awukho umhlabathi ongamboziwe.",
-      "st": "Food forest ya sebaka se futhumetseng Durban, e bonwa ho tswa hodimo: dibanana, sefate sa ditholwana se senyane, dihlahla le groundcover, mme ha ho mobu o se nang sekwahelo.",
-      "ve": "Food forest ya fhethu hu dudelaho ngei Durban, yo vhonwaho u bva nṱha: miomva, muri muṱuku wa mitshelo, zwiṱaka na groundcover, nahone a hu na mavu a songo fukedzwaho.",
-      "ts": "Food forest ya ndhawu yo kufumela eThekwini, leyi voniwaka ehenhla: vanana, murhi wa mihandzu lowuntshwa, swihlahla na groundcover, naswona a ku na misava leyi nga funengetiwangiki."
+      "en": "A subtropical food forest seen from above: bananas, a young fruit tree, shrubs and groundcover, with no bare soil."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
@@ -679,11 +671,7 @@
     "width": 1400,
     "height": 681,
     "caption": {
-      "en": "A long swale being dug by TLB, with a survey staff to check the level. Get experienced advice before any large machine earthworks.",
-      "zu": "I-swale ende imbiwa nge-TLB, kusetshenziswa induku yokukala ukuhlola izinga. Thola iseluleko komuntu onolwazi ngaphambi kwemisebenzi emikhulu yomhlabathi ngemishini.",
-      "st": "Swale e telele e epjwa ka TLB, ho sebediswa thupa ya ho metha ho hlahloba bophahamo. Fumana keletso ho motho ya nang le boiphihlelo pele o etsa mesebetsi e meholo ya mobu ka metjhini.",
-      "ve": "Swale ndapfu i tshi gwiwa nga TLB, hu tshi shumiswa lufhanga lwa u ela u sedza vhuimo. Wanani nyeletshedzo kha muthu a re na tshenzhemo phanḓa ha mishumo mihulwane ya mavu nga metshini.",
-      "ts": "Swale yo leha yi ri karhi yi cheriwa hi TLB, ku tirhisiwa nhonga yo pima ku kambela ku ringana. Kuma ndzayo eka munhu la nga na ntokoto u nga si endla mintirho leyikulu ya misava hi michini."
+      "en": "A long swale being dug by machine, with a survey staff to keep the level true."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
@@ -743,11 +731,7 @@
     "width": 1280,
     "height": 494,
     "caption": {
-      "en": "A runoff dam at the top of a property catches water flowing down the valley. Dams have legal rules in South Africa.",
-      "zu": "Idamu le-runoff elisenhla kwendawo libamba amanzi ageleza ehla esigodini. Amadamu anemithetho eNingizimu Afrika.",
-      "st": "Letamo la runoff le kahodimo ho sebaka le tshwara metsi a phallang a theoha phuleng. Matamo a na le melao Afrika Borwa.",
-      "ve": "Damu ḽa runoff ḽi re nṱha ha fhethu ḽi fara maḓi a elelaho a tshi tsela mulamboni. Madamu a na milayo Afrika Tshipembe.",
-      "ts": "Damu ra runoff leri nga ehenhla ka ndhawu ri khoma mati lama khulukaka ma rhelela nkoveni. Madamu ma na milawu eAfrika Dzonga."
+      "en": "A runoff dam at the top of a property catches water flowing down the valley."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
@@ -775,11 +759,7 @@
     "width": 1160,
     "height": 794,
     "caption": {
-      "en": "The same pond, lined with plastic, three weeks later after 45 mm of rain. Fence ponds so that children cannot get in.",
-      "zu": "Ichibi elifanayo, elinepulasitiki ngaphakathi, emavikini amathathu kamuva ngemva kwemvula engu-45 mm. Biyela amachibi ukuze izingane zingangeni.",
-      "st": "Letangwana le tshwanang, le nang le polasetiki ka hare, dibeke tse tharo hamorao kamora pula ya 45 mm. Terata matangwana hore bana ba se kene.",
-      "ve": "Tshidziva tshi fanaho, tsho ṱanganiwaho nga pulasitiki, nga murahu ha vhege tharu musi ho na mvula ya 45 mm. Tangani zwidziva nga luvhondo uri vhana vha si dzhene.",
-      "ts": "Xidziva lexi fanaka, lexi nga na pulasitiki endzeni, endzhaku ka mavhiki manharhu loko ku nele mpfula ya 45 mm. Biyela swidziva leswaku vana va nga nghenisi."
+      "en": "The same pond, lined with plastic, a few weeks later, full after heavy rain."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
@@ -807,18 +787,14 @@
     "width": 930,
     "height": 474,
     "caption": {
-      "en": "A sand dam across a river bed at a community centre in Lesotho.",
-      "zu": "Idamu lesihlabathi elinqamula umfula esikhungweni somphakathi eLesotho.",
-      "st": "Letamo la lehlabathe le tshelang noka setsing sa setjhaba Lesotho.",
-      "ve": "Damu ḽa muṱavha ḽo pfukaho mulambo kha senthara ya tshitshavha ngei Lesotho.",
-      "ts": "Damu ra sava leri tsemakanyaka nambu eka senthara ya muganga eLesotho."
+      "en": "A sand dam across a seasonal river bed."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
   {
     "id": "07-a-frame-level",
     "chapter": "07-earthworks-and-water",
-    "section": 5,
+    "section": 10,
     "src": "/manual/figures/07-a-frame-level.jpg",
     "width": 1400,
     "height": 1050,
@@ -834,7 +810,7 @@
   {
     "id": "07-a-frame-contour",
     "chapter": "07-earthworks-and-water",
-    "section": 5,
+    "section": 10,
     "src": "/manual/figures/07-a-frame-contour.jpg",
     "width": 740,
     "height": 534,
@@ -1042,7 +1018,7 @@
   {
     "id": "08-soil-profile",
     "chapter": "08-soil",
-    "section": 1,
+    "section": 0,
     "src": "/manual/figures/08-soil-profile.jpg",
     "width": 411,
     "height": 572,
@@ -1058,7 +1034,7 @@
   {
     "id": "08-soil-jar-test",
     "chapter": "08-soil",
-    "section": 3,
+    "section": 2,
     "src": "/manual/figures/08-soil-jar-test.jpg",
     "width": 1400,
     "height": 1050,
@@ -1074,7 +1050,7 @@
   {
     "id": "08-straw-mulch",
     "chapter": "08-soil",
-    "section": 4,
+    "section": 3,
     "src": "/manual/figures/08-straw-mulch.jpg",
     "width": 682,
     "height": 453,
@@ -1106,7 +1082,7 @@
   {
     "id": "08-sheet-mulch-cardboard",
     "chapter": "08-soil",
-    "section": 7,
+    "section": 6,
     "src": "/manual/figures/08-sheet-mulch-cardboard.jpg",
     "width": 682,
     "height": 476,
@@ -1122,7 +1098,7 @@
   {
     "id": "08-planting-into-mulch",
     "chapter": "08-soil",
-    "section": 7,
+    "section": 6,
     "src": "/manual/figures/08-planting-into-mulch.jpg",
     "width": 761,
     "height": 571,
@@ -1138,7 +1114,7 @@
   {
     "id": "08-compost-stick-base",
     "chapter": "08-soil",
-    "section": 8,
+    "section": 7,
     "src": "/manual/figures/08-compost-stick-base.jpg",
     "width": 746,
     "height": 651,
@@ -1154,7 +1130,7 @@
   {
     "id": "08-compost-watering-layers",
     "chapter": "08-soil",
-    "section": 8,
+    "section": 7,
     "src": "/manual/figures/08-compost-watering-layers.jpg",
     "width": 735,
     "height": 651,
@@ -1170,7 +1146,7 @@
   {
     "id": "08-red-wigglers",
     "chapter": "08-soil",
-    "section": 9,
+    "section": 8,
     "src": "/manual/figures/08-red-wigglers.jpg",
     "width": 708,
     "height": 698,
@@ -1186,7 +1162,7 @@
   {
     "id": "08-bathtub-worm-farm",
     "chapter": "08-soil",
-    "section": 9,
+    "section": 8,
     "src": "/manual/figures/08-bathtub-worm-farm.jpg",
     "width": 1400,
     "height": 653,
@@ -1202,7 +1178,7 @@
   {
     "id": "08-stacking-worm-farm",
     "chapter": "08-soil",
-    "section": 9,
+    "section": 8,
     "src": "/manual/figures/08-stacking-worm-farm.jpg",
     "width": 1400,
     "height": 1050,
@@ -1218,7 +1194,7 @@
   {
     "id": "09-trophic-pyramid",
     "chapter": "09-balanced-ecology",
-    "section": 2,
+    "section": 1,
     "src": "/manual/figures/09-trophic-pyramid.jpg",
     "width": 1400,
     "height": 1050,
@@ -1234,7 +1210,7 @@
   {
     "id": "09-cowpea-ground-cover",
     "chapter": "09-balanced-ecology",
-    "section": 4,
+    "section": 2,
     "src": "/manual/figures/09-cowpea-ground-cover.jpg",
     "width": 682,
     "height": 511,
@@ -1250,7 +1226,7 @@
   {
     "id": "09-legume-trees",
     "chapter": "09-balanced-ecology",
-    "section": 4,
+    "section": 2,
     "src": "/manual/figures/09-legume-trees.jpg",
     "width": 1400,
     "height": 1050,
@@ -1266,7 +1242,7 @@
   {
     "id": "09-wildlife-pond",
     "chapter": "09-balanced-ecology",
-    "section": 5,
+    "section": 3,
     "src": "/manual/figures/09-wildlife-pond.jpg",
     "width": 618,
     "height": 512,
@@ -1282,7 +1258,7 @@
   {
     "id": "09-owl-box",
     "chapter": "09-balanced-ecology",
-    "section": 5,
+    "section": 3,
     "src": "/manual/figures/09-owl-box.jpg",
     "width": 1400,
     "height": 1050,
@@ -1298,7 +1274,7 @@
   {
     "id": "10-companion-flowers",
     "chapter": "10-natural-pest-control",
-    "section": 7,
+    "section": 4,
     "src": "/manual/figures/10-companion-flowers.jpg",
     "width": 1160,
     "height": 662,
@@ -1314,7 +1290,7 @@
   {
     "id": "10-nasturtium-aphids",
     "chapter": "10-natural-pest-control",
-    "section": 7,
+    "section": 4,
     "src": "/manual/figures/10-nasturtium-aphids.jpg",
     "width": 1400,
     "height": 1050,
@@ -1330,7 +1306,7 @@
   {
     "id": "10-onions-beside-carrots",
     "chapter": "10-natural-pest-control",
-    "section": 10,
+    "section": 5,
     "src": "/manual/figures/10-onions-beside-carrots.jpg",
     "width": 682,
     "height": 453,
@@ -1346,23 +1322,19 @@
   {
     "id": "11-stone-house-bethel",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 2,
+    "section": 1,
     "src": "/manual/figures/11-stone-house-bethel.jpg",
     "width": 1280,
     "height": 720,
     "caption": {
-      "en": "A stone-and-cob building at a community centre in Lesotho, with solar panels and a roof vent: a home designed for the sun.",
-      "zu": "Isakhiwo samatshe nodaka esikhungweni somphakathi eLesotho, esinamaphaneli elanga nembobo yomoya ophahleni: ikhaya eliklanyelwe ilanga.",
-      "st": "Moaho wa majwe le seretse setsing sa setjhaba Lesotho, o nang le diphanele tsa letsatsi le lesoba la moya marulelong: lehae le raletsweng letsatsi.",
-      "ve": "Tshifhaṱo tsha matombo na vhu kha senthara ya tshitshavha ngei Lesotho, tshi na dziphanele dza ḓuvha na mukwita wa muya kha ṱhanga: hayani ho pulanelwaho ḓuvha.",
-      "ts": "Xakiwa xa maribye na vumba eka senthara ya muganga eLesotho, lexi nga na tiphanele ta dyambu na xiphuphu xa moya elwangwini: kaya leri pulaneriweke dyambu."
+      "en": "A stone-and-cob building with solar panels and a roof vent: a home designed for the sun."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
   {
     "id": "11-small-solar-panels",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 4,
+    "section": 2,
     "src": "/manual/figures/11-small-solar-panels.jpg",
     "width": 801,
     "height": 711,
@@ -1378,7 +1350,7 @@
   {
     "id": "11-solar-geyser",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 4,
+    "section": 2,
     "src": "/manual/figures/11-solar-geyser.jpg",
     "width": 775,
     "height": 581,
@@ -1394,7 +1366,7 @@
   {
     "id": "11-solar-oven",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 4,
+    "section": 2,
     "src": "/manual/figures/11-solar-oven.jpg",
     "width": 703,
     "height": 727,
@@ -1410,7 +1382,7 @@
   {
     "id": "11-sun-drying-fruit",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 5,
+    "section": 3,
     "src": "/manual/figures/11-sun-drying-fruit.jpg",
     "width": 1168,
     "height": 478,
@@ -1426,7 +1398,7 @@
   {
     "id": "11-solar-dryer",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 5,
+    "section": 3,
     "src": "/manual/figures/11-solar-dryer.jpg",
     "width": 1400,
     "height": 751,
@@ -1442,7 +1414,7 @@
   {
     "id": "11-wonder-bag",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 6,
+    "section": 4,
     "src": "/manual/figures/11-wonder-bag.jpg",
     "width": 803,
     "height": 722,
@@ -1458,7 +1430,7 @@
   {
     "id": "11-rocket-stove",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 7,
+    "section": 5,
     "src": "/manual/figures/11-rocket-stove.jpg",
     "width": 1400,
     "height": 1050,
@@ -1474,7 +1446,7 @@
   {
     "id": "11-biogas-diagram",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 8,
+    "section": 6,
     "src": "/manual/figures/11-biogas-diagram.jpg",
     "width": 1400,
     "height": 1050,
@@ -1490,23 +1462,19 @@
   {
     "id": "11-biogas-digester-build",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 8,
+    "section": 6,
     "src": "/manual/figures/11-biogas-digester-build.jpg",
     "width": 769,
     "height": 575,
     "caption": {
-      "en": "Building a household biogas digester in Lesotho: the tank sits in a block-lined pit. Never work alone in a pit.",
-      "zu": "Ukwakha i-biogas digester yasekhaya eLesotho: ithangi lihlala emgodini onezitini. Ungalokothi usebenze wedwa emgodini.",
-      "st": "Ho haha biogas digester ya lelapa Lesotho: tanka e dula sekoting se nang le ditena. O se ke wa sebetsa o le mong sekoting.",
-      "ve": "U fhaṱa biogas digester ya hayani ngei Lesotho: thanngi i dzula mukwitani wo fhaṱiwaho nga zwidina. Ni songo shuma no ḓiṋa mukwitani.",
-      "ts": "Ku aka biogas digester ya le kaya eLesotho: thanki yi tshama emugodini lowu akiweke hi switina. U nga tshuki u tirha u ri wexe emugodini."
+      "en": "Building a household biogas digester: the tank sits in a block-lined pit."
     },
     "credit": "Photo: RVCC Permaculture Gardening Handbook, 2020–21"
   },
   {
     "id": "11-biogas-digester-finished",
     "chapter": "11-home-and-appropriate-technology",
-    "section": 8,
+    "section": 6,
     "src": "/manual/figures/11-biogas-digester-finished.jpg",
     "width": 1400,
     "height": 1050,
