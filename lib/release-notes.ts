@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '922191da', changes: [
+    'Introduction lesson 1 pairs three Sesotho ethics concepts with English.',
+    'Vegetables lesson 3 pairs six more Tshivenda resilience concepts with English.',
+  ], tour: [
+    { title: 'Check the Sesotho ethics draft', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open lesson 1. Compare the draft ethics sentences with English; Fair Share and practical examples remain English.' },
+    { title: 'Check the Tshivenda resilience draft', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Tshivenda and open lesson 3. The crop, seed, water and quiz guidance remains English beside the marked concept drafts.' },
+  ] },
   { when: '27 September 2026', sha: 'fde0423b', changes: [
     'Soil Health lesson 1 shows six Tshivenda soil-concept drafts beside English.',
     'Soil Health lesson 1 pairs five Sesotho soil-life drafts with English.',
