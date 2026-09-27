@@ -30,7 +30,7 @@ Zwiṅwe zwipiḓa zwo dzhiiwa, nga thendelo, kha bugu ya African Conservation T
 4. **Shumisani Ṱhalutshedzo ya maipfi.** Maipfi a thekhinikhi a ngaho swale na mulch a ṱalutshedzwa musi a tshi thoma u vhonala, na oṱhe fhethu huthihi kha Ṱhalutshedzo ya maipfi i re magumoni.
 5. **Wanani zwiṅwalwa magumoni.** Zwiṅwalwa nga ha mulayo na nga ha u tsireledza vhathu na zwifuwo zwo kuvhanganywa fhethu huthihi murahu ha bugu.
 
-Bugu ino i dovha ya wanala nga isiZulu, Sesotho na Tshivenḓa, sa zwiṅwalwa zwa u thoma zwine zwa kha ḓi sedzuluswa nga vhathu vha ambaho nyambo idzo zwavhuḓi. Arali tshiṅwe tshithu tshi songo pfala, vhambedzani na Luisimane.
+Bugu ino i dovha ya wanala nga isiZulu, Sesotho, Tshivenḓa na Xitsonga, sa zwiṅwalwa zwa u thoma zwine zwa kha ḓi sedzuluswa nga vhathu vha ambaho nyambo idzo zwavhuḓi. Arali tshiṅwe tshithu tshi songo pfala, vhambedzani na Luisimane.
 
 ## Zwithu zwa ndeme
 

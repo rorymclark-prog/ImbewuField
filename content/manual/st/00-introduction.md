@@ -30,7 +30,7 @@ Dikarolo tse ding di fetotswe, ka tumello, ho tswa bukeng ya African Conservatio
 4. **Sebedisa Glossary.** Mantswe a thekniki a kang swale le mulch a hlaloswa ha a hlaha la pele, mme a hlaloswa kaofela mmoho ho Glossary qetellong.
 5. **Fumana dintlha qetellong.** Dintlha ka molao le ka ho boloka batho le diphoofolo di sireletsehile di bokeletswe sebakeng se le seng ka morao bukeng.
 
-Bukana ena e fumaneha hape ka isiZulu, Sesotho le Tshivenḓa, e le diphetolelo tsa pele (drafts) tse ntseng di hlahlojwa ke batho ba buang dipuo tsena hantle. Haeba ho na le ntho e sa hlakang, bapisa le Senyesemane.
+Bukana ena e fumaneha hape ka isiZulu, Sesotho, Tshivenḓa le Xitsonga, e le diphetolelo tsa pele (drafts) tse ntseng di hlahlojwa ke batho ba buang dipuo tsena hantle. Haeba ho na le ntho e sa hlakang, bapisa le Senyesemane.
 
 ## Dintlha tsa bohlokwa
 

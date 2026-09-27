@@ -30,7 +30,7 @@ Izingxenye zayo zithathwe, ngemvume, encwadini ye-African Conservation Trust eth
 4. **Sebenzisa uHlu lwamagama.** Amagama obuchwepheshe afana ne-**swale** ne-**mulch** achazwa okokuqala uma evela, futhi onke ndawonye eHlwini lwamagama ekugcineni.
 5. **Thola amanothi ekugcineni.** Amanothi ngomthetho nangokugcina abantu nezilwane bephephile aqoqwe endaweni eyodwa ngemuva kwencwadi.
 
-Le ncwadi itholakala nangesiZulu, isiSuthu nesiVenda, njengamadrafti asahlolwa yizikhulumi ezazi kahle lezo zilimi. Uma kukhona okungacacile, qhathanisa nesiNgisi.
+Le ncwadi itholakala nangesiZulu, isiSuthu, isiVenda nesiTsonga, njengamadrafti asahlolwa yizikhulumi ezazi kahle lezo zilimi. Uma kukhona okungacacile, qhathanisa nesiNgisi.
 
 ## Amaphuzu amqoka
 

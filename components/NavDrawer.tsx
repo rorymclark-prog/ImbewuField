@@ -109,7 +109,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
         // The fact-checked Permaculture Manual (app/manual) in English, isiZulu, Sesotho,
-        // and Tshivenḓa — reading, not a tool, but it is where a farmer looks things up.
+        // Tshivenḓa and Xitsonga — reading, not a tool, but it is where a farmer looks things up.
         { href: '/manual',   Icon: BookOpen,     label: t('navManual') },
       ],
     },

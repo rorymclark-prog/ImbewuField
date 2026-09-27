@@ -30,7 +30,7 @@ Parts are adapted, with permission, from the African Conservation Trust's *Intro
 4. **Use the Glossary.** Technical words such as swale and mulch are explained the first time they appear, and all together in the Glossary at the end.
 5. **Find the notes at the end.** Notes on the law and on keeping people and animals safe are gathered in one place at the back.
 
-The manual is also in isiZulu, Sesotho and Tshivenḓa, as drafts still being checked by fluent speakers. If something is unclear, compare the English.
+The manual is also in isiZulu, Sesotho, Tshivenḓa and Xitsonga, as drafts still being checked by fluent speakers. If something is unclear, compare the English.
 
 ## Key points
 
