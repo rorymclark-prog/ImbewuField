@@ -73,3 +73,26 @@ No numbered figure captions ("Fig N") occur in lines 216–884. The narrow text 
 - Aristotle and winter-flowering aloes — kept as well established, but not re-checked online in this session (web search limit reached).
 - Holmgren's proverbs for principles 1, 4, 5, 7 and 11 — left out (not re-checked).
 - Granadilla as a vertical-garden crop — left out pending a NEMBA list check.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to the REWRITE.md brief (4,000 → 2,791 words). Safety boxes removed; their essential lines are kept once inside the text; the rest is listed in `research/manual/rewrite/01-what-is-permaculture-endnote.md`.
+
+Verified:
+- Winter-flowering aloes (principle 3): PlantZAfrica gives *Aloe marlothii* flowering May–September; flowering through the winter months is typical of most aloes. https://pza.sanbi.org/aloe-marlothii ; https://en.wikipedia.org/wiki/Aloe_marlothii — kept ("many indigenous aloes flower in winter").
+- Soil erosion > 70% of SA's land: re-confirmed on Grain SA. https://www.grainsa.co.za/soil-erosion-in-south-africa---its-nature-and-distribution
+- SA rainfall ~450 mm vs world ~860 mm: re-confirmed (gov.za National water security; UniZulu Hydrology). One source gives the world figure as 786 mm; kept 860 mm as the more widely cited figure with "about".
+- Holmgren ties every principle to a proverb; "Beauty is in the mind of the beholder" (P1) and "Let nature take its course" (P5) confirmed in search results (Ballarat Permaculture Guild and others). Not added to the text, to save words; existing proverbs (P2, 3, 6, 8, 9, 10, 12) kept.
+- Mollison's death (Hobart, 24 Sep 2016, aged 88): ABC News 2016. Note: that article says *Permaculture One* was published in 1974; this is wrong — the book appeared in 1978 (publisher's page, as in the first pass). Text keeps 1978.
+
+Cut:
+- Aristotle quote ("Nature does nothing without purpose") — cut with the ethics rewrite (not re-checked; not needed).
+- Gandhi "need, not greed" quote — cut (second-hand attribution, and one quote per section).
+- "If you fail to plan…" Tip — cut (the closing line now opens into Chapter 2).
+- Manure 120-day rule, pig fencing, greywater ponding/illness/salt-flushing lines, sprout cooking advice for vulnerable people, sprayed-lawn clippings — moved to the endnote list.
+
+Generalised / unchanged:
+- PRI quote, Mollison "pattern" quote, lion claim, "rich in minerals and vitamins", "fossil fuel running out" — stay out, as in the first pass.
+- Granadilla — still not named (NEMBA status not checked).
+
+Facts changed: none. New in the text: the "three questions" test of the ethics (a teaching device, no factual claim) and a "Try it" observation exercise.
