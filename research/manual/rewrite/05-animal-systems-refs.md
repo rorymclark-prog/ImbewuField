@@ -1,0 +1,25 @@
+# References — 05-animal-systems
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
+- Sonaiya, E.B. and Swan, S.E.J. (2004). *Small-scale poultry production: technical guide*. FAO Animal Production and Health Manual 1. https://www.fao.org/4/y5169e/y5169e05.htm
+- Alabama Cooperative Extension System (n.d.). *Backyard & Small Poultry Flock Management Series: Feeding the Laying Hen*. Alabama A&M and Auburn Universities. https://www.aces.edu/blog/topics/farming/backyard-small-poultry-flock-management-series-feeding-the-laying-hen/
+- Oregon State University Extension Service (n.d.). *How to feed your laying hens* (PNW 477). https://extension.oregonstate.edu/catalog/pnw-477-how-feed-your-laying-hens
+- Poultry Extension (n.d.). *Space allowances in housing for small and backyard poultry flocks*. Small and backyard poultry. https://poultry.extension.org/articles/getting-started-with-small-and-backyard-poultry/housing-for-small-and-backyard-poultry-flocks/space-allowances-in-housing-for-small-and-backyard-poultry-flocks/
+- Poultry Extension (n.d.). *Biosecurity for small poultry flocks*. Small and backyard poultry. https://poultry.extension.org/articles/poultry-health/biosecurity-for-small-poultry-flocks/
+- Grobbelaar, J.A.N., Sutherland, B. and Molalakgotla, N.M. (2010). *Egg production potentials of certain indigenous chicken breeds from South Africa*. Animal Genetic Resources Information 46: 25–32. FAO. https://www.fao.org/4/i1353t/i1353t04.pdf
+- FAO (2001). *Controlling Newcastle Disease in Village Chickens* (field manual, version 14.03.2001). FAO Open Knowledge. https://openknowledge.fao.org/server/api/core/bitstreams/0ee168a3-53cf-4a45-a4eb-dc127373081a/content
+- FAO (n.d.). *Chapter 4: Newcastle disease in village chickens*. FAO. https://www.fao.org/4/y5162e/y5162e05.htm
+- African Centre for Biodiversity (n.d.). *GMOs in South Africa series: Genetically modified maize in South Africa* (fact sheet). ACB. https://acbio.org.za/wp-content/uploads/2022/03/ACB-factsheet_GM-maize-SA.pdf
+- AgriOrbit (n.d.). *Quick overview of GMOs in South Africa*. AgriOrbit. https://agriorbit.com/quick-overview-of-gmos-in-south-africa/
+- Department of Agriculture, Land Reform and Rural Development (n.d.). *Ten things you should know about African Swine Fever*. DALRRD. https://www.nda.gov.za/images/outbreaks/African%20Swine%20Fever/African%20Swine%20Fever%20Information/Ten%20things%20you%20should%20know%20about%20African%20Swine%20Fever.pdf
+- BirdLife South Africa (n.d.). *Yellow-billed Duck* (Red List page). BirdLife South Africa. https://www.birdlife.org.za/red-list/yellow-billed-duck/
+- Klein, A.-M., Vaissière, B.E., Cane, J.H., Steffan-Dewenter, I., Cunningham, S.A., Kremen, C. and Tscharntke, T. (2007). *Importance of pollinators in changing landscapes for world crops*. Proceedings of the Royal Society B 274: 303–313. https://royalsocietypublishing.org/doi/10.1098/rspb.2006.3721
+- Locke, B. (2016). *Natural Varroa mite-surviving Apis mellifera honeybee populations*. Apidologie 47: 467–482. https://link.springer.com/article/10.1007/s13592-015-0412-8
+- The Conversation (2015). *American disease that's wreaking havoc on the Cape's honeybee population*. The Conversation Africa. https://theconversation.com/american-disease-thats-wreaking-havoc-on-the-capes-honeybee-population-44804
+- South African Government (2009). *Agriculture on American Foul Brood (AFB) outbreak*, 25 March 2009. gov.za. https://www.gov.za/news/agriculture-american-foul-brood-afb-outbreak-25-mar-2009
+- University of Georgia Extension (n.d.). *Africanized Honey Bees* (Bulletin 1290). UGA CAES. https://fieldreport.caes.uga.edu/publications/B1290/africanized-honey-bees/
+- NC State Extension (n.d.). *Africanized Honey Bees: Prevention and Control*. NC State University. https://content.ces.ncsu.edu/africanized-honey-bees-prevention-and-control
+- Bees for Development (n.d.). *Natural beekeeping*. Bees for Development. https://www.beesfordevelopment.org/categories/natural-beekeeping/
+- Cleveland Clinic (n.d.). *Bee Sting*. Cleveland Clinic. https://my.clevelandclinic.org/health/diseases/25093-bee-sting
+- News24 (2015). *Calling an ambulance: 10177 / 112 from cell*. News24. https://www.news24.com/life/archive/calling-an-ambulance-10177-112-from-cell-20150826

@@ -1,379 +1,238 @@
 # Animal systems
 
-## Why animals belong in permaculture
+Animals close the loop. A hen turns kitchen peelings into eggs and manure. A pig turns fallen fruit into meat and a cleared bed. A bee turns the flowers along your fence into honey and a heavier crop of pumpkins.
 
-Most farms and homesteads keep some animals. When they are well planned and well managed, animals are key members of a permaculture farm. They help make it a complete, balanced system.
+Kept badly, animals are work and worry. Kept well, they do much of the work for you. The difference is in the design: where the animal lives, what it eats, and which of its natural habits you have given a job.
 
-Animals, wild and domestic, give many benefits:
+**By the end of this chapter you will be able to:**
 
-- **Manure.** Animal manure is a rich fertiliser. Chicken manure is one of the richest in nitrogen.
-- **Less human work.** Animals can do jobs that people would otherwise do by hand.
-- **Ground preparation.** Pigs dig and turn the soil with their snouts.
-- **Vegetation control.** Grazing animals keep grass and weeds short.
-- **Land repair.** Well-managed animals can help restore damaged land.
-- **Products.** Meat, eggs, milk, wool, feathers and honey.
-- **Ecosystem services.** Bees pollinate crops; ducks and chickens eat pests.
-- **Waste recycling.** Animals turn kitchen scraps and spoiled fruit into manure. Pigs let into an orchard for a short time clean up fallen fruit.
-- **Soil building.** Animals return nutrients to the soil and complete the nutrient cycle.
-- **Liquid fertiliser.** Worm farms produce a nutrient-rich liquid ("worm tea").
-- **Breaking pest cycles.** Chickens that follow cattle scratch through the dung and eat fly larvae.
-- **Draught and transport.** Donkeys, horses and oxen pull ploughs and carts.
-- **Security.** Dogs, and even geese, warn you when strangers come.
-- **Company.** Many animals are good companions (worms, perhaps, less so).
+- Read an animal's needs, products and behaviours, and place it where they do useful work
+- Build and move an animal tractor for chickens or pigs
+- Feed, house and protect a small flock of chickens, and keep Newcastle disease out
+- Keep pigs and ducks where they help the farm and cannot harm it
+- Place a beehive safely and make your land a good home for bees
 
 ## Place animals where they work for you
 
-As with plants, we place animals where they are easiest to look after, where their products are easy to collect, and where their natural habits can do work for us.
+A goat browses. A pig digs. A chicken scratches and eats every grub it finds. Left to chance, these habits cause damage. Designed in, they save you days of labour.
 
-In permaculture we do this by looking at each animal's **needs** (what it must have: food, water, shelter, space, company), its **products** (what it gives: eggs, manure, meat, heat) and its **behaviours** (what it does naturally: scratching, digging, grazing, eating insects). Then we connect these to other parts of the farm. For example, a chicken's need for food and its habit of scratching can be joined to a garden bed that needs clearing of weeds and pests.
+Well-placed animals give manure, dug ground, short grass, fewer pests, and meat, eggs, milk, wool and honey. Oxen and donkeys pull ploughs, and dogs, and even geese, warn you when strangers come.
 
-Every animal, including people, affects its surroundings. We can use animals' natural behaviour to break pest cycles, prepare ground and keep grass short.
+To put an animal in the right place, look at three things:
 
-Choose species and breeds that suit your climate and your needs. As the climate becomes less predictable, it is wise to favour hardy animals that cope with a wide range of conditions.
+1. **Needs**: what it must have. Food, water, shelter, space, company.
+2. **Products**: what it gives. Eggs, meat, manure, feathers, heat.
+3. **Behaviours**: what it does by nature. Scratching, digging, grazing, hunting insects.
+
+Then link each of these to another part of the farm. A hen needs food and loves to scratch. A bed after harvest needs clearing of weeds and pests. Put the two together and both needs are met.
+
+As the weather grows less predictable, favour hardy breeds that cope with heat, cold and drought.
 
 ## Animal tractors
 
-An **animal tractor** is a movable pen, or a fenced area that moves, in which animals such as chickens, ducks, turkeys, geese, pigs or goats do useful work. They manure, scratch, graze and dig as they would naturally, and so clean, prepare and maintain parts of the farm. When one patch is done, you move the pen to the next.
+An **animal tractor** is a movable pen: animals work one patch of ground, then you move the pen to the next. Chickens, ducks, geese, pigs and goats all work this way. They manure, scratch, graze and dig as they would anyway, but now it happens where you want it: on a garden bed between crops, under fruit trees, on tired pasture, on overgrown land, or on the floor of a new pond, which pigs dig and firm.
 
-Animal tractors are good for the animals too. They give protection from predators, a varied diet, fresh ground and the chance to behave naturally.
+A closed tractor is a frame of timber or poles covered in wire mesh, roofed over one end for shade and rain, and light enough for two people to drag. An open tractor is a ring of movable electric netting, powered by a small solar energiser.
 
-Uses include:
+1. Put the tractor on the patch you want worked.
+2. Leave the animals until the ground is scratched over and manured, but not bare and trampled hard. For a few hens on a garden bed, that is often a few days.
+3. Move the tractor to the next patch.
+4. Plant the worked patch, or let its grass recover.
 
-- clearing and manuring garden beds between crops
-- cleaning up under fruit trees
-- improving pasture
-- preparing the site for a pond (pigs dig and firm the soil)
-- clearing overgrown land
-
-A tractor can be a closed, simple frame covered with wire mesh, built from hardware-store materials. It can also be open, using movable electric fencing.
-
-Different animal tractors work well one after another. For example, move chickens onto ground after pigs, goats or cattle: the chickens scratch the manure into the soil and eat fly larvae.
+Follow pigs, goats or cattle with chickens: they spread the manure, scratch it in and eat the fly larvae.
 
 ## Chickens
 
-Chickens are probably the most valuable animals for Zones 1 and 2. They are small, have little impact on the land and are often the first animals a family keeps. They give meat, eggs, feathers, pest control and help with clearing land. Their manure is one of the richest farm manures.
+Chickens are usually a family's first animals. They are small, cheap and gentle on the land, and give eggs, meat, feathers, pest control, cleared ground and some of the richest manure on the farm. They belong in **Zone** 1 and 2, the areas nearest the house that you visit every day.
 
 ### Feeding chickens
 
-Chickens are **omnivores**: they eat both plant and animal foods. A healthy diet includes:
+Chickens are **omnivores**: they eat plants and animals. A laying hen needs:
 
-- **Protein**, from insects, worms and legumes such as beans (cooked) and pigeon pea seed
-- **Energy**, from grains such as maize, sorghum, wheat and barley
-- **Greens**, from grass, weeds and other plants
-- **Calcium** for strong eggshells, from crushed oyster shell, limestone grit or dried, crushed eggshells
-- **Grit**, small hard stones or coarse sand, which chickens keep in their gizzard to grind their food
-- **Vitamins**, especially vitamin A (from green leaves and yellow maize) and vitamin D (from sunlight)
-- **Clean water** at all times
+- **Protein**, from insects, worms, cooked beans and pigeon pea seed
+- **Energy**, from grains such as mielies, sorghum and wheat
+- **Greens**, from grass, weeds and garden waste
+- **Calcium** for strong shells, from crushed oyster shell, limestone grit or dried, crushed eggshell
+- **Grit**, small hard stones or coarse sand she keeps in her gizzard to grind food
+- **Vitamins**, especially A from green leaves and yellow maize, and D from sunlight
+- **Clean water** all the time
 
-A laying hen eats roughly 110–140 g of feed a day and drinks about twice that weight in water, and more in hot weather.
+A laying hen eats roughly 110 to 140 g of feed a day and drinks about twice that weight in water, more in hot weather.
 
-**Bought feed.** A bag of commercial layer or grower feed is balanced and convenient, but it costs money. Much of the maize and soya grown in South Africa is genetically modified (GM), and bought feed usually contains both. Some permaculture farmers choose to avoid GM feed.
+Bought layer feed is balanced but costs money. Most South African maize and nearly all its soya is genetically modified (GM), and bought feed usually contains both, so some permaculture farmers choose to grow their own. Home-grown feed must still be balanced: hens fed only grain lay fewer eggs. If laying drops, add protein or some bought layer feed.
 
-**Home-grown feed.** You can cut feed costs with chicken tractors, rotating yards and by growing part of their food. Free-ranging hens that eat plenty of greens and insects often lay eggs with darker yellow or orange yolks. Home-grown feed must still be balanced: hens fed only grain will lay fewer eggs. If eggs drop off, add a protein source or some bought layer feed.
+Free food is all over the farm: kitchen scraps and stale bread; slugs, snails and grubs; aphid-covered leaves; raked leaves full of insects and seeds; the outside of the **compost** heap, where scraps are rotting down; cattle dung full of larvae; and sunflower heads, hung up ripe for the birds to peck.
 
-### Free food on the farm
+> **Tip:** Dry and crush eggshells before you feed them back. Hens that recognise a whole shell may start eating their own eggs.
 
-- Kitchen scraps: vegetable peelings, stale bread and old grain
-- Garden pests: slugs, snails, grubs and leaves covered in aphids
-- Mulch: grass cuttings or raked leaves carry small insects and weed seeds
-- The compost heap (let them scratch through the outside of it)
-- Pasture greens and weeds
-- Sunflowers grown along the edge of fields; hang the ripe heads for the birds to peck
-- Insects in the dung of cattle and other large animals
+Give them a sheltered patch of dry, loose soil, sand or wood ash for a **dust bath**. Rolling in it keeps their feathers clean.
 
-> **Tip:** Dry and crush eggshells before you give them back to hens. If they recognise whole shells as eggs, they may start eating their own eggs.
+### Housing, water and predators
 
-Chickens love a **dust bath**: a dry, loose patch of soil, sand or wood ash where they roll to keep their feathers clean. Give them a sheltered spot for this.
+Snakes, mongooses, genets, wild cats, dogs, rats and birds of prey all take chickens. In the countryside, a good house is most of the battle.
 
-### Water
+1. **Space.** Allow 3 to 4 birds per square metre of floor. Crowded birds fight, fall sick and lay less.
+2. **Perches.** Chickens sleep high, as in a tree. Give each bird 15 to 20 cm of perch, all at the same height, or they will fight for the top one. Set perches above the nest boxes.
+3. **Nest boxes.** About 30 cm wide, deep and high, one for every four or five hens. Old fruit boxes work. Line them with dry grass or shavings.
+4. **Air.** Let air flow through the house, without cold draughts on the birds at night.
+5. **Mesh.** Use strong wire mesh with small holes. Bury it, or fold it outwards along the ground, so nothing digs under.
+6. **Night.** Close the birds in every night. Keep young chicks in a covered run.
+7. **Water.** An upside-down cold-drink bottle standing in a shallow dish makes a simple drinker. Keep it in the shade and clean it often.
 
-Chickens must always have clean, fresh water, especially young chicks. Water drinkers that hold enough for a day or more save work. You can make a simple drinker from an upside-down plastic cold-drink bottle standing in a shallow dish. Keep drinkers in the shade and clean them often.
-
-### Housing
-
-Chickens need a secure house at night.
-
-- **Space:** allow about 0.25–0.33 m² of floor per bird inside the house (3–4 birds per square metre). Crowded birds fight, get sick and lay fewer eggs.
-- **Roosts (perches):** chickens like to sleep high off the ground, as on the branch of a tree. Give each bird 15–20 cm of perch. Put all perches at the **same height**, or the birds will fight for the highest one. Place perches higher than the nest boxes.
-- **Nest boxes:** laying hens need a quiet, dark nest box. Make each box about 30 cm wide, 30 cm deep and 30 cm high, and provide about one box for every four or five hens. Old wooden fruit boxes work well, or build them from timber. Line them with clean, dry grass, straw or wood shavings.
-- **Ventilation:** air must flow through the house, but without cold draughts on the birds at night.
-
-### Predators
-
-In rural areas, predators are often the biggest problem. Snakes, mongooses, genets, wild cats, dogs, rats and birds of prey all take chickens and chicks.
-
-- Close the birds in a secure, predator-proof house every night.
-- Use strong wire mesh with small holes, and bury it or fold it outwards along the bottom so animals cannot dig under.
-- Protect young chicks in a covered run.
-
-It may take some time and some losses to build the right chicken house or tractor. Look at designs other local farmers use successfully.
-
-### Rotating chickens through the garden
-
-Chickens are useful in the garden, but they also scratch up seedlings and mulch. Move them in turns: let a group work in a garden bed for a set time (for example after harvest), then move them back to free-range or to their yard until the next bed is ready.
-
-> **Note:** On large commercial farms chickens often have the tips of their beaks trimmed to reduce fighting. Permaculture aims to prevent fighting instead, by giving birds enough space, a varied diet and a natural life.
+Chickens also scratch up seedlings and **mulch**, the dry grass and leaves that cover and protect the soil, so rotate them: a bed after harvest, then back to their yard until the next bed is ready.
 
 ### Which chickens?
 
-Choose a breed that gives you what you need: eggs, meat, or both.
+**Local breeds** have been kept in Southern Africa for generations. They are hardy, forage well and make good mothers, but grow more slowly and lay less than commercial birds. Well-known South African breeds are the **Potchefstroom Koekoek**, **Venda**, **Ovambo**, **Naked Neck** and **Boschveld**, a newer breed developed in Limpopo from Venda, Matabele and Ovambo chickens.
 
-**Indigenous and local breeds** have been kept in Southern Africa for many generations. They are hardy, suited to local conditions, good at foraging and good mothers. They grow more slowly and usually lay fewer eggs than commercial hybrids. Well-known South African breeds include:
+In ARC trials with good feed and housing, these breeds began to lay at about 24 to 26 weeks old. Koekoek hens laid about 196 eggs in a year, Venda about 154, Naked Neck about 139 and Ovambo about 126. A village hen that finds all her own food lays far fewer, often three clutches of about 10 eggs a year, because she stops laying to hatch and raise her chicks.
 
-- **Potchefstroom Koekoek**
-- **Venda**
-- **Ovambo**
-- **Naked Neck**
-- **Boschveld**, a newer breed developed in Limpopo from Venda, Matabele and Ovambo chickens
-
-Under good feeding and housing in ARC trials, these breeds started to lay at about 24–26 weeks old. Koekoek hens laid about 196 eggs in a year, Venda about 154, Naked Neck about 139 and Ovambo about 126. Village hens that scavenge for all their food lay far fewer: often around three clutches of about 10 eggs a year, because they stop laying to hatch and raise chicks.
-
-**Commercial hybrid chickens** are bred by large poultry companies. **Layers** are bred only for eggs and lay many more eggs than local breeds. **Broilers** are bred only for meat and grow very fast. Hybrids need good feed and care, and are less hardy and less suited to free-ranging than local breeds, so many permaculture farmers prefer local breeds.
+**Commercial hybrids**, **layers** for eggs and **broilers** for meat, produce more but need good feed and care, and are less hardy on free range.
 
 ### Keeping chickens healthy
 
-Disease can wipe out a whole flock in a few days.
+**Newcastle disease** is the great killer of village chickens in Southern Africa. It can wipe out most of an unvaccinated flock in days.
 
-**Newcastle disease** is the most serious disease of village chickens in Southern Africa. It can kill most unvaccinated birds in a flock.
+1. **Vaccinate.** Newcastle vaccines for small flocks are sold at co-ops and farm stores. Eye drops protect best; vaccine in the drinking water also works. Follow the instructions on the pack.
+2. **Repeat.** Protection wears off, so village flocks are usually vaccinated again about every three months.
 
-1. **Vaccinate.** Newcastle disease vaccines for small flocks are sold at co-ops and farm stores. Eye-drop vaccination gives the best protection; drinking-water vaccination also works.
-2. **Repeat.** Protection wears off. Village flocks are commonly revaccinated about every three months. Follow the instructions on the vaccine and the advice of your local animal health technician or state veterinarian.
-3. **Report.** Newcastle disease is a **controlled disease** under the Animal Diseases Act (Act 35 of 1984). If many of your birds suddenly fall sick or die, report it to your nearest state veterinarian straight away.
+**Biosecurity** means the everyday habits that keep disease off your farm:
 
-Good everyday **biosecurity** (habits that keep disease out):
-
-- Keep new birds apart from your flock for two to three weeks before you mix them, and watch for signs of sickness.
-- Do not let wild birds share your chickens' feed and water.
+- Keep new birds apart from your flock for about a month, and watch them for sickness.
+- Keep wild birds away from your chickens' feed and water.
 - Keep houses clean and dry, and change nest material often.
 - Wash your hands after handling birds or manure.
-- Bury or burn birds that die; do not throw them where dogs or other animals can reach them.
+- Bury or burn birds that die, where dogs cannot dig them up.
 
-### Introducing new chickens
-
-Chickens have a strong social order, called the **pecking order**. When a new bird joins, the others will fight it, sometimes badly, for a day or two until a new order is settled.
-
-- Introduce newcomers in the evening, after the flock has gone to roost.
-- Add two or more birds at once. A single new hen or rooster will be picked on by all the others.
-- Give enough space so that a bullied bird can get away.
+When new birds join, expect a day or two of fighting while the **pecking order** settles. Add them in the evening, after the flock has gone to roost, two or more at once so no single bird is picked on, with room for a bullied bird to escape.
 
 ## Pigs
 
-Pigs can be very useful, especially in orchards, food forests and on rough land. They suit Zones 2, 3 and 4 and fit in well with other animals.
+Pigs are the great clearers. Put them on rough, overgrown ground and within a week they will have turned it better than any pikmatok or fork. They suit Zones 2, 3 and 4, and they work well in orchards and in the **food forest**, a garden planted in layers like a natural forest.
 
-### What pigs eat
+### Feeding pigs
 
-Pigs eat a wide range of food. On a varied farm they will eat grass, vines, fallen fruit and nuts, and they will happily dig up potatoes and other roots. They need clean water and shade at all times.
-
-> **Safety:** It is against the law in South Africa to feed pigs food waste from kitchens, hotels, restaurants or similar places (called **swill**) unless it has been boiled for at least one hour. Raw or undercooked pork and other meat scraps can carry **African swine fever**, a deadly pig disease with no cure or vaccine. Feed pigs vegetable and garden waste from your own farm, and grain or bought feed.
+Pigs eat grass, vines, fallen fruit, nuts and any roots they can dig. Give them clean water and shade at all times. Feed them vegetable and garden waste from your own farm, plus grain or bought feed. Never give them meat scraps or kitchen waste from other homes, restaurants or hotels. That food can carry **African swine fever**, which kills pigs and has no cure or vaccine.
 
 ### Pig tractors
 
-Pigs are excellent "first clearers" of rough ground.
+1. Fence the patch with a movable electric fence: one or two wires at snout height.
+2. Let the pigs eat most of the plants above ground first. They will not dig while there is plenty of food on top.
+3. Make sure the soil is moist. Pigs root in soft ground, not hard, dry soil.
+4. After about a week the patch is dug over. Move the fence on.
+5. Follow the pigs with a chicken tractor to spread their manure.
 
-- Put pigs inside a movable electric fence on an overgrown area for about a week, and they will uproot and clear it better than any spade or fork.
-- To make them dig, let them first eat most of the plants above ground, and make sure the soil is moist. Pigs will not dig if there is plenty of food on top.
-- In orchards and food forests, pigs eat fallen fruit, and with it the fruit-fly larvae inside. This helps break the fruit-fly cycle.
-- Follow the pigs with a chicken tractor to spread their manure.
+In the orchard, pigs eat fallen fruit and the fruit-fly larvae inside it, which helps break the fruit-fly cycle.
+
+> **Tip:** Train piglets to the electric fence while they are small, in a strong pen with the electric wire run inside it. A pig that has never felt the wire will simply push through.
 
 ### Keeping pigs in
 
-The main problem with pigs is that they are very destructive when they get loose. They can easily destroy young trees and a vegetable garden in one night.
+A loose pig can destroy young trees and a whole vegetable garden in one night. Fence them well, and choose carefully where they may go.
 
-- Keep them well enclosed, and choose carefully which areas they may enter.
-- An electric fence for pigs needs one or two wires at about snout height.
-- Train young pigs to respect the electric fence while they are small, in a strong pen with the electric wire inside it. Pigs that have not learned will try to push through.
-
-### Company and shelter
-
-Pigs are social animals and are happiest with at least one other pig. If you do not want to breed, keep only females or castrated males. In cold winters pigs need a dry, draught-free shelter, and in summer they need shade.
+Pigs are social, so keep at least two. If you do not want to breed, keep only females or castrated males. Give them a dry, draught-free shelter for winter and shade for summer.
 
 ## Ducks
 
-> **Note:** "You don't have a snail problem, you have a duck deficiency." This saying is widely credited to Bill Mollison.
+"You don't have a snail problem, you have a duck deficiency." The saying is widely credited to Bill Mollison.
 
-Ducks do well on a permaculture farm and are a good Zone 2 animal. They do not scratch like chickens, so they do less damage to mulch. You can let them range in the orchard, and in the vegetable garden after harvest. Watch them around young seedlings, which they can trample or eat.
+Ducks suit Zone 2. They do not scratch like chickens, so they are gentle on mulch. Let them range in the orchard, and in the vegetable garden after harvest, but keep them off young seedlings, which they trample or eat.
 
-### What ducks give
+Ducks eat slugs, snails and insects. Muscovies also graze grass short. Duck eggs are bigger than most hens' eggs, and ducks usually lay early in the morning: keep them in until mid-morning and you will find the eggs in the house, not hidden in the garden. Muscovy meat is lean and dark.
 
-- **Pest control.** Ducks love slugs, snails and insects.
-- **Grazing.** Some ducks, such as Muscovies, also eat grass and help keep it short.
-- **Eggs.** Duck eggs are larger than most hens' eggs. Ducks usually lay early in the morning, so keep them shut in until mid-morning and you will find the eggs in the house, not hidden in the garden.
-- **Meat and feathers.** Muscovy meat is lean and dark and is popular.
-- **Routine.** Ducks learn a daily routine quickly and will wait to be let in or out.
+What ducks need:
 
-### What ducks need
+1. **A safe house at night**, just like chickens.
+2. **Water deep enough to dip the whole head.** Ducks wash food out of their eyes and nostrils. A deep basin or bucket is enough; they do not need a pond.
+3. **Fresh water often.** Ducks dirty their water fast. Change it daily and pour the old water on fruit trees and crops you cook. It carries manure, so keep it off morogo and anything else eaten raw.
+4. **A fence.** Most farm ducks, such as Pekin, runner and Khaki Campbell, come from the wild mallard. Mallards that escape breed with indigenous wild ducks such as the yellow-billed duck and push them out. Keep your ducks fenced, well away from rivers, dams and wetlands. The Muscovy is a separate species.
 
-- **Protection from predators**, especially at night, just like chickens.
-- **Water deep enough to dip their whole head.** Ducks need to wash food out of their nostrils and eyes. A basin or deep bucket is enough for most ducks; they do not need a pond.
-- **Fresh water often.** Ducks quickly make their water dirty. Change it often. The dirty water is a good liquid fertiliser for fruit trees and for crops that are cooked before eating.
-
-> **Safety:** Duck water contains manure. Do not use it on leafy greens or other crops that are eaten raw, and do not let children play in it.
-
-Ducks can be noisy, so they may not suit town gardens with close neighbours. Muscovies are the exception: they are much quieter, and the males mostly hiss.
-
-> **Note:** Most domestic duck breeds, such as Pekin, runner and Khaki Campbell, are descended from the **mallard**. The mallard is a listed invasive species in South Africa (Category 2 under NEMBA), because it breeds with indigenous wild ducks such as the yellow-billed duck and threatens them. Keep ducks fenced, away from rivers, dams and wetlands, and never let them go wild. Ask your provincial conservation office whether you need a permit for the ducks you keep. The Muscovy is a separate species.
+Most ducks are noisy. Muscovies are the quiet exception: the males mostly hiss.
 
 ## Bees
 
-Bees are very valuable in gardens and orchards because they **pollinate** flowers: they carry pollen from flower to flower so that fruit and seed can form. Many fruits, vegetables, oil seeds and nuts give bigger and better harvests when bees visit them.
-
-Worldwide, about three-quarters of the leading food crops benefit from animal pollination, and these crops make up about a third of all crop production. The big grain staples (maize, wheat, rice and sorghum) are pollinated by wind, not bees, but most of the fruit and vegetables that give us vitamins depend on pollinators.
+Bees are **pollinators**: they carry pollen from flower to flower so that fruit and seed can form. Worldwide, about three-quarters of the leading food crops benefit from animal pollination. Maize, wheat and sorghum are pollinated by wind, but most of our fruit and vegetables need pollinators.
 
 ### Feed the bees
 
-Bees visit almost any flower that has nectar or pollen. Try to have something flowering in your garden in every season.
+Aim for something in flower in every season.
 
-- Plant flowering hedges and living fences with indigenous shrubs and trees, such as karee (*Searsia lancea*) and sweet thorn (*Vachellia karroo*).
-- Aloes flower in winter, when little else does.
-- Herbs such as lavender, rosemary, borage and rocket, and fruit trees and berry bushes, all feed bees.
+- Plant flowering hedges of **indigenous** trees, ones that grow here naturally, such as karee (*Searsia lancea*) and sweet thorn (*Vachellia karroo*).
+- Plant aloes. They flower in winter, when little else does.
+- Grow lavender, rosemary, borage, rocket, fruit trees and berry bushes.
+- Leave a patch of wild grass and weeds to flower.
+- Put out a shallow dish of water with stones in it, so bees can drink without drowning.
+- Stop using insect sprays. If you must spray, use the mildest option, in the late evening when bees are not flying, and never onto open flowers.
 
-Bees give us honey, wax and pollen, all of which are valuable foods and products.
-
-### Why bees are under threat
-
-Around the world, honeybee colonies are being lost. The causes include the **varroa mite** (a parasite), viruses and other diseases, poor nutrition, loss of wild flowers and the careless use of pesticides.
-
-Large monocultures (one crop over a huge area) remove the wild flowering plants that bees need. Spraying insecticides and weedkillers then makes the land even less friendly for bees and other insects.
-
-In South Africa:
-
-- **Varroa mite** arrived in 1997. South Africa's own honeybees became tolerant of it within a few years, and beekeepers here normally do not need to treat for it.
-- **American foulbrood** (AFB), a bacterial disease that kills the young bees (brood), was confirmed in the Western Cape in 2009 and has since been found elsewhere in the country. Its spores live for decades in honey, wax and used hive equipment. AFB must be reported to the Department of Agriculture, and infected hives usually have to be burned.
+Worldwide, honeybees are dying from pests, disease, hunger and pesticides. South Africa's story is more hopeful. The **varroa mite**, a parasite, arrived here in 1997, and our honeybees became tolerant of it within a few years, so beekeepers here do not normally treat for it. The bigger threat is **American foulbrood**, a bacterial disease that kills the young bees. It was first confirmed in the Western Cape in 2009, and its spores survive for decades in honey, wax and old hive equipment.
 
 ### South Africa's honeybees
 
-South Africa has two kinds of honeybee:
-
-- the **African** or **savanna honeybee** (*Apis mellifera scutellata*), found over most of the country
-- the **Cape honeybee** (*Apis mellifera capensis*), found in the Western Cape and nearby areas
-
-Both are **defensive**. They react quickly when their hive is disturbed, sting in large numbers and may chase a person or animal for hundreds of metres.
-
-### Beekeeping and the law
-
-Keeping bees is a skill that needs training and practice. Before you start:
-
-1. **Learn first.** Do a beekeeping course and find an experienced local beekeeper who will mentor you. Most beekeepers are happy to share what they know.
-2. **Register.** Under the Agricultural Pests Act (1983) and its control measures for honeybees, anyone who keeps bees, even a single hobby hive, must register as a beekeeper with the national Department of Agriculture. Registration is free and must be renewed when it expires; check the current period on the registration form.
-3. **Do not move bees between regions.** Do not move bees between the Cape bee region and the rest of the country, or keep Cape bees outside their home region, without written permission from the Department. Cape bees can take over and destroy colonies of African bees.
-4. **Check local bylaws.** Many municipalities have rules about keeping bees in towns.
+We have two honeybees: the African or savanna honeybee (*Apis mellifera scutellata*) over most of the country, and the Cape honeybee (*Apis mellifera capensis*) in the Western Cape and nearby. Both are defensive. Disturb the hive and they sting in large numbers, and may chase a person or animal for hundreds of metres. Learn from a course and an experienced local beekeeper before you open your first hive.
 
 ### Placing hives
 
-1. **Away from people and animals.** Put hives well away from houses, paths, roads, schools and places where animals are tied or kept in pens. A hedge or fence in front of the hives makes the bees fly up and over, above people's heads.
-2. **Level and raised.** Set each hive level on a firm stand so it cannot fall over and the combs do not break. Raise it off the ground to keep out mice, other animals and damp. Old tyres or a strong stand work well.
-3. **Ants.** If ants are a problem, stand the legs of the hive stand in tins of water or oil, or grease them.
-4. **Sun and wind.** Bees use a lot of energy to keep their hive at the right temperature. Choose a site sheltered from strong wind and shaded from harsh afternoon sun in summer. Face the entrance towards the east, to the morning sun.
-5. **Security.** Honey attracts thieves and animals. Fence the area if you have many hives, or chain and lock single hives.
+Natural beekeepers open a hive only a few times a year, so it can sit at the edge of Zone 2, or in Zone 3 or 4.
 
-Because natural beekeepers open their hives only a few times a year, hives can go at the outer edge of Zone 2, in Zone 3 or even in Zone 4.
+1. **Away from people and animals.** Keep hives well clear of houses, paths, roads, schools, children, and animals that are tied or penned. A hedge or fence in front of the hives makes the bees fly up and over people's heads.
+2. **Level and raised.** Set each hive level on a firm stand, so it cannot tip and the combs do not break. Raise it off the ground against mice and damp. A stack of old tyres works.
+3. **Ants.** Stand the legs of the hive stand in tins of water or oil, or grease them.
+4. **Sun and wind.** Shelter the hive from strong wind and harsh afternoon sun, so the bees spend less energy cooling and warming it. Face the entrance east, to the morning sun.
+5. **Security.** Honey draws thieves and animals. Fence a group of hives, or chain and lock a single one.
 
 ### Natural beekeeping
 
-Natural beekeeping aims to disturb the bees as little as possible and let the colony live as naturally as it can. Its main ideas are:
+Natural beekeeping disturbs the colony as little as possible. Treat the colony as one living whole. Open it seldom, so the nest keeps its scent and warmth. Let the bees build their own comb and multiply by their own swarming. Keep local bees, and only as many hives as the local flowers can feed. Put nothing into the hive that did not come from bees, take only the honey they can spare, and let what the bees do guide you.
 
-- Treat the colony as one whole living thing.
-- Respect the bees' natural ways and keep the scent and warmth of the nest; open the hive as seldom as possible.
-- Let the bees build their own comb and decide their own cell size.
-- Let the colony's own swarming decide how it multiplies.
-- Leave the bees enough of their own honey and pollen to last through winter and dry seasons. Take only what they can spare.
-- Use local bees that are adapted to local conditions.
-- Keep only as many hives as the local flowers can feed.
-- Put nothing into the hive that did not come from bees, and be guided by what you see the bees doing.
+Leave them enough honey and pollen for winter and dry spells, rather than feeding sugar water. Never feed bees honey, and never use second-hand hives, frames or wax unless you know where they came from: both can carry foulbrood spores.
 
-Natural beekeepers do not feed sugar water as a normal practice. If a colony is starving in a drought, ask an experienced beekeeper for advice.
+### Stings
 
-> **Safety:** Never feed bees honey, and never use second-hand hives, frames or wax unless you know they are free of disease. Honey and old equipment can carry American foulbrood spores.
+Many stings at once, or one sting in a person who is allergic, can kill.
 
-### Stings and allergy
+1. Wear a veil, a bee suit or long sleeves and trousers, and gloves.
+2. Work calmly, with a smoker. Do not open hives in cold, wet or windy weather, or at night.
+3. If someone is stung, walk away from the hive. Scrape the sting out sideways with a fingernail or knife blade; do not squeeze it. Wash the spot and cool it.
+4. If the face, lips, tongue or throat swell, if breathing or swallowing is hard, or if the person is dizzy, faint or covered in a spreading rash, call an ambulance at once: 10177, or 112 from a cellphone. Do the same for anyone stung many times.
 
-> **Safety:** Bee stings can kill. A person can die from many stings at once, or from a severe allergic reaction (**anaphylaxis**) to even one sting. Every beekeeper and helper must know the warning signs below.
-
-Protect yourself:
-
-- Always wear a veil, a bee suit (or long sleeves and trousers) and gloves when working with bees.
-- Work calmly and use a smoker. Do not open hives in cold, wet or windy weather, or at night.
-- Keep children and animals well away from the hives.
-
-If someone is stung:
-
-1. Walk away from the hive to a safe place.
-2. Scrape the sting out sideways with a fingernail or a knife blade. Do not squeeze it.
-3. Wash the spot and put something cold on it.
-
-> **Safety:** Get emergency help at once (call 10177 for an ambulance, or 112 from a cellphone) if someone has been stung many times, or has any of these signs: swelling of the face, lips, tongue or throat; difficulty breathing or swallowing; an itchy rash or swelling spreading over the body; dizziness, fainting or a weak, fast pulse; vomiting. Anaphylaxis can kill within minutes.
-
-Anyone who has had a bad reaction to a sting before should not work with bees, and should ask a doctor about carrying emergency medicine.
-
-### Be bee-friendly
-
-- Stop using fly and insect sprays.
-- Plant lots of flowers, especially indigenous ones.
-- If you must spray, use the mildest option, spray in the late evening when bees are not flying, and never spray open flowers.
-- Put out a shallow dish of water with stones or sticks in it, so bees can land and drink without drowning.
-- Leave a patch of wild grass and weeds to flower.
+Anyone who has had a bad reaction to a sting before should not work with bees.
 
 ## Plants for fodder
 
-These plants can feed animals, either by grazing, as cut-and-carry fodder, as hay or silage, or as tree browse and pods. Many also improve the soil or feed bees. Heights are approximate.
+**Fodder** is plant food grown or gathered for animals. The best fodder plants do more than one job. Many are **legumes** (the bean family) and **nitrogen fixers**, which add nitrogen from the air to the soil. An **annual** lives one season; a **perennial** lives for years.
 
-### Groundcovers and field crops
-
-| Plant | Type | Uses |
+| Plant | What it is | Uses |
 |---|---|---|
-| Turnip (*Brassica rapa*) | Annual root crop | Winter feed for sheep and cattle; grazing for pigs |
-| Chicory (*Cichorium intybus*) | Perennial herb, deep taproot | Grazing pasture; grows in the cool season |
-| Italian ryegrass (*Lolium multiflorum*) | Annual or short-lived grass | Winter grazing, hay and silage |
-| Sweet lupin (*Lupinus albus*) | Annual legume, deep taproot | Grain and grazing; good in rotation with cereals |
-| Lucerne (*Medicago sativa*) | Perennial legume | Very nutritious hay, silage and cut-and-carry fodder |
-| Fodder radish (*Raphanus sativus*) | Annual | Autumn-sown fodder; thick root loosens the soil |
-| Rye (*Secale cereale*) | Annual winter cereal | Winter grazing and cover crop |
-| White clover (*Trifolium repens*) | Low perennial legume | Grazing, fixes nitrogen, bee forage |
-| Broad bean (*Vicia faba*) | Annual legume | Hay, silage and green manure in rotation with cereals |
-| Cowpea (*Vigna unguiculata*) | Annual legume | Leaves and vines fed fresh, as hay or as silage |
-| Vetiver (*Chrysopogon zizanioides*), sterile types only | Perennial clumping grass | Erosion control, mulch; young leaves as a feed supplement |
+| Lucerne (*Medicago sativa*) | Perennial legume | Rich hay, silage and cut-and-carry fodder |
+| Cowpea (*Vigna unguiculata*) | Annual legume | Leaves and vines fed fresh, as hay or silage |
+| Sweet lupin (*Lupinus albus*) | Annual legume | Grain and grazing; rotates well with cereals |
+| White clover (*Trifolium repens*) | Low perennial legume | Grazing, fixes nitrogen, feeds bees |
+| Rye (*Secale cereale*) | Winter cereal | Winter grazing and cover crop |
+| Turnip (*Brassica rapa*) | Root crop | Winter feed for sheep and cattle; grazing for pigs |
+| Fodder radish (*Raphanus sativus*) | Annual root crop | Sown in autumn; its thick root loosens the soil |
+| Pigeon pea (*Cajanus cajan*) | Short-lived shrub, frost-tender | Protein-rich leaves and pods; seed for poultry |
+| Vetiver (*Chrysopogon zizanioides*), sterile types only | Clumping grass | Holds soil, gives mulch; young leaves as extra feed |
+| Sweet thorn (*Vachellia karroo*) | Indigenous tree, 7 to 12 m | Fixes nitrogen; pods and leaves are browse |
+| Puzzle bush (*Ehretia rigida*) | Indigenous tree, 5 to 12 m | Browse for livestock; draws birds |
+| Karee (*Searsia lancea*) | Indigenous tree, about 7 m | Hedge; feeds bees; holds soil; frost-hardy |
 
-### Shrubs
+## Try it
 
-| Plant | Type | Uses |
-|---|---|---|
-| Pigeon pea (*Cajanus cajan*) | Short-lived shrub, frost-tender | Leaves and pods are protein-rich fodder; seeds for poultry |
-| Sunn hemp (*Crotalaria juncea*) | Annual summer legume | Green manure (dig in or cut as mulch) |
+Give one animal a job this week.
 
-### Trees
-
-| Plant | Approx. height | Uses |
-|---|---|---|
-| Torchwood (*Balanites maughamii*) | 15–20 m | Edible seed oil, firewood |
-| Pride-of-De Kaap (*Bauhinia galpinii*) | 3–5 m | Living fence; attracts wildlife |
-| False olive (*Buddleja saligna*) | 4–12 m | Timber; attracts butterflies |
-| Carob (*Ceratonia siliqua*), not indigenous | 5–10 m | Pods are good fodder; drought-tolerant; windbreak |
-| Bluebush (*Diospyros lycioides*) | 3–7 m | Edible fruit, biomass |
-| Puzzle bush (*Ehretia rigida*) | 5–12 m | Browse for livestock; attracts birds |
-| Blue guarri (*Euclea crispa*) | 8–20 m | Edible fruit, useful timber |
-| Cross-berry (*Grewia occidentalis*) | 6–10 m | Edible fruit |
-| Ouhout (*Leucosidea sericea*) | 6–9 m | Firewood, fence posts; frost-hardy pioneer |
-| Wild olive (*Olea europaea* subsp. *cuspidata*) | 8–14 m | Firewood; hardy; coppices well |
-| African wattle (*Peltophorum africanum*) | 9–14 m | Quick-growing; firewood; shade |
-| English oak (*Quercus robur*), not indigenous | 10–20 m | Acorns for pigs; timber |
-| River willow (*Salix mucronata*) | up to 12 m | Stabilises stream banks |
-| Thorn pear (*Scolopia zeyheri*) | 7–20 m | Attracts wildlife |
-| Karee (*Searsia lancea*) | about 7 m | Hedge; attracts bees; holds soil; frost-hardy |
-| Common hook-thorn (*Senegalia caffra*) | 12–18 m | Hedge, firewood; attracts wildlife |
-| Silver cluster-leaf (*Terminalia sericea*) | 10–16 m | Firewood, biomass |
-| Sweet thorn (*Vachellia karroo*) | 7–12 m | Fixes nitrogen; pods and leaves are browse; gum |
-| Large sourplum (*Ximenia caffra*) | 5–7 m | Fruit high in vitamin C; hedge |
-
-> **Note:** English oak is not on South Africa's invasive species lists, but it has spread along rivers in the Western Cape. Do not plant it near streams or wetlands. The indigenous trees in this table are the better choice wherever they grow well.
+1. Choose an animal you keep, or one you plan to keep.
+2. On paper, draw three columns: **Needs**, **Products**, **Behaviours**. Fill each one.
+3. Walk your land with the list. For every product, find a place that needs it: manure for a bed, scratching for a weedy patch.
+4. For every need, find something on the farm that already supplies it: scraps, weeds, shade, water.
+5. Try the best link for a few days. For chickens, pen a small group on a harvested bed.
+6. Write down what you see: weeds gone, ground scratched, eggs laid, any damage.
 
 ## Key points
 
-- Look at each animal's needs, products and behaviours, and link them to other parts of the farm.
+- Look at each animal's needs, products and behaviours, and link them to the rest of the farm.
 - Animal tractors move animals over the land so their manure, scratching and digging do useful work.
-- Chickens need balanced feed, clean water, grit and calcium, a safe house, 15–20 cm of perch each and one nest box per four or five hens.
-- Local breeds such as Koekoek, Venda, Ovambo, Naked Neck and Boschveld are hardy; commercial hybrids lay more but need more care.
-- Vaccinate against Newcastle disease, repeat regularly, keep new birds apart at first, and report sudden deaths to the state vet.
-- Pigs clear land well but must be well fenced; by law, kitchen swill must be boiled for an hour before pigs eat it.
-- Ducks eat slugs and snails but need head-deep water; keep them enclosed, away from wetlands.
-- South Africa's honeybees are defensive; register as a beekeeper, place hives away from people and animals, and never feed bees honey.
-- Stings can cause a deadly allergic reaction; wear protection and get emergency help for swelling or breathing trouble.
+- Chickens need balanced feed, grit, calcium, clean water and a predator-proof house, and a Newcastle vaccine every few months.
+- Pigs clear land and ducks clear snails, but both must be well fenced.
+- Place hives away from people, feed the bees with flowers all year, and never feed them honey.
+
+Start with one animal and one job. The second job will show itself, and then the third.
