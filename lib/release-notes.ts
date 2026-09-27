@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '33a7eb68', changes: [
+    'Soil Health adds Sesotho and Xitsonga draft slides beside English.',
+  ], tour: [
+    { title: 'Compare the Soil Health drafts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho for slide 5 or Xitsonga for slides 3 to 5. Short unreviewed drafts are paired with exact English. Other teaching and narration stay English where regional wording is uncertain.' },
+  ] },
   { when: '27 September 2026', sha: '6cbd8602', changes: [
     'Soil Health opens with four Sesotho draft slides beside English.',
   ], tour: [

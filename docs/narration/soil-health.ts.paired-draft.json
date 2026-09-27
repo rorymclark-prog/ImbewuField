@@ -3,15 +3,16 @@
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "provenance": {
-    "newDrafts": "Slides 1 and 2, first sentence only. These are new machine-draft proposals, not present in the existing Xitsonga course draft.",
+    "newDrafts": "Slides 1–2 first sentence, slide 3 heading/first sentence, slide 4 heading, slide 5 first sentence are unreviewed machine drafts with exact English source. This expands the held-source pilot.",
     "reusedDrafts": "None in learner frames. Slide 4 existing technical paragraph was held after semantic cross-check.",
-    "holds": "Every heading and all other narration remain English. Slide 4 technical microbiology and nutrient-uptake paragraphs are held as complete source paragraphs."
+    "holds": "All other narration and uncertain soil, jar, compost, water and diagnostic guidance remain exact English."
   },
   "reviewNotes": [
     "Slide 1 uses the broad word “Misava” for soil/ground; a fluent Xitsonga reviewer should check that the sentence is natural and preserves the source distinction.",
     "Slide 2 “Xiyimo xa misava xi khumba timitsu, mati ni ntshovelo” is a new machine draft of a general orientation claim; confirm the terms for soil condition and harvest in the intended written variety.",
     "No Xitsonga fluency, comprehension, or local soil-science approval is claimed.",
-    "Slide 4 remains exact English: the existing ku tswonga nutrients wording could misstate nutrient uptake and the worm-channel terms need fluent and local soil-science review."
+    "Slide 4 body remains exact English: the existing ku tswonga nutrients wording could misstate nutrient uptake and the worm-channel terms need fluent and local soil-science review.",
+    "Slide 5 draft refers to the two illustrated soil examples; the underlying source is a concept cutaway, not a diagnostic photograph or laboratory comparison."
   ],
   "slides": [
     {
@@ -84,11 +85,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Leswi u nga ta swi dyondza"
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Languta swikombiso swo hlayanyana swa xiyimo xa misava."
           },
           {
             "status": "english-hold"
@@ -111,7 +114,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Misava ya hanya"
         },
         "body": [
           {
@@ -144,7 +148,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Langutisisa swikombiso leswi swimbirhi swa misava."
           },
           {
             "status": "english-hold"
