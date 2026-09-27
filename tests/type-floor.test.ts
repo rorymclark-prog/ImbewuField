@@ -77,6 +77,7 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'lib/training-access.tsx': 'course access and refusal text must remain readable on learner phones',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
   'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',

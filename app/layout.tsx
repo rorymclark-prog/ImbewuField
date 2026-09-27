@@ -14,6 +14,7 @@ import SampleModeBanner from '@/components/SampleModeBanner';
 import PhotoViewer from '@/components/PhotoViewer';
 import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
+import { TrainingAccessProvider } from '@/lib/training-access';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -127,7 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ProductTourProvider>
                 <AccountOnboardingGates />
                 <FieldSyncRunner />
-                <BackControlProvider>{children}</BackControlProvider>
+                <TrainingAccessProvider><BackControlProvider>{children}</BackControlProvider></TrainingAccessProvider>
                 <ChatWidget />
                 <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
                 <UpdateGuide loadedBuildSha={loadedBuildSha} />
