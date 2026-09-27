@@ -503,11 +503,29 @@ class Occupancy {
       const stale = realNow !== undefined && typeof p.once === 'string'
         && onceStampIsPast(p.once, realNow.year, realNow.month);
       if (p.existing || stale) {
-        const entryOffset = existingSowOffset(p.sowMonth, nowMonth)
+        // AGE IT FROM THE REAL TODAY, NOT THE ANCHOR (2026-09-27 audit). The
+        // whole-year sweep calls this with `nowMonth` set to each of twelve
+        // synthetic anchors; ageing an already-growing crop from those made a
+        // July tomato look nearly finished from a January anchor, and the
+        // winning plan stacked sweet potato and cucumber on whole-bed tomatoes
+        // and cabbage (conflicts in 22 of 24 probe runs; Simple mode showed
+        // none). The crop's remaining months are fixed in real time, so they
+        // are placed at their real offsets, translated into this frame...
+        const ageFrom = realNow?.month ?? nowMonth;
+        const frameShift = monthsForward(ageFrom, nowMonth);
+        const entryOffset = existingSowOffset(p.sowMonth, ageFrom)
           + bedHoldStartOffsetMonths(crop);
         for (let index = 0; index < bedHoldSpanMonths(crop); index++) {
-          const offset = entryOffset + index;
+          const realOffset = entryOffset + index;
+          if (realOffset < 0) continue;
+          const offset = realOffset - frameShift;
           if (offset >= 0) this.addExistingOffset(p.bedId, offset, crop.key, safeFraction);
+          // ...and, in a synthetic frame, also blocked by calendar month: the
+          // frame starts at the anchor, so a recurring row whose first-year
+          // occurrence falls between today and the anchor would otherwise
+          // never meet the crop. Same conservative fix as the saved starter
+          // rows below; the from-now plan (frameShift 0) is unchanged.
+          if (frameShift !== 0) this.addAnnualMonth(p.bedId, wrapMonth(ageFrom + realOffset), crop.key, safeFraction);
         }
       } else {
         // A saved one-time starter holds ground exactly like a planned row, and
@@ -1074,6 +1092,7 @@ class BedRotation {
   private slotsByBed = new Map<string, RotationSlot[]>();
   private rotateCrops: boolean;
   private nowMonth: number;
+  private realNowMonth: number | undefined;
   private exactFallbackFamily: RotationFamily | null;
   private fallbackBeds = new Map<string, RotationFamily>();
 
@@ -1085,6 +1104,7 @@ class BedRotation {
     realNow?: RealNow,
   ) {
     this.nowMonth = nowMonth;
+    this.realNowMonth = realNow?.month;
     this.rotateCrops = rotateCrops;
     this.exactFallbackFamily = exactFallbackFamily;
     warnIfOnceRowUnverifiable(existingPlantings, realNow, 'BedRotation');
@@ -1119,8 +1139,11 @@ class BedRotation {
   }
 
   private slotFor(crop: CropDef, sowMonth: number, existing: boolean): RotationSlot {
+    // An already-growing crop is dated from the real today and then expressed
+    // in this (possibly synthetic, whole-year-sweep) frame — see Occupancy.seed.
+    const ageFrom = this.realNowMonth ?? this.nowMonth;
     const sowOffset = existing
-      ? existingSowOffset(sowMonth, this.nowMonth)
+      ? existingSowOffset(sowMonth, ageFrom) - monthsForward(ageFrom, this.nowMonth)
       : monthsForward(this.nowMonth, sowMonth);
     const startOffset = sowOffset + bedHoldStartOffsetMonths(crop);
     return {

@@ -41,6 +41,10 @@ export interface CropDef {
   sowMonths: Record<RainPattern, number[]>;
   daysToHarvest: number;
   transplant?: boolean;
+  /** Killed by frost (warm-season / tropical crop). The catalog's hard-frost 'summer'
+   * column may not offer a sow month whose crop is in the field during May-Aug frost
+   * before its first harvest — tests/crop-catalog-frost.test.ts enforces it. */
+  frostTender?: boolean;
   spacingCm: number;
   /** Sourced row/in-row/depth split (2026-07-15 agronomy pass) — additive,
    *  only populated where a directly-quoted SA source gives the split (see
@@ -122,8 +126,11 @@ export const CROPS: CropDef[] = [
     key: 'maize',
     name: 'Maize (mielies)',
     icon: '🌽',
+    frostTender: true,
     sowMonths: {
-      summer: [10, 11, 12],
+      // Frost gate (2026-09-27 audit): Dec removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [10, 11],
       winter: [],
       'all-year': [10, 11, 12],
       'mild-frost': [10, 11, 12],
@@ -160,8 +167,11 @@ export const CROPS: CropDef[] = [
     key: 'dry-beans',
     name: 'Dry beans (sugar beans)',
     icon: '🫘',
+    frostTender: true,
     sowMonths: {
-      summer: [11, 12, 1],
+      // Frost gate (2026-09-27 audit): Jan removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [11, 12],
       winter: [],
       'all-year': [3, 4],
       'mild-frost': [11, 12, 1],
@@ -194,6 +204,7 @@ export const CROPS: CropDef[] = [
     key: 'green-beans',
     name: 'Green beans',
     icon: '🫛',
+    frostTender: true,
     sowMonths: {
       summer: [9, 10, 11, 12, 1],
       winter: [8, 9, 10, 11],
@@ -222,6 +233,7 @@ export const CROPS: CropDef[] = [
     key: 'butternut',
     name: 'Butternut',
     icon: '🧡',
+    frostTender: true,
     sowMonths: {
       summer: [10, 11, 12],
       winter: [9, 10, 11],
@@ -254,8 +266,11 @@ export const CROPS: CropDef[] = [
     key: 'pumpkin',
     name: 'Pumpkin',
     icon: '🎃',
+    frostTender: true,
     sowMonths: {
-      summer: [10, 11, 12],
+      // Frost gate (2026-09-27 audit): Dec removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [10, 11],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
       'mild-frost': [9, 10, 11], // shifted earlier, dropped Dec — Starke Ayres national Sowing Guide + Seeds for Africa KZN chart (both agree Sep-Nov, not Oct-Dec)
@@ -538,6 +553,7 @@ export const CROPS: CropDef[] = [
     key: 'tomatoes',
     name: 'Tomatoes',
     icon: '🍅',
+    frostTender: true,
     sowMonths: {
       summer: [8, 9, 10],
       winter: [8, 9, 10],
@@ -576,6 +592,7 @@ export const CROPS: CropDef[] = [
     key: 'peppers',
     name: 'Peppers',
     icon: '🫑',
+    frostTender: true,
     sowMonths: {
       summer: [8, 9, 10],
       winter: [8, 9, 10],
@@ -611,6 +628,7 @@ export const CROPS: CropDef[] = [
     key: 'chilli',
     name: 'Chilli',
     icon: '🌶️',
+    frostTender: true,
     // Same rows as Peppers (crop-catalog.ts above): KZN DARD Table 6 groups
     // chilli and green pepper under one "Capsicum" line, so sow window,
     // spacing, duration and rotation family carry over unchanged. Only
@@ -648,8 +666,11 @@ export const CROPS: CropDef[] = [
     key: 'sweet-potato',
     name: 'Sweet potato',
     icon: '🍠',
+    frostTender: true,
     sowMonths: {
-      summer: [10, 11, 12],
+      // Frost gate (2026-09-27 audit): Dec removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [10, 11],
       winter: [9, 10, 11],
       'all-year': [8, 9, 10, 11],
       'mild-frost': [10, 11, 12],
@@ -685,8 +706,11 @@ export const CROPS: CropDef[] = [
     key: 'potato',
     name: 'Potato',
     icon: '🥔',
+    frostTender: true,
     sowMonths: {
-      summer: [2, 3, 8, 9],
+      // Frost gate (2026-09-27 audit): Feb, Mar removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [8, 9],
       winter: [7, 8, 9],
       // Added 4,5 (Apr-May): a 2026-08-19 audit (commit ff2c014) removed this
       // window from mild-frost below because its source (a potato-specific
@@ -770,8 +794,11 @@ export const CROPS: CropDef[] = [
     key: 'amadumbe',
     name: 'Amadumbe (taro)',
     icon: '🌰',
+    frostTender: true,
     sowMonths: {
-      summer: [9, 10, 11],
+      // Frost gate (2026-09-27 audit): Sep, Oct, Nov removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [],
       winter: [9, 10],
       'all-year': [8, 9, 10, 11],
       'mild-frost': [9, 10, 11],
@@ -804,8 +831,11 @@ export const CROPS: CropDef[] = [
     key: 'groundnuts',
     name: 'Groundnuts (peanuts)',
     icon: '🥜',
+    frostTender: true,
     sowMonths: {
-      summer: [10, 11],
+      // Frost gate (2026-09-27 audit): Nov removed — sown then, this frost-tender crop is in the field
+      // during the hard-frost interior's May-Aug frost (header) before its first harvest.
+      summer: [10],
       winter: [9, 10, 11],
       'all-year': [9, 10, 11],
       'mild-frost': [10, 11],
@@ -960,6 +990,7 @@ export const CROPS: CropDef[] = [
     key: 'cucumber',
     name: 'Cucumber',
     icon: '🥒',
+    frostTender: true,
     sowMonths: {
       summer: [9, 10, 11, 12],
       winter: [9, 10, 11],
@@ -989,6 +1020,7 @@ export const CROPS: CropDef[] = [
     key: 'watermelon',
     name: 'Watermelon',
     icon: '🍉',
+    frostTender: true,
     sowMonths: {
       summer: [10, 11, 12],
       winter: [9, 10, 11],

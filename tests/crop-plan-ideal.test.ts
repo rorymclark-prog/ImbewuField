@@ -890,3 +890,36 @@ test('a once row with no realNow context warns in dev, and stops once realNow is
     console.warn = originalWarn;
   }
 });
+
+// ── Already-growing crops hold their ground in every anchor frame ───────────
+//
+// Found 2026-09-27 by three independent auditors. The sweep aged `existing`
+// rows from each synthetic anchor instead of the real today, so a crop sown a
+// month or two ago looked finished in most frames and the winning plan was
+// stacked on top of it (73% of 1,152 probe inputs overbooked; Simple mode
+// showed no conflict). The benchmark's own conflict detector is the oracle.
+test('the whole-year plan never overbooks a bed holding an already-growing crop', async () => {
+  const { buildPlanYieldBenchmark } = await import('@/lib/crop-plan');
+  const beds: PlanBed[] = [
+    { id: 'eb-1', label: 'Bed 1', areaM2: 10, minDimM: 1.2 },
+    { id: 'eb-2', label: 'Bed 2', areaM2: 10, minDimM: 1.2 },
+  ];
+  const offenders: string[] = [];
+  for (const realNow of [1, 4, 7, 9, 11]) {
+    for (const [cropKey, back] of [['cabbage', 0], ['tomatoes', 2], ['carrots', 1], ['onions', 3]] as const) {
+      const existing: Planting[] = [{
+        id: `ex-${cropKey}`, bedId: 'eb-1', cropKey, sowMonth: wrapMonth(realNow - back), existing: true,
+      }];
+      const ideal = suggestIdealYearPlan({
+        goal: 'family', groups: [], cropKeys: ['cabbage', 'carrots', 'lettuce', 'green-beans', 'beetroot'],
+        rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+        allowMixedCropsInBed: true, reliableIrrigation: true,
+      }, 'mild-frost', beds, existing, realNow, REAL_NOW_YEAR);
+      const benchmark = buildPlanYieldBenchmark([...existing, ...ideal.best.result.plantings], beds, realNow);
+      if (benchmark.areaConflictBedLabels.length) {
+        offenders.push(`now=${realNow} existing ${cropKey} sown ${back} back → anchor ${ideal.best.anchorMonth} overbooks ${benchmark.areaConflictBedLabels.join(', ')}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
+});

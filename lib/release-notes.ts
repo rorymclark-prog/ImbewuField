@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '8fa5017', changes: [
+    'Whole-year plans no longer stack new crops on beds already growing.',
+    'Cold-interior plans no longer sow tender crops that frost would kill.',
+  ], tour: [
+    { title: 'Re-run the whole-year plan', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'Crops you marked as already growing now keep their beds in the best whole-year plan. In cold-winter areas, late potato, sweet potato, pumpkin, maize, dry bean and groundnut sowings that would still be in the ground at the first frost are no longer offered.' },
+  ] },
   { when: '27 September 2026', sha: 'bc1dcee', changes: [
     'Sowing months now follow your winter cold: frost-free farms get winter tomatoes.',
     'Very cold farms no longer get a light-frost calendar.',
