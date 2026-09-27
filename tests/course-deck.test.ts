@@ -486,6 +486,28 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
   } finally { act(() => view.unmount()); }
 
+  for (const language of ['ve', 'ts']) {
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: language })); });
+    try {
+      const picture = () => view.root.findAllByType('img')[0];
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`));
+      assert.equal(view.root.findAllByType('audio').length, 0,
+        `${language} learners should not hear English before choosing it`);
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+      const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')), ['English source narration'],
+        'the isiZulu voice must not be offered as the regional voice');
+      const expectedName = language === 've' ? 'Tshivenda' : 'Xi' + 'tsonga';
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''),
+        new RegExp(`No ${expectedName} narration available`, 'i'));
+      act(() => voiceButtons[0].props.onClick());
+      assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
+        'choosing English source audio must leave the regional paired slide visible');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+    } finally { act(() => view.unmount()); }
+  }
+
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
   try {
     const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
@@ -495,6 +517,13 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
       'the existing English and isiZulu switch still changes the narration');
     assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 16 / 9);
+    act(() => view.root.findByProps({ className: 'playControl' }).props.onClick());
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props['aria-label'], 'Stop the lesson');
+    act(() => view.update(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'ts' })));
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/ts\/slide-01\.webp$/);
+    assert.equal(view.root.findAllByType('audio').length, 0,
+      'changing the app language must stop the old voice and require a new source choice');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
   } finally { act(() => view.unmount()); }
 });
 

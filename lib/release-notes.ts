@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'a89acfd5', changes: [
+    'Regional study slides now wait for your English narration choice.',
+  ], tour: [
+    { title: 'Choose source narration', where: 'Study → any core module', href: '/student',
+      detail: 'With Sesotho, Tshivenda or Xitsonga selected, the slides stay in that language where a draft exists. English narration starts only after you choose it.' },
+  ] },
   { when: '27 September 2026', sha: '33a7eb68', changes: [
     'Soil Health adds Sesotho and Xitsonga draft slides beside English.',
   ], tour: [

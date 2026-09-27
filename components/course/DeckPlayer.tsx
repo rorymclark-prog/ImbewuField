@@ -81,17 +81,17 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const deck = deckFor(moduleId);
   const narration = COURSE_NARRATION[moduleId];
 
-  // The picture and the voice can have different available languages. A Sesotho learner should
-  // keep a Sesotho slide when choosing English source narration, and the English voice should
-  // never start merely because a Sesotho recording is absent.
+  // The picture and the voice can have different available languages. Regional draft readers
+  // should keep their selected slides when choosing English source narration, and the English
+  // voice should never start merely because a regional recording is absent.
   //
   // Replacing the old track list with this player took the isiZulu/English switch away with it,
   // and that switch was doing real work: a learner reading isiZulu may still want to hear the
   // English, a facilitator checks both, and the app-wide language is a heavier thing to change and
   // change back. It defaults to the app's language and is only offered when the module actually
   // has more than one recording.
-  const needsSourceNarrationChoice = appLang === 'st' && deck?.slideLanguages.includes('st') &&
-    !narration?.languages.includes('st');
+  const needsSourceNarrationChoice = ['st', 've', 'ts'].includes(appLang) &&
+    !!narration?.languages.includes('en') && !narration.languages.includes(appLang);
   const [slideChoice, setSlideChoice] = useState(appLang);
   const [narrationChoice, setNarrationChoice] = useState<string | null>(
     needsSourceNarrationChoice ? null : appLang,
@@ -140,6 +140,14 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const narrationEnded = useRef(false);
+
+  useEffect(() => {
+    // Switching the app language mid-lesson must not keep advancing pages under the old voice.
+    audioRef.current?.pause();
+    videoRef.current?.pause();
+    setRunning(false);
+    setTimedVoiceActive(false);
+  }, [appLang]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -470,7 +478,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   }}
                 >
                   {needsSourceNarrationChoice && code === 'en'
-                    ? 'Modumo wa Senyesemane · English source narration'
+                    ? appLang === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration'
                     : langName(code, uiLang)}
                 </button>
               );
@@ -652,9 +660,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
       {needsSourceNarrationChoice && (
         <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          Sesotho AI draft · {narrationChoice === 'en'
+          {appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
             ? 'Ho kgethilwe modumo wa Senyesemane (wa mohlodi). English source: English source narration selected.'
-            : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane hore o mamele thuto. English source: No Sesotho narration available. Select English source narration to hear the lesson.'}
+            : 'Ha ho modumo wa Sesotho wa thuto ena. Kgetha modumo wa Senyesemane hore o mamele thuto. English source: No Sesotho narration available. Select English source narration to hear the lesson.'}</>
+            : narrationChoice === 'en'
+              ? `English source narration selected. ${langName(appLang, uiLang)} narration is not available for this module yet.`
+              : `No ${langName(appLang, uiLang)} narration available. Select English source narration to hear the lesson.`}
         </p>
       )}
 
