@@ -48,6 +48,16 @@ jobs:
       - name: Install
         run: npm ci
 
+      # The paired Study slide preflight measures every full source paragraph with Pillow before
+      # writing a deck. Without the same renderer library as local authoring, CI would fail at
+      # import time and never test whether a draft overflows at phone-readable type size.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install slide renderer dependency
+        run: python -m pip install Pillow==12.2.0
+
       - name: Typecheck
         run: npx tsc --noEmit
 
