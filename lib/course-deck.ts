@@ -52,6 +52,10 @@ export interface DeckSlide {
 export interface ModuleDeck {
   /** Languages with their OWN rendered slides. Others fall back — see resolveDeckLang. */
   slideLanguages: string[];
+  /** Use a compact format only for an explicitly registered language; old decks stay JPEG. */
+  slideFormatsByLanguage?: Record<string, 'jpg' | 'webp'>;
+  /** Rendered still dimensions may differ by language; width divided by height. */
+  slideAspectRatioByLanguage?: Record<string, number>;
   /**
    * Slides a language is missing, by slide number.
    *
@@ -182,7 +186,9 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
 
 // The three locally drawn Introduction clips await Rory's visual clearance.
 const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
-  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8 },
+  // The Sesotho proof carries the source illustration and paired text on the still. Showing the
+  // English animation poster instead would hide both language panels on the first ethics slide.
+  4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st'] },
 };
 
 // Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
@@ -251,7 +257,12 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
-    slideLanguages: ['en', 'zu'],
+    // The first eight source-paired Sesotho frames cover the opening and lesson 1. Later lessons
+    // remain English until their own draft media has had phone and source-pair checks.
+    slideLanguages: ['en', 'zu', 'st'],
+    slideFormatsByLanguage: { st: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400 },
+    missingSlides: { st: Array.from({ length: 14 }, (_, i) => i + 9) },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
@@ -315,7 +326,8 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   if (!deck || !deck.slideLanguages.includes(lang)) return null;
   if (!deck.slides.some((s) => s.slide === slide)) return null;
   if (deck.missingSlides?.[lang]?.includes(slide)) return null;
-  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.jpg`;
+  const format = deck.slideFormatsByLanguage?.[lang] ?? 'jpg';
+  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${format}`;
 }
 
 /**

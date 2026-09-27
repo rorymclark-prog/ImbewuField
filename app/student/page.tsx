@@ -1178,7 +1178,11 @@ export default function StudentPage() {
                       {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
                         <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
                       )}
-                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Slides: English</span>}
+                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
+                        {lang === 'st' && mod.id === 'intro-permaculture'
+                          ? 'Slides: Sesotho AI draft (lesson 1); English later'
+                          : 'Slides: English'}
+                      </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
                           <span className="font-sans text-xs" style={{ color: '#755942' }}>
