@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: 'fd50fb6d', changes: [
+    'Introduction lesson 3 now shows a footpath zones example in the lesson card.',
+  ], tour: [
+    { title: 'See the zones example', where: 'Study → Introduction to Permaculture → lesson 3', href: '/student',
+      detail: 'Open the lesson diagram. Numbered zones follow a path from the house toward the field and wilder land, rather than fixed circles. This is an example, not a plan for your site.' },
+  ] },
   { when: '27 September 2026', sha: '83b0e6e3', changes: [
     'Introduction lesson 3 has source-paired Sesotho draft slides and a footpath zones example.',
   ], tour: [

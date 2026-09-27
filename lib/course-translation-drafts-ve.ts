@@ -249,10 +249,8 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       id: "intro-permaculture-l3",
-      infographicAlt: pair(
-        "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
-        "Maringi a no ṱanḓavhuwa u bva nnḓuni u ya nnḓa. Ringi ḽi re tsini tsini na vothi ḽi ṱhogomelwa ḓuvha ḽiṅwe na ḽiṅwe; ringi ḽiṅwe na ḽiṅwe ḽi re kule ḽi dalelwa lwa si gathi nahone ḽa siilwa ḽo fana na ḓaka.",
-      ),
+      // The earlier draft described rings that the replacement picture does not show.
+      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Zoune na Sekithara: U Dzudzanya Bulasi Yaṋu nga Maanḓa",
