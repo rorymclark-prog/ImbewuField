@@ -75,8 +75,10 @@ test('Mediterranean winter-rainfall climate maps to the winter pattern', () => {
   assert.equal(atlasRainPattern(CAPE_TOWN), 'winter');
 });
 
-test('a climate with real frost maps to mild-frost regardless of rain seasonality', () => {
-  assert.equal(atlasRainPattern(VIENNA), 'mild-frost');
+test('a hard-frost climate maps to the frost-waiting summer column regardless of rain seasonality', () => {
+  // Never the LIGHT-frost column: that inversion sent the coldest places to the warmest
+  // frost calendar until the 2026-09-27 crop-plan audit.
+  assert.equal(atlasRainPattern(VIENNA), 'summer');
 });
 
 test('hot, evenly wet climate maps to all-year', () => {

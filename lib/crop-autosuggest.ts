@@ -1164,15 +1164,22 @@ class BedRotation {
     if (!this.rotateCrops) return false;
     const candidate = this.slotFor(crop, sowMonth, false);
     const family = candidate.family;
+    // Each projected copy remembers the ledger slot it was projected from, so a
+    // cohort that merges into the candidate's course takes its annual copies with it.
+    const baseOf = new Map<ProjectedRotationSlot, RotationSlot>();
     const others: ProjectedRotationSlot[] = (this.slotsByBed.get(bedId) ?? [])
-      .flatMap((slot) => slot.existing
-        ? [{ ...slot, cycleShift: 0 as const }]
-        : [-12, 0, 12].map((shift) => ({
-          ...slot,
-          cycleShift: shift as -12 | 0 | 12,
-          startOffset: slot.startOffset + shift,
-          endOffset: slot.endOffset + shift,
-        })));
+      .flatMap((slot) => {
+        const copies: ProjectedRotationSlot[] = slot.existing
+          ? [{ ...slot, cycleShift: 0 as const }]
+          : [-12, 0, 12].map((shift) => ({
+            ...slot,
+            cycleShift: shift as -12 | 0 | 12,
+            startOffset: slot.startOffset + shift,
+            endOffset: slot.endOffset + shift,
+          }));
+        for (const copy of copies) baseOf.set(copy, slot);
+        return copies;
+      });
     // Overlapping cohorts of this SAME crop are one course. Once the first
     // cohort has actually released the bed, a following crop is a new course
     // even when it starts in the next calendar month; treating adjacency as
@@ -1193,7 +1200,23 @@ class BedRotation {
         changed = true;
       }
     }
-    const neighbours = others.filter((slot) => !merged.has(slot));
+    // 2026-09-27 audit: a same-crop cohort that joined this course used to leave
+    // its own ±12 annual copies behind as "neighbours", so a second, staggered
+    // cabbage read as cabbage → cabbage against its partner's next-year copy and
+    // was refused whenever the bed had nothing else yet — the comment above says
+    // staggered cohorts are ONE course, and the whole bed sat mostly empty under
+    // the default rotate + steady + mixed-bed settings. The candidate's own
+    // annual copies were never neighbours either, so this makes a merged cohort
+    // behave exactly like the candidate itself. A different crop of the same
+    // family is untouched: it never merges, so its copies still block.
+    // Only a cohort that joined in the CURRENT cycle (shift 0) carries its copies
+    // along: one reached only through a ±12 copy is last or next year's course,
+    // and letting it in would chain cohorts into a year-round monoculture (carrots
+    // Jan–Oct then again from Dec — tests/crop-plan-interrogation.test.ts oracle).
+    const mergedBases = new Set([...merged]
+      .filter((slot) => slot.cycleShift === 0)
+      .map((slot) => baseOf.get(slot)));
+    const neighbours = others.filter((slot) => !merged.has(slot) && !mergedBases.has(baseOf.get(slot)));
     // A same-family course held at the SAME TIME as the candidate is the
     // repeat risk in its most concentrated form; no neighbour ordering can
     // excuse it.
@@ -3182,6 +3205,12 @@ export function autoSuggestPlan(
     // country read was a paragraph about an audit. It is genuinely actionable,
     // so it stays prominent — but as a warning that opens with the thing to do.
     notes.push(planNote('warning', 'Check each sowing month with your local extension officer — outside KZN this calendar has not been checked crop by crop.'));
+  } else {
+    // Frost-free and light-frost summer-rain sites OUTSIDE KZN (Mbombela, Tzaneen)
+    // now reach this column too (lib/koppen-global.ts rainPatternFor). The engine
+    // does not know the province, so the provenance stays visible — as basis, not a
+    // warning: inside KZN it is the audited calendar and needs no action.
+    notes.push(planNote('basis', 'These sowing months follow the KZN DARD warm-area calendar. Outside KwaZulu-Natal, confirm them with your local extension officer.'));
   }
 
   const usableBedIds = new Set(beds.map((bed) => bed.id));

@@ -52,6 +52,25 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 27 Sep 2026 — Crop-plan audit: climate calendar + rotation packing
+- Multi-agent audit of every crop-planning feature, plus a line-by-line fact-check of one engine
+  plan for the Mkuze demo farm against two independent expert plans.
+- **Climate (critical):** `rainPatternFor` (lib/koppen-global.ts) now chooses the calendar column by
+  frost class first (coldest-month mean < 7 / < 11 / >= 13 °C), rain second. Before, the coldest
+  sites (< 4 °C) got the KZN *light*-frost calendar, hard-frost bimodal Karoo sites got the
+  frost-free column, and frost-free lowveld/coast (the demo farm, Durban, Mbombela) could only get
+  the hard-frost Highveld windows. Arid sites stay on the frost column. Warm-area plans now carry a
+  basis note to confirm months with an extension officer outside KZN.
+- **Rotation (critical):** a second, staggered sowing of one crop was refused because its partner's
+  next-year copy read as a same-family repeat, leaving beds mostly empty under the default settings.
+  Staggered cohorts joined in the current cycle now carry their annual copies (one course, as the
+  code's own comment says). The test oracle now also draws year −1, matching the engine.
+- Measured: Mkuze demo farm 154 → 191 kg/yr, bed-months 91.4% → 92.7%, winter tomatoes appear;
+  reference farm commercial/steady 324 → 365 kg, bed use 58% → 66%.
+- Still open from the audit (see the PR): temperature/heat gating, a sourced frost-free column,
+  kg-per-bed-month ranking, "few big harvests" packing, rain-fed mode, existing-crop double-booking in
+  the whole-year plan, potato/frost-tail windows, missing heat-season crops.
+
 ### 26 Sep 2026 — Wave 9 (final): last theme leftovers (#706)
 - Community, community profile, Contact, PopiaConsent, Onboarding and login now paint with theme
   tokens instead of hardcoded forest/paper/error hexes (Google logo colours kept).
