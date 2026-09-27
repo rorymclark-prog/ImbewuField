@@ -418,12 +418,12 @@ test('Water playback respects language gaps, download choice and the whole clear
   }
 });
 
-test('new regional ethics stills stay visible while all unauthored Introduction frames use English', () => {
+test('new regional orientation and ethics stills stay visible while unauthored Introduction frames use English', () => {
   for (const lang of ['ve', 'ts']) {
     const deck = COURSE_DECKS['intro-permaculture'];
     assert.ok(deck.slideLanguages.includes(lang));
     assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
-    for (const slide of [1, 4, 5, 6]) {
+    for (const slide of [1, 2, 3, 4, 5, 6]) {
       assert.ok(onDisk(slideImageUrl('intro-permaculture', lang, slide)!));
       assert.match(slideImageFor('intro-permaculture', lang, slide)!.url, new RegExp(`/${lang}/slide-0${slide}\\.webp$`));
     }
