@@ -204,13 +204,26 @@ test('Sesotho Soil Health entry keeps paired stills and English source narration
   const pack = offlinePack('soil-health', 'st');
   assert.deepEqual(pack.missing, []);
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-  for (const n of ['01', '02', '03', '04']) {
+  for (const n of ['01', '02', '03', '04', '05']) {
     assert.ok(slides.includes(`/course-decks/soil-health/st/slide-${n}.webp`));
   }
-  assert.ok(slides.includes('/course-decks/soil-health/en/slide-05.jpg'));
+  assert.ok(slides.includes('/course-decks/soil-health/en/slide-06.jpg'));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
     entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
   assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/st/')));
+});
+
+test('itsonga Soil Health keeps five paired stills and exact English fallback/audio offline', () => {
+  const pack = offlinePack('soil-health', 'ts');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  for (const n of ['01', '02', '03', '04', '05']) {
+    assert.ok(slides.includes(`/course-decks/soil-health/ts/slide-${n}.webp`));
+  }
+  assert.ok(slides.includes('/course-decks/soil-health/en/slide-06.jpg'));
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ts/')));
 });
 
 test('Tshivenda and Xitsonga Introduction downloads include orientation stills and English fallback', () => {

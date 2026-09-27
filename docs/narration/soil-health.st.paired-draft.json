@@ -140,7 +140,8 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sheba mehlala ena e mmedi ya mobu ka hloko."
           },
           {
             "status": "english-hold"
