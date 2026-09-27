@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { reverseGeocode } from '@/lib/reverse-geocode';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 export const maxDuration = 60;
 
@@ -116,6 +117,9 @@ Base everything on your knowledge of South Africa at this specific GPS point. If
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/area-profile');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/area-profile', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   const { lat, lon } = await req.json();
   if (typeof lat !== 'number' || typeof lon !== 'number') {
     return new Response('Invalid coordinates', { status: 400 });
@@ -130,8 +134,8 @@ export async function POST(req: NextRequest) {
 
   const prompt = buildPrompt(lat, lon, admin, pois);
 
-  const stream = await client.messages.stream({
-    model: 'claude-sonnet-4-6',
+  const stream = await ai.messages.stream({
+    model: AI_MODELS.main,
     max_tokens: 1600,
     messages: [{ role: 'user', content: prompt }],
   });

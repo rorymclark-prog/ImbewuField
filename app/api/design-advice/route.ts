@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 // Advice calls are small and frequent (fired on most canvas edits) — allow up to 30s
 // but keep them cheap: claude-haiku-4-5, short system prompt, short max_tokens.
@@ -22,6 +23,9 @@ interface DesignAdviceAI {
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/design-advice');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/design-advice', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   let body: unknown;
   try {
     body = await req.json();
@@ -38,9 +42,9 @@ export async function POST(req: NextRequest) {
 
   let raw: string;
   try {
-    const msg = await client.messages.create({
+    const msg = await ai.messages.create({
       // Small, frequent, cost-conscious calls — Haiku is plenty for short layout tips.
-      model: 'claude-haiku-4-5',
+      model: AI_MODELS.cheap,
       max_tokens: 400,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMessage }],

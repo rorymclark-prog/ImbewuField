@@ -42,11 +42,21 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 September 2026', sha: 'c77f1739', changes: [
+  { when: '27 September 2026', sha: 'c1cc99a3', changes: [
     'More regional Study drafts now appear beside English.',
   ], tour: [
     { title: 'Compare the new Study drafts', where: 'Study → Vegetables & Staples, Market Gardening or Soil Health', href: '/student',
       detail: 'Choose Sesotho for Vegetables slides 1, 2, 8 and 9; Tshivenda for Market slides 2 and 3; or Xitsonga for Soil slides 1 and 2. These are unreviewed AI drafts beside exact English. Other slides and narration remain English.' },
+  ] },
+  { when: '27 September 2026', sha: 'c77f1739', changes: [
+    'Each person now has a monthly AI allowance, shown on your Account page.',
+    'When it runs out, AI keeps working on a simpler model until the 1st.',
+    'Reports, chat and photo checks now use a newer, better-value AI model.',
+  ], tour: [
+    { title: 'See your AI allowance', where: 'Account', href: '/account',
+      detail: 'A bar shows how much of this month\'s AI allowance is left and the date it refills.' },
+    { title: 'Ask for advice as usual', where: 'Home', href: '/home',
+      detail: 'Nothing changes in how you ask. Visitors who are not signed in get a small daily allowance, then a prompt to sign in.' },
   ] },
   { when: '27 September 2026', sha: 'f767fba9', changes: [
     'Market and Vegetables now show more regional draft slides beside English.',

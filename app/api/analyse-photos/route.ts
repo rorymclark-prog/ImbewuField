@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/analyse-photos');
   if (auth.response) return auth.response;
+  const metered = await meteredAi(req, auth, '/api/analyse-photos', client);
+  if (metered.response) return metered.response;
+  const { ai } = metered;
   let body: { images: Array<{ data: string; mediaType: string }>; locationData: LocationData; source: 'upload' | 'satellite' };
   try {
     body = await req.json();
@@ -84,8 +88,8 @@ Be direct and concise. This feeds into a full design report.`,
     },
   ];
 
-  const stream = await client.messages.stream({
-    model: 'claude-sonnet-4-6',
+  const stream = await ai.messages.stream({
+    model: AI_MODELS.main,
     max_tokens: 1400,
     messages: [{ role: 'user', content }],
   });

@@ -52,6 +52,17 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 27 Sep 2026 — Monthly AI allowance + value models
+- New `lib/ai-budget.ts` + `lib/metered-ai.ts`: every Claude call in app/api goes through one metered
+  client. €3/person/month (env `AI_MONTHLY_CAP_EUR`), priced from real usage, ledger in Firestore
+  `ai_spend` (server-only rule). Over the cap → cheap model until the 1st, never blocked.
+- Guests: €0.05/day per hashed IP (`AI_GUEST_DAILY_EUR`) on the cheap model, then a sign-in reply (429).
+- No Firestore Admin credentials → 1.5 s-capped read, then an in-memory per-instance ledger (partial,
+  like the rate limiter). Account page shows "AI this month" via `/api/ai-allowance`.
+- Models: main → Sonnet 5 ($2/$10), deep → Opus 5 (same price as before); thinking kept off and
+  max_tokens ×1.3 for the new tokenizer. Gemini 3.8 Flash from the research is NOT wired yet —
+  needs a GEMINI_API_KEY and the side-by-side comparison the research asks for.
+
 ### 26 Sep 2026 — Wave 9 (final): last theme leftovers (#706)
 - Community, community profile, Contact, PopiaConsent, Onboarding and login now paint with theme
   tokens instead of hardcoded forest/paper/error hexes (Google logo colours kept).

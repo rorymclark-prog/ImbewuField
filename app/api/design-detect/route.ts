@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { AI_MODELS, meteredAi, type MeteredAi } from '@/lib/metered-ai';
 
 export const maxDuration = 60;
 
@@ -203,16 +204,12 @@ const claudeClient = process.env.ANTHROPIC_API_KEY
   ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   : null;
 
-async function detectWithClaude(body: DetectBody): Promise<DetectResult> {
+async function detectWithClaude(body: DetectBody, ai: MeteredAi): Promise<DetectResult> {
   const { imageBase64, imgW, imgH, mPerPx } = body;
-  if (!claudeClient) {
-    throw new Error('ANTHROPIC_API_KEY not configured');
-  }
-
   const prompt = `You are analysing a top-down satellite photo of a South African smallholding for a permaculture design app. The image is ${imgW}x${imgH} px at an ASSUMED ${mPerPx} metres/px — this assumed scale may be wrong, so estimate the real-world scale independently from known-size objects visible in the image (cars are ~4.5 m long, a domestic roof typically spans 8-15 m, a road lane is ~3.5 m wide). Identify visible features and also the visible property/plot boundary (fence lines, hedge lines, cadastral-looking edges), if one is discernible. Return STRICT JSON only, with exactly these top-level keys: {"features":[{"kind":one of tree|building|water_tank|pond|veg_area|driveway,"points":[[x,y],...] normalised 0..1 (single point for tree/tank/pond/building-centre; 3+ ring for veg_area and large building footprints; 2+ polyline along a driveway),"sizeM":estimated diameter/width in metres for point features,"note":"5-word description"}],"boundary":[[x,y],...] normalised 0..1 ring of 3+ points tracing the property/plot boundary, or null if none is discernible,"metresAcross":your independent estimate of the real-world width in metres of the ENTIRE image (left edge to right edge), or null if you cannot estimate it}. Max 15 features, most confident first. Only clearly visible features — no speculation.`;
 
-  const msg = await claudeClient.messages.create({
-    model: 'claude-sonnet-4-6',
+  const msg = await ai.messages.create({
+    model: AI_MODELS.main,
     max_tokens: 2000,
     messages: [
       {
@@ -340,7 +337,10 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const result = await detectWithClaude(body);
+    if (!claudeClient) throw new Error('ANTHROPIC_API_KEY not configured');
+    const metered = await meteredAi(req, auth, '/api/design-detect', claudeClient);
+    if (metered.response) return metered.response;
+    const result = await detectWithClaude(body, metered.ai);
     console.log(`design-detect: claude fallback — ${result.features.length} features`);
     return NextResponse.json({ ...result, engine: 'claude' });
   } catch (err) {
