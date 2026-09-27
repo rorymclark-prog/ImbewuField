@@ -43,8 +43,9 @@ export interface UpdateTourStop {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '27 September 2026', sha: 'c77f173', changes: [
-    'Auto-suggest now picks sowing months by how cold your winters get, so frost-free lowveld and coast farms get their winter tomato and bean season.',
-    'The coldest farms no longer get a light-frost calendar, and auto-suggest can now stagger sowings of one crop so beds stay fuller.',
+    'Sowing months now follow your winter cold: frost-free farms get winter tomatoes.',
+    'Very cold farms no longer get a light-frost calendar.',
+    'Auto-suggest can stagger sowings of one crop, so beds stay fuller.',
   ], tour: [
     { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
       detail: 'Open your crop plan and run auto-suggest again. The climate line under the plan says which calendar your site uses; plans already saved are not changed until you accept a new suggestion.' },
