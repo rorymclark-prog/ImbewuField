@@ -14,6 +14,8 @@
 //   node scripts/make-lesson-slides.mjs <module-id> <lang> [out-dir]
 //   node scripts/make-lesson-slides.mjs seeds-sovereignty zu
 //   node scripts/make-lesson-slides.mjs intro-permaculture st OUT --paired-draft draft.json --validate-only
+//   node scripts/make-lesson-slides.mjs intro-permaculture st OUT --paired-draft draft.json --paired-art art.json
+//   art.json: {"10":"docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg"}
 //   draft.json: {"language":"st","sourceLanguage":"en","reviewStatus":"unreviewed",
 //     "slides":[{"n":1,"english":{"heading":"...","body":["..."]},
 //       "target":{"heading":{"status":"draft","text":"..."},
@@ -40,14 +42,17 @@ const overrideFlag = argv.indexOf('--art-overrides');
 const brandingFlag = argv.indexOf('--branding');
 const sourceFlag = argv.indexOf('--source');
 const pairedFlag = argv.indexOf('--paired-draft');
+const pairedArtFlag = argv.indexOf('--paired-art');
 const validateOnly = argv.includes('--validate-only');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
 const sourcePath = sourceFlag >= 0 ? resolve(argv[sourceFlag + 1]) : null;
 const pairedPath = pairedFlag >= 0 && argv[pairedFlag + 1] ? resolve(argv[pairedFlag + 1]) : null;
+const pairedArtPath = pairedArtFlag >= 0 && argv[pairedArtFlag + 1] ? resolve(argv[pairedArtFlag + 1]) : null;
 if (pairedFlag >= 0 && !pairedPath) throw new Error('--paired-draft requires a JSON file');
-const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--validate-only']);
-const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag].filter((i) => i >= 0).map((i) => i + 1));
+if (pairedArtFlag >= 0 && !pairedArtPath) throw new Error('--paired-art requires a JSON file');
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--validate-only']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
@@ -58,6 +63,7 @@ if (!moduleId || !lang) {
 if (pairedPath && (lang !== 'st' || sourcePath || brandingPath || overridesPath || imagesDir)) {
   throw new Error('--paired-draft supports st and the authored English source only, without art or branding overrides');
 }
+if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
 const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${pairedPath ? 'en' : lang}.md`));
 if (!existsSync(scriptPath)) {
@@ -69,8 +75,23 @@ const raw = readFileSync(scriptPath, 'utf8');
 const pairedSlides = pairedPath
   ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw))
   : null;
-const pairedSourceSlides = pairedSlides?.map(({ n }) =>
-  resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
+const pairedArt = pairedArtPath ? JSON.parse(readFileSync(pairedArtPath, 'utf8')) : {};
+if (!pairedArt || typeof pairedArt !== 'object' || Array.isArray(pairedArt)) {
+  throw new Error('--paired-art must be a slide-number-to-image-path object');
+}
+for (const [slide, path] of Object.entries(pairedArt)) {
+  if (!/^[1-9]\d*$/.test(slide) || Number(slide) > (pairedSlides?.length ?? 0) ||
+      typeof path !== 'string' || !path.trim()) {
+    throw new Error(`--paired-art has an invalid slide or path: ${slide}`);
+  }
+  const image = resolve(path);
+  if (!image.startsWith(`${process.cwd()}/`) || !existsSync(image)) {
+    throw new Error(`--paired-art image is missing or outside this repository: ${path}`);
+  }
+}
+const pairedSourceSlides = pairedSlides?.map(({ n }) => pairedArt[n]
+  ? resolve(pairedArt[n])
+  : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
 for (const sourceSlide of pairedSourceSlides ?? []) {
   if (!existsSync(sourceSlide)) throw new Error(`paired draft needs its illustrated English source slide: ${sourceSlide}`);
 }
@@ -235,6 +256,7 @@ writeFileSync(
     moduleNumber,
     pairedSlides,
     pairedSourceSlides,
+    pairedArtSlides: Object.keys(pairedArt).map(Number),
     validateOnly,
     footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
     branding,
@@ -408,7 +430,9 @@ if PAIRED:
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
         draw.text((96, 75), 'SESOTHO AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
-        draw.text((96, 220), 'ILLUSTRATED ENGLISH SOURCE SLIDE', font=F_PAIR_LABEL, fill=AMBER)
+        art_label = ('IMBEWUFIELD ILLUSTRATION · ENGLISH SOURCE BELOW'
+                     if pair['n'] in cfg.get('pairedArtSlides', []) else 'ILLUSTRATED ENGLISH SOURCE SLIDE')
+        draw.text((96, 220), art_label, font=F_PAIR_LABEL, fill=AMBER)
         with Image.open(source_image) as original:
             original = original.convert('RGB')
             original.thumbnail((1280, 720), Image.Resampling.LANCZOS)

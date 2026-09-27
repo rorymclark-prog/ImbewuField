@@ -424,8 +424,8 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
   const deck = COURSE_DECKS['intro-permaculture'];
   assert.ok(deck.slideLanguages.includes('st'));
   assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
-  for (let slide = 1; slide <= 8; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
-  assert.equal(slideImageUrl('intro-permaculture', 'st', 9), null);
+  for (let slide = 1; slide <= 14; slide++) assert.ok(onDisk(slideImageUrl('intro-permaculture', 'st', slide)!));
+  assert.equal(slideImageUrl('intro-permaculture', 'st', 15), null);
   assert.equal(animationUrls('intro-permaculture', 4, 'st'), null,
     'the English animation poster must not cover the paired Sesotho ethics frame');
 

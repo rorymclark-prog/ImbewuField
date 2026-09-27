@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 September 2026', sha: '276a7874', changes: [
+    'Introduction lesson 2 has source-paired Sesotho draft slides.',
+  ], tour: [
+    { title: 'Try the Sesotho principles lesson', where: 'Study → Introduction to Permaculture → lesson 2', href: '/student',
+      detail: 'Choose Sesotho and open lesson 2. Slides 9–14 retain exact English source and safety holds. Slides 15–22 and narration remain English; English audio needs an explicit choice.' },
+  ] },
   { when: '27 September 2026', sha: '1b66ece2', changes: [
     'Introduction lesson 1 has source-paired Sesotho draft slides.',
   ], tour: [
