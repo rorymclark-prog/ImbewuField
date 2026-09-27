@@ -165,12 +165,12 @@ What comes off your land that your own family never eats?
 
 - “The second ethic is People Care.” → “Molao wa bobedi wa boitshwaro ke Tlhokomelo ya Batho (People Care).” (`machine-draft; unreviewed`)
 - “Your family's needs come first, then your community's.” → “Ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno.” (`machine-draft; unreviewed`; wording follows the existing ethics concept review draft)
-- “A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.” → “Sehoai ya rekisang mahe ohle le meroho yohle, e sa sie letho bakeng sa dijo tsa lelapa, e tlola People Care.” (`machine-draft; unreviewed`)
+- “A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.” — **exact-English hold:** This is a consequential household food and selling example; retain its exact English wording for fluent and local review.
 - “The farm is meant to feed the household that runs it.” → “Polasi e reretswe ho fepa lelapa le e tsamaisang.” (`machine-draft; unreviewed`)
 - `[pause]` is a source direction; no target copy.
 - “What comes off your land that your own family never eats?” → “Ke eng e tswang mobung wa hao eo lelapa la hao le sa e jeng?” (`machine-draft; unreviewed`)
 
-**Tally:** heading translated 1, held 0; body paragraphs translated 5, held 0; 1 pause cue retained as a source direction.
+**Tally:** heading translated 1, held 0; body paragraphs translated 4, held 1; 1 pause cue retained as a source direction.
 
 ### Slide 6 — source pair
 
@@ -256,17 +256,17 @@ Build these three into how you think before you build anything on the ground.
 
 ```
 
-**Provisional Sesotho heading:** Ha ho na Melao e Ngotsweng — `machine-draft; unreviewed`
+**Sesotho heading:** exact-English hold; no draft. “When There Is No Rulebook” refers to permaculture decision-making, not the absence of law or permission requirements.
 
 **Paired provisional Sesotho body:**
 
 - “This is what the ethics are actually for.” → “Ke ka lebaka lena melao ya boitshwaro e leng teng.” (`machine-draft; unreviewed`)
 - “A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.” — **exact-English hold:** This example includes grazing after drought and swale damage; keep the scenario in English for local farming and water-construction review.
-- “The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.” → “Melao ya boitshwaro e o thusa ho lekanya dikgetho le ho hlalosa qeto ya hao. Sheba melao mme o kope tumello moo ho hlokahalang.” (`machine-draft; unreviewed`)
+- “The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.” — **exact-English hold:** The permission requirement must not shift in translation; retain it for fluent review.
 - `[pause]` is a source direction; no target copy.
-- “Build these three into how you think before you build anything on the ground.” → “Etsa hore melao ena e meraro e be karolo ya mokgwa wa hao wa ho nahana pele o haha ntho efe kapa efe mobung.” (`machine-draft; unreviewed`)
+- “Build these three into how you think before you build anything on the ground.” — **exact-English hold:** This connects the ethics to on-ground construction decisions; retain it for local review.
 
-**Tally:** heading translated 1, held 0; body paragraphs translated 3, held 1; 1 pause cue retained as a source direction.
+**Tally:** heading translated 0, held 1; body paragraphs translated 1, held 3; 1 pause cue retained as a source direction.
 
 ### Slide 9 — source pair
 
@@ -355,11 +355,11 @@ Name one thing that arrives on your land free and leaves again without being use
 
 - “Harvest rain, sun and biomass before they leave your property.” — **exact-English hold:** This is direct harvesting guidance involving water and biomass; retain it for local review.
 - “Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.” → “E nngwe le e nngwe ya tsona e fihla e sa lefellwe mme e tsamaya e sa lefellwe. Metsi a phalla a tloha, makgasi a fefolwa ke moya, letsatsi le kganyetsa mobu o se nang dimela.” (`machine-draft; unreviewed`)
-- “Compare the cost and work with the benefit on your own farm.” → “Bapisa ditshenyehelo le mosebetsi le molemo polasing ya hao.” (`machine-draft; unreviewed`)
+- “Compare the cost and work with the benefit on your own farm.” — **exact-English hold:** This asks for an economic trade-off; retain the source until the intended meaning is checked.
 - `[pause]` is a source direction; no target copy.
 - “Name one thing that arrives on your land free and leaves again without being used.” → “Bolela ntho e le nngwe e fihlang mobung wa hao e sa lefellwe, ebe e boela e tsamaya e sa sebediswa.” (`machine-draft; unreviewed`)
 
-**Tally:** heading translated 0, held 1; body paragraphs translated 3, held 1; 1 pause cue retained as a source direction.
+**Tally:** heading translated 0, held 1; body paragraphs translated 2, held 2; 1 pause cue retained as a source direction.
 
 ## Per-slide tally
 
@@ -371,13 +371,13 @@ Counts below cover headings and body paragraphs; pause cues are retained as sour
 | 2 | 1 | 0 | 4 | 0 |
 | 3 | 1 | 0 | 4 | 0 |
 | 4 | 1 | 0 | 3 | 1 |
-| 5 | 1 | 0 | 5 | 0 |
+| 5 | 1 | 0 | 4 | 1 |
 | 6 | 1 | 0 | 2 | 3 |
 | 7 | 1 | 0 | 1 | 2 |
-| 8 | 1 | 0 | 3 | 1 |
+| 8 | 0 | 1 | 1 | 3 |
 | 9 | 1 | 0 | 3 | 0 |
 | 10 | 0 | 1 | 1 | 3 |
-| 11 | 0 | 1 | 3 | 1 |
-| **Total** | **9** | **2** | **33** | **11** |
+| 11 | 0 | 1 | 2 | 2 |
+| **Total** | **8** | **3** | **29** | **15** |
 
 These counts describe this review packet only. Its paired English spans and draft notes need an appropriate renderer or human adaptation before any learner-facing use; the file is not a ready deck.

@@ -395,7 +395,7 @@ Which direction does the weather that damages you come from?
 
 ## Slide 19
 
-**Tally:** headings translated 0, held 1; body paragraphs translated 2, held 3. Pause cues are source directions and are excluded.
+**Tally:** headings translated 0, held 1; body paragraphs translated 0, held 5. Pause cues are source directions and are excluded.
 
 **Exact English heading:**
 
@@ -439,11 +439,9 @@ On your own site, observe the damaging winds before choosing where to plant. Thi
 
 **Paired provisional Sesotho body:**
 
-- Paragraph 1 — **provisional machine draft, unreviewed:** Sheba mohlala ona. Moea o tsoa leboea-bophirimela.
-  - Exact English: `Look at this example. The wind comes from the north-west.`
+- Paragraph 1 — **exact-English hold (wind direction in the example must remain exact for local review):** Look at this example. The wind comes from the north-west.
 
-- Paragraph 2 — **provisional machine draft, unreviewed:** Lifate le lihlahla li eme pakeng tsa moea oo le lijalo.
-  - Exact English: `The trees and shrubs stand between that wind and the crops.`
+- Paragraph 2 — **exact-English hold (placement of trees and shrubs relative to crops is a design claim):** The trees and shrubs stand between that wind and the crops.
 
 - Paragraph 3 — **exact-English hold (describes airflow around a windbreak):** Some air passes through the windbreak. Other air moves over it or around its ends.
 
