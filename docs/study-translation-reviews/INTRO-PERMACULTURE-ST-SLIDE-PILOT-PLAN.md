@@ -31,4 +31,4 @@ The generator now has an opt-in `--paired-draft` path. It checks all 22 records 
 
 ## Cost and scope
 
-Rendering the 22 reviewer proofs uses local Pillow only, with no paid AI render or voice generation. The first local PNG proof set is about 6.7 MB and is not in the learner app. Measure any later deck's actual transfer size before release and let learners choose before downloading it.
+Rendering the 22 reviewer proofs uses local Pillow only, with no paid AI render or voice generation. The current local PNG proof set is about 6.9 MB and is not in the learner app. Measure any later deck's actual transfer size before release and let learners choose before downloading it.

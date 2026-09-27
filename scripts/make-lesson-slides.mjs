@@ -242,7 +242,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
 PAIRED = cfg.get('pairedSlides')
-W, H = (1440, 3400) if PAIRED else (1920, 1080)
+W, H = (1440, 4600) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
 # measured against — warm paper, forest green for anything structural, ochre for the small
@@ -366,8 +366,8 @@ if PAIRED:
         target_body = [(source if part['status'] == 'english-hold' else part['text'])
                        for source, part in zip(pair['english']['body'], target['body'])]
         paired_plans.append((
-            panel_plan(probe, target_heading, target_body, 210, 1690, pair['n']),
-            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 1720, 3200, pair['n']),
+            panel_plan(probe, target_heading, target_body, 210, 2200, pair['n']),
+            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 2230, 4220, pair['n']),
             held,
         ))
 
@@ -404,11 +404,11 @@ if PAIRED:
         target_body = [(source if part['status'] == 'english-hold' else part['text'])
                        for source, part in zip(pair['english']['body'], target['body'])]
         draw_panel(draw, 'SESOTHO · RUST TEXT = ENGLISH HOLD' if held else 'SESOTHO · AI DRAFT',
-                   target_heading, target_body, 210, 1690, target_plan, target)
+                   target_heading, target_body, 210, 2200, target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
-                   pair['english']['body'], 1720, 3200, source_plan)
-        draw.text((96, 3280), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
-        draw.text((W - 96, 3280), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+                   pair['english']['body'], 2230, 4220, source_plan)
+        draw.text((96, 4350), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, 4350), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
     sys.exit(0)
