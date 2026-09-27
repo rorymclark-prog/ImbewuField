@@ -55,6 +55,28 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.equal(pairedDraftLanguageLabel('xh'), null);
 });
 
+test('regional Introduction ethics frames keep all farming examples and decisions in exact English', () => {
+  for (const lang of ['ve', 'ts']) {
+    const packet = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, source, lang);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    const drafted = slides.flatMap((slide: any) => slide.target.body
+      .map((paragraph: any, index: number) => paragraph.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+      .filter(Boolean));
+    assert.deepEqual(drafted, ['1:1', '1:4', '4:1', '5:1', '6:1']);
+    assert.deepEqual(slides.filter((slide: any) => slide.target.heading.status === 'draft')
+      .map((slide: any) => slide.n), [4, 5, 6]);
+    for (const n of [4, 5, 6]) {
+      assert.ok(slides[n - 1].target.body.slice(1).every((part: any) => part.status === 'english-hold'),
+        `slide ${n} ${lang}: examples, care advice and reflection questions must remain English`);
+    }
+    for (const n of [2, 3, 7, 8]) {
+      assert.ok(slides[n - 1].target.body.every((part: any) => part.status === 'english-hold'),
+        `slide ${n} ${lang}: work, zones, water and permission claims must remain English`);
+    }
+  }
+});
+
 test('Food Forest Xitsonga media keeps every unreviewed sentence paired with its current English narration', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/food-forest.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/food-forest.ts.paired-draft.json', 'utf8'));
