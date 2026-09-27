@@ -43,6 +43,9 @@ test('the Tshivenda Introduction draft stays paired to the English Study source'
     if (original.infographicAlt) {
       assert.ok(lesson.infographicAlt, `${path}: source infographic alt must be represented`);
       checkPair(lesson.infographicAlt, original.infographicAlt, `${path}.infographicAlt`);
+      if (original.id === 'intro-permaculture-l3') {
+        assert.equal(lesson.infographicAlt.reviewStatus, 'hold', 'the old Tshivenda rings description must not describe the footpath picture');
+      }
     } else assert.equal(lesson.infographicAlt, undefined, `${path}: do not invent infographic alt text`);
     assert.equal(lesson.keyPoints.length, original.keyPoints.length, `${path}: key point count must match`);
     lesson.keyPoints.forEach((point, index) => checkPair(point, original.keyPoints[index], `${path}.keyPoints[${index}]`));

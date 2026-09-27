@@ -134,8 +134,8 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "intro-permaculture-l3",
-        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
-        infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
+        infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+        infographicAlt: "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
         body: "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
         keyPoints: [

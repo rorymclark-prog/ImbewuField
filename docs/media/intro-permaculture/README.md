@@ -109,3 +109,14 @@ for the examples: Zone 2 is the larger garden and chicken run, Zone 3 the large
 field, and Zone 4 semi-wild fruit trees and fodder. This is an unreviewed AI
 draft; no narration or lesson text was changed and no Flow credits or SVG were
 used.
+
+### Lesson 3 Study card — 27 September 2026
+
+The separate lesson-card infographic now uses a smaller JPEG of that same
+footpath example at `public/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg`.
+Its new URL prevents an offline cache from continuing to show the old rings.
+The canonical English image description names only the visible example zones;
+it does not claim the picture shows sectors or prescribed distances. The old
+Sesotho and Tshivenda image descriptions referred to rings, so they are held in
+exact English until fluent review. Lesson bodies, quizzes and narration were
+not changed.

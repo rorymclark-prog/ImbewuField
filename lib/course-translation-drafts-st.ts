@@ -248,10 +248,8 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
     },
     {
       id: "intro-permaculture-l3",
-      infographicAlt: pair(
-        "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
-        "Masale a phatlaletseng ho tloha ntlong ho ya kantle. Lesale le haufi haholo le monyako le hlokomelwa letsatsi le leng le le leng; lesale ka leng le fetang kantle le etelwa ka sewelo mme le siuwa le hlaha le ho feta.",
-      ),
+      // The earlier draft described rings that the replacement picture does not show.
+      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Dibaka (Zones) le Makala (Sectors): Ho Hlophisa Polasi ya Hao ka Matla",
