@@ -15,6 +15,7 @@ import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import ConsentPanel from '@/components/ConsentPanel';
+import AiAllowance from '@/components/AiAllowance';
 import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, ChevronDown, ChevronUp, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
@@ -351,6 +352,7 @@ export default function AccountPage() {
             </button>
           )}
           {(!simple || moreOpen) && <AccountAccess />}
+          {user && <AiAllowance copy={copy} />}
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
