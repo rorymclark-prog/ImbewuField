@@ -8,6 +8,9 @@ import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } fr
 import { SESOTHO_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-st-food-forest.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const completeHold = (language = 'st') => ({
@@ -128,6 +131,58 @@ test('Vegetables slides pair only existing Xitsonga resilience concepts with exa
     assert.equal(slides[slideIndex].target.body[slideParagraph].text, translated[lessonParagraph]);
   }
   assert.equal(slides[13].target.body[2].status, 'english-hold');
+  assert.equal(slides[13].target.body[3].status, 'english-hold');
+});
+
+test('Sesotho Market records slides reuse six exact existing learner draft sentences', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/market-community.st.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'st');
+  const map = [[2, 1, 0], [2, 2, 1], [5, 1, 3], [5, 4, 6], [6, 1, 7], [6, 4, 10]];
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean)), map.map(([n, p]) => `${n}:${p}`));
+  const lesson = SESOTHO_MARKET_COMMUNITY_DRAFT.lessons[0].body;
+  const english = lesson.sourceEnglish.split('\n\n');
+  const translated = lesson.sesothoDraft.split('\n\n');
+  for (const [n, p, i] of map) {
+    assert.equal(slides[n - 1].english.body[p - 1], english[i]);
+    assert.equal(slides[n - 1].target.body[p - 1].text, translated[i]);
+  }
+  assert.equal(slides[1].target.body[2].status, 'english-hold');
+  assert.equal(slides[4].target.body[1].status, 'english-hold');
+});
+
+test('Xitsonga Market media pairs only the two existing low-risk learner concepts', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/market-community.ts.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 'ts');
+  const map = [[2, 1, 'market-community-l1', 0], [18, 1, 'market-community-l3', 9]] as const;
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean)), ['2:1', '18:1']);
+  for (const [n, p, lessonId, paragraphIndex] of map) {
+    const body = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === lessonId)!.body;
+    assert.equal(slides[n - 1].english.body[p - 1], body.sourceEnglish.split('\n\n')[paragraphIndex]);
+    assert.equal(slides[n - 1].target.body[p - 1].text, body.xitsongaDraft.split('\n\n')[paragraphIndex]);
+  }
+  assert.equal(slides[17].target.body[1].status, 'english-hold');
+});
+
+test('Tshivenda staples media holds quantities and crop claims beside two existing concepts', () => {
+  const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
+  const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
+  const slides = validatePairedDraft(packet, source, 've');
+  assert.deepEqual(slides.flatMap((slide: any) => slide.target.body
+    .map((part: any, index: number) => part.status === 'draft' ? `${slide.n}:${index + 1}` : null)
+    .filter(Boolean)), ['12:1', '14:2']);
+  const concepts = [TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.bodyConcept,
+    TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.secondBodyConcept];
+  for (const [n, p, concept] of [[12, 1, concepts[0]], [14, 2, concepts[1]]] as const) {
+    assert.equal(slides[n - 1].english.body[p - 1], concept.sourceEnglish);
+    assert.equal(slides[n - 1].target.body[p - 1].text, concept.tshivendaDraft);
+  }
+  assert.equal(slides[11].target.body[3].status, 'english-hold');
   assert.equal(slides[13].target.body[3].status, 'english-hold');
 });
 
