@@ -1,179 +1,148 @@
 # Matsavu na swibyariwa swa nkoka
 
+Ndyangu wu dya siku na siku, hikwalaho ntanga wu fanele ku wu dyisa siku na siku. Swakudya swin'wana hi swi tshovela hi xitsongo hi nkarhi: miroho, parsley, ndyelo wa tinyawa. Swakudya swin'wana hi swi tshovela kan'we hi nguva kutani hi swi hlayisa: mavele yo oma, tinyawa, tipatata.
+
+Muxaka wun'wana na wun'wana wa swakudya wu lava ntanga wa wona, endhawini ya wona. Veka wun'wana na wun'wana laha wu faneleke kona kutani purasi hinkwaro ri tirha hi ntirho wutsongo.
+
+**Loko u hetile ndzima leyi u ta kota ku:**
+
+- Veka mintanga ya wena hi ku ya hi maxelo ya wena kutani u hlayisa swibyariwa kule na xirhami
+- Ringanisa vukulu bya ntanga wa wena na nkarhi na mali leswi u nga na swona hakunene
+- Hlela ntanga wa le kusuhi na yindlu, ntanga wa matsavu, ntanga wa makete na ntanga wa swibyariwa swa nkoka
+- Byala mavele, mabele, tinyawa to oma, tipatata na mukhomboni hi nkarhi lowu faneleke na hi mpfhuka lowu faneleke
+
 ## Ku byala swakudya eka maxelo ya Dzonga ra Afrika
 
-Afrika Dzonga yi na maxelo yo hambana-hambana, hikwalaho a ku na khalendara yin'we yo byala leyi tirhaka etindhawini hinkwato.
+A ku na khalendara yo byala yin'we laha. Tiva maxelo ya wena:
 
-- **Ndhawu ya le ndzeni ka tiko laha mpfula yi naka hi ximumu** (Highveld, Free State, xiphemu lexikulu xa Eastern Cape, KwaZulu-Natal Midlands, Lesotho): mpfula yo tala yi na ku sukela kwalomu ka Nhlangula (October) ku ya eka Nyenyankulu (March). Vuxika byi omile naswona byi titimela, naswona etindhawini to tala ku va na xirhami. Nguva leyikulu yo byala i ximun'wana (spring) na ximumu.
-- **Western Cape, laha mpfula yi naka hi vuxika**: mpfula yo tala yi na ku sukela kwalomu ka Mudyaxihi (May) ku ya eka Ndzhati (September). Ximumu xi hisa naswona xi omile, hikwalaho swibyariwa swa ximumu swi lava ku cheletiwa.
-- **Lowveld na ribuwa ra lwandle laha ku nga riki na xirhami** (xikombiso, ribuwa ra KwaZulu-Natal na lowveld ya Limpopo na ya Mpumalanga): u nga byala swibyariwa swo tala hi nkarhi wo tala wa lembe loko u ri na mati.
+- **Xikarhi xa tiko lexi kumaka mpfula hi ximumu** (Highveld, Free State, xiphemu lexikulu xa Eastern Cape, tindhawu ta xikarhi ta KwaZulu-Natal, Lesotho): mpfula yi na ku sukela kwalomu ka October ku ya eka March; tinguva ta vuxika ta oma naswona ta titimela, hakanyingi ku ri na xirhami.
+- **Western Cape leyi kumaka mpfula hi vuxika**: mpfula yi na ku sukela kwalomu ka May ku ya eka September. Swibyariwa swa ximumu swi lava ku cheletiwa.
+- **Lowveld na gereve leswi nga riki na xirhami** (gereve ra KwaZulu-Natal, lowveld ya Limpopo na Mpumalanga): loko ku ri na mati, u nga byala lembe ro tala.
 
-Etindhawini leti titimelaka, nguva yo byala yi komile naswona xirhami xa vuxika hi xona khombo lerikulu. Loko u endla pulani ya mintanga ya wena ya swakudya, anakanya hi leswi landzelaka.
+Etindhawini to titimela, xirhami hi xona khombo lerikulu. Moya wo titimela wa tika. Hi vusiku lebyi nga riki na moya naswona byi nga riki na mapapa wu khuluka wu rhelela ku fana na mati kutani wu hlengeletana etindhawini ta le hansi leti vitaniwaka **ti-frost pocket** (swikhele laha xirhami xi hlengeletanaka kona). Tirhisana na wona:
 
-### Sirhelela swibyariwa eka xirhami
+1. Siya vangula ehansi eka marhangu na malufenisi lama hanyaka etlhelweni ra le henhla, leswaku moya wo titimela wu ya emahlweni wu hundza wu famba.
+2. Byala swibyariwa leswi nga tiyeliki xirhami ehenhla ka ndhawu yo rhelela, ku nga ri ehansi ka nkova nikatsongo.
+3. Tirhisa tindhawu to rhelela leti languteke en'walungu eka swibyariwa swa ka ha ri emahlweni na swa le ndzhaku. Ti kuma dyambu ro tala hi vuxika.
+4. Lehisa nguva hi thanele ya plastiki, leyi chipaka ku tlula ngilazi. Loko yi akiwile erirhangwini ra n'walungu ra yindlu, yi pfuna ku kufumeta yindlu na yona. Varimi van'wana va hlayisa tihuku ti nga ri tingani eka khonamu leyi biyeriweke ya yona hi vuxika leswaku ti kuma ku kufumela na vulongo; ti nyike moya lowuntshwa wo tala, hikuva vulongo byi humesa ammonia.
 
-Moya lowu titimelaka wa tika. Hi vusiku lebyi moya wu nga hungiki naswona matilo ma basile, wu khuluka wu rhelela ku fana na mati, kutani wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti vitaniwa **ti-frost pocket** (swikhele swa xirhami).
+## Hlela hi ku ya hi vutomi lebyi u nga na byona
 
-- U nga pfaleli moya lowu titimelaka endzhaku ka marhangu, tindlu kumbe swihlahla leswi tsindzanaka etlhelweni ra le henhla ra ntanga wa wena. Siya ndhawu leyi pfulekeke ehansi leswaku moya lowu titimelaka wu ya emahlweni wu khuluka wu rhelela wu famba.
-- Byala swibyariwa leswi onhiwaka hi xirhami ehenhla eku rheleleni, ku nga ri ehansi enkoveni.
-- Ku rhelela loku languteke n'walungu ku kuma dyambu ngopfu hi vuxika, naswona hi tona tindhawu leti kufumelaka ku tlula hinkwato eka swibyariwa swa nguva yo sungula na swa nguva yo hetelela.
+Ntanga lowukulu lowu u nga kotiki ku wu hlayisa hi ku hatlisa wu hundzuka ntanga lowu teleke hi nhova lowu onhakeke. U nga si cela, tshembeka hi **nkarhi**, **mali** na **ku tsakela** ka wena.
 
-### Lehisa nguva yo byala
+1. Endla **nxopaxopo wa vutomi bya wena** (lifestyle audit) wo olova. Tsala leswaku u nga nyika ntanga tiawara to fika kwihi hi vhiki, leswi u swi lavaka eka wona (swakudya, muholo kumbe swimbirhi) na leswi u nga swi tirhisaka hi mali.
+2. Loko nkarhi wu ri wutsongo, swi olovise. Byala **ti-perennial** (swimilana leswi hanyaka malembe yo tala) to tala, ku fana na mirhi ya mihandzu, mirhi yo nun'hwela na asparagus. Ponisa ntirho hi **drip irrigation** (tiphayiphi leti thonisaka mati hi ku nonoka eka ximilana xin'wana na xin'wana) na xitirhisiwa xa nkarhi eka thephe.
+3. Loko u lava muholo naswona u ri na nkarhi na matimba, kurisa ntanga u tlhela u tirha ngopfu.
 
-Thanele ya plastiki kumbe yindlu ya swimilana (greenhouse) yi hlayisa swimilana swi kufumela, naswona yi ku pfumelela ku byala nkarhi wo leha hi xixika (autumn) na hi vuxika. Nghilazi yi durha swinene; plastiki a yi durhi ngopfu.
-
-- Thanele kumbe yindlu ya swimilana leyi akiweke yi namarhela khumbi ra n'walungu ra yindlu yi hlayisa ku hisa ka dyambu, naswona yi nga pfuna ku kufumeta yindlu hi vuxika na yona.
-- Varimi van'wana va hlayisa tihuku ti nga ri tingani eka xiphemu xo hambana lexi nga na lufenisi endzeni ka thanele hi vuxika. Ku hisa ka mimiri ya tona ku engetela ku kufumela kutsongo, naswona vulongo bya tona byi nonisa misava. Tiyisisa leswaku moya lowuntshwa wu nghena kahle, hikuva vulongo bya tihuku byi humesa ammonia (gasi leyi nun'hwaka ngopfu), leyi onhaka tihuku na swimilana.
-
-## Endla pulani leyi fambelanaka na vutomi bya wena
-
-Loko u nga si sungula, tiyisisa leswaku leswi u swi endlaka hi swona leswi u swi lavaka hakunene. Vula ntiyiso hi **nkarhi**, **mali** na **ku tsakela** loku u nga na kona eka vurimi.
-
-1. Endla **nkambisiso wo olova wa vutomi bya wena** (lifestyle audit). Tsala tiawara tingani hi vhiki leti u nga ti nyikaka ntanga, leswi u swi lavaka eka wona (swakudya swa ndyangu, mali, kumbe hinkwaswo) na mali leyi u nga yi tirhisaka.
-2. Loko u ri na nkarhi wutsongo, endla leswaku maendlelo ya wena ma olova. Byala **ti-perennial** (swimilana leswi hanyaka malembe yo tala), ku fana na mirhi ya mihandzu, mirhi yo nun'hwela na asparagus, kutani u ponisa ntirho hi switirhisiwa ku fana na **drip irrigation** (ku cheleta hi mathonsi) na xitirhisiwa lexi pfulaka no pfala mati hi xoxe (tap timer).
-3. Loko u lava ku rima leswaku u kuma mali, naswona u ri na nkarhi, matimba na switirhisiwa, ntanga lowukulu lowu tirhiwaka ngopfu wu nga ku fanela.
-
-Dizayina mintanga ya wena hi ku ya hi tinhlamulo ta wena. Ntanga lowukulu lowu u nga kotiki ku wu khathalela wu ta hatla wu tala nhova, wu va wu onhakile.
-
-Mintanga ya swakudya ya mune leyi nga laha hansi yi landzelela **ti-zone** ta permaculture (ndlela yo rima leyi tiyisaka misava na vanhu malembe hinkwawo): swiphemu swa purasi leswi u swi endzelaka ngopfu swi vekiwa ekusuhi na yindlu.
+Mintanga ya mune leyi nga laha hansi yi landza **ti-zone** (tindhawu leti hlelekeke hi ku ya hi leswaku u ti endzela kangani) ta permaculture: swiphemu swa purasi leswi u swi endzelaka ngopfu swi le kusuhi ngopfu na yindlu.
 
 ## 1. Ntanga wa le kusuhi na yindlu (Zone 1)
 
-Ntanga wa le kusuhi na yindlu (kitchen garden) i xiphemu xa **Zone 1**, ndhawu leyi rhendzeleke yindlu, hi ntolovelo ku nga ri ekule ku tlula timitara ti nga ri tingani ku suka enyangweni wa khixi. I ntanga wa swakudya lowu nga ekusuhi swinene na khixi, naswona hi wona lowu u wu endzelaka ngopfu, hikwalaho wu fanele ku fikeleleka hi ku hatlisa naswona hi ku olova.
+Ntanga wa le kusuhi na yindlu (kitchen garden) wu le ka **Zone 1**, magoza ma nga ri mangani ku suka enyangweni wa khixi. U wu hundza kan'wana na kan'wana hi siku, hikwalaho tshovela eka wona kan'wana na kan'wana hi siku.
 
-Byala swimilana leswi u swi tshovelaka siku na siku:
+Byala leswi u swi tirhisaka siku na siku:
 
-- matsavu ya saladi lama u **ma tshovelaka ma tlhela ma mila** (cut and come again: tshovela matluka ma nga ri mangani kutani u tshika ximilana xi tlhela xi mila), ku fana na letisi, xipinichi na Swiss chard
-- tinyawa na tiphizi (peas)
-- matamatisi matsongo (cherry tomatoes)
-- mirhi yo nun'hwela leyi u yi tirhisaka loko u sweka, ku fana na parsley, coriander, anyanisi ya rihlaza (spring onions) na thyme
+- miroho na matluka ya saladi lama u nga **tsemaka kutani ma tlhela ma mila** (tshovela matluka ma nga ri mangani kutani u tshika ximilana xi mila nakambe): xipinichi, Swiss chard, letisi
+- tinyawa na tiphiza
+- matamatisi lamatsongo (cherry tomatoes)
+- mirhi yo nun'hwela yo sweka: parsley, coriander, tinyala letitsongo, thyme
 
-Swimilana swo tala laha i **ti-annual** (swimilana leswi hanyaka nguva yin'we ntsena), swi ri na mirhi yo nun'hwela yi nga ri yingani ya perennial.
+Swo tala i **ti-annual** (swimilana leswi hanyaka nguva yin'we), swin'we na mirhi yo nun'hwela yi nga ri yingani leyi hanyaka malembe yo tala.
 
-### Byala swi tsindzana, u swi khathalela ngopfu
+Byala swi tshinelanile. Tirhisa xiphemu xin'wana na xin'wana xa misava, naswona u kurisa swi ya ehenhla na swona, hi tinyawa eka lufenisi. Eka mitara-mbirhi yin'wana na yin'wana lowu i ntanga wa wena lowu humesaka swo tala ngopfu, hikwalaho wu lava vukorhokeri byo tala ngopfu: ku byala, ku susa nhova, ku veka **mulch** (ku funengeta misava hi swilo swa swimilana swo oma), ku dyisa misava na ku tshovela swivungu swo onha hi voko.
 
-Ntanga wa le kusuhi na yindlu wu byariwa hi ku tsindzana swinene, ku tirhisiwa ndhawu hinkwayo, ehansi ni le henhla (xikombiso, tinyawa leti khandziyaka lufenisi kumbe rihlelo ra timhandzi (trellis)). Eka mitara wun'we wa xikwere, hi wona ntanga lowu humesaka swakudya swo tala ku tlula mintanga hinkwayo ya wena, hikwalaho wu tlhela wu lava ku khathaleriwa ngopfu. Ku susa nhova, ku byala mbewu, ku byala swimilana, ku veka **mulch** (xifunengeto xa byanyi byo oma kumbe matluka), ku tshovela, ku lwisana na swivungu na ku nonisa misava hinkwaswo i xiphemu xa ntirho wa minkarhi hinkwayo.
-
-### Wu endle wu pfuna naswona wu saseka
-
-Mintanga ya le kusuhi na yindlu yi va na swivumbeko na mavumbeko ya hinkwayo. Nchumu wa nkoka swinene i leswaku ntanga wu tirha kahle. Tanihi leswi wu nga ekusuhi swinene na yindlu, wu endle wu saseka na wona. Ndhawu leyi i yitsongo, hikwalaho u nga teka nkarhi wo engetela ku rhendzela mibhedhi hi swiphemu swa marhavi lamakulu (logs), switina swa khale kumbe maribye, u funengeta tindlela hi maribyana (gravel) kumbe swiphemu leswitsongo swa mapulanga (wood chips).
+Wu endle wu saseka. Wu tsongo naswona wu le tlhelweni ka yindlu, hikwalaho teka nkarhi wo rhendzela mibhedhi hi swinkavana, switina swa khale kumbe maribye, kutani u funengeta tindlela hi maribyana kumbe hi swiphemu swa mapulanka.
 
 ## 2. Ntanga wa matsavu (Zone 2)
 
-Ntanga wa matsavu wu kulu ku tlula ntanga wa le kusuhi na yindlu. Laha u byala matsavu lama lavaka ndhawu yo tala kumbe lama tekaka nkarhi wo leha ku tshoveleka, xikombiso khavichi, bitirudu (beetroot), liki (leeks), anyanisi, pepere, matamatisi na okra.
+Ntanga wa matsavu wu kulu. Wu hlayisa swibyariwa leswi lavaka ndhawu yo tala kumbe leswi tekaka nkarhi wo leha ku kula: khavichi, beetroot, ti-leek, tinyala, ti-pepper, matamatisi na okra. U wu endzela kan'we hi siku kumbe endzhaku ka masiku ma nga ri mangani, hikwalaho wu ya ekulenyana, eka **Zone 2**. Tithanele ta muti na tindlu ta shade net na tona ti fanele ku va laha.
 
-U wu endzela ku nga ri ngopfu ku fana na ntanga wa le kusuhi na yindlu, kumbexana kan'we hi siku kumbe endzhaku ka masiku ma nga ri mangani, hikwalaho wu vekiwa ekule nyana na yindlu, eka **Zone 2**.
+1. Hlela mibhedhi leyi vonakaka kahle leyi nga na tindlela exikarhi ka yona. Endhawini yo rhelela, endla leswaku mibhedhi na tindlela swi landza **contour** (layini leyi tsemakanyaka ndhawu yo rhelela eka ku leha loku fanaka), leswaku mati ma nghena emisaveni ku ri na ku khuluka ma famba.
+2. Byala swibyariwa swo tala swin'we. Engetela xidziva lexitsongo xa swiketlane na swiluva leswi dyisaka swivungwana leswi pfunaka (Ndzima 10).
+3. U nga rhendzeli mibhedhi. Vumba mibhedhi nakambe hi voko kan'wana hi lembe.
 
-### Ndlela leyi wu hlelekiweke ha yona
+Ntirho wu ya emahlweni: ku kambela tiphayiphi ta drip, ku veka mulch, ku engetela **compost** (thyaka ra swimilana na swiharhi leri boleke), ku susa nhova na ku byala.
 
-- Byala swibyariwa swa mixaka yo tala swin'we. Engetela swilo leswi pfunaka ku lwisana na swivungu, ku fana na xidziva lexitsongo (xa swiketlane na **ti-predator** tin'wana: swiharhi leswi dyaka swivungu swo onha) na swimilana swa swiluva leswi kokaka swivungwana leswi pfunaka.
-- Endla mibhedhi yo byala leyi voningeke kahle ku ri na tindlela exikarhi ka yona. Loko ndhawu yi rhelela, endla leswaku mibhedhi na tindlela swi landzelela **contour** (layini leyi tsemakanyaka ku rhelela, laha tindhawu hinkwato ta yona ti nga eka ku leha loku fanaka), leswaku mati ma nghena emisaveni ematshan'wini yo khuluka ma famba.
-- Tanihi leswi ndhawu yi nga yikulu, a swi bohi ku rhendzela mibhedhi. Yi lulamise hi voko minkarhi yi nga ri yingani hi lembe.
+## 3. Vurimi bya matsavu bya xibindzu lebyitsongo (Zone 3)
 
-Ntirho wa ha ri wunyingi: ku hundzisa swihahatelo kumbe ku kambela tiphayiphi ta drip irrigation, ku veka mulch, ku engetela **compost** (thyaka ra swimilana leri boleke), ku lwisana na swivungu, ku susa nhova na ku tshamela ku byala mbewu kumbe ku rhurhisa swimilana leswintshwa.
+Ntanga wa matsavu lowu byariwaka ngopfu ku xavisa i **ntanga wa makete** (market garden). Ku sukela kwalomu ka 0.4 wa tihekitara (akere yin'we) ku ya ehenhla, wu fanele ku va eka **Zone 3**, ndhawu leyikulu yo rima.
 
-Tithanele letikulu ta plastiki, tindlu ta swimilana na tithanele ta lapi ra ndzhuti (shade-net) ta muti na tona ti fanele ku va eka Zone 2, ekusuhi na ntanga wa matsavu.
+1. Byala xibyariwa xin'we eka mubhedhi wun'we. Ku byala, ku susa nhova na ku tshovela swi hatlisa. Cinca xibyariwa eka mubhedhi wun'wana na wun'wana nguva yin'wana na yin'wana (Ndzima 10).
+2. Byala swi tshinelanile eka mibhedhi leyi enteke leyi nga na compost yo tala. Ku tshinelana ku nyika swakudya swo tala eka mitara-mbirhi naswona ku siva nhova hi ndzhuti.
+3. Tirhisa switirhisiwa leswi ponisaka nkarhi: xibyali xo susumeta (push-seeder) na **broadfork** (foroko leyi anameke ya swikhomo swimbirhi leyi phurhisaka misava handle ko yi hundzuluxa). Purasi lerikulu ri nga engetela thirakitara ya mavhilwa mambirhi leyi fambiwaka endzhaku ka yona.
 
-Ntanga wa matsavu wa ndyangu a wu bohi ku va lowukulu swinene. U nga ta wu kurisa endzhaku loko u lava ku xavisa matsavu lama saleke leswaku u engetela mali leyi u yi kumaka.
+Mintanga ya makete ya tirha hikuva vaxavi va lava swakudya leswintshwa leswi byariweke ekusuhi. Xavisa hi ku kongoma eka vaxavi, enyangweni wa purasi, emakete, eswikolweni, eka ti-spaza kumbe eswitolo swa swakudya, kutani u kuma nxavo wa **retail** (nxavo lowu muxavi wo hetelela a hakelaka wona), ku nga ri nxavo wa le hansi wa **wholesale** (nxavo lowu muxavisi a ku hakelaka wona). Ntsengo wo sungula i wa le hansi, naswona leswi humesiwaka swo hambana-hambana (matsavu, mihandzu, mandza, vulombe, jamu) swi endla leswaku mali yi ya emahlweni yi nghena.
 
-## 3. Vurimi bya matsavu byo xavisa lebyitsongo (Zone 3)
-
-Ntanga wa matsavu lowukulu lowu byariwaka ngopfu ku xavisa hi ntolovelo wu vitaniwa **ntanga wo xavisa** (market garden). Ku sukela kwalomu ka hekitara ya 0.4 (acre yin'we) ku ya ehenhla, ndhawu leyinene ya wona i **Zone 3**, ndhawu leyikulu ya vurimi.
-
-### Hlela leswaku u humesa swo tala
-
-Ntanga wo xavisa wu hleleriwa ku humesa swakudya swo tala hilaha swi kotekaka hakona, ku ri ni ntirho wutsongo lowu lahlekaka.
-
-- Byala muxaka wun'we wa matsavu eka mubhedhi wun'wana ni wun'wana. Leswi swi hatlisisa ku byala, ku tshovela na mintirho yin'wana. Cinca xibyariwa eka mubhedhi wun'wana na wun'wana ku suka eka nguva yin'we ku ya eka yin'wana (**crop rotation**).
-- Byala swi tsindzana eka mibhedhi leyi lulamisiweke kahle naswona yi nga na compost yo tala. Ku byala swi tsindzana swi nyika swakudya swo tala eka mitara wun'we wa xikwere naswona ndzhuti wa swona wu dlaya nhova.
-- Tirhisa switirhisiwa swo olova leswi ponisaka nkarhi, ku fana na xibyala-mbewu xa voko lexi susumetiwaka (push-seeder) na **broadfork** (foroko yo anama leyi nga na swikhomo swimbirhi, leyi olovisaka misava handle ko yi hundzuluxa). Purasi lerikulu ri nga tirhisa thirakitara leyitsongo ya mavhilwa mambirhi leyi munhu a fambaka a yi landza, ku rima hi ku olova na ku tsema swimilana swo funengeta misava (cover crops).
-
-### Hikokwalaho ka yini mintanga yo xavisa yi nga humelela
-
-Mintanga yo xavisa yi tolovelekile emisaveni hinkwayo, ku katsa na le Dzongeni ka Afrika, hikuva vaxavi vo tala sweswi va lava swakudya leswintshwa leswi byariweke ekusuhi na le kaya.
-
-- **Xavisela vaxavi hi ku kongoma.** Loko u xavisela vaxavi hi ku kongoma (enyangweni wa purasi, emakete ya laha kaya, eka vaakelani, eswikolweni, eswipaza (spaza shops) kumbe etirhestorente), u kuma **nxavo lowu heleleke wa le vhengeleni** (retail) ematshan'wini ya **nxavo wa le hansi wa xitalo** (wholesale) lowu hakeriwaka hi vaxavisi.
-- **Ntsengo wa le hansi wo sungula.** Ndhawu leyitsongo na switirhisiwa swa voko a swi durhi ku sungula ku fana na purasi lerikulu leri tirhisaka timichini.
-- **Nyika ku hambana-hambana.** Varimi vo xavisa lava humelelaka hi ntolovelo va xavisa swilo swo tala: matsavu, mihandzu, mihandzu leyitsongo (berries), matandza, vulombe, nyama kumbe masi. Van'wana va engetela nkoka hi ku endla jamu, matsavu lama hlayisiweke hi vhinika (pickles), mihandzu leyi omisiweke na swilo swin'wana.
-
-> **Xiletelo:** Loko u nga si byala swo xavisa, vulavula na vaxavi va wena. Kuma leswi va swi lavaka, hi ku tala kwihi, kangani na hi nxavo wihi. Byalela makete leyi u yi tivaka, ku nga ri leyi u tshembaka leswaku yi ta va kona.
+> **Xiletelo:** Vulavula na vaxavi va wena u nga si byala. Kuma leswaku va lava yini, swo fika kwihi, kangani na hi nxavo wihi. Byalela makete lowu u wu tivaka, ku nga ri lowu u wu tshembaka.
 
 ## 4. Ntanga wa swibyariwa swa nkoka (Zone 3)
 
-**Swibyariwa swa nkoka** (staple crops) i swakudya leswi endlaka xiphemu lexikulu xa swakudya swa ndyangu, ku fana na mavele, mabele, tinyawa na patata leyi nyanganyelaka.
+**Swibyariwa swa nkoka** (staple crops) i swakudya leswi tatisaka pulata ya ndyangu masiku yo tala. Timbewu, tizambala na timitsu tin'wana ti nyika matimba. Tinyawa na **ti-legume** (ndyangu wa tinyawa) tin'wana ti nyika phrotheni.
 
-- **Swibyariwa swa timbewu (grains), zambala na swibyariwa swin'wana swa timitsu** swi nyika **khabohayidreti** (carbohydrates): swakudya swa matimba.
-- **Tinyawa na ti-legume tin'wana** (swimilana swa muxaka wa tinyawa) ti nyika **phurotheni** (protein): swakudya swo aka miri.
-
-Swibyariwa swa nkoka swi lava ndhawu yo tala ku kuma ntshovelo wa le xikarhi. Swo tala swi teka tin'hweti to tala ku vupfa, naswona hi ntolovelo swi tshoveriwa hi nkarhi wun'we, ku fana na mavele yo oma kumbe tinyawa to oma. Hikwalaho hi veka ntanga wa swibyariwa swa nkoka endhawini ya vurimi, eka **Zone 3**.
-
-Ntanga wa swibyariwa swa nkoka wu lava ntirho wutsongo ku tlula ntanga wa le kusuhi na yindlu kumbe ntanga wa matsavu, naswona a wu wu endzeli ngopfu. Swibyariwa swin'wana swi cheletiwa minkarhi yin'wana, kambe swo tala swi byariwa hi mpfula ntsena. Hlawula swibyariwa leswi fambelanaka na maxelo ya ka n'wina, u swi byala hi nkarhi lowu faneleke leswaku swi tirhisa mpfula hi ndlela leyinene.
-
-### Swibyariwa swa nkoka swa Dzonga ra Afrika
+Swibyariwa swa nkoka swi lava ndhawu yo tala eka ntshovelo wa xikarhi, swi teka tin'hweti ku vupfa naswona swi vupfa hinkwaswo hi nkarhi wun'we, hikwalaho swi ya eka Zone 3. Zone leyi yi lava ntirho wutsongo naswona yi mila ngopfu hi mpfula, hikwalaho hlawula swibyariwa leswi fambelanaka na maxelo ya wena kutani u swi byala hi ndlela leyi khomaka mpfula.
 
 | Ntlawa | Swibyariwa |
 |---|---|
-| Swibyariwa swa timbewu | mavele, mabele, nyawuti (pearl millet); koroni (wheat), oats na barley (ngopfu-ngopfu i swibyariwa swa vuxika) |
-| Tinyawa na ti-legume tin'wana | tinyawa to oma ku fana na sugar beans, dlodlo (cowpea), tindluwa (jugo bean, Bambara groundnut), timanga (groundnut), soya, pigeon pea, mung bean, chickpea |
-| Swibyariwa swa timitsu (root and tuber crops) | zambala, patata leyi nyanganyelaka, madumbe (amadumbe, taro), mufarinya (cassava; etindhawini leti nga riki na xirhami ntsena) |
-| Matsavu lama lavaka ndhawu yo tala | marhanga (pumpkin), butternut, xibehe (watermelon), swibehe swin'wana na makhalabasi (gourds) |
+| Timbewu | mavele, mabele, nyawuti; koroni, oats na barley (ngopfu swibyariwa swa vuxika) |
+| Tinyawa na ti-legume tin'wana | sugar beans na tinyawa tin'wana to oma, dlodlo, tindluwa, timanga, soya, pigeon peas, mung beans, chickpeas |
+| Timitsu na swilo leswi mirisiwaka ehansi ka misava | tizambala, tipatata, madumbi (amadumbe), mukhomboni (etindhawini leti nga riki na xirhami ntsena) |
+| Matsavu lama lavaka ndhawu yo tala | marhanga, butternut, swibehe, ti-melon na swikutsu |
 
 ### Mavele
 
-Mavele i swakudya swa nkoka swinene eka swiphemu swo tala swa Afrika Dzonga.
-
-- Etindhawini laha mpfula yi naka hi ximumu, byala endzhaku ka loko mpfula leyinene yi tsakamisile misava naswona khombo ra xirhami ri hundzile, hi ntolovelo ku sukela hi Nhlangula (October) ku ya eka N'wendzamhala (December).
-- Byala hi milayini leyi nga na mpfhuka wa kwalomu ka 90 cm exikarhi ka yona. Etindhawini leti omeke, siya mpfhuka wo anama exikarhi ka swimilana (kwalomu ka ximilana xin'we eka 50 cm yin'wana ni yin'wana eka layini) leswaku ximilana xin'wana ni xin'wana xi kuma mati yo ringana. Loko mpfula yi ri yinene, loko u cheleta, kumbe loko misava yi nonile, swimilana swi nga tshinelelana (kwalomu ka 30 cm exikarhi).
-- Mixaka ya **open-pollinated** (mixaka ya ntumbuluko leyi u nga yi byalaka nakambe) yi nga byariwa nakambe hi mbewu leyi u yi hlayiseke hi wexe. Mavele ya hybrid ma nyika ntshovelo wo tala hi mbewu leyi xaviweke, kambe mbewu leyi hlayisiweke eka hybrid a yi mili yi fana na leyi a yi ri kona, naswona yi humesa ntshovelo wutsongo.
+1. Etindhawini leti kumaka mpfula hi ximumu, byala endzhaku ka loko timpfula letinene ti tsakamisile misava naswona xirhami xi hundzile, hakanyingi ku sukela eka October ku ya eka December.
+2. Byala hi milayini leyi hambanaka hi kwalomu ka 90 cm. Etindhawini to oma siya kwalomu ka 50 cm exikarhi ka swimilana eka layini, leswaku xin'wana na xin'wana xi va na mati yo ringanela. Loko ku ri na mpfula leyinene, ku cheleta kumbe misava leyi noneke, swi byale swi hambana hi kwalomu ka 30 cm.
+3. Hlawula mbewu ya **open-pollinated** (mbewu leyi hluvukaka hi ntumbuluko leyi u nga yi hlayisaka) loko u lava ku hlayisa ya wena. Mbewu ya hybrid yi humesa kahle hi nkarhi wo sungula, kambe mbewu leyi hlayisiweke eka xibyariwa xa hybrid yi humesa kwalomu ka xiphemu xinharhu xin'we ehansi.
 
 ### Mabele
 
-Mabele ma tiyisela ku hisa na dyandza ku tlula mavele, naswona i ku hlawula lokunene etindhawini leti omeke. Laha mati ma nga riki mangani, ma byale hi **milayini yo anama** (kwalomu ka 0.9 m ku ya eka 2.3 m exikarhi, hi ku ya hi mpfula na misava ya wena) leswaku ximilana xin'wana na xin'wana xi va na ndhawu leyikulu ya misava leyi xi nga kumaka mati eka yona. Etindhawini leti tsakamaka ku tlula, milayini leyi tshinelelanaka yi lulamile.
+Mabele ma tiyisela ku hisa na dyandza ku tlula mavele. Laha mati ma nga manyanyana, ma byale hi milayini leyi hambanaka ngopfu, kwalomu ka 0.9 m ku ya eka 2.3 m hi ku ya hi mpfula na misava, leswaku ximilana xin'wana na xin'wana xi va na misava yo tala yo nwa eka yona.
 
-### Tinyawa to oma na dlodlo
+### Tinyawa to oma, dlodlo na tindluwa
 
-- Byala tinyawa to oma loko misava yi kufumerile (ehenhla ka kwalomu ka 15 °C) endzhaku ka mpfula yo sungula leyinene: etindhawini to tala laha mpfula yi naka hi ximumu, leswi i ku sukela exikarhi ka Nhlangula ku ya eka N'wendzamhala, naswona etindhawini ta xirhami ku fika kwalomu ka exikarhi ka Sunguti (January).
-- Tinyawa ti mila kahle hi milayini exikarhi ka mavele kumbe etlhelo ka wona. Ku fana na ti-legume tin'wana, ti pfuna ku nonisa misava hi naytirojini.
-- Dlodlo na tindluwa swi tiyisela ku hisa na dyandza ku tlula tinyawa to oma.
+1. Byala tinyawa to oma endzhaku ka timpfula to sungula letinene, loko misava yi hisa ku tlula kwalomu ka 15 °C: exikarhi ka October ku ya eka December etindhawini to tala leti kumaka mpfula hi ximumu, naswona ku fika kwalomu ka exikarhi ka January laha ku nga na xirhami.
+2. Ti byale etlhelweni ka mavele kumbe exikarhi ka wona. Ti dyisa misava hi naytirojini.
+3. Etindhawini leti hisaka, to oma, byala dlodlo na tindluwa, leti tiyiselaka dyandza kahle.
 
-### Patata leyi nyanganyelaka
+### Patata
 
-Patata leyi nyanganyelaka yi byariwa hi **swiphemu swa marhavi ya yona lama khandziyaka** (vine cuttings), ku nga ri hi mbewu.
+1. Tsema swiphemu swa rihlanga swa 20 ku ya eka 30 cm hi ku leha eka swimilana leswi hanyeke kahle.
+2. Swi byale eka mitsala ya misava leyi tlakukeke leyi hambanaka hi kwalomu ka 1 m, swi hambana hi 30 cm eka mutsala.
+3. Laha ku nga na xirhami, byala ku sukela exikarhi ka November ku ya eku sunguleni ka December. Etindhawini leti nga riki na xirhami, byala ku sukela eka August ku ya eka March.
 
-1. Tsema swiphemu swa marhavi swo leha 20–30 cm eka swimilana leswi hanyeke kahle.
-2. Swi byale ehenhla ka makhurhana yo leha ya misava (ridges) kumbe swikhurhana swa misava (mounds) leswi nga na mpfhuka wa kwalomu ka 1 m exikarhi, swiphemu swi ri na mpfhuka wa kwalomu ka 30 cm exikarhi ehenhla ka khurhana.
-3. Etindhawini leti nga na xirhami, byala ku sukela kwalomu ka exikarhi ka Hukuri (November) ku ya eku sunguleni ka N'wendzamhala. Etindhawini leti nga riki na xirhami u nga byala ku sukela kwalomu ka Mhawuri (August) ku ya eka Nyenyankulu.
+Byala muxaka lowu nga na nyama ya oranji. Wu tele hi vhitamini A naswona wu kahle eka vana.
 
-Patata leyi nyanganyelaka leyi nga na nyama ya oranji yi tele hi vhitamini A naswona yi pfuna ngopfu vana.
+### Mukhomboni
 
-### Mufarinya (cassava)
-
-Mufarinya wu mila kahle ntsena etindhawini leti hisaka, **leti nga riki na xirhami**, ku fana na swiphemu swa KwaZulu-Natal, lowveld ya Mpumalanga na ya Limpopo. Wu tiyisela dyandza swinene loko wu mile wu tiyile.
-
-> **Vuhlayiseki:** Timitsu na matluka ya mufarinya swi na swilo swa ntumbuluko leswi humesaka **cyanide**, ku nga chefu. Mixaka "leyi babaka" yi na yona yo tala swinene ku tlula mixaka "leyi nyanganyelaka", naswona swimilana leswi karhatiweke hi dyandza swi na yona yo tala. U nga tshuki u dya mufarinya wu nga swekiwanga. Hohlola timitsu kutani u ti sweka ti vupfa kahle. Mufarinya lowu babaka na wona wu fanele ku veketiwa ematini masiku ma nga ri mangani (mati wolawo u ma lahla), kumbe wu siliwa (grated) wu lulamisiwa, loko u nga si wu sweka. Vutisa mutirhi wa vurimi wa mfumo leswaku u na muxaka wihi.
+Mukhomboni (cassava) wu mila ntsena etindhawini leti hisaka leti nga riki na xirhami, ku fana na gereve ra KwaZulu-Natal na lowveld, naswona wu tiyisela dyandza kahle loko wu simekile. Timitsu ta wona ti humesa cyanide, ku nga chefu, hikwalaho a hi dyi mukhomboni wu nga swekiwanga nikatsongo: hohola timitsu kutani u ti sweka kahle, naswona u rhanga u peta mixaka leyi baba ematini masiku ma nga ri mangani, u lahla mati wolawo.
 
 ### Misinya ya milawu ya ntanga wa swibyariwa swa nkoka
 
-Ku na tindlela to tala to byala swibyariwa swa nkoka. Ndlela leyinene eka wena yi ya hi maxelo ya ka n'wina, mikhuva ya vurimi ya laha kaya, switirhisiwa leswi u nga na swona na swibyariwa leswi u swi hlawulaka. Misinya ya milawu leyi yi pfuna eka xiyimo xin'wana ni xin'wana:
+1. **Hlanganisa swibyariwa.** Byala mavele na tinyawa na marhanga, ku nga ri xibyariwa xin'we xi ri xoxe.
+2. **U nga khumbi misava ku tlula mpimo.**
+3. **Siya mahlanga na matluka emisaveni tanihi mulch.** Swi sirhelela misava naswona swi yi dyisa loko swi bola.
+4. **Byala swimilana swo funengeta misava** (cover crops) exikarhi ka swibyariwa leswikulu.
+5. **Byala eka contour** leswaku mpfula yi nghena emisaveni naswona misava yi tshama laha yi nga kona.
+6. **Endla crop rotation** (hundzuluxa swibyariwa) leswaku ku nga vi na xibyariwa lexi tlhelelaka endhawini yin'we lembe na lembe.
+7. **Wisisa misava** ehansi ka swimilana swo funengeta misava kumbe madyelo endzhaku ka tinguva ti nga ri tingani.
 
-1. **Byala swibyariwa swo hambana swin'we (polycultures), ku nga ri muxaka wun'we ntsena (monocultures).** Byala swibyariwa swo tala swin'we, xikombiso mavele na tinyawa na marhanga.
-2. **U nga pfilunganyi misava ngopfu.** Papalata ku rima ku ya ekule ehansi laha swi kotekaka.
-3. **Siya masalela ya swibyariwa ehenhla ka misava ma va mulch.** Mahlanga na matluka swi sirhelela misava naswona swi yi nonisa loko swi bola.
-4. **Byala swimilana swo funengeta misava** ku sirhelela na ku nonisa misava exikarhi ka swibyariwa leswikulu.
-5. **Byala hi ku landza contour** leswaku mpfula yi nghena emisaveni naswona misava yi tshama laha yi nga kona.
-6. **Endla crop rotation.** U nga byali xibyariwa lexi fanaka endhawini yin'we lembe na lembe.
-7. **Wiselisa misava.** Endzhaku ka tinguva ti nga ri tingani, tshika nsimu yi wisa yi funengetiwile hi swimilana swo funengeta misava kumbe hi madyelo.
+## Ringeta
 
-> **Xitsundzuxo:** Tinyawa i swakudya swa siku na siku eka swiphemu swo tala swa Afrika. Le Rwanda na le Burundi, munhu un'wana na un'wana u dya kwalomu ka 27–31 kg wa tinyawa hi lembe hi ku ringanisa, ku nga ku tala ku tlula hinkwako emisaveni.
+Endla mepe wa mintanga ya wena ya mune evhikini leri.
+
+1. Dirowa yindlu ya wena na misava leyi yi rhendzeleke ephepheni.
+2. Yima enyangweni wa khixi kutani u famba magoza ya 10. Funga ndhawu leyinene ngopfu ya ntanga wa le kusuhi na yindlu endzeni ka mpfhuka wolowo.
+3. Funga ndhawu ya ntanga wa matsavu, laha u nga fikaka hi ku olova naswona kusuhi na mati.
+4. Funga ndhawu ya swibyariwa swa nkoka, kutani u tsala leswaku misava yi rhelela hi tlhelo rihi.
+5. Hi madyambu lama nga riki na moya, lama titimelaka, twa laha moya wo titimela wu tshamaka kona. Funga frost pocket yoleyo.
+6. Etlhelweni ka ntanga wun'wana na wun'wana, tsala tiawara leti u nga ti nyikaka wona hi vhiki.
 
 ## Tinhla ta nkoka
 
-- Tiva maxelo ya ka n'wina: mpfula ya ximumu endzeni ka tiko, mpfula ya vuxika eWestern Cape, lowveld na ribuwa ra lwandle leswi nga riki na xirhami.
-- Tshika moya lowu titimelaka wu khuluka wu rhelela; hlayisa swibyariwa leswi onhiwaka hi xirhami ekule na ti-frost pocket.
-- Hlela mintanga leswaku yi fambelana na nkarhi, mali na ku tsakela loku u nga na kona hakunene.
-- Ntanga wa le kusuhi na yindlu (Zone 1): wutsongo, wu tsindzanile, matsavu ya siku na siku na mirhi yo nun'hwela, ekusuhi swinene na khixi.
-- Ntanga wa matsavu (Zone 2): swibyariwa leswikulu, mibhedhi na tindlela swi landza contour.
-- Ntanga wo xavisa (Zone 3): xibyariwa xin'we eka mubhedhi wun'we, swimilana swi tshinelelana, xavisela vaxavi hi ku kongoma leswaku u kuma nxavo lowunene.
-- Ntanga wa swibyariwa swa nkoka (Zone 3): mavele, mabele, tinyawa, patata leyi nyanganyelaka na swibyariwa swin'wana swa matimba na swa phurotheni, leswi byariwaka ngopfu hi mpfula.
-- U nga tshuki u dya mufarinya wu nga swekiwanga; wu hohlole, u wu veketa ematini kutani u wu sweka kahle.
-- Hlanganisa swibyariwa, u nga pfilunganyi misava ngopfu, veka mulch, endla crop rotation, byala hi ku landza contour u tlhela u wiselisa misava.
+- Tiva maxelo ya wena, kutani u tshika moya wo titimela wu huma kule na swibyariwa leswi nga tiyeliki.
+- Endla mintanga ya wena yi ringana na nkarhi, mali na ku tsakela leswi u nga na swona hakunene.
+- Ntanga wa le kusuhi na yindlu wu va kusuhi naswona wu tala; ntanga wa matsavu eka contour; ntanga wa makete eka mibhedhi ya xibyariwa xin'we, wu xavisa hi ku kongoma.
+- Byala swibyariwa swa nkoka hi ndlela leyi khomaka mpfula, naswona u nga dyi mukhomboni wu nga swekiwanga nikatsongo.
+- Hlanganisa swibyariwa, u nga khumbi misava ngopfu, veka mulch, hundzuluxa swibyariwa naswona u wisisa misava.
+
+Sungula hi ntanga lowu nga enyangweni wa khixi. Loko wu ku dyisa siku na siku, u ta tiva loko u lunghekele lowu landzelaka.
